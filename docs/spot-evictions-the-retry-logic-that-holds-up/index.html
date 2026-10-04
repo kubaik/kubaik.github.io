@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Spot evictions: the retry logic that holds up - Kubai Kevin</title>
-        <meta name="description" content="Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.">
+        <meta name="description" content="Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.">
         <meta name="keywords" content="AwsSpotInstances, RetryLogic, BackgroundWorkers, AwsBatch, RedisStreams, SpotInstanceEviction, JobRetrySystem, CostOptimization, Redis, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-12T12:52:38.265562">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.635959+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:28:33.766443+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Spot evictions: the retry logic that holds up">
-        <meta property="og:description" content="Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.">
+        <meta property="og:description" content="Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.">
         <meta property="og:url" content="https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Spot evictions: the retry logic that holds up">
-        <meta name="twitter:description" content="Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.">
+        <meta name="twitter:description" content="Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/spot-evictions-the-retry-logic-that-holds-up.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/#article",
       "headline": "Spot evictions: the retry logic that holds up",
-      "description": "Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.",
+      "description": "Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.",
       "datePublished": "2026-08-12T12:52:38+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2828,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T10:28:33+00:00",
+      "wordCount": 2487,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Spot evictions: the retry logic that holds up</h1>
                 
-                <p class="post-lead">Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.</p>
+                <p class="post-lead">Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
                 
                 
                 <div class="tags">
@@ -257,362 +257,267 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2828 words
+                        12 min read
+                        &nbsp;·&nbsp; 2487 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most tutorials show you how to run a background worker on AWS Spot Instances with a simple SQS queue and a cron retry. That's fine for a demo. In production, Spot Instances evict every 2–3 days on average. The real problem isn't the eviction itself; it's the retry storms that follow. A 2026 AWS incident report found that 42% of Spot reclaims happen during OS patch windows and 31% coincide with AZ capacity reshuffles. When hundreds of workers restart at once, your retry budget explodes, your downstream APIs melt, and your p99 latency spikes for hours.</p>
-<p>The part that trips people up is the retry logic: teams usually build a fixed backoff table or a simple exponential backoff, but those don't respect the ephemeral nature of Spot. A fixed backoff of 5 minutes after an eviction means 100 workers retry at t+5, t+10, t+15 — all hitting the same endpoint. The AWS docs mention jitter and max retries, but they don't cover the cost of coordinated retries on a fleet that can vanish overnight.</p>
-<p>What you actually need is a retry policy that: (1) detects evictions early, (2) spreads retries over minutes instead of seconds, and (3) stops hammering hosts that are already overloaded. That's the gap between "it works on my machine" and "it works in production."</p>
-<h2 id="how-how-we-use-spot-instances-smart-retry-logic-for-non-critical-agent-workloads-actually-works-under-the-hood">How How we use spot instances + smart retry logic for non-critical agent workloads actually works under the hood</h2>
-<p>We run non-critical agents for data enrichment, link checking, and batch PDF rendering. These workloads tolerate latency spikes and can tolerate some data loss, but they cannot tolerate cost spikes or downstream cascades. The architecture uses Spot Instances for compute, AWS Batch as the orchestrator, and a custom retry service built on top of Redis Streams and CloudWatch Metrics.</p>
-<p>When a Spot Instance receives a termination notice (usually 2 minutes before EC2 stops it), the agent publishes an eviction event to a Redis Stream (<code>agent_evictions</code>). A sidecar container running a small Go binary (<code>spot-retry</code>) consumes that stream and enqueues the job in a prioritized S3 bucket (<code>retry-queue/{job_id}/{attempt}.json</code>). A separate controller (<code>retry-controller</code>) pulls from the bucket using AWS Batch's <code>try</code> logic: it reads the attempt number, checks Redis for an exponential backoff delay, and sleeps for the computed duration before resubmitting the job. The controller also records metrics: eviction rate, retry delay, and downstream error rate. If the downstream API returns a 429 or 503, the controller increases the backoff by 200% and bumps a CloudWatch alarm named <code>RetryStormThreshold</code>.</p>
-<p>The key insight is that the retry isn't tied to the instance lifecycle. It's tied to the job's attempt count and the downstream system's health. By decoupling the retry mechanism from the host that was evicted, we avoid the coordinated retry storm. The Redis Stream acts as a durable buffer, so even if the Spot fleet evaporates, the jobs persist until processed.</p>
-<p>Another detail: we use AWS Batch's <code>FARGATE_SPOT</code> queues with <code>attempt_duration</code> set to 60 seconds. This forces Batch to reschedule failed tasks quickly, but our controller overrides the retry delay with its own logic. Without the override, Batch would retry every 60 seconds regardless of downstream health, which would still trigger a storm.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<h3 id="1-detect-evictions-and-publish-to-redis-stream">1. Detect evictions and publish to Redis Stream</h3>
-<pre><code class="language-python"># spot-monitor.py (runs as a sidecar on each agent)
-import boto3
-import redis
-import os
+                <h2 id="why-naive-retry-logic-fails-on-spot-fleets">Why naive retry logic fails on Spot fleets</h2>
+<p>Running background workers on Spot Instances is a well-documented cost lever. The failure mode that catches teams off guard is not the eviction itself — it is what the fleet does immediately afterwards.</p>
+<p>A first-pass implementation usually looks like this: a worker pulls a job from a queue, the instance is reclaimed, and the worker restarts and retries. If the retry policy is a fixed backoff (say, 5 minutes) or a plain exponential backoff with no jitter, every evicted worker computes roughly the same delay and fires at roughly the same moment. A hundred workers that vanished together come back together. The downstream API sees a step-function spike in traffic, returns 429s or 503s, and the retries compound.</p>
+<p>This is a coordination problem, not a capacity problem. The fix is to make retries depend on the job's attempt count and the downstream system's health, not on the lifecycle of the instance that happened to be running it.</p>
+<p>Three properties matter:</p>
+<ol>
+<li><strong>Early detection.</strong> Spot gives a short termination notice (documented at up to two minutes for EC2 Spot). That window is enough to persist state, but only if something is watching for it.</li>
+<li><strong>Durable decoupling.</strong> The retry record must survive the death of the instance that created it. If the retry timer lives in the worker process, it dies with the process.</li>
+<li><strong>Backpressure-aware delay.</strong> The delay should widen when the downstream is already unhealthy, so retries do not amplify an existing incident.</li>
+</ol>
+<h2 id="a-reference-architecture">A reference architecture</h2>
+<p>The pattern below is not the only workable one, but it separates the concerns cleanly and is easy to reason about during an incident.</p>
+<ul>
+<li><strong>Compute:</strong> Spot Instances (or a Spot-backed managed compute service such as AWS Batch, GKE Autopilot with Spot node pools, or a self-managed autoscaling group).</li>
+<li><strong>Eviction signal:</strong> the cloud provider's instance-metadata termination notice, or the equivalent event stream.</li>
+<li><strong>Buffer:</strong> a durable, ordered log — Redis Streams, Kafka, Kinesis, or a database table with a status column.</li>
+<li><strong>Controller:</strong> a small long-running service that reads the buffer, computes a delay from the attempt count and downstream health, and re-enqueues the job.</li>
+<li><strong>Job queue:</strong> whatever the workers already consume. The controller writes back into it after the delay.</li>
+<li><strong>Observability:</strong> metrics for eviction rate, retry delay distribution, and downstream error rate.</li>
+</ul>
+<p>The important structural decision is that the retry timer lives in the controller, not in the worker. When an instance is reclaimed, the worker's only job is to publish an eviction event. Everything after that is handled by a process that is not co-located with the ephemeral fleet.</p>
+<h2 id="step-1-detect-the-eviction-and-publish-an-event">Step 1: detect the eviction and publish an event</h2>
+<p>The EC2 instance metadata service exposes a termination notice at a well-known path. Polling it is cheap and does not require API credentials.</p>
+<pre><code class="language-python"># spot_monitor.py — runs as a sidecar on each Spot instance
 import json
+import os
 import time
+import urllib.request
 
-r = redis.Redis(host=os.getenv(&quot;REDIS_HOST&quot;), port=6379, decode_responses=True)
-ec2 = boto3.client(&quot;ec2&quot;)
+import redis
 
-INSTANCE_ID = os.getenv(&quot;EC2_INSTANCE_ID&quot;)
-HOSTNAME = os.getenv(&quot;HOSTNAME&quot;)
-REDIS_STREAM = &quot;agent_evictions&quot;
+REDIS_URL = os.environ[&quot;REDIS_URL&quot;]
+STREAM = &quot;agent_evictions&quot;
+NOTICE_URL = &quot;http://169.254.169.254/latest/meta-data/spot/instance-action&quot;
 
-def publish_eviction():
+r = redis.from_url(REDIS_URL, decode_responses=True)
+
+
+def check_notice() -&gt; dict | None:
+    try:
+        with urllib.request.urlopen(NOTICE_URL, timeout=2) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None  # no notice pending
+        raise
+
+
+def publish(action: dict) -&gt; None:
     payload = {
-        &quot;instance_id&quot;: INSTANCE_ID,
-        &quot;hostname&quot;: HOSTNAME,
-        &quot;timestamp&quot;: int(time.time()),
-        &quot;attempt&quot;: 1,  # first attempt after eviction
-        &quot;job_id&quot;: os.getenv(&quot;JOB_ID&quot;)
+        &quot;instance_id&quot;: os.environ[&quot;EC2_INSTANCE_ID&quot;],
+        &quot;job_id&quot;: os.environ[&quot;JOB_ID&quot;],
+        &quot;attempt&quot;: int(os.environ.get(&quot;ATTEMPT&quot;, &quot;1&quot;)),
+        &quot;action_time&quot;: action.get(&quot;time&quot;),
+        &quot;detected_at&quot;: int(time.time()),
     }
-    r.xadd(REDIS_STREAM, {&quot;message&quot;: json.dumps(payload)})
-    print(f&quot;Eviction published to {REDIS_STREAM}&quot;)
+    r.xadd(STREAM, {&quot;message&quot;: json.dumps(payload)})
 
-# AWS sends a 2-minute notice; we send it to Redis immediately
-try:
-    response = ec2.describe_instance_status(InstanceIds=[INSTANCE_ID], IncludeEvents=True)
-    for event in response.get(&quot;InstanceStatuses&quot;, [{}])[0].get(&quot;Events&quot;, []):
-        if event.get(&quot;Code&quot;) == &quot;instance-stop&quot;:
-            publish_eviction()
+
+if __name__ == &quot;__main__&quot;:
+    while True:
+        action = check_notice()
+        if action:
+            publish(action)
+            # Give the sidecar a moment to flush before the instance dies.
+            time.sleep(2)
             break
-except Exception as e:
-    print(f&quot;Failed to detect eviction: {e}&quot;)
+        time.sleep(5)
 </code></pre>
-<p>This script runs every 30 seconds via a systemd timer. It checks EC2 instance events for a <code>instance-stop</code> code and publishes a message to Redis Stream. The latency from notice to Redis is usually &lt;50ms.</p>
-<h3 id="2-retry-controller-consume-stream-compute-backoff-enqueue-job">2. Retry controller: consume stream, compute backoff, enqueue job</h3>
-<pre><code class="language-go">// retry-controller/main.go
+<p>Two details are worth calling out.</p>
+<p>First, the metadata endpoint returns HTTP 404 when no notice is pending. Treating that as an error will spam logs; treat it as the normal case.</p>
+<p>Second, the notice does not guarantee a fixed grace period across all instance types and capacity sources. The documented maximum is two minutes, but actual time can be shorter. Publish the eviction event immediately on detection rather than waiting for a countdown.</p>
+<h2 id="step-2-compute-a-backoff-that-respects-downstream-health">Step 2: compute a backoff that respects downstream health</h2>
+<p>A backoff function that only looks at the attempt count will still produce synchronized retries if many jobs share the same attempt number. Add jitter, and gate the base delay on the downstream error rate.</p>
+<pre><code class="language-go">// backoff.go
+package retry
+
+import (
+    &quot;math&quot;
+    &quot;math/rand&quot;
+    &quot;time&quot;
+)
+
+// Config holds tunables. Defaults are illustrative starting points,
+// not measured optima — tune them against your own downstream limits.
+type Config struct {
+    BaseDelay        time.Duration // e.g. 8 * time.Second
+    MaxDelay         time.Duration // e.g. 15 * time.Minute
+    JitterFraction   float64       // e.g. 0.5 for full jitter up to 50%
+    ErrorMultiplier  float64       // e.g. 2.0 when downstream is unhealthy
+    ErrorThreshold   int           // e.g. 3 recent 5xx/429 responses
+}
+
+func Backoff(attempt int, recentDownstreamErrors int, cfg Config) time.Duration {
+    if attempt &lt; 1 {
+        attempt = 1
+    }
+
+    // Exponential component: base * 2^(attempt-1), capped.
+    exp := float64(cfg.BaseDelay) * math.Pow(2, float64(attempt-1))
+    if exp &gt; float64(cfg.MaxDelay) {
+        exp = float64(cfg.MaxDelay)
+    }
+
+    // Widen the window when the downstream is already struggling.
+    if recentDownstreamErrors &gt;= cfg.ErrorThreshold {
+        exp *= cfg.ErrorMultiplier
+        if exp &gt; float64(cfg.MaxDelay) {
+            exp = float64(cfg.MaxDelay)
+        }
+    }
+
+    // Full jitter: uniform in [0, exp]. This is the part that breaks
+    // the synchronization between workers that were evicted together.
+    jitter := rand.Float64() * exp * cfg.JitterFraction
+
+    return time.Duration(exp + jitter)
+}
+</code></pre>
+<p>The <code>recentDownstreamErrors</code> value should come from a metric store, not from the worker's own experience. A worker that just got a 429 has only one data point; the controller can see the fleet-wide rate.</p>
+<h2 id="step-3-a-controller-that-owns-the-retry-timer">Step 3: a controller that owns the retry timer</h2>
+<p>The controller reads eviction events, computes a delay, and re-enqueues the job after that delay. Because the controller is a separate process, it survives the death of the Spot fleet.</p>
+<pre><code class="language-go">// controller.go
 package main
 
 import (
     &quot;context&quot;
     &quot;encoding/json&quot;
-    &quot;fmt&quot;
     &quot;log&quot;
-    &quot;os&quot;
-    &quot;strconv&quot;
     &quot;time&quot;
 
-    &quot;github.com/aws/aws-sdk-go-v2/aws&quot;
-    &quot;github.com/aws/aws-sdk-go-v2/config&quot;
-    &quot;github.com/aws/aws-sdk-go-v2/service/s3&quot;
-    &quot;github.com/go-redis/redis/v9&quot;
+    &quot;github.com/redis/go-redis/v9&quot;
 )
 
 type EvictionEvent struct {
     InstanceID string `json:&quot;instance_id&quot;`
-    Hostname   string `json:&quot;hostname&quot;`
-    Timestamp  int64  `json:&quot;timestamp&quot;`
-    Attempt    int    `json:&quot;attempt&quot;`
     JobID      string `json:&quot;job_id&quot;`
+    Attempt    int    `json:&quot;attempt&quot;`
 }
 
-func computeBackoff(attempt int, downstreamErrors int) time.Duration {
-    base := 2 * time.Second
-    if downstreamErrors &gt; 3 {
-        base *= 2 // Backoff 200% if downstream is overloaded
-    }
-    exponential := base * (1 &lt;&lt; uint(attempt-1)) // 2s, 4s, 8s, 16s...
-    jitter := time.Duration(randInt(0, int(exponential.Seconds()/2))) * time.Second
-    total := exponential + jitter
-    return total
+type Enqueuer interface {
+    Enqueue(ctx context.Context, jobID string, attempt int, delay time.Duration) error
 }
 
-func main() {
-    rdb := redis.NewClient(&amp;redis.Options{Addr: os.Getenv(&quot;REDIS_HOST&quot;) + &quot;:6379&quot;})
-    s3Client := s3.NewFromConfig(aws.Config{Region: &quot;us-east-1&quot;})
+type ErrorRateSource interface {
+    RecentErrors(ctx context.Context, jobID string) (int, error)
+}
+
+func Run(ctx context.Context, rdb *redis.Client, q Enqueuer, errs ErrorRateSource) error {
+    stream := &quot;agent_evictions&quot;
+    group := &quot;retry-controller&quot;
+    consumer := &quot;controller-1&quot;
+
+    // Create the consumer group if it does not exist.
+    _ = rdb.XGroupCreateMkStream(ctx, stream, group, &quot;0&quot;).Err()
 
     for {
-        streams, err := rdb.XRead(context.Background(), &amp;redis.XReadArgs{
-            Streams: []string{&quot;agent_evictions&quot;, &quot;$&quot;},
-            Count:   1,
-            Block:   5 * time.Second,
+        res, err := rdb.XReadGroup(ctx, &amp;redis.XReadGroupArgs{
+            Group:    group,
+            Consumer: consumer,
+            Streams:  []string{stream, &quot;&gt;&quot;},
+            Count:    16,
+            Block:    5 * time.Second,
         }).Result()
         if err != nil {
-            log.Printf(&quot;XRead failed: %v&quot;, err)
+            if err == redis.Nil {
+                continue
+            }
+            log.Printf(&quot;XReadGroup: %v&quot;, err)
+            time.Sleep(time.Second)
             continue
         }
 
-        for _, stream := range streams {
-            for _, msg := range stream.Messages {
-                var event EvictionEvent
-                if err := json.Unmarshal([]byte(msg.Values[&quot;message&quot;].(string)), &amp;event); err != nil {
-                    log.Printf(&quot;Failed to unmarshal: %v&quot;, err)
-                    rdb.XAck(context.Background(), &quot;agent_evictions&quot;, &quot;agent-retry-group&quot;, msg.ID)
+        for _, s := range res {
+            for _, msg := range s.Messages {
+                var ev EvictionEvent
+                raw, _ := msg.Values[&quot;message&quot;].(string)
+                if err := json.Unmarshal([]byte(raw), &amp;ev); err != nil {
+                    log.Printf(&quot;bad event %s: %v&quot;, msg.ID, err)
+                    rdb.XAck(ctx, stream, group, msg.ID)
                     continue
                 }
 
-                backoff := computeBackoff(event.Attempt, downstreamErrors(event.JobID))
-                retryPayload := map[string]interface{}{
-                    &quot;job_id&quot;:     event.JobID,
-                    &quot;attempt&quot;:    event.Attempt,
-                    &quot;delay_ms&quot;:   backoff.Milliseconds(),
-                    &quot;timestamp&quot;:  time.Now().Unix(),
+                recent, err := errs.RecentErrors(ctx, ev.JobID)
+                if err != nil {
+                    // Fail open with zero errors, but do not ack — retry later.
+                    log.Printf(&quot;error rate lookup failed: %v&quot;, err)
+                    continue
                 }
 
-                key := fmt.Sprintf(&quot;retry-queue/%s/%d.json&quot;, event.JobID, event.Attempt)
-                _, err = s3Client.PutObject(context.Background(), &amp;s3.PutObjectInput{
-                    Bucket: aws.String(&quot;retry-bucket&quot;),
-                    Key:    key,
-                    Body:   bytes.NewReader([]byte(payload)),
-                })
-                if err != nil {
-                    log.Printf(&quot;Failed to enqueue retry: %v&quot;, err)
-                } else {
-                    rdb.XAck(context.Background(), &quot;agent_evictions&quot;, &quot;agent-retry-group&quot;, msg.ID)
+                delay := Backoff(ev.Attempt, recent, DefaultConfig)
+                if err := q.Enqueue(ctx, ev.JobID, ev.Attempt+1, delay); err != nil {
+                    log.Printf(&quot;enqueue failed: %v&quot;, err)
+                    continue // do not ack; the event will be redelivered
                 }
+                rdb.XAck(ctx, stream, group, msg.ID)
             }
         }
     }
 }
 </code></pre>
-<p>This controller consumes the Redis Stream, computes a backoff that respects downstream health (via a helper <code>downstreamErrors</code>), and writes the job payload to an S3 bucket keyed by <code>job_id/attempt</code>. The S3 bucket acts as a durable, prioritized queue; AWS Batch can subscribe to it via <code>aws batch submit-job --job-queue retry-queue --job-definition retry-def</code> with a custom <code>attempt</code> parameter.</p>
-<h3 id="3-aws-batch-job-definition-with-attempt-aware-retry">3. AWS Batch job definition with attempt-aware retry</h3>
-<pre><code class="language-json">{
-  &quot;jobDefinitionArn&quot;: &quot;arn:aws:batch:us-east-1:123456789012:job-definition/retry-def:4&quot;,
-  &quot;jobDefinitionName&quot;: &quot;retry-def&quot;,
-  &quot;type&quot;: &quot;container&quot;,
-  &quot;containerProperties&quot;: {
-    &quot;image&quot;: &quot;123456789012.dkr.ecr.us-east-1.amazonaws.com/retry-agent:2026-05-20&quot;,
-    &quot;vcpus&quot;: 1,
-    &quot;memory&quot;: 512,
-    &quot;command&quot;: [
-      &quot;python&quot;,
-      &quot;agent.py&quot;,
-      &quot;--job-id&quot;, &quot;Ref::job_id&quot;,
-      &quot;--attempt&quot;, &quot;Ref::attempt&quot;
-    ],
-    &quot;environment&quot;: [
-      {&quot;name&quot;: &quot;ATTEMPT&quot;, &quot;value&quot;: &quot;Ref::attempt&quot;},
-      {&quot;name&quot;: &quot;JOB_ID&quot;, &quot;value&quot;: &quot;Ref::job_id&quot;}
-    ]
-  },
-  &quot;retryStrategy&quot;: {
-    &quot;attempts&quot;: 5
-  }
-}
-</code></pre>
-<p>The key here is the <code>Ref::attempt</code> parameter, which Batch passes to the container. Our agent (<code>agent.py</code>) reads this and publishes a final success/failure event to a <code>job_status</code> SNS topic. If the job fails, Batch retries up to 5 times, but our controller has already spread the retries over minutes, so the coordinated storm is avoided.</p>
-<h3 id="4-downstream-health-check-in-the-controller">4. Downstream health check in the controller</h3>
-<pre><code class="language-go">// downstream_errors.go
-func downstreamErrors(jobID string) int {
-    ctx := context.Background()
-    metric := &quot;Downstream5xx&quot;
-    query := fmt.Sprintf(`
-      SELECT MAX(Downstream5xx) 
-      FROM SCHEMA(&quot;retry&quot;, &quot;job_id='%s'&quot;) 
-      WHERE time &gt; now() - 5m
-    `, jobID)
-
-    result, err := influxdb.Query(ctx, query)
-    if err != nil || len(result) == 0 {
-        return 0
-    }
-
-    return int(result[0].Values[0][0].(float64))
-}
-</code></pre>
-<p>We use InfluxDB 2.7 to track downstream errors per job_id over the last 5 minutes. If the error rate exceeds 3 in 5 minutes, the controller doubles the backoff for that job_id. This prevents retry storms when the downstream API is already melting.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We run this setup on ~200 Spot Instances across us-east-1a, us-east-1b, and us-west-2a. Each instance runs 4 parallel agents. The system handles ~1.2 million jobs per day with an average payload size of 8KB.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Value (2026-05)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Spot evictions per day</td>
-<td>~4,800</td>
-</tr>
-<tr>
-<td>Average retry delay</td>
-<td>112 seconds</td>
-</tr>
-<tr>
-<td>p95 job latency</td>
-<td>14.2 seconds</td>
-</tr>
-<tr>
-<td>p99 job latency</td>
-<td>38.7 seconds</td>
-</tr>
-<tr>
-<td>Downstream 5xx rate</td>
-<td>0.42%</td>
-</tr>
-<tr>
-<td>Cost per million jobs</td>
-<td>$0.042</td>
-</tr>
-<tr>
-<td>Spot savings vs On-Demand</td>
-<td>71%</td>
-</tr>
-</tbody>
-</table>
-<p>The p99 spike is driven by downstream API rate limits (1000 RPM per customer). Our controller detects the 429 and doubles the backoff, which spreads the retries and keeps the downstream API healthy.</p>
-<p>A common trap here is to set the backoff too short. Teams running into this usually see downstream 429s within minutes, which then cascade into 503s and 504s. The fix is to start with a base of 8–16 seconds and increase by 200% on downstream errors.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<h3 id="1-redis-stream-consumer-lag-during-az-outages">1. Redis Stream consumer lag during AZ outages</h3>
-<p>When an entire AZ goes down, the Redis primary in that AZ can become unavailable for 30–60 seconds while a failover happens. The consumer (<code>spot-retry</code>) loses its connection and stops processing the stream. The backlog grows, and the retry delay increases for all jobs in the queue. The symptom is a spike in <code>XPending</code> count for the stream.</p>
-<p>Fix: Run the consumer in two AZs with a Redis Cluster (Redis 7.2) and set <code>failoverTimeout</code> to 10 seconds. The consumer should reconnect within 10 seconds and resume processing. If you're using AWS ElastiCache, enable Multi-AZ with automatic failover.</p>
-<h3 id="2-s3-eventual-consistency-on-retry-keys">2. S3 eventual consistency on retry keys</h3>
-<p>When the controller writes <code>retry-queue/{job_id}/{attempt}.json</code>, AWS S3 guarantees read-after-write consistency for new objects. However, if your agent restarts and tries to read the same key, it might get a 404 for up to 1 second. The symptom is a job that appears lost.</p>
-<p>Fix: Add a 2-second delay after writing the key before starting the Batch job. Or, use DynamoDB with strong consistency for the retry queue (costs ~$0.0001 per read).</p>
-<h3 id="3-spot-instance-reclaims-during-patch-windows">3. Spot Instance reclaims during patch windows</h3>
-<p>AWS schedules Spot reclaims during OS patch windows (usually Tuesdays). The reclaim frequency jumps from ~2 days to ~6 hours. The controller sees a surge of eviction events and starts computing backoffs. If the downstream API is already under load from other workloads, the retry delay can balloon to minutes, and jobs time out.</p>
-<p>Fix: Monitor the <code>SpotReclaim</code> metric in CloudWatch and preemptively increase the base backoff by 50% on Tuesdays between 06:00–12:00 UTC. We use a Lambda that updates the controller's <code>computeBackoff</code> base value via Parameter Store.</p>
-<h3 id="4-clock-skew-between-spot-notice-and-redis-timestamp">4. Clock skew between Spot notice and Redis timestamp</h3>
-<p>The Spot notice is time-stamped by AWS, but the Redis server and the agent can have clock skew up to 100ms. When a job is enqueued with a delay of 2 seconds, the actual delay can be 2.1s or 1.9s. The symptom is jobs that appear to run out of order.</p>
-<p>Fix: Use NTP on all instances and set <code>redis-cli --latency-history</code> to monitor skew. If skew exceeds 50ms, restart the NTP service or switch to <code>chrony</code>.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool/Library</th>
-<th>Version</th>
-<th>Purpose</th>
-<th>Why it's useful</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AWS Batch</td>
-<td>2026-05</td>
-<td>Orchestrate Spot jobs with retries</td>
-<td>Handles task scheduling, retries, and logging</td>
-</tr>
-<tr>
-<td>Redis Streams</td>
-<td>7.2</td>
-<td>Decouple eviction events from job state</td>
-<td>Durable, low-latency buffer</td>
-</tr>
-<tr>
-<td>Go (controller)</td>
-<td>1.22</td>
-<td>Compute backoff, enqueue jobs</td>
-<td>Fast, low GC pressure</td>
-</tr>
-<tr>
-<td>InfluxDB 2.7</td>
-<td>2.7</td>
-<td>Track downstream health per job_id</td>
-<td>Real-time error rate monitoring</td>
-</tr>
-<tr>
-<td>CloudWatch Alarms</td>
-<td>2026</td>
-<td>Alert on retry storms</td>
-<td>Auto-scale downstream capacity</td>
-</tr>
-<tr>
-<td>AWS ElastiCache Redis</td>
-<td>7.2</td>
-<td>Multi-AZ failover for streams</td>
-<td>Avoids AZ outage lag</td>
-</tr>
-<tr>
-<td>pytest</td>
-<td>7.4</td>
-<td>Test retry logic with time mocks</td>
-<td>Validate backoff curves</td>
-</tr>
-</tbody>
-</table>
-<p>Avoid polling SQS for eviction events. SQS has a 1s latency floor and doesn't give you the 2-minute notice you need to publish to Redis. Use EC2 instance events instead.</p>
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This pattern is designed for non-critical, latency-tolerant workloads. If your workload is critical (e.g., payment processing, user-facing API calls, real-time analytics), the coordinated retry storm risk outweighs the Spot cost savings. In those cases, use On-Demand or Savings Plans.</p>
-<p>Avoid this pattern if:
-- Your downstream APIs have strict rate limits (&lt;100 RPM per customer). - Your jobs must complete within 30 seconds. The retry delay will violate SLA. - You cannot tolerate data loss. Redis Streams are durable, but S3 keys can be lost during AZ outages if you don't use versioning. - Your team lacks DevOps capacity to run Redis Cluster and CloudWatch alarms.</p>
-<p>In practice, teams running into this usually see downstream 429s within minutes, which then cascade into 503s. The fix is to either switch to On-Demand or implement a token bucket at the API gateway level.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>The biggest surprise wasn't the Spot evictions—it was the downstream API melt-ups. We assumed our agents were low priority, but the downstream APIs had their own rate limits. The controller's health check saved us multiple times when a downstream SaaS partner rolled out a new rate-limiting policy. Without the <code>downstreamErrors</code> check, we would have melted their API and triggered a support ticket.</p>
-<p>Another surprise: the cost savings aren't linear. The first 50% is easy (just move to Spot), but the next 20% comes from tuning the retry delays and avoiding downstream cascades. The real leverage is in the observability layer—CloudWatch alarms and InfluxDB metrics let us catch issues before they become incidents.</p>
-<p>What I would change: use DynamoDB instead of S3 for the retry queue. S3 is cheap and durable, but the eventual consistency and 2-second delay for new keys add complexity. DynamoDB with on-demand capacity costs ~$0.25 per million writes, which is still cheaper than the downstream cascade cost.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Check your current retry logic for Spot workloads. If you're using a fixed backoff or a simple exponential backoff without downstream health checks, add a 10-line Go or Python service that:</p>
-<ol>
-<li>Reads eviction events from EC2 instance status API</li>
-<li>Publishes them to a Redis Stream (or Kafka topic) with a job ID</li>
-<li>Computes backoff using <code>max(2s * 2^attempt, downstream_error_rate * 200%)</code></li>
-<li>Enqueues the job in a prioritized queue (S3, SQS FIFO, or DynamoDB)</li>
-</ol>
-<p>Then, set a CloudWatch alarm on <code>RetryStormThreshold</code> (errors &gt; 10 in 5 minutes) and watch the metrics for 24 hours. The first time you see a downstream 429, you'll know the controller is working.</p>
-<p>Run this command to check your current Spot reclaim rate:</p>
-<pre><code class="language-bash"># Replace REGION with your AWS region
-aws ec2 describe-spot-instance-requests --region REGION \
-  --filters &quot;State=active&quot; \
-  --query &quot;length(SpotInstanceRequests)&quot; --output text
-</code></pre>
-<p>If your reclaim rate is &gt;1 per hour on average, this retry logic is worth the 30-minute setup.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I handle jobs that are already running when the Spot Instance evicts?</strong>
-Jobs that are in progress when the eviction occurs are lost. The Spot notice gives 2 minutes, which is enough to checkpoint progress to S3 or DynamoDB, but most agents don't do that. For long-running jobs (&gt;5 minutes), implement a checkpoint file or use AWS Batch's checkpointing feature if you're on Fargate Spot. Expect data loss for jobs that don't checkpoint.</p>
-<p><strong>Can I use this with Kubernetes instead of AWS Batch?</strong>
-Yes, but swap the controller for a custom Kubernetes operator that watches Spot eviction events and creates Jobs with <code>activeDeadlineSeconds</code> set to your retry delay. Use a Redis Stream or Kafka topic as the buffer. The key is to decouple the eviction event from the job restart—don't let the pod retry directly.</p>
-<p><strong>What's the smallest retry delay I should use?</strong>
-Start with 8 seconds and increase by 200% on downstream errors. A 2-second delay is too short; it will still cause coordinated retries. If your downstream API has strict rate limits (&lt;100 RPM), start with 32 seconds and tune from there.</p>
-<p><strong>How do I test this in staging without burning real jobs?</strong>
-Use a mock downstream API that returns 429 or 503 based on a query parameter. In your controller, set <code>downstream_errors</code> to a fixed value (e.g., 5) for jobs with <code>job_id</code> starting with <code>test-</code>. Then, simulate evictions by publishing fake events to the Redis Stream and verify the backoff delays. You can also use AWS Step Functions to orchestrate a chaos scenario.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>Two correctness notes on the Redis Streams usage:</p>
 <ul>
-<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
-<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
-<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+<li><code>XReadGroup</code> with <code>&gt;</code> delivers only messages that have not been delivered to any consumer in the group. Acknowledging with <code>XAck</code> after a successful enqueue is what prevents duplicate retries.</li>
+<li>If the controller crashes between <code>Enqueue</code> and <code>XAck</code>, the message will be redelivered and the job will be enqueued twice. Make the enqueue idempotent — for example, by keying the retry record on <code>(job_id, attempt)</code> so a second write is a no-op.</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
+<h2 id="step-4-make-the-retry-queue-idempotent">Step 4: make the retry queue idempotent</h2>
+<p>Whichever store holds the pending retries (S3, DynamoDB, a database table, a queue with deduplication), the write must be safe to repeat. The simplest approach is a deterministic key:</p>
+<pre><code>retry/{job_id}/{attempt}
+</code></pre>
+<p>If the same key is written twice with the same payload, the second write is harmless. If the payload differs — say, because the computed delay changed — you have a race between two controller instances. Either use a conditional write (write only if the key does not exist) or accept last-write-wins and make the consumer tolerant of an early or late retry.</p>
+<h2 id="how-to-measure-whether-this-is-working">How to measure whether this is working</h2>
+<p>There is no universal benchmark for this pattern; the numbers depend on your fleet size, downstream rate limits, and job duration. What you can do is instrument the specific behaviours that indicate the pattern is doing its job.</p>
+<p><strong>Eviction rate.</strong> Count eviction events per hour. On EC2, the instance metadata notice is the authoritative signal for a given instance. Aggregate across the fleet to get a rate. If the rate is much higher than you expect, check whether you are running in a capacity-constrained instance family or availability zone.</p>
+<p><strong>Retry delay distribution.</strong> Record the computed delay for every retry as a histogram. A healthy distribution is wide — that width is the jitter doing its work. A distribution that clusters at a single value means jitter is not being applied, or the attempt counts are all identical.</p>
+<p><strong>Downstream error rate during retry windows.</strong> This is the metric that matters most. Correlate downstream 5xx and 429 rates with spikes in retry volume. If retries and downstream errors rise together, the backoff is not providing enough separation.</p>
+<p><strong>Queue depth and age.</strong> For the buffer (Redis Stream, Kafka topic, etc.), track the consumer lag and the age of the oldest unprocessed message. A growing lag during an eviction wave means the controller cannot keep up.</p>
+<p>A simple way to start: emit one counter per retry and one gauge for the delay, then plot them against your downstream error rate. You do not need a full observability stack to see the shape of the problem.</p>
+<h2 id="failure-modes-to-plan-for">Failure modes to plan for</h2>
+<h3 id="consumer-lag-when-the-buffers-primary-goes-down">Consumer lag when the buffer's primary goes down</h3>
+<p>If the buffer is a single-primary Redis instance and that primary is in an availability zone that becomes unavailable, the consumer stops until failover completes. During that window, eviction events accumulate and retries are delayed for every job in the queue.</p>
+<p>Mitigation: run the buffer with multi-AZ failover, and alert on consumer lag rather than only on buffer availability. A lag alert fires earlier and is more actionable.</p>
+<h3 id="duplicate-retries-from-at-least-once-delivery">Duplicate retries from at-least-once delivery</h3>
+<p>Redis Streams, Kafka, and SQS all deliver at least once. Any of them can redeliver a message after a consumer crash. If the enqueue step is not idempotent, the job runs twice.</p>
+<p>Mitigation: deterministic keys as described above, plus a consumer-side check that the job has not already completed. For jobs with side effects (writes to external systems), keep an idempotency key with the downstream as well.</p>
+<h3 id="clock-skew-between-the-eviction-notice-and-the-retry-timer">Clock skew between the eviction notice and the retry timer</h3>
+<p>The eviction notice carries a timestamp from the provider. The controller's delay is computed from its own clock. If the two clocks differ, the effective delay differs from the intended one. In practice, the skew is small, but it is worth monitoring if you have strict ordering requirements.</p>
+<p>Mitigation: run NTP or chrony on all hosts, and monitor offset. If you need strict ordering, use a logical clock (the attempt counter) rather than wall-clock time to sequence retries.</p>
+<h3 id="backoff-that-grows-without-bound">Backoff that grows without bound</h3>
+<p>If the downstream stays unhealthy, an uncapped exponential backoff will eventually schedule retries hours or days out. Jobs appear to vanish.</p>
+<p>Mitigation: cap the delay at a value your SLA can tolerate, and route jobs that exceed a maximum attempt count to a dead-letter queue with an alert. The dead-letter queue is the signal that something needs human attention; without it, the failure is silent.</p>
+<h2 id="when-not-to-use-this-pattern">When not to use this pattern</h2>
+<p>This approach trades operational complexity for cost savings. It is a poor fit when:</p>
 <ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><strong>The workload is latency-sensitive.</strong> If a job must complete within seconds, a retry delay measured in tens of seconds violates the SLA. Use On-Demand capacity or a reserved pool.</li>
+<li><strong>The downstream has very tight rate limits.</strong> If the downstream allows only a small number of requests per minute per tenant, retries from a large fleet will exhaust the budget regardless of jitter. Fix the rate limiting at the caller side first.</li>
+<li><strong>You cannot tolerate any data loss.</strong> Spot eviction can kill a job mid-execution. If the job is not checkpointed, its work is lost. For non-idempotent jobs, that is a correctness problem, not a cost problem.</li>
+<li><strong>You do not have the operational capacity to run the buffer and controller.</strong> A managed queue with built-in retry and dead-letter support may be a better fit if you do not want to operate Redis or Kafka.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>What is the smallest sensible base delay?</strong>
+It depends on the downstream's rate limit and the size of the fleet. As a starting point, pick a base delay that is at least as long as the time it takes the downstream to recover from a burst — often tens of seconds. A base delay in the low single-digit seconds is usually too short for a large fleet, because even with jitter the retries arrive close together.</p>
+<p><strong>Should the retry live in the worker or in a separate controller?</strong>
+In a separate controller. A retry timer inside the worker dies with the worker, which is exactly the failure mode you are trying to avoid. The worker should only publish the eviction event and exit.</p>
+<p><strong>How do I test this without real evictions?</strong>
+Publish synthetic eviction events to the stream with a controlled job ID and attempt count, and point the error-rate source at a mock that returns a fixed value. Then assert on the computed delay and on the number of enqueues. Because the delay computation is a pure function, it can be unit-tested directly without any infrastructure.</p>
+<p><strong>Does this work with Kubernetes instead of a batch service?</strong>
+Yes. The controller can be a Kubernetes controller that watches for node termination events and creates Jobs with a delay, or it can be a standalone service that writes to whatever queue the Jobs consume. The key property — decoupling the retry timer from the evicted pod — is the same.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick one Spot-backed workload and add a single counter that increments every time a worker starts a retry. Emit it with the attempt number as a label. Run the workload for a day, then plot retries per minute against your downstream error rate.</p>
+<p>If the two lines move together, your retry policy is amplifying downstream problems and is worth fixing. If they are independent, the current policy is providing enough separation and you can leave it alone. This measurement takes less time than implementing the full pattern and tells you whether the pattern is needed at all.</p>
                 
                 
             </div>
@@ -641,8 +546,8 @@ Use a mock downstream API that returns 429 or 503 based on a query parameter. In
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
-                        <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/event-driven-beats-agent-driven-910-times/">

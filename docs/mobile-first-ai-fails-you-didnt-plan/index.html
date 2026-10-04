@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mobile-first AI fails you didn’t plan… - Kubai Kevin</title>
-        <meta name="description" content="Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.">
+        <meta name="description" content="Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.">
         <meta name="keywords" content="MobileAiPerformance, LowBandwidthAi, Lambda, Sentence, ReactPwaSlow, Ai, Reactjs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-26T17:38:26.304775">
-        <meta property="article:modified_time" content="2026-09-30T04:44:38.259270+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:45:17.951907+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Mobile-first AI fails you didn’t plan…">
-        <meta property="og:description" content="Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.">
+        <meta property="og:description" content="Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.">
         <meta property="og:url" content="https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Mobile-first AI fails you didn’t plan…">
-        <meta name="twitter:description" content="Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.">
+        <meta name="twitter:description" content="Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/mobile-first-ai-fails-you-didnt-plan.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/#article",
       "headline": "Mobile-first AI fails you didn’t plan…",
-      "description": "Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.",
+      "description": "Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.",
       "datePublished": "2026-08-26T17:38:26+00:00",
-      "dateModified": "2026-09-30T04:44:38+00:00",
-      "wordCount": 2246,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-04T10:45:17+00:00",
+      "wordCount": 2383,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Mobile-first AI fails you didn’t plan…</h1>
                 
-                <p class="post-lead">Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.</p>
+                <p class="post-lead">Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
                 
                 
                 <div class="tags">
@@ -259,64 +259,64 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2246 words
+                        12 min read
+                        &nbsp;·&nbsp; 2383 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-30
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The default configuration is fine right up until it isn't. Here's what actually worked, and why.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Global AI best practices assume fast, cheap internet and powerful GPUs on every device. In markets where mobile data costs $1.80/GB and 5G still covers 60% of users, those assumptions collapse. APIs that send 500 kB JSON blobs to a React frontend break when latency exceeds 300 ms and throughput drops below 200 KB/s. Quantization and on-device LLMs don’t help when OEMs ship 2 GB models with 4 GB RAM handsets. The part that trips teams up is not the model architecture—it’s the network boundary and the device boundary. This post explains why common patterns fail and what to swap in before your next launch.</p>
-<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most AI tutorials still start with a Jupyter notebook that trains a 7B parameter model on an A100 in 30 minutes, then expects the same model to run in a browser tab with WebAssembly and 100 ms latency. That mismatch hides three realities teams only learn after launch:</p>
-<ol>
-<li>Latency compounds across every hop. A 100 ms API call inside AWS us-east-1 becomes 320 ms in Nairobi CBD on Safaricom 4G and 850 ms on Equitel’s legacy network. 2. Payload size matters more than model size. A 500 kB JSON response from an embedding API can cost a user $0.90 per request when data is $1.80/GB. 3. On-device models often fail silently. A 2 GB LLM shipped by an OEM may crash after two inference steps because the vendor’s RAM throttling cuts the process to 512 MB.</li>
-</ol>
-<p>Teams that optimize only for model accuracy miss the fact that users abandon flows after three seconds. In a 2026 field study across Nairobi, Lagos, and Dar es Salaam, 48% of users dropped out when the first meaningful paint took over 2.5 s, irrespective of the model’s perplexity score.</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+                <h2 id="why-mobile-first-ai-fails">Why mobile-first AI fails</h2>
+<p>The default configuration of most AI tutorials is fine right up until it isn't. Tutorials typically assume fast, cheap internet and a GPU on every device. In markets where mobile data is metered and 4G coverage is uneven, those assumptions collapse. An API that returns a 500 kB JSON blob to a React frontend breaks when round-trip latency exceeds 300 ms and effective throughput drops below 200 KB/s. On-device models don't rescue the situation when OEMs ship 2 GB models to handsets with 4 GB of RAM.</p>
+<p>The part that trips teams up is rarely the model architecture. It's the network boundary and the device boundary. This article explains why common patterns fail and what to swap in before launch.</p>
+<h2 id="the-mental-model-two-serial-bottlenecks">The mental model: two serial bottlenecks</h2>
 <p>Think of the network and the device as two serial bottlenecks, not one. Every AI feature has to pass through both, and the slowest step defines the ceiling.</p>
 <ul>
-<li>Network bottleneck: Radio access, middle-mile latency, packet loss. - Device bottleneck: RAM, CPU, thermal throttling, storage I/O.</li>
+<li><strong>Network bottleneck:</strong> radio access, middle-mile latency, packet loss, TLS setup.</li>
+<li><strong>Device bottleneck:</strong> RAM, CPU, thermal throttling, storage I/O, JavaScript parse time.</li>
 </ul>
-<p>In a mobile-first market, the network is usually the tighter constraint. A 256 kB model running locally might still need to fetch a 128 kB vocabulary file, and that 128 kB costs the user $0.23 on a typical Kenyan data bundle. The device bottleneck only shows up when the model runs at all; most users never get that far.</p>
-<p>Compare this to a desktop-first market where the network is wide and cheap, and the device is powerful. There, the model bottleneck dominates, and teams tune quantization and pruning. In mobile-first markets, tuning quantization is pointless if the app never loads the model.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Scenario: A Nairobi fintech launches an AI chat for microloan eligibility. They start with a cloud-based embedding model (sentence-transformers/all-mpnet-base-v2, 420 MB) behind an AWS API Gateway endpoint. The frontend is a React PWA served from CloudFront in us-east-1.</p>
-<p>Step 1: Measure the cold-start latency from a Nairobi user on Safaricom 4G.</p>
-<pre><code class="language-bash">curl -w &quot;\nTotal: %{time_total}s\n&quot; https://api.fintech.example.com/embed -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;text&quot;: &quot;I earn KES 35,000 monthly&quot;}'
+<p>In a mobile-first market the network is usually the tighter constraint. A 256 kB model running locally might still need to fetch a 128 kB vocabulary file, and that 128 kB is charged against the user's data bundle. The device bottleneck only shows up once the model runs at all; many users never get that far.</p>
+<p>Contrast this with a desktop-first market, where the network is wide and cheap and the device is powerful. There the model bottleneck dominates, and teams spend their time on quantization and pruning. In mobile-first markets, tuning quantization is pointless if the app never finishes loading the model.</p>
+<p>A useful rule: <strong>optimize the first byte and the last byte before you optimize the middle.</strong> The first byte is what the user waits for before anything renders. The last byte is what the device has to parse and execute. Model accuracy sits in the middle and matters least if the user has already abandoned the flow.</p>
+<h2 id="what-to-measure-before-you-change-anything">What to measure before you change anything</h2>
+<p>The three realities below are the ones teams most often discover only after launch. Each one has a measurement attached, so you can confirm or refute it on your own traffic.</p>
+<p><strong>1. Latency compounds across every hop.</strong> A 100 ms API call inside a single cloud region becomes several hundred milliseconds from a mobile network in another continent, because you add DNS, TCP, TLS, and the last-mile radio. You cannot estimate this from a laptop on office Wi-Fi. Measure it from the actual network:</p>
+<pre><code class="language-bash">curl -w &quot;\nTotal: %{time_total}s\nDNS: %{time_namelookup}s\nTCP: %{time_connect}s\nTLS: %{time_appconnect}s\nFirst byte: %{time_starttransfer}s\nSize: %{size_download} bytes\n&quot; \
+  https://api.example.com/embed \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;text&quot;: &quot;sample prompt&quot;}'
 </code></pre>
-<p>Typical output:</p>
-<pre><code>Total: 1.423s
-DNS: 0.012s
-TCP: 0.045s
-TLS handshake: 0.412s
-API Gateway cold start: 0.687s
-Model inference: 0.156s
-Response size: 487 kB
-</code></pre>
-<p>Step 2: Translate that latency into user cost.</p>
-<ul>
-<li>487 kB payload at $1.80/GB = $0.000877 per request. - 1.423 s latency at 200 KB/s effective throughput = ~285 KB of data in flight.</li>
-</ul>
-<p>Step 3: Quantize the model to int8 and compress the vocabulary.</p>
-<p>Model size after quantization: 134 MB (68% reduction)
-Vocabulary size after pruning: 32 k tokens (44% reduction)</p>
-<pre><code class="language-python">from sentence_transformers import SentenceTransformer
-from transformers import AutoTokenizer
+<p>Run this from a tethered phone on the target carrier, not from a CI runner. Repeat it ten times and look at the spread, not the average. The <code>time_appconnect</code> minus <code>time_connect</code> figure is your TLS cost; if it is large and stable, connection reuse is your cheapest win.</p>
+<p><strong>2. Payload size matters more than model size.</strong> A large JSON response from an embedding API is billed to the user twice: once in time and once in money. To put a number on it, take the response size in kilobytes, divide by 1,024 to get gigabytes, and multiply by the local price per gigabyte. A 500 kB response is roughly 0.000488 GB. At a metered rate of $1.80/GB that is about $0.00088 per request — small per call, but it becomes material when a single user session makes dozens of calls. Instrument response size in your server logs and aggregate it per session.</p>
+<p><strong>3. On-device models often fail silently.</strong> A large model shipped by an OEM may be killed after a few inference steps because the vendor's memory management caps the process. This does not raise a clean error; it usually manifests as a tab crash or a stalled worker. Measure it by logging peak heap usage and catching worker termination events:</p>
+<pre><code class="language-javascript">// Run inside the inference worker
+let peak = 0;
+const sample = () =&gt; {
+  if (performance.memory) {
+    peak = Math.max(peak, performance.memory.usedJSHeapSize);
+  }
+};
+setInterval(sample, 250);
 
-model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2-int8-dynamic', device='cpu')
-tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-mpnet-base-v2-int8-dynamic')
-
-# Strip the tokenizer’s JSON blob to essentials
-tokenizer.save_pretrained(&quot;./model/tokenizer&quot;, save_format=&quot;json&quot;, max_size=32768)
+self.addEventListener('beforeunload', () =&gt; {
+  navigator.sendBeacon('/telemetry/worker-exit', JSON.stringify({ peak }));
+});
 </code></pre>
-<p>Step 4: Swap API Gateway for a lightweight proxy on AWS Lambda with ARM64 and snapStart enabled.</p>
+<p>If <code>peak</code> approaches the device's per-tab limit before the model finishes loading, the model will not run reliably regardless of how accurate it is.</p>
+<h2 id="a-worked-example-shrinking-the-network-hop">A worked example: shrinking the network hop</h2>
+<p>The following walkthrough uses illustrative numbers to show the reasoning. Substitute your own measurements.</p>
+<p><strong>Scenario.</strong> A fintech app serves an AI chat for loan eligibility. The backend runs a sentence-embedding model behind a managed API gateway. The frontend is a React PWA served from a CDN edge in a distant region.</p>
+<p><strong>Step 1 — Baseline.</strong> Measure cold-start latency from a phone on the target carrier using the curl command above. Suppose it returns 1.42 s total, of which 0.41 s is TLS, 0.69 s is gateway cold start, 0.16 s is model inference, and the response is 487 kB.</p>
+<p><strong>Step 2 — Translate to user cost.</strong> 487 kB is 0.000476 GB. At $1.80/GB that is about $0.00086 per request. That is the number to reduce, and the two levers are response size and cold start.</p>
+<p><strong>Step 3 — Compress the response.</strong> Most JSON embedding responses compress extremely well because they are arrays of similar floats. Enable gzip or Brotli at the proxy and confirm with <code>Accept-Encoding</code>:</p>
+<pre><code class="language-bash">curl -s -H &quot;Accept-Encoding: br,gzip&quot; -o /dev/null \
+  -w &quot;encoded size: %{size_download}\n&quot; https://api.example.com/embed
+</code></pre>
+<p>Compare that against the same request without the header. If the ratio is poor, the payload is probably already compressed or is dominated by high-entropy data such as base64-encoded binary.</p>
+<p><strong>Step 4 — Cut cold start.</strong> Move the handler to a runtime with snapshot-based startup and an ARM64 architecture, and keep the model warm with provisioned concurrency for your busiest regions. A minimal configuration looks like this:</p>
 <pre><code class="language-yaml"># serverless.yml
 functions:
   embed:
@@ -333,35 +333,35 @@ functions:
         - 'model/**'
         - '!node_modules/**'
 </code></pre>
-<p>Step 5: Re-measure from the same Nairobi user.</p>
-<pre><code class="language-bash">Total: 0.487s
-DNS: 0.008s
-TCP: 0.031s
-TLS handshake: 0.212s
-Lambda warm start: 0.089s
-Model inference: 0.103s
-Response size: 156 kB
-</code></pre>
-<p>Cost per request drops from $0.000877 to $0.000281, and latency drops from 1.423 s to 0.487 s. That moves the chat’s first meaningful paint from 2.6 s to 1.1 s, which is below the 2.5 s threshold where users start dropping off.</p>
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve tuned a Django REST API for high traffic, you already know connection pooling and gzip. The same knobs apply, but the cost of a missed optimization is 10× higher in mobile-first markets because every extra KB costs real money and every extra ms loses real users.</p>
+<p><strong>Step 5 — Re-measure.</strong> Run the same curl from the same network. If the total drops to roughly 0.49 s and the encoded response to roughly 156 kB, the per-request data cost falls to about $0.00027 and the first meaningful paint moves from around 2.6 s to around 1.1 s — below the point at which users commonly abandon a flow.</p>
+<p>The exact figures will differ. The method does not: measure, change one variable, re-measure from the same network.</p>
+<h2 id="familiar-concepts-higher-stakes">Familiar concepts, higher stakes</h2>
+<p>If you have ever tuned a REST API for high traffic, you already know connection pooling and compression. The same knobs apply here, but a missed optimization costs more because every extra kilobyte is billed and every extra millisecond is felt.</p>
 <ul>
-<li>Gzip compression: A 500 kB JSON blob compresses to ~160 kB (68% savings). - HTTP/2 and multiplexing: One TLS handshake serves all requests, saving ~200 ms on each new connection. - Lambda snapStart: Cuts cold starts from ~600 ms to ~100 ms on ARM64.</li>
+<li><strong>Compression.</strong> JSON responses compress heavily because of repeated keys and float formatting. Enable it at the proxy, not in application code, and verify the ratio with curl.</li>
+<li><strong>Connection reuse.</strong> HTTP/2 and keep-alive let one TLS handshake serve many requests. On high-latency links the handshake is often the single largest fixed cost per new connection.</li>
+<li><strong>Snapshot startup.</strong> Snapshot-based cold starts cut the initialization phase of a function. The benefit is largest for runtimes that load heavy libraries at import time.</li>
+<li><strong>Caching.</strong> In desktop-first apps you cache responses in a shared store to cut backend load. In mobile-first apps you cache on the device so the user does not pay for the same bytes twice. A server-side cache still serves the first request; the second request should never leave the phone.</li>
 </ul>
-<p>The difference is that in a desktop-first world, gzip alone is a nice-to-have; in mobile-first, it’s the difference between a user staying on the flow and churning.</p>
-<p>Another familiar concept is caching. In desktop-first apps, you cache responses in Redis to cut backend load. In mobile-first apps, you cache responses in IndexedDB on the device so the user doesn’t pay for data twice. The same Redis instance can still serve the first request, but the second request should never leave the phone.</p>
-<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p>Misconception 1: On-device models are always better.</p>
-<p>Reality: Shipping a 2 GB model via an OTA update costs users $3.60 on a 2 GB bundle and may brick low-end phones. Most users will never download it, and the ones who do will uninstall it after one failed inference attempt. A better pattern is progressive downloading: start with a 128 MB distilled model, then download the full model only when the user explicitly opts in to better accuracy.</p>
-<p>Misconception 2: Quantization is enough.</p>
-<p>Reality: Quantizing a 420 MB model to int8 cuts size to 134 MB, but the tokenizer’s vocabulary file can still be 32 MB. If you don’t compress the tokenizer, the payload is still large, and the user still pays. Use tokenizers with <code>save_pretrained(..., save_format="json", max_size=32768)</code> to split the tokenizer into chunks no larger than 32 k tokens.</p>
-<p>Misconception 3: Edge caching solves everything.</p>
-<p>Reality: Edge caching (CloudFront, Fastly) helps repeat users in the same city, but it doesn’t help first-time users or users roaming between networks. For those users, the cold start is still the bottleneck. Lambda@Edge with snapStart helps, but it’s not a silver bullet.</p>
-<p>Misconception 4: Users will wait for better AI.</p>
-<p>Reality: In a 2026 survey of 1,200 mobile-first users across Kenya, Nigeria, and Ghana, 62% abandoned flows when the first screen took longer than 2.5 s, regardless of the AI’s quality. Only 14% said they would wait for a better model if the flow was slow.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once you’ve cut payloads and warmed your cloud functions, the next bottleneck is the device itself. Here are three advanced patterns that teams in East Africa use to go from “works on my phone” to “works on 90% of phones in the market.”</p>
-<p>Pattern 1: Progressive model loading with fallback</p>
+<p>The difference is one of degree. In a desktop-first world, compression is a nice-to-have. In a mobile-first world, it is the difference between a user completing the flow and churning.</p>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>Failure mode 1: shipping a large model over the air.</strong> A multi-gigabyte model download is charged to the user and will not complete on many handsets. Most users will never finish it, and those who do may uninstall after the first failed inference. A better pattern is progressive loading: start with a small distilled model and offer the larger one only when the user explicitly opts in to better accuracy.</p>
+<p><strong>Failure mode 2: quantizing the model but not the tokenizer.</strong> Quantization shrinks the weights, but the tokenizer vocabulary can still be tens of megabytes. If the vocabulary is fetched separately, the user pays for it on every cold start. Ship the tokenizer with the app when the size budget allows, and prune the vocabulary to the languages you actually serve.</p>
+<p><strong>Failure mode 3: assuming edge caching solves cold start.</strong> Edge caching helps repeat users in the same city. It does not help first-time users or users roaming between networks. For those users the cold start is still the bottleneck.</p>
+<p><strong>Failure mode 4: assuming users will wait for better AI.</strong> Users abandon flows based on perceived responsiveness, not on model quality. A slow but accurate model loses to a fast, adequate one. Treat time-to-first-useful-output as a product requirement, not an optimization.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before shipping an AI feature to a mobile-first audience, answer these in writing:</p>
+<ol>
+<li>What is the measured round-trip latency from the target carrier, not from your office?</li>
+<li>What is the encoded response size, and what does that cost per request at the local data rate?</li>
+<li>Does the flow render something useful before the model responds?</li>
+<li>What is the peak memory of the on-device path, and what is the smallest device you support?</li>
+<li>What happens when the model fails to load — is there a fallback that still works?</li>
+<li>Which responses are cached on the device, and for how long?</li>
+<li>How will you detect a regression in latency or payload size after launch?</li>
+</ol>
+<h2 id="implementation-patterns">Implementation patterns</h2>
+<p><strong>Progressive model loading with fallback.</strong> Load the smallest model first and only escalate when the user asks for it. Always keep a fallback path.</p>
 <pre><code class="language-javascript">// src/workers/model.worker.js
 const MODEL_URLS = [
   { url: '/models/distilled-int8.onnx', size: '128 MB', accuracy: 0.82 },
@@ -377,14 +377,13 @@ async function loadModel(stage = 0) {
     currentModel = model;
     return model;
   } catch (e) {
-    // Fallback to distilled model if full model fails
+    // Fall back to the distilled model if the larger one fails to load.
     if (stage === 1) return loadModel(0);
     throw e;
   }
 }
 </code></pre>
-<p>Pattern 2: Adaptive concurrency with Lambda destination throttling</p>
-<p>In markets where Safaricom and Airtel have asymmetric capacity, you can’t treat all regions the same. Use AWS Lambda destination throttling to cap concurrency in regions where capacity is scarce.</p>
+<p><strong>Capping concurrency in constrained regions.</strong> Where capacity is scarce, cap concurrency rather than letting the queue grow unbounded, and route failures to a queue you can inspect.</p>
 <pre><code class="language-yaml"># serverless.yml
 functions:
   embed:
@@ -400,11 +399,10 @@ functions:
       onSuccess:
         type: sqs
         arn: !GetAtt SuccessQueue.Arn
-    reservedConcurrency: 500  # Cap in low-capacity regions
-    provisionedConcurrency: 100  # Warm instances for top regions
+    reservedConcurrency: 500
+    provisionedConcurrency: 100
 </code></pre>
-<p>Pattern 3: Client-side pre-fetch with service worker</p>
-<p>Service workers can pre-fetch the most likely model chunks during idle CPU time, so the user doesn’t wait for the download when they actually need the model.</p>
+<p><strong>Pre-fetching model chunks with a service worker.</strong> A service worker can cache model files during idle time so the user does not wait for the download at inference time.</p>
 <pre><code class="language-javascript">// src/sw.js
 self.addEventListener('install', (event) =&gt; {
   event.waitUntil(
@@ -427,88 +425,61 @@ self.addEventListener('fetch', (event) =&gt; {
   }
 });
 </code></pre>
-<p>Use telemetry to decide which chunks to cache. If you see 80% of users asking for Swahili prompts, cache the Swahili tokenizer first.</p>
-<h2 id="quick-reference">Quick reference</h2>
+<p>Decide which chunks to cache from your own telemetry. If most requests are in one language, cache that tokenizer first.</p>
+<h2 id="comparison-where-to-spend-your-effort">Comparison: where to spend your effort</h2>
 <table>
 <thead>
 <tr>
 <th>Bottleneck</th>
-<th>Typical mobile-first symptom</th>
-<th>Tool/Library</th>
-<th>Fix</th>
-<th>Cost saving</th>
-<th>Latency delta</th>
+<th>Symptom to look for</th>
+<th>Typical fix</th>
+<th>How to verify</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Cold start API</td>
-<td>1.4 s latency, 487 kB payload</td>
-<td>Lambda snapStart + ARM64</td>
-<td>0.487 s, 156 kB</td>
-<td>$0.60/1k reqs</td>
-<td>–930 ms</td>
+<td>Cold start</td>
+<td>Long first request, fast subsequent ones</td>
+<td>Snapshot startup, ARM64, provisioned concurrency</td>
+<td>Compare <code>time_starttransfer</code> on a cold vs warm call</td>
 </tr>
 <tr>
-<td>Tokenizer size</td>
-<td>32 MB JSON blob</td>
-<td>Tokenizers 0.15 with max_size=32768</td>
-<td>8 MB</td>
-<td>$0.14/1k reqs</td>
-<td>–0 ms (network)</td>
+<td>Payload size</td>
+<td>Large encoded response, high per-request data cost</td>
+<td>Brotli/gzip at the proxy, smaller embedding dimensions</td>
+<td>Compare <code>size_download</code> with and without <code>Accept-Encoding</code></td>
 </tr>
 <tr>
-<td>Uncompressed JSON</td>
-<td>500 kB → 160 kB after gzip</td>
-<td>Django REST + gzip middleware</td>
-<td>68% size</td>
-<td>$1.22/GB</td>
-<td>–0 ms (compression CPU)</td>
+<td>TLS setup</td>
+<td>High <code>time_appconnect</code> on every new connection</td>
+<td>HTTP/2, keep-alive, connection reuse</td>
+<td>Diff <code>time_appconnect</code> and <code>time_connect</code> across calls</td>
 </tr>
 <tr>
-<td>Connection pool</td>
-<td>200 ms TLS handshake</td>
-<td>HTTP/2 + keep-alive</td>
-<td>60 ms</td>
-<td>$0.08/1k reqs</td>
-<td>–140 ms</td>
+<td>Tokenizer fetch</td>
+<td>Extra request before first inference</td>
+<td>Ship tokenizer in the app, prune vocabulary</td>
+<td>Count requests before first token is produced</td>
 </tr>
 <tr>
-<td>On-device model</td>
-<td>2 GB OTA, bricked phones</td>
-<td>Progressive loading with fallback</td>
-<td>128 MB default</td>
-<td>$3.60/user avoided</td>
-<td>–2.5 s FMP</td>
+<td>Device memory</td>
+<td>Worker terminated mid-inference</td>
+<td>Smaller model, progressive loading, fallback</td>
+<td>Log peak <code>usedJSHeapSize</code> per worker</td>
 </tr>
 </tbody>
 </table>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does my PWA still feel slow even after gzip and Lambda snapStart?</strong></p>
-<p>The remaining latency is usually the device’s JavaScript engine and the browser’s garbage collection. On low-end Android Go devices, the V8 engine can take 300–400 ms to parse a 156 kB response, and the garbage collector can pause for another 200 ms. Use lightweight frameworks like Preact or Svelte, and avoid large React component trees. Measure with Lighthouse’s “Total Blocking Time” metric; anything over 300 ms on a low-end device is a red flag.</p>
-<p><strong>What’s the smallest model size that still gives useful accuracy for Swahili?</strong></p>
-<p>A distilled version of <code>sentence-transformers/all-mpnet-base-v2</code> quantized to int8 with a 32 k token vocabulary still hits 0.82 cosine similarity on the STSB Swahili benchmark while weighing 128 MB. Anything smaller (64 MB or 32 MB) drops to 0.71, which users notice in side-by-side comparisons. The 0.82 model is the smallest practical choice for most fintech use cases in East Africa.</p>
-<p><strong>How do I detect when a user is on a high-latency network?</strong></p>
-<p>Use the browser’s <code>navigator.connection</code> API (effectiveConnectionType) and <code>navigator.onLine</code>. If <code>effectiveConnectionType</code> is "2g" or "slow-2g" and <code>navigator.onLine</code> is true, switch to the distilled model and disable non-critical features. In 2026, 14% of Kenyan users still fall into this bucket on Equitel’s legacy network.</p>
-<p><strong>Should I ship the tokenizer with the app or fetch it on demand?</strong></p>
-<p>Ship the tokenizer with the app if the app size budget allows (under 50 MB). Fetch it on demand if the user’s device storage is tight or if you’re targeting users with 1 GB RAM handsets. In a Nairobi field test, shipping the tokenizer cut first inference time from 1.2 s to 0.3 s for repeat users, but increased install size by 8 MB.</p>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://onnxruntime.ai/docs/execution-providers/WebAssembly-EP.html">WebAssembly for AI: ONNX Runtime 1.18 and the WASM backend</a> – Benchmarks show 2× faster inference on low-end devices when you compile to WASM instead of running Python in the browser. - <a href="https://aws.amazon.com/blogs/compute/introducing-lambda-snapstart-for-python/">AWS Lambda SnapStart for Python 3.12</a> – The original announcement with cold start numbers and ARM64 deltas. - <a href="https://sbert.net/docs/hub/sentence_transformers/quantization.html">Sentence Transformers quantization guide (v3.0)</a> – Covers int8 and int4, tokenizer pruning, and vocabulary chunking. - <a href="https://developer.android.com/guide/practices/android-go">Google’s Android Go performance checklist</a> – Lists the exact CPU, RAM, and storage constraints for low-end devices sold in Kenya in 2026. - <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-hit-ratio.html">CloudFront cache hit ratio tuning</a> – Explains how to set TTLs for API responses to avoid stale data in mobile networks with spotty connectivity. - <a href="https://onnxruntime.ai/docs/execution-providers/WebGPU-EP.html">ONNX Runtime Web GPU backend</a> – If you’re targeting high-end Android devices with WebGPU support, this backend gives 3× speedup over CPU for small models (&lt; 256 MB).</li>
-</ul>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
-<li><a href="https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/">Latency trade-offs: Nairobi teams beat global AI providers</a></li>
-<li><a href="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">Why progressive web apps fail on 2G and how to fix…</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does the PWA still feel slow after compression and snapshot startup?</strong>
+The remaining latency is often on the device: JavaScript parse time and garbage collection. On low-end Android devices, parsing a large response can take hundreds of milliseconds and the collector can pause for more. Measure Total Blocking Time in Lighthouse on a throttled profile; a value above roughly 300 ms on a low-end device is worth investigating. Lighter component trees and smaller bundles help more than server-side changes at this point.</p>
+<p><strong>Should the tokenizer ship with the app or be fetched on demand?</strong>
+Ship it with the app when your install-size budget allows, because it removes a round trip before the first inference. Fetch it on demand only when storage is genuinely tight. Either way, prune the vocabulary to the languages you serve; a full multilingual vocabulary is mostly dead weight for a single-language product.</p>
+<p><strong>How do I detect a high-latency network at runtime?</strong>
+Use <code>navigator.connection.effectiveConnectionType</code> together with <code>navigator.onLine</code>. When the effective type is <code>2g</code> or <code>slow-2g</code>, switch to the smallest model and disable non-critical features. Treat this as a hint, not a guarantee: the API is not implemented uniformly across browsers, so always keep a server-side timeout as the real safety net.</p>
+<p><strong>How small can a model be before quality suffers?</strong>
+There is no universal answer. Build a small evaluation set from real user prompts, then measure quality and latency at each candidate size. Pick the smallest model that clears your quality bar on that set. Comparing sizes on a public benchmark that does not match your language or domain will mislead you.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one production AI endpoint and run the curl timing command from a tethered phone on your primary carrier. Record <code>time_appconnect</code>, <code>time_starttransfer</code>, and <code>size_download</code>, then compute the per-request data cost from your local price per gigabyte. That single measurement tells you whether your bottleneck is the network, the cold start, or the device — and which of the fixes above is worth your next sprint.</p>
                 
                 
             </div>
@@ -537,7 +508,7 @@ self.addEventListener('fetch', (event) =&gt; {
                     
                     <a class="related-card" href="/self-service-is-broken-without-ai-ops/">
                         <h3>Self-service is broken without AI ops</h3>
-                        <p>How AI turned &amp;#x27;self-service&amp;#x27; from a permissions problem into a guardrail system — with concrete AWS examples, Terraform snippets, and the metrics that…</p>
+                        <p>Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
                         <span class="related-meta">12 min read · 24 August 2026</span>
                     </a>
                     

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI interviews break systems: 5 real mistakes in 2026 - Kubai Kevin</title>
-        <meta name="description" content="The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…">
+        <meta name="description" content="AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.">
         <meta name="keywords" content="Ai, Systemdesign, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T00:04:24.296647">
-        <meta property="article:modified_time" content="2026-09-20T09:47:16.601806+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:52:13.326464+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI interviews break systems: 5 real mistakes in 2026">
-        <meta property="og:description" content="The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…">
+        <meta property="og:description" content="AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.">
         <meta property="og:url" content="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI interviews break systems: 5 real mistakes in 2026">
-        <meta name="twitter:description" content="The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…">
+        <meta name="twitter:description" content="AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-interviews-break-systems-5-real-mistakes-in-2026.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/#article",
       "headline": "AI interviews break systems: 5 real mistakes in 2026",
-      "description": "The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…",
+      "description": "AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.",
       "datePublished": "2026-06-20T00:04:24+00:00",
-      "dateModified": "2026-09-20T09:47:16+00:00",
-      "wordCount": 3519,
-      "timeRequired": "PT18M",
+      "dateModified": "2026-10-04T10:52:13+00:00",
+      "wordCount": 2712,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI interviews break systems: 5 real mistakes in 2026</h1>
                 
-                <p class="post-lead">The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…</p>
+                <p class="post-lead">AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.</p>
                 
                 
                 <div class="tags">
@@ -247,42 +247,34 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3519 words
+                        14 min read
+                        &nbsp;·&nbsp; 2712 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>In 2026, teams that used to hire backend engineers every quarter started getting candidate systems that simply don’t run. Not because the code is wrong, but because the AI assistant that generated it made assumptions that don’t match the target environment. The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact error in GitHub Actions:</p>
+                <p>AI coding assistants produce code that is internally consistent but implicitly assumes an environment: a Linux runner, a Docker daemon at <code>/var/run/docker.sock</code>, root-equivalent privileges, and a recent toolchain. When that code lands in a real pipeline, the build fails with an error that names a symptom, not a cause. This article walks through five recurring failure modes, what each error actually means, and how to make a repository survive a heterogeneous set of runners.</p>
+<h2 id="the-error-and-why-it-misleads">The error and why it misleads</h2>
+<p>A representative symptom looks like this:</p>
 <pre><code>Error: exec: &quot;docker&quot;: executable file not found in $PATH
 Command failed: docker build --platform linux/amd64 -t myapp:latest .
 </code></pre>
-<p>That message tells you nothing about the root cause. Docker isn’t installed on the runner? Wrong runner image? Missing Docker Desktop on a Mac runner? In 2026, this error masks a deeper mismatch: the AI assistant assumed a Linux AMD64 runner with Docker preinstalled, but the team actually uses GitHub-hosted macOS runners with Colima instead of Docker Desktop.</p>
-<p>This post is what I wished I had found then.</p>
-<p>The real problem isn’t Docker missing—it’s environment drift between local, CI, and prod. AI assistants optimize for the happy path: Ubuntu 22.04, Docker 25.0, and arm64. Real teams run heterogeneous runners, legacy kernels, and custom socket paths. The error message is a red herring; the failure is in the gap between the assistant’s assumptions and the team’s reality.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The root cause is a mismatch in three layers: runtime assumptions, environment variables, and privileged access. AI assistants in 2026 generate code that assumes a standard Linux container runtime with root privileges and a predictable filesystem layout. But teams in 2026 run a mix of environments:</p>
-<ul>
-<li>GitHub-hosted runners (Ubuntu 24.04, Docker 25.0, 2 vCPUs, 7 GB RAM)</li>
-<li>Self-hosted runners (Ubuntu 22.04, Podman 5.0, cgroups v2, custom socket path)</li>
-<li>Local development (macOS with Colima, Docker Desktop, or Orbstack)</li>
-<li>On-prem Kubernetes clusters (Kubernetes 1.29, containerd 1.7, SELinux enforced)</li>
-</ul>
-<p>The error <code>exec: "docker": executable file not found in $PATH</code> is just the tip. The real issue is that the assistant’s Dockerfile and CI workflow assume a Docker socket at <code>/var/run/docker.sock</code>, but in 2026 many teams use Podman with <code>podman.socket</code> at <code>/run/user/1001/podman/podman.sock</code> or Colima with a custom socket path. Even worse, some teams disable Docker entirely in CI to use Kubernetes-in-Docker (KinD) or buildah.</p>
-<p>Another hidden cause is the <code>DOCKER_HOST</code> environment variable. If the runner sets <code>DOCKER_HOST=unix:///run/podman/podman.sock</code>, but the Dockerfile assumes <code>docker build</code>, the command fails silently because the shell can’t find <code>docker</code> in <code>$PATH</code> even though a container runtime exists.</p>
-<p>One candidate’s system worked locally but failed in CI because their Dockerfile used <code>USER node</code> and the CI runner ran as root—causing permission errors on <code>/var/run/docker.sock</code>. The assistant never considered that the team’s CI runner runs as a non-root user.</p>
-<p>The final layer is tool version drift. Docker 25.0 changed default build behavior in 2026, and many teams pinned to Docker 24.0 or Podman 4.9. AI assistants default to the latest version, which can break builds when the team’s runner lags behind.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p>The most common cause is assuming Docker is installed and available at <code>/var/run/docker.sock</code>. The fix is to remove Docker-specific assumptions from the CI workflow and runtime. Use a container runtime-agnostic approach:</p>
-<ol>
-<li>Replace <code>docker build</code> with <code>docker buildx build</code> or <code>podman build</code> in the workflow. 2. Use <code>container</code> in GitHub Actions instead of <code>docker</code>:</li>
-</ol>
+<p>The message points at a missing binary. The actual problem is usually a mismatch between the assumptions baked into the generated workflow and the environment the workflow runs in. <code>docker</code> may be absent, or it may be present but pointed elsewhere by <code>DOCKER_HOST</code>, or the runner may use Podman, buildah, or Kaniko and expose no Docker CLI at all. The error is a red herring; the failure is the gap between assumed and actual environment.</p>
+<p>A typical failure mode is a developer who validates locally on macOS with Docker Desktop, where the daemon runs as root and the socket sits at a well-known path, then pushes to a Linux CI runner that behaves differently. The build "works on my machine" and fails in CI, and the error text gives no hint about which assumption broke.</p>
+<h2 id="the-three-layers-that-actually-diverge">The three layers that actually diverge</h2>
+<p>Environment drift between local, CI, and production shows up in three layers.</p>
+<p><strong>Runtime assumptions.</strong> The generated code expects a container runtime with a predictable binary name, socket path, and default build behavior. Real fleets mix GitHub-hosted runners, self-hosted runners, macOS laptops, and on-prem clusters.</p>
+<p><strong>Environment variables.</strong> <code>DOCKER_HOST</code>, <code>DOCKER_CERT_PATH</code>, and <code>DOCKER_TLS_VERIFY</code> are frequently set on developer machines and absent or differently set in CI. Conversely, a CI runner may set <code>DOCKER_HOST</code> to a Podman socket while the workflow still invokes <code>docker</code> directly.</p>
+<p><strong>Privileged access.</strong> Generated Dockerfiles and workflows often assume volume mounts, <code>--device</code> flags, or <code>--privileged</code> are available. Many CI runners disable privileged mode for security, and SELinux or AppArmor in enforcing mode blocks mounts that succeed elsewhere.</p>
+<p>Tool version drift is a fourth, quieter layer: a workflow written against a recent buildx or Compose v2 will fail on a runner pinned to an older release, and the error rarely names the version mismatch.</p>
+<h2 id="failure-mode-1-assuming-a-docker-binary-and-socket">Failure mode 1: assuming a Docker binary and socket</h2>
+<p>This is the most common cause. The workflow calls <code>docker build</code>, but the runner has no <code>docker</code> binary, or has one that cannot reach a daemon.</p>
+<p>The fix is to stop assuming the host provides a runtime. Two patterns work.</p>
+<p>First, run the job inside a container image that ships the CLI:</p>
 <pre><code class="language-yaml">jobs:
   build:
     runs-on: ubuntu-24.04
@@ -292,107 +284,102 @@ Command failed: docker build --platform linux/amd64 -t myapp:latest .
       - uses: actions/checkout@v4
       - run: docker buildx build --platform linux/amd64 -t myapp:latest .
 </code></pre>
-<p>This forces the workflow to pull a Docker CLI image, ensuring <code>docker</code> is available regardless of the runner’s setup.</p>
-<ol>
-<li>Replace <code>docker run</code> with a shell script that checks for <code>docker</code> or <code>podman</code>:</li>
-</ol>
+<p>Second, make scripts runtime-agnostic so the same code path works under Docker or Podman:</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 
 RUNTIME=${DOCKER_RUNTIME:-docker}
 
-if ! command -v $RUNTIME &gt;/dev/null 2&gt;&amp;1; then
-  echo &quot;Falling back to podman&quot;
-  RUNTIME=&quot;podman&quot;
+if ! command -v &quot;$RUNTIME&quot; &gt;/dev/null 2&gt;&amp;1; then
+  if command -v podman &gt;/dev/null 2&gt;&amp;1; then
+    echo &quot;docker not found; falling back to podman&quot; &gt;&amp;2
+    RUNTIME=&quot;podman&quot;
+  else
+    echo &quot;ERROR: neither docker nor podman found in PATH&quot; &gt;&amp;2
+    exit 1
+  fi
 fi
 
-$RUNTIME run --rm -it myapp:latest
+&quot;$RUNTIME&quot; run --rm myapp:latest
 </code></pre>
-<p>The key insight: don’t assume a runtime exists. Use a container runtime image in CI to guarantee availability, and make your scripts runtime-agnostic in prod.</p>
-<p>The build succeeded locally because Docker Desktop runs as root, but failed in CI because the runner’s user couldn’t access <code>/var/run/docker.sock</code>. The fix was to add <code>USER node</code> to the Dockerfile and ensure the CI runner runs as a non-root user with access to the socket.</p>
-<p>Another common oversight: the candidate’s system used <code>docker-compose</code> v2, but the team’s CI used Compose v1. In 2026, Compose v1 is deprecated, but many teams still rely on it. The fix is to pin Compose version explicitly:</p>
+<p>Note the quoting on <code>"$RUNTIME"</code> and the explicit failure path. A script that silently proceeds when no runtime exists converts a clear error into a confusing one later.</p>
+<p>Version pinning matters for the same reason. Installing a pinned Compose release avoids silent breakage when the runner's default changes:</p>
 <pre><code class="language-yaml">- name: Install Docker Compose
   run: |
     curl -SL https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
 </code></pre>
-<p>Version pinning prevents silent breaks when the assistant generates code for the latest tool, but the team uses an older version.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p>The less obvious cause is environment variable leakage. AI assistants often generate workflows that rely on <code>DOCKER_HOST</code>, <code>DOCKER_CERT_PATH</code>, or <code>DOCKER_TLS_VERIFY</code>, but these variables are not set in the CI environment. The symptom is that <code>docker build</code> works locally but fails in CI with:</p>
+<p>Substitute whatever version the project actually validates against; the point is that the version is explicit and reviewable.</p>
+<h2 id="failure-mode-2-environment-variable-leakage-and-privilege">Failure mode 2: environment variable leakage and privilege</h2>
+<p>The second cause is environment variables that exist locally and not in CI, or vice versa. A workflow that assumes a TCP-exposed daemon fails with:</p>
 <pre><code>Cannot connect to the Docker daemon at tcp://localhost:2375. Is the docker daemon running?
 </code></pre>
-<p>The root cause is that the assistant assumed a local Docker daemon with TCP exposed, but the CI runner uses Unix sockets or a different protocol. In 2026, most teams disable TCP sockets for security, but AI assistants still generate workflows with <code>DOCKER_HOST=tcp://localhost:2375</code>.</p>
-<p>The fix is to remove <code>DOCKER_HOST</code> from the workflow and rely on the container runtime image in CI. If you must use <code>DOCKER_HOST</code>, set it explicitly in the workflow:</p>
+<p>The generated workflow set <code>DOCKER_HOST=tcp://localhost:2375</code>, but the runner uses a Unix socket, or no socket at all. Most teams disable TCP daemon exposure for security, so this assumption is both fragile and a bad default.</p>
+<p>The durable fix is to remove <code>DOCKER_HOST</code> from the workflow and rely on a container image that provides the runtime. If an explicit socket is unavoidable, set it deliberately:</p>
 <pre><code class="language-yaml">env:
-  DOCKER_HOST: unix:///run/podman/podman.sock
+  DOCKER_HOST: unix:///run/user/1001/podman/podman.sock
 steps:
   - run: docker build -t myapp:latest .
 </code></pre>
-<p>But this is fragile. A better approach is to use the GitHub Actions <code>container</code> feature or a prebuilt image with the runtime baked in.</p>
-<p>Another hidden issue is privileged access. In 2026, many teams run CI runners with <code>--privileged</code> disabled for security. But Docker requires privileged mode to mount volumes or use <code>--device</code> flags. The symptom is that <code>docker run --privileged</code> fails in CI with:</p>
+<p>Privileged access is the sibling problem. A workflow that runs <code>docker run --privileged</code> fails on runners that disallow it:</p>
 <pre><code>docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock.
 </code></pre>
-<p>The fix is to avoid privileged mode in CI. Use user namespaces or <code>--userns=keep-id</code> instead:</p>
+<p>Prefer user namespaces over privileged mode where the workload permits:</p>
 <pre><code class="language-yaml">- run: docker run --rm --userns=keep-id myapp:latest
 </code></pre>
-<p>The build failed because the runner didn’t allow privileged mode. The fix was to switch to <code>--gpus all</code> with NVIDIA Container Toolkit, which doesn’t require privileged mode:</p>
+<p>For GPU workloads, the NVIDIA Container Toolkit provides <code>--gpus</code> without requiring full privileged mode:</p>
 <pre><code class="language-yaml">- run: docker run --rm --gpus all myapp:latest
 </code></pre>
-<p>The final less obvious cause is architecture mismatch. AI assistants assume <code>linux/amd64</code>, but teams use arm64 runners for cost savings. The symptom is that the build works locally on amd64 but fails in CI on arm64 with:</p>
+<p>Architecture mismatch belongs in this layer too. A build that succeeds on <code>amd64</code> can fail on <code>arm64</code> when a base image or a compiled dependency has no arm64 variant:</p>
 <pre><code>ERROR: failed to solve: process &quot;/bin/sh -c apk add --no-cache build-base&quot; did not complete successfully: exit 1
 </code></pre>
-<p>The fix is to use multi-arch builds or explicitly set the platform:</p>
+<p>Build for both explicitly, or pin the platform the runner actually provides:</p>
 <pre><code class="language-yaml">- run: docker buildx build --platform linux/amd64,linux/arm64 -t myapp:latest --push .
 </code></pre>
-<p>Or, if the image must be single-arch, set the platform explicitly:</p>
 <pre><code class="language-yaml">- run: docker build --platform linux/amd64 -t myapp:latest .
 </code></pre>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>The environment-specific cause is Kubernetes-in-Docker (KinD) or buildah usage. Teams that use KinD or buildah in CI don’t have a Docker daemon running. The symptom is that <code>docker build</code> fails in CI with:</p>
-<pre><code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
-</code></pre>
-<p>But the real issue is that the CI runner uses KinD or buildah, which don’t expose a Docker socket. The fix is to replace Docker commands with buildah or KinD-specific commands:</p>
+<h2 id="failure-mode-3-alternative-runtimes-and-mandatory-access-control">Failure mode 3: alternative runtimes and mandatory access control</h2>
+<p>Teams that build with buildah, Kaniko, or KinD have no Docker daemon. A <code>docker build</code> step fails with the socket error above even though a working build path exists.</p>
 <p>For buildah:</p>
 <pre><code class="language-yaml">- name: Build with buildah
   run: |
     buildah bud --platform linux/amd64 -t myapp:latest .
     buildah push myapp:latest oci:myapp:latest
 </code></pre>
-<p>For KinD:</p>
+<p>For KinD, build first, then load the image into the cluster:</p>
 <pre><code class="language-yaml">- name: Create KinD cluster
   run: |
     kind create cluster --name myapp-ci
     kind load docker-image myapp:latest
 </code></pre>
-<p>Another environment-specific issue is SELinux or AppArmor enforcement. In 2026, many teams run SELinux in enforcing mode, which blocks Docker from mounting volumes or running containers. The symptom is that <code>docker run</code> fails with:</p>
+<p>SELinux in enforcing mode produces a distinct class of failure when a container mounts a host path:</p>
 <pre><code>Error response from daemon: error while creating mount source path '/var/lib/docker/volumes/myapp/_data': mkdir /var/lib/docker/volumes/myapp/_data: permission denied
 </code></pre>
-<p>The fix is to set SELinux labels explicitly:</p>
+<p>The correct fix depends on who controls the path. If the image owns the directory, label it at build time:</p>
 <pre><code class="language-dockerfile">VOLUME [&quot;/data&quot;]
-RUN chcon -Rt svirt_sandbox_file_t /data
+RUN chcon -Rt container_file_t /data
 </code></pre>
-<p>Or, if you can’t modify the image, run the container with <code>--security-opt label=disable</code>:</p>
+<p>If the image cannot be modified, relax the label for that container only:</p>
 <pre><code class="language-yaml">- run: docker run --rm --security-opt label=disable myapp:latest
 </code></pre>
-<p>The build failed because the volume path wasn’t labeled correctly. The fix was to add <code>chcon</code> to the Dockerfile and ensure the CI runner runs with <code>securityContext.privileged: false</code> and <code>securityContext.seLinuxOptions.level: "s0"</code>.</p>
-<p>Another environment-specific issue is custom socket paths in Colima or Podman. The symptom is that <code>docker build</code> fails in CI with:</p>
+<p><code>--security-opt label=disable</code> removes a security boundary. Treat it as a diagnostic step and a temporary measure, not a default.</p>
+<p>Custom socket paths from Colima or Podman produce a variant of the same error:</p>
 <pre><code>Cannot connect to the Docker daemon at unix:///Users/runner/.colima/docker.sock. Is the docker daemon running?
 </code></pre>
-<p>The fix is to set <code>DOCKER_HOST</code> explicitly in the workflow:</p>
-<pre><code class="language-yaml">env:
-  DOCKER_HOST: unix:///run/user/1001/podman/podman.sock
-</code></pre>
-<p>Or, better, use a container runtime image in CI:</p>
-<pre><code class="language-yaml">container:
-  image: ghcr.io/colima/colima:0.6.4
-</code></pre>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>To verify the fix, run the CI workflow three times:
-1. On the candidate’s runner (if available)
-2. On GitHub-hosted runners (ubuntu-24.04, macos-14)
-3. On a self-hosted runner (Ubuntu 22.04 with Podman 5.0)</p>
-<p>The build should succeed on all three without changes to the repository.</p>
-<p>Add a <code>test</code> job that runs the container and checks for expected behavior:</p>
+<p>Setting <code>DOCKER_HOST</code> to the correct path works, but a container image with the runtime baked in is less fragile because it does not depend on the host's socket layout at all.</p>
+<h2 id="worked-example-diagnosing-a-permission-failure">Worked example: diagnosing a permission failure</h2>
+<p>Consider a build that succeeds on a developer's laptop and fails in CI with <code>permission denied</code> on the Docker socket. Reasoning through it step by step:</p>
+<ol>
+<li>The error names the socket, so the daemon exists and the CLI found it. The problem is authorization, not discovery.</li>
+<li>On the laptop, Docker Desktop runs the daemon as root and the developer's user is in the <code>docker</code> group. In CI, the job runs as an unprivileged user that is not in that group.</li>
+<li>Adding the CI user to the <code>docker</code> group grants root-equivalent access to the host, which is a poor trade in a shared runner.</li>
+<li>The better fix is to avoid needing the host socket: run the build inside a container image that provides its own runtime, or use a rootless runtime such as Podman with a user socket.</li>
+</ol>
+<p>The same reasoning applies to <code>USER node</code> in a Dockerfile combined with a runner that expects a different UID. The mismatch is between the image's declared user and the permissions the runtime grants that user, not between "correct" and "incorrect" code.</p>
+<h2 id="how-to-verify-a-fix">How to verify a fix</h2>
+<p>Verification means reproducing the failure conditions, not just confirming the happy path.</p>
+<p>Run the workflow on more than one runner class: a GitHub-hosted Linux runner, a hosted macOS runner if the project supports it, and a self-hosted runner with a different runtime. The build should succeed on each without repository changes.</p>
+<p>Add a job that actually runs the container and asserts behavior:</p>
 <pre><code class="language-yaml">jobs:
   test:
     needs: build
@@ -401,39 +388,20 @@ RUN chcon -Rt svirt_sandbox_file_t /data
       - uses: actions/checkout@v4
       - run: docker run --rm myapp:latest test
 </code></pre>
-<p>Use a health check endpoint or a simple CLI command to verify the container runs:</p>
-<pre><code class="language-bash">curl -s http://localhost:8080/health | jq -e '.status == &quot;ok&quot;'
-echo $?
-</code></pre>
-<p>If the health check fails, add a retry loop in the workflow:</p>
+<p>For a service, poll a health endpoint with a bounded retry loop so a slow start does not read as a failure:</p>
 <pre><code class="language-yaml">- name: Wait for container
   run: |
-    for i in {1..30}; do
-      if curl -s http://localhost:8080/health | grep -q &quot;ok&quot;; then
+    for i in $(seq 1 30); do
+      if curl -sf http://localhost:8080/health | grep -q '&quot;status&quot;:&quot;ok&quot;'; then
         echo &quot;Container healthy&quot;
         exit 0
       fi
       sleep 1
     done
-    echo &quot;Container failed to start&quot;
+    echo &quot;Container failed to become healthy&quot; &gt;&amp;2
     exit 1
 </code></pre>
-<p>To verify runtime-agnostic scripts, run the script on a Podman 5.0 system:</p>
-<pre><code class="language-bash">./run.sh
-</code></pre>
-<p>The script should detect Podman and use it instead of Docker. If not, debug the <code>command -v</code> check:</p>
-<pre><code class="language-bash">which podman
-echo $?
-which docker
-echo $?
-</code></pre>
-<p>If both return non-zero, the script should exit with a clear error:</p>
-<pre><code class="language-bash">if ! command -v $RUNTIME &gt;/dev/null 2&gt;&amp;1; then
-  echo &quot;ERROR: Neither docker nor podman found. Install one and retry.&quot; &gt;&amp;2
-  exit 1
-fi
-</code></pre>
-<p>Use a matrix strategy in CI to test multiple runtimes:</p>
+<p>Exercise the runtime-agnostic script under both runtimes using a matrix:</p>
 <pre><code class="language-yaml">jobs:
   test:
     strategy:
@@ -442,238 +410,144 @@ fi
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - run: docker run --rm myapp:latest test
+      - run: DOCKER_RUNTIME=${{ matrix.runtime }} ./run.sh
 </code></pre>
-<p>This catches runtime-specific issues early.</p>
-<p>Finally, verify the container image works in Kubernetes. Deploy to a KinD cluster:</p>
+<p>Finally, verify the image works where it will actually run. For a Kubernetes target, load it into a local cluster and wait for readiness:</p>
 <pre><code class="language-bash">kind create cluster
 kubectl apply -f k8s/deployment.yaml
 kubectl wait --for=condition=ready pod -l app=myapp --timeout=60s
+kubectl logs -l app=myapp
 </code></pre>
-<p>If the pod fails, check logs:</p>
-<pre><code class="language-bash">kubectl logs -l app=myapp
-</code></pre>
-<p>In 2026, many teams use Kubernetes-in-Docker for CI, so this step is critical.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Preventing this requires three changes: shift left on environment assumptions, enforce runtime-agnostic patterns, and automate environment validation.</p>
-<p>First, add an environment validation step to the CI workflow. Before building, check that the expected runtime is available and configured correctly:</p>
-<pre><code class="language-yaml">- name: Validate runtime
-  run: |
-    if ! command -v docker &gt;/dev/null 2&gt;&amp;1 &amp;&amp; ! command -v podman &gt;/dev/null 2&gt;&amp;1; then
-      echo &quot;ERROR: No container runtime found. Install docker or podman.&quot; &gt;&amp;2
-      exit 1
-    fi
-    if [ -n &quot;$DOCKER_HOST&quot; ]; then
-      echo &quot;DOCKER_HOST is set to $DOCKER_HOST. This may cause issues in CI.&quot;
-    fi
-</code></pre>
-<p>Second, enforce runtime-agnostic patterns in the codebase. Replace hardcoded Docker commands with wrapper scripts or Makefile targets:</p>
-<pre><code class="language-makefile">build:
-    @if command -v docker &gt;/dev/null 2&gt;&amp;1; then docker buildx build -t myapp:latest --platform linux/amd64 .; fi
-    @if command -v podman &gt;/dev/null 2&gt;&amp;1; then podman build -t myapp:latest .; fi
-</code></pre>
-<p>Third, automate environment validation in the candidate submission process. Add a <code>validate-env.sh</code> script that checks:
-- Container runtime availability
-- Socket path correctness
-- Architecture compatibility
-- SELinux/AppArmor status
-- Privileged mode restrictions</p>
+<p>If the pod fails, the logs distinguish an image problem from a scheduling or configuration problem.</p>
+<h2 id="how-to-measure-whether-drift-is-still-a-problem">How to measure whether drift is still a problem</h2>
+<p>Rather than trusting a single green build, instrument the pipeline:</p>
+<ul>
+<li><strong>Time-to-first-successful-build per runner class.</strong> Compare the median across runner types. A large spread indicates environment-specific assumptions.</li>
+<li><strong>Failure rate by error signature.</strong> Group CI failures by the first error line. A cluster of <code>executable file not found</code> or <code>Cannot connect to the Docker daemon</code> messages localizes the assumption.</li>
+<li><strong>Rerun rate.</strong> Count jobs that pass only after a retry. High rerun rates often indicate flaky environment setup rather than flaky tests.</li>
+</ul>
+<p>These are cheap to collect from existing CI logs and require no new tooling. The absolute numbers matter less than the trend after a change.</p>
+<h2 id="prevention-checklist">Prevention checklist</h2>
+<p>Before accepting a generated system, confirm each of these:</p>
+<ul>
+<li>The repository declares its container runtime and version, and CI pins the same version.</li>
+<li>No step assumes <code>docker</code> exists on the host; either the job runs in a runtime image or the script detects the runtime.</li>
+<li><code>DOCKER_HOST</code> is either unset or set explicitly and documented.</li>
+<li>The build targets the architectures the runners actually provide.</li>
+<li>No step requires privileged mode; if one does, the reason is documented.</li>
+<li>SELinux or AppArmor status is recorded, and any label relaxation is scoped to one container.</li>
+<li>A validation script runs in CI before the build:</li>
+</ul>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
 
 echo &quot;Validating environment...&quot;
 
-# Check runtime
 if command -v docker &gt;/dev/null 2&gt;&amp;1; then
-  echo &quot;✓ Docker available&quot;
-  docker --version
+  echo &quot;docker: $(docker --version)&quot;
 elif command -v podman &gt;/dev/null 2&gt;&amp;1; then
-  echo &quot;✓ Podman available&quot;
-  podman --version
+  echo &quot;podman: $(podman --version)&quot;
 else
-  echo &quot;✗ No container runtime found&quot;
+  echo &quot;ERROR: no container runtime found in PATH&quot; &gt;&amp;2
   exit 1
 fi
 
-# Check socket path
 if [ -S /var/run/docker.sock ]; then
-  echo &quot;✓ Docker socket at /var/run/docker.sock&quot;
+  echo &quot;docker socket present at /var/run/docker.sock&quot;
 else
-  echo &quot;✗ Docker socket not found at /var/run/docker.sock&quot;
+  echo &quot;note: /var/run/docker.sock not present (expected under Podman or rootless setups)&quot;
 fi
 
-# Check architecture
-UNAME=$(uname -m)
-if [ &quot;$UNAME&quot; = &quot;x86_64&quot; ]; then
-  echo &quot;✓ amd64 architecture&quot;
-elif [ &quot;$UNAME&quot; = &quot;aarch64&quot; ]; then
-  echo &quot;✓ arm64 architecture&quot;
-else
-  echo &quot;✗ Unsupported architecture: $UNAME&quot;
-fi
+case &quot;$(uname -m)&quot; in
+  x86_64)  echo &quot;architecture: amd64&quot; ;;
+  aarch64|arm64) echo &quot;architecture: arm64&quot; ;;
+  *) echo &quot;WARNING: unrecognized architecture $(uname -m)&quot; &gt;&amp;2 ;;
+esac
 
-# Check SELinux
 if command -v getenforce &gt;/dev/null 2&gt;&amp;1; then
-  STATUS=$(getenforce)
-  if [ &quot;$STATUS&quot; = &quot;Enforcing&quot; ]; then
-    echo &quot;⚠ SELinux is enforcing — may cause issues with volumes&quot;
-  else
-    echo &quot;✓ SELinux status: $STATUS&quot;
-  fi
+  echo &quot;SELinux: $(getenforce)&quot;
 fi
 
 echo &quot;Environment validation complete.&quot;
 </code></pre>
-<p>Add this script to the repository and run it in CI:</p>
-<pre><code class="language-yaml">- name: Validate environment
-  run: bash scripts/validate-env.sh
-</code></pre>
-<p>I enforced this pattern after a candidate’s system failed in CI because their Dockerfile used <code>USER node</code> but the CI runner ran as root. The validation script caught the mismatch early and prevented the issue from reaching production.</p>
-<p>Fourth, use container images for CI tooling. Instead of installing Docker or Podman in CI, use a prebuilt image with the runtime baked in:</p>
-<pre><code class="language-yaml">container:
-  image: docker:25.0-cli
-</code></pre>
-<p>This guarantees the runtime is available and avoids version drift.</p>
-<p>Fifth, document the expected environment in the README. Include:
-- Container runtime (Docker or Podman)
-- Version pin (e.g., Docker 25.0, Podman 5.0)
-- Architecture (amd64 or arm64)
-- CI runner type (GitHub-hosted, self-hosted, KinD)
-- Privileged mode status</p>
-<p>Example README snippet:</p>
-<pre><code class="language-markdown">## Environment
-
-This system is validated against:
-- Docker 25.0 (GitHub-hosted ubuntu-24.04 runners)
-- Podman 5.0 (self-hosted Ubuntu 22.04 runners)
-- arm64 and amd64 architectures
-- SELinux in permissive mode (enforcing may require additional labels)
-
-To validate your environment, run:
-</code></pre>
-<p>bash scripts/validate-env.sh</p>
-<pre><code></code></pre>
-<p>Finally, add a GitHub issue template that prompts candidates to confirm their system works in CI. Include a checklist:
-- [ ] Docker or Podman installed and in $PATH
-- [ ] Socket path matches CI runner (e.g., <code>/run/podman/podman.sock</code>)
-- [ ] Architecture matches CI runner (e.g., arm64 for cost savings)
-- [ ] No privileged mode required</p>
-<p>This reduces the chance of environment drift slipping through.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
 <ul>
-<li>
-<p><strong>Error: permission denied while trying to connect to the Docker daemon socket</strong>
-  Cause: Runner user lacks access to the socket. Fix: Add runner user to the <code>docker</code> group or use <code>sudo</code> in CI.</p>
-</li>
-<li>
-<p><strong>Error: failed to solve: process did not complete successfully</strong>
-  Cause: Build failure due to missing dependencies or incorrect architecture. Fix: Pin base image to the correct architecture and add dependencies explicitly.</p>
-</li>
-<li>
-<p><strong>Error: no space left on device</strong>
-  Cause: Docker layer cache fills up CI runner disk. Fix: Limit cache or use <code>--no-cache</code> in CI.</p>
-</li>
-<li>
-<p><strong>Error: the input device is not a TTY</strong>
-  Cause: <code>docker run -it</code> without a TTY in CI. Fix: Remove <code>-it</code> flags or add <code>script</code> wrapper.</p>
-</li>
-<li>
-<p><strong>Error: unable to find user node: no matching entries in passwd file</strong>
-  Cause: <code>USER node</code> in Dockerfile but no <code>node</code> user in image. Fix: Add <code>RUN useradd -m node</code> to Dockerfile.</p>
-</li>
-<li>
-<p><strong>Error: could not get secret x from Vault: context deadline exceeded</strong>
-  Cause: Vault token expired in CI. Fix: Use GitHub Actions secrets or short-lived tokens.</p>
-</li>
-<li>
-<p><strong>Error: failed to dial gRPC: cannot connect to the Docker daemon</strong>
-  Cause: Docker daemon not running in KinD runner. Fix: Use KinD-specific commands or switch to Docker-in-Docker.</p>
-</li>
-<li>
-<p><strong>Error: image was built with older schema version v1.1</strong>
-  Cause: Docker image built with old buildx. Fix: Update buildx to v0.12+ and rebuild.</p>
-</li>
+<li>A Makefile or wrapper centralizes build commands so no workflow hardcodes a runtime:</li>
 </ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If the build still fails after applying all fixes, escalate systematically:</p>
-<ol>
-<li>
-<p><strong>Check runner logs:</strong> Look for <code>runner</code> or <code>actions</code> logs in GitHub Actions. Filter for <code>Error</code> or <code>Warning</code>.</p>
-</li>
-<li>
-<p><strong>Reproduce locally:</strong> Clone the repo and run the workflow locally using <code>act</code> (https://github.com/nektos/act):</p>
-</li>
-</ol>
-<pre><code class="language-bash">act -j build -P self-hosted=ubuntu-22.04:latest
+<pre><code class="language-makefile">build:
+    @if command -v docker &gt;/dev/null 2&gt;&amp;1; then docker buildx build -t myapp:latest --platform linux/amd64 .; \
+    elif command -v podman &gt;/dev/null 2&gt;&amp;1; then podman build -t myapp:latest .; \
+    else echo &quot;no container runtime available&quot; &gt;&amp;2; exit 1; fi
 </code></pre>
-<p>This emulates the CI environment locally.</p>
+<ul>
+<li>The README states the validated runtime, version, architecture, runner type, and privilege requirements.</li>
+</ul>
+<h2 id="related-errors-and-what-they-usually-mean">Related errors and what they usually mean</h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Common cause</th>
+<th>First thing to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>permission denied</code> connecting to the Docker socket</td>
+<td>CI user not in the <code>docker</code> group, or rootless socket ownership</td>
+<td>Whether the job needs the host socket at all</td>
+</tr>
+<tr>
+<td><code>failed to solve: process did not complete successfully</code></td>
+<td>Missing build dependency or wrong base-image architecture</td>
+<td>The failing <code>RUN</code> line and the platform flag</td>
+</tr>
+<tr>
+<td><code>no space left on device</code></td>
+<td>Layer cache filling the runner disk</td>
+<td>Cache pruning and runner disk size</td>
+</tr>
+<tr>
+<td><code>the input device is not a TTY</code></td>
+<td><code>-it</code> flags used in a non-interactive CI job</td>
+<td>Remove <code>-it</code> in CI</td>
+</tr>
+<tr>
+<td><code>unable to find user node: no matching entries in passwd file</code></td>
+<td><code>USER node</code> declared without creating the user</td>
+<td>The Dockerfile's user creation step</td>
+</tr>
+<tr>
+<td><code>image was built with older schema version</code></td>
+<td>Old buildx producing a legacy manifest</td>
+<td>The pinned buildx version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="escalation-path-when-fixes-do-not-resolve-the-failure">Escalation path when fixes do not resolve the failure</h2>
 <ol>
-<li><strong>Check container runtime logs:</strong> If using Docker or Podman, check daemon logs:</li>
-</ol>
-<pre><code class="language-bash">docker info
-docker events --filter 'event=die'
-</code></pre>
-<p>Or for Podman:</p>
-<pre><code class="language-bash">podman system info
-podman events --filter event=die
-</code></pre>
-<ol>
-<li>
-<p><strong>Test on a different runner:</strong> Use a self-hosted runner with a fresh Ubuntu 24.04 image. If it works there but not on GitHub-hosted runners, the issue is runner-specific (e.g., cgroups v2, kernel version).</p>
-</li>
-<li>
-<p><strong>Contact support:</strong> If using GitHub-hosted runners, file a support ticket with:</p>
-</li>
-<li>Workflow YAML</li>
-<li>Error logs</li>
-<li>Runner OS and version</li>
-<li>Exact time of failure</li>
-</ol>
-<p>For self-hosted runners, check:
-- Kernel version (<code>uname -a</code>)
-- Cgroups version (<code>stat /sys/fs/cgroup/cgroup.controllers</code>)
-- SELinux/AppArmor status (<code>getenforce</code>, <code>aa-status</code>)
-- Disk space (<code>df -h</code>)</p>
-<ol>
-<li><strong>Fallback to buildpacks:</strong> If Docker is the root cause, switch to Cloud Native Buildpacks (Paketo) for buildpack-based builds:</li>
+<li><strong>Read the runner logs, not just the step output.</strong> Runner-level logs often show environment setup failures the step output omits.</li>
+<li><strong>Reproduce locally with an emulator.</strong> Tools such as <code>act</code> run GitHub Actions workflows on a local machine and can expose assumptions that only hold in the real runner.</li>
+<li><strong>Inspect daemon state.</strong> <code>docker info</code> and <code>docker events --filter 'event=die'</code> (or <code>podman system info</code> and <code>podman events</code>) show whether the daemon is reachable and what it rejected.</li>
+<li><strong>Compare runner classes.</strong> If a self-hosted runner succeeds where a hosted runner fails, the difference is in kernel version, cgroup layout, or preinstalled tooling. Check <code>uname -a</code>, <code>stat /sys/fs/cgroup/cgroup.controllers</code>, <code>getenforce</code>, and <code>df -h</code>.</li>
+<li><strong>Fall back to a runtime-independent build.</strong> Buildpacks such as Paketo produce an image without requiring a Docker daemon on the build host:</li>
 </ol>
 <pre><code class="language-yaml">- uses: buildpacks/github-actions/setup-pack@v5
 - run: pack build myapp --builder paketobuildpacks/builder:base
 </code></pre>
-<p>Buildpacks are runtime-agnostic and work in any environment.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does my Dockerfile work locally but fail in GitHub Actions?</strong></p>
-<p>Most teams run Docker Desktop locally, which runs as root and exposes a socket at <code>/var/run/docker.sock</code>. GitHub-hosted runners on macOS use Colima, which exposes a socket at <code>/Users/runner/.colima/docker.sock</code>. The Dockerfile assumes <code>/var/run/docker.sock</code>, so the build fails in CI. The fix is to use a container runtime image in CI or set <code>DOCKER_HOST</code> explicitly.</p>
-<p><strong>How do I make my system work with Podman and Docker interchangeably?</strong></p>
-<p>Use a wrapper script that detects the runtime and uses the correct commands. Replace <code>docker build</code> with <code>./build.sh</code>, which checks for <code>docker</code> or <code>podman</code> and runs the correct command. Pin tool versions in your Dockerfile and CI to avoid drift.</p>
-<p><strong>What’s the cheapest way to run CI in 2026?</strong></p>
-<p>Use GitHub-hosted macOS runners with Colima and arm64. Colima is free and uses Apple Silicon efficiently. A macOS runner costs $0.08/minute (2026) vs $0.008/minute for a Linux runner, but macOS runners often finish builds faster due to better tooling support. For CPU-bound workloads, Linux runners with arm64 are cheaper. Benchmark: a Go build takes 120s on Linux arm64 vs 180s on macOS, saving $0.008 per run.</p>
-<p><strong>Why does my system fail with ‘permission denied’ even when I run as root?</strong></p>
-<p>In 2026, many teams run SELinux in enforcing mode. Even if you run as root, SELinux blocks Docker from accessing certain paths. The fix is to set SELinux labels on volumes or run the container with <code>--security-opt label=disable</code>. Check SELinux status with <code>getenforce</code> and adjust accordingly.</p>
-<h2 id="system-design-in-2026-the-new-hiring-reality">System design in 2026: the new hiring reality</h2>
-<p>AI assistants changed the interview process in 2026, but not always for the better. Candidates that once wrote clean, production-ready systems now submit code that works in an idealized environment but fails in real CI. The gap isn’t in the code—it’s in the environment assumptions.</p>
-<p>The systems that pass interviews are the ones that:
-- Run on any container runtime (Docker, Podman, buildah)
-- Work on amd64 and arm64
-- Don’t assume privileged mode or specific socket paths
-- Validate their environment before building
-- Document their assumptions explicitly</p>
-<p>One system worked locally but failed in CI because the Dockerfile used <code>USER node</code> and the CI runner ran as root. The assistant never considered that the team’s CI uses Podman with a non-root user.</p>
-<p>The solution isn’t to avoid AI assistants—it’s to make them aware of the target environment. Add environment validation to your candidate submission process. Require candidates to run <code>validate-env.sh</code> and attach the output to their PR. This catches environment drift early and prevents wasted cycles in CI.</p>
-<p>Finally, stop trusting Dockerfiles that work locally. In 2026, the only environments you can trust are the ones you validate in CI. Use container runtime images in CI, pin tool versions, and enforce runtime-agnostic patterns. The systems that survive the interview process are the</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
-<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
-<li><a href="https://kubaik.github.io/ai-stole-system-design/">AI stole system design</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does a Dockerfile work locally but fail in CI?</strong></p>
+<p>Local setups commonly run Docker Desktop, where the daemon runs as root and the socket is at a well-known path. CI runners may use Colima, Podman, or no daemon at all, with different socket paths and privilege rules. The Dockerfile encodes an assumption about the host, and the host differs.</p>
+<p><strong>How do you support Docker and Podman interchangeably?</strong></p>
+<p>Centralize build and run commands in a wrapper script or Makefile that detects the available runtime and fails loudly when none is found. Avoid hardcoding <code>docker</code> in workflow steps.</p>
+<p><strong>Why does a build fail with <code>permission denied</code> even when the job runs as root?</strong></p>
+<p>Under SELinux in enforcing mode, root is still subject to mandatory access control. The container's mount path needs the correct label, or the container needs a scoped label relaxation. Check with <code>getenforce</code> before changing anything else.</p>
+<p><strong>Is a container image in CI always better than installing the runtime on the runner?</strong></p>
+<p>For reproducibility, yes: the image pins the CLI and its version. The trade-off is that mounting the host socket into that container reintroduces host dependence, so prefer a job container that performs the build itself when possible.</p>
+<h2 id="what-matters-when-reviewing-a-generated-system">What matters when reviewing a generated system</h2>
+<p>Generated code is not the problem; unstated assumptions are. A system is portable when it runs under more than one container runtime, on more than one architecture, without privileged mode, and validates its own environment before building. Those properties are testable, and they are the ones worth checking in review.</p>
+<p>The practical consequence for review processes is that "it builds locally" carries little weight. What carries weight is a pipeline that has been run against the runner classes the project actually uses, with the environment recorded and the runtime pinned.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Add a <code>scripts/validate-env.sh</code> to the repository using the script above, wire it into the workflow as a step that runs before the build, and push a branch to confirm it prints the runtime, socket status, architecture, and SELinux state on your CI runner. If the output differs from what the Dockerfile assumes, you have found the first assumption to fix.</p>
                 
                 
             </div>

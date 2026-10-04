@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Poolers won’t save your serverless DB - Kubai Kevin</title>
-        <meta name="description" content="Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.">
+        <meta name="description" content="Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.">
         <meta name="keywords" content="Connection, ServerlessDatabase, RdsProxyAlternatives, PgcatVsPgbouncer, Serverless, PostgresMultiplexing, Lambda, Ai, Dataengineering, Postgresql">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-19T02:59:58.647198">
-        <meta property="article:modified_time" content="2026-10-01T04:54:51.662628+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:44:30.034032+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Poolers won’t save your serverless DB">
-        <meta property="og:description" content="Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.">
+        <meta property="og:description" content="Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.">
         <meta property="og:url" content="https://kubaik.github.io/poolers-wont-save-your-serverless-db/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Poolers won’t save your serverless DB">
-        <meta name="twitter:description" content="Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.">
+        <meta name="twitter:description" content="Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/poolers-wont-save-your-serverless-db.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/poolers-wont-save-your-serverless-db/#article",
       "headline": "Poolers won’t save your serverless DB",
-      "description": "Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.",
+      "description": "Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.",
       "datePublished": "2026-07-19T02:59:58+00:00",
-      "dateModified": "2026-10-01T04:54:51+00:00",
-      "wordCount": 3018,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-04T10:44:30+00:00",
+      "wordCount": 2666,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Poolers won’t save your serverless DB</h1>
                 
-                <p class="post-lead">Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</p>
+                <p class="post-lead">Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
                 
                 
                 <div class="tags">
@@ -259,269 +259,149 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3018 words
+                        13 min read
+                        &nbsp;·&nbsp; 2666 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-01
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most connection pooler guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. This is what a proper investigation tends to turn up.</p>
-<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>The first time you sit through a vendor demo where the presenter claims their connection pooler can "solve serverless cold starts," the instinct should be to walk out. Instead, take notes. Two weeks later, after auditing a few production systems, the pattern is usually the same: teams delete hundreds of lines of connection-pooling code and replace it with a direct-to-database path. The pooler hadn't saved a single millisecond; it had added double-digit milliseconds of extra latency and doubled the bill because every pooled connection incurred a cross-AZ data-transfer charge.</p>
-<p>What the slides miss is the fine print: docs assume you're running on long-lived VMs or Kubernetes pods, not on ephemeral, bursty Lambda runtimes that live for 300 ms–15 minutes. The pooler vendors optimize for throughput under steady load, but serverless workloads from AI agents look nothing like steady load. A typical agent workflow hits the DB for 200 ms, sleeps for 2 s while it calls an LLM, then repeats. That pattern is poison for traditional poolers because each connection spends 90 % of its life idle, and poolers still charge you for the idle time.</p>
-<p>The bigger lie is the promise of "instant" connection reuse. In practice, a Lambda that wakes up after 10 minutes of inactivity will still create a new TCP socket to the pooler, negotiate TLS, and authenticate, because the pooler itself is behind a Network Load Balancer (NLB) or Application Load Balancer (ALB) that enforces TLS termination. The pooler's own connection to the database is long-lived, but the client-facing connection is short-lived. That means the pooler is just another hop, adding latency and cost, not reducing it.</p>
-<p>Pooler vendors also rarely publish the full cost model. A quote of $0.08 per million pooled connections often hides an additional $0.004 per GB of data transferred out of their VPC. In a system that streams 8 KB JSON blobs back to agents, that tiny per-GB fee commonly adds 15–20 % to the monthly AWS bill.</p>
-<p>These mismatches aren't academic. In 2026, AI agents issue a large and growing share of database requests in agent-heavy systems, and the workload pattern is bursty, chatty, and latency-sensitive. Poolers optimized for web servers don't cut it.</p>
-<h2 id="how-connection-poolers-in-the-age-of-serverless-and-ai-agents-what-still-makes-sense-actually-works-under-the-hood">How Connection poolers in the age of serverless and AI agents — what still makes sense actually works under the hood</h2>
-<p>Connection poolers like PgBouncer, ProxySQL, or Amazon RDS Proxy sit between clients and the database. Their job is to keep a set of persistent connections open so clients don't pay the 50–300 ms TCP+TLS handshake every time they need data. Under steady web traffic, that's a win. But in serverless, the contract is flipped: clients appear and disappear rapidly, and the pooler itself becomes a bottleneck.</p>
-<p>Let's look at the two phases every serverless request runs through: connect and query.</p>
-<p><strong>Connect phase</strong>
-When a Lambda wakes up, it opens a TCP socket to the pooler's endpoint. If the pooler uses TLS, the handshake takes 1–2 RTTs (round-trip times). If the pooler is behind an ALB, that adds another load-balancer hop. Typical benchmarks put that at 12–22 ms added to the critical path on every cold start. Worse, the pooler may enforce client-side TLS re-authentication for every new Lambda execution context, even if the underlying DB connection is reused. That's another 8–15 ms of CPU time inside the Lambda.</p>
-<p><strong>Query phase</strong>
-Once the connection is established, the pooler routes the query to a backend connection. If the pooler is in transaction mode, it must issue PING or SHOW commands to keep the backend connection alive, consuming 1–2 % CPU continuously. If the pooler is in session mode, it simply hands off the existing connection, but the pooler's own keep-alive timers still fire every 60 s, generating noise traffic.</p>
-<p>The real killer is the idle-connection tax. A Lambda that runs for 800 ms and then sleeps for 3 s still pays for the pooled connection's idle time, because the pooler charges by the millisecond the connection is open, not by the millisecond it's used. In agent-heavy systems, that idle tax commonly runs into the low thousands of dollars per month for hundreds of millions of agent invocations.</p>
-<p>Surprisingly, the pooler's connection-count limits also bite. PgBouncer defaults to 100 connections per pool. If 150 concurrent Lambdas wake up in the same AZ and all hit the same pooler, 50 Lambdas get queued behind the pooler's accept queue. In 2026, a single queue stall can add hundreds of milliseconds to p95 latency, which breaks typical agent timeout budgets.</p>
-<p>What actually helps in this environment is not a pooler but a <strong>connection multiplexer</strong>: a lightweight proxy that keeps one physical connection per database shard and lets many logical clients share it without TLS renegotiation. That cuts the connect phase to a single RTT and removes the idle tax entirely.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>The pattern below replaces an agent pipeline's pooler with a connection multiplexer. It's the shape that tends to hold up in production over months-long windows with zero connection-exhaustion incidents.</p>
-<p><strong>Step 1: Pick a multiplexer for your database</strong>
-- PostgreSQL → <a href="https://github.com/postgresml/pgcat">PgCat</a> 1.3.0 (the fork that supports sharding)
-- MySQL → <a href="https://proxysql.com">ProxySQL</a> 2.5.4 with multiplexing enabled
-- Aurora Serverless → <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html">Aurora Data API</a> (no pooler needed; the Data API itself multiplexes)</p>
-<p><strong>Step 2: Configure the multiplexer</strong>
-PgCat's config is a single TOML file. The critical flags are:</p>
-<pre><code class="language-toml">[general]
-pool_mode = &quot;transaction&quot;   # or &quot;statement&quot; if you need per-statement auth
-connection_lifetime = 3600  # seconds before physical connection recycle
-connect_timeout = 500       # ms
-query_timeout = 1000        # ms
+                <h2 id="why-pooler-guides-stop-where-the-interesting-part-starts">Why pooler guides stop where the interesting part starts</h2>
+<p>Most connection pooler write-ups assume steady web traffic and long-lived application servers. Serverless and agent workloads break both assumptions, and the guidance rarely gets updated. This article covers what actually changes: where the latency goes, which costs appear, which failure modes are common, and how to measure all of it on your own system rather than trusting a vendor's slide.</p>
+<p>Two clarifications before going further. First, "pooler" here means a process that keeps persistent backend connections open and hands them to clients — PgBouncer, ProxySQL, Amazon RDS Proxy, and similar. Second, "multiplexer" means a proxy that terminates many logical client connections onto a small number of physical backend connections without per-client TLS renegotiation. The distinction matters because the two designs fail differently.</p>
+<h2 id="what-a-pooler-actually-does-and-why-serverless-flips-the-contract">What a pooler actually does, and why serverless flips the contract</h2>
+<p>A pooler sits between clients and the database and keeps a set of persistent connections open so clients avoid the TCP and TLS handshake on every request. Under steady traffic from long-lived application servers, that is a clear win: the handshake cost is amortized across thousands of queries.</p>
+<p>Serverless runtimes invert the assumptions the design was tuned for:</p>
+<ul>
+<li>Clients are short-lived and appear in bursts. A function instance may run for a few hundred milliseconds and then disappear.</li>
+<li>The client-facing connection is short-lived even when the backend connection is not. If the pooler sits behind a load balancer that terminates TLS, every new function instance still pays a fresh TCP and TLS handshake to the pooler.</li>
+<li>Idle time dominates. An agent that queries the database, waits several seconds for a model response, then queries again spends most of its connection lifetime idle. Poolers that bill or meter by connection-open time charge for that idle period.</li>
+</ul>
+<p>The result is that in bursty workloads the pooler can be a net addition to the critical path rather than a subtraction from it. The backend connection is reused; the client-side cost is not.</p>
+<p>A useful way to think about it: a pooler optimizes the <em>backend</em> side of the connection. Serverless latency problems usually live on the <em>client</em> side and in the network path between the client and the pooler. Fixing one does not fix the other.</p>
+<h2 id="where-the-latency-actually-goes">Where the latency actually goes</h2>
+<p>Break a serverless request into phases and measure each one rather than reasoning about the total.</p>
+<p><strong>Connect phase.</strong> The function opens a TCP socket to the pooler endpoint. If TLS is enforced at the pooler or at a load balancer in front of it, the handshake costs one or more round trips. If the pooler is behind an application load balancer, that adds another hop. The exact cost depends on region, availability zone placement, and whether the client and pooler are co-located, so measure it rather than assuming a number.</p>
+<p><strong>Authentication phase.</strong> Some poolers re-authenticate each new client session even when the backend connection is reused. Look for whether your pooler requires client credentials on every new connection and whether that check is cached.</p>
+<p><strong>Query phase.</strong> The pooler routes the query to a backend connection. In transaction pooling mode the backend is held only for the duration of a transaction; in session mode it is held for the whole client session. Transaction mode is usually the better fit for short bursts, but it requires care with session-level state such as temporary tables, advisory locks, and <code>SET</code> commands, which do not survive across transactions on a shared backend.</p>
+<p><strong>Idle phase.</strong> If the pooler or your provider meters connection-open time, the idle phase is where cost accumulates. This is invisible in latency graphs and shows up only on the bill.</p>
+<p>To measure the connect phase in isolation, run a trivial <code>SELECT 1</code> in a loop from a cold function and record the time from socket open to first row returned, then compare against the same query issued over an already-open connection. The difference is your per-request connection overhead. Do this in the same region and availability zone as production, because cross-AZ placement can dominate the result.</p>
+<h2 id="the-costs-that-do-not-appear-in-the-pricing-page">The costs that do not appear in the pricing page</h2>
+<p>Latency is the visible problem; cost is the one that surprises teams at the end of the month. Three cost centers are worth instrumenting:</p>
+<ol>
+<li><strong>Per-connection charges.</strong> Some managed poolers bill per million proxied connections. If your function opens a connection per invocation, that count tracks invocations, not queries.</li>
+<li><strong>Data transfer.</strong> If the pooler runs in a different availability zone or VPC from the client or the database, every byte crosses a boundary that may be billed. This is easy to miss because it is a line item on the network bill, not the database bill.</li>
+<li><strong>Idle connection time.</strong> Where the provider meters open connections, idle time is billed time.</li>
+</ol>
+<p>The honest way to evaluate a pooler's cost is to compute it from your own traffic shape. As a worked example with illustrative numbers: suppose a workload issues 100 million function invocations per month, each opening one connection to a pooler, and the pooler charges $0.02 per million connections. That is 100 × $0.02 = $2 per month in connection charges — small. Now suppose each invocation transfers 8 KB through the pooler and the cross-AZ transfer rate is $0.01 per GB in each direction. That is 100,000,000 × 8 KB = 800,000,000 KB = 800 GB, costing 800 × $0.01 × 2 = $16 per month. Still small at this volume. The point is not that any specific figure is large; it is that you must substitute your own invocation count, payload size, and provider rates, because the relative weight of connection charges versus transfer charges changes completely with payload size. A workload streaming large JSON blobs is dominated by transfer; a workload issuing tiny queries is dominated by connection count.</p>
+<p>Build a small spreadsheet with invocation count, average payload size, connection charge per million, and transfer rate per GB, and compute both. That is more reliable than any published benchmark, including the ones in this article's earlier drafts.</p>
+<h2 id="a-multiplexer-is-not-a-pooler">A multiplexer is not a pooler</h2>
+<p>The alternative to a pooler in a bursty serverless environment is a multiplexer: a lightweight proxy that terminates many logical client connections onto a small number of physical backend connections, without requiring a fresh TLS handshake per client.</p>
+<p>The important properties:</p>
+<ul>
+<li>The client-to-proxy leg is cheap and can be terminated at a gateway that is already in the request path, removing a separate TLS negotiation.</li>
+<li>The proxy-to-database leg is a small, fixed number of long-lived connections, typically one or a few per shard.</li>
+<li>Logical clients share physical connections, which means session-level state cannot be assumed to persist between statements. This is the same constraint as transaction pooling mode and it is the source of most multiplexer bugs.</li>
+</ul>
+<p>Where a pooler reduces backend connection count, a multiplexer also reduces the <em>client-side</em> handshake cost by removing the extra TLS hop. That is the part that shows up in p50 latency.</p>
+<h2 id="implementation-walkthrough">Implementation walkthrough</h2>
+<p>The following pattern replaces a per-invocation connection to a pooler with a connection to a multiplexer that sits behind the API gateway, with TLS terminated at the gateway.</p>
+<h3 id="step-1-choose-the-right-mechanism-for-your-database">Step 1: Choose the right mechanism for your database</h3>
+<ul>
+<li><strong>PostgreSQL, self-managed or RDS:</strong> a connection multiplexer such as PgBouncer in transaction mode, or a purpose-built multiplexer proxy. Evaluate whether your workload can tolerate shared backend sessions.</li>
+<li><strong>MySQL or Aurora MySQL:</strong> ProxySQL supports multiplexing; verify its prepared-statement and session-state behavior against your workload.</li>
+<li><strong>Aurora Serverless:</strong> the Aurora Data API is an HTTP-based interface that does not require a persistent connection from the client at all. For many serverless workloads this removes the pooler question entirely.</li>
+<li><strong>Managed pools:</strong> Amazon RDS Proxy is a managed option. It still sits in the network path, so measure the added hop against your baseline.</li>
+</ul>
+<p>Do not choose a tool by version number from an article; check the project's current release notes and confirm the features you need exist in the version you deploy.</p>
+<h3 id="step-2-configure-transaction-level-connection-reuse">Step 2: Configure transaction-level connection reuse</h3>
+<p>For a PgBouncer-style proxy, the settings that matter most for bursty workloads are the pool mode and the timeouts:</p>
+<pre><code class="language-ini">[pgbouncer]
+pool_mode = transaction
+server_reset_query = DISCARD ALL
+server_idle_timeout = 60
+query_wait_timeout = 5
 </code></pre>
-<p>Note: <code>pool_mode = "transaction"</code> keeps the backend connection open only for the duration of a transaction, which matches the agent pattern of short bursts.</p>
-<p><strong>Step 3: Deploy behind API Gateway</strong>
-PgCat listens on port 5432 inside an ECS Fargate sidecar. API Gateway routes <code>/agents/v1/*</code> to the Fargate service, which terminates TLS at the gateway. That removes the TLS handshake from the Lambda → PgCat leg entirely.</p>
-<p><strong>Step 4: Lambda client code</strong>
-Python example using <code>pg8000</code> 1.30.0:</p>
+<p><code>pool_mode = transaction</code> releases the backend connection at the end of each transaction, which matches short bursts. <code>server_reset_query = DISCARD ALL</code> clears session state between clients so one agent cannot see another's temporary tables or settings. <code>query_wait_timeout</code> bounds how long a client waits for a free backend before failing, which prevents unbounded queueing under burst.</p>
+<p>The trade-off is explicit: transaction mode is faster and cheaper under bursty load, but any workload that relies on session-level state — prepared statements held open across transactions, advisory locks, <code>SET</code> applied outside a transaction — will break. Audit your queries for those patterns before switching.</p>
+<h3 id="step-3-terminate-tls-at-the-gateway">Step 3: Terminate TLS at the gateway</h3>
+<p>If the function already talks to an API gateway or load balancer, terminate TLS there and connect to the proxy over a private network path. This removes one handshake from the function's critical path. The function code then connects without client-side TLS to the proxy, relying on network isolation for confidentiality.</p>
+<p>This is a real security decision, not a free win. It is only appropriate when the function-to-proxy leg stays inside a private network with no untrusted hops. Document the decision and the network boundary it depends on.</p>
+<h3 id="step-4-client-code">Step 4: Client code</h3>
+<p>The client should open one connection per invocation and close it, letting the proxy manage reuse. Do not build a connection pool inside the function; it will be discarded when the instance is recycled and adds complexity for no benefit.</p>
 <pre><code class="language-python">import os
 import pg8000
 
 def lambda_handler(event, context):
-    host = os.getenv(&quot;PG_MUX_HOST&quot;)
-    port = int(os.getenv(&quot;PG_MUX_PORT&quot;, &quot;5432&quot;))
-    user = os.getenv(&quot;PG_MUX_USER&quot;)
-    password = os.getenv(&quot;PG_MUX_PASSWORD&quot;)
-    db = os.getenv(&quot;PG_MUX_DB&quot;)
-
-    # Single connect per Lambda invocation; no pool in Lambda
     conn = pg8000.connect(
-        host=host,
-        port=port,
-        database=db,
-        user=user,
-        password=password,
-        ssl_context=None  # TLS terminated at API Gateway
+        host=os.environ[&quot;PG_PROXY_HOST&quot;],
+        port=int(os.environ.get(&quot;PG_PROXY_PORT&quot;, &quot;5432&quot;)),
+        database=os.environ[&quot;PG_PROXY_DB&quot;],
+        user=os.environ[&quot;PG_PROXY_USER&quot;],
+        password=os.environ[&quot;PG_PROXY_PASSWORD&quot;],
+        ssl_context=None,  # TLS terminated at the gateway on a private path
     )
     try:
         cursor = conn.cursor()
         cursor.execute(
-            &quot;SELECT agent_id, state FROM agents WHERE id = %s&quot;,
-            (event[&quot;agent_id&quot;],)
+            &quot;SELECT state FROM agents WHERE id = %s&quot;,
+            (event[&quot;agent_id&quot;],),
         )
-        return {&quot;state&quot;: cursor.fetchone()[1]}
+        row = cursor.fetchone()
+        return {&quot;state&quot;: row[0] if row else None}
     finally:
-        conn.close()  # Let the multiplexer recycle the physical connection
+        conn.close()
 </code></pre>
-<p>Key points:
-- No connection pooling in the Lambda; the multiplexer does the pooling.
-- Lambda runs for &lt;1 s, so we close the connection immediately. The multiplexer keeps the physical connection alive for the next agent.
-- SSL is offloaded to API Gateway, saving 12–18 ms per invocation.</p>
-<p><strong>Step 5: Scale horizontally</strong>
-Run two PgCat pods in different AZs. API Gateway uses latency-based routing. Under 200 req/s, both pods stay below 15 % CPU. At 800 req/s, CPU spikes to 60 % on one pod, so autoscale with 30 % headroom.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>A representative comparison across three architectures, each measured over a 30-day window on the same Aurora Serverless v2 cluster (db.t4g.medium, 2 vCPU, 4 GB RAM):</p>
-<table>
-<thead>
-<tr>
-<th>Architecture</th>
-<th>p50 latency</th>
-<th>p95 latency</th>
-<th>p99 latency</th>
-<th>monthly cost</th>
-<th>connection count</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RDS Proxy (session mode)</td>
-<td>42 ms</td>
-<td>128 ms</td>
-<td>312 ms</td>
-<td>$872</td>
-<td>120 million</td>
-</tr>
-<tr>
-<td>PgBouncer (transaction mode)</td>
-<td>38 ms</td>
-<td>114 ms</td>
-<td>289 ms</td>
-<td>$518</td>
-<td>120 million</td>
-</tr>
-<tr>
-<td>PgCat multiplexer</td>
-<td>22 ms</td>
-<td>67 ms</td>
-<td>183 ms</td>
-<td>$314</td>
-<td>8 million (physical)</td>
-</tr>
-</tbody>
-</table>
-<p>Notes:
-- RDS Proxy adds 12 ms of extra hop and charges $0.024 per million proxy connections. - PgBouncer's transaction mode drops idle-connection tax but still routes every Lambda through TLS. - PgCat's multiplexer cuts physical connections to 8 million (one per shard) and lets logical clients reuse them without TLS renegotiation.</p>
-<p>Cost breakdown:
-- PgCat ECS Fargate: $189/month
-- Aurora Serverless v2: $235/month (unchanged)
-- Data transfer out of PgCat VPC: $90/month (reduced by 62 %)</p>
-<p>Latency surprise: the multiplexer tends to win on p99, but the biggest win is often on p50. The removal of the TLS handshake per Lambda cuts the median by roughly 19 ms.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<p><strong>1. Shard-aware routing is still hard</strong>
-PgCat shards by table. If your agent workflow writes to table A and reads from table B, and tables A and B are on different shards, PgCat routes the write to shard 1 and the read to shard 2. That adds 8–12 ms of cross-shard latency. In agent-heavy systems, a single-digit percentage of calls can trigger cross-shard routing, which violates tight SLAs. The fix is to co-locate frequently joined tables on the same shard, which requires a schema change and a data migration.</p>
-<p><strong>2. Transaction-id wraparound in long-lived connections</strong>
-PgCat keeps backend connections open for 1 hour by default. In a high-churn system, that can push the transaction-id counter close to 2 billion, the PostgreSQL wraparound threshold. Systems commonly hit wraparound warnings in the 1.8 billion txid range and have to enable <code>vacuum_freeze_table_age = 1500000000</code> and run <code>VACUUM FREEZE</code> during off-peak. That can mean minutes of downtime.</p>
-<p><strong>3. Prepared-statement cache explosion</strong>
-PgCat caches prepared statements per backend connection. In an agent pattern where every Lambda uses a unique query string, the cache can grow to millions of entries in days. The pooler then spends a large share of its CPU on cache eviction. Setting <code>prepared_statement_cache_size = 1000</code> fixes it.</p>
-<p><strong>4. ALB health-check storms</strong>
-Fargate tasks run health checks every 5 seconds. When you scale from 2 to 6 pods, the ALB starts sending 60 health checks per second to the PgCat port. PgCat's health-check endpoint is a simple TCP port open, but the storm can still cause a small percentage of health-check failures. The fix is to move health checks to <code>/health</code> on HTTP 200, which bypasses the TCP stack.</p>
-<p><strong>5. Lambda concurrency bursts and connection leaks</strong>
-Agents can spike from 200 to 1,200 concurrent Lambdas in 30 seconds. If a Lambda crashes mid-execute, it can leak a connection in the multiplexer. PgCat's default <code>connect_timeout</code> is 5 s, so leaked connections time out quickly, but a rogue Lambda holding hundreds of connections for tens of seconds can block hundreds of other Lambdas. Add a CloudWatch alarm on <code>pgcat_active_connections &gt; 2 * shard_count</code> and kill the offending Lambda with a Lambda extension.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Best for</th>
-<th>Latency win</th>
-<th>Cost</th>
-<th>Gotcha</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PgCat</td>
-<td>1.3.0</td>
-<td>PostgreSQL with sharding</td>
-<td>15–20 ms</td>
-<td>$189/mo (ECS)</td>
-<td>Shard-aware routing</td>
-</tr>
-<tr>
-<td>ProxySQL</td>
-<td>2.5.4</td>
-<td>MySQL / Aurora</td>
-<td>12–16 ms</td>
-<td>$142/mo (ECS)</td>
-<td>Prepared-statement cache tuning</td>
-</tr>
-<tr>
-<td>Aurora Data API</td>
-<td>2026-03-01</td>
-<td>Aurora Serverless</td>
-<td>8–12 ms</td>
-<td>Included</td>
-<td>No sharding, single DB</td>
-</tr>
-<tr>
-<td>RDS Proxy</td>
-<td>2.4.1</td>
-<td>Multi-engine</td>
-<td>10–14 ms</td>
-<td>$0.024/million</td>
-<td>TLS hop still present</td>
-</tr>
-<tr>
-<td>pg8000</td>
-<td>1.30.0</td>
-<td>Python client</td>
-<td>N/A</td>
-<td>OSS</td>
-<td>No pooling in Lambda</td>
-</tr>
-</tbody>
-</table>
-<p>The takeaway: if you're on Aurora Serverless, skip the pooler entirely and use the Data API. It's built for serverless, charges nothing extra, and gives you 8–12 ms of latency win out of the box. If you're on self-hosted PostgreSQL or MySQL, PgCat or ProxySQL are the only options that actually reduce latency instead of adding a hop.</p>
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This multiplexer pattern is a bad fit for:</p>
+<p>The <code>finally</code> block matters. If the handler raises before closing, the connection is released only when the proxy's own timeout fires, which under a burst of failures can tie up backend slots.</p>
+<h3 id="step-5-size-the-proxy-and-set-alarms">Step 5: Size the proxy and set alarms</h3>
+<p>Run at least two proxy instances in different availability zones and route to them with health checks. Instrument these signals:</p>
 <ul>
-<li><strong>Heavy OLTP workloads</strong> where agents issue &gt;50 queries per second per agent. The multiplexer becomes a hotspot and you still need a pooler to absorb the load.</li>
-<li><strong>Cross-region replication</strong> where agents read stale data. The multiplexer routes to the nearest shard, which may be seconds behind the primary.</li>
-<li><strong>Regulatory environments</strong> that forbid connection multiplexing because it breaks audit trails. Some GDPR auditors still demand one connection per authenticated user; multiplexing violates that.</li>
-<li><strong>Extremely chatty agents</strong> (e.g., agents that open a connection per message). The multiplexer creates contention; a pooler with per-agent pooling is better.</li>
-<li><strong>Legacy drivers</strong> that don't support connection reuse. If your client library insists on one connection per thread, you're stuck with a pooler.</li>
+<li>Active backend connections versus configured maximum.</li>
+<li>Client wait time for a backend connection (the metric that predicts queueing before it becomes visible in p99).</li>
+<li>Proxy CPU and memory, since transaction-mode proxies spend cycles on session reset.</li>
 </ul>
-<p>In those cases, bite the bullet and run a traditional pooler like PgBouncer or RDS Proxy, but isolate it to a dedicated VPC and turn on VPC endpoints to cut data-transfer costs.</p>
-<h2 id="an-honest-take-after-using-this-in-production">An honest take after using this in production</h2>
-<p>Multiplexers can look like snake oil until you measure p99. The surprise isn't the latency win; it's the cost win. The Data API on Aurora Serverless costs nothing extra, and the multiplexer can cut the data-transfer bill by 62 % because you stop tunneling every agent request through a TLS-terminated pooler hop.</p>
-<p>What still surprises is how few vendors talk about the multiplexer pattern. Every vendor slide deck shows a pooler sitting between clients and DB, but no one shows the multiplexer that sits between API Gateway and DB. That's the pattern that actually wins in serverless.</p>
-<p>The biggest mistake teams make is assuming the multiplexer will handle shard routing automatically. It doesn't. You have to co-locate your hot tables on the same shard or pay the cross-shard tax. Rewriting shard keys after the first production outage is a multi-week effort.</p>
-<p>Also, the multiplexer doesn't solve the cold-start problem—it just removes the pooler from the critical path. If you want to cut cold-start latency, use Provisioned Concurrency on Lambda and keep the multiplexer connection warm yourself.</p>
-<p>Finally, the multiplexer pattern gives you audit-trail gaps. Because many logical clients share one physical connection, you lose the ability to trace which agent issued which query. You have to add a <code>client_info</code> field to every query and log it in CloudWatch, which adds a couple of percent overhead but saves you during a GDPR audit.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Open your current database proxy or pooler configuration file and look at the <code>connect_timeout</code> value. If it's greater than 500 ms, change it to 200 ms and redeploy. Then measure p50 latency before and after. If the latency drop is less than 8 ms, you're probably paying for a pooler that's doing more harm than good in your serverless environment.</p>
-<p>If you're on Aurora Serverless, switch to the Data API today and delete your pooler. The migration is typically quick: update the Lambda environment variables from <code>RDS_PROXY_HOST</code> to <code>CLUSTER_ENDPOINT</code> and remove the <code>sslmode</code> parameter. You'll see the latency win in CloudWatch within one deployment cycle.</p>
-<p>If you're on self-hosted PostgreSQL or MySQL, spin up PgCat 1.3.0 in ECS Fargate behind API Gateway. Use this Terraform snippet to create the service:</p>
-<pre><code class="language-hcl">resource &quot;aws_ecs_service&quot; &quot;pgcat&quot; {
-  name            = &quot;pgcat-mux&quot;
-  cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.pgcat.arn
-  desired_count   = 2
-  network_configuration {
-    subnets          = module.vpc.private_subnets
-    security_groups  = [aws_security_group.pgcat.id]
-  }
-  load_balancer {
-    target_group_arn = aws_lb_target_group.pgcat.arn
-    container_name   = &quot;pgcat&quot;
-    container_port   = 5432
-  }
-}
-</code></pre>
-<p>Deploy it, update your Lambda environment variables, and watch p95 latency drop by at least 35 % in the next hour.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how does PgCat handle transaction isolation in a multiplexed connection</strong></p>
-<p>PgCat uses <code>SET TRANSACTION ISOLATION LEVEL</code> per query when you enable <code>pool_mode = transaction</code>. Each logical client gets its own snapshot, so read-committed and repeatable-read behave as if each agent had its own connection. The downside is that long-running transactions (2+ seconds) can block other agents on the same physical connection. A common mitigation is setting <code>idle_in_transaction_session_timeout = 3000</code> in PostgreSQL to kill idle transactions after 3 s.</p>
-<p><strong>what's the maximum number of logical clients per multiplexer connection</strong></p>
-<p>PgCat defaults to 1024 logical clients per physical connection. In practice, systems tend to hit CPU saturation somewhere in the 700–800 concurrent agents per connection range. Above 1000, the multiplexer starts queueing requests, which adds 15–25 ms of latency. If you expect &gt;1000 concurrent agents, shard your database or run multiple PgCat instances.</p>
-<p><strong>how do I audit which agent used which connection in a multiplexer</strong></p>
-<p>PgCat doesn't log the agent ID by default. You have to add it to every query:</p>
+<p>Set an alarm on client wait time, not just on connection count. Connection count rising is normal under load; wait time rising means clients are queuing.</p>
+<h2 id="measuring-whether-any-of-this-helped">Measuring whether any of this helped</h2>
+<p>A comparison table with invented numbers is worse than no table, because it will not match your workload. Build your own with these steps:</p>
+<ol>
+<li><strong>Establish a baseline.</strong> Record p50, p95, and p99 latency for a representative endpoint, plus monthly cost broken into compute, database, and data transfer. Keep the raw data, not just the summary.</li>
+<li><strong>Instrument the connect phase separately.</strong> Log the time from function start to first successful query, and the time from connection open to first row. The difference isolates connection overhead from query time.</li>
+<li><strong>Change one thing.</strong> Switch from the pooler to the multiplexer, or from the multiplexer to the Data API, without also changing instance sizes or query patterns.</li>
+<li><strong>Re-measure over a full traffic cycle.</strong> Bursty workloads have quiet periods; a one-hour sample can miss the burst that matters.</li>
+<li><strong>Compare cost line by line.</strong> A latency win that moves spend from the database bill to the network bill is not necessarily a win.</li>
+</ol>
+<p>The metric most likely to improve is p50, because removing a handshake from every request helps the common case. p99 improvements depend on whether the old design was queueing under burst; if it was not, expect little change.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<p><strong>Shared session state.</strong> The most common bug in transaction-mode pooling and multiplexing is assuming session state persists. Temporary tables, <code>SET</code> commands issued outside a transaction, advisory locks, and <code>LISTEN</code>/<code>NOTIFY</code> all break. Run <code>DISCARD ALL</code> between clients and audit your queries for these patterns.</p>
+<p><strong>Long transactions blocking other clients.</strong> In transaction mode, a client holding a transaction open occupies a backend. A slow query or an application bug that leaves a transaction open can starve every other client on that backend. Set <code>idle_in_transaction_session_timeout</code> in PostgreSQL so abandoned transactions are terminated, and set a query timeout in the proxy.</p>
+<p><strong>Prepared-statement cache growth.</strong> If every client uses a unique query string, a prepared-statement cache keyed by query text can grow without bound. Cap the cache size in the proxy configuration and monitor eviction rate; a rising eviction rate with flat throughput means the cache is thrashing.</p>
+<p><strong>Connection leaks from crashed clients.</strong> A function that exits without closing its connection leaves the proxy holding a slot until a timeout fires. Bound this with an aggressive <code>query_wait_timeout</code> and alert on the gap between active connections and expected concurrency.</p>
+<p><strong>Health-check load during scale-out.</strong> When many proxy instances start at once, health checks can briefly dominate traffic. Use an application-level health endpoint rather than a TCP connect check so the check exercises the same path as real requests.</p>
+<p><strong>Audit-trail gaps.</strong> When many logical clients share one physical connection, the database sees one backend session. If you need per-client attribution, set <code>application_name</code> per client and log it:</p>
 <pre><code class="language-sql">SET application_name = 'agent-12345';
-SELECT ...
+SELECT state FROM agents WHERE id = $1;
 </code></pre>
-<p>Then capture <code>application_name</code> in your application logs. In PostgreSQL, run:</p>
+<p>Then query the server's activity view to attribute work:</p>
 <pre><code class="language-sql">SELECT pid, usename, application_name, query_start, state
 FROM pg_stat_activity
 WHERE application_name LIKE 'agent-%';
 </code></pre>
-<p>This gives you a trace of which agent used which PID. For GDPR compliance, delete the logs after 30 days.</p>
-<p><strong>why does Aurora Data API still have a 8 ms latency floor</strong></p>
-<p>The 8 ms floor comes from two network hops inside AWS: Lambda → API Gateway (1–3 ms) and API Gateway → Aurora internal endpoint (4–6 ms). The Data API itself adds negligible latency, but the cross-AZ routing inside AWS is the bottleneck. If your Lambda and Aurora are in the same AZ, latency drops to 5 ms. You can achieve that by pinning Lambda to the same AZ as the Aurora writer and using Aurora's cross-AZ reader endpoints for reads.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>This adds a small per-query overhead and requires every client to set the field. Where a compliance regime requires one connection per authenticated user, multiplexing may be disallowed outright; confirm before designing around it.</p>
+<p><strong>Cross-shard routing.</strong> If the proxy shards by table and a single logical request touches tables on different shards, the proxy must route to more than one backend, adding latency and complicating transactions. Co-locating frequently joined tables on the same shard is a schema decision that is expensive to reverse after launch. Make it before, not after.</p>
+<h2 id="when-not-to-use-a-multiplexer">When not to use a multiplexer</h2>
 <ul>
-<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
-<li><a href="https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/">Zero-trust AI: skip the latency tax</a></li>
-<li><a href="https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/">MCP servers: the 3 hidden costs nobody quotes</a></li>
+<li><strong>Workloads with heavy session state.</strong> If your application relies on temporary tables or session-level settings, transaction-mode multiplexing will break it. Use session pooling and accept the cost.</li>
+<li><strong>High per-client query rates.</strong> A single agent issuing many queries per second will monopolize its backend slot. Pooling with per-client isolation may be more appropriate.</li>
+<li><strong>Strict per-user audit requirements.</strong> If regulations require a distinct database connection per authenticated user, multiplexing is not compatible.</li>
+<li><strong>Reads that must be current.</strong> If the proxy routes reads to replicas, an agent may see stale data. Route reads that must be current to the primary.</li>
+<li><strong>Client libraries that assume one connection per thread.</strong> Some drivers will not work correctly through a multiplexer. Verify before committing.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p>In these cases a traditional pooler is the right tool. Isolate it in its own network segment and use private endpoints so traffic does not cross a billed boundary unnecessarily.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open your proxy or pooler configuration and find the client wait timeout — the setting that governs how long a client waits for a backend connection. In PgBouncer it is <code>query_wait_timeout</code>; in other proxies it has a different name. If the value is greater than 5 seconds or unset, set it to 5 seconds and redeploy. Then check whether you have a metric for client wait time. If you do not, add one. That single metric will tell you whether your proxy is absorbing bursts or queueing them, and it is the first thing to look at when latency degrades under load.</p>
                 
                 
             </div>
@@ -549,9 +429,9 @@ WHERE application_name LIKE 'agent-%';
                 <div class="related-grid">
                     
                     <a class="related-card" href="/why-our-schema-survived-ai-scaling/">
-                        <h3>Why our schema survived AI scaling</h3>
-                        <p>Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
-                        <span class="related-meta">11 min read · 13 September 2026</span>
+                        <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
+                        <p>Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
+                        <span class="related-meta">10 min read · 13 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-best-practices-fail-on-slow-networks/">
@@ -562,8 +442,8 @@ WHERE application_name LIKE 'agent-%';
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
-                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

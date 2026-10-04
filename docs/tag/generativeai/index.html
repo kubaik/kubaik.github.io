@@ -49,13 +49,13 @@
 
       <a class="post-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
-        <p class="post-excerpt">LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</p>
-        <p class="post-reading-time">15 min read · 3 October 2026</p>
+        <p class="post-excerpt">How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+        <p class="post-reading-time">14 min read · 3 October 2026</p>
       </a>
       <a class="post-card" href="/who-signs-off-on-ai-code/">
         <h3>Who signs off on AI code?</h3>
-        <p class="post-excerpt">AI writes code fast, but who owns the merge? Add Git trailers, CI policy checks, and branch protection to keep accountability without slowing down.</p>
-        <p class="post-reading-time">14 min read · 2 October 2026</p>
+        <p class="post-excerpt">AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
+        <p class="post-reading-time">11 min read · 2 October 2026</p>
       </a>
       <a class="post-card" href="/agentic-workflows-surviving-network-partitions/">
         <h3>Agentic workflows: surviving network partitions</h3>
@@ -64,23 +64,23 @@
       </a>
       <a class="post-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
         <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
-        <p class="post-excerpt">Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
-        <p class="post-reading-time">13 min read · 29 September 2026</p>
+        <p class="post-excerpt">Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+        <p class="post-reading-time">11 min read · 29 September 2026</p>
       </a>
       <a class="post-card" href="/route-fine-tune-or-scale-pick-right/">
         <h3>Route, fine-tune, or scale: pick right</h3>
-        <p class="post-excerpt">Fine-tune, route, or use a bigger model? Build an eval set first, then a routing layer.</p>
+        <p class="post-excerpt">A practical framework for choosing between model routing, fine-tuning, and simply paying for a larger model, with code, cost math, and evaluation harnesses.</p>
         <p class="post-reading-time">13 min read · 29 September 2026</p>
       </a>
       <a class="post-card" href="/agent-architecture-the-new-model-trap/">
         <h3>Agent architecture: the new model trap</h3>
-        <p class="post-excerpt">Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.</p>
-        <p class="post-reading-time">17 min read · 27 September 2026</p>
+        <p class="post-excerpt">Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
+        <p class="post-reading-time">16 min read · 27 September 2026</p>
       </a>
       <a class="post-card" href="/multi-agent-systems-when-they-quietly-degrade/">
         <h3>Multi-agent systems: when they quietly degrade</h3>
-        <p class="post-excerpt">Multi-agent research systems degrade quietly: token growth, retry loops, and missing per-node metrics. Learn what to instrument first to catch the slide.</p>
-        <p class="post-reading-time">14 min read · 24 September 2026</p>
+        <p class="post-excerpt">Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+        <p class="post-reading-time">11 min read · 24 September 2026</p>
       </a>
       <a class="post-card" href="/when-your-agent-goes-silent-degrade-gracefully/">
         <h3>When your agent goes silent: degrade gracefully</h3>
@@ -89,28 +89,28 @@
       </a>
       <a class="post-card" href="/context-windows-agents-that-run-for-days/">
         <h3>Context windows: agents that run for days</h3>
-        <p class="post-excerpt">Long-running agents forget constraints when context windows fill.</p>
-        <p class="post-reading-time">15 min read · 19 September 2026</p>
+        <p class="post-excerpt">Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.</p>
+        <p class="post-reading-time">17 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/most-llm-cost-dashboards-lie/">
         <h3>Most LLM cost dashboards lie…</h3>
-        <p class="post-excerpt">LLM bills hide 30-60% of real spend in retries, cache misses, and agent loops.</p>
-        <p class="post-reading-time">15 min read · 19 September 2026</p>
+        <p class="post-excerpt">Per-request token attribution, prompt caching, model routing and retry caps: how to instrument LLM spend so the numbers match the invoice.</p>
+        <p class="post-reading-time">12 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/multi-agent-systems-why-failures-hide/">
         <h3>Multi-agent systems: why failures hide</h3>
-        <p class="post-excerpt">Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</p>
+        <p class="post-excerpt">Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
         <p class="post-reading-time">12 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/stop-putting-llm-keys-in-env/">
         <h3>Stop Putting LLM Keys in .env</h3>
-        <p class="post-excerpt">Why .env files fail at 40+ LLM integrations — the env-dump leak, build-arg exposure, and the gateway pattern that fixes rotation and audit.</p>
+        <p class="post-excerpt">Why flat .env files fail at scale for LLM API keys, and how a secrets manager plus gateway brokering scoped credentials fixes rotation and leaks.</p>
         <p class="post-reading-time">14 min read · 17 September 2026</p>
       </a>
       <a class="post-card" href="/llm-agents-why-monoliths-win/">
         <h3>LLM agents: why monoliths win</h3>
-        <p class="post-excerpt">LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.</p>
-        <p class="post-reading-time">13 min read · 10 September 2026</p>
+        <p class="post-excerpt">Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.</p>
+        <p class="post-reading-time">11 min read · 10 September 2026</p>
       </a>
       <a class="post-card" href="/two-engineer-classes-the-ai-tool-norm-trap/">
         <h3>Two engineer classes: the AI tool norm trap</h3>
@@ -119,13 +119,13 @@
       </a>
       <a class="post-card" href="/agents-running-hours-youre-losing-context-fast/">
         <h3>Agents running hours? You're losing context fast</h3>
-        <p class="post-excerpt">Keep long-running agents on track without ballooning prompts — sliding windows, archive thresholds, and PostgreSQL 16 JSONB with 3 concrete numbers and a…</p>
+        <p class="post-excerpt">How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
         <p class="post-reading-time">11 min read · 3 September 2026</p>
       </a>
       <a class="post-card" href="/llm-eval-drift-that-users-notice-first/">
         <h3>LLM eval drift that users notice first</h3>
-        <p class="post-excerpt">Detect LLM drift before users notice — real metrics from production pipelines, with concrete thresholds, code snippets, and cost figures for 2026…</p>
-        <p class="post-reading-time">17 min read · 28 August 2026</p>
+        <p class="post-excerpt">Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
+        <p class="post-reading-time">15 min read · 28 August 2026</p>
       </a>
       <a class="post-card" href="/agent-code-review-gap-nobody-admits/">
         <h3>agent code review gap nobody admits</h3>
@@ -139,13 +139,13 @@
       </a>
       <a class="post-card" href="/llm-drift-before-users-complain-catch-it-early/">
         <h3>LLM drift before users complain: catch it early</h3>
-        <p class="post-excerpt">Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%</p>
-        <p class="post-reading-time">14 min read · 10 August 2026</p>
+        <p class="post-excerpt">Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.</p>
+        <p class="post-reading-time">11 min read · 10 August 2026</p>
       </a>
       <a class="post-card" href="/agent-frameworks-stop-rewriting-the-same-glue-code/">
         <h3>Agent frameworks: stop rewriting the same glue code</h3>
-        <p class="post-excerpt">Agent frameworks: stop rewriting the same glue code – cut boilerplate 70% with a job queue, credentials service, and DAG compiler in 2026</p>
-        <p class="post-reading-time">19 min read · 10 August 2026</p>
+        <p class="post-excerpt">Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+        <p class="post-reading-time">12 min read · 10 August 2026</p>
       </a>
       <a class="post-card" href="/context-windows-live-longer-than-you-think/">
         <h3>Context windows live longer than you think</h3>
@@ -154,12 +154,12 @@
       </a>
       <a class="post-card" href="/ai-code-in-prod-postmortems-still-work/">
         <h3>AI code in prod? Postmortems still work</h3>
-        <p class="post-excerpt">AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.</p>
-        <p class="post-reading-time">14 min read · 21 July 2026</p>
+        <p class="post-excerpt">AI-generated code hides its assumptions. Capture the prompt, model snapshot and runtime context so incident reviews explain decisions, not just stack traces.</p>
+        <p class="post-reading-time">11 min read · 21 July 2026</p>
       </a>
       <a class="post-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">
         <h3>Agents keep breaking prod: 3 boundary rules you still need</h3>
-        <p class="post-excerpt">Agent breaking prod silently: 3 boundary rules to add now — outcome polling, schema drift checks, and concurrency guards — with concrete fixes and failure costs</p>
+        <p class="post-excerpt">Agents that mutate external state fail silently when 2xx is mistaken for completion. Three boundary rules: outcome polling, schema drift gates, atomic claims.</p>
         <p class="post-reading-time">14 min read · 17 July 2026</p>
       </a>
       <a class="post-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
@@ -183,9 +183,9 @@
         <p class="post-reading-time">11 min read · 4 July 2026</p>
       </a>
       <a class="post-card" href="/ai-tools-rewrote-my-engineering-rules/">
-        <h3>AI tools rewrote my engineering rules</h3>
-        <p class="post-excerpt">Cut error rates 80% after AI tools broke my workflow — the principles I updated and why resilience beats velocity in 2026.</p>
-        <p class="post-reading-time">15 min read · 2 July 2026</p>
+        <h3>AI Code Generation Shifts Engineering Judgment</h3>
+        <p class="post-excerpt">AI coding tools move effort from writing to auditing. A practical framework for invariants, resilience patterns, and measuring what matters.</p>
+        <p class="post-reading-time">13 min read · 2 July 2026</p>
       </a>
       <a class="post-card" href="/test-ai-code-without-testing-the-ai/">
         <h3>Test AI code without testing the AI</h3>

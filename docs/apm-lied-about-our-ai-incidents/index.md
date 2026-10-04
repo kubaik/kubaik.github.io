@@ -1,141 +1,127 @@
-# APM lied about our AI incidents
+# Why APM Misses GPU-Bound LLM Incidents
 
-I ran into this traditional apm problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's the fuller picture, with the tradeoffs left in.
+## The blind spot in code-centric monitoring
 
-## The conventional wisdom (and why it's incomplete)
+Application Performance Monitoring (APM) is usually treated as the single source of truth for incidents. That works well when the workload is CPU-bound, the latency budget is tight, and the hot path runs entirely inside instrumented code. It stops working the moment a request leaves the process and enters a hardware accelerator or an external inference server.
 
-Most teams still treat Application Performance Monitoring (APM) as the single source of truth for incidents. That’s fine when your system is CPU-bound, your latency budget is <100ms, and your logs are on fast NVMe storage. But in 2026, once you plug an LLM endpoint into your stack, the old rules break. I ran into this when we shipped a new feature that used a 13B parameter model served via vLLM 0.5 on an A100 GPU in AWS us-east-1. Our APM (Datadog APM 1.47) showed p99 latency at 420ms, green health, and no errors — yet users in Lagos were seeing 2.1s timeouts. The honest answer is that APM tools excel at measuring code paths they can see, but they miss everything that happens after your process hands off control to an external binary or hardware accelerator.
+The reason is structural, not a product defect. A tracer records the span between two points in your code: the call to `model.generate()` and its return. Everything the GPU does in between — kernel launch, memory allocation, batch scheduling, KV cache eviction — happens outside the tracer's visibility. The user's perceived latency, however, includes all of it plus the network round trip and browser rendering. The result is a dashboard that reports a healthy few hundred milliseconds while users experience seconds of waiting.
 
-The standard advice says: “Add tracing, set up SLOs, and monitor your endpoints.” That advice assumes the endpoint is a Python function or a Node route. When your endpoint is a 13B parameter model that offloads requests to a CUDA kernel, the tracer can’t see inside the CUDA context, the GPU’s internal scheduler, or the vLLM batching queue. The tracer only records the time from when your process writes the prompt to when it gets the first token back — but the user’s experience includes the entire token generation loop, network hops, and browser rendering. The gap between what APM shows and what the user feels can be 5× or more.
+The standard advice — add tracing, define SLOs, monitor your endpoints — assumes the endpoint is a function you control. When the endpoint delegates to a model server that batches requests on a GPU, that assumption breaks. This article covers where the gap comes from, how to measure it, and how to decide how much telemetry you actually need.
 
-I once watched a senior engineer spend three days tweaking Gunicorn worker counts only to realise the real bottleneck was the GPU’s memory bandwidth during batch decoding. The APM graphs were all flat; the only clue was a 1.8s tail latency spike on the GPU metrics endpoint we had added as an afterthought. That metric wasn’t in the APM dashboard, it was scraped from a Prometheus exporter pointed at the NVIDIA DCGM 3.2 metrics endpoint.
+## What the tracer can and cannot see
 
-## What actually happens when you follow the standard advice
+Consider a typical request path through a GPU-backed inference endpoint:
 
-Most APM setups start with one of three patterns:
-1. **Auto-instrumentation**: Turn on Datadog’s Python tracer, get traces for every endpoint.
-2. **SLO-based**: Set a p95 latency budget of 500ms and alert if it breaches.
-3. **Log aggregation**: Ship all logs to Loki and query with Grafana.
+1. Your web process receives the HTTP request and writes the prompt to the model server.
+2. The model server (for example, vLLM) places the request in a scheduling queue.
+3. The scheduler forms a batch when enough requests are waiting or a timeout elapses.
+4. The GPU executes prefill and decode kernels; KV cache memory is allocated and reused.
+5. Tokens stream back through the server to your process and out to the client.
 
-Here’s what breaks when you add an LLM endpoint:
+An auto-instrumented tracer covers step 1 and the tail of step 5. It does not cover steps 2 through 4, which is where most of the wall-clock time is spent under load. Typical contributors to end-to-end latency, in rough order of magnitude for a hosted model:
 
-- **The tracer doesn’t follow GPU control flow**: When your endpoint calls `model.generate()`, the tracer records the start and end of the Python call, but not the CUDA kernel execution, the GPU’s internal queueing, or the vLLM batch scheduler. The actual user-perceived latency is the sum of:
-  - Python overhead: ~5ms
-  - GPU kernel launch: ~200ms
-  - Token generation loop: ~1s (varies by prompt length)
-  - Network round-trip: ~60ms (Lagos to us-east-1)
-  - Browser rendering: ~300ms
-  The APM only shows the first 5ms + the last 60ms, so it reports 65ms while users see 1.6s.
+- Python and framework overhead: single-digit milliseconds.
+- Queue wait in the scheduler: highly variable, from near zero to seconds when the GPU is saturated.
+- GPU prefill and decode: hundreds of milliseconds to seconds, depending on prompt and output length.
+- Network round trip to the user: tens to hundreds of milliseconds depending on geography.
+- Browser rendering: tens to hundreds of milliseconds.
 
-- **SLOs are blind to GPU saturation**: A 500ms p95 budget is meaningless when the GPU is saturated. vLLM batches requests to maximize throughput, but if the batch size grows beyond the GPU’s memory capacity, the kernel evicts earlier requests’ KV caches, causing re-computation. The latency spike can jump from 400ms to 2.3s with no warning in the APM.
+An APM span that captures only the first and last items will understate the total by however much time the middle items consume. Under light load that gap may be small. Under saturation it can be an order of magnitude.
 
-- **Logs are too late**: By the time a log line appears in Loki, the user has already retried or bounced. In one incident, a memory leak in the vLLM cache caused a 300% latency spike every 45 minutes. The logs showed `OOM on GPU` only after the container restarted — 90 seconds after the first user timeout.
+### Failure mode: the green dashboard
 
-I once tried to debug a 900ms tail latency on a model endpoint using only Datadog APM. After three days of tweaking Gunicorn timeouts and adding more workers, I discovered the real issue: vLLM’s internal queue was full because the GPU batch scheduler was starved for memory. The APM showed no errors, only a slight p99 rise. The fix wasn’t in the Python code; it was tuning `max_model_len=2048` and reducing `gpu_memory_utilization=0.7` to prevent KV cache thrashing. The APM couldn’t see the GPU memory pressure at all.
+A common pattern is an SLO defined on the APM span, for example p95 under 500 ms. The APM satisfies this because the span closes before the GPU work is accounted for. Meanwhile the GPU is at high memory utilization, the scheduler queue is growing, and users are timing out and retrying — which adds more load and makes the queue longer. The dashboard stays green through the entire degradation.
 
-## A different mental model
+This is the central failure mode: the metric being alerted on is not causally connected to the user-visible symptom. Fixing it requires either measuring the true end-to-end path at the edge, or measuring the resource layer that causes the delay, or both.
 
-To stop missing AI incidents, shift from “code-centric monitoring” to “resource-centric monitoring.” That means tracking:
+## Instrumenting the layers APM cannot reach
 
-- **GPU utilization and memory pressure**: Not just GPU% used, but memory fragmentation, KV cache size, and PCIe bandwidth.
-- **Batch scheduler state**: How many requests are queued, what’s the current batch size, and is the scheduler dropping requests?
-- **Network and token economics**: Prompt token count, generated token count, and the ratio between them (a high ratio means the model is looping or stuck).
-- **External dependencies**: Model registry latency, S3/Blob storage access for weights, and CDN cache hit ratios for static assets.
+The shift is from code-centric monitoring to resource-centric monitoring. That means collecting metrics from three additional places.
 
-The new stack looks like this:
+**GPU telemetry.** Utilization, memory usage, and memory bandwidth. The category of tool here is a GPU metrics exporter — a daemon that reads device counters and exposes them in a Prometheus-compatible format. Vendors ship such exporters; the exact metric names differ between them, so check your exporter's documentation rather than assuming a name.
 
-| Layer | What to monitor | Tool | Example metric |
-|---|---|---|---|
-| Application | Python call overhead | Datadog APM 1.47 | `dd.trace.http.server.duration` |
-| GPU | Memory usage, utilization | NVIDIA DCGM 3.2 | `DCGM_FI_DEV_MEM_COPY_UTIL` |
-| Batch scheduler | Queued requests, dropped batches | vLLM 0.5 internal metrics | `vllm:num_requests_waiting` |
-| Model registry | Latency to fetch weights | Prometheus + exporter | `model_registry_fetch_duration_ms` |
-| Network | Round-trip time to user | Cloudflare CDN logs | `cf-ray:edge_response_time` |
+**Inference server internals.** Most production model servers expose a metrics endpoint. For vLLM, setting the metrics option on the engine exposes Prometheus-format counters including queue depth and KV cache usage. Consult the version's documentation for the exact metric names, since these have changed across releases.
 
-The key insight is that the user’s experience is a product of all these layers, not just your Python code. If any layer is saturated or misconfigured, the APM will show green while users see red.
+**Edge and client telemetry.** Real user monitoring, CDN logs, or a synthetic probe from representative regions. This is the only layer that captures the full path the user experiences.
 
-I once shipped a fix that reduced GPU memory pressure by 40% simply by adding `enforce_eager=True` to the vLLM config. The APM graphs remained flat; the user-reported error rate dropped from 8% to 0.3%. The only place the improvement showed up was in the DCGM memory fragmentation metric.
+A comparison of what each layer can answer:
 
-## Evidence and examples from real systems
+| Layer | Question it answers | Typical source |
+|---|---|---|
+| Application APM | How long did my code wait on the model call? | Tracer spans |
+| GPU exporter | Is the device saturated, and on what resource? | Device counters exposed as Prometheus metrics |
+| Inference server | Is work queuing, and is the KV cache under pressure? | Server metrics endpoint |
+| Edge / RUM | What did the user actually experience? | CDN logs, real user monitoring |
 
-Here’s a table of incidents we caught only after adding GPU and batch-scheduler metrics. The “APM only” column shows what Datadog APM 1.47 reported; the “Full stack” column shows what we saw once we added DCGM and vLLM internal metrics.
+None of these layers alone is sufficient. The APM tells you your code is waiting; the GPU exporter tells you why; the edge telemetry tells you whether it mattered to users.
 
-| Incident | APM only | Full stack | User impact | Root cause |
-|---|---|---|---|---|
-| GPU memory leak | p99 latency +20ms | GPU memory used +300% | 8% of users saw 2.3s timeouts | vLLM cache not releasing KV caches |
-| PCIe bandwidth saturation | p99 latency +50ms | PCIe util >90%, GPU idle | 12% of users saw 1.9s timeouts | Concurrent model loads exceeding PCIe bandwidth |
-| Batch scheduler drop | p99 latency flat | queued_requests >200, dropped_requests >5 | 5% of users saw retries | vLLM max_batch_size too low |
-| Token loop | p95 latency flat | token_ratio >10, model_loop_duration >1.5s | 3% of users saw spinner forever | Prompt causing infinite loop in model |
-| CDN cache miss | p99 latency +10ms | cache_hit_ratio <30% | 7% of users saw slow load times | Model weights not cached in CDN |
+### How to measure the gap
 
-In one case, a user reported a 2.1s timeout on a model endpoint. The APM showed 420ms latency and no errors. The DCGM metrics showed GPU memory utilization at 98% and a PCIe bandwidth saturation spike. The fix was to reduce the model’s `max_model_len` from 4096 to 2048 and set `gpu_memory_utilization=0.7`. After the change, the GPU utilization dropped to 70%, and user timeouts fell to 0.2%.
+Do this before adding any tooling, because it tells you whether you have a problem and how large it is.
 
-I once spent two weeks trying to fix a 900ms tail latency using only APM. The real issue was a misconfigured vLLM batch scheduler causing requests to queue up, but the APM only showed the Python call duration. The breakthrough came when I added `vllm:num_requests_waiting` to our Grafana dashboard. The metric spiked to 500 at the same time as the user-reported errors. The fix was to increase `max_batch_size` from 32 to 64 and add a priority queue for GPU access.
+1. Pick a representative endpoint and record the APM-reported p95 latency over a fixed window, for example one hour.
+2. From the same window, record the client-observed p95 latency. If you have real user monitoring, use it. If not, run a synthetic probe from at least two regions and record the full request duration including token streaming.
+3. Compare the two numbers. The difference is your instrumentation gap.
+4. Correlate that gap with a GPU metric from the same window. If the gap widens when GPU memory or compute utilization rises, the GPU layer is the cause.
 
-## The cases where the conventional wisdom IS right
+The instrumentation gap, not any single absolute latency figure, is the number that justifies the work. If the gap is small and stable, the existing stack is adequate.
 
-Not every AI incident needs GPU telemetry. The old APM stack works fine for these cases:
+## Worked example: reasoning about a latency spike
 
-- **Embedding endpoints**: If your model only returns embeddings (e.g., 768-dimensional vectors) and the generation loop is trivial, the APM will show the full latency.
-- **Pre-computed responses**: If you cache the entire model output in Redis 7.2 and serve it via a simple HTTP route, the APM will capture the full latency.
-- **Small models**: A 1B parameter model on a single GPU with no batching will fit in the APM’s view.
-- **CPU-only inference**: If you’re running ONNX Runtime on CPU, the tracer can follow the call stack all the way through.
+Suppose a synthetic probe reports a 2.0 s p95 end-to-end time while the APM span for the same endpoint reports 400 ms. Assume the probe and the APM cover the same requests.
 
-In these cases, adding GPU metrics is overkill. A good rule of thumb: if your model’s total generation latency is <200ms, the APM will likely catch issues. Beyond that, you need deeper telemetry.
+- Unexplained time = 2.0 s − 0.4 s = 1.6 s.
 
-We once ran a 300M parameter model on CPU with no batching. The APM showed the full latency, and we caught a memory leak in the ONNX session by monitoring Python’s `memory_profiler`. Adding GPU metrics added no value because the bottleneck was the Python process, not the hardware.
+Next, decompose the 1.6 s using the layers above. Suppose the GPU exporter shows memory utilization pinned near its ceiling and the inference server's queue-depth metric rising in the same window. A plausible causal chain:
 
-## How to decide which approach fits your situation
+1. Concurrent requests exceed the KV cache capacity configured for the model.
+2. The scheduler cannot admit new requests without evicting cache entries for in-flight sequences.
+3. Evicted sequences must be recomputed, which consumes GPU time that would otherwise serve new requests.
+4. Queue depth grows, so each new request waits longer before its first token.
+5. The APM span, which measures only the client-side call, does not include the queue wait.
 
-Use this decision matrix:
+The remediation levers, in order of least disruption:
 
-| Model size | Batch size | Hardware | Recommended monitoring stack |
-|---|---|---|---|
-| <1B params | 1–16 | CPU | Datadog APM 1.47 + Python memory profiler |
-| 1B–7B params | 16–64 | Single GPU | Datadog APM + NVIDIA DCGM 3.2 + vLLM internal metrics |
-| 7B–13B params | 64–256 | Single or multi-GPU | Datadog APM + DCGM + vLLM + Prometheus for model registry |
-| >13B params | >256 | Multi-GPU or distributed | Datadog APM + DCGM + vLLM + Prometheus + custom exporter for distributed scheduler |
-| Embeddings-only | Any | Any | Datadog APM only |
+- Reduce the maximum sequence length so each sequence consumes less KV cache. A smaller cache footprint per request means more concurrent requests fit.
+- Lower the memory utilization target passed to the engine, leaving headroom so the scheduler is not forced to evict.
+- Cap concurrency at the admission layer so the scheduler never sees more work than it can hold.
+- Add capacity if the above do not restore headroom.
 
-The matrix is not about model size alone; it’s about the interaction between model size, batch size, and hardware. A 7B parameter model with batch size 256 will hit GPU memory limits and need deeper telemetry, while a 13B parameter model with batch size 8 might not.
+Note that the arithmetic above uses illustrative numbers. The method is what transfers: measure the gap, attribute it to a layer, then adjust the parameter that governs that layer's capacity.
 
-I once ran a 7B parameter model with batch size 32 on a single A100. The APM looked fine, but users in Lagos saw 1.8s timeouts. The GPU memory utilization was at 95%, and the PCIe bandwidth was saturated. The fix was to reduce the batch size and add `gpu_memory_utilization=0.7`. The APM never saw the issue; the DCGM metrics did.
+### Verifying the fix
 
-## Objections I've heard and my responses
+After changing a parameter, re-run the same measurement over a comparable window. The check is not "did the APM improve" — the APM may not move at all. The check is whether the instrumentation gap narrowed and whether the GPU metric that was saturated now has headroom. If the gap narrowed but the GPU metric is still saturated, you have moved the bottleneck rather than removed it.
 
-**Objection 1**: “Adding GPU and vLLM metrics is too complex. My team doesn’t have the bandwidth.”
+## When the conventional approach is sufficient
 
-Response: Start with one metric. Pick `DCGM_FI_DEV_MEM_COPY_UTIL` and alert if it goes above 80%. That one metric catches 60% of GPU-related incidents. You don’t need to instrument vLLM’s internal queue to catch memory pressure.
+Not every LLM deployment needs GPU telemetry. The existing APM stack is adequate when:
 
-**Objection 2**: “Our APM vendor supports OpenTelemetry, so it should cover everything.”
+- The model is small enough and the hardware fast enough that generation completes in well under the APM's resolution, and there is no batching.
+- Responses are precomputed and served from a cache, so the request path is ordinary HTTP.
+- Inference runs on CPU and the framework's call stack is fully visible to the tracer.
+- The endpoint is an embeddings call with no autoregressive generation loop.
+- Traffic is low enough that the GPU is never saturated, so queue wait is negligible.
 
-Response: OpenTelemetry can trace across processes, but it can’t see inside a CUDA kernel or a GPU scheduler. The tracer records the Python call, but not the GPU’s internal state. You need exporters that speak the hardware’s language, not just the code’s.
+The deciding factor is not model size in parameters. It is whether the GPU is ever a contended resource and whether queue wait ever contributes meaningfully to user-visible latency. A large model on a lightly loaded dedicated device may need less telemetry than a small model serving heavy concurrent traffic.
 
-**Objection 3**: “We already have an NOC team watching GPU dashboards. Why duplicate?”
+A practical test: if the APM's p95 and the client-observed p95 track each other closely across your busiest periods, you do not have an instrumentation gap worth closing.
 
-Response: The NOC team watches infrastructure; your users care about the end-to-end experience. The GPU dashboard might show green while users see red. You need metrics that bridge the gap between hardware and user experience.
+## A decision checklist
 
-**Objection 4**: “Adding all these exporters will bloat our stack.”
+Work through these in order. Stop when the answer is "no."
 
-Response: Start with DCGM and a single vLLM metric (`vllm:num_requests_waiting`). That’s two extra endpoints and ~500 lines of Prometheus scrape config. The overhead is <1% of your system’s CPU.
+1. Does the request path include autoregressive generation on an accelerator? If no, standard APM is likely sufficient.
+2. Is the accelerator ever saturated during peak traffic? If no, the gap is probably small.
+3. Does client-observed latency diverge from APM latency during peak? If no, you have no gap to close.
+4. Is the divergence correlated with a GPU or queue metric? If yes, you have found the layer to instrument.
+5. Can you act on that metric — is there a parameter, a concurrency limit, or a capacity change that would move it? If no, adding the metric produces alert fatigue without remediation.
 
-I once tried to push for full GPU telemetry on a team that already had an NOC. The NOC said, “We monitor GPU memory, we’re good.” A week later, a memory leak in the vLLM cache caused a 300% latency spike. The NOC’s GPU memory metric showed green because the leak was in the vLLM process’s heap, not the GPU’s global memory. The fix was to add `vllm_cache_size_bytes` to our Prometheus scrape. The NOC’s dashboard missed it; ours caught it.
+## Adding the metrics: a minimal starting configuration
 
-## What I'd do differently if starting over
+Start with the smallest set that can explain a latency gap, then expand only if it cannot.
 
-If I were building an AI endpoint today, I’d start with this stack:
-
-1. **Datadog APM 1.47** for Python call tracing (even if it misses GPU latency).
-2. **NVIDIA DCGM 3.2** for GPU telemetry, with alerts on `DCGM_FI_DEV_MEM_COPY_UTIL > 80%` and `DCGM_FI_PROF_PIPE_UTIL > 90%`.
-3. **vLLM 0.5 internal metrics** exposed via a `/metrics` endpoint, with `vllm:num_requests_waiting` and `vllm:kv_cache_size_bytes` scraped by Prometheus.
-4. **Prometheus + Grafana** for dashboards, with a single “AI SLO” panel that combines:
-   - APM latency (p95)
-   - GPU memory utilization
-   - Batch queue length
-   - Token ratio (generated / prompt)
-5. **A lightweight alerting rule** that triggers if any of the above metrics breach SLOs, even if the APM is green.
-
-Here’s the Prometheus scrape config I’d start with:
+The following Prometheus scrape configuration assumes a model server exposing metrics on port 8000 and a GPU exporter on port 9400. Adjust ports and paths to match your deployment.
 
 ```yaml
 scrape_configs:
@@ -143,60 +129,48 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets: ['localhost:8000']
-  - job_name: 'nvidia-dcgm'
+  - job_name: 'gpu-exporter'
     metrics_path: '/metrics'
     static_configs:
       - targets: ['localhost:9400']
 ```
 
-I’d also add a single custom metric: `ai_endpoint_user_timeout_ratio` calculated as `(user_reported_timeouts / total_requests) * 100`. This metric bridges the gap between hardware telemetry and user experience. If the ratio spikes while APM and GPU metrics are green, it’s a sign the APM is missing the real bottleneck.
+Alongside these, add one derived metric that bridges resource telemetry and user experience:
 
-I spent six months debugging a 900ms tail latency on a model endpoint using only APM. If I’d started with DCGM and vLLM internal metrics, I would have caught the GPU memory pressure in under an hour. The lesson is: don’t wait for the APM to show red; instrument the layers the APM can’t see.
+```
+ai_endpoint_user_timeout_ratio = (client_reported_timeouts / total_requests) * 100
+```
+
+If this ratio rises while APM latency and GPU utilization are both flat, the instrumentation gap is real and neither of your existing views is capturing the cause.
+
+For alerting, avoid thresholds copied from another system. Derive them: observe the metric during a known-good period, note its distribution, and set the alert above the normal range with enough duration to avoid firing on transient spikes. A threshold of 80% utilization is a starting hypothesis, not a universal rule.
+
+## Common objections
+
+**"This is too complex for our team."**
+Start with one metric from one layer. A single GPU memory metric correlated against client-observed latency answers the first diagnostic question. Expand only when that metric fails to explain an incident.
+
+**"Our APM supports OpenTelemetry, so it covers everything."**
+OpenTelemetry propagates context across process boundaries, but it does not read device counters or scheduler internals. Instrumentation at the application layer cannot observe state that the application does not expose.
+
+**"Our infrastructure team already watches GPU dashboards."**
+Infrastructure dashboards answer "is the hardware healthy," not "is the user waiting." A device can be within its operating limits while the request queue in front of it is deep enough to cause timeouts. The two views must be correlated to be useful.
+
+**"More exporters will bloat the stack."**
+Each exporter is a process and a scrape target. The cost is real but bounded, and it is paid once. Compare it against the cost of an incident that is invisible to your current monitoring.
+
+**"We already have an SLO on latency."**
+Check what the SLO is measured against. If it is measured on an APM span that closes before the GPU work completes, the SLO is not measuring the thing users experience.
 
 ## Summary
 
-Traditional APM tools miss most AI incidents because they’re built for CPU-bound code, not GPU-accelerated inference. The gap between what APM shows and what users feel can be 5× or more. To catch these incidents, you need to monitor GPU memory pressure, batch scheduler state, and token economics — not just Python call latency.
+APM tools are built around code paths they can instrument. GPU-accelerated inference spends most of its wall-clock time outside those paths, in scheduling queues, kernel execution, and memory management. The result is dashboards that stay green while users wait.
 
-Start by adding NVIDIA DCGM 3.2 and vLLM 0.5 internal metrics to your stack. Pick one GPU metric (`DCGM_FI_DEV_MEM_COPY_UTIL`) and one vLLM metric (`vllm:num_requests_waiting`). Add a Prometheus scrape config, a single Grafana dashboard, and an alert that triggers if either metric breaches your SLO — even if the APM is green.
+The remedy is not to replace APM but to add the layers it cannot see: GPU device metrics, inference server queue and cache metrics, and edge or real-user telemetry. The measurement that justifies the work is the gap between APM-reported latency and client-observed latency, correlated against a resource metric.
 
-The next step is to open your current APM dashboard, find the AI endpoint, and look at the latency graph. Then open your GPU metrics dashboard (or your NOC’s GPU dashboard) and compare the two. If the GPU metrics show spikes while the APM is flat, you’ve found the gap. Fix it by adding DCGM and vLLM metrics to your stack, and set up alerts before the next incident hits.
+Start small, verify that each added metric can explain a real incident, and set thresholds from observed behavior rather than copied defaults.
 
+## Do this in the next 30 minutes
 
-## Frequently Asked Questions
-
-**What’s the minimal set of GPU metrics to start with?**
-Start with three: `DCGM_FI_DEV_MEM_COPY_UTIL` (GPU memory utilization), `DCGM_FI_PROF_PIPE_UTIL` (compute pipeline utilization), and `DCGM_FI_DEV_PCIE_TX_BYTES` (PCIe bandwidth). These three catch 80% of GPU-related incidents. Add alerts if any metric goes above 80% for more than 30 seconds.
-
-**Does this apply to CPU-only inference?**
-No. If your model runs on CPU and the generation loop is under 200ms, the APM will likely catch issues. Only add GPU metrics if your model is >1B parameters or uses batching.
-
-**How do I expose vLLM internal metrics?**
-vLLM 0.5 exposes a `/metrics` endpoint by default when you set `metrics=True` in the `LLM` config. The metrics include `vllm:num_requests_waiting`, `vllm:kv_cache_size_bytes`, and `vllm:generated_token_count`. Scrape these with Prometheus and add them to your Grafana dashboard.
-
-**What’s the cheapest way to add GPU telemetry?**
-Use NVIDIA DCGM 3.2 in sidecar mode on the same host as your model endpoint. DCGM runs as a daemon and exposes metrics on port 9400. The overhead is <1% CPU and no extra memory. Pair it with a single Prometheus scrape config and you’re done.
-
-**Can Datadog APM 1.47 show GPU metrics?**
-No. Datadog APM can trace across processes, but it can’t see inside a CUDA kernel or GPU scheduler. You need an exporter that speaks the hardware’s language, like DCGM or a custom vLLM metrics endpoint.
-
-**What’s the most common GPU-related incident?**
-GPU memory pressure caused by KV cache thrashing. When the batch size grows beyond the GPU’s memory capacity, the scheduler evicts earlier requests’ KV caches, causing re-computation and a latency spike. The fix is to reduce `max_model_len` or set `gpu_memory_utilization=0.7`.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** August 01, 2026
+Open your APM dashboard and note the p95 latency for one LLM-backed endpoint over the last 24 hours. Then run a synthetic request to that endpoint from a region far from your servers, timing the full response including token streaming. Subtract the APM figure from the measured figure. If the difference is more than a small fraction of the total, you have a quantified instrumentation gap — and a concrete number to bring to the next capacity or observability discussion.
+===END===

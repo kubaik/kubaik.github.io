@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI ate the niches first - Kubai Kevin</title>
-        <meta name="description" content="2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state.">
+        <meta name="description" content="A framework for judging whether a vertical SaaS product is defensible against free, integrated AI features, with code for auditing your own UI surface.">
         <meta name="keywords" content="Ai, MicroSaasMoats, ComplianceMoatSaas, ProprietaryDataSaas, Notarization, Dataengineering, Saas">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-17T19:55:02.675961">
-        <meta property="article:modified_time" content="2026-09-15T12:16:02.360714+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:08:18.889087+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI ate the niches first">
-        <meta property="og:description" content="2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state.">
+        <meta property="og:description" content="A framework for judging whether a vertical SaaS product is defensible against free, integrated AI features, with code for auditing your own UI surface.">
         <meta property="og:url" content="https://kubaik.github.io/ai-ate-the-niches-first/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI ate the niches first">
-        <meta name="twitter:description" content="2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state.">
+        <meta name="twitter:description" content="A framework for judging whether a vertical SaaS product is defensible against free, integrated AI features, with code for auditing your own UI surface.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-ate-the-niches-first.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-ate-the-niches-first/#article",
       "headline": "AI ate the niches first",
-      "description": "2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state.",
+      "description": "A framework for judging whether a vertical SaaS product is defensible against free, integrated AI features, with code for auditing your own UI surface.",
       "datePublished": "2026-06-17T19:55:02+00:00",
-      "dateModified": "2026-09-15T12:16:02+00:00",
-      "wordCount": 2494,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-04T10:08:18+00:00",
+      "wordCount": 1854,
+      "timeRequired": "PT9M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI ate the niches first</h1>
                 
-                <p class="post-lead">2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state.</p>
+                <p class="post-lead">A framework for judging whether a vertical SaaS product is defensible against free, integrated AI features, with code for auditing your own UI surface.</p>
                 
                 
                 <div class="tags">
@@ -259,174 +259,136 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2494 words
+                        9 min read
+                        &nbsp;·&nbsp; 1854 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-15
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>This post is what I put together after properly working through it.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>In 2026 the Micro-SaaS world still repeats a mantra: find an underserved niche, automate the pain, and charge $20–$50/month before the SaaS giants notice. The story goes that niches like real-estate agent tooling, Shopify plugin catalogs, or local gym management are low-hanging fruit because the big players ignore them.</p>
-<p>The standard playbook has five steps:
-1. Pick a vertical with fragmented workflows (e.g., dental labs scheduling). 2. Build a 200-line CRUD wrapper around a spreadsheet. 3. Add Zapier-style integrations to QuickBooks, Stripe, and Gmail. 4. Charge $39/month per practitioner. 5. Wait for competitors to copy the UI.</p>
-<p>What the playbook misses is the moment a large model can replicate the entire workflow in one prompt. In 2026 we hit the commoditisation inflection point: any vertical where the primary output is text, structured data, or a semi-structured UI can be generated by a fine-tuned model in seconds. The niches that survive are the ones where the data is messy, proprietary, or legally sensitive—and where the model cannot reproduce the result without human-in-the-loop cost.</p>
-<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>Last year I launched a Micro-SaaS for indie SaaS founders called "ChurnQL"—a simple SQL-like query builder that turned Stripe events into churn forecasts.</p>
-<p>Revenue looked healthy—$4,250 MRR. Then Stripe rolled out "Churn Insights" (a free AI agent that ingests your Stripe data and emails you a churn report). My churn rate shot from 1.2% to 7.8% in 30 days. That difference cost me 37% of my users.</p>
-<p>The honest answer is that the standard advice underestimates how fast incumbents weaponize AI. Free, integrated AI features inside the billing stack turned a $20/month niche into a checkbox.</p>
-<p>Each week 34% of tickets asked for custom SQL snippets. At $120/hour that was $1,152 of unpaid labor—enough to fund one new engineer. Running that every week was unsustainable.</p>
-<p>Costs stacked up: Fly.io bill hit $280/month at 12k requests/day, plus $420 for Retool to rebuild the UI faster.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>In 2026 Micro-SaaS niches survive on one of three moats:</p>
+                <h2 id="the-conventional-wisdom-and-where-it-breaks">The conventional wisdom, and where it breaks</h2>
+<p>A durable piece of startup advice says: find an underserved vertical, automate the painful workflow, and charge $20–$50 per seat per month before a large platform notices. The examples usually offered are real-estate agent tooling, e-commerce plugin catalogs, or local gym management — verticals the big players supposedly ignore.</p>
+<p>The standard playbook has five steps:</p>
 <ol>
-<li><strong>Proprietary data loops</strong> – the model cannot train on your customer’s private data without violating GDPR or HIPAA, and the cost of reproducing the output is higher than paying you.</li>
-<li><strong>Human-in-the-loop compliance</strong> – the output must be legally signed, notarized, or certified, so automation alone is illegal.</li>
-<li><strong>Real-time multiplayer state</strong> – the product must synchronize UI state across 50+ concurrent editors, and eventual consistency is unacceptable (think live co-editing of clinical notes).</li>
+<li>Pick a vertical with fragmented workflows.</li>
+<li>Build a thin CRUD wrapper around a spreadsheet.</li>
+<li>Add integrations to the incumbent tools of that vertical.</li>
+<li>Charge a modest monthly subscription per practitioner.</li>
+<li>Wait for competitors to copy the interface.</li>
 </ol>
-<p>Anything else is now a feature inside a larger SaaS platform.</p>
-<p>Let me give you a concrete example. In 2026 I built "DocMerge AI"—a service that merges clinical notes from EHRs into PDF discharge summaries. EHR vendors like Epic expose HL7 feeds, but the semantic mapping is proprietary and changes weekly.</p>
-<p>The twist: the final PDF had to be digitally signed by the physician. That signed PDF is the billable artifact. The AI can draft the text, but the physician must click “sign” in a HIPAA-compliant viewer. The cost to replicate that workflow externally would require a licensed physician on standby—$180/hour. The incumbents (Epic, Cerner) can’t automate the signature step without re-certifying the entire EHR suite, which takes 18 months.</p>
-<p>In contrast, a “dental lab scheduling” tool I evaluated last quarter collapsed in three weeks. A fine-tuned Llama-3.1-70B model now sits inside Dentrix Ascend and spits out lab orders in natural language. The dentists didn’t need my UI; they just asked the AI inside their existing workflow.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>Here are six niches I tracked from January to July 2026, with MRR deltas and the AI feature that killed them.</p>
+<p>The playbook assumes the interface is the product. That assumption is what changed. When a capable model can produce the primary output of a workflow — a summary, a classification, a structured record, a first-draft document — from the same inputs your product accepts, the interface stops being the thing customers pay for. The platform that already holds the data can ship that generation as a free checkbox.</p>
+<p>The defensible verticals are the ones where generation is not the bottleneck: messy proprietary data, a legally required human signature, or real-time shared state. Everything else trends toward being a feature.</p>
+<h2 id="the-failure-mode-described-generically">The failure mode, described generically</h2>
+<p>A recurring pattern in vertical SaaS looks like this. A product wraps a platform's API and adds analysis on top: it ingests a customer's billing events, support tickets, or scheduling data and returns a forecast, a report, or a recommended action. It charges a low monthly fee.</p>
+<p>Then the platform ships a native feature that does the same analysis on the same data, at no extra cost, inside the surface the customer already uses. The wrapper's differentiation was convenience, not capability. Retention collapses not because the product got worse but because the reason to leave the host platform disappeared.</p>
+<p>The diagnostic question is not "is my product good?" It is "what does the customer have to leave, install, or pay for in order to use me, and can the platform eliminate that step?" If the answer is "nothing much," the product is exposed.</p>
+<p>The same logic applies to a second pattern: a product whose core value is a single generation step (upload a document, get a summary). The cost of that generation falls toward zero, and the platform that owns the document upload flow can absorb it.</p>
+<h2 id="three-moats-that-hold">Three moats that hold</h2>
+<p>Vertical SaaS products that have held up against free integrated AI features generally sit on one of three moats.</p>
+<p><strong>1. Proprietary or regulated data the platform cannot legally touch.</strong> If the model cannot be trained on your customers' data without a data processing agreement and explicit consent, the incumbent faces a legal cost to replicate your output, not just an engineering cost. This is a real constraint, but note it is a legal moat, not a technical one — it holds only as long as the regulation and the enforcement do.</p>
+<p><strong>2. A human-in-the-loop step that is legally required.</strong> If the billable artifact must be signed, notarized, or attested by a licensed professional, no amount of model capability removes the human. The AI can draft; the human must sign. This moat is durable because it is a licensing constraint, not a capability constraint.</p>
+<p><strong>3. Real-time multiplayer state.</strong> If the product must synchronize edits across many concurrent users with low latency and strong consistency, it is a distributed-systems problem, not a generation problem. Models do not solve conflict resolution.</p>
+<p>The rest of this article works through how to tell which category you are in, with a concrete worked example.</p>
+<h2 id="a-worked-example-the-notarization-workflow">A worked example: the notarization workflow</h2>
+<p>Consider a service that notarizes documents over a live video call. The workflow is: the customer uploads a PDF, schedules a short video session with a notary, the notary verifies identity and witnesses the signature, and the service returns a notarized PDF with an audit trail.</p>
+<p>Why this holds up:</p>
+<ul>
+<li>The notarization artifact is legally binding, and the notary is a licensed human. A model cannot perform the notarization.</li>
+<li>The audit trail has evidentiary value; courts care about the chain of custody, not the quality of the generated text.</li>
+<li>The incumbent platforms that own document storage have no incentive to become licensed notaries in every jurisdiction.</li>
+</ul>
+<p>The generation step — drafting the document, filling fields, formatting the output — is the easy part and is not where the value sits. The value sits in the legally recognized act.</p>
+<p>Now contrast with a scheduling tool for a vertical like dental labs. The workflow is: receive a lab order, parse it, schedule it, notify the technician. Every step is text processing and calendar manipulation. A model embedded in the practice-management system the dentist already uses can do all of it. The scheduling tool has no moat because the output is generated text and the data already lives in the incumbent.</p>
+<p>The general rule: if the primary user action is "give data, receive generated result," the platform absorbs it. If the primary user action requires a licensed human, a signature, or coordination between many simultaneous editors, it does not.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Answer each question for your product. Two or more "yes" answers means you are exposed.</p>
 <table>
 <thead>
 <tr>
-<th>Niche</th>
-<th>Pre-AI MRR</th>
-<th>Post-AI MRR delta</th>
-<th>AI feature</th>
-<th>Underlying model</th>
-<th>Why it stuck (or didn’t)</th>
+<th>Question</th>
+<th>Yes means</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Shopify bundle optimizer</td>
-<td>$128k</td>
-<td>-89%</td>
-<td>Free bundle generator in Shopify admin</td>
-<td>Shopify’s proprietary model</td>
-<td>Merchants clicked “Generate bundles” instead of installing apps</td>
+<td>Can a model produce the primary output from the same inputs your product accepts?</td>
+<td>Generation is commoditised</td>
 </tr>
 <tr>
-<td>Real-estate agent CRM</td>
-<td>$456k</td>
-<td>-67%</td>
-<td>AI email responder inside Realtor.com</td>
-<td>Realtor’s fine-tuned model</td>
-<td>Agents never left the portal to use third-party tools</td>
+<td>Is the primary output text, structured JSON, or a semi-structured document?</td>
+<td>Output is model-shaped</td>
 </tr>
 <tr>
-<td>Local gym member onboarding</td>
-<td>$92k</td>
-<td>-73%</td>
-<td>AI waiver generator inside Mindbody</td>
-<td>Mindbody’s model</td>
-<td>Members signed waivers before class without an extra app</td>
+<td>Can the workflow run entirely inside a platform your customers already pay for?</td>
+<td>The platform can absorb you</td>
 </tr>
 <tr>
-<td>Clinical trial recruitment</td>
-<td>$211k</td>
-<td>-42%</td>
-<td>Free AI screener inside Medidata Rave</td>
-<td>Medidata’s curated model</td>
-<td>Sites used the built-in tool to avoid vendor lock-in</td>
+<td>Is the input data already available to a major model or a public dataset?</td>
+<td>No data moat</td>
 </tr>
 <tr>
-<td>Indie SaaS churn forecast</td>
-<td>$4.3k</td>
-<td>-37%</td>
-<td>Stripe Churn Insights</td>
-<td>Stripe’s model</td>
-<td>Free integration killed the paid niche</td>
-</tr>
-<tr>
-<td>Physician discharge summary</td>
-<td>$8.4k</td>
-<td>+12%</td>
-<td>None (HIPAA signature required)</td>
-<td>N/A</td>
-<td>Moat intact</td>
+<td>Could a competent engineer replicate 90% of the functionality in 30 days with a modest budget?</td>
+<td>Low replication cost</td>
 </tr>
 </tbody>
 </table>
-<p>The pattern is clear: if the primary UX is “upload data → click button → download result,” the big platform will absorb it. The surviving niches either (a) require a legally binding signature, (b) train on proprietary data the platform cannot access, or (c) synchronize real-time state across many users.</p>
-<p>I’ll give you another data point. In March 2026 I helped a friend spin up "TinyNotary"—a service that notarizes PDFs via a live Zoom call and stores the notarization on IPFS. The workflow is: upload PDF → schedule 30-second Zoom → sign → notarize → return PDF. Revenue climbed from $0 to $7,200 MRR in 90 days. The notarization artifact is legally binding in 48 U.S. states. Not even the largest SaaS platforms can reproduce that without re-certifying a notary public license in every state—an 18-month compliance moat.</p>
-<p>Tooling stack: Next.js 14 on Vercel Edge, WebRTC via Daily.co, IPFS via Fleek, Stripe subscriptions. Latency: median 8.3 seconds from upload to notarized PDF. Cost per notarization: $0.52 (compute + storage). At 1,200 notarizations/month the burn is $624, leaving $6,576 gross profit before support.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>There are still places where AI has not commoditised the niche. The first is <strong>industrial IoT telemetry</strong> where the data is raw CAN bus frames or OPC-UA streams. No public model can parse your factory’s proprietary PLC tags without a $50k enterprise fine-tune. We charge $149/month per production line. The AI giants haven’t released a model trained on Siemens firmware, and reverse-engineering the protocol violates DMCA.</p>
-<p>The second is <strong>multi-tenant SaaS with per-tenant schema</strong>. Think verticals like legal case management where each firm customizes fields, workflows, and retention rules. The cost to replicate this with a generic AI agent would require re-creating the schema plus the firm’s custom macros—an estimated 400 hours of engineering. We charge $299/month per firm, and churn is under 3%.</p>
-<p>The third is <strong>regulatory reporting that must be signed by a licensed professional</strong>. Think SOC 2, HIPAA, or PCI DSS questionnaires. A Micro-SaaS called "ComplyBot" guides a CPA through the questionnaire, drafts policies, and submits the report to the auditor. The auditor still signs the report, so the AI cannot fully automate the workflow. MRR: $184k across 312 CPAs.</p>
-<p>In short, if the moat is regulatory certification, firmware reverse-engineering, or per-tenant schema customization, the AI tide has not yet reached the shore.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>Here’s a checklist I give founders. Answer each yes/no. Two or more “no” answers means the niche is at risk of AI commoditisation.</p>
-<ul>
-<li>Can a fine-tuned model replicate &gt;80% of the core UX in under 5 minutes of user time? (e.g., upload CSV → click button → download report)</li>
-<li>Is the primary output text, structured JSON, or a semi-structured PDF?</li>
-<li>Can the workflow run entirely inside another SaaS platform (e.g., Shopify, Stripe, Salesforce)?</li>
-<li>Is the data publicly available or already in the training set of a major model?</li>
-<li>Would a competent engineer with a budget of $5k and 30 days be able to replicate 90% of the functionality?</li>
-</ul>
-<p>If the answer to any of these is “yes,” treat the niche as a feature, not a product. Either refine the moat (proprietary data, human signature, real-time sync) or pivot.</p>
-<p>I’ll give you a real example. A friend launched "ResumeAI Pro" in January 2026—an AI resume scanner that compared resumes to job descriptions. It used a fine-tuned model on top of a public dataset. Within six weeks a free feature inside LinkedIn Recruiter did 94% of the same job. The notarization artifact is legally defensible in court, so the moat is compliance, not AI.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p><strong>Objection 1: "AI features are just checkboxes; customers still want best-of-breed tools."</strong>
-My response: In 2026 the checkboxes are free and integrated. Integration beats polish every time. The exception: when the workflow requires multiplayer real-time editing (e.g., co-authoring a legal contract), the free AI inside Google Docs still lacks the state machine depth.</p>
-<p><strong>Objection 2: "Regulatory moats will erode as AI models get certified."</strong>
-My response: Not in 2026. HIPAA, SOC 2, and FDA 21 CFR Part 11 require a human license and audit trail. A model can draft a discharge summary, but it cannot sign it. The certification body still requires a licensed physician to attest. Until the FDA certifies an AI model as a physician extender (a process that takes 18–36 months), the moat holds. In the meantime, Micro-SaaS can charge for the human step.</p>
-<p><strong>Objection 3: "Proprietary data moats will disappear when models can train on my customer’s data without consent."</strong>
-My response: GDPR Article 9 and HIPAA §164.514 still apply. Training a model on a customer’s PHI without a BAA and explicit consent is illegal. In practice, the incumbents cannot risk the fines, so they ship AI features that only use aggregate, anonymized data. That leaves a gap for Micro-SaaS that train on clean-room customer data under BAA.</p>
-<p><strong>Objection 4: "Real-time multiplayer state is too hard for Micro-SaaS."</strong>
-My response: It’s hard but not impossible. Latency to sync a 500KB note across 40 concurrent editors is 180ms median. Cost: $0.003/editor-minute on Fly.io. MRR: $5,400 with 92 clinics. The moat is the real-time sync engine; no big platform ships a HIPAA-compliant collaborative editor yet.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<p>If I were launching a Micro-SaaS today, I would start with a compliance or data-moat checklist first, not a niche checklist. Here’s the order I’d follow:</p>
-<ol>
-<li><strong>Identify the legally binding artifact</strong> the customer must produce (signed PDF, notarized timestamp, SOC 2 report).</li>
-<li><strong>Audit the data source</strong>—is it proprietary, regulated, or physically inaccessible to incumbents?</li>
-<li><strong>Prototype the human-in-the-loop step</strong> before writing a line of AI code. If the human step is mandatory, the moat exists.</li>
-<li><strong>Calculate the cost to replicate</strong>—$5k and 30 days is the threshold. If under that, pivot.</li>
-<li><strong>Build the smallest viable product</strong> around the moat, not the niche.</li>
-</ol>
-<p>I’ll share a mistake I made. In Q4 2026 I built "ContractAI"—an AI contract reviewer for freelancers. Wrong. A week after launch a free tool inside Notion AI reviewed the same documents with 87% accuracy. My second mistake: I didn’t charge for a legally binding artifact. Within 28 days MRR dropped 61%. MRR stabilized at $8,900 with 198 freelancers. Lesson: the moat is the signature, not the AI.</p>
-<p>Tooling stack I’d reuse: Next.js 14, Vercel Edge, Stripe subscriptions, IPFS for notarization, and a daily cron to scrub PHI from logs. Cost to launch: ~$1,200 for the first 100 users.</p>
-<h2 id="summary">Summary</h2>
-<p>Micro-SaaS in 2026 is a fight between two forces: AI features that commoditise UI-driven workflows and compliance or data moats that keep the incumbents out. The niches that survive are the ones where the output must be legally signed, where the data is proprietary and regulated, or where real-time multiplayer state is non-negotiable.</p>
-<p>If your niche feels safe today, ask: Can a fine-tuned model replicate the core UX in under five minutes? If yes, the clock is ticking. Build around a legally binding artifact or a real-time sync problem, and you’ll have a moat that scales to $10k+ MRR.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>What are the best niches left for Micro-SaaS in 2026?</strong></p>
-<p>Look for niches where the output is a signed PDF, notarized timestamp, or SOC 2 report. Examples: physician discharge summaries, landlord-tenant lease notarization, CPA-assisted SOC 2 questionnaires, and collaborative real-time clinical notes. Also consider industrial IoT telemetry where the data is proprietary firmware streams.</p>
-<p><strong>How do I know if my niche is at risk of AI commoditisation?</strong></p>
-<p>Run this checklist: (1) Can a fine-tuned model replicate &gt;80% of the core UX in under 5 minutes? (2) Is the primary output text, JSON, or a semi-structured PDF? (3) Can the workflow run entirely inside another SaaS platform? If two or more answers are “yes,” treat your product as a feature, not a company.</p>
-<p><strong>What tools stack should I use to build a compliance-first Micro-SaaS?</strong></p>
-<p>Start with Next.js 14 on Vercel Edge for the UI, Stripe for subscriptions, IPFS via Fleek for notarized artifacts, and PostgreSQL 16 with row-level security for tenant isolation. Add Daily.co for WebRTC if you need real-time multiplayer. Budget $1,200 to reach 100 users.</p>
-<p><strong>How much does it cost to fine-tune a model for a niche workflow?</strong></p>
-<p>For a vertical-specific model, expect $14–$42 per iteration if you label 1,800–5,400 examples at $0.008/label on Scale AI. If the model must run on-prem for compliance, the cost jumps to $2k–$5k for a NVIDIA L40S GPU instance per month. In most cases, the fine-tuning cost exceeds the Micro-SaaS MRR until you hit 1,000+ users.</p>
-<p><strong>What’s the fastest way to validate a compliance moat?</strong></p>
-<p>Build a minimal prototype that produces a legally binding artifact (signed PDF, notarized timestamp) and ask 20 target users to pay $50/month for it. If 10+ accept, the moat exists. If fewer than 5 accept, the niche is likely commoditised.</p>
-<h2 id="next-step-in-the-next-30-minutes">Next step in the next 30 minutes</h2>
-<p>Open your product’s README (or the folder with your top feature) and run this grep:</p>
-<pre><code class="language-bash">grep -r &quot;upload\|download\|click\|button\|report&quot; . | wc -l
+<p>If you answered "yes" to two or more, the product is likely to become a feature. The response is either to add a moat (proprietary data under agreement, a required human signature, real-time sync) or to change the product so the moat is the core.</p>
+<h2 id="audit-your-own-ui-surface">Audit your own UI surface</h2>
+<p>A fast way to see how exposed a product is: count how much of your UI is upload, download, click, and report. If the bulk of the interaction is data in and generated result out, the product is model-shaped.</p>
+<p>The following script walks a repository and counts occurrences of those interaction verbs in source files. It is a rough signal, not a verdict — adjust the patterns to your stack.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+# Count interaction verbs that suggest a generate-and-return UI.
+# Run from the repository root.
+
+set -euo pipefail
+
+patterns='upload|download|click|button|report|generate|export'
+
+total=0
+while IFS= read -r file; do
+  count=$(grep -Eoi &quot;$patterns&quot; &quot;$file&quot; | wc -l | tr -d ' ')
+  if [ &quot;$count&quot; -gt 0 ]; then
+    printf '%6d  %s\n' &quot;$count&quot; &quot;$file&quot;
+    total=$((total + count))
+  fi
+done &lt; &lt;(find . -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) \
+  -not -path './node_modules/*' -not -path './.next/*')
+
+echo &quot;----&quot;
+echo &quot;total interaction-verb matches: $total&quot;
 </code></pre>
-<p>If the line count is above 15, your niche is at risk of AI commoditisation. Either refine the moat to a legally binding artifact or pivot within 30 days.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>What to do with the number: it is only meaningful relative to your total surface area. A better ratio is interaction-verb matches divided by total lines of UI code. Compute both, track the ratio over time, and watch whether the product is drifting toward a generate-and-return shape or away from it.</p>
+<p>If the ratio is high and the primary output is generated, treat the product as a feature unless you can point to a specific moat.</p>
+<h2 id="instrumenting-whether-a-platform-feature-is-eating-you">Instrumenting whether a platform feature is eating you</h2>
+<p>The generic failure mode above is not something you detect from a dashboard after the fact. You detect it by watching a few leading indicators:</p>
 <ul>
-<li><a href="https://kubaik.github.io/micro-saas-niches-eaten-by-ai-in-2026/">Micro-SaaS niches eaten by AI in 2026</a></li>
-<li><a href="https://kubaik.github.io/found-niche-in-2026-saas-that-ai-cant-copy/">Found niche in 2026: SaaS that AI can’t copy</a></li>
-<li><a href="https://kubaik.github.io/double-the-price-double-the-revenue/">Double the price, double the revenue</a></li>
+<li><strong>Support ticket themes.</strong> Count tickets that ask for a capability the host platform now offers natively. A rising count is the earliest signal.</li>
+<li><strong>Signup source.</strong> If new signups increasingly come from outside the platform ecosystem, the platform's native feature is doing the work for you. If they increasingly come from inside it, you are competing with a free checkbox.</li>
+<li><strong>Churn reason codes.</strong> Add a "switched to a platform-native feature" reason code and track it separately from price and product churn.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>None of these require a benchmark. They require you to instrument the funnel and read the reasons, not just the rate.</p>
+<h2 id="where-the-conventional-wisdom-still-holds">Where the conventional wisdom still holds</h2>
+<p>Three categories have resisted commoditisation in practice.</p>
+<p><strong>Industrial telemetry with proprietary protocols.</strong> If the data is raw bus frames or a vendor-specific industrial protocol, no public model can parse your factory's tags without a substantial fine-tune on labeled data you own. The moat is the labeling effort and the protocol access, not the model.</p>
+<p><strong>Multi-tenant products with per-tenant schema customisation.</strong> Verticals where each customer customises fields, workflows, and retention rules require re-creating the schema and the customer's macros to replicate. The cost is engineering hours, not model capability, and it scales with customer count.</p>
+<p><strong>Regulatory reporting that requires a licensed signer.</strong> The auditor or the licensed professional still signs the report. The model drafts; the human attests.</p>
+<p>In all three, the moat is a cost the incumbent would have to pay — legal, engineering, or licensing — not a capability the incumbent lacks.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I tell if my niche is exposed?</strong></p>
+<p>Run the checklist above. If two or more answers are "yes," assume exposure and either add a moat or reposition.</p>
+<p><strong>Is a data moat enough on its own?</strong></p>
+<p>Only if the data is genuinely inaccessible to the incumbent — regulated, proprietary, or under a contract that prevents training. "Our data is better" is not a moat if the incumbent already holds the same data.</p>
+<p><strong>Do regulatory moats erode?</strong></p>
+<p>They can, if the regulation changes or if a certification pathway for automated attestation appears. Treat a regulatory moat as durable but not permanent, and re-check it annually.</p>
+<p><strong>What if my product has no moat but good retention?</strong></p>
+<p>Retention is evidence, not a moat. Check whether the retention survives the platform shipping the same feature for free. If you cannot answer that, you do not yet know whether the retention is structural.</p>
+<p><strong>How much does it cost to fine-tune a model for a niche?</strong></p>
+<p>It depends on labeling volume, base model, and whether you need on-premises inference for compliance. The dominant cost is usually labeling and evaluation, not compute. Estimate it by pricing your labeling hours at your own rate and adding the inference cost at your expected request volume.</p>
+<h2 id="next-step-in-the-next-30-minutes">Next step in the next 30 minutes</h2>
+<p>Run the audit script above against your primary repository, then compute the ratio of interaction-verb matches to total lines of UI code. Write the ratio down with today's date. If the ratio is high and your primary output is generated text or a structured document, add a "switched to a platform-native feature" reason code to your churn survey and check it again in 30 days. That single number will tell you more about your exposure than any market analysis.</p>
                 
                 
             </div>
@@ -461,13 +423,13 @@ My response: It’s hard but not impossible. Latency to sync a 500KB note across
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
-                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/local-llm-agents-vllm-vs-ollama-for-fintech/">
                         <h3>Local LLM agents: vLLM vs Ollama for fintech</h3>
-                        <p>vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</p>
+                        <p>Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.</p>
                         <span class="related-meta">15 min read · 18 September 2026</span>
                     </a>
                     

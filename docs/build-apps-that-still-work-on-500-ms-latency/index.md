@@ -1,494 +1,427 @@
 # Build apps that still work on 500 ms latency
 
-The tutorials all showed the happy path. This post shows what comes after.
+## The problem: happy-path tutorials vs. high-latency reality
 
-In March 2026, Starlink dishes landed in Kenya and Uganda. Overnight, every telco tower in East Africa had a new upstream: 60–120 Mbps down, 20–30 ms to Nairobi, and 400–500 ms latency spikes when the beam passed over a flock of birds. Teams shipping new web apps to the region suddenly saw 4× more timeouts. It commonly takes two days to realize the issue isn’t the CDN origin—it’s the 500 ms TLS handshake on every single asset. This post is what I wished I had found then.
+Most framework tutorials assume a 20–80 ms round trip. When the same code is deployed for users on high-latency links — satellite backhaul, congested mobile networks, or long-haul routes to a distant origin — the failure mode is consistent: pages that render a spinner and never finish, timeouts that appear random, and error rates that spike whenever the link quality dips.
 
-## Why I wrote this (the problem I kept hitting)
+The underlying reasons are mechanical, not mysterious. On a 500 ms RTT link, every round trip costs half a second. A TLS handshake is several round trips. A cache miss that triggers an origin fetch is another. An uncached asset is another. Add them up and a page that felt instant on a 30 ms link becomes unusable.
 
-A common pattern in 2025 was adding a “tail -f” like feature over HTTP to an open-source logging library, shipping it behind Cloudflare R2, and assuming a 95th percentile latency of 80 ms would cover most users. When Starlink beams lit up Kampala in February 2026, traffic from Uganda tripled overnight and 15 % of clients started seeing 500 ms TLS handshakes. The bug report typically reads: “The page never loads, only a loading spinner.”
+This article covers the specific techniques that keep a dashboard responsive under a 400–500 ms RTT budget, why each one works, and how to measure whether it's working in your environment.
 
-Node 20 LTS ships with OpenSSL 3.0, which defaults to a 2048-bit RSA certificate chain. On a 4G-as-baseline connection, a full TLS handshake with RSA can take 400–500 ms. ECDSA certificates shave that to 100 ms. The fix is one CLI command: `certbot certonly --ecc --nginx`. The lesson: under 500 ms latency, every millisecond counts, and cryptography choices now rival network choices for impact.
+## Why latency dominates bandwidth on slow links
 
-If you’re still using RSA leaf certificates in 2026, you’re burning 400 ms on every TLS handshake—money left on the table when your users sit on a Starlink beam in Tororo.
+Bandwidth determines how long a payload takes to transfer once the connection exists. Latency determines how long it takes to establish the connection and negotiate each request. On a link with 500 ms RTT and 1.6 Mbps throughput:
+
+- A full TLS 1.2 handshake with an RSA certificate typically requires two round trips before application data flows — roughly 1 second of wall-clock time on a 500 ms RTT link.
+- TLS 1.3 reduces this to one round trip for the initial handshake, and zero round trips on resumption.
+- A 1.2 MB image at 1.6 Mbps takes about 6 seconds to transfer, but a 50 KB image takes about 250 ms.
+
+The practical implication: shaving bytes off a large asset helps, but shaving round trips off the connection setup helps more, because round trips are multiplied by the RTT and bytes are divided by the bandwidth. On a 500 ms link, a single saved round trip is worth roughly 500 ms; a saved megabyte is worth roughly 5 seconds at 1.6 Mbps — but only if the megabyte was actually going to be transferred.
+
+This is why certificate algorithm choice, HTTP version, connection reuse, and preloading matter disproportionately on high-latency links.
 
 ## Prerequisites and what you'll build
 
-You’ll build a minimal Next.js 14.2 (App Router) dashboard that loads under 1.5 s on a 500 ms baseline. We’ll measure TTI (Time to Interactive) with Lighthouse 11 in simulated 4G throttling (RTT 300 ms, throughput 1.6 Mbps). The stack:
+The examples below use a Next.js App Router dashboard, a Redis-compatible cache, an S3-compatible object store for static assets, and a CDN. None of these are mandatory — the techniques transfer to any stack. The specific tools are chosen because they have documented behavior that makes the reasoning concrete.
 
-- Next.js 14.2 with Turbopack dev server
-- Redis 7.2 for edge caching (fly.io redis)
-- Cloudflare R2 for static assets (we’ll test 500 ms RTT to nairobi.r2.cloudflarestorage.com)
-- AWS CloudFront edge with 200 ms RTT to Mombasa POPs
-- Node 20 LTS runtime for server components
+You'll need:
 
-You don’t need a Kubernetes cluster—just Docker Compose and a free Cloudflare R2 bucket. I’ll show a Terraform snippet so you can spin up Redis 7.2 in 3 commands if you want parity with prod.
+- Node.js 20 LTS or later
+- Docker (for the local Redis instance)
+- A CDN account with configurable TLS (Cloudflare, Fastly, or similar)
+- An S3-compatible object store for static assets
+- Lighthouse 11 or later, and Playwright for synthetic testing
 
-On a typical developer laptop, the baseline TTI for this kind of dashboard lands around 3.2 s. After the changes here, it commonly drops to around 950 ms. That’s the 70 % cut we’ll replicate together.
+The dashboard itself is intentionally small: a server component that reads a cached page payload, a client component that renders it, and a layout that preloads the critical chunk and the LCP image.
 
 ## Step 1 — set up the environment
 
-1. Clone the starter repo
+1. Create the project and install dependencies:
+
 ```bash
-git clone https://github.com/kubai/next-starlink-starter.git
-cd next-starlink-starter
-npm install
+npx create-next-app@latest latency-dashboard --typescript --app
+cd latency-dashboard
+npm install redis opossum
 ```
 
-2. Create `.env.local`
+2. Create `.env.local` with your cache and asset host configuration:
+
 ```env
 REDIS_URL="redis://localhost:6379/0"
-R2_ENDPOINT="https://[bucket].r2.cloudflarestorage.com"
-R2_ACCESS_KEY_ID="your-key"
-R2_SECRET_ACCESS_KEY="your-secret"
-NEXT_PUBLIC_ASSET_HOST="https://assets.yourdomain.com"
+ASSET_HOST="https://assets.yourdomain.com"
 ```
 
-3. Spin up Redis 7.2 in Docker
+3. Start a local Redis instance:
+
 ```bash
 docker run -d --name redis7 \
   -p 6379:6379 \
-  redis/redis-stack:7.2.0-v5
+  redis:7.2
 ```
 
-Redis Stack 7.2.0-v5 is a common choice because it ships with RedisJSON and search, but you can drop to vanilla Redis 7.2.0 if you only need strings. The memory overhead is 20 % higher, but it pays off when you start storing full page payloads in JSON.
+Redis 7.2 is a reasonable baseline because it supports the commands used below (`GET`, `SET` with `EX`, and `SET` with `NX` for lock-free stampede protection). If you only need string caching, the vanilla image is sufficient; managed Redis-compatible services work the same way.
 
-4. Build and run
+4. Start the dev server:
+
 ```bash
 npm run dev
 ```
 
-Gotcha: Turbopack dev server defaults to HTTP/2 without push. Under 500 ms latency, HTTP/2 push adds no value and can stall the main thread if the server mis-calculates priority. Swap to `next dev --no-h2-push` for parity with prod.
+Verify the app responds before adding any of the latency work, so you have a clean baseline to compare against.
 
 ## Step 2 — core implementation
 
-We’ll implement three layers: edge cache, asset preload, and TLS optimisation.
+The implementation has three layers: a cache that absorbs origin round trips, a layout that preloads critical resources, and a TLS configuration that minimizes handshake round trips.
 
-1. Edge cache with Redis 7.2
-Create `lib/cache.js`
-```javascript
+### Layer 1: edge cache with a Redis-compatible store
+
+Create `lib/cache.ts`:
+
+```typescript
 import { createClient } from 'redis';
-import { unstable_cache } from 'next/cache';
 
 const client = createClient({
   url: process.env.REDIS_URL,
-  socket: { tls: false, reconnectStrategy: (retries) => Math.min(retries * 100, 5000) }
-});
-await client.connect();
-
-export const getCachedPage = unstable_cache(
-  async (path) => {
-    const hit = await client.get(path);
-    return hit ? JSON.parse(hit) : null;
+  socket: {
+    reconnectStrategy: (retries) => Math.min(retries * 100, 5000),
   },
-  ['page'],
-  { revalidate: 60, tags: ['page'] }
-);
+});
+
+client.on('error', (err) => console.error('redis error', err));
+
+let connected = false;
+export async function getClient() {
+  if (!connected) {
+    await client.connect();
+    connected = true;
+  }
+  return client;
+}
+
+export async function getCachedPage(path: string) {
+  const redis = await getClient();
+  const hit = await redis.get(path);
+  return hit ? JSON.parse(hit) : null;
+}
+
+export async function setCachedPage(path: string, data: unknown, ttlSeconds = 300) {
+  const redis = await getClient();
+  await redis.set(path, JSON.stringify(data), { EX: ttlSeconds });
+}
 ```
 
-2. Preload critical assets
-In `app/layout.js`, add a `<link rel="modulepreload">` for the main client chunk and a `<link rel="preload">` for the LCP image. The typical result is a 200 ms drop in TTI when the browser can fetch the JS bundle while parsing HTML.
+A common bug in this pattern is calling `client.connect()` at module load time. On serverless platforms that reuse module instances across invocations, that can throw "already connected" on the second call. Tracking connection state explicitly avoids it.
 
-3. TLS optimisation
-Regenerate the certificate with ECDSA:
+### Layer 2: preload critical assets
+
+In `app/layout.tsx`, preload the main client chunk and the LCP image so the browser can start fetching them while it parses HTML:
+
+```tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href={`${process.env.ASSET_HOST}/hero.webp`}
+          fetchPriority="high"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+The `fetchPriority="high"` attribute is a hint, not a guarantee; it works in Chromium-based browsers and is ignored elsewhere. The measurable effect is that the LCP image request starts earlier in the HTML parse, which on a 500 ms RTT link can save one round trip — roughly 500 ms.
+
+### Layer 3: TLS configuration
+
+TLS handshake cost is dominated by two things: the protocol version and the certificate algorithm. Two changes matter:
+
+1. **Enable TLS 1.3.** It reduces the handshake to one round trip (or zero on resumption) instead of two. Most CDNs and modern web servers enable it by default; verify with:
+
 ```bash
-certbot certonly --ecc --nginx -d yourdomain.com --non-interactive --agree-tos --email you@example.com
+openssl s_client -connect yourdomain.com:443 -tls1_3 </dev/null 2>/dev/null | grep "Protocol"
 ```
 
-Verify with curl:
+If the output shows `TLSv1.3`, it's enabled. If it shows `TLSv1.2`, check your server or CDN configuration.
+
+2. **Use an ECDSA certificate where supported.** An ECDSA P-256 certificate produces smaller signatures than RSA, which reduces the bytes transferred during the handshake. The handshake round-trip count is the same, but the per-round-trip payload is smaller, which matters on constrained links.
+
+To check what algorithm your current certificate uses:
+
 ```bash
-curl -w "%{time_total}
-" -o /dev/null https://yourdomain.com
+echo | openssl s_client -connect yourdomain.com:443 2>/dev/null \
+  | openssl x509 -noout -text \
+  | grep -E "Public Key Algorithm|Signature Algorithm"
 ```
-Before: 0.48 s, after: 0.11 s. That’s a 77 % faster TLS handshake.
 
-4. Static asset CDN
-Upload the LCP image to Cloudflare R2 and set the bucket region to `auto` (closest POP). A typical measurement from a phone in Kampala: 500 ms TLS + 200 ms R2 fetch + 100 ms rendering = 800 ms LCP. Without R2, it’s 1.6 s. The cost for 100 GB/month is $0.25 at 2026 R2 pricing—cheaper than CloudFront for the first 10 TB.
+If the output says `rsaEncryption` and `sha256WithRSAEncryption`, you're serving an RSA certificate. Whether to switch depends on your client mix — see the failure-mode section below.
+
+### Layer 4: static assets on a CDN with a nearby POP
+
+Serve the LCP image and other static assets from a CDN POP that is geographically close to your users. The measurement that matters is not "is it on a CDN" but "what is the RTT from the user to the POP serving the asset."
+
+To measure this from a test location, use `curl`'s timing breakdown:
+
+```bash
+curl -w "dns: %{time_namelookup}\nconnect: %{time_connect}\ntls: %{time_appconnect}\nttfb: %{time_starttransfer}\ntotal: %{time_total}\n" \
+  -o /dev/null -s https://assets.yourdomain.com/hero.webp
+```
+
+The `time_connect` value approximates the TCP RTT to the POP. If it's above ~100 ms, the user is not hitting a nearby POP and you should check your CDN's routing configuration.
 
 ## Step 3 — handle edge cases and errors
 
-1. Cache stampede on cold start
-When Redis 7.2 restarts, 10,000 users hitting `/dashboard` can trigger 10,000 identical DB queries. Fix:
+### Cache stampede on cold start
 
-```javascript
-export const getCachedPage = unstable_cache(
-  async (path) => {
-    const hit = await client.get(path);
-    if (hit) return JSON.parse(hit);
-    // Stale-while-revalidate
-    const data = await db.query(`SELECT * FROM pages WHERE path = ?`, [path]);
-    await client.set(path, JSON.stringify(data), { EX: 300 });
-    return data;
-  },
-  ['page'],
-  { revalidate: 60 }
-);
+When the cache restarts, every concurrent request to the same path misses and hits the origin. On a 500 ms RTT link, 100 concurrent misses means 100 origin round trips, which can saturate the origin and cascade into timeouts.
+
+The fix is a lock: the first request to miss acquires a short-lived lock, fetches from origin, and populates the cache; concurrent requests either wait briefly or serve stale data.
+
+```typescript
+import { getClient, setCachedPage } from './cache';
+
+export async function getCachedPageWithLock(path: string, fetchFromOrigin: () => Promise<unknown>) {
+  const redis = await getClient();
+
+  const hit = await redis.get(path);
+  if (hit) return JSON.parse(hit);
+
+  const lockKey = `lock:${path}`;
+  const acquired = await redis.set(lockKey, '1', { NX: true, EX: 10 });
+
+  if (!acquired) {
+    // Another request is already fetching. Wait briefly, then read the cache.
+    await new Promise((r) => setTimeout(r, 100));
+    const retry = await redis.get(path);
+    if (retry) return JSON.parse(retry);
+    // Fall through and fetch ourselves rather than fail.
+  }
+
+  const data = await fetchFromOrigin();
+  await setCachedPage(path, data, 300);
+  await redis.del(lockKey);
+  return data;
+}
 ```
 
-2. TLS fallback for legacy clients
-Some old Android 8 devices can’t parse ECDSA chains. Serve an RSA fallback on port 8443:
+The `NX` flag makes the `SET` atomic: only one caller gets the lock. The `EX` expiry ensures a crashed holder doesn't deadlock the path.
+
+### Circuit breaker for flapping links
+
+On links that intermittently spike from 400 ms to over 1 second RTT, a request that would normally succeed can exceed the client's timeout. A circuit breaker stops sending requests to a failing dependency for a cooldown period, which prevents a slow dependency from consuming the entire request budget.
+
+```typescript
+import CircuitBreaker from 'opossum';
+
+const breaker = new CircuitBreaker(
+  async (path: string) => {
+    const res = await fetch(`https://api.yourdomain.com/page/${path}`, {
+      signal: AbortSignal.timeout(1200),
+    });
+    if (!res.ok) throw new Error(`status ${res.status}`);
+    return res.json();
+  },
+  {
+    timeout: 1200,
+    errorThresholdPercentage: 50,
+    resetTimeout: 30000,
+  }
+);
+
+breaker.fallback(() => ({ stale: true, data: null }));
+
+export async function fetchPage(path: string) {
+  return breaker.fire(path);
+}
+```
+
+The key parameter is `timeout: 1200`. It must be shorter than the overall request budget, so a single slow dependency doesn't consume the entire budget and cause the page to fail. The fallback returns a stale-data marker, which the UI can render as a degraded state rather than an error.
+
+### Legacy client TLS fallback
+
+Some older clients cannot validate ECDSA certificate chains. If you switch to ECDSA and see an increase in handshake failures, you have two options: serve an RSA certificate on a separate port for those clients, or terminate TLS at a CDN that negotiates the algorithm based on the client's capabilities.
+
+If you control the server, a dual-certificate configuration looks like this:
 
 ```nginx
 server {
   listen 443 ssl;
-  listen 8443 ssl;
-  ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain-ecc.pem;
-  ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey-ecc.pem;
-  ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
-  if ($ssl_protocol = "") { return 301 https://$host$request_uri; }
+  http2 on;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_certificate     /etc/ssl/fullchain-ecc.pem;
+  ssl_certificate_key /etc/ssl/privkey-ecc.pem;
+  # Additional RSA chain for clients that cannot negotiate ECDSA
+  ssl_certificate     /etc/ssl/fullchain-rsa.pem;
+  ssl_certificate_key /etc/ssl/privkey-rsa.pem;
 }
 ```
 
-3. 504 timeouts on edge workers
-AWS Lambda@Edge 2026 defaults to 5 s timeout. If your edge function calls Redis 7.2 in Mumbai while the user is in Mombasa, you can hit the 5 s wall. Bump timeout to 10 s in `serverless.yml`:
+The server presents both chains and the client picks. This is preferable to a separate port because it requires no client-side logic.
+
+### Timeout budgets
+
+Every layer that can wait needs an explicit timeout, and the timeouts must nest correctly. A typical budget for a 500 ms RTT link:
+
+- Total request budget: 5 seconds
+- Origin fetch timeout: 2 seconds
+- Cache read timeout: 200 ms
+- Circuit breaker timeout: 1.2 seconds (must be less than origin fetch timeout)
+
+If a cache read can hang for 5 seconds, it will consume the entire request budget and the origin fetch will never run. Set cache timeouts aggressively low — a cache that takes more than 200 ms to respond is not providing value on a 500 ms RTT link anyway.
+
+## Step 4 — observability and tests
+
+### Lighthouse CI
+
+Lighthouse's simulated throttling (default: 150 ms RTT, 1.6 Mbps) gives a reproducible baseline, but it does not simulate 500 ms RTT. To approximate a high-latency link, configure the throttling explicitly:
+
 ```yaml
-functions:
-  ssr:
-    handler: handler.render
-    timeout: 10
-```
-
-4. Starlink beam flapping
-Starlink beams in Tororo can flip between 400 ms and 1.2 s RTT every 30 seconds. Add a circuit breaker in your data fetcher:
-
-```javascript
-import { CircuitBreaker } from 'opossum';
-
-const breaker = new CircuitBreaker(async (path) => {
-  const res = await fetch(`https://api.yourdomain.com/page/${path}`);
-  if (!res.ok) throw new Error(res.status);
-  return res.json();
-}, { timeout: 1200, errorThresholdPercentage: 50, resetTimeout: 30000 });
-```
-
-With these guards, the dashboard stays up even when the beam flaps.
-
-## Step 4 — add observability and tests
-
-1. Lighthouse CI in GitHub Actions
-```yaml
-- uses: treosh/lighthouse-ci-action@v10
+- uses: treosh/lighthouse-ci-action@v11
   with:
     urls: |
-      https://staging.yourdomain.com
       https://staging.yourdomain.com/dashboard
     uploadArtifacts: true
     temporaryPublicStorage: true
+    configPath: ./lighthouserc.json
 ```
 
-2. Redis 7.2 latency monitoring
-Add a Prometheus exporter:
-```bash
-docker run -d --name redis-exporter \
-  -p 9121:9121 \
-  oliver006/redis_exporter:v1.56.0 \
-  --redis.addr=redis://localhost:6379
-```
-Then scrape `/metrics` every 15 s. A sensible alert threshold is p99 latency > 10 ms—any higher and the dashboard TTI creeps above 1 s.
+With `lighthouserc.json`:
 
-3. Synthetic test from Kampala
-Use Playwright in GitHub Actions to hit the staging URL from a runner in `af-south-1`:
-```javascript
-import { test, expect } from '@playwright/test';
-
-test('TTI on 500 ms baseline', async ({ page }) => {
-  await page.emulateNetworkConditions({
-    offline: false,
-    downloadThroughput: () => 1600 * 1024 / 8,
-    uploadThroughput: () => 750 * 1024 / 8,
-    latency: 500,
-  });
-  await page.goto('https://staging.yourdomain.com/dashboard');
-  await expect(page).toHaveScreenshot('tti.png', { fullPage: true });
-});
-```
-
-4. Alert on TLS handshake time
-In Cloudflare Analytics, create a custom metric:
-```
-(tls_handshake_duration > 200) ? 1 : 0
-```
-Route alerts to Slack via Cloudflare Webhooks. This pattern is how a mis-configured ECDSA chain gets caught—one that was serving a 2048-bit RSA fallback.
-
-## Real results from running this
-
-A dashboard shipped to 5,000 beta users in Kampala and Nairobi on 1 March 2026 typically produces numbers like these:
-
-| Metric | Before | After | Change |
-|---|---|---|---|
-| 95th percentile TTI (Lighthouse) | 3.1 s | 950 ms | -70 % |
-| TLS handshake time | 480 ms | 110 ms | -77 % |
-| Redis 7.2 p99 latency | 8 ms | 3 ms | -62 % |
-| Monthly CDN cost (100 GB) | $18 | $0.25 | -99 % |
-| Users with TTI > 2 s | 18 % | 0.4 % | -98 % |
-
-The biggest surprise is usually the CDN cost drop. By moving LCP images to R2 in auto-POP mode, CloudFront spend commonly falls from $18 to $0.25. The 200 ms latency from Kampala to the nearest R2 POP holds steady even during beam flapping.
-
-Teams also commonly see a 3 % lift in conversion (sign-ups) for users with TTI < 1 s. At a typical pricing tier, that translates to a meaningful ARR uplift per month.
-
-## Common questions and variations
-
-**“Is ECDSA really safe in 2026?”**
-Yes. NIST SP 800-186 (2026) still recommends P-256 for TLS certificates. The only systems that reject ECDSA are Android 4.x and IE 11—both < 0.1 % global share as of 2026. Google Chrome and Safari both prioritise ECDSA, so you get faster handshakes and better ranking in Core Web Vitals.
-
-**“Can I use Cloudflare Workers instead of Redis 7.2?”**
-Workers KV is eventually consistent and lacks RedisJSON, so it won’t cache full page payloads. Use Workers only for edge rendering if your payload is < 1 MB. For a 2.3 MB dashboard, Redis 7.2 typically cuts TTI by 400 ms versus Workers KV.
-
-**“What if I’m on Vercel?”**
-Vercel still uses RSA leafs as of 2026. Add a Cloudflare Worker in front of your Vercel deployment to terminate TLS with ECDSA and cache page payloads. The Worker script is 15 lines of JavaScript.
-
-**“Does this matter for mobile 5G?”**
-In a 2026 lab test, 5G NSA (non-standalone) users in Nairobi saw 12 ms RTT with 800 Mbps down. Under 5G, TLS handshake time matters less, but the asset preload and edge cache still cut TTI by 300 ms.
-
-## Where to go from here
-
-Run Lighthouse 11 on your production app right now:
-
-```bash
-npx lighthouse https://yourdomain.com --output=json --output-path=./report.json
-```
-
-If TTI > 1.5 s, do this:
-
-1. Convert your leaf cert to ECDSA (`certbot certonly --ecc`)
-2. Move LCP images to Cloudflare R2 in auto-POP mode
-3. Add the preload tags in your layout file
-
-Then push the changes and rerun the audit. This sequence commonly cuts TTI from 1.8 s to 920 ms in under 30 minutes.
-
----
-
-### Advanced edge cases commonly encountered in 2026
-
-#### 1. Certificate chain mis-ordering with Let’s Encrypt staging vs production
-In January 2026, Let’s Encrypt rolled out a new intermediate for ECDSA certificates (`ECDSA X4`). Some clients—specifically Node 20.12.0 running on Alpine Linux in a Docker container—failed to validate the chain because the intermediate was delivered out of order. The handshake fell back to RSA, adding 370 ms on mobile clients in Dar es Salaam. The fix requires pinning the correct intermediate via `ssl_trusted_certificate` in nginx and regenerating with:
-```bash
-certbot certonly --ecc --nginx --cert-name prod-ecc --must-staple -d yourdomain.com --deploy-hook "cp /etc/letsencrypt/live/prod-ecc/fullchain.pem /etc/nginx/trusted.crt"
-```
-
-#### 2. Starlink beam asymmetry causing QUIC fallback degradation
-Starlink’s 2026 firmware introduced asymmetric beam routing: download via Nairobi POP, upload via Mombasa POP. A Next.js API route making a 500 KB POST to `/api/save` on a user’s phone in Kisumu can experience 1.4 s RTT due to route flipping. QUIC (HTTP/3) in Chrome 124+ handles this gracefully, but TCP connections reset roughly 12 % of the time. The mitigation is to force HTTP/2 over TCP and add a 302 redirect to a regional CloudFront POP:
-```javascript
-// pages/api/save.js
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const regional = req.headers['x-starlink-region'] === 'nairobi' ? 'nairobi' : 'mombasa';
-    const endpoint = `https://api.${regional}.yourdomain.com/save`;
-    const response = await fetch(endpoint, { method: 'POST', body: req.body });
-    res.status(response.status).json(await response.json());
-  }
-}
-```
-You can also add an edge Worker to rewrite the origin based on geolocation:
-```javascript
-addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  const region = new URL(request.url).searchParams.get('region') || 'auto';
-  if (region === 'auto') {
-    const cf = request.cf;
-    const pop = cf.colo === 'NBO' || cf.colo === 'KGL' ? 'nairobi' : 'mombasa';
-    return fetch(request.url, { cf: { resolveOverride: `${pop}.yourdomain.com` } });
-  }
-  return fetch(request);
-}
-```
-
-#### 3. Redis 7.2 TLS session reuse denial on ARM devices
-On Raspberry Pi 4 clusters running Redis 7.2.0-v5 in Ubuntu 24.04 (ARM64), the TLS session cache can be silently ignored due to a bug in OpenSSL 3.0.13. Each TLS handshake between the Next.js server and Redis adds 80 ms. The workaround is to disable TLS in Docker Compose for local dev and prod in Africa:
-```yaml
-services:
-  redis:
-    image: redis/redis-stack:7.2.0-v5
-    command: redis-server --tls-port 0
-    ports:
-      - "6379:6379"
-```
-For production in AWS eu-west-1, keep TLS but pin OpenSSL to 3.0.14 via a custom Dockerfile:
-```dockerfile
-FROM redis/redis-stack:7.2.0-v5
-RUN apt-get update && apt-get install -y openssl=3.0.14-0ubuntu1
-```
-This cuts handshake time from 80 ms to 12 ms on ARM devices.
-
-#### 4. Cloudflare R2 preflight CORS preemption under 100 ms latency
-With R2 buckets in auto-POP mode, preflight OPTIONS requests for `/assets/*` can be served from Johannesburg instead of the local POP due to CORS misconfiguration. The result: 200 ms added latency on first asset load in Kampala. The fix is to set:
 ```json
 {
-  "CORSRules": [
-    {
-      "AllowedOrigins": ["https://yourdomain.com"],
-      "AllowedMethods": ["GET", "HEAD"],
-      "AllowedHeaders": ["Range"],
-      "ExposeHeaders": ["Content-Range", "Content-Length"],
-      "MaxAgeSeconds": 86400
+  "ci": {
+    "collect": {
+      "settings": {
+        "throttling": {
+          "rttMs": 500,
+          "throughputKbps": 1600,
+          "cpuSlowdownMultiplier": 4
+        }
+      }
     }
-  ]
-}
-```
-via Terraform:
-```hcl
-resource "aws_s3_bucket_cors_configuration" "assets" {
-  bucket = aws_s3_bucket.assets.id
-  cors_rule {
-    allowed_origins = ["https://yourdomain.com"]
-    allowed_methods = ["GET", "HEAD"]
-    allowed_headers = ["Range"]
-    max_age_seconds = 86400
   }
 }
 ```
-After applying, the OPTIONS request resolves in 12 ms from the Nairobi POP.
 
----
+The `rttMs: 500` setting is the important one. Lighthouse's default throttling is optimistic for high-latency targets.
 
-### Integration with real tools (2026 versions)
+### Real-device synthetic testing
 
-#### 1. Next.js 14.2 + Upstash Redis 7.2 (serverless edge)
-Upstash now supports Redis 7.2 with 5 ms p99 latency in `af-south-1`. The integration is one-line:
-```javascript
-import { Redis } from '@upstash/redis';
+Lighthouse simulates latency in software. To measure the real thing, run a Playwright test from a CI runner in a region with high RTT to your origin:
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('dashboard loads under 500 ms RTT', async ({ page }) => {
+  const client = await page.context().newCDPSession(page);
+  await client.send('Network.emulateNetworkConditions', {
+    offline: false,
+    downloadThroughput: (1600 * 1024) / 8,
+    uploadThroughput: (750 * 1024) / 8,
+    latency: 500,
+  });
+
+  const start = Date.now();
+  await page.goto('https://staging.yourdomain.com/dashboard');
+  await page.waitForSelector('[data-testid="dashboard-ready"]');
+  const duration = Date.now() - start;
+
+  console.log(`time to dashboard-ready: ${duration} ms`);
+  expect(duration).toBeLessThan(5000);
 });
 ```
-Then use it in a server component:
-```javascript
-// app/dashboard/page.js
-import { getCachedPage } from '@/lib/cache';
 
-export default async function Dashboard() {
-  const data = await getCachedPage('/dashboard');
-  if (!data) return <div>Loading...</div>;
-  return <DashboardClient data={data} />;
-}
-```
-This commonly delivers a 60 % reduction in cold-start TTI compared to fly.io Redis when serving 10,000 users in Uganda. Use this for global apps where Redis must be co-located with users.
+The `data-testid` selector should be on an element that only renders after the dashboard data is available, not on a loading spinner. Otherwise the test measures the wrong thing.
 
-#### 2. Cloudflare Workers + KV + R2 (HTTP/3 edge)
-Cloudflare Workers now support HTTP/3 and KV atomic operations in 2026. Here’s a Worker that terminates TLS with ECDSA, caches page payloads with KV, and serves LCP images from R2:
-```javascript
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    if (url.pathname.startsWith('/assets/')) {
-      return env.ASSETS.getObject(url.pathname.slice(1));
-    }
-    const cacheKey = `page:${url.pathname}`;
-    let html = await env.PAGES.get(cacheKey);
-    if (!html) {
-      html = await fetch(`https://origin.yourdomain.com${url.pathname}`).then(r => r.text());
-      await env.PAGES.put(cacheKey, html, { expirationTtl: 60 });
-    }
-    return new Response(html, { headers: { 'content-type': 'text/html' } });
-  }
-};
-```
-Deploy with Wrangler 3.18.0:
+### Alerting on TLS handshake time
+
+Most CDNs expose TLS handshake duration as a metric. A reasonable alert threshold is p95 handshake duration above 200 ms — on a healthy TLS 1.3 connection with a nearby POP, handshakes should be well under that. If the metric rises, the likely causes are:
+
+- A certificate change that broke session resumption
+- A CDN POP change that increased RTT
+- A protocol downgrade (TLS 1.3 to 1.2)
+
+Each of these is diagnosable from the metric trend, which is why alerting on it is worth the setup cost.
+
+## Failure modes and how to detect them
+
+### Failure mode: certificate chain served out of order
+
+If the server sends the leaf certificate before the intermediate, some clients fail to build a valid chain and fall back or fail outright. This is invisible in browsers that cache the intermediate from a previous connection, but visible on first visits.
+
+Detection: run a chain validation from a clean client:
+
 ```bash
-wrangler deploy --name starlink-edge --env production
+openssl s_client -connect yourdomain.com:443 -showcerts </dev/null 2>/dev/null \
+  | openssl verify -CAfile /etc/ssl/certs/ca-certificates.crt
 ```
-The Worker runs in 12 ms median latency in Nairobi and handles 15,000 rps with 99.9 % uptime.
 
-#### 3. Prometheus + Grafana Cloud + Redis 7.2 exporter
-Grafana Cloud now ingests Redis 7.2 metrics at 15 s resolution. Add this to your `docker-compose.yml`:
-```yaml
-prometheus-redis:
-  image: oliver006/redis_exporter:v1.56.0
-  environment:
-    REDIS_ADDR: redis://redis:6379
-  ports:
-    - "9121:9121"
-```
-Then scrape `/metrics` in Prometheus:
-```yaml
-scrape_configs:
-  - job_name: redis-africa
-    static_configs:
-      - targets: [prometheus-redis:9121]
-    scrape_interval: 15s
-```
-Create a Grafana dashboard with panels for:
-- `redis_connected_clients`
-- `redis_commands_duration_seconds_count{cmd="get"}`
-- `redis_memory_used_bytes` (alert if > 80 % of 256 MB)
-This setup is how a memory leak in a Next.js page handler caching untrusted user data gets caught—it can balloon from 120 MB to 240 MB in 4 hours. The alert fires at 220 MB.
+If the output is not `OK`, the chain is mis-ordered or incomplete.
 
----
+### Failure mode: cache key collision across tenants
 
-### Before/after comparison with typical numbers (March 2026)
+If the cache key is derived only from the URL path and not from the tenant or user, one user's cached page can be served to another. This is a correctness bug, not a performance bug, but it often appears after a caching change and is blamed on the cache being "stale."
 
-| Scenario | Baseline (RSA + CloudFront) | Optimized (ECDSA + R2 + Redis 7.2) | Delta |
-|---|---|---|---|
-| TLS handshake (Nairobi → origin) | 482 ms (RSA 2048) | 108 ms (ECDSA P-256) | -78 % |
-| LCP (Kampala, 500 ms RTT) | 1.62 s | 812 ms | -50 % |
-| TTI (Lighthouse, 4G throttle) | 3.1 s | 950 ms | -69 % |
-| Asset load (LCP image, 1.2 MB) | 1.1 s (CloudFront, 200 ms RTT) | 310 ms (R2 auto-POP) | -72 % |
-| Redis 7.2 p99 latency (af-south-1) | 8 ms | 3 ms | -62 % |
-| Monthly CDN cost (100 GB) | $18 (CloudFront) | $0.25 (R2) | -99 % |
-| Lines of code added/modified | 0 | 47 | +47 |
-| Build time (CI) | 2m 12s | 2m 24s | +6 % |
-| Cold start (Next.js server) | 420 ms | 210 ms | -50 % |
-| Users with TTI > 2 s (beta cohort) | 18 % | 0.4 % | -98 % |
-| Conversion rate (sign-ups, TTI < 1 s) | 1.8 % | 4.9 % | +172 % |
-| Error rate (5xx) under beam flap | 12 % | 0.8 % | -93 % |
-| TLS handshake failures (legacy clients) | 0.3 % | 0.6 % | +0.3 % (acceptable) |
+Detection: include the tenant ID in the cache key and assert in tests that two different tenants get different payloads.
 
-#### Key takeaways from the numbers:
-1. **Cryptography is now a network lever**: Switching from RSA to ECDSA saves 374 ms on every TLS handshake. At 1 million daily active users, that’s 374,000 seconds of cumulative wait time saved per day—equivalent to 4.3 person-days.
-2. **Edge caching with Redis 7.2 is not optional**: The p99 latency drop from 8 ms to 3 ms under load keeps TTI below 1 s for 99.6 % of users.
-3. **R2 auto-POP is the new default CDN**: For static assets, R2 in auto-POP mode reduces latency by 72 % and cuts costs by 99 %. The only downside is eventual consistency—use it for immutable assets.
-4. **Legacy fallback is cheap insurance**: The 0.3 % increase in TLS handshake failures for legacy clients is offset by the 172 % lift in conversion for modern clients. Use port 8443 or a Worker to serve RSA only when necessary.
-5. **Observability is the multiplier**: Without Prometheus + Grafana + Lighthouse CI, it’s easy to miss a memory leak or a certificate chain mis-ordering. The observability layer pays for itself in hours.
+### Failure mode: preload hint on the wrong resource
 
-#### When to use this stack:
-- **Target**: 4G-as-baseline users in Africa, South Asia, or Latin America with Starlink or similar LEO upstream.
-- **App type**: Web apps > 1 MB payload, dashboard-heavy, with read-heavy traffic patterns.
-- **Budget**: < $100/month for 100 GB CDN, Redis, and Workers.
-- **Team size**: 1–3 engineers. The entire setup fits in a single `docker-compose.yml` for local parity.
+`<link rel="preload">` on a resource that isn't used on the page consumes bandwidth without benefit, and on a 500 ms RTT link that bandwidth is precious. A preload for an image that turns out to be below the fold delays the LCP image.
 
-#### When NOT to use this stack:
-- **Ultra-low latency needs**: If your users are on 5G SA with < 20 ms RTT, focus on bundle size and rendering optimizations instead.
-- **Write-heavy workloads**: Redis 7.2 is not a write-through cache. Use PostgreSQL or Firestore for high-frequency writes.
-- **Regions without Starlink or LEO**: This stack optimizes for 400–500 ms upstream. In regions with 80 ms RTT (e.g., US East), the gains are marginal.
+Detection: check Lighthouse's "Preload key requests" and "Avoid chaining critical requests" audits. If a preloaded resource doesn't appear in the LCP critical path, remove the preload.
 
-Use these numbers as your benchmark. If your TTI is > 1.5 s after applying the changes, revisit the TLS handshake and asset preload steps—those two optimizations alone account for 70 % of the improvement.
+### Failure mode: circuit breaker fallback masks real errors
 
----
+A fallback that returns `{ stale: true, data: null }` can hide an origin outage from the UI, which then renders an empty dashboard. Users see a working page with no data and don't report it.
 
-## Frequently Asked Questions
+Detection: emit a metric every time the fallback fires, and alert if the fallback rate exceeds a small threshold (for example, 1% of requests over 5 minutes).
+
+## When this approach helps and when it doesn't
+
+| Situation | Does this help? | Why |
+|---|---|---|
+| 400–500 ms RTT to origin, read-heavy dashboard | Yes, significantly | Round-trip savings dominate |
+| 20–50 ms RTT, read-heavy dashboard | Marginally | Round trips are already cheap |
+| Write-heavy workload | No | Cache doesn't help; focus on write path |
+| Small payloads (< 100 KB) on fast links | No | Bandwidth isn't the bottleneck |
+| Large payloads (> 1 MB) on slow links | Yes, but optimize payload size first | Bandwidth and round trips both matter |
+| Users behind a flapping link | Yes, with circuit breaker | Prevents one slow dependency from failing the page |
+
+## FAQ
 
 **Why does TLS handshake time matter more than bandwidth on high-latency links?**
-A TLS handshake requires multiple round trips between client and server before any payload bytes move. On a 500 ms RTT link, each round trip costs half a second, so a full RSA handshake can consume 400–500 ms of wall-clock time regardless of how much bandwidth is available. Bandwidth only helps once the connection is established; latency dominates the connection setup phase. That’s why swapping RSA for ECDSA—which shortens the handshake—often produces a bigger perceived speedup than upgrading throughput.
 
-**Should I use ECDSA or RSA certificates for a global audience?**
-ECDSA (P-256) is the better default in 2026 because it produces smaller keys and faster handshakes, and it’s supported by all modern browsers and TLS stacks. The main exception is very old clients—Android 4.x and IE 11—which can’t validate ECDSA chains and represent well under 0.1 % of global traffic. For those, serve an RSA fallback on a separate port or via a Worker that inspects the User-Agent. This keeps modern clients fast while preserving compatibility for the long tail.
+A TLS handshake requires round trips before any application data moves. On a 500 ms RTT link, each round trip costs half a second. TLS 1.3 reduces the handshake to one round trip (or zero on resumption), while TLS 1.2 with RSA requires two. That difference is 500 ms of wall-clock time on every new connection, regardless of how much bandwidth is available. Bandwidth only helps once the connection is established.
 
-**Is Redis the right edge cache, or should I use Workers KV or another store?**
-Redis (including managed options like Upstash) is the right choice when you need to cache full page payloads, JSON documents, or anything requiring sub-10 ms p99 reads and structured data types. Workers KV is eventually consistent and lacks RedisJSON-style operations, so it’s better suited to small, immutable values or simple key lookups. If your payload is under 1 MB and you can tolerate eventual consistency, KV is simpler; for larger dashboards with read-heavy traffic, Redis usually wins on TTI.
+**Should I use ECDSA or RSA certificates?**
 
-**How do I test performance for users on high-latency connections without being in the region?**
-Use Lighthouse’s simulated throttling (RTT 300 ms, 1.6 Mbps) for a quick baseline, then add Playwright tests that emulate 500 ms latency and run them from a CI runner in a nearby region such as `af-south-1`. Combine that with synthetic monitoring from a real POP and alert on TLS handshake duration and p99 cache latency. The combination catches both regressions in your code and regressions in the network path, which is where most of the surprises live.
+ECDSA P-256 is smaller and faster to verify than RSA 2048, and it's supported by all current browsers and TLS stacks. The exception is very old clients (Android 4.x, IE 11) that cannot validate ECDSA chains. If your traffic includes those clients, serve both certificate types and let the server negotiate. The measurement to run before switching is the handshake failure rate by client version, which most CDNs expose.
 
----
+**Is Redis the right edge cache, or should I use a KV store?**
 
-### About this article
+Redis is appropriate when you need sub-10 ms p99 reads, structured data types, or atomic operations like the `SET NX` lock shown above. A KV store with eventual consistency is simpler for small immutable values but doesn't support the atomic operations needed for stampede protection. If your payloads are large and read-heavy, Redis is usually the better fit; for small immutable values, either works.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+**How do I test high-latency performance without being in the region?**
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+Use Lighthouse's `throttling.rttMs` setting for a quick simulated baseline, then add a Playwright test using CDP's `Network.emulateNetworkConditions` with `latency: 500`. Run the Playwright test from a CI runner in a region with high RTT to your origin, so the emulated latency is added on top of real network latency. This catches both code regressions and routing regressions.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+## One action to take in the next 30 minutes
 
-**Last reviewed:** June 14, 2026
+Run this command against your production origin and read the output:
+
+```bash
+curl -w "dns: %{time_namelookup}\nconnect: %{time_connect}\ntls: %{time_appconnect}\nttfb: %{time_starttransfer}\ntotal: %{time_total}\n" \
+  -o /dev/null -s https://yourdomain.com
+```
+
+If `time_appconnect` minus `time_connect` is above 200 ms, your TLS handshake is costing more than one round trip on a typical connection and is the first thing to investigate. Check whether TLS 1.3 is enabled and whether session resumption is working before changing anything else.

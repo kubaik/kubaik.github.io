@@ -1,186 +1,186 @@
-# Observability agents lied to us
+# Observability Agents as Application Code
 
-Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path.
+Most observability guidance stops at the happy path: install an agent, expose metrics, collect traces, set up alerts. That playbook was written for a world of long-lived monoliths. It says much less about what happens when the collectors themselves become a distributed system you did not plan for.
 
-## The conventional wisdom (and why it's incomplete)
+## The conventional wisdom and where it runs out
 
-The standard playbook says: *install an agent, expose metrics, collect traces, set up alerts, and you’re done.* This advice is everywhere—vendor docs, conference talks, even the CNCF TrailMap. But the honest answer is that this playbook is optimized for yesterday’s systems, not today’s. It misses the part that breaks first when you move from monoliths to distributed services: the cost and complexity of running agents in production.
+The standard playbook is: install an agent, expose metrics, collect traces, set up alerts, and you are done. This is reasonable advice, and for many systems it is sufficient. What it understates is the operational surface of the agents themselves once you move from one host to a fleet.
 
-A 2026 survey of 500 SREs found that 68% ran into unexpected agent resource overhead after deploying their first production-grade agent suite (Prometheus 2.47 + Grafana Agent 0.38 + OpenTelemetry Collector 0.92). The failure mode wasn’t telemetry quality—it was the agents themselves. The exact error teams usually see is:
+The failure mode is rarely telemetry quality. It is the collection tier's own resource consumption, configuration drift, and restart behavior. A typical symptom is an agent that cannot reach its own scrape target:
 
 ```
 level=fatal msg="Failed to start scrape pool" err="failed to create scrape pool: dial tcp 127.0.0.1:9090: connect: connection refused"
 ```
 
-But that error points at the symptom, not the cause. The real issue is that the agent’s own resource usage (memory 512 MiB, CPU 1.2 cores at steady state) becomes the tail that wags the dog. The mental model most teams adopt—*‘agents are lightweight’*—is only true until you scale past 50 services. After that, the agents’ footprint becomes the dominant cost center.
+That error describes a symptom. The cause is usually upstream: the agent was OOM-killed, the target had not finished starting, or a network policy change blocked the loopback path. Reading the error as "the target is down" sends you debugging the wrong component.
 
-Steelman the opposing view: *agents are unavoidable*. If you refuse to run a sidecar or daemon to collect telemetry, you’re choosing blind spots. The honest answer is that agents are a necessary evil, but the conventional wisdom frames them as a solved problem. They’re not.
+The mental model worth challenging is "agents are lightweight." That holds for a single host running one exporter. It stops holding when a collector is deployed per node and each instance is configured to scrape host metrics, kubelet metrics, container runtime metrics, and application endpoints on the same interval. The agent's footprint then scales with cluster size and object count, not with the size of the node it runs on.
 
-The part that trips people up is the hidden tax of running agents at scale—their memory leaks, their configuration drift, and the fact that their own metrics pipelines become a distributed system you didn’t plan for. That’s what this post actually covers.
+The opposing view is worth stating fairly: if you refuse to run anything on the host or in a sidecar, you are choosing blind spots. Agents are necessary. The question is not whether to run them but whether you treat them as set-and-forget infrastructure or as software you operate.
 
+## What happens when you follow the standard advice
 
-## What actually happens when you follow the standard advice
+Consider a representative progression.
 
-Let’s walk through the typical sequence. You start with a monolith on a single EC2 instance (m6g.xlarge, 4 vCPUs, 16 GiB RAM). You install Prometheus Node Exporter (1.6), and it uses 15 MiB RAM and 0.05 CPU—negligible. You move to Kubernetes (EKS 1.28, Kubernetes 1.28, kubelet 1.28). Now your Node Exporter becomes a DaemonSet, and suddenly you have 30 pods running Node Exporter, each using 30 MiB RAM and 0.02 CPU. Total overhead: 900 MiB RAM and 0.6 CPU across the cluster. That’s before you add the OpenTelemetry Collector (0.92), which in its default configuration starts at 256 MiB RAM and 0.3 CPU per pod.
+Start with a monolith on one instance. A node exporter process uses a small, roughly constant amount of memory and a negligible fraction of a CPU. Nothing to manage.
 
-Here’s the gotcha: the OpenTelemetry Collector’s default configuration enables *all* exporters. When you deploy it in a DaemonSet with hostNetwork: true, each node ends up running a collector with *host metrics*, *kubelet metrics*, *containerd metrics*, and *application metrics*—all scraped via the same scrape interval. The result is a 40% increase in p99 latency for kubelet metrics on nodes running collectors. The error message that shows up is:
+Move to Kubernetes and the same exporter becomes a DaemonSet. Now there is one pod per node. If the exporter uses roughly 30 MiB per pod and you have 30 nodes, that is about 900 MiB of cluster memory for host metrics alone. The arithmetic is simple and worth doing before deployment: per-pod footprint multiplied by node count.
+
+Add a collector DaemonSet and the picture changes more sharply. A collector's default configuration commonly enables a broad set of receivers and exporters. On each node it may scrape host metrics, kubelet metrics, container runtime metrics, and application endpoints. If all of those share one scrape interval and one queue, a slow endpoint backs up the queue for every other endpoint.
+
+A concrete cascade looks like this. The kubelet's metrics endpoint has a request timeout. When the collector's scrape queue is saturated, requests to that endpoint exceed the timeout and samples are dropped:
 
 ```
 level=error msg="Scrape failed" name=kubelet duration=12.4s err="Get \"http://127.0.0.1:10255/metrics\": context deadline exceeded (Client.Timeout exceeded while awaiting headers)"
 ```
 
-The kubelet’s /metrics endpoint has a 5-second timeout. When the collector’s scrape queue is full, it misses the timeout and drops samples. The fix isn’t to tune the kubelet—it’s to realize that the collector’s own resource pressure caused the cascade.
+The instinct is to raise the kubelet timeout. That treats the symptom. The cause is that the collector is doing more work per interval than its queue and worker pool can absorb, so a slow target starves the rest. The fix is to separate scrape jobs, raise the queue, or reduce what the collector is asked to do per node.
 
-Another common trap: configuration drift. The standard advice is to use a single ConfigMap for all collectors. But when you have 50 services, each with different scrape intervals, relabeling rules, and exporters, the ConfigMap becomes a 4,000-line YAML file. The collector pod restarts every time you update the ConfigMap, and the restart causes a 30-second window where no telemetry is collected. The error message is silent—just missing data in Grafana.
+Configuration drift is the second failure mode. A single ConfigMap shared across every collector instance is fine at ten services. At fifty services with different intervals, relabeling rules, and exporters, the file grows into something no one reviews carefully. Updating it restarts every collector pod, and each restart opens a window where no telemetry is collected. The failure is silent: no error, just gaps in dashboards that are easy to attribute to the application.
 
-The real cost isn’t in the agents’ runtime—it’s in the operational overhead. A team of 4 SREs at a mid-size SaaS company (2026 headcount: 4 SREs, 120 services) reported spending 18 hours per week on agent-related incidents: Pod restarts, OOM kills, misconfigured relabeling rules, and missed scrapes. That’s 45% of their on-call time—before they even get to debugging application issues.
+The operational cost is the part that rarely appears in benchmarks. The measurable version is on-call load attributable to the collection tier: pod restarts, OOM kills, misconfigured relabeling, missed scrapes. You can measure this directly by tagging incidents with a "telemetry" category and counting them over a quarter. That number, not a vendor figure, is the one that should drive your decision.
 
+## How to measure agent overhead honestly
 
-## A different mental model
+Before adopting any mental model, get your own numbers. The commands below are the ones that produce evidence rather than opinion.
 
-The conventional model treats agents as *infrastructure*—something you set and forget. The alternative is to treat agents as *application code*. That means:
-
-- Agents are versioned, tested, and deployed like any other microservice. - Agents have their own resource budgets, SLOs, and error budgets. - Agents are observable via their own telemetry, not just the telemetry they collect.
-
-In practice, this means:
-
-1. Pin agent versions (e.g., OpenTelemetry Collector 0.92 with a specific set of components). 2. Set memory/CPU requests and limits based on load testing, not defaults. 3. Run agents in a dedicated namespace with pod disruption budgets. 4. Monitor the agents’ own metrics (e.g., `otelcol_process_runtime_heap_usage`, `otelcol_process_cpu_seconds`) alongside application metrics. 5. Use separate scrape intervals for agent telemetry vs. application telemetry.
-
-This mental model is harder to adopt because it requires treating agents as first-class citizens in your deployment pipeline. But the payoff is that you stop debugging why your telemetry pipeline is broken—because you’re already monitoring it.
-
-
-## Evidence and examples from real systems
-
-Here’s a concrete example from a 2026 production incident at a fintech company. They deployed an OpenTelemetry Collector DaemonSet (otelcol 0.92) across 120 EKS nodes (m6g.2xlarge, 8 vCPUs, 32 GiB RAM). The collector’s default config enabled the k8sobjectsreceiver, which scrapes Kubernetes API objects at a 30-second interval. On a cluster with 5,000 pods, this caused:
-
-- 40% higher p95 latency for the Kubernetes API server (from 25ms to 35ms). - 15% increase in etcd latency (from 5ms to 5.8ms). - Collector memory usage spiked to 1.2 GiB per pod, causing OOM kills.
-
-The fix wasn’t to tune the collector—it was to disable the k8sobjectsreceiver and move to a centralized collector deployment with a service mesh exporter. The latency dropped back to baseline within 30 minutes.
-
-Another example: a gaming company (2026 revenue: $1.2B) ran into a cache stampede problem with their metrics pipeline. They used Prometheus 2.47 with a sidecar exporter per pod. During traffic spikes, the exporters’ scrape queues filled up, and Prometheus started dropping samples. The error message was:
+**Per-pod resource use.** On a cluster with metrics-server installed:
 
 ```
-level=warn component="scrape manager" scrape_pool=game-server duration=15s err="dropped samples because sample limit exceeded"
+kubectl top pods -n observability --sort-by=memory
+kubectl top pods -n observability --sort-by=cpu
 ```
 
-The fix was to switch to a push-based model using OpenTelemetry Protocol (OTLP) over gRPC, with a centralized collector and batching. Sample loss dropped from 8% to 0.2%. The cost was higher latency (50ms vs. 10ms for scrape-based), but the loss of samples was unacceptable for their billing system.
+Compare the collector's usage against its configured requests and limits, not against an absolute threshold. A collector at 400 MiB with a 512 MiB limit has less headroom than one at 600 MiB with a 2 GiB limit.
 
+**Scrape health.** The collector exposes its own internal metrics. The relevant signals are the number of dropped spans or metric points, the queue length, and the fraction of failed scrapes. Instrument those and alert on them the same way you would alert on an application.
 
-## The cases where the conventional wisdom IS right
+**Restart frequency.** Count container restarts over a week:
 
-Not every system needs to treat agents as first-class code. The conventional wisdom works fine when:
+```
+kubectl get pods -n observability -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.containerStatuses[*].restartCount}{"\n"}{end}'
+```
 
-- You’re running fewer than 20 services. - Your services are long-lived (no ephemeral pods). - Your telemetry volume is low (<10k metrics/s). - You’re using managed services (e.g., Datadog Agent, New Relic Infrastructure) where the vendor handles scaling.
+A collector that restarts more than a handful of times a week is not stable, regardless of how it looks in a dashboard.
 
-In these cases, the overhead of running agents is negligible, and the simplicity of the standard playbook outweighs the complexity of treating agents as code.
+**Latency impact on targets.** If you scrape an endpoint, you can measure how long that scrape takes from the target's perspective. Compare the p99 of your metrics endpoint latency before and after enabling a new scrape job. The difference is the cost you are paying for that job.
 
-For example, a small e-commerce site (2026 traffic: 5k requests/min) runs a single monolith on a t3.medium instance. They use the Datadog Agent (7.53) and see no issues. The agent uses 120 MiB RAM and 0.03 CPU. The overhead is 1% of the instance’s resources. In this case, the conventional wisdom is correct.
+**Sample loss.** If you use a pull-based system, compare the number of samples you expect (targets multiplied by interval) with the number actually stored. The gap is your loss rate. If you use a push-based pipeline, the collector's own counters report dropped data points directly.
 
-The trap is assuming that what works for a small monolith will scale to a distributed system. It won’t.
+None of these require a benchmark suite. They require that you look at the agents as systems with their own SLOs.
 
+## A different mental model: agents as application code
 
-## How to decide which approach fits your situation
+The alternative to treating agents as infrastructure is to treat them as application code. That has concrete consequences:
 
-Use this table to decide whether to adopt the "agents as code" mental model:
+- Agents are versioned, tested, and deployed through the same pipeline as services.
+- Agents have their own resource budgets, SLOs, and error budgets.
+- Agents are observable via their own telemetry, not only the telemetry they collect.
 
-| Criterion                     | Conventional Wisdom (agents as infra) | Agents as Code                      |
-|-------------------------------|---------------------------------------|--------------------------------------|
-| Service count                 | <20 services                          | ≥20 services                         |
-| Service lifetime              | Long-lived (hours/days)               | Ephemeral (minutes/seconds)         |
-| Telemetry volume              | <10k metrics/s                        | ≥10k metrics/s                       |
-| Cluster size                  | <50 nodes                             | ≥50 nodes                            |
-| Team size                     | 1–2 SREs                              | 3+ SREs                               |
-| Tolerance for sample loss     | High                                  | Low                                  |
-| Budget for operational overhead | Low                                   | High                                 |
+In practice this means:
 
-If your situation crosses the thresholds in the right column, treat agents as code. Otherwise, the conventional wisdom is fine.
+1. Pin agent versions and the exact set of components enabled in each build.
+2. Set memory and CPU requests and limits from load testing rather than accepting defaults.
+3. Run agents in a dedicated namespace with pod disruption budgets and priority classes.
+4. Monitor the agents' own process metrics alongside application metrics.
+5. Use separate scrape intervals for agent telemetry and application telemetry.
+6. Treat the agent configuration as versioned code, reviewed like any other change.
 
+This is harder to adopt because it adds work to the deployment pipeline. The payoff is that when the telemetry pipeline breaks, you already have the instrumentation to diagnose it instead of discovering that your observability tooling is itself unobservable.
 
-## Objections I've heard and my responses
+## Worked example: sizing a collector from first principles
 
-**Objection 1: "Agents are supposed to be lightweight. If they’re not, you’re doing it wrong."**
+The numbers below are illustrative, not measured. Substitute your own.
 
-Response: The lightweight claim is only true for trivial workloads. In a 2026 benchmark, running Prometheus Node Exporter on a node with 100 pods increased memory usage by 40% compared to running it on a node with 10 pods. The agent’s footprint scales with the number of pods, not the node’s capacity. The lightweight claim assumes a static workload, which is rare in production.
+Assume a cluster with 40 nodes. You plan a collector DaemonSet, one pod per node. You expect each pod to handle 2,000 metric points per second and to buffer up to 30 seconds of data during a downstream outage.
 
-**Objection 2: "Managed services solve this. Use Datadog/New Relic/OpenTelemetry SaaS."**
+Step 1: estimate steady-state memory. Suppose your load test shows the collector uses roughly 150 MiB of heap at 2,000 points per second with the receivers and exporters you have enabled. Add a 2x safety factor for bursts: 300 MiB.
 
-Response: Managed services reduce operational overhead but don’t eliminate it. In 2026, Datadog’s container agent (7.53) still requires:
+Step 2: estimate buffer memory. If a point is roughly 200 bytes in memory and you buffer 30 seconds at 2,000 points per second, that is 2,000 × 30 × 200 bytes, or about 12 MB. This is small relative to heap, which is why heap, not buffer, usually drives the limit.
 
-- A DaemonSet with hostNetwork: true (which breaks network policies on some clusters). - A service account with cluster-admin permissions (a security risk). - A dedicated API key per environment (key rotation overhead).
+Step 3: set requests and limits. Request 256 MiB, limit 512 MiB. The request guarantees scheduling; the limit prevents a runaway collector from evicting application pods on the same node.
 
-The managed service abstracts the agent’s resource usage, but the configuration and permissions still need to be managed. The overhead isn’t gone—it’s just shifted to the vendor’s API limits and pricing model.
+Step 4: verify. After deployment, watch actual usage against the limit for a week. If usage sits at 80 percent of the limit under normal load, the limit is too tight for the next traffic spike.
 
-**Objection 3: "The OpenTelemetry Collector is supposed to be composable. Just disable the exporters you don’t need."**
+The point of the exercise is not the specific numbers. It is that a collector's resource budget should come from a load test and an explicit buffer assumption, not from a default in a manifest.
 
-Response: In practice, disabling exporters is harder than it sounds. The default configuration in otelcol 0.92 enables *all* exporters unless explicitly disabled. The configuration file grows to hundreds of lines, and the risk of misconfiguration increases. A 2026 audit of 30 production collectors found that 12 had misconfigured exporters enabled, leading to unnecessary resource usage and sample loss.
+## Failure modes worth designing against
 
-**Objection 4: "This is over-engineering. Just monitor the agents’ resource usage and set alerts."**
+**Queue saturation causing cross-target starvation.** One slow target fills a shared queue and starves fast targets. Mitigation: separate scrape jobs with independent queues, or reduce the number of targets per collector.
 
-Response: Monitoring and alerting are reactive. The failure mode isn’t that the agent runs out of memory—it’s that the agent’s OOM kill causes a cascade of missing telemetry, which leads to prolonged debugging sessions. By the time the alert fires, the incident is already in progress. Treating agents as code moves the problem upstream—you catch the resource pressure before it causes an outage.
+**OOM kill cascades.** A collector is killed, telemetry stops, and the resulting gap is attributed to the application. Mitigation: set limits with headroom, alert on memory approaching the limit, and ensure the collector is not the lowest-priority workload on the node.
 
+**Restart storms from configuration changes.** A shared ConfigMap change restarts every collector at once. Mitigation: use rolling updates, shard collectors by function, and avoid a single config that all instances share.
 
-## What I'd do differently if starting over
+**Silent sample loss.** The collector drops data under pressure and reports it only in its own metrics. Mitigation: scrape the collector's internal metrics and alert on drop counters.
 
-If I were designing an observability stack in 2026, here’s what I’d do:
+**Permission and network coupling.** Agents often need broad permissions and host network access, which interacts badly with network policies and least-privilege service accounts. Mitigation: scope permissions to what the collector actually reads, and test policy changes against the agent.
 
-1. **Start with a centralized collector from day one**. Use a single OpenTelemetry Collector deployment (not DaemonSet) with a service mesh exporter (e.g., Istio’s telemetry v2). This avoids the per-node overhead of DaemonSets.
+## When the conventional wisdom is right
 
-2. **Pin the collector’s components**. Use a minimal build of otelcol 0.92 with only the exporters you need (e.g., otelcol-contrib with prometheusreceiver and otlpexporter). Disable all others at build time.
+Treating agents as first-class code is not universally necessary. The standard playbook is fine when:
 
-3. **Set resource budgets based on load testing**. In a 2026 benchmark, a centralized collector handling 50k metrics/s used 512 MiB RAM and 0.5 CPU. Scale from there.
+- You run a small number of services, roughly fewer than twenty.
+- Your services are long-lived, with few ephemeral pods.
+- Telemetry volume is low relative to the collector's capacity.
+- You use a managed agent where the vendor handles scaling and upgrades.
 
-4. **Use push-based telemetry by default**. Scrape-based telemetry (Prometheus) is brittle under load. Push-based (OTLP over gRPC) is more reliable, though it introduces latency.
+In those cases the agent's footprint is a rounding error and the simplicity of the standard setup is worth more than the rigor of treating it as code. A single monolith on one instance with a vendor agent using a small, stable amount of memory does not need a resource budget review.
 
-5. **Monitor the collector’s own metrics**. Add a separate scrape job for `otelcol_process_*` metrics and alert on memory usage, CPU usage, and dropped samples.
+The trap is assuming that what works for a small monolith will scale unchanged to a distributed system. It usually will not, and the failure is gradual rather than dramatic.
 
-6. **Version the collector’s config**. Treat the collector’s configuration as code. Use Helm or Kustomize to version and deploy it alongside your services.
+## Decision checklist
 
-7. **Test agent failures in staging**. Run chaos experiments that kill the collector pods and verify that your system degrades gracefully (e.g., metrics are queued and retried).
+Use this to decide whether to adopt the agents-as-code model. The thresholds are illustrative; calibrate them against your own measurements.
 
-The biggest mistake I made in my first production agent deployment was assuming the agent was a black box. It’s not—it’s a distributed system in its own right. Treat it like one.
+| Criterion | Agents as infrastructure | Agents as code |
+|---|---|---|
+| Service count | Fewer than 20 | 20 or more |
+| Service lifetime | Hours to days | Seconds to minutes |
+| Telemetry volume | Well under collector capacity | Near or above capacity |
+| Cluster size | Small, few nodes | Dozens of nodes or more |
+| Team size | 1–2 people on call | 3 or more |
+| Tolerance for sample loss | High | Low |
+| Appetite for operational overhead | Low | High |
 
+If several criteria fall in the right column, treat agents as code. If most fall in the left, the conventional playbook is likely sufficient.
+
+## Common objections
+
+**"Agents are supposed to be lightweight. If they are not, you configured them wrong."**
+
+The lightweight claim holds for a single exporter on a single host. It weakens when a collector is deployed per node and configured to scrape many targets. The footprint scales with the number of targets and the number of enabled components, not with node capacity. That is a configuration property, not a defect, and it is worth measuring rather than assuming.
+
+**"Managed services solve this."**
+
+Managed agents reduce operational overhead but do not remove it. A container agent typically still runs as a DaemonSet, may require host network access, and needs a service account with permissions to read cluster state. Those are configuration and security decisions you still own. The vendor abstracts the agent's resource usage, but the integration surface remains yours to manage. For small teams this trade is usually good. For large fleets, the overhead shifts to managing API limits, cardinality, and pricing.
+
+**"Just disable the exporters you do not need."**
+
+In principle this is correct. In practice, default configurations often enable more than the operator realizes, and the configuration file grows until no one reviews it carefully. The reliable approach is to build a minimal collector image containing only the components you intend to run, so that an unneeded exporter is not present to be accidentally enabled.
+
+**"Monitor the agents and set alerts."**
+
+Monitoring is necessary but reactive. The failure that hurts is not the collector running out of memory; it is the gap in telemetry that follows, which makes the incident harder to diagnose. Treating agents as code moves the problem upstream: you catch resource pressure before it becomes an outage, and you have the agent's own telemetry to explain what happened.
+
+## A starting configuration
+
+A reasonable default for a new stack:
+
+1. Start with a centralized collector deployment rather than a per-node DaemonSet, unless you have a specific reason to collect node-local data.
+2. Pin the collector version and build a minimal image with only the receivers and exporters you need.
+3. Set resource requests and limits from a load test, with an explicit buffer assumption.
+4. Use push-based telemetry where the protocol supports it, and keep pull-based scraping for targets that only expose a pull endpoint.
+5. Scrape the collector's own metrics with a separate job and alert on dropped data, queue length, and memory approaching the limit.
+6. Version the collector configuration alongside your services and roll it out gradually.
 
 ## Summary
 
-The standard observability playbook misses the part that breaks first: the agents themselves. The failure mode isn’t telemetry quality—it’s the agents’ resource usage, configuration drift, and operational overhead. The conventional wisdom treats agents as infrastructure, but in distributed systems, they’re application code.
+The standard observability playbook covers the happy path well and the collection tier poorly. The failure modes that matter at scale are the agents' own resource consumption, configuration drift, and restart behavior, and they are measurable with tools you already have.
 
-The real cost isn’t in the agents’ runtime—it’s in the time SREs spend debugging why their telemetry pipeline is broken. The fix is to treat agents as first-class code: version them, budget their resources, monitor their own metrics, and test their failures.
+Treating agents as application code is not a universal requirement. It is a response to specific conditions: many services, short-lived workloads, high telemetry volume, and low tolerance for sample loss. When those conditions hold, the agents are a distributed system in their own right, and they deserve the same versioning, budgeting, monitoring, and failure testing as anything else you run.
 
-If you’re running more than 20 services or your telemetry volume is above 10k metrics/s, the conventional wisdom will fail you. Start with a centralized collector, pin its components, and monitor its own metrics. That’s the part that trips people up—and that’s what you need to fix first.
+## Do this in the next 30 minutes
 
-Check the agents’ resource usage first—run `kubectl top pods -n observability` and check the memory and CPU of your collector pods. If any pod is using more than 512 MiB RAM or 0.5 CPU, that’s your first signal that the conventional wisdom isn't enough.
-
-
-## Frequently Asked Questions
-
-**Why do agents use so much memory in Kubernetes?**
-
-Agents like the OpenTelemetry Collector run as sidecars or DaemonSets, where each pod includes the agent binary, its configuration, and any enabled exporters. In Kubernetes, each pod has a memory overhead of ~100 MiB just for the container runtime. When you enable multiple exporters (e.g., k8sobjectsreceiver, prometheusreceiver), the memory usage scales linearly with the number of exporters and the number of objects scraped. For example, a DaemonSet running on a node with 100 pods will use ~300 MiB more memory than one running on a node with 10 pods, due to the overhead of scraping Kubernetes API objects.
-
-**What’s the difference between scrape-based and push-based telemetry?**
-
-Scrape-based telemetry (e.g., Prometheus) relies on the monitoring system polling your application for metrics. Push-based telemetry (e.g., OTLP over gRPC) has your application send metrics to the collector. The tradeoff is latency vs. reliability. Scrape-based is lower latency (10ms) but brittle under load (sample loss during spikes). Push-based is higher latency (50ms) but more reliable (metrics are queued and retried). In 2026, most teams using push-based telemetry report 0.2% sample loss vs. 8% for scrape-based during traffic spikes.
-
-**How do I know if my agents are causing latency issues?**
-
-Check the p99 latency of your application’s metrics endpoints. If you’re using Prometheus, query `prometheus_target_interval_length_seconds{quantile="0.99"}`. If values are above 5 seconds, your scrape interval is too aggressive or your agents are overloaded. Another signal is kubelet or API server latency spikes during agent restarts. For example, a 2026 incident at a fintech company showed a 40% increase in kubelet p99 latency (from 25ms to 35ms) when the OpenTelemetry Collector DaemonSet restarted.
-
-**Why can’t I just use a managed service like Datadog?**
-
-Managed services reduce operational overhead but don’t eliminate it. In 2026, Datadog’s container agent (7.53) still requires a DaemonSet with hostNetwork: true, which breaks network policies on some clusters. It also needs a service account with cluster-admin permissions and dedicated API keys per environment. The managed service abstracts the agent’s resource usage, but the configuration and permissions still need to be managed. For small teams, this is fine—but for teams running 50+ services, the overhead shifts to managing the vendor’s API limits and pricing model.
-
-**What’s the minimal viable agent setup for a 2026 stack?**
-
-Start with a centralized OpenTelemetry Collector (otelcol 0.92) using a minimal build (only prometheusreceiver and otlpexporter). Deploy it as a Deployment (not DaemonSet) with resource requests/limits of 512 MiB RAM and 0.5 CPU. Use OTLP over gRPC for push-based telemetry. Monitor the collector’s own metrics with a separate scrape job. This setup handles up to 50k metrics/s with 0.2% sample loss and minimal operational overhead.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Run `kubectl top pods -n observability --sort-by=memory` and compare each collector pod's usage against its configured memory limit. If any pod is using more than 80 percent of its limit under normal load, raise the limit or reduce what that collector is asked to do, and note the change so you can verify it after the next traffic peak.
+===END===

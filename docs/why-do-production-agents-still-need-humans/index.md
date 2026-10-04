@@ -1,34 +1,34 @@
 # Why do production agents still need humans?
 
-production agents broke in a way our monitoring wasn't even watching for. The tutorials all show the happy path. This is the writeup with the mistakes left in, not edited out.
+Production agents — LLM-driven chat bots, automated fraud detectors, inventory-balancing microservices — are increasingly the front line for businesses operating in regions with volatile networks and fast-moving regulation. The promise is familiar: 24/7 availability, elastic scaling, sub-second responses measured in a lab. In the field, the same agents meet flaky mobile links, payment-rail quirks, and rules that change without warning. The hidden assumption that trips teams up is that a model can operate safely without a human safety net. This article is about where that assumption fails and how to build the boundary properly.
 
-Production agents—whether they are LLM‑driven chat bots, automated fraud detectors, or inventory‑balancing micro‑services—are now the default front line for many Nigerian, Ghanaian, and East African businesses. The promise is alluring: 24/7 availability, instant scaling on AWS Lambda (arm64) runtime 2026.09, and sub‑second response times measured in the lab. In the field, however, agents bump into flaky 3G/4G networks, payment‑rail quirks from M‑Pay, Flutterwave, and Paystack, and regulatory rules that change overnight. The part that trips people up is the hidden assumption that a model can operate safely without a human safety net, and that's what this post actually covers.
+## The error and why it is confusing
 
-## The error and why it's confusing
-
-When an agent misclassifies a transaction or drops a user request, the logs often show a generic message such as:
+When an agent misclassifies a transaction or drops a user request, the logs often show something generic:
 
 ```
 Error: Unexpected token in JSON payload (code 500)
 ```
 
-Developers interpret this as a bug in the parsing library, a malformed request, or a temporary outage. The symptom is clean, but the root cause is anything from a corrupted SMS gateway payload (common on low‑bandwidth networks) to a regulatory flag that only a human can resolve. The confusion deepens because the same error can appear in a fully automated pipeline that uses Node.js 20 LTS with `axios` for HTTP calls, as well as in a hybrid pipeline that already has a manual review step. The error message gives no clue whether the failure is technical, business‑logic, or compliance‑related. Teams that treat the symptom as a pure code defect end up looping on retries, inflating Lambda costs by up to **$0.12 per 1 M invocations** and increasing latency from the expected **150 ms** to **>800 ms** during peak traffic.
+The natural reading is "parsing bug" or "malformed request" or "transient outage." The symptom is clean; the root cause is not. It can be a corrupted SMS gateway payload on a low-bandwidth link, a business rule that only a human can resolve, or a stale compliance threshold. The same message appears in a fully automated pipeline and in a hybrid pipeline that already has a manual review step. Nothing in the string tells you whether the failure is technical, business-logical, or regulatory.
 
-## What's actually causing it (the real reason, not the surface symptom)
+The practical consequence: teams treat the symptom as a code defect and loop on retries. Retries consume Lambda time, push latency past the timeout, and never resolve the underlying condition, because the underlying condition is not a transient fault.
 
-The real culprit is the lack of a well‑defined human‑in‑the‑loop (HITL) boundary. In 2026, three interlocking factors make HITL indispensable:
+## What is actually causing it
 
-1. **Network volatility** – In many West African markets, average downstream speed on 3G is **350 ms RTT** and packet loss can reach **2.4 %**. When an agent calls an external payment API, the request may time out, but the timeout itself is not the problem; the problem is that the business rule requires a manual verification of the user’s identity before proceeding.
-2. **Payment‑rail idiosyncrasies** – M‑Pay returns a non‑standard error code `MPAY-302` for “insufficient balance after pending settlement”. The code is undocumented in the public SDK, so the agent treats it as a generic failure. A human reviewer can look up the merchant’s ledger and approve the transaction.
-3. **Regulatory flux** – Central banks in Nigeria and Kenya introduced real‑time AML thresholds in early 2026. The thresholds are stored in a Redis 7.2 cache that updates only once per hour. If the cache is stale, the agent will either block a legitimate transaction or let a risky one slip through. Only a human can override the stale cache in the short window.
+The recurring root cause is the absence of a well-defined human-in-the-loop (HITL) boundary. Three forces make that boundary necessary:
 
-These three forces combine to produce the same "Unexpected token" error, but the fix lives outside the code base. A proper HITL design isolates the decision point, surfaces the exact failure reason, and routes it to a human operator.
+1. **Network volatility.** On congested mobile links, request timeouts are routine. The timeout itself is not the problem. The problem is that the business rule requires manual verification of the user's identity before proceeding, and the agent has no way to express "I cannot decide this."
+2. **Payment-rail idiosyncrasies.** Rails return non-standard error codes for states like "insufficient balance after pending settlement." These codes are often undocumented in the public SDK, so the agent classifies them as generic failures. A human reviewer can check the merchant ledger and approve or reject.
+3. **Regulatory flux.** AML thresholds and similar limits change, and they are frequently cached. If the cache is stale, the agent either blocks a legitimate transaction or lets a risky one through. Only a human can override the stale value inside the short window before the cache refreshes.
 
-## Fix 1 — the most common cause
+These forces produce the same surface error, but the fix lives outside the code path that raised it. A proper HITL design isolates the decision point, surfaces the exact failure reason, and routes it to a human operator with enough context to act.
 
-**Symptom pattern:** The agent repeatedly retries a failing API call, logs `Error: Unexpected token in JSON payload`, and the overall error rate spikes to **2.4 %** of all requests during a 30‑minute window.
+## Fix 1 — the most common cause: blind retries on business errors
 
-**Root cause:** The retry logic is blind to business context. A common implementation uses exponential back‑off with `axios-retry` (v3.3) in Node.js 20 LTS:
+**Symptom pattern:** the agent repeatedly retries a failing API call, logs the generic parse error, and the error rate spikes for a sustained window.
+
+**Root cause:** retry logic that is blind to business context. A typical implementation:
 
 ```javascript
 const axios = require('axios');
@@ -40,11 +40,11 @@ async function chargeCustomer(payload) {
 }
 ```
 
-When the payment gateway returns `MPAY-302`, the retry loop treats it as a transient network error, inflating latency to **>1 s** and exhausting the Lambda timeout (default 6 s). The fix is to make the retry policy **aware** of the error code and hand off to a human when the code is business‑specific.
+When the gateway returns a business-specific code, the retry loop treats it as transient, inflating latency and exhausting the function timeout. The fix is to make the retry policy aware of the error code and hand off to a human when the code is business-specific.
 
-**Actionable steps:**
+**Steps:**
 1. Extend the error handler to inspect `error.response.data.code`.
-2. If the code matches a known business‑critical list (e.g., `MPAY-302`, `FLW-401`), publish a message to an SQS queue (`human-review-queue`) instead of retrying.
+2. If the code is in a known business-critical list, publish a message to a review queue instead of retrying.
 3. Attach the original payload and a correlation ID for traceability.
 
 ```python
@@ -65,30 +65,31 @@ def handle_error(response):
         raise RuntimeError('Unexpected error')
 ```
 
-By routing the error to a human, you eliminate the wasteful retry loop, cut Lambda cost by an estimated **30 %** during peak periods, and keep the error rate under **0.5 %**.
+Routing the error to a human removes the wasteful retry loop and converts an unresolvable failure into a queued decision.
 
-## Fix 2 — the less obvious cause
+## Fix 2 — the less obvious cause: stale configuration cache
 
-**Symptom pattern:** After a successful deployment, the agent starts flagging legitimate transactions as fraud, generating a surge of alerts that overwhelm the ops team. The logs show no stack trace, only `Error: Unexpected token in JSON payload`.
+**Symptom pattern:** after a deployment, the agent flags legitimate transactions as fraud, generating a surge of alerts. Logs show no stack trace, only the generic parse error.
 
-**Root cause:** The cache that stores AML thresholds is stale. Many teams rely on a simple `redis-cli` `GET` call at startup:
+**Root cause:** the cache holding AML thresholds is stale. Many teams read it once:
 
 ```bash
 redis-cli -h redis-prod.example.com GET aml_threshold
 ```
 
-If the cache refresh job (a Cron task on an EC2 instance) fails due to a missed run caused by a 2‑hour power outage, the agent continues to use the old threshold. The mismatch triggers false positives that manifest as JSON parsing errors because the downstream service expects a numeric field that is now a string.
+If the refresh job fails — a missed cron run, a power outage, a network partition — the agent keeps using the old threshold. The mismatch triggers false positives that surface downstream as parsing errors, because a service expecting a numeric field receives a string.
 
-**Fix:** Use a **cache‑with‑fallback** pattern. Pull the threshold from Redis, but if the value is older than 5 minutes, fall back to a DynamoDB lookup. Also, instrument the cache with a TTL that forces a refresh.
+**Fix:** a cache-with-fallback pattern. Read from the cache, but if the value is older than a chosen staleness window, fall back to a durable store. Instrument the cache with a TTL that forces refresh.
 
-| Aspect | Fully Automated | Human‑In‑The‑Loop |
+A comparison of the two operating modes, with figures labelled illustrative:
+
+| Aspect | Fully automated | Human-in-the-loop |
 |--------|----------------|-------------------|
-| Latency (avg) | 150 ms | 200 ms (human review) |
-| Cost per 1 M ops | $0.08 | $0.12 (includes reviewer time) |
-| Failure rate | 2.4 % | 0.6 % |
-| Compliance risk | High | Low |
+| Latency (illustrative) | ~150 ms | ~200 ms including queue and review |
+| Failure rate (illustrative) | ~2.4% | ~0.6% |
+| Compliance risk | Higher | Lower |
 
-**Implementation snippet (Node.js):**
+**Implementation (Node.js):**
 
 ```javascript
 const Redis = require('ioredis');
@@ -108,15 +109,15 @@ async function getAmlThreshold() {
 }
 ```
 
-By adding the TTL guard, the agent avoids using stale data, and the fallback guarantees correctness even when the cache refresh job is missed.
+The TTL guard prevents the agent from acting on stale data, and the fallback guarantees correctness even when the refresh job is missed.
 
-## Fix 3 — the environment-specific cause
+## Fix 3 — the environment-specific cause: intermediaries rewriting the stream
 
-**Symptom pattern:** Agents deployed on edge locations in Lagos experience a sudden spike in `Error: Unexpected token` after a mobile‑network provider rolls out a new compression proxy. The error appears only on devices using the 2G fallback.
+**Symptom pattern:** agents in a specific region start throwing parse errors after a mobile carrier or CDN changes its compression or header behavior. The error appears only on a particular network path.
 
-**Root cause:** The compression proxy injects a non‑standard header (`X-Compress-Mode: gzip‑lite`) that some HTTP libraries misinterpret as part of the JSON body. In Python 3.11, the `requests` library reads the entire response stream before stripping headers, causing the first few bytes of the body to be corrupted.
+**Root cause:** a proxy injects a non-standard header or re-encodes the body, and some HTTP clients misread the result — reading the full stream, stripping headers after the fact, or leaving stray bytes in front of the JSON.
 
-**Fix:** Switch to a streaming parser that discards unknown headers, or configure the HTTP client to disable automatic decompression.
+**Fix:** switch to a client configuration that disables automatic decompression and tolerates leading bytes.
 
 ```python
 import requests
@@ -129,23 +130,32 @@ def fetch_payload(url):
     resp = session.get(url, timeout=5)
     resp.raise_for_status()
     # Use a safe json loader that tolerates stray bytes
-    return resp.content.lstrip(b'\xef\xbb\bf').decode('utf-8')
+    return resp.content.lstrip(b'\xef\xbb\xbf').decode('utf-8')
 ```
 
-After deploying this change, latency on the 2G fallback returns to **350 ms** and the error rate drops from **1.8 %** to **0.2 %**. The fix is environment‑specific but illustrates why a universal “no‑human” stance fails when network stacks differ.
+This is environment-specific, and that is the point: a universal "no-human" stance fails when network stacks differ, because the failure mode itself differs by path.
 
 ## How to verify the fix worked
 
-1. **Metric collection** – Enable CloudWatch custom metrics for `HumanReviewHandOffs`, `CacheStaleHits`, and `ProxyErrorRate`. Set alarms when any metric exceeds **5 %** of total requests.
-2. **Trace correlation** – Use AWS X‑Ray (v3.2) to attach the correlation ID from the SQS message to the downstream Lambda invocation. Verify that the trace shows a `HumanReview` segment.
-3. **A/B test** – Deploy the updated retry logic to 20 % of traffic using a Lambda alias version. Compare error rates: the control should stay around **2.4 %**, while the variant should be **≤0.5 %**.
-4. **Load test** – Run a k6 (v0.48) script simulating 500 concurrent users on a 3G profile. Record average latency; it should stay under **400 ms** after the fixes.
+Do not trust a single dashboard. Instrument the boundary itself and compare before and after on the same traffic.
 
-If the numbers align, you have confidence that the HITL boundaries are correctly enforced.
+1. **Metric collection.** Emit custom metrics for `HumanReviewHandOffs`, `CacheStaleHits`, and `ProxyErrorRate`. Alarm when any exceeds a threshold you have chosen relative to total requests.
+2. **Trace correlation.** Attach the correlation ID from the queue message to the downstream invocation, and confirm the trace shows a human-review segment. Without this, hand-offs are invisible.
+3. **Split traffic.** Deploy the updated retry logic to a fraction of traffic using a function alias or feature flag. Compare error rates between control and variant over the same window.
+4. **Load test.** Simulate concurrent users on a throttled network profile and record latency. The number that matters is the p95, not the mean.
+
+**How to measure the specific claims in this article.** Any figure you see quoted for HITL benefits should be reproducible:
+
+- **Retry waste.** Count invocations whose only outcome was a retry of a business-code error. Multiply by the measured average duration and your per-GB-second price. This gives the cost of the loop you removed.
+- **Hand-off latency.** Instrument the time between the queue message being written and the reviewer action being recorded. That interval, not the reviewer's click, is what your SLA must absorb.
+- **Error-rate change.** Compare the count of the specific error class per thousand requests, before and after, on the same traffic mix. A change in traffic mix will otherwise masquerade as a fix.
+- **Stale-cache incidents.** Log every fallback read, then count how many would have used a value older than your staleness window. This is the number that justifies the fallback path.
+
+If those four numbers move in the expected direction, the boundary is working. If only the headline error rate moves, you have probably changed what you log, not what happens.
 
 ## How to prevent this from happening again
 
-Prevention starts with **policy as code**. Define a JSON schema that lists all error codes that require human review. Store the schema in a version‑controlled S3 bucket (`s3://company-config/hitl-schema.json`) and load it at startup.
+Prevention starts with **policy as code**. Define a schema listing the error codes that require human review, store it in version control, and load it at startup.
 
 ```json
 {
@@ -153,207 +163,57 @@ Prevention starts with **policy as code**. Define a JSON schema that lists all e
 }
 ```
 
-Combine this with CI checks that reject any new agent code that hard‑codes a retry‑only path for these codes. Additionally, schedule a daily health check Lambda (Node.js 20 LTS) that verifies:
-- Redis TTL for `aml_threshold` is > 300 seconds.
-- The SQS `human-review-queue` depth is < 50 messages.
-- The network proxy header list matches the allowed set.
+Combine this with CI checks that reject new agent code which hard-codes a retry-only path for those codes. Then schedule a health check that verifies:
 
-Enforce a **runbook** that requires a manual sign‑off before any change to the HITL schema, ensuring compliance teams stay in the loop.
+- The cache TTL for the threshold key is above your staleness window.
+- The review queue depth is below a threshold you can act on.
+- The set of proxy headers observed in production matches the allowed set.
 
-## Related errors you might hit next
+Finally, enforce a runbook that requires sign-off before any change to the HITL schema, so compliance stays in the loop rather than being notified afterward.
 
-- `Error: Invalid signature on payment payload` – often caused by clock drift on edge devices; fix by syncing NTP.
-- `Error: Rate limit exceeded (code 429)` – can be mitigated by token bucket throttling in the API gateway.
-- `Error: PermissionDeniedException` from AWS SSM – usually a missing IAM policy for the Lambda role; add `ssm:GetParameter`.
+## A worked example: deciding where the boundary goes
 
-Each of these errors shares the pattern of being surface‑level JSON parsing failures that mask deeper operational gaps.
+Suppose a payment agent handles 100,000 requests per day. Of those, 3% fail with a business-specific code. Two designs are on the table.
 
-## When none of these work: escalation path
+**Design A — retry everything.** Each business-code failure is retried three times before giving up. That is 100,000 × 0.03 × 3 = 9,000 extra invocations per day. Each invocation costs compute time you would otherwise not spend, and each one delays the user's eventual failure message.
 
-1. **Open a ticket** in the internal JIRA project `AGENT‑OPS` with label `hitl‑failure`.
-2. **Attach** the CloudWatch logs for the offending request, the correlation ID, and the SQS message (if any).
-3. **Tag** the on‑call engineer (`@team/infra`) and the compliance lead (`@team/compliance`).
-4. **Run** the diagnostic script `scripts/agent_debug.sh` (included in the repo) which gathers:
-   - Network trace (`tcpdump` for 30 s)
-   - Redis TTL dump (`redis-cli --scan`)
-   - Lambda environment variables (`aws lambda get-function-configuration`)
-5. If the issue persists after 45 minutes of investigation, **escalate** to the senior architecture group via the `#critical‑incidents` Slack channel.
+**Design B — route business codes to review.** The same 3,000 requests per day go to a queue. A reviewer handles each in roughly 20 seconds of active work. That is 3,000 × 20 = 60,000 seconds, or about 16.7 hours of reviewer time per day. If that exceeds your staffing, the boundary is drawn too wide: narrow the code list to only the codes that genuinely require judgment, and let the rest fail fast with a clear user-facing message.
 
-The escalation path ensures that no silent failure stays in production longer than the 30‑minute window defined by the SLA.
+The arithmetic is the point. HITL is not free, and the review load scales linearly with traffic. A boundary that works at 10,000 requests per day can collapse at 100,000. Compute the reviewer hours before you ship, not after.
 
-## Frequently Asked Questions
+## Failure modes of the boundary itself
 
-**How do I decide which error codes need human review?**  
-Identify codes that map to business‑critical decisions: regulatory blocks, high‑value payments, or ambiguous fraud signals. Store them in a version‑controlled schema and review quarterly with compliance.
+A HITL design can fail in ways that are worse than no boundary at all:
 
-**Why can't I rely solely on automated retries?**  
-Retries consume compute time and cost, and they cannot resolve errors that require contextual judgment, such as missing customer documents or outdated AML thresholds.
+- **Queue as a black hole.** Messages are written but nobody owns the queue. Add an alert on queue age, not just depth.
+- **Missing context.** A reviewer who sees only a correlation ID cannot decide anything. Ship the payload, the attempted action, and the reason for the hand-off in the same message.
+- **Duplicate side effects.** If the agent retries after handing off, the human may approve a transaction that already succeeded. Make the hand-off terminal for that request.
+- **Silent fallback.** If the cache fallback fails and the agent proceeds with a default threshold, you have replaced a visible error with an invisible one. Fail closed and alert.
+- **Boundary creep.** Every new error code added to the review list increases reviewer load permanently. Review the list on a schedule and remove codes that no longer need judgment.
 
-**What is the minimal latency impact of adding a human step?**  
-In practice, a well‑orchestrated review adds about **50 ms** of queue time on average, because most reviewers are already logged into the dashboard and can approve with a single click.
+## When none of this works: escalation path
 
-**When should I fallback to a different payment rail?**  
-If the primary rail returns a business‑specific error code more than twice in a 5‑minute window, trigger a fallback to an alternative (e.g., from M‑Pay to Paystack) and log the event for audit.
+1. Open a ticket with the logs for the offending request, the correlation ID, and the queue message if one exists.
+2. Tag both the on-call engineer and the compliance owner. These are different people with different incentives; do not merge them.
+3. Run a diagnostic script that gathers a short network trace, a cache TTL dump, and the function's environment configuration.
+4. If the issue persists past your defined investigation window, escalate to the architecture group with the diagnostic bundle attached.
 
-The next concrete action you can take right now is to open `src/hitl_handler.py` and add the JSON schema load logic shown above, then commit and push the change. This will give you a live HITL boundary within the next 30 minutes.
+The escalation path exists so that no silent failure stays in production longer than the window your SLA allows.
 
----
+## Frequently asked questions
 
-## Advanced Edge Cases I’ve Personally Encountered (300+ words)
+**How do I decide which error codes need human review?**
+Identify codes that map to business-critical decisions: regulatory blocks, high-value payments, ambiguous fraud signals. Store them in version-controlled schema and review the list on a schedule with compliance.
 
-When you start shipping agents to the streets of Lagos, Accra, and Nairobi, the “edge” isn’t just a network diagram—it’s a living, breathing set of constraints that only reveal themselves under real‑world load. Below are three concrete edge cases I ran into on production, each with a name you can reference in incident tickets.
+**Why can't I rely solely on automated retries?**
+Retries consume compute and cannot resolve errors that require contextual judgment, such as missing customer documents or outdated AML thresholds.
 
-### 1. **SMS‑Gateway Byte‑Shift (NG‑SMS‑001)**
-Our chatbot uses an SMS fallback for users on feature phones. The local carrier’s SMS‑C gateway in Nigeria occasionally injects a stray `0x00` byte after every 160‑character segment when the payload contains a Unicode emoji. The downstream Node.js parser (`fast-json-parse` v3.1) treats the extra byte as part of the JSON string, resulting in `Unexpected token` errors that surface only on 2G connections. The fix was to pre‑sanitize the payload with a tiny binary‑filter that strips `0x00` before handing it to the JSON parser.
+**What is the minimal latency impact of adding a human step?**
+It depends entirely on your queue and staffing. Measure the interval between message write and reviewer action; that is the number to put in the SLA, not an assumed constant.
 
-### 2. **M‑Pay Settlement Window Race (KE‑MPAY‑RACE)**
-Paystack and M‑Pay both expose a “settlement window” endpoint that tells you whether a pending transaction can be cleared. In Kenya, the settlement window closes exactly at 00:00 UTC+3. When a Lambda invoked at 23:59:58 UTC+3 queried the window, the API returned a **partial JSON** payload (the `status` field was omitted). Our Go‑based agent (Go 1.22, `encoding/json` v0.0.1) threw a generic parsing error, which we later traced to the race condition between the clock drift on the edge Lambda and the carrier’s NTP server. Adding a 2‑second buffer and using the `time.RFC3339Nano` format eliminated the race.
+**When should I fall back to a different payment rail?**
+Define a threshold in advance — for example, repeated business-specific errors from one rail inside a short window — and log every fallback for audit.
 
-### 3. **Flutterwave Header Collision (GH‑FLW‑HDR)**
-In Ghana, a new CDN for Flutterwave injected a `Set-Cookie: session=…` header that conflicted with the `session` field inside the JSON body of the `/transactions/verify` response. The Java SDK (`flutterwave-java` v2.5.0) merges headers into the response map, causing the body parser to see a string where it expects a numeric amount, again surfacing as “Unexpected token”. The resolution was to configure the SDK to ignore response headers (`client.setIgnoreHeaders(true)`) and to add a custom deserializer for the `amount` field.
+## The next 30 minutes
 
-These three cases illustrate why a blanket “no‑human” policy is brittle. Each edge case required a human to notice the pattern, add a rule, and then codify it so the next Lambda invocation can survive the same anomaly without blowing up.
-
----
-
-## Integration with Real‑World Tools (2026 Versions) – Code Walkthrough (300+ words)
-
-Below is a minimal, production‑ready snippet that stitches together three tools we rely on daily in West‑African deployments:
-
-1. **`axios` v1.6.2** – HTTP client with built‑in retry support.
-2. **`ioredis` v5.4.0** – Redis client that works over unreliable 3G links.
-3. **`aws-sdk` v3.567.0** – The modular AWS SDK for JavaScript, used here to push HITL tickets to an SQS FIFO queue.
-
-The goal of the snippet is to **charge a customer**, **detect a business‑specific error**, **store a temporary cache of the error for 30 seconds**, and **hand off to a human reviewer** if needed. All steps are instrumented with OpenTelemetry (v1.12.0) so you can trace the flow end‑to‑end, even when the request traverses a flaky network.
-
-```javascript
-// ------------------------------------------------------------
-// 2026‑09‑08 – hitl_integration.js
-// ------------------------------------------------------------
-import axios from 'axios';
-import axiosRetry from 'axios-retry';
-import Redis from 'ioredis';
-import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
-import { trace, context, propagation } from '@opentelemetry/api';
-
-// ---------- Configuration ----------
-const PAYMENT_URL = 'https://api.m-pesa.com/v2/charge';
-const SQS_URL = 'https://sqs.us-east-1.amazonaws.com/123456789012/human-review.fifo';
-const redis = new Redis({ host: 'redis-prod.example.com', port: 6379, enableOfflineQueue: true });
-const sqs = new SQSClient({ region: 'us-east-1' });
-
-// ---------- Axios with business‑aware retry ----------
-axiosRetry(axios, {
-  retries: 3,
-  retryCondition: (error) => {
-    // Only retry on network timeouts, not on business codes
-    const code = error?.response?.data?.code;
-    return !code || ['ECONNABORTED', 'ETIMEDOUT'].includes(error.code);
-  },
-  retryDelay: axiosRetry.exponentialDelay,
-});
-
-// ---------- Helper: publish to HITL queue ----------
-async function handoffToHuman(correlationId, payload, reason) {
-  const msg = {
-    MessageBody: JSON.stringify({ correlationId, payload, reason }),
-    QueueUrl: SQS_URL,
-    MessageGroupId: 'agent-errors',
-    MessageDeduplicationId: correlationId,
-  };
-  await sqs.send(new SendMessageCommand(msg));
-}
-
-// ---------- Main charge function ----------
-export async function chargeCustomer(customerId, amount, currency = 'NGN') {
-  const tracer = trace.getTracer('hitl-agent');
-  return tracer.startActiveSpan('chargeCustomer', async (span) => {
-    const correlationId = `${customerId}-${Date.now()}`;
-    const payload = { customerId, amount, currency, correlationId };
-
-    try {
-      const resp = await axios.post(PAYMENT_URL, payload, { timeout: 4000 });
-      // Cache successful responses for 30 seconds to avoid duplicate charges
-      await redis.setex(`charge:${correlationId}`, 30, JSON.stringify(resp.data));
-      span.setAttribute('payment.status', resp.data.status);
-      return resp.data;
-    } catch (err) {
-      const code = err?.response?.data?.code;
-      // Store the error for 30 seconds so the UI can show a consistent message
-      await redis.setex(`error:${correlationId}`, 30, JSON.stringify(err.response?.data || {}));
-      if (code && ['MPAY-302', 'FLW-401', 'PAYSTACK-999'].includes(code)) {
-        await handoffToHuman(correlationId, payload, `Business error ${code}`);
-        span.setAttribute('hitl.handled', true);
-        span.setAttribute('error.code', code);
-        return { status: 'human_review', correlationId };
-      }
-      // Unexpected network error – let the retry logic handle it
-      span.recordException(err);
-      span.setStatus({ code: 2, message: err.message });
-      throw err;
-    } finally {
-      span.end();
-    }
-  });
-}
-```
-
-**Why this matters for low‑bandwidth markets:**
-
-* **`enableOfflineQueue: true`** tells `ioredis` to buffer commands when the 3G link drops, then replay them automatically.
-* **Business‑aware retry** prevents endless loops that would otherwise waste precious Lambda seconds and increase the bill for a region where the average Lambda execution cost is already **$0.12 per 1 M invocations**.
-* **SQS FIFO** guarantees exactly‑once delivery of the human‑review ticket, essential for audit trails required by the Central Bank of Nigeria’s 2026 AML regulations.
-
-Deploy this file as a Lambda layer (Node.js 20 LTS) and you’ll see the following metrics in CloudWatch after a few minutes of traffic on a 3G‑simulated load test:
-
-* **Success latency:** 312 ms (including Redis cache hit)
-* **Human‑hand‑off latency:** 475 ms (queue time + reviewer click)
-* **Error‑retry rate:** < 0.2 % (thanks to the business‑code guard)
-
-This integration pattern can be copied verbatim for Paystack (v3.2.1) or Flutterwave (v2.9.0) by swapping `PAYMENT_URL` and adjusting the error‑code list.
-
----
-
-## Before/After Comparison – Real Numbers (300+ words)
-
-To prove that a well‑scoped HITL boundary actually moves the needle, I ran a controlled experiment on a production‑grade agent that processes **2 M** transactions per day across Nigeria, Ghana, and Kenya. The baseline (“Before”) used the naïve retry‑only approach described in **Fix 1**. The “After” version implements the three‑step workflow from the integration snippet above, plus the cache‑with‑fallback from **Fix 2**.
-
-| Metric | Before (Pure‑Automation) | After (HITL‑Enabled) |
-|--------|--------------------------|----------------------|
-| **Average latency (all requests)** | 842 ms (peak 3G) | 378 ms (peak 3G) |
-| **95th‑percentile latency** | 1 412 ms | 612 ms |
-| **Lambda compute cost** | $0.12 / 1 M invocations | $0.084 / 1 M invocations |
-| **SQS messages per day** | 0 (no hand‑off) | 4 320 human‑review tickets |
-| **Human reviewer time** | — | 2 h / day (≈ $30 / day) |
-| **Error rate (Unexpected token)** | 2.4 % (48 k errors) | 0.42 % (8.4 k errors) |
-| **Lines of code added** | +0 | +112 (new hitl_handler.js, config schema, OpenTelemetry hooks) |
-| **Cache‑stale incidents** | 1 200 /day (5 % of traffic) | 96 /day (0.4 % of traffic) |
-| **Compliance‑related overrides** | 0 (blocked) | 1 120 /day (handled) |
-| **Overall monthly bill** | $1 260 (Lambda) + $0 (review) | $882 (Lambda) + $900 (review) = $1 782 |
-
-### Interpretation
-
-* **Latency:** By eliminating blind retries on business‑specific error codes, we cut the average latency by **55 %**. The 95th‑percentile dropped below the 800 ms SLA that most African mobile‑network operators consider “acceptable”.
-* **Cost:** Lambda execution time fell from an average of 6 ms per request to 4 ms, saving **$0.036 / 1 M**. The modest reviewer cost is offset by the reduction in failed transactions and the avoidance of regulatory fines (estimated $0.02 per false positive).
-* **Error rate:** The “Unexpected token” surface error shrank to **0.42 %**, a 5‑fold improvement. Most of the remaining errors are now **network‑only timeouts**, which we already mitigate with exponential back‑off.
-* **Lines of code:** Adding 112 lines may sound like overhead, but those lines are highly reusable (error‑code schema, OpenTelemetry wrappers). In a monorepo of 250 k LOC, this is a **0.045 %** increase—negligible compared to the operational gains.
-* **Human‑review volume:** 4 320 tickets per day translates to roughly **180 tickets per hour** across three regional ops centers. With a simple React dashboard (built on Next.js 14.2) and a one‑click “Approve” button, the average handling time is **15 seconds**, comfortably within the **50 ms** added latency budget we quoted earlier.
-
-### Real‑World Impact Story
-
-On day 12 of the rollout, a sudden **M‑Pay settlement window bug** (the KE‑MPAY‑RACE case) would have caused a cascade of failed charges. The “Before” system would have kept retrying, inflating the Lambda timeout to the 6 s limit and triggering a **$5 K** spike in the AWS bill for that hour. The “After” system detected the `MPAY-302`‑like code, handed it off, and the human reviewer approved 98 % of the pending transactions within two minutes. The Lambda cost stayed flat, and the business avoided a potential **$12 K** regulatory penalty for delayed settlements.
-
-These numbers demonstrate that a carefully scoped human‑in‑the‑loop boundary isn’t a “cost centre” – it’s a **cost‑optimiser** in the low‑bandwidth, high‑regulation markets that dominate West and East Africa in 2026.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open your agent's error handler and add one branch: if the response code is in a small, explicit set of business-critical codes, publish a message containing the correlation ID, the original payload, and the reason to a queue you already own. Do not change the retry logic yet, and do not add a dashboard. Just make the hand-off visible in production. Once you can see how often it fires, you have the data to decide how wide the boundary should be.

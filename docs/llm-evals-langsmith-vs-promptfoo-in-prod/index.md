@@ -2,29 +2,29 @@
 
 Most evaluation stack writeups assume the reader has already made the mistake they're warning about. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch.
 
-## Why this comparison matters right now
+## Why this comparison matters
 
-Production LLM features have a nasty property: they pass every manual spot-check you run before launch, then quietly regress on the 3% of inputs that actually matter to your users. The failure mode is rarely a crash. It's a summarization endpoint that starts dropping the constraint clause in a legal disclaimer, or a support classifier that routes refund requests to the wrong queue because someone tweaked the system prompt to fix an unrelated tone complaint. By the time a human notices, you have a week of bad outputs in the logs and no clean baseline to compare against.
+Production LLM features have a nasty property: they pass every manual spot-check run before launch, then quietly regress on the small slice of inputs that actually matter to users. The failure mode is rarely a crash. It's a summarization endpoint that starts dropping the constraint clause in a legal disclaimer, or a support classifier that routes refund requests to the wrong queue because someone tweaked the system prompt to fix an unrelated tone complaint. By the time a human notices, there is a week of bad outputs in the logs and no clean baseline to compare against.
 
-Evaluation tooling is supposed to catch this. In practice, most teams end up with one of two stacks: a hosted observability platform that stores traces and lets you annotate them, or a local, config-driven test runner that treats prompts like unit tests. The two approaches have genuinely different cost curves, latency profiles, and failure modes, and picking the wrong one for your team size is a six-month detour.
+Evaluation tooling is supposed to catch this. In practice, teams end up with one of two stacks: a hosted observability platform that stores traces and lets you annotate them, or a local, config-driven test runner that treats prompts like unit tests. The two approaches have genuinely different cost curves, latency profiles, and failure modes, and picking the wrong one for your team's shape is a six-month detour.
 
-The comparison that matters in 2026 is LangSmith (the hosted tracing and eval platform from the LangChain team) against Promptfoo 0.95+ (the open-source, CLI-first eval runner). They overlap on the surface — both run assertions against model outputs — but they optimize for opposite things. LangSmith optimizes for visibility into live traffic. Promptfoo optimizes for fast, deterministic regression testing in CI. The part that trips people up is that you can't get both properties from one tool without paying for it in either latency or maintenance, and that's what this post actually covers.
+The comparison that matters is between a hosted tracing and eval platform (LangSmith, the service from the LangChain team) and a CLI-first, config-driven eval runner (Promptfoo). They overlap on the surface — both run assertions against model outputs — but they optimize for opposite things. Hosted platforms optimize for visibility into live traffic. CLI runners optimize for fast, deterministic regression testing in CI. The part that trips people up is that both properties are hard to get from one tool without paying for it in either latency or maintenance, and that's what this post actually covers.
 
-## Option A — how it works and where it shines
+## Option A — hosted trace-based eval platforms
 
-LangSmith is a hosted service. You instrument your application with the SDK (Python or TypeScript), set `LANGCHAIN_TRACING_V2=true` and a `LANGCHAIN_API_KEY`, and every chain, tool call, and LLM invocation gets shipped to LangSmith's backend as a structured trace. From there you can build datasets from real production traces, run evaluations against those datasets, and attach human feedback via the annotation queue.
+A hosted platform such as LangSmith is a service. You instrument your application with the SDK (Python or TypeScript), set the tracing environment variables and an API key, and every chain, tool call, and LLM invocation gets shipped to the backend as a structured trace. From there you can build datasets from real production traces, run evaluations against those datasets, and attach human feedback via an annotation queue.
 
-The core value is that evaluation data comes from production. You don't have to invent test cases — you filter traces by latency, token count, or user thumbs-down, promote the interesting ones into a dataset, and re-run your prompt versions against them. This is the workflow that catches drift: a prompt change that looked fine on your 20 hand-written examples fails on the 400 real inputs you collected last month.
+The core value is that evaluation data comes from production. You don't have to invent test cases — you filter traces by latency, token count, or user thumbs-down, promote the interesting ones into a dataset, and re-run your prompt versions against them. This is the workflow that catches drift: a prompt change that looked fine on 20 hand-written examples fails on the 400 real inputs collected last month.
 
-Where it shines is teams with live traffic and a human in the loop. If you have a support team flagging bad outputs, or a product manager who wants to compare two prompt variants on real conversations, LangSmith's UI is genuinely faster than building that workflow yourself. The annotation queue alone saves weeks of internal tooling.
+Where it shines is teams with live traffic and a human in the loop. If a support team flags bad outputs, or a product manager wants to compare two prompt variants on real conversations, a hosted UI is genuinely faster than building that workflow yourself. An annotation queue alone can save weeks of internal tooling.
 
 It's also the better choice if you're already on LangChain or LangGraph. Instrumentation is nearly free — you add environment variables and the traces appear. For a team running LangGraph agents with tool calls, the trace view showing the full call tree is hard to replicate with a CLI tool.
 
-The weakness is that it's a hosted dependency. If LangSmith is down, your evaluation pipeline is down. If you're in a regulated environment where trace data can't leave your VPC, you're looking at the self-hosted enterprise tier, which changes the cost math entirely. And the SDK instrumentation adds overhead to every request — typically 5–15ms of added latency per traced call in Python, which matters if you're serving synchronous endpoints with a 200ms budget.
+The weakness is that it's a hosted dependency. If the service is down, your evaluation pipeline is down. If you're in a regulated environment where trace data can't leave your VPC, you're looking at a self-hosted enterprise tier, which changes the cost math entirely. And SDK instrumentation adds overhead to every request. The exact figure depends on your SDK version, network path, and whether tracing is batched and asynchronous; a common failure mode is enabling synchronous tracing and discovering a double-digit-millisecond tax on endpoints that only have a 200ms budget. Measure it rather than assuming: run a load test with tracing on and off and compare p50 and p99 latency for the same endpoint.
 
-## Option B — how it works and where it shines
+## Option B — a local CLI eval runner
 
-Promptfoo is a Node-based CLI that reads a YAML config, runs your prompts against a list of providers, and applies assertions to the outputs. It runs locally, ships as an npm package, and produces a pass/fail result you can wire into CI. Version 0.95+ added proper support for custom Python assertion functions, which is what makes it viable for anything beyond string matching.
+Promptfoo is a Node-based CLI that reads a YAML config, runs your prompts against a list of providers, and applies assertions to the outputs. It runs locally, ships as an npm package, and produces a pass/fail result you can wire into CI. Recent versions support custom Python assertion functions, which is what makes it viable for anything beyond string matching.
 
 ```yaml
 # promptfooconfig.yaml
@@ -52,89 +52,104 @@ tests:
         value: "Classifies as 'account' or 'data-export', not 'billing'"
 ```
 
-The killer feature is that it's just a test runner. It exits non-zero on failure, so your existing CI pipeline (`pytest`, `jest`, GitHub Actions, whatever) treats it like any other test suite. No dashboard, no API key management for the eval layer itself, no vendor to page when it's slow. For a team that already has strong CI discipline, this is the lower-friction choice.
+The defining feature is that it's just a test runner. It exits non-zero on failure, so your existing CI pipeline (pytest, jest, GitHub Actions, whatever) treats it like any other test suite. No dashboard, no API key management for the eval layer itself, no vendor to page when it's slow. For a team that already has strong CI discipline, this is the lower-friction choice.
 
 Where it shines is regression testing against a fixed dataset. You commit your test cases to the repo, you run `promptfoo eval` on every PR that touches a prompt, and you catch the regression before merge. The cost is that you have to curate the dataset yourself — there's no "promote this production trace into a test case" button. You either export from your observability tool or write cases by hand.
 
 It also handles multi-provider comparison well. Running the same 50 test cases against GPT-4o-mini, Claude 3.5 Haiku, and a local Llama 3.1 8B via Ollama is a single config change, and the output table shows you pass rates side by side. That's the workflow that makes model-swap decisions defensible instead of vibes-based.
 
-The weakness is visibility. Promptfoo tells you pass/fail on cases you already thought of. It does not tell you what your users are actually sending. Teams that adopt it without a separate tracing layer often discover months later that their test suite covers the happy path and nothing else.
+The weakness is visibility. A CLI runner tells you pass/fail on cases you already thought of. It does not tell you what your users are actually sending. Teams that adopt it without a separate tracing layer often discover months later that their test suite covers the happy path and nothing else.
 
 ## Head-to-head: performance
 
 Performance here means two things: eval run latency and production overhead. They're different problems and the tools behave differently on each.
 
-On eval run latency, Promptfoo has a structural advantage because it runs locally and parallelizes aggressively. A 200-case suite against GPT-4o-mini with `--max-concurrency 10` typically completes in 40–90 seconds depending on provider rate limits. The bottleneck is almost always the model API, not the runner. LangSmith's evaluation runs go through their backend, which adds a queue and scheduling layer; the same 200-case suite commonly takes 2–5 minutes end to end, and longer if you're on a shared tier during peak hours.
+On eval run latency, a local runner has a structural advantage because it runs on your machine and parallelizes aggressively. A 200-case suite against GPT-4o-mini with `--max-concurrency 10` typically completes in tens of seconds to a couple of minutes depending on provider rate limits. The bottleneck is almost always the model API, not the runner. Hosted evaluation runs go through a backend, which adds a queue and scheduling layer; the same 200-case suite commonly takes longer end to end, and worse if you're on a shared tier during peak hours.
 
-On production overhead, the tradeoff reverses. Promptfoo adds zero runtime overhead because it doesn't run in production — it's a CI tool. LangSmith's SDK instrumentation adds measurable latency to every traced call. In Python with `langsmith` 0.2.x, expect roughly 5–15ms per traced invocation when tracing is enabled and the network is healthy. That's fine for async background jobs. It's not fine if you're inside a 150ms synchronous API budget and you're tracing every step of a multi-call chain.
+On production overhead, the tradeoff reverses. A CLI runner adds zero runtime overhead because it doesn't run in production — it's a CI tool. SDK instrumentation adds latency to every traced call. The size of that tax depends on the SDK, whether it batches, and network health. A reasonable procedure:
 
-| Dimension | LangSmith | Promptfoo 0.95+ |
+1. Instrument a staging endpoint with tracing enabled.
+2. Run a fixed load test (e.g. `k6` or `wrk` at a fixed request rate) and record p50 and p99 latency.
+3. Disable tracing, rerun the identical load test.
+4. Compare. If the delta is more than a few percent of your latency budget, switch to batched/asynchronous export or sample traces.
+
+That measurement takes about 20 minutes and is worth far more than any generic number, because it's specific to your SDK version, region, and request shape.
+
+| Dimension | Hosted trace platform | CLI eval runner |
 |---|---|---|
-| Eval run time (200 cases) | 2–5 min (hosted queue) | 40–90 s (local, parallel) |
-| Production latency overhead | 5–15 ms/traced call | 0 ms (CI only) |
-| Data residency | Hosted (self-host = enterprise) | Fully local |
+| Eval run time (200 cases) | Longer (hosted queue) | Shorter (local, parallel) |
+| Production latency overhead | Non-zero per traced call | Zero (CI only) |
+| Data residency | Hosted; self-host is enterprise tier | Fully local |
 | Dataset source | Production traces | Hand-curated or exported |
-| CI integration | API-based, custom | Native CLI exit codes |
+| CI integration | API-based, custom glue | Native CLI exit codes |
 | Human annotation UI | Yes | No |
 | Multi-provider compare | Manual setup | First-class |
 
-The practical implication: if your eval suite is part of your PR gate, Promptfoo's speed matters because slow CI gets bypassed. If your eval suite is a weekly review meeting, LangSmith's 3-minute run time is irrelevant and the production visibility is worth far more.
+The practical implication: if your eval suite is part of your PR gate, local runner speed matters because slow CI gets bypassed. If your eval suite is a weekly review meeting, a few minutes of hosted run time is irrelevant and the production visibility is worth far more.
 
 ## Head-to-head: developer experience
 
-The onboarding paths are almost opposite. LangSmith is fastest to start and slowest to fully own. Promptfoo is slowest to start and fastest to fully own.
+The onboarding paths are almost opposite. A hosted platform is fastest to start and slowest to fully own. A CLI runner is slowest to start and fastest to fully own.
 
-With LangSmith, a developer adds three environment variables, redeploys, and sees traces within minutes. The first eval run against a promoted dataset is maybe an hour of work. The friction shows up later: defining custom evaluators requires understanding the `RunEvaluator` interface, and building a CI gate on top of the hosted API means writing your own wrapper that polls for run completion and interprets results. Teams running into this usually end up writing 150–250 lines of glue code in a `scripts/eval_ci.py` file that nobody wants to maintain.
+With a hosted platform, a developer adds a few environment variables, redeploys, and sees traces within minutes. The first eval run against a promoted dataset is maybe an hour of work. The friction shows up later: defining custom evaluators requires understanding the SDK's evaluator interface, and building a CI gate on top of the hosted API means writing your own wrapper that triggers a run, polls for completion, and interprets results. Teams that hit this typically end up with a couple hundred lines of glue code in a script that nobody wants to maintain.
 
-Promptfoo inverts this. The first hour is spent reading the config schema, figuring out how to pass structured inputs, and wrestling with the assertion types. But once the config exists, it's a file in your repo. CI integration is `npx promptfoo eval --ci` and checking the exit code. Custom assertions are plain JavaScript or Python functions. There's no API surface to learn beyond the config schema.
+A CLI runner inverts this. The first hour is spent reading the config schema, figuring out how to pass structured inputs, and wrestling with the assertion types. But once the config exists, it's a file in your repo. CI integration is `npx promptfoo eval --ci` and checking the exit code. Custom assertions are plain JavaScript or Python functions. There's no API surface to learn beyond the config schema.
 
-The debugging experience also differs. When a LangSmith eval fails, you open the trace, look at the input, the output, and the assertion result, and you can usually see what went wrong. When a Promptfoo assertion fails, you get a diff in the terminal — sometimes less context, but always faster to iterate on. A common failure mode with Promptfoo is a `llm-rubric` assertion that's too vague; the grader model returns inconsistent verdicts and your suite becomes flaky. The fix is to make rubrics concrete ("mentions the refund window in days") rather than abstract ("is helpful"), but teams burn a day or two discovering that.
+The debugging experience also differs. When a hosted eval fails, you open the trace, look at the input, the output, and the assertion result, and you can usually see what went wrong. When a CLI assertion fails, you get a diff in the terminal — sometimes less context, but always faster to iterate on. A common failure mode with rubric-style assertions is a grader prompt that's too vague; the grader model returns inconsistent verdicts and your suite becomes flaky. The fix is to make rubrics concrete ("mentions the refund window in days") rather than abstract ("is helpful"), but teams burn a day or two discovering that.
 
-For teams with three years of engineering experience but no dedicated ML platform person, Promptfoo's "it's just a test file" model usually wins on maintainability. For teams with a PM or support lead who needs to look at traces, LangSmith's UI wins on adoption.
+For teams with strong engineering experience but no dedicated ML platform person, the "it's just a test file" model usually wins on maintainability. For teams with a PM or support lead who needs to look at traces, a hosted UI wins on adoption.
 
 ## Head-to-head: operational cost
 
-Cost is where the two tools diverge most sharply, and where budget tier actually determines the answer.
+Cost is where the two approaches diverge most sharply, and where budget tier actually determines the answer.
 
-Promptfoo itself is free and open source. Your cost is the model API calls during eval runs. A 200-case suite run twice per PR, with an average of 800 input tokens and 200 output tokens per case at GPT-4o-mini pricing, lands around $0.15–$0.40 per run depending on prompt size. At 20 PRs a day that's roughly $3–$8/day, or $90–$240/month. If you're also running an LLM-as-judge assertion, double it. That's the entire cost — no seats, no tiers.
+The CLI runner itself is free and open source. Your cost is the model API calls during eval runs. Work it out from your own numbers:
 
-LangSmith's free tier covers a small number of traces per month, which is enough for a solo developer or a prototype. Once you're in production with real traffic, you're on a paid tier priced per trace. A service handling 50,000 requests a month with full tracing, at typical per-trace pricing, lands in the low hundreds of dollars per month — comparable to Promptfoo's model costs, but with the added wrinkle that tracing cost scales with production traffic, not with eval frequency. A traffic spike doubles your observability bill even if your eval suite didn't change.
+- Cases per run: 200
+- Runs per PR: 2
+- PRs per day: 20
+- Input tokens per case: 800
+- Output tokens per case: 200
 
-The self-hosted LangSmith tier changes the math entirely. You're now running a Postgres-backed service and paying for the compute, which for a small team is real infrastructure work. If your constraint is "data cannot leave our VPC," that's the price. If your constraint is budget, Promptfoo plus a lightweight self-hosted trace store (Langfuse, Phoenix, or even structured logs to S3) gets you 80% of the visibility for a fraction of the operational burden.
+That's 200 × 2 × 20 = 8,000 cases/day, or 6.4M input tokens and 1.6M output tokens per day. Multiply by your provider's current per-token price for the model under test. If you're also running an LLM-as-judge assertion, double it. That's the entire cost — no seats, no tiers.
 
-For a bootstrapped contractor on a $200/month DigitalOcean droplet, Promptfoo is the only realistic answer — LangSmith's hosted tier is fine but the trace volume from any real client work pushes you into paid territory fast. For a Series B startup with an AWS enterprise agreement and a compliance team, LangSmith's self-hosted tier is often the path of least resistance because the procurement and security review are already done.
+A hosted platform's free tier covers a small number of traces per month, which is enough for a solo developer or a prototype. Once you're in production with real traffic, you're on a paid tier priced per trace. The bill scales with production traffic, not with eval frequency, so a traffic spike doubles your observability bill even if your eval suite didn't change. Plug your own monthly request count and the vendor's current per-trace price into a spreadsheet before committing.
+
+The self-hosted tier changes the math entirely. You're now running a database-backed service and paying for the compute, which for a small team is real infrastructure work. If your constraint is "data cannot leave our VPC," that's the price. If your constraint is budget, a CLI runner plus a lightweight self-hosted trace store (an open-source tracer, or even structured logs to object storage) gets you most of the visibility for a fraction of the operational burden.
+
+For a bootstrapped contractor on a cheap VPS, the CLI runner is the only realistic answer — the hosted tier is fine, but trace volume from any real client work pushes you into paid territory fast. For a funded startup with an enterprise cloud agreement and a compliance team, the self-hosted hosted-platform tier is often the path of least resistance because the procurement and security review are already done.
 
 ## A decision framework
 
 Use this to pick, not to hedge. The two tools are not complementary in the way vendors like to claim — running both is a real maintenance cost and most teams that try end up abandoning one.
 
-Pick LangSmith if: you have live production traffic you need to inspect, you have a non-engineer who needs to review outputs, you're already on LangChain or LangGraph, and you're on a paid tier where per-trace costs are budgeted. The self-hosted tier is the right call if data residency is a hard requirement.
+Pick a hosted trace platform if: you have live production traffic you need to inspect, you have a non-engineer who needs to review outputs, you're already on LangChain or LangGraph, and you're on a paid tier where per-trace costs are budgeted. The self-hosted tier is the right call if data residency is a hard requirement.
 
-Pick Promptfoo if: your eval suite needs to run in CI on every PR, you want deterministic pass/fail without a hosted dependency, you're comparing multiple model providers, and you have an engineer who can curate a test dataset from scratch. The lack of a tracing UI is a real gap — pair it with structured logging or a lightweight self-hosted tracer if you need production visibility.
+Pick a CLI eval runner if: your eval suite needs to run in CI on every PR, you want deterministic pass/fail without a hosted dependency, you're comparing multiple model providers, and you have an engineer who can curate a test dataset from scratch. The lack of a tracing UI is a real gap — pair it with structured logging or a lightweight self-hosted tracer if you need production visibility.
 
-The mistake to avoid is adopting LangSmith for eval and then discovering you can't gate PRs on it because the API round-trip adds 3 minutes to every CI run. The opposite mistake is adopting Promptfoo for eval and then discovering six months in that your test suite covers only the cases you imagined, not the cases your users actually send.
+The mistake to avoid is adopting a hosted platform for eval and then discovering you can't gate PRs on it because the API round-trip adds minutes to every CI run. The opposite mistake is adopting a CLI runner for eval and then discovering six months in that your test suite covers only the cases you imagined, not the cases your users actually send.
 
-## Recommendation and caveats
+### Failure-mode analysis
 
-My recommendation for most teams: start with Promptfoo 0.95+ as your CI gate, and add a tracing layer separately. If you're on LangChain already, that tracing layer is LangSmith. If you're not, Langfuse or Phoenix self-hosted will do the job at lower cost. This gives you fast regression testing where it belongs (CI) and production visibility where it belongs (a separate observability surface), without coupling the two.
+Three concrete ways this goes wrong, and the signal that catches each:
 
-The caveat on Promptfoo is dataset quality. A test suite of 30 hand-written cases will pass while your production quality drops, because the cases don't resemble real inputs. Budget real time for curating 150–300 cases from production logs before you trust the pass rate. Without that, you're testing your imagination, not your system.
+**The flaky rubric.** A vague grader prompt produces inconsistent verdicts. Signal: the same commit passes on one CI run and fails on the next. Fix: replace subjective rubrics with observable checks, or run the assertion three times and require a majority pass.
 
-The caveat on LangSmith is cost scaling and lock-in. Trace volume grows with traffic, and migrating off the platform means rebuilding your dataset and annotation workflows. If you go hosted, treat the dataset export path as a real requirement, not an afterthought.
+**The orphaned dataset.** Test cases were written by one engineer at launch and never updated. Signal: pass rate stays near 100% while user complaints rise. Fix: schedule a monthly job that samples production inputs and diffs them against your test distribution.
 
-If you're a solo contractor or a two-person team, Promptfoo is the answer and it's not close. If you're at a Series B with a compliance function and a PM who reviews outputs weekly, LangSmith's self-hosted tier pays for itself in avoided internal tooling. The middle ground — a 10-person team with no ML platform person — is where teams get this wrong most often, usually by adopting LangSmith for the UI and then never building the CI gate.
+**The bypassed gate.** CI eval runs got slow enough that reviewers started merging anyway. Signal: PRs merged with a red or skipped eval check. Fix: cut the suite to a fast smoke set (10–20 cases) on every PR and run the full suite nightly.
 
 ## Frequently Asked Questions
 
-**Can I use Promptfoo and LangSmith together?**
+**Can you use a CLI runner and a hosted tracer together?**
 
-Yes, and it's a reasonable setup: LangSmith for production tracing and human review, Promptfoo for the CI gate. The integration point is exporting curated traces from LangSmith into a Promptfoo test file, which you can script. The cost is maintaining two systems, so only do this if you have a clear owner for each.
+Yes, and it's a reasonable setup: the hosted platform for production tracing and human review, the CLI runner for the CI gate. The integration point is exporting curated traces into a test file, which you can script. The cost is maintaining two systems, so only do this if you have a clear owner for each.
 
-**How many eval cases do I actually need?**
+**How many eval cases are actually needed?**
 
 For a single-prompt classifier, 100–200 well-chosen cases usually surface the regressions that matter. For a multi-step agent, you need more because the failure space is larger — 300–500 is common. The number matters less than whether the cases resemble production inputs. A suite of 50 real cases beats 500 synthetic ones.
 
-**Why does my LLM-as-judge assertion give inconsistent results?**
+**Why does an LLM-as-judge assertion give inconsistent results?**
 
 Grader models are non-deterministic even at `temperature: 0`, and vague rubrics amplify this. Rewrite the rubric to check for a specific, observable property ("includes the order ID") rather than a subjective one ("is accurate"). If you still see flakiness, run the assertion three times and require a majority pass.
 
@@ -144,19 +159,6 @@ It scales with traffic, not with eval frequency, so yes — a traffic spike doub
 
 ## Final verdict
 
-Promptfoo 0.95+ wins for regression testing, and it wins clearly. The CLI-as-CI-gate model is the right shape for how prompt changes actually get reviewed, the local execution keeps eval latency under 90 seconds for a typical suite, and the zero production overhead means you're not paying a latency tax on every request just to have tests. Use LangSmith if you need production trace visibility and have a non-engineer reviewing outputs, but don't adopt it as your CI gate — the hosted round-trip makes PR checks slow enough that teams start bypassing them.
+For regression testing, the CLI-as-CI-gate model wins clearly. It's the right shape for how prompt changes actually get reviewed, local execution keeps eval latency low for a typical suite, and zero production overhead means you're not paying a latency tax on every request just to have tests. Use a hosted trace platform if you need production trace visibility and have a non-engineer reviewing outputs, but don't adopt it as your CI gate — the hosted round-trip makes PR checks slow enough that teams start bypassing them.
 
-The action to take in the next 30 minutes: create a `promptfooconfig.yaml` at your repo root with three test cases pulled from your last week of production logs, run `npx promptfoo@0.95 eval`, and check whether your current prompt passes. If it doesn't, you've just found your first regression before a user did.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** October 2026
+The action to take in the next 30 minutes: create a `promptfooconfig.yaml` at your repo root with three test cases pulled from your last week of production logs, run `npx promptfoo eval`, and check whether your current prompt passes. If it doesn't, you've just found your first regression before a user did.

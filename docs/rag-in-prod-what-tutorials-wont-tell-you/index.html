@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RAG in prod: what tutorials won’t tell you - Kubai Kevin</title>
-        <meta name="description" content="Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.">
+        <meta name="description" content="Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.">
         <meta name="keywords" content="RagPipelineProduction, FaissLatencyTuning, PgvectorNightlyJob, RagCostOptimization, SentenceTransformersOnnx, RedisCacheRag, Redis, Rag, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T17:45:22.815623">
-        <meta property="article:modified_time" content="2026-09-25T04:05:53.591610+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:34:53.384710+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG in prod: what tutorials won’t tell you">
-        <meta property="og:description" content="Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.">
+        <meta property="og:description" content="Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.">
         <meta property="og:url" content="https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="RAG in prod: what tutorials won’t tell you">
-        <meta name="twitter:description" content="Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.">
+        <meta name="twitter:description" content="Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/rag-in-prod-what-tutorials-wont-tell-you.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/#article",
       "headline": "RAG in prod: what tutorials won’t tell you",
-      "description": "Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.",
+      "description": "Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.",
       "datePublished": "2026-06-08T17:45:22+00:00",
-      "dateModified": "2026-09-25T04:05:53+00:00",
-      "wordCount": 2579,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:34:53+00:00",
+      "wordCount": 2715,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">RAG in prod: what tutorials won’t tell you</h1>
                 
-                <p class="post-lead">Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.</p>
+                <p class="post-lead">Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.</p>
                 
                 
                 <div class="tags">
@@ -259,54 +259,71 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2579 words
+                        14 min read
+                        &nbsp;·&nbsp; 2715 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-25
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most RAG pipeline guides assume a clean environment and a patient timeline. Production gives you neither. Here's what typically goes wrong when a RAG feature meets real constraints.</p>
-<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>A common scenario for B2B SaaS teams in 2026: ship a RAG-powered feature—an AI copilot for store owners that answers questions like <em>"Why did my conversion drop 20% last week?"</em> using their historical order data. Teams that have already shipped vector search over product embeddings often expect this to be a quick win.</p>
-<p>Typical targets look like:
-- <strong>P99 latency under 800ms</strong> for the full RAG pipeline (retrieval + generation)
-- <strong>Cost under $0.002 per query</strong> at 100k daily active users
-- <strong>Zero manual retraining</strong>—using the latest order data nightly via CDC</p>
-<p>A representative stack for this kind of build:
-- Python 3.11
-- LangChain 0.1.16 (early-adopter territory)
-- PostgreSQL 15 with pgvector 0.7.0 for vector storage
-- Cohere embeddings v3 (often the only non-open model in the mix)
-- FastAPI 0.109.1 for the API
-- Uvicorn 0.27.0 with gunicorn 21.2.0 workers</p>
-<p>A lean deployment might look like: 2x <code>c6g.xlarge</code> (Graviton2) for the API, 1x <code>r6g.large</code> for PostgreSQL/pgvector, and 1x <code>t3.medium</code> for the CDC runner. Total AWS bill: roughly $480/month.</p>
-<p>That setup feels ready. Then production traffic arrives.</p>
-<p><strong>First surprise:</strong> A nightly CDC job that refreshes embeddings can take 4 hours to process 2 million rows. During that window, the vector index is locked for writes, and retrieval latency spikes to 2.3s. Users get timeouts. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout—or, in this case, the index lock hiding behind it. This post is what many teams wish they had found then.</p>
-<p>Users stop asking questions. Revenue from the copilot feature flatlines.</p>
-<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
-<h3 id="attempt-1-increase-postgresql-resources">Attempt 1: Increase PostgreSQL resources</h3>
-<p>Bumping the <code>r6g.large</code> to <code>r6g.xlarge</code> and doubling <code>shared_buffers</code> to 4GB is the obvious first move. Cost goes up 2x ($80 → $160/month for the DB alone). Latency improves slightly—from 2.3s to 1.8s—but the index lock still happens during CDC. The nightly job still takes 4 hours.</p>
-<p>Parallelising the CDC with 8 workers doesn't help either, because pgvector doesn't support concurrent writes to the same index. Inserts get serialised anyway. The <code>pgvector</code> docs even warn about this, but it's easy to miss.</p>
-<h3 id="attempt-2-switch-to-faiss-in-memory">Attempt 2: Switch to FAISS in-memory</h3>
-<p>Moving the vector index to FAISS 1.8.0 in a Redis 7.2 cluster (3x <code>cache.r7g.large</code> nodes) is the next common step. Pre-computing embeddings nightly and loading them into Redis at startup drops latency to 200ms—great! But the Redis bill hits $240/month, and 12GB of RAM per node is needed to fit the index. Cache invalidation also has to be handled manually; if a store owner updates their product catalog, the embeddings become stale until the next reload.</p>
-<h3 id="attempt-3-use-qdrant-183">Attempt 3: Use Qdrant 1.8.3</h3>
-<p>Qdrant promises concurrent writes and built-in batching. A 3-node cluster on <code>i4i.large</code> (NVMe SSD, 16GB RAM) is a typical setup. Setup is smooth—Qdrant's HTTP API feels familiar after PostgreSQL—and concurrent writes work. But retrieval latency jumps to 350ms because Qdrant's default HNSW index has a higher CPU cost than FAISS. Worse, the Go-based Qdrant nodes have historically leaked memory. After a few days, one node can OOM and restart, causing 500ms spikes during failover.</p>
-<p>There's also a hard limit: Qdrant's payload size cap of 1MB per point. Some order embeddings exceed that after joining with product metadata. Fields have to be truncated—a hack nobody fully trusts.</p>
-<p>The common resolution is to roll back to PostgreSQL/pgvector and tell the team: <em>"We need a different approach."</em></p>
-<h2 id="the-approach-that-worked">The approach that worked</h2>
-<p>The fix isn't optimising the vector index—it's treating embeddings as <strong>ephemeral, disposable assets</strong>. Teams don't need to keep every vector in memory forever. Instead, build a <strong>two-tier retrieval system</strong>:</p>
+                <p>Most RAG pipeline guides assume a clean environment and a patient timeline. Production gives you neither. The interesting failures in a retrieval-augmented generation feature rarely come from the model or the prompt. They come from the retrieval layer's interaction with write concurrency, memory limits, and data freshness.</p>
+<p>This article walks through a common failure mode for a B2B SaaS copilot — a feature that answers questions like <em>"Why did my conversion drop 20% last week?"</em> using a customer's historical order data — and the two-tier retrieval design that resolves it. The scenario is representative rather than reported: the numbers below are labelled either as documented defaults, as arithmetic from stated assumptions, or as illustrative.</p>
+<h2 id="the-situation">The situation</h2>
+<p>A typical stack for this kind of build:</p>
+<ul>
+<li>Python 3.11</li>
+<li>A RAG orchestration framework (LangChain is common; version pinning matters less than knowing which components it lazy-loads)</li>
+<li>PostgreSQL 15 with pgvector for vector storage</li>
+<li>A hosted embedding API, or a local sentence-transformers model</li>
+<li>FastAPI for the HTTP layer, behind an ASGI server with multiple workers</li>
+<li>A change-data-capture (CDC) runner that refreshes embeddings nightly</li>
+</ul>
+<p>A lean illustrative deployment might be two ARM-based application instances, one memory-optimised instance for PostgreSQL/pgvector, and one small general-purpose instance for the CDC runner.</p>
+<p>Typical targets for this kind of feature:</p>
+<ul>
+<li><strong>P99 latency under 800ms</strong> for retrieval plus generation</li>
+<li><strong>Cost under $0.002 per query</strong> at 100k daily active users</li>
+<li><strong>No manual retraining</strong> — embeddings refresh nightly from CDC</li>
+</ul>
+<p>That setup looks ready. Then production traffic arrives, and the failure mode is almost always the same shape.</p>
+<p><strong>The failure mode:</strong> a nightly CDC job that refreshes embeddings takes hours to process a large table. During that window, the vector index is effectively unavailable for reads at normal latency, and retrieval latency spikes into the seconds. Users get timeouts. The connection-pool errors that dominate the debugging session are usually a symptom — the real cause is write contention on the index, hidden behind a timeout that looks like a pool exhaustion problem.</p>
+<p>The diagnostic question is not "is my index fast?" It is "what happens to read latency while the index is being written?"</p>
+<h2 id="why-the-obvious-fixes-dont-work">Why the obvious fixes don't work</h2>
+<h3 id="attempt-1-more-postgresql-resources">Attempt 1: more PostgreSQL resources</h3>
+<p>Scaling the database instance up and raising <code>shared_buffers</code> is the first move most teams make. Latency improves modestly, but the index lock still happens during CDC, and the nightly job still takes the same wall-clock time. The bottleneck is not buffer cache; it is serialised writes to the index.</p>
+<p>Parallelising the CDC job with more workers does not help either, because pgvector does not support concurrent writes to the same index. Inserts serialise regardless of how many workers you throw at them. This is documented behaviour rather than a bug, but it is easy to miss when the tutorial only shows a single-writer example.</p>
+<p><strong>How to verify this for your own workload:</strong> instrument the CDC job to log <code>pg_stat_activity.wait_event</code> for the embedding writer session, and log read latency percentiles from the application side on the same timeline. If read p99 spikes correlate with write-wait events, you have confirmed index-level write contention rather than a query-plan problem.</p>
+<h3 id="attempt-2-an-in-memory-index-behind-a-cache">Attempt 2: an in-memory index behind a cache</h3>
+<p>Moving the vector index into an in-memory library loaded into a cache cluster is the next common step. Pre-computing embeddings nightly and loading them into memory at process startup drops latency dramatically. Two costs appear immediately:</p>
+<ul>
+<li><strong>RAM.</strong> The index must fit in memory on every node that serves it, and vector indexes are memory-hungry. Sizing is arithmetic: <code>num_vectors × dimensions × bytes_per_float</code>. For 2 million vectors at 1024 dimensions in float32, that is <code>2,000,000 × 1024 × 4 = 8.19 GB</code> before index overhead. HNSW graph structure adds more on top.</li>
+<li><strong>Invalidation.</strong> When a customer updates their product catalog, the in-memory embeddings are stale until the next reload. There is no incremental update path unless you build one.</li>
+</ul>
+<h3 id="attempt-3-a-dedicated-vector-database">Attempt 3: a dedicated vector database</h3>
+<p>A dedicated vector database promises concurrent writes and built-in batching, and usually delivers on both. The trade-offs that show up in practice:</p>
+<ul>
+<li><strong>CPU cost of the graph index.</strong> HNSW search is more CPU-intensive than a flat or IVF index at the same recall, so latency per query can be higher than the in-memory alternative unless you tune <code>efSearch</code> down.</li>
+<li><strong>Operational maturity.</strong> Memory behaviour under sustained load varies by implementation. Any service that holds a large graph in RAM needs a memory ceiling and a restart strategy, because an OOM kill during a query burst produces exactly the latency spikes you were trying to avoid.</li>
+<li><strong>Payload limits.</strong> Vector databases impose per-point payload size caps. If your embeddings are built from joined order-plus-product-metadata text, long documents can exceed the cap, and truncation silently degrades retrieval quality.</li>
+</ul>
+<p>The common resolution is to roll back to PostgreSQL/pgvector and conclude that the architecture, not the database, is wrong.</p>
+<h2 id="the-approach-that-works-two-tier-retrieval">The approach that works: two-tier retrieval</h2>
+<p>The fix is not optimising the vector index. It is treating embeddings as <strong>ephemeral, disposable assets</strong> and splitting retrieval by data temperature.</p>
 <ol>
-<li><strong>Hot tier</strong>: In-memory FAISS index for the last 7 days of data (frequently queried)</li>
-<li><strong>Cold tier</strong>: PostgreSQL/pgvector for older data (queried infrequently)</li>
+<li><strong>Hot tier</strong> — an in-memory index covering recent data (for example, the last 7 days), which is what most queries touch.</li>
+<li><strong>Cold tier</strong> — PostgreSQL/pgvector for older data, queried infrequently.</li>
 </ol>
-<p>This split solves three problems:
-- <strong>Concurrency</strong>: FAISS handles concurrent writes; PostgreSQL handles bulk writes at night. - <strong>Latency</strong>: The hot tier serves 80% of queries in &lt;200ms. - <strong>Cost</strong>: Redis RAM usage drops by 60% and the FAISS load-at-startup hack goes away.</p>
-<h3 id="how-we-routed-queries">How we routed queries</h3>
-<p>A simple heuristic works: if a store owner's question contains a date in the last 7 days, route to FAISS; otherwise, route to PostgreSQL.</p>
+<p>This split addresses three problems at once:</p>
+<ul>
+<li><strong>Concurrency.</strong> The in-memory index handles its own writes; PostgreSQL handles bulk writes on a schedule that does not overlap peak read traffic.</li>
+<li><strong>Latency.</strong> The hot tier serves the majority of queries without touching the database.</li>
+<li><strong>Cost.</strong> The cache cluster's RAM requirement drops because it no longer holds the full index, only the hot slice plus cached answers.</li>
+</ul>
+<h3 id="routing-queries">Routing queries</h3>
+<p>A simple heuristic is enough to start: if the query references a date within the hot window, route to the hot tier; otherwise route to the cold tier.</p>
 <pre><code class="language-python">from datetime import datetime, timedelta
 
 def route_query(query: str) -&gt; str:
@@ -320,28 +337,25 @@ def route_query(query: str) -&gt; str:
             continue
     return &quot;cold&quot;
 </code></pre>
-<p>The hot tier runs in a separate FastAPI service on a <code>c6g.large</code> node with FAISS 1.8.0. Redis 7.2 acts as the shared cache for generated answers (TTL 5 minutes) to avoid regenerating identical responses.</p>
-<p>The cold tier stays in PostgreSQL/pgvector, but with <strong>partial indexing</strong> to speed up nightly CDC. Instead of rebuilding the entire vector index, only vectors for orders changed in the last 24 hours get updated.</p>
-<h3 id="handling-embeddings-at-scale">Handling embeddings at scale</h3>
-<p>Switching from Cohere v3 to <code>sentence-transformers/multilingual-e5-large</code> (v2.2.0) for embeddings is a common move. It's open-source, multilingual (critical for Indonesian/Malay/Tagalog), and runs on CPU. ONNX runtime 1.16.0 accelerates inference on Graviton2.</p>
-<p>Pre-computing embeddings in a nightly batch job with 16 parallel workers on <code>c6g.4xlarge</code> (16 vCPUs) is typical. Each worker processes ~125k rows/hour. Total job time: 1.5 hours (down from 4 hours with Cohere). Cost: about $1.20 per night.</p>
-<p>Storing embeddings in S3 (Parquet format) for durability and recomputing them on demand if a CDC job fails adds fault tolerance that didn't exist before.</p>
+<p>This is deliberately naive. It only recognises ISO-formatted dates, and it fails on relative expressions like "last week". Before shipping it, log the routing decision alongside the query and review the misroutes weekly. A better long-term approach is to have the generation model emit a structured time filter as part of the query plan, then route on that.</p>
+<p>The hot tier runs as a separate service instance with the in-memory index. A cache (Redis is the common choice) holds generated answers with a short TTL to avoid regenerating identical responses.</p>
+<p>The cold tier stays in PostgreSQL/pgvector, but with <strong>partial indexing</strong> to shrink the nightly CDC window. Instead of rebuilding the entire vector index, only vectors for rows changed in the last 24 hours are updated.</p>
 <h2 id="implementation-details">Implementation details</h2>
-<h3 id="hot-tier-faiss-fastapi">Hot tier: FAISS + FastAPI</h3>
-<p>Using the <code>faiss-cpu</code> package with AVX2 support, the index is built with:</p>
+<h3 id="hot-tier-in-memory-index">Hot tier: in-memory index</h3>
+<p>Using <code>faiss-cpu</code> with AVX2 support, the index is built with an HNSW graph:</p>
 <pre><code class="language-python">import faiss
 
-# Dimension after sentence-transformers/multilingual-e5-large
+# Dimension after the embedding model
 D = 1024
 index = faiss.IndexHNSWFlat(D, 32)  # 32 is the M parameter for HNSW
 
-# Add vectors in batches of 10k
+# Add vectors in batches
 batch_size = 10_000
 for i in range(0, len(vectors), batch_size):
     batch = vectors[i:i+batch_size]
     index.add(batch)
 </code></pre>
-<p>Wrapping the index in a FastAPI service with Uvicorn workers set to 4 (matching the Graviton2's 4 cores) is standard. <code>redis-py 5.0.1</code> serves as a shared cache for answers:</p>
+<p>Wrapping the index in a FastAPI service, with worker count matched to available cores, is standard. A cache client serves as the shared answer cache:</p>
 <pre><code class="language-python">import redis.asyncio as redis
 
 r = redis.Redis(host=&quot;redis-hot-tier&quot;, port=6379, decode_responses=True)
@@ -358,9 +372,14 @@ async def generate_answer(query: str, store_id: str) -&gt; str:
     await r.set(cache_key, answer, ex=300)  # 5 minutes TTL
     return answer
 </code></pre>
-<p>Monitoring FAISS memory usage with <code>psutil</code> and capping it at 8GB is important. If memory exceeds 8GB, rebuild the index in a rolling fashion to avoid downtime.</p>
+<p>Two operational requirements are easy to skip and expensive to skip:</p>
+<ul>
+<li><strong>Cap index memory.</strong> Monitor process RSS and set a hard ceiling at roughly 80% of the node's RAM. When the ceiling is reached, rebuild the index on a fresh process and swap traffic over, rather than growing in place.</li>
+<li><strong>Pre-warm after rebuild.</strong> An HNSW index that has just been loaded has cold caches. A periodic dummy query against the index keeps latency stable. Without it, the first real query after a rebuild pays a visible penalty.</li>
+</ul>
+<p><strong>How to measure the warm-up cost:</strong> time a query immediately after index load, then time the same query again after 10, 100, and 1000 warm-up queries. Plot p50 against warm-up count. If the curve flattens after a few hundred queries, schedule that many synthetic queries before the process accepts traffic.</p>
 <h3 id="cold-tier-postgresqlpgvector-with-partial-updates">Cold tier: PostgreSQL/pgvector with partial updates</h3>
-<p>Adding a <code>last_updated_at</code> column to the <code>orders</code> table and using a trigger to mark rows changed in the last 24 hours is the standard pattern:</p>
+<p>Add a recency flag to the orders table and maintain it with a trigger:</p>
 <pre><code class="language-sql">CREATE OR REPLACE FUNCTION mark_recent_orders()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -373,12 +392,13 @@ CREATE TRIGGER mark_recent_trigger
 BEFORE UPDATE OR INSERT ON orders
 FOR EACH ROW EXECUTE FUNCTION mark_recent_orders();
 </code></pre>
-<p>The nightly CDC job then only rebuilds vectors for <code>is_recent = true</code> rows:</p>
+<p>Note that a <code>BEFORE</code> trigger only fires on the row being written. Rows that were recent yesterday but are not recent today will not be re-flagged by this trigger alone. In practice you need either a scheduled job that clears stale flags, or a <code>WHERE updated_at &gt;= NOW() - INTERVAL '24 hours'</code> predicate in the CDC query itself, which is simpler and avoids the trigger entirely for this purpose.</p>
+<p>The nightly CDC job then only rebuilds vectors for recently changed rows:</p>
 <pre><code class="language-python"># Pseudocode for the CDC job
 changed_orders = db.query(&quot;&quot;&quot;
     SELECT id, order_data
     FROM orders
-    WHERE is_recent = true
+    WHERE updated_at &gt;= NOW() - INTERVAL '24 hours'
 &quot;&quot;&quot;)
 
 vectors = embedder.encode([order.order_data for order in changed_orders])
@@ -390,180 +410,94 @@ for order_id, vector in zip([o.id for o in changed_orders], vectors):
         vector, order_id
     )
 </code></pre>
-<p>This cuts the nightly job from 4 hours to 45 minutes and reduces PostgreSQL CPU usage by 60%.</p>
-<h3 id="monitoring-and-alerting">Monitoring and alerting</h3>
-<p>Three critical metrics matter here:</p>
+<p>The size of the win depends entirely on what fraction of rows change daily. If 5% of a 2-million-row table changes per night, the CDC job processes 100,000 rows instead of 2,000,000 — a 20x reduction in work. If 80% changes, the partial update buys you almost nothing and you should reconsider whether the cold tier is worth maintaining.</p>
+<h2 id="monitoring-what-to-instrument">Monitoring: what to instrument</h2>
+<p>The metrics that matter for this architecture, and how to read them:</p>
 <table>
 <thead>
 <tr>
 <th>Metric</th>
-<th>Threshold</th>
-<th>Tool</th>
-<th>Why it mattered</th>
+<th>Where it comes from</th>
+<th>What a rising value means</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Hot tier latency (P99)</td>
-<td>&gt;500ms</td>
-<td>Prometheus + Grafana</td>
-<td>FAISS HNSW can degrade with high concurrency</td>
+<td>Hot tier query latency (p99)</td>
+<td>Application histogram</td>
+<td>Graph index degrading under concurrency, or memory pressure</td>
 </tr>
 <tr>
-<td>Cold tier lock time</td>
-<td>&gt;2s</td>
-<td>PostgreSQL <code>pg_locks</code></td>
-<td>Nightly CDC was still the bottleneck</td>
+<td>Index write wait time</td>
+<td><code>pg_stat_activity.wait_event</code> on the writer session</td>
+<td>CDC is contending with reads; move the window or shrink the batch</td>
 </tr>
 <tr>
-<td>Embedding cache hit rate</td>
-<td>&lt;70%</td>
-<td>Redis <code>info keyspace</code></td>
-<td>We were regenerating answers too often</td>
+<td>Cold tier lock duration</td>
+<td><code>pg_locks</code></td>
+<td>Partial updates are not partial enough</td>
+</tr>
+<tr>
+<td>Answer cache hit rate</td>
+<td>Cache server <code>INFO</code> stats</td>
+<td>TTL too short, or query diversity higher than assumed</td>
+</tr>
+<tr>
+<td>Process RSS vs. ceiling</td>
+<td><code>psutil</code> or the container runtime</td>
+<td>Index rebuild is due</td>
 </tr>
 </tbody>
 </table>
-<p>Alerts via Slack and PagerDuty are the usual setup. The first time the hot tier latency spikes to 600ms, a team typically catches it in 2 minutes and restarts the FAISS service (graceful restart, no downtime).</p>
-<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before</th>
-<th>After</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>P99 latency (full RAG)</td>
-<td>2,300ms</td>
-<td>320ms</td>
-<td><strong>78% faster</strong></td>
-</tr>
-<tr>
-<td>P95 latency</td>
-<td>1,200ms</td>
-<td>180ms</td>
-<td><strong>85% faster</strong></td>
-</tr>
-<tr>
-<td>Cost per query (at 100k daily users)</td>
-<td>$0.0032</td>
-<td>$0.0018</td>
-<td><strong>44% cheaper</strong></td>
-</tr>
-<tr>
-<td>Nightly CDC job time</td>
-<td>4 hours</td>
-<td>45 minutes</td>
-<td><strong>88% faster</strong></td>
-</tr>
-<tr>
-<td>AWS bill (RAG services only)</td>
-<td>$480/month</td>
-<td>$310/month</td>
-<td><strong>$170 saved/month</strong></td>
-</tr>
-<tr>
-<td>Memory usage (hot tier)</td>
-<td>N/A</td>
-<td>6.8GB</td>
-<td>Within our 8GB cap</td>
-</tr>
-</tbody>
-</table>
-<p>5xx errors also drop from 1.2% to 0.08%—mostly from FAISS restarts during index rebuilds, which a rolling rebuild strategy fixes.</p>
-<p>Most importantly, store owners start using the copilot again. Within two weeks, daily active users for the feature commonly jump from 0 to 8k.</p>
-<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>Alerts belong on the first three. Cache hit rate is a tuning signal, not a page.</p>
+<h2 id="a-worked-sizing-example">A worked sizing example</h2>
+<p>Suppose the copilot serves 100k queries per day, and 80% of them reference data inside the 7-day hot window. That is 80,000 hot queries per day, or roughly 0.93 queries per second on average. Assume a 5x peak-to-average ratio, giving about 4.6 queries per second at peak.</p>
+<p>If the hot tier holds 7 days of order data for all customers, and that comes to 500,000 vectors at 1024 dimensions in float32:</p>
+<p><code>500,000 × 1024 × 4 bytes = 2.05 GB</code> of raw vector data, plus HNSW graph overhead. Budget 1.5x to 2x for the graph, so 3-4 GB per serving instance. That fits comfortably on a memory-optimised instance and leaves headroom for the answer cache.</p>
+<p>The cold tier holds the remaining 1.5 million vectors. At the same dimensions that is <code>1,500,000 × 1024 × 4 = 6.14 GB</code> of vector data in PostgreSQL. That is a real storage cost, and it is the reason the cold tier should only be queried when routing says the hot tier cannot answer.</p>
+<p>These figures are illustrative. Substitute your own vector count, dimensions, and peak ratio; the arithmetic is the same.</p>
+<h2 id="common-mistakes">Common mistakes</h2>
 <ol>
-<li>
-<p><strong>Skip LangChain for low-level control</strong>
-   LangChain 0.1.16 can add 200ms of overhead per query due to its lazy-loading of components. Rewriting the retrieval and generation steps in 400 lines of vanilla Python using <code>asyncio</code> and <code>aiohttp</code> drops latency another 30ms.</p>
-</li>
-<li>
-<p><strong>Avoid pgvector for production writes</strong>
-   Even with partial updates, PostgreSQL struggles with concurrent writes. A dedicated vector DB for the cold tier is the better next step—probably Qdrant again, but with a smaller index and better monitoring for memory leaks.</p>
-</li>
-<li>
-<p><strong>Pre-warm the FAISS index</strong>
-   FAISS's cold-start time is easy to overlook. The first query after a rebuild can take 1.2s. A pre-warm endpoint that runs a dummy query every 5 minutes drops latency to 200ms immediately.</p>
-</li>
-<li>
-<p><strong>Use ONNX for embeddings in prod</strong>
-   Running <code>sentence-transformers</code> in a separate service for the first week is common. Switching to ONNX reduces embedding time from 450ms to 180ms on Graviton2.</p>
-</li>
-<li>
-<p><strong>Don't trust default HNSW parameters</strong>
-   FAISS's default <code>M=16</code> is too aggressive for many datasets. Tuning it to <code>M=32</code> and reducing <code>efSearch</code> to 64 improves latency by 15% with no loss in recall.</p>
-</li>
+<li><strong>Optimising the index before measuring the write path.</strong> The bottleneck is usually the CDC job's interaction with reads, not the search algorithm.</li>
+<li><strong>Assuming the cache cluster can hold the whole index.</strong> Sizing is arithmetic, and it is usually larger than expected.</li>
+<li><strong>Using a <code>BEFORE</code> trigger for recency without a cleanup path.</strong> Stale flags accumulate silently.</li>
+<li><strong>Skipping the warm-up after a rebuild.</strong> The cold-start penalty is real and shows up as a p99 spike, not a p50 one.</li>
+<li><strong>Trusting default HNSW parameters.</strong> The defaults are tuned for general use, not for your recall/latency trade-off. Measure recall against a labelled set before and after any parameter change.</li>
+<li><strong>Letting an orchestration framework hide the retrieval path.</strong> Framework overhead is measurable; if you cannot see where time goes inside the framework, you cannot tune it.</li>
 </ol>
-<h2 id="the-broader-lesson">The broader lesson</h2>
-<p><strong>RAG pipelines aren't just retrieval + generation—they're a distributed system with their own failure modes.</strong> The tutorials skip the boring parts: cache invalidation, partial updates, and resource contention. In production, these kill you.</p>
-<p>The key insight is to <strong>treat embeddings as disposable</strong>. There's no need to keep every vector in memory forever. A two-tier system—hot for recent data, cold for historical—solves 80% of scaling headaches. It's not glamorous, but it works.</p>
-<p>Another lesson: <strong>don't optimise your vector index in isolation.</strong> The bottleneck will always be somewhere else—your CDC job, your embedding service, or your cache. Measure first, then optimise.</p>
-<p>Finally, <strong>embrace ephemeral state.</strong> If a vector index becomes stale, rebuild it. If a cache misses too often, increase the TTL. Production RAG isn't about perfect recall—it's about <em>good enough</em> answers with <em>low enough</em> latency.</p>
-<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
-<ol>
-<li>
-<p><strong>Profile your traffic first</strong>
-   Run <code>SELECT date_trunc('hour', created_at), COUNT(*) FROM queries GROUP BY 1</code> on your query logs for a week. If 80% of queries hit the last 7 days, you need a hot tier. If not, your data might be evenly distributed—skip the two-tier system.</p>
-</li>
-<li>
-<p><strong>Start with FAISS in-memory</strong>
-   It's the fastest path to &lt;200ms latency. Use <code>IndexHNSWFlat</code> with tuned parameters (<code>M=32</code>, <code>efSearch=64</code>). Cap memory at 80% of available RAM to avoid OOMs.</p>
-</li>
-<li>
-<p><strong>Use PostgreSQL/pgvector only for cold storage</strong>
-   Add a <code>last_updated_at</code> column and only rebuild vectors for recent rows. This cuts nightly jobs from hours to minutes.</p>
-</li>
-<li>
-<p><strong>Cache generated answers aggressively</strong>
-   Use Redis with a 5-minute TTL. Monitor the cache hit rate—if it's below 70%, your TTL is too short or your queries are too unique.</p>
-</li>
-<li>
-<p><strong>Avoid LangChain in production</strong>
-   It's great for demos, but it adds overhead. Write your retrieval and generation steps in 500 lines of async Python using <code>aiohttp</code> and <code>sentence-transformers</code> in ONNX.</p>
-</li>
-<li>
-<p><strong>Pre-warm your indices</strong>
-   Add a <code>/health</code> endpoint that runs a dummy query every 5 minutes. This keeps FAISS warm and avoids cold-start latency spikes.</p>
-</li>
-</ol>
-<h2 id="resources-that-helped">Resources that helped</h2>
-<ul>
-<li><a href="https://github.com/facebookresearch/faiss/wiki/HNSW-parameters">FAISS 1.8.0 docs: HNSW parameters</a> — critical for tuning</li>
-<li><a href="https://github.com/qdrant/qdrant/issues/1234">Qdrant memory leak issue #1234</a> — helped us diagnose OOMs</li>
-<li><a href="https://huggingface.co/sentence-transformers/multilingual-e5-large"><code>sentence-transformers</code> multilingual models</a> — the only open model that worked for SE Asian languages</li>
-<li><a href="https://onnxruntime.ai/docs/performance/benchmarks.html">ONNX Runtime 1.16.0 benchmarks</a> — showed 2.5x speedup on Graviton2 vs. PyTorch</li>
-<li><a href="https://www.postgresql.org/docs/15/indexes-partial.html">PostgreSQL 15: partial indexes</a> — reduced nightly job time by 88%</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h2 id="faq">FAQ</h2>
 <p><strong>How do I know if my RAG pipeline needs a two-tier system?</strong></p>
-<p>Check your query logs for a 7-day rolling window. If 80%+ of queries hit the last 7 days, you need a hot tier. If not, your historical data might be evenly distributed—skip the hot tier and optimise PostgreSQL/pgvector instead. A simple SQL query grouping queries by date usually reveals the 80/20 split in one afternoon.</p>
-<p><strong>What's the worst mistake teams make with FAISS?</strong></p>
-<p>Not capping memory usage. FAISS will happily allocate all available RAM and then OOM the node. Set a hard cap at 8GB and add a rolling rebuild strategy. The classic failure mode is a developer accidentally loading a 12GB index into a 16GB node. Lesson: always set memory limits and monitor <code>psutil</code> metrics.</p>
+<p>Look at the distribution of query dates in your logs. Group queries by the age of the data they reference:</p>
+<pre><code class="language-sql">SELECT date_trunc('day', query_created_at - data_referenced_at) AS age_bucket,
+       COUNT(*)
+FROM queries
+GROUP BY 1
+ORDER BY 1;
+</code></pre>
+<p>If a large majority of queries reference the last few days, a hot tier is worth building. If the distribution is flat, the two-tier split adds complexity without benefit, and you should optimise the cold path instead.</p>
+<p><strong>What's the worst mistake teams make with an in-memory index?</strong></p>
+<p>Not capping memory usage. An in-memory index will allocate until the process is killed. Set a hard ceiling, monitor RSS, and plan a rolling rebuild rather than growing the index in place.</p>
 <p><strong>How do I handle multilingual embeddings in production?</strong></p>
-<p>Use <code>sentence-transformers/multilingual-e5-large</code> in ONNX. It supports Indonesian, Malay, Tagalog, Thai, and Vietnamese out of the box. Benchmarks on Graviton2 typically show it 2.5x faster than the PyTorch version. The model size is 1.5GB—pack it with ONNX and quantise to FP16 if RAM is tight.</p>
+<p>Pick a multilingual sentence-transformer model and run it through an ONNX runtime for CPU inference. Verify the language coverage you actually need against the model card before committing — "multilingual" claims vary in how well they cover lower-resource languages. Quantising to FP16 reduces memory at a small, measurable accuracy cost that you should quantify on your own evaluation set rather than assume.</p>
 <p><strong>What's the simplest way to cache RAG answers?</strong></p>
-<p>Use Redis with a 5-minute TTL. The cache key should combine the query and the store/user ID. Cache misses will still happen, but at 70%+ hit rate, you'll cut latency by 80%. <code>redis-py 5.0.1</code> works well, and a pre-warm endpoint keeps the cache warm during low-traffic periods.</p>
-<p><strong>Why switch from Cohere to sentence-transformers?</strong></p>
-<p>Cost and latency. Cohere v3 costs $0.0004/1k tokens at 100k daily users—$40/day. <code>sentence-transformers/multilingual-e5-large</code> runs on Graviton2 nodes at 180ms/embedding with ONNX. Total cost: $1.20/night for 2M rows. Plus, you own the model—no rate limits or API outages.</p>
-<p><strong>What's the biggest surprise teams face after going live?</strong></p>
-<p>Store owners ask questions that require <strong>joining order data with product metadata</strong>—but embeddings often only cover order text. The embedding pipeline has to be rebuilt to include product names and categories. Always validate your embedding strategy against real user queries before shipping.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
-<li><a href="https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/">Build a search system in 2026: semantic, keyword</a></li>
-<li><a href="https://kubaik.github.io/build-dev-platform-for-2kmonth/">Build dev platform for $2k/month</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>A key-value cache with a short TTL, keyed on a hash of the query plus the tenant ID. Monitor the hit rate; if it is low, the TTL is too short or the queries are more diverse than assumed. Do not cache across tenants.</p>
+<p><strong>Why might a team move from a hosted embedding API to a local model?</strong></p>
+<p>Cost predictability and rate-limit independence. A hosted API charges per token and can throttle; a local model has a fixed infrastructure cost and no external dependency. The trade-off is operational: you now own model serving, batching, and version management. Measure both against your actual query volume before switching.</p>
+<p><strong>What's the biggest surprise after going live?</strong></p>
+<p>Users ask questions that require joining order data with product metadata, but the embeddings often only cover order text. Validate the embedding input against real user queries before shipping. If the retrieval corpus does not contain the fields the questions reference, no amount of index tuning will help.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>A RAG pipeline is a distributed system with its own failure modes. The tutorials skip the unglamorous parts: write contention, cache invalidation, partial updates, and memory ceilings. Those are what determine whether the feature holds up under load.</p>
+<p>Two principles carry most of the weight. First, treat embeddings as disposable — if an index is stale, rebuild it; if a cache misses too often, adjust the TTL. Second, measure before optimising: the bottleneck is almost never the vector index in isolation, it is the interaction between the write path and the read path.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Run this against your query logs and look at the shape of the result:</p>
+<pre><code class="language-sql">SELECT date_trunc('day', NOW() - referenced_date) AS age_bucket,
+       COUNT(*) AS queries
+FROM query_log
+WHERE created_at &gt;= NOW() - INTERVAL '7 days'
+GROUP BY 1
+ORDER BY 1;
+</code></pre>
+<p>If the first bucket dominates, you have a case for a hot tier. If the distribution is flat, you do not — and you have saved yourself an architecture you would have had to maintain.</p>
                 
                 
             </div>
@@ -592,14 +526,14 @@ for order_id, vector in zip([o.id for o in changed_orders], vectors):
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
-                        <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
                         <h3>Spot evictions: the retry logic that holds up</h3>
-                        <p>Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.</p>
-                        <span class="related-meta">14 min read · 12 August 2026</span>
+                        <p>Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+                        <span class="related-meta">12 min read · 12 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/event-driven-beats-agent-driven-910-times/">

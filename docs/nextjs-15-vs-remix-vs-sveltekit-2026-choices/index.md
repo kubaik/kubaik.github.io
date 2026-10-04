@@ -1,36 +1,40 @@
 # Next.js 15 vs Remix vs SvelteKit: 2026 choices
 
-The short version: the conventional advice on nextjs remix is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+Most framework comparisons stop at "SSR versus CSR" or "bundles versus runtime." Those distinctions matter less than three things that actually determine whether a team ships on schedule: how each framework models the network, how it handles errors and state across the server/client boundary, and how much developer tooling you end up debugging instead of using.
 
-## The one-paragraph version (read this first)
+This article covers the three meta-frameworks that dominate production choices — Next.js (App Router), Remix, and SvelteKit — and focuses on the failure modes that show up after the demo works. Numbers below are either documented defaults, arithmetic shown from stated assumptions, or explicitly labelled illustrative. Where a real benchmark would help, the article tells you how to run it yourself.
 
-If you’re building a production app in 2026 and need to pick a meta-framework, the three realistic choices are Next.js 15, Remix, and SvelteKit. Next.js 15 gives you the largest ecosystem and the fastest cold-start times on Vercel, but its App Router still leaks client state into the server and its Turbopack dev server commonly drops a large share of HMR updates once the bundle grows past roughly 500 kB. Remix forces you to think about the network first, which is great for unreliable connections but typically means writing noticeably more boilerplate than SvelteKit for a simple dashboard. SvelteKit’s compiler generates smaller bundles and its runes model removes a good chunk of the boilerplate you write in React land, but its ecosystem is still thin outside of Europe and its form actions lack the first-class validation you get in Remix. Teams shipping government portals on these stacks across Senegal, Kenya, and Nigeria tend to report the same surprise: how often the “fastest” framework in benchmarks slowed down the team instead of the users.
+## The one-paragraph orientation
 
-Pick Next.js 15 if you want the least hiring friction and Vercel’s edge network. Pick Remix if your users are on 2G and you’re ready to own the network contract. Pick SvelteKit if you’re optimizing for bundle size and your team already knows Svelte.
+Next.js offers the largest ecosystem and the deepest hosting integration, at the cost of a rendering model that hides client/server boundaries until they leak. Remix forces the network contract into the foreground: every route is a potential data endpoint, and every loader is a round trip you must design for. SvelteKit moves work to compile time, producing smaller transfer sizes, with a smaller ecosystem and fewer batteries-included solutions for i18n and auth.
 
-## Why this concept confuses people
+The choice is rarely about raw speed. It is about which set of trade-offs your team can maintain for years.
 
-Most comparisons stop at “SSR vs CSR” or “bundles vs runtime,” but in 2026 the real pain points are state leakage, error boundaries, and the hidden cost of developer tooling. A common version of this is inheriting a Next.js 14 page that mysteriously duplicates form state after a browser refresh. The bug only shows up when the user has a slow connection and the React cache hydrates twice. The root cause is usually a client-only component importing a server-only util — Next.js doesn’t warn you because the error happens after the page mounted. That pattern routinely costs a couple of days of debugging during a deployment window, especially in offices where power cuts are a daily reality.
+## Why the "fastest framework" framing misleads
 
-Another trap is the “SSR is always faster” myth. In a typical Kenya deployment, Remix’s loaders cut median TTI from 1.8 s to 1.1 s on 3G, but the team then spends a week arguing over whether to cache the loader responses. The cache often hurts user-visible latency because the CDN TTL doesn’t match the data freshness window. Teams usually only notice after instrumenting edge logs and seeing a large share of requests hitting stale responses.
+Three confusions recur in practice.
 
-The last confusion is bundling. SvelteKit’s rollup-based build produces around 2.3 MB of JS in dev and roughly 410 kB in prod when you enable tree-shaking, but the HMR loop in Vite 5 sometimes serves a 600 kB bundle because the compiler still includes unused slots. Remix, by contrast, produces a single ~180 kB runtime plus route chunks, but its error overlays make it hard to see which chunk failed on a feature phone running Opera Mini.
+**State leakage across the server/client boundary.** A component that imports a server-only utility from a client component will not always fail loudly. In React-based frameworks, the error can surface after mount — for example, when a browser cache is cold and the server response is delayed, causing hydration to run against stale data. The symptom is duplicated form state or a search box that resets. The cause is usually an import boundary, not your component logic. This class of bug is expensive because it does not reproduce reliably in development.
 
-## The mental model that makes it click
+**"SSR is always faster."** Server rendering reduces time-to-first-byte for the HTML document, but it does not reduce time-to-interactive if the client bundle is large. A page that renders HTML in 200 ms and then downloads 400 kB of JavaScript before responding to taps will feel slower than a page that renders in 400 ms and hydrates in 80 ms. The metric that matters for perceived speed is when the page becomes interactive, not when the first byte arrives.
 
-Think of these frameworks as three different contracts between the developer and the network.
+**Caching that hurts.** A CDN cache with a TTL that does not match your data freshness window will serve stale content and hide the problem until someone reads the logs. This is not framework-specific; it is a configuration error that all three frameworks make easy to commit.
 
-Next.js 15 is a “best-effort” contract: it tries to hide the network from you with ISR, edge functions, and client-side caching, but when the network misbehaves the React reconciliation leaks state and the Vercel runtime still charges you for edge invocations even if the user sees a stale page. The mental shortcut is: if you’re happy shipping a SPA with sprinkles of SSR, Next.js is the path of least resistance.
+## The mental model: three network contracts
 
-Remix is a “network-first” contract: every loader and action is a round trip you must design for offline, retries, and partial failures. The mental shortcut is: if your users are on 2G or you’re building a form-heavy app that must survive spotty connections, Remix forces you to confront latency up front. It’s a common surprise that even simple CRUD apps in Remix require meaningfully more boilerplate than the same app in Next.js, but that boilerplate pays off when a power cut hits during a deployment and half the forms still submit.
+Think of each framework as a different contract between the developer and the network.
 
-SvelteKit is a “compile-time” contract: the compiler rewrites your code so aggressively that the runtime is tiny, but the ecosystem is still catching up on internationalization and auth providers. The mental shortcut is: if you’re optimizing for bundle size and your team already writes Svelte, SvelteKit gives you the smallest transfer size and the fastest cold-start times in 2026.
+**Next.js: best-effort hiding.** The framework tries to make the network invisible through incremental static regeneration, edge functions, and client-side caching. When the network misbehaves, the abstractions leak and you debug React internals. The shortcut: if you are comfortable shipping a single-page app with sprinkles of server rendering, Next.js is the path of least resistance.
 
-## A concrete worked example
+**Remix: network-first.** Every loader and action is a round trip you must design for. Retries, partial failures, and offline behaviour are explicit concerns. The shortcut: if your users are on unreliable connections or you are building a form-heavy application, Remix forces you to confront latency before it surprises you.
 
-Let’s build the same tiny dashboard — a list of users with a search box and a delete button — in each framework. I’ll show the file count, bundle size, and median Time-to-Interactive on a 1.5 Mbps / 300 ms RTT connection (simulated with Chrome’s network throttling).
+**SvelteKit: compile-time.** The compiler rewrites your code so the runtime stays small. The trade-off is a smaller ecosystem and fewer pre-built solutions for common needs. The shortcut: if bundle size is your primary constraint and your team already writes Svelte, SvelteKit gives you the smallest transfer size with the least runtime overhead.
 
-### Next.js 15 (App Router)
+## A worked example: the same dashboard in three frameworks
+
+Consider a small dashboard: a list of users, a search box, and a delete button. The code below is illustrative, not benchmarked. It shows the structural differences that matter.
+
+### Next.js (App Router)
 
 ```javascript
 // app/users/page.js
@@ -53,7 +57,7 @@ import { useState } from 'react'
 export default function UsersList({ users }) {
   const [term, setTerm] = useState('')
   const filtered = users.filter(u => u.name.includes(term))
-  
+
   return (
     <div>
       <input value={term} onChange={e => setTerm(e.target.value)} />
@@ -63,11 +67,7 @@ export default function UsersList({ users }) {
 }
 ```
 
-Build output (production): 247 kB JS, 118 kB CSS. Time-to-Interactive: 1.3 s.
-
-Dependencies: next@15.0.0, react@18.3, prisma@6.0.0.
-
-The gotcha: when you enable Turbopack in dev, the HMR loop breaks for bundles above 500 kB. Teams commonly hit that around 300 components and waste half a day before switching back to webpack-dev-server.
+The `'use client'` directive is the boundary marker. Everything imported into a client component must be safe to ship to the browser. When a server-only utility slips across that line, the failure mode described above appears.
 
 ### Remix
 
@@ -100,11 +100,7 @@ export default function Users() {
 }
 ```
 
-Build output: 180 kB JS runtime + 67 kB route chunks. Time-to-Interactive: 1.1 s.
-
-Dependencies: @remix-run/react@2.10, @remix-run/node@2.10, prisma@6.0.0.
-
-The gotcha: the Remix compiler rewrites `useSearchParams` to serialize the query string automatically, but if you forget to add `?q=` in the URL the first load returns an empty string. It’s an easy one to miss on a first deploy, and users see no results until they type a character.
+Here the search term lives in the URL. That is deliberate: it makes the state shareable and survives a page reload. The cost is that every keystroke becomes a navigation, which you may want to debounce for large lists.
 
 ### SvelteKit
 
@@ -131,58 +127,29 @@ export async function load({ url }) {
 {/each}
 ```
 
-Build output: 410 kB in dev, 142 kB in prod. Time-to-Interactive: 0.9 s.
+The `+page.server.js` file runs only on the server. The `+page.svelte` file runs in both environments. The `$:` label is a reactive declaration: `filtered` recomputes whenever `term` or `data.users` changes.
 
-Dependencies: svelte@5.0.0-next.204, @sveltejs/kit@2.5.0, prisma@6.0.0.
+## How to measure bundle size and interactivity yourself
 
-The gotcha: the HMR loop in Vite 5 sometimes injects a 600 kB bundle because the compiler hasn’t pruned unused slots. The standard fix is adding `vite.config.js`:
+Any published bundle size is meaningless without stating the entry point, the production flag, and the build tool version. Instead of trusting a table, measure it.
 
-```javascript
-import { defineConfig } from 'vite'
-import { sveltekit } from '@sveltejs/kit/vite'
+**Production bundle size.** Build for production and inspect the output directory:
 
-export default defineConfig({
-  plugins: [sveltekit()],
-  build: { rollupOptions: { treeshake: 'recommended' } }
-})
-```
+- Next.js: `npm run build`, then inspect `.next/static/chunks`.
+- Remix: `npm run build`, then inspect `build/client`.
+- SvelteKit: `npm run build`, then inspect `.svelte-kit/output/client`.
 
-That shaves roughly 190 kB off the dev bundle.
+Sum the JavaScript files that the entry HTML actually references. Do not sum every file in the directory; lazy-loaded route chunks are not part of the initial payload.
 
-## How this connects to things you already know
+**Time-to-interactive.** Use Chrome DevTools with network throttling set to a profile that matches your users. Record the moment the page responds to input, not the moment the first byte arrives. Repeat at least five times and take the median; single runs are noise.
 
-If you’ve used Create React App or Vite in the past, Next.js 15 will feel familiar because it still gives you a `pages/` or `app/` directory and a familiar `next build` pipeline. The main difference is that the App Router now forces you to mark components as `'use client'` explicitly, which is basically the same as marking a component as client-side in Remix’s loader world.
+**HMR stability.** Open the dev server, edit a component, and count how many times the browser updates versus how many times you must refresh manually. Do this with a bundle that resembles your production app, not a hello-world. This is the measurement that matters for developer experience, and it is the one most comparisons skip.
 
-Remix’s nested routing model is similar to Angular’s route tree or Vue Router’s children arrays, but Remix makes every route a potential data endpoint. If you’ve ever written a Django view that returns JSON, Remix’s `loader` is the spiritual successor.
+## Caching: where the real bugs live
 
-SvelteKit’s file-based routing is the same idea as Next.js’s pages directory, but the compiler does more work at build time. The runes syntax (`$state`, `$derived`) is just compiler macros that rewrite your code so the runtime is smaller — think of it like JSX without the virtual DOM overhead.
+**Next.js.** Incremental static regeneration is simple until your data freshness window changes. A common mitigation for cache stampedes is a short stale-while-revalidate window alongside a longer TTL. The exact values depend on your tolerance for stale reads, not on a framework default.
 
-## Common misconceptions, corrected
-
-1. “Next.js 15’s Turbopack is production-ready.”
-   In real deployments, Turbopack commonly drops a large share of HMR updates once the bundle passes 500 kB. Switching to `next dev --turbo=false` restores the update rate. Turbopack is fast for small apps, but the compiler still emits warnings as TODOs, not errors.
-
-2. “SvelteKit can’t do SSR.”
-   SvelteKit supports SSR out of the box via `+page.server.js` load functions. The misconception comes from the fact that `+page.svelte` can also run on the server if you export a `load` function, but the syntax is different from Next.js’s `getServerSideProps`.
-
-3. “Remix forces you to use React.”
-   Remix’s core is framework-agnostic; the React adapter is just the default. You can write a Remix app with Preact or even a custom adapter. The loader/action model is the key abstraction, not the rendering library.
-
-4. “Bundles under 300 kB are always fast.”
-   In a typical 3G test, a 247 kB Next.js bundle takes 1.3 s TTI, while a 180 kB Remix bundle takes 1.1 s. The difference is the amount of client-side state and the size of the React runtime. Smaller bundles don’t always mean faster interactivity.
-
-5. “Edge functions are free.”
-   Vercel’s edge network charges around $0.20 per million requests in 2026. For a portal with 500 k daily active users, that’s roughly $100/month — more than the cost of a single t3.micro EC2 instance in us-east-1 running the same workload. Edge is cheap per request but expensive at scale.
-
-## The advanced version (once the basics are solid)
-
-Once you’ve shipped a small app, the real costs show up in three places: caching strategy, error boundaries, and third-party integrations.
-
-Caching strategy
-
-Next.js 15’s ISR (Incremental Static Regeneration) is simple but leaks if your data freshness window changes. A common fix for cache stampedes is adding a 1-second stale-while-revalidate window and a 5-minute TTL. The trick is to set `revalidate: 60` in `getStaticProps` and `cache-control: s-maxage=300, stale-while-revalidate=60` in the edge function.
-
-Remix gives you full control over caching via `cache-control` headers in loaders. The gotcha is that Remix doesn’t automatically strip cookies from cache keys, so if your user session cookie changes, Remix still serves a stale page. The standard fix is to normalize the cookie in the loader:
+**Remix.** Caching is controlled by `Cache-Control` headers in loaders. The pitfall is that responses keyed on a session cookie will be cached incorrectly if the CDN does not vary on that cookie. If a loader reads session data, either set `Cache-Control: private` or ensure the CDN's cache key includes the relevant cookie. Serving one user's data to another is the worst version of this bug.
 
 ```javascript
 import { json } from '@remix-run/node'
@@ -192,12 +159,12 @@ export async function loader({ request }) {
   const session = parseSession(cookie)
   const users = await db.user.findMany({ where: { orgId: session.orgId } })
   return json(users, {
-    headers: { 'Cache-Control': 's-maxage=60' }
+    headers: { 'Cache-Control': 'private, max-age=60' }
   })
 }
 ```
 
-SvelteKit’s caching is controlled by the `+server.js` endpoint. The tricky part is that the endpoint must return a `Response` object with the correct headers, so you end up writing more boilerplate than in Remix. A common mitigation is a small helper:
+**SvelteKit.** Caching is controlled by returning a `Response` object with the correct headers from a `+server.js` endpoint. A small helper reduces repetition:
 
 ```javascript
 // src/lib/server/cache.js
@@ -205,131 +172,82 @@ import { json } from '@sveltejs/kit'
 
 export function cachedJson(data, ttl = 60) {
   const response = json(data)
-  response.headers.set('Cache-Control', `s-maxage=${ttl}`)
+  response.headers.set('Cache-Control', `private, max-age=${ttl}`)
   return response
 }
 ```
 
-Error boundaries
+## Error boundaries and state reset
 
-Next.js 15’s error boundaries still leak client state when the error happens during hydration. The fix is to use the `error.js` file convention in the App Router and explicitly reset state in the error component.
+**Next.js.** Use the `error.js` file convention in the App Router. If an error occurs during hydration, the boundary catches it, but any client state initialized before the error is not automatically reset. Explicitly reset state in the error component.
 
-Remix’s error boundaries are route-scoped and run on both server and client. The gotcha is that if you throw an error in a loader, Remix shows the error page but the browser console still logs the original error. A common workaround is importing `@remix-run/react` and wrapping the error boundary in an `ErrorBoundary` component that swallows the log.
+**Remix.** Error boundaries are route-scoped and run on both server and client. A thrown error in a loader renders the nearest `ErrorBoundary` export. The original error still appears in the console, which is useful for debugging and noisy in production; filter it at the logging layer rather than swallowing it in the component.
 
-SvelteKit’s error boundaries are component-scoped and don’t catch loader errors. The fix is to use the `+error.svelte` convention and wrap the entire page in a try/catch inside the `+layout.server.js` load function.
+**SvelteKit.** Use the `+error.svelte` convention. Loader errors propagate to the nearest error page. If you need to handle a loader failure without rendering the error page, catch it inside the load function and return a sentinel value.
 
-Third-party integrations
+## Third-party integrations
 
-Next.js 15’s ecosystem is the largest but many libraries still assume client-side rendering. Porting a PDF generator from `jspdf` to `pdf-lib` because the former doesn’t play well with server components is a recurring week-long task for teams.
+**Next.js.** The ecosystem is the largest, but many libraries still assume client-side rendering. Libraries that touch `window`, `document`, or browser-only APIs must be loaded dynamically with `ssr: false` or wrapped in a client component. Budget time for this when adopting a new dependency.
 
-Remix forces you to write adapters for third-party libraries. The adapter pattern is simple but adds boilerplate: a React context provider, a custom hook, and a server-side util. A common approach is a generic `remix-http-client` adapter that wraps `axios` and normalizes responses across client and server.
+**Remix.** Third-party libraries often need adapters because loaders and actions run on the server. The adapter pattern is straightforward — a server-side utility plus a client-side hook — but it adds code for every library that was not designed for the framework.
 
-SvelteKit’s ecosystem is smaller but growing. The runes model makes it easier to write lightweight adapters. Replacing a heavy `chart.js` bundle with a Svelte component that uses the Canvas API can shave several hundred kB off the transfer size.
+**SvelteKit.** The ecosystem is smaller. Before committing, verify that your required libraries have Svelte equivalents or are framework-agnostic. Replacing a heavy charting library with a small canvas-based component is often the right call, but it is work you must schedule.
 
-## Quick reference
+## Comparison table
 
-| Dimension                | Next.js 15 (App)       | Remix 2.10           | SvelteKit 2.5        |
-|--------------------------|------------------------|----------------------|----------------------|
-| SSR model                | Pages or App Router    | Nested routes        | File-based (+server) |
-| Bundle size (prod)       | 247 kB                 | 180 kB runtime + 67 kB chunks | 142 kB              |
-| TTI on 3G (median)       | 1.3 s                  | 1.1 s                | 0.9 s                |
-| HMR stability (dev)      | Breaks >500 kB         | Stable               | Breaks >600 kB (Vite)|
-| Learning curve           | Low                    | Medium               | Low (if you know Svelte)|
-| Offline support          | Manual caching         | Built-in retries     | Manual caching       |
-| Edge cost (per 1M req)   | $0.20                  | $0                    | $0                    |
-| TypeScript support       | First-class            | First-class          | First-class          |
-| Form validation          | Zod + client hooks     | useActionData + Zod  | Superforms library   |
-| Internationalization     | next-intl              | remix-i18next        | sveltekit-i18n       |
+| Dimension | Next.js (App Router) | Remix | SvelteKit |
+|---|---|---|---|
+| Data loading model | Server Components + client fetch | Loaders and actions | `load` functions in `+page.server.js` |
+| Client/server boundary | `'use client'` directive | File naming (`*.server.js`) | File naming (`+page.server.js`) |
+| Routing | File-based, nested layouts | Nested routes, file-based | File-based, `+page`/`+layout` conventions |
+| Error handling | `error.js` convention | Route-scoped `ErrorBoundary` | `+error.svelte` convention |
+| Caching control | Framework defaults + headers | Explicit `Cache-Control` headers | Explicit `Response` headers |
+| Ecosystem size | Largest | Medium | Smallest |
+| Primary trade-off | Abstraction leaks | Boilerplate | Ecosystem gaps |
 
+Bundle sizes and interactivity timings are deliberately omitted: they depend on your application, your build configuration, and your users' network. Measure them with the procedure above.
 
-## Further reading worth your time
+## Common misconceptions
 
-- [Next.js 15 release notes](https://nextjs.org/blog/next-15) — pay attention to the App Router stability notes and the Turbopack caveats.
-- [Remix performance guide](https://remix.run/docs/en/main/guides/performance) — the section on caching headers is gold.
-- [SvelteKit 2.5 changelog](https://kit.svelte.dev/docs/2.5) — look for the runes migration guide and Vite 5 integration.
-- [Web performance budgets in 2026](https://almanac.httparchive.org/en/2026/performance-budgets) — concrete numbers on bundle budgets for SSRs.
-- [Edge networks cost calculator](https://vercel.com/docs/edge-network/pricing) — plug in your expected traffic and see if edge is worth it.
+**"Turbopack is production-ready for every app."** Check the current documentation for your version before enabling it in development for a large codebase. If hot module replacement becomes unreliable as the bundle grows, falling back to the default bundler for development is a reasonable mitigation.
 
-## Frequently Asked Questions
+**"SvelteKit cannot do server rendering."** It can. `+page.server.js` load functions run on the server by default. The confusion arises because `+page.svelte` can also run on the server, and the syntax differs from Next.js's data-fetching conventions.
 
-### Why does Next.js 15 still leak client state after a refresh?
+**"Remix forces you to use React."** The core is framework-agnostic; the React adapter is the default. The loader/action model is the abstraction, not the rendering library.
 
-Next.js 15’s React cache can hydrate twice if the browser cache is cold and the server response is delayed. The fix is to mark the page as dynamic (`dynamic = 'force-dynamic'`) or to use a client-side cache with a short TTL. Adding `export const dynamic = 'force-dynamic'` to the page typically stops the duplication. It’s a small change, but you have to know it exists before you go hunting for the bug in your own component tree.
+**"Smaller bundles are always faster."** Not necessarily. The amount of client-side state, the cost of hydration, and the time to first interaction all matter. A smaller bundle with a heavier hydration step can feel slower than a larger bundle that hydrates incrementally.
 
-### How do I pick between Remix’s loaders and Next.js 15’s server components?
+**"Edge functions are free."** They are not. Check your provider's current pricing and calculate the cost for your expected request volume before committing. For a regional user base, a single origin server is often cheaper and fast enough.
 
-Use Remix’s loaders when you need fine-grained control over caching headers and retries. Use Next.js server components when you want to avoid client bundles altogether and your data freshness window is predictable. In a typical Kenya deployment, Remix cut TTI from 1.8 s to 1.1 s, but required meaningfully more boilerplate. The decision usually comes down to whether you want to own the network contract or delegate it.
+## Decision checklist
 
-### Can SvelteKit handle i18n without a heavy library?
+Before choosing, answer these questions in writing:
 
-Yes. SvelteKit 2.5’s `+layout.server.js` can inspect the `Accept-Language` header and pass the locale to every page. A tiny helper that returns a Response with the correct `Content-Language` header and the translated strings is often all you need. The total weight is around 2 kB, which is far less than most i18n libraries. The tradeoff is that you own the translation pipeline yourself.
+1. **What is your users' median connection quality?** If it is poor or intermittent, prioritize explicit retry and offline behaviour.
+2. **How form-heavy is the application?** Form-heavy apps benefit from frameworks that treat mutations as first-class.
+3. **What is your team's existing expertise?** The framework your team already knows will ship faster than the one with better benchmarks.
+4. **How large is your dependency list?** A large list of browser-only libraries is easier in an ecosystem with more adapters.
+5. **What is your data freshness requirement?** Aggressive caching is only safe when stale reads are acceptable.
+6. **Who owns the network contract?** If you want the framework to hide it, choose accordingly. If you want to control it, choose accordingly.
+7. **What is your hosting budget?** Calculate edge invocation costs against origin server costs for your traffic volume.
 
-### What’s the real cost of Vercel’s edge network for a small portal?
+## FAQ
 
-For 500 k daily active users and 20 requests per user, the edge bill is roughly $100/month at 2026 prices. That’s more than a t3.micro EC2 instance (around $8/month) running the same workload in us-east-1. Only use edge if you need the 50 ms latency win for global users. For a regional portal, the math rarely works out in edge’s favor.
+**Why does client state sometimes duplicate after a refresh in React-based frameworks?**
+Hydration can run against stale data when the browser cache is cold and the server response is delayed. Marking the page as dynamic or using a short client-side cache TTL usually resolves it. The important part is knowing the failure mode exists so you look in the right place.
 
-### How do I debug HMR failures in SvelteKit when the bundle grows?
+**When should I use Remix loaders versus Next.js Server Components?**
+Use loaders when you need explicit control over caching headers and retries. Use Server Components when you want to avoid shipping client JavaScript for a component and your data freshness window is predictable. The decision usually comes down to how much of the network contract you want to own.
 
-Run `npm run dev -- --force` to bypass the cache and then check the Vite dev server logs for warnings about “excessive slot usage.” If the bundle is above 600 kB, add `vite.config.js` with `build: { rollupOptions: { treeshake: 'recommended' } }` to prune unused slots. That shaves roughly 190 kB in the typical case. The dev/prod bundle mismatch is the part that trips people up most often.
+**Can SvelteKit handle internationalization without a heavy library?**
+Yes. A `+layout.server.js` load function can inspect the `Accept-Language` header and pass a locale to every page. A small helper that returns translated strings and sets the `Content-Language` header is often sufficient. The trade-off is that you own the translation pipeline.
 
-### Is Remix’s nested routing model worth the boilerplate?
+**How do I debug hot module replacement failures when the bundle grows?**
+Check the dev server logs for warnings. Restart the dev server with a cleared cache. If the problem persists, compare the dev bundle size to the production bundle size; a large discrepancy usually indicates the dev server is including modules that the production build tree-shakes away.
 
-Yes, if your app is form-heavy or runs on unreliable networks. The nested routes give you automatic code-splitting and the ability to colocate loaders with their UI. The boilerplate is the price of offline resilience. In a typical Senegal deployment, the forms still submit after a power cut because the Remix runtime retries the failed POST.
+**Is nested routing worth the boilerplate?**
+If your application is form-heavy or runs on unreliable networks, yes. Nested routes give you automatic code-splitting and let you colocate data loading with the UI that consumes it. The boilerplate is the price of explicit behaviour.
 
-## The choice table
+## Action for the next 30 minutes
 
-| Use case                              | Pick Next.js 15 | Pick Remix | Pick SvelteKit |
-|---------------------------------------|-----------------|------------|----------------|
-| Team already knows React               | ✅              | ⚠️         | ❌             |
-| Need smallest bundle size             | ❌              | ⚠️         | ✅             |
-| Users on 2G / unreliable connections  | ❌              | ✅         | ⚠️             |
-| Fastest hiring pipeline               | ✅              | ❌         | ❌             |
-| Edge CDN or global low latency        | ✅              | ❌         | ❌             |
-| Form-heavy app with retries           | ❌              | ✅         | ⚠️             |
-| Budget under $100/month               | ⚠️              | ✅         | ✅             |
-
-
-## What surprised teams after shipping three real projects
-
-Next.js 15 looks like the obvious winner for most teams because of the ecosystem, but the App Router’s state leakage routinely costs a couple of days of debugging when a slow connection triggers a double-hydration. The fix is trivial once you understand the React cache, but teams usually only catch it after instrumenting edge logs during a generator outage.
-
-Remix’s network-first contract forces more boilerplate, but that boilerplate pays off when a power cut hits during a deployment. Half the forms still submit because the Remix runtime retries the POSTs automatically. The surprise is that the “slower” framework (Remix) actually makes the user journey more resilient.
-
-SvelteKit’s compiler produces the smallest bundles, but the HMR loop in Vite 5 sometimes serves a 600 kB bundle in dev even when the prod build is 142 kB. The fix is a tiny `vite.config.js` snippet, but the first few days are frustrating because the dev server doesn’t match the prod bundle size.
-
-## When to avoid each framework
-
-- Avoid Next.js 15 if your team is small and your app grows above 500 kB in dev because Turbopack’s HMR becomes unreliable.
-- Avoid Remix if your designers refuse to accept nested routing — the file structure is unavoidable.
-- Avoid SvelteKit if you need a mature i18n ecosystem outside of Europe — the libraries are still catching up.
-
-## The one rule I follow now
-
-Pick the framework that matches your network contract, not your component model. If your users are on 2G, pick Remix even if it feels verbose. If you’re optimizing for bundle size and your team already writes Svelte, pick SvelteKit. If you need the largest ecosystem and Vercel’s edge, pick Next.js 15 — but budget for Turbopack’s quirks and React cache leaks.
-
-
-**Action for the next 30 minutes:**
-
-Create a new folder, install each framework with its 2026 LTS versions, and run the basic counter example from their docs. Measure the production bundle size (`npm run build && ls -lh .next/static/chunks` for Next.js, `npm run build` then check `build/` for Remix, `npm run build` then `static/` for SvelteKit). Compare the three numbers. That single metric will tell you which framework’s compiler philosophy matches your constraints.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 16, 2026
+Create three empty directories, scaffold one framework in each using its official starter command, and build the same trivial page in all three: a list of items fetched from a local JSON file, with a search box that filters the list. Then run the production build for each and record two numbers: the total JavaScript bytes referenced by the initial HTML, and the time from navigation start to the first interaction in Chrome DevTools with network throttling enabled. Those two numbers, measured on your own code, will tell you more about which framework fits your constraints than any comparison table.

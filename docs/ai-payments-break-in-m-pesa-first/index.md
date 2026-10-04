@@ -1,46 +1,45 @@
 # AI payments break in M-Pesa first
 
-After reviewing enough code that touches building features, the same failure pattern keeps showing up. The edge cases only show up once real users hit the system. This post covers what comes after the happy path.
+AI features that touch payments fail in predictable ways, and the failures usually have nothing to do with the model. The pattern repeats across providers: a webhook arrives twice, a retry policy changes without notice, a local cache drifts from the provider's ledger, and a discount or credit gets applied more than once. This article covers what comes after the happy path — the invariants a payment provider does not give you, and how to build them yourself.
 
 ## The gap between what the docs say and what production needs
 
-If you’re shipping AI features that touch payments in Brazil, Colombia, or Mexico, your first mistake is trusting the payment provider’s docs to tell you what can actually fail. M-Pesa’s docs will tell you about webhooks and STK push, Paystack will show you the /charge endpoint, Flutterwave will point to /v3/payments. What they won’t tell you is how often the webhook arrives twice, how Paystack’s idempotency key errors cascade into your feature store, or why Flutterwave’s sandbox hangs for 30 seconds when you retry a declined card. The part that trips people up isn’t the AI model’s accuracy—it’s the fact that the payment system you’re integrating with treats idempotency, retries, and webhook ordering as afterthoughts, not core guarantees.
+Payment provider documentation describes the successful call. It shows the webhook payload shape, the charge endpoint, the signature header. What it typically does not specify is the failure envelope: how often a webhook is redelivered, whether retries preserve ordering, how idempotency keys are compared, and what happens to in-flight requests during a provider-side incident.
 
-Teams that treat these integrations as simple glue code end up with race conditions in their feature store writes, duplicated events in their analytics pipeline, and silent data drift when a payment provider’s retry policy changes without notice. The gap isn’t technical debt you can pay down later; it’s a gap between what the provider promises and what your user sees in production.
+Teams that treat payment integration as glue code end up with race conditions in feature store writes, duplicated events in analytics, and silent drift when a provider changes a retry policy. This is not technical debt you pay down later; it is a gap between what the provider guarantees and what the user experiences.
 
-The worst part? Most failure modes aren’t listed in the official changelogs. M-Pesa’s docs won’t tell you that their webhook signature fails if the timestamp drifts more than 30 seconds. Paystack’s API reference won’t warn you that their idempotency key validation is case-sensitive and collides with your lowercase UUIDs. Flutterwave’s API docs don’t mention that their sandbox returns HTTP 500 for certain card numbers, which breaks your automated test suite.
+A common trap: an AI feature suggests a discount when a payment fails, and the discount is applied twice because the webhook arrived twice. The provider's docs may never mention duplicate delivery. The background worker assumes idempotency. The result is an over-credited user and a support ticket that will not reproduce in staging.
 
-This isn’t theoretical. A common trap here is writing an AI feature that suggests a discount when a payment fails, then triggering the discount twice because the webhook arrived twice. The provider’s docs never mention duplicate webhooks; your retry logic in the background worker assumes idempotency. The result is an over-discounted user and a support ticket you can’t reproduce in staging.
+The core problem is not model accuracy. It is that the payment layer does not hand you the invariants — exactly-once processing, ordered delivery, stable error semantics — that a reliable system needs. Until you internalize that, every AI feature you ship on top of it is fragile by design.
 
-The real problem isn’t the AI model—it’s that the payment layer doesn’t provide the invariants you need to build a reliable system. Until you internalize that, every AI feature you ship will be fragile by design.
+## What is actually happening under the hood
 
-## How Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes actually works under the hood
+You are not calling one API. You are stitching together multiple consistency models into one user-facing flow. Mobile-money providers often confirm through an eventually consistent channel (an SMS or callback). Card processors commonly use an idempotent charge-and-refund model. Aggregators frequently sit on top of external PSPs with their own two-phase semantics. Your AI feature reads state from all of them, writes back changes, and must present one source of truth.
 
-Under the hood, you’re not just calling an API—you’re stitching together three different consistency models into one user-facing flow. M-Pesa uses an eventually consistent SMS-based confirmation model, Paystack uses an idempotent charge-and-refund model, and Flutterwave uses a two-phase commit with external PSPs. Your AI feature needs to read the state of all three, write back changes, and still present a single source of truth to the user.
+The first cut most teams make is to treat each provider as a stateless function: call the API, record the response, done. That works for a demo and fails the moment you need to retry, reconcile, or audit. The second cut is a local cache of provider state, which goes stale the moment a retry policy changes or a webhook arrives out of order.
 
-The first cut most teams make is to treat each provider as a stateless function: call the API, record the response, done. That works for a demo, but fails the moment you need to retry, reconcile, or audit. The second cut is to build a local cache of provider state, but that cache becomes stale the moment the provider’s retry policy changes or a webhook arrives out of order.
+The system that survives production treats the provider as an unreliable event stream, not a reliable RPC. Concretely, you need to:
 
-The system that survives production is one that treats the payment provider as an unreliable event stream, not a reliable RPC. You need to:
-- deduplicate events from the provider’s webhook endpoint
-- reconcile provider state with your local feature store
-- handle idempotency failures without corrupting user balances
-- surface provider-specific errors in a way your AI model can understand
+- deduplicate events arriving at the webhook endpoint
+- reconcile provider state against your local feature store
+- handle idempotency failures without corrupting balances
+- surface provider-specific errors in a vocabulary your AI layer can act on
 
-A common failure mode here is conflating the provider’s transaction ID with your internal event ID. M-Pesa’s transaction ID is alphanumeric and case-sensitive; Paystack’s is numeric and case-insensitive; Flutterwave’s is UUIDv4. If you store all three as strings without normalization, your deduplication logic will miss duplicates and your reconciliation will drift.
+A frequent failure mode is conflating the provider's transaction ID with your internal event ID. Transaction IDs differ in format and comparison semantics across providers — some are numeric, some alphanumeric and case-sensitive, some UUIDs. If you store them all as raw strings without normalization, deduplication misses duplicates and reconciliation drifts.
 
-Another trap is assuming the provider’s webhook order matches the actual transaction order. In practice, webhooks can arrive out of order, duplicated, or delayed. Your system needs to handle that without corrupting the user’s balance or triggering an over-refund.
+Another trap is assuming webhook order matches transaction order. In practice webhooks arrive out of order, duplicated, or delayed. The system must tolerate all three without corrupting a balance or issuing an over-refund.
 
-The system that works in production also needs to handle provider-specific timeouts and rate limits. M-Pesa’s sandbox can hang for 30 seconds on a declined card; Paystack’s sandbox rejects idempotency keys after 5 retries; Flutterwave’s sandbox returns HTTP 500 for certain card numbers. If your retry logic doesn’t back off exponentially and jitter, you’ll DDOS your own retry queue and trigger provider-side throttling.
+Timeouts and rate limits also differ per provider. A sandbox may hang for tens of seconds on a declined card; another may reject a reused idempotency key after a small number of attempts; another may return HTTP 500 for specific test card numbers. If retry logic does not back off with jitter, you can saturate your own retry queue and trigger provider-side throttling.
 
-Finally, you need to surface provider-specific errors to your AI model in a way it can use. M-Pesa’s errors are SMS-based; Paystack’s are JSON with a specific error code; Flutterwave’s are JSON with a generic status field. Your AI model needs a consistent vocabulary to decide whether to suggest a retry, a discount, or a cancellation. If you map all provider errors to a generic “failed” label, your AI will keep suggesting retries for irrecoverable declines.
+Finally, the AI layer needs a consistent error vocabulary. If every provider error collapses to a generic "failed" label, the model will keep suggesting retries for irrecoverable declines. Normalizing errors is what lets it choose between retry, discount, and cancellation.
 
-## Step-by-step implementation with real code
+## Step-by-step implementation
 
-Below is a minimal but production-grade implementation that handles M-Pesa, Paystack, and Flutterwave in a single codebase. It uses Python 3.11, FastAPI 0.109, Redis 7.2 for deduplication and caching, and SQLAlchemy 2.0 for the feature store. It assumes you’re running on a t3.small instance in us-east-1, with a single PostgreSQL 15.4 RDS instance for the feature store.
+The following is a minimal but production-oriented implementation that handles three providers in one codebase. It uses Python 3.11, FastAPI, Redis for deduplication, and SQLAlchemy 2.0 for the feature store. Pin versions to whatever your environment supports; the patterns matter more than the exact releases.
 
 ### 1. Normalize provider responses
 
-Each provider returns transaction data in a different shape. Normalize them into a common event format before writing to the feature store.
+Each provider returns transaction data in a different shape. Normalize into a common event format before writing to the feature store.
 
 ```python
 # providers/schema.py
@@ -50,7 +49,7 @@ from typing import Optional
 class PaymentEvent(BaseModel):
     provider: str  # "mpesa", "paystack", "flutterwave"
     tx_id: str  # provider-specific transaction ID
-    amount: int  # amount in smallest currency unit (cents/centavos/naira)
+    amount: int  # amount in smallest currency unit (cents/centavos/kobo)
     status: str  # "pending", "success", "failed", "reversed"
     timestamp: int  # Unix epoch in seconds
     raw: dict = Field(default_factory=dict)  # provider-specific extras
@@ -79,7 +78,7 @@ class FlutterwaveEvent(PaymentEvent):
 
 ### 2. Deduplicate webhooks with Redis
 
-Use a Redis 7.2 sorted set to deduplicate webhooks by provider and transaction ID. The key is the SHA-256 hash of the provider + transaction ID to handle case sensitivity differences.
+Use a Redis sorted set keyed by a hash of provider plus normalized transaction ID. The hash sidesteps case-sensitivity differences between providers. Trim old entries to bound memory.
 
 ```python
 # services/dedup.py
@@ -87,25 +86,34 @@ import hashlib
 import redis.asyncio as redis
 from providers.schema import PaymentEvent
 
+def normalize_tx_id(provider: str, tx_id: str) -> str:
+    # Normalize case for providers whose IDs are effectively case-insensitive.
+    # Keep the raw value for providers where case is significant.
+    if provider in ("paystack",):
+        return tx_id.lower()
+    return tx_id
+
 async def dedupe_event(event: PaymentEvent, redis_client: redis.Redis) -> bool:
-    key = f"dedupe:{event.provider}:{event.tx_id}"
+    normalized = normalize_tx_id(event.provider, event.tx_id)
+    key = f"dedupe:{event.provider}:{normalized}"
     digest = hashlib.sha256(key.encode()).hexdigest()
     inserted = await redis_client.zadd(
         "dedupe_set",
-        {digest: event.timestamp}
+        {digest: event.timestamp},
+        nx=True,
     )
     # Only keep events from the last 24h to bound memory usage
     await redis_client.zremrangebyscore(
         "dedupe_set",
         0,
-        event.timestamp - 86400
+        event.timestamp - 86400,
     )
-    return inserted == 1
+    return bool(inserted)
 ```
 
-### 3. Reconcile provider state with local feature store
+### 3. Reconcile provider state with the local feature store
 
-The feature store tracks the user’s balance and discount eligibility. Reconcile it with the provider’s state after each event, but never overwrite the user’s balance—only update derived state like discount eligibility.
+The feature store tracks derived state such as discount eligibility. Do not overwrite the user's balance from webhook data alone; update derived state and reconcile balances through a separate, auditable path.
 
 ```python
 # models/feature_store.py
@@ -125,13 +133,17 @@ class DiscountEligibility(Base):
     user_id = Column(String(36), primary_key=True)
     eligible = Column(Integer, default=0)  # 0 or 1
     last_evaluated = Column(DateTime, server_default=func.now(), onupdate=func.now())
+```
 
+```python
 # services/reconcile.py
+from sqlalchemy import update, func
 from sqlalchemy.ext.asyncio import AsyncSession
-from models.feature_store import UserBalance, DiscountEligibility
+from models.feature_store import DiscountEligibility
+from providers.schema import PaymentEvent
 
 async def reconcile_user(user_id: str, event: PaymentEvent, session: AsyncSession):
-    # Only update discount eligibility, never user balance
+    # Only update derived state, never the user balance.
     if event.status == "success":
         stmt = (
             update(DiscountEligibility)
@@ -150,17 +162,16 @@ async def reconcile_user(user_id: str, event: PaymentEvent, session: AsyncSessio
 
 ### 4. Handle provider-specific retries and backoff
 
-Each provider has different rate limits and timeout behaviors. Use exponential backoff with jitter, and cap retries at the provider’s documented limit.
+Providers differ in rate limits and timeout behavior. Use exponential backoff with jitter and cap retries at a value you can justify from the provider's documented limit. The numbers below are illustrative starting points — measure your own provider behavior and adjust.
 
 ```python
 # services/retry.py
 import asyncio
 import random
 from typing import Callable, Any
-from providers.mpesa import charge_mpesa
-from providers.paystack import charge_paystack
-from providers.flutterwave import charge_flutterwave
 
+# Illustrative caps. Derive these from your provider's documented rate
+# limits and observed behavior, not from a blog post.
 PROVIDER_RETRIES = {
     "mpesa": 3,
     "paystack": 5,
@@ -173,20 +184,22 @@ PROVIDER_BACKOFF = {
     "flutterwave": [1, 2, 4, 8],
 }
 
-async def with_retry(provider: str, fn: Callable[[], Any], *args, **kwargs) -> Any:
-    for attempt in range(PROVIDER_RETRIES[provider]):
+async def with_retry(provider: str, fn: Callable[..., Any], *args, **kwargs) -> Any:
+    attempts = PROVIDER_RETRIES[provider]
+    backoff = PROVIDER_BACKOFF[provider]
+    for attempt in range(attempts):
         try:
             return await fn(*args, **kwargs)
-        except Exception as e:
-            if attempt == PROVIDER_RETRIES[provider] - 1:
+        except Exception:
+            if attempt == attempts - 1:
                 raise
-            delay = PROVIDER_BACKOFF[provider][attempt] + random.uniform(0, 0.5)
+            delay = backoff[attempt] + random.uniform(0, 0.5)
             await asyncio.sleep(delay)
 ```
 
 ### 5. Map provider errors to AI-compatible labels
 
-Your AI model needs to know why a payment failed to decide whether to suggest a retry, a discount, or a cancellation. Normalize provider errors into a common vocabulary.
+The AI layer needs to know why a payment failed to decide between retry, discount, and cancellation. Normalize errors into a small vocabulary.
 
 ```python
 # providers/errors.py
@@ -194,10 +207,10 @@ from typing import Dict, Optional
 
 ERROR_MAPPING: Dict[str, Dict[str, str]] = {
     "mpesa": {
-        "Insufficient Funds": "insufficient_funds",
-        "Invalid Amount": "invalid_amount",
-        "User Cancelled": "user_cancelled",
-        "Timeout": "timeout",
+        "insufficient funds": "insufficient_funds",
+        "invalid amount": "invalid_amount",
+        "user cancelled": "user_cancelled",
+        "timeout": "timeout",
     },
     "paystack": {
         "card_declined": "card_declined",
@@ -214,17 +227,18 @@ ERROR_MAPPING: Dict[str, Dict[str, str]] = {
 
 def normalize_error(provider: str, raw_error: str) -> Optional[str]:
     mapping = ERROR_MAPPING.get(provider, {})
+    lowered = raw_error.lower()
     for key, label in mapping.items():
-        if key in raw_error.lower():
+        if key in lowered:
             return label
     return "generic_failure"
 ```
 
-### 6. Put it all together in a FastAPI endpoint
+### 6. Put it together in a FastAPI endpoint
 
 ```python
 # main.py
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from providers.schema import PaymentEvent
 from services.dedup import dedupe_event
 from services.reconcile import reconcile_user
@@ -242,142 +256,72 @@ async def webhook(provider: str, event: PaymentEvent):
     if not await dedupe_event(event, redis_client):
         return {"status": "duplicate"}
 
-    # 2. Normalize error for AI
+    # 2. Normalize error for the AI layer
     error_label = normalize_error(provider, event.raw.get("error", ""))
 
     # 3. Reconcile user state
     async with async_engine.begin() as session:
         await reconcile_user(event.user_id, event, session)
 
-    # 4. Trigger AI feature
+    # 4. Trigger AI feature using error_label
     # ... your AI logic here ...
 
     return {"status": "processed"}
 ```
 
-## Performance numbers from a live system
+Note that the endpoint above still needs a `user_id` on the event, which providers do not always supply directly. In practice you resolve it from a mapping table keyed by provider transaction reference, and you must handle the case where the mapping is not yet present (webhook arrives before your charge call returns). A robust handler either parks the event in a pending table or re-fetches the transaction from the provider before reconciling.
 
-I ran this stack for three months on a single t3.small (2 vCPU, 2 GiB RAM) in us-east-1, serving ~120k webhook calls per day across all three providers. The PostgreSQL 15.4 RDS instance was a db.t3.medium (2 vCPU, 4 GiB RAM) with 20 GB gp3 storage. Redis 7.2 ran on a cache.t3.micro (1 vCPU, 0.5 GiB RAM) with 1 GB memory.
+## How to measure the failure modes yourself
 
-| Metric                     | M-Pesa       | Paystack     | Flutterwave  |
-|----------------------------|--------------|--------------|--------------|
-| P99 latency (ms)           | 380          | 420          | 460          |
-| Error rate (provider side) | 0.8%         | 1.2%         | 1.5%         |
-| Duplicate webhook rate     | 0.3%         | 0.5%         | 0.7%         |
-| Redis memory usage (MB)    | 85           | 90           | 95           |
-| PostgreSQL CPU %           | 22           | 25           | 28           |
+Any benchmark table copied from someone else's environment is worse than useless — your provider mix, traffic shape, and retry policy will differ. Measure these instead:
 
-The duplicate webhook rate came from M-Pesa’s retry policy, which can send the same event up to three times within 30 seconds. Paystack and Flutterwave duplicates were mostly due to client-side retries when the user refreshed the page.
+- **Duplicate webhook rate.** Log every inbound webhook with provider, normalized transaction ID, and receipt timestamp. Count distinct transaction IDs versus total deliveries per 24 hours. The ratio is your duplicate rate. Instrument this before you add deduplication so you have a baseline.
+- **Out-of-order arrivals.** For each transaction, record the provider's event timestamp and your receipt timestamp. Sort by provider timestamp and count inversions in your receipt order. Inversions indicate reordering.
+- **Idempotency key collisions.** Log every outbound charge with its idempotency key and the provider's returned transaction ID. Group by normalized key; any group with more than one transaction ID is a collision.
+- **Reconciliation drift.** Run a job that pulls the provider's transaction list for the last 24 hours and diffs it against your feature store. Count rows present on one side only. This is your drift metric.
+- **Retry amplification.** Count outbound requests per provider per minute and compare against your normal baseline. A spike without a matching spike in user-initiated charges indicates retry amplification.
 
-The P99 latency includes the time to deduplicate, reconcile, and trigger the AI model. The model itself adds ~200ms on average, so the overhead of the integration layer is ~180-260ms depending on the provider.
+For each metric, the command depends on your stack. With Redis-backed deduplication, `redis-cli ZCARD dedupe_set` gives the current window size; comparing that against your inbound webhook counter tells you how much deduplication is actually firing. With PostgreSQL, a query grouping events by `provider, tx_id` and filtering `HAVING COUNT(*) > 1` gives duplicate counts directly.
 
-Cost-wise, the stack ran ~$85/month on AWS, including RDS, EC2, and ElastiCache. The biggest variable was Redis memory usage, which grew linearly with the number of active users. After three months, we capped Redis at 200 MB and switched to Redis 7.2’s LFU eviction policy to bound memory usage.
+## Failure modes worth designing for
 
-The surprise here was that Paystack’s sandbox was the slowest to respond in production, even though their API docs claim sub-200ms latency. In practice, Paystack’s sandbox returns HTTP 500 for certain card numbers, which forced us to implement a circuit breaker and fallback to a cached success response for testing. That added ~100ms to the P99 latency for Paystack events.
-
-## The failure modes nobody warns you about
-
-1. **Provider sandbox lies about idempotency**
-   Paystack’s sandbox will accept the same idempotency key twice and return two different transaction IDs. This breaks any system that assumes idempotency keys are truly idempotent. The fix is to treat the sandbox as untrustworthy and always verify the transaction state in production.
-
-2. **Webhook signature drift**
-   M-Pesa’s webhook signature includes a timestamp. If your server clock drifts more than 30 seconds, the signature check fails and the event is silently dropped. The fix is to validate the timestamp before checking the signature, and to log clock drift events.
-
-3. **Card number blacklists change daily**
-   Flutterwave’s sandbox blacklists certain card numbers, but the blacklist changes daily. If your automated test suite runs against the sandbox, you’ll get intermittent failures. The fix is to cache the blacklist and refresh it every 6 hours, or to use Flutterwave’s test card numbers that are guaranteed to work.
-
-4. **Rate limit headers are undocumented**
-   Paystack’s rate limits are documented as 100 requests per minute, but the headers they return (X-RateLimit-Remaining, X-RateLimit-Reset) are not. If you hit the limit, you’ll get HTTP 429 without any hint of when the limit resets. The fix is to implement a local rate limiter that respects the provider’s undocumented headers.
-
-5. **Reconciliation drift after provider outages**
-   If a provider goes down for an hour, your local feature store will drift because you couldn’t reconcile events during the outage. The fix is to implement a backfill job that re-processes events from the provider’s audit log after an outage.
-
-6. **Currency conversion errors in AI suggestions**
-   If your AI suggests a discount in USD but the user’s balance is in COP, you need to convert currencies. Most teams forget to handle the conversion rate drift and end up suggesting discounts that are 5-10% off because they used a stale rate. The fix is to fetch the latest conversion rate from a reliable source (e.g., Open Exchange Rates) and cache it for 5 minutes.
-
-7. **Duplicate events from client-side retries**
-   If the user refreshes the page after a failed payment, your frontend will retry the charge, resulting in two identical events. The fix is to deduplicate on the client side using the idempotency key, not just on the server side.
-
-The most surprising failure mode was **idempotency key collisions in Paystack**. Paystack’s idempotency key is case-sensitive, so `UUID` and `uuid` are treated as different keys. If your code generates lowercase UUIDs but the sandbox generates mixed case, you’ll get duplicate charges. The fix is to normalize the idempotency key to lowercase before sending it to Paystack.
-
-## Tools and libraries worth your time
-
-| Tool/Library         | Version | Use case                          | Why it’s worth it                                                                 |
-|----------------------|---------|-----------------------------------|-----------------------------------------------------------------------------------|
-| Redis                | 7.2     | Deduplication, rate limiting       | Lua scripting for atomic deduplication, LFU eviction to bound memory usage        |
-| SQLAlchemy           | 2.0     | Feature store                     | Async support, easy schema migrations, ORM for complex reconciliation logic      |
-| FastAPI              | 0.109   | Webhook endpoint                  | Async first, automatic OpenAPI docs, easy to integrate with AI model              |
-| Pydantic             | 2.6     | Schema validation                 | Runtime type checking, automatic normalization of provider responses              |
-| Tenacity             | 8.2     | Retry logic                       | Exponential backoff with jitter, cap at provider limits                           |
-| Asyncpg              | 0.29    | PostgreSQL driver                 | Async support, connection pooling, good for high concurrency                       |
-| Cryptography         | 41.0    | Webhook signature verification    | Constant-time comparison to avoid timing attacks                                  |
-| Open Exchange Rates  | 2026    | Currency conversion               | Reliable conversion rates, cache for 5 minutes                                   |
-
-If you’re on a tight budget, skip SQLAlchemy and use raw asyncpg queries instead—it’s 30% faster but harder to maintain. Redis 7.2’s LFU eviction is worth the upgrade from 6.x if you’re hitting memory limits. If you’re using Node.js on the frontend, use `ioredis` 5.x for Redis 7.2 compatibility.
-
-Avoid using Stripe’s official libraries for these providers—they don’t handle M-Pesa, Paystack, or Flutterwave’s quirks. Write your own thin wrappers around the providers’ REST APIs and normalize the responses yourself.
+1. **Sandbox idempotency is not production idempotency.** Sandboxes frequently accept the same idempotency key twice and return different transaction IDs. Never treat sandbox behavior as evidence about production semantics.
+2. **Webhook signature drift.** Some providers include a timestamp in the signature. If your server clock drifts beyond the tolerance, the signature check fails and the event is silently dropped. Validate the timestamp explicitly and log drift events so you notice.
+3. **Test-card blacklists change.** Sandbox card blacklists are updated without notice. Automated test suites that rely on specific card numbers will fail intermittently. Cache the blacklist or use provider-documented test cards and expect churn.
+4. **Undocumented rate limits.** A provider may document a limit but not the response headers that tell you when the limit resets. Implement a local limiter that respects the documented limit and treats HTTP 429 as a signal to back off, not to retry immediately.
+5. **Drift after provider outages.** During a provider incident, events do not arrive. Your feature store drifts. Implement a backfill job that re-processes events from the provider's audit log or transaction list after an outage.
+6. **Currency conversion drift in AI suggestions.** If the AI suggests a discount in one currency against a balance in another, a stale rate produces suggestions that are visibly wrong. Cache rates with a short TTL and serve stale rates only during outages, with a flag.
+7. **Client-side retry duplication.** A user refreshing after a failed payment can trigger a second charge. Deduplicate on the client using the idempotency key, not just on the server.
+8. **Idempotency key case sensitivity.** Some providers compare idempotency keys case-sensitively. If your client generates lowercase UUIDs and another code path generates mixed case, you get duplicate charges. Normalize the key before sending.
 
 ## When this approach is the wrong choice
 
-This pattern—deduplication, reconciliation, and error normalization—is overkill if you’re only integrating with one provider and your AI feature doesn’t write back to the user’s balance. If you’re just calling Paystack’s `/charge` endpoint and showing a success message, you don’t need Redis or a feature store. A simple retry loop with exponential backoff is enough.
+This pattern — deduplication, reconciliation, error normalization — is overkill if you integrate with a single provider and your AI feature never writes back to a balance. If you call a charge endpoint and show a success message, a simple retry loop with exponential backoff is enough.
 
-This pattern is also the wrong choice if you’re building a low-latency system where P99 must be under 100ms. The deduplication and reconciliation add ~180ms overhead, and Paystack’s sandbox makes it worse. If you need sub-100ms latency, use a serverless provider like AWS Lambda with a local cache, but accept that you’ll lose some reliability guarantees.
+It is also the wrong choice if your P99 budget is very tight. Deduplication and reconciliation add latency, and provider-side variance often dominates. If you need sub-100ms end-to-end, use a serverless handler with a local cache and accept weaker reliability guarantees, or move reconciliation off the request path entirely.
 
-Finally, this pattern is the wrong choice if you’re working with a team that doesn’t have PostgreSQL experience. The reconciliation logic is complex, and a single bug in the SQL can corrupt user balances. If your team is more comfortable with DynamoDB or MongoDB, consider a simpler pattern that only tracks the latest provider event and assumes the user’s balance is always correct.
+Finally, it is the wrong choice if your team has no relational database experience. The reconciliation logic is the kind of code where a single bug corrupts balances. If your team is more comfortable with a document store, consider a simpler pattern that tracks only the latest provider event and treats the provider as the source of truth for balances.
 
-## My honest take after using this in production
+## FAQ
 
-The biggest surprise wasn’t the providers’ failure modes—it was how often those failure modes changed without notice. M-Pesa’s webhook signature validation rules changed twice in three months, Paystack’s sandbox started rejecting certain idempotency keys, and Flutterwave’s sandbox blacklist grew by 20% overnight. Every change broke a different part of the system, and none of them were documented.
+**Why not use the provider's official SDK for retries?**
+Official SDKs often do not expose the retry policy or backoff behavior, or they pick defaults that are aggressive for production. If the SDK retries at fixed short intervals without jitter, it can amplify load during an incident. Wrap the SDK call in your own retry function so you control backoff and jitter.
 
-The second surprise was how little the AI model cared about the providers’ quirks. Once the error labels were normalized, the AI suggestions were surprisingly stable. The model didn’t need to know that M-Pesa’s timeout was 30 seconds vs Paystack’s 10 seconds—it just needed to know that the payment failed and whether it was recoverable.
+**How do I handle sandbox versus production differences without duplicating code?**
+Switch endpoints and credentials via environment variables, but keep the same retry, deduplication, and reconciliation code. If you find yourself duplicating retry logic per environment, extract it into a shared function.
 
-The biggest win was the deduplication layer. Before we added Redis, we had users getting multiple discounts for the same failed payment. After Redis, the duplicate rate dropped to 0.3-0.7% across providers, and the support tickets dried up.
+**What if the AI model needs the raw error message?**
+Normalize the error for the model's input, but store the raw error in your event log. The model gets a consistent vocabulary; support and debugging keep the full context.
 
-The biggest regret was not implementing a backfill job earlier. After Paystack’s sandbox outage, our feature store drifted for 45 minutes before we noticed. A backfill job that re-processes events from the provider’s audit log would have fixed it in minutes.
+**How do I test duplicate webhook handling without spamming the provider?**
+Use a local mock server or a provider sandbox that allows duplicate events. Send two identical events with the same transaction ID within the retry window and verify the second is dropped. For providers that support idempotency keys, send the same key twice and verify only one charge exists.
 
-The most fragile part of the system is still the currency conversion. We used Open Exchange Rates, but their API can be slow, and the rates can drift during market hours. A stale rate can cause the AI to suggest a discount that’s 10% off, which users notice immediately.
+**What is the smallest viable system that still handles these failure modes?**
+One PostgreSQL table for events, a unique constraint on `(provider, normalized_tx_id)`, and a cron job that reconciles every few minutes. Skip Redis; the unique constraint drops duplicates. This handles duplicate events and reconciliation drift with far less code.
 
-Overall, this pattern works, but it’s not free. You need to budget for Redis, PostgreSQL, and the time to maintain the reconciliation logic. If you’re a small team, consider using a managed service like Paddle or Adyen that handles these quirks for you—even if it costs 2-3% more in fees.
+**How do I handle currency conversion without a single external rate API?**
+Use a local cache of rates from a source you trust, and prefer a central bank reference rate for the currency pair. Cache with a short TTL and serve stale rates only during outages, with a flag on the response so downstream logic knows.
 
 ## What to do next
 
-Open your terminal and run this command to check if your current deduplication logic is safe:
-
-```bash
-redis-cli --scan --pattern "dedupe:*" | wc -l
-```
-
-If the count is greater than 0, you’re already using Redis for deduplication—good. If the count is 0, you’re not deduplicating webhooks at all, which means you’re vulnerable to duplicate events from M-Pesa’s retry policy. Add the deduplication layer above and redeploy. If you’re not using Redis, consider using a local SQLite table with a unique constraint on provider + transaction ID to avoid adding a new dependency.
-
-## Frequently Asked Questions
-
-**Why not use the provider’s official SDK for retries?**
-Most providers’ official SDKs don’t expose the retry policy or backoff logic you need. They assume you’ll handle retries yourself, and their defaults are too aggressive for production. For example, M-Pesa’s Python SDK retries at 1s, 2s, 4s intervals without jitter, which can DDOS your own API under load. The Tenacity library above gives you control over backoff and jitter.
-
-**How do I handle sandbox vs production differences without duplicating code?**
-Use environment variables to switch between sandbox and production endpoints, but keep the same retry and deduplication logic. The only difference should be the endpoint and the idempotency key generation. If you find yourself duplicating the retry logic, extract it into a shared function as shown above.
-
-**What if my AI model needs the raw error message for context?**
-Normalize the error for the AI model’s input (e.g., "insufficient_funds"), but store the raw error in your event log for debugging. This way, your AI model gets a consistent vocabulary, but you still have the full context for support tickets and logs.
-
-**How do I test duplicate webhook handling without spamming the provider?**
-Use a local mock server like WireMock or a provider-specific sandbox that allows duplicate events. For M-Pesa, send two identical events with the same TransactionId within 30 seconds and verify that your deduplication layer drops the second one. For Paystack, use the same idempotency key twice and verify that only one charge is created.
-
-**What’s the smallest viable system that still handles these failure modes?**
-Start with a single PostgreSQL table for events, a unique constraint on provider + transaction ID, and a cron job that reconciles events every 5 minutes. Skip Redis for deduplication and use the unique constraint to drop duplicates. This is 200 lines of code instead of 800, but it handles the most common failure modes: duplicate events and reconciliation drift.
-
-**How do I handle currency conversion if I can’t use Open Exchange Rates?**
-Use a local cache of conversion rates from a reliable source like the Central Bank of each country. For COP/USD, use the Banco de la República API; for MXN/USD, use Banxico’s API; for NGN/USD, use the Central Bank of Nigeria’s API. Cache the rates for 5 minutes and serve stale rates during outages.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+In the next 30 minutes, add one measurement: log every inbound webhook with `provider`, normalized `tx_id`, provider timestamp, and receipt timestamp to a table or log sink. Do not add deduplication yet. Run it for a day, then query for duplicate `(provider, tx_id)` pairs and for timestamp inversions. That gives you the real duplicate and reordering rates for your traffic, which is the only baseline worth designing against.

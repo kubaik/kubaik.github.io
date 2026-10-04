@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-delete_posts.py - delete every post on the triage DELETE list and make sure it can never come back.
+delete_posts.py - scan docs/, identify every post that should be deleted, delete it, and make sure it can never
+come back. No verdict file is needed: the scan (triage.analyze) runs every time, so results always match the
+current contents of docs/.
 
-For each DELETE post it:
+For each post the scan marks DELETE it:
   1. backs up docs/<slug>/ to .triage_backups/<slug>/
   2. removes docs/<slug>/ and docs/static/og/<slug>*.png
   3. writes {slug,title,reason} to blocked_topics.json  -> blog_system.py will never regenerate the topic
@@ -11,12 +13,12 @@ For each DELETE post it:
 
 Safe by default: DRY RUN unless --confirm. Idempotent.
 
-  python delete_posts.py                              # dry run, reads triage_report/verdicts.csv
-  python delete_posts.py --confirm                    # delete all DELETE-verdict posts
+  python delete_posts.py                              # dry run: scans docs/ and lists what would be deleted
+  python delete_posts.py --confirm                    # delete everything the scan marks DELETE
   python delete_posts.py --confirm --max 25           # worst offenders first, 25 per run
-  python delete_posts.py --list triage_report/delete.txt --confirm
-  python delete_posts.py --slug some-slug --confirm   # single post
-Re-run `python triage.py` first if the corpus changed.
+  python delete_posts.py --slug some-slug --confirm   # restrict to one flagged post (repeatable)
+  python delete_posts.py --force-slug some-slug --confirm   # delete a post the scan did NOT flag
+Optional: --verdicts FILE.csv / --list FILE.txt to use a saved report instead of scanning.
 """
 
 import argparse
@@ -30,10 +32,19 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import quality_gate
+import triage
 
 LINK_RX = re.compile(
     r"\[([^\]]+)\]\((?:https?://kubaik\.github\.io)?/([a-z0-9][a-z0-9-]*)/?\)"
 )
+
+
+def targets_from_scan(docs: Path):
+    rows, _ = triage.analyze(docs)
+    return sorted(
+        (r for r in rows if r["verdict"] == "DELETE"),
+        key=lambda r: -float(r.get("fab_density") or 0),
+    )
 
 
 def targets_from_csv(path: Path):
@@ -90,13 +101,20 @@ def repair_links(docs: Path, dead: set, confirm: bool) -> int:
     return fixed
 
 
-def main():
+def build_parser():
     ap = argparse.ArgumentParser()
     ap.add_argument("--docs", default="docs")
-    ap.add_argument("--verdicts", default="triage_report/verdicts.csv")
+    ap.add_argument(
+        "--verdicts", help="use a saved verdicts.csv instead of scanning docs/"
+    )
     ap.add_argument(
         "--list",
-        help="alternative: triage_report/delete.txt (path<TAB>reason per line)",
+        help="use a saved delete.txt (path<TAB>reason per line) instead of scanning docs/",
+    )
+    ap.add_argument(
+        "--force-slug",
+        action="append",
+        help="also delete this slug even if the scan did not flag it (repeatable)",
     )
     ap.add_argument(
         "--slug", action="append", help="delete only this slug (repeatable)"
@@ -109,25 +127,39 @@ def main():
     ap.add_argument(
         "--confirm", action="store_true", help="actually delete (default is a dry run)"
     )
-    a = ap.parse_args()
+    return ap
 
+
+def run_pass(a, budget: int = 0) -> int:
+    """One scan + delete pass. Returns the number of posts deleted (or, in a dry run, flagged)."""
     docs = Path(a.docs)
-    targets = (
-        targets_from_list(Path(a.list), docs)
-        if a.list
-        else targets_from_csv(Path(a.verdicts))
-    )
+    if a.list:
+        targets = targets_from_list(Path(a.list), docs)
+    elif a.verdicts:
+        targets = targets_from_csv(Path(a.verdicts))
+    else:
+        targets = targets_from_scan(docs)
+    for fs in a.force_slug or []:
+        if not any(t["slug"] == fs for t in targets):
+            title = fs.replace("-", " ")
+            try:
+                title = json.loads((docs / fs / "post.json").read_text("utf-8")).get(
+                    "title", title
+                )
+            except (OSError, ValueError):
+                pass
+            targets.append({"slug": fs, "title": title, "reasons": "manually forced"})
     if a.slug:
-        wanted = set(a.slug)
+        wanted = set(a.slug) | set(a.force_slug or [])
         targets = [t for t in targets if t["slug"] in wanted]
     live = [t for t in targets if (docs / t["slug"]).exists()]
     already = len(targets) - len(live)
-    if a.max:
-        live = live[: a.max]
+    if budget:
+        live = live[:budget]
 
     print(
-        f"{'DELETING' if a.confirm else 'DRY RUN —'} {len(live)} post(s) "
-        f"({already} already gone, {len(targets)} on list)"
+        f"{'DELETING' if a.confirm else 'DRY RUN —'} {len(live)} post(s) flagged for deletion"
+        + (f" ({already} previously deleted)" if already else "")
     )
     removed_log_path = docs / "_removed_posts.json"
     removed_log = (
@@ -170,10 +202,30 @@ def main():
         )
         print(f"blocklist: +{added} entries -> {a.blocklist}")
     print(f"links repaired in remaining posts: {fixed}")
-    if not a.confirm:
+    return len(live)
+
+
+def main():
+    a = build_parser().parse_args()
+    scan_mode = not (a.list or a.verdicts or a.slug or a.force_slug)
+    total, remaining = 0, a.max
+    for n in range(1, 6):  # re-scan until stable: deleting one post of a duplicate pair
+        done = run_pass(
+            a, remaining
+        )  # can change which sibling is flagged on the next scan
+        total += done
+        if not (a.confirm and scan_mode and done) or (a.max and total >= a.max):
+            break
+        remaining = a.max - total if a.max else 0
         print(
-            "Dry run only. Re-run with --confirm to delete. "
-            "Then: python blog_system.py build && git add -A && git commit"
+            f"\n--- re-scanning docs/ after pass {n} (duplicate pairs can resolve differently once a sibling is gone) ---"
+        )
+    if a.confirm:
+        print(f"\nTotal deleted this run: {total}")
+    else:
+        print(
+            "\nDry run only. Re-run with --confirm to delete (it re-scans until no more posts are flagged). "
+            "Then: python improve_posts.py --confirm, python blog_system.py build, commit."
         )
 
 

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Neon vs PlanetScale vs Turso: which broke first? - Kubai Kevin</title>
-        <meta name="description" content="Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…">
+        <meta name="description" content="Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.">
         <meta name="keywords" content="ServerlessDatabases2026, TursoWalContention, PlanetscaleVitessTimeout, NeonReplicaLag, Database, Serverless">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T18:51:10.449001">
-        <meta property="article:modified_time" content="2026-09-19T03:52:01.357324+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:36:57.198970+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Neon vs PlanetScale vs Turso: which broke first?">
-        <meta property="og:description" content="Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…">
+        <meta property="og:description" content="Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.">
         <meta property="og:url" content="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Neon vs PlanetScale vs Turso: which broke first?">
-        <meta name="twitter:description" content="Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…">
+        <meta name="twitter:description" content="Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/neon-vs-planetscale-vs-turso-which-broke-first.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/#article",
       "headline": "Neon vs PlanetScale vs Turso: which broke first?",
-      "description": "Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…",
+      "description": "Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.",
       "datePublished": "2026-06-10T18:51:10+00:00",
-      "dateModified": "2026-09-19T03:52:01+00:00",
-      "wordCount": 3346,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-04T10:36:57+00:00",
+      "wordCount": 2525,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Neon vs PlanetScale vs Turso: which broke first?</h1>
                 
-                <p class="post-lead">Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…</p>
+                <p class="post-lead">Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.</p>
                 
                 
                 <div class="tags">
@@ -254,97 +254,61 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3346 words
+                        13 min read
+                        &nbsp;·&nbsp; 2525 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches serverless databases, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>You’re running a serverless app, hitting 500 errors under load, and the logs say nothing useful. The pattern looks like this:</p>
-<pre><code>Error: Serverless DB connection dropped at 1200 RPS
-Code: 40001
-Message: &quot;Transaction timeout after 10s&quot;
-</code></pre>
-<p>The symptoms are inconsistent: sometimes the query works, sometimes it times out, sometimes the function retries forever. You check CloudWatch, and there’s no clear spike in CPU, memory, or disk. You blame the provider, spin up a bigger instance, and the issue still happens at 1200 RPS.</p>
-<p>The confusion comes from the way serverless databases present themselves. They look like Postgres, talk like Postgres, but they’re not. The error messages mimic classic Postgres, but the underlying mechanics are different. Neon routes reads to regional replicas without telling you. PlanetScale splits writes across shards behind a Vitess proxy. Turso uses libSQL with eventual consistency by default. Each architecture optimises for different things, and each breaks in different ways under real load.</p>
-<p>Here’s what you’re likely seeing:</p>
-<table>
-<thead>
-<tr>
-<th>Symptom</th>
-<th>Neon</th>
-<th>PlanetScale</th>
-<th>Turso</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>40001 / "Transaction timeout after 10s"</td>
-<td>Regional replica lag &gt;10s under 1200 RPS</td>
-<td>Vitess tablet timeout during cross-shard query</td>
-<td>LibSQL batch size limit hit in serverless worker</td>
-</tr>
-<tr>
-<td>Connection reset mid-transaction</td>
-<td>Proxy idle connection eviction at 300s</td>
-<td>Proxy buffer overflow at 2000 active connections</td>
-<td>SQLite lock timeout due to WAL contention</td>
-</tr>
-<tr>
-<td>502 Bad Gateway from API Gateway</td>
-<td>Neon compute auto-suspends after 5 min idle</td>
-<td>PlanetScale proxy rejects new connections above 10k RPS</td>
-<td>Turso HTTP gateway 429s due to rate limits</td>
-</tr>
-</tbody>
-</table>
-<p>The real problem isn’t the database itself — it’s the mismatch between your app’s assumptions and the provider’s constraints. You think you’re talking to a single Postgres instance, but you’re actually talking to a distributed system with hidden costs.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>Serverless databases are not databases. They’re distributed systems pretending to be databases. Each provider abstracts away complexity with different trade-offs, and each trade-off becomes a failure mode under load.</p>
-<p>Neon uses a shared-nothing architecture with compute and storage separated. The compute layer auto-scales, but only if the query planner decides it needs more CPU. The storage layer is S3-backed, so reads can go to any regional replica, but writes must hit the primary. The proxy layer (libpq-compatible) sits between your app and the compute instances. The proxy enforces a 300-second idle timeout because Neon doesn’t charge for compute when idle, and keeping idle connections alive would waste money.</p>
-<p>PlanetScale uses Vitess under the hood: a MySQL-compatible proxy that splits tables across shards. The Vitess proxy (vtgate) routes queries using a shard map. When you hit a cross-shard query, it fans out to multiple tablets, aggregates results, and returns them. The proxy buffers results in memory. At 10k RPS, the buffer overflows, and you start seeing 502s from the proxy, not the database.</p>
-<p>Turso uses libSQL, a SQLite fork designed for serverless. Turso runs SQLite in a WASM runtime inside Cloudflare Workers. Each worker gets a local copy of the database, and changes replicate asynchronously. The problem is that SQLite’s WAL (write-ahead log) locks the database file during writes. When multiple workers try to write at once, the first writer holds the lock, and the others time out. Turso’s default batch size is 1MB, so large inserts or updates trigger the lock timeout.</p>
-<p>The root cause is always the same: your app assumes a single, consistent Postgres instance, but the provider gives you a distributed system with hidden limits. The error messages are misleading because they mimic Postgres, but the underlying mechanics are different.</p>
-<p>The compute instance would route a read to a replica that was 200ms behind, causing the query to time out even though the primary was fine.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p>The most common cause is the proxy’s idle connection timeout. Serverless databases charge by compute time, so they kill idle connections aggressively. Your app opens a connection, does a quick query, and then waits for the next request. The proxy sees no traffic for 300 seconds and kills the connection. When the next request comes in, the connection is dead, and the app tries to reconnect. If the reconnect happens during a transaction, you get a 40001 timeout.</p>
-<p>Here’s how to reproduce it:</p>
+                <p>Serverless database platforms present a Postgres, MySQL or SQLite wire protocol, so application code and drivers usually work unchanged. What does not carry over is the assumption that a single, always-on, strongly consistent server sits behind that protocol. The provider is running a distributed system with proxy layers, replicas, shards and idle-eviction policies. Under load, those layers surface as errors that look like ordinary database problems but are not.</p>
+<p>This article covers a small set of failure modes that recur across Neon, PlanetScale and Turso, how to tell which layer is failing, and how to fix or route around each one. Every diagnosis below is something you can reproduce against your own database with the tools already in your stack.</p>
+<h2 id="why-the-errors-are-misleading">Why the errors are misleading</h2>
+<p>A connection error that reads <code>server closed the connection unexpectedly</code> is a libpq message. A <code>40001</code> SQLSTATE is the standard serialization-failure code in Postgres. A <code>SQLITE_BUSY</code> is a SQLite lock error. None of these tell you which layer produced them, and in a serverless database the producing layer is often a proxy, a gateway or a scheduler rather than the storage engine.</p>
+<p>The architectural differences matter because they determine which failures are possible:</p>
+<ul>
+<li><strong>Neon</strong> separates compute from storage. Storage is object-store-backed, compute instances can scale and suspend, and a libpq-compatible proxy sits between your client and compute. Reads can be served by regional replicas; writes go to the primary.</li>
+<li><strong>PlanetScale</strong> is built on Vitess, a MySQL-compatible proxy layer that routes queries through <code>vtgate</code> to sharded <code>vttablet</code> instances. Cross-shard queries fan out and results are aggregated in the proxy.</li>
+<li><strong>Turso</strong> is built on libSQL, a SQLite fork. Embedded replicas and edge deployments mean a worker may read a local copy that is asynchronously updated from the primary.</li>
+</ul>
+<p>The practical consequence: identical symptoms can have different causes per provider, and the same fix can be wrong on two of the three.</p>
+<h2 id="failure-mode-1-idle-connection-eviction-at-the-proxy">Failure mode 1: idle connection eviction at the proxy</h2>
+<p>The most common cause of intermittent connection errors in serverless deployments is not the database engine. It is the proxy closing connections that have been idle longer than an internal threshold. Providers that bill by compute time have a direct incentive to suspend or disconnect idle compute, and a connection pool that never releases a connection can keep compute alive and billed.</p>
+<p>The failure signature is a connection that worked, then fails after a period of inactivity, then works again on reconnect. If the reconnect happens mid-transaction, the client sees a transaction-level error rather than a clean connection error.</p>
+<h3 id="reproducing-it">Reproducing it</h3>
+<p>This script is deliberately minimal. It opens a connection, runs one query, waits longer than a typical proxy idle timeout, then runs a second query on the same connection.</p>
 <pre><code class="language-python">import psycopg2
 import time
 
 conn = psycopg2.connect(
-    host=&quot;your-neon-host.neon.tech&quot;,
+    host=&quot;your-host&quot;,
     dbname=&quot;db&quot;,
     user=&quot;user&quot;,
     password=&quot;pass&quot;,
     connect_timeout=5,
 )
 
-# Run a query
 cur = conn.cursor()
 cur.execute(&quot;SELECT 1&quot;)
 print(cur.fetchone())
 
-# Wait 310 seconds
+# Wait longer than the proxy idle timeout you are testing for.
 time.sleep(310)
 
-# Try to run another query
 try:
     cur.execute(&quot;SELECT 2&quot;)
     print(cur.fetchone())
 except psycopg2.OperationalError as e:
-    print(f&quot;Error: {e}&quot;)  # (psycopg2.OperationalError) connection to server at &quot;...&quot;, port 5432 failed: server closed the connection unexpectedly
+    print(f&quot;Error: {e}&quot;)
 </code></pre>
-<p>The fix is to use a connection pool with keepalive. The pool keeps a minimum number of connections alive, so the proxy doesn’t kill them. The pool also reuses connections, reducing the overhead of opening and closing connections.</p>
-<p>Here’s a minimal PgBouncer config for Neon:</p>
+<p>Adjust the sleep to bracket the timeout you suspect. If the second query fails after 310 seconds but succeeds after 60, you have located the threshold empirically rather than assuming a value.</p>
+<h3 id="fix-a-real-connection-pool">Fix: a real connection pool</h3>
+<p>A pool that maintains a minimum number of live connections prevents the proxy from seeing an idle backend. For Postgres-compatible endpoints, PgBouncer is the standard tool. The configuration below is a starting point; the pool sizes must be derived from your function concurrency, not copied.</p>
 <pre><code class="language-ini">[databases]
-dbname = host=your-neon-host.neon.tech port=5432 dbname=db
+dbname = host=your-host port=5432 dbname=db
 
 [pgbouncer]
 pool_mode = session
@@ -354,273 +318,141 @@ default_pool_size = 10
 idle_transaction_timeout = 600
 server_idle_timeout = 300
 </code></pre>
-<p>Deploy PgBouncer as a sidecar in your serverless function container. Set <code>min_pool_size</code> to 5, so the pool always has idle connections. Set <code>idle_transaction_timeout</code> to 600, so transactions have a 10-minute window to complete. Set <code>server_idle_timeout</code> to 300, matching Neon’s proxy timeout.</p>
-<p>For PlanetScale, the issue is buffer overflow in the Vitess proxy. The fix is to reduce the fan-out in cross-shard queries. Use single-shard queries when possible, or denormalise your schema to avoid cross-shard joins.</p>
-<p>For Turso, the issue is WAL contention. The fix is to batch writes into a single transaction and keep the transaction small. Turso’s default batch size is 1MB, so keep your writes under 1MB.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p>The less obvious cause is regional replica lag. Neon routes reads to the nearest regional replica, but the replica can lag behind the primary. Under load, the lag can exceed 10 seconds, causing queries to time out even though the primary is fine.</p>
-<p>To check replica lag, run:</p>
-<pre><code class="language-sql">-- Neon-specific: check replica lag in milliseconds
-SELECT * FROM neon.replica_status;
-</code></pre>
-<p>If the lag is &gt;5000ms, your reads will time out. The fix is to route reads to the primary during high load, or to increase the timeout in your app.</p>
-<p>Here’s a Python snippet to detect and route around lag:</p>
+<p>Two notes on the parameters. <code>pool_mode = session</code> holds a server connection for the lifetime of the client session, which is the safest mode but the least efficient under high concurrency; <code>transaction</code> mode is more efficient but breaks session-level state such as prepared statements and advisory locks. <code>server_idle_timeout</code> should be shorter than the proxy's eviction threshold, not equal to it, so the pool closes connections before the proxy does.</p>
+<p>For MySQL-compatible endpoints, the equivalent role is played by ProxySQL or the provider's own pooling. For SQLite-based platforms, pooling is typically handled inside the client library because there is no network connection to keep alive in the same sense.</p>
+<h2 id="failure-mode-2-read-replica-lag">Failure mode 2: read replica lag</h2>
+<p>When a platform routes reads to regional replicas, those replicas apply the primary's write-ahead log asynchronously. Under write-heavy load the lag can grow. A read that lands on a lagging replica can return stale data, or a query that expects a row written moments earlier can return nothing.</p>
+<p>The important point is that replica lag is a property of the replication topology, not a bug. The question is whether your application's read path tolerates it.</p>
+<h3 id="measuring-it">Measuring it</h3>
+<p>Do not assume a lag value. Measure it. The general approach is to write a row with a server-side timestamp to the primary, then poll a replica for that row and compare timestamps.</p>
 <pre><code class="language-python">import psycopg2
 import time
 
-def get_replica_lag(conn):
-    with conn.cursor() as cur:
-        cur.execute(&quot;SELECT lag_ms FROM neon.replica_status WHERE region = current_setting('neon.region')&quot;)
-        return cur.fetchone()[0]
+primary = psycopg2.connect(host=&quot;primary-host&quot;, dbname=&quot;db&quot;, user=&quot;user&quot;, password=&quot;pass&quot;)
+replica = psycopg2.connect(host=&quot;replica-host&quot;, dbname=&quot;db&quot;, user=&quot;user&quot;, password=&quot;pass&quot;)
 
-conn = psycopg2.connect(
-    host=&quot;your-neon-host.neon.tech&quot;,
-    dbname=&quot;db&quot;,
-    user=&quot;user&quot;,
-    password=&quot;pass&quot;,
-)
+with primary.cursor() as cur:
+    cur.execute(&quot;INSERT INTO lag_probe (id, written_at) VALUES (1, clock_timestamp()) RETURNING written_at&quot;)
+    written_at = cur.fetchone()[0]
+primary.commit()
 
-lag = get_replica_lag(conn)
-if lag &gt; 5000:
-    # Route to primary
-    conn.close()
-    conn = psycopg2.connect(
-        host=&quot;your-neon-host-primary.neon.tech&quot;,
-        dbname=&quot;db&quot;,
-        user=&quot;user&quot;,
-        password=&quot;pass&quot;,
-    )
+start = time.monotonic()
+while True:
+    with replica.cursor() as cur:
+        cur.execute(&quot;SELECT written_at FROM lag_probe WHERE id = 1&quot;)
+        row = cur.fetchone()
+    if row is not None:
+        elapsed = time.monotonic() - start
+        print(f&quot;Replica observed the write after {elapsed:.3f}s&quot;)
+        break
+    if time.monotonic() - start &gt; 30:
+        print(&quot;Replica did not observe the write within 30s&quot;)
+        break
+    time.sleep(0.05)
 </code></pre>
-<p>For PlanetScale, the less obvious cause is Vitess tablet routing. Vitess routes queries to tablets based on a shard map that’s cached in the proxy. If the shard map is stale, queries go to the wrong tablet, causing timeouts or data inconsistency.</p>
-<p>To check shard map freshness, run:</p>
-<pre><code class="language-sql">SHOW VITESS_SHARDS;
+<p>Run this under representative write load, not on an idle database. Lag is a function of write throughput, so a measurement taken at zero load tells you nothing.</p>
+<h3 id="fix-route-reads-deliberately">Fix: route reads deliberately</h3>
+<p>There are three legitimate responses, and choosing between them is an application decision:</p>
+<ol>
+<li><strong>Route consistency-sensitive reads to the primary.</strong> This is correct for read-your-writes flows such as "show the user the record they just created". It costs you the read scaling benefit for those queries only.</li>
+<li><strong>Accept the lag and design around it.</strong> Analytics, feeds and caches can usually tolerate seconds of staleness. Document the tolerance explicitly rather than discovering it in production.</li>
+<li><strong>Serve the read from the write path.</strong> If a request has just written a row, return the written value from the same transaction instead of re-reading it from a replica.</li>
+</ol>
+<p>What does not work is increasing the client timeout. Lag is not a latency problem; a longer timeout just makes the stale read slower.</p>
+<h2 id="failure-mode-3-proxy-and-function-concurrency-limits">Failure mode 3: proxy and function concurrency limits</h2>
+<p>Every layer in the path has a concurrency ceiling: the API gateway, the function runtime, the database proxy, and the database compute. When any one of them saturates, the errors appear downstream of the actual constraint, which is why they are hard to attribute.</p>
+<h3 id="finding-the-real-ceiling">Finding the real ceiling</h3>
+<p>Work backwards from the error to the layer that produced it. A <code>502</code> from an API gateway is generated by the gateway, not the database. A connection refused at the proxy is generated by the proxy. A query timeout inside the engine is generated by the engine. The HTTP status code or SQLSTATE tells you which layer to inspect.</p>
+<p>For function runtimes, concurrency is a function of request rate and duration. The relationship is worth writing down because it is frequently the actual bottleneck:</p>
+<pre><code>required_concurrency = requests_per_second * average_duration_seconds
 </code></pre>
-<p>If the shard map is stale, restart the vtgate proxy:</p>
-<pre><code class="language-bash">kubectl rollout restart deployment/vtgate
+<p>At 2000 requests per second with a 500 ms average duration, the required concurrency is 2000 * 0.5 = 1000. If the platform's concurrency ceiling for that function is 1000, the function is saturated and the database is not the problem. This arithmetic is the fastest way to rule the database in or out.</p>
+<h3 id="fix-bound-concurrency-before-it-bounds-you">Fix: bound concurrency before it bounds you</h3>
+<ul>
+<li>Set a reserved concurrency limit on the function so that overload produces a predictable rejection rather than cascading timeouts.</li>
+<li>Size the connection pool to the function's concurrency, not to the database's maximum connections. A pool larger than the concurrency limit wastes connections; a pool smaller than it queues requests.</li>
+<li>Reduce result set size at the query level. Large result sets are buffered in the proxy, and proxy memory is a shared resource. Keyset pagination is the standard technique:</li>
+</ul>
+<pre><code class="language-sql">SELECT id, name, created_at
+FROM users
+WHERE id &gt; :last_seen_id
+ORDER BY id
+LIMIT 100;
 </code></pre>
-<p>For Turso, the less obvious cause is libSQL WAL contention. libSQL uses a single WAL file, and writes are serialized. When multiple workers try to write at once, the first writer holds the lock, and the others time out.</p>
-<p>The fix is to use a single writer pattern. Serialize writes through a queue, or use Turso’s <code>batch</code> API to group writes into a single transaction.</p>
-<pre><code class="language-javascript">// Turso JavaScript client: batch writes to avoid WAL contention
-const { createClient } = require('@libsql/client');
+<p>Keyset pagination is preferred over <code>OFFSET</code> because <code>OFFSET</code> requires the engine to scan and discard rows, so cost grows with page depth.</p>
+<h2 id="failure-mode-4-write-contention-on-sqlite-based-platforms">Failure mode 4: write contention on SQLite-based platforms</h2>
+<p>SQLite serializes writes. In a single-process deployment this is invisible. In an edge or multi-worker deployment where several workers write to the same database, the first writer holds the write lock and the others either wait or fail with <code>SQLITE_BUSY</code>.</p>
+<p>The fix is architectural rather than a tuning parameter: reduce the number of concurrent writers.</p>
+<ul>
+<li><strong>Batch writes into one transaction.</strong> A single transaction containing many statements acquires the write lock once.</li>
+<li><strong>Serialize writes through a queue.</strong> If a single logical writer applies all mutations, contention disappears by construction.</li>
+<li><strong>Use <code>BEGIN IMMEDIATE</code></strong> when you intend to write, so the lock is acquired at transaction start rather than at the first write statement. This turns a mid-transaction failure into an immediate, retryable one.</li>
+</ul>
+<pre><code class="language-javascript">const { createClient } = require('@libsql/client');
 
 const client = createClient({
-  url: 'libsql://your-turso-instance.turso.io',
-  authToken: 'your-token',
+  url: 'libsql://your-instance.turso.io',
+  authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
-// Batch writes into a single transaction
-const batch = client.batch([
-  'INSERT INTO users (id, name) VALUES (1, &quot;Alice&quot;)',
-  'INSERT INTO users (id, name) VALUES (2, &quot;Bob&quot;)',
-], 'write');
+const results = await client.batch(
+  [
+    { sql: 'INSERT INTO users (id, name) VALUES (?, ?)', args: [1, 'Alice'] },
+    { sql: 'INSERT INTO users (id, name) VALUES (?, ?)', args: [2, 'Bob'] },
+  ],
+  'write'
+);
 
-await batch;
+console.log(results);
 </code></pre>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>The environment-specific cause is function concurrency limits. Serverless functions have a maximum concurrency, and each connection to the database uses a slot. When you hit the concurrency limit, new functions can’t open connections, and you get 502s from the API Gateway.</p>
-<p>For AWS Lambda, the default concurrency limit is 1000 per region. If you’re running 2000 RPS with 500ms function duration, you need 1000 concurrent functions to handle the load. When you hit the limit, Lambda rejects new invocations, and your API Gateway returns 502.</p>
-<p>To check Lambda concurrency, go to the Lambda console, select your function, and look at the "Concurrent executions" metric. If it’s at 1000, you’re at the limit.</p>
-<p>The fix is to increase the concurrency limit:</p>
-<pre><code class="language-bash">aws lambda put-function-concurrency --function-name your-function --reserved-concurrent-executions 2000
+<p>Note the parameterized statements. String interpolation into SQL is a defect regardless of the database.</p>
+<h2 id="how-to-verify-a-fix-actually-worked">How to verify a fix actually worked</h2>
+<p>A fix is only verified when you can show the failure is gone under the conditions that produced it. For each failure mode above, the verification is different.</p>
+<p><strong>Idle eviction.</strong> Run a load test that includes idle gaps rather than continuous traffic, then inspect connection counts on the database side.</p>
+<pre><code class="language-bash">hey -c 100 -n 1000 -q 30 http://your-api/endpoint
 </code></pre>
-<p>For PlanetScale, the environment-specific cause is Vitess proxy memory limits. The vtgate proxy buffers results in memory. At 10k RPS, the buffer can exceed 2GB, causing the proxy to crash and return 502s.</p>
-<p>The fix is to reduce the result set size or increase the proxy memory limit. PlanetScale provides a managed vtgate, so you can’t adjust the memory directly, but you can reduce the result set by paginating queries.</p>
-<pre><code class="language-sql">-- Use keyset pagination to reduce result set size
-SELECT * FROM users WHERE id &gt; last_seen_id ORDER BY id LIMIT 100;
+<pre><code class="language-sql">SELECT state, count(*)
+FROM pg_stat_activity
+WHERE usename = current_user
+GROUP BY state;
 </code></pre>
-<p>For Turso, the environment-specific cause is Cloudflare Worker limits. Turso runs in Cloudflare Workers, which have a 10ms CPU time limit per request. If your query takes longer than 10ms, the worker times out and returns a 504.</p>
-<p>The fix is to offload long-running queries to a dedicated worker or to a Turso Edge function with a longer timeout.</p>
-<pre><code class="language-toml"># wrangler.toml
-[[durable_objects]]
-name = &quot;db_worker&quot;
-class_name = &quot;DbWorker&quot;
-
-[[migrations]]
-tag = &quot;v1&quot;
-new_classes = [&quot;DbWorker&quot;]
-</code></pre>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>To verify the idle connection timeout fix, run a load test with connection churn:</p>
-<pre><code class="language-bash"># Use hey to simulate 1000 RPS with 30s between requests
-hey -c 100 -n 1000 -q 30 http://your-api/generate-report
-</code></pre>
-<p>Check the database logs for connection drops:</p>
-<pre><code class="language-sql">-- Neon: check connection counts
-SELECT * FROM pg_stat_activity WHERE usename = 'your-user';
-</code></pre>
-<p>If the connection count stays stable and no 40001 errors appear, the fix worked.</p>
-<p>To verify the replica lag fix, run a synthetic lag test:</p>
-<pre><code class="language-python">import psycopg2
-import time
-
-conn = psycopg2.connect(
-    host=&quot;your-neon-host.neon.tech&quot;,
-    dbname=&quot;db&quot;,
-    user=&quot;user&quot;,
-    password=&quot;pass&quot;,
-)
-
-# Insert a row
-with conn.cursor() as cur:
-    cur.execute(&quot;INSERT INTO test (id, ts) VALUES (1, now())&quot;)
-    conn.commit()
-
-# Sleep to allow replica lag
-for i in range(30):
-    time.sleep(1)
-    lag = get_replica_lag(conn)
-    print(f&quot;Lag: {lag}ms&quot;)
-
-# Query the replica
-with conn.cursor() as cur:
-    cur.execute(&quot;SELECT * FROM test WHERE id = 1&quot;)
-    print(cur.fetchone())
-</code></pre>
-<p>If the query returns the row after the lag exceeds 5000ms, the replica lag fix worked.</p>
-<p>To verify the concurrency limit fix, run a load test with increasing RPS:</p>
-<pre><code class="language-bash"># Use k6 to simulate 2000 RPS
-k6 run --vus 200 --duration 60s script.js
-</code></pre>
-<p>Check Lambda concurrency metrics:</p>
-<pre><code class="language-bash">aws cloudwatch get-metric-statistics \
-  --namespace AWS/Lambda \
-  --metric-name ConcurrentExecutions \
-  --dimensions Name=FunctionName,Value=your-function \
-  --start-time $(date -u -v-5M +%Y-%m-%dT%H:%M:%SZ) \
-  --end-time $(date -u +%Y-%m-%dT%H:%M:%SZ) \
-  --period 60 \
-  --statistics Maximum
-</code></pre>
-<p>If the concurrency stays below 2000 and no 502s appear, the fix worked.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Preventing these issues requires changing how you design and operate serverless databases.</p>
-<p>First, always use a connection pool. Serverless databases charge by compute time, so idle connections are expensive. A connection pool keeps a minimum number of connections alive, reducing reconnect overhead and avoiding proxy timeouts. Use PgBouncer for Neon and PlanetScale, and Turso’s built-in pooling for Turso.</p>
-<p>Second, design for eventual consistency. Serverless databases are distributed systems, so you can’t rely on strong consistency. Use read-your-writes patterns, but accept that reads might lag. For analytics, use materialized views or batch queries. For user-facing reads, use a cache (Redis) to hide lag.</p>
-<p>Third, monitor replica lag and shard map freshness. Neon provides <code>neon.replica_status</code>, PlanetScale provides <code>SHOW VITESS_SHARDS</code>, and Turso provides <code>SELECT * FROM sqlite_master WHERE type='index'</code>. Set up alerts when lag exceeds 5000ms or shard map is stale.</p>
-<p>Fourth, avoid cross-shard queries. PlanetScale’s Vitess splits tables across shards, so joins that span shards are expensive. Denormalise your schema or use single-shard queries. For Turso, avoid large writes and use batch APIs.</p>
-<p>Finally, test under load. Use k6 or hey to simulate traffic, and watch for connection drops, timeouts, and 502s. Set up dashboards for database metrics: connection count, query latency, replica lag, and proxy buffer usage.</p>
-<p>Neon exposes <code>neon.proxy_metrics</code>, PlanetScale exposes <code>SHOW VITESS_METRICS</code>, and Turso exposes <code>SELECT * FROM _cf_metrics</code>. Add these to your dashboards.</p>
-<p>Here’s a minimal Prometheus exporter for Neon proxy metrics:</p>
-<pre><code class="language-python">import psycopg2
-from prometheus_client import start_http_server, Gauge
-
-PROXY_METRICS = Gauge('neon_proxy_connections', 'Neon proxy active connections', ['region'])
-
-def update_metrics():
-    conn = psycopg2.connect(
-        host=&quot;your-neon-host.neon.tech&quot;,
-        dbname=&quot;db&quot;,
-        user=&quot;user&quot;,
-        password=&quot;pass&quot;,
-    )
-    with conn.cursor() as cur:
-        cur.execute(&quot;SELECT region, active_connections FROM neon.proxy_metrics&quot;)
-        for region, count in cur.fetchall():
-            PROXY_METRICS.labels(region=region).set(count)
-
-if __name__ == &quot;__main__&quot;:
-    start_http_server(8000)
-    while True:
-        update_metrics()
-        time.sleep(10)
-</code></pre>
-<p>Deploy this exporter next to your app, and scrape <code>/metrics</code> with Prometheus. Set an alert when <code>neon_proxy_connections</code> exceeds 80% of the proxy’s limit.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<p>After fixing the connection timeout, replica lag, and concurrency limits, you might hit these next:</p>
-<ul>
-<li>
-<p><strong>Neon</strong>: <code>40P01 deadlock detected</code> — caused by concurrent writes to the same row. Neon’s primary compute is single-threaded, so write contention causes deadlocks. Fix: use advisory locks or reduce write concurrency.</p>
-</li>
-<li>
-<p><strong>PlanetScale</strong>: <code>Query execution was interrupted (errno 1317)</code> — caused by Vitess query timeouts. Fix: increase <code>max_execution_time</code> in your query or split the query into smaller chunks.</p>
-</li>
-<li>
-<p><strong>Turso</strong>: <code>SQLITE_BUSY: database is locked</code> — caused by WAL contention. Fix: use <code>BEGIN IMMEDIATE</code> transactions or batch writes into a single transaction.</p>
-</li>
-<li>
-<p><strong>All</strong>: <code>503 Service Unavailable</code> — caused by API Gateway rate limiting. Fix: request a quota increase or use a custom domain with higher limits.</p>
-</li>
-<li>
-<p><strong>All</strong>: <code>429 Too Many Requests</code> — caused by provider rate limits. Neon has a 10k RPS limit per compute, PlanetScale has a 20k RPS limit per organization, Turso has a 5k RPS limit per instance. Fix: shard your database or use a higher-tier plan.</p>
-</li>
-</ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If you’re still seeing errors after applying all fixes, escalate to the provider’s support team with the following details:</p>
+<p>Success looks like a stable connection count with no accumulation of <code>idle in transaction</code> sessions. Failure looks like connection counts climbing and never falling, which means the pool is leaking.</p>
+<p><strong>Replica lag.</strong> Re-run the lag probe from the previous section under the same load that triggered the original problem. Success is a bounded, measured lag. Failure is unbounded growth, which means the replica cannot keep up and the read path must be changed.</p>
+<p><strong>Concurrency.</strong> Compare the function's concurrent execution metric against the ceiling while running the load test. Success is the metric plateauing below the ceiling with no gateway errors. Failure is the metric pinned at the ceiling, which means you need either a higher limit or a lower per-request duration.</p>
+<p><strong>Write contention.</strong> Run concurrent writers and count <code>SQLITE_BUSY</code> errors before and after the change. Success is zero errors with all writes applied. Failure is errors that scale with writer count, which means the serialization is not actually happening.</p>
+<h2 id="a-decision-checklist-before-choosing-a-provider">A decision checklist before choosing a provider</h2>
+<p>Provider selection is usually decided by workload shape rather than by feature lists. The following questions separate the three architectures cleanly.</p>
 <ol>
-<li><strong>Error pattern</strong>: Exact error message, frequency, and time of occurrence.</li>
-<li><strong>Load profile</strong>: RPS, function duration, and concurrency.</li>
-<li><strong>Configuration</strong>: Connection pool settings, timeouts, and batch sizes.</li>
-<li><strong>Metrics</strong>: Database connection count, query latency, replica lag, and proxy buffer usage.</li>
+<li><strong>Does your read path need strong consistency?</strong> If yes, replica-based read scaling is not available to you for those queries, regardless of provider.</li>
+<li><strong>Is your workload write-heavy or read-heavy?</strong> Sharded write scaling and read replica scaling are different capabilities. A platform strong at one may be weak at the other.</li>
+<li><strong>Do your queries span entities that would be sharded separately?</strong> If so, cross-shard joins become a cost and latency concern, and denormalization becomes a schema decision rather than an optimization.</li>
+<li><strong>Where do your users and your data live?</strong> Edge replication reduces read latency but increases the number of places where stale data can be observed.</li>
+<li><strong>What is your actual concurrency requirement?</strong> Compute it with the rate-times-duration formula above. If the number exceeds the platform's connection or concurrency ceiling, the architecture is wrong before any tuning begins.</li>
+<li><strong>What is your tolerance for a migration?</strong> Protocols are compatible; operational semantics are not. Moving between these platforms is a re-architecture of the data access layer, not a connection string change.</li>
 </ol>
-<p>For Neon, file a support ticket at https://neon.tech/support with the subject "40001 timeout under 1200 RPS". Include the <code>neon.proxy_metrics</code> and <code>neon.replica_status</code> outputs.</p>
-<p>For PlanetScale, file a ticket at https://planetscale.com/support with the subject "502 from vtgate under 10k RPS". Include the output of <code>SHOW VITESS_SHARDS</code> and <code>SHOW PROCESSLIST</code>.</p>
-<p>For Turso, file a ticket at https://turso.tech/support with the subject "SQLITE_BUSY under 5k RPS". Include the output of <code>SELECT * FROM _cf_metrics</code> and the exact query causing the lock.</p>
-<p>If the provider can’t resolve the issue, consider migrating to a managed Postgres with a traditional connection pool. Neon, PlanetScale, and Turso are optimised for different use cases, and none of them handle high-concurrency, low-latency workloads like Aurora Serverless v2 or AlloyDB.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do I keep getting "Transaction timeout after 10s" even though my query runs fast locally?</strong></p>
-<p>The timeout is from the proxy layer, not the database. Neon’s proxy kills idle connections after 300 seconds, so your app’s reconnect takes longer than the query execution time. Use a connection pool with keepalive to keep connections alive and reduce reconnect overhead. PlanetScale’s Vitess proxy buffers results in memory, and at high RPS the buffer overflows, causing timeouts. Turso’s libSQL WAL contention causes locks that time out queries even if they’re fast.</p>
-<p><strong>How do I know if my reads are going to a lagged replica in Neon?</strong></p>
-<p>Run <code>SELECT lag_ms FROM neon.replica_status WHERE region = current_setting('neon.region')</code>. If the lag is &gt;5000ms, your reads might time out. To force reads to the primary, use <code>host=your-neon-host-primary.neon.tech</code> in your connection string. Monitor this metric in production and route reads based on lag.</p>
-<p><strong>What’s the difference between PlanetScale’s Vitess and Neon’s compute/storage separation?</strong></p>
-<p>Neon separates compute and storage, so reads can go to any regional replica, but writes must hit the primary. PlanetScale uses Vitess to split tables across shards and routes queries using a shard map. Neon scales reads horizontally across replicas. PlanetScale scales writes horizontally across shards. Neon is optimised for read-heavy workloads. PlanetScale is optimised for write-heavy workloads with cross-shard queries.</p>
-<p><strong>Can I use Turso for real-time user-facing queries?</strong></p>
-<p>Turso is optimised for eventual consistency and low-latency reads in edge locations. It’s not suitable for real-time user-facing queries that require strong consistency. Use Turso for analytics, caching, or user-generated content that can tolerate lag. For user-facing queries, use a cache (Redis) in front of Turso or switch to Neon for strong consistency.</p>
-<p><strong>My PlanetScale schema change failed with "vttablet: rpc error: code = Unavailable desc = all TabletGateways are down". What’s happening?</strong></p>
-<p>The Vitess tablet gateway (<code>vtgate</code>) is down or unreachable. This happens when the shard map is stale, the proxy is overloaded, or the tablets are restarting. Restart the <code>vtgate</code> deployment: <code>kubectl rollout restart deployment/vtgate</code>. If the issue persists, check the <code>vtgate</code> logs: <code>kubectl logs deployment/vtgate</code>. If the logs show buffer overflows, reduce the result set size or increase the proxy memory limit.</p>
-<p><strong>Neon charges $0.30 per compute hour, but my bill is 2x higher than expected. Why?</strong></p>
-<p>Neon charges for compute time, including idle time if you don’t use a connection pool. Each idle connection keeps a compute instance alive, and Neon charges for the entire hour. Use PgBouncer with <code>min_pool_size</code> to keep connections alive and reduce idle compute time. Also, check for long-running transactions that prevent compute auto-suspend.</p>
-<h2 id="which-one-should-you-pick">Which one should you pick?</h2>
-<p>Here’s the reality after running each in production for a year:</p>
-<table>
-<thead>
-<tr>
-<th>Provider</th>
-<th>Best for</th>
-<th>Worst for</th>
-<th>Hard limit</th>
-<th>Cost per 1M RPS (2026)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Neon</td>
-<td>Read-heavy analytics, global apps, Postgres compatibility</td>
-<td>Write-heavy workloads, strong consistency, high concurrency</td>
-<td>10k RPS per compute</td>
-<td>$90 (1 vCPU, 4GB RAM)</td>
-</tr>
-<tr>
-<td>PlanetScale</td>
-<td>Write-heavy workloads, MySQL compatibility, Vitess sharding</td>
-<td>Cross-shard queries, complex joins, real-time reads</td>
-<td>20k RPS per org</td>
-<td>$120 (2 vCPU, 8GB RAM)</td>
-</tr>
-<tr>
-<td>Turso</td>
-<td>Edge apps, low-latency reads, SQLite compatibility</td>
-<td>High write concurrency, strong consistency, large datasets</td>
-<td>5k RPS per instance</td>
-<td>$60 (1 vCPU, 2GB RAM)</td>
-</tr>
-</tbody>
-</table>
-<p>Pick Neon if you need Postgres compatibility and global reads. Pick PlanetScale if you need MySQL compatibility and Vitess sharding. Pick Turso if you need edge deployment and SQLite simplicity.</p>
-<p>I chose Neon for a global analytics API because it offered Postgres compatibility and regional replicas. This post is what I wished I had found then.</p>
-<p>Choose based on your workload, not the marketing. Test under load, monitor the proxy layer, and be ready to migrate if the limits don’t match your scale.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
-<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Cut cold starts 70%: Lambda cost hack</a></li>
-<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="a-worked-example-of-the-arithmetic">A worked example of the arithmetic</h2>
+<p>Suppose an API serves 1500 requests per second, and 20 percent of those requests write. Average request duration is 400 ms.</p>
+<pre><code>required_concurrency = 1500 * 0.4 = 600
+write_requests_per_second = 1500 * 0.2 = 300
+</code></pre>
+<p>If each write holds a serialized lock for 2 ms, the minimum serialized write capacity is:</p>
+<pre><code>300 writes/s * 0.002 s = 0.6
+</code></pre>
+<p>A value below 1.0 means a single serialized writer can absorb the load with headroom. A value above 1.0 means writes queue, and queue depth grows without bound unless writers are added or batching reduces the lock acquisitions per unit of work. These figures are illustrative; substitute your own measured duration and write ratio.</p>
+<p>This single calculation tells you whether write contention is a plausible explanation before you spend time investigating. If the value is comfortably below 1.0, look elsewhere.</p>
+<h2 id="common-follow-up-questions">Common follow-up questions</h2>
+<p><strong>Why does a query time out when it runs quickly against a local database?</strong></p>
+<p>Local databases have no proxy, no replication lag and no shared compute. In a serverless deployment, the elapsed time includes connection acquisition, proxy routing, and possibly waiting for a replica. Time the phases separately rather than timing the whole request.</p>
+<p><strong>Should I always route reads to the primary?</strong></p>
+<p>No. That discards the read scaling the platform provides and pushes all load onto one compute instance. Route to the primary only for reads that require read-your-writes consistency, and route everything else to replicas with an explicit staleness tolerance.</p>
+<p><strong>Is a larger compute instance the right fix for connection errors?</strong></p>
+<p>Rarely. Connection errors originate at the proxy or the pool, not the compute. Increasing instance size does not change the proxy's idle timeout or the pool's connection count. Diagnose the layer first.</p>
+<p><strong>How do I know whether the bottleneck is the function or the database?</strong></p>
+<p>Compare the function's concurrent execution metric against its ceiling while the error occurs. If the function is pinned at its ceiling, the database is downstream of the real constraint.</p>
+<p><strong>Can I avoid these problems by using a traditional always-on database?</strong></p>
+<p>You can avoid proxy eviction and cold-start effects, but you take on connection management and capacity planning yourself. The trade is operational control for operational burden, and it is a legitimate choice for steady, predictable workloads.</p>
+<h2 id="take-this-action-in-the-next-30-minutes">Take this action in the next 30 minutes</h2>
+<p>Instrument one request path end to end. Add timing around three phases: connection acquisition, query execution, and result serialization. Deploy it, run your normal traffic for ten minutes, and look at which phase dominates. That single measurement will tell you whether you have a pool problem, a routing problem or a query problem, and it costs less than an hour of work.</p>
                 
                 
             </div>
@@ -649,20 +481,20 @@ if __name__ == &quot;__main__&quot;:
                     
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
-                        <p>Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</p>
-                        <span class="related-meta">11 min read · 15 September 2026</span>
+                        <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+                        <span class="related-meta">10 min read · 15 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
                         <h3>Senior engineer title inflation in 2026</h3>
-                        <p>Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</p>
-                        <span class="related-meta">12 min read · 13 August 2026</span>
+                        <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+                        <span class="related-meta">10 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
-                        <h3>AI micro-SaaS under $150/month: the real infra choices</h3>
-                        <p>Launch an AI micro-SaaS and keep infra under $150/month in 2026.</p>
-                        <span class="related-meta">15 min read · 5 August 2026</span>
+                        <h3>Designing AI Micro-SaaS Infra on a $150/Month Budget</h3>
+                        <p>How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
+                        <span class="related-meta">14 min read · 5 August 2026</span>
                     </a>
                     
                 </div>

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI errors hide in plain latency - Kubai Kevin</title>
-        <meta name="description" content="AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %">
+        <meta name="description" content="Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.">
         <meta name="keywords" content="AiObservability, LlmLatency, P99Latency, Model, RedisCacheStampede, OpentelemetryForAi, SloDrivenAutoscaling, Ai, Llm, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-21T16:58:29.625499">
-        <meta property="article:modified_time" content="2026-10-03T11:38:08.217217+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:46:21.156932+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI errors hide in plain latency">
-        <meta property="og:description" content="AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %">
+        <meta property="og:description" content="Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.">
         <meta property="og:url" content="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI errors hide in plain latency">
-        <meta name="twitter:description" content="AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %">
+        <meta name="twitter:description" content="Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-errors-hide-in-plain-latency.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-errors-hide-in-plain-latency/#article",
       "headline": "AI errors hide in plain latency",
-      "description": "AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %",
+      "description": "Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.",
       "datePublished": "2026-08-21T16:58:29+00:00",
-      "dateModified": "2026-10-03T11:38:08+00:00",
-      "wordCount": 2395,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-04T10:46:21+00:00",
+      "wordCount": 1974,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI errors hide in plain latency</h1>
                 
-                <p class="post-lead">AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</p>
+                <p class="post-lead">Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
                 
                 
                 <div class="tags">
@@ -261,93 +261,93 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2395 words
+                        10 min read
+                        &nbsp;·&nbsp; 1974 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for skills that is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. Here's what I'd tell a colleague hitting this for the first time.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Token counts and perplexity tell you your model’s internals, not whether users actually see slower responses, worse answers, or silent failures. The real signal of user-visible degradation is <strong>end-to-end latency at the 95th and 99th percentiles</strong>, combined with <strong>failure rate spikes</strong> measured at the API gateway. In 2026 production systems, a 100 ms increase in p99 latency or a 0.5 % jump in failure rate correlates with a measurable drop in user engagement, and these metrics are the only ones that reliably surface the problems teams actually debug in on-call pages.</p>
-<p>The part that trips people up is believing that internal metrics like token-per-request or GPU utilization predict user pain. They don’t. That’s what this post actually covers.</p>
-<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most AI teams start with model-centric evaluation: they measure tokens per request, perplexity, or F1 on a held-out set. Those metrics are cheap to compute and feel objective. What they miss is the <strong>interface between the model and the rest of the system</strong>—the tokenization step, the embedding lookup, the retry loop, the cache stampede, the serialization latency, and the downstream service that times out at 500 ms.</p>
-<p>Consider the common “cache hit” lie. A team plugs in a Redis cache for embeddings and sees 95 % cache hits, tokens per request drop 30 %, and assumes everything is fine. Then a deploy changes the prompt slightly so the cached key misses—each request now rebuilds the embedding, adding 120 ms. Users don’t complain about cache misses; they complain that the page loads slower, and the team spends hours in profilers chasing the token-count deltas instead of the latency spike.</p>
-<p>Another trap is the “GPU busy” dashboard. When GPU utilization spikes to 98 %, engineers assume the model is the bottleneck. In practice, the GPU might be waiting on a slow vector database query or a locked Redis connection pool. The tokens are flying, but the user’s browser is spinning on a spinner.</p>
-<p>These mismatches happen because teams optimize the wrong layer: they trust internal telemetry and ignore the contract they made with users—"I promise the page will load in under 2 seconds."</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of the system as a <strong>latency budget</strong>, not a token budget. Break the flow into discrete stages, assign a target latency to each, and instrument each stage so you can see where the budget bleeds.</p>
+                <p>Model-centric metrics describe the model. They do not describe what a user experiences. A request can complete with a perfectly reasonable token count and an unchanged perplexity score while the page the user is waiting on takes four times longer to render. The gap between "the model is healthy" and "the product is healthy" is where most AI latency incidents live, and it is a gap you close with instrumentation, not with better prompts.</p>
+<h2 id="the-short-version">The short version</h2>
+<p>Token counts, perplexity, and F1 scores describe the model's internals. They do not tell you whether users see slower responses, worse answers, or silent failures. The signals that track user-visible degradation are <strong>end-to-end latency at the 95th and 99th percentiles</strong> and <strong>failure rate</strong>, both measured at the edge where requests enter and leave your system.</p>
+<p>The failure mode this article addresses is treating internal telemetry as a proxy for user pain. Internal telemetry is necessary for diagnosis. It is not sufficient for detection.</p>
+<h2 id="why-model-centric-metrics-mislead">Why model-centric metrics mislead</h2>
+<p>Most AI teams begin with model-centric evaluation: tokens per request, perplexity, or F1 on a held-out set. These metrics are cheap to compute, reproducible, and feel objective. What they miss is the <strong>interface between the model and the rest of the system</strong> — tokenization, embedding lookup, retry loops, cache behavior, serialization, and downstream services that time out.</p>
+<p>Two patterns recur.</p>
+<p><strong>The cache hit illusion.</strong> A team adds a cache in front of embedding generation, sees a high hit rate, and watches tokens per request fall. Then a deploy changes the prompt slightly, the cache key no longer matches, and every request rebuilds an embedding. The added work is invisible in the hit-rate dashboard until the rate itself drops, but it shows up immediately as a latency step change. Users do not report cache misses. They report that the page got slower.</p>
+<p><strong>The busy GPU.</strong> GPU utilization saturates, so the model is assumed to be the bottleneck. In practice the GPU may be idle-waiting on a slow vector database query, a contended connection pool, or a synchronous serialization step. High utilization means the GPU is doing something, not that it is doing the thing on the critical path.</p>
+<p>Both patterns share a cause: the team optimizes the layer it can see and ignores the contract it made with users — "this page responds in under two seconds."</p>
+<h2 id="a-latency-budget-not-a-token-budget">A latency budget, not a token budget</h2>
+<p>The mental model that resolves this is a <strong>latency budget</strong>. Decompose the request path into stages, assign each stage a target, and instrument each stage so you can see which one bleeds.</p>
 <table>
 <thead>
 <tr>
 <th>Stage</th>
-<th>Target p99</th>
-<th>Typical 2026 cost</th>
+<th>Illustrative target (p99)</th>
+<th>What usually drives it</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Tokenization</td>
 <td>20 ms</td>
-<td>$0.0001 per 1k tokens</td>
+<td>Input length, tokenizer implementation</td>
 </tr>
 <tr>
 <td>Embedding fetch</td>
 <td>50 ms</td>
-<td>$0.0005 per 1k tokens</td>
+<td>Vector DB query time, connection pool contention</td>
 </tr>
 <tr>
 <td>Model inference</td>
 <td>300 ms</td>
-<td>$0.015 per 1k tokens</td>
+<td>Context length, batch size, KV cache behavior</td>
 </tr>
 <tr>
 <td>Post-processing</td>
 <td>30 ms</td>
-<td>$0.0002 per 1k tokens</td>
+<td>Parsing, formatting, guardrail checks</td>
 </tr>
 <tr>
 <td>API gateway</td>
 <td>10 ms</td>
-<td>$0.00005 per request</td>
+<td>Serialization, auth, routing</td>
 </tr>
 <tr>
-<td>Total budget</td>
+<td>Total</td>
 <td>410 ms</td>
-<td>—</td>
+<td>Sum of stage targets</td>
 </tr>
 </tbody>
 </table>
-<p>If any stage exceeds its target, the total p99 can jump by hundreds of milliseconds even though the model itself is unchanged. The key insight is that <strong>user-visible degradation is the sum of stage-level violations</strong>, not the sum of internal metrics.</p>
-<p>The second half of the model is <strong>failure rate coupling</strong>. Tiny increases in failure rate (0.1 %–0.5 %) often trigger user-visible effects—retries, timeouts, and workarounds—before average latency rises enough to trip a p95 alert. That’s why you need both latency and error rate in the same dashboard.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s trace a real production incident from January 2026 that started with a simple prompt change.</p>
+<p>The numbers above are illustrative, not measured. The point is the structure: a per-stage target that sums to a user-facing promise. If any stage exceeds its target, total p99 can jump by hundreds of milliseconds even when the model is byte-for-byte unchanged.</p>
+<p>The second half of the model is <strong>failure-rate coupling</strong>. Small increases in error rate often produce user-visible effects — retries, timeouts, manual workarounds — before average latency rises enough to trip a p95 alert. Latency and error rate belong on the same dashboard because they fail together.</p>
+<h2 id="a-worked-example-the-prompt-change-that-broke-post-processing">A worked example: the prompt change that broke post-processing</h2>
+<p>This is a composite scenario assembled from common failure patterns, not a specific incident.</p>
 <h3 id="the-change">The change</h3>
-<p>A product team adjusted a prompt template to add a disclaimer at the end:</p>
+<p>A prompt template gains a trailing instruction:</p>
 <pre><code class="language-python"># Before
-prompt = f&quot;Answer the user’s question: {user_input}&quot;
+prompt = f&quot;Answer the user's question: {user_input}&quot;
 
 # After
-prompt = f&quot;Answer the user’s question: {user_input}\n\nDisclaimer: This is AI-generated.&quot;
+prompt = f&quot;Answer the user's question: {user_input}\n\nDisclaimer: This is AI-generated.&quot;
 </code></pre>
-<p>Token count increased from 85 to 105 tokens, a 23 % jump. No alarm—perplexity on the internal eval set stayed flat.</p>
-<h3 id="the-observed-symptom">The observed symptom</h3>
-<p>At 03:42 UTC, the on-call engineer got page: <strong>p99 API latency rose from 380 ms to 620 ms</strong> within 4 minutes. Error rate jumped from 0.08 % to 0.45 %.</p>
-<p>Initial hypothesis: “The model is slower because it has more tokens.”</p>
-<h3 id="the-instrumentation-trace">The instrumentation trace</h3>
-<p>The team enabled <strong>distributed tracing</strong> (OpenTelemetry 1.30) and replayed the same traffic through staging.</p>
+<p>Input grows from roughly 85 to 105 tokens. Perplexity on the internal eval set is unchanged. No alarm fires.</p>
+<h3 id="the-symptom">The symptom</h3>
+<p>End-to-end p99 latency steps up sharply within minutes, and error rate rises alongside it. The first hypothesis is usually "more tokens means slower inference," which is true but rarely accounts for a step change of this size.</p>
+<h3 id="the-trace">The trace</h3>
+<p>Distributed tracing (for example, OpenTelemetry spans around each stage) replays the same traffic and attributes time per stage:</p>
 <table>
 <thead>
 <tr>
 <th>Stage</th>
 <th>Before</th>
 <th>After</th>
-<th>Stage p99 delta</th>
+<th>Delta</th>
 </tr>
 </thead>
 <tbody>
@@ -383,48 +383,44 @@ prompt = f&quot;Answer the user’s question: {user_input}\n\nDisclaimer: This i
 </tr>
 </tbody>
 </table>
-<p>The smoking gun was post-processing: a new regex parser for the disclaimer was replacing multiple slow string ops with a single catastrophic backtracking pattern. The parser took 200 ms on the 105-token response, blowing the 30 ms budget.</p>
-<h3 id="the-fix-and-the-follow-up">The fix and the follow-up</h3>
-<p>They replaced the regex with a linear scan:</p>
-<pre><code class="language-python"># Before (catastrophic backtracking)
+<p>The added tokens explain the inference delta. They do not explain the post-processing delta. The culprit is a new extraction step — a regex applied to the model output — that backtracks catastrophically on the longer string.</p>
+<h3 id="the-fix">The fix</h3>
+<p>Replace the regex with a linear scan:</p>
+<pre><code class="language-python"># Before: catastrophic backtracking on long inputs
 import re
 disclaimer = re.search(r'Disclaimer:.*', prompt, re.DOTALL)
 
-# After (O(n) scan)
+# After: O(n) scan
 def extract_disclaimer(text):
     idx = text.find('Disclaimer:')
     return text[idx:] if idx &gt;= 0 else ''
 </code></pre>
-<p>After the deploy, p99 latency dropped to 395 ms and error rate returned to 0.09 %.</p>
-<h3 id="lesson">Lesson</h3>
-<p>Token count stayed within ±20 %, perplexity was unchanged, but user-visible latency doubled because an internal stage violated its budget. The error pattern is common: a small prompt tweak triggers a hidden O(n²) parser, but teams optimize the model instead of the parser.</p>
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve ever debugged a Python web app where Gunicorn workers hang at 100 % CPU while nginx shows 502s, you’ve already lived this mental model. The CPU metric didn’t predict the 502; the queue depth and the worker timeout did. AI systems are just web apps wearing a transformer mask—same queuing theory, same budgeting logic.</p>
-<p>The same pattern shows up in batch pipelines. A team running daily embeddings on AWS Batch set <code>vcpus=2</code> and <code>memory=8GB</code>. After dataset size doubled, batch jobs started timing out at 29 minutes (the AWS Batch job timeout). Users didn’t notice the batch step, but their nightly reports arrived two hours late, which broke downstream dashboards. The fix wasn’t bigger GPUs; it was increasing <code>vcpus</code> to 4 and setting <code>timeout=45 minutes</code>. The internal metric (job duration) was invisible to users; the external contract (report by 8 a.m.) was violated.</p>
-<p>Another familiar echo is the “cache stampede.” Teams cache model outputs to save GPU cost, but forget to set a low TTL and a lock around cache misses. When traffic spikes, every miss triggers a concurrent rebuild, melting the GPU queue and pushing p99 latency to 2.1 s. The token count per request is unchanged, but users see 4× slower responses. The internal metric (cache hit rate) hides the stampede; the external metric (p99) exposes it.</p>
-<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>Myth 1: “If perplexity is flat, user experience is fine.”</strong></p>
-<p>Perplexity measures model likelihood on a held-out set. It ignores tokenization overhead, network hops, serialization, and downstream timeouts. In one 2026 benchmark across 14 production deployments, perplexity stayed within ±1 % while user-visible p99 latency varied by 180–410 ms. The correlation between perplexity and user-facing latency was r = 0.09—essentially noise.</p>
-<p><strong>Myth 2: “We track GPU utilization, so we know if the model is the bottleneck.”</strong></p>
-<p>GPU utilization often plateaus at 95–99 % while the real latency driver is PCIe transfer time to the embedding database. In a 2026 study of 8 A100 clusters, teams that relied solely on GPU utilization missed 62 % of latency regressions that originated in embedding fetches.</p>
-<p><strong>Myth 3: “We have a rate limiter, so failures are impossible.”</strong></p>
-<p>Rate limiters protect upstream services, not downstream timeouts. When a downstream vector DB returns 504s under load, the rate limiter allows 100 req/s, but each request waits 1.2 s in queue before timing out. The user sees a spinner; the rate limiter sees nothing wrong. The error rate inside the vector DB is the real signal.</p>
-<p><strong>Myth 4: “We can estimate latency by multiplying tokens by ms-per-token.”</strong></p>
-<p>The multiplier is not constant. At 10 tokens the model runs at 45 ms; at 1,000 tokens it runs at 280 ms; at 3,000 tokens it jumps to 700 ms due to KV cache spill to CPU RAM. A linear model overestimates speed at high concurrency and underestimates it at low load. The only reliable measurement is end-to-end p99 under real traffic.</p>
-<p><strong>Mismatched mental models</strong></p>
-<p>Teams that think in tokens optimize for model efficiency; teams that think in latency budgets optimize for user contracts. The first group ships faster but pages more; the second ships slower but sleeps through the night.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>When you’ve instrumented every stage and still see user-visible degradation, the next layer is <strong>correlated failure injection</strong>. Simulate a 10 % spike in embedding fetch latency and measure how the p99 propagates through the system. If a 50 ms embedding delay turns into a 400 ms p99 jump, you’ve found a hidden serialization point (often a single-threaded Redis connection or a synchronous GPU queue).</p>
-<p>Use <strong>chaos engineering tools</strong> like Gremlin 3.10 or AWS Fault Injection Simulator to inject failures at API gateway, tokenization, and embedding layers. A common pattern in 2026 is to inject a 200 ms delay on 5 % of embedding fetches and watch the p99 latency surface in Grafana within 30 seconds. If the p99 doesn’t rise, the embedding layer isn’t the bottleneck; if it does rise by 150 ms, you’ve validated the latency budget.</p>
-<p>Another advanced lever is <strong>adaptive batching</strong>. Instead of batching requests statically (batch_size=8), use dynamic batching tuned to the current p99 budget. At low load, batch_size=1; at high load, batch_size=32. A 2026 case study at a European fintech showed p99 latency drop from 420 ms to 210 ms and GPU cost rise by only 8 % by switching from static to adaptive batching.</p>
-<p>Finally, <strong>SLO-based autoscaling</strong> is the ultimate guardrail. Set an SLO: p99 ≤ 500 ms and error rate ≤ 0.3 %. When the system violates the SLO, trigger a horizontal scale-out of model replicas before latency propagates to users. In a 2026 deployment at a Series B startup, this cut on-call pages by 68 % over three months.</p>
+<p>The regex in the "before" block is not inherently catastrophic for this specific pattern, but patterns that combine nested quantifiers or ambiguous alternation with <code>.*</code> over long inputs frequently are. The general lesson holds: a linear scan has predictable cost, and predictable cost is what a latency budget requires.</p>
+<h3 id="the-lesson">The lesson</h3>
+<p>Token count moved by about 24 percent. Perplexity did not move. User-visible latency roughly doubled because one stage blew its budget. The team's instinct — tune the model — would have been wasted effort.</p>
+<h2 id="how-to-measure-this-in-your-own-system">How to measure this in your own system</h2>
+<p>You cannot borrow someone else's benchmark for this. The numbers depend on your prompt mix, your hardware, your network, and your traffic shape. What you can borrow is the method.</p>
+<p><strong>Instrument the edge first.</strong> At your API gateway or ingress, record a histogram of end-to-end request duration with buckets that span your SLO. A reasonable starting set is <code>[0.1, 0.2, 0.3, 0.5, 0.75, 1.0, 2.0]</code> seconds. This gives you p95 and p99 without sampling every request.</p>
+<p><strong>Instrument each stage.</strong> Wrap tokenization, embedding fetch, inference, and post-processing in spans. The goal is not a pretty trace viewer; it is the ability to attribute a p99 regression to a stage within minutes.</p>
+<p><strong>Record error rate at the same boundary.</strong> Count requests that returned an error to the caller, and count retries separately. A retry that succeeds still cost the user latency.</p>
+<p><strong>Compare distributions, not averages.</strong> Averages hide tail behavior. When you change anything — prompt, model version, cache policy — compare the p95 and p99 of the before and after windows, not the mean.</p>
+<p><strong>Set the alert on the user contract.</strong> Alert on p99 exceeding your SLO for a sustained window, and on error rate crossing a threshold. Do not alert on token count.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>"If perplexity is flat, the user experience is fine."</strong> Perplexity measures model likelihood on a held-out set. It says nothing about tokenization overhead, network hops, serialization, or downstream timeouts. A model can be perfectly calibrated and the product can still be slow.</p>
+<p><strong>"We track GPU utilization, so we know if the model is the bottleneck."</strong> Utilization tells you the GPU is busy. It does not tell you whether the GPU is on the critical path. A saturated GPU waiting on a vector DB query looks identical to a saturated GPU doing useful work.</p>
+<p><strong>"We have a rate limiter, so failures are impossible."</strong> Rate limiters protect upstream services from overload. They do not prevent downstream timeouts. If a vector DB returns 504s under load, the rate limiter happily admits requests that will all fail.</p>
+<p><strong>"Latency is tokens times milliseconds-per-token."</strong> The multiplier is not constant. Short prompts and long prompts have different per-token costs, and at high concurrency, KV cache pressure changes the curve again. The only reliable measurement is end-to-end p99 under real traffic.</p>
+<h2 id="failure-injection-and-adaptive-batching">Failure injection and adaptive batching</h2>
+<p>Once every stage is instrumented, the next step is to verify that your budget reflects reality.</p>
+<p><strong>Correlated failure injection.</strong> Inject a small, controlled delay into one stage — say, an added 50 ms on a fraction of embedding fetches — and observe how p99 propagates. If a 50 ms stage delay becomes a 400 ms end-to-end jump, you have found a serialization point: a single-threaded connection, a synchronous queue, or a lock. Managed fault-injection services and open-source chaos tooling can both do this; the tool matters less than the discipline of injecting one variable at a time.</p>
+<p><strong>Adaptive batching.</strong> Static batch sizes are a compromise that is wrong at both ends of the load curve. Dynamic batching that targets the current latency budget — small batches under light load, larger batches under heavy load — trades a small amount of throughput for tail-latency control. Whether it helps depends on your inference server and your traffic; measure before and after with the same histogram you built above.</p>
+<p><strong>SLO-based autoscaling.</strong> Define an SLO in user terms — p99 under a threshold, error rate under a threshold — and scale on SLO violation rather than on CPU or GPU utilization. Utilization-based scaling reacts to the wrong signal; it will happily add replicas while the real bottleneck is a downstream database.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
 <tr>
 <th>Concept</th>
 <th>What to measure</th>
-<th>Typical 2026 tool</th>
 <th>Where it hides</th>
 </tr>
 </thead>
@@ -432,73 +428,48 @@ def extract_disclaimer(text):
 <tr>
 <td>Token budget</td>
 <td>Tokens per request</td>
-<td>Prometheus + token counter</td>
-<td>Dashboard only</td>
+<td>Cost dashboards only</td>
 </tr>
 <tr>
 <td>Latency budget</td>
-<td>p95/p99 end-to-end</td>
-<td>OpenTelemetry 1.30 + Grafana 10</td>
+<td>End-to-end p95/p99</td>
 <td>On-call pages</td>
 </tr>
 <tr>
 <td>Failure budget</td>
-<td>Error rate delta</td>
-<td>CloudWatch/ELK</td>
+<td>Error rate at the edge</td>
 <td>User complaints</td>
 </tr>
 <tr>
 <td>Stage latency</td>
-<td>Stage-level p99</td>
-<td>Jaeger 1.51</td>
+<td>Per-stage p99</td>
 <td>Internal profiling</td>
 </tr>
 <tr>
-<td>Cache stampede</td>
-<td>Miss latency spike</td>
-<td>Redis 7.2 <code>INFO stats</code> + custom gauge</td>
+<td>Cache behavior</td>
+<td>Miss latency, not just hit rate</td>
 <td>GPU queue</td>
 </tr>
 <tr>
-<td>Model latency multiplier</td>
-<td>Non-linear token-&gt;ms curve</td>
-<td>PyTorch 2.3 <code>torch.profiler</code></td>
-<td>KV cache spill</td>
+<td>Scaling behavior</td>
+<td>Non-linear token-to-latency curve</td>
+<td>KV cache pressure</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li>Google SRE Workbook, Chapter 5: “Measuring and Changing Latency Budgets” (2026 edition)</li>
-<li>OpenTelemetry 1.30 docs: “Instrumenting LLM pipelines”</li>
-<li>AWS re:Invent 2026 talk: “Observability beyond the model: tracing embeddings at scale”</li>
-<li>Paper: “Cache Stampede in Vector Databases” (NeurIPS 2026 workshop)</li>
-<li>PyTorch Profiler tutorial: “Non-linear scaling with KV cache size” (PyTorch blog, March 2026)</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do most teams still optimize for token counts?</strong></p>
-<p>Token counts are cheap to log and correlate with billing, but they don’t capture serialization, network, or downstream service time. Teams keep measuring what’s easy, not what matters, because switching to latency budgets requires adding OpenTelemetry spans and adjusting dashboards—work that feels like overhead until the first p99 spike hits.</p>
-<p><strong>How do I convince my manager to invest in end-to-end tracing instead of more GPUs?</strong></p>
-<p>Show them a one-week spike in error rate that disappeared after a parser fix, but only after 12 engineer-hours of debugging. Offer to instrument one endpoint with OpenTelemetry in a staging branch and run a load test. Once the dashboard shows the stage-level p99 violations, the trade-off becomes obvious: spend $2k on tracing now or spend $50k on extra GPUs later.</p>
-<p><strong>What’s the smallest change I can make today to start seeing the right signals?</strong></p>
-<p>Add two counters to your API gateway: <code>request_duration_seconds_bucket{le="0.5"}</code>, <code>request_duration_seconds_bucket{le="1.0"}</code>, and expose <code>http_server_duration</code> from OpenTelemetry. Then add a single alert rule: <code>increase(request_duration_seconds_sum[5m]) &gt; 100</code>. That alert will fire when p99 latency rises 100 ms in five minutes—exactly the pattern that predicts user pain.</p>
-<p><strong>Should I still track token counts at all?</strong></p>
-<p>Yes, but treat them as a cost control metric, not a quality metric. Use them to set billing alerts and to detect prompt drift, but don’t let them gate deployments or trigger rollbacks. The quality gate should be the latency and error rate SLOs.</p>
-<h2 id="next-step-you-can-do-today">Next step you can do today</h2>
-<p>Open your API gateway’s OpenTelemetry config, add the <code>http.server.duration</code> histogram with buckets <code>[0.1, 0.2, 0.3, 0.5, 0.75, 1.0, 2.0]</code>, and create an alert that fires when the 0.95 quantile exceeds 500 ms for five minutes. Commit the change and push it to production staging. You’ll surface the same latency budget violations that currently hide behind token-count dashboards, and you’ll be able to reproduce the worked example from this post in your own environment within an hour.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
-<li><a href="https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/">AI on slow networks: Nairobi teams' 2026 playbook</a></li>
-<li><a href="https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/">Cache stampedes: the patterns that scale and the ones…</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why do teams keep optimizing token counts?</strong></p>
+<p>Token counts are cheap to log and correlate with billing, so they get built into dashboards first. Moving to latency budgets requires adding spans, adjusting alert thresholds, and accepting that some regressions will be attributed to code outside the model. That work feels like overhead until the first p99 step change, at which point it becomes the only thing that matters.</p>
+<p><strong>How do you justify tracing work to a manager?</strong></p>
+<p>Point at a recent debugging session and count the engineer-hours spent. Then propose instrumenting one endpoint in staging and running a load test. Once the stage-level p99 breakdown is visible, the trade-off between tracing effort and debugging effort becomes concrete rather than theoretical.</p>
+<p><strong>What is the smallest useful change?</strong></p>
+<p>Add an end-to-end request duration histogram at your API gateway with buckets spanning your SLO, and alert when p99 exceeds the SLO for a sustained window. That single change surfaces the class of regression described in this article.</p>
+<p><strong>Should token counts be tracked at all?</strong></p>
+<p>Yes, as a cost and prompt-drift signal. They should not gate deployments or trigger rollbacks. Quality gates belong on latency and error-rate SLOs.</p>
+<p><strong>Do you need a full tracing stack to start?</strong></p>
+<p>No. A histogram at the edge plus a coarse timer around each major stage gets you most of the diagnostic value. Full distributed tracing helps when you have many services and need to correlate across them, but it is not a prerequisite for finding a stage that blew its budget.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open your API gateway or ingress configuration and add a request-duration histogram with buckets <code>[0.1, 0.2, 0.3, 0.5, 0.75, 1.0, 2.0]</code> seconds, plus an alert that fires when the 0.95 quantile exceeds your SLO for five consecutive minutes. Deploy it to staging, generate load, and confirm the histogram populates. That single change gives you the end-to-end signal that token-count dashboards cannot provide.</p>
                 
                 
             </div>
@@ -527,20 +498,20 @@ def extract_disclaimer(text):
                     
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
-                        <p>Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
-                        <span class="related-meta">12 min read · 25 September 2026</span>
+                        <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+                        <span class="related-meta">11 min read · 25 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-your-routing-layer-will-collapse-at-scale/">
                         <h3>Why your routing layer will collapse at scale</h3>
-                        <p>Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens</p>
-                        <span class="related-meta">14 min read · 4 September 2026</span>
+                        <p>How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+                        <span class="related-meta">12 min read · 4 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
                         <h3>Senior engineer title inflation in 2026</h3>
-                        <p>Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</p>
-                        <span class="related-meta">12 min read · 13 August 2026</span>
+                        <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+                        <span class="related-meta">10 min read · 13 August 2026</span>
                     </a>
                     
                 </div>

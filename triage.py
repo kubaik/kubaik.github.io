@@ -10,7 +10,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import entity_gate
 
-SKIP = {"static", "tag", "author", "about", "contact", "dmca", "page"}
+SKIP = {
+    "static",
+    "tag",
+    "author",
+    "about",
+    "contact",
+    "dmca",
+    "page",
+    "terms-of-service",
+    "privacy-policy",
+    "ai-content-policy",
+    "privacy",
+    "terms",
+}
 NUM = r"(?:\$\s?\d[\d,.]*\s?[kKmMbB]?|\d[\d,.]*\s?(?:%|ms|s\b|x\b|k\b|M\b|TB|GB|MAU|QPS|req|requests|teams|engineers|users|services|agents|incidents|weeks|months|days))"
 FIRST = r"\b(?:we|our|i|my|me)\b"
 VERB = r"(?:cut|reduced|shipped|migrated|spent|ran|measured|pulled|tested|built|joined|lost|saved|launched|moved|replaced|burned|deployed|wrote|hit|saw|got|paid|dropped|rolled|switched|scaled|handled|served|processed)"
@@ -43,18 +56,78 @@ def sents(t):
     ]
 
 
+LAST_COVERAGE = {}
+
+
+def _md_post(slug, md_path):
+    """Synthesize a post dict from index.md when post.json is missing/corrupt, so EVERY post directory is reviewed."""
+    txt = md_path.read_text("utf-8") if md_path.exists() else ""
+    lines = txt.split("\n")
+    title = (
+        lines[0][2:].strip()
+        if lines and lines[0].startswith("# ")
+        else slug.replace("-", " ")
+    )
+    body = (
+        "\n".join(lines[1:]).strip()
+        if lines and lines[0].startswith("# ")
+        else txt.strip()
+    )
+    first = next(
+        (p.strip() for p in body.split("\n\n") if p.strip() and not p.startswith("#")),
+        "",
+    )
+    now = ""
+    return {
+        "title": title,
+        "content": body,
+        "slug": slug,
+        "tags": [],
+        "meta_description": first[:155],
+        "featured_image": "",
+        "created_at": now,
+        "updated_at": now,
+        "seo_keywords": [],
+        "affiliate_links": [],
+        "monetization_data": {},
+        "twitter_hashtags": "",
+    }
+
+
 def load(docs):
-    out = {}
-    for p in sorted(docs.glob("*/post.json")):
-        if p.parent.name in SKIP:
+    """Every content directory under docs/ is reviewed. Reserved/site pages are skipped by name; a directory with
+    no post.json (or an unparseable one) falls back to index.md; one with neither is reported as an empty post.
+    """
+    out, skipped, repaired = {}, [], []
+    for d in sorted(Path(docs).iterdir()):
+        if not d.is_dir() or d.name.startswith((".", "_")):
             continue
-        try:
-            d = json.loads(p.read_text("utf-8"))
-        except Exception:
+        if d.name in SKIP:
+            skipped.append(d.name)
             continue
-        d["_path"] = str(p.parent / "index.md")
-        d["_slug"] = p.parent.name
-        out[p.parent.name] = d
+        pj, md = d / "post.json", d / "index.md"
+        data = None
+        if pj.exists():
+            try:
+                data = json.loads(pj.read_text("utf-8"))
+            except Exception:
+                data = None
+        if data is None:
+            if not md.exists() and not pj.exists():
+                skipped.append(d.name)
+                continue  # e.g. legal pages: index.html only
+            data = _md_post(d.name, md)
+            data["_no_json"] = True
+            repaired.append(d.name)
+        data.setdefault("title", d.name.replace("-", " "))
+        data.setdefault("content", "")
+        data.setdefault("created_at", "")
+        data["_path"] = str(md)
+        data["_slug"] = d.name
+        out[d.name] = data
+    LAST_COVERAGE.update(
+        reviewed=len(out), skipped=skipped, rebuilt_from_markdown=repaired
+    )
     return out
 
 
@@ -153,14 +226,12 @@ def verdict(sc, dup_loser):
     return "IMPROVE", why, fix
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--docs", default="docs")
-    ap.add_argument("--out", default="triage_report")
-    a = ap.parse_args()
-    docs = Path(a.docs)
-    posts = load(docs)
-    pairs = similarity(posts)
+def analyze(docs: Path, dup_threshold: float = 0.40):
+    """Scan docs/*/post.json and return (rows, dup_pairs). One row per post:
+    slug, path, verdict (DELETE|IMPROVE), reasons, fixes, title, created + all score() fields.
+    Pure function of the files on disk: no verdict file is read or required."""
+    posts = load(Path(docs))
+    pairs = similarity(posts, dup_threshold) if posts else {}
     loser = {}
     for (x, y), s in sorted(pairs.items(), key=lambda kv: -kv[1]):
         sx, sy = score(posts[x]), score(posts[y])
@@ -196,12 +267,28 @@ def main():
                 **sc,
             )
         )
-    Path(a.out).mkdir(exist_ok=True)
-    with open(f"{a.out}/verdicts.csv", "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0]))
-        w.writeheader()
-        w.writerows(rows)
-    Path(f"{a.out}/delete.txt").write_text(
+    cov = LAST_COVERAGE
+    print(
+        f"reviewed {cov.get('reviewed', 0)} post directories in {docs}/ "
+        f"(skipped {len(cov.get('skipped', []))} site/reserved dirs"
+        + (
+            f"; {len(cov['rebuilt_from_markdown'])} had no readable post.json and were reviewed from index.md"
+            if cov.get("rebuilt_from_markdown")
+            else ""
+        )
+        + ")"
+    )
+    return rows, pairs
+
+
+def write_report(rows, out):
+    Path(out).mkdir(exist_ok=True)
+    if rows:
+        with open(f"{out}/verdicts.csv", "w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0]))
+            w.writeheader()
+            w.writerows(rows)
+    Path(f"{out}/delete.txt").write_text(
         "\n".join(
             f'{r["path"]}\t{r["reasons"]}'
             for r in sorted(
@@ -211,11 +298,25 @@ def main():
         )
         + "\n"
     )
-    Path(f"{a.out}/improve.txt").write_text(
+    Path(f"{out}/improve.txt").write_text(
         "\n".join(r["path"] for r in rows if r["verdict"] == "IMPROVE") + "\n"
     )
-    c = Counter(r["verdict"] for r in rows)
-    print(c, "dup pairs:", len(pairs))
+
+
+def main():
+    ap = argparse.ArgumentParser(
+        description="Scan docs/ and print DELETE/IMPROVE verdicts; optionally write a report."
+    )
+    ap.add_argument("--docs", default="docs")
+    ap.add_argument("--out", default="triage_report")
+    ap.add_argument(
+        "--no-report", action="store_true", help="print summary only, write nothing"
+    )
+    a = ap.parse_args()
+    rows, pairs = analyze(Path(a.docs))
+    if not a.no_report:
+        write_report(rows, a.out)
+    print(Counter(r["verdict"] for r in rows), "dup pairs:", len(pairs))
     return rows
 
 

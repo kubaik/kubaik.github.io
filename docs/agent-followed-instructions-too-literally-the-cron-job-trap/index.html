@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Agent followed instructions too literally: the cron job trap - Kubai Kevin</title>
-        <meta name="description" content="Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…">
+        <meta name="description" content="Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.">
         <meta name="keywords" content="CronJobTimeout, Literal, Python, Python3, Kubernetes, K8s, Techjobs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-11T08:43:33.018896">
-        <meta property="article:modified_time" content="2026-08-11T08:43:33.018907">
+        <meta property="article:modified_time" content="2026-10-04T10:46:07.121243+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent followed instructions too literally: the cron job trap">
-        <meta property="og:description" content="Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…">
+        <meta property="og:description" content="Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.">
         <meta property="og:url" content="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Agent followed instructions too literally: the cron job trap">
-        <meta name="twitter:description" content="Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…">
+        <meta name="twitter:description" content="Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-followed-instructions-too-literally-the-cron-job-trap.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/#article",
       "headline": "Agent followed instructions too literally: the cron job trap",
-      "description": "Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…",
+      "description": "Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.",
       "datePublished": "2026-08-11T08:43:33+00:00",
-      "dateModified": "2026-08-11T08:43:33+00:00",
-      "wordCount": 2660,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:46:07+00:00",
+      "wordCount": 2364,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Agent followed instructions too literally: the cron job trap</h1>
                 
-                <p class="post-lead">Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…</p>
+                <p class="post-lead">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
                 
                 
                 <div class="tags">
@@ -260,40 +260,62 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2660 words
+                        12 min read
+                        &nbsp;·&nbsp; 2364 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-11
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've hit the same production incident mistake in more than one production codebase over the years. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>The symptom looks like a classic ‘task never finishes’ incident: Prometheus alerts fire for a job stuck in ‘Running’ state, the error log shows no stack trace, and <code>kubectl top pod</code> reports CPU usage stuck at 4m (0.05 core) with memory flatlining at 30 MB. Teams usually first check the pod logs, expecting a panic or timeout, but the container exits cleanly after 15 minutes with exit code 0 and no error message. The confusion comes from the fact that the agent coders implemented the retry logic exactly as specified in the ticket: “run every 5 minutes; if the task errors, retry up to 3 times with 1-minute backoff.” The spec never asked for a timeout, so the agent runs forever on a stuck IO call and never hard-fails.</p>
-<p>A common failure mode here is when the agent uses Python 3.11’s <code>requests.get(timeout=None)</code> by default, which means the underlying socket blocks indefinitely. The pod looks healthy from Kubernetes’s point of view because the process hasn’t crashed; it’s just not making forward progress. That mismatch between “process alive” and “work done” trips up teams that treat exit codes as the only signal of failure.</p>
-<p>The part that trips people up is the interaction between Kubernetes liveness probes and literal instruction following: you set <code>livenessProbe</code> to <code>/health</code> every 30s, but the agent never exits on error, so the probe keeps returning 200 while the real work freezes. The surface symptom is “pods stay green but don’t process anything,” which feels like a monitoring gap rather than a bug in the agent code.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The root cause is the conflation of two different failure modes in distributed systems: <em>process exit</em> and <em>work completion</em>. The agent’s retry spec treats retries as a process-level concern (“restart the process on error”), but the actual failure is a network-level hang that doesn’t trigger a process exit. Python’s <code>requests</code> library defaults to <code>timeout=None</code>, so a hung TCP connection leaves the process in a blocked state that isn’t an error according to the process exit code.</p>
-<p>Historically, teams used to set global timeouts at the load balancer layer, but modern Kubernetes-native agents often bypass those layers and talk directly to internal services over service mesh or direct pod IPs. In 2026, 68% of teams in the Lagos cluster use Linkerd 2.14 for mTLS, yet only 32% configure its <code>opaquePorts</code> timeout for outbound traffic, leading to exactly this symptom when an agent calls a service that hangs without sending FIN/RST.</p>
-<p>Another factor is the agent’s container image size. A typical Python agent image built from <code>python:3.11-slim</code> weighs 55 MB, but when you add <code>requests</code>, <code>urllib3</code>, and <code>certifi</code>, the final layer can reach 110 MB. That extra size increases cold-start latency in Kubernetes and exacerbates the perception that the pod is “stuck” when the real issue is a 2-second DNS lookup followed by a 20-second TCP handshake that the timeout logic never accounts for.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p>The most common cause is the absence of a socket-level timeout in the HTTP client. The fix is to set <code>timeout=10</code> (seconds) in every outbound request, both connect and read. In Python 3.11, <code>requests.get(url, timeout=10)</code> splits that timeout into connect timeout and read timeout internally, which is usually what you want.</p>
+                <h2 id="the-symptom-a-job-that-never-finishes-and-never-fails">The symptom: a job that never finishes and never fails</h2>
+<p>A recurring production pattern in agent-style workloads looks like this: an alert fires for a job stuck in a <code>Running</code> state, the application log contains no stack trace, and CPU usage sits near idle. The container may exit cleanly after a long interval with exit code 0 and no error message, or it may simply keep running. Teams typically start by reading pod logs looking for a panic or timeout, then check <code>kubectl top pod</code>, and find nothing obviously wrong.</p>
+<p>The confusion comes from a specific mismatch. The agent was built to a ticket that said something like: "run every 5 minutes; if the task errors, retry up to 3 times with 1-minute backoff." The spec described retries but never described a timeout. An implementation that follows that spec literally has no upper bound on how long a single attempt may take, so a blocked I/O call never produces an error, never triggers a retry, and never hard-fails.</p>
+<p>That mismatch between <em>process alive</em> and <em>work done</em> is the core trap. Kubernetes reports the pod as healthy because the process has not crashed. The liveness probe returns 200 because the health endpoint is served by a different code path than the blocked work. The surface symptom is "pods stay green but do not process anything," which reads like a monitoring gap rather than a bug in the agent code.</p>
+<h2 id="why-the-literal-reading-fails">Why the literal reading fails</h2>
+<p>The root cause is the conflation of two distinct failure modes in distributed systems: process exit and work completion. The retry spec treats retries as a process-level concern — restart or re-enter the loop on error — but the actual failure is a network-level hang that never raises an exception.</p>
+<p>In Python, <code>requests</code> documents <code>timeout=None</code> as the default, meaning the underlying socket blocks until the server responds or the connection is reset. A hung TCP connection leaves the process blocked in a syscall, and from the process's point of view nothing has gone wrong. There is no exception to catch, so the retry branch is never entered.</p>
+<p>A common failure mode is that teams rely on load balancer or ingress timeouts to bound request duration. That works when traffic traverses those layers. Kubernetes-native agents frequently call internal services directly over a service mesh or pod IPs, bypassing the layer that would have cut the connection. The bound that existed before no longer applies.</p>
+<p>A second contributing factor is DNS. Resolution happens before the HTTP client's connect timeout starts, so a slow resolver adds latency that no HTTP-level timeout covers. In Kubernetes, CoreDNS can become slow under load, and a multi-second lookup followed by a slow TCP handshake looks like a single long hang attributed to the server.</p>
+<h2 id="fix-1-set-explicit-socket-level-timeouts">Fix 1 — set explicit socket-level timeouts</h2>
+<p>The most common cause is the absence of a timeout on the HTTP client. The fix is to pass a timeout on every outbound call. In <code>requests</code>, a tuple splits connect and read timeouts.</p>
 <pre><code class="language-python">import requests
 
-# Do this everywhere the agent calls external services
+# Set timeouts everywhere the agent calls external services.
 response = requests.get(
     &quot;https://internal-service/api/v1/tasks&quot;,
-    timeout=(2.0, 10.0)  # (connect, read) in seconds
+    timeout=(2.0, 10.0),  # (connect, read) in seconds
 )
 </code></pre>
-<p>Teams that skip this often cite “we already have a 30-second Kubernetes liveness probe,” but that probe only catches process crashes, not blocked threads. In a 2026 incident review of an e-commerce checkout retry agent in Berlin, the team found that 47% of hangs occurred on <code>GET /inventory</code> calls that took 15 seconds to respond due to a slow Redis 7.2 cluster under load. Without per-request timeouts, the agent process blocked for 60 seconds before the slow query finally returned, causing the next 5-minute cron to pile up and eventually OOM the pod.</p>
-<p>After applying the timeout, the same agent’s p99 latency dropped from 60s to 2.4s (96% reduction) and CPU usage normalized to 0.08 core during the hang period. The pod still stayed green in the liveness probe, but the work actually completed.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p>The less obvious cause is the retry logic treating retries as process restarts rather than work retries. When the agent’s retry loop catches an exception, it logs the error and continues the loop, but the loop body is the blocking network call, so the retry happens inside the same process and the same socket. That means the backoff between retries is wasted time waiting for the hung connection to eventually time out (which might never happen).</p>
-<p>The fix is to move the retry logic outside the blocking call by using an async queue with a bounded wait. In Python 3.11, <code>asyncio</code> is stable, so a common pattern is to wrap the blocking call in a coroutine with a timeout and let the retry loop sleep between retries without holding the socket open.</p>
+<p>The connect timeout bounds how long the client waits for the TCP handshake. The read timeout bounds how long it waits for bytes after the connection is established. Both matter: a server that accepts the connection and then stalls will pass the connect check and hang on the read.</p>
+<p>A common objection is "we already have a 30-second liveness probe." That probe only detects process crashes or a dead health endpoint. It does not detect a blocked worker thread, because the health endpoint is usually served by a separate thread or path.</p>
+<h3 id="worked-example-why-the-retry-loop-never-fires">Worked example: why the retry loop never fires</h3>
+<p>Consider a worker that processes one task per invocation with this structure:</p>
+<pre><code class="language-python">for attempt in range(3):
+    try:
+        result = requests.get(url)  # no timeout
+        return result
+    except Exception:
+        time.sleep(60)
+</code></pre>
+<p>If the server accepts the connection and then stalls, the call blocks in the read. No exception is raised, so <code>except</code> never runs, <code>sleep(60)</code> never runs, and the loop never advances. The job runs until the process is killed or the connection is reset by something upstream. The retry logic is present and correct in isolation; it simply never gets control.</p>
+<p>Adding <code>timeout=(2.0, 10.0)</code> changes the outcome: after 10 seconds the call raises <code>requests.exceptions.ReadTimeout</code>, the <code>except</code> branch runs, and the loop proceeds. The retry behavior the ticket asked for now actually executes.</p>
+<h3 id="how-to-measure-whether-this-is-your-problem">How to measure whether this is your problem</h3>
+<p>Instrument the client, not the process. Add a histogram around outbound calls, for example <code>http_client_duration_seconds</code> with buckets at 0.5, 1, 2, 4, 8, 10, 30, 60. Then:</p>
+<ol>
+<li>Compare the p99 against the intended timeout. If p99 exceeds the timeout you believe you set, the timeout is not being applied on that code path.</li>
+<li>Check for a spike in the highest bucket. A cluster of samples at exactly 60 seconds usually means something upstream is cutting the connection, not your client.</li>
+<li>Correlate with <code>http_client_errors_total</code> by exception type. If <code>ReadTimeout</code> never appears, the timeout is not firing.</li>
+</ol>
+<p>During an active hang, inspect the socket state:</p>
+<pre><code class="language-bash">kubectl exec &lt;pod&gt; -- ss -tunap | grep &lt;port&gt;
+</code></pre>
+<p>Connections stuck in <code>SYN_SENT</code> indicate the handshake never completed (connect timeout territory). Connections in <code>ESTABLISHED</code> for longer than the read timeout indicate the read is not being interrupted.</p>
+<h2 id="fix-2-retry-the-work-not-the-process">Fix 2 — retry the work, not the process</h2>
+<p>The less obvious cause is retry logic that treats retries as process restarts rather than work retries. When the retry loop wraps a blocking call, the backoff sleeps inside the same process while the socket stays open. The retry interval is consumed waiting for a connection that may never resolve.</p>
+<p>The fix is to bound each attempt and let the retry loop run between bounded attempts. An async client with a total timeout makes this explicit.</p>
 <pre><code class="language-python">import asyncio
 from aiohttp import ClientSession, ClientTimeout
 
@@ -307,157 +329,127 @@ async def retry_task(url: str, max_retries: int = 3):
         try:
             async with ClientSession() as session:
                 return await fetch_task(session, url)
-        except (asyncio.TimeoutError, ConnectionError) as e:
+        except (asyncio.TimeoutError, ConnectionError):
             if attempt == max_retries - 1:
                 raise
             await asyncio.sleep(2 ** attempt)  # exponential backoff
 </code></pre>
-<p>Teams that keep the retry loop inside the blocking call often see retry intervals ignored because the blocking call itself is stuck. In a Singapore incident, an agent retrying a Kafka consumer offset commit hung on a 30-second broker-side lock, and the retry loop slept for 2s between retries but never actually retried until the lock cleared. After switching to the async wrapper, the retry happened immediately after the lock cleared, reducing total retry time from 30s to 2.1s on average.</p>
-<p>Note: If you can’t migrate to async, at least wrap the blocking call in a thread with a timeout using <code>concurrent.futures.ThreadPoolExecutor</code> with a <code>timeout</code> parameter. The pattern is similar but avoids the async runtime entirely.</p>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>The environment-specific cause is DNS resolution timing out, which is invisible to both the process exit code and the HTTP timeout if the client doesn’t expose DNS timeout separately. In Kubernetes, CoreDNS can become slow under heavy load, and a 5s DNS lookup followed by a 10s TCP handshake looks like a 15s hang that the HTTP client blames on the server.</p>
-<p>The fix is to set a DNS timeout at the container level or in the HTTP client’s resolver. In Node.js 20 LTS, you can set <code>dns.setDefaultResultOrder('ipv4first')</code> and <code>dns.lookup(hostname, { all: false, timeout: 2000 })</code> to fail fast on DNS delays. In Python, use <code>requests</code> with <code>resolver</code> override or switch to <code>httpx</code> with explicit resolver settings.</p>
-<pre><code class="language-javascript">// Node.js 20 LTS example
-import { setDefaultResultOrder } from 'dns/promises';
-import { lookup } from 'dns/promises';
+<p>Two details matter here. First, <code>ClientTimeout(total=10)</code> bounds the entire request, including connection setup and body read, so a stalled server cannot hold the coroutine open. Second, <code>asyncio.sleep</code> yields the event loop, so the backoff does not block other work.</p>
+<p>If migrating to async is not feasible, the same shape can be achieved with a thread pool and a timeout:</p>
+<pre><code class="language-python">from concurrent.futures import ThreadPoolExecutor, TimeoutError
+
+def call_with_timeout(fn, timeout_s):
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        future = pool.submit(fn)
+        return future.result(timeout=timeout_s)
+</code></pre>
+<p>Be aware of the caveat: the thread is not cancelled when the timeout fires. It continues running in the background until the underlying call returns. This bounds the caller's wait but leaks the blocked thread, so it is a mitigation, not a full fix.</p>
+<h3 id="failure-mode-analysis-async-does-not-fix-a-blocking-library">Failure-mode analysis: async does not fix a blocking library</h3>
+<p>A frequent trap is wrapping a blocking library in an async function. If <code>requests.get</code> is called inside an <code>async def</code>, it blocks the event loop for the duration of the call. The coroutine timeout never gets a chance to fire because the loop cannot schedule the timeout callback while it is blocked. The symptom is identical to the original bug: the agent hangs with no error. The fix is to use an async-native client such as <code>aiohttp</code> or <code>httpx</code>, or to run the blocking call in an executor.</p>
+<h2 id="fix-3-bound-dns-resolution-separately">Fix 3 — bound DNS resolution separately</h2>
+<p>DNS resolution happens before the HTTP client's connect timeout starts, so it needs its own bound. In Kubernetes, CoreDNS can slow down under load, and a slow lookup plus a slow handshake looks like one long server-side hang.</p>
+<p>In Node.js, <code>dns.lookup</code> accepts a <code>timeout</code> option, and the default result order can be pinned:</p>
+<pre><code class="language-javascript">import { setDefaultResultOrder, lookup } from 'dns/promises';
 
 setDefaultResultOrder('ipv4first');
 try {
   await lookup('internal-service', { all: false, timeout: 2000 });
 } catch (err) {
-  console.log('DNS timeout after 2s');
+  console.log('DNS lookup failed or timed out after 2s');
   throw err;
 }
 </code></pre>
-<p>In the Lagos cluster, teams using <code>python:3.11-slim</code> without a pinned DNS resolver often hit this when CoreDNS CPU spikes above 1.8 core during peak hours (typical threshold is 1.5 core). After pinning the resolver to <code>10.96.0.10</code> (CoreDNS cluster IP) and setting a 2s DNS timeout, the same agent’s DNS-related hangs dropped from 12% of incidents to 2%.</p>
-<p>Comparison table: timeout strategies across runtimes</p>
+<p>In Python, DNS timeout is not exposed by <code>requests</code> directly. Options include setting a resolver-level timeout via the container's <code>resolv.conf</code> (<code>options timeout:2 attempts:2</code>), or using a client library that exposes resolver configuration. Checking from inside the pod is quick:</p>
+<pre><code class="language-bash">kubectl exec &lt;pod&gt; -- dig +time=2 +tries=1 internal-service.svc.cluster.local
+</code></pre>
+<p>If the lookup takes longer than the configured bound, the resolver is the bottleneck, and no HTTP client timeout will help.</p>
+<h2 id="timeout-defaults-across-common-clients">Timeout defaults across common clients</h2>
+<p>The table below lists documented defaults for widely used HTTP clients. Verify against the version you actually ship; defaults change between majors.</p>
 <table>
 <thead>
 <tr>
-<th>Runtime / Library</th>
-<th>Timeout Type</th>
-<th>Default Value</th>
-<th>Recommended Value</th>
+<th>Runtime / library</th>
+<th>Setting</th>
+<th>Documented default</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Python <code>requests</code></td>
-<td>Total</td>
-<td>None</td>
-<td>10 (seconds)</td>
-<td>Splits into connect/read internally</td>
+<td><code>timeout</code></td>
+<td><code>None</code> (no timeout)</td>
+<td>Tuple form sets connect and read separately</td>
 </tr>
 <tr>
-<td>Python <code>requests</code></td>
-<td>Connect</td>
-<td>None</td>
-<td>2 (seconds)</td>
-<td>Separate from read timeout</td>
+<td>Python <code>urllib3</code></td>
+<td><code>Timeout</code></td>
+<td><code>None</code></td>
+<td>Underlying library for <code>requests</code></td>
 </tr>
 <tr>
 <td>Node.js <code>http</code></td>
-<td>Timeout</td>
-<td>0 (no timeout)</td>
-<td>10 (seconds)</td>
-<td>Also affects keep-alive sockets</td>
+<td><code>timeout</code></td>
+<td><code>0</code> (no timeout)</td>
+<td>Applies to socket inactivity, not total duration</td>
 </tr>
 <tr>
 <td>Node.js <code>dns.lookup</code></td>
-<td>Timeout</td>
-<td>0 (OS default)</td>
-<td>2 (seconds)</td>
-<td>DNS only, not TCP</td>
+<td><code>timeout</code></td>
+<td><code>-1</code> (OS default)</td>
+<td>Resolution only, not TCP</td>
 </tr>
 <tr>
 <td>Go <code>http.Client</code></td>
-<td>Timeout</td>
-<td>0</td>
-<td>10 * time.Second</td>
-<td>Includes dial, TLS handshake</td>
+<td><code>Timeout</code></td>
+<td><code>0</code> (no timeout)</td>
+<td>Covers dial, TLS handshake, headers, body</td>
 </tr>
 <tr>
 <td>Java <code>HttpClient</code></td>
-<td>Timeout</td>
-<td>0</td>
-<td>10s</td>
-<td>Separate connect/read timeout fields</td>
+<td><code>connectTimeout</code></td>
+<td>Implementation-defined</td>
+<td>Set both connect and request timeouts explicitly</td>
 </tr>
 </tbody>
 </table>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>First, check the agent’s metrics endpoint for <code>http_client_duration_seconds</code> (histogram) and <code>http_client_errors_total</code> (counter). After applying per-request timeouts, you should see no samples above the 10-second mark and an increase in the 2–4 second bucket. If the histogram still shows 60-second samples, the timeout isn’t being applied to all code paths.</p>
-<p>Second, inspect the pod’s TCP connections during a hang. Run <code>kubectl exec &lt;pod&gt; -- ss -tunap | grep &lt;port&gt;</code> and look for connections in <code>SYN_SENT</code> or <code>ESTABLISHED</code> for more than 10 seconds. If you see those, the HTTP client’s timeout isn’t interrupting the socket.</p>
-<p>Third, check the agent’s logs for <code>TimeoutError</code> or <code>ReadTimeout</code> messages. These indicate the timeout fired, proving the client aborted the request instead of blocking indefinitely. Without these logs, the timeout might be configured but never triggered due to a bug in the wrapper logic.</p>
-<p>Finally, run a synthetic load test that forces the slow endpoint to hang for 30 seconds. A typical test uses <code>toxiproxy</code> to simulate a 30-second delay on <code>/tasks</code>. After the fix, the agent should return a 504 after 10 seconds and log the timeout. If it still blocks for 30 seconds, revisit the timeout propagation in the codebase.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Prevention starts with a policy: every outbound network call must have an explicit timeout, documented in the function signature. Treat the absence of a timeout as a code review blocker. In 2026, teams using Go 1.22 enforce this with a custom <code>http.Client</code> wrapper that panics if any request is created without a timeout. The wrapper sets a default 15-second timeout but allows overrides via context.</p>
-<p>Second, add static analysis to CI. Use <code>bandit</code> 1.7 for Python to flag any <code>requests.get</code> without a <code>timeout</code> argument, and fail the build. For Node.js, use <code>eslint-plugin-security</code> with the <code>no-missing-timeout</code> rule. In the Berlin cluster, this reduced timeout-related incidents by 38% in three months.</p>
-<p>Third, instrument the agent to expose the timeout configuration in its <code>/health</code> endpoint. The health check should return 503 if the configured timeout is above 30 seconds, warning operators that the agent might hang longer than expected. This catches misconfigurations where a developer overrides the default timeout in dev but forgets to update prod.</p>
-<p>Lastly, run chaos experiments weekly. Use <code>ChaosMesh</code> 2.6 to inject 15-second delays on specific endpoints and verify the agent fails fast. Teams that skip chaos testing often discover timeout gaps only during real incidents, when the blast radius is already large.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<ul>
-<li>
-<p><strong>Task stuck in ‘Pending’ state</strong>: This is usually a resource constraint (CPU/memory limits too low) or a missing <code>depends_on</code> in Docker Compose. The pod never starts, so the agent never runs the timeout logic.</p>
-</li>
-<li>
-<p><strong>Exit code 137 (SIGKILL)</strong>: This indicates the agent was OOM-killed because it buffered 10 MB of response data without streaming. The fix is to use streaming responses (<code>response.iter_bytes()</code> in Python) and set <code>memory.limit</code> in the container.</p>
-</li>
-<li>
-<p><strong>Connection reset by peer (ECONNRESET)</strong>: This happens when the server closes the connection before the client’s timeout fires. It’s usually a server-side issue (e.g., Nginx <code>client_body_timeout</code> too low), but it can mask a client-side timeout misconfiguration.</p>
-</li>
-<li>
-<p><strong>DNS lookup failed (ENOTFOUND)</strong>: This is DNS-specific and often appears when the agent runs outside Kubernetes and relies on the host’s DNS resolver. The fix is to pin the resolver or use <code>getent hosts</code> in a startup probe.</p>
-</li>
-</ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If the agent still hangs after applying all three fixes, escalate to the platform team with the following data:</p>
+<p>The pattern across languages is consistent: the default is unbounded, and the burden is on the caller to set a bound.</p>
+<h2 id="how-to-verify-a-fix-actually-took-effect">How to verify a fix actually took effect</h2>
+<p>A timeout change that is not exercised proves nothing. Verification requires forcing the failure.</p>
 <ol>
-<li>The pod’s <code>kubectl describe pod</code> output, focusing on <code>Last State</code>, <code>Reason</code>, and <code>Exit Code</code>.</li>
-<li>A <code>kubectl exec</code> session showing <code>ss -tunap</code> during the hang, timestamped to the incident.</li>
-<li>The agent’s <code>/metrics</code> endpoint showing <code>http_client_duration_seconds</code> buckets during the incident.</li>
-<li>The CoreDNS logs from the namespace (<code>kubectl logs -n kube-system -l k8s-app=kube-dns --tail=1000</code>).</li>
+<li><strong>Synthetic delay.</strong> Introduce a proxy that delays responses on the target endpoint by more than the configured timeout. A tool such as <code>toxiproxy</code> can inject a fixed latency. After the fix, the client should abort at the timeout and log a <code>ReadTimeout</code> (or the equivalent exception for your runtime).</li>
+<li><strong>Metric check.</strong> Confirm the histogram's upper buckets are empty and that the error counter increments by exception type. If the error counter does not move, the timeout path was never taken.</li>
+<li><strong>Socket check during the hang.</strong> Run <code>ss -tunap</code> inside the pod while the synthetic delay is active and confirm no connection stays in <code>ESTABLISHED</code> beyond the read timeout.</li>
+<li><strong>Log check.</strong> Confirm the exception is logged with the endpoint and the elapsed time. A timeout that fires but is swallowed by a broad <code>except Exception</code> is invisible and will not be caught in review.</li>
 </ol>
-<p>The platform team will check for:
-- Network policies blocking egress (common in regulated clusters in Singapore).
-- Service mesh sidecar (<code>linkerd-proxy</code>) version mismatches that break timeout propagation.
-- Node-level firewall rules that drop packets after 30 seconds (typical in cloud providers that default to 30s idle timeout).</p>
-<p>In 15% of cases, the root cause is a kernel-level issue (e.g., <code>tcp_retries2</code> set too high), which requires a node reboot or kernel parameter change. The platform team will schedule a maintenance window if the node is under memory pressure or the kernel is older than 5.15.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does my agent hang even after setting timeout=10?</strong>
-This usually means the timeout is applied to the HTTP layer but not to the underlying socket. In Python, if you use <code>socket.create_connection</code> without a timeout, the connection can still block indefinitely. Always set socket-level timeouts if you bypass the HTTP client library.</p>
-<p><strong>How do I know if DNS is the problem?</strong>
-Run <code>dig +time=2 internal-service.svc.cluster.local</code> from inside the pod. If it takes longer than 2 seconds, CoreDNS is slow. Check CoreDNS CPU usage (<code>kubectl top pods -n kube-system</code>) and scale the CoreDNS deployment if CPU exceeds 1.5 cores during peak.</p>
-<p><strong>My agent uses asyncio but still hangs. What’s missing?</strong>
-Asyncio timeouts only apply to the coroutine, not to the underlying OS calls. If you call a blocking library (e.g., <code>requests</code> inside an async function), the event loop is blocked. Use <code>loop.run_in_executor</code> with a timeout or switch to <code>aiohttp</code> for outbound calls.</p>
-<p><strong>Should I set the same timeout for every request?</strong>
-No. Use different timeouts based on the endpoint’s SLA. For example, <code>/health</code> can have a 2-second timeout, while <code>/data-export</code> might need 60 seconds. Document the timeout choice in the function’s docstring to avoid future overrides.</p>
-<p><strong>What’s a good default timeout for internal services?</strong>
-A common default is 10 seconds total, split into 2 seconds connect and 8 seconds read. This covers 95% of internal service latencies in 2026, based on the Berlin cluster’s 2026 incident review. Adjust per service based on observed p95 latency.</p>
-<h2 id="action-step">Action step</h2>
-<p>Open your agent’s top-level HTTP client wrapper file (usually <code>clients/http.py</code> or <code>utils/network.py</code>) and check every method that calls <code>requests.get</code>, <code>aiohttp.get</code>, or Node’s <code>http.request</code>. For each call, add a concrete timeout value using the table in the Fix 3 section as a reference. Commit the change, push to the main branch, and run the synthetic load test with <code>toxiproxy</code> to confirm the agent aborts hangs within 10 seconds. This takes 15 minutes if your codebase already has the wrapper layer; if not, create the wrapper first and then apply the timeout.</p>
-<h2 id="related-reading">Related reading</h2>
+<h2 id="prevention-checklist">Prevention checklist</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/">Agent tracing: when logs lie and metrics mislead</a></li>
-<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
-<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Agent flooded our API with bad calls overnight</a></li>
+<li>Require an explicit timeout on every outbound call in code review. Treat a missing timeout as a blocker, not a nit.</li>
+<li>Add static analysis to CI. For Python, <code>bandit</code> can flag <code>requests</code> calls without a <code>timeout</code> argument. For Node.js, ESLint rules can flag <code>http.request</code> without a timeout. Configure the rule to fail the build.</li>
+<li>Document the timeout choice next to the call, ideally in the function docstring, so a future override is a deliberate decision rather than an accident.</li>
+<li>Keep a default client wrapper that applies a baseline timeout, and allow per-call overrides with a stated reason. This makes the default safe and the exceptions visible.</li>
+<li>Run periodic fault injection against the endpoints the agent depends on. A weekly or per-release experiment that injects latency and verifies fast failure catches timeout gaps before they reach production.</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
+<h2 id="related-failure-modes-and-what-they-actually-indicate">Related failure modes and what they actually indicate</h2>
 <ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><strong>Task stuck in <code>Pending</code>.</strong> Usually a scheduling or resource constraint, not a timeout issue. Check pod events and resource requests before touching client code.</li>
+<li><strong>Exit code 137.</strong> The process was killed, typically by the OOM killer. Often caused by buffering a large response in memory. Streaming responses and a memory limit address this.</li>
+<li><strong><code>ECONNRESET</code>.</strong> The peer closed the connection. This can mask a client timeout misconfiguration because the error looks like a server problem. Check whether the server has its own idle timeout that fires first.</li>
+<li><strong><code>ENOTFOUND</code>.</strong> Resolution failed outright. Common when the agent runs outside the cluster and uses the host resolver. Pin the resolver or verify it from inside the pod.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does the agent still hang after setting <code>timeout=10</code>?</strong>
+The timeout may not be applied on every code path. Check whether some calls use a session object with its own defaults, whether a wrapper overrides the value, and whether any call bypasses the HTTP client entirely (for example, a raw <code>socket.create_connection</code> without a timeout).</p>
+<p><strong>How do I tell whether DNS is the cause?</strong>
+Run <code>dig +time=2 +tries=1 &lt;host&gt;</code> from inside the pod. If it takes longer than the bound, the resolver is slow. Check CoreDNS resource usage and consider scaling it or pinning the resolver in <code>resolv.conf</code>.</p>
+<p><strong>The agent uses asyncio but still hangs. What is missing?</strong>
+A blocking library called inside an async function blocks the event loop, so the coroutine timeout cannot fire. Use an async-native HTTP client, or run the blocking call in an executor.</p>
+<p><strong>Should every request use the same timeout?</strong>
+No. Set timeouts per endpoint based on observed latency distributions. A health check can tolerate a short bound; a bulk export may need a long one. Record the rationale next to the call.</p>
+<p><strong>What is a reasonable starting default for internal services?</strong>
+A common starting point is a 2-second connect timeout and a read timeout set above the endpoint's observed p99. Measure first, then set the bound with headroom, and revisit when the service's latency profile changes.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the module that wraps outbound HTTP calls in your agent — commonly <code>clients/http.py</code>, <code>utils/network.py</code>, or an equivalent. Grep for every call site that constructs a request without a timeout argument. For each one, add an explicit connect and read timeout, choosing the read value from the endpoint's observed p99 plus headroom. Then run one synthetic delay against a single endpoint and confirm the client aborts at the configured bound and logs the exception. That single verified abort proves the timeout path is wired correctly end to end.</p>
                 
                 
             </div>
@@ -486,8 +478,8 @@ A common default is 10 seconds total, split into 2 seconds connect and 8 seconds
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
-                        <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
@@ -498,8 +490,8 @@ A common default is 10 seconds total, split into 2 seconds connect and 8 seconds
                     
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
                         <h3>Cost tools fail when agents scale autonomously</h3>
-                        <p>Traditional cloud cost tools report hours after autonomous agents make scaling decisions — the attribution gap that turns $12,000 surprise bills into…</p>
-                        <span class="related-meta">14 min read · 9 September 2026</span>
+                        <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
+                        <span class="related-meta">10 min read · 9 September 2026</span>
                     </a>
                     
                 </div>

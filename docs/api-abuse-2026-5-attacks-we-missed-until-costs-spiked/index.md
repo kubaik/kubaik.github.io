@@ -1,40 +1,37 @@
-# API abuse 2026: 5 attacks we missed until costs spiked
+# Tiered API abuse defense: match cost to attacker economics
 
-Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what teams commonly run into when they try to build this under real constraints.
+Most API security guidance assumes a clean environment and a patient timeline. Production provides neither. This article covers abuse patterns that show up as cost anomalies rather than as blocked requests, why the obvious first defenses often fail, and how to build a tiered defense whose cost is proportional to each attack's economics.
 
-## The situation (what we were trying to solve)
+## The situation
 
-A common 2026 scenario: a REST API running on AWS Lambda (Python 3.12, FastAPI 0.111) suddenly costs 3× what was budgeted. Traffic hasn’t tripled—something else is happening. CloudWatch logs show 40% of requests returning 429 before they even hit the handler. WAF (v2.10) is in front of CloudFront, but the bill still climbs. A connection-pool issue that consumes three days of debugging is usually a single misconfigured header timeout—and the write-up you wish you had found then is the one that starts from the cost curve, not the ruleset.
+A recognizable scenario: a REST API on AWS Lambda (Python 3.12, FastAPI) costs three times what was budgeted while request volume has barely moved. CloudWatch shows a large share of requests returning 429 before reaching the handler. A CDN and a web application firewall sit in front of the origin, and the bill still climbs.
 
-The real question is which attack patterns are actually profitable for attackers in 2026. Not the OWASP Top 10 that every slide deck repeats, but the ones that show up in an AWS cost explorer at 3 a.m. after the same Lambda code has been redeployed for the fifth time.
+The useful question is not "which OWASP category applies" but "which abuse patterns are profitable for an attacker against this specific stack." The patterns below are worth modeling because they consume disproportionate backend resources per unit of attacker effort:
 
-Historical data (2024) showed credential stuffing was the top cause of API abuse, but by 2026 three new patterns started eating budget:
+1. **Cache-stampede amplification via conditional GETs.** A client sends `If-None-Match` with a stale validator; the origin recomputes an expensive response and returns 304. The attacker pays for one small request; the origin pays for full computation.
+2. **JWT `kid` header swap.** Each request carries a different `kid`, forcing a key lookup (often a network call to a JWKS endpoint or cache miss) on every request. Cheap to generate, expensive to serve.
+3. **GraphQL depth attacks.** A single deeply nested query can return megabytes of JSON from a small request body.
+4. **Distributed credential stuffing.** Many source IPs, low per-IP rate, high aggregate rate. Per-IP limits do not see it.
+5. **Cold-start abuse.** Bursts of requests to a cold function drain concurrency and inflate latency for legitimate traffic, sometimes triggering retries that amplify load.
 
-1. Cache-stampede amplification via conditional GETs
-2. JWT kid header swap to force key-lookup on every request
-3. GraphQL depth attacks where a single query returned 24 MB JSON
-4. AI-assisted credential stuffing at 12 kRPS sustained (cheap GPU rentals in 2026 make this viable)
-5. Lambda cold-start abuse: attackers trigger 10 k cold starts per hour to drain concurrency quotas
+A representative stack for reasoning about this:
+- AWS Lambda (Python 3.12, arm64), modest memory allocation
+- API Gateway HTTP API
+- A CDN in front, with edge compute for token validation
+- Redis (ElastiCache) for rate-limit counters
+- A managed web application firewall with a managed rule group
 
-A typical stack at the time:
-- AWS Lambda (Python 3.12, arm64) with 1 vCPU / 1 GB
-- API Gateway HTTP API v2.5
-- Amazon CloudFront with Lambda@Edge for JWT validation
-- Redis 7.2 (ElastiCache, 2×cache.t4g.micro) for rate-limit counters
-- AWS WAF with managed rule group AWSManagedRulesCommonRuleSet v1.6
+## What teams try first, and why it often fails
 
-## What teams try first and why it doesn’t work
+**Attempt 1: maximum-sensitivity managed rules.**
+Turning up a managed rule group across all distributions is the default first move. Two things commonly go wrong. First, false positives on health checks and legitimate clients rise, so the team either whitelists broadly (reopening the hole) or spends time tuning. Second, inspection cost per request rises because the firewall examines more of each request. The fix is not "more sensitivity" but "fewer, targeted rules based on observed traffic."
 
-**Attempt 1: WAF managed ruleset at max sensitivity**
-Enabling AWSManagedRulesCommonRuleSet, setting AWSWAFWebACLManagedRuleARNCount to 10, and pushing it to all CloudFront distributions is the default first move. The false-positive rate commonly jumps to 12% on GET /health and the 95th-percentile latency for valid requests increases from 85 ms to 210 ms. Cost per million requests rises from $0.90 to $1.45 because WAF now inspects every byte of every request.
-
-**Attempt 2: Redis rate-limit per IP with fixed window**
-The next move is usually a Python rate-limit decorator:
+**Attempt 2: per-IP fixed-window rate limiting.**
+A typical decorator looks like this:
 
 ```python
 from fastapi import Request, HTTPException
 from redis.asyncio import Redis
-from datetime import timedelta
 
 async def rate_limit_ip(request: Request, limit: int = 100, window: int = 60):
     key = f"rl:{request.client.host}"
@@ -45,84 +42,101 @@ async def rate_limit_ip(request: Request, limit: int = 100, window: int = 60):
         raise HTTPException(status_code=429, detail="Too Many Requests")
 ```
 
-Deployed to 5 Lambda functions behind an ALB, attackers typically pivot within 2 hours to hitting a single endpoint that triggers expensive SQL inside the handler. The rate-limit key is still per IP, but the cost moves from WAF to database CPU. An Aurora PostgreSQL 15.4 bill commonly jumps 280% before anyone notices.
+Two problems. Fixed windows allow a burst at the boundary (a client can send `limit` requests at the end of one window and `limit` again at the start of the next). More importantly, the key is per IP, so distributed attacks pass straight through. Attackers also pivot to a single endpoint that triggers expensive work inside the handler, moving cost from the edge to the database.
 
-**Attempt 3: JWT kid header validation in Lambda@Edge**
-Moving JWT kid header validation from each Lambda to CloudFront Lambda@Edge (Node 20 LTS) is meant to reject malformed tokens before they hit the origin. What breaks first is the Lambda@Edge timeout: AWS sets a hard 5-second limit, and a key-lookup function that occasionally takes 6–7 seconds because ElastiCache is in a different region will start timing out and retrying, amplifying the load. The fix is usually a 2-second timeout and a local LRU cache of the last 1000 keys to stay within limits.
+**Attempt 3: JWT `kid` validation at the edge.**
+Moving validation to edge compute is meant to reject malformed tokens before they reach the origin. What breaks first is the execution timeout. Edge compute has a hard timeout (commonly a few seconds), and a key-lookup function that occasionally exceeds it will time out and retry, amplifying load. The practical fix is a short explicit timeout plus a local LRU cache of recently seen keys.
 
-## The approach that worked
+## A tiered defense
 
-Stop trying to block everything at the edge and instead adopt a **tiered defense** that matches the economics of each attack:
+Stop trying to block everything at one layer. Match each defense to the economics of the attack it addresses.
 
-| Tier | Where | What | Tool / version | Cost per 1M req |
-|------|-------|------|----------------|-----------------|
-| Edge | CloudFront Lambda@Edge | Fast path: reject malformed tokens & invalid kid | Node 20 LTS | $0.60 |
-| Rate | WAF v2.10 | IP-based sliding window with Redis 7.2 counters | Redis 7.2 + AWS WAF | $0.45 |
-| Origin | Lambda | Request-shape analysis & GraphQL depth limit | Python 3.12 + FastAPI 0.111 | $0.90 |
-| Data | Aurora PostgreSQL 15.4 | Query-time depth limit & query planner hints | PostgreSQL 15.4 | $1.10 |
+| Tier | Where | Purpose | Typical cost driver |
+|------|-------|---------|---------------------|
+| Edge | CDN edge compute | Reject malformed tokens and unknown `kid` cheaply | Per-request edge compute time |
+| Rate | Firewall + Redis counters | Sliding-window limits, including per-token not just per-IP | Counter storage and lookups |
+| Origin | Application middleware | Request-shape analysis, GraphQL depth limits | Lambda duration |
+| Data | Database | Query-time guards, statement timeouts | Database CPU and I/O |
 
-Key tactics:
+### 1. Sliding-window rate limits with Redis
 
-1. **Sliding-window rate limits with Redis 7.2**
-   Switch from fixed windows to a sliding log algorithm (GCRA) implemented in Redis:
-   ```lua
-   -- GCRA.lua for Redis 7.2
-   local key = KEYS[1]
-   local limit = tonumber(ARGV[1])
-   local period = tonumber(ARGV[2])
-   local now = tonumber(ARGV[3])
-   
-   local bucket = redis.call('HGET', key, 'bucket') or 0
-   local last = redis.call('HGET', key, 'last') or now
-   local tokens = math.max(0, limit - ((now - last) * limit / period) - (bucket - limit))
-   if tokens < 1 then
-     return {0, 0}
-   end
-   redis.call('HSET', key, 'bucket', tokens + 1)
-   redis.call('HSET', key, 'last', now)
-   redis.call('PEXPIRE', key, period * 1000)
-   return {tokens, limit}
-   ```
-   Call it from FastAPI with `redis.eval(GCRA_LUA, 1, key, limit, period, now)`.
+Replace fixed windows with a sliding algorithm such as GCRA (Generic Cell Rate Algorithm) implemented as a Lua script so the read-modify-write is atomic:
 
-2. **JWT kid header swap protection**
-   Validate kid against a signed JWKS that is refreshed every 5 minutes via a CloudWatch event. The JWKS endpoint is fronted by CloudFront with an immutable cache key (kid is part of the cache key). Invalid kid returns 400 in 12 ms instead of 6 seconds.
+```lua
+-- GCRA rate limiter for Redis
+-- KEYS[1]: rate limit key
+-- ARGV[1]: limit (max requests per period)
+-- ARGV[2]: period in seconds
+-- ARGV[3]: current time in seconds
+local key = KEYS[1]
+local limit = tonumber(ARGV[1])
+local period = tonumber(ARGV[2])
+local now = tonumber(ARGV[3])
 
-3. **GraphQL depth limiter**
-   Add a depth analyzer in the request middleware:
-   ```python
-   from graphql import parse, visit
-   from graphql.language.visitor import Visitor, visit_in_parallel
-   
-   class DepthVisitor(Visitor):
-       def __init__(self, max_depth=6):
-           self.max_depth = max_depth
-           self.current_depth = 0
-       
-       def enter(self, node, *args, **kwargs):
-           if hasattr(node, 'selection_set') and node.selection_set:
-               self.current_depth += 1
-               if self.current_depth > self.max_depth:
-                   raise HTTPException(status_code=400, detail="Query too deep")
-   
-   def limit_depth(query: str, max_depth=6):
-       ast = parse(query)
-       visitor = DepthVisitor(max_depth)
-       visit(ast, visitor)
-       return visitor.current_depth
-   ```
-   The depth check runs in 1–3 ms for typical queries and rejects depth > 6 before the resolver is ever touched.
+local state = redis.call('HMGET', key, 'tokens', 'last')
+local tokens = tonumber(state[1]) or limit
+local last = tonumber(state[2]) or now
 
-4. **Lambda cold-start abuse mitigation**
-   Switch to Lambda SnapStart (Java 21) for the auth service. SnapStart warms the JVM in 100 ms instead of 1.8 s, so attackers get less bang for their buck. Provisioned concurrency of 50 for the auth function typically costs an extra $180/month but cuts cold-start requests by 94%.
+-- Refill tokens based on elapsed time
+local elapsed = math.max(0, now - last)
+tokens = math.min(limit, tokens + (elapsed * limit / period))
+
+if tokens < 1 then
+  redis.call('HSET', key, 'tokens', tokens, 'last', now)
+  redis.call('PEXPIRE', key, period * 1000)
+  return {0, math.floor(tokens)}
+end
+
+tokens = tokens - 1
+redis.call('HSET', key, 'tokens', tokens, 'last', now)
+redis.call('PEXPIRE', key, period * 1000)
+return {1, math.floor(tokens)}
+```
+
+Call it from FastAPI with `redis.eval(GCRA_LUA, 1, key, limit, period, now)`. Key the limiter on a stable identity — an API token or authenticated subject — not just the source IP, so distributed attacks are counted together.
+
+### 2. JWT `kid` handling
+
+Validate `kid` against a JWKS that is refreshed on a fixed schedule and cached at the edge. Include `kid` in the cache key so a valid key is served from cache and an unknown `kid` fails fast. Reject unknown `kid` with 400 before any origin call. Keep the edge validation timeout well under the platform's hard limit so a slow JWKS fetch cannot cascade into retries.
+
+### 3. GraphQL depth limiting
+
+Add a depth analyzer in middleware. The visitor pattern below counts nesting depth and raises before resolvers execute:
+
+```python
+from graphql import parse, visit
+from graphql.language.visitor import Visitor
+from fastapi import HTTPException
+
+class DepthVisitor(Visitor):
+    def __init__(self, max_depth=6):
+        self.max_depth = max_depth
+        self.current_depth = 0
+
+    def enter(self, node, *args, **kwargs):
+        if hasattr(node, "selection_set") and node.selection_set:
+            self.current_depth += 1
+            if self.current_depth > self.max_depth:
+                raise HTTPException(status_code=400, detail="Query too deep")
+
+def limit_depth(query: str, max_depth=6):
+    ast = parse(query)
+    visitor = DepthVisitor(max_depth)
+    visit(ast, visitor)
+    return visitor.current_depth
+```
+
+Note that this counts the maximum depth reached during traversal, not the depth of the final node visited; if you need the true maximum, track `self.max_depth_seen` separately. Depth checks run in low single-digit milliseconds for typical queries and reject oversized queries before any resolver executes. Pair with a response-size cap at the data layer as a backstop.
+
+### 4. Cold-start abuse
+
+If the runtime supports snapshot-based startup (for example, Lambda SnapStart on Java), enabling it reduces cold-start latency substantially. Otherwise, provisioned concurrency on the auth function absorbs bursts without draining the shared pool. Provisioned concurrency is billed continuously, so size it to your baseline and let on-demand handle the rest.
 
 ## Implementation details
 
-**1. Redis 7.2 cluster sizing**
-Moving from a single cache.t4g.micro to a 3-node Redis 7.2 cluster (cache.m6g.large × 3) in the same VPC as Lambda gives 25 k RPS sustained and sub-millisecond P99 latency. The monthly cost is $245 vs. $68 for the single node, but the false-positive rate on rate limits drops from 3% to 0.2% and the overall API cost falls by 42% because fewer requests reach the database.
+**Redis sizing.** A single small node becomes a bottleneck as request rate climbs, and failover during a restart makes rate-limit counters unavailable. During that window, traffic reaches the origin unbounded. Run rate-limit state in its own Redis cluster, separate from session cache. Use AOF persistence if you accept the write cost, or accept that counters reset on failover and size the origin to survive a short burst.
 
-**2. WAF custom rules for conditional GET amplification**
-A WAF rule that blocks requests with `If-None-Match` when the response size would exceed 1 MB runs at the CloudFront edge:
+**Conditional GET amplification.** A firewall rule can block requests carrying `If-None-Match` when the response would be large. The rule shape is a byte-match on the `if-none-match` header:
 
 ```json
 {
@@ -144,147 +158,50 @@ A WAF rule that blocks requests with `If-None-Match` when the response size woul
 }
 ```
 
-This commonly cuts CloudFront data-out charges by 22% because attackers can no longer force full payloads with a 304 response.
+Blocking all conditional GETs will break legitimate caching, so scope the rule to endpoints whose responses are expensive to recompute, and monitor the sampled-request metric before enforcing.
 
-**3. JWT kid header swap in Lambda@Edge**
-Replace the inline key lookup with a signed JWKS served from an S3 bucket with CloudFront. The JWKS is refreshed every 5 minutes by a CloudWatch event Lambda (Python 3.12) that writes to S3 and invalidates the CloudFront cache key that includes the ETag of the JWKS file. The refresh Lambda costs $0.12 per million refreshes and the edge validation now runs in 8–12 ms vs. the previous 1.2–6 s.
+**Database guards.** Add a statement timeout and a maximum response size at the data layer. A connection pooler in transaction mode prevents connection exhaustion under burst. A hard cap on returned payload size catches the cases that slip past the depth limiter.
 
-**4. Aurora PostgreSQL depth guardrail**
-Add a pg_bouncer pooler (pgbouncer 1.21) in transaction mode and a depth limiter in the connection string:
+## How to measure whether any of this is working
 
-```ini
-[databases]
-api = host=aurora-cluster-15.4 port=5432 dbname=api user=api password=... max_client_conn=100 pool_mode=transaction
-```
+Do not trust a single before/after table. Instrument these:
 
-Inside the API handler, use a PostgreSQL 15.4 view that caps the maximum JSON size returned by GraphQL queries to 2 MB. Any deeper query throws a depth error before it touches the planner.
+- **Cost per million requests** — divide your monthly bill by requests served, per endpoint if possible. Track the trend, not a single number.
+- **P95 and P99 latency** — from your load balancer or API gateway access logs, not from application logs, so you see the full path.
+- **429 rate and where it is emitted** — edge, firewall, or application. A rising 429 rate at the edge means your limits are too tight; a rising 429 rate at the application means attackers are reaching the origin.
+- **Database CPU** — the signal that tells you abuse has moved past the edge.
+- **Cold-start count per hour** — from your platform's metrics, if available.
 
-## Results — the numbers before and after
+To measure a specific attack's cost, run a controlled load test against a staging endpoint that mimics production shape. Compare cost per request before and after each defense is enabled. The number that matters is the marginal cost of serving an abusive request, not the total bill.
 
-| Metric | Before (Feb 2026) | After (May 2026) | Change |
-|--------|-------------------|------------------|--------|
-| API cost per million requests | $2.70 | $1.57 | –42% |
-| 95th-percentile latency | 210 ms | 85 ms | –60% |
-| Database CPU % (Aurora) | 82% | 41% | –50% |
-| False-positive rate (429s) | 12% | 0.8% | –93% |
-| Cold-start requests per hour | 1,240 | 78 | –94% |
-| CloudFront data-out GB | 420 GB | 327 GB | –22% |
+## A worked example
 
-Attack surface reduction is measurable too. A typical 7-day honeypot run (April 2026) commonly shows:
-- 18 k credential-stuffing attempts blocked at the edge (vs. 3 k before)
-- 34 k conditional GET amplification attempts blocked by WAF
-- 2 k GraphQL depth queries rejected at origin
-- 47 k JWT kid header swap attempts rejected by Lambda@Edge
-
-The biggest surprise is how cheap attackers have become. A single EC2 `g5.xlarge` (GPU) instance in 2026 can sustain 12 k RPS of credential stuffing for $0.80/hour. That’s why tiered defenses that push the cost of attack back onto the attacker matter more than ever.
+Suppose a GraphQL endpoint serves a query that returns 2 MB of JSON. At an illustrative compute cost of $0.00002 per request-second and 400 ms of compute per request, each request costs roughly $0.000008 to serve. At 1,000 requests per second sustained for an hour, that is 3.6 million requests, or about $28.80 per hour in compute alone, before database cost. If a depth limit rejects those queries at 2 ms of middleware time instead, the same 3.6 million requests cost about $0.14. The arithmetic is illustrative, but the shape is the point: the ratio between "serve the query" and "reject the query" is what determines whether a defense pays for itself.
 
 ## What to do differently
 
-**1. Start with a threat model, not a ruleset**
-Rules built only on what shows up in logs, rather than on attacker economics, miss the cheapest attack vector—often the one nobody modeled. A simple spreadsheet works: column A is attack type, B is cost per million requests to run it, C is cost per million requests to detect/block it, and D is profit if it succeeds. Any row where C > B is a waste of time to block; any row where B >> C is where engineering cycles should go.
+**1. Model attacker economics before choosing a defense.** Build a simple table: attack type, cost to run per million requests, cost to block per million requests, and value if it succeeds. Any row where blocking costs more than running is not worth engineering time. Any row where running is far cheaper than blocking is where you should invest.
 
-**2. Isolate rate-limit state in its own Redis cluster**
-A first Redis shared with session cache is a common mistake. During a Redis failover, the rate-limit counters are unavailable for 47 seconds—47 seconds of unbounded traffic hitting the database. Run two Redis clusters: one for sessions (cache) and one for rate limits (durable with AOF). The durable cluster costs an extra $110/month but prevents a single Redis failure from becoming an outage.
+**2. Isolate rate-limit state.** Do not share a Redis instance between session cache and rate-limit counters. A failover in the shared instance takes both down.
 
-**3. Move JWT kid header swap protection to the JWKS issuer**
-Instead of validating kid in Lambda@Edge, require all issuers to include kid in the `iss` claim and sign the kid with the JWKS. This moves the cost of validation to the issuer, not to the consumer. A 5-minute TTL on the JWKS cache key keeps invalidations fast and cheap.
+**3. Validate `kid` at the issuer where possible.** If your identity provider can sign and publish keys in a way that makes unknown `kid` cheap to reject, push validation there rather than paying edge compute for every request.
 
-**4. Stop using fixed timeouts in Lambda@Edge**
-The 5-second hard timeout in Lambda@Edge is unforgiving. Use a 2-second timeout for JWT validation and a 3-second timeout for everything else. A synthetic Lambda@Edge function that returns 400 for any request that takes longer than 1.8 seconds makes edge-timeout spikes measurable and alertable.
+**4. Use short, explicit edge timeouts.** A timeout that is close to the platform hard limit will cause retries under load. Set it well below the limit and alert on timeout rate.
 
-## The broader lesson
+## FAQ
 
-API security in 2026 is no longer about blocking every possible request; it’s about making the cost of attack greater than the value of success. Attackers have commoditized their tools—credential stuffing, conditional GET amplification, GraphQL depth queries, cold-start abuse—because the marginal cost of another GPU hour or Lambda invocation is pennies. Defense therefore has to shift from “block everything” to “raise the attacker’s cost above the attacker’s profit.”
+**What is the smallest change that reduces abuse cost today?**
+Enable snapshot-based startup or provisioned concurrency on the auth function. Cold-start abuse is often the cheapest attack to mitigate because the fix is a configuration change, not new code.
 
-This is not a new idea (see Lampson’s “golden key” from 1992), but the economics have flipped. In 2026, the defender’s budget is measured in CPU milliseconds and Redis P99 latency, while the attacker’s budget is measured in GPU hours and auto-scaling groups. The defense that wins is the one that maximizes the attacker’s cost per successful request.
+**How do I know if `kid` validation is working?**
+Watch edge logs for execution errors mentioning JWKS or key lookup. A low, stable rate means the cache is serving; a rising rate means the refresh interval is too long or the cache key is wrong.
 
-## How to apply this to your situation
+**Should I limit GraphQL depth or payload size first?**
+Depth first. A shallow query with wide fields can still return a large payload, but depth is the cheapest signal to compute and rejects the most common amplification pattern before resolvers run. Add payload size as a backstop.
 
-If you only do one thing, run a 24-hour honeypot on a non-production endpoint that mimics your production API shape. Use a simple Python script with `httpx` and `asyncio`:
-
-```python
-import asyncio, httpx, time
-from datetime import datetime
-
-ENDPOINT = "https://api.yourservice.com/graphql"
-HEADERS = {"Authorization": "Bearer fake", "Content-Type": "application/json"}
-
-async def probe():
-    async with httpx.AsyncClient(timeout=5.0) as c:
-        payload = {
-            "query": "{ user { id name posts { title comments { text } } } }"
-        }
-        start = time.time()
-        r = await c.post(ENDPOINT, json=payload, headers=HEADERS)
-        latency = (time.time() - start) * 1000
-        print(f"{datetime.utcnow().isoformat()} {latency:.0f}ms {r.status_code}")
-
-async def main():
-    while True:
-        await probe()
-        await asyncio.sleep(0.01)  # 100 RPS
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-Run this for 24 hours and look at three numbers:
-- Median latency (should be < 100 ms)
-- P95 latency (should be < 200 ms)
-- Cost per million requests (should be < $2)
-
-If any of these numbers spike, you’ve found your first tiered-defense gap.
-
-Next, triage the top three endpoints by request volume and add a depth limit in code (GraphQL) or a WAF rule (REST). Do not start with WAF managed rules—start with a single custom rule that blocks the pattern you actually see in your honeypot.
-
-Finally, move your JWT kid header swap protection to the issuer. If your auth provider can’t do it, switch providers. The cost of validating kid in your edge is no longer acceptable when attackers can rent a GPU for $0.80/hour.
-
-## Resources that helped
-
-1. **Redis 7.2 Lua scripts** – Official repo with GCRA and other rate-limit algorithms https://github.com/redis/redis/tree/unstable/src
-2. **WAF custom rule examples** – AWS samples for conditional GET and amplification https://github.com/aws-samples/aws-waf-sample-rules
-3. **JWKS best practices** – Okta developer guide, section “kid and key rotation” https://developer.okta.com/docs/guides/tokens/overview/
-4. **GraphQL depth limiting** – `graphql-depth-limit` npm package (v1.1.0) for Node; for Python, the visitor pattern above works well
-5. **Lambda SnapStart pricing** – AWS Lambda SnapStart pricing page (March 2026) https://aws.amazon.com/lambda/pricing/
-6. **Cost calculator for g5.xlarge** – AWS EC2 pricing page (April 2026) https://aws.amazon.com/ec2/pricing/on-demand/
-7. **Aurora PostgreSQL depth guardrail** – AWS RDS docs on pg_bouncer and query planner hints https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html#postgresql-extensions.pg-bouncer
-
-## Frequently Asked Questions
-
-**What’s the smallest change I can make today to cut API abuse costs?**
-Enable Lambda SnapStart on your auth Lambda (if Java 21). The 94% reduction in cold-start requests will drop your concurrency quota burn by at least 40% and usually cuts the bill by 12–18% overnight. If you’re not on Java, provision 50 concurrent executions for the auth function—it costs ~$180/month but saves more than that in database CPU.
-
-**How do I know if my JWT kid header swap protection is working?**
-Check CloudFront edge logs for `LambdaExecutionError` with `JWKS` or `kid` in the message. If you see fewer than 10 errors per hour, your JWKS refresh is likely working. If you see more, increase the refresh frequency to 2 minutes and add an S3 bucket notification to CloudFront invalidation.
-
-**My GraphQL API returns large nested objects. Should I block depth or limit payload size first?**
-Block depth first. A depth-8 query can return 24 MB even if the individual fields are small. Use a depth limiter in the request middleware—it runs in microseconds and rejects the request before the resolver executes. Only then add a 2 MB payload-size limit in the view layer to catch edge cases.
-
-**Is Redis 7.2 really worth the extra $177/month compared to a single node?**
-Yes, if your API handles more than 5 k RPS. The single node becomes a bottleneck at 15 k RPS and the 47-second failover window is unacceptable for rate limits. For under 5 k RPS, a single cache.t4g.medium with AOF disabled is fine, but use Redis Cluster mode from day one if you plan to scale.
+**Is a separate Redis cluster for rate limits worth the cost?**
+If your API handles more than a few thousand requests per second, yes. Below that, a single node with persistence disabled may be fine, but understand the failover window and size the origin to survive it.
 
 ## Next step in the next 30 minutes
 
-Open `src/middleware/rate_limit.py` in your project and replace the fixed-window rate limiter with the Redis 7.2 GCRA Lua script shown above. Run the honeypot script for 15 minutes. If your 95th-percentile latency stays under 200 ms and your false-positive rate drops below 1%, merge the change. If not, check Redis cluster health and adjust the Lua script’s limit and period parameters.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 20, 2026
+Open your rate-limit middleware and change the key from the source IP to the authenticated subject or API token. Run your existing load test for 15 minutes and compare the 429 rate at the edge against the 429 rate at the application. If the application rate drops, distributed abuse was previously invisible to your limiter and the change is worth keeping.

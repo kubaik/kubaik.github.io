@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Commit ownership in AI pair coding - Kubai Kevin</title>
-        <meta name="description" content="AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.">
+        <meta name="description" content="AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.">
         <meta name="keywords" content="AiPairProgramming, CodeOwnership, DockerGuardrails, Ai, Nigerian, Llm, Docker, Containers">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-31T12:27:42.708342">
-        <meta property="article:modified_time" content="2026-08-31T12:27:42.708352">
+        <meta property="article:modified_time" content="2026-10-04T10:49:05.107601+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Commit ownership in AI pair coding">
-        <meta property="og:description" content="AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.">
+        <meta property="og:description" content="AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.">
         <meta property="og:url" content="https://kubaik.github.io/commit-ownership-in-ai-pair-coding/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Commit ownership in AI pair coding">
-        <meta name="twitter:description" content="AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.">
+        <meta name="twitter:description" content="AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/commit-ownership-in-ai-pair-coding.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/commit-ownership-in-ai-pair-coding/#article",
       "headline": "Commit ownership in AI pair coding",
-      "description": "AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.",
+      "description": "AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.",
       "datePublished": "2026-08-31T12:27:42+00:00",
-      "dateModified": "2026-08-31T12:27:42+00:00",
-      "wordCount": 3325,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-04T10:49:05+00:00",
+      "wordCount": 2730,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Commit ownership in AI pair coding</h1>
                 
-                <p class="post-lead">AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
+                <p class="post-lead">AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.</p>
                 
                 
                 <div class="tags">
@@ -261,42 +261,41 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3325 words
+                        14 min read
+                        &nbsp;·&nbsp; 2730 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-31
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The conventional advice on run aiaugmented is incomplete in one specific, costly way. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path.</p>
+                <p>AI coding assistants are usually adopted for speed, and the documentation that ships with them focuses on speed: suggestions, completions, refactors. What the documentation rarely covers is what happens after the generated diff lands in a repository. The unresolved question is ownership. When an AI-assisted commit fails a linter in CI, misses an edge case in a unit test, or pages the on-call engineer, the commit's <code>author</code> field still points at a human. But the logic originated from a prompt that may have been reviewed lightly or not at all.</p>
+<p>That gap is not a tooling bug. It is a missing contract between the agent, the developer, and the CI pipeline. This article describes what that contract looks like in practice, how to implement it with a small amount of code, where it breaks, and when it is the wrong choice.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most teams start using AI coding assistants because they promise faster delivery. A 2026 Stack Overflow survey of 10,243 developers found that 68% of teams in sub-Saharan Africa adopted AI pair-coding tools within the first six months of availability, driven by management urgency rather than engineering readiness. The docs from GitHub Copilot, Amazon Q Developer, and Cursor all highlight speed and accuracy improvements, but they rarely mention what happens when the AI-generated code lands in your repo. The part that trips people up is ownership: once an AI writes a commit, who is responsible when the linters fail in CI, the unit tests don’t cover the edge case, or the on-call engineer gets paged at 3 AM?</p>
-<p>That ambiguity shows up in the PR history. A common trap here is AI commits that pass local pre-commit hooks but break in GitHub Actions because the test matrix runs Node 20 LTS on Ubuntu 24.04, not the developer’s local setup. The mismatch usually shows up when the AI suggests a regex that works on Python 3.11 but fails on Python 3.12 due to subtle Unicode handling changes. The author field on the commit shows the human developer, but the logic originated from a prompt the developer barely reviewed. When the test suite times out after 15 minutes instead of 2 minutes, the team debates whether the AI or the reviewer broke the build. That debate is exactly where accountability drifts.</p>
-<p>The real constraint isn’t the AI’s capability—it’s the lack of a lightweight, enforceable contract between the AI agent, the developer, and the CI pipeline. Without it, code ownership becomes a ghost: the PR author signs off, but the commit’s intent is unclear, the tests are brittle, and the next developer inherits a black box. The rub is that most teams don’t realize they need that contract until the first production outage tied to an AI-generated change.</p>
-<h2 id="how-ai-augmented-teams-without-destroying-code-ownership-and-accountability-actually-works-under-the-hood">How AI-augmented teams without destroying code ownership and accountability actually works under the hood</h2>
-<p>The solution is to stop treating the AI as a silent pair programmer and start treating it as a constrained subprocess with explicit boundaries. Instead of letting the AI write code that merges directly into main, you run it inside a sandbox that enforces: (1) a prompt template that includes acceptance criteria, (2) a test suite that runs before the human review, and (3) a commit message format that traces each line back to a requirement or a test case.</p>
-<p>Here’s how the flow actually works in practice. When a developer opens an issue or a ticket in Linear or Jira, the AI agent receives a prompt that includes the ticket description, a list of failing tests (if any), and a production-like environment signature (Python 3.11, Node 20 LTS, Ubuntu 24.04, Redis 7.2). The agent outputs a diff that is validated by a pre-commit hook called <code>ai-check</code>, written in Python 3.11, which runs <code>pytest</code> against the new diff and <code>eslint</code> for JavaScript changes. Only if the tests pass does the diff reach the developer’s editor. The developer can then review the diff, adjust the prompt, or reject the change entirely. The key is that the AI never writes directly to the repo; it writes to a staging branch that the developer must approve before merging.</p>
-<p>Under the hood, the system uses three lightweight mechanisms:</p>
+<p>Most vendor documentation for AI coding assistants describes the generation step: how to prompt, how to accept a suggestion, how to run an agent over a repository. It says much less about the verification step. The result is that teams inherit a workflow where the artifact (a diff) and the accountability (a person) are only loosely coupled.</p>
+<p>A typical failure mode looks like this. An AI suggests a regular expression. It passes the developer's local pre-commit hook. It fails in CI because the CI runner uses a different language runtime version, and the regex depends on Unicode behavior that changed between those versions. The commit author is the developer. The logic came from the model. The reviewer skimmed the diff because it was small and looked plausible. Nobody in that chain can say with confidence which requirement the regex was meant to satisfy.</p>
+<p>That ambiguity compounds. The next developer who touches the file inherits a black box: no clear intent, no test that pins the behavior, and no way to tell whether the regex was hand-written or generated. The cost is not paid at generation time. It is paid at debugging time, usually weeks later, usually under pressure.</p>
+<p>The constraint is not model capability. It is the absence of a lightweight, enforceable boundary that makes the AI's contribution visible and testable before it reaches the main branch.</p>
+<h2 id="treating-the-agent-as-a-constrained-subprocess">Treating the agent as a constrained subprocess</h2>
+<p>The framing that works is to stop treating the assistant as a silent pair programmer and start treating it as a subprocess with explicit inputs, outputs, and gates. Concretely, that means three things:</p>
 <ol>
-<li>
-<p><strong>Prompt guardrails</strong>: The prompt is tokenized and hashed; the hash is stored as a Git note on the commit. If the prompt changes, the hash changes, invalidating previous reviews. This prevents “prompt drift,” where the same prompt evolves and yields different outputs over time.</p>
-</li>
-<li>
-<p><strong>Test regression guard</strong>: Before the AI writes any code, it must pass a regression test suite that runs in a Docker container matching the production runtime. If the suite fails, the agent gets 0 tokens to proceed. This prevents the common failure mode where AI-generated regexes break BCrypt validation because the test suite didn’t include Unicode edge cases.</p>
-</li>
-<li>
-<p><strong>Ownership tagging</strong>: Each line of the AI diff is tagged with a source marker: <code>#ai:req-123</code> or <code>#ai:test-case-456</code>. When a test fails in production, the stack trace points to the exact requirement and test, not to “some AI thing.” This makes rollbacks surgical: you can revert a single line or a single test, not the entire commit.</p>
-</li>
+<li>The agent receives a prompt that includes acceptance criteria and an environment signature, not just a ticket title.</li>
+<li>The agent's output must pass the same test suite that human code must pass, in a container that matches CI.</li>
+<li>The commit records which prompt version produced the diff, so the review can be traced back to its inputs.</li>
 </ol>
-<p>The system is intentionally minimal—no Kubernetes cluster, no feature flags service, no SRE on call. It runs on a t3.medium instance in AWS Lightsail for about $36 per month in 2026 pricing, with Redis 7.2 as a cache for prompt hashes to avoid redundant runs.</p>
-<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
-<p>Let’s walk through a real scenario: a team building a citizen reporting app in Kenya, where feature phones are common and network latency matters. The ticket is “Add offline-first caching for form submissions using localStorage.”</p>
-<h3 id="step-1-set-up-the-prompt-guardrail">Step 1: Set up the prompt guardrail</h3>
-<p>Create a file <code>ai_prompt_template.txt</code>:</p>
-<pre><code class="language-text">You are an experienced frontend engineer building a PWA for feature phones in Kenya.
+<p>The agent never writes directly to the main branch. It writes a diff to a staging location. A human reviews that diff and decides whether to commit it. The commit message states plainly that the change is AI-generated and names the reviewer.</p>
+<p>Three lightweight mechanisms implement this:</p>
+<p><strong>Prompt guardrails.</strong> The prompt template is hashed, and the hash is stored alongside the commit (a Git note works; so does a row in an audit table). If the template changes, the hash changes, and prior reviews are marked stale. This addresses prompt drift, the situation where the same ticket produces different output because the template evolved underneath it.</p>
+<p><strong>A test regression gate.</strong> Before a diff is accepted, it runs through the project's test suite inside a container pinned to the same runtime as CI. If the suite fails, the diff does not reach the developer's editor. This catches the common case where generated code is correct for the developer's machine but not for the deployment target.</p>
+<p><strong>Ownership tagging.</strong> Lines or hunks in the diff carry a marker linking them to a requirement or a test case, for example a comment referencing a ticket ID. When something fails later, the trace points at a requirement, not at "some AI change." Rollbacks become surgical rather than all-or-nothing.</p>
+<p>None of this requires a cluster, a feature-flag service, or a dedicated on-call rotation. It runs on a single small VM or even locally, depending on team size.</p>
+<h2 id="a-worked-example-offline-first-form-caching">A worked example: offline-first form caching</h2>
+<p>Consider a ticket for a progressive web app: "Add offline-first caching for form submissions using localStorage." The acceptance criteria are that form data survives an app restart, that submissions queue while offline, and that no data is lost when the network recovers.</p>
+<h3 id="step-1-the-prompt-template">Step 1: The prompt template</h3>
+<p>Store the template in the repository so it is versioned alongside the code.</p>
+<pre><code class="language-text">You are an experienced frontend engineer working on a progressive web app.
 
 Ticket: {ticket_description}
 
@@ -316,21 +315,23 @@ Write a diff that passes the acceptance tests below.
 
 If you cannot meet the criteria, output nothing.
 </code></pre>
-<h3 id="step-2-build-the-pre-commit-hook">Step 2: Build the pre-commit hook</h3>
-<p>Create <code>.git/hooks/pre-commit.ai</code> (make it executable):</p>
+<p>The environment signature matters. Without it, the model has no way to know which runtime behaviors to assume, and it will default to whatever is most common in its training data.</p>
+<h3 id="step-2-the-pre-commit-gate">Step 2: The pre-commit gate</h3>
+<p>The gate runs the test suite in a container that matches CI. The script below is illustrative and assumes the project installs with <code>npm ci</code> and tests with <code>npm test</code>.</p>
 <pre><code class="language-python">#!/usr/bin/env python3.11
 import subprocess
 import sys
 import os
 
 def run_tests():
-    # Use the same container as CI
+    # Use the same container image as CI
     cmd = [
         &quot;docker&quot;, &quot;run&quot;, &quot;--rm&quot;,
         &quot;-v&quot;, f&quot;{os.getcwd()}:/app&quot;,
+        &quot;-w&quot;, &quot;/app&quot;,
         &quot;node:20-slim&quot;,
         &quot;sh&quot;, &quot;-c&quot;,
-        &quot;cd /app &amp;&amp; npm ci &amp;&amp; npm test&quot;
+        &quot;npm ci &amp;&amp; npm test&quot;
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     return result.returncode == 0, result.stdout, result.stderr
@@ -347,8 +348,9 @@ def main():
 if __name__ == &quot;__main__&quot;:
     sys.exit(main())
 </code></pre>
-<h3 id="step-3-add-ownership-tagging-to-the-diff">Step 3: Add ownership tagging to the diff</h3>
-<p>Create a script <code>ai_diff_tag.py</code>:</p>
+<p>Two details are easy to get wrong. First, <code>-w /app</code> sets the working directory inside the container; without it, <code>npm ci</code> runs in the wrong place. Second, the image tag should be pinned to a specific patch release rather than the floating <code>node:20-slim</code> tag, because slim images occasionally change their base layer and break a dependency that relied on a specific glibc version.</p>
+<h3 id="step-3-prompt-hashing">Step 3: Prompt hashing</h3>
+<p>The hash is written to a file and attached to the commit as a Git note. This is what makes the review traceable.</p>
 <pre><code class="language-python">#!/usr/bin/env python3.11
 import hashlib
 import os
@@ -371,214 +373,123 @@ if os.path.exists(PROMPT_PATH):
 with open(PROMPT_PATH, &quot;w&quot;) as f:
     f.write(hash_prompt())
 </code></pre>
-<h3 id="step-4-wire-it-into-git">Step 4: Wire it into Git</h3>
-<p>Add to <code>.git/config</code>:</p>
-<pre><code class="language-ini">[hook &quot;ai-check&quot;]
-    command = .git/hooks/pre-commit.ai
-</code></pre>
-<h3 id="step-5-developer-workflow">Step 5: Developer workflow</h3>
-<ol>
-<li>Developer opens ticket in Linear.</li>
-<li>Developer runs <code>npm run ai:generate</code> which:</li>
-<li>Fetches the ticket description</li>
-<li>Injects it into the prompt template</li>
-<li>Calls the AI agent</li>
-<li>Outputs a diff in <code>src/features/offline-cache.diff</code></li>
-<li>Developer reviews the diff in VS Code with the GitLens AI diff viewer.</li>
-<li>Developer runs <code>npx ai-check</code> which runs the pre-commit hook inside Docker.</li>
-<li>If tests pass, developer commits the diff with a message like:
-   ```
-   feat(cache): offline-first localStorage for form submissions</li>
-</ol>
-<p>AI-generated, reviewed by @dev-name
-   Test: jest --testPathPattern=offline-cache
-   Req: #1234
-   ```
-6. PR triggers GitHub Actions to run the same test suite on Node 20 LTS, Ubuntu 24.04.
-7. Only if all checks pass does the PR merge to main.</p>
-<p>The developer retains full ownership: the AI is a subprocess, not a co-author. The commit message explicitly states the AI’s contribution and the reviewer, making the contract visible to future maintainers.</p>
-<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
-<p>We ran this system for six months on a government reporting app in Nigeria with 12,000 monthly active users on feature phones. Here are the numbers:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before AI guardrails</th>
-<th>After AI guardrails</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Median PR size (lines)</td>
-<td>247</td>
-<td>89</td>
-</tr>
-<tr>
-<td>Median review time</td>
-<td>42 minutes</td>
-<td>18 minutes</td>
-</tr>
-<tr>
-<td>Test pass rate in CI</td>
-<td>81%</td>
-<td>96%</td>
-</tr>
-<tr>
-<td>Production outages tied to code changes</td>
-<td>7</td>
-<td>1</td>
-</tr>
-<tr>
-<td>AWS Lightsail cost</td>
-<td>$24/month</td>
-<td>$36/month</td>
-</tr>
-</tbody>
-</table>
-<p>The outlier PR that still caused an outage was a race condition in the localStorage fallback logic—handwritten code, not AI-generated. The AI guardrail caught 94% of brittle regex changes that would have broken Unicode validation in production. The cost increase is justified by the 7x reduction in outages, especially given that the Lightsail instance also hosts the Redis 7.2 cache for prompt hashes, avoiding redundant AI runs.</p>
-<p>The most surprising number was the 64% reduction in PR size. The AI often proposes a focused change that satisfies the ticket, so the developer only needs to review the delta, not rewrite the whole module. That reduction also cut the average review time by more than half, which matters when your team is spread across Lagos, Nairobi, and Kampala with a 3-hour time-zone spread.</p>
-<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
-<p>Even with guardrails, three failure modes show up repeatedly:</p>
-<ol>
-<li>
-<p><strong>Prompt drift over time</strong>
-   Teams update the prompt template to add new constraints (e.g., “support Arabic locale”). The prompt hash changes, but old commits still reference the old hash. The result is that new AI runs produce different outputs for the same ticket, breaking the assumption that the AI is deterministic. The fix is to pin the prompt hash in the Git note for each commit, so future reviewers can see which prompt version produced which diff. Without this, a PR that passed CI with prompt v1 might fail when re-run with prompt v2 because the AI now suggests a different caching strategy.</p>
-</li>
-<li>
-<p><strong>Test regression in Docker container</strong>
-   The Docker image used in pre-commit (<code>node:20-slim</code>) occasionally updates its base layer, breaking a test that relied on a specific npm package version. A common failure mode is when Playwright 1.40 inside the container behaves differently than the developer’s local Playwright 1.40 due to a glibc change in the slim image. The fix is to pin the Docker image tag to <code>node:20.13.1-slim</code> and rebuild the image weekly in CI to match production.</p>
-</li>
-<li>
-<p><strong>False ownership attribution</strong>
-   When the AI diff includes a comment like <code>#ai:req-123</code>, reviewers assume the AI wrote the logic and only skim the actual code. This leads to missing subtle bugs in the implementation. The fix is to require a human-authored summary in the PR body that explains the AI’s approach and the reviewer’s rationale. Without it, the team ends up with a commit that looks like it passed review but actually contains untested assumptions.</p>
-</li>
-</ol>
-<p>One documented incident in our Nigeria system: an AI-generated diff added a try/catch around a network call but left the catch block empty. The test suite passed because the mocked network call never threw. The empty catch block went to production and swallowed a critical error, causing silent data loss for 47 users. The fix wasn’t to remove the AI—it was to add a lint rule (<code>no-empty-catch</code>) enforced in the pre-commit hook. The lesson: ownership isn’t just about who signed the commit; it’s about which lint rules you enforce on the AI’s output.</p>
-<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Why it matters</th>
-<th>Cost (2026)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GitLens</td>
-<td>15.4</td>
-<td>AI diff viewer with line-by-line ownership tags</td>
-<td>Free (VS Code extension)</td>
-</tr>
-<tr>
-<td>pre-commit</td>
-<td>3.6</td>
-<td>Runs Python 3.11 hooks before commit</td>
-<td>Free</td>
-</tr>
-<tr>
-<td>Docker</td>
-<td>25.0</td>
-<td>Matches CI runtime exactly</td>
-<td>Free (community edition)</td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>7.2</td>
-<td>Caches prompt hashes to avoid redundant runs</td>
-<td>$0.012/GB-month (AWS ElastiCache micro)</td>
-</tr>
-<tr>
-<td>Lightsail</td>
-<td>t3.medium</td>
-<td>Runs pre-commit hooks in isolated env</td>
-<td>$36/month</td>
-</tr>
-<tr>
-<td>Cursor</td>
-<td>0.32</td>
-<td>AI agent with TypeScript support and prompt templates</td>
-<td>Free tier available</td>
-</tr>
-<tr>
-<td>pytest</td>
-<td>7.4</td>
-<td>Enforces test coverage on AI diffs</td>
-<td>Free</td>
-</tr>
-</tbody>
-</table>
-<p>Avoid Cursor’s default behavior of auto-committing AI changes. Instead, use its prompt templates to generate diffs and write them to a staging branch. GitHub Copilot Enterprise’s “explain this change” feature is useful for reviewer summaries, but it can hallucinate ownership attribution if not paired with explicit <code>#ai:</code> tags.</p>
-<p>The most underrated tool is <code>pre-commit</code> itself. Most teams treat it as a linting step, but it’s also a boundary enforcer. By running the AI check before the human review, you shift the contract from “trust the AI” to “the AI must pass the same gates as human code.”</p>
-<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
-<p>This system works best for teams that already have:</p>
-<ul>
-<li>A test suite that can run in under 5 minutes on a t3.medium instance</li>
-<li>A culture of code review and commit discipline</li>
-<li>Budget for a $36/month Lightsail instance or equivalent cloud sandbox</li>
-</ul>
-<p>It breaks down in three scenarios:</p>
-<ol>
-<li>
-<p><strong>No test suite</strong>
-   If your project lacks tests, the AI guardrail can’t run meaningful validation. The prompt guardrail will still run, but it’s just a linter and won’t catch logic errors. Teams in this situation should first invest in Jest + Playwright coverage before adopting AI pair coding.</p>
-</li>
-<li>
-<p><strong>High churn in dependencies</strong>
-   If your project updates dependencies weekly (e.g., a research prototype), the Docker image pinning breaks. The pre-commit hook will fail because the image is out of date, but so will the prompt hash. The result is constant drift and reviewer fatigue. In this case, skip the Docker guardrail and use a local environment with strict version pinning (e.g., <code>npm ci --omit=dev</code> in CI).</p>
-</li>
-<li>
-<p><strong>Regulated environments</strong>
-   In financial or healthcare systems with audit requirements, the Git note and prompt hash approach may not satisfy compliance. The Git notes are not immutable, and the prompt template can change without traceability. In these cases, use a full audit trail: store the AI prompt and diff in a separate audit log database with a cryptographic hash of the prompt and the diff. Tools like AWS QLDB or an in-house PostgreSQL table with triggers work better than Git notes.</p>
-</li>
-</ol>
-<p>A common trap here is teams that adopt AI pair coding to “ship faster” but skip the test suite because “the AI writes the tests.” That leads to brittle coverage and silent failures in production, exactly the opposite of what guardrails aim to prevent.</p>
-<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>The biggest surprise was how much the team resisted the AI after the first month. Developers expected the AI to write all the code and make them obsolete. Instead, they found themselves spending more time reviewing AI diffs than writing new features. That shift in workload exposed a hidden assumption: we hired developers to write code, not to validate AI outputs. The guardrails forced us to confront that assumption.</p>
-<p>What worked best was the ownership tagging. When a bug surfaced in production, the stack trace pointed to a line tagged <code>#ai:req-345</code>. The reviewer could immediately see which requirement the AI was implementing and which test covered it. That reduced rollback time from 4 hours to 22 minutes, and it gave the team confidence to keep using the AI for repetitive tasks like form validation regexes.</p>
-<p>The biggest disappointment was Docker’s unreliability. Even with pinned images, the <code>node:20-slim</code> image occasionally fails to install a dependency due to a transient network error in the container registry. The pre-commit hook exits 1, blocking the commit. The fix was to add a retry loop in the Python hook, but that introduced flakiness in the guardrail itself. If you’re on a tight budget, consider running the pre-commit hook on a cheap EC2 instance with a fixed AMI instead of Docker, despite the extra cost.</p>
-<p>Overall, the system forces discipline without sacrificing speed. The AI is still faster than a human for boilerplate, but the guardrails ensure the human remains the final arbiter of quality. That balance is fragile—one misconfiguration in the prompt template or a flaky Docker image can break the entire flow—but it’s the only way to keep ownership visible when the AI is in the loop.</p>
-<h2 id="what-to-do-next">What to do next</h2>
-<p>Open your repo’s <code>.git/hooks</code> directory and create <code>pre-commit.ai</code> using the Python 3.11 script from this post. Make it executable and test it on the next AI-generated diff. If the hook fails, you’ll know immediately whether the issue is the tests, the Docker image, or the prompt. That single step takes less than 30 minutes and exposes the real gap between your AI workflow and your production needs.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how do i stop ai commits from bloating my git history with whitespace noise</strong>
-Run <code>npm run format</code> or <code>black .</code> in the pre-commit hook before the AI check. Add a step that runs <code>git add .</code> after formatting so the whitespace changes are committed separately from the AI diff. This keeps the AI diff focused on logic changes and avoids noise in the blame history.</p>
-<p><strong>what if my team uses feature flags instead of feature branches</strong>
-Feature flags don’t solve the ownership problem—they just move it. If an AI generates a flagged feature that fails in production, the flag owner is still on the hook for rollback. Keep the same guardrail: the AI diff must pass the test suite in a production-like container before it’s allowed to merge, even if the merge happens via a feature flag pipeline.</p>
-<p><strong>how do i enforce this in a monorepo with multiple languages</strong>
-Pin the Docker image to a multi-language base like <code>eclipse-temurin:21-jdk-jammy</code> and install the required runtimes in the Dockerfile. Then, extend the pre-commit hook to run <code>pytest</code> for Python, <code>jest</code> for JavaScript, and <code>go test</code> for Go in sequence. The hook exits 1 if any test suite fails, ensuring the AI diff is valid across all languages.</p>
-<p><strong>when should i disable the ai guardrail temporarily</strong>
-Only during rapid prototyping sprints where the goal is to explore the problem space, not to ship to production. Use a feature branch with a distinct prompt template (e.g., <code>ai_prompt_prototype.txt</code>) and skip the Docker guardrail. Tag the branch as experimental and merge it to main only after the prototype has been validated by the guardrail.</p>
-<p><strong>why does my docker pre-commit hook fail with npm ci errors</strong>
-The most common cause is a mismatch between the <code>package-lock.json</code> in the repo and the one installed in the Docker image. Run <code>docker run --rm -v $(pwd):/app -w /app node:20-slim npm ci</code> locally to reproduce the failure before committing. Update <code>package-lock.json</code> if needed and recommit.</p>
-<p><strong>how do i log which ai prompt produced which commit</strong>
-Store the prompt hash in a Git note attached to the commit:</p>
+<p>Attach the hash to the commit:</p>
 <pre><code class="language-bash">git notes add -m &quot;ai_prompt: $(cat .ai_prompt_hash.txt)&quot; HEAD
 </code></pre>
-<p>Then, when reviewing a commit, run <code>git notes show HEAD</code> to see which prompt version produced the diff. This makes the contract explicit and traceable.</p>
-<p><strong>what’s the smallest team size where this works</strong>
-Four developers is the minimum. With three or fewer, the overhead of reviewing AI diffs and maintaining the Docker image outweighs the benefits. At four developers, the team can share the Lightsail instance and the prompt template, reducing the per-developer cost to $9/month.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>When reviewing an older commit, <code>git notes show HEAD</code> reveals which prompt version produced the diff.</p>
+<h3 id="step-4-developer-workflow">Step 4: Developer workflow</h3>
+<ol>
+<li>The developer opens a ticket.</li>
+<li>A script fetches the ticket description, injects it into the template, calls the model, and writes the resulting diff to a staging file.</li>
+<li>The developer reviews the diff in an editor with a diff viewer.</li>
+<li>The pre-commit gate runs the test suite in the pinned container.</li>
+<li>If tests pass, the developer commits with a message that records the AI's contribution and the reviewer:</li>
+</ol>
+<pre><code>feat(cache): offline-first localStorage for form submissions
+
+AI-generated, reviewed by @dev-name
+Test: jest --testPathPattern=offline-cache
+Req: #1234
+</code></pre>
+<ol>
+<li>CI runs the same test suite on the same runtime.</li>
+<li>Only if all checks pass does the change merge.</li>
+</ol>
+<p>The developer retains ownership. The AI is a subprocess whose output is gated by the same checks as human code.</p>
+<h2 id="how-to-measure-whether-this-actually-helps">How to measure whether this actually helps</h2>
+<p>Claims about productivity gains from AI guardrails are easy to make and hard to verify. The honest position is that the effect depends on the codebase. What can be measured is a set of proxy metrics that any team can instrument.</p>
+<p>Track these over a baseline period before introducing the guardrails, then again afterward:</p>
 <ul>
-<li><a href="https://kubaik.github.io/who-signs-off-on-ai-code/">Who signs off on AI code?</a></li>
-<li><a href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">Claude Code after 365 days: what actually works</a></li>
-<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+<li><strong>CI pass rate on first push.</strong> Count PRs where the first CI run succeeds. This is the most direct signal that the local gate matches CI.</li>
+<li><strong>Median PR size in changed lines.</strong> Available from your Git host's API. Smaller, focused diffs are easier to review and easier to revert.</li>
+<li><strong>Median time from PR open to first review.</strong> Also available from the Git host.</li>
+<li><strong>Reverts and hotfixes per week.</strong> Count commits that revert a prior commit or are labeled as hotfixes.</li>
+<li><strong>Failures attributable to environment mismatch.</strong> Grep CI logs for errors that do not reproduce locally.</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
+<p>The comparison that matters is the same repository before and after, not one repository against another. A worked assumption: if first-push CI pass rate moves from 80% to 90% on a team that opens 40 PRs per week, that is four fewer failed CI cycles per week. Whether that is worth the maintenance cost of a pinned container is a judgment call the team has to make with its own numbers.</p>
+<h2 id="failure-modes-worth-knowing-about">Failure modes worth knowing about</h2>
+<p>Even with guardrails in place, several failure modes recur.</p>
+<p><strong>Prompt drift.</strong> A team adds a constraint to the template, for example support for a new locale. The hash changes. Old commits still reference the old hash, and reviewers comparing a new diff to an old one may not realize the inputs differ. The fix is to keep the Git note attached to each commit so the prompt version is always visible, and to treat a hash change as a reason to re-review rather than to assume equivalence.</p>
+<p><strong>Container drift.</strong> The pinned image is rebuilt upstream, or a base layer changes. A test that passed last week fails this week for reasons unrelated to the diff. The fix is to pin to a digest rather than a tag, and to rebuild the image on a schedule so drift is caught in CI rather than during a commit.</p>
+<p><strong>False ownership attribution.</strong> Once a diff carries an <code>#ai:</code> tag, reviewers may assume the tagged lines are the model's and skim the rest, or vice versa. The fix is to require a short human-written summary in the PR body that states what the model proposed and what the reviewer verified. Without that summary, a commit can look reviewed while containing untested assumptions.</p>
+<p><strong>Empty error handling.</strong> A model asked to add a network call may wrap it in a try/catch and leave the catch block empty. Tests pass if the mocked call never throws. A lint rule that forbids empty catch blocks, enforced in the pre-commit gate, catches this class of bug cheaply. The lesson is that ownership is partly a function of which lint rules are enforced on generated output.</p>
+<h2 id="tools-and-their-roles">Tools and their roles</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Example category</th>
+<th>What to look for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Diff review</td>
+<td>Editor extension with inline diff view</td>
+<td>Line-level attribution, PR integration</td>
+</tr>
+<tr>
+<td>Pre-commit hooks</td>
+<td>Hook manager (e.g., <code>pre-commit</code>)</td>
+<td>Runs arbitrary checks before commit</td>
+</tr>
+<tr>
+<td>Runtime matching</td>
+<td>Container runtime</td>
+<td>Pinnable image digests, CI parity</td>
+</tr>
+<tr>
+<td>Prompt hash cache</td>
+<td>Key-value store</td>
+<td>Avoids redundant model calls on unchanged prompts</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>Hosted runner</td>
+<td>Same runtime as the local gate</td>
+</tr>
+<tr>
+<td>AI agent</td>
+<td>Editor or CLI agent with prompt templates</td>
+<td>Writes diffs, not direct commits</td>
+</tr>
+</tbody>
+</table>
+<p>The most underrated item in that table is the hook manager. Most teams treat pre-commit hooks as a linting convenience. Used as a boundary enforcer, they shift the contract from "trust the model" to "the model's output passes the same gates as human code."</p>
+<p>Avoid any agent feature that auto-commits generated changes. Configure the agent to write diffs to a staging location and let the developer decide what to commit.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>The guardrail pattern assumes a few preconditions. Where they are missing, it adds overhead without adding safety.</p>
+<p><strong>No test suite.</strong> If the project has no meaningful tests, the gate has nothing to validate. The prompt hash still runs, but it is only a linter. Teams in this position should invest in test coverage first. Adopting the guardrails before that produces a false sense of safety.</p>
+<p><strong>High dependency churn.</strong> Research prototypes that update dependencies weekly will fight the pinned container. Every update invalidates the image and the prompt hash. In that setting, skip the container gate and rely on strict lockfile-based installs in CI instead.</p>
+<p><strong>Regulated environments.</strong> Git notes are mutable and not designed as an audit trail. Financial and healthcare systems may need the prompt, the diff, and a cryptographic hash stored in an append-only log with retention guarantees. A database table with appropriate access controls is a better fit than Git notes in that context.</p>
+<p><strong>Very small teams.</strong> With two or three developers, the maintenance cost of a pinned container and a prompt template can exceed the benefit. The overhead is real: image rebuilds, hash invalidation, and review summaries all take time. A team should measure its own CI failure rate before deciding whether the gate pays for itself.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting the guardrail pattern, answer these questions:</p>
 <ul>
-<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li>Does the project have a test suite that runs in under five minutes?</li>
+<li>Can the test suite run in a container that matches CI?</li>
+<li>Is there a place to record the prompt hash that reviewers will actually check?</li>
+<li>Is there a lint rule set that catches the error-handling patterns the model tends to produce?</li>
+<li>Does the team have a convention for marking AI-generated commits in the message?</li>
+<li>Is there a designated reviewer for AI-generated diffs, or does review fall to whoever is available?</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<p>If more than two answers are "no," fix those first. The guardrails are only as good as the practices underneath them.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open the repository and create a pre-commit hook that runs the project's test suite inside a container pinned to the same runtime as CI. Make it executable, then run it against the most recent AI-generated diff in the history. If the hook fails, the failure tells you which part of the contract is missing: the tests, the container, or the prompt. That single step is enough to expose the gap between the current workflow and what production actually requires.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I keep AI commits from adding whitespace noise to history?</strong>
+Run the formatter in the pre-commit hook before the test gate, and stage the formatted output as a separate commit. That keeps the generated diff focused on logic and avoids noise in blame output.</p>
+<p><strong>Does using feature flags instead of feature branches solve the ownership problem?</strong>
+No. Flags change when code is exposed, not who is accountable for it. If a flagged feature fails, the flag owner is still responsible for rollback. Keep the same gate: the diff must pass the test suite in a production-like container before it merges, regardless of how it is released.</p>
+<p><strong>How do I apply this in a monorepo with multiple languages?</strong>
+Pin a base image that includes the required runtimes, install language-specific toolchains in the Dockerfile, and have the hook run each language's test command in sequence. Exit non-zero if any suite fails.</p>
+<p><strong>When is it reasonable to disable the gate?</strong>
+During exploratory prototyping on a branch that will never merge directly to main. Use a separate prompt template for that branch, tag the branch as experimental, and require the gate before any merge.</p>
+<p><strong>Why does the containerized hook fail with install errors?</strong>
+Usually a mismatch between the lockfile in the repository and the one the container resolves. Reproduce locally with the same command the hook runs, then update the lockfile if needed.</p>
+<p><strong>What is the minimum team size for this to be worth it?</strong>
+It depends on the CI failure rate and the cost of a production incident. Teams of three or four can share a single gate and template. Smaller teams should measure first: if CI failures are rare and incidents are cheap, the maintenance overhead may not be justified.
+</parameter></p>
                 
                 
             </div>
@@ -613,14 +524,14 @@ Four developers is the minimum. With three or fewer, the overhead of reviewing A
                     
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
-                        <p>AI writes code fast, but who owns the merge? Add Git trailers, CI policy checks, and branch protection to keep accountability without slowing down.</p>
-                        <span class="related-meta">14 min read · 2 October 2026</span>
+                        <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
+                        <span class="related-meta">11 min read · 2 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
-                        <p>Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
-                        <span class="related-meta">12 min read · 25 September 2026</span>
+                        <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+                        <span class="related-meta">11 min read · 25 September 2026</span>
                     </a>
                     
                 </div>

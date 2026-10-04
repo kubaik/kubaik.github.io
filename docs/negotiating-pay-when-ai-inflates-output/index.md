@@ -1,58 +1,56 @@
 # Negotiating pay when AI inflates output
 
-It's fine in staging because staging never sees the traffic pattern that breaks it. The compensation negotiation section of a postmortem is easy to skim past, right up until it's the section that matters. This walks through the fix and the reasoning, not just the patch.
+## The one-paragraph version
 
-## The one-paragraph version (read this first)
-
-The market has noticed that AI tools can make a single engineer appear to produce the output of two or three. That creates a specific confusion: if your output metric doubled, should your pay double? No — because output is not the same as impact, and companies don't pay for lines of code or tickets closed. They pay for the value that output creates, and for the risk they avoid by having someone who can be trusted when the AI is wrong. The negotiation playbook that works is not "I produce 2x, pay me 2x." It is: quantify the business outcome you own, show that you are the person who catches the 20% of AI output that is confidently wrong, and anchor your ask to the cost of replacing that judgment — not to your commit count. The part that trips people up is thinking the AI multiplier is the argument, when the real argument is the accountability multiplier, and that's what this post actually covers.
+AI coding assistants have made first-draft code generation cheap. That creates a specific confusion in compensation conversations: if output metrics rise, should pay rise proportionally? Generally no. Companies compensate for the value output creates and for the risk they avoid by employing someone who can be trusted when the generated code is wrong. The framing that tends to work is not "my output doubled, pay me double." It is: quantify the business outcome you own, demonstrate that you are the person who catches the confidently-wrong fraction of AI output, and anchor the ask to the cost of replacing that judgment rather than to commit counts. The common mistake is treating the AI multiplier as the argument, when the stronger argument is the accountability multiplier.
 
 ## Why this concept confuses people
 
-There are two separate conversations happening at once, and most engineers conflate them.
+Two separate conversations happen at once, and they are easy to conflate.
 
-The first is the productivity conversation. Tools like GitHub Copilot (v1.180, 2026) and Cursor 0.45 can generate a 200-line module in under a minute. A developer who used to close 8 tickets a sprint might now close 14. That is real. It is measurable. And it is exactly the number that managers see in Jira.
+The first is the productivity conversation. Modern coding assistants can generate a multi-hundred-line module in under a minute, and a developer who previously closed eight tickets a sprint might close fourteen. That change is real and it is measurable, and it is exactly the number that shows up in issue trackers and sprint dashboards.
 
-The second is the compensation conversation. Compensation is not set by your ticket velocity. It is set by a combination of (a) the revenue or cost savings attributed to your work, (b) the difficulty of replacing you, and (c) the risk the company carries if you leave or disengage. AI changes (a) only indirectly, and it can actually reduce (b) if your role looks like "person who prompts an LLM."
+The second is the compensation conversation. Compensation is not set by ticket velocity. It is set by some combination of (a) the revenue or cost savings attributed to your work, (b) the difficulty of replacing you, and (c) the risk the company carries if you leave or disengage. AI changes (a) only indirectly, and it can actively reduce (b) if your role looks like "person who prompts a model."
 
-Here is the trap. A common failure mode is an engineer walking into a review with a slide that says "my PR throughput is up 75% since we adopted Copilot." The manager nods, says "great, the whole team is up 60%, that's why we bought the licenses," and the conversation ends. The engineer has just argued that they are a beneficiary of a tool the company already pays for — not that they are the reason the tool produces value.
+A common failure mode is an engineer walking into a review with a slide that says their PR throughput is up by a large percentage since the team adopted an assistant. The manager nods, notes that the whole team's throughput is up because the company bought the licenses, and the conversation ends. The engineer has just argued that they are a beneficiary of a tool the company already pays for — not that they are the reason the tool produces value.
 
-The confusion gets worse because AI output is not uniformly good. It is bimodal. About 80% of what a good model produces is fine or easily fixable. The remaining 20% is subtly wrong in ways that pass tests but fail in production — an off-by-one in a pagination cursor, a race condition that only appears under 200 concurrent requests, a currency rounding error that only shows up when the exchange rate has 4 decimal places. The person who catches that 20% is doing a different job than the person who generates the 80%. That difference is where the negotiation leverage lives. (I am using "leverage" in the plain sense of "advantage," not as a buzzword.)
+The confusion compounds because AI output is not uniformly good. It is bimodal. A large fraction of what a capable model produces is fine or trivially fixable. The remainder is subtly wrong in ways that pass tests but fail in production: an off-by-one in a pagination cursor, a race condition that only appears under a few hundred concurrent requests, a currency rounding error that only surfaces when an exchange rate has four decimal places. The person who catches that remainder is doing a different job than the person who generates the bulk. That difference is where negotiation leverage lives.
 
 ## The mental model that makes it click
 
-Think of it like a surgical team. The robot does the incision. The surgeon decides where to cut, recognizes when the robot's plan is wrong, and takes legal and professional responsibility if it fails. You do not pay the robot. You pay the surgeon. And you pay the surgeon more when the robot is in the room, because the surgeon now has to supervise a tool that is fast and confident and occasionally catastrophically wrong.
+Think of a surgical team. The robot makes the incision. The surgeon decides where to cut, recognizes when the robot's plan is wrong, and carries professional responsibility if something fails. Nobody pays the robot. The surgeon is paid, and the surgeon is paid more when the robot is in the room, because the surgeon now supervises a tool that is fast, confident, and occasionally catastrophically wrong.
 
-AI coding tools are the robot. You are the surgeon. The market has started to price this correctly in some segments and badly in others.
+AI coding tools are the robot. The engineer is the surgeon. Markets price this correctly in some segments and badly in others.
 
 The model has three layers:
 
-1. **Generation** — producing a first draft. This is now cheap. Its market price is approaching the cost of the tool subscription, amortized across a team. Do not anchor your ask here.
-2. **Verification** — knowing whether the generated code is correct, secure, and appropriate for the context. This is expensive because it requires domain knowledge the model does not have. This is where your value concentrates.
-3. **Accountability** — being the named person who is on the hook when the system fails at 2am. This is the scarcest layer, because it cannot be delegated to a tool. It is also the layer most engineers forget to mention in a negotiation.
+1. **Generation** — producing a first draft. This is now cheap. Its market price is approaching the amortized cost of a tool subscription across a team. Do not anchor an ask here.
+2. **Verification** — knowing whether the generated code is correct, secure, and appropriate for the context. This is expensive because it requires domain knowledge the model does not have. Value concentrates here.
+3. **Accountability** — being the named person on the hook when the system fails at 2am. This is the scarcest layer because it cannot be delegated to a tool. It is also the layer most engineers forget to mention in a negotiation.
 
-The practical consequence: your compensation argument should be built on layers 2 and 3, with layer 1 mentioned only as context. "I ship faster" is a layer-1 claim. "I ship faster and I am the reason we caught the three production incidents last quarter before they became customer-facing" is a layer-2 and layer-3 claim.
+The practical consequence: build the compensation argument on layers 2 and 3, and mention layer 1 only as context. "I ship faster" is a layer-1 claim. "I ship faster, and I am the reason three production incidents last quarter were caught before they became customer-facing" is a layer-2 and layer-3 claim.
 
-## A concrete worked example
+## A worked example
 
-Consider a typical mid-level backend engineer at a fintech company processing payments through Paystack and Flutterwave. Before AI tooling, they owned a service that handled 40,000 transactions per day. After adopting an AI coding assistant, they refactored the service and added a new reconciliation endpoint in about 60% of the time it would have taken previously. Their ticket velocity went from 9 to 15 per sprint.
+Consider a mid-level backend engineer at a payments company processing transactions through a regional processor. Before AI tooling, they owned a service handling tens of thousands of transactions per day. After adopting an assistant, they refactored the service and added a new reconciliation endpoint in roughly 60% of the time it would previously have taken. Their ticket velocity went from nine to fifteen per sprint.
 
-Now consider two ways they could frame this in a compensation review.
+Two ways to frame this in a compensation review:
 
 **Framing A (weak):** "My velocity is up 67%. I'd like a 30% raise."
 
-Manager's internal response: The tool did that. We pay for the tool. Also, 30% is above band.
+Likely manager response: the tool did that, the company pays for the tool, and 30% is above band.
 
-**Framing B (strong):** "The reconciliation endpoint I shipped last quarter eliminated a manual review step that was costing the finance team about 12 hours per week. At a fully-loaded cost of roughly ₦8,500 per hour for that team, that's about ₦5.3 million per year in recovered capacity. I also caught a rounding bug in the AI-generated settlement logic that would have misstated about 0.4% of daily settlement totals — roughly ₦1.2 million per month in potential reconciliation breaks. I'd like to discuss moving to the senior band, which is a 22% increase."
+**Framing B (strong):** "The reconciliation endpoint I shipped last quarter eliminated a manual review step that was costing the finance team about 12 hours per week. At a fully-loaded internal cost of roughly 8,500 per hour for that team, that is about 5.3 million per year in recovered capacity. I also caught a rounding bug in the AI-generated settlement logic that would have misstated about 0.4% of daily settlement totals — roughly 1.2 million per month in potential reconciliation breaks. I'd like to discuss moving to the senior band, which is a 22% increase."
 
-Framing B works for three reasons. It converts output into money. It names a specific risk that was avoided. And it asks for a band change, which is a structural ask, not a percentage ask — managers have more room to move someone between bands than to grant an out-of-band raise.
+The arithmetic in Framing B is illustrative, not measured: 12 hours/week × 52 weeks × 8,500/hour ≈ 5.3 million/year, and the settlement figure depends entirely on the actual daily volume and break rate at a given company. Substitute your own numbers, but keep the structure. Framing B works for three reasons. It converts output into money. It names a specific risk that was avoided. And it asks for a band change, which is a structural ask rather than a percentage ask — managers typically have more room to move someone between bands than to grant an out-of-band raise.
 
-The numbers in Framing B are illustrative for the scenario, not measured. But the structure is what matters. The engineer is not claiming credit for the AI's speed. They are claiming credit for the judgment that turned speed into a business outcome and prevented a specific, quantifiable loss.
+The engineer is not claiming credit for the AI's speed. They are claiming credit for the judgment that turned speed into a business outcome and prevented a specific, quantifiable loss.
 
-Here is a small script that can help you build this framing from your own git history and issue tracker. It is not magic; it just forces you to look at outcomes instead of activity.
+The following script helps build this framing from git history and issue-tracker exports. It is not magic; it forces a review of outcomes instead of activity.
 
 ```python
-# outcome_audit.py — run against a repo + issue export to surface outcome-shaped work
-# Requires: Python 3.11+, GitPython 3.1.40
+# outcome_audit.py — run against a repo to surface outcome-shaped work
+# Requires: Python 3.11+, stdlib only
 import subprocess
 from collections import defaultdict
 
@@ -62,7 +60,7 @@ def prs_since(days=180):
         "git", "log", "--merges", f"--since={days} days ago",
         "--pretty=format:%H|%s|%ad", "--date=short"
     ], text=True)
-    return [line.split("|") for line in out.strip().splitlines()]
+    return [line.split("|", 2) for line in out.strip().splitlines()]
 
 # Map PR titles to rough business areas. Replace with your own taxonomy.
 AREAS = {
@@ -85,47 +83,47 @@ for area, items in sorted(buckets.items(), key=lambda x: -len(x[1])):
         print(f"  {date}  {subj}")
 ```
 
-Run that, and you will usually find that 60–70% of your merged work clusters into two or three business areas. Those clusters are your negotiation material. The other 30–40% is maintenance noise that no one will pay a premium for.
+In most repositories, a large majority of merged work clusters into two or three business areas. Those clusters are the negotiation material. The rest is maintenance that nobody will pay a premium for.
 
 ## How this connects to things you already know
 
-If you have ever done capacity planning, you already understand the core idea. A server that handles 1,000 requests per second is not automatically worth 10x a server that handles 100. What matters is whether the extra capacity is on the critical path for revenue, and whether the failure mode when it runs out is graceful or catastrophic. The same logic applies to your output.
+If you have done capacity planning, you already understand the core idea. A server that handles 1,000 requests per second is not automatically worth ten times a server that handles 100. What matters is whether the extra capacity sits on the critical path for revenue, and whether the failure mode when it runs out is graceful or catastrophic. The same logic applies to output.
 
-If you have ever written a retry wrapper around an unreliable third-party API, you understand the second idea. The value is not in the happy path. It is in the handling of the unhappy path. AI-generated code is an unreliable third-party API that happens to run in your process. The person who writes the equivalent of a circuit breaker around it — the review process, the test coverage, the canary deploy — is providing the value.
+If you have written a retry wrapper around an unreliable third-party API, you understand the second idea. The value is not in the happy path; it is in the handling of the unhappy path. AI-generated code is an unreliable third-party API that happens to run in your process. The person who writes the equivalent of a circuit breaker around it — the review process, the test coverage, the canary deploy — is providing the value.
 
-If you have ever negotiated a cloud contract, you understand the third idea. Vendors do not price on list features. They price on switching cost and on risk transferred. Your compensation negotiation is the same shape. You are not selling features ("I can write Go"). You are selling the reduction of a risk the company would otherwise carry.
+If you have negotiated a cloud contract, you understand the third idea. Vendors do not price on list features. They price on switching cost and risk transferred. A compensation negotiation has the same shape. You are not selling features ("I can write Go"). You are selling the reduction of a risk the company would otherwise carry.
 
-The connection to regional context matters here. If you are working for a company that pays in naira, shillings, or cedis but bills in dollars, your compensation is partly a function of the FX exposure the company is managing. Engineers who understand that — who can articulate how their work affects dollar-denominated revenue or local-currency cost — are in a structurally better negotiating position than engineers who only speak in ticket counts. This is not a reason to under-ask. It is a reason to frame your ask in the currency the company actually cares about.
+Regional context matters here. For engineers at companies that pay in local currency but bill in dollars, compensation is partly a function of the FX exposure the business manages. Engineers who can articulate how their work affects dollar-denominated revenue or local-currency cost are in a structurally better position than engineers who speak only in ticket counts. That is not a reason to under-ask; it is a reason to frame the ask in the currency the company actually cares about.
 
 ## Common misconceptions, corrected
 
-**Misconception 1: "AI made me 3x faster, so I should ask for 3x."**
+**Misconception 1: "AI made me three times faster, so I should ask for three times the pay."**
 
-No. AI made generation faster. Generation was never the bottleneck for compensation. The bottleneck is trust and accountability, and those did not triple. A realistic ask in most markets is a band move or a 15–25% increase, supported by outcome evidence. Asking for 3x signals that you do not understand how compensation is set, and it usually ends the conversation.
+No. AI made generation faster, and generation was never the bottleneck for compensation. The bottleneck is trust and accountability, and those did not triple. A realistic ask in most markets is a band move or a 15–25% increase supported by outcome evidence. Asking for a multiple signals a misunderstanding of how compensation is set, and it usually ends the conversation.
 
 **Misconception 2: "If I admit I use AI, I look replaceable."**
 
-This is backwards. In 2026, every serious engineering org assumes you use AI. Hiding it makes you look like you are either not using it (behind) or pretending your output is unaided (dishonest). The strong position is: "I use these tools heavily, and here is the review process I built around them, and here is the incident that process caught."
+This is backwards. Most serious engineering organizations now assume you use AI. Hiding it makes you look either behind or dishonest. The strong position is: "I use these tools heavily, here is the review process I built around them, and here is the incident that process caught."
 
-**Misconception 3: "My manager will bring up AI as a reason to deny the raise."**
+**Misconception 3: "My manager will cite AI as a reason to deny the raise."**
 
-They might. The counter is not to argue that AI did not help. It is to point out that the company already captured the AI productivity gain at the team level — through the license cost and through the aggregate velocity — and that your ask is about the individual accountability layer, which the license does not buy. A useful line: "The Copilot license makes the team faster. It does not make anyone responsible for the settlement bug. That part is still me."
+They might. The counter is not to argue that AI did not help. It is to point out that the company already captured the AI productivity gain at the team level — through license cost and aggregate velocity — and that the ask concerns the individual accountability layer, which the license does not buy. A useful line: "The assistant license makes the team faster. It does not make anyone responsible for the settlement bug. That part is still me."
 
 **Misconception 4: "I need to wait for the annual review cycle."**
 
-Reviews are one venue. Retention conversations, scope changes, and band re-leveling can happen any time there is a triggering event — a key person leaving, a new regulatory requirement, a migration. If you have just prevented a specific, quantifiable loss, that is a triggering event. Waiting 9 months for the cycle to come around usually means the evidence is stale and the budget is gone.
+Reviews are one venue. Retention conversations, scope changes, and band re-leveling can happen any time there is a triggering event: a key person leaving, a new regulatory requirement, a migration. Preventing a specific, quantifiable loss is a triggering event. Waiting months for the cycle usually means the evidence is stale and the budget is gone.
 
-## The advanced version (once the basics are solid)
+## The advanced version
 
-Once you can frame a single outcome, the next step is to build a portfolio of them. This is where the negotiation stops being a one-time conversation and becomes a standing position.
+Once a single outcome can be framed, the next step is a portfolio of them. This is where negotiation stops being a one-time conversation and becomes a standing position.
 
-A useful structure is a quarterly one-pager with three columns: outcome, counterfactual, and evidence. Outcome is what changed in the business. Counterfactual is what would have happened without your specific intervention — this is the hard part, and it is where most engineers underperform. Evidence is the link, usually a dashboard, an incident report, or a finance memo.
+A useful structure is a quarterly one-pager with three columns: outcome, counterfactual, and evidence. Outcome is what changed in the business. Counterfactual is what would have happened without the specific intervention — this is the hard part, and it is where most engineers underperform. Evidence is the link: a dashboard, an incident report, or a finance memo.
 
-Here is a small Node 20 LTS script that pulls the kind of evidence you would want for the reliability column. It assumes you have an incident tracker with a JSON API and a service catalog.
+The following script pulls the kind of evidence needed for the reliability column. It assumes an incident tracker with a JSON API and a fixed service catalog.
 
 ```javascript
-// reliability_evidence.mjs — Node 20 LTS
-// Requires: node-fetch 3.3.2 (or native fetch on Node 20)
+// reliability_evidence.mjs — Node 20 LTS (native fetch)
+// Requires: Node 20+, no external dependencies
 
 const INCIDENTS = 'https://incidents.internal/api/v1/incidents?since=90d';
 const SERVICES = ['settlement', 'recon', 'payouts'];
@@ -158,61 +156,66 @@ for (const [svc, s] of summary) {
 }
 ```
 
-The output is the raw material for the "counterfactual" column. If 7 of 9 incidents in the last quarter were caught by your canary deploy rather than by a customer, that is a concrete, defensible statement about the value of the process you built. It is much harder to argue with than "I feel like I contribute a lot."
+The output is raw material for the counterfactual column. If most incidents in the last quarter were caught by a canary deploy rather than by a customer, that is a concrete, defensible statement about the value of the process you built. It is far harder to argue with than "I feel like I contribute a lot."
 
-The advanced move is to make this a habit, not a scramble. Fifteen minutes at the end of each month, updating the one-pager, means that when the conversation happens — scheduled or not — you are not reconstructing six months of context from memory.
+The advanced move is making this a habit rather than a scramble. Fifteen minutes at the end of each month updating the one-pager means that when the conversation happens — scheduled or not — you are not reconstructing six months of context from memory.
+
+## Measuring the claim instead of asserting it
+
+Because AI productivity claims are easy to overstate, it helps to know how to measure them rather than cite a number. There is no universal multiplier; documented effects vary by task, codebase familiarity, and developer experience, and some studies have found experienced developers slower on certain tasks despite feeling faster. If a number is going to appear in your negotiation, it should come from your own environment.
+
+A defensible measurement has three parts:
+
+1. **A baseline window.** Pick a period before tooling adoption, of comparable scope and team composition. Record lead time for changes (from issue creation to deploy), change failure rate, and time-to-restore.
+2. **A treatment window.** Same metrics, same definitions. Instrument at the CI/CD layer, not by self-report. Most CI systems expose lead time and deployment frequency per service.
+3. **A confound list.** Note what else changed: team size, on-call rotation, a migration, a hiring freeze. If three things changed at once, the attribution is weak, and a sharp manager will say so.
+
+The point is not to produce a headline number. It is to be the person in the room who can say precisely what changed, by how much, and why the measurement is trustworthy. That credibility transfers to the accountability argument, which is the one that actually moves compensation.
+
+## Failure modes to watch for
+
+- **Claiming team outcomes as individual ones.** If the migration succeeded because four people worked on it, saying "I led the migration" invites a correction that damages everything else you said. Attribute precisely.
+- **Leading with the tool.** Managers remember outcomes and forget tool names within a week. Put the outcome first and the tooling last, if at all.
+- **Asking for a percentage when a band move is available.** Percentage asks run into budget rules. Band changes are structural and often have more room.
+- **Bringing no counterfactual.** "I shipped X" is an activity claim. "Without X, Y would have happened" is a value claim. Only the second one is negotiable.
+- **Letting the evidence go stale.** A win from eleven months ago is a historical footnote. A win from last quarter is a current argument.
 
 ## Quick reference
 
 | Situation | Weak framing | Strong framing |
 |---|---|---|
 | Velocity up | "My PRs are up 70%" | "I shipped the reconciliation endpoint that removed 12 hours/week of manual review" |
-| AI catches bugs | (not mentioned) | "My review process caught the rounding bug before it hit settlement" |
-| New tool adopted | "I learned Cursor 0.45" | "I built the review checklist the team now uses for AI-generated migrations" |
-| Ask | "30% raise" | "Move to senior band (roughly 22%)" |
+| AI catches bugs | (not mentioned) | "My review process caught the rounding bug before it reached settlement" |
+| New tool adopted | "I learned the new assistant" | "I built the review checklist the team now uses for AI-generated migrations" |
+| Ask | "30% raise" | "Move to senior band" |
 | Timing | Annual review | Immediately after a triggering event |
 
-Key numbers to have ready before the conversation:
-- Cost per hour of the team whose manual work you removed
-- Monthly value of the loss you prevented (even a rough order of magnitude)
+Numbers to have ready before the conversation:
+- Fully-loaded hourly cost of the team whose manual work you removed
+- Monthly value of the loss you prevented (an order of magnitude is enough)
 - Your current band midpoint and the next band midpoint
-- The number of incidents caught by your process vs. by customers, last 90 days
+- Incidents caught by your process versus by customers, last 90 days
 
-## Frequently Asked Questions
+## FAQ
 
-**How do I prove my AI-assisted output is worth more without sounding like I'm bragging about the tool?**
+**How do I show that AI-assisted output is worth more without sounding like I am bragging about the tool?**
 
 Stop leading with the tool. Lead with the business outcome and mention the tool only as context for how you got there faster. The sentence structure "I shipped X, which saved Y, using Z tooling" puts the outcome first and the tool last. Managers remember outcomes and forget tool names within a week.
 
-**What if my company says AI productivity gains are already priced into the market rate?**
+**What if the company says AI productivity gains are already priced into the market rate?**
 
-They are partly right, and you should concede that point rather than fight it. Then redirect: market rate reflects generation speed, but your ask is about accountability and verification, which the market has not fully priced because it is harder to measure. Offer to make it measurable — propose a specific metric, like incident catch rate, that you will own for the next two quarters.
+They are partly right, and conceding the point is stronger than fighting it. Then redirect: market rate reflects generation speed, but the ask concerns accountability and verification, which the market has not fully priced because it is harder to measure. Offer to make it measurable — propose a specific metric, such as incident catch rate, that you will own for the next two quarters.
 
-**Should I bring up AI in a negotiation at all?**
+**Should AI come up in a negotiation at all?**
 
-Yes, but as a fact, not as an argument. "I use these tools heavily and I have built a review process around them" is a fact that establishes you as current. "AI makes me 3x so pay me 3x" is an argument that will not survive contact with a compensation committee. The fact helps you; the argument hurts you.
+Yes, but as a fact, not as an argument. "I use these tools heavily and I built a review process around them" is a fact that establishes currency. "AI makes me three times faster so pay me three times more" is an argument that will not survive a compensation committee. The fact helps; the argument hurts.
 
-**How do I handle a manager who says the whole team got faster so no one deserves an individual raise?**
+**How do I handle a manager who says the whole team got faster, so no individual deserves a raise?**
 
-That is a real position and sometimes a correct one. The response is to move the conversation from speed to scope. If the whole team is faster, the team can take on more ambitious work, and someone has to own the higher-risk parts of that work. Ask to be formally assigned that ownership — with the title and band that go with it. You are not asking for a reward for speed; you are asking for a role that matches the responsibility you are already carrying.
+That is a real position and sometimes a correct one. Move the conversation from speed to scope. If the whole team is faster, the team can take on more ambitious work, and someone has to own the higher-risk parts of it. Ask to be formally assigned that ownership, with the title and band that go with it. You are not asking for a reward for speed; you are asking for a role that matches the responsibility you already carry.
 
-## Further reading worth your time
+**What if there is no measurable business outcome to point to?**
 
-- The original research on AI coding assistant productivity is worth reading in full rather than in summary, because the effect sizes are smaller and more conditional than the headlines suggest. Start with the METR study on experienced developers: https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/
-- If you work with M-Pesa, the Safaricom developer portal documents the Daraja API and its failure modes, which are a good source of concrete "what could go wrong" material for your counterfactual column: https://developer.safaricom.co.ke/
-- For a clear-eyed look at how compensation bands are actually set in tech, the Levels.fyi data is more useful than most blog posts because it is structured and comparable: https://www.levels.fyi/
+Then the negotiation is premature, and the honest move is to build one. Ask for ownership of a service or metric with a clear business owner, define what success looks like in numbers, and revisit in a quarter. Compensation conversations are easier when the evidence exists before the ask, not after.
 
-Your next step, in the next 30 minutes: open your issue tracker, filter to issues you closed in the last 90 days, and tag each one as "generation" (you wrote it fast) or "verification/accountability" (you caught something, owned something, or prevented a loss). Count the second category. That count is your opening number, and it is the one number the AI tool did not produce for you.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Your next step, in the next 30 minutes: open your issue tracker, filter to issues you closed in the last 90 days, and tag each one as either "generation" (you wrote it quickly) or "verification/accountability" (you caught something, owned something, or prevented a loss). Count the second category. That count is your opening number, and it is the one number the AI tool did not produce for you.

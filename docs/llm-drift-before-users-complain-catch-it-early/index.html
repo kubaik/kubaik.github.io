@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLM drift before users complain: catch it early - Kubai Kevin</title>
-        <meta name="description" content="Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%">
+        <meta name="description" content="Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.">
         <meta name="keywords" content="LlmDriftDetection, LlmEvaluationMetrics, Tokenizer, LlmLatencyMonitoring, Model, Prometheus, LlmChaosTesting, Llm, Generativeai, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-10T12:22:46.862454">
-        <meta property="article:modified_time" content="2026-10-03T15:57:28.992577+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:22:53.137287+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM drift before users complain: catch it early">
-        <meta property="og:description" content="Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%">
+        <meta property="og:description" content="Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.">
         <meta property="og:url" content="https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="LLM drift before users complain: catch it early">
-        <meta name="twitter:description" content="Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%">
+        <meta name="twitter:description" content="Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-drift-before-users-complain-catch-it-early.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/#article",
       "headline": "LLM drift before users complain: catch it early",
-      "description": "Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%",
+      "description": "Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.",
       "datePublished": "2026-08-10T12:22:46+00:00",
-      "dateModified": "2026-10-03T15:57:28+00:00",
-      "wordCount": 2866,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T10:22:53+00:00",
+      "wordCount": 2260,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">LLM drift before users complain: catch it early</h1>
                 
-                <p class="post-lead">Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%</p>
+                <p class="post-lead">Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.</p>
                 
                 
                 <div class="tags">
@@ -261,58 +261,59 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2866 words
+                        11 min read
+                        &nbsp;·&nbsp; 2260 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>There's a gap between how llm evaluation is taught and how it actually behaves under load. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.</p>
-<h1 id="llm-evaluation-pipelines-that-catch-drift-before-users-notice-real-metrics-from-production">LLM evaluation pipelines that catch drift before users notice — real metrics from production</h1>
-<p>Teams shipping LLM features tend to treat evaluation as a one-time gate before launch: run the prompts, log some scores, and move on. The part that trips people up is the drift that shows up days or weeks later—subtle shifts in latency, token usage, or output quality that users feel before dashboards do. That’s what this post actually covers: how to set up evaluation pipelines that catch drift in production, with the concrete metrics that matter and the real failure modes that bite teams running multi-region services.</p>
-<p>The pipelines we’re talking about are not just unit tests or synthetic benchmarks. They’re lightweight, always-on checks that run on every production request, compare the latest model behavior against a rolling baseline, and alert when any metric degrades beyond a threshold. The tricky part isn’t the alerting—it’s the metrics and baselines that actually reflect what users experience.</p>
-<p>Below are the three most common failure modes we see in production, the fixes that work, and the numbers that show why they matter. Each section ends with the exact command or file to check next time you’re debugging.</p>
-<hr />
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>The symptom: your dashboard shows green. Users complain. The model is slower or more expensive, but your evaluation pipeline didn’t fire because the only metric being tracked was accuracy or similarity. You’re measuring what you think matters, not what actually breaks for users.</p>
-<p>A common trap here is assuming latency and cost are stable unless the model changes. In practice, latency drifts when upstream dependencies change—new vector DB versions, regional latency shifts, or rate limiter throttling. Cost drifts when tokenizers or caching strategies degrade—missed cache hits, larger prompts, or unexpected retries.</p>
-<p>This usually shows up when teams run daily batch evaluations and miss the 2 AM p99 spike in a secondary region. By the time the alert fires, support tickets are piling up and the on-call rotation is exhausted.</p>
-<hr />
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>Most teams start with accuracy or semantic similarity as their primary metric. That’s fine for offline benchmarks, but in production, the real pain comes from latency and cost per request.</p>
-<p>The root cause is a mismatch between the evaluation metric and the user-facing outcome. When tokenizers change, prompt expansions break, or caching fails, the model still produces correct-looking outputs—users see slower responses or higher bills before quality degrades. By then, you’re already in incident mode.</p>
-<p>Another hidden driver is regional drift. A model that runs in us-east-1 with a 1 Gbps network link will behave differently in ap-southeast-1 when the upstream vector store’s connection pool saturates at 500 concurrent queries. The evaluation pipeline only samples from the primary region, so the drift goes unnoticed until users in Singapore start complaining.</p>
-<hr />
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p>The most common cause is evaluating only on accuracy or similarity. This is easy to set up—run a set of golden prompts, compare outputs with an LLM-as-a-judge, and log a score. But that misses the metrics that actually matter to users: latency, tokens per request, and cache hit rate.</p>
-<p>A typical setup uses an async evaluation worker that logs metrics to Prometheus via a sidecar. The worker samples 1% of production traffic and compares the current request against a rolling baseline built from the last 24 hours. If the p99 latency increases by more than 200 ms or tokens per request jump by more than 15%, it triggers an alert.</p>
-<p>Here’s a minimal Python 3.11 worker using FastAPI, Redis 7.2 for caching baselines, and Prometheus client 0.19:</p>
+                <h2 id="why-accuracy-only-evaluation-misses-production-drift">Why accuracy-only evaluation misses production drift</h2>
+<p>Most LLM evaluation content focuses on offline quality: golden prompt sets, similarity scores, LLM-as-a-judge. Those are useful for gating a release. They are close to useless for detecting the failure modes that actually degrade a live service, because the things users feel first are latency and cost, not answer quality.</p>
+<p>A model can keep producing correct-looking outputs while p99 latency doubles and token consumption climbs. By the time a quality metric moves, the incident is already hours old. The evaluation pipeline that catches drift early is therefore not a benchmark harness — it is a lightweight, always-on set of checks over operational metrics, compared against a rolling baseline rather than a fixed threshold.</p>
+<p>Three metric families carry most of the signal:</p>
+<ul>
+<li><strong>Latency</strong> (p50, p95, p99, and upstream dependency latency)</li>
+<li><strong>Cost proxies</strong> (tokens per request, retries per request, cache hit rate)</li>
+<li><strong>Quality</strong> (a sampled judge score or task-specific assertion, used as a backstop)</li>
+</ul>
+<p>Everything below is about instrumenting those correctly, and about the failure modes that make them move without any model change.</p>
+<h2 id="failure-mode-1-fixed-thresholds-instead-of-rolling-baselines">Failure mode 1: fixed thresholds instead of rolling baselines</h2>
+<p>A hardcoded alert like "p99 &gt; 1s is bad" works on the day it is written and decays from then on. Traffic mix changes, prompt templates grow, upstream services get slower, and the threshold either fires constantly or never fires at all.</p>
+<p>The fix is a rolling baseline per <code>(model_version, region)</code> pair. A practical definition:</p>
+<ul>
+<li>Window: the last 24 hours of production traffic.</li>
+<li>Statistic: p99 latency and mean tokens per request.</li>
+<li>Outlier handling: exclude samples above the 99.9th percentile before computing the baseline.</li>
+<li>Refresh: hourly, via a background job.</li>
+<li>Alert condition: current p99 exceeds baseline by a fixed absolute margin, or tokens per request exceed baseline by a fixed relative margin.</li>
+</ul>
+<p>The absolute margin for latency and the relative margin for tokens are policy choices, not universal constants. What matters is that they are computed against a baseline that tracks the system, and that they are set per region so a 200 ms shift in a high-traffic region is not treated the same as the same shift in a region with a saturated upstream.</p>
+<p>Instrumenting this requires three things: a histogram for latency, a counter for tokens, and a gauge for cache hit rate. A minimal FastAPI worker that records all three looks like this:</p>
 <pre><code class="language-python">from fastapi import FastAPI, Request
 from prometheus_client import Counter, Histogram, Gauge
 import redis.asyncio as redis
 import time
-import json
 
 app = FastAPI()
 
-# Metrics
 REQUEST_LATENCY = Histogram(
     &quot;llm_request_latency_seconds&quot;,
     &quot;Latency of LLM requests in seconds&quot;,
-    buckets=(0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0)
+    buckets=(0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0),
 )
 TOKENS_PER_REQUEST = Counter(
     &quot;llm_tokens_total&quot;,
     &quot;Total tokens processed&quot;,
-    [&quot;model_version&quot;]
+    [&quot;model_version&quot;, &quot;region&quot;],
 )
 CACHE_HIT_RATE = Gauge(
     &quot;llm_cache_hit_rate&quot;,
-    &quot;Cache hit rate for LLM responses&quot;
+    &quot;Cache hit rate for LLM responses&quot;,
+    [&quot;region&quot;],
 )
 
 redis_client = redis.Redis(
@@ -320,7 +321,7 @@ redis_client = redis.Redis(
     port=6379,
     decode_responses=True,
     socket_timeout=5,
-    socket_connect_timeout=5
+    socket_connect_timeout=5,
 )
 
 @app.middleware(&quot;http&quot;)
@@ -329,13 +330,14 @@ async def track_metrics(request: Request, call_next):
     response = await call_next(request)
     latency = time.time() - start
 
-    REQUEST_LATENCY.observe(latency)
+    region = request.headers.get(&quot;x-region&quot;, &quot;unknown&quot;)
+    REQUEST_LATENCY.labels(region=region).observe(latency)
 
-    # Extract model version and tokens from response headers
     model_version = response.headers.get(&quot;x-model-version&quot;, &quot;unknown&quot;)
     tokens = int(response.headers.get(&quot;x-tokens-used&quot;, &quot;0&quot;))
-
-    TOKENS_PER_REQUEST.labels(model_version=model_version).inc(tokens)
+    TOKENS_PER_REQUEST.labels(
+        model_version=model_version, region=region
+    ).inc(tokens)
 
     return response
 
@@ -343,169 +345,135 @@ async def track_metrics(request: Request, call_next):
 async def health():
     return {&quot;status&quot;: &quot;ok&quot;}
 </code></pre>
-<p>The key detail here is the rolling baseline. Most teams hardcode thresholds like "p99 &gt; 1s is bad," but that threshold drifts as the model or infrastructure changes. Instead, compute the baseline from the last 24 hours of production traffic and alert when the current p99 exceeds baseline + 200 ms or tokens per request exceed baseline + 15%.</p>
-<p>A common mistake is using fixed thresholds that don’t account for regional differences. A 200 ms jump in us-east-1 might be noise, but the same jump in ap-southeast-1 could mean a saturated upstream service. The fix is to maintain separate baselines per region and per model version.</p>
-<hr />
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p>The less obvious cause is caching degradation. When cache hit rates drop from 85% to 50%, latency and cost spike even if the model itself hasn’t changed. The evaluation pipeline won’t catch this if it only tracks accuracy or similarity.</p>
-<p>This usually shows up when teams rely on a single Redis cluster for caching and forget to shard by region. During a traffic spike, the cluster becomes the bottleneck, cache eviction policies degrade, and requests fall back to the model. Users see higher latency and higher bills, but the accuracy metric still looks fine.</p>
-<p>A typical failure pattern: a team moves from a single Redis 7.2 cluster to a cluster mode setup to handle 10k req/s, but forgets to update the eviction policy. With the default <code>maxmemory-policy allkeys-lru</code>, the cache starts evicting large chunks of data, and hit rate drops from 85% to 60%. The model is still producing correct outputs, so the accuracy metric doesn’t trigger an alert.</p>
-<p>Here’s a Redis 7.2 configuration snippet that prevents this:</p>
-<pre><code># redis.conf for cluster mode with regional sharding
+<p>Two details matter more than the code. First, the region label must be on the histogram and counter, not only on the gauge — otherwise the baseline cannot be computed per region. Second, the token count must come from the response path, not be estimated from the prompt, because the whole point is to catch cases where actual consumption diverges from expectation.</p>
+<h3 id="how-to-measure-whether-your-baseline-is-any-good">How to measure whether your baseline is any good</h3>
+<p>You do not need a benchmark table to know if this works. You need a backtest. Take 30 days of historical metric data, compute the rolling baseline as of each hour, and ask: for the incidents you already know about, how many hours before the first user complaint would this rule have fired? If the answer is "never" or "after," the baseline or the margin is wrong. This is a query against data you already have, and it is the only honest way to tune the margins.</p>
+<h2 id="failure-mode-2-cache-degradation-that-quality-metrics-cannot-see">Failure mode 2: cache degradation that quality metrics cannot see</h2>
+<p>A response cache is part of the serving path, and when it degrades, latency and cost rise while output quality stays identical. This is the single most common reason a green quality dashboard coexists with a support queue.</p>
+<p>The mechanism is usually eviction, not failure. A cache cluster under memory pressure evicts entries according to its <code>maxmemory-policy</code>. With <code>allkeys-lru</code>, the policy evicts across all keys, so a traffic spike can flush a large fraction of a working set that was previously stable. Requests then fall through to the model, latency climbs, and token spend climbs with it. Nothing errors. Nothing looks broken. The only signal is the hit rate.</p>
+<p>A configuration that behaves more predictably under skewed access patterns uses an LFU policy rather than LRU:</p>
+<pre><code># redis.conf — cluster mode
 cluster-enabled yes
 cluster-config-file nodes.conf
 cluster-node-timeout 5000
 maxmemory 16gb
-maxmemory-policy allkeys-lru
-# Add a small buffer to avoid sudden evictions
+maxmemory-policy allkeys-lfu
 maxmemory-samples 5
-# Enable LFU for better hit rate on skewed access patterns
 lfu-log-factor 10
 lfu-decay-time 1
 </code></pre>
-<p>The critical part is monitoring cache hit rate per region. If hit rate drops below 75%, alert immediately. In production, we’ve seen hit rates drop to 45% during a regional failover because the shard replicas weren’t warmed up. The evaluation pipeline caught it within 5 minutes because we track cache hit rate as a Prometheus metric.</p>
-<p>Another fix is to use a multi-level cache: local in-memory cache (e.g., Python’s <code>lru_cache</code>) for the same process, regional Redis cluster for cross-process sharing, and a global cache for model weights. This reduces upstream load during regional outages.</p>
-<hr />
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>The environment-specific cause is upstream dependency drift. Teams often assume that model weights and tokenizers are static artifacts, but in practice, they’re loaded from a model registry that can change without notice. If the tokenizer version changes, prompt expansion breaks, and token counts jump even if the model itself hasn’t changed.</p>
-<p>This usually shows up when teams pin model and tokenizer versions in their Dockerfile but pull weights from a shared registry during deploy. A new tokenizer version ships, and suddenly every request uses 25% more tokens. The evaluation pipeline only sees the accuracy metric, so it doesn’t trigger an alert until users complain about higher bills.</p>
-<p>A concrete scenario: a team uses Hugging Face transformers 4.40.0 with a tokenizer from the same version. During a model registry update, the tokenizer version increments to 4.41.0, which applies a new normalization rule. The same prompt now expands to 25% more tokens, and the p99 latency jumps from 450 ms to 800 ms. Users in EMEA notice the slowdown before the on-call team.</p>
-<p>The fix is to pin the tokenizer version explicitly and lock it to the model version. Here’s a Python snippet that enforces this:</p>
+<p><code>allkeys-lfu</code> tracks access frequency, so entries that are read often survive a burst of one-off keys that would otherwise displace them under LRU. <code>lfu-decay-time 1</code> means the frequency counter halves roughly once per minute, which keeps the policy responsive to changing access patterns rather than locking in historical popularity.</p>
+<p>The monitoring rule is simple and does not depend on any particular traffic level: alert on a relative drop in hit rate against its own rolling baseline, per region. A fixed "below 75%" line is a starting point, but the same reasoning as latency applies — the baseline should move with the workload.</p>
+<h3 id="a-worked-example-of-the-cost-arithmetic">A worked example of the cost arithmetic</h3>
+<p>Suppose a service serves 1,000,000 requests per day. The cache normally absorbs 85% of them, so 150,000 reach the model. Each model call averages 1,200 tokens. At a blended price of $0.50 per million tokens, the daily model spend is:</p>
+<ul>
+<li>150,000 × 1,200 = 180,000,000 tokens</li>
+<li>180,000,000 / 1,000,000 = 180 million-token units</li>
+<li>180 × $0.50 = $90 per day</li>
+</ul>
+<p>Now suppose the hit rate falls to 60%. Model calls rise to 400,000:</p>
+<ul>
+<li>400,000 × 1,200 = 480,000,000 tokens</li>
+<li>480 × $0.50 = $240 per day</li>
+</ul>
+<p>The difference is $150 per day, or roughly $4,500 per month, from a change that produced no errors and no quality regression. These figures are illustrative — substitute your own request volume and token price — but the shape of the result is the point: hit rate is a first-class cost metric, and it belongs on the same dashboard as latency.</p>
+<h3 id="multi-level-caching">Multi-level caching</h3>
+<p>A single cache tier concentrates risk. A common structure that reduces it:</p>
+<ul>
+<li><strong>In-process cache</strong> (for example, Python's <code>functools.lru_cache</code>) for repeated identical calls within one worker.</li>
+<li><strong>Regional cache</strong> (a Redis cluster per region) for cross-process sharing.</li>
+<li><strong>Global store</strong> for model weights and other large artifacts, ideally replicated to each region.</li>
+</ul>
+<p>The regional tier is what prevents a failover in one region from turning into a cross-region latency problem for every region.</p>
+<h2 id="failure-mode-3-silent-artifact-and-dependency-drift">Failure mode 3: silent artifact and dependency drift</h2>
+<p>Model weights and tokenizers are treated as static artifacts, but they are pulled from somewhere, and that somewhere can change. A tokenizer revision that applies a new normalization rule will change token counts for the same input text without changing a single model weight. The outputs still look fine. The bill and the latency do not.</p>
+<p>The defense is to pin the revision explicitly and verify it at load time:</p>
 <pre><code class="language-python">from transformers import AutoTokenizer, AutoModelForCausalLM
 import hashlib
 
 MODEL_ID = &quot;my-org/my-model&quot;
-MODEL_VERSION = &quot;v1.2.3&quot;
-TOKENIZER_VERSION = &quot;v1.2.3&quot;  # Must match model version
+MODEL_REVISION = &quot;v1.2.3&quot;
+TOKENIZER_REVISION = &quot;v1.2.3&quot;
 
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_ID,
-    revision=MODEL_VERSION,
-    trust_remote_code=True
+    revision=MODEL_REVISION,
 )
 tokenizer = AutoTokenizer.from_pretrained(
     MODEL_ID,
-    revision=TOKENIZER_VERSION,
-    trust_remote_code=True
+    revision=TOKENIZER_REVISION,
 )
 
-# Verify tokenizer hasn’t changed
-tokenizer_hash = hashlib.sha256(tokenizer.get_vocab().tobytes()).hexdigest()
-expected_hash = &quot;a1b2c3...&quot;  # Precomputed from known good version
+vocab = tokenizer.get_vocab()
+# Sort keys so the hash is stable across processes.
+canonical = &quot;\n&quot;.join(f&quot;{k}\t{v}&quot; for k, v in sorted(vocab.items()))
+tokenizer_hash = hashlib.sha256(canonical.encode(&quot;utf-8&quot;)).hexdigest()
+expected_hash = &quot;a1b2c3...&quot;  # recorded when the revision was validated
 if tokenizer_hash != expected_hash:
-    raise RuntimeError(&quot;Tokenizer version mismatch detected&quot;)
+    raise RuntimeError(&quot;Tokenizer revision mismatch detected&quot;)
 </code></pre>
-<p>This prevents silent upgrades to tokenizers or model weights. In production, we’ve seen this save $4k/month in token overage fees by blocking an unintended tokenizer update.</p>
-<p>Another environment-specific risk is regional model registry latency. If your model registry is in us-east-1 and your service runs in ap-southeast-1, registry pulls can add 400–600 ms to cold starts. The evaluation pipeline won’t catch this if it only runs in the primary region. The fix is to replicate the model registry to each region and use regional endpoints.</p>
-<hr />
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>After applying the three fixes, verify the evaluation pipeline catches drift before users notice. The key is to simulate drift and confirm the alerts fire.</p>
-<p>First, simulate a tokenizer upgrade by temporarily using a different tokenizer version. In a staging environment, run:</p>
-<pre><code class="language-bash"># Simulate a tokenizer version bump
-docker run --rm -it \
-  -e TOKENIZER_VERSION=&quot;v1.2.4&quot; \
-  my-llm-service:staging \
-  python -m myapp.cli simulate_drift --tokenizer-jump 25
+<p>Two corrections to the naive version of this check are worth stating explicitly. Hashing <code>tokenizer.get_vocab().tobytes()</code> is not reliable, because dict iteration order is not guaranteed to be stable across processes or Python versions; sort the items and hash a canonical string instead. And pinning a revision is only meaningful if the check runs at startup, so a mismatch fails the deploy rather than surfacing as a metric anomaly hours later.</p>
+<p>The same reasoning applies to any managed artifact store or model registry: the category of tool matters less than the property that a revision identifier resolves to immutable content, and that the deployed process verifies it.</p>
+<p>There is a second, quieter version of this failure mode: cold-start latency when artifacts are pulled from a distant region. If the artifact store lives in one region and the service runs in another, cold starts absorb cross-region transfer time. The evaluation pipeline will not see this if it only samples the primary region. Replicating the artifact store per region, and measuring cold-start latency as its own metric, is the fix.</p>
+<h2 id="verifying-that-the-pipeline-actually-fires">Verifying that the pipeline actually fires</h2>
+<p>An alerting rule that has never fired is untested. The verification approach is to inject each drift mode deliberately and confirm the alert arrives.</p>
+<p><strong>Tokenizer drift.</strong> In a staging environment, run the service with a different tokenizer revision and confirm that the startup hash check fails the deploy. This is the cheapest test and it catches the most common silent regression.</p>
+<p><strong>Cache eviction.</strong> Force evictions and watch the hit-rate gauge:</p>
+<pre><code class="language-bash">redis-cli --cluster call 127.0.0.1:6379 &quot;DEBUG evict 10000&quot;
 </code></pre>
-<p>This command artificially inflates token counts by 25% for 1% of traffic. The evaluation worker should detect the p99 latency increase and tokens per request jump, then fire an alert within 5 minutes.</p>
-<p>Next, simulate a cache eviction event by forcing Redis to evict 50% of keys:</p>
-<pre><code class="language-bash"># In Redis 7.2
-redis-cli --cluster call 127.0.0.1:6379 &quot;DEBUG evict 10000&quot;
-</code></pre>
-<p>This forces evictions of 10k keys. The cache hit rate should drop from ~85% to ~50%, and the evaluation pipeline should alert within 3 minutes.</p>
-<p>Finally, simulate a regional network shift by injecting 300 ms of artificial latency into the upstream vector DB connection:</p>
-<pre><code class="language-python"># In your vector DB client
-import socket
+<p>Note that <code>DEBUG evict</code> is a debugging command and is not available in all managed Redis offerings; where it is unavailable, simulate the same effect by lowering <code>maxmemory</code> on a test cluster until eviction begins.</p>
+<p><strong>Upstream latency.</strong> Inject delay on the path to the vector store or another upstream dependency and confirm that the per-region p99 alert fires. A socket-level wrapper is one way to do this in a test harness:</p>
+<pre><code class="language-python">import socket
 import time
 
-original_socket = socket.socket
+_original_socket = socket.socket
 
 def slow_socket(*args, **kwargs):
-    s = original_socket(*args, **kwargs)
+    s = _original_socket(*args, **kwargs)
     s.settimeout(10)
-    # Inject 300 ms latency
-    time.sleep(0.3)
+    time.sleep(0.3)  # injected delay
     return s
 
 socket.socket = slow_socket
 </code></pre>
-<p>The evaluation worker should detect the p99 latency increase and alert within 5 minutes.</p>
-<p>A common mistake here is relying on synthetic tests that don’t reflect real traffic patterns. The fix is to run these simulations on a 1% traffic shadow in production, not in staging. In our experience, staging traffic doesn’t reproduce the regional skew or upstream dependency churn that production sees.</p>
-<hr />
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Preventing drift requires three habits: pin everything, monitor everything, and test everything.</p>
-<p>Pin model and tokenizer versions explicitly in your model registry and deployment manifests. Use a lockfile for Python dependencies and pin transformer versions to the patch level. In production, we’ve seen teams save $12k/year by locking tokenizer versions and avoiding unexpected token overages.</p>
-<p>Monitor everything means tracking not just accuracy, but also latency, tokens per request, cache hit rate, and upstream dependency latency per region. Use Prometheus with per-region and per-model baselines. Set alerts when any metric drifts beyond baseline ±20%. In a 2026 survey of 200 ML teams, 68% reported that drift alerts based on fixed thresholds missed regional issues—only rolling baselines caught them.</p>
-<p>Test everything means running the evaluation pipeline on every deploy and also running chaos tests weekly. The chaos test should simulate tokenizer upgrades, cache evictions, and regional network shifts, and verify the alerts fire within 5 minutes. In our experience, teams that run weekly chaos tests catch drift 3x faster than teams that rely on deploys only.</p>
-<p>Here’s a minimal chaos test script using Locust 2.22 and Redis 7.2:</p>
+<p>This monkeypatch is a test-only tool. It delays socket creation, not individual sends, so it is a crude approximation of real network latency — useful for confirming that an alert fires, not for measuring realistic latency distributions.</p>
+<p><strong>Load shape.</strong> To exercise a region under realistic concurrency, a load generator with per-request region headers is enough:</p>
 <pre><code class="language-python">from locust import HttpUser, task, between
-import random
-import time
 
 class DriftUser(HttpUser):
     wait_time = between(0.5, 2.5)
 
     @task
     def request(self):
-        self.client.get(&quot;/api/v1/chat&quot;, headers={&quot;x-region&quot;: &quot;ap-southeast-1&quot;})
+        self.client.get(
+            &quot;/api/v1/chat&quot;,
+            headers={&quot;x-region&quot;: &quot;ap-southeast-1&quot;},
+        )
 
-# Run with:
-# locust -f drift_test.py --headless -u 100 -r 10 --host=https://my-service.com
+# locust -f drift_test.py --headless -u 100 -r 10 --host=https://example.internal
 </code></pre>
-<p>The script simulates 100 concurrent requests from ap-southeast-1. During the test, inject 300 ms of latency into the vector DB client and verify the evaluation pipeline alerts within 5 minutes.</p>
-<p>Another habit is maintaining a model registry that enforces version pinning. Use tools like MLflow Model Registry 2.9 or Hugging Face Hub with strict versioning. Never allow automatic upgrades of model or tokenizer artifacts.</p>
-<hr />
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<ul>
-<li><strong>Redis connection pool exhaustion during regional failover</strong>: The error message is <code>MISCONF Redis is configured to save RDB snapshots, but no save points are configured</code>. This happens when Redis 7.2 loses its config during a failover because the config file wasn’t replicated. Fix: use Redis 7.2 cluster mode with replicated config files and monitor connection count.</li>
-<li><strong>Token count inflation due to prompt expansion</strong>: The error message is <code>Token limit exceeded for model</code>. This happens when a prompt expansion rule changes silently in a new tokenizer version. Fix: pin tokenizer versions and test expansion rules in CI.</li>
-<li><strong>Prometheus metric cardinality explosion</strong>: The error message is <code>Too many labels for metric</code>. This happens when you add per-region and per-model labels without rate limiting. Fix: use relabeling in Prometheus config to drop unnecessary labels.</li>
-<li><strong>Evaluation worker OOM during traffic spike</strong>: The error message is <code>Killed: 9</code>. This happens when the worker buffers too many samples in memory. Fix: use a streaming approach with Redis or Kafka for metrics, not in-memory buffers.</li>
-</ul>
-<hr />
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If the evaluation pipeline still misses drift, escalate through three steps:</p>
+<p>The important property of these tests is not that they run in staging — it is that they run against a copy of the metric pipeline with the same baselines and the same alert rules as production. A chaos test that fires an alert nobody receives proves nothing.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>When a drift alert fires, or when you are deciding what to instrument next, work through this list in order:</p>
 <ol>
-<li>Check the model registry logs for unexpected artifact updates. In Hugging Face Hub, run <code>huggingface_hub list_repo_files</code> and compare file hashes against known good versions.</li>
-<li>Check Redis cluster logs for eviction events. Run <code>redis-cli --cluster info</code> and look for <code>evicted_keys</code> spikes.</li>
-<li>Check Prometheus for upstream dependency latency. Run <code>rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])</code> and look for regional spikes.</li>
+<li><strong>Is the alert comparing against a rolling baseline, per region and per model version?</strong> If not, fix that first; every other signal is unreliable without it.</li>
+<li><strong>Did the hit rate move?</strong> Check the per-region cache hit-rate gauge against its baseline before looking at anything else. Eviction is the most common cause and the easiest to confirm.</li>
+<li><strong>Did tokens per request move?</strong> If yes, and latency moved with it, suspect an artifact change. Check the tokenizer and model revision hashes recorded at deploy time.</li>
+<li><strong>Did upstream dependency latency move?</strong> Break p99 down by dependency. A vector store or a rate limiter is more often the cause than the model itself.</li>
+<li><strong>Is the drift confined to one region?</strong> Regional isolation points at infrastructure — connection pools, replication lag, cross-region artifact pulls — rather than at the model.</li>
+<li><strong>Has the alert ever fired in a test?</strong> If not, treat the rule as unverified and run the injection tests above.</li>
 </ol>
-<p>If all three are clean, the drift is likely in the application logic—prompt expansion, caching strategy, or retry logic. Escalate to the application team with a 5-minute reproduction script.</p>
-<hr />
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does my p99 latency jump even though the model version hasn’t changed?</strong>
-Latency drift usually comes from upstream dependencies: vector DB latency, network jitter, or cache thrashing. A common culprit is Redis eviction policies—when the cache can’t keep up, requests fall back to the model, adding 300–600 ms per request. Check cache hit rate and upstream latency per region.</p>
-<p><strong>How do I set a rolling baseline for metrics like tokens per request?</strong>
-Compute the baseline from the last 24 hours of production traffic, excluding outliers above the 99.9th percentile. Store the baseline in Redis as a rolling window: <code>BASELINE:{model_version}:{region}</code>. Update it every hour with a lightweight background job using Python 3.11 and Redis 7.2.</p>
-<p><strong>What’s the minimum set of metrics I need to catch drift before users complain?</strong>
-Track p99 latency, tokens per request, cache hit rate, and upstream dependency latency per region. Accuracy and similarity are secondary—users feel latency and cost before quality degrades. In a 2026 survey, 72% of teams that caught drift early used at least these four metrics.</p>
-<p><strong>How do I prevent tokenizer upgrades from silently inflating token counts?</strong>
-Pin the tokenizer version to the model version in your model registry and deployment manifest. Use a hash of the tokenizer’s vocabulary to verify it hasn’t changed. In production, this prevents a $4k/month overage when a new tokenizer version silently applies a normalization rule.</p>
-<hr />
-<h2 id="action-for-today">Action for today</h2>
-<p>Check your evaluation pipeline’s rolling baselines. Open the Prometheus query for <code>llm_request_latency_seconds</code> and compare the 24-hour baseline to the last 2 hours. If the p99 has drifted more than 200 ms, adjust the alert threshold or fix the upstream dependency. Then, verify that cache hit rate hasn’t dropped below 75% in any region. If it has, update your Redis 7.2 eviction policy and restart the cluster.</p>
-<p>Next step: run the chaos test script above in staging today. It should alert within 5 minutes if your pipeline is working.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
-<li><a href="https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
-<li><a href="https://kubaik.github.io/why-does-my-model-drift-after-deploy/">Why does my model drift after deploy?</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
-<li><a href="https://docs.locust.io/">Locust documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why would p99 latency rise with no model change?</strong>
+The most common causes are cache eviction reducing hit rate, an upstream dependency slowing down, or connection pool saturation under concurrency. Break the latency down by dependency and by region before assuming the model is involved.</p>
+<p><strong>How should a rolling baseline be computed?</strong>
+Take the last 24 hours of production samples for a given <code>(model_version, region)</code>, drop samples above the 99.9th percentile, and compute the statistic you alert on. Refresh hourly. Store it wherever your alerting layer can read it cheaply.</p>
+<p><strong>What is the minimum metric set for catching drift early?</strong>
+Per-region p99 latency, tokens per request, cache hit rate, and upstream dependency latency. Quality metrics are a backstop, not the primary signal, because latency and cost move first.</p>
+<p><strong>How do I stop a tokenizer update from silently changing token counts?</strong>
+Pin the tokenizer revision to the model revision, verify a canonical hash of the vocabulary at process startup, and fail the deploy on mismatch. Verify at deploy time, not at request time.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open your metrics backend and run two queries for the last 24 hours, grouped by region: p99 latency and cache hit rate. Compare the most recent two hours against the preceding 22. If either has moved by more than roughly 15% in any single region, you have found a drift your current alerts are not catching — and you now have the specific metric and region to build the rolling baseline around.</p>
                 
                 
             </div>
@@ -534,8 +502,8 @@ Pin the tokenizer version to the model version in your model registry and deploy
                     
                     <a class="related-card" href="/llm-eval-drift-that-users-notice-first/">
                         <h3>LLM eval drift that users notice first</h3>
-                        <p>Detect LLM drift before users notice — real metrics from production pipelines, with concrete thresholds, code snippets, and cost figures for 2026…</p>
-                        <span class="related-meta">17 min read · 28 August 2026</span>
+                        <p>Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
+                        <span class="related-meta">15 min read · 28 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/context-windows-live-longer-than-you-think/">

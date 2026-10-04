@@ -1,5 +1,21 @@
-CHANGELOG — AdSense quality cleanup, round 2
+CHANGELOG — AdSense quality cleanup, round 3 (scan mode)
 Date: 2026-10-03   Scope: kubaik/kubaik.github.io pipeline + corpus (473 posts audited)
+
+ROUND 3 — SCRIPTS NOW SCAN docs/ THEMSELVES (no verdict files needed)
+  * triage.py exposes analyze(docs): reviews EVERY content directory under docs/ and returns DELETE/IMPROVE rows.
+    delete_posts.py, improve_posts.py and post_enhancer.py call it on every run, so results always reflect what is
+    currently in docs/. --verdicts / --list remain as optional overrides only.
+  * Coverage is printed each run: "reviewed N post directories (skipped K site/reserved dirs ...)". Directories with a
+    missing/corrupt post.json are still reviewed from index.md (and flagged, e.g. as thin); legal/site pages
+    (about, contact, privacy, terms, ai-content-policy, tag, author, static) are skipped by name.
+  * delete_posts.py re-scans after each pass until nothing new is flagged (deleting one half of a duplicate pair can
+    change which sibling is flagged: 86 posts on pass 1, +1 on pass 2). --max is a total budget. New --force-slug
+    deletes a post the scan did not flag.
+  * improve_posts.py: the REVIEW always covers every post; --limit only bounds LLM rewrites per run (default 10,
+    --all or --limit 0 = everything). Prints "N of M pending, K remain". Skips posts flagged DELETE and warns.
+  * blog-automation.yml no longer passes verdict files to any step.
+  * Verified on a repo copy with NO report files present, including injected edge cases (markdown-only dir, corrupt
+    post.json with/without index.md, empty dir): all reviewed or skipped correctly; delete is idempotent.
 
 WHAT CHANGED SINCE ROUND 1
   * Final DELETE count is 86 (not 88): the entity allow-list now knows real tools (PyTorch, SageMaker, LangSmith,
@@ -60,11 +76,11 @@ CHANGED FILES (full files supplied)
                        before the rebuild; new dispatch inputs triage_max_deletions (10) and improve_limit (5).
 
 HOW TO RUN (one-time cleanup)
-  python triage.py --docs docs --out triage_report
-  python delete_posts.py                       # review the dry run
-  python delete_posts.py --confirm
-  python improve_posts.py --confirm --limit 10 # repeat (resume-safe) until "0 post(s)"; needs one LLM key
-  python post_enhancer.py --docs docs --verdicts triage_report/verdicts.csv --confirm
+  python delete_posts.py                       # dry run: scans docs/, lists posts to delete
+  python delete_posts.py --confirm             # deletes them (re-scans until stable) + writes blocked_topics.json
+  python improve_posts.py --confirm --limit 10 # scans docs/, rewrites 10; repeat (resume-safe) or use --all
+  python post_enhancer.py --docs docs --confirm
+  (optional report: python triage.py --docs docs --out triage_report)
   python blog_system.py build && git add -A && git commit -m "quality cleanup"
   Or run the workflow manually with triage_max_deletions=100 and improve_limit=0..N.
 

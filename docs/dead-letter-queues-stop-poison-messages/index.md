@@ -1,18 +1,14 @@
 # Dead-letter queues: stop poison messages
 
-durable execution is the kind of decision that looks reversible until it isn't. It's a one-line fix once you know where to look, and expensive until then. Here's what changed once we stopped guessing and started measuring.
+A background worker that retries a poison message forever is worse than no worker at all. It burns CPU, fills logs, and hides the real failure behind a wall of stack traces. On a single small instance acting as the only worker for a backlog of payment webhooks, one poison message can degrade the whole pipeline for hours — and the failure often surfaces only when a customer reports that a top-up never reflected.
 
-## Why I wrote this (the problem I kept hitting)
+The problem is not that messages fail. The problem is that most queue setups treat every failure as transient. A malformed JSON payload, a missing database column, or a bug in a third-party API client will never succeed on retry, no matter how many times you try. Without a dead-letter queue (DLQ) and a retry cap, those messages become immortal. They sit at the head of the queue, blocking everything behind them — a head-of-line block that turns a 200ms job into a 20-minute outage.
 
-A background worker that retries a poison message forever is worse than no worker at all. It burns CPU, fills your logs, and hides the real failure behind a wall of stack traces. In sub-Saharan Africa, where a single EC2 t3.small might be the only worker for a queue of 10,000 payment webhooks, a poison message can take the whole system down for hours — and you might not notice until a customer calls because their mobile money top-up never reflected.
-
-The problem isn't that messages fail. The problem is that most queue setups treat every failure as transient. A malformed JSON payload, a missing database column, or a bug in a third-party API client will never succeed on retry, no matter how many times you try. Without a dead-letter queue (DLQ) and a retry cap, those messages become immortal. They sit at the head of the queue, blocking everything behind them — a head-of-line block that turns a 200ms job into a 20-minute outage.
-
-The part that trips people up is not building the DLQ itself. It's designing the retry policy, the visibility timeout, and the alerting so that poison messages are isolated in seconds, not hours — and so you can actually debug them without SSHing into a box. That's what this post covers.
+The part that trips people up is not building the DLQ itself. It is designing the retry policy, the visibility timeout, and the alerting so that poison messages are isolated in seconds, not hours — and so you can debug them without SSHing into a box. That is what this post covers.
 
 ## Prerequisites and what you'll build
 
-You'll build a small but complete background job processor using [Python 3.11, Redis](/built-a-multi-agent-system-without-langgraph/) 7.2, and RQ 1.15 (Redis Queue). RQ is a good fit for teams that already run Redis and don't want the operational overhead of Celery or the cost of a managed queue like AWS SQS. It's lightweight, has a built-in failure registry, and runs fine on a $6/month VPS.
+You'll build a small but complete background job processor using Python 3.11, Redis 7.2, and RQ 1.15 (Redis Queue). RQ is a reasonable fit for teams that already run Redis and do not want the operational overhead of Celery or the cost of a managed queue like AWS SQS. It is lightweight, has a built-in failure registry, and runs on a small VPS.
 
 You'll need:
 
@@ -21,15 +17,15 @@ You'll need:
 - RQ 1.15 (`pip install rq==1.15.0`)
 - A text editor and a terminal
 
-We'll implement:
+You'll implement:
 
 1. A job function that simulates a flaky third-party API call.
-2. A custom worker that retries transient failures but stops after 3 attempts.
+2. A worker wrapper that retries transient failures but stops after 3 attempts.
 3. A dead-letter queue that stores the full job payload and exception traceback.
 4. Structured logging and a simple metric for failed jobs.
-5. A test suite using pytest 7.4 that proves poison messages don't block the queue.
+5. A test suite using pytest 7.4 that proves poison messages do not block the queue.
 
-The total code is under 150 lines. You can run it on a Raspberry Pi 4 with 2GB RAM — which matters when your production environment is a single board computer in a rack in Lagos.
+The total code is under 150 lines and will run on a Raspberry Pi 4 with 2GB RAM.
 
 ## Step 1 — set up the environment
 
@@ -61,9 +57,9 @@ MAX_RETRIES = 3
 RETRY_DELAY_SECONDS = 10
 ```
 
-Why `MAX_RETRIES = 3`? Because most transient failures — a 503 from a payment gateway, a brief DNS blip — resolve within two attempts. Three attempts with a 10-second delay gives you 30 seconds of retry window. If a job still fails after that, it's almost certainly not transient, and retrying further just delays the inevitable DLQ entry. You can tune this per job type later.
+Why `MAX_RETRIES = 3`? Most transient failures — a 503 from a payment gateway, a brief DNS blip — resolve within two attempts. Three attempts with a 10-second delay gives you a 30-second retry window. If a job still fails after that, it is almost certainly not transient, and retrying further just delays the inevitable DLQ entry. You can tune this per job type later.
 
-Now create a `worker.py` that will run the RQ worker. We'll add the DLQ logic in the next step, but get the skeleton running first.
+Now create a `worker.py` that will run the RQ worker. You'll add the DLQ logic in the next step, but get the skeleton running first.
 
 ```python
 # worker.py
@@ -82,11 +78,11 @@ if __name__ == "__main__":
         worker.work()
 ```
 
-Run `python worker.py` in one terminal. You should see `Worker rq:worker:... started`. If you see a connection refused error, Redis isn't running or the URL is wrong. Fix that before moving on.
+Run `python worker.py` in one terminal. You should see `Worker rq:worker:... started`. If you see a connection refused error, Redis is not running or the URL is wrong. Fix that before moving on.
 
 ## Step 2 — core implementation
 
-Now we'll write the job function and the retry logic. The key design decision is: retries happen inside the job, not at the queue level. RQ's built-in retry mechanism re-enqueues the job with a delay, but it doesn't give you fine-grained control over which exceptions are retryable. For poison message handling, you want to catch specific exceptions, retry those, and send everything else straight to the DLQ.
+Now write the job function and the retry logic. The key design decision is: retries happen inside the job, not at the queue level. RQ's built-in retry mechanism re-enqueues the job with a delay, but it does not give you fine-grained control over which exceptions are retryable. For poison message handling, you want to catch specific exceptions, retry those, and send everything else straight to the DLQ.
 
 Create `jobs.py`:
 
@@ -130,8 +126,6 @@ Now wrap the job in a retry loop. In RQ, you can do this inside the job function
 
 ```python
 # jobs.py (continued)
-from rq import get_current_job
-
 def process_payment_with_retry(payload: dict):
     """Retry transient errors, fail fast on permanent ones."""
     for attempt in range(1, MAX_RETRIES + 1):
@@ -147,6 +141,8 @@ def process_payment_with_retry(payload: dict):
             raise  # no retry, go straight to failure
 ```
 
+Note that `time.sleep` inside a worker blocks that worker's slot for the duration. With a 10-second delay and three attempts, a single failing job can occupy a worker for ~20 seconds. If that matters for your throughput, run retries as delayed re-enqueues instead, and track attempt counts in the job payload.
+
 Enqueue a job from a Python shell:
 
 ```python
@@ -158,15 +154,15 @@ q = Queue("default", connection=Redis.from_url("redis://localhost:6379/0"))
 q.enqueue(process_payment_with_retry, {"user_id": "user_123", "amount": 5000})
 ```
 
-Run the worker and watch the logs. You'll see retries for transient errors and immediate failures for permanent ones. But right now, failed jobs just sit in RQ's failed registry. We need to move them to a DLQ with enough context to debug.
+Run the worker and watch the logs. You'll see retries for transient errors and immediate failures for permanent ones. But right now, failed jobs just sit in RQ's failed registry. You need to move them to a DLQ with enough context to debug.
 
 ## Step 3 — handle edge cases and errors
 
-RQ stores failed jobs in a `FailedJobRegistry`. By default, it keeps the last 10,000 failures. That's fine for debugging, but it's not a DLQ — it doesn't isolate poison messages, and it doesn't give you a separate queue to monitor. More importantly, if a job fails because of a bug in your code, RQ will keep it in the failed registry, but your worker will keep pulling new jobs. The poison message doesn't block the queue — but it also doesn't get the attention it needs.
+RQ stores failed jobs in a `FailedJobRegistry`. By default, it keeps the last 10,000 failures. That is fine for debugging, but it is not a DLQ — it does not isolate poison messages, and it does not give you a separate queue to monitor. More importantly, if a job fails because of a bug in your code, RQ will keep it in the failed registry, but your worker will keep pulling new jobs. The poison message does not block the queue — but it also does not get the attention it needs.
 
 The real poison message problem shows up when you use a queue that blocks on failure, like a simple `BRPOPLPUSH` loop. In that design, a single bad message can halt the entire worker. RQ avoids that by design, but you still need a DLQ for two reasons: first, to separate poison messages from transient failures that exhausted retries; second, to trigger alerts when the DLQ grows.
 
-Let's implement a DLQ using a separate Redis list. When a job fails permanently, we push the full payload and exception traceback to `dlq:payments`.
+Implement a DLQ using a separate Redis list. When a job fails permanently, push the full payload and exception traceback to `dlq:payments`.
 
 ```python
 # dlq.py
@@ -228,13 +224,13 @@ def send_to_dlq_dedup(queue_name: str, payload: dict, exc: Exception):
     send_to_dlq(queue_name, payload, exc)
 ```
 
-This adds 2 lines of overhead but prevents a flood of identical failures from filling your DLQ and drowning out unique errors.
+This adds a few lines of overhead but prevents a flood of identical failures from filling your DLQ and drowning out unique errors. Note that the dedup key ignores the exception type and message, so two genuinely different failures with identical payloads will collapse into one entry. If that matters, include `type(exc).__name__` in the hash input.
 
 ## Step 4 — add observability and tests
 
-A DLQ you never look at is just a slower way to lose messages. You need two things: a metric you can alert on, and a test that proves poison messages don't block the queue.
+A DLQ you never look at is just a slower way to lose messages. You need two things: a metric you can alert on, and a test that proves poison messages do not block the queue.
 
-For metrics, use Redis counters. Increment `metrics:dlq:payments:count` every time you push to the DLQ. Then set up an alert: if the counter increases by more than 5 in 10 minutes, page someone. On a small team, that someone might be you, and the alert might be a Telegram message from a cron job. That's fine — the important part is that you know within minutes, not days.
+For metrics, use Redis counters. Increment `metrics:dlq:payments:count` every time you push to the DLQ. Then set up an alert: if the counter increases by more than 5 in 10 minutes, page someone. On a small team, that someone might be you, and the alert might be a Telegram message from a cron job. That is fine — the important part is that you know within minutes, not days. Pick the threshold by measuring your normal DLQ arrival rate for a week first; a fixed number chosen without a baseline will either page constantly or never fire.
 
 ```python
 # metrics.py
@@ -284,7 +280,7 @@ def test_good_job_processes_after_poison(redis_conn):
     assert redis_conn.llen("dlq:payments") == 1  # only the poison one
 ```
 
-Run `pytest test_poison.py -v`. You should see both tests pass in under 2 seconds. If the second test fails because the good job also went to the DLQ, check your retry logic — you're probably treating a transient error as permanent.
+Run `pytest test_poison.py -v`. Both tests should pass in a couple of seconds. If the second test fails because the good job also went to the DLQ, check your retry logic — you are probably treating a transient error as permanent. Note that the good-job test has a 30% chance of hitting the simulated transient failure, so it can be flaky; set `random.seed()` in the test, or make the flakiness injectable, before relying on it in CI.
 
 Now add a simple health check script that reports DLQ depth. Run it every 5 minutes from cron.
 
@@ -297,23 +293,18 @@ if [ "$DEPTH" -gt 10 ]; then
 fi
 ```
 
-On a $6/month VPS, this is enough to catch poison messages before they become a crisis.
+On a small VPS, this is enough to catch poison messages before they become a crisis.
 
-## Real results from running this
+## How to measure the effect yourself
 
-I ran this setup on a single AWS t3.micro instance (2 vCPU, 1GB RAM) with Redis 7.2 and RQ 1.15. Here are typical numbers you can expect:
+Rather than trust a table of numbers from someone else's machine, instrument your own. The measurements that matter are:
 
-| Metric | Without DLQ | With DLQ |
-|--------|-------------|----------|
-| Time to isolate poison message | 45 minutes (manual log grep) | 8 seconds (automatic) |
-| Worker CPU during poison loop | 85% sustained | 12% baseline |
-| Failed job visibility | RQ failed registry (last 10k) | Dedicated DLQ + metric |
-| Recovery time after fix | 20 minutes (re-enqueue manually) | 2 minutes (replay from DLQ) |
-| Lines of code added | 0 | 147 |
+- **Time to isolate a poison message.** Log a timestamp when a job first fails and again when it lands in the DLQ. The difference is your detection latency. Compare that against how long it would take to notice via manual log inspection.
+- **Worker CPU under a poison loop.** Run `top -b -n 1 | grep python` or read the worker's CPU from `/proc/<pid>/stat` while a permanent failure is being retried indefinitely versus after the retry cap is applied. This shows whether retries are starving other jobs.
+- **Queue latency.** Measure the time between `enqueue` and job start for a known-good job while a poison message is present. This is the head-of-line blocking cost.
+- **Recovery time.** Time how long it takes to re-enqueue every DLQ entry after a fix. With a replay script, this is bounded by your script's throughput; without one, it is bounded by how long it takes someone to reconstruct payloads by hand.
 
-These are illustrative figures from a controlled test with 1,000 jobs, 10% of which were poison messages. Your numbers will vary with payload size and Redis latency, but the order of magnitude is consistent: automatic DLQ routing cuts detection time from minutes to seconds.
-
-The biggest surprise was the CPU difference. A poison message that retries forever doesn't just waste time — it keeps the worker busy, which means legitimate jobs wait in the queue. On a t3.micro, a single poison message looping at 10 retries/second pushed queue latency from 200ms to over 4 seconds. With the retry cap and DLQ, latency stayed under 300ms.
+A controlled test with 1,000 jobs, 10% of which are poison, is a reasonable harness. Your numbers will vary with payload size, Redis latency, and worker count, but the direction is consistent: a retry cap plus automatic DLQ routing turns a multi-minute detection window into seconds, and it stops a single bad message from consuming a worker indefinitely.
 
 ## Common questions and variations
 
@@ -322,6 +313,15 @@ The biggest surprise was the CPU difference. A poison message that retries forev
 Write a small script that pops entries from the DLQ and re-enqueues them. Always add a `replayed_at` field so you can track how many times a job has been replayed. If a job fails again after replay, it goes back to the DLQ — but now you have two entries, which helps you spot patterns.
 
 ```python
+import json
+from datetime import datetime, timezone
+from redis import Redis
+from rq import Queue
+from config import REDIS_URL
+from jobs import process_payment_with_retry
+
+redis_conn = Redis.from_url(REDIS_URL)
+
 def replay_dlq(queue_name: str, limit: int = 10):
     q = Queue(queue_name, connection=redis_conn)
     for _ in range(limit):
@@ -335,29 +335,26 @@ def replay_dlq(queue_name: str, limit: int = 10):
 
 **What's the difference between a DLQ and a retry queue?**
 
-A retry queue holds jobs that failed transiently and are waiting to be retried. A DLQ holds jobs that have exhausted retries or failed permanently. Mixing them means you can't tell whether a job is waiting or dead. Keep them separate.
+A retry queue holds jobs that failed transiently and are waiting to be retried. A DLQ holds jobs that have exhausted retries or failed permanently. Mixing them means you cannot tell whether a job is waiting or dead. Keep them separate.
 
-**Should I use AWS SQS with a DLQ instead of Redis?**
+**Should I use a managed queue with a built-in DLQ instead of Redis?**
 
-If you're already on AWS and can pay the ~$0.40 per million requests, SQS gives you a managed DLQ with automatic redrive. But SQS has a 256KB message limit and doesn't support arbitrary Python objects. For small teams without a credit card for AWS, Redis + RQ is a practical alternative that runs on any VPS.
+If you are already on a cloud provider and can absorb the per-request cost, a managed queue gives you a DLQ with automatic redrive and no worker process to babysit. The trade-offs are usually a message size limit and the need to serialize payloads as bytes or JSON rather than arbitrary Python objects. For small teams without a cloud billing relationship, Redis plus RQ is a practical alternative that runs on any VPS.
 
 **How do I handle poison messages that are too large for Redis?**
 
-Redis has a 512MB value limit, but you should keep messages under 1MB. If your payload is larger, store it in S3 (or a local file) and put only the reference in the queue. The DLQ entry should include the S3 key, not the full payload.
+Redis has a 512MB value limit, but you should keep messages well under 1MB. If your payload is larger, store it in object storage (or a local file) and put only the reference in the queue. The DLQ entry should include the storage key, not the full payload.
 
-## Where to go from here
+## A decision checklist before you deploy
 
-Your next step: open your current worker code and add a single `MAX_RETRIES` constant with a value of 3. Then wrap your job function in a try/except that catches a specific transient exception and re-raises everything else. Run your test suite. If a poison message still blocks the queue, you'll see it in the test output — and now you have a place to put the DLQ logic. Do this in the next 30 minutes, before your next deploy.
+- Does every job type have an explicit retry cap? An unbounded retry is a poison-message generator.
+- Are exceptions classified as transient or permanent at the point they are raised, not inferred later?
+- Does the DLQ entry contain the payload, the exception type, the traceback, and a timestamp?
+- Is there a metric on DLQ depth, and an alert threshold chosen from a measured baseline?
+- Is there a replay script, and has it been run against a real DLQ entry at least once?
+- Is `send_to_dlq` itself protected against failure, so a broken DLQ does not swallow the original error?
+- Is deduplication in place if the same payload can fail repeatedly?
 
+## Your next 30 minutes
 
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open your current worker code and add a single `MAX_RETRIES` constant with a value of 3. Then wrap your job function in a `try/except` that catches one specific transient exception, retries up to the cap, and re-raises everything else. Run your existing test suite. If a poison message still blocks the queue, you will see it in the test output — and now you have a place to put the DLQ logic.

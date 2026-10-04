@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Why does my agent version break clients? - Kubai Kevin</title>
-        <meta name="description" content="Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.">
+        <title>Agent API versioning: why clients break on upgrade - Kubai Kevin</title>
+        <meta name="description" content="Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.">
         <meta name="keywords" content="AgentVersioning, Microservice, SemanticVersioning, Docker, Containers">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-14T04:09:00.375326">
-        <meta property="article:modified_time" content="2026-09-14T04:09:00.375341">
+        <meta property="article:modified_time" content="2026-10-04T10:17:43.707396+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Why does my agent version break clients?">
-        <meta property="og:description" content="Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.">
+        <meta property="og:title" content="Agent API versioning: why clients break on upgrade">
+        <meta property="og:description" content="Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.">
         <meta property="og:url" content="https://kubaik.github.io/why-does-my-agent-version-break-clients/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/why-does-my-agent-version-break-clients.png">
-        <meta property="og:image:alt" content="Why does my agent version break clients?">
+        <meta property="og:image:alt" content="Agent API versioning: why clients break on upgrade">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Why does my agent version break clients?">
-        <meta name="twitter:description" content="Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.">
+        <meta name="twitter:title" content="Agent API versioning: why clients break on upgrade">
+        <meta name="twitter:description" content="Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-does-my-agent-version-break-clients.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/why-does-my-agent-version-break-clients/#article",
-      "headline": "Why does my agent version break clients?",
-      "description": "Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.",
+      "headline": "Agent API versioning: why clients break on upgrade",
+      "description": "Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.",
       "datePublished": "2026-09-14T04:09:00+00:00",
-      "dateModified": "2026-09-14T04:09:00+00:00",
-      "wordCount": 2525,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:17:43+00:00",
+      "wordCount": 2374,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Why does my agent version break clients?",
+          "name": "Agent API versioning: why clients break on upgrade",
           "item": "https://kubaik.github.io/why-does-my-agent-version-break-clients/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Why does my agent version break clients?</span>
+            <span>Agent API versioning: why clients break on upgrade</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Why does my agent version break clients?</h1>
+                <h1 itemprop="headline">Agent API versioning: why clients break on upgrade</h1>
                 
-                <p class="post-lead">Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.</p>
+                <p class="post-lead">Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.</p>
                 
                 
                 <div class="tags">
@@ -255,34 +255,46 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2525 words
+                        12 min read
+                        &nbsp;·&nbsp; 2374 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-14
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Nobody mentions the failure mode until it's already cost someone a bad night. The metric everyone watches for versioning evolving isn't the one that would have warned us. This post covers what comes after the happy path.</p>
-<p>When a microservice that hosts an AI‑driven "agent" rolls out a new capability, the downstream system often sees a cascade of failures that look like random timeouts, schema mismatches, or outright crashes. The symptom usually appears as a sudden spike in HTTP 502 responses, a JSON payload that no longer matches the contract, or an unexpected exception like <code>AgentCapabilityError: unsupported version</code>. Teams scramble to roll back, only to discover that the old version is still being referenced somewhere deep in the CI pipeline. The part that trips people up is the hidden coupling between version tags, feature flags, and client‑side SDK expectations, and that's what this post actually covers.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>The most common error message that signals a versioning mishap looks like this:</p>
-<pre><code>AgentCapabilityError: unsupported version 2.3.0 (minimum supported: 2.4.1)
-</code></pre>
-<p>On the surface it reads like a simple mismatch: the client asks for version 2.3.0, the server says it only supports 2.4.1 and above. In practice the root cause is rarely a typo. A typical scenario involves a CI job that builds a Docker image with the agent code, tags it as <code>latest</code>, and pushes it to an Amazon ECR repository. Meanwhile, a separate repository that contains the client SDK still pins the dependency to <code>agent-sdk==2.3.0</code>. Because the deployment pipeline promotes the new image within minutes, the client starts receiving responses that contain newly added fields (<code>"context": {...}</code>) and a changed error‑code enumeration. The client library, compiled against the older schema, throws the generic <code>AgentCapabilityError</code>. The confusion stems from three overlapping layers:</p>
+                <p>Agent services fail in a distinctive way when their version changes. The error surfaces at the transport layer, so engineers debug the network, the load balancer, or the model provider. The actual cause is usually a contract that moved without a coordinated version bump.</p>
+<p>This article covers the failure modes that appear after a new agent capability ships, how to tell which layer is responsible, and the checks that catch the problem before production traffic does. It assumes a service that wraps a model behind an HTTP or gRPC interface and has at least one client that is deployed separately from the server.</p>
+<h2 id="the-symptom-is-misleading">The symptom is misleading</h2>
+<p>A versioning failure rarely announces itself as a versioning failure. It looks like one of these:</p>
+<ul>
+<li>A spike in 502 or 504 responses right after a deploy.</li>
+<li>A JSON payload that no longer matches the client's expected shape.</li>
+<li>A deserialization error on a field the client has never heard of.</li>
+<li>An exception such as <code>AgentCapabilityError: unsupported version 2.3.0 (minimum supported: 2.4.1)</code>.</li>
+</ul>
+<p>That last message reads like a simple mismatch: the client asks for 2.3.0, the server only accepts 2.4.1 and above. In practice the version string is often the least interesting part of the problem. The client may be pinned correctly and the server may be running exactly what was intended. What changed is the shape of the data flowing between them.</p>
+<p>Three layers usually overlap:</p>
 <ol>
-<li><strong>Semantic versioning misuse</strong> – teams treat minor bumps as backward compatible when they actually introduce new required fields.</li>
-<li><strong>Implicit "latest" tags</strong> – Docker tags like <code>latest</code> or <code>stable</code> silently move, breaking any consumer that resolves the image at runtime.</li>
-<li><strong>Feature‑flag drift</strong> – a flag that enables a new capability is toggled globally, but the client does not have a guard clause to detect the flag state.</li>
+<li><strong>Semantic versioning misuse.</strong> A change is labelled minor or patch because it "only adds a field", but the field is required, or the server now enforces a rule that depends on it.</li>
+<li><strong>Mutable image tags.</strong> A deployment references <code>latest</code> or <code>stable</code>, so the binary behind a stable name changes without any version number moving.</li>
+<li><strong>Feature-flag drift.</strong> A capability is enabled by configuration rather than by version, and the client has no way to observe that configuration.</li>
 </ol>
-<p>Because the error surfaces at the HTTP layer, engineers often start looking at network latency (e.g., a 120 ms increase) or load balancer timeouts, missing the version coupling entirely.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The real culprit is a <em>contract erosion</em> between the agent and its consumers. In a well‑engineered system, the contract lives in a versioned OpenAPI spec, a protobuf definition, or a JSON schema stored in a dedicated repo. When the agent team adds a field, they should increment the <strong>major</strong> version if the change is breaking, or the <strong>minor</strong> version if the change is additive and optional. Unfortunately, many teams follow outdated tutorials that suggest "increment the patch version for any change" and rely on the implicit optionality of JSON. This pattern creates a hidden dependency on the runtime schema rather than the declared contract.</p>
-<p>A concrete illustration: a payments platform runs an "order‑fulfillment" agent written in Python 3.11 that communicates via gRPC. The team adds a new <code>priority</code> field to the <code>OrderRequest</code> message and releases version 2.5.0. The client library, built with <code>grpcio-tools==1.57.0</code>, still expects the older <code>OrderRequest</code> definition. Because protobuf treats unknown fields as ignored, the client silently drops the new field, but the server now enforces a business rule that rejects orders without a <code>priority</code>. The server returns a <code>FAILED_PRECONDITION</code> error, which the client surface‑maps to <code>AgentCapabilityError</code>. The symptom looks like a version mismatch, but the underlying issue is a <strong>contract that changed without a coordinated version bump</strong>.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p><strong>Stop using mutable "latest" tags and pin exact image versions.</strong> The easiest way to eliminate accidental breakage is to make every deployment artifact immutable. Replace Docker tags like <code>latest</code> or <code>stable</code> with a digest or a full semver tag that never moves.</p>
+<p>Because the error appears at the HTTP layer, the first instinct is to inspect latency, connection pools, and timeouts. Those are worth ruling out, but they rarely explain an error that starts within seconds of a deploy and affects one client while others stay healthy.</p>
+<h2 id="what-is-actually-happening-contract-erosion">What is actually happening: contract erosion</h2>
+<p>The contract between an agent and its consumers is the set of things the consumer is allowed to rely on: field names, types, required versus optional status, error codes, and the semantics of a successful response. In a well-run system that contract lives somewhere explicit, such as a versioned schema file, a protobuf definition, or a generated client library. When it lives only in the server's serialization code, the contract is whatever the current binary happens to emit.</p>
+<p>Consider a worked example. An order-fulfillment agent communicates over gRPC. The request message gains a new <code>priority</code> field, and the release is tagged 2.5.0 on the assumption that adding a field is additive.</p>
+<ul>
+<li>The server now rejects orders that arrive without a <code>priority</code> value, because a business rule was added in the same change.</li>
+<li>The client was generated from the 2.4.0 definition. Protobuf ignores unknown fields on the wire, so the client sends no <code>priority</code> and never notices anything is wrong.</li>
+<li>The server returns <code>FAILED_PRECONDITION</code>, which the client maps to its generic capability error.</li>
+</ul>
+<p>Every individual step is defensible. The release is broken because the version number described the wire format, while the breaking change was in the validation logic. That is contract erosion: the declared contract and the enforced contract diverged, and only one of them was versioned.</p>
+<p>The same pattern appears with JSON APIs. A new required field, a tightened enum, a changed default, or a new error code can all break a client without any schema-level incompatibility that a naive diff would flag.</p>
+<h2 id="fix-1-make-deployment-artifacts-immutable">Fix 1: make deployment artifacts immutable</h2>
+<p>The cheapest structural fix is to stop letting a name resolve to a different binary over time. Build the image with an explicit version tag, push it, and reference that exact tag (or its digest) in the deployment manifest.</p>
 <pre><code class="language-bash"># Build the agent image with a fixed version tag
 docker build -t 123456789012.dkr.ecr.us-east-1.amazonaws.com/agent:2.5.0 \
     --build-arg PYTHON_VERSION=3.11 .
@@ -290,7 +302,6 @@ docker build -t 123456789012.dkr.ecr.us-east-1.amazonaws.com/agent:2.5.0 \
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
 docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/agent:2.5.0
 </code></pre>
-<p>In the deployment manifest (e.g., an AWS CloudFormation stack or a Kubernetes Deployment), reference the exact tag:</p>
 <pre><code class="language-yaml">apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -306,9 +317,10 @@ spec:
             - name: AGENT_VERSION
               value: &quot;2.5.0&quot;
 </code></pre>
-<p>By freezing the image tag, you guarantee that a client built against <code>2.3.0</code> will continue to talk to the exact binary it was tested with, unless you explicitly update the client dependency. This eliminates the silent drift that caused the <code>AgentCapabilityError</code> in the first place. In practice, teams that switched to immutable tags saw a <strong>15 % reduction in post‑deploy incidents</strong> and cut rollback time from an average of 12 minutes to under 3 minutes.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p><strong>Adopt a contract‑first workflow with versioned OpenAPI/Proto files and enforce compatibility checks in CI.</strong> Many tutorials still suggest "write the server first, then generate the client" without a formal contract repository. The modern pattern is to store the contract in a separate Git repo, version it with semantic tags, and run a compatibility matrix during pull‑request validation.</p>
+<p>Freezing the tag does not by itself prevent a client from breaking, but it removes one entire class of surprise: the binary a client was tested against is the binary it keeps talking to until someone deliberately changes the reference. It also makes rollback a matter of redeploying a known tag rather than reconstructing which build was live an hour ago.</p>
+<p>Two details matter. First, <code>AGENT_VERSION</code> should be set from the same source that produced the image tag, not typed by hand, or the two will drift. Second, if you want reproducibility guarantees stronger than a tag, reference the image by digest in the manifest; a tag can be re-pushed, a digest cannot be changed.</p>
+<h2 id="fix-2-contract-first-with-compatibility-checks-in-ci">Fix 2: contract-first with compatibility checks in CI</h2>
+<p>Immutable tags stop silent binary drift. They do nothing about a contract change that is genuinely incompatible. For that, the contract needs to be an artifact under version control, and pull requests need to be checked against the last released version.</p>
 <pre><code class="language-yaml"># .github/workflows/contract-check.yml
 name: Contract Compatibility
 on: [pull_request]
@@ -316,140 +328,99 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install OpenAPI validator
-        run: pip install openapi-spec-validator==0.5.6
+      - uses: actions/checkout@v4
+      - name: Install schema validator
+        run: pip install openapi-spec-validator==0.7.1
       - name: Validate new spec
         run: openapi-spec-validator ./specs/agent-api.yaml
       - name: Compatibility check
         run: |
-          # Compare with last released version
           python scripts/compare_specs.py \
             --old specs/agent-api-2.4.0.yaml \
             --new specs/agent-api-2.5.0.yaml
 </code></pre>
-<p>The <code>compare_specs.py</code> script can use the <code>openapi-diff</code> library (v0.3.3) to assert that no breaking changes were introduced without a major version bump. If the diff reports a breaking change, the CI job fails, forcing the team to either raise the major version or make the change optional.</p>
-<p>When a team at a fintech firm applied this workflow, they caught a breaking change that added a required <code>currency</code> field to a payment request. The diff flagged the change, the team bumped the version to <strong>3.0.0</strong>, and downstream services updated their SDKs accordingly. The result was a <strong>30 ms reduction in request latency</strong> because the server no longer rejected malformed payloads after the initial handshake.</p>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p><strong>Synchronize feature‑flag states across environments and expose the flag status via a health endpoint.</strong> In many cloud deployments, a feature flag service such as LaunchDarkly 7.5 or AWS AppConfig (v2.2) controls the rollout of new agent capabilities. If the flag is enabled in production but not in staging, developers testing against the staging endpoint will never see the new fields, leading to a mismatch when the code is promoted.</p>
-<p>Add a health check that reports the flag state:</p>
-<pre><code class="language-go">// health.go (compiled with Go 1.21)
-package main
-import (
-    &quot;net/http&quot;
-    &quot;github.com/launchdarkly/go-server-sdk/v7&quot;
-)
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-    flag := ldclient.Get().BoolVariation(&quot;new-order-priority&quot;, lduser.NewUser(&quot;example&quot;), false)
-    if flag {
-        w.Write([]byte(&quot;{\&quot;status\&quot;:\&quot;ok\&quot;,\&quot;flags\&quot;:[\&quot;new-order-priority\&quot;]}&quot;))
-    } else {
-        w.Write([]byte(&quot;{\&quot;status\&quot;:\&quot;ok\&quot;,\&quot;flags\&quot;:[]}&quot;))
-    }
+<p>The comparison script should fail the build when it finds a change that a client generated from the old spec could not survive. The categories worth checking are:</p>
+<ul>
+<li>A field that was optional becomes required.</li>
+<li>A field is removed or renamed.</li>
+<li>An enum loses a value the client may send, or gains one the client may receive without a documented fallback.</li>
+<li>An error code is added to a set the client treats as exhaustive.</li>
+<li>A default value changes.</li>
+</ul>
+<p>For a JSON API, a schema diff tool can detect the first, second, and fifth categories mechanically. The third and fourth usually need a short allowlist or a human review step, because they depend on how clients handle unknown values. If the diff reports a breaking change, the build fails and the author either raises the major version or makes the change backward compatible.</p>
+<p>The important property is not the specific tool. It is that the contract is a file, the file is diffed on every pull request, and the diff has the authority to block a merge.</p>
+<h2 id="fix-3-make-configuration-observable">Fix 3: make configuration observable</h2>
+<p>Feature flags move behaviour without moving a version number, which is exactly why they cause version-shaped failures. The standard mitigation is to expose the effective configuration through a health or status endpoint, so a client or an operator can see what the server will actually do.</p>
+<pre><code class="language-python"># health.py
+import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+FLAGS = {
+    &quot;new_order_priority&quot;: True,
+    &quot;strict_currency_check&quot;: False,
 }
-func main() {
-    http.HandleFunc(&quot;/health&quot;, healthHandler)
-    http.ListenAndServe(&quot;:8080&quot;, nil)
-}
+
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        body = json.dumps({
+            &quot;status&quot;: &quot;ok&quot;,
+            &quot;version&quot;: &quot;2.5.0&quot;,
+            &quot;flags&quot;: [name for name, on in FLAGS.items() if on],
+        }).encode()
+        self.send_response(200)
+        self.send_header(&quot;Content-Type&quot;, &quot;application/json&quot;)
+        self.send_header(&quot;Content-Length&quot;, str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+if __name__ == &quot;__main__&quot;:
+    HTTPServer((&quot;0.0.0.0&quot;, 8080), HealthHandler).serve_forever()
 </code></pre>
-<p>Deploy the same binary to all environments; the flag server will answer truthfully based on its own configuration. Clients can query <code>/health</code> before sending a request and adapt their payload accordingly. This pattern eliminates the silent assumption that a flag is uniformly enabled, a mistake that historically caused <strong>5 % of integration failures</strong> in large SaaS platforms.</p>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>Verification should be automated and observable. Follow these steps after applying any of the fixes above:</p>
-<ol>
-<li><strong>Run contract diff in CI</strong> – ensure the pipeline reports "no breaking changes" for the target version.</li>
-<li><strong>Execute an integration test suite</strong> that spins up the agent container with the exact tag you just released. Use a tool like <code>pytest 7.4</code> with the <code>requests</code> library pinned to <code>2.31.0</code> to send a payload that includes the new fields. The test should assert a <code>200 OK</code> response and verify the response body contains the expected version field.</li>
-<li><strong>Check the health endpoint</strong> – curl <code>http://agent-service.local/health</code> and confirm the flag list matches the intended state.</li>
-<li><strong>Monitor runtime metrics</strong> – in CloudWatch, set an alarm for <code>AgentCapabilityError</code> count. A drop from the pre‑fix average of <strong>12 errors per minute</strong> to <strong>&lt;1 error per minute</strong> over a 10‑minute window confirms success.</li>
-<li><strong>Validate image immutability</strong> – run <code>docker images --digests</code> and confirm the digest for the deployed tag matches the digest stored in the CI artifact registry.</li>
-</ol>
-<p>If all five checkpoints pass, you have a high confidence that the versioning issue is resolved.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Prevention is a combination of policy, tooling, and culture:</p>
-<table>
-<thead>
-<tr>
-<th>Practice</th>
-<th>Tool / Version</th>
-<th>Typical Cost / Effort</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Immutable image tags</td>
-<td>Docker 24.0, ECR</td>
-<td>negligible runtime cost, ~1 hour CI config time</td>
-</tr>
-<tr>
-<td>Contract‑first design</td>
-<td>OpenAPI 3.1, <code>openapi-diff</code> 0.3.3</td>
-<td>saves ~2 hours of debugging per release</td>
-</tr>
-<tr>
-<td>Feature‑flag health checks</td>
-<td>LaunchDarkly SDK 7.5, AWS AppConfig 2.2</td>
-<td>adds ~5 ms latency per health call</td>
-</tr>
-<tr>
-<td>Automated compatibility testing</td>
-<td>pytest 7.4, <code>pytest-asyncio</code> 0.23.0</td>
-<td>runs in &lt;30 seconds per PR</td>
-</tr>
-</tbody>
-</table>
-<p>Enforce these practices through a <strong>version‑gate</strong> in your PR workflow: any change that touches the contract must increment the major version, and any change that adds optional fields must be accompanied by a compatibility test. Require that every Docker image tag be signed with Notary v2 and that the CI pipeline verifies the signature before promotion. Finally, schedule a quarterly audit of feature‑flag configurations across all environments to catch drift before it surfaces in production.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<p>Two rules make this useful rather than decorative. The endpoint must report the <em>effective</em> flag state, read from the same source the request path reads from, not a hardcoded copy. And the same binary must be deployed to every environment, with the flag source doing the differentiating; if staging runs different code, the health endpoint only tells you about the code, not the configuration.</p>
+<p>Clients can then check the reported version and flags before sending a request that depends on them, and degrade gracefully instead of failing at deserialization time. Operators get a fast answer to "is this environment configured the way I think it is", which is the question that otherwise gets answered by reading logs for twenty minutes.</p>
+<h2 id="how-to-measure-whether-the-fix-worked">How to measure whether the fix worked</h2>
+<p>None of the above is verifiable without instrumentation. Set up the following before the next release, so you have a baseline to compare against.</p>
+<p><strong>1. Contract diff in CI.</strong> The pipeline should print an explicit pass or fail for compatibility against the last released spec. Treat a missing result as a failure.</p>
+<p><strong>2. Integration test against the exact released artifact.</strong> Start the container using the pinned tag, then run a client test that sends a payload exercising the new fields and asserts both the status code and the presence of the expected version field in the response. The test must use the pinned tag, not a locally built image, or it is testing something other than what will run in production.</p>
+<p><strong>3. Health endpoint check.</strong> Query the status endpoint and confirm the reported version and flag list match the intended state for that environment. Script this, because it is exactly the kind of check that gets skipped manually.</p>
+<p><strong>4. Error-rate comparison.</strong> Instrument a counter for your capability or deserialization error class, labelled by client version if possible. Record the count per minute for the hour before and the hour after the change. The useful signal is the shape: a step change that begins at the deploy time and affects one client version points at the contract, while a gradual rise across all clients points elsewhere. Percentages from someone else's system will not tell you what your baseline is; measure your own.</p>
+<p><strong>5. Artifact identity.</strong> Confirm the digest of the deployed image matches the digest recorded as the CI artifact for that tag.</p>
+<p>If all five hold, the release is consistent. If any fails, you have located the layer at which the version and the contract diverged.</p>
+<h2 id="failure-modes-to-watch-for">Failure modes to watch for</h2>
+<p><strong>The additive change that is not additive.</strong> Adding a field is safe only if nothing enforces it. Check whether validation, routing, or a downstream service reads the new field conditionally on its presence.</p>
+<p><strong>Unknown-field handling.</strong> Some deserializers reject unknown fields by default. Before assuming a new field is backward compatible, confirm how each client's serialization library handles fields it does not recognise, and whether that behaviour is configurable.</p>
+<p><strong>Enum extension.</strong> Adding a value to an enum that clients treat as exhaustive causes failures at the client, not the server. Version the enum's open-endedness explicitly, or document that clients must tolerate unknown values.</p>
+<p><strong>Flag flips without a version change.</strong> A flag that changes response shape is a contract change wearing a configuration costume. Either version it, or guarantee that both states are valid for every supported client.</p>
+<p><strong>Rollback that does not roll back.</strong> If the old binary is restored but the flag state or the contract file is not, the rollback is incomplete. Rollback procedures should name every artifact that moves together.</p>
+<p><strong>Multiple clients, one version.</strong> A server version can be compatible with one client and incompatible with another. Track which client versions are actually sending traffic, so "we only support 2.4.1 and above" is a statement about real consumers rather than an assumption.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Use this when planning a change to an agent's interface.</p>
 <ul>
-<li><code>SchemaValidationError: missing required property "priority"</code> – occurs when a client sends a payload that lacks a newly added required field.</li>
-<li><code>UnsupportedProtocolVersion: client 1.9, server requires &gt;=2.0</code> – raised by gRPC when the client library version is too old for the server's protocol.</li>
-<li><code>HTTP 504 Gateway Timeout</code> – can be a side effect of a feature flag that disables a fallback path, causing the request to hang.</li>
-<li><code>DeserializationException: unknown field "context"</code> – typical when a protobuf definition is out of sync.</li>
+<li>Does the change alter anything a client can observe: field presence, required status, enum values, error codes, defaults, or timing guarantees?</li>
+<li>If yes, is it breaking for at least one deployed client version? If you cannot answer, find out which client versions are live before merging.</li>
+<li>Is the change expressed as a version bump, a flag, or both? Prefer one mechanism with a clear owner.</li>
+<li>Is the contract file updated in the same pull request as the implementation?</li>
+<li>Does CI diff the contract against the last release and fail on breaking changes?</li>
+<li>Is the deployed artifact pinned by tag or digest, and is that reference recorded?</li>
+<li>Does the status endpoint report the effective version and flags?</li>
+<li>Is there a rollback step that covers code, configuration, and contract together?</li>
 </ul>
-<p>Each of these errors points back to the same root: a mismatch between what the agent promises and what the consumer expects.</p>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<ol>
-<li><strong>Open a ticket in the internal incident tracker</strong> with the tag <code>agent-version-mismatch</code> and attach the failing request logs (include the full JSON payload and the exact error message).</li>
-<li><strong>Escalate to the Platform Reliability team</strong> – provide the CloudWatch alarm ID and the digest of the Docker image you deployed.</li>
-<li><strong>If the issue is reproducible locally</strong>, create a minimal repo that reproduces the mismatch and share it with the Agent Core team. Include a <code>Dockerfile</code> that builds the exact image version and a <code>pytest</code> script that triggers the failure.</li>
-<li><strong>Request a hot‑fix branch</strong> from the Agent Core team if the contract break is critical. The hot‑fix should bump the major version and add a compatibility shim for older clients.</li>
-<li><strong>Document the incident</strong> in the versioning playbook, noting the root cause, the fix, and any process gaps uncovered.</li>
-</ol>
-<p>Following this escalation ladder ensures that no incident stalls indefinitely and that the knowledge gained feeds back into the preventive measures.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How can I test backward compatibility without deploying a new version?</strong>
-Use a local Docker registry to spin up the previous image tag and run the client test suite against it. Tools like <code>testcontainers</code> (Java 1.19) let you programmatically start containers with specific tags, so you can verify that older clients still parse responses correctly.</p>
-<p><strong>Why does adding an optional field still break some clients?</strong>
-Optional fields are only safe when the client deserialization library discards unknown keys. Some SDKs (e.g., older <code>protobuf</code> versions) treat unknown fields as errors unless <code>ignore_unknown_fields</code> is enabled. Verify the SDK version and configuration before assuming optionality guarantees safety.</p>
-<p><strong>What is the recommended versioning scheme for LLM‑driven agents?</strong>
-Treat the API contract as immutable for a major version. Any change that alters the shape of the prompt, response schema, or required metadata should trigger a major bump. Minor bumps can add new optional capabilities, but always guard them behind a feature flag.</p>
-<p><strong>When should I use a digest instead of a semver tag?</strong>
-If you need absolute reproducibility—such as in CI or for security‑sensitive deployments—use the image digest. For day‑to‑day releases where you want humans to read the version, combine a semver tag with an immutable digest reference in the deployment manifest.</p>
-<p><strong>How do I automate feature‑flag health checks across multiple services?</strong>
-Create a small Go or Python service that queries each <code>/health</code> endpoint, aggregates the flag states, and pushes a metric to CloudWatch. Set an alarm for any flag that is enabled in production but not in staging.</p>
-<p><strong>What tooling can I use to enforce semantic versioning in CI?</strong>
-The <code>semantic-release</code> package (v19.0.5) integrates with GitHub Actions and can automatically determine the next version based on conventional commit messages. Pair it with <code>openapi-diff</code> to abort the release if a breaking change is detected.</p>
-<p><strong>How long does it typically take to roll out a version‑gate policy?</strong>
-For a medium‑size team (10‑15 engineers) with an existing CI pipeline, implementing immutable tags and contract checks takes about <strong>3 weeks</strong> of work, including training and documentation.</p>
-<p><strong>Can I revert a breaking change without bumping the major version?</strong>
-Only if you add a backward‑compatible shim that translates the new payload back to the old schema. This adds runtime overhead (≈5 ms per request) and should be considered a temporary fix, not a long‑term strategy.</p>
-<p><strong>What is the cost impact of using immutable tags and digests?</strong>
-ECR storage costs are negligible (≈$0.10 per GB per month). The main cost is the additional CI minutes—roughly <strong>30 seconds</strong> per build, translating to &lt;$0.01 per build on a typical CI provider.</p>
-<p><strong>How do I know if my client SDK is out of date?</strong>
-Check the <code>User-Agent</code> header sent by the SDK; most libraries include the version number. Compare it against the version listed in the contract repository. If the difference is greater than one minor version, schedule an upgrade.</p>
-<h2 id="next-step-you-can-take-in-the-next-30-minutes">Next step you can take in the next 30 minutes</h2>
-<p>Open the <code>deployment.yaml</code> for your agent service, replace any <code>image: …:latest</code> reference with the exact tag you just built (e.g., <code>image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/agent:2.5.0</code>), and apply the manifest with <code>kubectl apply -f deployment.yaml</code>.</p>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
-<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Can an optional field still break a client?</strong>
+Yes. Optionality is a property of the schema; whether a client tolerates the field depends on its deserialization configuration and on whether any server-side logic reacts to the field's presence. Verify both.</p>
+<p><strong>Should the version live in the URL, a header, or the payload?</strong>
+Any of these works if it is consistent and if the server rejects unsupported versions explicitly rather than guessing. The failure mode to avoid is a version that is transmitted but never checked.</p>
+<p><strong>When is an image digest preferable to a tag?</strong>
+When you need a guarantee that the artifact cannot change, such as for reproducibility or audit. Tags are easier for humans to read; digests are unambiguous. Many teams use a readable tag in the manifest and record the resolved digest alongside it.</p>
+<p><strong>How do you test compatibility with an older client without deploying the old server?</strong>
+Run the previous artifact locally, for example with a container runtime or a test container library, and execute the current client's test suite against it. This catches cases where the new client sends something the old server cannot parse.</p>
+<p><strong>Do feature flags belong in a versioning strategy at all?</strong>
+They belong in the rollout strategy. If a flag can change the response contract, it needs the same compatibility review as a schema change, because clients cannot see flag state unless you expose it.</p>
+<p><strong>What is the minimum viable version gate?</strong>
+A contract file under version control, a CI step that diffs it against the last release, and a rule that a failing diff blocks the merge. Everything else is refinement.</p>
+<h2 id="take-this-action-in-the-next-30-minutes">Take this action in the next 30 minutes</h2>
+<p>Open your deployment manifest for the agent service and find every image reference. If any of them uses <code>latest</code>, <code>stable</code>, or another mutable tag, replace it with the exact version tag of the build currently running in production, then confirm the running pod's image digest matches the digest recorded for that tag in your registry. That single change removes the most common source of "the version did not change but the behaviour did".
+===END===</p>
                 
                 
             </div>
@@ -484,14 +455,14 @@ Check the <code>User-Agent</code> header sent by the SDK; most libraries include
                     
                     <a class="related-card" href="/commit-ownership-in-ai-pair-coding/">
                         <h3>Commit ownership in AI pair coding</h3>
-                        <p>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-                        <span class="related-meta">17 min read · 31 August 2026</span>
+                        <p>AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.</p>
+                        <span class="related-meta">14 min read · 31 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/wasm-servers-beat-containers-here/">
                         <h3>WASM servers beat containers here</h3>
-                        <p>Cut API latency 60% with WebAssembly on the server — the concrete cases where WASM beats containers in 2026, with Rust 1.77, Node 20 LTS, and real…</p>
-                        <span class="related-meta">12 min read · 5 August 2026</span>
+                        <p>A practical guide to choosing WebAssembly over containers for short-lived, CPU-bound server tasks, with code, failure modes, and a measurement plan.</p>
+                        <span class="related-meta">11 min read · 5 August 2026</span>
                     </a>
                     
                 </div>

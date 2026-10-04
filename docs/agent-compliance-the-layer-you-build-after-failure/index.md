@@ -1,18 +1,18 @@
 # Agent compliance: the layer you build after failure
 
-The workaround gets copy-pasted forward long after the original reason is forgotten. Benchmarks for governance layer that don't mention their failure conditions aren't worth much. This post covers what comes after the happy path.
+The workaround gets copy-pasted forward long after the original reason is forgotten. Benchmarks for a governance layer that don't state their failure conditions aren't worth much. This article covers what comes after the happy path.
 
 ## The conventional wisdom (and why it's incomplete)
 
-The conventional wisdom says that agent systems need governance from day one. Put a policy engine in front of every tool call, log every decision, require human approval for anything that touches production data, and you'll never have a compliance incident. This sounds responsible. It's also the reason so many agent platforms stall at prototype stage: the governance layer becomes a tax on every iteration, and teams either abandon the project or bolt on a minimal, brittle gate that passes audits rather than prevents failures.
+The conventional wisdom says that agent systems need governance from day one. Put a policy engine in front of every tool call, log every decision, require human approval for anything that touches production data, and compliance incidents will not happen. This sounds responsible. It is also a common reason agent platforms stall at prototype stage: the governance layer becomes a tax on every iteration, and teams either abandon the project or bolt on a minimal, brittle gate that passes audits rather than prevents failures.
 
-The incomplete part is the assumption that governance is a *preventive* control. In practice, most compliance-relevant failures in agent systems are not prevented by pre-execution gates. They are discovered after the fact — by a customer complaint, a regulator inquiry, a security review, or a sudden spike in a cost dashboard. The governance layer that actually matters is the one you build *after* that failure. It's the reconstruction layer: the ability to answer, within hours, what the agent did, why it did it, what data it touched, and what should have stopped it.
+The incomplete part is the assumption that governance is a *preventive* control. In practice, most compliance-relevant failures in agent systems are not prevented by pre-execution gates. They are discovered after the fact — by a customer complaint, a regulator inquiry, a security review, or a sudden spike in a cost dashboard. The governance layer that actually matters is the one built *after* that failure. It is the reconstruction layer: the ability to answer, within hours, what the agent did, why it did it, what data it touched, and what should have stopped it.
 
-This post argues that the post-failure governance layer is the real deliverable. Pre-execution policy is necessary but insufficient. The teams that recover fastest from a compliance incident are not the ones with the most elaborate approval workflows — they are the ones with immutable, queryable traces that let them reconstruct the decision path and patch the specific gap. The part that trips people up is that most agent frameworks optimize for *action* (tool calls, model invocations) and treat *reconstruction* as an afterthought, which is exactly backwards when compliance is on the line.
+The argument here is that the post-failure governance layer is the real deliverable. Pre-execution policy is necessary but insufficient. The teams that recover fastest from a compliance incident are not the ones with the most elaborate approval workflows — they are the ones with immutable, queryable traces that let them reconstruct the decision path and patch the specific gap. The part that trips people up is that most agent frameworks optimize for *action* (tool calls, model invocations) and treat *reconstruction* as an afterthought, which is exactly backwards when compliance is on the line.
 
-## What actually happens when you follow the standard advice
+## What happens when the standard advice is followed literally
 
-Following the standard advice means building a policy engine, a human-in-the-loop queue, and a logging pipeline. In a typical stack — say, an agent built on LangChain 0.1.x calling OpenAI's gpt-4-turbo through a FastAPI 0.110 backend — you end up with something like this:
+Following the standard advice means building a policy engine, a human-in-the-loop queue, and a logging pipeline. In a typical stack — an agent built on a framework that wraps a hosted chat model behind a FastAPI service — the result looks something like this:
 
 ```python
 # policy_gate.py — the standard pre-execution check
@@ -40,15 +40,17 @@ def check_policy(call: ToolCall, role: str):
     return True
 ```
 
-This works for the obvious cases. It fails for the ones that actually cause compliance incidents. A common [failure mode: the agent](/agent-drift-the-failure-mode-you-didnt-log/) calls `read_customer_record` with a `user_id` that belongs to a different tenant because the retrieval step mixed up context from a shared vector store. The policy gate sees a permitted tool and a permitted role. It passes. The data leak is not in the tool call; it's in the *argument provenance*. Pre-execution policy almost never inspects how an argument was constructed.
+This works for the obvious cases. It fails for the ones that actually cause compliance incidents.
 
-Another common pattern: the agent chains three permitted calls — `read_customer_record`, `summarize`, `send_email` — and the summary includes PII that the email tool then sends to an external address. Each call passes policy individually. The composite action violates data-handling rules. This is the classic confused-deputy problem, and it's well documented in agent security literature. Pre-execution gates that evaluate calls in isolation cannot catch it.
+A common failure mode: the agent calls `read_customer_record` with a `user_id` that belongs to a different tenant because the retrieval step mixed up context from a shared vector store. The policy gate sees a permitted tool and a permitted role. It passes. The data leak is not in the tool call; it is in the *argument provenance*. Pre-execution policy almost never inspects how an argument was constructed.
 
-What happens next is predictable. The incident surfaces weeks later. The team scrambles to reconstruct what happened. If they logged only the final tool call, they cannot. If they logged every call but not the model's reasoning or the retrieval context, they cannot explain *why* the agent chose that customer record. The governance layer that would have helped — a full decision trace — was never built, because the standard advice focused on stopping actions, not explaining them.
+Another common pattern: the agent chains three permitted calls — `read_customer_record`, `summarize`, `send_email` — and the summary includes PII that the email tool then sends to an external address. Each call passes policy individually. The composite action violates data-handling rules. This is the classic confused-deputy problem, and it is well documented in agent security literature. Pre-execution gates that evaluate calls in isolation cannot catch it.
+
+What happens next is predictable. The incident surfaces weeks later. The team scrambles to reconstruct what happened. If only the final tool call was logged, they cannot. If every call was logged but not the model's reasoning or the retrieval context, they cannot explain *why* the agent chose that customer record. The governance layer that would have helped — a full decision trace — was never built, because the standard advice focused on stopping actions, not explaining them.
 
 ## A different mental model
 
-Think of governance as two layers: the *brake* and the *flight recorder*. The brake is pre-execution policy. The flight recorder is post-execution reconstruction. Most teams invest 90% in the brake and 10% in the recorder. The right ratio, if compliance is a real requirement, is closer to 40/60.
+Think of governance as two layers: the *brake* and the *flight recorder*. The brake is pre-execution policy. The flight recorder is post-execution reconstruction. A common pattern is to invest heavily in the brake and treat the recorder as an infrastructure afterthought. When compliance is a real requirement, the recorder deserves at least as much design attention as the brake.
 
 The flight recorder has three properties that pre-execution policy cannot provide:
 
@@ -58,11 +60,11 @@ The flight recorder has three properties that pre-execution policy cannot provid
 
 3. **Counterfactual clarity.** It lets you ask, after the fact, what would have stopped this. Was it a missing policy rule? A retrieval filter? A model prompt that should have included a tenant constraint? You can only answer that if you have the full trace.
 
-The mental shift is from *preventing* to *reconstructing*. Prevention is probabilistic — you will miss something. Reconstruction is deterministic — if you logged it, you can replay it. The governance layer that matters is the one that turns an incident from a multi-week forensic mystery into a two-hour query.
+The mental shift is from *preventing* to *reconstructing*. Prevention is probabilistic — something will be missed. Reconstruction is deterministic — if it was logged, it can be replayed. The governance layer that matters is the one that turns an incident from a multi-week forensic mystery into a two-hour query.
 
-## Evidence and examples from real systems
+## A worked example: refund issued to the wrong customer
 
-Consider a typical customer-support agent deployed on AWS Lambda (Python 3.11 runtime) with DynamoDB for session state and OpenSearch for retrieval. The agent has access to `get_order`, `issue_refund`, and `send_email`. A compliance-relevant failure occurs when the agent issues a refund to the wrong customer because the session ID was reused across two concurrent conversations — a race condition in the state store.
+Consider a customer-support agent running as a serverless function with a key-value store for session state and a search index for retrieval. The agent has access to `get_order`, `issue_refund`, and `send_email`. A compliance-relevant failure occurs when the agent issues a refund to the wrong customer because the session ID was reused across two concurrent conversations — a race condition in the state store.
 
 With only pre-execution policy, the trace looks like this:
 
@@ -70,7 +72,7 @@ With only pre-execution policy, the trace looks like this:
 {"timestamp": "2026-01-15T10:23:41Z", "tool": "issue_refund", "args": {"order_id": "ord_9981", "amount": 120}, "result": "success"}
 ```
 
-This tells you a refund happened. It does not tell you which conversation triggered it, which user was authenticated, or what the agent's reasoning was. Reconstructing the incident requires correlating Lambda request IDs, DynamoDB stream records, and CloudWatch logs — a process that typically takes 6–8 hours across two engineers.
+This tells you a refund happened. It does not tell you which conversation triggered it, which user was authenticated, or what the agent's reasoning was. Reconstructing the incident requires correlating request IDs, stream records, and application logs — a process that typically takes hours across two engineers.
 
 With a flight-recorder layer, the trace includes the decision context:
 
@@ -94,36 +96,33 @@ With a flight-recorder layer, the trace includes the decision context:
 
 With this, the reconstruction is a single query: find all traces where `session_id` was shared across `authenticated_user` values. The root cause — session reuse — is visible in seconds. The fix is a session key that includes the authenticated user ID, plus a policy rule that rejects tool calls when the session's user does not match the authenticated user.
 
-The cost difference is not trivial. A post-incident forensic process that takes 8 engineer-hours at a fully loaded rate of roughly $95/hour costs about $760 per incident. A flight-recorder query that takes 15 minutes costs about $24. More importantly, the time-to-remediation drops from days to hours, which matters when a regulator is asking for a timeline.
+### Reasoning through the cost, with stated assumptions
 
-A second example: an agent that summarizes customer emails and posts them to a Slack channel. The agent uses a retrieval step that pulls from a shared index. A compliance failure occurs when a summary includes a customer's full credit card number because the retrieval step surfaced a document containing it. Pre-execution policy permitted the `post_to_slack` call. The flight recorder shows that the retrieved document had a `pii_flag` field set to `true`, but the agent's prompt did not instruct it to redact. The fix is a pre-retrieval filter on `pii_flag` and a post-retrieval redaction step. Without the trace, the team would likely have blamed the model or added a generic "do not include PII" instruction, which is unreliable.
+The cost comparison is arithmetic, not a benchmark. State the assumptions and the conclusion follows.
+
+Assume a forensic process that requires two engineers working four hours each: 8 engineer-hours. At a fully loaded rate of $95/hour, that is 8 × $95 = $760 per incident. Assume instead a trace query that takes one engineer 15 minutes: 0.25 × $95 = $23.75, roughly $24. The difference is $736 per incident.
+
+The dollar figure matters less than the ratio: time-to-remediation drops from days to hours, which matters when a regulator is asking for a timeline. If you want your own numbers rather than these illustrative ones, measure three things: (a) the wall-clock time from incident report to root-cause identification, logged in your incident tracker; (b) the number of engineers involved, from the incident channel; (c) the fully loaded hourly rate your finance team uses for internal chargebacks. Multiply (a) × (b) × (c) for the pre-trace baseline, then repeat after the trace schema is in place. The measurement is cheap; the point is to replace intuition with a number you can defend.
+
+A second example: an agent that summarizes customer emails and posts them to a chat channel. The agent uses a retrieval step that pulls from a shared index. A compliance failure occurs when a summary includes a customer's full credit card number because the retrieval step surfaced a document containing it. Pre-execution policy permitted the `post_to_slack` call. The flight recorder shows that the retrieved document had a `pii_flag` field set to `true`, but the agent's prompt did not instruct it to redact. The fix is a pre-retrieval filter on `pii_flag` and a post-retrieval redaction step. Without the trace, the team would likely have blamed the model or added a generic "do not include PII" instruction, which is unreliable.
 
 These are not exotic scenarios. They are the ordinary shape of agent failures: correct tool calls with incorrect context. The governance layer that catches them is the one that records context, not just calls.
 
-| Approach | Catches wrong-tool calls | Catches wrong-context calls | Reconstruction time | Typical cost per incident |
-|---|---|---|---|---|
-| Pre-execution policy only | Yes | No | 6–8 hours | ~$760 |
-| Logging tool calls only | Yes | No | 4–6 hours | ~$570 |
-| Full decision trace | Yes | Yes | 15–30 minutes | ~$24–48 |
-| Trace + automated replay | Yes | Yes | 5–10 minutes | ~$8–16 |
+## The cases where the conventional wisdom is right
 
-## The cases where the conventional wisdom IS right
+Pre-execution policy is not useless. It is exactly right for a specific class of failures: those where the action itself is categorically prohibited, regardless of context. If an agent is never allowed to delete a production database, a policy gate that blocks `drop_table` is correct and sufficient. If an agent must never issue a refund above $500 without human approval, a policy gate is the right control. These are *action-level* rules, and they are cheap to enforce.
 
-Pre-execution policy is not useless. It is exactly right for a specific class of failures: those where the action itself is categorically prohibited, regardless of context. If your agent is never allowed to delete a production database, a policy gate that blocks `drop_table` is correct and sufficient. If your agent must never issue a refund above $500 without human approval, a policy gate is the right control. These are *action-level* rules, and they are cheap to enforce.
+The conventional wisdom is also right about human-in-the-loop for high-stakes, low-frequency actions. If an agent can wire money, a human approval step is appropriate. The mistake is extending that logic to every action. A support agent that reads customer records thousands of times a day cannot have a human approve each read. The governance layer for that agent must be the flight recorder, not the approval queue.
 
-The conventional wisdom is also right about human-in-the-loop for high-stakes, low-frequency actions. If your agent can wire money, a human approval step is appropriate. The mistake is extending that logic to every action. A support agent that reads customer records thousands of times a day cannot have a human approve each read. The governance layer for that agent must be the flight recorder, not the approval queue.
+Finally, the conventional wisdom is right that governance must be designed, not accreted. But "designed" should mean designing the trace schema and the query interface first, then adding policy rules as gaps are discovered. Many teams do the reverse: they design policy rules first and treat logging as an infrastructure concern. That ordering is why post-incident reconstruction is so painful.
 
-Finally, the conventional wisdom is right that governance must be designed, not accreted. But "designed" should mean designing the trace schema and the query interface first, then adding policy rules as you discover gaps. Most teams do the reverse: they design policy rules first and treat logging as an infrastructure concern. That ordering is why post-incident reconstruction is so painful.
-
-## How to decide which approach fits your situation
+## How to decide which approach fits
 
 The decision hinges on two questions: how reversible are the agent's actions, and how sensitive is the data it touches?
 
 If actions are reversible and data is low-sensitivity — for example, an agent that drafts internal documentation — pre-execution policy is probably enough. A simple allowlist of tools and a basic audit log will satisfy most reviews.
 
-If actions are irreversible or data is sensitive — refunds, emails to customers, access to PII — you need the flight recorder. The rule of thumb: if a regulator could ask "show me exactly why the agent did this," you need a trace that answers that question without human archaeology.
-
-A practical decision matrix:
+If actions are irreversible or data is sensitive — refunds, emails to customers, access to PII — the flight recorder is required. The rule of thumb: if a regulator could ask "show me exactly why the agent did this," the trace must answer that question without human archaeology.
 
 | Action reversibility | Data sensitivity | Recommended governance |
 |---|---|---|
@@ -136,49 +135,53 @@ For most teams building customer-facing agents, the answer is the third row or f
 
 ## Common objections, and responses
 
-**"Decision traces are too expensive to store."** A trace with full context — retrieval documents, model reasoning, tool args — might be 2–5 KB per step. An agent that executes 50 steps per conversation and handles 10,000 conversations per day generates about 1–2.5 GB per day. At S3 Standard pricing (around $0.023 per GB-month), that's under $2 per month for storage. The compute to write it is negligible. The objection is usually about schema design effort, not cost.
+**"Decision traces are too expensive to store."** Do the arithmetic with your own volume. A trace with full context — retrieval documents, model reasoning, tool args — might be 2–5 KB per step. An agent that executes 50 steps per conversation and handles 10,000 conversations per day generates 50 × 10,000 × 3 KB ≈ 1.5 GB per day, or roughly 45 GB per month. At S3 Standard pricing (around $0.023 per GB-month), that is about $1 per month for storage. The compute to write it is negligible. The real cost is schema design effort, not storage.
 
-**"We can't log model reasoning because it contains PII."** You can. Redact at write time using a deterministic tokenizer, or store reasoning in a separate encrypted store with stricter access controls. The trace does not need to contain raw PII; it needs to contain enough to reconstruct the decision. A hash of the PII plus a pointer to the source document is often sufficient.
+**"Model reasoning can't be logged because it contains PII."** It can. Redact at write time using a deterministic tokenizer, or store reasoning in a separate encrypted store with stricter access controls. The trace does not need to contain raw PII; it needs to contain enough to reconstruct the decision. A hash of the PII plus a pointer to the source document is often sufficient.
 
-**"Our agent framework doesn't support this."** Most frameworks — LangChain 0.1.x, LlamaIndex 0.10.x, CrewAI 0.30.x — have callback hooks or event emitters that let you capture steps. If yours doesn't, wrap the tool-calling interface. The flight recorder is a cross-cutting concern; it should not depend on framework support.
+**"Our agent framework doesn't support this."** Most frameworks expose callback hooks or event emitters that let you capture steps. If yours doesn't, wrap the tool-calling interface. The flight recorder is a cross-cutting concern; it should not depend on framework support.
 
-**"We'll add it after we have an incident."** That is the definition of building governance after a failure, which is the thesis of this post. The point is that you should build the *reconstruction* layer before you need it, because the incident will not wait for you to design a schema. The brake can be minimal; the recorder should be ready.
+**"We'll add it after we have an incident."** That is the definition of building governance after a failure, which is the thesis of this article. The point is that the *reconstruction* layer should exist before it is needed, because the incident will not wait for a schema design. The brake can be minimal; the recorder should be ready.
 
-## What the alternative approach would change
+## Failure modes of the flight recorder itself
 
-If teams treated the flight recorder as the primary governance artifact, several things would change. First, the trace schema would be a first-class design document, reviewed alongside the agent's prompt and tool definitions. Second, incident response would be a query, not a project. Third, policy rules would be derived from trace analysis — you would see which contexts lead to violations and write rules that target those contexts, rather than guessing. Fourth, compliance reviews would shift from "show us your approval workflow" to "show us a trace of a real decision," which is a much stronger answer.
+A flight recorder is not automatically trustworthy. Three failure modes are worth designing against.
+
+**Sampling.** If traces are sampled to control volume — say, one in ten — the incident almost certainly falls in the unsampled nine. For compliance-relevant paths, log at 100%. Sample only high-volume, low-sensitivity spans.
+
+**Mutable storage.** If traces live in a store where application code has write access to existing records, the trace is not evidence. Write once, then restrict the application's credentials to append-only. If the store supports object-lock or immutability windows, use them.
+
+**Schema drift.** The trace schema will be extended as the agent gains tools. If old records lack fields the query layer expects, reconstruction queries silently return incomplete results. Version the schema, and make the query layer fail loudly on unknown versions rather than returning partial rows.
+
+A fourth, subtler failure: traces that record the model's *stated* reasoning rather than the actual inputs. A model's chain-of-thought is itself a generated artifact, not a faithful log of computation. Treat it as one input among several — alongside retrieval scores, tool arguments, and policy results — not as ground truth.
+
+## What changes if the recorder is treated as primary
+
+If teams treated the flight recorder as the primary governance artifact, several things would change. First, the trace schema would be a first-class design document, reviewed alongside the agent's prompt and tool definitions. Second, incident response would be a query, not a project. Third, policy rules would be derived from trace analysis — seeing which contexts lead to violations and writing rules that target those contexts, rather than guessing. Fourth, compliance reviews would shift from "show us your approval workflow" to "show us a trace of a real decision," which is a much stronger answer.
 
 The cultural change is the hardest part. Pre-execution policy feels like control. The flight recorder feels like overhead until the first incident, at which point it feels like the only thing that mattered. The teams that internalize this build agents that are not just governed but *explainable*, which is increasingly the actual regulatory requirement.
 
 ## Summary
 
-The governance layer that matters after a compliance-relevant failure is not the policy gate you built before it. It is the decision trace you built to reconstruct it. Pre-execution policy catches categorical violations; it does not catch wrong-context actions, which are the majority of agent failures. A flight recorder that captures sequence, argument provenance, and counterfactual clarity turns an 8-hour forensic project into a 15-minute query and reduces cost per incident from roughly $760 to under $50. The conventional wisdom is right about action-level rules and human approval for high-stakes actions, but wrong about treating logging as an afterthought. Build the trace schema first, derive policy from it, and treat reconstruction as the primary control.
-
-Your next step: open your agent's tool-calling wrapper and add a single structured log line that captures the provenance of one argument — for example, the document ID and similarity score that produced an `order_id`. Run one conversation, then query that log for the provenance field. If you can answer "where did this argument come from" in under a minute, you have the beginning of a flight recorder. If you cannot, you have just found the gap that a compliance incident would expose.
+The governance layer that matters after a compliance-relevant failure is not the policy gate built before it. It is the decision trace built to reconstruct it. Pre-execution policy catches categorical violations; it does not catch wrong-context actions, which are a large share of agent failures. A flight recorder that captures sequence, argument provenance, and counterfactual clarity turns a multi-hour forensic project into a short query. The conventional wisdom is right about action-level rules and human approval for high-stakes actions, but wrong about treating logging as an afterthought. Design the trace schema first, derive policy from it, and treat reconstruction as the primary control.
 
 ## Frequently Asked Questions
 
 **What is a compliance-relevant failure in an agent system?**
 It is any action or outcome that violates a legal, regulatory, or contractual obligation — for example, a data leak, an unauthorized transaction, or a failure to honor a deletion request. These failures are often not caused by a prohibited tool call but by a permitted call with incorrect context, such as the wrong customer record or an unredacted PII field. The governance layer that addresses them must capture context, not just actions.
 
-**How do I log agent decisions without storing PII?**
+**How can agent decisions be logged without storing PII?**
 Store hashes or tokens instead of raw values, and keep a separate, access-controlled mapping if you need to resolve them. For model reasoning, redact at write time using a deterministic tokenizer or store it in an encrypted store with stricter IAM policies. The trace needs enough to reconstruct the decision path, not the raw data itself. This approach is compatible with GDPR and CCPA if the mapping store is properly governed.
 
 **Why isn't pre-execution policy enough for agent governance?**
 Pre-execution policy evaluates each tool call in isolation, so it cannot detect composite violations (e.g., three permitted calls that together leak data) or argument-provenance errors (e.g., a permitted tool called with an argument from the wrong tenant). Those are the failure modes that most often trigger compliance incidents. Policy is necessary for categorical rules but insufficient for context-dependent ones.
 
-**What tools can help build a decision trace for agents?**
-OpenTelemetry (spec 1.27) with custom spans is a common foundation, paired with a storage backend like ClickHouse 24.x or AWS OpenSearch. For agent-specific tracing, LangSmith and Arize Phoenix offer instrumentation, but you can also implement a lightweight wrapper around your tool-calling interface. The key is to define a schema that includes provenance, not just the call and result.
+**What can be used to build a decision trace for agents?**
+OpenTelemetry with custom spans is a common foundation, paired with a storage backend such as ClickHouse or OpenSearch. Agent-specific tracing products exist, but a lightweight wrapper around the tool-calling interface is often enough. The key is to define a schema that includes provenance, not just the call and result.
 
+**How do I know my trace is complete enough?**
+Run a tabletop exercise. Pick a plausible incident — a refund to the wrong customer, a summary containing PII — and try to answer, using only the trace, which conversation triggered it, which user was authenticated, what the model saw, and which rule would have blocked it. If any of those questions cannot be answered from the trace alone, the schema has a gap. This exercise takes an hour and is far cheaper than discovering the gap during a real inquiry.
 
----
+## Your next 30 minutes
 
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open the tool-calling wrapper in your agent and add a single structured log line that captures the provenance of one argument — for example, the document ID and similarity score that produced an `order_id`. Run one conversation, then query that log for the provenance field. If the question "where did this argument come from" can be answered in under a minute, you have the beginning of a flight recorder. If it cannot, you have just found the gap that a compliance incident would expose.

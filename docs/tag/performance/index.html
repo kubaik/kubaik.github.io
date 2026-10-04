@@ -49,13 +49,13 @@
 
       <a class="post-card" href="/audit-logs-compliance-vs-performance/">
         <h3>Audit logs: compliance vs performance</h3>
-        <p class="post-excerpt">A typical failure mode: the application acknowledges the user request after enqueuing the audit event, but the queue consumer lags by 200–500 ms under…</p>
-        <p class="post-reading-time">24 min read · 20 September 2026</p>
+        <p class="post-excerpt">How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.</p>
+        <p class="post-reading-time">12 min read · 20 September 2026</p>
       </a>
       <a class="post-card" href="/memory-systems-for-production-agents/">
         <h3>Memory Systems for Production Agents</h3>
-        <p class="post-excerpt">Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</p>
-        <p class="post-reading-time">11 min read · 15 September 2026</p>
+        <p class="post-excerpt">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+        <p class="post-reading-time">10 min read · 15 September 2026</p>
       </a>
       <a class="post-card" href="/why-does-my-model-drift-after-deploy/">
         <h3>Why ML Models Drift After Deployment</h3>
@@ -64,28 +64,28 @@
       </a>
       <a class="post-card" href="/why-platform-metrics-lie/">
         <h3>Why platform metrics lie</h3>
-        <p class="post-excerpt">Platform impact measured beyond vanity metrics: see how a contribution index reveals real latency, error and cost gains, avoiding hidden regional spikes.</p>
-        <p class="post-reading-time">14 min read · 8 September 2026</p>
+        <p class="post-excerpt">Aggregate p99 and request counts hide regional variance, cost attribution gaps, and failure modes. Here is how to build a composite platform metric.</p>
+        <p class="post-reading-time">12 min read · 8 September 2026</p>
       </a>
       <a class="post-card" href="/audit-logs-that-scale-skip-the-3am-fire-drills/">
         <h3>Audit logs that scale: skip the 3AM fire drills</h3>
-        <p class="post-excerpt">Cut audit log storage 70% and query latency 90% with a dual-stream stack—Kafka 3.7, ClickHouse 23.11, S3 Parquet—while satisfying GDPR and SOC2 integrity…</p>
-        <p class="post-reading-time">13 min read · 17 August 2026</p>
+        <p class="post-excerpt">How to design audit log pipelines that satisfy auditors and engineers: immutable event streams, hash chains, tiered retention, and a decision checklist.</p>
+        <p class="post-reading-time">15 min read · 17 August 2026</p>
       </a>
       <a class="post-card" href="/why-your-multi-agent-system-degraded-slowly/">
         <h3>Why your multi-agent system degraded slowly</h3>
-        <p class="post-excerpt">Cut multi-agent system p99 latency 80% by stopping silent orchestration overhead growth — payload size creep, NATS queueing pressure, and retry loops…</p>
-        <p class="post-reading-time">15 min read · 9 August 2026</p>
+        <p class="post-excerpt">Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.</p>
+        <p class="post-reading-time">14 min read · 9 August 2026</p>
       </a>
       <a class="post-card" href="/wasm-servers-beat-containers-here/">
         <h3>WASM servers beat containers here</h3>
-        <p class="post-excerpt">Cut API latency 60% with WebAssembly on the server — the concrete cases where WASM beats containers in 2026, with Rust 1.77, Node 20 LTS, and real…</p>
-        <p class="post-reading-time">12 min read · 5 August 2026</p>
+        <p class="post-excerpt">A practical guide to choosing WebAssembly over containers for short-lived, CPU-bound server tasks, with code, failure modes, and a measurement plan.</p>
+        <p class="post-reading-time">11 min read · 5 August 2026</p>
       </a>
       <a class="post-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
         <h3>Audit logs: ship them fast, keep them forever</h3>
-        <p class="post-excerpt">Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.</p>
-        <p class="post-reading-time">14 min read · 6 July 2026</p>
+        <p class="post-excerpt">Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.</p>
+        <p class="post-reading-time">13 min read · 6 July 2026</p>
       </a>
       <a class="post-card" href="/audit-trails-immutabledb-vs-dynamodb-streams/">
         <h3>Audit trails: ImmutableDB vs DynamoDB Streams</h3>
@@ -99,8 +99,8 @@
       </a>
       <a class="post-card" href="/starlink-4g-fallback-serve-pages-under-800ms/">
         <h3>Starlink 4G fallback: serve pages under 800ms</h3>
-        <p class="post-excerpt">Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.</p>
-        <p class="post-reading-time">11 min read · 26 June 2026</p>
+        <p class="post-excerpt">How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.</p>
+        <p class="post-reading-time">12 min read · 26 June 2026</p>
       </a>
       <a class="post-card" href="/postgres-17-buried-redis-s3-cron/">
         <h3>Postgres 17 buried Redis, S3, cron</h3>
@@ -124,8 +124,8 @@
       </a>
       <a class="post-card" href="/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">
         <h3>Next.js 15 vs Remix vs SvelteKit: 2026 choices</h3>
-        <p class="post-excerpt">Cut 40 % latency on 3G: Next.js 15 vs Remix vs SvelteKit benchmarks with real deployments in Senegal, Kenya, and Nigeria — bundle sizes, Turbopack pitfalls…</p>
-        <p class="post-reading-time">17 min read · 16 June 2026</p>
+        <p class="post-excerpt">A practical comparison of Next.js, Remix and SvelteKit: routing and data contracts, bundle measurement, caching pitfalls, and a decision checklist.</p>
+        <p class="post-reading-time">13 min read · 16 June 2026</p>
       </a>
       <a class="post-card" href="/build-in-public-without-burning-out/">
         <h3>Build in public without burning out</h3>
@@ -133,9 +133,9 @@
         <p class="post-reading-time">11 min read · 16 June 2026</p>
       </a>
       <a class="post-card" href="/react-19-compiler-my-components-changed-how/">
-        <h3>React 19 compiler: my components changed how</h3>
-        <p class="post-excerpt">Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.</p>
-        <p class="post-reading-time">14 min read · 15 June 2026</p>
+        <h3>React 19 Compiler: What It Rewrites and Where It Breaks</h3>
+        <p class="post-excerpt">How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.</p>
+        <p class="post-reading-time">10 min read · 15 June 2026</p>
       </a>
       <a class="post-card" href="/3-ways-container-builds-got-3x-faster-in-2026/">
         <h3>Container Build Caching: What Actually Speeds Up CI</h3>
@@ -149,8 +149,8 @@
       </a>
       <a class="post-card" href="/tool-calls-under-load-async-batch-vs-fire-and-forget/">
         <h3>Tool calls under load: async batch vs fire-and-forget</h3>
-        <p class="post-excerpt">Cut cloud costs 60% with async batch tool calls — real P99 latency, Redis 7.2 cost, and the fire-and-forget trap most teams hit at scale.</p>
-        <p class="post-reading-time">18 min read · 13 June 2026</p>
+        <p class="post-excerpt">Compare async batch and fire-and-forget tool-calling patterns: when each fits, how to instrument latency and queue depth, and how to pick a batch size.</p>
+        <p class="post-reading-time">15 min read · 13 June 2026</p>
       </a>
       <a class="post-card" href="/build-a-search-system-in-2026-semantic-keyword/">
         <h3>Build a search system in 2026: semantic, keyword</h3>
@@ -159,13 +159,13 @@
       </a>
       <a class="post-card" href="/soft-deletes-fail-what-breaks-first/">
         <h3>Soft deletes fail: what breaks first</h3>
-        <p class="post-excerpt">Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed</p>
-        <p class="post-reading-time">13 min read · 9 June 2026</p>
+        <p class="post-excerpt">Soft deletes leak into every query and bloat indexes. Here is how to measure the damage and move to a tiered live/archive/cold lifecycle.</p>
+        <p class="post-reading-time">12 min read · 9 June 2026</p>
       </a>
       <a class="post-card" href="/pass-interviews-without-a-cs-degree/">
         <h3>Pass interviews without a CS degree</h3>
-        <p class="post-excerpt">Self-taught devs pass remote interviews by debugging real systems, not just LeetCode.</p>
-        <p class="post-reading-time">16 min read · 9 June 2026</p>
+        <p class="post-excerpt">Why algorithm drills alone fail remote technical interviews, and how to build the system-debugging and trade-off reasoning that actually decides hires.</p>
+        <p class="post-reading-time">11 min read · 9 June 2026</p>
       </a>
       <a class="post-card" href="/drop-ec2-bills-70-without-code/">
         <h3>Kernel and EBS Tuning That Cuts EC2 CPU Overhead</h3>

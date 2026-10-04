@@ -1,32 +1,32 @@
 # Agent drift: the failure mode you didn't log
 
-It's the kind of problem that's easy to reproduce and hard to explain. It's easy to spend longer than expected on detect contain before the actual failure mode becomes clear. This is the version of the write-up that includes the part that broke.
+An agent passes its evaluation suite on Tuesday, ships a slightly different distribution of answers on Wednesday, and by Friday a subset of users receives responses that are technically valid but contextually wrong. Nothing in the stack flagged it. Latency is flat, token counts are flat, error rates are flat. This is agent drift, and the reason it goes unlogged is that most observability is built to catch a different failure.
 
 ## The gap between what the docs say and what production needs
 
-[Agent drift is](/agent-drift-why-it-hurts-ux/) one of those terms that sounds like a research problem until you see it in a support ticket. The canonical definition — an agent's behavior gradually diverging from its intended specification over time — is accurate but useless for building anything. The docs for most agent frameworks (LangGraph 0.2, CrewAI 0.30, AutoGen 0.2) describe drift as something you handle with better prompts or a stronger model. Production disagrees. What actually happens is that an agent passes your eval suite on Tuesday, ships a slightly different distribution of answers on Wednesday, and by Friday a subset of users is getting responses that are technically valid but contextually wrong — and nothing in your stack flagged it.
+Agent drift is commonly defined as an agent's behavior gradually diverging from its intended specification over time. That definition is accurate and nearly useless for building anything. The documentation for many agent frameworks treats drift as something addressed with better prompts or a stronger model. Production behavior suggests otherwise.
 
-The part that trips people up is that drift is not a model failure. It is a *distribution* failure. The model is doing exactly what you asked; you just stopped asking the same thing. A common failure mode here: a support agent that starts summarizing tickets more aggressively after a prompt cache warms up, because the cached prefix includes an example that biases toward brevity. The model didn't change. The context did. And because your eval suite tests final answers, not intermediate state, the drift is invisible until a customer complains that the agent "sounds different."
+The part that trips people up is that drift is usually not a model failure. It is a distribution failure. The model is doing what it was asked; the input distribution, the context assembly, or the surrounding system changed. A recurring failure mode: a support agent begins summarizing tickets more aggressively once a prompt cache warms up, because the cached prefix contains an example that biases toward brevity. The model weights did not change. The context did. Because evaluation suites test final answers rather than intermediate state, the shift stays invisible until a user reports that the agent "sounds different."
 
-I think most agent observability today is built for the wrong failure. Teams instrument latency, token counts, and error rates — all of which stay flat during drift. The signal you need is behavioral: are the agent's decisions still clustering around the same points as last week? That is a different measurement problem, and it is the one this post covers.
+Most agent observability is built for the wrong failure. Teams instrument latency, token counts, and error rates, all of which stay flat during drift. The signal that matters is behavioral: are the agent's decisions still clustering around the same points as last week? That is a different measurement problem, and it is the one this article covers.
 
-## How agent drift detection actually works under the hood
+## Detection and containment are two different problems
 
-Drift detection for agents is really two separate problems bolted together: *detection* (did the behavior change?) and *containment* (what do we do about it?). Most teams conflate them and end up with a dashboard nobody acts on.
+Drift handling is really two separate problems bolted together: detection (did the behavior change?) and containment (what do we do about it?). Conflating them produces a dashboard nobody acts on.
 
-Detection works by sampling the agent's decision points and comparing them to a reference distribution. For a tool-calling agent, the decision points are: which tool was selected, what arguments were passed, and in what order. For a RAG agent, it is the retrieval set and the answer's claim structure. You do not need to compare full text — that is expensive and noisy. You compare embeddings of the decision trace, or cheaper, you compare categorical features (tool name, argument schema shape, retrieval count).
+Detection works by sampling the agent's decision points and comparing them to a reference distribution. For a tool-calling agent, the decision points are which tool was selected, what arguments were passed, and in what order. For a retrieval-augmented agent, they are the retrieval set and the claim structure of the answer. Comparing full text is expensive and noisy. Comparing embeddings of the decision trace is better but still costly. Cheaper still, and often sufficient, is comparing categorical features: tool name, argument schema shape, retrieval count, answer length bucket.
 
-Containment is the harder half. Once you detect drift, you have three options: roll back the prompt/model version, clamp the agent to a narrower action space, or route the drifted traffic to a human. The mistake is treating containment as a manual runbook. In practice, containment needs to be a policy the agent runtime enforces — a circuit breaker that trips when the drift score crosses a threshold.
+Containment is the harder half. Once drift is detected, there are three broad options: roll back the prompt or model version, clamp the agent to a narrower action space, or route the drifted traffic to a human. Treating containment as a manual runbook is the common mistake. Containment needs to be a policy the agent runtime enforces, such as a circuit breaker that trips when the drift score crosses a threshold.
 
-A concrete example: an agent that books internal meeting rooms. Its tool calls are `check_availability`, `reserve_room`, `send_invite`. Normal drift is a shift in argument distribution (more 30-minute slots than 60). Pathological drift is the agent starting to call `reserve_room` before `check_availability` — a sequencing violation that produces double-bookings. Categorical drift detection catches the first; a state-machine guard catches the second. You need both.
+A concrete example: an agent that books internal meeting rooms. Its tool calls are `check_availability`, `reserve_room`, and `send_invite`. Normal drift is a shift in the argument distribution, for instance more 30-minute slots than 60-minute slots. Pathological drift is the agent calling `reserve_room` before `check_availability`, a sequencing violation that produces double-bookings. Categorical drift detection catches the first; a state-machine guard catches the second. Both are needed.
 
-The key insight I keep coming back to: drift detection is a *statistical* problem, but containment is a *state machine* problem. Teams that try to solve both with the same tool end up with either noisy alerts or brittle guards.
+The useful framing: drift detection is a statistical problem, but containment is a state machine problem. Teams that try to solve both with the same tool end up with either noisy alerts or brittle guards.
 
-## Step-by-step implementation with real code
+## A minimal implementation
 
-Here is a minimal implementation that has worked in practice. It uses Python 3.11, sentence-transformers 3.0 for embeddings, and Redis 7.2 for storing reference distributions. The agent runtime is a simple loop; the drift detector runs as a sidecar that samples 5% of traces.
+The following is a minimal implementation of the architecture described above. It uses Python 3.11, sentence-transformers 3.0 for the optional embedding check, and Redis 7.2 for storing reference distributions. The agent runtime is a simple loop; the drift detector runs as a sidecar that samples a fraction of traces.
 
-First, the trace collector. Every agent decision gets logged as a structured event with a categorical signature:
+First, the trace collector. Every agent decision is logged as a structured event with a categorical signature:
 
 ```python
 import hashlib
@@ -56,9 +56,9 @@ def signature(trace: DecisionTrace) -> str:
     return hashlib.sha1("|".join(parts).encode()).hexdigest()[:16]
 ```
 
-The signature is deliberately coarse. Comparing raw embeddings of full traces gives you high-dimensional noise; comparing categorical signatures gives you a distribution you can actually test. In practice, a signature space of 200–500 distinct values is the sweet spot — small enough to compute a stable histogram, large enough to catch real shifts.
+The signature is deliberately coarse. Comparing raw embeddings of full traces yields high-dimensional noise; comparing categorical signatures yields a distribution that can actually be tested. A signature space of a few hundred distinct values is typically the sweet spot: small enough to compute a stable histogram, large enough to catch real shifts.
 
-Next, the reference distribution and the drift score. We use population stability index (PSI) because it is interpretable: PSI < 0.1 is stable, 0.1–0.25 is a warning, > 0.25 is a drift event. This is the same metric credit risk teams have used for decades, and it maps cleanly onto agent traces.
+Next, the reference distribution and the drift score. Population stability index (PSI) is a reasonable choice because it is interpretable. The conventional reading, inherited from credit risk monitoring, is that PSI below 0.1 is stable, 0.1 to 0.25 is a warning, and above 0.25 is a drift event. The metric maps cleanly onto agent traces.
 
 ```python
 import math
@@ -75,15 +75,15 @@ def psi(reference: Counter, current: Counter, epsilon: float = 1e-6) -> float:
         score += (cur_pct - ref_pct) * math.log(cur_pct / ref_pct)
     return score
 
-# Thresholds used in production:
+# Common starting thresholds:
 # PSI < 0.10  -> stable, no action
-# 0.10 - 0.25 -> log warning, increase sampling to 25%
+# 0.10 - 0.25 -> log warning, increase sampling
 # > 0.25      -> trip circuit breaker, route to fallback agent
 ```
 
-Containment is a state machine layered on top. The circuit breaker lives in the agent runtime, not in the detector. When PSI crosses 0.25 for two consecutive 15-minute windows, the runtime swaps the agent's tool set to a read-only subset and routes write operations to a queue for human review. That is the difference between detection and containment: the detector emits a signal, the runtime enforces a policy.
+Containment is a state machine layered on top, and it lives in the agent runtime rather than in the detector. When PSI crosses the chosen threshold for two consecutive windows, the runtime can swap the agent's tool set to a read-only subset and route write operations to a queue for human review. That is the difference between detection and containment: the detector emits a signal, the runtime enforces a policy.
 
-One more piece — the sequencing guard. This catches pathological drift that categorical PSI misses:
+One more piece: the sequencing guard. This catches pathological drift that categorical PSI misses.
 
 ```python
 ALLOWED_TRANSITIONS = {
@@ -99,97 +99,83 @@ def enforce_sequence(history: list[str], next_tool: str) -> bool:
     return next_tool in ALLOWED_TRANSITIONS.get(last, set())
 ```
 
-If `enforce_sequence` returns False, the runtime rejects the tool call and re-prompts the agent with the valid next actions. This is cheap (microseconds) and catches the double-booking class of failure that PSI will never see because the *distribution* of tool calls looks normal.
+If `enforce_sequence` returns False, the runtime rejects the tool call and re-prompts the agent with the valid next actions. This is cheap, on the order of microseconds, and catches the double-booking class of failure that PSI will never see, because the distribution of tool calls can look entirely normal while the ordering is wrong.
 
-## Performance numbers from a live system
+## What this costs in practice
 
-Typical figures from a mid-size deployment — a customer support agent handling around 40,000 conversations per day across three regions. These are illustrative of what the architecture above costs and catches, not measurements from a single named system.
+Rather than quoting benchmark numbers, it is more useful to describe what to instrument and how to compare. The figures below are illustrative of what the architecture above tends to cost, expressed as a worked example with stated assumptions rather than measurements from a named system.
 
-| Component | Cost / latency | Notes |
-|---|---|---|
-| Trace signature computation | ~0.3 ms per decision | Pure CPU, no model call |
-| PSI computation (5% sample, 15-min window) | ~12 ms per window | ~2,000 traces per window |
-| Embedding-based deep check (1% sample) | ~85 ms per trace | sentence-transformers 3.0, all-MiniLM-L6-v2 |
-| Redis 7.2 storage | ~40 MB per week | Signatures + histograms, 30-day retention |
-| Circuit breaker trip latency | < 50 ms | In-process, no network hop |
-| False positive rate (PSI > 0.25) | ~3% of windows | Drops to ~0.8% with 2-window confirmation |
+Assume an agent handling 40,000 conversations per day, sampled at 5 percent, over 15-minute windows. That is roughly 2,000 conversations per day entering the detector, or about 83 per window. If each conversation produces on average 6 decisions, a window contains roughly 500 traces. A PSI computation over a histogram of a few hundred keys is a few milliseconds of pure CPU work; the dominant cost is reading the window from storage.
 
-The number that surprised me: the categorical PSI detector caught 94% of drift events that the embedding-based check also caught, at roughly 1/250th the cost. The embedding check is worth keeping for the 6% it catches alone — usually semantic drift where the tool distribution is stable but the *content* of arguments shifted. But if you can only afford one, build the categorical one first. It is boring and it works.
+Trace signature computation is a hash over a handful of short strings, which runs in well under a millisecond and requires no model call. Storage is the signature string plus a counter per window; with a 30-day retention policy and a few hundred distinct signatures, this stays in the tens of megabytes. The circuit breaker, being in-process, adds no network hop.
 
-Latency impact on the agent itself is negligible: the signature is computed inline (0.3 ms), the PSI runs async, and the sequencing guard adds under 1 ms. Total overhead is under 2 ms per decision, which is noise compared to a typical 800–1,500 ms LLM call.
+The optional embedding-based deep check is the expensive component. Running a sentence-transformer model such as `all-MiniLM-L6-v2` on a single trace costs on the order of tens to low hundreds of milliseconds depending on hardware, which is why it is usually reserved for a 1 percent sample or run offline.
 
-## The failure modes nobody warns you about
+To measure the tradeoff on your own traffic, instrument three things: the wall-clock time of `signature()`, the wall-clock time of `psi()` per window, and the count of distinct signatures per window. Then compare the drift events flagged by the categorical detector against those flagged by the embedding check over the same period. The comparison that matters is not raw accuracy but the marginal value of the embedding check: how many drift events does it catch that the categorical detector misses, and what does each of those cost.
 
-The first failure mode is **reference distribution rot**. Your reference histogram is built from last month's traffic. If your user base shifts — a new customer segment, a seasonal spike — the reference is no longer valid, and PSI will fire constantly. Teams usually respond by raising the threshold, which defeats the purpose. The fix is to rebuild the reference on a rolling 14-day window, but only from traces that passed human review or explicit quality checks. Never rebuild from all traffic; you will bake drift into your baseline.
+A common finding when teams run this comparison is that the categorical PSI detector catches the large majority of drift events that the embedding check also catches, at a small fraction of the cost. The embedding check is still worth keeping for the residual cases, usually semantic drift where the tool distribution is stable but the content of arguments shifted. If only one can be afforded, build the categorical detector first. It is boring and it works.
 
-The second is **the silent tool rename**. If you rename `reserve_room` to `book_room` in a prompt update, every signature changes overnight and PSI goes to infinity. This is not drift, it is a schema change, and it will page you at 3 a.m. The fix is a signature versioning scheme — hash the tool schema, not the tool name, and treat schema changes as explicit reference resets. A common trap here is treating the signature as stable when the underlying schema is not.
+Latency impact on the agent itself is typically negligible: the signature is computed inline, the PSI runs asynchronously, and the sequencing guard adds under a millisecond. Total overhead is small compared to a typical LLM call.
 
-The third, and the one that actually causes bad user experiences, is **drift in the fallback path**. When the circuit breaker trips, traffic routes to a fallback agent — usually a simpler, more constrained one. If the fallback has its own drift (and it will, because it gets less attention), you have just moved the problem. The fallback needs its own reference distribution and its own PSI check. Teams that skip this discover that their "safety net" is producing the same bad answers, just slower.
+## Failure modes worth designing for
 
-A concrete example of the third: an agent that normally handles refund requests starts drifting toward over-approval. Circuit breaker trips, traffic routes to a rule-based fallback. The fallback approves refunds under $50 automatically — a rule that was correct six months ago but now covers 70% of requests because of a pricing change. Users get inconsistent treatment: some approved instantly, some routed to manual review, with no visible logic. The drift was contained; the user experience was not.
+The first failure mode is reference distribution rot. The reference histogram is built from some period of past traffic. If the user base shifts, whether from a new customer segment or a seasonal spike, the reference is no longer valid and PSI will fire constantly. The usual response is to raise the threshold, which defeats the purpose. The fix is to rebuild the reference on a rolling window, but only from traces that passed human review or explicit quality checks. Rebuilding from all traffic bakes drift into the baseline.
 
-## Tools and libraries worth your time
+The second is the silent tool rename. Renaming `reserve_room` to `book_room` in a prompt update changes every signature overnight, and PSI goes to its maximum. This is not drift; it is a schema change. The fix is a signature versioning scheme: hash the tool schema rather than the tool name, and treat schema changes as explicit reference resets. Treating a signature as stable when the underlying schema is not is a common trap.
 
-There is a real temptation to build everything from scratch. Resist it for the storage and metrics layers; build the detection logic yourself because it is domain-specific.
+The third, and the one that most directly causes bad user experiences, is drift in the fallback path. When the circuit breaker trips, traffic routes to a fallback agent, usually a simpler and more constrained one. If the fallback has its own drift, and it will because it receives less attention, the problem has simply moved. The fallback needs its own reference distribution and its own PSI check. Teams that skip this discover that the safety net produces the same bad answers, just slower.
 
-| Tool | Version | What it is good for | What it is not |
+A concrete example of the third: an agent that handles refund requests starts drifting toward over-approval. The circuit breaker trips and traffic routes to a rule-based fallback. The fallback approves refunds under a fixed dollar threshold automatically, a rule that was correct when written but now covers most requests because of a pricing change. Users get inconsistent treatment: some approved instantly, some routed to manual review, with no visible logic. The drift was contained; the user experience was not.
+
+## Choosing components
+
+There is a real temptation to build everything from scratch. For storage and metrics layers, existing tools are usually adequate. The detection logic itself is domain-specific and is often worth writing directly.
+
+| Component | Role | Where it fits | Where it does not |
 |---|---|---|---|
-| Redis 7.2 | 7.2 | Signature storage, sliding windows, TTL | Not a time-series DB; do not use for long-range queries |
-| Prometheus 2.51 | 2.51 | PSI as a gauge, alerting rules | Not for high-cardinality trace IDs |
-| sentence-transformers 3.0 | 3.0 | Semantic drift checks on 1% sample | Too slow for inline use |
-| LangGraph 0.2 | 0.2 | Explicit state machine for containment | Its built-in tracing is not drift detection |
-| OpenTelemetry 1.27 | 1.27 | Trace propagation across agent steps | Does not understand agent semantics |
-| Evidently 0.6 | 0.6 | PSI and drift reports for batch jobs | Not designed for streaming agent traces |
+| Redis | Signature storage, sliding windows, TTL | Fast key-value histograms with expiry | Not a time-series database; avoid long-range analytical queries |
+| Prometheus | PSI as a gauge, alerting rules | Threshold alerts on low-cardinality metrics | Not for high-cardinality trace IDs |
+| sentence-transformers | Semantic drift checks on a sample | Offline or sampled semantic comparison | Too slow for inline use |
+| LangGraph | Explicit state machine for containment | Encoding allowed transitions | Its tracing is not drift detection |
+| OpenTelemetry | Trace propagation across agent steps | Correlating decisions to a request | Does not understand agent semantics |
+| A batch drift-reporting library | PSI and drift reports for batches | Building reference distributions, validating thresholds | Not designed for streaming agent traces |
 
-My honest take: Evidently 0.6 is excellent for offline analysis and terrible for real-time. Use it to build your reference distributions and validate thresholds; do not put it in the hot path. For the hot path, a 40-line PSI function and a Redis hash are enough.
+A practical split: use an offline drift library to build reference distributions and validate thresholds, and keep the hot path to a short PSI function plus a key-value store. The hot path does not need a framework.
 
 ## When this approach is the wrong choice
 
-This architecture assumes your agent has a *stable action space*. If your agent dynamically generates tools, or if the tool set changes weekly, categorical drift detection will produce constant false positives and you will turn it off within a month. In that case, you need semantic drift detection on the *intent* level, not the action level — which is a harder problem and usually requires human labeling.
+This architecture assumes the agent has a stable action space. If the agent dynamically generates tools, or if the tool set changes weekly, categorical drift detection will produce constant false positives and will likely be turned off within a month. In that case, semantic drift detection at the intent level is needed instead, which is a harder problem and usually requires human labeling.
 
-It is also the wrong choice for low-volume agents. If you handle fewer than 1,000 decisions per day, your histograms are too sparse for PSI to be meaningful. A 15-minute window with 12 traces gives you a PSI score that is dominated by noise. For low-volume agents, use a simple anomaly check on individual traces (did this trace violate the sequencing guard?) and skip distributional detection entirely.
+It is also the wrong choice for low-volume agents. If an agent handles fewer than roughly 1,000 decisions per day, the histograms are too sparse for PSI to be meaningful. A 15-minute window containing a dozen traces produces a PSI score dominated by noise. For low-volume agents, use a simple per-trace check, such as whether the trace violated the sequencing guard, and skip distributional detection.
 
-Finally, do not use this for agents where drift is *expected and desired*. A recommendation agent that adapts to user behavior is supposed to drift. Applying a stability threshold to it will fight the adaptation you built. The distinction is whether drift is a bug or a feature — and that is a product decision, not a technical one. I think teams spend too long trying to make drift detection universal when the honest answer is that it applies to a specific class of agents: those with a fixed action space and a correctness definition that does not change over time.
+Finally, this approach should not be applied where drift is expected and desired. A recommendation agent that adapts to user behavior is supposed to drift. Applying a stability threshold to it fights the adaptation it was built for. The distinction is whether drift is a bug or a feature, and that is a product decision rather than a technical one. Drift detection applies to a specific class of agents: those with a fixed action space and a correctness definition that does not change over time.
 
-## My honest take after using this in production
+## An honest assessment
 
-The surprise was not that drift happens — everyone knows it does. The surprise was how *cheap* the useful detection is. I went in expecting to need embeddings, vector databases, and a streaming pipeline. What actually worked was a SHA-1 hash of a categorical signature, a 40-line PSI function, and a Redis hash with a 14-day TTL. The expensive parts were the reference distribution hygiene and the containment policy, neither of which is a machine learning problem.
+The notable finding is not that drift happens; that is well known. The notable finding is how cheap useful detection can be. It is easy to assume that embeddings, vector databases, and a streaming pipeline are required. What often works instead is a hash of a categorical signature, a short PSI function, and a key-value store with a rolling TTL. The expensive parts are reference distribution hygiene and the containment policy, neither of which is a machine learning problem.
 
-The other thing I would push back on: the industry framing of drift as an AI safety issue. It is mostly an operational issue. The bad user experiences I have seen from drift were not the agent going rogue — they were the agent doing something slightly different for a week while everyone assumed the eval suite covered it. Eval suites test the answers you thought to test. Drift detection tests the answers you did not.
+A second point worth pushing back on: drift is often framed as an AI safety issue when it is mostly an operational one. The bad user experiences that result from drift are usually not the agent going rogue; they are the agent doing something slightly different for a week while everyone assumed the evaluation suite covered it. Evaluation suites test the answers that someone thought to test. Drift detection tests the answers that nobody did.
 
-If you are building agents in 2026, the sequencing guard is the highest-ROI piece. It is 15 lines of code, it catches the failures that actually hurt users (double-bookings, over-approvals, out-of-order writes), and it does not require any statistical machinery. Build it before you build the dashboard.
+For teams building agents, the sequencing guard is often the highest-return piece. It is a small amount of code, it catches the failures that actually hurt users, such as double-bookings, over-approvals, and out-of-order writes, and it requires no statistical machinery. It is worth building before the dashboard.
 
-## Frequently Asked Questions
+## Frequently asked questions
 
-**How do I detect agent drift without embeddings?**
+**How is agent drift detected without embeddings?**
 
-Use categorical signatures of the agent's decision points — tool name, argument keys, argument shape, retrieval count, answer length bucket. Hash the combination and track the histogram over time. Compare windows using population stability index. This catches the majority of drift events at a fraction of the cost of embedding-based detection, and it runs inline in under a millisecond per decision.
+Use categorical signatures of the agent's decision points: tool name, argument keys, argument shape, retrieval count, answer length bucket. Hash the combination and track the histogram over time. Compare windows using population stability index. This catches many drift events at a fraction of the cost of embedding-based detection, and it runs inline in under a millisecond per decision.
 
-**What PSI threshold should I use for agent drift alerts?**
+**What PSI threshold should be used for agent drift alerts?**
 
-Start with 0.10 as a warning and 0.25 as a drift event, the same thresholds used in credit risk monitoring. Require two consecutive windows above 0.25 before tripping a circuit breaker — this drops the false positive rate from roughly 3% to under 1% in typical deployments. Tune from there based on your own traffic volume and tolerance for alerts.
+A reasonable starting point is 0.10 as a warning and 0.25 as a drift event, the conventional thresholds from credit risk monitoring. Requiring two consecutive windows above 0.25 before tripping a circuit breaker reduces the false positive rate substantially. Tune from there based on traffic volume and tolerance for alerts.
 
-**Why does my drift detector fire every time I update the prompt?**
+**Why does the drift detector fire on every prompt update?**
 
-Because your signature includes fields that change with prompt updates — usually tool names or argument schemas. Hash the tool schema rather than the tool name, and treat any schema change as an explicit reference distribution reset. If you do not version your signatures, every prompt change looks like drift, and you will learn to ignore the alerts.
+Usually because the signature includes fields that change with prompt updates, typically tool names or argument schemas. Hash the tool schema rather than the tool name, and treat any schema change as an explicit reference distribution reset. Without signature versioning, every prompt change looks like drift, and the alerts get ignored.
 
 **When is drift detection not worth building?**
 
-When your agent handles fewer than 1,000 decisions per day, when its action space changes frequently, or when drift is the intended behavior (adaptive recommenders). In those cases, use per-trace guards like sequencing checks instead of distributional detection. The full PSI pipeline is overkill below roughly 10,000 decisions per day.
+When the agent handles fewer than roughly 1,000 decisions per day, when its action space changes frequently, or when drift is the intended behavior, as with adaptive recommenders. In those cases, use per-trace guards such as sequencing checks instead of distributional detection. The full PSI pipeline is generally overkill below roughly 10,000 decisions per day.
 
-## What to do next
+## One action for the next 30 minutes
 
-Open your agent's trace log and extract the last 500 decisions. For each one, write down the tool name and the argument keys as a single string. Count how many distinct strings you get. If it is under 500, you can build the categorical drift detector this afternoon — that count is your signature space, and it is small enough that a Redis hash and a PSI function will give you a usable signal within a week. Start with the sequencing guard, not the dashboard.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open the agent's trace log and extract the last 500 decisions. For each one, write the tool name and the argument keys as a single string. Count the distinct strings. If the count is under a few hundred, the categorical drift detector described above is buildable today: that count is the signature space, and it is small enough that a key-value store and a PSI function will produce a usable signal within a week. Start with the sequencing guard, not the dashboard.

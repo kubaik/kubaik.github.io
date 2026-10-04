@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Database Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;One misconfigured vector DB killed our RAG pipeline,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
+  <meta name="description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;When a vector DB misconfiguration breaks RAG silently,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubaik.github.io/tag/database/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Database Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;One misconfigured vector DB killed our RAG pipeline,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
+  <meta property="og:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;When a vector DB misconfiguration breaks RAG silently,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
   <meta property="og:url" content="https://kubaik.github.io/tag/database/">
   <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Database Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;One misconfigured vector DB killed our RAG pipeline,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
+  <meta name="twitter:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;When a vector DB misconfiguration breaks RAG silently,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
   <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Database Articles","url":"https://kubaik.github.io/tag/database/",
-    "description":"Articles on Database covering database design, optimization, and data management, including \"Memory Systems for Production Agents,\" \"One misconfigured vector DB killed our RAG pipeline,\" and \"Postgres vector search: what breaks first\"."}
+    "description":"Articles on Database covering database design, optimization, and data management, including \"Memory Systems for Production Agents,\" \"When a vector DB misconfiguration breaks RAG silently,\" and \"Postgres vector search: what breaks first\"."}
   </script>
 </head>
 <body>
@@ -49,13 +49,13 @@
 
       <a class="post-card" href="/memory-systems-for-production-agents/">
         <h3>Memory Systems for Production Agents</h3>
-        <p class="post-excerpt">Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</p>
-        <p class="post-reading-time">11 min read · 15 September 2026</p>
+        <p class="post-excerpt">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+        <p class="post-reading-time">10 min read · 15 September 2026</p>
       </a>
       <a class="post-card" href="/one-misconfigured-vector-db-killed-our-rag-pipeline/">
-        <h3>One misconfigured vector DB killed our RAG pipeline</h3>
-        <p class="post-excerpt">RAG pipeline failures at 3am: index misconfiguration, vector DB timeouts, and the observability patterns that prevent them — with concrete numbers and fixes…</p>
-        <p class="post-reading-time">12 min read · 29 July 2026</p>
+        <h3>When a vector DB misconfiguration breaks RAG silently</h3>
+        <p class="post-excerpt">Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.</p>
+        <p class="post-reading-time">11 min read · 29 July 2026</p>
       </a>
       <a class="post-card" href="/postgres-vector-search-what-breaks-first/">
         <h3>Postgres vector search: what breaks first</h3>
@@ -89,13 +89,13 @@
       </a>
       <a class="post-card" href="/neon-vs-planetscale-vs-turso-which-broke-first/">
         <h3>Neon vs PlanetScale vs Turso: which broke first?</h3>
-        <p class="post-excerpt">Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…</p>
-        <p class="post-reading-time">17 min read · 10 June 2026</p>
+        <p class="post-excerpt">Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.</p>
+        <p class="post-reading-time">13 min read · 10 June 2026</p>
       </a>
       <a class="post-card" href="/soft-deletes-fail-what-breaks-first/">
         <h3>Soft deletes fail: what breaks first</h3>
-        <p class="post-excerpt">Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed</p>
-        <p class="post-reading-time">13 min read · 9 June 2026</p>
+        <p class="post-excerpt">Soft deletes leak into every query and bloat indexes. Here is how to measure the damage and move to a tiered live/archive/cold lifecycle.</p>
+        <p class="post-reading-time">12 min read · 9 June 2026</p>
       </a>
       <a class="post-card" href="/rag-pipelines-4-silent-prod-killers/">
         <h3>RAG pipelines: 4 silent prod killers</h3>

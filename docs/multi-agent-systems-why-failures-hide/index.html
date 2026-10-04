@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Multi-agent systems: why failures hide - Kubai Kevin</title>
-        <meta name="description" content="Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.">
+        <meta name="description" content="Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.">
         <meta name="keywords" content="MultiAgentSystems, AgentOrchestration, LlmTokenBudget, Agent, Llm, Generativeai, Multiagent">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-18T11:29:41.379120">
-        <meta property="article:modified_time" content="2026-09-18T11:29:41.379131">
+        <meta property="article:modified_time" content="2026-10-04T10:34:34.271092+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Multi-agent systems: why failures hide">
-        <meta property="og:description" content="Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.">
+        <meta property="og:description" content="Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.">
         <meta property="og:url" content="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Multi-agent systems: why failures hide">
-        <meta name="twitter:description" content="Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.">
+        <meta name="twitter:description" content="Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/multi-agent-systems-why-failures-hide.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/multi-agent-systems-why-failures-hide/#article",
       "headline": "Multi-agent systems: why failures hide",
-      "description": "Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.",
+      "description": "Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.",
       "datePublished": "2026-09-18T11:29:41+00:00",
-      "dateModified": "2026-09-18T11:29:41+00:00",
-      "wordCount": 2437,
+      "dateModified": "2026-10-04T10:34:34+00:00",
+      "wordCount": 2454,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Multi-agent systems: why failures hide</h1>
                 
-                <p class="post-lead">Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</p>
+                <p class="post-lead">Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
                 
                 
                 <div class="tags">
@@ -262,32 +262,32 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2437 words
+                        &nbsp;·&nbsp; 2454 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The common failure question that matters isn't in the FAQ, it's in the incident log. This is the writeup with the mistakes left in, not edited out. Most write-ups stop exactly where the interesting part starts.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p><a href="/multi-agent-systems-break-first/">Multi-agent systems are</a> sold as a way to parallelise work: one agent plans, another retrieves, a third acts, and a coordinator stitches the results together. In practice, the failure modes that matter rarely show up in a single request. They show up after 10,000 requests, when a retry loop has quietly tripled your token spend, when two agents are deadlocked waiting on each other's output, or when a coordinator keeps re-dispatching the same subtask because a downstream agent returns a plausible-looking but wrong answer.</p>
-<p>I keep seeing the same pattern in teams deploying agent stacks on constrained infrastructure. A common trap here is treating agent orchestration like a normal microservice call graph. It is not. A microservice that returns HTTP 500 is obviously broken. An agent that returns a fluent, confident paragraph is not obviously broken, even when it is completely wrong. That asymmetry is the root of why these failures hide.</p>
-<p>Three things make early detection hard. First, agents are stochastic: the same input can produce different tool calls on successive runs, so a test that passed once proves little. Second, failures are often silent — a hallucinated field propagates through three agents before a human notices. Third, cost and latency failures compound: a 200 ms per-call overhead looks fine until you have 12 agents and a retry storm turns it into 4 seconds p99.</p>
-<p>The part that trips people up is that the observability you already have — request logs, error rates, p95 latency — is blind to most of this. What you need is per-agent tracing, semantic validation, and budget enforcement. That is what this post covers.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You will build a small but realistic multi-agent pipeline with three roles: a planner, a retriever, and a synthesizer. The coordinator dispatches subtasks, enforces a per-request token budget, and records a trace span per agent call. We will then deliberately break it in the ways that happen in production and show which signal catches each break.</p>
-<p>Assumptions: you are comfortable with Python, have used an LLM API before, and can run Docker. I am using Python 3.12, FastAPI 0.115, OpenTelemetry SDK 1.27, Redis 7.2, and pytest 8.2. The LLM calls are stubbed behind an interface so you can swap in any provider; the orchestration logic is what matters here.</p>
+                <p>The interesting failure question in a multi-agent system is rarely answered in the FAQ. It lives in the incident log. Most write-ups stop exactly where the interesting part starts.</p>
+<h2 id="the-problem-failures-that-do-not-announce-themselves">The problem: failures that do not announce themselves</h2>
+<p>Multi-agent systems are usually pitched as a way to parallelise work: one agent plans, another retrieves, a third acts, and a coordinator stitches the results together. The failure modes that matter rarely show up in a single request. They show up after thousands of requests, when a retry loop has quietly tripled token spend, when two agents are deadlocked waiting on each other's output, or when a coordinator keeps re-dispatching the same subtask because a downstream agent returns a plausible-looking but wrong answer.</p>
+<p>A common trap is treating agent orchestration like a normal microservice call graph. It is not. A microservice that returns HTTP 500 is obviously broken. An agent that returns a fluent, confident paragraph is not obviously broken, even when it is completely wrong. That asymmetry is the root of why these failures hide.</p>
+<p>Three properties make early detection hard. First, agents are stochastic: the same input can produce different tool calls on successive runs, so a test that passed once proves little. Second, failures are often silent — a hallucinated field propagates through three agents before a human notices. Third, cost and latency failures compound: a 200 ms per-call overhead looks fine until there are 12 agents and a retry storm turns it into 4 seconds p99.</p>
+<p>The observability you already have — request logs, error rates, p95 latency — is blind to most of this. What is needed is per-agent tracing, semantic validation, and budget enforcement. That is what this article covers.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>You will build a small but realistic multi-agent pipeline with three roles: a planner, a retriever, and a synthesizer. The coordinator dispatches subtasks, enforces a per-request token budget, and records a trace span per agent call. The pipeline is then deliberately broken in the ways that happen in production, and each break is mapped to the signal that catches it.</p>
+<p>Assumptions: you are comfortable with Python, have used an LLM API before, and can run Docker. The examples use Python 3.12, FastAPI, the OpenTelemetry SDK, Redis, and pytest. The LLM calls are stubbed behind an interface so any provider can be swapped in; the orchestration logic is what matters here.</p>
 <p>You will need:</p>
 <ul>
 <li>Python 3.12 with <code>uv</code> or <code>pip</code></li>
-<li>Redis 7.2 running locally (<code>docker run -p 6379:6379 redis:7.2</code>)</li>
-<li>An OpenTelemetry collector or just the console exporter for local runs</li>
+<li>Redis running locally (<code>docker run -p 6379:6379 redis:7.2</code>)</li>
+<li>An OpenTelemetry collector, or just the console exporter for local runs</li>
 <li>Around 30 minutes to get the skeleton running</li>
 </ul>
-<p>What you will end up with is a pipeline that fails loudly and early instead of silently and expensively. The key design decision, and the one I will defend: put the budget check and the schema check inside the coordinator, not inside each agent. Agents should be dumb executors. If each agent independently decides whether it is over budget, you get inconsistent enforcement and no single place to reason about cost.</p>
+<p>The end result is a pipeline that fails loudly and early instead of silently and expensively. The key design decision, and the one worth defending: put the budget check and the schema check inside the coordinator, not inside each agent. Agents should be dumb executors. If each agent independently decides whether it is over budget, you get inconsistent enforcement and no single place to reason about cost.</p>
 <p>A comparison of where to put guardrails:</p>
 <table>
 <thead>
@@ -327,7 +327,7 @@
 </table>
 <p>The coordinator is the only component with the full picture, so that is where enforcement belongs.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Before writing orchestration code, get tracing wired up. The reason is simple: if you add tracing after the pipeline works, you will add it around the happy path and miss the failure paths, which are exactly the ones you need to see.</p>
+<p>Before writing orchestration code, get tracing wired up. The reason is simple: if tracing is added after the pipeline works, it gets added around the happy path, and the failure paths — exactly the ones that need to be visible — are missed.</p>
 <p>Install dependencies:</p>
 <pre><code class="language-bash">python -m venv .venv &amp;&amp; source .venv/bin/activate
 pip install &quot;fastapi==0.115.*&quot; &quot;redis==5.0.*&quot; \
@@ -335,7 +335,7 @@ pip install &quot;fastapi==0.115.*&quot; &quot;redis==5.0.*&quot; \
   &quot;opentelemetry-exporter-otlp==1.27.*&quot; \
   &quot;pytest==8.2.*&quot; &quot;pydantic==2.9.*&quot;
 </code></pre>
-<p>Now set up a tracer that exports to the console so you can see spans without a collector. The important detail is that each agent call gets its own span with attributes for token count, latency, and a semantic hash of the output. That semantic hash is what lets you detect the silent-wrong-answer failure mode later.</p>
+<p>Now set up a tracer that exports to the console so spans are visible without a collector. The important detail is that each agent call gets its own span with attributes for token count, latency, and a semantic hash of the output. That semantic hash is what lets you detect the silent-wrong-answer failure mode later.</p>
 <pre><code class="language-python"># tracing.py
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
@@ -346,8 +346,8 @@ provider.add_span_processor(SimpleSpanProcessor(ConsoleSpanExporter()))
 trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(&quot;agent-pipeline&quot;)
 </code></pre>
-<p>A gotcha worth flagging now: the default <code>SimpleSpanProcessor</code> is synchronous and will slow down your pipeline noticeably under load — expect 5–15 ms of added latency per span on a busy machine. Use <code>BatchSpanProcessor</code> in anything resembling production. I am keeping it simple here only so you can read the spans in your terminal.</p>
-<p>Finally, start Redis and confirm it is reachable. We will use it for two things: a per-request token counter and a short-lived cache of agent outputs keyed by a hash of the input, which cuts duplicate work when the coordinator retries.</p>
+<p>A gotcha worth flagging now: <code>SimpleSpanProcessor</code> is synchronous and will slow down the pipeline noticeably under load. Use <code>BatchSpanProcessor</code> in anything resembling production. It is kept simple here only so spans are readable in the terminal.</p>
+<p>Finally, start Redis and confirm it is reachable. It is used for two things: a per-request token counter and a short-lived cache of agent outputs keyed by a hash of the input, which cuts duplicate work when the coordinator retries.</p>
 <pre><code class="language-bash">docker run --rm -p 6379:6379 redis:7.2
 redis-cli ping   # expect: PONG
 </code></pre>
@@ -396,7 +396,7 @@ async def call_agent(agent_fn, name: str, payload: dict, request_id: str) -&gt; 
         span.set_attribute(&quot;agent.confidence&quot;, result.confidence)
         return result
 </code></pre>
-<p>The budget check reads from Redis rather than a local variable because the coordinator may run on multiple workers. This is the first place a naive implementation fails: if you keep the counter in process memory, two workers each think they have the full budget and you overspend by 2x. With 40,000 tokens at roughly $3 per million input tokens and $15 per million output tokens, a 2x overspend on a busy endpoint is a real line item.</p>
+<p>The budget check reads from Redis rather than a local variable because the coordinator may run on multiple workers. This is the first place a naive implementation fails: if the counter lives in process memory, two workers each think they have the full budget and you overspend by 2x. That factor is arithmetic, not a measurement: two independent counters, each allowed to reach the same ceiling, permit twice the intended total.</p>
 <p>Now the graph. The planner produces subtasks, the retriever fetches sources, the synthesizer combines them. Each is called through <code>call_agent</code>.</p>
 <pre><code class="language-python">async def run_pipeline(query: str, request_id: str) -&gt; dict:
     plan = await call_agent(planner, &quot;planner&quot;, {&quot;query&quot;: query}, request_id)
@@ -417,7 +417,7 @@ async def call_agent(agent_fn, name: str, payload: dict, request_id: str) -&gt; 
     )
     return {&quot;answer&quot;: final.content, &quot;confidence&quot;: final.confidence}
 </code></pre>
-<p>That <code>[:5]</code> cap is not cosmetic. A planner that decides to emit 40 subtasks is the single most common cause of runaway cost I have seen described in agent postmortems. Capping fan-out at the coordinator is cheap insurance.</p>
+<p>That <code>[:5]</code> cap is not cosmetic. A planner that decides to emit 40 subtasks is a frequently reported cause of runaway cost in agent postmortems. Capping fan-out at the coordinator is cheap insurance.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>This is where multi-agent systems differ most from normal services. Four failure modes matter, and each needs a different signal.</p>
 <p><strong>Deadlock.</strong> Two agents each wait for the other's output. In a synchronous pipeline this shows up as a request that never returns. The fix is a hard timeout on every <code>call_agent</code>, plus a global request deadline. A common failure here is a timeout that is set per-agent but not enforced across the graph, so 12 agents each taking 29 seconds under a 30-second limit still blows past any sane client timeout. Set a wall-clock deadline for the whole request and check it before every dispatch.</p>
@@ -461,32 +461,36 @@ async def test_no_loop_on_typical_query():
     assert result[&quot;confidence&quot;] &gt;= 0.5
 </code></pre>
 <p>Run these under <code>pytest -x --asyncio-mode=auto</code>. The budget test is the one that pays for itself; it is the only test that reliably catches an unbounded fan-out before it hits production.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>On a three-agent pipeline with the caps and checks above, typical figures I would expect on a modest cloud instance (2 vCPU, 4 GB) are: p50 latency around 1.8 seconds, p95 around 3.4 seconds, and p99 spiking to 6–8 seconds under retry load. Token usage per request lands around 8,000–12,000 tokens for a 5-subtask query, which at current mid-tier pricing is roughly $0.05–$0.15 per request. The budget check adds under 1 ms per call.</p>
-<p>What changes with the guardrails: without the fan-out cap, a planner that emits 30 subtasks pushes token usage to 60,000+ and p99 past 20 seconds. Without the semantic-hash loop check, a retriever that loops on a bad query can double cost silently — you only notice at the monthly bill. Without source cross-checking, hallucinated citations pass through at a rate that is easy to underestimate until a user complains.</p>
-<p>The honest summary: guardrails cost you a few milliseconds and maybe 50 lines of code, and they turn three silent failure modes into loud ones. That trade is worth it every time.</p>
+<h2 id="how-to-measure-this-on-your-own-pipeline">How to measure this on your own pipeline</h2>
+<p>Rather than trusting numbers from someone else's stack, instrument the pipeline and read the distributions yourself. What to capture:</p>
+<ol>
+<li><strong>Per-span attributes.</strong> Already in the code above: <code>agent.tokens</code>, <code>agent.latency_ms</code>, <code>agent.semantic_hash</code>, <code>agent.confidence</code>. Export these to a store you can query (the console exporter is fine for a smoke test, but you want a backend that supports aggregation).</li>
+<li><strong>Request-level totals.</strong> Sum <code>agent.tokens</code> across all spans sharing a <code>request_id</code>. That sum, not the per-call figure, is what the budget governs.</li>
+<li><strong>Latency percentiles.</strong> Compute p50, p95, and p99 over the <em>request</em>, not the span. A pipeline's tail is dominated by fan-out and retries, so span-level percentiles will flatter you.</li>
+<li><strong>Loop indicator.</strong> Count duplicate <code>semantic_hash</code> values per agent per request. A run of three or more identical hashes is the loop signature.</li>
+<li><strong>Source-integrity rate.</strong> Fraction of synthesizer outputs whose cited sources all appear in the retriever outputs. This is the metric that catches hallucinated citations, and it should be near 1.0.</li>
+</ol>
+<p>To compare configurations, run the same fixed query set through the pipeline with and without each guardrail, and diff the request-level token sum and p99 latency. That is a controlled comparison; anything else is a guess. The distribution of tokens per request is typically long-tailed, so report the median and the 95th percentile rather than the mean.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>Does this work with more than three agents?</strong> Yes, but fan-out grows fast. Cap the total number of agent calls per request, not just subtasks. A hard cap of 15 calls per request is a reasonable starting point; raise it only when you have traces showing the extra calls are productive.</p>
-<p><strong>What if my agents run on different providers?</strong> The coordinator pattern is provider-agnostic as long as each agent returns the same Pydantic shape. Normalise at the agent boundary, not in the coordinator, so the coordinator stays simple.</p>
-<p><strong>How do I handle streaming?</strong> Streaming complicates budget enforcement because you do not know the token count until the stream ends. Count tokens incrementally and abort the stream if the budget is exceeded mid-flight. This is awkward but necessary — I would not run streaming agents without a hard abort.</p>
-<p><strong>Is Redis the right place for the counter?</strong> For low-to-moderate traffic, yes. Above roughly 1,000 requests per second, the Redis round-trip becomes a bottleneck and you want a local counter with periodic flush, accepting slightly loose enforcement in exchange for throughput.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>The one thing to do in the next 30 minutes: open your coordinator (or wherever you dispatch agent calls) and add a wall-clock deadline check before every dispatch. If you do not have a coordinator, add the check at your top-level handler. The exact line is a comparison of <code>time.monotonic()</code> against a deadline captured at request start, raising if exceeded. That single check catches deadlocks and runaway fan-out, which together account for most of the expensive agent failures I have seen described. Do it before you add anything else.</p>
-<h2 id="official-documentation">Official documentation</h2>
+<p><strong>Does this work with more than three agents?</strong> Yes, but fan-out grows fast. Cap the total number of agent calls per request, not just subtasks. A hard cap of 15 calls per request is a reasonable starting point; raise it only when traces show the extra calls are productive.</p>
+<p><strong>What if the agents run on different providers?</strong> The coordinator pattern is provider-agnostic as long as each agent returns the same Pydantic shape. Normalise at the agent boundary, not in the coordinator, so the coordinator stays simple.</p>
+<p><strong>How do I handle streaming?</strong> Streaming complicates budget enforcement because the token count is not known until the stream ends. Count tokens incrementally and abort the stream if the budget is exceeded mid-flight. This is awkward but necessary — running streaming agents without a hard abort is asking for an unbounded bill.</p>
+<p><strong>Is Redis the right place for the counter?</strong> For low-to-moderate traffic, yes. At high request rates the Redis round-trip becomes a bottleneck and you want a local counter with periodic flush, accepting slightly loose enforcement in exchange for throughput. The exact crossover depends on your Redis latency and request volume; measure it rather than assuming.</p>
+<h2 id="decision-checklist-before-you-ship">Decision checklist before you ship</h2>
 <ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
-<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
-<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li>[ ] Every agent call goes through a single dispatch function.</li>
+<li>[ ] The dispatch function checks the token budget before calling the model.</li>
+<li>[ ] A wall-clock deadline is captured at request start and checked before every dispatch.</li>
+<li>[ ] Fan-out is capped, both per-plan and in total calls per request.</li>
+<li>[ ] Agent output is validated against a schema at the coordinator boundary.</li>
+<li>[ ] Agent inputs are hashed and cached so retries do not re-run the graph.</li>
+<li>[ ] Semantic hashes are recorded per span and duplicates are flagged.</li>
+<li>[ ] Cited sources are cross-checked against retrieved sources.</li>
+<li>[ ] Tests assert on invariants, not on exact model output.</li>
+<li>[ ] Token and latency distributions are exported and reviewed per release.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>The one thing to do in the next 30 minutes: open your coordinator (or wherever you dispatch agent calls) and add a wall-clock deadline check before every dispatch. If there is no coordinator, add the check at your top-level handler. The exact line is a comparison of <code>time.monotonic()</code> against a deadline captured at request start, raising if exceeded. That single check catches deadlocks and runaway fan-out, which together account for most of the expensive agent failures described in postmortems. Do it before you add anything else.</p>
                 
                 
             </div>
@@ -515,19 +519,19 @@ async def test_no_loop_on_typical_query():
                     
                     <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
                         <h3>Multi-agent systems: when they quietly degrade</h3>
-                        <p>Multi-agent research systems degrade quietly: token growth, retry loops, and missing per-node metrics. Learn what to instrument first to catch the slide.</p>
-                        <span class="related-meta">14 min read · 24 September 2026</span>
+                        <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+                        <span class="related-meta">11 min read · 24 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
                         <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
-                        <p>Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
-                        <span class="related-meta">13 min read · 29 September 2026</span>
+                        <p>Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+                        <span class="related-meta">11 min read · 29 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agents-running-hours-youre-losing-context-fast/">
                         <h3>Agents running hours? You&#39;re losing context fast</h3>
-                        <p>Keep long-running agents on track without ballooning prompts — sliding windows, archive thresholds, and PostgreSQL 16 JSONB with 3 concrete numbers and a…</p>
+                        <p>How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
                         <span class="related-meta">11 min read · 3 September 2026</span>
                     </a>
                     

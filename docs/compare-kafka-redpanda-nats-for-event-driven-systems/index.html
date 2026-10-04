@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Compare Kafka, Redpanda, NATS for event-driven systems - Kubai Kevin</title>
-        <meta name="description" content="Pick the right event broker in 2026: Kafka vs Redpanda vs NATS with concrete benchmarks, tuning steps, and cost figures to cut latency and avoid message loss.">
+        <meta name="description" content="Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.">
         <meta name="keywords" content="EventDrivenArchitecture, KafkaTuningGuide, RedpandaTieredStorage, NatsJetstreamLatency, EventBrokerBenchmarks, Apachekafka, Rag">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T18:22:50.210273">
-        <meta property="article:modified_time" content="2026-09-16T08:56:56.007691+00:00">
+        <meta property="article:modified_time" content="2026-10-04T09:56:25.655150+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Compare Kafka, Redpanda, NATS for event-driven systems">
-        <meta property="og:description" content="Pick the right event broker in 2026: Kafka vs Redpanda vs NATS with concrete benchmarks, tuning steps, and cost figures to cut latency and avoid message loss.">
+        <meta property="og:description" content="Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.">
         <meta property="og:url" content="https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Compare Kafka, Redpanda, NATS for event-driven systems">
-        <meta name="twitter:description" content="Pick the right event broker in 2026: Kafka vs Redpanda vs NATS with concrete benchmarks, tuning steps, and cost figures to cut latency and avoid message loss.">
+        <meta name="twitter:description" content="Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/compare-kafka-redpanda-nats-for-event-driven-systems.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/#article",
       "headline": "Compare Kafka, Redpanda, NATS for event-driven systems",
-      "description": "Pick the right event broker in 2026: Kafka vs Redpanda vs NATS with concrete benchmarks, tuning steps, and cost figures to cut latency and avoid message loss.",
+      "description": "Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.",
       "datePublished": "2026-06-14T18:22:50+00:00",
-      "dateModified": "2026-09-16T08:56:56+00:00",
-      "wordCount": 2302,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-04T09:56:25+00:00",
+      "wordCount": 2596,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Compare Kafka, Redpanda, NATS for event-driven systems</h1>
                 
-                <p class="post-lead">Pick the right event broker in 2026: Kafka vs Redpanda vs NATS with concrete benchmarks, tuning steps, and cost figures to cut latency and avoid message loss.</p>
+                <p class="post-lead">Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.</p>
                 
                 
                 <div class="tags">
@@ -254,219 +254,175 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2302 words
+                        13 min read
+                        &nbsp;·&nbsp; 2596 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches eventdriven architecture, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>You’re standing in front of three logos—Kafka, Redpanda, and NATS—each promising to solve your event-driven headaches. They all look similar at first glance: producers, topics, brokers, consumers. But every time you try to map your use case, you hit a wall. Kafka promises durability but feels like overkill for simple pub/sub. Redpanda markets itself as "Apache Kafka-compatible, but faster," yet you’re not sure what "faster" means when you’re already on SSD-backed clusters. NATS calls itself a "connective tissue" but you’re unclear whether it handles backpressure or just drops messages when overwhelmed.</p>
-<p>Instead, I hit a wall with Kafka’s 30-second default <code>linger.ms</code> making events arrive too late, wasting $12k in fraudulent transactions before I even tuned it. This post is what I wish I’d had then: a no-BS comparison of what each broker actually excels at, where each one stumbles, and which one to pick based on your workload—not hype.</p>
-<p>If you’re here because your current broker is causing latency spikes, message loss, or cost overruns, you’re in the right place. These aren’t edge cases—they’re the symptoms that reveal which broker you should have chosen in the first place.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The confusion isn’t about features—it’s about trade-offs. Kafka, Redpanda, and NATS optimize for different things, and their defaults reflect that. Kafka’s Raft-based replication (as of 2.8) prioritizes durability over latency, which means your fraud detection event might be written to three brokers before it’s acknowledged. Redpanda’s tiered storage (since 2.5) offloads older segments to object storage, reducing disk usage but adding 10–20ms of extra latency when reading cold partitions. NATS JetStream prioritizes throughput and minimal latency, but its disk-backed persistence is optional—if you enable it, you’re trading 5–10ms of sync time for durability.</p>
-<p>The real issue isn’t performance—it’s whether your workload can tolerate Kafka’s 30s <code>linger.ms</code> default, Redpanda’s 10ms tiered storage latency, or NATS’ 5ms write latency with optional persistence. Most teams pick based on GitHub stars, not tail latency requirements.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p><strong>Symptom:</strong> You’re using Kafka and your end-to-end latency is 100ms+, but your SLA is 50ms. Producers report <code>RecordTooLargeException</code> even though individual messages are under 1MB.</p>
-<p><strong>Root cause:</strong> Kafka’s default <code>linger.ms=30000</code> (30 seconds) batches messages aggressively to reduce network overhead. If your events are small but frequent, they sit in the producer buffer waiting for the batch to fill or the linger timeout to fire. Worse, <code>batch.size</code> defaults to 16384 bytes (16KB), so even 10KB messages get buffered until the batch fills or the linger timeout expires. This isn’t a bug—it’s a default tuned for high-throughput, not low-latency workloads.</p>
-<p>Kafka’s producer logs showed <code>WARN [Producer clientId=fraud-producer] Got error produce response with correlation id 12345 on topic-partition fraud-topic-0, retrying. Error: RecordTooLargeException</code>. But our individual messages were 4KB. The fix wasn’t increasing <code>batch.size</code>—it was reducing <code>linger.ms</code> to 5ms and setting <code>acks=1</code> to avoid waiting for ISR commits.</p>
-<pre><code class="language-java">// Before: 100ms+ latency, timeouts, retries
-Properties props = new Properties();
+                <h2 id="why-broker-comparisons-go-wrong">Why broker comparisons go wrong</h2>
+<p>Most broker comparisons list features. Feature lists are nearly identical across the three systems that dominate event-driven architecture discussions: producers, topics/streams, brokers, consumers, replay, retention. The differences that actually decide your architecture live in defaults, in what happens when a node restarts, and in what the system does when a consumer falls behind.</p>
+<p>A second failure mode is benchmarking the wrong thing. A cluster tested with 1 KB messages at 1,000 events/sec tells you almost nothing about a pipeline pushing 4 KB events at 20,000/sec with a 50 ms end-to-end budget. The broker that wins an idle benchmark is often not the broker that holds its p99 under load.</p>
+<p>This article covers three systems:</p>
+<ul>
+<li><strong>Apache Kafka</strong> — a partitioned commit log with replication, widely deployed for durable event streaming.</li>
+<li><strong>Redpanda</strong> — a Kafka-API-compatible broker written in C++, with a built-in tiered-storage feature that offloads older log segments to object storage.</li>
+<li><strong>NATS with JetStream</strong> — a lightweight messaging system where JetStream adds streams, consumers, and optional persistence on top of core NATS pub/sub.</li>
+</ul>
+<p>The goal is not to crown a winner. It is to give you the vocabulary and the measurement plan to pick correctly for your workload, and to recognize the three most common misconfiguration patterns.</p>
+<h2 id="the-real-axis-of-comparison-durability-vs-latency-vs-cost">The real axis of comparison: durability vs latency vs cost</h2>
+<p>Every broker here makes the same fundamental trade. To acknowledge a write durably, you must wait for it to reach stable storage and, in replicated systems, for enough replicas to confirm. To acknowledge it quickly, you must acknowledge before that work completes. There is no configuration that gives you both maximum durability and minimum latency; there is only a dial.</p>
+<p>Kafka exposes this dial through <code>acks</code> and <code>min.insync.replicas</code>. Redpanda exposes it through the same Kafka producer settings plus its own tiered-storage and fsync behavior. NATS JetStream exposes it through whether you use memory or file storage and whether file writes are synced to disk.</p>
+<p>Three consequences follow, and they explain most "the broker lost my messages" and "the broker is too slow" reports:</p>
+<ol>
+<li><strong>Acknowledgment semantics are a producer-side decision.</strong> If the producer uses <code>acks=1</code>, the broker can acknowledge before all replicas have the data. A leader failure at the wrong moment loses the write. This is not a broker bug.</li>
+<li><strong>Persistence is often asynchronous by default.</strong> Write-back caches and memory-mapped files mean data can be acknowledged and then lost on a hard restart. The window is usually small, but it is not zero.</li>
+<li><strong>Tiered storage trades read latency for disk cost.</strong> Moving cold segments to object storage reduces local disk footprint; the first read of a cold segment pays a fetch.</li>
+</ol>
+<p>The rest of this article works through each consequence with a concrete failure mode and a fix.</p>
+<h2 id="failure-mode-1-kafka-producer-batching-that-violates-a-latency-slo">Failure mode 1: Kafka producer batching that violates a latency SLO</h2>
+<p><strong>Symptom.</strong> End-to-end latency sits well above the target, but broker CPU, disk, and network look healthy. Producer-side timeouts and retries appear intermittently.</p>
+<p><strong>Root cause.</strong> Kafka's producer buffers records to form batches. Two settings govern when a batch is sent: <code>batch.size</code> (bytes) and <code>linger.ms</code> (time). A batch is sent when either threshold is reached. If you publish small records at a moderate rate, the batch never fills, so every record waits out the full <code>linger.ms</code> before being sent. The documented default for <code>linger.ms</code> is <code>0</code>, which means "send as soon as possible" — but many production configurations raise it deliberately for throughput, and a raised value is then inherited by every topic on that producer. If someone set <code>linger.ms=30000</code> for a bulk ingestion job and the same producer config is reused for a real-time topic, every real-time event waits up to 30 seconds.</p>
+<p><strong>A second, separate symptom</strong> is <code>RecordTooLargeException</code>. That exception means the batch (not the individual record) exceeded <code>max.request.size</code> or the broker's <code>message.max.bytes</code>. Raising <code>batch.size</code> without raising <code>max.request.size</code> produces exactly this error.</p>
+<p><strong>Fix.</strong> Set <code>linger.ms</code> to a value derived from your latency budget, not copied from a throughput-oriented template. A reasonable starting point is 5 ms, which still allows batching under load but bounds the added latency. Keep <code>batch.size</code> large enough to hold a useful batch, and raise <code>max.request.size</code> to match so you do not trigger size exceptions.</p>
+<pre><code class="language-java">Properties props = new Properties();
 props.put(&quot;bootstrap.servers&quot;, &quot;kafka1:9092&quot;);
-props.put(&quot;acks&quot;, &quot;all&quot;);
-props.put(&quot;linger.ms&quot;, &quot;30000&quot;);
-props.put(&quot;batch.size&quot;, &quot;16384&quot;);
-Producer&lt;String, byte[]&gt; producer = new KafkaProducer&lt;&gt;(props);
 
-// After: 20ms p99 latency, no timeouts
-Properties props = new Properties();
-props.put(&quot;bootstrap.servers&quot;, &quot;kafka1:9092&quot;);
-props.put(&quot;acks&quot;, &quot;1&quot;);
+// Durability: &quot;all&quot; waits for in-sync replicas; &quot;1&quot; waits only for the leader.
+// Choose based on whether you can tolerate losing the last writes on leader failure.
+props.put(&quot;acks&quot;, &quot;all&quot;);
+
+// Latency: bound how long a record may sit in the buffer waiting for a batch.
 props.put(&quot;linger.ms&quot;, &quot;5&quot;);
-props.put(&quot;batch.size&quot;, &quot;1024000&quot;); // 1MB max batch
+
+// Throughput: allow larger batches, and raise the request limit to match.
+props.put(&quot;batch.size&quot;, &quot;262144&quot;);        // 256 KB
+props.put(&quot;max.request.size&quot;, &quot;1048576&quot;); // 1 MB, must be &gt;= batch.size
+
+// Fail fast instead of blocking the caller when metadata is unavailable.
 props.put(&quot;max.block.ms&quot;, &quot;500&quot;);
+
 Producer&lt;String, byte[]&gt; producer = new KafkaProducer&lt;&gt;(props);
 </code></pre>
-<p>The numbers speak for themselves. After the change, p99 latency dropped from 105ms to 22ms, and we cut producer-side memory usage by 40% because batches were flushed aggressively instead of sitting idle. The <code>RecordTooLargeException</code> disappeared because large batches were flushed before the client-side buffer filled.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p><strong>Symptom:</strong> You’re using Redpanda and your read latency jumps from 2ms to 25ms every 5 minutes. Metrics show high <code>disk_read_ops</code> and <code>tiered_storage_fetch_latency</code>.</p>
-<p><strong>Root cause:</strong> Redpanda’s tiered storage offloads older segments to object storage (S3-compatible), but when a consumer requests data that’s not in the local cache, Redpanda fetches it from object storage. The first read triggers a cold fetch that adds 10–20ms, and subsequent reads hit the local cache. If your workload has hot partitions that age out of local cache, you’ll see periodic latency spikes. This isn’t a bug—it’s the trade-off for Redpanda’s tiered storage feature.</p>
-<p>Our fraud detection pipeline reads the last 5 minutes of events, but after 30 minutes, the segment containing those events is offloaded to S3. The first read after offload spikes to 25ms, then drops to 2ms. The fix isn’t disabling tiered storage—it’s tuning the <code>cloud_storage_cache_ttl_ms</code> and <code>cloud_storage_segment_max_upload_interval_sec</code> to keep hot segments in local cache longer.</p>
-<pre><code class="language-yaml"># redpanda.yaml snippet
-cloud_storage_cache_ttl_ms: 900000  # 15min TTL to match our retention
-cloud_storage_segment_max_upload_interval_sec: 300  # upload every 5min
-retention_local_target_bytes: 10737418240  # 10GB local cache
+<p>Note what this does and does not do. It bounds producer-side buffering latency. It does not change broker replication latency, and it does not make the pipeline durable if <code>acks=1</code> is chosen. Those are separate decisions.</p>
+<p><strong>How to measure it.</strong> Use the bundled producer performance tool with your real record size and throughput, and read the latency percentiles rather than the average:</p>
+<pre><code class="language-bash">kafka-producer-perf-test \
+  --topic events \
+  --num-records 200000 \
+  --throughput -1 \
+  --record-size 4096 \
+  --producer-props bootstrap.servers=kafka1:9092 acks=all linger.ms=5 batch.size=262144 \
+  --print-metrics
 </code></pre>
-<p>The numbers: Without tuning, cold reads added 18ms p99 latency every 5 minutes. After tuning <code>cloud_storage_cache_ttl_ms</code> to 15min, cold reads dropped to 5ms, and we kept 60% disk cost savings. The key insight: tiered storage isn’t free—it trades latency for cost. If you need consistent sub-5ms reads, keep segments local or use NATS.</p>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p><strong>Symptom:</strong> You’re using NATS JetStream and messages disappear during a rolling restart. Logs show <code>NATS: message not found</code> and consumers complain about missed events.</p>
-<p><strong>Root cause:</strong> NATS JetStream’s persistence is optional, and its default configuration doesn’t sync writes to disk immediately. If you enable <code>file</code> storage, NATS uses a memory-mapped file for writes, but the OS page cache can delay flushing to disk. During a rolling restart, if the OS hasn’t flushed the page cache, NATS loses in-flight messages. This isn’t a bug—it’s a default tuned for throughput, not durability.</p>
-<p>During a rolling restart, 15% of our fraud events vanished because the OS page cache wasn’t synced. The fix was enabling <code>sync</code> writes and setting <code>storage=file</code> with <code>compact enabled=true</code> to force periodic flushing.</p>
-<pre><code class="language-yaml"># nats-server.conf
+<p>Compare the reported <code>99th percentile latency</code> against your SLO. Then re-run with <code>linger.ms=0</code> and with your previous value to see how much of your tail latency is producer buffering. If the p99 barely moves between <code>linger.ms=0</code> and <code>linger.ms=5</code>, your bottleneck is elsewhere — broker replication, consumer processing, or network — and tuning the producer further will not help.</p>
+<h2 id="failure-mode-2-tiered-storage-cold-reads">Failure mode 2: tiered storage cold reads</h2>
+<p><strong>Symptom.</strong> Read latency is stable and low most of the time, then spikes on a regular cadence. Metrics show elevated disk read operations and elevated object-storage fetch latency.</p>
+<p><strong>Root cause.</strong> This applies to brokers with tiered storage, where older log segments are uploaded to object storage and evicted from local disk. When a consumer requests data that is no longer local, the broker must fetch the segment back. The first read pays that fetch; subsequent reads hit the local cache. A workload that repeatedly reads a window of data that has just aged out of the local cache will see the spike on every cycle.</p>
+<p><strong>Fix.</strong> Two knobs matter. First, how long a fetched segment stays in the local cache. Second, how large the local cache is allowed to grow. If your consumers routinely read the last N minutes of data, the local cache must be large enough and the retention long enough to hold that window.</p>
+<p>The exact setting names and units differ between distributions and versions, so verify against your broker's documentation rather than copying a snippet. The categories to look for are:</p>
+<ul>
+<li>Local cache size limit (bytes or percentage of disk).</li>
+<li>Cache eviction or retention duration.</li>
+<li>Segment upload interval, which controls how quickly data leaves local disk.</li>
+<li>An option to pin or keep recent segments local.</li>
+</ul>
+<p><strong>How to measure it.</strong> Instrument the read path, not just the write path. What you want is a histogram of consumer fetch latency, broken down by whether the segment was served locally or from object storage. At minimum, track:</p>
+<ul>
+<li>p50, p95, and p99 of consumer fetch latency over a rolling window.</li>
+<li>A counter of object-storage fetches per minute.</li>
+<li>Local cache hit ratio.</li>
+</ul>
+<p>If the p99 spikes correlate with object-storage fetch counts, the cause is confirmed. The decision then is whether the cost saving from tiered storage is worth the tail latency. For workloads with a strict sub-10 ms read SLO, keeping all actively read data on local disk is usually the correct answer, and the cost saving is not worth the SLO violation.</p>
+<h2 id="failure-mode-3-persistence-that-is-not-synced">Failure mode 3: persistence that is not synced</h2>
+<p><strong>Symptom.</strong> Messages disappear during a rolling restart or a hard node failure. Consumers report missing sequence numbers or gaps. No application error is logged at publish time.</p>
+<p><strong>Root cause.</strong> This is the classic write-back cache problem, and it applies to any broker that acknowledges a write before it is flushed to stable storage. In a memory-mapped or buffered file design, the operating system may hold written data in the page cache and flush it later. If the process or the machine restarts before the flush, the data is gone even though the producer received an acknowledgment.</p>
+<p>NATS JetStream is the most common place teams encounter this, because JetStream's persistence is optional and its default tuning favors throughput. If you configure memory storage, data is not durable at all. If you configure file storage without synchronous writes, durability depends on the OS flush schedule.</p>
+<p><strong>Fix.</strong> For NATS JetStream, use file storage and enable synchronous writes. The trade-off is explicit: each write waits for the disk, adding latency.</p>
+<pre><code class="language-conf"># nats-server.conf
 jetstream {
   store_dir = &quot;/var/lib/nats/data&quot;
   max_memory_store = 1GB
   max_file_store = 10GB
-  file {
-    compact = true
-    compact_frag = 50
-  }
-  sync = true
 }
 </code></pre>
-<p>The numbers: Without <code>sync=true</code>, we lost 15% of events during restarts. With <code>sync=true</code>, event loss dropped to 0%, but write latency increased from 2ms to 5ms. The trade-off: durability vs latency. If you need both, use Kafka with <code>acks=all</code> and <code>min.insync.replicas=2</code>, or Redpanda with <code>cloud_storage_enabled=false</code> and local storage only.</p>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>After applying any fix, verify with concrete metrics—not logs.</p>
-<p><strong>For Kafka:</strong> Check <code>kafka-producer-perf-test</code> with your new producer config. Aim for p99 latency &lt; 50ms and zero timeouts over 10k messages.</p>
-<pre><code class="language-bash">kafka-producer-perf-test \
-  --topic fraud-topic \
-  --num-records 10000 \
-  --throughput -1 \
-  --record-size 4096 \
-  --producer-props bootstrap.servers=kafka1:9092 acks=1 linger.ms=5 batch.size=1024000 \
-  --print-metrics
+<p>The storage type and sync behavior are set per stream, not globally, in JetStream. Create or update the stream with file storage and synchronous writes enabled:</p>
+<pre><code class="language-bash">nats stream add EVENTS \
+  --subjects &quot;events.&gt;&quot; \
+  --storage file \
+  --replicas 3 \
+  --max-age 72h
 </code></pre>
-<p>Expected output: <code>99th percentile latency = 22ms</code>, <code>record-error-rate=0.0%</code>. If you see <code>record-error-rate&gt;0.1%</code>, your <code>max.block.ms</code> is too low or your brokers are overloaded.</p>
-<p><strong>For Redpanda:</strong> Use <code>rpk topic stats</code> to check <code>tiered_storage_fetch_latency</code> and <code>disk_read_ops</code>. Aim for <code>tiered_storage_fetch_latency&lt;10ms</code> and <code>disk_read_ops&lt;1000/second</code>.</p>
-<pre><code class="language-bash">rpk topic stats fraud-topic --brokers redpanda1:9092 --human
-</code></pre>
-<p>Expected output: <code>tiered_storage_fetch_latency=5ms</code>, <code>disk_read_ops=800/second</code>. If <code>tiered_storage_fetch_latency&gt;20ms</code>, your <code>cloud_storage_cache_ttl_ms</code> is too short.</p>
-<p><strong>For NATS:</strong> Use <code>nats server check --config nats-server.conf</code> to verify <code>storage</code> is <code>file</code> and <code>sync</code> is <code>true</code>. Then publish 10k messages and force a restart to ensure no message loss.</p>
-<pre><code class="language-bash">nats server check --config nats-server.conf
-</code></pre>
-<p>Expected output: <code>Storage: file (sync=true)</code>, <code>JetStream: enabled</code>, <code>Memory: 1GB</code>, <code>File: 10GB</code>. If you see <code>Storage: memory</code>, switch to <code>file</code> immediately.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>The fix isn’t just about tuning—it’s about bake-offing brokers under real load before you commit.</p>
-<p><strong>1. Benchmark under load, not idle:</strong> Most teams benchmark with 1KB messages at 1k events/sec. That’s not your production load. Use your real message size and throughput.</p>
-<p><strong>2. Set SLOs before you pick:</strong> Define your latency, loss, and cost SLOs. If you need p99 &lt; 50ms and 0% message loss, Kafka with <code>acks=all</code> and <code>min.insync.replicas=2</code> is the safe choice. If you need p99 &lt; 25ms and can tolerate 0.1% message loss, Redpanda with tiered storage is fine. If you need p99 &lt; 10ms and cost is secondary, NATS JetStream with <code>sync=true</code> is your best bet.</p>
-<p><strong>3. Monitor the right metrics:</strong> Don’t trust GitHub stars. Monitor <code>producer_latency_p99</code>, <code>consumer_latency_p99</code>, <code>message_loss_rate</code>, <code>disk_usage_growth</code>, and <code>tiered_storage_fetch_latency</code> daily.</p>
-<p><strong>4. Document your trade-offs:</strong> Write down why you picked a broker. If you pick Redpanda for cost savings, document the tiered storage latency trade-off. If you pick NATS for latency, document the durability trade-off. This isn’t paperwork—it’s a postmortem waiting to happen.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<ul>
-<li><strong>Kafka:</strong> <code>NotEnoughReplicasException</code> — you set <code>acks=all</code> but not enough brokers are in-sync. Fix: increase <code>min.insync.replicas</code> and add brokers.</li>
-<li><strong>Redpanda:</strong> <code>CloudStorageFetchFailed</code> — object storage is unavailable. Fix: check S3 credentials and network policies.</li>
-<li><strong>NATS:</strong> <code>JetStreamDisabled</code> — JetStream wasn’t enabled in the config. Fix: set <code>jetstream {}</code> block in <code>nats-server.conf</code>.</li>
-</ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If you’ve tuned all three brokers and still see latency spikes or message loss, escalate to the broker team—but bring data.</p>
-<ol>
-<li>
-<p><strong>For Kafka:</strong> Capture <code>kafka-run-class.sh kafka.tools.JmxTool</code> output for <code>kafka.network:type=SocketServer,name=NetworkProcessorAvgIdlePercent</code> and <code>kafka.controller:type=KafkaController,name=LeaderCount</code>. If <code>NetworkProcessorAvgIdlePercent&lt;30%</code>, your brokers are overloaded. Escalate to the cluster team.</p>
-</li>
-<li>
-<p><strong>For Redpanda:</strong> Capture <code>rpk cluster health</code> and <code>rpk topic stats</code> for <code>cloud_storage_fetch_latency</code> and <code>disk_read_ops</code>. If <code>cloud_storage_fetch_latency&gt;50ms</code>, escalate to the storage team to check object storage latency.</p>
-</li>
-<li>
-<p><strong>For NATS:</strong> Capture <code>nats server check --config nats-server.conf</code> and <code>nats server report</code>. If <code>JetStream: disabled</code>, enable it. If <code>Storage: memory</code>, switch to <code>file</code> with <code>sync=true</code>. If the issue persists, escalate to the networking team to check DNS and firewall rules.</p>
-</li>
-</ol>
-<h2 id="which-broker-should-you-pick">Which broker should you pick?</h2>
+<p>Check the stream's configuration afterward and confirm the storage backend is <code>file</code> and the replica count is what you expect. A single-replica file-backed stream is still durable across a process restart but not across loss of the node.</p>
+<p><strong>How to measure it.</strong> Do not measure durability by reading logs. Measure it by counting. Publish a known number of uniquely numbered messages, restart the broker, then count how many are present in the stream. Repeat the restart several times. The loss rate is <code>(published - present) / published</code>. Run this test with your production storage settings, because the answer changes completely between memory storage, file storage without sync, and file storage with sync.</p>
+<p>The same test applies to Kafka and Redpanda: produce numbered records, kill the leader during the run, and verify the consumer sees a contiguous sequence. If it does not, your <code>acks</code> / <code>min.insync.replicas</code> combination permits loss, and that is a configuration choice you should make deliberately.</p>
+<h2 id="how-to-run-a-fair-bake-off">How to run a fair bake-off</h2>
+<p>Broker benchmarks are only useful if they resemble your workload. Most published comparisons use small messages, idle clusters, and short runs, which measures the wrong regime. A bake-off that actually informs a decision has four properties.</p>
+<p><strong>1. Use production-shaped traffic.</strong> Same message size distribution, same key cardinality, same producer and consumer counts, same retention. If your events are 4 KB and bursty, do not benchmark 1 KB at a constant rate.</p>
+<p><strong>2. Run long enough to hit steady state.</strong> Compaction, segment rolling, tiered-storage uploads, and page-cache eviction all happen on timescales of minutes to hours. A five-minute test will not show them. Run for at least several hours, ideally through a full retention cycle.</p>
+<p><strong>3. Measure tail latency and loss, not averages.</strong> Averages hide the spikes that break SLOs. Record p50, p95, p99, and p99.9 for produce and consume latency. Count lost messages by sequence number gaps, not by log inspection.</p>
+<p><strong>4. Test failure, not just steady state.</strong> Kill a broker. Restart a broker. Fill a disk. Make the object store slow or unreachable. The behavior under failure is usually the deciding factor and is almost never in the benchmark table.</p>
+<p>A minimal instrumentation list, applicable to all three systems:</p>
 <table>
 <thead>
 <tr>
-<th>Use case</th>
-<th>Broker</th>
-<th>Why</th>
-<th>Latency (p99)</th>
-<th>Message loss</th>
-<th>Cost per 100k msg/day (USD)</th>
-<th>Setup complexity</th>
+<th>What to measure</th>
+<th>Why it matters</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Durable event streaming with high throughput</td>
-<td>Kafka 3.7</td>
-<td>Raft replication, <code>acks=all</code>, 60% market share</td>
-<td>50ms</td>
-<td>0%</td>
-<td>$45</td>
-<td>High</td>
+<td>Produce p99 latency</td>
+<td>Detects batching and replication stalls</td>
 </tr>
 <tr>
-<td>Low-latency event streaming with tiered storage</td>
-<td>Redpanda 2.5</td>
-<td>Simplified architecture, 10ms default latency</td>
-<td>20ms</td>
-<td>0.1%</td>
-<td>$22</td>
-<td>Medium</td>
+<td>Consume p99 latency</td>
+<td>Detects cold reads and consumer lag</td>
 </tr>
 <tr>
-<td>Ultra-low-latency pub/sub with optional persistence</td>
-<td>NATS 2.10</td>
-<td>2ms default latency, 5ms with <code>sync=true</code></td>
-<td>5ms</td>
-<td>2%</td>
-<td>$18</td>
-<td>Low</td>
+<td>Message loss count (by sequence gap)</td>
+<td>The only honest durability metric</td>
 </tr>
 <tr>
-<td>High-frequency trading or fraud detection</td>
-<td>Kafka 3.7</td>
-<td>Durability and ordering guarantees</td>
-<td>25ms</td>
-<td>0%</td>
-<td>$55</td>
-<td>High</td>
+<td>Disk usage growth per day</td>
+<td>Determines retention and cost</td>
 </tr>
 <tr>
-<td>IoT telemetry with cost constraints</td>
-<td>Redpanda 2.5</td>
-<td>Tiered storage cuts disk costs 60%</td>
-<td>25ms</td>
-<td>0.2%</td>
-<td>$15</td>
-<td>Medium</td>
+<td>Object-storage fetch rate and latency</td>
+<td>Only if tiered storage is enabled</td>
 </tr>
 <tr>
-<td>Gaming leaderboards with ephemeral state</td>
-<td>NATS 2.10</td>
-<td>Minimal latency, optional persistence</td>
-<td>3ms</td>
-<td>5%</td>
-<td>$12</td>
-<td>Low</td>
+<td>Replication/ISR state over time</td>
+<td>Detects under-replicated partitions</td>
 </tr>
 </tbody>
 </table>
-<p>The table isn’t theoretical. These numbers come from benchmarks I ran on AWS c6i.4xlarge brokers with 20k events/sec, 4KB messages, and 3-day retention. Kafka wins on durability but loses on cost. Redpanda wins on latency and cost, but loses on message loss during restarts. NATS wins on latency and cost, but loses on durability.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does Kafka’s default linger.ms=30000 make sense for some teams but break others?</strong></p>
-<p>Kafka’s default <code>linger.ms=30000</code> is tuned for high-throughput workloads like log aggregation, where batching reduces network overhead. If your use case is real-time fraud detection, you need sub-50ms latency, so 30s batches are a non-starter. The fix is to set <code>linger.ms=5</code> and <code>batch.size=1MB</code>, which reduces latency from 105ms to 22ms without sacrificing throughput.</p>
-<p><strong>Can Redpanda really replace Kafka in production?</strong></p>
-<p>Yes, but not for every use case. Redpanda 2.5 matches Kafka’s API and adds tiered storage, cutting disk costs 60%. But if you need strict ordering guarantees or <code>acks=all</code>, Kafka is still the safer choice. If your SLO allows 0.1% loss, Redpanda is a solid choice.</p>
-<p><strong>When should I avoid NATS JetStream for event streaming?</strong></p>
-<p>Avoid NATS JetStream if you need strong durability guarantees. NATS’s default configuration doesn’t sync writes to disk immediately, so a rolling restart can lose 2–5% of messages. If you need 0% message loss, use Kafka with <code>acks=all</code> or Redpanda with <code>cloud_storage_enabled=false</code>.</p>
-<p><strong>How do I benchmark Kafka, Redpanda, and NATS fairly?</strong></p>
-<p>Benchmark with your real message size and throughput, not 1KB messages at 1k events/sec. Use <code>kafka-producer-perf-test</code>, <code>rpk topic stats</code>, and <code>nats bench</code> with your production workload. For Kafka, aim for <code>p99 latency&lt;50ms</code> and <code>record-error-rate=0%</code>. For Redpanda, aim for <code>tiered_storage_fetch_latency&lt;10ms</code> and <code>disk_read_ops&lt;1000/second</code>. For NATS, aim for <code>p99 latency&lt;10ms</code> and <code>message_loss_rate&lt;1%</code>.</p>
-<h2 id="now-do-this">Now do this</h2>
-<p>Pick the broker that matches your SLOs, not your GitHub stars. Open your broker config file right now and check the defaults:</p>
-<ul>
-<li>If you’re on Kafka, set <code>linger.ms</code> to match your SLA (start with 5ms) and <code>acks</code> to 1 or <code>all</code> based on your durability needs.</li>
-<li>If you’re on Redpanda, review <code>cloud_storage_cache_ttl_ms</code> and <code>compact enabled</code> to avoid tiered storage latency spikes.</li>
-<li>If you’re on NATS, enable <code>sync=true</code> and switch from <code>memory</code> to <code>file</code> storage.</li>
-</ul>
-<p>Then run a 10-minute load test with your real message size and throughput. If you see latency or loss outside your SLO, change brokers—don’t waste time tuning defaults that were never meant for your workload.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/">Why AI interviewers failed 68% of us in 2026</a></li>
-<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
-<li><a href="https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/">Fintech features break in Ghana: the real fix</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order. The first question that fails usually eliminates a broker.</p>
+<ol>
+<li><strong>Can you tolerate any message loss?</strong> If no, you need synchronous replication with a quorum acknowledgment. Kafka with <code>acks=all</code> and <code>min.insync.replicas</code> set to at least 2, or Redpanda with equivalent settings, or NATS JetStream with file storage, multiple replicas, and sync enabled. If yes, you have more freedom on latency and cost.</li>
+<li><strong>What is your p99 end-to-end latency budget?</strong> If it is under 10 ms, tiered storage and large batching are both off the table for the hot path. If it is 50–100 ms, you can batch and tier aggressively.</li>
+<li><strong>How much data do you retain, and how often is it read?</strong> High retention with rare reads favors tiered storage. High retention with frequent reads of recent data favors local disk with a large cache.</li>
+<li><strong>What is your operational capacity?</strong> A system with fewer moving parts is easier to run, but "fewer moving parts" is not the same as "no tuning." Every broker here has defaults that assume a different workload than yours.</li>
+<li><strong>What does your team already run?</strong> Operational familiarity has real value. A well-tuned system your team understands usually beats a theoretically better system nobody can debug at 3 a.m.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Is Redpanda a drop-in replacement for Kafka?</strong></p>
+<p>It exposes the Kafka API, so Kafka clients generally work without code changes. That does not mean behavior is identical. Replication, storage, and tiered-storage behavior are implemented independently, and defaults differ. Treat it as a compatible API with different operational characteristics, and validate with your own bake-off rather than assuming equivalence.</p>
+<p><strong>Does NATS JetStream guarantee durability?</strong></p>
+<p>Only if you configure it to. Persistence is optional, storage type is per-stream, and synchronous writes are a configuration choice. With memory storage, there is no durability. With file storage and sync enabled across replicas, writes survive restarts. The default is not the durable configuration.</p>
+<p><strong>Why does Kafka batch messages at all?</strong></p>
+<p>Batching amortizes network and disk overhead across many records, which is how a single broker sustains high throughput. The cost is added latency for each record waiting for its batch. The correct <code>linger.ms</code> is a function of your latency budget, not a universal constant.</p>
+<p><strong>How do I know if my broker is dropping messages?</strong></p>
+<p>Count. Publish records with monotonically increasing sequence numbers, consume them, and look for gaps. This works regardless of broker and does not depend on trusting logs or metrics. Run it during a restart to test the durability path specifically.</p>
+<p><strong>Can I use more than one of these in the same system?</strong></p>
+<p>Yes, and it is common. A low-latency path for real-time decisions and a durable log for replay and audit serve different requirements. The cost is operating two systems and defining the handoff semantics, including what happens when the fast path and the durable path disagree.</p>
+<h2 id="do-this-now">Do this now</h2>
+<p>Open your producer configuration and find the value of <code>linger.ms</code> (Kafka and Redpanda) or your stream's storage and sync settings (NATS JetStream). Then answer one question in writing: what is the maximum amount of data you are willing to lose on a node failure, expressed in seconds or messages?</p>
+<p>If <code>linger.ms</code> is greater than your end-to-end latency budget, lower it and re-run a load test with your real message size. If your NATS stream uses memory storage or a single replica, and you claimed you need durability, change it now. If you cannot state your loss tolerance, that is the first thing to fix — no broker choice is correct until you know what you are optimizing for.</p>
                 
                 
             </div>
@@ -495,20 +451,20 @@ jetstream {
                     
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
-                        <p>Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
-                        <span class="related-meta">12 min read · 25 September 2026</span>
+                        <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+                        <span class="related-meta">11 min read · 25 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/audit-logs-that-scale-skip-the-3am-fire-drills/">
                         <h3>Audit logs that scale: skip the 3AM fire drills</h3>
-                        <p>Cut audit log storage 70% and query latency 90% with a dual-stream stack—Kafka 3.7, ClickHouse 23.11, S3 Parquet—while satisfying GDPR and SOC2 integrity…</p>
-                        <span class="related-meta">13 min read · 17 August 2026</span>
+                        <p>How to design audit log pipelines that satisfy auditors and engineers: immutable event streams, hash chains, tiered retention, and a decision checklist.</p>
+                        <span class="related-meta">15 min read · 17 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/rag-rots-if-you-dont-refresh-indexes/">
                         <h3>RAG rots if you don’t refresh indexes</h3>
-                        <p>Build production RAG that lasts: why static indexes fail, how to set up CDC, chunk versioning, and incremental refresh with concrete tools and costs</p>
-                        <span class="related-meta">15 min read · 4 August 2026</span>
+                        <p>RAG indexes rot when source documents change. Learn change detection, chunk versioning, and incremental refresh patterns, with code and a cost model.</p>
+                        <span class="related-meta">14 min read · 4 August 2026</span>
                     </a>
                     
                 </div>

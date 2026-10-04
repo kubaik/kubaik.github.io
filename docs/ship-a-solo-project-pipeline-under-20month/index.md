@@ -1,53 +1,35 @@
-# Ship a solo project pipeline under $20/month
+# A Solo-Project Deploy Pipeline That Stays Under $20/Month
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Most deployment tutorials show the happy path: a workflow file, a `git push`, a green checkmark. What they rarely show is the accounting — which line items actually bill, which defaults quietly cost money, and how to verify any of it on your own project.
 
-## Why I wrote this (the problem I kept hitting)
+This article walks through a minimal pipeline for a single Python web service: GitHub Actions for test and build, a container host for runtime, one YAML file, one TOML file. The goal is a pipeline whose monthly cost can be estimated from documented prices and whose behavior can be measured with commands you run yourself.
 
-I spent three months trying to bolt together CI from GitHub Actions, Docker Hub, and a $12 DO droplet only to discover the build cache alone cost $300/month once I hit 50 builds. That’s when I decided to burn the whole stack down and rebuild it with just what I needed — no YAML, no Dockerfile complexity, and no surprise bills. This isn’t about saving pennies; it’s about shipping without waking up to a $342 AWS bill because CloudFront decided to bill me for 400k requests I never made.
+## What you'll build and what you need
 
-Most solo project pipelines end up either:
+Prerequisites:
 
-- Over-provisioned (a $50/month server that idles 99% of the time)
-- Under-provisioned (a $5/month server that falls over when the cache warms up)
-- Hidden-cost hell (GitHub Actions minutes, Docker Hub pulls, object storage egress)
+1. A GitHub account.
+2. An account with a container-hosting platform that can run a Docker image (Fly.io is used as the example here; the same structure applies to any host that accepts an image and exposes an HTTP service).
+3. Python 3.11 or newer, plus `pipx` if you want isolated CLI installs.
+4. A single Python web service (Flask or FastAPI) with a handful of dependencies.
 
-I evaluated every combo: GitHub Actions + Fly.io, Render + Railway, Render + AWS ECS, DigitalOcean + Docker Hub, even tried Cloudflare Workers KV for the fun of it. Every path had at least one footgun. The worst was watching a 6-line Dockerfile balloon into 12 layers because I copy-pasted a community base image — that image alone added 600 MB and doubled cold-start latency to 850 ms.
+The end state:
 
-What finally stuck was treating the pipeline as code, not infrastructure. I moved the build step into a single 50-line Python script that runs locally and on any runner, and I pushed the built image directly to Fly.io’s registry. No Docker Hub, no intermediate layers, no surprise cache hits. It cost me $2.14 to set up and $14.78 to run for the first month. The second month it dropped to $12.65 because I finally tuned the Fly.io scaling triggers.
+- A GitHub Actions workflow that runs tests on every push to `main` and deploys on success.
+- A container image built from a multi-stage Dockerfile, kept small by copying only installed packages into the runtime layer.
+- Automatic HTTPS at the host, with a health check that matches the app's real readiness endpoint.
+- A rollback path that consists of re-deploying a previous image tag.
+- A cost model you can compute from published prices, not from a screenshot.
 
-This post is what I wish I had when I started. Skip the hype and the 27-slide architecture diagrams — here’s the actual trade-offs, the real numbers, and the one change that saved me the most time.
+If your service is JavaScript, Go, Rust, or .NET, the principles carry over. Swap the Dockerfile steps and the test command; the workflow shape and the host configuration stay the same.
 
-## Prerequisites and what you'll build
+### A note on the numbers in this article
 
-You need four things to follow along:
+Any cost figure here is derived from stated assumptions (hours per month, requests per day, average response size) and shown as arithmetic. Any latency or memory figure is something you should reproduce on your own machine and host, because it depends on your image, your region, and your traffic. Treat every number as a hypothesis to verify, not a benchmark.
 
-1. A GitHub account (free)
-2. A Fly.io account (free tier allows 3 shared-cpu-1x 256mb VMs and 3GB outbound per month — enough for a solo project)
-3. Python 3.11+ and pipx installed (I use 3.11.8 on Ubuntu 24.04 LTS)
-4. A project with a single Python web service (Flask or FastAPI) and a handful of dependencies
+## Step 1 — Set up the project
 
-What we’ll end up with:
-
-- A GitHub Actions workflow that runs tests on every push and builds a Docker image
-- A Fly.io app running the image with automatic HTTPS and region failover
-- A single YAML file for GitHub Actions and a single TOML file for Fly.io
-- Total monthly cost ≤ $20 even if the project gets 10k requests/day
-- A rollback button that works in < 30 seconds
-
-If your project is JavaScript, .NET, Go, Rust, or anything else, the same principles apply — swap the Dockerfile steps and the build script language, but keep the rest. I built this with a FastAPI service that started at 180 lines of code and ended at 210 after adding health checks and graceful shutdown.
-
-Gotchas I hit:
-
-- Fly.io’s free tier includes outbound bandwidth up to 3GB/month. My service averages 140 KB per request, so 3GB covers about 22k requests. Anything more triggers the $0.05/GB overage. If you expect more traffic, budget $5–$10 extra or add Cloudflare in front.
-- GitHub Actions minutes reset at 00:00 UTC. If you’re in Asia and push at 23:50 UTC, your next push at 00:05 UTC will fail unless you have minutes left or you upgrade to the free tier of GitHub Enterprise (yes, they still give it to students and OSS projects).
-- Python 3.11 is the last version that still supports manylinux2014 wheels — if you jump to 3.12 you’ll need to rebuild more wheels and your Docker image grows by ~40 MB.
-
-I burned two days debugging why my FastAPI service returned 502s after the first deploy. It turned out Fly.io’s default health check path is `/` and my app only responded to `/health`. The fix was one line in `fly.toml` — `[[services.http_checks]] path = "/health"`.
-
-## Step 1 — set up the environment
-
-Create a new directory and initialize a Python project:
+Create a directory and a virtual environment:
 
 ```bash
 mkdir solo-pipeline && cd solo-pipeline
@@ -57,19 +39,19 @@ pip install --upgrade pip setuptools
 pip install fastapi uvicorn gunicorn python-dotenv httpx pytest pytest-asyncio
 ```
 
-Pin versions in `requirements.txt`:
+Pin versions in `requirements.txt`. Pinning matters because an unpinned dependency can change your image size and your cold start without any code change:
 
 ```text
 fastapi==0.115.2
 uvicorn==0.32.0
--gunicorn==21.2.0
+gunicorn==21.2.0
 python-dotenv==1.0.1
 httpx==0.27.0
 pytest==8.3.2
 pytest-asyncio==0.23.8
 ```
 
-Install Playwright for browser tests if you need them:
+If you need browser tests, install Playwright separately — it should not live in the production image:
 
 ```bash
 pip install playwright
@@ -93,7 +75,7 @@ async def health():
     return {"status": "healthy"}
 ```
 
-Add a simple test in `tests/test_main.py`:
+Add a test in `tests/test_main.py`:
 
 ```python
 from fastapi.testclient import TestClient
@@ -107,20 +89,20 @@ def test_root():
     assert response.json()["status"] == "ok"
 ```
 
-Set up the Fly.io CLI:
+Install the host CLI and authenticate. The install method varies by platform; on Linux and macOS the vendor script is the standard path:
 
 ```bash
 curl -L https://fly.io/install.sh | sh
 fly auth login
 ```
 
-Log in with your GitHub account and create a new app:
+Create the app without deploying yet:
 
 ```bash
 fly launch --name solo-app --image none --no-deploy
 ```
 
-This creates a `fly.toml` file. Replace its contents with:
+This writes a `fly.toml`. Replace its contents with the following. Note the health check path — the default is `/`, and if your app only answers on `/health`, the health check will fail even though the service is fine:
 
 ```toml
 app = "solo-app"
@@ -147,20 +129,20 @@ app = "solo-app"
   timeout = "5s"
 ```
 
-Run a local build to sanity-check the Dockerfile we’ll write next:
+Before writing the Dockerfile, run a local build to confirm the toolchain works:
 
 ```bash
 docker build -t solo-app:local .
 docker run --rm -p 8080:8080 solo-app:local
 ```
 
-Visit `http://localhost:8080` and `http://localhost:8080/health`. If you see JSON responses, you’re good. Stop the container with Ctrl+C.
+Visit `http://localhost:8080` and `http://localhost:8080/health`. If you see JSON, the app is wired correctly. Stop the container with Ctrl+C.
 
-I spent an hour debugging why the image wouldn’t build until I realized I had a typo in the filename (`Dockerfile.` with a trailing dot). Docker silently ignores files with trailing dots, so it fell back to the default Dockerfile and failed to find `.dockerignore`.
+One failure mode worth knowing: Docker ignores files whose names end in a trailing dot, so a file accidentally named `.dockerignore.` is not read, and every file in your working directory — including `.venv` and `.git` — gets copied into the build context. If your builds suddenly take minutes instead of seconds, check the filename first.
 
-## Step 2 — core implementation
+## Step 2 — Build the image and the workflow
 
-Create a minimal multi-stage Dockerfile in the project root:
+Create a multi-stage Dockerfile in the project root:
 
 ```dockerfile
 # ---- base builder ----
@@ -178,23 +160,18 @@ FROM python:3.11-slim-bookworm
 
 WORKDIR /app
 
-# Install runtime deps only
 RUN apt-get update && apt-get install -y --no-install-recommends libgcc-s1 && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy only the installed packages from builder
 COPY --from=builder /root/.local /root/.local
 ENV PATH=/root/.local/bin:$PATH
 
-# Copy app code
 COPY app/ ./app/
-COPY .env .
 
-# Use gunicorn with uvicorn workers
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "app.main:app"]
 ```
 
-`.dockerignore`:
+Note what is not in this Dockerfile: no `COPY .env .`. Baking secrets into an image means they end up in the layer history and in every registry copy. The `.dockerignore` below excludes `.env` for the same reason — pass secrets at runtime through your host's secret mechanism instead:
 
 ```text
 .git
@@ -208,22 +185,22 @@ __pycache__
 .DS_Store
 ```
 
-Build and run locally to verify size and layers:
+Build locally and inspect the result:
 
 ```bash
 docker build -t solo-app:local .
 docker images | grep solo-app
 ```
 
-You should see something like:
+You'll see the image size in the output. A `python:3.11-slim-bookworm` base plus FastAPI and a handful of dependencies typically lands somewhere in the low hundreds of megabytes; the exact figure depends on your dependency tree. What matters is that you record it, then re-check it after every dependency change. A single heavy transitive dependency can add tens of megabytes without any visible change to your `requirements.txt` top level.
 
+To find which layer is responsible, use:
+
+```bash
+docker history solo-app:local
 ```
-solo-app   local   78a9d1234567   2 minutes ago   147MB
-```
 
-That’s 147 MB — small enough to fit in Fly.io’s free tier without paying for extra storage.
-
-Next, create a GitHub Actions workflow in `.github/workflows/deploy.yml`:
+Next, create the workflow at `.github/workflows/deploy.yml`. The `test` job runs first; `build-and-deploy` only runs if `test` succeeds:
 
 ```yaml
 name: Deploy to Fly.io
@@ -240,7 +217,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install pytest pytest-asyncio
+      - run: pip install -r requirements.txt
       - run: pytest
 
   build-and-deploy:
@@ -255,15 +232,13 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 ```
 
-Generate an API token on Fly.io:
+Generate an API token and store it as a repository secret named `FLY_API_TOKEN`:
 
 ```bash
 flyctl auth token
 ```
 
-Add it to GitHub Secrets as `FLY_API_TOKEN`.
-
-Create a release tag and push:
+Commit and tag the first release:
 
 ```bash
 git add .
@@ -272,22 +247,13 @@ git tag -a v0.1.0 -m "first release"
 git push origin main --follow-tags
 ```
 
-Watch the Actions tab. The first build will take 65 seconds and deploy to Fly.io. Subsequent builds reuse the cache and take 12–15 seconds.
+Watch the Actions tab. The first run builds every layer from scratch; subsequent runs reuse cached layers where the inputs are unchanged. To see the difference, compare the "Build" step duration on the first run and on the second. If the second run is not meaningfully faster, your layer ordering is wrong — anything that changes on every commit (application code) should be copied after anything that rarely changes (dependency manifests).
 
-I expected the build to finish in under 30 seconds, but the first run pulled the full Python 3.11-slim image (140 MB) plus the layer for gcc (127 MB). That’s 267 MB total before even installing dependencies. The second run reused the layer, so it only pulled 140 MB. Lesson learned: pin your base images to specific digests if you want reproducible cache hits.
+## Step 3 — Handle the failure modes that actually occur
 
-## Step 3 — handle edge cases and errors
+The four issues below are the ones most likely to bite a small service in its first weeks. Each has a concrete fix and a way to verify it.
 
-Edge cases that broke me in the first week:
-
-1. Fly.io health checks timing out
-2. Gunicorn workers crashing on SIGTERM
-3. Memory leaks from httpx in long-lived workers
-4. Region failover not activating
-
-Fix 1 — Tune health checks:
-
-In `fly.toml`, add a faster timeout and higher interval:
+**1. Health checks timing out.** If your health check interval is longer than your host's patience, or your timeout is longer than your app's worst-case response, the host will kill a healthy machine. Tighten both:
 
 ```toml
 [[http_checks]]
@@ -296,67 +262,78 @@ In `fly.toml`, add a faster timeout and higher interval:
   timeout = "3s"
 ```
 
-Fix 2 — Graceful shutdown:
+Verify by watching logs during a deploy: `fly logs` should show the check passing on the first or second attempt, not flapping.
 
-Update the CMD line in the Dockerfile to use `--graceful-timeout`:
+**2. Workers killed on SIGTERM.** On redeploy, the host sends SIGTERM and waits. If Gunicorn's graceful timeout is shorter than your longest in-flight request, connections get dropped. Set it explicitly:
 
 ```dockerfile
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--graceful-timeout", "30", "app.main:app"]
 ```
 
-Fix 3 — Memory leak mitigation:
-
-Add a custom Gunicorn worker init hook in `app/gunicorn.py`:
+**3. Memory growth from per-request clients.** The classic version of this bug is creating an `httpx.AsyncClient` inside a request handler and never closing it. Each instance holds a connection pool; over thousands of requests, memory climbs and never comes back. The fix is a module-level client created once and closed on shutdown:
 
 ```python
-from gunicorn.workers.base import Worker
+# app/http_client.py
+import httpx
 
-class UvicornWorkerWithCleanup(Worker):
-    def init_process(self):
-        super().init_process()
-        # Close any open http clients on reload
-        import atexit
-        import httpx
-        atexit.register(lambda: httpx.Client().close())
+_client: httpx.AsyncClient | None = None
 
+def get_client() -> httpx.AsyncClient:
+    global _client
+    if _client is None:
+        _client = httpx.AsyncClient(timeout=5.0)
+    return _client
+
+async def close_client() -> None:
+    global _client
+    if _client is not None:
+        await _client.aclose()
+        _client = None
+```
+
+Wire the shutdown into the app's lifespan so it runs exactly once:
+
+```python
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from app.http_client import close_client
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    await close_client()
+
+app = FastAPI(lifespan=lifespan)
+```
+
+A Gunicorn `post_fork` hook that just logs the worker PID is also useful — it tells you whether workers are being recycled unexpectedly:
+
+```python
+# app/gunicorn.py
 def post_fork(server, worker):
     server.log.info("Worker spawned (pid: %s)", worker.pid)
-
-def pre_fork(server, worker):
-    pass
-
-def pre_exec(server):
-    server.log.info("Forked child, re-executing.")
 ```
 
-Update the CMD line again:
+If you use a custom worker class, point Gunicorn at it via `--worker-class app.gunicorn.UvicornWorkerWithCleanup`, but only after the module actually defines that class. A `--worker-class` pointing at a missing attribute fails at boot, and the error message is not always obvious.
 
-```dockerfile
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--worker-class", "app.gunicorn.UvicornWorkerWithCleanup", "--graceful-timeout", "30", "app.main:app"]
-```
-
-Fix 4 — Region failover:
-
-Add a primary region and at least one backup:
+**4. Region failover that doesn't fail over.** A single-region deployment has no failover, no matter what the dashboard implies. If you want a second region, declare it and verify it:
 
 ```toml
-[deploy]
-  release_command = "python -m app.main migrate"
-
 [[vm]]
   memory = "256mb"
   cpu_kind = "shared"
   cpus = 1
-  regions = ["iad", "ord"]  # primary in iad, backup in ord
+  regions = ["iad", "ord"]
 ```
 
-Now if `iad` goes down, Fly.io automatically fails over to `ord` in under 30 seconds.
+After deploying, confirm both machines exist with `fly status`, then deliberately stop the primary and time how long until the service answers again. That elapsed time is your real failover number; there is no way to know it without testing it.
 
-I ran a load test with k6 and watched memory climb from 80 MB to 240 MB in 30 minutes. The leak came from a single endpoint that created an httpx.AsyncClient per request and never closed it. The fix dropped memory usage back to 75 MB and kept it flat. The leak was 16 bytes per request — tiny, but over 10k requests it added up to 160 KB, which was enough to push the container over the edge.
+### Measuring memory under load
 
-Add a simple load test in `tests/load.py`:
+Add a small load script that runs against a local container:
 
 ```python
+# tests/load.py
 import asyncio
 import httpx
 
@@ -370,31 +347,31 @@ if __name__ == "__main__":
     asyncio.run(hit_endpoint(url))
 ```
 
-Run it locally before each deploy to sanity-check memory:
+Run it, and while it runs, sample memory from another terminal:
 
 ```bash
-python -m pytest tests/load.py -s
+docker stats --no-stream
 ```
 
-## Step 4 — add observability and tests
+Run the load script twice and compare. Flat memory across runs means no leak; a rising baseline means you have one. Note that `pytest tests/load.py` will not execute this script the way you might expect — it has no test functions, so pytest collects nothing. Run it directly with `python tests/load.py`, or wrap the logic in an `async def test_...` function if you want it under pytest.
 
-Observability stack:
+## Step 4 — Observability, tests, and the cost model
 
-- Fly.io logs: `fly logs`
-- Prometheus metrics on `/metrics` (add a new endpoint)
-- Sentry for errors (free plan covers 5k events/month)
+Observability for a solo service can be three things:
 
-Add a metrics endpoint to `app/main.py`:
+- Host logs (`fly logs`) for deploy-time and crash-time events.
+- A `/metrics` endpoint for request counts and latency, if you want graphs.
+- An error reporter for exceptions, so you see them without tailing logs.
+
+Add metrics to the app. The `prometheus-client` library and `starlette-exporter` middleware are the common pairing:
 
 ```python
 from fastapi import FastAPI
-from prometheus_client import make_wsgi_app
 from prometheus_client import Counter, Gauge
 from starlette_exporter import PrometheusMiddleware, handle_metrics
 
 app = FastAPI()
 
-# Metrics
 REQUEST_COUNT = Counter("app_requests_total", "Total HTTP Requests", ["method", "endpoint"])
 REQUEST_LATENCY = Gauge("app_request_latency_seconds", "Request latency", ["method", "endpoint"])
 
@@ -412,16 +389,19 @@ app.add_middleware(PrometheusMiddleware)
 app.add_route("/metrics", handle_metrics)
 ```
 
-Update requirements:
+Add the two dependencies to `requirements.txt`:
 
 ```text
 prometheus-client==0.19.0
 starlette-exporter==0.22.0
 ```
 
-Add Sentry SDK:
+Be aware that `starlette_exporter` already registers its own request counter and latency histogram. Adding your own middleware on top means you'll have two sets of metrics for the same traffic, which is fine for a solo project but confusing if you later wonder why the numbers don't match. Pick one: either use the exporter's built-in metrics, or write your own middleware and skip the exporter.
+
+Add an error reporter. The initialization is a few lines:
 
 ```python
+import os
 import sentry_sdk
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 
@@ -432,7 +412,7 @@ sentry_sdk.init(
 )
 ```
 
-Add a failing endpoint to test Sentry:
+Add an endpoint that fails on purpose, so you can confirm the integration works before you need it:
 
 ```python
 @app.get("/boom")
@@ -440,23 +420,18 @@ async def boom():
     raise RuntimeError("intentional error for sentry")
 ```
 
-Run locally:
+Set the DSN as a host secret rather than in the image, then deploy and hit the endpoint:
 
 ```bash
-flyctl secrets set SENTRY_DSN=https://examplePublicKey@o123456.ingest.sentry.io/0
+flyctl secrets set SENTRY_DSN=<your-dsn>
 flyctl deploy
 curl https://solo-app.fly.dev/boom
-```
-
-Check Sentry dashboard and Fly.io logs:
-
-```bash
 fly logs | grep RuntimeError
 ```
 
-I expected Sentry to catch the error immediately, but it took three requests before the first event appeared. It turns out FastAPI’s error handling swallows exceptions in some cases. The fix was adding `raise` inside the handler so Sentry’s integration picks it up. Took me 45 minutes to realize I’d forgotten to re-raise.
+A common trap: FastAPI's exception handlers can swallow an exception before the reporter sees it. If nothing arrives in the dashboard, check that the handler you wrote re-raises, or remove the handler and let the framework's default behavior propagate.
 
-Add a CI test that verifies the metrics endpoint returns 200:
+Add a test that the metrics endpoint responds:
 
 ```python
 import httpx
@@ -467,72 +442,61 @@ def test_metrics():
     assert b"app_requests_total" in response.content
 ```
 
-Update the GitHub Actions workflow to run this test after the main test job:
+This test requires a running server on port 8080, so it belongs in a separate job or a step that starts the container first. Running it in the same job as unit tests will fail with a connection error.
 
-```yaml
-- name: Test metrics endpoint
-  run: pytest tests/test_main.py::test_metrics -v
-```
+### The cost model
 
-## Real results from running this
+Costs are arithmetic. State your assumptions, then multiply.
 
-I ran this pipeline for 12 weeks on a personal project with 8k–12k requests/day across Asia, Europe, and the US. Here are the numbers:
+Assumptions for this example:
 
-| Metric | Value | Notes |
-|--------|-------|-------|
-| Monthly cost | $12.65 | Fly.io $11.70 + GitHub Actions $0.95 |
-| Build time | 14 s | Subsequent builds after cache hit |
-| First cold start | 850 ms | Fly.io shared CPU |
-| Region failover | 28 s | Measured from health check failure to healthy in backup region |
-| Memory usage | 75 MB stable | After leak fix |
-| Error rate | 0.02% | Only from client timeouts, no server errors |
-| Rollback time | 22 s | From tag push to healthy in prod |
+- One shared-CPU machine running continuously: 730 hours per month.
+- Published price of $0.0019 per hour for that machine class.
+- 12,000 requests per month at 140 KB average response size.
+- 150 CI minutes per month at $0.008 per minute.
+- A domain at $9 per year.
 
-Cost breakdown (2026 prices):
+The arithmetic:
 
-- Fly.io: 1 shared-cpu-1x 256mb VM running 24x7 at $0.0019/hr = $13.68
-- Fly.io outbound overage: $0 for 12k requests (1.68 GB total) — under 3 GB free
-- GitHub Actions: ~150 minutes/month at $0.008/minute = $1.20
-- Domain: Cloudflare registrar $9/year = $0.75
-- Sentry: free plan (5k events) = $0
+- Machine: 730 × $0.0019 = $1.39 per month.
+- Outbound: 12,000 × 140 KB = 1,680,000 KB ≈ 1.68 GB, which is under a 3 GB free allowance, so $0.
+- CI: 150 × $0.008 = $1.20 per month.
+- Domain: $9 ÷ 12 = $0.75 per month.
 
-Total: $15.63
+Total: $1.39 + $1.20 + $0.75 = $3.34 per month, well under the $20 target.
 
-If I had used AWS ECS Fargate with 0.25 vCPU and 0.5 GB memory, the same load would have cost $28.40/month. If I had used a $5 DO droplet, I would have paid $5 but risked downtime during noisy neighbors.
+The point of writing it out this way is that you can change one assumption and see the effect. If traffic grows to 100,000 requests per month, outbound becomes about 14 GB, which is 11 GB over the 3 GB allowance. At $0.05 per GB, that is $0.55 — still small. The line item that grows fastest for a small project is usually CI minutes, not bandwidth.
 
-The biggest surprise was Fly.io’s automatic TLS. I never configured a certificate or DNS — the app got a Let’s Encrypt cert within 60 seconds of the first deploy. That alone saved me a day of certificate rotation scripts.
+Verify your own numbers rather than trusting these. The host's billing page shows actual usage; the CI provider's usage page shows actual minutes. Compare them monthly.
 
-I also expected the shared CPU to spike under load, but the 95th percentile CPU never exceeded 45% even under 100 requests/second for 10 minutes straight. Fly.io’s CPU credits system kept it throttled but responsive.
+### Measuring what matters
 
-The weakest link turned out to be Cloudflare DNS propagation. When I switched domains, it took 17 minutes for the new A record to propagate globally. During that window, some users got certificate errors. Lesson: always test DNS changes with a secondary provider or use Fly.io’s built-in DNS for the first week.
+Three things are worth measuring on your own deployment, because no article can measure them for you:
 
-## Common questions and variations
+- **Cold start.** After a deploy, time the first request with `curl -w "%{time_total}\n" -o /dev/null -s https://your-app/`. Repeat after the machine has been idle to see whether `auto_stop_machines` is affecting you.
+- **Rollback time.** Deploy a known-good tag, then deploy a deliberately broken one, then roll back. Time the whole cycle. If it takes longer than a coffee break, your rollback procedure is not real.
+- **Memory under load.** Run the load script and sample `docker stats` as described above. Record the steady-state number so you notice when it changes.
+
+## Common questions
 
 ### How do I add a database?
 
-For a solo project, use Fly.io Postgres in the same app group:
+Use a managed Postgres from the same host so the connection stays on the private network:
 
 ```bash
 fly postgres create --name solo-db
 fly postgres attach solo-db -a solo-app
 ```
 
-Update `fly.toml` to include the database URL:
+The attach command sets a `DATABASE_URL` secret on the app. Do not hardcode the URL in `fly.toml` — the file is committed, and the credential would be too. Read it from the environment in your app instead.
 
-```toml
-[env]
-DATABASE_URL = "postgres://user:pass@solo-db.internal:5432/solo-db?sslmode=require"
-```
+### Can I use this for a Node app?
 
-Fly.io Postgres gives you 3 GB storage and 10M rows free. If you need backups, bump to the $15/month plan. I ran this for 6 weeks and hit 1.2 GB with 50k rows — still under the free limit.
+Yes. Replace the Dockerfile with a Node multi-stage build, change `actions/setup-python` to `actions/setup-node`, and swap `pytest` for your test runner. The host configuration and the workflow structure are unchanged. The image size and cold start will differ; measure them the same way.
 
-### Can I use this for a Next.js or Nuxt app?
+### What if outbound bandwidth exceeds the free allowance?
 
-Yes. Replace the Dockerfile with a Node 20 LTS multi-stage build, and change the GitHub Actions runner to `node:20`. The Fly.io runtime stays the same. I tested a Next.js 14 app and the cold start dropped to 1.2 s (vs 850 ms for Python). Costs were identical.
-
-### What if I need more than 3 GB outbound?
-
-Add Cloudflare in front of Fly.io. Cloudflare’s free tier gives you 100k requests/day and 10 TB egress. Route your domain’s DNS to Cloudflare, then proxy to Fly.io. Cost jumps to ~$5/month for the domain and Cloudflare, but you get global CDN and DDoS protection.
+Two options. First, compute the overage: if you serve 140 KB per response and exceed a 3 GB allowance, that is roughly 22,000 requests before you start paying. At $0.05 per GB, doubling that traffic costs a few dollars a month. Second, put a CDN in front of the host. A CDN with a generous free egress tier absorbs most static and cacheable traffic, so the origin only sees cache misses. The trade-off is an extra DNS and cache-invalidation surface to manage — worth it for a content-heavy site, less so for a JSON API where nothing is cacheable.
 
 ### How do I set up a custom domain?
 
@@ -541,11 +505,11 @@ fly certs create solo-app.com
 fly certs status
 ```
 
-It takes 2–3 minutes to issue a Let’s Encrypt certificate. Point your domain’s A record to Fly.io’s anycast IPs (see `fly ips list`).
+Certificate issuance typically completes within a few minutes. Point the domain's A record at the host's anycast addresses, which you can list with `fly ips list`. Before switching a live domain, lower the TTL on the existing record so the change propagates quickly, and keep the old record in place until the new one resolves from a few different networks.
 
-### What about CI caching?
+### Does CI caching help?
 
-GitHub Actions cache is free for public repos, $0.25/GB/month for private. The Python build layer is 140 MB, so caching saves ~5 s per build. Add this to your workflow:
+For public repositories, GitHub Actions cache is free. For private repositories it is billed by storage. Caching `~/.cache/pip` saves the time spent downloading wheels, which for a small dependency set is a few seconds per build. Add it if your builds are slow for that reason; skip it if they are slow because of something else, like a large base image pull.
 
 ```yaml
 - uses: actions/cache@v4
@@ -554,52 +518,8 @@ GitHub Actions cache is free for public repos, $0.25/GB/month for private. The P
     key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 ```
 
-I tried caching the Docker layer, but Fly.io’s registry already caches layers per commit hash, so the speed gain was negligible.
+## Your next 30 minutes
 
-## Where to go from here
+Write a script that prints your current monthly estimate from the provider APIs, and run it now. Start with the two figures that dominate a small project's bill — machine hours and CI minutes — and add line items as you discover them. A rough version that prints two numbers and their sum is enough to catch a runaway before the invoice does.
 
-If you ship one thing after reading this, make it a shell script that prints your current monthly cost estimate. Mine is a 15-line Bash script called `cost.sh`:
-
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-FLY_COST=$(flyctl status --json | jq -r '.Machines | length * 0.0019 * 24 * 30')
-GH_COST=$(gh api -H "Accept: application/vnd.github+json" /repos/$GITHUB_REPOSITORY/actions/runs --jq '.[0].run_duration_ms / 1000 / 60 * 0.008' || echo "0.00")
-TOTAL=$(echo "$FLY_COST + $GH_COST" | bc -l)
-echo "Monthly cost estimate: $${TOTAL%.*}.${TOTAL#*.}"
-```
-
-Run it every Friday. If the total ever exceeds $20, you’ll know immediately instead of waiting for the bill. I set up a GitHub Actions workflow that runs this script on `schedule: cron('0 9 * * 5')` — every Friday at 9 AM UTC.
-
-Next step: open your terminal and run:
-
-```bash
-pip install flyctl
-flyctl auth login
-flyctl launch --name my-solo-app --image none --no-deploy
-```
-
-You’ll have a production-grade pipeline in under 10 minutes and a bill you can show your manager without flinching.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 15, 2026
+Then deploy the app from Step 1 with the health check path corrected, hit `/health` once, and time the response. You now have a baseline. Everything else in this article is an adjustment to that baseline, and every number in it is something you can check.

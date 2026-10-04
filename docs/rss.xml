@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Oct 2026 05:00:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 13:58:08 +0000</lastBuildDate>
     <item>
       <title>AI best practices fail on slow networks</title>
       <link>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</link>
@@ -16,35 +16,35 @@
     <item>
       <title>SBOM + attestation that gets used</title>
       <link>https://kubaik.github.io/sbom-attestation-that-gets-used/</link>
-      <description>SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.</description>
+      <description>How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</description>
       <pubDate>Sat, 03 Oct 2026 10:43:42 +0000</pubDate>
       <guid>https://kubaik.github.io/sbom-attestation-that-gets-used/</guid>
     </item>
     <item>
       <title>LLM evals: LangSmith vs Promptfoo in prod</title>
       <link>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</link>
-      <description>LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</description>
+      <description>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</description>
       <pubDate>Sat, 03 Oct 2026 04:27:57 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</guid>
     </item>
     <item>
       <title>Webhook delivery that survives outages</title>
       <link>https://kubaik.github.io/webhook-delivery-that-survives-outages/</link>
-      <description>Webhook delivery that survives downstream outages: transactional outbox, SQS visibility timeout, idempotency keys, and the retry schedule that prevents…</description>
+      <description>How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.</description>
       <pubDate>Fri, 02 Oct 2026 17:40:12 +0000</pubDate>
       <guid>https://kubaik.github.io/webhook-delivery-that-survives-outages/</guid>
     </item>
     <item>
       <title>Who signs off on AI code?</title>
       <link>https://kubaik.github.io/who-signs-off-on-ai-code/</link>
-      <description>AI writes code fast, but who owns the merge? Add Git trailers, CI policy checks, and branch protection to keep accountability without slowing down.</description>
+      <description>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</description>
       <pubDate>Fri, 02 Oct 2026 04:45:55 +0000</pubDate>
       <guid>https://kubaik.github.io/who-signs-off-on-ai-code/</guid>
     </item>
     <item>
       <title>Double-entry ledger: concurrent write errors</title>
       <link>https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/</link>
-      <description>Fix ledger inconsistency under concurrent writes: SERIALIZABLE isolation, deferred triggers, and retry logic to stop serialization failures and drift.</description>
+      <description>Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.</description>
       <pubDate>Thu, 01 Oct 2026 18:15:25 +0000</pubDate>
       <guid>https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/</guid>
     </item>
@@ -58,56 +58,56 @@
     <item>
       <title>DuckDB in production: when it replaces a warehouse</title>
       <link>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</link>
-      <description>DuckDB 1.1 replaces a warehouse for sub-100GB analytics workloads — how to set up partitioned Parquet, avoid the single-writer trap, and profile slow…</description>
+      <description>When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</description>
       <pubDate>Wed, 30 Sep 2026 17:49:35 +0000</pubDate>
       <guid>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</guid>
     </item>
     <item>
       <title>Chaos engineering without an SRE team</title>
       <link>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</link>
-      <description>Chaos engineering for teams without SREs: lightweight fault injection with FastAPI, Redis 7.2, and AWS FIS.</description>
+      <description>How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.</description>
       <pubDate>Wed, 30 Sep 2026 04:44:20 +0000</pubDate>
       <guid>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</guid>
     </item>
     <item>
       <title>Multi-agent handoffs: the latency tax nobody measures</title>
       <link>https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/</link>
-      <description>Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</description>
+      <description>Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</description>
       <pubDate>Tue, 29 Sep 2026 17:53:25 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/</guid>
     </item>
     <item>
       <title>Route, fine-tune, or scale: pick right</title>
       <link>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</link>
-      <description>Fine-tune, route, or use a bigger model? Build an eval set first, then a routing layer.</description>
+      <description>A practical framework for choosing between model routing, fine-tuning, and simply paying for a larger model, with code, cost math, and evaluation harnesses.</description>
       <pubDate>Tue, 29 Sep 2026 04:56:19 +0000</pubDate>
       <guid>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</guid>
     </item>
     <item>
       <title>Agent versioning: the contract you forgot</title>
       <link>https://kubaik.github.io/agent-versioning-the-contract-you-forgot/</link>
-      <description>Agent versioning: version tools and output schemas to avoid silent breakage. Learn the contract, the routing pattern, and the deprecation policy.</description>
+      <description>Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.</description>
       <pubDate>Mon, 28 Sep 2026 19:26:44 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-versioning-the-contract-you-forgot/</guid>
     </item>
     <item>
       <title>Settlement vs clearing: backend engineer&apos;s guide</title>
       <link>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</link>
-      <description>Clearing vs settlement: why your ledger doesn&amp;#x27;t balance. A backend engineer&amp;#x27;s guide to obligations, netting, and settlement finality.</description>
+      <description>Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</description>
       <pubDate>Mon, 28 Sep 2026 04:25:56 +0000</pubDate>
       <guid>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</guid>
     </item>
     <item>
       <title>Prompt injection: what breaks first in prod</title>
       <link>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</link>
-      <description>Prompt and tool injection in LLM apps: schema validation, tool allowlists, SSRF blocks, and the write-confirmation step that actually stops exfiltration.</description>
+      <description>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</description>
       <pubDate>Sun, 27 Sep 2026 16:41:09 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</guid>
     </item>
     <item>
       <title>Agent architecture: the new model trap</title>
       <link>https://kubaik.github.io/agent-architecture-the-new-model-trap/</link>
-      <description>Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.</description>
+      <description>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</description>
       <pubDate>Sun, 27 Sep 2026 04:24:45 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-architecture-the-new-model-trap/</guid>
     </item>
@@ -121,28 +121,28 @@
     <item>
       <title>Portfolio projects hiring managers skip</title>
       <link>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</link>
-      <description>Portfolio projects get skipped when reviewers can&amp;#x27;t parse them in 90 seconds. Here&amp;#x27;s the legibility fix: problem, constraint, decision, measured result.</description>
+      <description>Portfolio projects often fail screening for legibility, not code quality. Here is how to restructure a repo so a reviewer understands it fast.</description>
       <pubDate>Fri, 25 Sep 2026 16:52:21 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</guid>
     </item>
     <item>
       <title>APM is blind to your AI agents</title>
       <link>https://kubaik.github.io/apm-is-blind-to-your-ai-agents/</link>
-      <description>Traditional APM misses AI incidents like empty retrieval and token overruns.</description>
+      <description>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</description>
       <pubDate>Fri, 25 Sep 2026 04:05:33 +0000</pubDate>
       <guid>https://kubaik.github.io/apm-is-blind-to-your-ai-agents/</guid>
     </item>
     <item>
       <title>Multi-agent systems: when they quietly degrade</title>
       <link>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</link>
-      <description>Multi-agent research systems degrade quietly: token growth, retry loops, and missing per-node metrics. Learn what to instrument first to catch the slide.</description>
+      <description>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</description>
       <pubDate>Thu, 24 Sep 2026 16:46:39 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</guid>
     </item>
     <item>
       <title>World models won&apos;t replace your backend</title>
       <link>https://kubaik.github.io/world-models-wont-replace-your-backend/</link>
-      <description>World models won&amp;#x27;t replace your backend stack. Learn the time-series and edge-sync patterns that actually matter for physical AI in 2026.</description>
+      <description>World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.</description>
       <pubDate>Thu, 24 Sep 2026 03:50:12 +0000</pubDate>
       <guid>https://kubaik.github.io/world-models-wont-replace-your-backend/</guid>
     </item>

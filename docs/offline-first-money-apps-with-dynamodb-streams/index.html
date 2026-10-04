@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Offline-first money apps with DynamoDB Streams - Kubai Kevin</title>
-        <meta name="description" content="Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.">
+        <meta name="description" content="Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.">
         <meta name="keywords" content="Duplicate, Conditional, Mobiledev">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-08T09:54:51.263546">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.314062+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:28:54.557085+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Offline-first money apps with DynamoDB Streams">
-        <meta property="og:description" content="Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.">
+        <meta property="og:description" content="Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.">
         <meta property="og:url" content="https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Offline-first money apps with DynamoDB Streams">
-        <meta name="twitter:description" content="Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.">
+        <meta name="twitter:description" content="Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/offline-first-money-apps-with-dynamodb-streams.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/#article",
       "headline": "Offline-first money apps with DynamoDB Streams",
-      "description": "Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.",
+      "description": "Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.",
       "datePublished": "2026-08-08T09:54:51+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2629,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:28:54+00:00",
+      "wordCount": 2863,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Offline-first money apps with DynamoDB Streams</h1>
                 
-                <p class="post-lead">Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.</p>
+                <p class="post-lead">Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.</p>
                 
                 
                 <div class="tags">
@@ -245,57 +245,46 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2629 words
+                        14 min read
+                        &nbsp;·&nbsp; 2863 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all show the happy path. This post covers what comes after the happy path.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Most e-money apps in East Africa treat offline-first as a nice-to-have: you queue the transaction, retry later. That’s fine for a single user, but when you have 10,000 agents each doing 50 transactions an hour and your backend is a Node.js cluster behind an ALB, the queue model breaks in three predictable ways:</p>
-<ol>
-<li>
-<p><strong>Ordering guarantees disappear</strong> – DynamoDB Streams preserve order per shard, but if you fan-out to SQS or EventBridge the ordering is only per-message-group, not per-user or per-transaction. Teams that skip the shard key end up with duplicate debits when the retry loop reorders transfers.</p>
-</li>
-<li>
-<p><strong>Budget lapses silently</strong> – A user’s wallet balance can change between an offline save and the eventual sync. Naïve eventual-consistency reads return stale values and you over-deduct or under-deduct in 1–3 % of cases. In a system processing 500,000 daily transactions, that’s 5,000–15,000 money errors a day if you don’t guard the balance check.</p>
-</li>
-<li>
-<p><strong>Cost explosion</strong> – Using DynamoDB transactions for every offline write costs 2× the WCU/WCU. Most teams bump provisioned capacity, see 70 % idle provisioned units, and switch to on-demand only to get throttled at month-end spikes.</p>
-</li>
-</ol>
-<p>The part that trips people up is that eventual consistency isn’t just a toggle; it’s a distributed-system contract you have to enforce with concrete policies. This post shows the exact levers I’ve seen teams miss: shard-key design in DynamoDB Streams, conditional writes with balance checks expressed as idempotency keys, and cost-aware retry backoffs that still hit the 95th percentile latency target of ≤800 ms from click to confirmation screen.</p>
+                <p>Tutorials usually show the happy path for offline-first payments: queue the transaction, retry later. That model holds up for one user. It breaks down when thousands of agents each push dozens of transactions per hour into a backend that has to reconcile them against a shared wallet ledger. Three failure modes show up repeatedly.</p>
+<p><strong>Ordering guarantees disappear.</strong> DynamoDB Streams preserve order per shard, but once you fan out to SQS or EventBridge the ordering is only per message group, not per user or per transaction. A retry loop that reorders transfers can produce duplicate debits unless the write path is idempotent on its own.</p>
+<p><strong>Balance checks race.</strong> A wallet balance can change between the moment an offline transaction is saved and the moment it syncs. Naïve eventual-consistency reads return stale values, and a read-then-write balance check will over- or under-deduct whenever two syncs for the same phone overlap.</p>
+<p><strong>Cost grows quietly.</strong> Using DynamoDB transactions for every offline write multiplies consumed capacity units. Teams often respond by bumping provisioned capacity, watch most of it sit idle, then switch to on-demand and get throttled during month-end spikes.</p>
+<p>Eventual consistency is not a toggle you flip once. It is a contract you enforce with concrete policies: shard-key design, conditional writes that express the balance check inside the write itself, and retry backoff that respects a latency budget. This article walks through those levers.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll end up with a small Node.js service (Node 20 LTS, arm64) that:</p>
+<p>You'll end up with a small Node.js service (Node 20 LTS, arm64) that:</p>
 <ul>
-<li>Accepts POST /tx/offline with { agentId, phone, amount, idempotencyKey }</li>
-<li>Stores the tx in DynamoDB with a TTL of 7 days and a status of "queued"</li>
-<li>Uses DynamoDB Streams → Lambda to reconcile to the ledger table on success or move to a DLQ on failure</li>
-<li>Exposes /tx/status/{idempotencyKey} that returns the current status without leaking internal state</li>
+<li>Accepts <code>POST /tx/offline</code> with <code>{ agentId, phone, amount, idempotencyKey }</code></li>
+<li>Stores the transaction in DynamoDB with a TTL of 7 days and a status of <code>queued</code></li>
+<li>Uses DynamoDB Streams → Lambda to reconcile to the ledger table on success, or move the record to a DLQ on failure</li>
+<li>Exposes <code>/tx/status/{idempotencyKey}</code> that returns the current status without leaking internal state</li>
 </ul>
-<p>You’ll need:</p>
+<p>You'll need:</p>
 <ul>
 <li>An AWS account with IAM permissions for DynamoDB, Lambda, CloudWatch Logs, SQS, EventBridge, and IAM roles</li>
-<li>AWS CLI 2.15.0 or later</li>
-<li>Node 20 LTS (v20.13.1 at time of writing)</li>
-<li>Python 3.11 for the cost-calculator script later</li>
+<li>AWS CLI v2</li>
+<li>Node 20 LTS</li>
 <li>A DynamoDB table for transactions (<code>OfflineTx</code>) with partition key <code>agentId</code> and sort key <code>createdAt</code></li>
-<li>A DynamoDB table for ledger (<code>WalletLedger</code>) with partition key <code>phone</code> and sort key <code>txId</code></li>
+<li>A DynamoDB table for the ledger (<code>WalletLedger</code>) with partition key <code>phone</code> and sort key <code>txId</code></li>
 </ul>
-<p>The ledger table uses <strong>Single-Table Design</strong>: one GSI on <code>GSI1PK = STATUS</code> and <code>GSI1SK = createdAt</code> to let the Lambda scan only queued records every minute. That reduces Lambda cost by 40 % compared to full scans.</p>
+<p>The ledger table uses a single-table design: one GSI on <code>GSI1PK = STATUS</code> and <code>GSI1SK = createdAt</code> so the reconciler can query only queued records instead of scanning the whole table. Any query that filters by status will be cheaper than a full scan, though the exact saving depends on how many records are in each state — measure it with consumed-capacity metrics rather than assuming a fixed percentage.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Create a new directory and initialize:</p>
 <pre><code class="language-bash">mkdir mobile-money-offline &amp;&amp; cd mobile-money-offline
 npm init -y
-npm install aws-sdk@3.581.0 @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb uuid ioredis@5.3.2
+npm install @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb @aws-sdk/client-sqs uuid
 </code></pre>
 <p>Install the CDK CLI globally and bootstrap once per region:</p>
-<pre><code class="language-bash">npm install -g aws-cdk@2.100.0
+<pre><code class="language-bash">npm install -g aws-cdk
 cdk bootstrap aws://ACCOUNT-NUMBER/REGION
 </code></pre>
 <p>Define <code>cdk.json</code>:</p>
@@ -327,7 +316,7 @@ class OfflineStack extends cdk.Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    // OfflineTx table – 50 GB, 1000 RCU/WCU initially, on-demand
+    // OfflineTx table: on-demand billing, TTL, stream with old and new images
     const offlineTx = new dynamodb.Table(this, 'OfflineTx', {
       partitionKey: { name: 'agentId', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'createdAt', type: dynamodb.AttributeType.NUMBER },
@@ -343,7 +332,7 @@ class OfflineStack extends cdk.Stack {
       ],
     });
 
-    // Ledger table – single table design
+    // Ledger table: single-table design
     const ledger = new dynamodb.Table(this, 'WalletLedger', {
       partitionKey: { name: 'phone', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'txId', type: dynamodb.AttributeType.STRING },
@@ -356,6 +345,9 @@ class OfflineStack extends cdk.Stack {
         },
       ],
     });
+
+    // Dead-letter queue for failed reconciliations
+    const sqsQueue = new sqs.Queue(this, 'TxDLQ', { retentionPeriod: Duration.days(14) });
 
     // Lambda consumer
     const consumer = new lambda.Function(this, 'TxConsumer', {
@@ -380,9 +372,6 @@ class OfflineStack extends cdk.Stack {
       retryAttempts: 3,
     }));
 
-    // DLQ
-    const sqsQueue = new sqs.Queue(this, 'TxDLQ', { retentionPeriod: Duration.days(14) });
-
     // Permissions
     offlineTx.grantStreamRead(consumer);
     offlineTx.grantReadWriteData(consumer);
@@ -398,8 +387,8 @@ module.exports = { OfflineStack };
 </code></pre>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <p>Create <code>lambda/index.js</code>:</p>
-<pre><code class="language-javascript">const { DynamoDBClient, UpdateItemCommand, TransactWriteItemsCommand } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand, QueryCommand } = require('@aws-sdk/lib-dynamodb');
+<pre><code class="language-javascript">const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand, TransactWriteItemsCommand } = require('@aws-sdk/lib-dynamodb');
 const { v4: uuidv4 } = require('uuid');
 const { SQSClient, SendMessageCommand } = require('@aws-sdk/client-sqs');
 
@@ -413,7 +402,7 @@ const DLQ_URL = process.env.DLQ_URL;
 
 async function enqueueOfflineTx(agentId, phone, amount, idempotencyKey) {
   const now = Date.now();
-  const expiresAt = now + 7 * 24 * 3600 * 1000; // 7 days
+  const expiresAt = Math.floor(now / 1000) + 7 * 24 * 3600; // TTL is in epoch seconds
 
   await docClient.send(new PutCommand({
     TableName: OFFLINE_TABLE,
@@ -426,27 +415,39 @@ async function enqueueOfflineTx(agentId, phone, amount, idempotencyKey) {
       idempotencyKey,
       status: 'queued',
     },
+    ConditionExpression: 'attribute_not_exists(idempotencyKey)',
   }));
   return { idempotencyKey };
 }
 
+// Convert a DynamoDB stream image into plain JS values.
+function unmarshallImage(image) {
+  const out = {};
+  for (const [key, value] of Object.entries(image)) {
+    const type = Object.keys(value)[0];
+    out[key] = value[type];
+  }
+  return out;
+}
+
 async function reconcileTx(record) {
+  if (record.eventName !== 'INSERT' &amp;&amp; record.eventName !== 'MODIFY') return;
+
   const newImage = record.dynamodb.NewImage;
-  const { agentId, phone, amount, idempotencyKey, status } = DynamoDB.Converter.unmarshall(newImage);
+  const { agentId, phone, amount, idempotencyKey, status, createdAt } = unmarshallImage(newImage);
 
-  if (status !== 'queued') return; // only process queued
+  if (status !== 'queued') return; // only process queued records
 
-  // 1. Guard against duplicate debits using idempotency key
+  // 1. Guard against duplicate debits using the idempotency key.
   const existing = await docClient.send(new GetCommand({
     TableName: LEDGER_TABLE,
     Key: { phone, txId: idempotencyKey },
   }));
 
   if (existing.Item) {
-    // Idempotent success – update offline record
     await docClient.send(new UpdateCommand({
       TableName: OFFLINE_TABLE,
-      Key: { agentId, createdAt: newImage.createdAt.N },
+      Key: { agentId, createdAt },
       UpdateExpression: 'SET #status = :status',
       ExpressionAttributeNames: { '#status': 'status' },
       ExpressionAttributeValues: { ':status': 'synced' },
@@ -454,10 +455,8 @@ async function reconcileTx(record) {
     return;
   }
 
-  // 2. Conditional write with balance check – use TransactWriteItems for atomicity
-  const newTxId = uuidv4();
-  const newBalance = Math.round((parseFloat(newImage.balanceBefore?.N || '0') || 0) - amount);
-
+  // 2. Atomic debit: write the tx row and decrement the balance in one transaction.
+  // The condition on the balance row makes the check part of the write itself.
   try {
     await docClient.send(new TransactWriteItemsCommand({
       TransactItems: [
@@ -466,51 +465,45 @@ async function reconcileTx(record) {
             TableName: LEDGER_TABLE,
             Item: {
               phone,
-              txId: newTxId,
+              txId: idempotencyKey,
               amount: Number(amount),
               createdAt: Date.now(),
               status: 'completed',
               type: 'debit',
-              idempotencyKey,
             },
+            ConditionExpression: 'attribute_not_exists(txId)',
           },
         },
         {
           Update: {
             TableName: LEDGER_TABLE,
             Key: { phone, txId: `BALANCE_${phone}` },
-            UpdateExpression: 'SET #balance = :newBalance',
-            ConditionExpression: '#balance &gt;= :amount',
+            UpdateExpression: 'SET #balance = #balance - :amount',
+            ConditionExpression: 'attribute_exists(#balance) AND #balance &gt;= :amount',
             ExpressionAttributeNames: { '#balance': 'balance' },
-            ExpressionAttributeValues: {
-              ':newBalance': newBalance,
-              ':amount': Number(amount),
-            },
+            ExpressionAttributeValues: { ':amount': Number(amount) },
           },
         },
       ],
     }));
 
-    // Mark offline record synced
     await docClient.send(new UpdateCommand({
       TableName: OFFLINE_TABLE,
-      Key: { agentId, createdAt: newImage.createdAt.N },
+      Key: { agentId, createdAt },
       UpdateExpression: 'SET #status = :status',
       ExpressionAttributeNames: { '#status': 'status' },
       ExpressionAttributeValues: { ':status': 'synced' },
     }));
   } catch (err) {
-    if (err.name === 'ConditionalCheckFailedException') {
-      // Not enough balance – move to failed
+    if (err.name === 'TransactionCanceledException' || err.name === 'ConditionalCheckFailedException') {
       await docClient.send(new UpdateCommand({
         TableName: OFFLINE_TABLE,
-        Key: { agentId, createdAt: newImage.createdAt.N },
+        Key: { agentId, createdAt },
         UpdateExpression: 'SET #status = :status, #reason = :reason',
         ExpressionAttributeNames: { '#status': 'status', '#reason': 'reason' },
         ExpressionAttributeValues: { ':status': 'failed', ':reason': 'INSUFFICIENT_BALANCE' },
       }));
 
-      // Optionally notify user via push queue
       await sqs.send(new SendMessageCommand({
         QueueUrl: DLQ_URL,
         MessageBody: JSON.stringify({
@@ -519,59 +512,51 @@ async function reconcileTx(record) {
           amount,
           error: 'INSUFFICIENT_BALANCE',
         }),
-        MessageGroupId: phone,
       }));
       return;
     }
 
-    // Any other error -&gt; DLQ
-    await sqs.send(new SendMessageCommand({
-      QueueUrl: DLQ_URL,
-      MessageBody: JSON.stringify({
-        record,
-        error: err.message,
-      }),
-    }));
+    // Transient or unexpected error: rethrow so the stream retries the batch.
+    throw err;
   }
 }
 
 module.exports = { enqueueOfflineTx, reconcileTx };
 </code></pre>
+<p>Two things to note about the rewrite above versus the naive version:</p>
+<ul>
+<li>The balance is decremented with <code>SET #balance = #balance - :amount</code> inside the transaction, and the guard <code>#balance &gt;= :amount</code> is part of the same write. There is no separate read, so there is no window for a concurrent sync to slip in between the read and the write.</li>
+<li>The ledger row's primary key is <code>(phone, idempotencyKey)</code>, so a replayed stream record collides with the existing item and the <code>attribute_not_exists(txId)</code> condition fails. That is how the idempotency guard is enforced at the storage layer, not just in application code.</li>
+<li>Transient errors are rethrown, not swallowed into the DLQ. If the Lambda throws, the stream retries the batch; only permanent business failures (insufficient balance) go to the DLQ.</li>
+</ul>
 <p>Add the handler file (<code>lambda/index.handler.js</code>):</p>
 <pre><code class="language-javascript">const { reconcileTx } = require('./index');
 
 module.exports.handler = async (event) =&gt; {
   const records = event.Records || [];
-  const promises = records.map(reconcileTx);
-  await Promise.allSettled(promises);
-  return { batchItemFailures: [] };
+  const results = await Promise.allSettled(records.map(reconcileTx));
+
+  const batchItemFailures = [];
+  results.forEach((result, index) =&gt; {
+    if (result.status === 'rejected') {
+      batchItemFailures.push({ itemIdentifier: records[index].eventID });
+    }
+  });
+
+  return { batchItemFailures };
 };
 </code></pre>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>A common trap here is that DynamoDB Streams retries are <strong>at-least-once</strong>, so the same record can fire multiple times. If your reconcileTx function is not idempotent, you double-debit the ledger. The guard clause using the idempotency key and the conditional write on the balance solves that, but you still need to handle:</p>
+<p>Returning <code>batchItemFailures</code> (rather than an empty array) requires the event source mapping to have <code>reportBatchItemFailures: true</code>. Without it, Lambda retries the whole batch on any failure, which re-processes records that already succeeded.</p>
+<h2 id="step-3-edge-cases-and-failure-modes">Step 3 — edge cases and failure modes</h2>
+<p>DynamoDB Streams delivers <strong>at least once</strong>, so the same record can fire more than once. If <code>reconcileTx</code> is not idempotent, you double-debit the ledger. The idempotency key plus the conditional put handles that. The remaining edge cases:</p>
 <ul>
-<li>
-<p><strong>Concurrent balance updates</strong> – If two reconciliations start at the same time for the same phone, the second one will hit the conditional check and fail, moving the offline record to "failed". That’s acceptable behavior; the agent sees the failure and retries the transfer.</p>
-</li>
-<li>
-<p><strong>Duplicate idempotency keys from the agent</strong> – The agent might retry the same transfer from the mobile app before the offline record is synced. Your GET on the ledger will find the existing tx and mark the offline record as synced, so no double debit.</p>
-</li>
-<li>
-<p><strong>Stale balance reads</strong> – The reconcileTx function reads the current balance before the debit. If another transaction hits the ledger between the GET and the TransactWriteItems, the conditional check fails and the offline record is marked failed. That’s intended.</p>
-</li>
-<li>
-<p><strong>Lambda timeouts at scale</strong> – With 10,000 agents, the Lambda batch size of 100 can still take 4–5 seconds when the GSI on the ledger table has hot keys. Increase the memory to 1 GB and set timeout to 30 s if you see timeouts.</p>
-</li>
+<li><strong>Concurrent balance updates.</strong> If two reconciliations start at the same time for the same phone, the second one hits the balance condition and fails the transaction. The offline record moves to <code>failed</code>, and the agent's client sees a failure and can retry. That is the intended behavior — better to fail a debit than to allow an overdraft.</li>
+<li><strong>Duplicate idempotency keys from the agent.</strong> If the mobile app retries the same transfer before the offline record syncs, the ledger <code>Get</code> finds the existing item and marks the offline record <code>synced</code> with no second debit.</li>
+<li><strong>Stale balance reads.</strong> Not applicable here, because the balance is read inside the transaction. If you ever add a separate read for a display value, treat it as advisory only.</li>
+<li><strong>Lambda timeouts at scale.</strong> With many agents syncing at once, a batch of 100 can take several seconds when the ledger GSI has hot keys. Raising memory to 1 GB and timeout to 30 s is a common adjustment; verify with the <code>Duration</code> metric on the function before changing anything.</li>
+<li><strong>Poison records.</strong> A record that always throws (e.g. malformed payload) will exhaust the event source's retry attempts and land in the Lambda destination / on-failure destination. Configure that destination explicitly; don't rely on the business DLQ for it.</li>
 </ul>
-<p>Add a retry backoff in the Lambda environment:</p>
-<pre><code class="language-json">{
-  &quot;retryAttempts&quot;: 3,
-  &quot;bisectBatchOnError&quot;: true,
-  &quot;maximumRetryAttempts&quot;: 100,
-  &quot;maximumEventAge&quot;: 60000
-}
-</code></pre>
-<p>Use <strong>Exponential Backoff with Jitter</strong> in the agent SDK:</p>
+<p>For the agent SDK, use exponential backoff with jitter:</p>
 <pre><code class="language-javascript">function retry(fn, retries = 3, delay = 100) {
   return new Promise((resolve, reject) =&gt; {
     fn()
@@ -584,8 +569,9 @@ module.exports.handler = async (event) =&gt; {
   });
 }
 </code></pre>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Attach a CloudWatch Alarm to the DLQ to alert on any failed events:</p>
+<p>Jitter matters because synchronized retries create a thundering herd: when a branch office comes back online, every agent's client fires at once. Spreading retries over a random window keeps the reconcile requests from clustering on the same second.</p>
+<h2 id="step-4-observability-and-tests">Step 4 — observability and tests</h2>
+<p>Alarm on DLQ depth so a stuck reconciler is visible before customers notice:</p>
 <pre><code class="language-bash">aws cloudwatch put-metric-alarm \
   --alarm-name &quot;OfflineTx-DLQ-Alarm&quot; \
   --alarm-description &quot;DLQ contains failed offline transactions&quot; \
@@ -598,34 +584,49 @@ module.exports.handler = async (event) =&gt; {
   --evaluation-periods 1 \
   --alarm-actions arn:aws:sns:eu-central-1:123456789012:AlarmTopic
 </code></pre>
-<p>Create a test file <code>test/offline.test.js</code> using Jest 29.7.0:</p>
+<p>A minimal integration test against a local DynamoDB (DynamoDB Local, or <code>amazon/dynamodb-local</code> in Docker) looks like this:</p>
 <pre><code class="language-javascript">const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient, PutCommand } = require('@aws-sdk/lib-dynamodb');
+const { DynamoDBDocumentClient, GetCommand, PutCommand } = require('@aws-sdk/lib-dynamodb');
 const { enqueueOfflineTx, reconcileTx } = require('../lambda/index');
 
-const ddb = new DynamoDBClient({ region: 'eu-central-1' });
+const ddb = new DynamoDBClient({
+  region: 'eu-central-1',
+  endpoint: 'http://localhost:8000',
+  credentials: { accessKeyId: 'local', secretAccessKey: 'local' },
+});
 const docClient = DynamoDBDocumentClient.from(ddb);
 
-beforeAll(async () =&gt; {
-  // Create test tables (adjust names)
-  await docClient.send(new PutCommand({
-    TableName: 'OfflineTx',
-    Item: { agentId: 'AGENT_001', createdAt: Date.now(), phone: '254712345678', amount: 100, idempotencyKey: 'TEST_KEY_001', status: 'queued' },
-  }));
-});
-
-test('idempotent debit succeeds once', async () =&gt; {
+test('duplicate idempotency key results in a single ledger row', async () =&gt; {
   const key = 'TEST_IDEMPOTENT_001';
   await enqueueOfflineTx('AGENT_001', '254712345678', 100, key);
-  await enqueueOfflineTx('AGENT_001', '254712345678', 100, key); // duplicate
-  const res = await docClient.send(new GetCommand({
-    TableName: 'OfflineTx',
-    Key: { agentId: 'AGENT_001', createdAt: expect.any(Number) },
+
+  const record = {
+    eventName: 'INSERT',
+    dynamodb: {
+      NewImage: {
+        agentId: { S: 'AGENT_001' },
+        createdAt: { N: String(Date.now()) },
+        phone: { S: '254712345678' },
+        amount: { N: '100' },
+        idempotencyKey: { S: key },
+        status: { S: 'queued' },
+      },
+    },
+  };
+
+  await reconcileTx(record);
+  await reconcileTx(record); // replay
+
+  const ledgerRow = await docClient.send(new GetCommand({
+    TableName: 'WalletLedger',
+    Key: { phone: '254712345678', txId: key },
   }));
-  expect(res.Item.status).toBe('synced');
+  expect(ledgerRow.Item).toBeDefined();
+  expect(ledgerRow.Item.amount).toBe(100);
 });
 </code></pre>
-<p>Add a Prometheus metrics endpoint in the Lambda:</p>
+<p>The replay is the important part. A test that only runs the happy path won't catch the double-debit bug that at-least-once delivery causes in production.</p>
+<p>For metrics, emit counters and timers from the handler:</p>
 <pre><code class="language-javascript">const client = require('prom-client');
 const register = new client.Registry();
 const txCounter = new client.Counter({ name: 'offline_tx_total', help: 'Total offline tx', registers: [register] });
@@ -634,82 +635,42 @@ const syncDuration = new client.Histogram({ name: 'offline_sync_duration_ms', he
 module.exports.handler = async (event) =&gt; {
   const end = syncDuration.startTimer();
   const results = await Promise.allSettled(event.Records.map(reconcileTx));
-  const failures = results.filter(r =&gt; r.status === 'rejected').length;
   txCounter.inc(results.length);
   end();
   return { batchItemFailures: [] };
 };
 </code></pre>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>After deploying this pattern to a production e-money app in Kenya in Q2-2026, we saw:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Baseline (queue + retry loop)</th>
-<th>With this pattern</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Duplicate debits</td>
-<td>1.3 %</td>
-<td>0.02 %</td>
-</tr>
-<tr>
-<td>95th percentile sync time</td>
-<td>3.2 s</td>
-<td>0.8 s</td>
-</tr>
-<tr>
-<td>P99 latency from click to confirmation screen</td>
-<td>6.4 s</td>
-<td>2.1 s</td>
-</tr>
-<tr>
-<td>AWS cost per 1M offline transactions</td>
-<td>$18.40</td>
-<td>$11.20</td>
-</tr>
-</tbody>
-</table>
-<p>The cost drop came from removing provisioned WCU on the ledger table and moving to on-demand with the GSI scan every minute instead of every 5 seconds.</p>
-<p>A documented failure mode we avoided was the <strong>cache stampede</strong> on wallet balance reads. Initially, the agent app cached the balance for 30 s. When the app came online, every agent in a branch would fire a reconcile request within the same second, causing 200 concurrent balance checks on the same phone GSI key. The conditional writes would fail en-masse, moving 15 % of offline records to "failed". The fix was to add a short random jitter (0–200 ms) to the agent’s sync trigger so the reconcile requests spread over 200 ms instead of 1 ms.</p>
+<h2 id="how-to-measure-whether-this-actually-helps">How to measure whether this actually helps</h2>
+<p>The published numbers you'll see for this kind of pattern are usually specific to one deployment and one traffic shape. Instead of copying them, instrument four things and compare before/after on your own workload:</p>
+<ol>
+<li><strong>Duplicate debits per million transactions.</strong> Count ledger rows where two entries share the same <code>(phone, idempotencyKey)</code> — there should be zero, but counting catches bugs in the guard. Query the ledger GSI by phone and idempotency key, or emit a CloudWatch metric from the reconciler when the <code>Get</code> on the ledger returns an existing item.</li>
+<li><strong>Reconcile latency p50/p95/p99.</strong> Use the Lambda <code>Duration</code> metric plus your own histogram. Compare the stream-to-synced delta by recording <code>Date.now() - createdAt</code> when the offline record flips to <code>synced</code>.</li>
+<li><strong>DLQ depth and age.</strong> <code>ApproximateNumberOfMessagesVisible</code> and <code>ApproximateAgeOfOldestMessage</code> on the DLQ. A rising age means the reconciler is failing faster than the DLQ is being drained.</li>
+<li><strong>Consumed capacity per million transactions.</strong> The <code>ConsumedWriteCapacityUnits</code> and <code>ConsumedReadCapacityUnits</code> metrics on both tables, summed over the window and divided by the transaction count. This is what actually tells you whether the transaction-based write path is worth its cost versus a simpler non-atomic path.</li>
+</ol>
+<p>Run the same load against both implementations — a replay harness that pushes N offline records through the stream — and compare the four metrics. That gives you a real answer for your traffic, not someone else's.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I handle agent refunds or reversals offline?</strong></p>
-<p>Add a second lambda that listens to <code>status = refund_requested</code> on the OfflineTx table. When the refund is queued, write a new transaction row with <code>type: 'credit'</code> and the same idempotency key. The reconcile lambda will see the existing debit record (via GSI scan on phone + status=completed) and allow the credit as long as the original tx is still in the ledger.</p>
-<p><strong>Is DynamoDB Streams ordering per-shard good enough for 10,000 agents?</strong></p>
-<p>Yes. With 10 shards on the OfflineTx table (1,000 WCU on-demand), the ordering per shard is strong. Agents are distributed by agentId hash, so ordering per agent is preserved. If you need global ordering, shard by phone instead of agentId and accept the hot-key risk, or move to Kinesis Data Streams with explicit ordering keys.</p>
-<p><strong>What if the Lambda consumer fails 100 % of the time?</strong></p>
-<p>DynamoDB Streams will retry the batch 3 times by default, then move the failed batch to a Lambda DLQ (separate from your business DLQ). You can configure <code>maximumRetryAttempts</code> up to 100 in the event source mapping. If the failure is due to a programming error, fix the Lambda and replay the DLQ with a Lambda that only updates the offline records to <code>failed</code> with the error message.</p>
+<p>Add a second Lambda that listens for <code>status = refund_requested</code> on the <code>OfflineTx</code> table. When a refund is queued, write a new ledger row with <code>type: 'credit'</code> and a deterministic tx id derived from the original (e.g. <code>refund:${originalIdempotencyKey}</code>). The conditional put on that id makes the refund idempotent the same way the debit is.</p>
+<p><strong>Is DynamoDB Streams ordering per shard good enough for many agents?</strong></p>
+<p>Per-shard ordering is strong. Because the partition key is <code>agentId</code>, all events for a given agent land on the same shard and are delivered in order. If you need ordering by phone instead, you'd have to shard by phone and accept the hot-key risk on popular numbers, or use a stream service with explicit ordering keys. In practice, agent-keyed ordering plus idempotent writes covers most money-app workloads.</p>
+<p><strong>What if the Lambda consumer fails 100% of the time?</strong></p>
+<p>DynamoDB Streams retries the batch up to the configured <code>retryAttempts</code> (3 in the CDK example above), then routes the failed records to the Lambda destination you configure. If the failure is a programming error, fix the code and replay the destination. Don't let a permanent bug keep burning stream retries — that blocks the shard.</p>
 <p><strong>Can I use this with PostgreSQL instead of DynamoDB?</strong></p>
-<p>Yes, but you lose the single-table design and ordering guarantees. You’d need to use LISTEN/NOTIFY or pg_notify to stream changes, and you must manage the shard key yourself. The cost will likely rise: on-demand PostgreSQL Aurora Serverless v2 costs ~$0.12 per vCPU-hour vs DynamoDB on-demand at ~$0.00013 per WCU + RCU. Expect 4–5× higher cost unless you provision aggressively.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Compare your current offline wallet implementation against the guarantees this post outlines. Open your wallet service file and check three things right now:</p>
+<p>Yes, but you lose the per-shard ordering guarantee and the single-table design. You'd use logical replication or <code>LISTEN/NOTIFY</code> to stream changes, and you'd manage the ordering key yourself. The cost comparison depends heavily on your workload and instance sizing; don't assume a ratio — measure consumed capacity against your Postgres instance-hour cost for the same traffic.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before shipping this pattern, confirm:</p>
 <ul>
-<li>Is the balance check done with a conditional write or a separate GET + write? If it’s a separate GET, replace it with a single conditional UpdateItem in a TransactWriteItems call. - Are you using a durable queue with at-least-once semantics? If not, switch to DynamoDB Streams + Lambda. - Is the retry policy adding jitter? If not, add a 0–200 ms random delay to every retry loop in the agent SDK.</li>
+<li>[ ] The balance check is a condition inside the write, not a separate read followed by a write.</li>
+<li>[ ] The ledger primary key includes the idempotency key, so replays collide instead of duplicating.</li>
+<li>[ ] The stream event source has <code>reportBatchItemFailures: true</code> and the handler returns per-record failures.</li>
+<li>[ ] Transient errors are rethrown (so the stream retries); only permanent business failures go to the DLQ.</li>
+<li>[ ] The DLQ has an alarm on depth and oldest-message age.</li>
+<li>[ ] The agent SDK uses exponential backoff with jitter, not fixed-interval retries.</li>
+<li>[ ] You have a replay harness that pushes duplicate records through the reconciler.</li>
 </ul>
-<p>If any of these is missing, merge the three-line diff from the code snippets above into your repo today. The change takes 15 minutes and avoids the most common money errors teams see in production.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
-<li><a href="https://kubaik.github.io/offline-first-agents-for-field-teams/">Offline-first agents for field teams</a></li>
-<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Temporal changed our agent retries for good</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open your wallet service and find the balance check for an offline transaction. If it reads the balance and then writes in a separate call, replace it with a single <code>TransactWriteItems</code> call that puts the ledger row and decrements the balance under a <code>#balance &gt;= :amount</code> condition — the code in Step 2 is a working template. Then write one test that calls the reconcile function twice with the same record and asserts that exactly one ledger row exists. That test is the difference between a queue that retries and a queue that double-debits.</p>
                 
                 
             </div>
@@ -744,14 +705,14 @@ module.exports.handler = async (event) =&gt; {
                     
                     <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
                         <h3>Currency switch fails in Ghana: one config file to rule…</h3>
-                        <p>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</p>
-                        <span class="related-meta">16 min read · 13 August 2026</span>
+                        <p>Mobile money providers put currency codes in different places. Learn a deterministic extraction, validation, and normalization pipeline that stops silent fallbacks.</p>
+                        <span class="related-meta">12 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">
                         <h3>Mobile money agent fees: why your bot keeps failing</h3>
-                        <p>Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.</p>
-                        <span class="related-meta">12 min read · 5 August 2026</span>
+                        <p>USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.</p>
+                        <span class="related-meta">13 min read · 5 August 2026</span>
                     </a>
                     
                 </div>

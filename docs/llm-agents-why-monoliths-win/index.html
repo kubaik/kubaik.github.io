@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLM agents: why monoliths win - Kubai Kevin</title>
-        <meta name="description" content="LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.">
+        <meta name="description" content="Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.">
         <meta name="keywords" content="Llm, Agents, LlmAgentArchitecture, LlmAgentLatency, LlmMonolithicDesign, Generativeai, Microservices, Chatgpt">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-10T08:01:41.646366">
-        <meta property="article:modified_time" content="2026-09-10T08:01:41.646379">
+        <meta property="article:modified_time" content="2026-10-04T10:52:57.080685+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM agents: why monoliths win">
-        <meta property="og:description" content="LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.">
+        <meta property="og:description" content="Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.">
         <meta property="og:url" content="https://kubaik.github.io/llm-agents-why-monoliths-win/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="LLM agents: why monoliths win">
-        <meta name="twitter:description" content="LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.">
+        <meta name="twitter:description" content="Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-agents-why-monoliths-win.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/llm-agents-why-monoliths-win/#article",
       "headline": "LLM agents: why monoliths win",
-      "description": "LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.",
+      "description": "Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.",
       "datePublished": "2026-09-10T08:01:41+00:00",
-      "dateModified": "2026-09-10T08:01:41+00:00",
-      "wordCount": 2586,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:52:57+00:00",
+      "wordCount": 2118,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">LLM agents: why monoliths win</h1>
                 
-                <p class="post-lead">LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.</p>
+                <p class="post-lead">Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.</p>
                 
                 
                 <div class="tags">
@@ -259,250 +259,206 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2586 words
+                        11 min read
+                        &nbsp;·&nbsp; 2118 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-10
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The redteaming internal advice that circulates internally rarely matches what's in the public docs. The default configuration is fine right up until it isn't. This covers the fix, the cost of not knowing sooner, and what we monitor now.</p>
-<p>When the Claude 4 and GPT‑5 models hit the market, the hype machine immediately pushed a micro‑service‑first mindset for every AI‑augmented workflow. The narrative was simple: split the prompt, the tool‑call, the post‑processing, and the safety checks into separate containers, wire them together with a message bus, and you’ll get a scalable, reusable stack. The reality is messier. Distributed LLM pipelines introduce latency spikes, GDPR‑compliant audit trails become fragmented, and the operational overhead dwarfs the theoretical benefits. The part that trips people up is the hidden latency and audit‑gap that appear when you over‑engineer the agent, and that's what this post actually covers.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>The prevailing advice in most LLM‑agent blogs reads like a checklist:</p>
+                <p>Most LLM agent systems start as a single process and work fine. The trouble usually begins when a team reads that "production-grade" agents need separate services for prompting, tool calls, post-processing and safety checks, and rebuilds a working pipeline into a distributed one. This article covers what that migration actually costs, why the costs are hard to see in advance, and how to decide with measurements rather than architecture fashion.</p>
+<h2 id="the-conventional-wisdom-and-what-it-leaves-out">The conventional wisdom, and what it leaves out</h2>
+<p>The standard advice in agent tutorials tends to read like a checklist:</p>
 <ol>
-<li><strong>Decompose</strong> the task into atomic LLM calls.</li>
-<li><strong>Wrap</strong> each call in its own micro‑service (often a FastAPI container).</li>
-<li><strong>Communicate</strong> via Kafka or SQS.</li>
-<li><strong>Persist</strong> intermediate results in Redis 7.2.</li>
-<li><strong>Scale</strong> each piece independently on AWS Fargate.</li>
+<li>Decompose the task into atomic LLM calls.</li>
+<li>Wrap each call in its own service, often a FastAPI container.</li>
+<li>Communicate over a queue or message bus.</li>
+<li>Persist intermediate results in a cache or database.</li>
+<li>Scale each piece independently on a container platform.</li>
 </ol>
-<p>The logic sounds solid: each component can be versioned, monitored, and replaced without touching the rest of the system. In a world where GDPR forces us to keep immutable logs for every data‑processing step, the idea of a dedicated audit‑service that writes to an encrypted S3 bucket (using AWS KMS v2) feels safe.</p>
-<p>However, the advice omits three hard facts that only surfaced after Claude 4 and GPT‑5 became production‑ready in 2026:</p>
+<p>The reasoning is not silly. Each component can be versioned, monitored and replaced in isolation. In a regulated environment, a dedicated audit service that writes immutable records to encrypted object storage looks like the safe choice.</p>
+<p>What the checklist omits is that an LLM call is not a pure function. Modern models carry state across a request in ways that matter to your architecture:</p>
 <ul>
-<li><strong>Prompt latency is no longer linear.</strong> The newer models have a warm‑up cost of roughly 30 ms per request, but when you chain three services the total p99 latency often exceeds 120 ms, a 45 ms penalty compared to a single‑process call.</li>
-<li><strong>Audit continuity breaks on network partitions.</strong> A typical failure mode is a <code>PermissionDenied</code> error from the audit Lambda (Node 20 LTS) when the service tries to write a signed JSON‑LD record to the EU‑West‑2 bucket. If the call is retried in another container, the original request ID is lost, violating Article 30 of the GDPR.</li>
-<li><strong>Operational debt multiplies.</strong> Managing IAM roles for ten separate containers, each with its own VPC endpoint, adds roughly 2 k lines of Terraform (v1.5) and a 30 % increase in monthly AWS bill.</li>
+<li><strong>Prompt caching and system-prompt persistence.</strong> Providers cache prefixes server-side, so the cost and latency of a call depend on what was sent before, not just on the current request. Splitting a logically single request across processes can invalidate or fragment that cache.</li>
+<li><strong>Per-request identity.</strong> Audit trails, rate limits, retries and tracing all key off a request ID. Every network hop is a place where that ID can be dropped, regenerated or mismatched.</li>
+<li><strong>Tail latency compounding.</strong> If each hop has a p99, the end-to-end p99 is not the sum of the averages — it is closer to the sum of the tails, plus queueing.</li>
 </ul>
-<p>The conventional wisdom assumes that you can treat each LLM call as a pure function, but the new generation of models introduces stateful token‑caching and system‑prompt persistence that make that assumption shaky.</p>
-<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>Consider a typical ticket‑routing bot built for a European bank. The design follows the checklist above: a <strong>router</strong> service (FastAPI 0.110) receives the user message, forwards it to a <strong>classifier</strong> micro‑service (Python 3.11) that calls Claude 4, then sends the classification to a <strong>handler</strong> service (Node 20 LTS) which invokes GPT‑5 for a response. All three services store intermediate JSON in Redis 7.2 with a 5‑second TTL.</p>
-<p>During load testing with 500 concurrent users, the following metrics emerged:</p>
-<ul>
-<li><strong>Router latency:</strong> 35 ms (average), 48 ms (p99)</li>
-<li><strong>Classifier latency:</strong> 68 ms (average), 102 ms (p99)</li>
-<li><strong>Handler latency:</strong> 55 ms (average), 90 ms (p99)</li>
-<li><strong>End‑to‑end latency:</strong> 215 ms (p99), 12 % above the SLA of 190 ms.</li>
-</ul>
-<p>The biggest surprise was the <strong>audit‑log gap</strong>. When the classifier container hit a throttling limit on the Redis cluster, it emitted the error <code>ERR maxmemory policy not set</code>. The downstream handler still attempted to write its own audit entry, but the request ID it received from the router was already marked as failed. The audit Lambda logged:</p>
-<pre><code>2026-09-10T12:34:56Z ERROR PermissionDenied: Unable to write audit record for request_id=abc123 – missing signature.
-</code></pre>
-<p>Because the signature is generated in the router, the missing piece caused a GDPR violation that required a manual remediation process lasting several days. The cost impact was also noticeable: the three‑service architecture consumed roughly $0.18 per 1 k tokens, whereas a single‑process monolith using the same models cost $0.12 per 1 k tokens – a 33 % increase.</p>
-<p>These numbers illustrate why the textbook micro‑service approach can backfire when the LLM itself is the bottleneck.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>Instead of <strong>decomposition first</strong>, start with <strong>monolithic orchestration</strong> and only extract services when you have concrete evidence of a bottleneck. The mental shift is simple: treat the LLM call as the <em>core</em> of the system, not a peripheral utility.</p>
-<p>Key principles of the monolithic‑first model:</p>
+<p>None of these are visible in a whiteboard diagram. All of them are measurable.</p>
+<h2 id="a-worked-failure-mode">A worked failure mode</h2>
+<p>Consider a ticket-routing bot: a router receives a message, a classifier assigns a category, a handler produces a reply. Suppose each stage is a separate service, and each writes its own audit record.</p>
+<p>Walk through a partial failure:</p>
 <ol>
-<li><strong>Single entry point</strong> – a FastAPI app (<code>app.py</code>) that runs on AWS Lambda with arm64 (Python 3.11). All LLM calls happen inside the same handler, eliminating inter‑process network hops.</li>
-<li><strong>In‑process caching</strong> – use <code>functools.lru_cache(maxsize=1024)</code> for system‑prompt reuse, reducing warm‑up latency by ~30 ms per request.</li>
-<li><strong>Unified audit</strong> – generate a signed audit record once, attach it to the response payload, and write it to S3 in the same Lambda execution context.</li>
-<li><strong>Feature flags</strong> – keep optional micro‑services behind a config flag (<code>ENABLE_EXTERNAL_CLASSIFIER</code>). Only flip the flag when you have measured a &gt;15 % latency reduction.</li>
+<li>The router signs an audit record and forwards the request with a request ID.</li>
+<li>The classifier succeeds but the downstream cache write fails, for example because the cache has no eviction policy configured and has hit its memory ceiling. The error surfaces as something like <code>OOM command not allowed when used memory &gt; 'maxmemory'</code>.</li>
+<li>The classifier returns an error to the router. The router marks the request failed.</li>
+<li>The handler, already in flight, completes and writes its own audit record — but the request ID it carries was issued by the router and is now associated with a failed request.</li>
 </ol>
-<p>By starting with a monolith, you get a baseline of ~85 ms p99 latency for the same ticket‑routing scenario, a 60 ms improvement over the distributed version. You also keep the audit chain intact, because the request ID never leaves the process.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<h3 id="example-1-financial-compliance-platform">Example 1: Financial compliance platform</h3>
-<p>A fintech startup in Berlin migrated from a 5‑service LLM pipeline to a single Lambda function (Python 3.11, <code>aws-lambda-py</code> 1.2). After the change, their p99 latency dropped from 140 ms to 78 ms, and the monthly AWS bill for the LLM workload fell from €4,200 to €2,900 – a 31 % saving. The audit logs now appear in a single S3 prefix (<code>s3://compliance‑logs/eu-west-1/</code>) with a continuous <code>request_id</code> field, satisfying the regulator’s chain‑of‑custody requirement.</p>
-<h3 id="example-2-customersupport-chatbot">Example 2: Customer‑support chatbot</h3>
-<p>A large retailer using GPT‑5 for auto‑reply generation split the workflow into three containers on Fargate. Their error monitoring (Datadog 8.14) reported a spike in <code>Task timed out after 3.00 seconds</code> errors during peak traffic. By consolidating the pipeline into a single FastAPI service on an EC2‑based autoscaling group (c6g.large, 2 vCPU, 4 GiB), the timeout rate fell from 4.2 % to 0.3 % and the average cost per interaction dropped from $0.015 to $0.009.</p>
-<h3 id="code-snippet-monolithic-llm-orchestration-python-311">Code snippet: monolithic LLM orchestration (Python 3.11)</h3>
-<pre><code class="language-python">import json
+<p>The result is an audit trail with two records for one logical request, one of which is marked failed, and no record of the classifier's partial work. In a GDPR Article 30 context, that is a records-integrity problem, not a bug. The remediation is manual: reconcile the logs, determine what data was processed, and document it.</p>
+<p>The same failure in a single process is a single exception. Either the whole request fails and one audit record is written, or it succeeds and one audit record is written. There is no window in which two processes disagree about what happened.</p>
+<p>This is the core argument for monolith-first: <strong>the unit of audit and the unit of retry should be the same unit as the unit of request.</strong> Distribution breaks that alignment, and you then have to rebuild it explicitly with idempotency keys, outbox patterns and reconciliation jobs.</p>
+<h2 id="what-to-measure-before-you-decompose">What to measure before you decompose</h2>
+<p>The claim "micro-services are slower here" is only useful if you can check it on your own workload. Instrument the following.</p>
+<p><strong>End-to-end latency, by percentile.</strong> Use a load generator that reports p50, p95 and p99, not just averages. Averages hide the tail that your SLA is actually written against. Run the same prompt mix against a single-process prototype and against the distributed version.</p>
+<p><strong>Per-hop latency.</strong> Time each network call, including DNS, TLS handshake and serialization. A hop that "should" take 2 ms often costs 10–15 ms once you include connection setup, and connection setup repeats whenever a container is cold.</p>
+<p><strong>Audit completeness.</strong> Define a test that asserts exactly one audit record per logical request, keyed by request ID. Run it under injected failures: kill a downstream service mid-request, throttle the cache, expire credentials. Count the requests where the assertion fails. This number is the one that matters for compliance, and it is almost always higher in a distributed design.</p>
+<p><strong>Cost per request.</strong> Break the bill into model tokens, compute time, and inter-service traffic. Inter-service traffic is the line item people forget: every hop is bytes in and bytes out, and in a container platform you may also pay for the load balancer and NAT gateway.</p>
+<p><strong>Cold-start behavior.</strong> Measure the first request after a deploy or scale-out event separately from steady state. A monolith has one cold start; a pipeline has as many cold starts as it has services, and they can compound if each service waits on the next.</p>
+<p>A useful rule is to write down the numbers before and after any split. If the split does not improve the metric you care about — usually p99 latency or cost per request — by more than the added operational burden is worth, do not keep it.</p>
+<h2 id="a-monolithic-first-design">A monolithic-first design</h2>
+<p>The alternative mental model is to treat the LLM call as the core of the system and keep everything that depends on request identity in the same process.</p>
+<p><strong>Single entry point.</strong> One application handles the full request-response cycle. All model calls happen in-process. There are no serialization boundaries inside a request.</p>
+<p><strong>In-process caching for stable inputs.</strong> System prompts and other stable strings can be memoized in the process. This avoids re-sending identical prefixes and avoids a network round trip to a cache service for data that never changes during the process lifetime.</p>
+<p><strong>Unified audit.</strong> Build the audit record once, in the request handler, and write it once. Sign it with a key you control, and include the request ID in every downstream payload so that any later processing can be correlated.</p>
+<p><strong>Feature flags for optional stages.</strong> Keep optional components — an external classifier, a retrieval step, a safety filter — behind configuration flags. The monolith calls them in-process by default; the flag exists so you can move a stage out later without rewriting the request path.</p>
+<p>A minimal version of this in Python:</p>
+<pre><code class="language-python">import base64
+import hashlib
+import hmac
+import json
 import os
 import time
 from functools import lru_cache
-import boto3
-import openai
 
-s3 = boto3.client('s3')
+import boto3
+from openai import OpenAI
+
+s3 = boto3.client(&quot;s3&quot;)
+client = OpenAI()
 
 @lru_cache(maxsize=256)
-def get_system_prompt():
-    return &quot;You are a helpful banking assistant...&quot;
+def get_system_prompt() -&gt; str:
+    return &quot;You are a helpful banking assistant. Be concise and accurate.&quot;
 
 def sign_audit(request_id: str, payload: dict) -&gt; str:
-    # Simplified HMAC signing – in production use AWS KMS
-    import hmac, hashlib, base64
-    secret = os.getenv('AUDIT_SECRET').encode()
+    # Illustrative HMAC. Use a managed KMS key for real signing.
+    secret = os.environ[&quot;AUDIT_SECRET&quot;].encode()
     msg = json.dumps({&quot;id&quot;: request_id, &quot;payload&quot;: payload}, sort_keys=True).encode()
-    signature = base64.b64encode(hmac.new(secret, msg, hashlib.sha256).digest()).decode()
-    return signature
+    return base64.b64encode(
+        hmac.new(secret, msg, hashlib.sha256).digest()
+    ).decode()
 
 def handler(event, context):
     start = time.time()
-    request_id = event.get('request_id') or str(int(time.time()*1000))
-    user_msg = event['body']['message']
-    prompt = f&quot;{get_system_prompt()}\nUser: {user_msg}\nAssistant:&quot; 
-    response = openai.ChatCompletion.create(
-        model=&quot;gpt-5&quot;,
-        messages=[{&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: get_system_prompt()},
-                  {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_msg}],
+    body = json.loads(event[&quot;body&quot;]) if isinstance(event.get(&quot;body&quot;), str) else event[&quot;body&quot;]
+    request_id = event.get(&quot;request_id&quot;) or body.get(&quot;request_id&quot;) or str(int(time.time() * 1000))
+    user_msg = body[&quot;message&quot;]
+
+    response = client.chat.completions.create(
+        model=os.environ[&quot;MODEL_ID&quot;],
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: get_system_prompt()},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_msg},
+        ],
         temperature=0.2,
     )
-    answer = response['choices'][0]['message']['content']
+    answer = response.choices[0].message.content
+
     audit_record = {
         &quot;request_id&quot;: request_id,
         &quot;timestamp&quot;: int(time.time()),
         &quot;answer&quot;: answer,
     }
-    audit_record['signature'] = sign_audit(request_id, audit_record)
+    audit_record[&quot;signature&quot;] = sign_audit(request_id, audit_record)
+
     s3.put_object(
-        Bucket=os.getenv('AUDIT_BUCKET'),
+        Bucket=os.environ[&quot;AUDIT_BUCKET&quot;],
         Key=f&quot;{request_id}.json&quot;,
         Body=json.dumps(audit_record).encode(),
-        ServerSideEncryption='aws:kms'
+        ServerSideEncryption=&quot;aws:kms&quot;,
     )
-    latency_ms = int((time.time() - start) * 1000)
+
     return {
         &quot;statusCode&quot;: 200,
-        &quot;body&quot;: json.dumps({&quot;answer&quot;: answer, &quot;latency_ms&quot;: latency_ms})
+        &quot;body&quot;: json.dumps({
+            &quot;answer&quot;: answer,
+            &quot;latency_ms&quot;: int((time.time() - start) * 1000),
+        }),
     }
 </code></pre>
-<h3 id="code-snippet-optional-external-classifier-node-20-lts">Code snippet: optional external classifier (Node 20 LTS)</h3>
+<p>Two details matter more than the rest. First, the audit write happens after the model call and before the response is returned, so a request that produced output always has a record. Second, the request ID is generated or accepted at the boundary and never regenerated downstream.</p>
+<p>If you later need an external component — say a dedicated classifier — keep it behind a flag and pass the request ID through explicitly:</p>
 <pre><code class="language-javascript">import { S3Client, PutObjectCommand } from &quot;@aws-sdk/client-s3&quot;;
-import fetch from &quot;node-fetch&quot;;
 
-const s3 = new S3Client({ region: &quot;eu-west-1&quot; });
+const s3 = new S3Client({ region: process.env.AWS_REGION });
 
-export async function classify(message) {
-  const resp = await fetch(&quot;https://api.claude.ai/v1/classify&quot;, {
+export async function classify(message, requestId) {
+  const resp = await fetch(process.env.CLASSIFIER_URL, {
     method: &quot;POST&quot;,
     headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
-    body: JSON.stringify({ text: message })
+    body: JSON.stringify({ text: message, request_id: requestId }),
   });
+
   if (!resp.ok) {
     throw new Error(`Classifier failed: ${resp.status}`);
   }
+
   const { category } = await resp.json();
-  // Write a tiny audit entry – note the same requestId must be passed in
+
   await s3.send(new PutObjectCommand({
     Bucket: process.env.AUDIT_BUCKET,
-    Key: `${process.env.REQUEST_ID}.json`,
-    Body: JSON.stringify({ category, ts: Date.now() })
+    Key: `${requestId}.classifier.json`,
+    Body: JSON.stringify({ category, request_id: requestId, ts: Date.now() }),
   }));
+
   return category;
 }
 </code></pre>
-<p>The second snippet shows how you can keep an external classifier <strong>behind a flag</strong>. If the flag is off, the monolith skips the HTTP call entirely, saving ~20 ms per request.</p>
-<h3 id="comparison-table">Comparison table</h3>
+<p>The caller passes the same <code>requestId</code> it used for its own audit record. If the flag is off, the monolith never makes the call and never writes the second record. If the flag is on, the two records share a key and can be joined.</p>
+<h2 id="where-the-distributed-design-does-earn-its-keep">Where the distributed design does earn its keep</h2>
+<p>Monolith-first is a default, not a religion. There are cases where splitting is the right call:</p>
 <table>
 <thead>
 <tr>
-<th>Aspect</th>
-<th>Monolithic (single Lambda)</th>
-<th>Micro‑service pipeline</th>
+<th>Situation</th>
+<th>Why splitting helps</th>
+<th>What it costs</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>p99 latency (ms)</td>
-<td>78</td>
-<td>215</td>
+<td>Multiple independent model providers with different failure modes</td>
+<td>A provider outage affects one stage, not the whole path</td>
+<td>Extra hop latency; per-stage audit records to reconcile</td>
 </tr>
 <tr>
-<td>Monthly AWS cost (EUR)</td>
-<td>2,900</td>
-<td>4,200</td>
+<td>Hard per-tenant compute isolation required by contract or regulation</td>
+<td>Container boundaries make isolation auditable</td>
+<td>More infrastructure; higher fixed cost per tenant</td>
 </tr>
 <tr>
-<td>Audit continuity</td>
-<td>100 % (single write)</td>
-<td>~85 % (split writes)</td>
+<td>Sustained load beyond a single runtime's limits</td>
+<td>Independent scaling of the bottleneck stage</td>
+<td>Capacity planning for each stage; more cold starts</td>
 </tr>
 <tr>
-<td>Lines of Terraform</td>
-<td>~800</td>
-<td>~2,100</td>
-</tr>
-<tr>
-<td>Deployment complexity (steps)</td>
-<td>3 (build, zip, deploy)</td>
-<td>12 (build each, configure VPC, IAM)</td>
+<td>Long-running background work alongside interactive requests</td>
+<td>Interactive path stays fast while batch work runs elsewhere</td>
+<td>Two code paths to keep consistent</td>
 </tr>
 </tbody>
 </table>
-<p>The numbers are typical for a mid‑scale European SaaS that must retain full GDPR audit trails.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>The micro‑service approach still shines in a few scenarios:</p>
-<ul>
-<li><strong>Heavy multi‑model orchestration</strong> – when you need to call Claude 4, GPT‑5, and a specialized T5 model in parallel, separating them prevents a single failure from taking down the whole pipeline.</li>
-<li><strong>Regulated multi‑tenant environments</strong> – if each tenant requires isolated compute (e.g., a bank offering separate LLM instances per client), container isolation simplifies compliance reporting.</li>
-<li><strong>Burst‑only workloads</strong> – a spike that exceeds the Lambda concurrency limit (e.g., 10k requests per second) may be easier to absorb with an auto‑scaled Fargate service.</li>
-</ul>
-<p>In those cases, the latency penalty can be mitigated by using <strong>AWS PrivateLink</strong> for internal traffic, which cuts the network hop from ~12 ms to ~4 ms, and by enabling <strong>Redis Cluster</strong> with 3‑node replication to keep cache latency under 2 ms.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>In each of these, the split is justified by a constraint, not by an aesthetic preference for small services. If you cannot name the constraint, the split is probably premature.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order. Stop at the first one that applies.</p>
 <ol>
-<li><strong>Measure baseline latency</strong> with a single‑process prototype. If p99 is already under 100 ms, you likely don’t need to split.</li>
-<li><strong>Audit risk assessment</strong> – map every data‑touch point to a GDPR article. If a split creates a missing <code>request_id</code>, the risk outweighs the scaling benefit.</li>
-<li><strong>Cost model</strong> – calculate per‑token cost (GPT‑5 $0.12/1k, Claude 4 $0.10/1k) and multiply by expected volume. Add estimated Lambda‑execution cost ($0.000016 per GB‑second) and compare against Fargate pricing.</li>
-<li><strong>Failure isolation requirement</strong> – if a single model outage must not affect other downstream services, factor the added network latency into your SLA budget.</li>
-<li><strong>Team maturity</strong> – a small team (≤5 engineers) will spend more time on Terraform plumbing than on product features when the architecture is hyper‑modular.</li>
+<li><strong>Is there a regulatory or contractual requirement for compute isolation?</strong> If yes, split. If no, continue.</li>
+<li><strong>Does the single-process prototype meet your p99 latency target?</strong> Measure it. If yes, do not split.</li>
+<li><strong>Is the bottleneck a specific stage that scales differently from the rest?</strong> If yes, split that stage only, and keep everything else in-process.</li>
+<li><strong>Can you keep one audit record per logical request across the split?</strong> If you cannot, fix that before splitting, not after.</li>
+<li><strong>Does the split reduce cost per request after including inter-service traffic and load balancer costs?</strong> If not, do not split.</li>
 </ol>
-<p>A quick decision matrix (yes = 1, no = 0) can be built in a spreadsheet; a total score ≥3 suggests staying monolithic, ≤2 suggests moving to micro‑services.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p><strong>Objection 1:</strong> <em>“Micro‑services let us reuse the classifier across products.”</em><br />
-<strong>Response:</strong> Reuse is rarely a win when the shared component is an LLM call. Token‑level caching is per‑prompt, not per‑service, so you lose most of the performance benefit. A better pattern is a <strong>shared library</strong> (e.g., a pip package) that each product imports, keeping the call local.</p>
-<p><strong>Objection 2:</strong> <em>“We need horizontal scaling; Lambda can’t handle 10k RPS.”</em><br />
-<strong>Response:</strong> Lambda can scale to 10k concurrent executions if you request a limit increase and keep the function warm. For truly massive bursts, a <strong>Fargate spot fleet</strong> behind an ALB can be added as a secondary path, but keep the core logic monolithic inside each container.</p>
-<p><strong>Objection 3:</strong> <em>“Audit logs must be stored in a separate compliance service.”</em><br />
-<strong>Response:</strong> The separation is fine, but the <strong>write must happen in the same execution context</strong>. You can still call a dedicated S3 bucket or KMS‑encrypted DynamoDB table from the monolith; you just don’t split the write across services.</p>
-<p><strong>Objection 4:</strong> <em>“Our security policy forbids running LLMs in the same process as business logic.”</em><br />
-<strong>Response:</strong> Deploy the LLM call in a <strong>dedicated layer</strong> within the Lambda (e.g., a separate Docker image layer). The business logic still runs in the same runtime, preserving audit continuity while satisfying the policy’s isolation requirement.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<ol>
-<li><strong>Start with a single FastAPI Lambda</strong> (Python 3.11) that performs the full request‑response cycle.</li>
-<li><strong>Add an in‑process LRU cache</strong> for system prompts; benchmark warm vs. cold latency.</li>
-<li><strong>Implement a unified audit writer</strong> that signs the payload with AWS KMS (v2) and stores it in a single S3 bucket.</li>
-<li><strong>Introduce feature flags</strong> (<code>ENABLE_CLASSIFIER</code>, <code>ENABLE_EXTERNAL_TOOL</code>) early, so you can toggle micro‑services later without code churn.</li>
-<li><strong>Write a Terraform module</strong> that provisions the Lambda, the S3 bucket, and the KMS key in one go – this keeps the IaC footprint under 1 k lines.</li>
-<li><strong>Run a latency budget test</strong> using <code>hey</code> (v0.1.4) with 200 concurrent users, targeting a p99 of ≤90 ms before considering any split.</li>
-<li><strong>Document the audit flow</strong> in a Mermaid diagram and store it in the repo’s <code>docs/</code> folder; compliance reviewers love visual traceability.</li>
-</ol>
-<p>By following this roadmap, you avoid the hidden latency and audit gaps that plagued many early‑adopter projects.</p>
-<h2 id="summary">Summary</h2>
-<p>The arrival of Claude 4 and GPT‑5 forced the community to rethink the micro‑service‑first dogma that dominated LLM‑agent design. While splitting responsibilities can still be valuable for extreme scale or strict tenant isolation, the default should be a monolithic orchestration that preserves latency, audit continuity, and cost efficiency. Measure first, audit second, and only then break out services behind explicit flags.</p>
-<p><strong>Next 30‑minute action:</strong> Open <code>agent.py</code> in your repo, replace any external HTTP calls with the in‑process <code>get_system_prompt()</code> cache, add the <code>sign_audit</code> function, and run <code>pytest -q tests/test_latency.py</code> to verify that p99 latency stays under 90 ms.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How can I keep audit logs GDPR‑compliant in a monolithic Lambda?</strong>
-Generate a signed JSON‑LD record inside the same execution context, store it in an S3 bucket encrypted with a KMS key that has a retention policy, and include the <code>request_id</code> in every downstream payload. This ensures a single, immutable chain of custody.</p>
-<p><strong>Why does my p99 latency jump when I add a Redis cache?</strong>
-If the Redis cluster is in a different VPC or uses a default security group, each call adds ~12 ms of network latency. Moving the cache to the same subnet or using an <strong>elasticache</strong> cluster with <strong>cluster mode disabled</strong> can cut that overhead to &lt;2 ms.</p>
-<p><strong>What is the best way to feature‑flag an external classifier?</strong>
-Use an environment variable (<code>ENABLE_CLASSIFIER</code>) read at runtime. Wrap the classifier call in a conditional block, and keep the same request‑ID flow so the audit record remains consistent whether the flag is on or off.</p>
-<p><strong>When should I consider moving from Lambda to Fargate?</strong>
-If you consistently exceed the Lambda concurrency limit (e.g., &gt;5,000 concurrent executions) or need more than 10 GB of memory per instance, Fargate with a <strong>c6g.large</strong> instance gives you predictable resources while still allowing you to keep the monolithic codebase.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/stop-trusting-agents-for-core-logic/">Stop trusting agents for core logic</a></li>
-<li><a href="https://kubaik.github.io/agent-architecture-the-new-model-trap/">Agent architecture: the new model trap</a></li>
-<li><a href="https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
-<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p>The order matters. Teams often start with step 3 because it is the most technically interesting, and discover steps 1, 2 and 4 later, when the audit trail is already fragmented.</p>
+<h2 id="common-objections">Common objections</h2>
+<p><strong>"We need to reuse the classifier across products."</strong> Reuse is usually better served by a shared library than a shared service. A library keeps the call in-process, preserves request identity, and removes a network hop. A shared service adds a deployment dependency and a failure domain for every consumer.</p>
+<p><strong>"We need to scale beyond what a single function can handle."</strong> Serverless platforms document concurrency limits and allow limit increases; container platforms scale further but with more operational surface. The relevant question is not whether a single runtime can handle your peak, but whether the bottleneck stage is the one you are splitting. If the model call is the bottleneck, splitting the surrounding code does not help.</p>
+<p><strong>"Audit logs must live in a separate system."</strong> Storage and execution context are separate concerns. You can write to a dedicated bucket, a dedicated table, or a dedicated account from inside the monolith. What you should not do is split the <em>write</em> across processes, because that is what breaks the one-record-per-request invariant.</p>
+<p><strong>"Security policy forbids running model calls alongside business logic."</strong> This is a real constraint in some environments, and it is usually satisfiable without a network hop — for example, by isolating the model client in a separate module or layer within the same runtime, or by running the model call in a sidecar that shares the request context. Confirm what the policy actually requires before assuming it requires a separate service.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open your agent's request handler and find every place where the request ID is generated, read or forwarded. If it is generated more than once, or if any downstream call does not carry the ID it received, fix that first — before any other architecture change. Then add a single test that asserts exactly one audit record exists per request ID after a successful request, and run it. That test is the cheapest guard you can put on the invariant that distributed designs tend to break.
+===END===</p>
                 
                 
             </div>
@@ -531,8 +487,8 @@ If you consistently exceed the Lambda concurrency limit (e.g., &gt;5,000 concurr
                     
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
-                        <p>LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</p>
-                        <span class="related-meta">15 min read · 3 October 2026</span>
+                        <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+                        <span class="related-meta">14 min read · 3 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">
@@ -543,8 +499,8 @@ If you consistently exceed the Lambda concurrency limit (e.g., &gt;5,000 concurr
                     
                     <a class="related-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
                         <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
-                        <p>Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
-                        <span class="related-meta">13 min read · 29 September 2026</span>
+                        <p>Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+                        <span class="related-meta">11 min read · 29 September 2026</span>
                     </a>
                     
                 </div>

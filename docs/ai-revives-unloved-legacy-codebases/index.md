@@ -1,42 +1,27 @@
 # AI revives unloved legacy codebases
 
-The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.
+Legacy codebases rarely rot because the language is old or the patterns are dated. They rot because the context around them disappears: the original developers leave, product priorities shift, and the infrastructure that ran the tests gets decommissioned. What remains is a repo with a README that says "run `docker-compose up` and you're good," a pinned runtime nobody has installed locally, and a CI job that last ran eighteen months ago.
 
-## The gap between what the docs say and what production needs
+The gap is not primarily technical. It is cognitive. Maintenance teams inherit systems where the only shared understanding lives in someone's head or in a chat thread from two years ago. AI tools are often pitched as a way to bridge that gap, but most tutorials assume a clean repo, a recent runtime, and a maintainer who still believes in tests. The realistic starting point is a repo nobody has touched in six months, an outage that just happened, and a stakeholder asking about a missing invoice.
 
-Legacy codebases don’t rot because the language is old or the patterns are dated. They rot because the context around them disappeared: the original developers left, the product priorities shifted, and the infrastructure that ran the tests was decommissioned. I learned that the hard way on a six-year-old PHP monolith powering a Mexican e-commerce platform. The codebase had 120k lines, zero tests, and a single CI job that hadn’t run in 18 months. The README proudly stated, “Run `docker-compose up` and you’re good.”
+Treating a single AI assistant as a replacement for all that missing context rarely works. What works better is treating AI as a force multiplier for the genuinely scarce resource: human attention. Instead of asking a model to write a new feature, ask tooling to surface the parts of the system most likely to break, explain why they are risky, and suggest the smallest change that reduces risk. The goal is not to replace developers. It is to give them a map when the trail has been overgrown.
 
-That didn’t match reality. Docker Compose failed on macOS with M-series chips, the PHP version was pinned to 7.2, and the MySQL container expected a specific collation that my local setup didn’t match. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+## What the stack actually consists of
 
-The real gap isn’t technical; it’s cognitive. Maintenance teams inherit systems where the only shared understanding lives in someone’s head or in a Slack thread from 2022. AI tools promise to bridge that gap with natural language queries and code generation, but most tutorials assume you have a clean repo, a recent language runtime, and a maintainer who still believes in tests. In reality, you’re often starting with a repo that hasn’t been touched in six months, a production outage that just happened, and a client screaming about a missing invoice.
+"AI" in this context is shorthand for several tools that each do one thing and hand off to the next:
 
-I’ve seen teams try to solve this with a single AI assistant and hope it replaces all the missing context. That rarely works. What does work is treating AI as a force multiplier for the scarce resource: human attention. Instead of asking AI to write a new feature, ask it to surface the parts of the system that are most likely to break, explain why they’re risky, and suggest the smallest possible change to reduce risk.
+- A **static analyzer** that finds type errors, undefined variables, and risky patterns without requiring the code to be rewritten.
+- A **security-focused analyzer** that looks for injection sinks, unsafe deserialization, and dynamic includes.
+- A **characterization test generator** that observes existing behavior and records it, so future changes that alter behavior fail loudly.
+- A **documentation extractor** that turns comments, TODOs, and function signatures into a rough spec a product owner can react to.
 
-That’s the insight behind the approach I use today. It’s not about replacing developers; it’s about giving them a map when the trail has been overgrown.
+The glue between these is ordinary scripting. None of the individual pieces is novel; the value comes from running them together on every change and routing the output to a human who can triage it.
 
-## How How I use AI to maintain legacy codebases nobody wants to touch actually works under the hood
+A key property makes this tractable: the tooling does not need to understand the entire codebase. It only needs to understand the slice of code that is changing. That is why the approach scales to repos that are far too large to reason about end to end.
 
-The core idea is simple: use AI to automate the boring parts of maintenance so humans can focus on the parts that need judgment. But “AI” here is shorthand for a stack of tools that work together: a static analyzer, a diff reviewer, a test generator, and a documentation crawler. Each tool does one thing well, and the glue between them is Python scripts running on an old laptop in my home office.
+## Step 1: Bootstrap a minimal CI pipeline
 
-I start by running a lightweight static analyzer over the entire codebase. For PHP, I use [Psalm 5.22](https://psalm.dev) because it’s fast, supports legacy PHP versions, and has a JSON output mode I can pipe into other tools. Psalm finds undefined variables, potential SQL injection points, and type mismatches without requiring type declarations. On a 120k-line repo, it takes 42 seconds on a 2026 MacBook Air with M1. That’s fast enough to run on every commit.
-
-The next layer is a diff reviewer. I use [GitHub’s CodeQL](https://codeql.github.com) with a custom query pack tuned for legacy PHP. The pack looks for patterns like direct file writes, eval() calls, and dynamic includes — things that are harmless in tests but dangerous in production. CodeQL runs in CI and posts a summary as a PR comment. It’s not perfect, but it catches 60% of the footguns I’ve seen in legacy code.
-
-Where AI actually shines is in generating tests from existing behavior. I use [Diffblue Cover](https://www.diffblue.com) for Java and [Pynguin](https://pynguin.readthedocs.io) for Python, but for PHP I had to build my own tool. It’s a small Python CLI that uses a PHP parser to extract function signatures and then runs the function with randomized inputs, collecting outputs and exceptions. The tool outputs JUnit XML, which I feed into the CI pipeline. It doesn’t generate beautiful tests, but it generates tests that fail when the behavior changes — which is exactly what I need.
-
-The final piece is documentation. I run [Grep.app](https://grep.app) against the codebase to find comments that look like specs (“should handle null,” “must validate,” “TODO: fix”). I pipe those into an LLM with a prompt that asks for a minimal OpenAPI spec or a set of test cases. The output isn’t production-ready, but it’s enough to start a conversation with the product owner about what the system is supposed to do.
-
-The surprising part? The AI doesn’t need to understand the entire codebase. It only needs to understand the slice of code that’s changing. That’s why this approach scales: you’re not asking AI to replace the developer; you’re asking it to amplify the developer’s limited context.
-
-I was surprised that the most valuable output wasn’t code generation — it was failure prediction. After running this stack for three months, Psalm flagged 450 issues, CodeQL caught 37 risky patterns, and the test generator produced 1,200 new assertions. But the real win was that the system correctly predicted 8 out of 9 production incidents before they happened, based on the diffs it reviewed. That’s the kind of signal that keeps you sleeping at night.
-
-## Step-by-step implementation with real code
-
-Here’s how I set this up on a real legacy repo. I’ll use a small PHP monolith as the example — it’s small enough to follow along, but large enough to show the pain points.
-
-### Step 1: Bootstrap a minimal CI pipeline
-
-Most legacy repos don’t have CI. If they do, it’s probably a single job that runs tests — and the tests are broken. I start by creating a `.github/workflows/legacy.yml` file that runs Psalm, CodeQL, and a smoke test.
+Most legacy repos either have no CI or have a single job whose tests are already broken. The first useful step is a pipeline that runs analysis and uploads results as artifacts, without gating merges yet.
 
 ```yaml
 name: Legacy Maintenance
@@ -56,38 +41,37 @@ jobs:
         with:
           php-version: '7.2'
           coverage: none
-      - name: Install Psalm
+      - name: Install static analyzer
         run: composer require --dev vimeo/psalm:^5.22 --with-all-dependencies
-      - name: Run Psalm
+      - name: Run static analysis
         run: vendor/bin/psalm --output-format=json --no-cache > psalm.json
-      - name: Run CodeQL
+      - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: php
       - name: Run CodeQL analysis
         uses: github/codeql-action/analyze@v3
-      - name: Upload Psalm results
+      - name: Upload analysis results
         uses: actions/upload-artifact@v4
         with:
           name: psalm-report
           path: psalm.json
 ```
 
-This runs in 90 seconds on GitHub’s Ubuntu runners. The key is pinning PHP 7.2 so the analyzer matches the runtime. If you don’t pin it, Psalm will try to use the latest PHP version and fail to parse the code.
+The important detail is pinning the runtime to match production. If the analyzer runs under a newer PHP than the application, it will parse syntax the application cannot execute and miss the errors that actually matter. This is also why a static analyzer that requires a modern runtime is often unusable on a legacy PHP codebase: the analyzer's own requirements become the blocker.
 
-### Step 2: Build a test generator
+## Step 2: Generate characterization tests
 
-For PHP, I wrote a small CLI called `php-test-gen` in Python. It uses the [php-parser](https://github.com/nikic/PHP-Parser) library to walk the AST and extract function signatures. It then generates randomized inputs for each function and runs the function, collecting outputs and exceptions.
+The most valuable tests on a legacy system are not unit tests of intended behavior. They are characterization tests: tests that record what the code currently does, so that any change to that behavior is visible. Generated tests are rarely elegant, but they fail when behavior changes, which is exactly the signal a maintenance team needs.
 
-Here’s the core loop:
+A test generator walks the AST, extracts function signatures, generates inputs, runs each function in isolation, and records the output or exception. The core loop looks like this:
 
 ```python
 import subprocess
-import json
 import random
-import sys
 from pathlib import Path
 from php_parser import Parser, NodeVisitor
+
 
 class TestGenerator(NodeVisitor):
     def __init__(self):
@@ -100,7 +84,7 @@ class TestGenerator(NodeVisitor):
         self.tests.append({
             "name": node.name.name,
             "params": params,
-            "source": str(node.loc)
+            "source": str(node.loc),
         })
 
     def generate_param(self, param):
@@ -114,18 +98,25 @@ class TestGenerator(NodeVisitor):
         else:
             return None
 
+
 def run_test(test):
-    code = f"<?php\n{test['source']}\n$result = {test['name']}({', '.join(map(str, test['params']))});\n"
+    code = (
+        "<?php\n"
+        f"$result = {test['name']}("
+        + ", ".join(repr(p) for p in test["params"])
+        + ");\n"
+    )
     result = subprocess.run(
         ["php", "-r", code],
         capture_output=True,
-        text=True
+        text=True,
     )
     return {
         "input": test["params"],
         "output": result.stdout,
-        "exception": result.stderr if result.returncode != 0 else None
+        "exception": result.stderr if result.returncode != 0 else None,
     }
+
 
 if __name__ == "__main__":
     repo_path = Path(".")
@@ -139,244 +130,167 @@ if __name__ == "__main__":
             print(result["exception"])
 ```
 
-The tool runs for 12 minutes on a 15k-line codebase and generates 800 test cases. Most of them are trivial, but 15% fail — either because the function throws an exception or because the output doesn’t match the expected type. Those failures become the starting point for real tests.
+Two things matter here. First, `repr()` is used when building the call so that strings are quoted correctly; naive string interpolation produces invalid PHP for any string parameter. Second, the generator runs application code, so it must never touch a real database, filesystem, or network. The failure-mode section below covers containment.
 
-### Step 3: Use an LLM to turn comments into specs
+In practice, most generated cases are trivial, a minority fail because the function throws or returns an unexpected type, and those failures become the seed for real tests written by a human.
 
-I use a small script that greps for comments containing keywords like “should,” “must,” “TODO,” and “FIXME.” It then feeds those comments into an LLM with a prompt that asks for a minimal OpenAPI spec or a set of test cases.
+## Step 3: Turn comments into candidate specs
+
+Legacy code is full of comments that encode requirements nobody wrote down: "should handle null input," "must validate email," "TODO: race condition here." Extracting them and asking a local model to restate each as a test case or an API fragment produces a rough spec that is useful for a conversation, not for direct execution.
 
 ```python
 import subprocess
-import json
 
 comments = subprocess.run(
-    ["grep", "-nE", "(should|must|TODO|FIXME)", "-r", "./src"],
+    ["grep", "-rnE", "(should|must|TODO|FIXME)", "./src"],
     capture_output=True,
-    text=True
+    text=True,
 ).stdout.splitlines()
 
 prompt = """
 You are a senior developer reviewing legacy PHP code.
 The following comments were extracted from the codebase.
 Convert each comment into a minimal OpenAPI 3.0 operation or a set of test cases.
-
-Example:
-Comment: // should handle null input
-Expected: { "operationId": "handleNullInput", "parameters": [{ "name": "input", "schema": { "nullable": true } }], "responses": { "200": { "description": "Success" }, "400": { "description": "Bad Request" } } }
+If a comment is too vague to convert, say so instead of guessing.
 
 --- Comments ---
 """ + "\n".join(comments)
 
 result = subprocess.run(
-    ["ollama", "run", "llama3.2", "--prompt", prompt],
+    ["ollama", "run", "llama3.2", prompt],
     capture_output=True,
-    text=True
+    text=True,
 )
 
 print(result.stdout)
 ```
 
-The output is noisy, but it’s enough to start a conversation with the product owner. In one case, a comment about “must validate email” led to a new validation rule that caught a real bug in production a week later.
+The output is noisy and should be treated as a draft. Its value is that it gives a product owner something concrete to correct, which is faster than asking them to describe the system from memory. The instruction to say "too vague" rather than guess is deliberate: models will otherwise invent a plausible requirement that nobody ever asked for.
 
-### Step 4: Glue it all together
+## Step 4: Glue the outputs into a single summary
 
-I run these tools in a GitHub Action that posts a summary as a PR comment. The comment includes:
-- Psalm issues with severity high
-- CodeQL alerts
-- Test generation failures
-- OpenAPI snippets from comments
-
-Here’s the workflow:
+The point of the pipeline is to produce one short, opinionated summary per pull request rather than four separate noisy reports. A script reads each tool's output, filters to high-signal items, and posts a comment.
 
 ```yaml
 - name: Generate PR summary
   run: |
-    python scripts/generate_summary.py psalm.json codeql-results.json tests.json comments.json > summary.md
+    python scripts/generate_summary.py \
+      psalm.json codeql-results.json tests.json comments.json > summary.md
     gh pr comment ${{ github.event.pull_request.number }} --body-file summary.md
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-The summary is opinionated: it only shows issues that are likely to cause production pain. That keeps the noise down and the signal high.
+The filtering rules matter more than the formatting. A useful default is to show only analyzer findings on lines the pull request actually changed, plus any characterization test that flipped from pass to fail. Everything else stays in the artifact for later.
 
-## Performance numbers from a live system
+## How to measure whether this is working
 
-I’ve been running this stack on six legacy codebases for the past nine months. Here are the numbers that matter:
+Claims about AI-assisted maintenance are easy to make and hard to verify. Rather than trusting a summary table, instrument the pipeline and compare against a baseline period.
 
-| Metric | Before | After | Delta |
-|---|---|---|---|
-| Psalm issues | 420 | 120 | -71% |
-| CodeQL alerts | 89 | 12 | -86% |
-| Test coverage | 3% | 22% | +19pp |
-| Production incidents | 9 | 1 | -89% |
-| CI build time | 120s | 180s | +50s |
+What to record, per week:
 
-The coverage jump is the most surprising. The test generator doesn’t write beautiful tests, but it writes tests that fail when behavior changes. That’s enough to catch regressions before they hit production.
+- **Analyzer findings on changed lines.** Count only findings that touch code in the diff. Total repo findings will fall slowly and is a misleading metric.
+- **Characterization tests that flipped.** A test going from pass to fail on an unchanged function is a signal worth investigating; a test that never runs is not.
+- **Time from PR open to first human review.** This measures whether the summary is helping or adding noise.
+- **Incidents by category.** Classify each production incident by the file or subsystem involved, then check whether any analyzer finding had already flagged that location. This is the only honest way to evaluate "prediction" claims.
+- **CI wall-clock time for the fast job.** If the fast job exceeds a few minutes, developers will stop reading its output.
 
-The incident drop is the real win. In the first three months, the system predicted 8 out of 9 incidents based on the diffs it reviewed. The one it missed was a database schema migration that touched 15 tables — the AI didn’t have enough context to flag it. But for the other eight, it caught them early enough to prevent customer impact.
+A concrete comparison method: pick a four-week baseline before enabling the pipeline, record the metrics above, then enable the pipeline and record the same metrics for four weeks. Compare medians, not totals, and note any confounders such as a release freeze or a staffing change. A pipeline that shortens review time but does not reduce incidents is still useful; a pipeline that does neither is overhead.
 
-The cost is manageable. The GitHub Actions runners cost $18/month for six repos. The Ollama model runs on a $30/month VPS. The total is under $50/month — less than the cost of one junior developer’s salary for a single day.
+## Failure modes and how to contain them
 
-The latency numbers are acceptable. Psalm runs in 42 seconds, CodeQL in 90 seconds, and the test generator in 12 minutes. The total CI pipeline is under 20 minutes, which is fast enough for a team that’s used to waiting overnight for builds.
+### Hallucinated architecture
 
-I was surprised that the biggest bottleneck wasn’t the tools — it was the human review. Engineers still need to triage the AI output, decide which issues to fix, and write the real tests. The AI just gives them a shorter list to start with.
+Asked to reverse-engineer a call graph from a partial codebase, a language model will produce a plausible diagram containing functions that do not exist and relationships that were never in the code. The output looks authoritative because it is well formatted.
 
-## The failure modes nobody warns you about
+Containment: use models for narrow, verifiable tasks such as drafting a test case or restating a comment. Do not use them to reconstruct system architecture. If a generated diagram is useful, verify each edge against a real call-site search before acting on it.
 
-AI tools for legacy code aren’t magic. They’re glorified pattern matchers with a fancy UI. And pattern matchers fail in predictable ways.
+### Analyzer false confidence
 
-### Mode 1: The LLM hallucinates call stacks
+Static analyzers infer types from docblocks and usage. A function documented as returning `array` but returning `array|string` in practice will be analyzed as if it always returns an array, producing false negatives on the union case. The tool is not lying; it is reasoning from the annotations it was given.
 
-I tried using an LLM to generate a call graph for a 10-year-old JavaScript app. The output looked plausible — dozens of functions, arrows, and even some color coding. But when I ran the actual code coverage, only 30% of the functions were ever called. The rest were dead code or imported libraries that were never used.
+Containment: treat a clean analyzer run as "no findings under these assumptions," not "no bugs." Where a type is intentionally dynamic, add a suppression with a comment explaining why, so the suppression is itself documented.
 
-The mistake cost me a day of debugging before I realized the LLM was inventing relationships. Now I only use LLMs for generating stubs or test cases, not for reverse-engineering systems.
+### Destructive generated tests
 
-### Mode 2: The static analyzer lies about types
+Randomized inputs against real code can call functions that delete files, drop tables, or send email. A test that passes because the target directory happened to be empty is not a safe test.
 
-Psalm 5.22 is great for PHP 7.2, but it assumes the codebase is type-safe. In reality, the codebase I inherited had 40% of its functions using `mixed` as the return type. Psalm would happily analyze a function that returns `array|string` as if it always returned `array`, leading to false negatives.
+Containment: run the generator in a container with a read-only root filesystem and an explicit writable mount for temporary output, and point it at a disposable database.
 
-The fix is to add `@psalm-suppress MixedReturnType` comments to functions where the type is intentionally dynamic. That’s not ideal, but it’s better than ignoring the analyzer entirely.
+```bash
+docker run --rm --read-only \
+  -v "$(pwd)/tests:/tmp/tests" \
+  -v "$(pwd):/app" \
+  -w /app \
+  python:3.11 python scripts/test_generator.py
+```
 
-### Mode 3: The test generator breaks the app
+Even with `--read-only`, any network access should be blocked, since a function that posts to a webhook will otherwise fire during test generation.
 
-The test generator runs randomized inputs against production-like code. In one case, it called a function that deleted a directory recursively. The test passed because the directory was empty, but if I had run it in a real environment, it would have wiped a cache directory.
+### The pipeline becomes the bottleneck
 
-Now I run the generator in a Docker container with a read-only filesystem and a volume mount for temporary files. It’s slower, but it’s safer.
+Running every analyzer on every pull request adds minutes to each build. When the added time is large, developers start ignoring the output, which defeats the purpose.
 
-### Mode 4: The CI pipeline becomes a bottleneck
+Containment: split into a fast job (static analysis, a couple of minutes) that posts a summary immediately, and a slow job (test generation) that runs asynchronously and publishes results as an artifact. Allow merges on the fast job alone.
 
-The first version of the CI pipeline ran Psalm, CodeQL, and the test generator on every PR. That added 15 minutes to the build time, which frustrated the team. They started ignoring the PR comments because they were too noisy.
+### Stakeholders distrust the output
 
-The fix was to split the pipeline into two jobs: a fast job that runs Psalm and CodeQL (90 seconds), and a slow job that runs the test generator (12 minutes). The fast job posts a summary immediately, and the slow job runs in the background. Engineers can merge the PR if the fast job passes, and the slow job’s output is available as an artifact.
+The most common objection to an AI-flagged issue is "the app works fine." That is usually true: the tool flags potential problems, not confirmed ones. A function calling `eval()` on admin-only, validated input is a real risk that a team may reasonably accept.
 
-### Mode 5: The product owner doesn’t trust the output
+Containment: frame findings as questions, not verdicts. "This function evaluates user input; is the input validated upstream?" is actionable. "Critical vulnerability" is not, and it erodes trust when it turns out to be a false positive.
 
-The most common objection I hear is, “The AI said there’s a bug, but the app works fine.” That’s usually true — the AI flags potential issues, not guaranteed ones. The fix is to treat the AI output as a starting point for a conversation, not a verdict.
+## Choosing tools
 
-In one case, the AI flagged a function that used `eval()` on user input. The function was only called in an admin panel, and the input was validated. The product owner didn’t want to touch it. I added a comment to the function explaining why it’s safe, and the AI stopped flagging it. That’s the right outcome — the AI surfaced a risk, and the team decided it was acceptable.
+The categories matter more than specific products, because availability and version support change quickly. For each category, the selection criteria are:
 
-## Tools and libraries worth your time
+- **Static analysis for legacy PHP.** The analyzer must run under a PHP version the codebase can actually parse, and must emit machine-readable output. Verify this before committing: an analyzer that requires a modern runtime cannot analyze code pinned to an old one.
+- **Security analysis.** Look for one that integrates with the existing CI provider, supports the application's language, and allows custom queries for patterns specific to the codebase, such as a homegrown template engine.
+- **Local model runtime.** A local runtime avoids per-token costs and keeps source code off third-party servers, which matters for regulated codebases. The tradeoff is that local models are weaker than hosted frontier models on complex reasoning.
+- **AST parsing library.** Choose one that is actively maintained and handles the exact language version in the repo. Parser correctness determines whether generated tests are meaningful.
+- **CI provider.** Any provider with artifact upload and pull-request comments will do.
 
-Not all tools are created equal. Here’s the stack I’ve settled on after trying dozens of options. I’ve included the versions and the reasons I chose them.
-
-| Tool | Version | Use case | Why it works |
-|---|---|---|---|
-| Psalm | 5.22 | Static analysis for PHP | Fast, supports legacy PHP, JSON output for scripting |
-| CodeQL | 2.18 | Security-focused static analysis | Integrates with GitHub, custom queries for legacy patterns |
-| Ollama | 0.1.45 | Local LLM for summarization | Works on a $30 VPS, no API costs |
-| PHP-Parser | 4.12 | AST walking for test generation | Accurate, well-documented, pure Python |
-| Grep.app CLI | 1.0 | Comment mining | One-liner to extract TODO/FIXME comments |
-| GitHub Actions | v4 | CI pipeline | Free for public repos, easy to customize |
-| Ollama Python SDK | 0.1.8 | Programmatic LLM calls | Simple API, works offline |
-
-I tried [SonarQube](https://www.sonarsource.com) for PHP, but it was slow and required a server. [PHPStan](https://phpstan.org) was faster, but it didn’t support PHP 7.2. Psalm was the only tool that balanced speed, accuracy, and legacy support.
-
-For the LLM layer, I evaluated [LM Studio](https://lmstudio.ai), [Jan](https://jan.ai), and Ollama. Ollama won because it’s lightweight, supports offline models, and has a simple CLI. The 3.2 8B model is good enough for summarization and code review, and it runs on a Raspberry Pi 4 if needed.
-
-The test generator is the most fragile part of the stack. I tried [Rector](https://getrector.com) for automated refactoring, but it was too aggressive for a legacy codebase. The randomized test generator is safer because it only observes behavior, it doesn’t change it.
+A small model (roughly 3B parameters) is adequate for summarization and comment extraction. A mid-size model (roughly 8B) handles drafting test cases better. Neither is reliable for architectural reasoning, and neither should be given write access to production systems.
 
 ## When this approach is the wrong choice
 
-AI won’t save a codebase that’s fundamentally unmaintainable. If the architecture is a ball of mud, no amount of AI will make it easier to understand. If the tests are so broken that they can’t even fail, the AI’s output will be noise. If the team refuses to touch the code, AI is just another layer of indirection.
+AI tooling cannot rescue a codebase that is fundamentally unmaintainable, and adding it to one mostly adds a layer of indirection. Warning signs:
 
-Here are the red flags:
+- The build process takes more than half an hour and fails most of the time. Fix the build first; no analyzer output is trustworthy until the code compiles reproducibly.
+- There is no CI at all and no appetite to add one. The pipeline is the delivery mechanism for every finding; without it, nothing reaches a human.
+- The team spends more time debating coding standards than fixing bugs. The bottleneck is social, not informational.
+- The architecture is a ball of mud with no module boundaries. Analysis findings will be correct and useless, because every change touches everything.
+- The team has already decided the system must be replaced. In that case, effort is better spent on a strangler-fig migration, where AI tooling can help generate the seam tests but cannot decide the boundaries.
 
-- The repo has no CI pipeline — not even a broken one.
-- The build process takes more than 30 minutes and fails 80% of the time.
-- The team spends more time arguing about coding standards than fixing bugs.
-- The codebase has more TODO comments than lines of actual code.
+The approach is also a poor fit when the codebase is small and healthy. If a repo has tests, a working build, and a maintainer who understands it, the overhead of an analysis pipeline exceeds the benefit.
 
-In those cases, the first step isn’t AI — it’s a rewrite or a gradual strangulation. AI can help with the gradual part, but it can’t fix the root cause.
+For teams with limited infrastructure budgets, the stack is viable on commodity hardware: a small VPS running a local model runtime and a hosted CI account are sufficient. No GPU cluster is required for the summarization and comment-extraction tasks described here.
 
-I also avoid this approach for greenfield projects. If you’re starting fresh, write tests, use modern tooling, and skip the AI overhead. AI is for when you’re stuck with a legacy system and no budget for a rewrite.
+## A worked example of triage
 
-For teams in Latin America or other regions with limited infrastructure budgets, this stack is viable because it runs on commodity hardware. You don’t need Kubernetes or a dedicated GPU — a $30 VPS and a GitHub account are enough to get started.
+Suppose the analyzer reports forty findings on a pull request that changed three files. A reasonable triage sequence:
 
-## My honest take after using this in production
+1. **Filter to changed lines.** Of the forty, perhaps six touch the diff. The other thirty-four are pre-existing and belong in a separate backlog.
+2. **Classify the six.** Two are type mismatches in a function whose return type is genuinely dynamic — suppress with a documented reason. One is an unused variable — fix in the same commit. Two are possible null dereferences on a value that comes from a database column defined `NOT NULL` — verify the schema, then either fix or suppress. One is a call to a function that writes a file whose path comes from user input — this is the one worth a conversation.
+3. **Write one real test for the risky case.** Not a generated test: a hand-written test that asserts the path is validated. This test survives refactoring, unlike the generated characterization tests.
+4. **Record the decision.** If the team accepts the risk, write down why and where. An accepted risk with a written rationale is a decision; the same risk unrecorded is a future incident.
 
-This approach works, but it’s not a silver bullet. The biggest win is that it reduces the cognitive load on the team. Instead of staring at 120k lines of PHP wondering where to start, they get a curated list of issues, a set of failing tests, and a rough spec for the part of the system they’re touching.
+This sequence takes perhaps twenty minutes for six findings. The value is not that the analyzer found six things; it is that it turned an open-ended question ("is this change safe?") into a bounded list.
 
-The biggest surprise was how well the LLM layer worked for documentation. I expected it to hallucinate wildly, but in practice, it produced useful summaries of TODO comments and even suggested test cases that caught real bugs. The product owner started trusting the PR comments enough to merge changes without manual review.
+## A note on cost and latency
 
-The biggest disappointment was the test generator. It’s noisy, it breaks sometimes, and it doesn’t replace real tests. But it’s better than nothing, and it’s a starting point. In one case, the generated tests caught a regression that would have taken a week to find manually.
+Costs depend entirely on choices: a hosted CI provider's free tier for public repos, a local model runtime on existing hardware, and open-source analyzers can bring marginal cost close to zero. Hosted model APIs and larger runners add up quickly. Before adopting, estimate the per-pull-request cost of each component and multiply by the team's merge frequency.
 
-The cost is low enough that it’s worth trying on any legacy codebase. The tools are all open source or have free tiers, and the setup is simple enough that a solo developer can do it in a weekend. The real barrier isn’t technical — it’s cultural. You need a team that’s willing to triage AI output and a product owner that trusts the process.
+The same applies to latency. Static analysis on a mid-sized codebase typically completes in under a minute; security analysis is slower on first run because it downloads and compiles query packs, then faster on subsequent runs with a warm cache. Test generation is the slowest component and should not block merges.
 
-If you’re the only developer on a legacy codebase, this stack will save you time and sleep. If you’re part of a team, it will buy you goodwill with the product owner and reduce the fire drills.
+## What to do in the next 30 minutes
 
-I’ve used this on six codebases so far, and the pattern holds: small, consistent improvements compound into big wins. It’s not glamorous, but it’s effective.
-
-## What to do next
-
-Pick one legacy repo you’ve been avoiding. Run Psalm 5.22 on it and export the JSON output. Then open the worst file in the repo — the one that’s 1,500 lines long and hasn’t been touched in two years. Run this command in your terminal:
-
-```bash
-docker run --rm -v $(pwd):/app -w /app ghcr.io/vimeo/psalm:5.22 psalm --output-format=json --no-cache -m src/
-```
-
-If Psalm runs without errors, you’ve found a unicorn. If it finds issues, open the file and fix the top three Psalm errors. Commit the fix, push it, and watch the CI pipeline run. That’s your first step toward taming the legacy beast.
-
-
-## Frequently Asked Questions
-
-**how do i run psalm 5.22 on a php 5.6 codebase?**
-
-Psalm 5.22 requires PHP 7.0+, so you can’t run it directly on PHP 5.6 code. The workaround is to run Psalm in a Docker container with PHP 7.2, and point it at the PHP 5.6 code. Use this command:
+Pick one legacy repository you have been avoiding. Run a static analyzer against it in a container so you do not have to install anything locally, and capture the machine-readable output:
 
 ```bash
-docker run --rm -v $(pwd):/app -w /app ghcr.io/vimeo/psalm:5.22 psalm --output-format=json --no-cache -m src/
+docker run --rm -v "$(pwd):/app" -w /app \
+  ghcr.io/vimeo/psalm:5.22 \
+  psalm --output-format=json --no-cache -m src/ > psalm.json
 ```
 
-The container will parse the PHP 5.6 syntax correctly, even though it’s running on PHP 7.2. The only caveat is that Psalm might complain about undefined types that were added in PHP 7.0, but you can suppress those with `@psalm-suppress UndefinedClass`.
-
-**why does my codeql analysis take 10 minutes on a small repo?**
-
-CodeQL’s initial setup downloads a 1.2GB database and compiles queries. On a small repo, the download and compilation dominate the runtime. The first run will be slow, but subsequent runs reuse the cache. If you’re in a hurry, limit the languages to just PHP:
-
-```yaml
-- uses: github/codeql-action/init@v3
-  with:
-    languages: php
-```
-
-That cuts the runtime from 10 minutes to 2 minutes on a 15k-line repo.
-
-**what’s the smallest llm model that works for code review?**
-
-For summarization and comment mining, the 3B parameter version of Llama 3.2 is enough. It runs on a Raspberry Pi 4 in 2-3 seconds per prompt. For more complex tasks like generating test cases, the 8B version is better. I use the 3.2 8B model for most tasks because it’s a good balance between speed and accuracy.
-
-**how do i stop the test generator from deleting files?**
-
-Run the test generator in a Docker container with a read-only filesystem and a volume mount for temporary files. Here’s the command:
-
-```bash
-docker run --rm --read-only -v $(pwd)/tests:/tmp/tests -v $(pwd):/app -w /app python:3.11 python scripts/test_generator.py
-```
-
-The `--read-only` flag prevents the container from writing to the filesystem, and the volume mount gives it a safe place to store temporary files. If you need to write files, mount a volume at `/tmp/tests` and use that as the output directory.
-
-**what’s the best way to convince my team to adopt this?**
-
-Start with a single repo and a single tool — Psalm. Run it in CI and post the results as a PR comment. Don’t ask for permission; just do it. Once the team sees the value of the Psalm output, they’ll be more open to adding CodeQL or the test generator. The key is to show quick wins: fewer incidents, faster reviews, and less context switching.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 29, 2026
+Then count the findings by file and open the file with the most. Fix the top three findings that are unambiguous — unused variables, undefined variables, obviously wrong types — and commit. Do not attempt to fix everything; the goal of the first session is to prove that the analyzer runs, that its output is readable, and that at least one finding was real. Everything else in this article builds on that first result.
+===

@@ -1,318 +1,259 @@
 # CI/CD pipelines stall with GPU pods: 2026 benchmarks
 
-After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.
+## Why GPU pods stall while CPU pods finish
 
-## The error and why it's confusing
+A GPU job that runs in minutes on a CPU node can sit `Pending` for half an hour on a GPU node pool, then get killed by a job deadline. The pipeline UI often points at the image or the application logs, so engineers debug the container instead of the scheduler. The container is usually fine. The pod never reached a node.
 
-You see the pipeline yellow for 12–15 minutes, then red. The UI screams “ImagePullBackOff” or “OOMKilled” with no clear signal that it’s a GPU quota wall rather than a Dockerfile typo. Worse, it happens sporadically: one merge runs fine, the next fails because the account has burned through the 8 GPUs per region limit that AWS quietly lowered in 2026.
+Scheduling failures are quiet by design. The scheduler records a `FailedScheduling` event and retries, and retries produce more of the same event. If nobody reads events, the only visible symptom is elapsed time.
 
-The confusing part is that the same job runs on CPU nodes in under 4 minutes, so engineers assume the container is broken instead of looking at the GPU scheduler. The logs don’t scream “quota exceeded”; they just keep retrying, pushing the pod to the back of the queue until TTLSecondsAfterFinished kills it after 30 minutes.
+This article covers the four scheduling-layer causes that account for most GPU pipeline stalls, how to confirm each one with a command, and how to keep them from recurring.
 
-## What's actually causing it (the real reason, not the surface symptom)
+## How Kubernetes actually schedules a GPU pod
 
-Under the hood, Kubernetes 1.30’s Device Plugin API changed how GPU resources are advertised. In 2026, any GPU claim above your account’s `ResourceQuota` is silently queued by the scheduler but never lands on a node. The kubelet reports `0/0` devices ready, so the pod stays in `Pending` until it hits pod lifetime limits. The real failure isn’t the image or the code—it’s the invisible quota wall most teams never query until the pipeline fails.
+A GPU is not a normal extended resource. The kubelet does not know how many GPUs a node has. A device plugin DaemonSet runs on each node, discovers the hardware, and registers the resource name and count with the kubelet through the Device Plugin API. Only then does the node advertise capacity, and only then can the scheduler place a pod that requests that resource.
 
-Historically, teams relied on `kubectl describe quota` or the AWS Service Quotas console, but those endpoints lag 30–60 minutes behind live usage. In 2026, the latency-sensitive teams moved to the AWS Resource Explorer v2 API, which refreshes every 30 seconds. Even then, the quota metric name changed from `nvidia.com/gpu` to `aws.amazon.com/gpu` in EKS 1.29, and most Helm charts still use the old name, causing silent mis-scheduling.
+This produces three distinct failure surfaces:
 
-CPU pods don’t hit this wall because the default `ResourceQuota` for CPU is 100 cores per region, whereas GPU quotas are often set to 4–8 per account. When you run `kubectl get events --sort-by=.metadata.creationTimestamp` you’ll see `FailedScheduling` with reason `Exceeded quota`—but only if the quota object was created after March 2026; older clusters inherit the old object and never surface the error.
+1. **The resource name in the manifest does not match the name the plugin advertises.** The node reports zero of the requested resource, so the pod never fits.
+2. **The resource name matches, but the node has no free GPUs.** The pod waits for capacity or for a new node.
+3. **The pod fits the resource request but is excluded by a selector, affinity rule, or taint.** Capacity is irrelevant because the pod is not eligible for any node.
 
-## Fix 1 — the most common cause
+A fourth surface sits outside the scheduler: a namespace `ResourceQuota` can reject the pod at admission, before scheduling is attempted at all. That failure looks different in events, which is useful—it tells you to stop looking at nodes.
 
-The usual fix is to request the GPU resource by the new name and raise the quota. Update every GPU workload manifest to use `resources.requests: { aws.amazon.com/gpu: "1" }` instead of `nvidia.com/gpu: "1"`. Most Helm charts still ship with the old key, so a one-line grep-and-replace isn’t enough—you have to patch the chart or use `values.yaml` overrides.
+### Reading the events correctly
 
-Run this once per namespace to enforce the new key:
-```yaml
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: gpu-quota
-spec:
-  hard:
-    aws.amazon.com/gpu: 8
-    requests.cpu: "32"
-    requests.memory: 128Gi
-```
-
-After applying, validate with:
 ```sh
-kubectl get quota -n <ns> gpu-quota -o json | jq '.status.hard.aws.amazon.com/gpu'
+kubectl describe pod <pod-name> -n <namespace>
 ```
 
-Expect a 2–3 minute delay for the quota to propagate. If the pod still stalls, check if the namespace has a LimitRange object limiting requests to 0 GPU; that’s the silent killer most teams miss.
+Read the `Events` section at the bottom. The `Reason` field separates the surfaces above:
 
-## Fix 2 — the less obvious cause
+| Event reason | What it means | Where to look next |
+|---|---|---|
+| `FailedScheduling` with "Insufficient nvidia.com/gpu" or equivalent | No node advertises enough of that resource | Device plugin health, resource name |
+| `FailedScheduling` with "node(s) didn't match node selector" | Pod is ineligible for every candidate node | `nodeSelector`, affinity |
+| `FailedScheduling` with "node(s) had untolerated taint" | Node taints are not matched by pod tolerations | Taints and tolerations |
+| `FailedScheduling` with "exceeded quota" | Namespace quota blocks the request | `ResourceQuota`, `LimitRange` |
+| No events at all, pod stuck `Pending` | Often a scheduler backlog or a webhook | Scheduler logs, admission webhooks |
 
-The second culprit is the pod’s `nodeSelector` or `tolerations` accidentally locking out GPU nodes. In 2026, many clusters run mixed node groups: some CPU-only (m5.xlarge), some GPU (g5g.xlarge). If your deployment has this:
-```yaml
-tolerations:
-- key: "dedicated"
-  operator: "Equal"
-  value: "cpu"
-  effect: "NoSchedule"
-```
-it will never land on a GPU node, even if `aws.amazon.com/gpu` is available. This is a common trap: a toleration left over from a CPU-heavy experiment and never removed, costing teams weeks of debugging before anyone realises the scheduler was never allowed to place the pod on a GPU node at all.
+Run a cluster-wide sweep when you do not know which pod is at fault:
 
-Check your deployment spec for any `nodeSelector` or `tolerations` that mention CPU or GPU explicitly. Remove or adjust them so the scheduler can float the pod to any node that advertises `aws.amazon.com/gpu`.
-
-Also watch for pod affinity rules that pin pods to specific node pools. A single `requiredDuringSchedulingIgnoredDuringExecution` rule can block GPU scheduling if the pool is empty.
-
-## Fix 3 — the environment-specific cause
-
-If you’re running in a region where AWS just launched new GPU SKUs (e.g., g6e in ap-southeast-4), the Device Plugin may not have updated yet. In late 2026, the `nvidia-device-plugin` DaemonSet version 0.14.1 doesn’t advertise the new GPU types, so pods requesting `aws.amazon.com/gpu` see 0 capacity even though the nodes exist.
-
-To confirm, run on a GPU node:
 ```sh
-docker run --rm --gpus all nvidia/cuda:12.4-base nvidia-smi
+kubectl get events -A --field-selector reason=FailedScheduling \
+  --sort-by=.lastTimestamp
 ```
-If it prints GPU info, the device plugin is the bottleneck. Bump the plugin:
+
+The most recent entries are at the bottom.
+
+## Cause 1: resource name mismatch between manifest and device plugin
+
+Extended resource names are arbitrary strings. The device plugin chooses the name it advertises, and the pod must request that exact string. When the two disagree, the node advertises zero of the requested resource, and the scheduler reports insufficient capacity even though idle GPUs are sitting on the node.
+
+Common sources of mismatch:
+
+- The device plugin was upgraded or replaced and now advertises a different name than the one in your manifests.
+- A cloud provider's managed GPU add-on advertises a vendor-specific name while your Helm chart still requests the upstream default.
+- A node pool was rebuilt with a different AMI that ships a different plugin version.
+
+Confirm what a node actually advertises:
+
 ```sh
-helm upgrade --install nvidia-device-plugin nvidia-device-plugin/gpu-operator \
-  --version v0.15.0 \
-  --set driver.enabled=false
+kubectl get node <gpu-node> -o jsonpath='{.status.capacity}' | jq
 ```
-That one-line version bump is the standard fix for a 40-minute scheduling stall when a new SKU launches in a region where the plugin hasn’t caught up yet.
 
-Another regional gotcha: some VPCs disable IMDSv2 by default, and the GPU operator needs IMDSv2 to pull the NVIDIA driver. Add this annotation to the node’s launch template:
-```yaml
-data:
-  user-data: |
-    #cloud-boothook
-    sudo yum install -y ec2-instance-connect
-    echo 'EC2_INSTANCE_METADATA_SERVICE_ENDPOINT=http://169.254.169.254/latest' | sudo tee /etc/ec2-instance-metadata-service-config
-exit 0
+Compare the GPU keys in that output against the `resources.requests` and `resources.limits` keys in your pod spec. They must match character for character.
+
+A second, subtler mismatch is the plugin reporting not-ready. Check the DaemonSet:
+
+```sh
+kubectl get pods -n kube-system -l name=nvidia-device-plugin-ds -o wide
+kubectl logs -n kube-system <device-plugin-pod> --tail=100
 ```
-Without IMDSv2, the GPU operator fails silently and the pod stays pending.
 
-## How to verify the fix worked
+A plugin that fails to start—because the driver is missing, the runtime hook is absent, or the node cannot reach its metadata service—registers nothing. The node appears to have no GPUs.
 
-Start with a smoke job that requests 1 GPU and has no other resource constraints. Use this manifest:
+### Validating the fix
+
+A minimal smoke job isolates scheduling from application code:
+
 ```yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: gpu-smoke
 spec:
+  backoffLimit: 0
   template:
     spec:
+      restartPolicy: Never
       containers:
       - name: smoke
-        image: nvcr.io/nvidia/cuda:12.4-base
-        command: ["/bin/sh", "-c"]
-        args: ["nvidia-smi && sleep 10"]
+        image: nvidia/cuda:12.4.1-base-ubuntu22.04
+        command: ["nvidia-smi"]
         resources:
           limits:
-            aws.amazon.com/gpu: "1"
-      restartPolicy: Never
+            nvidia.com/gpu: "1"
 ```
 
-Wait 30 seconds after applying. If the pod jumps to `Running`, the quota and device plugin are healthy. If it stays `Pending`, run:
+Replace the resource key with whatever your node advertises. Apply it, then watch:
+
 ```sh
-kubectl describe pod gpu-smoke-xxx | grep -A 10 Events
-```
-Look for `Exceeded quota` or `node(s) didn't match node selector`.
-
-Next, measure end-to-end latency. A GPU job that compiles a model on CPU commonly takes around 240 seconds in a us-west-2 cluster; with a single T4 GPU it typically drops to roughly 68 seconds—about a 3.5× speedup. If your delta is less than 2×, double-check that the GPU isn’t oversubscribed—run `kubectl top pods` and verify GPU usage stays above 85% during the job.
-
-Finally, check cost. In 2026, a g5g.xlarge in us-west-2 costs $0.626/hour versus $0.082 for a c6g.xlarge. A 2-minute GPU job costs $0.021; the same CPU job at 3.5× runtime costs $0.0047—so GPU only wins above 10-minute runtimes. Log your job durations and set an alert when CPU runtime exceeds 12 minutes; that’s your GPU trigger threshold.
-
-## How to prevent this from happening again
-
-Automate the quota check in your CI pipeline. Add a step that queries AWS Resource Explorer v2 every time a GPU job is queued:
-```python
-import boto3, json
-
-def check_gpu_quota(region: str, account: str) -> bool:
-    client = boto3.client('resource-explorer-2', region_name=region)
-    resp = client.search(
-        QueryString=f'{"ResourceType":"aws::ec2::instance","Tags":{{"aws:ResourceQuota":\"true\"}}}}',
-        MaxResults=1
-    )
-    usage = json.loads(resp['Items'][0]['Properties'])
-    limit = 8  # your account limit
-    return usage['aws.amazon.com/gpu']['Used'] < limit
+kubectl get pod -l job-name=gpu-smoke -w
 ```
 
-Fail the pipeline immediately if the quota is ≤2 left:
-```yaml
-- name: check-gpu-quota
-  run: python quota_check.py
-  env:
-    AWS_REGION: us-west-2
-    AWS_ACCOUNT: "${{ secrets.AWS_ACCOUNT_ID }}"
-```
+If the pod reaches `Running` and `nvidia-smi` prints a device table, the plugin, the resource name, and the runtime hook are all healthy. If it stays `Pending`, the events tell you which of the remaining causes applies.
 
-Also, pin the `nvidia-device-plugin` version in your Git repo. Use Renovate or Dependabot to bump the chart version weekly; the plugin moves fast to support new GPU SKUs.
+## Cause 2: selectors, affinity, and tolerations that exclude GPU nodes
 
-Finally, add a pod template validator that rejects any manifest using the old GPU key:
-```yaml
-- name: validate-gpu-key
-  run: |
-    if grep -r "nvidia.com/gpu" . --include="*.yaml" --include="*.yml"; then
-      echo "ERROR: Found deprecated GPU key nvidia.com/gpu"
-      exit 1
-    fi
-```
+A pod can request a GPU and still be ineligible for every GPU node. The scheduler evaluates eligibility before capacity, so a pod excluded by a selector will never be placed, no matter how many idle GPUs exist.
 
-Teams that add this guardrail commonly catch a dozen or more pipeline failures in the month after the key becomes invalid—failures that would otherwise show up as mysterious `Pending` pods.
+The usual culprits:
 
-## Related errors you might hit next
+- A `nodeSelector` pinning the pod to a CPU instance family, often left over from an earlier version of the workload.
+- A toleration for a CPU-only taint, with no toleration for the GPU node pool's taint.
+- A `requiredDuringSchedulingIgnoredDuringExecution` node affinity rule that names a node pool which no longer exists or is scaled to zero.
+- Pod anti-affinity that prevents two replicas from sharing a node, combined with a GPU node pool smaller than the replica count.
 
-- **Pending due to `InvalidImageName`**: the image tag points to a GPU-specific image in a private ECR repo that the pod service account can’t pull. Fix: add `imagePullSecrets` to the pod spec. - **OOMKilled with GPU memory usage 100%**: the GPU memory limit is too tight; bump `resources.limits.memory` to 16Gi or more. - **Node not found error**: the cluster autoscaler hasn’t provisioned GPU nodes yet; check `kubectl get machines -n fleet` and wait for nodes to appear. - **Failed to initialize NVML: Driver/library version mismatch**: the NVIDIA driver version on the node is older than the CUDA image; pin the driver version in your AMI or use the NVIDIA driver DaemonSet from the GPU operator. - **Pod stuck in `ContainerCreating`**: the `nvidia-container-runtime` hook fails to mount the GPU; verify the runtime class is set to `nvidia` in the node’s kubelet config.
+Inspect the node's taints and labels, then compare them to the pod spec:
 
-## When none of these work: escalation path
-
-If the pod stays pending after all three fixes:
-
-1. Check the cluster autoscaler logs for GPU node group failures:
-   ```sh
-   kubectl logs -n kube-system deployment/cluster-autoscaler | grep -i gpu
-   ```
-   Look for `failed to create node` with `Instance type g5g.xlarge is not supported in this region`.
-
-2. Verify the EKS cluster version. EKS 1.28 and below don’t officially support the g5g SKU; upgrade to EKS 1.30.
-
-3. Open a support ticket with AWS Support with the exact pod spec and node group name. Include the output of:
-   ```sh
-   kubectl get events --sort-by=.lastTimestamp -A | grep -i gpu
-   eksctl get nodegroup --cluster <name> --region <region>
-   aws ec2 describe-instance-types --instance-types g5g.xlarge --region <region>
-   ```
-
-Expect a 2–6 hour SLA for GPU SKU enablement tickets; pre-warm your quota by emailing `ec2-gpu-launch-support@amazon.com` with your account ID and region list.
-
-## Frequently Asked Questions
-
-**Why does my GPU job run fine in staging but fail in prod?**
-Staging often uses smaller node groups or runs in a different region with looser GPU quotas. In 2026, AWS capped new accounts at 4 GPUs in us-east-1 and 8 in eu-west-1. Check each namespace’s ResourceQuota object and compare the hard limits. Also verify the staging cluster uses the same EKS version; older clusters still advertise `nvidia.com/gpu`, causing silent drift.
-
-**How do I set up GPU memory limits correctly?**
-Start with a conservative limit: `resources.limits.memory: "16Gi"` for a 16GB GPU. Watch `kubectl top pod` during the job; if memory usage stays below 80%, reduce the limit. If it spikes above 95%, increase to 24Gi or 32Gi. Right-sizing memory limits commonly cuts memory spillage from around 12% to 2% and reduces job restarts by roughly 40%.
-
-**What’s the real cost difference between GPU and CPU for short jobs?**
-In us-west-2, a 2-minute g5g.xlarge job costs $0.021, while a 7-minute c6g.xlarge CPU job costs $0.0097. GPU wins only when CPU runtime exceeds 10 minutes. For jobs under 8 minutes, CPU is cheaper despite the longer runtime—the cost curve typically crosses at around 9 minutes 42 seconds based on 2026 spot pricing.
-
-**How often should I rotate the NVIDIA driver on GPU nodes?**
-Rotate every EKS minor version bump. EKS 1.30 ships with driver 535.129.03; EKS 1.31 moves to 550.x. If you pin the driver via AMI, rebuild the AMI weekly. If you use the NVIDIA driver DaemonSet from the GPU operator, let Renovate bump the chart version automatically—clusters on this pattern commonly upgrade several times a year without downtime.
-
-## Benchmarks table: CI/CD + GPU vs CPU (2026)
-
-| Workload | CPU runtime | GPU runtime | CPU cost | GPU cost | Speed-up | Break-even threshold |
-|---|---|---|---|---|---|---|
-| ResNet-50 training | 312 s | 89 s | $0.043 | $0.015 | 3.5× | 128 s |
-| BERT fine-tune | 1800 s | 520 s | $0.248 | $0.087 | 3.5× | 720 s |
-| Stable Diffusion 2.1 | 98 s | 34 s | $0.014 | $0.005 | 2.9× | 52 s |
-| TinySolar 100M | 480 s | 160 s | $0.066 | $0.023 | 3.0× | 180 s |
-
-All benchmarks run on EKS 1.30, g5g.xlarge spot nodes in us-west-2, and CPU runs on c6g.xlarge. Costs include node runtime only; spot discounts applied.
-
-## Pricing trade-offs: GPU vs CPU in 2026
-
-GPU SKUs are now priced 7.6× higher per hour than their CPU equivalents, but the runtime compression means total job cost is often lower for jobs above 10 minutes. Teams that over-provision GPU memory (e.g., 32Gi on a 16Gi GPU) see 30% cost waste from idle cycles. Conversely, teams that under-provision (8Gi on a 16Gi GPU) suffer OOMKilled restarts, which can double the effective cost.
-
-Across clusters in 2026, average GPU memory utilisation commonly sits around 62%. After right-sizing, utilisation typically jumps to 87% and cost per job falls 22%. The rule of thumb: aim for 85% memory utilisation at peak; anything above 95% is a risk of spillage.
-
-## Gradual rollout strategies for AI workloads
-
-A common pattern for moving AI workloads to GPU happens in three waves:
-
-1. **Shadow mode**: run the GPU job in parallel with CPU, compare outputs, but don’t route traffic. Keep CPU as the primary path. Duration: 1 week. 2. **Canary**: send 5% of traffic to GPU, monitor latency and error rates. Duration: 2 weeks. 3. **Blue-green**: cut 100% to GPU, keep CPU as a rollback path via a feature flag. Duration: 1 week.
-
-Typical rollback triggers are latency >150ms p95 or GPU memory spillage >15%. A canary spike to 180ms p95 due to driver misconfiguration is a common first-canary failure—and it’s usually recoverable in under ten minutes by flipping the flag.
-
-Use the Argo Rollouts `setWeight` step to automate the canary:
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: ai-model
-spec:
-  replicas: 5
-  strategy:
-    canary:
-      steps:
-      - setWeight: 5
-      - pause: {duration: 48h}
-      - setWeight: 50
-      - pause: {duration: 72h}
-      - setWeight: 100
-```
-
-Track the metrics with Prometheus:
-```promql
-rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m]) > 0.15
-```
-
-## Cost guardrails for AI pipelines
-
-Set three hard limits in your GitOps repo:
-
-- GPU runtime per job: 20 minutes max (enforced via pod `activeDeadlineSeconds`). - GPU memory request: must be ≤ 80% of node memory. - GPU cost per day per namespace: $200 (enforced via AWS Budgets).
-
-Here’s the budget alert Terraform:
-```hcl
-resource "aws_budgets_budget" "gpu_cost" {
-  name              = "gpu-cost-ns-${var.namespace}"
-  budget_type       = "COST"
-  limit_amount      = "200"
-  limit_unit        = "USD"
-  time_unit         = "MONTHLY"
-  notification {
-    comparison_operator        = "GREATER_THAN"
-    threshold                  = 80
-    threshold_type             = "PERCENTAGE"
-    notification_type          = "ACTUAL"
-  }
-}
-```
-
-Add the budget to every namespace; it’s cheap to set up and routinely catches five-figure sums of unchecked GPU spend per quarter.
-
-## Monitoring stack for GPU pipelines
-
-Three dashboards cover most of what matters:
-
-1. GPU utilization heatmap: shows idle GPUs by hour to catch over-provisioning. 2. Cost per job: aggregates CloudWatch cost explorer per pod UID. 3. Scheduling latency: measures time from pod creation to `Running` state; alerts if >3 minutes.
-
-The heatmap commonly reveals GPUs sitting idle every night from 2 AM to 6 AM—downsizing the node group from 8 to 4 can cut idle cost by 50%. The latency dashboard is how teams catch scheduler regressions that add 90 seconds to pod startup; the usual response is to pin to the previous EKS version until the patch ships.
-
-## Real-world failure: the cache stampede mistake
-
-A common failure mode shows `GPU memory limit exceeded` in the logs, but the manifest only requested 8Gi. The base image pulled in a CUDA sample that pre-allocated 4Gi statically, plus PyTorch’s default allocator reserve of 1Gi. After subtracting driver overhead, the pod had 3Gi left—enough for a 100MB model but not for a 1GB dataset.
-
-The fix is to add `PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.8` to the container env and lower the `memory` limit to 6Gi. Job runtime commonly drops from around 420s to 180s and OOMKilled restarts vanish. Always sanity-check the base image’s static allocations before blaming the cluster.
-
-## Actionable next step in the next 30 minutes
-
-Open your cluster’s `ResourceQuota` object in the namespace that owns GPU jobs and verify the hard limit for `aws.amazon.com/gpu` is at least 4. If it’s 0 or missing, run:
 ```sh
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: gpu-quota
-spec:
-  hard:
-    aws.amazon.com/gpu: 4
-    requests.cpu: "16"
-    requests.memory: 64Gi
-EOF
+kubectl get node <gpu-node> -o jsonpath='{.spec.taints}'
+kubectl get node <gpu-node> --show-labels
 ```
-Then redeploy the smoke job from this post and watch it go green in <60 seconds. That single check prevents the large majority of the GPU pipeline stalls seen in 2026.
 
----
+A GPU node pool is typically tainted so that only GPU workloads land on expensive hardware. A pod that does not tolerate that taint is filtered out. The fix is to add the matching toleration, not to remove the taint—removing the taint lets unrelated workloads consume GPU nodes.
 
-### About this article
+```yaml
+tolerations:
+- key: "sku"
+  operator: "Equal"
+  value: "gpu"
+  effect: "NoSchedule"
+```
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+For affinity rules, prefer `preferredDuringSchedulingIgnoredDuringExecution` over the required form unless the placement is genuinely mandatory. A required rule turns a soft preference into a hard scheduling failure the moment the target pool is unavailable.
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+### A worked example
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+Suppose a deployment requests one GPU and carries this affinity:
 
-**Last reviewed:** June 28, 2026
+```yaml
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: eks.amazonaws.com/nodegroup
+          operator: In
+          values: ["gpu-pool-a"]
+```
+
+The `gpu-pool-a` node group is scaled to zero overnight and back up in the morning. While it is at zero, every replica is unschedulable. The event reads "node(s) didn't match node affinity," which is accurate but does not say the pool is empty.
+
+Two changes resolve it. First, relax the rule to the preferred form so the pod can land elsewhere if the pool is unavailable. Second, if the pool must be used, ensure the cluster autoscaler is configured to scale it from zero—a node group with a minimum size of zero needs the autoscaler to recognize the pending pod as a scaling trigger, which requires the pod's resource requests to be representable by the node group's instance types.
+
+## Cause 3: namespace quota and LimitRange objects
+
+A `ResourceQuota` rejects pods at admission. The pod is never created, or it is created and immediately fails, depending on the quota type. Either way, no scheduling occurs.
+
+Check the quota and its live usage:
+
+```sh
+kubectl get resourcequota -n <namespace> -o yaml
+kubectl describe resourcequota -n <namespace>
+```
+
+The `Status` block shows `used` and `hard` for each constrained resource. If `used` equals `hard` for the GPU resource, new pods cannot be admitted until something is deleted or the quota is raised.
+
+A `LimitRange` is the quieter problem. A `LimitRange` can set a default request for a resource, or enforce a maximum. If a `LimitRange` sets a default GPU request of zero, or caps GPU requests below what the workload needs, the pod is rejected or silently modified. Inspect it:
+
+```sh
+kubectl get limitrange -n <namespace> -o yaml
+```
+
+Quota changes propagate through the quota controller, so allow a short interval before retrying. If a pod is rejected for quota and the quota has since been raised, delete and recreate the pod rather than waiting for the existing one to succeed.
+
+## Cause 4: capacity, autoscaling, and instance availability
+
+When the events say insufficient capacity and the resource name and selectors are correct, the cluster genuinely has no free GPUs and no way to add them. Two things can be true here, and they need different responses:
+
+- **The autoscaler cannot add nodes.** The node group may be at its maximum size, the account may lack quota for the instance family, or the instance type may be unavailable in the availability zone.
+- **The autoscaler can add nodes but has not yet.** GPU nodes take longer to join than CPU nodes because the driver and device plugin must initialize. A pod that waits several minutes is not necessarily broken.
+
+Check the autoscaler's view of the pending pod:
+
+```sh
+kubectl logs -n kube-system deployment/cluster-autoscaler --tail=200 | grep -i "gpu\|scale"
+```
+
+Look for messages naming the node group, the reason it was not scaled, and any quota or instance-availability error. If the autoscaler reports that the node group is at maximum size, the fix is a quota increase or a larger maximum, not a manifest change.
+
+To distinguish slow scaling from blocked scaling, watch node creation directly:
+
+```sh
+kubectl get nodes -w
+```
+
+If a new node appears and the pod schedules shortly after, the delay was provisioning. If no node appears and the autoscaler logs a refusal, the delay is a hard limit.
+
+## How to measure whether GPU is even the right choice
+
+Before investing in GPU scheduling fixes, confirm that the GPU is actually faster for the workload. The measurement is straightforward and does not require a benchmark suite.
+
+1. Run the job on a CPU node and record wall-clock duration and node cost per hour.
+2. Run the same job on a GPU node and record the same two numbers.
+3. Compute cost per run as `duration_seconds / 3600 * hourly_rate` for each.
+4. Compute the speedup as `cpu_duration / gpu_duration`.
+
+The GPU is cheaper only when `gpu_cost_per_run < cpu_cost_per_run`. Because GPU instance rates are higher, this requires the speedup to exceed the ratio of the two hourly rates. As an illustrative example, if a GPU node costs four times as much per hour as a CPU node, the GPU must be more than four times faster for the cost per run to fall. If it is only twice as fast, the CPU run is cheaper despite taking longer.
+
+The crossover also depends on whether the job is dominated by startup or by compute. A job that spends most of its time pulling an image, installing dependencies, or loading a model will not benefit much from a faster processor, and the GPU premium is wasted. Instrument the job with timestamps around each phase to see where the time goes before assuming the accelerator is the bottleneck.
+
+For scheduling specifically, the metric worth tracking is time from pod creation to `Running`. Export it from the cluster and alert when the p95 exceeds a threshold you choose. A rising p95 is the earliest signal that quota, capacity, or a device plugin regression is starting to bite.
+
+## Prevention checklist
+
+- **Pin the device plugin version** in your manifest repository and update it deliberately. An unpinned DaemonSet can change the advertised resource name or fail to support a new instance type after an automatic upgrade.
+- **Assert the resource name in CI.** A repository-wide grep for the expected GPU resource key catches manifests that still use a name the cluster no longer advertises:
+
+```sh
+if grep -rn "nvidia.com/gpu" . --include="*.yaml" --include="*.yml"; then
+  echo "Found a GPU resource key; confirm it matches the device plugin's advertised name"
+  exit 1
+fi
+```
+
+Adjust the pattern to your environment's actual resource name. The point is to make the name explicit and reviewed rather than inherited.
+
+- **Check quota before the pipeline starts.** A short preflight step that reads the namespace quota and fails early gives a clear error instead of a timeout.
+- **Keep a smoke job in the repository.** When scheduling breaks, the smoke job tells you in under a minute whether the problem is infrastructure or application.
+- **Alert on scheduling latency, not just failures.** A pod that eventually runs is still a problem if it waited twenty minutes.
+
+## FAQ
+
+**Why does the same manifest work in one cluster and not another?**
+The advertised GPU resource name, node taints, and quota objects are cluster-scoped. Two clusters running the same workload can differ in all three. Compare `kubectl get node <node> -o jsonpath='{.status.capacity}'` and the namespace quota between the two clusters before changing the manifest.
+
+**The pod is Pending with no events. What does that mean?**
+No events usually means the scheduler has not attempted to place the pod, or the events have aged out of the API server's retention window. Check the scheduler's own logs and any admission webhooks in the path. Also confirm the pod is not blocked by a `PodDisruptionBudget` or a `PriorityClass` preemption that is waiting on a higher-priority pod.
+
+**How do I set GPU memory limits correctly?**
+GPU memory is not a schedulable resource in Kubernetes. `resources.limits.memory` constrains container RAM, not device memory. For device memory, the relevant controls live in the framework or runtime—for example, a PyTorch allocator configuration environment variable, or a framework-specific memory fraction setting. Right-size container RAM by watching actual usage during a representative run and setting the limit above the observed peak with headroom, then verify with a load test.
+
+**Should I request GPUs with `limits` only, or both `requests` and `limits`?**
+For extended resources, Kubernetes requires `requests` and `limits` to be equal if both are set, and a `limits`-only entry is treated as the request. Setting only `limits` is the common and valid form.
+
+**What is the fastest way to tell whether a stall is quota or capacity?**
+Read the event reason. A quota rejection names the quota object. An insufficient-capacity event names the resource. If the resource name is correct and a node advertises free capacity of that resource, the problem is eligibility—selectors, affinity, or taints—not capacity.
+
+## Do this in the next 30 minutes
+
+Pick the namespace that runs your GPU jobs and run:
+
+```sh
+kubectl describe resourcequota -n <namespace>
+kubectl get events -n <namespace> --field-selector reason=FailedScheduling \
+  --sort-by=.lastTimestamp | tail -20
+```
+
+If the quota shows zero or missing GPU capacity, or the events show a resource name that does not match what your nodes advertise, you have found the cause. Apply the minimal smoke job from this article with the correct resource name and confirm it reaches `Running`. That single check separates a scheduling problem from an application problem before the next pipeline run.

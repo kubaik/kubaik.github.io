@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Multi-agent handoffs: the latency tax nobody measures - Kubai Kevin</title>
-        <meta name="description" content="Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.">
+        <meta name="description" content="Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.">
         <meta name="keywords" content="MultiAgentLatency, AgentHandoff, LlmOrchestration, AgentHandoffOverhead, Llm, Generativeai, Multiagent">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-29T17:53:25.995285">
-        <meta property="article:modified_time" content="2026-09-29T17:53:25.995299">
+        <meta property="article:modified_time" content="2026-10-04T10:34:20.613552+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Multi-agent handoffs: the latency tax nobody measures">
-        <meta property="og:description" content="Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.">
+        <meta property="og:description" content="Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.">
         <meta property="og:url" content="https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Multi-agent handoffs: the latency tax nobody measures">
-        <meta name="twitter:description" content="Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.">
+        <meta name="twitter:description" content="Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/multi-agent-handoffs-the-latency-tax-nobody-measures.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/#article",
       "headline": "Multi-agent handoffs: the latency tax nobody measures",
-      "description": "Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.",
+      "description": "Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.",
       "datePublished": "2026-09-29T17:53:25+00:00",
-      "dateModified": "2026-09-29T17:53:25+00:00",
-      "wordCount": 2607,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:34:20+00:00",
+      "wordCount": 2135,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Multi-agent handoffs: the latency tax nobody measures</h1>
                 
-                <p class="post-lead">Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
+                <p class="post-lead">Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
                 
                 
                 <div class="tags">
@@ -259,65 +259,52 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2607 words
+                        11 min read
+                        &nbsp;·&nbsp; 2135 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-29
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Teams often end up shipping hidden latency twice — the second time because the first version failed quietly. This walks through the fix and the reasoning, not just the patch. Most write-ups stop exactly where the interesting part starts.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>Multi-agent systems are sold as the next step in AI architecture: split a complex task across specialised agents, let each one do what it's good at, and orchestrate the results. The pitch is clean, and the demos look impressive. But the standard advice almost always stops at <em>capability</em> — what the system can do — and says almost nothing about <em>cost</em> — what the system spends to do it. That gap is where the latency tax hides.</p>
-<p>When people talk about multi-agent performance, they usually reach for token counts and model choice. "Use a smaller model for routing," they say. "Cache the system prompt." All true, all useful. But the dominant cost in a multi-agent pipeline is not inference. It's the handoff: the serialisation, transport, deserialisation, re-prompting, and re-validation that happens every time control passes from one agent to another. A typical handoff adds 40–120ms of pure overhead before the next model even starts thinking. Chain five agents and you've added 200–600ms of dead time to every request, and that's before you count the extra tokens each agent burns re-reading context it didn't need.</p>
-<p>The part that trips people up is that this overhead is invisible in most observability setups. Your APM shows a 2.4s request. It doesn't show that 580ms of that was handoff tax. And that's what this post actually covers.</p>
-<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>The standard advice for building a multi-agent system goes something like this: define a planner agent, a researcher agent, a writer agent, and a critic agent. Wire them together with a framework like LangGraph 0.2 or CrewAI 0.30. Pass the full conversation history between them so each agent has context. Log everything to LangSmith or Langfuse for debugging.</p>
-<p>This works. It also quietly accumulates latency in four places that nobody instruments.</p>
-<p><strong>First, the serialisation cost.</strong> Every handoff means converting a Python object (usually a Pydantic model or a dict) to JSON, sending it over HTTP or a message queue, and parsing it back. For a 4,000-token context, that's roughly 16KB of JSON. Serialise, transport, deserialise: 15–40ms depending on payload size and whether you're using <code>orjson</code> or the standard library. Multiply by four handoffs and you've spent 60–160ms doing nothing useful.</p>
-<p><strong>Second, the re-prompting cost.</strong> Each agent needs to know what came before. If you're passing full history, a 4-agent pipeline can easily send 12,000 tokens to the final agent when only 2,000 were relevant. At typical input pricing, that's not just latency — it's money. More importantly, longer prompts mean longer time-to-first-token. A 12k-token prompt can add 200–400ms of prefill time versus a 2k-token prompt on the same model.</p>
-<p><strong>Third, the validation cost.</strong> Good multi-agent systems validate outputs between agents. That's a JSON schema check, sometimes a retry loop, sometimes a separate LLM call to grade the output. Each validation is 5–50ms, and each retry is a full agent invocation.</p>
-<p><strong>Fourth, the orchestration cost.</strong> The framework itself — the graph traversal, the state management, the callback hooks — adds overhead. It's usually small (5–15ms per step) but it compounds.</p>
-<p>A common failure mode here: a team builds a 5-agent pipeline, tests it on 10 requests, sees 1.8s average latency, and ships it. Under production load with concurrent requests, the same pipeline shows 3.2s p95 because the handoff overhead scales with queue depth and context size. The demo never caught it because the demo never ran at concurrency.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>Stop thinking of agents as workers passing a baton. Start thinking of them as functions in a pipeline where every boundary is a network call with a cost.</p>
-<p>The mental model that actually helps: <strong>an agent handoff is a remote procedure call, and you should treat it with the same suspicion you'd treat any RPC in a hot path.</strong> You wouldn't call a microservice five times in a request handler without asking whether those calls could be batched or eliminated. The same discipline applies here.</p>
-<p>This reframing changes what you optimise. Instead of asking "which model should each agent use?", you ask:</p>
+                <p>Multi-agent systems get pitched on capability: split a complex task across specialised agents, let each do what it is good at, orchestrate the results. The demos look impressive. The standard advice, however, almost always stops at what the system can do and says little about what it spends to do it. That gap is where the latency tax hides.</p>
+<h2 id="the-conventional-wisdom-and-where-it-stops">The conventional wisdom and where it stops</h2>
+<p>When teams discuss multi-agent performance, the conversation usually turns to token counts and model choice: use a smaller model for routing, cache the system prompt, trim the tool list. All of that is useful. But the dominant cost in many multi-agent pipelines is not inference. It is the handoff — the serialisation, transport, deserialisation, re-prompting and re-validation that happens every time control passes from one agent to another.</p>
+<p>The overhead is invisible in most observability setups. An APM trace shows a 2.4-second request. It does not break out the portion that was handoff tax. Without that breakdown, optimisation effort goes to the wrong place: teams tune prompts and swap models while the structural cost sits untouched.</p>
+<h2 id="what-a-handoff-actually-costs">What a handoff actually costs</h2>
+<p>A handoff is a remote procedure call with a model behind it. Four cost centres accumulate, and most of them are not instrumented by default.</p>
+<p><strong>Serialisation.</strong> Every handoff converts an in-memory object (typically a Pydantic model or a dict) to JSON, sends it, and parses it back. The cost scales with payload size and with the encoder used. <code>orjson</code> is meaningfully faster than the standard library <code>json</code> module on large payloads, but the difference is small next to what the payload size itself does to the total.</p>
+<p><strong>Transport.</strong> A same-region HTTP round trip has a floor set by network and TLS behaviour. Loopback and Unix sockets are cheaper than HTTP over TCP, which is cheaper than a cross-region call. This floor cannot be optimised away, only avoided by not making the call.</p>
+<p><strong>Re-prompting.</strong> Each agent needs to know what came before. If full history is passed, the final agent in a pipeline receives far more tokens than it needs. Longer prompts mean longer prefill, which means longer time-to-first-token. This is the largest of the four costs in most pipelines, and the one most often overlooked because it shows up as "model latency" rather than "handoff latency".</p>
+<p><strong>Validation.</strong> Well-built systems validate outputs between agents: a JSON schema check, sometimes a retry loop, sometimes a separate grading call. Each validation adds time, and each retry is a full agent invocation.</p>
+<p>A fifth contributor is the orchestration layer itself — graph traversal, state management, callback hooks. It is usually small per step but compounds across a long pipeline.</p>
+<p>The failure mode to watch for: a pipeline tested on a handful of sequential requests looks acceptable, then degrades under concurrent load. Handoff overhead scales with queue depth and context size, so p95 latency under real traffic can be substantially worse than the sequential test suggested. Demos rarely run at concurrency, which is why the problem surfaces after launch.</p>
+<h2 id="a-better-mental-model">A better mental model</h2>
+<p>Stop thinking of agents as workers passing a baton. Think of them as functions in a pipeline where every boundary is a network call with a cost. An agent handoff is an RPC in a hot path, and it deserves the same suspicion any RPC in a hot path would get. Nobody calls a microservice five times inside a request handler without asking whether those calls could be batched or removed.</p>
+<p>This reframing changes the questions worth asking:</p>
 <ul>
 <li>Can two agents be merged into one prompt with structured output?</li>
 <li>Can the handoff carry a summary instead of full history?</li>
-<li>Can validation happen in-process instead of as a separate call?</li>
-<li>Can the orchestrator run independent agents in parallel instead of serially?</li>
+<li>Can validation happen in-process rather than as a separate call?</li>
+<li>Can independent agents run in parallel instead of serially?</li>
 </ul>
-<p>In most systems I've seen described publicly, the answer to at least two of those is yes, and the savings are larger than any model swap.</p>
-<p>Here's the uncomfortable part: the multi-agent architecture is often chosen for <em>developer</em> ergonomics, not runtime performance. It's easier to reason about four small prompts than one large one. That's a legitimate reason to start there. It's not a legitimate reason to stay there once you've measured the cost.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>Consider a document-analysis pipeline: extract entities, classify sentiment, summarise, and fact-check. Four agents, serial, full history passed between each.</p>
-<p>Here's a simplified version of what the handoff layer looks like in a typical Python implementation:</p>
+<p>There is an uncomfortable truth underneath the architecture choice. Multi-agent designs are often selected for developer ergonomics, not runtime performance. Four small prompts are easier to reason about, test and iterate on than one large one. That is a legitimate reason to start there. It is not a legitimate reason to stay there once the cost has been measured.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a document-analysis pipeline: extract entities, classify sentiment, summarise, fact-check. Four agents, serial, full history passed between each. The numbers below are illustrative, chosen to make the arithmetic visible; substitute your own measurements.</p>
+<p>Assume a 4,000-token history. A rough rule of thumb is that one token is about four bytes of JSON-encoded text, so the payload is roughly 16KB. Assume a same-region HTTP round trip of 25ms and a prefill rate that adds measurable time per 1,000 input tokens. Four handoffs at 25ms each is 100ms of pure transport. Now add prefill: if each successive agent receives the accumulated history, the last agent sees roughly four times the context of the first, and the prefill cost grows with it. On a serial pipeline where each agent also generates output, the handoff-attributable share of end-to-end latency commonly lands in the range that makes the pipeline feel sluggish relative to a single well-structured prompt.</p>
+<p>The fix that shows up repeatedly is to pass a summary plus the current task, not the full history.</p>
 <pre><code class="language-python">import orjson
 import httpx
 from pydantic import BaseModel
 
-class AgentState(BaseModel):
-    history: list[dict]
+
+class SlimState(BaseModel):
+    task: str
+    summary: str          # keep this bounded, e.g. a few hundred tokens
     current_output: str
 
-async def handoff(state: AgentState, next_agent_url: str) -&gt; AgentState:
-    # Serialise full history — this is the tax
-    payload = orjson.dumps(state.model_dump())
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        resp = await client.post(next_agent_url, content=payload)
-    return AgentState(**orjson.loads(resp.content))
-</code></pre>
-<p>At 4,000 tokens of history, <code>payload</code> is roughly 16KB. The round trip on a same-region call is 20–35ms. With four handoffs, that's 80–140ms of pure transport. Add prefill time for the growing prompt and you're at 400–700ms of overhead per request before any agent has produced a useful token.</p>
-<p>The fix that consistently shows up: pass a <em>summary</em> plus the <em>current task</em>, not the full history.</p>
-<pre><code class="language-python">class SlimState(BaseModel):
-    task: str
-    summary: str          # 200 tokens max
-    current_output: str
 
 async def slim_handoff(state: SlimState, next_agent_url: str) -&gt; SlimState:
     payload = orjson.dumps(state.model_dump())
@@ -325,24 +312,41 @@ async def slim_handoff(state: SlimState, next_agent_url: str) -&gt; SlimState:
         resp = await client.post(next_agent_url, content=payload)
     return SlimState(**orjson.loads(resp.content))
 </code></pre>
-<p>The payload drops to roughly 1KB. Transport time drops to 8–15ms. Prefill time drops because the prompt is shorter. In a typical 4-agent pipeline, this change alone cuts 180–320ms of the total, which on a 1.5s baseline is a 12–21% reduction — before you touch parallelism or model choice.</p>
-<p>Now add parallelism. If entity extraction and sentiment classification don't depend on each other, run them concurrently with <code>asyncio.gather</code>. On a pipeline where two of four steps are independent, that saves the full latency of the shorter branch — often 300–500ms.</p>
-<p>Combine the two and you're looking at 40–60% total latency reduction on the same hardware, same models, same task quality. The mechanism is not magic; it's removing work that was never necessary.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>I'm not arguing that multi-agent architectures are wrong. They're the right call in specific situations, and pretending otherwise would be dishonest.</p>
-<p><strong>When agents have genuinely different tool access.</strong> If your researcher agent has web search and your writer agent has a sandboxed code interpreter, keeping them separate is a security boundary, not just an architectural choice. Merging them means the writer inherits search permissions it shouldn't have. That's worth 50ms.</p>
-<p><strong>When you need independent auditability.</strong> In regulated environments, having a separate critic agent whose only job is to validate output is a compliance feature. You want that handoff logged, signed, and immutable. The latency is the cost of the audit trail.</p>
-<p><strong>When agents run on different infrastructure.</strong> If your planner runs on a GPU box and your tool-executor runs on a sandboxed VM, the handoff is a real network boundary you can't eliminate. You can only make it cheaper.</p>
-<p><strong>When the task is genuinely long-running.</strong> For a job that takes 30 seconds end-to-end, 400ms of handoff overhead is 1.3%. Not worth optimising. The tax only matters when your baseline is short and your concurrency is high.</p>
-<p>The mistake is applying multi-agent architecture <em>by default</em> to tasks that are short, serial, and share tool access. That's where the tax dominates and the benefits don't materialise.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>Use this table as a first pass. It won't capture every nuance, but it forces the question.</p>
+<p>The payload shrinks by roughly an order of magnitude, transport time falls proportionally to payload size, and prefill time falls because the prompt is shorter. The mechanism is not clever. It is the removal of work that was never necessary.</p>
+<p>The same pattern applies to parallelism. If entity extraction and sentiment classification do not depend on each other, <code>asyncio.gather</code> runs them concurrently and the pipeline pays the latency of the slower branch rather than the sum of both.</p>
+<pre><code class="language-python">import asyncio
+
+
+async def analyse(document: str) -&gt; dict:
+    entities, sentiment = await asyncio.gather(
+        extract_entities(document),
+        classify_sentiment(document),
+    )
+    return {&quot;entities&quot;: entities, &quot;sentiment&quot;: sentiment}
+</code></pre>
+<p>Both changes preserve task quality because neither removes information the downstream agent actually needs. They remove information it was carrying by default.</p>
+<h2 id="how-to-measure-the-tax">How to measure the tax</h2>
+<p>The reason this cost stays hidden is that it is not a metric any framework surfaces by default. Instrument it directly.</p>
+<p><strong>Log payload size per handoff.</strong> In the function that builds each handoff payload, record <code>len(payload)</code> in bytes alongside the agent name and step index. This one line turns an invisible cost into a number.</p>
+<p><strong>Time the boundary, not the agent.</strong> Wrap the serialisation and the HTTP call separately. Serialisation time and transport time have different fixes: serialisation responds to smaller payloads and a faster encoder, transport responds to co-location or fewer calls.</p>
+<p><strong>Compare prompt sizes across steps.</strong> Log input token counts at each agent. If the count grows monotonically down the pipeline, full history is being carried and summarisation is the highest-leverage change available.</p>
+<p><strong>Measure at concurrency.</strong> Run the benchmark with realistic parallel request counts, not sequentially. Report p50 and p95. The gap between them is where the handoff tax lives.</p>
+<p><strong>Establish a baseline before changing anything.</strong> Record end-to-end latency, per-step latency, payload sizes and token counts on the current pipeline. Without the baseline, no improvement claim is verifiable.</p>
+<p>The resulting number — handoff time as a share of total request latency — is the optimisation budget. If it is small, the pipeline has a different problem and effort belongs elsewhere.</p>
+<h2 id="when-multi-agent-is-the-right-call">When multi-agent is the right call</h2>
+<p>Multi-agent architectures are not wrong. They are the right call in specific situations, and treating them as always-wrong would be as lazy as treating them as always-right.</p>
+<p><strong>Genuinely different tool access.</strong> If a research agent has web search and a writer agent has a sandboxed code interpreter, keeping them separate is a security boundary, not just an architectural preference. Merging them means the writer inherits permissions it should not have. That isolation is worth the handoff cost.</p>
+<p><strong>Independent auditability.</strong> In regulated environments, a separate critic agent whose only job is to validate output is a compliance feature. The handoff needs to be logged, attributable and immutable. The latency is the price of the audit trail.</p>
+<p><strong>Different infrastructure.</strong> If a planner runs on a GPU host and a tool executor runs on a sandboxed VM, the handoff is a real network boundary that cannot be eliminated, only made cheaper.</p>
+<p><strong>Genuinely long-running tasks.</strong> For a job that takes tens of seconds end to end, handoff overhead is a rounding error. The tax only matters when the baseline is short and concurrency is high.</p>
+<p>The mistake is applying multi-agent architecture by default to tasks that are short, serial and share tool access. That is where the tax dominates and the benefits do not materialise.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
 <table>
 <thead>
 <tr>
 <th>Signal</th>
-<th>Multi-agent is worth it</th>
-<th>Single-agent or merged is better</th>
+<th>Separate agents</th>
+<th>Merge or single agent</th>
 </tr>
 </thead>
 <tbody>
@@ -352,75 +356,52 @@ async def slim_handoff(state: SlimState, next_agent_url: str) -&gt; SlimState:
 <td>No — merge prompts</td>
 </tr>
 <tr>
-<td>Total pipeline latency budget</td>
-<td>&gt; 5s</td>
-<td>&lt; 2s</td>
+<td>Audit or compliance requirement</td>
+<td>Yes — separate traces</td>
+<td>No — one trace is fine</td>
+</tr>
+<tr>
+<td>Infrastructure differs per step</td>
+<td>Yes — real network boundary</td>
+<td>No — same process</td>
 </tr>
 <tr>
 <td>Steps are independent</td>
-<td>Parallelise agents</td>
+<td>Run in parallel</td>
 <td>Merge into one prompt</td>
 </tr>
 <tr>
-<td>Context size per handoff</td>
-<td>&lt; 1,000 tokens</td>
-<td>&gt; 4,000 tokens</td>
+<td>Context carried per handoff</td>
+<td>Bounded summary</td>
+<td>Full history</td>
 </tr>
 <tr>
-<td>Audit/compliance requirement</td>
-<td>Yes — separate agents</td>
-<td>No — single trace is fine</td>
+<td>Latency budget</td>
+<td>Generous</td>
+<td>Tight</td>
 </tr>
 <tr>
 <td>Concurrency</td>
-<td>&lt; 10 req/s</td>
-<td>&gt; 50 req/s</td>
-</tr>
-<tr>
-<td>Model choice differs per step</td>
-<td>Yes — specialised models</td>
-<td>No — one model handles all</td>
+<td>Low</td>
+<td>High</td>
 </tr>
 </tbody>
 </table>
-<p>A practical rule: if you can't name the specific reason two agents are separate — security, audit, infrastructure, or genuinely different models — merge them. The default should be one agent with structured output, not a graph of specialists.</p>
-<p>To measure where you actually stand, instrument the handoff layer directly. Add a timer around your serialisation and transport calls, and log the payload size. In a typical pipeline, you'll find that handoffs account for 20–40% of total latency. That number is your optimisation budget. If it's under 10%, stop reading and go work on something else.</p>
-<h2 id="common-objections-and-responses">Common objections, and responses</h2>
-<p><strong>"Merging agents makes prompts too long and hurts quality."</strong> Sometimes true. But the fix is usually structured output with clear sections, not more agents. A single prompt with explicit <code>## Task</code>, <code>## Context</code>, <code>## Output format</code> sections often outperforms a 3-agent pipeline on both quality and latency. Test it before assuming it won't work.</p>
-<p><strong>"Summarisation loses information the next agent needs."</strong> It can. The mitigation is to summarise <em>and</em> keep a retrieval path — store the full history, let the next agent fetch specific spans if needed. That's a tool call, not a handoff, and it's cheaper because it's on-demand.</p>
-<p><strong>"Our framework makes multi-agent easy, so why fight it?"</strong> Because the framework optimises for developer experience, not runtime. Easy to build is not the same as cheap to run. Frameworks like LangGraph 0.2 and CrewAI 0.30 are genuinely useful for prototyping; they're less useful as a production runtime if you haven't measured the handoff cost.</p>
-<p><strong>"Parallelism changes semantics — agents might race."</strong> Only if they share mutable state. Design agents as pure functions over immutable inputs and parallelism is safe. If they share state, you have a different problem that multi-agent didn't cause.</p>
-<p><strong>"We already shipped; ripping out agents is too expensive."</strong> You don't have to rip anything out. Start by changing what the handoff carries — summary instead of full history. That's a one-line change in most codebases and it's where the biggest single win usually lives.</p>
-<h2 id="what-the-alternative-approach-would-change">What the alternative approach would change</h2>
-<p>If teams adopted the RPC mental model by default, three things would shift.</p>
-<p>First, architecture diagrams would show latency budgets on every edge, the same way they show data flow. A handoff labeled "40ms, 16KB" invites a different conversation than an unlabeled arrow.</p>
-<p>Second, framework defaults would change. The sensible default for a handoff payload is a summary plus the current task, not full history. Frameworks that default to full history are optimising for debuggability at the cost of runtime — a defensible tradeoff for development, a bad one for production.</p>
-<p>Third, observability tools would surface handoff tax as a first-class metric. Right now you have to instrument it yourself. That's a gap in the tooling, and it's why the tax stays hidden.</p>
-<p>The broader point: multi-agent systems are a real architectural pattern with real costs. Treating them as free — which is what most tutorials implicitly do — leads to systems that work in demos and disappoint in production. The fix isn't to abandon the pattern. It's to measure the boundaries.</p>
-<h2 id="summary">Summary</h2>
-<p>Multi-agent handoffs carry a latency tax that most observability setups don't surface: serialisation, transport, re-prompting, and validation overhead that adds 200–600ms to a typical 4-agent pipeline. The conventional advice focuses on model choice and token counts, which misses where the time actually goes. The better mental model is to treat every handoff as an RPC in a hot path — something to eliminate, batch, or slim down before you optimise anything else. Passing summaries instead of full history and running independent agents in parallel are the two changes that consistently deliver 40–60% latency reduction on the same hardware and models. Multi-agent is still the right call when agents have different tool access, different infrastructure, or a compliance requirement for separate audit trails — but it should be a deliberate choice, not a default.</p>
-<p>Here's your next step: open your agent orchestration file, find the function that builds the payload for each handoff, and log its serialised size in bytes. If it's over 4KB, replace the full history with a 200-token summary and re-run your latency benchmark. That single change is where the biggest win usually hides.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I measure handoff latency in a multi-agent system?</strong>
-Wrap your serialisation and HTTP call in a timer and log both the duration and the payload size in bytes. Do this for every handoff boundary, not just the first one. In most pipelines, you'll find handoffs account for 20–40% of total request latency. Once you have that number, you know whether optimisation is worth the effort.</p>
-<p><strong>Why is my multi-agent pipeline slower than a single agent?</strong>
-Because each handoff adds serialisation, transport, and prefill overhead that a single agent doesn't pay. A 4-agent pipeline can easily add 400–700ms of pure overhead before any useful work happens. If your steps share tool access and don't need separate audit trails, merging them into one prompt with structured output is usually faster and cheaper.</p>
-<p><strong>What is the best way to pass context between agents?</strong>
-Pass a summary plus the current task, not the full conversation history. A 200-token summary instead of a 4,000-token history cuts payload size by roughly 90% and reduces prefill time significantly. If the next agent needs specific details, give it a retrieval tool so it can fetch them on demand rather than carrying everything upfront.</p>
-<p><strong>When should I use multiple agents instead of one?</strong>
-Use multiple agents when they have genuinely different tool access, run on different infrastructure, need separate audit trails for compliance, or require different models for quality reasons. If none of those apply, start with one agent and structured output. You can always split later if a specific boundary proves necessary — but you can't easily un-split a pipeline once it's in production.</p>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
-<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p>A practical rule: if you cannot name the specific reason two agents are separate — security, audit, infrastructure, or a genuinely different model — merge them. The default should be one agent with structured output, not a graph of specialists.</p>
+<h2 id="common-objections">Common objections</h2>
+<p><strong>"Merging agents makes prompts too long and hurts quality."</strong> Sometimes true. But the usual fix is structured output with clear sections, not more agents. A single prompt with explicit task, context and output-format sections often matches or beats a three-agent pipeline on quality while costing less. Test it rather than assuming.</p>
+<p><strong>"Summarisation loses information the next agent needs."</strong> It can. The mitigation is to summarise and keep a retrieval path: store the full history, let the next agent fetch specific spans on demand. That is a tool call, not a handoff, and it is cheaper because it is paid only when needed.</p>
+<p><strong>"The framework makes multi-agent easy, so why fight it?"</strong> Because the framework optimises for developer experience, not runtime. Easy to build is not the same as cheap to run. Graph-based orchestration libraries are genuinely useful for prototyping; they are less useful as a production runtime if the handoff cost has never been measured.</p>
+<p><strong>"Parallelism changes semantics — agents might race."</strong> Only if they share mutable state. Design agents as pure functions over immutable inputs and parallelism is safe. If they share state, that is a separate problem the multi-agent design did not cause.</p>
+<p><strong>"We already shipped; ripping out agents is too expensive."</strong> Nothing has to be ripped out. Start by changing what the handoff carries — summary instead of full history. In most codebases that is a small change in one function, and it is where the largest single win usually lives.</p>
+<h2 id="what-better-defaults-would-look-like">What better defaults would look like</h2>
+<p>If the RPC mental model were the default, three things would change.</p>
+<p>Architecture diagrams would show latency budgets on every edge the way they show data flow. A handoff labelled with a duration and a payload size invites a different conversation than an unlabelled arrow.</p>
+<p>Framework defaults would change. The sensible default for a handoff payload is a summary plus the current task, not full history. Frameworks that default to full history are optimising for debuggability at the cost of runtime — a defensible tradeoff during development, a poor one in production.</p>
+<p>Observability tools would surface handoff tax as a first-class metric. Today it has to be instrumented by hand, which is precisely why it stays hidden.</p>
+<p>The broader point is that multi-agent systems are a real architectural pattern with real costs. Treating them as free — which is what most tutorials implicitly do — produces systems that work in demos and disappoint in production. The fix is not to abandon the pattern. It is to measure the boundaries.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open the function that builds the payload for each handoff in your pipeline. Add one line that logs the serialised size in bytes and the agent name. Run your existing latency benchmark, sequentially and at realistic concurrency, and record the numbers. If any payload is larger than a few kilobytes, replace the full history with a bounded summary and re-run the same benchmark. That single change is where the largest win usually hides, and it takes less than thirty minutes to find out whether it applies to you.</p>
                 
                 
             </div>
@@ -449,20 +430,20 @@ Use multiple agents when they have genuinely different tool access, run on diffe
                     
                     <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
                         <h3>Multi-agent systems: when they quietly degrade</h3>
-                        <p>Multi-agent research systems degrade quietly: token growth, retry loops, and missing per-node metrics. Learn what to instrument first to catch the slide.</p>
-                        <span class="related-meta">14 min read · 24 September 2026</span>
+                        <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+                        <span class="related-meta">11 min read · 24 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
                         <h3>Multi-agent systems: why failures hide</h3>
-                        <p>Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</p>
+                        <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
                         <span class="related-meta">12 min read · 18 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
-                        <p>LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</p>
-                        <span class="related-meta">15 min read · 3 October 2026</span>
+                        <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+                        <span class="related-meta">14 min read · 3 October 2026</span>
                     </a>
                     
                 </div>

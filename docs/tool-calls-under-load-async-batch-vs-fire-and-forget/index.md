@@ -1,93 +1,144 @@
 # Tool calls under load: async batch vs fire-and-forget
 
-I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.
+## The two patterns, stated precisely
 
-**Why this comparison matters right now**
+A "tool call" here means any outbound request made from a request handler or worker to another service: an internal microservice, a model inference endpoint, a third-party API. The pattern used to dispatch those calls determines throughput, tail latency, and failure behavior far more than most code review discussions acknowledge.
 
-I once shipped a feature that looked perfect in staging but melted under traffic at 2am. We had added a new AI summarizer endpoint that called a feature extraction service for every document. The staging traffic was 50 req/s, production hit 2,000 req/s, and suddenly every downstream service started timing out. The logs showed 95% of the time was spent waiting for tool calls. The root cause? We’d used a fire-and-forget pattern with exponential backoff—a pattern that works great for rare failures but explodes CPU and memory when every request needs a tool call. This post is what I wish I’d had that night: a side-by-side look at two tool-calling patterns under load, with the instrumentation you need to measure them yourself.
+Two dispatch patterns dominate:
 
-The two patterns we’ll compare are:
-- **Async batch calling** (collect, group, call once)
-- **Fire-and-forget with retries** (call per item, no grouping)
+- **Async batch calling.** Items are buffered, grouped by destination, and sent as one request (or a small number of requests). Results are fanned back out to the original callers. Grouping happens in-process or in a local queue before the network hop.
+- **Fire-and-forget with retries.** Each item triggers its own call. The caller either does not wait for the result or waits only for an enqueue acknowledgment. Failures are retried with backoff, usually by a task queue or worker.
 
-Async batching is the pattern where you gather multiple tool calls, batch them into a single request, and process results together. Fire-and-forget with retries is the pattern where each item fires a tool call immediately and retries on failure. Neither is universally better—they win or lose based on workload shape, latency tolerance, and failure semantics.
+Neither is universally correct. The choice depends on workload shape (calls per request), latency budget for the main flow, required failure semantics, and how many distinct destinations exist. The rest of this article works through each pattern, then gives a measurement procedure so the decision is based on your own numbers rather than a rule of thumb.
 
-Both patterns are common in production systems that integrate with external APIs, model inference servers, or internal microservices. The stakes are real: a misfit pattern can double your cloud bill, triple your P99 latency, or cause cascading timeouts. I’ve watched teams burn $12k/month on over-provisioned queues before realizing the tool calls were the bottleneck. If you’ve ever seen a dashboard spike in CPU while API latency stays flat, this is likely why.
+## Why the choice matters
 
-The key to choosing correctly is measurement. Before you change anything, you need to know: how many tool calls are you making per request? what’s your retry budget? how long can you wait? If you can’t answer these, you’ll optimize the wrong thing.
+The failure mode that motivates this comparison is not "the tool call is slow." It is "the tool call is slow, so the request handler holds a connection, a task, and memory while it waits." Under load, that turns a downstream latency increase into an upstream capacity collapse: the handler pool saturates with requests that are all blocked on I/O, and the service stops accepting new work even though its own CPU is idle.
 
-**Option A — how it works and where it shines**
+Three quantities predict whether this happens:
 
-Async batch calling is the pattern of collecting multiple tool calls, grouping them by destination, and sending a single batched request. It’s the backbone of many high-throughput systems, from batch inference in LLM platforms to bulk image processing pipelines. For example, a document processing service might extract entities from 500 documents per batch instead of calling the entity extractor 500 times.
+1. **Tool calls per request.** If each request makes one call, per-call overhead dominates and batching has nothing to group. If each request makes dozens, the per-call overhead (connection setup, TLS, serialization, scheduling) is multiplied by that count.
+2. **Latency budget for the main flow.** A user-facing endpoint with a 200 ms budget cannot afford to wait for a batch drain interval plus a queue round trip. A background job with a minutes-long budget can.
+3. **Failure semantics.** Whether a single failed item must block the whole result, can be skipped, or must be retried indefinitely changes which pattern is even legal.
 
-Under the hood, async batch calling uses a queue or stream to buffer items, a scheduler to group items by destination, and a single HTTP client per destination. In Python, this often means using `asyncio.gather` with a batch size limit or a library like `httpx`’s streaming API. In Node.js, it’s typically `Promise.all` with batching or a library like `bottleneck` to limit concurrency. The key is that the grouping happens in-process or in-memory before the network hop, which avoids per-call overhead.
+If these three numbers are unknown, any pattern choice is a guess. The instrumentation section below describes how to get them.
 
-Async batch calling shines when:
-- Tool calls are predictable and batched naturally (e.g., 100 documents per user request). - Latency tolerance is moderate (hundreds of milliseconds per batch). - Tool destinations are few and stable (e.g., one or two internal services per app). - You can tolerate partial failures (e.g., a failed batch can be retried or skipped).
+## Option A: async batch calling
 
-A concrete example: In a 2025 redesign of a Jakarta-based e-commerce search service, we moved from per-item elasticsearch queries to async batch calling. Each user search request triggered entity extraction for 50 products. The old code fired 50 HTTP calls; the new code collected the IDs, sent one batched query, and processed the results in bulk. The change cut downstream QPS by 40x and reduced P99 latency from 380ms to 95ms at 1,200 req/s. The batching also reduced CPU usage by 35% because we reused one TCP connection per batch.
+### How it works
 
-Here’s a minimal Python 3.11 implementation using `httpx` and `asyncio`:
+A batcher holds a queue of pending items. A scheduler drains the queue when either the batch size is reached or a drain interval elapses, whichever comes first. The drained batch is sent as one request per destination. Responses are matched back to items by an index or a client-supplied ID.
+
+The essential components:
+
+- A bounded queue (unbounded queues convert overload into out-of-memory kills).
+- A grouping key (destination URL, tenant, schema version).
+- A drain trigger (size threshold, time threshold, or both).
+- A response demultiplexer that maps results back to callers.
+- A partial-failure policy (see below).
+
+### A minimal implementation
 
 ```python
 import asyncio
 import httpx
-from typing import List, Dict
+from typing import Dict, List, Tuple
 
 class AsyncBatcher:
-    def __init__(self, url: str, batch_size: int = 100, max_concurrent: int = 4):
+    def __init__(self, url: str, batch_size: int = 50,
+                 drain_interval: float = 0.05, max_concurrent: int = 4):
         self.url = url
         self.batch_size = batch_size
-        self.max_concurrent = max_concurrent
-        self.queue: asyncio.Queue = asyncio.Queue()
-        self.client = httpx.AsyncClient(timeout=30.0)
+        self.drain_interval = drain_interval
+        self.queue: asyncio.Queue = asyncio.Queue(maxsize=10_000)
+        self.client = httpx.AsyncClient(
+            timeout=30.0,
+            limits=httpx.Limits(max_connections=100, max_keepalive_connections=50),
+        )
         self.semaphore = asyncio.Semaphore(max_concurrent)
+        self._workers = []
+
+    async def start(self):
+        self._workers = [asyncio.create_task(self._run()) for _ in range(2)]
+
+    async def stop(self):
+        for w in self._workers:
+            w.cancel()
+        await asyncio.gather(*self._workers, return_exceptions=True)
+        await self.client.aclose()
 
     async def add(self, item_id: str, payload: Dict):
-        await self.queue.put((item_id, payload))
-        if self.queue.qsize() >= self.batch_size:
-            await self.process()
+        fut: asyncio.Future = asyncio.get_running_loop().create_future()
+        await self.queue.put((item_id, payload, fut))
+        return await fut
 
-    async def process(self):
-        batch: List[Dict] = []
-        item_ids: List[str] = []
-        while not self.queue.empty() and len(batch) < self.batch_size:
-            item_id, payload = await self.queue.get()
-            batch.append(payload)
-            item_ids.append(item_id)
-        if batch:
-            async with self.semaphore:
+    async def _run(self):
+        while True:
+            batch: List[Tuple[str, Dict, asyncio.Future]] = []
+            try:
+                first = await asyncio.wait_for(self.queue.get(), timeout=self.drain_interval)
+                batch.append(first)
+            except asyncio.TimeoutError:
+                continue
+            deadline = asyncio.get_running_loop().time() + self.drain_interval
+            while len(batch) < self.batch_size:
+                remaining = deadline - asyncio.get_running_loop().time()
+                if remaining <= 0:
+                    break
                 try:
-                    response = await self.client.post(self.url, json={"items": batch})
-                    response.raise_for_status()
-                    return response.json()
-                except httpx.HTTPStatusError as e:
-                    # Partial failure handling
-                    return {"error": str(e), "failed_ids": item_ids}
+                    batch.append(await asyncio.wait_for(self.queue.get(), timeout=remaining))
+                except asyncio.TimeoutError:
+                    break
+            await self._dispatch(batch)
 
-# Usage
-batcher = AsyncBatcher(url="http://internal-service/extract", batch_size=50)
-await batcher.add("doc-1", {"text": "..."})
-await batcher.add("doc-2", {"text": "..."})
-results = await batcher.process()
+    async def _dispatch(self, batch):
+        ids = [item[0] for item in batch]
+        payloads = [item[1] for item in batch]
+        futures = [item[2] for item in batch]
+        async with self.semaphore:
+            try:
+                resp = await self.client.post(self.url, json={"items": payloads})
+                resp.raise_for_status()
+                results = resp.json()["results"]
+                for fut, result in zip(futures, results):
+                    if not fut.done():
+                        fut.set_result(result)
+            except Exception as exc:
+                for fut in futures:
+                    if not fut.done():
+                        fut.set_exception(exc)
 ```
 
-The code is simple but misses critical production details: connection pooling, backpressure, and retry logic. In practice, you’d add a background worker that drains the queue every N seconds or when the batch size is reached, and you’d integrate it with your framework’s lifespan events (e.g., FastAPI’s `lifespan` context manager).
+```python
+# usage
+batcher = AsyncBatcher(url="http://internal-service/extract", batch_size=50)
+await batcher.start()
+result = await batcher.add("doc-1", {"text": "..."})
+```
 
-Async batch calling is not a silver bullet. It adds complexity: buffering, grouping, partial failure handling, and backpressure. If your workload is sparse or spiky, the queue can grow unbounded under load, leading to memory bloat or timeouts. And if your tool destinations change frequently (e.g., per-request external APIs with different schemas), batching becomes a liability.
+This version fixes several problems common in naive batchers: the queue is bounded so overload produces backpressure instead of memory growth; the drain loop waits for either a full batch or the interval, so a partially filled batch is not stranded; each caller gets its own future, so one slow item does not corrupt the others' results; and the HTTP client is reused with an explicit connection limit.
 
-**Option B — how it works and where it shines**
+### Failure modes specific to batching
 
-Fire-and-forget with retries is the pattern where each item triggers an immediate tool call and the caller moves on without waiting for the result. If the call fails, it’s retried with exponential backoff, often using a message queue or task runner. This pattern is ingrained in webhooks, event-driven architectures, and many background job systems. For example, a payment service might fire a webhook to a CRM after a transaction completes, without blocking the main flow.
+- **Straggler amplification.** Tail latency of the batch is the maximum of its items' latencies, not the average. A batch of 50 where one item takes 400 ms makes all 50 callers wait 400 ms. This is the single most common reason batching makes P99 worse while improving throughput.
+- **Head-of-line blocking.** If the queue is FIFO and one destination is slow, items behind it wait even if their destination is healthy. Grouping by destination before dispatch mitigates this.
+- **Unbounded queue growth.** If the drain rate is below the arrival rate, a bounded queue applies backpressure (correct) and an unbounded queue consumes memory until the process dies (incorrect). Choose bounded.
+- **Partial failure ambiguity.** If a batch request returns 200 with per-item errors, the caller must parse the body. If it returns 500, it is unclear which items were processed. Idempotency keys on the downstream service are the only reliable fix.
 
-Under the hood, fire-and-forget with retries uses an async task queue (Celery, RQ, BullMQ) or a streaming system (Kafka, AWS SQS) to enqueue the tool call and a worker to execute it. The worker retries on failure and updates state via callbacks or database flags. In Node.js, this is often handled by BullMQ or RabbitMQ with dead-letter queues. In Python, Celery with Redis is the classic stack.
+### When batching fits
 
-Fire-and-forget with retries shines when:
-- Tool calls are unpredictable or event-driven (e.g., webhooks, notifications). - Latency tolerance is high (seconds to minutes). - Tool destinations are many and varied (e.g., hundreds of external APIs per app). - You need strict failure isolation (a failed call doesn’t block unrelated work).
+- Calls per request are naturally high (tens or more) and arrive close together in time.
+- The main flow can tolerate the drain interval plus the batch's maximum item latency.
+- Destinations are few and stable, so grouping keys do not fragment into batches of one.
+- The downstream service accepts a bulk endpoint and defines per-item error semantics.
 
-A concrete example: In a Dublin-based SaaS platform, we used fire-and-forget to call a third-party compliance API for every customer signup. Each user triggered one API call. The call took 200–800ms, but the main flow only waited 20ms for the enqueue. The retry logic ensured eventual consistency: if the compliance API failed, the worker would retry up to 10 times with jitter. The system handled 500 signups/minute at peak without blocking the signup flow. The P99 for the signup endpoint stayed at 70ms, even when the compliance API had a 200ms outage.
+## Option B: fire-and-forget with retries
 
-Here’s a minimal Python 3.11 + Celery (5.3) implementation:
+### How it works
+
+Each item is enqueued to a broker (Redis, SQS, RabbitMQ, Kafka) and a worker pool consumes the queue. The request handler returns as soon as the enqueue succeeds. Retries are handled by the worker framework, typically with exponential backoff and jitter, and terminal failures go to a dead-letter queue.
+
+### A minimal implementation
 
 ```python
 # tasks.py
@@ -96,18 +147,22 @@ import requests
 
 app = Celery('tasks', broker='redis://redis:6379/0')
 
-@app.task(bind=True, max_retries=3)
+@app.task(bind=True, max_retries=5, acks_late=True)
 def compliance_check(self, user_id: str, email: str):
     try:
         response = requests.post(
             "https://compliance.example.com/check",
             json={"user_id": user_id, "email": email},
-            timeout=5
+            timeout=5,
         )
         response.raise_for_status()
     except requests.RequestException as exc:
-        self.retry(exc=exc, countdown=2 ** self.request.retries)
+        # 2^retries seconds, capped; add jitter in production
+        countdown = min(2 ** self.request.retries, 300)
+        raise self.retry(exc=exc, countdown=countdown)
+```
 
+```python
 # app.py
 from tasks import compliance_check
 
@@ -118,190 +173,134 @@ def signup(email: str):
     return {"status": "pending_compliance"}
 ```
 
-The Celery worker handles retries, backpressure, and connection pooling. Redis acts as the message broker and result backend. The key is that the main flow is decoupled from the tool call latency.
+Two details matter more than the retry count. `acks_late=True` means the message is acknowledged only after the task completes, so a worker crash does not silently drop work. The `countdown` cap prevents unbounded backoff growth. Jitter (adding a random offset to the countdown) is required in production to avoid synchronized retry storms when a downstream service recovers.
 
-Fire-and-forget with retries is not a magic wand. It introduces complexity in failure handling and observability. If the queue grows faster than the workers can drain it, you get backpressure and memory pressure. And if the tool call is on the critical path (e.g., a user expects immediate feedback), this pattern will disappoint. It’s also harder to reason about partial failures: did the call succeed? did it retry? what’s the state?
+### Failure modes specific to fire-and-forget
 
-**Head-to-head: performance**
+- **Retry storms.** When a downstream service fails, every in-flight task retries on roughly the same schedule. Without jitter and a cap, the retry traffic can exceed the original traffic and prevent recovery. This is a well-documented pattern; the mitigation is jitter plus a circuit breaker that pauses dispatch while the downstream is unhealthy.
+- **Queue growth outpacing workers.** If arrival rate exceeds drain rate, queue depth grows. With Redis or SQS this is a memory or cost problem; with Kafka it is a lag problem. Alert on queue depth and age of the oldest message, not just on worker count.
+- **Lost correlation.** The task runs in a different process from the original request, so the trace context must be propagated explicitly (a header or a field in the task payload). Without it, a failed task cannot be traced back to the user action that caused it.
+- **Duplicate execution.** At-least-once delivery means tasks can run more than once. The downstream call must be idempotent, or the task must check a completion flag before acting.
 
-We benchmarked both patterns in a controlled 2026 environment: a Kubernetes cluster on AWS with 4 vCPU nodes, 16GB RAM, and a 1Gbps network. The workload was a synthetic API that triggered tool calls for every request. We tested two scenarios:
+### When fire-and-forget fits
 
-- Scenario 1: 1,000 req/s, 50 tool calls per request (synthetic batch workload). - Scenario 2: 500 req/s, 1 tool call per request, but with random 50% failure rate (chaotic single-call workload).
+- Calls per request are low (typically one) or are event-driven and not tied to a request lifecycle.
+- The main flow cannot wait for the tool call, or the result is not needed to produce the response.
+- Destinations are numerous or vary per request, so grouping would not help.
+- Failure isolation is required: one failing call must not block unrelated work.
 
-Tools:
-- Async batch: Python 3.11, `httpx` 0.27, `uvloop` 0.17, batch size 50. - Fire-and-forget: Python 3.11, Celery 5.3, Redis 7.2 (cluster mode, 3 shards), workers=16.
+## Choosing between them: a decision checklist
 
-Latency is measured as the time from request arrival to the first byte of the response. Tool call latency is the end-to-end time for the tool call (including retries).
+Work through these in order. The first question that has a clear answer usually determines the pattern.
 
-| Metric                | Async Batch (50 items) | Fire-and-forget (1 item) |
-|-----------------------|------------------------|--------------------------|
-| P50 latency (req/s)   | 42 ms                  | 38 ms                    |
-| P95 latency (req/s)   | 95 ms                  | 180 ms                   |
-| P99 latency (req/s)   | 150 ms                 | 320 ms                   |
-| Tool call P99 latency | 145 ms                 | 480 ms (with retries)    |
-| CPU usage (cores)     | 1.8                    | 2.4                      |
-| Memory (MB)           | 210                    | 480                      |
-| QPS downstream        | 1,000                  | 45,000                   |
-| Cloud cost (monthly)* | $89                    | $212                     |
+1. **Does the response depend on the tool call result?** If no, fire-and-forget is the default; batching only helps if you also need throughput on the enqueue side.
+2. **How many calls per request, at the median and at P95?** Compute both. A median of 1 with a P95 of 50 is a spiky workload; a median of 40 with a P95 of 60 is a batch workload. They call for different patterns.
+3. **What is the main flow's latency budget, and how much of it is left after the tool call?** If the budget is under roughly 200 ms, a drain interval of 50 ms plus a batch maximum latency is a large fraction of it. Fire-and-forget is safer unless the call is off the critical path.
+4. **Must every item succeed, or can some be skipped?** If every item must succeed, fire-and-forget with a DLQ and manual replay gives an auditable path. Batching requires the downstream to define per-item error semantics.
+5. **How many distinct destinations?** One or two stable destinations favor batching. Hundreds of per-request destinations fragment batches and favor fire-and-forget.
+6. **What is the downstream service's rate limit and bulk API support?** A bulk endpoint with a documented item limit sets your batch size ceiling. A rate limit per caller favors a queue that can smooth traffic.
 
-*Cost assumes AWS EKS pricing for 4 nodes (m6i.xlarge) + Redis 7.2 cluster (3x cache.r6g.large) + egress traffic.
+## How to measure before you choose
 
-Key takeaways:
-- Async batching wins on P99 latency and CPU. It reduces downstream QPS by 45x in the batch scenario, which slashes downstream service load and cost. - Fire-and-forget wins on simplicity for single-call workloads but pays in tool call latency and memory. The retry logic adds ~300ms on average to tool call latency. - Async batching is more sensitive to batch size. If you set the batch size too high, P99 latency spikes because you wait for stragglers. If you set it too low, you lose the benefit.
+The decision should be driven by four metrics collected in your own system. None of them require new infrastructure beyond what most services already run.
 
-The P99 latency jumped to 520ms because a few slow items held up the entire batch. We fixed it by switching to a dynamic batch size: we drained the queue every 50ms or when the batch reached 50 items, whichever came first. That brought P99 back to 150ms.
+**1. `tool_calls_per_request` (histogram).** Record the count of outbound tool calls made while handling each request, labeled by endpoint. This is the single best predictor of whether batching will help. A median above roughly 10 makes batching worth evaluating; a median below 2 makes it unlikely to pay off.
 
-**Head-to-head: developer experience**
+**2. `tool_call_latency_ms` (histogram, labeled by destination and outcome).** Time each call from just before dispatch to just after the response is parsed. Label by destination so a slow downstream is visible separately from a slow caller.
 
-Async batching is easier to reason about in synchronous code but harder to debug when things go wrong. The grouping logic is usually in-process, so stack traces point to the right place. But partial failures are tricky: if one item in a batch fails, do you retry the whole batch or just the failed items? Most teams punt and retry the whole batch, which can mask issues. Observability is also harder: you need to track per-item state through the batch pipeline, which often means adding correlation IDs and custom metrics.
+**3. `tool_call_queue_depth` and `oldest_item_age_seconds` (gauges).** For batching, this is the in-process queue. For fire-and-forget, it is the broker queue. The age of the oldest item is more actionable than the depth: it directly bounds how stale a result can be.
 
-Fire-and-forget shines in observability when integrated with a task queue. Celery, BullMQ, and Temporal provide built-in retries, dead-letter queues, and metrics out of the box. But the decoupling makes it harder to trace a failed tool call back to the original request. Teams often add custom instrumentation: logging the correlation ID with the task, publishing events on retry, and alerting on dead-letter queues.
+**4. `tool_call_errors_total` (counter, labeled by destination and error class).** Distinguish timeouts, connection errors, 4xx, and 5xx. A retry policy that treats all of them identically will retry non-retryable errors and waste the retry budget.
 
-Here’s a concrete comparison of debugging experience:
-
-| Scenario                   | Async Batch                          | Fire-and-forget                     |
-|----------------------------|--------------------------------------|--------------------------------------|
-| Stack trace on failure     | Points to batch processor            | Points to worker, may lose context  |
-| Retry behavior             | Manual or library-specific           | Built-in (Celery, BullMQ, etc.)     |
-| Partial failure handling   | Manual or skip batch                 | Per-item retries, DLQ               |
-| Observability cost         | High (custom metrics per batch)      | Medium (queue metrics, DLQ)         |
-| On-call rotation           | Harder (latency spikes are rare)     | Easier (DLQ alerts are loud)        |
-
-In a 2025 incident, a batch processor in our Jakarta service failed silently on 0.1% of batches due to a race condition in the grouping logic. The stack trace pointed to the batch processor, but the root cause was a misaligned timestamp in the grouping key. Debugging took 4 hours because we had no per-item metrics. We added a Prometheus metric `batch_processor_items_failed_total` with labels for batch ID and error type, which cut future debugging time to minutes.
-
-Fire-and-forget is more forgiving for rapid iteration. If you change the tool call schema, you can update the worker without redeploying the main service. Async batching often requires redeploying the main service when the batch schema changes, which slows down iteration.
-
-**Head-to-head: operational cost**
-
-Async batching reduces downstream QPS, which cuts cloud costs at the network and service level. In our benchmark, async batching reduced downstream QPS from 45,000 to 1,000, which slashed the load on the downstream service by 45x. That translated to a 60% reduction in downstream service cost (from $180/month to $72/month) and a 25% reduction in egress traffic cost.
-
-Fire-and-forget increases operational cost in three ways:
-- Queue infrastructure: Redis cluster, SQS, or Kafka adds cost and complexity. - Worker scaling: You need enough workers to drain the queue under peak load. - Retry storms: If the tool destination is flaky, retries can amplify load and cost.
-
-In a 2026 outage, a Dublin team’s compliance API had a 5-minute outage. The Celery workers retried every failed task, which generated 120,000 extra messages in 5 minutes. The Redis cluster burst to 90% memory usage, and the team had to manually scale the cluster and clear the queue. The incident cost $400 in over-provisioned Redis and 2 engineer-hours.
-
-Here’s a cost breakdown for a 1,000 req/s workload with 50 tool calls per request:
-
-| Cost component            | Async Batch (monthly) | Fire-and-forget (monthly) |
-|---------------------------|-----------------------|---------------------------|
-| Compute (main service)    | $89                   | $120                      |
-| Downstream service        | $72                   | $180                      |
-| Queue/storage             | $12                   | $150                      |
-| Egress traffic            | $25                   | $60                       |
-| Total                     | $198                  | $510                      |
-
-Async batching is cheaper in CPU, downstream load, and egress, but the queue cost is lower for fire-and-forget because it uses shared infrastructure (e.g., Redis is already there for caching). The break-even point depends on your workload: if you’re making more than ~10 tool calls per request on average, async batching usually wins on cost.
-
-**The decision framework I use**
-
-I use this framework when choosing between async batch and fire-and-forget:
-
-1. **Workload shape**
-   - If tool calls are predictable and batched naturally (e.g., 50+ per request), choose async batch. - If tool calls are sparse or event-driven (e.g., webhooks, notifications), choose fire-and-forget.
-
-2. **Latency tolerance**
-   - If the main flow must respond in <200ms, avoid fire-and-forget unless the tool call is truly async (e.g., notifications). - If the main flow can wait seconds or minutes, fire-and-forget is fine.
-
-3. **Failure semantics**
-   - If partial failures are acceptable (e.g., skip a failed item), async batch can work with retries. - If every item must succeed (e.g., payment validation), use fire-and-forget with DLQ and manual recovery.
-
-4. **Tool destination diversity**
-   - If you call the same destination repeatedly (e.g., one internal service), async batching wins. - If you call many destinations (e.g., hundreds of external APIs), fire-and-forget is more maintainable.
-
-5. **Observability**
-   - If your team has strong metrics and tracing (e.g., OpenTelemetry, Datadog), async batching is manageable. - If your team relies on queue alerts (e.g., DLQ size), fire-and-forget is easier to monitor.
-
-6. **Team velocity**
-   - If your schema changes frequently, fire-and-forget is more flexible. - If your batch schema is stable, async batching is simpler.
-
-I made a mistake early in my career by standardizing on async batching for everything. We used it for user-facing features like search and recommendations, which worked great until we added a new feature: real-time ad bidding. The ad bidding service required per-request calls with strict latency guarantees. Async batching added 120ms of overhead, and our P99 latency for the ad endpoint jumped from 80ms to 200ms. We had to rip out the batching and switch to fire-and-forget with a custom retry budget. The lesson: batching isn’t free—it adds latency and complexity.
-
-**My recommendation (and when to ignore it)**
-
-If you’re building a new feature today, here’s the rule I follow:
-
-- **Use async batch calling if** your workload is naturally batched (10+ tool calls per request) and your latency tolerance is moderate (<300ms P99). - Start with a batch size of 50 and a drain interval of 50ms. - Instrument per-item latency and batch size metrics. - Use a connection pool with keep-alive (e.g., `httpx` with `limits=Limits(max_connections=100)`).
-
-- **Use fire-and-forget with retries if** your workload is sparse or event-driven (1 tool call per request on average) or your latency tolerance is high (>500ms). - Use a task queue with DLQ (Celery + Redis 7.2 or BullMQ). - Set a reasonable retry budget (3–5 retries with jitter). - Alert on DLQ size and retry rate.
-
-This recommendation ignores a few edge cases:
-- If your tool destination is a third-party API with strict rate limits (e.g., Stripe, Twilio), fire-and-forget with a rate-limited queue is safer than async batching. - If your batch size fluctuates wildly (e.g., 1–500 items per request), async batching is risky. Use a dynamic batch size with a max timeout. - If you’re in a regulated industry (e.g., finance, healthcare), fire-and-forget with DLQ and audit trails is often mandatory.
-
-Async batching is my default for internal services and user-facing features. It’s simpler to reason about, cheaper to run, and easier to optimize. Fire-and-forget is the fallback for everything else. But the real trick is measuring first—before you choose, instrument your tool call patterns. If you can’t measure, you can’t optimize.
-
-**Final verdict**
-
-Async batch calling is the better pattern for most production workloads in 2026. It reduces downstream load, cuts P99 latency, and lowers cloud costs. But it’s not a universal fit: if your workload is sparse, latency-sensitive, or chaotic, fire-and-forget with retries is the safer choice.
-
-The deciding factor is measurement. Before you commit to either pattern, you need to know:
-- How many tool calls are you making per request? - What’s your P99 latency tolerance for the main flow? - What’s your retry budget for tool calls? - How many tool destinations do you have?
-
-If you don’t have these answers, start with fire-and-forget and a task queue. It’s easier to instrument and debug, and it won’t paint you into a corner if your workload changes. Once you’ve measured, you can optimize toward async batching if it makes sense.
-
-Add this one metric first: `tool_calls_per_request histogram`. It’s the single best predictor of which pattern will work for you. If the median is >10, lean async batching. If the median is <2, lean fire-and-forget. Anything in between depends on your latency tolerance and failure semantics.
-
-Measure, don’t guess. The pattern you choose today will haunt you at 3am when the dashboard is red.
-
-## Frequently Asked Questions
-
-**how do i know if my tool calls are batched enough for async pattern**
-
-Start by logging the number of tool calls per request in your main flow. If the median is above 10 and the 95th percentile is above 50, async batching will likely help. If the median is below 2, fire-and-forget is safer. Watch for outliers: even one request with 200 tool calls can skew your decision. In a Jakarta e-commerce service, we saw a median of 8 tool calls per request but a 95th percentile of 150 during Black Friday. We switched to async batching with a dynamic batch size and cut downstream QPS by 18x.
-
-**what batch size should i start with for async tool calls**
-
-Begin with a batch size of 50 and a drain interval of 50ms. These values balance latency and throughput. In Node.js, a batch size of 30–50 is common for internal services. In Python, 50–100 works well with `httpx` and `uvloop`. Monitor P99 latency and queue depth. If P99 latency spikes above your SLO, lower the batch size or increase the drain interval. If throughput is too low, increase the batch size or add more workers.
-
-**how do i handle partial failures in async batch calls**
-
-Partial failures are inevitable. Decide upfront whether to retry the whole batch or just the failed items. Retrying the whole batch is simpler but can mask issues. Retrying per-item is more precise but adds complexity. Most teams retry the whole batch and log the failed items. Add a custom metric like `batch_processor_items_failed_total` with labels for batch ID and error type. In a 2025 incident, a batch processor failed silently on 0.1% of batches. The metric helped us identify the root cause (a race condition in grouping logic) in minutes instead of hours.
-
-**what retry strategy works for fire-and-forget tool calls**
-
-Use exponential backoff with jitter and a max retry count. Celery’s default (3 retries, 2^x seconds) is a good starting point. Add a dead-letter queue (DLQ) for failed tasks and alert on DLQ size. Avoid constant retries—jitter prevents thundering herds. In a Dublin compliance service, a 503 from the API triggered 120,000 retries in 5 minutes. We added jitter, limited retries to 5, and set a DLQ alert. The incident cost dropped from $400 to $20.
-
-**how do i measure tool call latency without observability debt**
-
-Start with three metrics: `tool_call_latency_ms`, `tool_calls_per_request`, and `tool_call_errors_total`. Log them per request in your main flow. Use OpenTelemetry or Datadog to propagate a trace ID through the tool call. In Python, wrap tool calls with a decorator:
+A minimal instrumentation wrapper:
 
 ```python
+import time
 from opentelemetry import trace
-from functools import wraps
 
 tracer = trace.get_tracer(__name__)
 
-def instrument_tool_call(func):
-    @wraps(func)
-    async def wrapper(*args, **kwargs):
-        with tracer.start_as_current_span(f"tool_call.{func.__name__}"):
-            start = time.time()
-            try:
-                result = await func(*args, **kwargs)
-                return result
-            except Exception as e:
-                span.record_exception(e)
-                raise
-            finally:
-                span.set_attribute("latency_ms", (time.time() - start) * 1000)
-    return wrapper
+async def instrumented_call(destination: str, coro_fn, *args, **kwargs):
+    with tracer.start_as_current_span(f"tool_call.{destination}") as span:
+        start = time.perf_counter()
+        try:
+            result = await coro_fn(*args, **kwargs)
+            span.set_attribute("outcome", "ok")
+            return result
+        except Exception as exc:
+            span.record_exception(exc)
+            span.set_attribute("outcome", type(exc).__name__)
+            raise
+        finally:
+            elapsed_ms = (time.perf_counter() - start) * 1000
+            span.set_attribute("latency_ms", elapsed_ms)
 ```
 
-Deploy this for one week, then decide which pattern to use based on the data. Most teams underestimate the observability cost of tool calls—measure first, optimize later.
+Run this for one to two weeks, then compute:
 
----
+- The median and P95 of `tool_calls_per_request` per endpoint.
+- The P99 of `tool_call_latency_ms` per destination.
+- The correlation between queue depth and request latency.
 
-### About this article
+If the P95 of calls per request is high and the P99 of tool latency is low relative to the budget, batching is likely to help. If calls per request are low and the P99 is dominated by a single slow destination, batching will not fix it; the destination is the problem.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+## Sizing a batch: a worked example
 
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+Suppose the main flow's latency budget is 300 ms, and the downstream service's P99 per-item latency is 80 ms. With a drain interval of D and a batch size of B, the worst-case added latency for an item that arrives just after a drain is approximately D plus the batch's maximum item latency. If item latencies are independent, the maximum of B items grows with B even when the mean is stable.
 
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
+Illustrative arithmetic with stated assumptions: assume per-item latency is roughly constant at 80 ms and the drain interval is 50 ms. Then:
 
-**Last reviewed:** June 13, 2026
+- An item arriving just after a drain waits up to 50 ms, then the batch takes about 80 ms. Worst case ≈ 130 ms.
+- If per-item latency has a long tail (P99 of 400 ms), the batch's maximum is 400 ms, so worst case ≈ 450 ms, which exceeds a 300 ms budget.
+
+The conclusion is that batch size does not affect the mean much but strongly affects the tail, because the tail of a batch is the maximum of its items. A practical approach is to cap batch size by the latency budget rather than by throughput: choose the largest B such that the observed P99 of the batch maximum stays within budget. Measure the batch maximum directly by recording, per batch, the maximum per-item latency.
+
+If the downstream service exposes a bulk endpoint with a documented item limit, that limit is a hard ceiling. Otherwise, start with a size that keeps the batch request payload under a few hundred kilobytes and adjust based on the batch-maximum metric.
+
+## Partial failures: the policy question
+
+Both patterns must answer the same question: when one item fails, what happens to the others?
+
+Three policies are common:
+
+- **All-or-nothing.** The whole batch is retried. Simple, but a single poison item blocks the batch indefinitely. Requires a retry cap and a DLQ for the batch.
+- **Per-item retry.** Failed items are re-queued individually. More precise, but requires the downstream to identify which items failed, and it can multiply queue traffic.
+- **Skip-and-log.** Failed items are recorded and dropped. Acceptable only when the work is genuinely optional.
+
+For fire-and-forget, the equivalent choice is the retry budget and the DLQ policy. A retry budget of three to five attempts with jitter and a cap is a common starting point; the DLQ must be monitored, because an unmonitored DLQ is a silent data loss channel.
+
+## Operational considerations
+
+**Backpressure.** Both patterns need an explicit answer to "what happens when arrival exceeds drain rate." For batching, a bounded queue that blocks or rejects is the answer. For fire-and-forget, the broker's retention limit and the worker autoscaling policy are the answer. In both cases, the failure should be visible as a metric before it becomes an outage.
+
+**Idempotency.** At-least-once delivery applies to both patterns: a batch request can be retried after a timeout even though the downstream processed it, and a task can run twice. The downstream operation should be idempotent, keyed on a client-supplied ID, or guarded by a completion check.
+
+**Observability cost.** Batching requires per-item metrics inside the batch pipeline to attribute failures. Fire-and-forget requires trace context propagation into the worker. Both are real costs and should be budgeted when choosing.
+
+**Schema evolution.** If the tool call payload changes frequently, a worker-based pattern lets the worker be redeployed independently of the main service. A batcher embedded in the main service couples the two deployment cycles.
+
+## FAQ
+
+**How do I know if my workload is batch-shaped?**
+
+Log `tool_calls_per_request` per endpoint for a week and look at the median and P95. A high median with a low spread is batch-shaped. A low median with a high P95 is spiky; batching will help the spikes but not the common case, so evaluate whether the spikes are worth the added complexity.
+
+**What batch size should I start with?**
+
+Start with a size that keeps the batch request payload small and the batch-maximum latency within budget. Measure the maximum per-item latency within each batch; if the P99 of that maximum exceeds your budget, reduce the size. There is no universal number, because it depends on the downstream's latency distribution.
+
+**How do I handle a poison item that always fails?**
+
+Cap retries and route terminal failures to a DLQ. For batching, retry the batch once, then split it or fall back to per-item calls for the failed batch so the poison item can be isolated.
+
+**What retry strategy works for fire-and-forget?**
+
+Exponential backoff with jitter, a cap on the delay, and a maximum attempt count. Without jitter, retries synchronize and amplify load on a recovering downstream. The cap prevents a task from being delayed indefinitely.
+
+**How do I measure tool call latency without adding heavy instrumentation?**
+
+Wrap the call site in a span or a timer that records duration and outcome, labeled by destination. Export as a histogram. The wrapper above is a few lines and adds negligible overhead compared to the network call itself.
+
+## One action to take in the next 30 minutes
+
+Add a `tool_calls_per_request` histogram to your main request handler: increment a counter at each outbound tool call site and record the total per request at the end of the handler. Deploy it, and in a week you will have the median and P95 that determine whether batching is worth building. Everything else in this article follows from those two numbers.

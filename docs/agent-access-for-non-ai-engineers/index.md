@@ -1,10 +1,10 @@
 # Agent access for non-AI engineers
 
-building internal looks simple until it has to survive real traffic. The edge cases only show up once real users hit the system. Here's what changed once we stopped guessing and started measuring.
+Building internal agent access looks simple until it has to survive real traffic. The edge cases only show up once real users hit the system, and the failures are usually semantic rather than structural: a 200 OK response that did the wrong thing.
 
 ## The one-paragraph version (read this first)
 
-Non-AI engineers — backend, frontend, data, SRE — need to call agents without understanding transformer internals, and agents need to call their code without breaking it. Internal tools that broker this safely usually have three parts: a policy layer that decides what an agent can do, a typed tool interface that makes every agent action inspectable, and a sandbox that limits blast radius when the model hallucinates a parameter. Get those three right and a team of 40 engineers can ship agent-powered features without a dedicated ML platform group. Get them wrong and you get the classic failure mode: an agent writes to production because the tool schema said `environment: string` instead of an enum. The confusion this post resolves is why "just call the API" doesn't work for agents, and what to build instead.
+Non-AI engineers — backend, frontend, data, SRE — need to call agents without understanding transformer internals, and agents need to call their code without breaking it. Internal tools that broker this safely usually have three parts: a policy layer that decides what an agent can do, a typed tool interface that makes every agent action inspectable, and a sandbox that limits blast radius when the model hallucinates a parameter. Get those three right and a mid-sized engineering org can ship agent-powered features without a dedicated ML platform group. Get them wrong and the classic failure mode appears: an agent writes to production because the tool schema said `environment: string` instead of an enum. The confusion this post resolves is why "just call the API" doesn't work for agents, and what to build instead.
 
 ## Why this concept confuses people
 
@@ -12,11 +12,11 @@ The confusion starts with a category error. Engineers treat an LLM agent like a 
 
 That difference shows up in three places that surprise people:
 
-**Argument validation is not optional.** When a human calls `POST /orders`, they read the schema. When an agent calls it, the model samples from a distribution over plausible arguments. A field typed as `string` in your OpenAPI spec is, to the model, a suggestion. A common failure: the schema says `quantity: integer`, the model emits `quantity: 3.0` because JSON numbers don't distinguish, and your strict Pydantic v2 model raises `ValidationError: Input should be a valid integer, got a number with a fractional part`. That's a 400 the agent will retry, sometimes in a loop, sometimes with the same value.
+**Argument validation is not optional.** When a human calls `POST /orders`, they read the schema. When an agent calls it, the model samples from a distribution over plausible arguments. A field typed as `string` in your OpenAPI spec is, to the model, a suggestion. A common failure: the schema says `quantity: integer`, the model emits `quantity: 3.0` because JSON numbers don't distinguish, and a strict Pydantic v2 model raises `ValidationError: Input should be a valid integer, got a number with a fractional part`. That's a 400 the agent will retry, sometimes in a loop, sometimes with the same value.
 
-**Idempotency is a different problem.** Humans click once. Agents retry. If your internal tool doesn't carry an idempotency key derived from the agent's reasoning step, a transient 503 turns into three refunds. This is well-documented in the Stripe idempotency model — the pattern is old, but agents make it mandatory rather than nice-to-have.
+**Idempotency is a different problem.** Humans click once. Agents retry. If an internal tool doesn't carry an idempotency key derived from the agent's reasoning step, a transient 503 turns into three refunds. The Stripe idempotency model documents the pattern well — it is old, but agents make it mandatory rather than nice-to-have.
 
-**Observability doesn't transfer.** A trace of a normal request shows spans for HTTP calls and DB queries. A trace of an agent request shows a reasoning chain, tool calls, and tool results, and the interesting failures are semantic: the agent picked the wrong tool, or picked the right tool with a plausible-but-wrong argument. Your existing Jaeger or Datadog dashboards will show a 200 OK and tell you nothing.
+**Observability doesn't transfer.** A trace of a normal request shows spans for HTTP calls and DB queries. A trace of an agent request shows a reasoning chain, tool calls, and tool results, and the interesting failures are semantic: the agent picked the wrong tool, or picked the right tool with a plausible-but-wrong argument. Standard Jaeger or Datadog dashboards show a 200 OK and tell you nothing about whether the action was correct.
 
 The part that trips people up is that all three problems are solvable with ordinary backend engineering — typed schemas, idempotency keys, structured logging — but only if you stop thinking of the agent as a client and start thinking of it as an untrusted caller with a fluent but unreliable understanding of your API.
 
@@ -30,11 +30,11 @@ That analogy gives you four concrete design rules:
 
 2. **Set a statement timeout.** Agents loop. Every tool call gets a wall-clock budget — 5 seconds for a read, 30 seconds for a write, hard kill after. This is the single highest-value guardrail and the one teams skip most often.
 
-3. **Run against a replica first.** For any tool that mutates state, give the agent a dry-run mode that returns what *would* happen. Most agent frameworks (LangGraph 0.2, OpenAI Assistants API, Anthropic's tool-use) support a two-phase call pattern where the model can inspect the dry-run result before committing.
+3. **Run against a replica first.** For any tool that mutates state, give the agent a dry-run mode that returns what *would* happen. Most agent frameworks support a two-phase call pattern where the model can inspect the dry-run result before committing.
 
 4. **Log the query, not just the result.** You need the exact arguments the model produced, not just the outcome, because the interesting bug is "the model picked `region: 'us-east-1'` when the user meant `eu-west-1'`" — a semantic error that a 200 response hides.
 
-Here's what that looks like as a minimal Python tool definition using Pydantic 2.7 and the standard `@tool` decorator pattern that works with LangChain 0.2 or standalone:
+Here's what that looks like as a minimal Python tool definition using Pydantic 2.7 and the standard `@tool` decorator pattern:
 
 ```python
 from enum import Enum
@@ -65,11 +65,11 @@ The `dry_run: bool = True` default is the important line. It means a model that 
 
 ## A concrete worked example
 
-A common scenario: an internal "deploy service" tool. The naive version exposes `deploy(service: str, version: str, environment: str)`. Within a week of giving this to an agent, a team typically sees one of these:
+A common scenario: an internal "deploy service" tool. The naive version exposes `deploy(service: str, version: str, environment: str)`. Within a short time of giving this to an agent, one of these typically appears:
 
 - The agent deploys `service: "api"` to `environment: "prod"` when the user asked for staging, because "prod" appeared earlier in the conversation context.
 - The agent retries a failed deploy three times, and the third retry succeeds against a partially-deployed state, leaving two versions running.
-- The agent passes `version: "latest"`, which your tool accepts, and which silently resolves to whatever tag was pushed most recently — including from a feature branch.
+- The agent passes `version: "latest"`, which the tool accepts, and which silently resolves to whatever tag was pushed most recently — including from a feature branch.
 
 The fix is not a better prompt. It's a tool that makes these failures structurally impossible:
 
@@ -96,51 +96,67 @@ export async function deploy(rawArgs) {
 
 Three things changed. The `version` regex rejects `latest` and any tag that isn't a full semver plus git SHA — the model can't pass a branch name. The `confirmation` literal is a speed bump: the model has to produce an exact string, which reduces (not eliminates) accidental prod deploys. And `requireApproval` makes prod deploys asynchronous with a human in the loop, which is the only reliable guardrail for irreversible actions.
 
-Teams that adopt this pattern report the same thing: the agent's success rate on the *first* attempt drops, because the model now has to produce valid arguments, but the rate of *dangerous* actions drops to near zero. That trade is almost always correct for internal tools.
+The trade-off teams report is consistent: the agent's success rate on the *first* attempt drops, because the model now has to produce valid arguments, but the rate of *dangerous* actions drops sharply. That trade is almost always correct for internal tools.
 
-| Approach | Agent success rate (typical) | Dangerous action rate | Ops overhead |
+The table below is **illustrative** — the ranges are plausible orders of magnitude, not measured benchmarks. Treat the columns as things to instrument in your own system, not as published results.
+
+| Approach | First-attempt success | Dangerous-action rate | Ops overhead |
 |---|---|---|---|
-| Free-form JSON args | 85–90% | 2–5% | Low initially, high after incident |
-| Typed schema, no confirmation | 75–82% | 0.5–1% | Medium |
-| Typed + confirmation + dry-run | 65–75% | <0.1% | Medium-high |
-| Typed + human approval for writes | 60–70% | ~0% | High |
+| Free-form JSON args | High | Highest | Low initially, high after incident |
+| Typed schema, no confirmation | Medium | Low | Medium |
+| Typed + confirmation + dry-run | Lower | Very low | Medium-high |
+| Typed + human approval for writes | Lowest | Near zero | High |
 
-Those numbers are illustrative ranges from teams running this pattern, not benchmarks — your mileage depends heavily on how well the tool descriptions map to the model's training distribution. The shape of the trade-off is what matters.
+To replace the illustrative column with real numbers, instrument three counters per tool: `tool_calls_total`, `tool_calls_validation_failed_total`, and `tool_calls_irreversible_total` (writes that passed every guardrail). The first-attempt success rate is `1 - validation_failed/total`. The dangerous-action rate is the count of irreversible calls that a reviewer later marked incorrect, divided by total calls. Both are cheap Prometheus counters; the hard part is the review step, which is why audit logs matter.
 
 ## How this connects to things you already know
 
-If you've built an internal API gateway, you already know 80% of this. The agent is just a client with unusual properties:
+If you've built an internal API gateway, you already know most of this. The agent is just a client with unusual properties:
 
-- **Rate limiting** — same as any untrusted client. Agents burst. A token bucket at 10 req/s per agent session is reasonable.
-- **Circuit breakers** — same. If a downstream tool fails 5 times in 30 seconds, stop calling it and return a structured error the agent can reason about.
-- **Schema registries** — same idea as Confluent Schema Registry, but for tool definitions. Version your tool schemas; when you change one, agents running against the old version should fail loudly, not silently.
+- **Rate limiting** — same as any untrusted client. Agents burst. A token bucket per agent session is a reasonable shape.
+- **Circuit breakers** — same. If a downstream tool fails repeatedly in a short window, stop calling it and return a structured error the agent can reason about.
+- **Schema registries** — same idea as a schema registry for events, but for tool definitions. Version your tool schemas; when you change one, agents running against the old version should fail loudly, not silently.
 - **Audit logs** — same as any compliance-relevant write. Log the agent ID, the reasoning trace ID, the arguments, and the outcome. 90-day retention is a common baseline.
 
 The new thing is that the *caller* is non-deterministic, which means your error messages are now part of the interface. A `400 Bad Request` with a stack trace teaches the agent nothing. A `400` with `{"error": "invalid_region", "allowed": ["us-east-1", "eu-west-1"], "hint": "region must match the customer's data residency"}` lets the agent self-correct on the next turn. This is the same principle as good API design for humans, but the cost of a bad error message is now measured in retry loops rather than support tickets.
 
 ## Common misconceptions, corrected
 
-**"We need a dedicated ML platform team."** No. The work is backend engineering: schemas, validation, idempotency, observability. A team of two senior backend engineers can build the initial broker in 3–4 weeks. The ML expertise you need is narrow — understanding that models hallucinate plausible arguments, not understanding attention mechanisms.
+**"We need a dedicated ML platform team."** No. The work is backend engineering: schemas, validation, idempotency, observability. A small team of senior backend engineers can build the initial broker in a few weeks. The ML expertise you need is narrow — understanding that models hallucinate plausible arguments, not understanding attention mechanisms.
 
 **"The agent will figure out the right tool."** It will, if your tool descriptions are written like API docs for a very literal reader. "Deploy a service to an environment" is worse than "Deploy a versioned build (git SHA required) of a service to staging or prod. Prod requires human approval." Description quality is a bigger lever than model choice in most internal-tool settings.
 
 **"We can add guardrails later."** You can't, because the incident that makes you want guardrails is the incident that already wrote to prod. Add the `dry_run` default and the `confirmation` literal on day one. They cost an hour.
 
-**"Structured output means we're safe."** Structured output (OpenAI's `response_format`, Anthropic's tool-use schema) guarantees the *shape* is valid. It does not guarantee the *values* are correct. A perfectly-typed `region: "us-east-1"` is still wrong if the customer is in Frankfurt.
+**"Structured output means we're safe."** Structured output guarantees the *shape* is valid. It does not guarantee the *values* are correct. A perfectly-typed `region: "us-east-1"` is still wrong if the customer is in Frankfurt.
 
 **"We'll just use a bigger model."** Bigger models hallucinate fewer arguments but not zero, and they cost more per call. The guardrail work is orthogonal to model choice, and it's the part you control.
+
+## Failure-mode analysis: what actually goes wrong
+
+Guardrails fail in predictable ways. Walking through the failure modes is more useful than memorizing the guardrail list.
+
+**The default that wasn't.** A tool ships with `dry_run: bool = True` but the broker's wrapper constructs arguments explicitly and sets `dry_run=False` unconditionally, because a developer was debugging. The default never applies. *Detection:* assert in tests that a call with no explicit `dry_run` produces a dry-run. *Fix:* make the wrapper pass through only caller-supplied fields.
+
+**The confirmation bypass.** The model learns to always emit `confirmation: "CONFIRM_DEPLOY"` because the tool description says it must. The literal stops being a speed bump and becomes boilerplate. *Detection:* track how often the literal appears in calls that also fail semantic validation; a high correlation suggests the model is echoing without reasoning. *Fix:* rotate the literal per session and include it in the tool description at call time, so it can't be memorized across sessions.
+
+**The retry amplification.** A tool times out client-side but succeeds server-side. The agent retries with a new idempotency key because the key is generated per attempt rather than per reasoning step. Two deploys happen. *Detection:* compare server-side write counts to client-side call counts per session. *Fix:* derive the idempotency key from `(session_id, reasoning_step_index, tool_name)` and never regenerate it on retry.
+
+**The policy that drifted.** A rules engine rejects writes to regions outside the customer's contract. Six months later a new region is added to the enum but not to the policy file, so the policy silently allows it. *Detection:* a test that enumerates every enum value and asserts the policy has an explicit decision for each. *Fix:* generate the policy's allowed set from the same source as the enum.
+
+**The trace you can't replay.** Traces store the result but not the exact tool version, so a replay against current code produces different behavior and the investigation stalls. *Detection:* a nightly job that replays yesterday's traces against the recorded tool version and diffs the outcomes. *Fix:* store a tool-version hash alongside every turn.
 
 ## The advanced version (once the basics are solid)
 
 Once the basic broker is in place, three things become worth building:
 
-**Per-agent capability tokens.** Instead of one tool surface, issue scoped tokens per agent session. A "read-only analytics" agent gets tokens that can call `query_metrics` but not `deploy`. This is the same principle as AWS IAM roles for service accounts, applied to agents. Implementation is usually a signed JWT with a `tools` claim, validated at the broker.
+**Per-agent capability tokens.** Instead of one tool surface, issue scoped tokens per agent session. A "read-only analytics" agent gets tokens that can call `query_metrics` but not `deploy`. This is the same principle as IAM roles for service accounts, applied to agents. Implementation is usually a signed JWT with a `tools` claim, validated at the broker.
 
-**Semantic argument validation.** Beyond types, validate *meaning*. If `region: "eu-west-1"` but the customer's contract says data must stay in `ap-southeast-1`, reject. This is a rules engine, not an ML problem, and it catches the class of errors that typed schemas miss. A common implementation is a small policy file evaluated per tool call, using something like OPA or a hand-rolled rule set.
+**Semantic argument validation.** Beyond types, validate *meaning*. If `region: "eu-west-1"` but the customer's contract says data must stay in `ap-southeast-1`, reject. This is a rules engine, not an ML problem, and it catches the class of errors that typed schemas miss. A common implementation is a small policy file evaluated per tool call, using a policy engine such as OPA or a hand-rolled rule set.
 
-**Replayable traces.** Store the full agent turn — prompt, tool calls, arguments, results — in a queryable store (Postgres with a JSONB column works fine at internal-tool scale, up to a few million turns). When an agent does something surprising, you can replay the exact sequence against a fixed tool version and see whether the model or the tool changed. This is the agent equivalent of a database WAL, and it's what turns "the agent did something weird" into a debuggable incident.
+**Replayable traces.** Store the full agent turn — prompt, tool calls, arguments, results, tool version — in a queryable store. Postgres with a JSONB column works at internal-tool scale. When an agent does something surprising, you can replay the exact sequence against a fixed tool version and see whether the model or the tool changed. This is the agent equivalent of a database WAL, and it's what turns "the agent did something weird" into a debuggable incident.
 
-A realistic scale target: 40 engineers, 200 agent sessions per day, 5 tool calls per session, 1,000 turns per day. That's 30,000 rows per month in your trace table — trivial for Postgres 16 with a BRIN index on the timestamp column. You do not need a vector database or a data lake for this.
+A realistic scale target, worked through: 40 engineers, 200 agent sessions per day, 5 tool calls per session, 1,000 turns per day. That's 30,000 rows per month in the trace table. A single Postgres instance with a BRIN index on the timestamp column handles that without tuning. A vector database or data lake is not required for this workload.
 
 ## Quick reference
 
@@ -155,13 +171,6 @@ A realistic scale target: 40 engineers, 200 agent sessions per day, 5 tool calls
 | Semantic errors | Policy rules (OPA or hand-rolled) | Broker |
 | Debugging | Replayable traces in Postgres JSONB | Storage |
 | Scope creep | Per-session capability tokens (JWT) | Auth layer |
-
-## Further reading worth your time
-
-- The Stripe idempotency documentation is still the clearest explanation of why retry-safe writes matter, and it applies directly to agent tool calls.
-- Pydantic v2's discriminated union docs show the exact pattern for closed-set arguments.
-- The OpenTelemetry semantic conventions for GenAI (still evolving as of 2026) are worth tracking if you want your agent traces to interoperate with existing APM tooling.
-- If you're on AWS, look at Bedrock Guardrails and Lambda's reserved concurrency as two cheap levers for limiting agent blast radius without building a platform.
 
 ## Frequently Asked Questions
 
@@ -180,16 +189,3 @@ Almost certainly not. The storage you need is a trace table — prompt, tool cal
 ## The one thing to do in the next 30 minutes
 
 Open the tool definition file for your most dangerous agent-callable function — the one that writes to prod, sends money, or deletes data — and add a single line: `dry_run: bool = True` as the default for its arguments, plus a `confirmation` literal field that the caller must set to a fixed string. Run your existing agent test suite against it. If any test starts failing, that test was exercising a path that could have written to prod without approval, and you just found your first real guardrail gap.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026

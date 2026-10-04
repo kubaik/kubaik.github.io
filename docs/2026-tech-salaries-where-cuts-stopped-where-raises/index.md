@@ -1,196 +1,139 @@
 # 2026 tech salaries: where cuts stopped, where raises
 
-It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.
+## The core claim, stated plainly
 
-## The one-paragraph version (read this first)
+Salary bands are not a single market. They are a function of four variables that move independently: company funding stage and runway, whether the role touches revenue-generating or regulated code, whether cash is being traded for equity, and the tax treatment of a cross-border employment relationship. When people say "salaries fell" or "salaries rose" in 2026, they are usually describing one of these variables and generalising it to all four.
 
-In 2026 the market settled into two clear tracks: companies that weathered the correction kept pay competitive for niche skills, while mass-market roles stayed flat or fell 5–15%. The inflection point came when Series C+ startups finally ran out of runway and paused hiring; salaries fell fastest for mid-level engineers ($65–95k TC in Nairobi) and recruiters who couldn’t place them got creative with equity and signing bonuses. Meanwhile, AI infra roles (prompt engineers, MLOps, infra reliability) kept climbing and now top $120–150k TC for remote-first teams.
+The practical consequence: two engineers with the same title, same years of experience and same city can be 40% apart in total compensation, and neither is being underpaid relative to their own company's constraints. Judging an offer by title and city alone will mislead you.
 
-## Why this concept confuses people
+This article gives you a model for decomposing an offer, a worked comparison with the arithmetic shown, the failure modes that make equity and cross-border pay worse than they look, and a checklist you can run against a real offer letter.
 
-Most engineers still think of salary bands by geography alone: Nairobi vs London vs San Francisco. That misses how the correction fractured by company stage, funding runway, and product category. A Series B fintech in Nairobi paying $55–75k in 2026 might now offer $75–95k if it raised in 2026, but only if the product is embedded finance or crypto rails. Generic SaaS products are stuck at 2026 levels or are quietly moving compensation to RSUs instead of cash.
+## Why the "geography only" model fails
 
-The other confusion is the treatment of equity. In 2026 most Series A+ startups issue options at $0.10–$0.30 per share priced at the last round, but only 15% of engineers actually sell within 12 months of vesting because liquidity events are scarce. Teams now routinely swap 10–15% of cash for RSUs with a 2× acceleration clause, which looks good on paper until you realize the tax hit on grant day is real and most startups still can’t confirm a secondary market.
+The common mental model is a single axis: Nairobi pays X, London pays Y, San Francisco pays Z. That model was always approximate, but it breaks badly when funding conditions diverge between companies in the same city.
 
-Finally, remote policies changed how cost-of-living adjustments work. A Nairobi engineer hired by a US company now faces two tax regimes: Kenyan PAYE on local income and US FICA on the remote portion. Most payroll providers (Deel, Remote, Oyster) default to the lower of the two, which can cost the engineer 8–12% of gross if the US company doesn’t gross-up.
+A more useful decomposition treats a company as a set of concentric rings around its value engine:
 
-## The mental model that makes it click
+- **Innermost ring — the product.** If the code is the differentiator (a payments ledger, a lending decision engine, custody infrastructure), the company cannot easily replace the people who own it. Compensation for those roles tends to be sticky or rising.
+- **Next ring — the customer segment.** Selling to enterprises and to other technical buyers generally supports higher pay than selling to consumers, because contract values and margins are higher.
+- **Outer ring — the funding story.** A company with a long runway can hire at its planned band. A company with a short runway is either freezing, cutting, or converting cash into equity.
 
-Think of the market as a set of concentric rings around the company’s core value engine. The innermost ring is the product itself: if the product is differentiated code or regulated data (e.g., payments, lending, crypto custody), salaries are sticky or rising. The next ring is the customer segment: selling to enterprises and other startups pays more than selling to consumers. The outer ring is the company’s funding story: Series C+ with 18+ months runway can still hire at 2026 rates; Series A/B with 6–12 months runway are either cutting or freezing.
+The outer ring dominates in a tight market. A well-funded company and a thinly-funded company in the same city, hiring for the same role, will produce very different offers, and the difference is not a negotiation tactic — it reflects what each can actually commit to.
 
-Use this simple table to sanity-check any offer:
+## A worked example: two senior backend offers
 
-| Ring | Example roles | 2026 salary range TC (USD, Nairobi-based remote or local) | Trend | Funding signal |
-|---|---|---|---|---|
-| Core product | Staff+ engineers, security lead, data infra | $110k–150k | ↗️ | Series C+, 24+ months runway |
-| Core product (mid-level) | Backend, mobile, ML platform | $65k–95k | ↗️ if embedded → ↘️ if generic SaaS | Any healthy round |
-| Adjacent product | DevEx, analytics, growth infra | $50k–75k | ➖ flat | Series B with 12 months runway |
-| Enabling layers | DevOps, QA automation, customer success engineering | $40k–60k | ↘️ if cost center | Pre-Series A or bootstrapped |
-| Consumer-facing | Frontend, content, community | $30k–50k | ↘️ flat | Revenue-negative |
+The following figures are **illustrative**, chosen to make the arithmetic visible. Substitute your own numbers.
 
-The funding signal matters most: if a company raised in 2026 and still has 18 months runway, it’s still hiring aggressively for roles that touch revenue. If it raised in 2026 and is still private, it’s either cutting headcount or converting roles to contractors.
+**Offer A — Series B fintech, closed a round roughly 18 months before the offer, remote-first.**
 
-## A concrete worked example
+- Base cash: $85,000
+- Signing bonus: $12,000, paid in two tranches (30 days and 180 days)
+- Equity: 3,000 options at a $0.25 strike, current 409A valuation $0.32, 1× acceleration after 12 months
+- Remote stipend: $1,200/year, paid as a taxable allowance
 
-Let’s run the numbers on a real senior backend role I negotiated last month. The company is a Nairobi-founded fintech with a Series B closed in July 2026 (18 months runway). They’re hiring a senior backend engineer to own the core ledger and compliance pipelines.
+First-year cash: $85,000 + $12,000 + $1,200 = **$98,200**.
 
-1. Base cash: $85k
-2. Signing bonus: $12k (paid in two tranches: 30 days and 180 days)
-3. RSUs: 3,000 shares of the 2026 Series B priced at $0.25 with 2× acceleration after 12 months (current 409A is $0.32, so the spread is minimal but the company promises a secondary at Series C)
-4. Remote stipend: $1,200/year for co-working or home office (taxed as allowance)
+The equity's paper spread is 3,000 × ($0.32 − $0.25) = **$2,100**. That is the intrinsic value if you could sell today, which you cannot. Everything beyond that is a bet on a future valuation and a future liquidity event.
 
-Total first-year cash equivalent: $98.2k, plus RSUs with a 5% chance of liquidity within 24 months.
+**Offer B — Series C+ company in the same niche, remote-first, longer runway.**
 
-Now compare to a Series C+ competitor in the same niche (also remote-first, Series C in Jan 2026, 24+ months runway):
+- Base cash: $95,000
+- Signing bonus: $15,000
+- Equity: 2,500 options at a $0.50 strike, 409A at $0.55, 3× acceleration after 12 months
+- Remote stipend: $2,400/year
+- Learning budget: $3,000/year; conference travel: $2,000/year
 
-- Base: $95k
-- Signing: $15k
-- RSUs: 2,500 shares priced at $0.50 with 3× acceleration after 12 months (409A at $0.55)
-- Remote: $2,400/year (because the US parent company treats it as a cost-of-living adjustment)
+First-year cash: $95,000 + $15,000 + $2,400 = **$112,400**.
 
-Total first-year cash equivalent: $112.4k, RSUs with a 20% chance of liquidity within 24 months.
+Paper spread on equity: 2,500 × ($0.55 − $0.50) = **$1,250**.
 
-The delta is 14% cash and 2× acceleration on the RSUs. The Series C+ role also includes a $3k annual learning budget and a $2k conference travel budget — not cash, but it reduces out-of-pocket costs.
+The cash delta is $112,400 − $98,200 = **$14,200**, or about 14.5% of the lower offer. The equity spread is actually *smaller* on Offer B in absolute terms, which is the counter-intuitive part: a later-stage company often has a narrower gap between strike and fair market value because the strike was set at a higher, more recent valuation.
 
-He said: “I trust the local team more and the RSU spread is smaller, so the tax hit on exercise will be lower.” That’s the kind of irrational but real preference that moves the market.
+That means the "equity is worth more at the later-stage company" intuition is only true if you weight the probability of a liquidity event heavily. On intrinsic value alone, the earlier-stage grant looks better. On cash, the later-stage offer wins clearly.
 
-## How this connects to things you already know
+### How to measure the equity component honestly
 
-If you’ve ever benchmarked cloud costs using AWS Cost Explorer, you already know that the sticker price isn’t the real price. The same is true for salaries: the headline number is only part of the story. The invisible costs are taxes, secondary liquidity, and runway risk.
+There is no published dataset that will tell you what a specific private company's options are worth. You have to build the estimate yourself, and label every input as an assumption:
 
-Think of salary components like a Lambda function’s memory and timeout settings. Base cash is like the memory: you pay for it every millisecond. Signing bonus is like an initial burst of CPU credits: it gives you headroom but runs out fast. RSUs are like provisioned concurrency: they’re expensive if you don’t use them, but they smooth out spikes in demand (in this case, equity events).
+1. **Probability of a liquidity event within your vesting horizon.** This is the input people guess most freely and it dominates the result. Anchor it to something observable: has the company had a secondary tender offer? Are later-stage investors marking up the position? How many months of runway does the last disclosed round buy at current burn?
+2. **Expected exit valuation relative to the current 409A.** Use the last primary round's post-money valuation as a ceiling unless you have specific evidence for more.
+3. **Your ownership percentage, fully diluted.** Ask for the fully diluted share count, not just your share number. A grant of 3,000 shares means nothing without the denominator.
+4. **Tax at exercise or settlement.** For options, the spread at exercise can be taxable even without a sale in some jurisdictions. Model this as a cash outflow, not a footnote.
 
-Another analogy: salary bands are like a rate card in a managed database service. The list price is public, but the real cost depends on how you configure it (e.g., multi-AZ, encryption at rest, backup retention). Most engineers only look at the list price and don’t account for the IAM policies, cross-border tax treaties, or vesting cliffs that change the real cost.
+Multiply probability × expected value × your diluted ownership, then discount for illiquidity. If the result is a small fraction of your cash component, treat the equity as a lottery ticket and negotiate on cash.
 
-If you’ve used AWS Budgets to set hard limits on dev environments, you already know the value of guardrails. Apply the same mental model to salary: set hard limits on base cash, cap signing bonuses at 15% of TC, and never let RSUs exceed 20% of total compensation unless you have a clear liquidity path.
+## Failure modes that make offers worse than they look
 
-## Common misconceptions, corrected
+**Stale strike prices.** A grant priced at the last round's valuation looks attractive until the next 409A comes in lower. If the fair market value drops below your strike, your options are underwater before they vest, and the "discount" you negotiated evaporates. The mitigation is contractual, not analytical: ask whether the company will reprice or regrant if a future 409A falls below your strike. Many will not commit to this in writing, and that refusal is itself information.
 
-Misconception 1: “If a company is remote-first, it must pay SF Bay Area rates.”
+**Acceleration clauses that don't trigger.** Single-trigger acceleration (vesting accelerates on a change of control alone) is meaningfully different from double-trigger (acceleration requires both a change of control and your termination). A "2× acceleration" headline is worth little if the trigger conditions are unlikely to be met in the scenario where you'd actually need it.
 
-Reality: Only ~1% of Nairobi engineers actually get SF Bay rates. Most remote-first US companies use a location-adjustment matrix that pegs Nairobi to the 25th percentile of US mid-tier cities like Austin or Atlanta, then apply a cost-of-living multiplier. In 2026 that lands at $85–110k TC for senior+ roles, not $150k+.
+**Location-adjustment matrices.** Remote-first companies frequently peg a location to a percentile of a comparable market rather than paying a single global rate. The published band may be wide precisely so that the actual offer can land anywhere inside it. If a band is quoted as a range, assume the offer is at the lower end unless you have a competing offer.
 
-The final offer letter showed $92k after location adjustment and a 10% “remote stipend” that was taxed as income. Net drop: 18%.
+**Cross-border payroll defaults.** When a company in one country employs someone in another through a payroll provider, the default configuration is often the one that minimises the employer's cost, not the employee's. Withholding treatment, social contributions and treaty positions vary by country and by provider. The only reliable approach is to model your own after-tax number for each offer and confirm it with a qualified tax advisor in your country of residence. Do not rely on a provider's marketing page for your personal tax position.
 
-Misconception 2: “Equity is always better than cash.”
+**Contractor-versus-employee arithmetic.** A contractor rate looks higher per hour but carries costs the headline hides: you absorb employer-side contributions, you have no paid leave, and the engagement can end without notice. When comparing, convert both to an annualised all-in cost including unpaid time between contracts, then compare. The comparison often flips depending on how many weeks per year you can actually bill.
 
-Reality: Equity is a lottery ticket. In 2026, only 8% of Nairobi-based engineers at Series A/B/C companies realized any value from equity within 18 months of vesting. The rest either held worthless paper or sold at a steep discount in a secondary that never materialized. The exception is companies that raised at >$500M post-money or have a clear IPO path within 24 months.
+## A decision checklist for a real offer
 
-Net result: he paid $12k in taxes for options worth $8k in the open market.
+Run these in order. Stop when an offer fails a step that matters to you.
 
-Misconception 3: “Contractors are cheaper than full-time hires.”
+1. **Cash first.** What is guaranteed first-year cash (base + signing + allowances)? Ignore equity for this step.
+2. **Runway.** How many months does the last round fund at current burn? Ask directly; a refusal to answer is a signal.
+3. **Equity denominator.** What is the fully diluted share count, and what percentage is your grant?
+4. **Strike versus current 409A.** What is the spread today, and when was the 409A last set?
+5. **Trigger conditions.** Is acceleration single- or double-trigger, and what multiple applies?
+6. **Liquidity history.** Has the company ever run a secondary or tender offer? If yes, at what price relative to the then-current 409A?
+7. **Tax.** Model your after-tax number under the actual withholding regime, not the headline rate.
+8. **Reversibility.** If the equity is worth zero, is the cash still competitive for your market? If not, the offer is an equity bet dressed as a salary.
 
-Reality: Contractors cost 20–30% more per hour once you factor in payroll taxes, benefits, and the hidden cost of knowledge loss. In Nairobi, a mid-level contractor now bills at $50–75/hour, while a full-time engineer costs $45–65k TC. At 40 hours/week, the contractor is 10–20% more expensive and you still have to manage the relationship.
+## Comparing offers across tax regimes
 
-The only time contractors make sense is for short, scoped spikes (e.g., a 3-month migration or a compliance audit) where you don’t want to hire a full-time FTE.
+The comparison people get wrong most often is between a high-cash, low-tax jurisdiction and a lower-cash, higher-tax one. The error is comparing gross numbers.
 
-Misconception 4: “Salary transparency laws equal higher pay.”
+Work through it as a sequence of explicit steps, using illustrative figures:
 
-Reality: In Kenya, the Employment (Amendment) Act 2026 requires salary bands in job ads, but it doesn’t mandate higher pay. It forces companies to publish bands that are often wider than the actual range, giving them room to lowball candidates who don’t negotiate.
+1. **Start with gross cash.** Offer X: $85,000. Offer Y: $110,000.
+2. **Apply the actual withholding regime.** If Offer X is subject to a 30% effective rate, net cash is $85,000 × 0.70 = $59,500. If Offer Y is subject to 0%, net cash is $110,000.
+3. **Subtract the cost-of-living delta.** If the higher-cash location costs an additional $30,000/year in housing and related expenses, the effective advantage narrows to $110,000 − $59,500 − $30,000 = $20,500.
+4. **Add back the value of benefits you would otherwise buy.** If Offer X includes $5,000/year of learning and travel budgets you would otherwise fund yourself, the gap narrows further.
+5. **Then, and only then, add a discounted equity estimate.**
 
-## The advanced version (once the basics are solid)
+The point of the sequence is that equity should be the last line, not the first. When it is added last, it is much harder for a large but improbable number to dominate the decision.
 
-If you’re at the point where you’re comparing offers across multiple currencies or negotiating a relocation, you need to model the after-tax cash flow and the time value of money on equity.
+A further complication: tax residence is not the same as physical location, and treaty positions between countries determine whether income is taxed once, twice, or with a credit. This is genuinely jurisdiction-specific and changes with legislation. Treat any general statement about "0% tax" as a starting question for an advisor, not an answer.
 
-Here’s a concrete model I built for a colleague who was deciding between a Nairobi fintech ($85k TC, 2,000 RSUs) and a Dubai crypto exchange ($110k TC, 1,500 RSUs, 0% income tax).
+## What the market data can and cannot tell you
 
-Step 1: After-tax cash
+Published compensation datasets are useful for establishing the shape of a distribution and almost useless for pricing an individual offer. They are self-reported, skewed toward large employers and toward people who are motivated to report, and they rarely capture equity terms in enough detail to be comparable.
 
-- Nairobi: $85k base, 30% PAYE, $12k net. RSUs: 2,000 shares at $0.25 grant, 409A at $0.32. AMT hit at exercise: ~$1.4k. Vesting: 4 years, 1 year cliff. Expected liquidity: 20% chance at 24 months at 3× current price. - Dubai: $110k base, 0% income tax, $110k net. RSUs: 1,500 shares at $1.00 grant, 409A at $1.10. No AMT. Vesting same. Expected liquidity: 40% chance at 18 months at 2× current price.
+The honest use of such data is to answer "is my cash component within a plausible range for this role and market?" It cannot answer "is this equity worth anything?" and it cannot answer "is this offer good for me?" Those require the company-specific inputs in the checklist above.
 
-Step 2: Net present value of equity
+If you want to build your own picture rather than rely on someone else's dataset, the measurement is straightforward: record the guaranteed cash, the fully diluted ownership percentage, the strike, the current 409A, the acceleration terms and the runway for every offer you receive or hear about from a trusted peer. After a handful of data points you will have a small, biased, but *first-hand* dataset that is more relevant to your decisions than any aggregate.
 
-Assume a 15% discount rate for illiquidity and a 50% chance the company fails to exit. The Nairobi RSUs are worth $2.4k today (20% × 2,000 × ($1.00 – $0.32) × 0.5). The Dubai RSUs are worth $3.3k today (40% × 1,500 × ($2.20 – $1.10) × 0.5).
+## FAQ
 
-Step 3: Total compensation in year 1
+**Why do some roles stay flat while others rise in the same market?**
 
-- Nairobi: $12k net cash + $2.4k NPV equity = $14.4k
-- Dubai: $110k net cash + $3.3k NPV equity = $113.3k
+Roles tied to revenue-generating or regulated systems are harder to substitute and tend to hold their bands. Roles that are seen as cost centres are the first to be frozen or converted to contract. The title matters less than whether the work sits close to the money.
 
-Even with the tax-free Dubai salary, the cash component dominates. The only way Nairobi wins is if the fintech raises another round at a 3× multiple within 18 months — a tail event.
+**Is a signing bonus a good substitute for base?**
 
-Step 4: Risk-adjusted decision
+It is a one-time payment, so it does not compound into future raises, equity refreshes or severance calculations. A $15,000 signing bonus and a $15,000 base increase are not equivalent even in year one, and the gap widens every year after. Treat signing bonuses as bridging cash, not as compensation.
 
-If the colleague values stability over upside, the Dubai offer is clearly better. If they believe in the fintech’s niche (embedded finance) and are willing to take the equity risk, Nairobi could pay off — but only if they negotiate a higher base and a shorter vesting cliff.
+**How do I evaluate options when the company won't share the fully diluted count?**
 
-The fintech matched the Dubai offer by adding a $15k signing bonus and accelerating 50% of the RSUs at 12 months. Net result: $107k first-year cash, plus equity with a clearer path to liquidity.
+You cannot evaluate them, and that is the answer. Ask in writing. If the company declines to provide the denominator, price the equity at zero for decision purposes and negotiate on cash.
 
-## Quick reference
+**Does a lower strike always mean a better grant?**
 
-| Role | Market band 2026 TC (USD, Nairobi-based) | Trend | Red flags |
-|---|---|---|---|
-| Junior backend (0–3 yrs) | $25–40k | ↘️ flat | Generic SaaS, no funding news |
-| Mid backend (3–7 yrs) | $55–75k | ↗️ if fintech/embedded | Consumer product, pre-Series A |
-| Senior backend (7+ yrs) | $75–95k | ↗️ if owned core system | Generic API team, no promotions |
-| Staff/principal | $110–140k | ↗️ | Series C+, owned by VP Eng |
-| Staff+ security lead | $120–150k | ↗️ | Regulated product, SOC 2 audit |
-| ML infra engineer | $100–130k | ↗️ | AI product, GPU budget |
-| SRE | $90–120k | ↗️ | On-call rotation, runbooks |
-| DevOps | $60–85k | ➖ flat | Cost center, no infra budget |
-| Data engineer | $70–95k | ↗️ if real-time pipelines | Batch ETL, BI focus |
-| Mobile lead | $80–110k | ↗️ if fintech/app store monetization | Consumer app, no revenue |
+No. A lower strike usually reflects an earlier, lower valuation. What matters is the spread between strike and current fair market value, your ownership percentage after dilution, and the probability of a liquidity event. A low strike on a large grant in a company with no exit path is worth less than a modest grant in a company with a clear path.
 
-Signing bonus norms
-- Entry level: 5–10% of TC
-- Mid level: 10–15% of TC
-- Senior+: 15–20% of TC
-- Above that, it’s signaling (e.g., counter-offer retention)
+**Should I take the higher gross offer?**
 
-RSU norms
-- Series A: 0.2–0.5% of fully diluted for senior+ (1,500–3,000 shares)
-- Series B: 0.5–1.0% (2,500–5,000 shares)
-- Series C+: 1.0–2.0% (5,000–10,000 shares)
-- Acceleration: 1×–3× after 12 months is standard; 4× is aggressive
+Only after you have computed after-tax cash, subtracted the cost-of-living delta, and priced the equity at something you can defend. Gross numbers are the beginning of the comparison, not the end of it.
 
-Remote stipend
-- US/EU companies: $2.4k–$3.6k/year (taxed as income)
-- Local companies: $1.2k–$2.4k/year (tax-free allowance in Kenya)
+## Do this in the next 30 minutes
 
-Equity liquidity
-- 8% of Nairobi engineers realize value within 18 months
-- 40% chance if company is Series C+ with 24+ months runway
-- 10% chance if company is Series A/B
-
-## Further reading worth your time
-
-1. Kenya Revenue Authority’s 2026 PAYE tables for remote workers — shows how location adjustments are taxed. 2. “State of Tech Compensation 2026” by Levels.fyi — the raw dataset behind most of these numbers, but requires cleaning. 3. Y Combinator’s 2026 SAFE note templates — shows how startups structure equity after the correction. 4. Deel’s 2026 Global Payroll Tax Guide — the only public source that maps Nairobi payroll taxes for US companies. 5. Nairobi Blockchain Association’s salary survey 2026 — niche but accurate for crypto/blockchain roles.
-
-## Frequently Asked Questions
-
-Why are Nairobi salaries still rising for fintech roles but flat for generic SaaS?
-
-Generic SaaS products depend on global subscription revenue, which got hammered in 2026 when US enterprise budgets froze. Fintech and embedded finance products, however, are still growing 20–30% YoY because they’re tied to local transaction volume. In 2026, Kenyan banks and telcos are still expanding digital lending and wallet rails, so fintech engineers are in short supply and command premium pay.
-
-How do I negotiate RSUs when the 409A valuation is stale?
-
-Ask for a side letter that pegs the strike price to the next 409A valuation, not the current one. Most companies will agree if you’re a senior+ hire. Also negotiate the vesting schedule: ask for a 6-month cliff instead of 12 months so you start realizing value sooner. If the company refuses, walk — stale 409A valuations are the #1 red flag for equity quality.
-
-In one case, a colleague accepted RSUs priced at $0.20 with a 12-month cliff. Six months later the 409A dropped to $0.15, wiping out 25% of the grant’s value before it vested.
-
-What’s the real cost difference between a contractor and a full-time hire in Nairobi?
-
-A mid-level contractor bills $50–75/hour, which at 40 hours/week is $8k–12k/month. A full-time engineer costs $45–65k TC, which is $3.7k–5.4k/month after PAYE. But contractors also incur payroll tax (10–12% in Kenya), benefits (NHIF, NSSF), and the hidden cost of knowledge loss (onboarding, context switching). Net result: contractors cost 20–30% more per hour and you still have to manage the relationship.
-
-The only time contractors make sense is for short, scoped spikes (e.g., a 3-month migration or compliance audit).
-
-Is it worth moving to Dubai for a 0% income tax role?
-
-Only if you’re single or your spouse can work remotely. Dubai’s cost of living (especially housing) has risen 25% since 2026, offsetting the tax savings. Also, UAE doesn’t have a double-taxation treaty with Kenya, so you’ll still pay Kenyan taxes on any Kenya-sourced income. In 2026, the breakeven is around $130k TC in Dubai vs $100k TC in Nairobi after factoring in housing, flights, and Kenya taxes on remote income.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 10, 2026
+Take any offer you are currently considering — or the one you accepted most recently — and write down five numbers in a single line: guaranteed first-year cash, fully diluted ownership percentage, strike price, current 409A, and months of runway funded by the last round. If you cannot fill in all five, you have identified the exact questions to send the company today, in writing, before you make any further decision.
+===END===

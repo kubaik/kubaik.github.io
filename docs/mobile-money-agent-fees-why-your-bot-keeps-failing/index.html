@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mobile money agent fees: why your bot keeps failing - Kubai Kevin</title>
-        <meta name="description" content="Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.">
+        <meta name="description" content="USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.">
         <meta name="keywords" content="ErrPaymentFailed, UssdSessionTimeout, MtnMomoSession, Apis, Mobiledev">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-05T14:16:59.891393">
-        <meta property="article:modified_time" content="2026-10-04T04:59:02.934789+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:53:15.131348+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Mobile money agent fees: why your bot keeps failing">
-        <meta property="og:description" content="Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.">
+        <meta property="og:description" content="USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.">
         <meta property="og:url" content="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Mobile money agent fees: why your bot keeps failing">
-        <meta name="twitter:description" content="Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.">
+        <meta name="twitter:description" content="USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/mobile-money-agent-fees-why-your-bot-keeps-failing.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/#article",
       "headline": "Mobile money agent fees: why your bot keeps failing",
-      "description": "Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.",
+      "description": "USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.",
       "datePublished": "2026-08-05T14:16:59+00:00",
-      "dateModified": "2026-10-04T04:59:02+00:00",
-      "wordCount": 2427,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-04T10:53:15+00:00",
+      "wordCount": 2523,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Mobile money agent fees: why your bot keeps failing</h1>
                 
-                <p class="post-lead">Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.</p>
+                <p class="post-lead">USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.</p>
                 
                 
                 <div class="tags">
@@ -250,8 +250,8 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2427 words
+                        13 min read
+                        &nbsp;·&nbsp; 2523 words
                         
                         &nbsp;·&nbsp; Updated 2026-10-04
                         
@@ -260,195 +260,180 @@
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.</p>
+                <p>A payment agent that works on a laptop and fails in the cloud after a few minutes of runtime is a well-documented pattern. The cause is usually not the payment logic. It is a mismatch between the agent's connection lifecycle and the provider's session contract.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>You built a lightweight agent that submits USSD requests to a mobile-money provider for a user paying in local currency via their phone wallet. It works perfectly on your laptop, but in the cloud it starts throwing <code>ERR_PAYMENT_FAILED</code> after 2–3 minutes of runtime. You check the payment logs and see 100% success on the provider side, yet the agent still fails. The error message is generic, the provider’s documentation says nothing about timeouts, and the agent’s own logs show no exceptions. This pattern—"works locally, fails in production after a few minutes"—is common when the agent’s runtime behavior doesn’t match the provider’s session expectations.</p>
-<p>The part that trips people up is the mismatch between the agent’s stateless loop and the provider’s stateful session contract. The provider expects a fresh USSD session per transaction and closes idle connections after 90 seconds. Most agents, however, keep a long-lived HTTP pool and reuse the same TCP connection, which the provider interprets as a single continuous session. When the provider times out the session, it rejects subsequent requests with <code>ERR_PAYMENT_FAILED</code> even though the agent sees no errors. That’s the real failure mode: silent session invalidation disguised as a payment failure.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>Mobile-money providers in 2026 still use USSD gateways that were designed for feature phones and USSD sessions, not for modern HTTP agents. Each USSD session has a hard 90-second idle timeout enforced by the gateway. After the timeout, the gateway releases the session state and any subsequent request over the same TCP connection is rejected with <code>ERR_PAYMENT_FAILED</code>. Most agents use a single HTTP client with connection pooling (e.g., Python’s <code>httpx</code> with <code>limits=10</code>) and keep the pool alive for minutes, unaware that the provider treats each TCP socket as a session.</p>
-<p>A typical scenario: your agent processes a queue of 200 local-payment requests for Ghanaian users paying via MTN Mobile Money. The agent reuses the same <code>httpx.Client</code> instance to avoid handshake overhead. After 90 seconds of idle time between requests, the provider drops the session. Your agent then sends the next request on the same socket, and the provider responds with <code>ERR_PAYMENT_FAILED</code>, even though the agent’s logs show a 200 OK from the provider’s health endpoint. The agent interprets this as a payment failure and retries, creating a cascade that burns money and degrades user trust.</p>
-<p>Historically, USSD gateways from MTN, Airtel, and Vodafone in Africa used 60–90 second session timeouts by default. A 2026 GSMA report on mobile money APIs confirmed that 87% of SS7/USSD gateways in sub-Saharan Africa still enforce 90-second session lifetimes. In 2026, newer REST/JSON gateways (like MTN’s MOMO API v2) expose explicit <code>session_id</code> fields, but many teams still hit the legacy path because their SDK or wrapper defaults to the older endpoint.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p>The most common fix is to enforce a session-per-transaction model by closing and recreating the HTTP client for every request. In Python with <code>httpx</code>, this means avoiding a shared client and instead using a new client per request or per batch. The tradeoff is higher latency (TLS handshake per request) and higher cost (more ephemeral IPs), but it matches the provider’s session contract.</p>
+<p>An agent submits USSD requests to a mobile-money provider on behalf of a user paying from a phone wallet in local currency. It runs correctly against a local test harness. Deployed to a cloud runtime, it starts returning <code>ERR_PAYMENT_FAILED</code> after two to three minutes. The provider's payment logs show successful transactions. The agent's own logs show no exceptions. The error string is generic, and the provider documentation often says nothing about session timeouts.</p>
+<p>The mismatch is between a stateless HTTP client loop and a stateful USSD session contract. USSD gateways were built for feature phones, where a session is a short-lived, interactive exchange. Many gateways enforce a hard idle timeout — commonly around 90 seconds — and release session state when it expires. A modern HTTP agent that keeps a long-lived connection pool reuses the same TCP socket across requests. If the provider maps a socket to a session, an idle gap longer than the timeout invalidates that session. The next request over the same socket is rejected, and the rejection surfaces as a payment error rather than a session error. This is silent session invalidation disguised as a payment failure.</p>
+<p>The confusion compounds because health checks and balance queries may keep returning 200 OK on the same client. Only the transaction path fails, and only after an idle period.</p>
+<h2 id="whats-actually-causing-it">What's actually causing it</h2>
+<p>Three mechanisms are responsible, and they can overlap.</p>
+<p><strong>Socket-to-session binding.</strong> Some gateways treat an open TCP connection as a session. Connection pooling — for example an HTTP client configured with <code>limits=10</code> — keeps sockets open between requests. After the idle timeout, the gateway discards session state but the socket remains open on the client side. The next write goes to a socket the provider no longer recognises.</p>
+<p><strong>Keep-alive that does not reset the timer.</strong> Some providers expose a keep-alive or ping endpoint. A common trap is assuming a ping resets the session timer. On legacy SS7-backed gateways, keep-alive traffic can be advisory: the gateway still enforces the idle timeout independently. The documentation rarely states this, and teams typically discover it only from traffic captures.</p>
+<p><strong>Egress-layer idle timers.</strong> Cloud NAT gateways and load balancers have their own TCP idle timeouts. A NAT gateway may hold a connection open for several minutes. If the provider's session timeout is shorter, the socket survives past the point where the provider has forgotten the session. The next request is then routed over a socket the provider considers new or invalid. This is environment-specific: it depends on the egress timeout of the runtime, and it is more likely to appear on platforms with short default NAT timeouts and cold-start behaviour.</p>
+<p>A typical failure sequence: an agent drains a queue of local-currency payment requests. It reuses one HTTP client to avoid TLS handshake overhead. A gap between requests exceeds the gateway idle timeout. The provider drops session state. The agent sends the next request on the same socket and receives <code>ERR_PAYMENT_FAILED</code>. The agent classifies this as a payment failure and retries, which can double-charge or exhaust the user's balance if the retry lands on a fresh session.</p>
+<h2 id="diagnosing-before-fixing">Diagnosing before fixing</h2>
+<p>Do not apply fixes blind. Establish which mechanism is active.</p>
+<ol>
+<li>Capture traffic. Run <code>tcpdump -i any -w momo.pcap port 443</code> on the agent host (or a sidecar) for five minutes, then inspect in Wireshark. Look for whether the client reuses one TCP stream across requests, and whether the server sends <code>FIN</code> or <code>RST</code> after an idle period.</li>
+<li>Log connection identity. In Python with <code>httpx</code>, log <code>id(response)</code> and the underlying transport's connection info per request. In Node.js, log the socket's local port. If the local port is identical across requests separated by more than the gateway timeout, socket reuse is confirmed.</li>
+<li>Correlate timing. Plot request timestamps against failures. A cluster of failures at a fixed offset after the last successful request is strong evidence of an idle timeout.</li>
+<li>Check the provider's response headers. Some gateways return <code>X-Session-Timeout</code>, <code>X-Idle-Timeout</code>, or a session identifier in headers. If present, record the value; it is the authoritative number, not a guess.</li>
+<li>Compare environments. Run the same agent against the same provider from a local machine and from the cloud runtime. If only the cloud path fails, an egress timer is involved.</li>
+</ol>
+<p>Only after this step does it make sense to choose a fix.</p>
+<h2 id="fix-1-session-per-transaction">Fix 1 — session per transaction</h2>
+<p>The most direct fix is to stop sharing connections across transactions. Create a fresh HTTP client per request, or per transaction, so each payment gets a new socket and therefore a new session.</p>
 <pre><code class="language-python"># Before — shared client, session reuse, eventual ERR_PAYMENT_FAILED
 import httpx
 
 client = httpx.Client(timeout=30.0, limits=httpx.Limits(max_connections=10))
 
-# After — new client per request, per-session contract
+# After — new client per request, matching the per-session contract
+import uuid
 import httpx
 
 def send_payment(payload: dict) -&gt; str:
     with httpx.Client(timeout=30.0) as client:
         r = client.post(
-            &quot;https://momodeveloper.mtn.com/v2/ussd/send&quot;,
+            &quot;https://example-provider.invalid/v2/ussd/send&quot;,
             json=payload,
             headers={&quot;X-Reference-Id&quot;: str(uuid.uuid4())}
         )
         r.raise_for_status()
         return r.json()[&quot;status&quot;]
 </code></pre>
-<p>Benchmarks from a Nairobi fintech in 2026 showed a 150 ms median latency increase (from 210 ms to 360 ms) when switching from a shared client to a per-request client, but the error rate dropped from 4.2% to 0.08% over a 30-day period. The cost increase was ~$180/month for 500k requests (extra ephemeral IP allocations), but it eliminated the cascade of failed payments that cost ~$12k/month in refunds.</p>
-<p>Teams that tried to optimize by keeping a small pool of 2–3 clients still hit the timeout wall because the provider treats each TCP socket as a session. The pool size doesn’t matter if the provider enforces a 90-second idle timeout on any open socket.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p>Some agents use a queue worker with a long-running process and a persistent HTTP pool, but they also rely on provider-provided keep-alive endpoints. A less obvious failure mode is when the keep-alive endpoint itself returns <code>ERR_SESSION_INVALID</code> after 90 seconds, even though the agent sends the keep-alive every 60 seconds. This happens because the provider’s keep-alive endpoint is tied to the same session ID as the USSD session, and the session times out independently of the keep-alive pings.</p>
-<p>A common trap here is assuming that keep-alive pings reset the session timer. In practice, some providers (especially legacy SS7 gateways) treat keep-alive as advisory and still enforce the 90-second idle timeout. The provider’s documentation rarely clarifies this, and teams discover it only after debugging traffic dumps.</p>
-<p>The fix is to decouple the keep-alive from the session lifecycle by using the newer REST/JSON endpoints that expose explicit <code>session_id</code> fields. In MTN’s MOMO API v2, for example, each <code>send</code> request returns a <code>sessionId</code> that must be used for subsequent requests within the same transaction. Using that session ID correctly resets the provider’s session timer.</p>
-<pre><code class="language-python"># Using session ID to reset timer (MTN MOMO v2)
+<p>The tradeoff is a TLS handshake per request: added latency, more ephemeral source ports, and possibly more NAT gateway traffic. To measure whether this is acceptable, instrument the following before and after the change:</p>
+<ul>
+<li>Median and p99 request latency, from the agent's own timing, with the client creation included.</li>
+<li>Count of <code>ERR_PAYMENT_FAILED</code> responses per thousand requests.</li>
+<li>Number of distinct source ports observed by the provider, if it exposes that, or locally via <code>ss -tn</code> sampling.</li>
+<li>NAT gateway or egress cost line item, if the platform bills per connection or per GB processed.</li>
+</ul>
+<p>A pool of two or three shared clients does not fix this. If the provider binds sessions to sockets and enforces an idle timeout, any socket that idles past the timeout is invalid, regardless of pool size.</p>
+<h2 id="fix-2-explicit-session-identifiers">Fix 2 — explicit session identifiers</h2>
+<p>Newer REST/JSON gateways expose an explicit session identifier that the client must echo back. Where that is available, use it. The session identifier, not the socket, becomes the unit of continuity, and the provider's timer resets on each request that carries a valid identifier.</p>
+<pre><code class="language-python">import uuid
 import httpx
 
-async def send_with_session(payload: dict, session_id: str = None):
+async def send_with_session(payload: dict, session_id: str | None = None):
     headers = {&quot;X-Reference-Id&quot;: str(uuid.uuid4())}
     if session_id:
         headers[&quot;X-Session-Id&quot;] = session_id
     async with httpx.AsyncClient(timeout=30.0) as client:
         r = await client.post(
-            &quot;https://momodeveloper.mtn.com/v2/ussd/send&quot;,
+            &quot;https://example-provider.invalid/v2/ussd/send&quot;,
             json=payload,
             headers=headers
         )
         data = r.json()
         return data[&quot;status&quot;], data.get(&quot;sessionId&quot;)
 </code></pre>
-<p>A 2026 benchmark from a Kampala fintech shows that using explicit <code>sessionId</code> reduced <code>ERR_PAYMENT_FAILED</code> rates from 3.1% to 0.12% and cut average latency from 420 ms to 290 ms because the provider no longer needed to re-establish the session on every request. The tradeoff is tighter coupling to the provider’s API contract and the need to propagate the <code>sessionId</code> across retries and async workers.</p>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>In some environments, the agent runs on AWS Lambda with ARM64 and NAT Gateway egress. The NAT Gateway has a 350-second idle timeout for TCP connections, but the mobile-money provider’s USSD gateway enforces 90 seconds. The agent’s connection sits idle in the NAT Gateway for 300+ seconds, then the next request from the Lambda container is routed over the same TCP socket, which the provider sees as a new session and rejects with <code>ERR_PAYMENT_FAILED</code>.</p>
-<p>This failure mode is environment-specific because it depends on the NAT Gateway’s TCP keep-alive behavior and the provider’s session timeout. Teams running in Kubernetes on GCP or Azure rarely hit this because their egress timeouts are longer (900 seconds) and configurable, but AWS Lambda’s NAT Gateway default is 350 seconds, which is still longer than the provider’s 90 seconds but short enough to cause race conditions during cold starts.</p>
-<p>The fix is to shorten the NAT Gateway’s TCP timeout or to force TCP reset on idle. In AWS, you can set the NAT Gateway’s TCP timeout via the VPC settings (default is 350 seconds, minimum is 60 seconds). After lowering it to 60 seconds, the agent’s TCP socket is reset before the provider’s session times out, preventing the race condition.</p>
-<pre><code class="language-yaml"># CloudFormation snippet to set NAT Gateway TCP timeout
-Resources:
-  NatGateway:
-    Type: AWS::EC2::NatGateway
-    Properties:
-      ConnectivityType: public
-      SubnetId: subnet-123456
-      Tags:
-        - Key: &quot;tcp-timeout-seconds&quot;
-          Value: &quot;60&quot;
-</code></pre>
-<p>Teams that cannot change the NAT Gateway timeout can use TCP_USER_TIMEOUT socket options in the agent’s runtime, but this requires custom Linux kernels or container images. A simpler workaround is to send a lightweight keep-alive ping every 30 seconds from the Lambda container to keep the NAT Gateway socket alive and reset the provider’s session timer implicitly.</p>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>After applying the fix, monitor three metrics for 7 days: error rate (<code>ERR_PAYMENT_FAILED</code>), average latency, and cost per 1k requests. Use a simple dashboard with Grafana or CloudWatch.</p>
-<p>A successful fix should show:
-- Error rate below 0.2% (baseline for mobile-money providers in 2026)
-- Latency within 5% of baseline (no regression from Fix 1)
-- No spike in cost after Fix 3 (NAT Gateway timeout changes should not increase NAT Gateway cost, as AWS charges by hour regardless of traffic)</p>
-<p>Use this query in CloudWatch Logs Insights to confirm the fix:</p>
+<p>Two cautions. First, confirm in the provider's documentation that the session identifier is intended to be reused across requests within a transaction, and whether it has its own expiry. Second, propagate the identifier across retries and async workers. If a retry starts without the identifier, it creates a new session, which may duplicate a payment.</p>
+<p>To measure the effect, track the same error rate and latency metrics as in Fix 1, plus the rate of <code>ERR_SESSION_INVALID</code> responses. A rise in that error alongside a fall in <code>ERR_PAYMENT_FAILED</code> indicates the session model is now explicit and observable rather than silent.</p>
+<h2 id="fix-3-egress-timers">Fix 3 — egress timers</h2>
+<p>When the provider's session timeout is shorter than the cloud egress idle timeout, the socket can outlive the session. The fix is to make the client's connection lifetime shorter than the provider's session timeout.</p>
+<p>Options, in order of preference:</p>
+<ul>
+<li><strong>Disable connection reuse for the transaction path.</strong> This is Fix 1, and it removes the egress timer from the equation entirely.</li>
+<li><strong>Set the socket keepalive and user timeout.</strong> On Linux, <code>TCP_USER_TIMEOUT</code> bounds how long unacknowledged data is retried before the socket errors. This is set per socket and typically requires a container image or runtime that exposes socket options. It is not a portable fix.</li>
+<li><strong>Reduce the NAT idle timeout.</strong> Some cloud NAT services allow the TCP idle timeout to be configured. Check the platform's documented minimum. Note that the tag-based configuration shown in some examples is not a real AWS feature: NAT gateway idle timeout is a property of the NAT gateway resource, not an arbitrary tag. Verify the current API surface before relying on it.</li>
+<li><strong>Send traffic more often than the shortest timer.</strong> A periodic lightweight request on the same connection can keep both the egress socket and the provider session alive, provided the provider's keep-alive semantics actually reset the timer. Confirm this from a traffic capture rather than assuming it.</li>
+</ul>
+<p>The decision rule is simple: make the shortest timer in the chain the one you control, and make the client's connection lifetime shorter than it.</p>
+<h2 id="how-to-verify-the-fix">How to verify the fix</h2>
+<p>Pick three metrics and watch them for at least a week, because mobile-money traffic is bursty and a single day can mislead.</p>
+<ul>
+<li><code>ERR_PAYMENT_FAILED</code> count per thousand transactions, segmented by provider and by endpoint path.</li>
+<li>Median and p99 latency, including client construction time.</li>
+<li>Egress cost per thousand transactions.</li>
+</ul>
+<p>A fix is working when the error rate falls and stays low across at least one full weekly traffic cycle, latency stays within an acceptable band, and cost does not rise disproportionately to the error reduction. There is no universal "good" error rate: the correct baseline is the provider's own documented success rate for the endpoint, plus your agent's own historical floor under known-good conditions.</p>
+<p>For log-based checking, a query such as the following surfaces bursts:</p>
 <pre><code class="language-sql">filter @message like /ERR_PAYMENT_FAILED/
 | stats count(*) as errors by bin(5m)
 | filter errors &gt; 5
 </code></pre>
-<p>If errors persist after 24 hours, check the provider’s response headers for <code>X-Session-Timeout</code> or <code>X-Idle-Timeout</code> to confirm the session contract. Some providers expose these headers in the health endpoint response.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Add a provider contract test in CI that simulates a 90-second idle period and verifies that the agent recovers without <code>ERR_PAYMENT_FAILED</code>. The test should:
-- Start a fresh agent process
-- Send a request
-- Wait 95 seconds
-- Send another request
-- Expect success or a clear session invalidation error (<code>ERR_SESSION_INVALID</code>), not <code>ERR_PAYMENT_FAILED</code></p>
-<p>Here’s a pytest snippet that runs in GitHub Actions:</p>
+<p>If failures persist, capture the provider's response headers for a failing request and compare them against a passing request. Differences in session or timeout headers are the fastest way to confirm the contract.</p>
+<h2 id="preventing-recurrence">Preventing recurrence</h2>
+<p>Add a contract test that exercises the idle boundary. The test does not need to run on every commit; a nightly job is usually enough.</p>
 <pre><code class="language-python"># tests/test_provider_session.py
-import pytest
-import httpx
 import time
+import uuid
+import httpx
+import pytest
 
 @pytest.mark.asyncio
 async def test_session_timeout_recovery():
     payload = {&quot;amount&quot;: &quot;100&quot;, &quot;currency&quot;: &quot;GHS&quot;, &quot;msisdn&quot;: &quot;233551234567&quot;}
-    url = &quot;https://momodeveloper.mtn.com/v2/ussd/send&quot;
+    url = &quot;https://example-provider.invalid/v2/ussd/send&quot;
 
-    # First request
     async with httpx.AsyncClient(timeout=30.0) as client:
         r = await client.post(url, json=payload, headers={&quot;X-Reference-Id&quot;: str(uuid.uuid4())})
         assert r.status_code == 200
 
-    # Idle for 95 seconds (simulate NAT Gateway timeout)
+    # Idle past the provider's documented session timeout.
     time.sleep(95)
 
-    # Second request — should either succeed or return ERR_SESSION_INVALID
     async with httpx.AsyncClient(timeout=30.0) as client:
         r = await client.post(url, json=payload, headers={&quot;X-Reference-Id&quot;: str(uuid.uuid4())})
         if r.status_code == 200:
-            assert True
-        else:
-            data = r.json()
-            assert &quot;ERR_SESSION_INVALID&quot; in data.get(&quot;status&quot;, &quot;&quot;)
+            return
+        data = r.json()
+        assert &quot;ERR_SESSION_INVALID&quot; in data.get(&quot;status&quot;, &quot;&quot;)
 </code></pre>
-<p>Teams that run this test in CI catch session contract mismatches before deploy. A 2026 survey of 42 African fintechs found that teams with provider contract tests in CI reduced <code>ERR_PAYMENT_FAILED</code> incidents by 68% within 30 days of adoption.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<p>Two design notes. The test asserts that a post-idle failure is reported as a session error, not a payment error — that is the contract you actually care about. And the idle duration should come from configuration, not a hard-coded 95, so it can be tuned to the provider's documented timeout.</p>
+<p>Run this in staging against the provider's sandbox. Running it against production is a cost and risk decision that belongs to the team operating the agent.</p>
+<h2 id="related-errors-and-what-they-usually-mean">Related errors and what they usually mean</h2>
 <ul>
-<li><strong>ERR_SESSION_INVALID</strong>: The provider explicitly invalidated the session; usually paired with a <code>session_id</code> expiry. Fix: use explicit session IDs and refresh them after expiry. - <strong>ERR_RATE_LIMIT</strong>: Provider throttled due to too many requests per session. Fix: reduce concurrency or batch requests. - <strong>ERR_INVALID_SIGNATURE</strong>: Wrong HMAC signature, often because the agent reused a stale session key. Fix: regenerate signature per request. - <strong>ERR_TIMEOUT</strong>: TCP-level timeout before HTTP response. Fix: increase client timeout and add circuit breaker.</li>
+<li><strong><code>ERR_SESSION_INVALID</code></strong> — the provider explicitly invalidated the session. This is the well-behaved version of the failure. Fix: use explicit session identifiers and refresh them on expiry.</li>
+<li><strong><code>ERR_RATE_LIMIT</code></strong> — throttling, often caused by retry storms after session failures. Fix: reduce concurrency and apply backoff before increasing retry count.</li>
+<li><strong><code>ERR_INVALID_SIGNATURE</code></strong> — a signature or HMAC mismatch, sometimes because the agent reused a key tied to an expired session. Fix: regenerate the signature per request.</li>
+<li><strong><code>ERR_TIMEOUT</code></strong> — a TCP-level timeout before an HTTP response. Fix: distinguish this from session invalidation in your metrics, then adjust client timeouts and add a circuit breaker.</li>
 </ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If the error persists after all fixes, escalate to the provider’s merchant support team with:
-- A 5-minute traffic capture (tcpdump or Wireshark) showing the TCP socket reuse and the provider’s <code>FIN</code> after 90 seconds
-- The exact request/response logs for the failed transaction, including <code>X-Reference-Id</code> and <code>session_id</code> if available
-- A reproduction script that runs in your staging environment</p>
-<p>Most providers in 2026 have dedicated merchant support Slack channels for API issues. Expect a response within 24 hours if you include the traffic capture, or 48 hours if you don’t. Provide the traffic capture as a <code>.pcap</code> file; base64-encoded logs are not sufficient for session-level debugging.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why does my agent fail after exactly 90 seconds in production but not locally?</strong></p>
-<p>Locally, your agent’s TCP connection is short-lived and the provider sees each request as a fresh session. In production, your agent reuses the same TCP socket for multiple requests, which the provider treats as a single session with a 90-second idle timeout. The NAT Gateway or load balancer in your cloud environment keeps the socket alive longer than 90 seconds, so the provider times out the session while the socket is still open.</p>
-<p><strong>How can I reduce latency after switching to per-request clients?</strong></p>
-<p>Use HTTP/2 or HTTP/3 where the provider supports it, or enable connection pooling only for non-USSD endpoints (e.g., balance inquiries) that don’t require fresh sessions. In Python, you can use <code>httpx.HTTPTransport(http2=True)</code> if the provider supports HTTP/2. A 2026 benchmark from a Lagos fintech showed a 40% latency drop when switching from HTTP/1.1 to HTTP/2 for balance checks while keeping per-request clients for USSD payments.</p>
-<p><strong>Is there a way to share sessions safely across async workers?</strong></p>
-<p>Yes, but only if the provider supports explicit <code>session_id</code> and the agent propagates it correctly. Use a Redis-backed session store with a 60-second TTL that matches the provider’s session lifetime. In Node.js with <code>ioredis</code>:</p>
-<pre><code class="language-javascript">import { createClient } from 'redis';
+<h2 id="retry-policy-that-does-not-burn-money">Retry policy that does not burn money</h2>
+<p>Retries are where session confusion becomes expensive. Two rules reduce most of the damage.</p>
+<p>First, classify the error before retrying. A session invalidation is not a payment failure. Retrying a session invalidation on a fresh connection is usually safe; retrying an ambiguous payment failure is not, because the original may have succeeded.</p>
+<p>Second, bound the retries and the window.</p>
+<pre><code class="language-python">import random
 
-const redis = createClient({ url: 'redis://redis:6379' });
-await redis.connect();
-
-async function sendWithSharedSession(payload) {
-  const sessionId = await redis.get('momo:session:id');
-  const headers = { 'X-Session-Id': sessionId || uuid() };
-  const res = await fetch('https://momodeveloper.mtn.com/v2/ussd/send', { method: 'POST', headers, body: JSON.stringify(payload) });
-  const data = await res.json();
-  if (data.sessionId) await redis.set('momo:session:id', data.sessionId, { EX: 60 });
-  return data;
-}
-</code></pre>
-<p>This pattern reduces latency spikes from TLS handshakes but requires careful error handling for session expiry.</p>
-<p><strong>What’s the safest way to retry failed payments without burning money?</strong></p>
-<p>Use an exponential backoff with jitter, capped at 3 retries, and skip the session timeout window. For example, retry after 2s, 5s, 10s, then give up. Avoid retrying during the 90-second idle window because the provider will still reject the request. Track the last successful request time and only retry after the session would have expired.</p>
-<pre><code class="language-python">import time
-import random
-
-def retry_policy(attempt: int) -&gt; int:
+def retry_delay(attempt: int) -&gt; int | None:
     if attempt &gt;= 3:
         return None
-    delay = min(2 ** attempt + random.uniform(0, 1), 10)
-    return int(delay)
+    return int(min(2 ** attempt + random.uniform(0, 1), 10))
 
-# In your agent loop
 for attempt in range(3):
     try:
         send_payment(payload)
         break
-    except PaymentFailed as e:
-        delay = retry_policy(attempt)
+    except PaymentFailed:
+        delay = retry_delay(attempt)
         if delay is None:
             raise
         time.sleep(delay)
 </code></pre>
-<p>This policy caps cost burn and respects the provider’s session contract.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The cap of three attempts and the maximum delay of ten seconds are illustrative choices, not provider requirements. The important properties are: bounded attempts, jitter to avoid synchronised retries, and a hard stop that escalates to a human or a reconciliation job rather than looping.</p>
+<h2 id="escalation-checklist">Escalation checklist</h2>
+<p>If the failure survives all of the above, escalate with evidence rather than a description.</p>
 <ul>
-<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
-<li><a href="https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/">Fintech features break in Ghana: the real fix</a></li>
-<li><a href="https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
+<li>A short packet capture (<code>tcpdump -w momo.pcap</code>) covering at least one failure, showing socket reuse and the provider's close behaviour.</li>
+<li>Request and response logs for one failing transaction and one passing transaction, including reference identifiers and any session identifier.</li>
+<li>A minimal reproduction script that runs in staging.</li>
+<li>The provider's documented session timeout, if any, and the observed timeout from the capture, if they differ.</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<p>The gap between documented and observed behaviour is usually the fastest thing a provider's support team can explain, and it is the detail most likely to be missing from a first escalation.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does the agent fail after roughly the same interval each time in production but not locally?</strong></p>
+<p>Locally, connections are typically short-lived and each request looks like a fresh session. In production, a pooled connection survives across requests, and an egress layer may keep it open longer than the provider's session timeout. The fixed interval is the provider's idle timeout, not a property of the payment logic.</p>
+<p><strong>Does reducing the connection pool size help?</strong></p>
+<p>Not on its own. If the provider binds sessions to sockets and enforces an idle timeout, any socket that idles past the timeout is invalid. Pool size changes how many sockets exist, not how long each one lives.</p>
+<p><strong>How can latency be reduced after switching to per-request clients?</strong></p>
+<p>Use protocol features the provider supports, such as HTTP/2, for endpoints that do not require fresh sessions. Keep the per-request pattern only for the transaction path. Measure the split before assuming it helps: the handshake cost and the protocol benefit may cancel out on short requests.</p>
+<p><strong>Can sessions be shared across async workers?</strong></p>
+<p>Only if the provider exposes an explicit session identifier and the agent propagates it correctly. A shared store with a TTL shorter than the provider's session timeout is the usual pattern. The failure mode to avoid is a worker picking up an identifier that has already expired, which produces the same silent invalidation the fix was meant to remove.</p>
+<p><strong>What is the safest retry strategy?</strong></p>
+<p>Classify errors first, cap attempts, add jitter, and stop rather than loop. Treat an ambiguous payment failure as potentially successful until reconciled.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Run one packet capture against your staging environment while sending two requests separated by 120 seconds, then open the capture and check whether the client reused the same TCP stream and whether the server closed it in between. That single observation tells you whether your provider binds sessions to sockets, which determines which of the three fixes above applies to your agent.</p>
                 
                 
             </div>
@@ -483,14 +468,14 @@ for attempt in range(3):
                     
                     <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
                         <h3>Currency switch fails in Ghana: one config file to rule…</h3>
-                        <p>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</p>
-                        <span class="related-meta">16 min read · 13 August 2026</span>
+                        <p>Mobile money providers put currency codes in different places. Learn a deterministic extraction, validation, and normalization pipeline that stops silent fallbacks.</p>
+                        <span class="related-meta">12 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/bank-apis-broke-under-african-2g/">
                         <h3>Bank APIs broke under African 2G</h3>
-                        <p>Cut fintech disputes 75% with shorter cache TTLs and event-driven invalidation — the real rules African APIs need in 2026</p>
-                        <span class="related-meta">16 min read · 28 June 2026</span>
+                        <p>Why aggressive caching and remote idempotency stores fail on flaky 2G/3G links, and how to instrument, measure, and redesign balance endpoints for it.</p>
+                        <span class="related-meta">13 min read · 28 June 2026</span>
                     </a>
                     
                 </div>

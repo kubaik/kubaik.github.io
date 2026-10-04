@@ -1,58 +1,42 @@
 # Price your remote job like a New York dev
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Remote postings from US, Canadian, and European employers commonly list compensation in USD, and public salary aggregators usually surface San Francisco or New York figures first. A contractor in Bogotá, Mexico City, or São Paulo who anchors a quote to local cost-of-living data will land well below what the same title pays in the client's market. This article lays out a repeatable way to build a rate model: define the inputs, compute the client-facing rate, handle currency and tax edge cases, and log every quote so you can explain it months later.
 
-## Why I wrote this (the problem I kept hitting)
+## What you need before you start
 
-I once quoted a US client in Colombian pesos at a 30% discount to "be competitive." Two weeks later, their finance team sent a polite note: the contract was canceled because my rate was 10% above their internal junior dev budget. I learned the hard way that currency math isn’t the same as market math.
+Three inputs, and nothing more:
 
-In 2026, remote job postings from the US, Canada, and Europe still dominate platforms like We Work Remotely, RemoteOK, and LinkedIn. The default filter is "USD," and most salary calculators (Gross-to-Net, Payscale, Levels.fyi) assume you’re in San Francisco or New York. If you’re in Bogotá, Mexico City, or São Paulo, your local cost-of-living tools will give you a number that’s off by 30–50%, because they’re benchmarked against local averages, not the client’s budget ceiling.
+1. **One real job posting.** A saved listing is better than a hypothetical, because it gives you a title, a seniority level, and often a range. Company career pages are more reliable than aggregators, which sometimes carry stale ranges.
+2. **A spreadsheet** with three scenarios: your local break-even, a middle figure, and the top of the client's likely range. A Google Sheet or Airtable base is enough.
+3. **A small Python script** that converts a target annual figure into an hourly, weekly, and monthly rate a client can paste into a budget tool.
 
-I spent two weeks reverse-engineering offer letters from US-based contractors on Upwork and Toptal. The pattern was clear: the same job title ("Senior Backend Engineer") paid $90k–$130k in NYC, but the contractor’s invoice showed $65k–$75k. The difference wasn’t taxes or benefits—it was a discount the contractor applied so the client’s accounting team wouldn’t flag the invoice as "foreign vendor at premium."
-
-The mistake I kept making was quoting against my local cost of living instead of the client’s willingness to pay. This post is the playbook I built after burning those cycles.
-
-## Prerequisites and what you'll build
-
-You’ll need three things to follow along:
-
-1. A real remote job posting you’re targeting (or a recent one you’ve saved). Example: a "Staff Engineer" role from a Series B startup in San Francisco. Use job boards like Y Combinator’s Work at a Startup, Wellfound (formerly AngelList Talent), or the company’s careers page.
-2. A spreadsheet to model three scenarios: your local minimum, a middle ground, and the client’s likely top of range. I’ll show you the formulas. A Google Sheet or Airtable base works.
-3. A simple rate calculator script (Python 3.11 + pandas) that converts your target salary into an hourly, weekly, and monthly rate the client can paste into their budget tool. The script will also flag hidden gotchas like the 2026 US self-employment tax cliff (15.3%) and the 30% VAT in Colombia for export services.
-
-Below is the folder structure we’ll use:
+A suggested layout:
 
 ```
 remote-rate-calc/
 ├── data/
-│   ├── benchmarks.csv      # Levels.fyi 2026 export
-│   └── fx_rates.json       # 2026-06-01 ECB feed (auto-updated via cron)
+│   ├── benchmarks.csv      # your own export of public comp data
+│   └── fx_rates.json       # cached FX rates
 ├── scripts/
 │   ├── rate_model.py       # core calculator
-│   └── sanity_check.py     # unit tests
+│   └── sanity_check.py     # checks for stale data
 └── README.md
 ```
 
-You don’t need Kubernetes or a managed database. The whole pipeline runs in 250 lines of Python and a cron job to pull fresh FX rates. We’ll use:
-- Python 3.11.6 (the last 3.11 patch before 3.12 GA)
-- pandas 2.2.2 for the data frames
-- requests-cache 1.2.0 to avoid hitting FX APIs too hard
-- pytest 7.4.4 for the unit tests
-
-If you’re on macOS or a modern Linux distro, the setup is one command:
+No orchestration layer, no managed database. A virtual environment, pandas for the arithmetic, and a caching HTTP client for FX lookups will cover it. Pin your versions in a lockfile so the numbers you computed last quarter still reproduce today.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate && pip install --upgrade pip \
-  pandas==2.2.2 requests-cache==1.2.0 pytest==7.4.4
+  pandas requests-cache pytest
 ```
 
-Windows users: replace `.venv/bin/activate` with `.venv\Scripts\activate`.
+On Windows, activate with `.venv\Scripts\activate` instead of `source .venv/bin/activate`.
 
-## Step 1 — set up the environment
+## Step 1 — assemble the benchmark data
 
-### 1.1 Pull the latest salary benchmarks
+### 1.1 Load and filter
 
-I keep a CSV dump of Levels.fyi’s 2026 export in `data/benchmarks.csv`. The export includes base salary, bonus, RSUs, and total comp for 15k+ jobs across 300+ companies. I pull it monthly via their public API (no key needed) and filter to roles I care about:
+You need a CSV with at least: `role`, `city`, and `total` (total annual compensation). Public aggregators publish this in various formats; the column names below are illustrative, so adjust them to your export.
 
 ```python
 import pandas as pd
@@ -63,11 +47,11 @@ filtered = df[df["role"].isin(roles)].copy()
 filtered["city"] = filtered["city"].fillna("Remote")
 ```
 
-The raw file is ~18 MB and contains 42 columns. I trim it down to 6 columns (role, city, base, bonus, rsu, total) to keep the memory footprint under 5 MB in memory. This matters when you’re running the script on a $15/month DigitalOcean droplet.
+Filter by title and by city tier before you compute anything. A median that mixes San Francisco, Austin, and fully-remote rows is not a useful comparison point.
 
-### 1.2 Get FX rates that update automatically
+### 1.2 Cache FX rates
 
-I use the European Central Bank’s 2026 feed (updated daily at 16:00 CET). The feed is free, no API key, and it’s the same source most banks use for their own FX conversions. I cache the feed for 24 hours using `requests-cache` to avoid hammering their endpoint.
+FX APIs rate-limit, and you do not need a fresh rate every time you open the script. A cached session with a 24-hour expiry is enough for quoting purposes.
 
 ```python
 import requests_cache
@@ -78,7 +62,7 @@ session = requests_cache.CachedSession(
     "data/fx_cache",
     backend="sqlite",
     expire_after=86_400,  # 24 hours
-    stale_if_error=True
+    stale_if_error=True,
 )
 
 def fetch_fx_rates(date=None):
@@ -86,67 +70,59 @@ def fetch_fx_rates(date=None):
     url = f"https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml?{date}"
     resp = session.get(url)
     resp.raise_for_status()
-    # XML parsing omitted for brevity; we store the parsed JSON
-    rates = {k: float(v) for k, v in resp.json().items()}
+    # The ECB endpoint returns XML. Parse it with xml.etree.ElementTree
+    # or lxml and write the result as JSON; the parsing step is omitted here.
+    rates = parse_ecb_xml(resp.text)
     Path("data/fx_rates.json").write_text(json.dumps(rates))
     return rates
 ```
 
-I run this in a cron job every morning at 09:00 Bogotá time (02:00 UTC).
+Note the stub: the ECB feed is XML, so a `.json()` call on the response will fail. Parse the XML, then persist JSON.
 
-### 1.3 Build the first model in the spreadsheet
+### 1.3 Build the three-scenario sheet
 
-Open Google Sheets and create three sheets:
+| Sheet | Purpose | Formula shape |
+|-------|---------|---------------|
+| Local | Your cost-of-living break-even | `=annual_local / 2080 * 1.25` |
+| Middle | A discount from the client-market midpoint | `=INDEX(benchmarks!F:F, MATCH("Staff Engineer", benchmarks!A:A, 0)) * 0.6` |
+| Client | Top of the client's likely budget | `=INDEX(benchmarks!F:F, MATCH("Senior Backend Engineer", benchmarks!A:A, 0)) * 0.85` |
 
-| Sheet name | Purpose | Formula |
-|------------|---------|---------|
-| Local | Your cost-of-living break-even | `=PMT(annual_local / 12, 60, 0, 0) * 1.25` |
-| Middle | 40% discount from US midpoint | `=INDEX(benchmarks!F:F, MATCH("Staff Engineer", benchmarks!A:A, 0)) * 0.6` |
-| Client | Top of client’s budget | `=INDEX(benchmarks!F:F, MATCH("Senior Backend Engineer", benchmarks!A:A, 0)) * 0.85` |
+The 1.25 multiplier on the Local sheet is a placeholder for your own overhead; replace it with your actual costs. The 0.6 and 0.85 multipliers are policy choices, not facts — they encode how aggressive you are willing to be. Write down why you picked them, because you will be asked.
 
-The hidden gotcha here is currency conversion. If you quote in USD but your bank wires in COP, the 3.8% spread on the wire will eat your margin. Always quote in the currency the client pays in, then convert to your local account at the real rate (not the tourist rate).
+Currency conversion is where the sheet usually lies to you. If you quote in USD but receive a wire in COP, the bank's spread comes out of your margin. Quote in the currency the client pays in, and convert to your local account at the rate your bank actually gives you, not the interbank rate.
 
-I once quoted in USD to a US client, but my Colombian bank charged a 4.2% spread on the wire. The effective hourly rate dropped from $85 to $81.50. I fixed it by quoting in COP at the ECB mid-market rate (3,900 COP/USD) and letting the client pay via Wise, which gave me a 0.5% spread.
+## Step 2 — the rate model
 
-## Step 2 — core implementation
+### 2.1 The core calculation
 
-### 2.1 Define the rate model
+The model converts a target annual take-home figure into an hourly rate. It accounts for:
 
-The core model converts an annual target salary into an hourly, weekly, and monthly rate the client can plug into their budget tool. The model accounts for:
-- Self-employment tax (15.3% for US clients in 2026)
-- VAT/GST for export services (0% for US clients, 16% for Mexican clients, 19% for Colombian clients exporting services)
-- Buffer for sick days and holidays (10%)
-- Buffer for project ramp-up (15%)
+- Self-employment or social-security contributions (the rate depends on your jurisdiction and the client's).
+- VAT or GST on export services (0% for US clients in many cases; other rates apply elsewhere).
+- A buffer for sick days and holidays.
+- A buffer for project ramp-up.
 
 ```python
 from dataclasses import dataclass
-from datetime import date
 import json
-from pathlib import Path
-import pandas as pd
 
 @dataclass
 class RateModel:
-    target_annual: float        # what you want to take home
-    fx_rate_usd_to_local: float # e.g. 3900 COP/USD
+    target_annual: float         # take-home target
+    fx_rate_usd_to_local: float  # e.g. 3900 COP per USD
     self_employment_tax: float = 0.153
-    vat_export: float = 0.0     # 0% for US clients
+    vat_export: float = 0.0
     buffer_sick: float = 0.10
     buffer_ramp: float = 0.15
 
     def client_rate_usd(self) -> float:
-        """Hourly rate the client sees in USD."""
-        # Start with the raw target
         net_needed = self.target_annual
-        # Add VAT (if applicable) so client pays the VAT
         gross_before_tax = net_needed / (1 - self.self_employment_tax)
         if self.vat_export > 0:
             gross_before_vat = gross_before_tax / (1 - self.vat_export)
         else:
             gross_before_vat = gross_before_tax
-        # Add buffers
         total_with_buffers = gross_before_vat * (1 + self.buffer_sick + self.buffer_ramp)
-        # Convert to hourly (2080 productive hours/year)
         hourly = total_with_buffers / 2080
         return round(hourly, 2)
 
@@ -154,22 +130,23 @@ class RateModel:
         return round(self.client_rate_usd() * self.fx_rate_usd_to_local, 0)
 ```
 
-### 2.2 Validate against benchmarks
+The 2080 figure is 40 hours × 52 weeks. It is a convention, not a measurement of your productive hours. If you take four weeks of leave and lose a week to holidays, your billable hours are closer to 1880, and the same target annual produces a higher hourly rate. Decide which denominator you are using and state it in the quote.
 
-I run the model against the trimmed benchmark CSV and flag any role/city combo where the output is more than 20% above the US midpoint. This catches outliers like "DevOps Engineer" in Boise, which pays $110k total, but the model inflates if the target annual is set too high.
+### 2.2 Sanity-check against the benchmark
+
+Before sending anything, compare your computed rate against the median for the role in the client's market.
 
 ```python
-# Inside rate_model.py
 benchmarks = pd.read_csv("data/benchmarks.csv")
 midpoint = benchmarks[benchmarks["role"] == "Senior Backend Engineer"]["total"].median()
-print(f"US midpoint: ${midpoint:,.0f}")
+print(f"Client-market midpoint: ${midpoint:,.0f}")
 ```
 
-The 2026 US midpoint for "Senior Backend Engineer" is $142k total. If my target is $150k, the client rate comes out to $88/hr. If the client’s budget is $120k, the model will flag a 25% overrun, so I’ll need to dial back the buffers or accept a lower target.
+If your rate implies an annual figure more than roughly 15% above that midpoint, the client's finance team will likely push back. If it is more than 15% below, you are leaving money on the table. Both directions are worth a second look at the buffers.
 
-### 2.3 Handle multiple currencies and regions
+### 2.3 Regional parameters
 
-I added a simple lookup table in a YAML file (`config/currencies.yaml`):
+Keep jurisdiction-specific values in a config file rather than in code. The numbers below are illustrative placeholders — verify every one against the current rules for your country before you rely on it.
 
 ```yaml
 usd:
@@ -183,65 +160,66 @@ cop:
 mxn:
   vat_export: 0.16
   fx_demo: 17.5
-  self_employment_tax: 0.011  # IMSS only, no income tax until ~$20k/year
+  self_employment_tax: 0.011
 ```
 
-The IMSS rate for Mexican contractors is 1.1%, not 15.3%, so the model adjusts accordingly. This is a gotcha I missed for the first two months; I quoted Mexican clients at the US self-employment rate and they flagged the invoice.
+The point of the config is that the tax treatment for a Mexican contractor is not the same as for a US one. Applying the US self-employment rate to a Mexican invoice produces a number the client's accountant will reject. Confirm the correct rate with a local accountant rather than copying a figure from an article.
 
-## Step 3 — handle edge cases and errors
+## Step 3 — edge cases that break quotes
 
-### 3.1 Currency spikes and slumps
+### 3.1 Currency spikes
 
-In April 2026, the Colombian peso swung 8% in a week after a central bank announcement. My model was quoting COP to US clients, and the FX rate used in the quote was stale. The client’s accounting team rejected the invoice because the COP amount had changed by more than 5%.
+A currency can move several percent in a week around a central-bank announcement. If your quote was written at an old rate, the client's accounting team may reject the invoice because the local-currency amount no longer matches.
 
-Fix: add a 48-hour window in the FX feed. If the rate changes by more than 5% in either direction, the script emails me and pings Slack. The rate used in the quote is locked for 48 hours to give me time to negotiate with the client.
+Add a guard that refuses to emit a quote when the rate has moved beyond a threshold:
 
 ```python
-from datetime import datetime, timedelta
-
 def validate_fx_spike(rate_before, rate_after, pct_threshold=0.05):
-    if abs(rate_before - rate_after) / rate_before > pct_threshold:
+    change = abs(rate_before - rate_after) / rate_before
+    if change > pct_threshold:
         raise ValueError(
-            f"FX rate moved {abs(rate_before - rate_after)/rate_before:.1%} "
+            f"FX rate moved {change:.1%} "
             f"({rate_before} -> {rate_after}) — abort quote"
         )
 ```
 
-### 3.2 Holiday buffers and ramp time
+The threshold is a policy choice. Five percent is a reasonable starting point; tighten it if your margins are thin.
 
-The 15% ramp buffer assumes 4 weeks of onboarding and 1 week of sick days. But if the client’s fiscal year starts on January 1 and they need you by March 1, you lose 8 weeks of productive time. I added a `ramp_override` parameter to the model so I can dial the buffer up or down.
+### 3.2 Ramp time
+
+The 15% ramp buffer assumes a short onboarding. If the client needs you productive in six weeks and you lose the first two to setup, the buffer is too small:
 
 ```python
-# Example: client wants you in 6 weeks
 model = RateModel(target_annual=120_000, fx_rate_usd_to_local=3900)
-model.buffer_ramp = 0.25  # 25% instead of 15%
+model.buffer_ramp = 0.25
 ```
 
-I once quoted a 6-week ramp to a client in January. They accepted, but their finance team flagged the invoice because the effective hourly rate dropped 18% below their internal junior budget. Lesson: always ask for the start date up front.
+Ask for the start date and the expected ramp before you quote. If the client's finance team has a fixed junior band, a rate that lands below it will trigger questions even if the total is fine.
 
-### 3.3 VAT on services to Mexico
+### 3.3 VAT as a separate line
 
-Mexican clients who pay via invoice (factura) must withhold 16% VAT on export services. The client’s accounting team will reject the invoice if the line item doesn’t include the VAT field. I added a `vat_line_item` flag to the model so the quote includes a separate VAT line:
+When VAT applies, put it on its own line. Clients who pay via invoice often need the tax field to reconcile automatically.
 
 ```python
-if self.vat_export > 0:
-    net_line = self.client_rate_usd() * hours
-    vat_line = net_line * self.vat_export
+def invoice_lines(model, hours):
+    net_line = model.client_rate_usd() * hours
+    vat_line = net_line * model.vat_export
     gross_line = net_line + vat_line
-    return gross_line
+    return {"net": net_line, "vat": vat_line, "gross": gross_line}
 ```
 
-I was surprised that Mexican clients prefer the VAT line item to be explicit. One client rejected an invoice because the VAT was buried in the total; they wanted a separate line so their accounting could auto-match.
+A VAT amount folded into the total is a common reason for a rejected invoice.
 
-## Step 4 — add observability and tests
+## Step 4 — logging and tests
 
-### 4.1 Logging and versioning
+### 4.1 Log every quote
 
-Every quote is logged to a SQLite file (`quotes.db`) with a SHA-256 hash of the input parameters. This lets me audit why a quote was X instead of Y six months later.
+Store each quote with a hash of its inputs. Six months later, when a client asks why the number was what it was, you can reproduce the calculation exactly.
 
 ```python
 import sqlite3
 import hashlib
+import json
 
 conn = sqlite3.connect("data/quotes.db")
 conn.execute(
@@ -269,13 +247,13 @@ def log_quote(model, notes=""):
             "ramp": model.buffer_ramp,
             "vat": model.vat_export,
             "tax": model.self_employment_tax,
-        }
+        },
     }, sort_keys=True)
     sha = hashlib.sha256(payload.encode()).hexdigest()
     conn.execute(
         """
-        INSERT INTO quotes (sha, ts, target_annual, client_rate_usd, 
-                           client_rate_local, fx_rate, buffers, notes)
+        INSERT INTO quotes (sha, ts, target_annual, client_rate_usd,
+                            client_rate_local, fx_rate, buffers, notes)
         VALUES (?, datetime('now'), ?, ?, ?, ?, ?, ?)
         """,
         (
@@ -296,15 +274,11 @@ def log_quote(model, notes=""):
     conn.commit()
 ```
 
-### 4.2 Unit tests with pytest
+### 4.2 Tests
 
-I test three scenarios:
-1. US client, COP bank, no VAT: verify the client rate math.
-2. US client, COP bank, with VAT: verify VAT line item.
-3. Mexican client, MXN bank, IMSS tax: verify IMSS rate.
+The tests below are the ones worth writing first: one per jurisdiction and tax combination you actually quote in. Compute the expected value by hand from the formula before you write the assertion — otherwise you are just freezing whatever the code currently does.
 
 ```python
-# tests/test_rate_model.py
 import pytest
 from rate_model import RateModel
 
@@ -315,23 +289,16 @@ def test_us_client_no_vat():
         fx_rate_usd_to_local=3900,
         vat_export=0.0,
     )
-    assert model.client_rate_usd() == pytest.approx(78.85)
-    assert model.client_rate_local() == pytest.approx(307_500)
-
-
-def test_mx_client_with_vat():
-    model = RateModel(
-        target_annual=1_200_000,  # ~$68k/year
-        fx_rate_usd_to_local=17.5,
-        vat_export=0.16,
-        self_employment_tax=0.011,
-    )
-    # IMSS only, so net_needed is after IMSS
-    expected_usd = pytest.approx(80.00)
-    assert model.client_rate_usd() == expected_usd
+    # 120000 / (1 - 0.153) = 141,676.44
+    # 141,676.44 * (1 + 0.10 + 0.15) = 177,095.55
+    # 177,095.55 / 2080 = 85.14
+    assert model.client_rate_usd() == pytest.approx(85.14, abs=0.01)
+    assert model.client_rate_local() == pytest.approx(332_046, abs=1)
 ```
 
-I run the tests in CI every push using GitHub Actions:
+The original article's expected value of 78.85 did not match its own formula; the arithmetic above shows the correct figure. The lesson is general: write the hand calculation into the test as a comment, or you will eventually assert a number that is simply wrong.
+
+A CI step to run them:
 
 ```yaml
 # .github/workflows/test.yml
@@ -339,129 +306,77 @@ I run the tests in CI every push using GitHub Actions:
 - uses: actions/setup-python@v5
   with:
     python-version: "3.11"
-- run: pip install -e . pytest==7.4.4
+- run: pip install -e . pytest
 - run: python -m pytest
 ```
 
-Tests caught a regression in March 2026 when I accidentally swapped the `vat_export` and `self_employment_tax` parameters. The Mexican client quotes were inflating by 20% because the VAT was applied twice.
+### 4.3 Alert on stale data
 
-### 4.3 Alerting on stale FX rates
-
-I set an uptime check via UptimeRobot to hit an endpoint that returns the timestamp of the last FX pull. If the feed is older than 48 hours, I get an email and a Slack ping:
+If the cached FX feed is old, every quote derived from it is suspect. Fail loudly:
 
 ```python
-# scripts/sanity_check.py
-import requests
+from datetime import datetime, timezone
 
-def fx_age():
-    resp = requests.get("https://my-api.example.com/fx_age")
-    return resp.json()["age_hours"]
-
-if fx_age() > 48:
-    raise RuntimeError("FX feed stale (>48h)")
+def assert_fresh(fetched_at_iso, max_age_hours=48):
+    fetched_at = datetime.fromisoformat(fetched_at_iso)
+    age_hours = (datetime.now(timezone.utc) - fetched_at).total_seconds() / 3600
+    if age_hours > max_age_hours:
+        raise RuntimeError(f"FX feed stale ({age_hours:.1f}h > {max_age_hours}h)")
 ```
 
-## Real results from running this
+## How to measure whether this is working
 
-### 5.1 Before vs after numbers
+There is no meaningful industry benchmark for "quote rejection rate" — it depends on your niche, your clients, and your seniority. What you can do is measure your own process before and after. Instrument these four numbers from your own records:
 
-| Metric | Before | After | Change |
-|--------|--------|-------|--------|
-| Quote rejection rate | 38% | 6% | -32pp |
-| Time to quote (minutes) | 45 | 8 | -37 |
-| FX spread loss | 4.2% | 0.5% | -3.7pp |
-| Average hourly rate uplift | -12% | +8% | +20pp |
+| Metric | How to measure | What a change tells you |
+|--------|----------------|-------------------------|
+| Quote-to-conversation rate | Quotes sent ÷ replies received | Whether your pitch or your price is the blocker |
+| Rejection reason | Tag each rejection: price, scope, timing, no reply | Whether the model needs tuning or the pipeline does |
+| FX loss per wire | Interbank rate at invoice date vs. rate received | Whether the wire spread is eating your margin |
+| Realised hourly | Total invoiced ÷ hours actually worked | Whether your buffers were realistic |
 
-The 32 percentage point drop in rejections came from two changes:
-1. Quoting in the client’s currency (USD) instead of local (COP/ARS/MXN).
-2. Pre-validating the FX rate against a 48-hour window.
+Fill this in for your last ten quotes, then again after ten quotes using the model. The comparison is the evidence, not a number borrowed from someone else.
 
-### 5.2 Case study: Staff Engineer at a Series B
+## Worked example
 
-I used the model to quote a Staff Engineer role for a Series B in San Francisco. The benchmark midpoint for Staff Engineer in SF is $220k total. My target was $180k net after tax and buffers.
+Suppose your target take-home is $120,000, you are billing a US client, and you pay 15.3% self-employment tax with no VAT on the export.
 
-- US midpoint: $220k
-- Model output: $180k target → $112/hr client rate
-- Client’s internal junior budget: $100k → $63/hr
-- Outcome: Counter-offer at $95k total ($60/hr) accepted after two rounds.
+1. Gross before tax: `120,000 / (1 - 0.153) = 141,676.44`
+2. Add sick and ramp buffers: `141,676.44 × 1.25 = 177,095.55`
+3. Hourly at 2080 hours: `177,095.55 / 2080 = 85.14`
+4. At a hypothetical rate of 3900 COP per USD: `85.14 × 3900 = 332,046 COP/hour`
 
-The gap closed because I showed the client the benchmark data and explained that $112/hr was still 20% below their midpoint. They accepted the lower number because they could justify it against Levels.fyi.
+Now check it against the market. If the client-market median for the role is $160,000 total, your $177,096 implied annual is about 11% above it. That is inside the range where a client's finance team will usually engage rather than dismiss. If the median were $130,000, your figure would be 36% above and you would need either a lower target or a justification tied to a specific skill the role requires.
 
-### 5.3 FX volatility impact
+The arithmetic here is the whole method. The rest is bookkeeping.
 
-In the week of April 14–21 2026, the Mexican peso moved 6.3% against the USD. My model flagged any quote older than 48 hours and auto-locked the rate. One client’s invoice was locked at 17.2 MXN/USD; by the time they paid, the rate had moved to 16.8, saving me 2.3% on the wire.
+## Common questions
 
-Without the lock, I would have lost ~$180 on a $7,800 invoice.
+**Do I have to quote in USD?**
 
-## Common questions and variations
+No. Quote in the currency the client pays in. If that is EUR, use EUR, and adjust the tax parameters for your jurisdiction rather than assuming the US rates apply.
 
-### Do I have to quote in USD?
+**How do I handle equity or bonuses?**
 
-No. You can quote in EUR if the client pays in EUR (e.g., German or Dutch startups). The model automatically adjusts the self-employment tax rate (Germany: 18.6%, Netherlands: 22.1%). I keep a small JSON table with EU tax rates and update it quarterly.
+Treat them as a separate line with an explicit vesting schedule and a stated valuation method. Do not discount them into the hourly rate unless you have a way to realise them. A promise of RSUs in a private company is not the same as cash.
 
-### How do I handle equity or bonuses?
+**What if the client uses an employer-of-record service?**
 
-I treat equity as a separate line item. If the client offers 0.1% RSUs vesting over 4 years, I add a separate row to the quote:
+An EOR withholds local taxes on your behalf, so your `self_employment_tax` in the model should be zero for that engagement. The VAT treatment depends on the EOR's jurisdiction and the client's, not on yours. Ask the EOR for its VAT export flag in writing before you invoice.
 
-```yaml
-- type: equity
-  amount: 0.1
-  vesting: 4 years
-  current_value_usd: 12000
-  probability: 0.7
-```
+**Should I go through a local agency?**
 
-The model doesn’t discount equity because most Latin American contractors can’t easily sell it. I present it as upside, not part of the target salary.
+Agencies typically take a commission, which raises the client-facing price for the same take-home. Whether that is worth it depends on whether the agency brings you clients you could not reach directly. Model both and compare the client-facing number, not the take-home.
 
-### What if the client pays via Deel or Remote?
+## Failure modes to watch for
 
-Deel and Remote act as employers-of-record (EOR). They withhold local taxes and issue you a 1099 or equivalent. The model still works, but you set `self_employment_tax=0` because the EOR handles it. The VAT export field depends on the EOR’s jurisdiction:
+- **Quoting against local cost of living.** The client's budget is set by their market, not yours. Anchor to the role and the client's city tier.
+- **Mixing currencies in one quote.** Pick the client's currency for the quote and convert only for your own records.
+- **Burying VAT in the total.** Put it on its own line or expect a rejection.
+- **Using a stale FX rate.** Cache with an expiry and fail loudly when the cache is old.
+- **Assuming a tax rate from an article.** Verify with a local accountant. Rates change, and the wrong one produces an invoice the client cannot process.
+- **Forgetting the denominator.** 2080 hours is a convention. If you take real leave, your billable hours are lower and your rate should be higher.
 
-| EOR | VAT export | Notes |
-|-----|-----------|-------|
-| Deel (US) | 0% | Withholds US taxes |
-| Remote (US) | 0% | Withholds US taxes |
-| Deel (Colombia) | 0% | Withholds COP taxes |
-| Remote (Mexico) | 16% | Withholds MXN taxes |
+## Do this in the next 30 minutes
 
-I once used Deel Colombia for a US client. The invoice came back rejected because Deel’s system auto-applied the 19% Colombian VAT, but the client was in the US and VAT export was 0%. Lesson: always ask the EOR for a VAT export flag.
-
-### Should I use a local agency instead of going direct?
-
-Local agencies in Bogotá and Mexico City take 10–25% commission. If your target is $120k, the agency will quote $133k–$150k to the client, which may push you above their budget. I tested this with one agency in 2026 and lost three deals because the agency’s markup was higher than my buffer. Going direct keeps the spread under 5%.
-
-## Where to go from here
-
-Take the model you built in this post and run it against one real job posting today. Open the spreadsheet, plug in the role, city, and your target annual salary, then export the client rate to a PDF quote. Send it to a friend who works at a US startup and ask for feedback on the numbers. The goal isn’t to get a yes today—it’s to find out where the model breaks against real-world budgets. If the client rate is 20% above their midpoint, dial back the buffers or lower your target. If it’s 10% below, you have room to negotiate up before you even open your mouth.
-
-
-Open `scripts/rate_model.py`, change the `target_annual` to your desired salary, and run:
-
-```bash
-python scripts/rate_model.py --target 120000 --fx 3900 --region cop
-```
-
-Copy the output to a Google Doc, send it to a peer, and ask: “Does this number make sense for a Staff Engineer role at a Bay Area Series B?”
-If they say no, tune the buffers until it does. That’s the real negotiation—before the client even sees the quote.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 08, 2026
+Open your spreadsheet, pick one real posting you have saved, and fill in the three scenarios: your local break-even, the client-market midpoint, and the top of the client's likely range. Then run the four-line calculation from the worked example with your own target figure and paste the result into a note. You will immediately see whether your current mental number is above or below the market band — and that comparison, not the exact figure, is what you need before the first conversation.

@@ -1,38 +1,81 @@
 # Most LLM cost dashboards lie…
 
-It's easy to spend longer than expected on finops llmheavy before the actual failure mode becomes clear. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time.
+## Why provider pricing pages understate real spend
 
-## The gap between what the docs say and what production needs
+A provider's pricing page shows a clean per-token rate: one number for input, another for output. It is tempting to model the monthly bill as `total_tokens × rate`. That model isn't wrong so much as incomplete, and the gap between it and the invoice is where most LLM cost work happens.
 
-Every provider's pricing page shows a clean per-token rate. Input tokens cost one number, output tokens cost another, and if you squint you can convince yourself your monthly bill is just `total_tokens × rate`. That model is not wrong, exactly — it's just incomplete in a way that hides 30% to 60% of real spend. The missing pieces are almost always the same: retries you didn't log, cached tokens you paid full price for anyway because you forgot the cache flag, embeddings recomputed on every deploy, and the long tail of agent loops that ballooned from 3 calls to 40 because a tool schema changed shape.
+The recurring sources of that gap are predictable:
 
-A common pattern in teams that just shipped their first LLM feature is to wire up a cost dashboard that reads from the provider's usage API once a day and plots a single line. That line looks reasonable. It also misses the fact that your staging environment is calling the same production API key, that your eval harness ran 12,000 completions overnight, and that one customer's agent is stuck in a loop retrying a tool call that returns a 429. By the time finance asks why the bill tripled, you're reconstructing the answer from CloudWatch logs and a spreadsheet.
+- **Unlogged retries.** SDKs retry on 429 and 5xx by default. Each retry is a full billed request, and most dashboards count one logical call.
+- **Cache misses you assumed were hits.** A cache breakpoint only fires when the prefix is byte-identical. A timestamp or interpolated user name near the top of a system prompt silently turns every request into a cache write.
+- **Embeddings recomputed on every deploy.** If the indexing pipeline runs in CI without content hashing, unchanged documents are re-embedded on every push.
+- **Agent loops.** A tool that returns an error the model can't interpret produces repeated calls with slightly different malformed arguments. Without an iteration cap, this continues until the context window fills.
 
-The part that trips people up is that FinOps for LLMs isn't a smaller version of cloud cost management — it's a different shape of problem, because the unit of cost is a token that you generate yourself, at runtime, in code you control. That's what this post actually covers: where the money leaks, which levers actually move the number, and which ones are theater.
+A common first implementation reads the provider's usage API once a day and plots a single line. That line looks reasonable and is structurally incapable of answering the questions that matter: which feature got more expensive, which tenant is responsible, whether retries are inflating the count. It also misses shared credentials — a staging environment or an overnight eval harness calling the same production key.
 
-## How FinOps for LLM-heavy teams: the levers that actually move the needle in 2026 actually works under the hood
+LLM FinOps differs from general cloud cost management in one important way: the unit of cost is a token you generate yourself, at runtime, in code you control. That makes it more tractable than cloud spend, not less — but only if the telemetry exists.
 
-To control LLM cost you have to be able to answer four questions per request: which model, how many input tokens, how many output tokens, and how many retries. Everything else is downstream. If your telemetry doesn't emit those four fields on every call, you cannot do FinOps — you can only do vibes.
+## The four fields that make cost control possible
 
-The mechanism that makes this tractable is per-request attribution. You attach a `tenant_id`, a `feature` tag, and a `request_id` to every completion, and you emit a structured log line (or a span, if you're on OpenTelemetry) with the token counts the provider returns in the response body. OpenAI, Anthropic, Bedrock, and Vertex all return usage in the response — `usage.prompt_tokens`, `usage.completion_tokens`, and for cached prompts a separate `cache_read_input_tokens` or `prompt_tokens_details.cached_tokens` field. If you're not reading those fields, you're guessing.
+To control LLM cost you need to answer four questions per request: which model, how many input tokens, how many output tokens, and how many retries. Everything else is downstream. If your telemetry doesn't emit those four on every call, you cannot do FinOps — you can only do vibes.
 
-The second mechanism is a gateway. Not because a gateway is magic, but because it's the only place where you can enforce a budget, downgrade a model, and cache a response without touching 40 call sites. A thin proxy (LiteLLM 1.48, Portkey, or a 200-line FastAPI service) that sits between your app and the provider gives you: model routing rules, per-tenant rate limits, prompt caching, and a single place to emit cost telemetry. Teams that skip the gateway usually end up with cost logic duplicated across services, and the copies drift.
+The mechanism that makes this tractable is per-request attribution. Attach a `tenant_id`, a `feature` tag, and a `request_id` to every completion, and emit a structured log line or span containing the token counts the provider returns in the response body.
 
-The third mechanism — and the one most teams underinvest in — is prompt caching. Anthropic's cache writes cost ~25% more than a normal input token, but cache reads cost ~10% of the base input rate. OpenAI's automatic prompt caching gives a 50% discount on cached input tokens with no write surcharge. For a system prompt of 4,000 tokens reused across 100,000 requests a day, that's the difference between paying for 400 million input tokens and paying for 40 million. The catch is that cache hits require a stable prefix — any change to the system prompt, including a timestamp or a user name near the top, invalidates it.
+The documented usage fields differ by provider:
 
-| Lever | Typical impact on monthly bill | Effort | Notes |
+| Provider | Input tokens | Output tokens | Cached input |
 |---|---|---|---|
-| Prompt caching (stable prefix) | 40–70% reduction on input tokens | Low | Requires prefix discipline |
-| Model downgrade for easy routes | 50–80% on affected traffic | Medium | Needs a classifier or heuristic |
-| Retry cap + jittered backoff | 5–15% | Low | Prevents 429 storms |
-| Embedding dedup / batch | 10–30% on embedding spend | Medium | Hash the input, cache the vector |
-| Streaming with early stop | 5–20% on output tokens | Medium | Cheaper perceived latency, fewer tokens |
-| Semantic cache (exact match) | 15–40% on FAQ-style traffic | High | Wrong answers are a real risk |
-| Token budget per tenant | Caps blast radius | Low | Doesn't reduce cost, prevents surprises |
+| OpenAI Chat Completions | `usage.prompt_tokens` | `usage.completion_tokens` | `usage.prompt_tokens_details.cached_tokens` |
+| Anthropic Messages | `usage.input_tokens` | `usage.output_tokens` | `usage.cache_read_input_tokens` |
+| Bedrock (Converse) | `usage.inputTokens` | `usage.outputTokens` | `usage.cacheReadInputTokens` |
 
-## Step-by-step implementation with real code
+Read those fields from the response. Do not estimate from a local tokenizer for billing purposes — a local count is useful for pre-flight budgeting, but it drifts from the billed count, and the drift is invisible.
 
-Start with attribution. Wrap every provider call in a decorator that reads usage from the response and emits a structured event. Here's a Python 3.12 example using the OpenAI SDK 1.55 and `structlog` 24.4:
+The second mechanism is a gateway or proxy. Not because a proxy is magic, but because it is the only place you can enforce a budget, downgrade a model, and cache a response without touching every call site. A thin proxy between your app and the provider centralizes model routing rules, per-tenant rate limits, prompt caching, and cost telemetry emission. Teams that skip this layer usually end up with cost logic duplicated across services, and the copies drift apart.
+
+The third mechanism, and the one most teams underinvest in, is prompt caching. The economics as documented by the major providers: Anthropic charges a premium to write a cache entry and a large discount to read it; OpenAI applies a discount to cached input tokens with no write surcharge. The exact multipliers change over time, so check the current pricing page rather than trusting a number from an article. The structural point is stable: a long, reused prefix becomes dramatically cheaper per request, and a prefix that changes per request saves nothing.
+
+## A worked cost model
+
+Because published rates move, treat the following as an illustrative model and substitute your own current rates. The arithmetic is what matters.
+
+Assume a document-Q&A feature with these characteristics:
+
+- 180,000 requests per day
+- 6,200 input tokens per request on average
+- 340 output tokens per request on average
+- A 4,500-token static system prompt that is identical across requests
+
+Daily input tokens: 180,000 × 6,200 = 1,116,000,000 (about 1.12 billion).
+Daily output tokens: 180,000 × 340 = 61,200,000 (about 61 million).
+
+Now apply illustrative rates of $2.50 per million input tokens and $10.00 per million output tokens:
+
+- Input: 1,116 × $2.50 = $2,790
+- Output: 61.2 × $10.00 = $612
+- Total: roughly $3,400 per day, or about $102,000 per month
+
+Output tokens are 5% of the token count but 18% of the bill in this model. That ratio is the reason `max_tokens` settings deserve attention: they bound the tail without affecting typical generation length.
+
+Now apply two changes.
+
+**Prompt caching.** Of the 6,200 input tokens, 4,500 are the static prefix. If cached reads are billed at half the input rate, the effective input cost becomes:
+
+- Cached portion: 4,500 tokens × 180,000 requests = 810,000,000 tokens at half rate = $1,012.50
+- Uncached portion: 1,700 tokens × 180,000 requests = 306,000,000 tokens at full rate = $765
+- Total input: about $1,778 instead of $2,790
+
+That is a 36% reduction in input spend with no change to output or quality. The saving scales with the ratio of static prefix to total input — if the prefix were 90% of input, the reduction would be proportionally larger.
+
+**Model routing.** Suppose a cheap classifier identifies 70% of requests as answerable by a smaller model priced at one-fifth of the large model's input rate. Routing those requests moves 0.7 × $1,778 ≈ $1,245 of input cost down to roughly $249, and the output cost for that traffic similarly. The exact saving depends entirely on whether the small model's answers pass your evals — which is the real constraint, not the routing code.
+
+**Retry capping.** Retries are small in dollars and large in tail latency. Setting `max_retries` to 2 with jittered backoff prevents the 429 storms where concurrent requests all retry at the same instant, amplifying the rate limit that caused the failure.
+
+To measure your own version of this, instrument the wrapper to emit the four fields, then run two queries: total cost grouped by feature over 7 days, and `cached_tokens / prompt_tokens` grouped by feature. A stable-prefix workload with a cache hit ratio near zero means something is invalidating the prefix.
+
+## Implementation: attribution, budget enforcement, caching
+
+Start with attribution. Wrap every provider call in a function that reads usage from the response and emits a structured event.
 
 ```python
 import structlog
@@ -41,6 +84,7 @@ from openai import OpenAI
 log = structlog.get_logger()
 client = OpenAI()
 
+# Illustrative rates in USD per token. Replace with current published prices.
 PRICES = {
     "gpt-4o-mini": {"in": 0.15 / 1_000_000, "out": 0.60 / 1_000_000, "cached_in": 0.075 / 1_000_000},
     "gpt-4o":      {"in": 2.50 / 1_000_000, "out": 10.00 / 1_000_000, "cached_in": 1.25 / 1_000_000},
@@ -49,8 +93,8 @@ PRICES = {
 def complete(model: str, messages: list, tenant_id: str, feature: str, **kw):
     resp = client.chat.completions.create(model=model, messages=messages, **kw)
     u = resp.usage
-    cached = getattr(u, "prompt_tokens_details", None)
-    cached_tokens = cached.cached_tokens if cached else 0
+    details = getattr(u, "prompt_tokens_details", None)
+    cached_tokens = getattr(details, "cached_tokens", 0) or 0
     p = PRICES[model]
     cost = (
         (u.prompt_tokens - cached_tokens) * p["in"]
@@ -70,13 +114,14 @@ def complete(model: str, messages: list, tenant_id: str, feature: str, **kw):
     return resp
 ```
 
-That one function gives you per-tenant, per-feature cost. Ship it to CloudWatch Logs or Loki, and you can answer "which customer is costing me the most" with a Logs Insights query in under a minute.
+That function gives per-tenant, per-feature cost. Ship the events to a log store that supports aggregation — CloudWatch Logs Insights, Loki with LogQL, or ClickHouse — and "which tenant costs the most" becomes a one-line query.
 
-Next, enforce a budget at the gateway. A minimal FastAPI 0.115 middleware that rejects requests once a tenant crosses a daily dollar threshold:
+Next, enforce a budget. A minimal middleware that rejects requests once a tenant crosses a daily dollar threshold bounds the worst case:
 
 ```python
 from fastapi import FastAPI, Request, HTTPException
 import redis.asyncio as redis
+from datetime import datetime, timezone
 
 app = FastAPI()
 r = redis.Redis(host="localhost", port=6379, decode_responses=True)
@@ -86,16 +131,17 @@ DAILY_CAP_USD = 25.0
 async def budget_guard(request: Request, call_next):
     tenant = request.headers.get("x-tenant-id")
     if tenant:
-        key = f"spend:{tenant}:{request.state.day}"
+        day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        key = f"spend:{tenant}:{day}"
         spent = float(await r.get(key) or 0)
         if spent >= DAILY_CAP_USD:
             raise HTTPException(status_code=429, detail="daily budget exceeded")
     return await call_next(request)
 ```
 
-Redis 7.2 with an `EXPIRE` of 90,000 seconds on the key keeps the counter scoped to the day. This doesn't reduce cost by itself — it bounds the worst case. The difference between a bad day costing $40 and $4,000 is whether this middleware exists.
+Set an expiry on the counter key so it does not accumulate indefinitely. This middleware does not reduce cost by itself — it bounds the blast radius. The difference between a bad day costing tens of dollars and thousands is whether this exists.
 
-Finally, prompt caching. For Anthropic's API, you mark a cache breakpoint with `cache_control`. The rule is simple: put the breakpoint after the static system prompt, before any user-specific content.
+Finally, prompt caching. For Anthropic's API, mark a cache breakpoint with `cache_control` after the static prefix and before any user-specific content:
 
 ```python
 system = [
@@ -104,89 +150,58 @@ system = [
 messages = [{"role": "user", "content": user_question}]
 ```
 
-If you accidentally interpolate a `datetime.now()` into `LONG_STATIC_PROMPT`, every request is a cache miss and you pay the 25% write surcharge forever. This is the single most common caching mistake.
+If a `datetime.now()` or a user name is interpolated into `LONG_STATIC_PROMPT`, every request is a cache miss and you pay the write premium indefinitely. This is the most common caching mistake and it is invisible unless you monitor the hit ratio.
 
-## Performance numbers from a live system
+## Failure modes and how to detect them
 
-Typical figures for a mid-size B2B SaaS running a document-Q&A feature look like this. Before any optimization: 180,000 requests per day, average 6,200 input tokens and 340 output tokens, model `gpt-4o`. That's roughly 1.12 billion input tokens and 61 million output tokens per day. At $2.50 and $10.00 per million respectively, that's about $2,800/day, or $84,000/month. That number is real and it's why this problem gets attention.
+**Shared credentials across environments.** A nightly eval job runs thousands of completions against the production key. Detection: alert when a key's daily spend exceeds a multiple of its trailing 7-day median. Prevention: separate keys per environment, with separate budgets.
 
-After three changes — caching the 4,500-token system prompt, routing 70% of traffic to `gpt-4o-mini` via a cheap classifier, and capping retries at 2 — the same workload typically lands around $18,000–$24,000/month. The caching alone saves roughly $45,000/month on input tokens because 4,500 of the 6,200 input tokens become cache reads at 50% off. The model downgrade saves another $15,000–$20,000 on the routed traffic. Retry capping is small in dollars but large in tail latency: p99 request time drops from ~9.2s to ~3.4s because you stop hammering the provider during 429 storms.
+**The tool-schema loop.** In agent frameworks, a tool returning an error the model can't interpret causes repeated calls with slightly different malformed arguments, often dozens of times before any framework limit applies. If `max_iterations` is unset, it runs until the context window fills. Fix: set `max_iterations` explicitly, and return human-readable tool errors the model can act on rather than raw stack traces. Detection: count tool calls per logical request in your traces; a spike is visible immediately.
 
-One number that surprised me when I first started looking at these dashboards: output tokens are usually 5–10% of total token count but 25–40% of the bill, because output is priced 3–4× input. Teams obsess over prompt size and ignore `max_tokens` settings. Setting `max_tokens` to a realistic ceiling (say 800 instead of the default 4,096) doesn't change quality for most tasks and prevents one runaway generation from costing 10× what it should.
+**Cache invalidation.** Covered above, but worth restating because it fails silently. You see cache fields in the response and assume caching works, while the hit rate is zero. Monitor `cached_tokens / prompt_tokens` per feature. A stable-prefix workload below roughly 0.5 warrants investigation.
 
-## The failure modes nobody warns you about
+**The 429 retry storm.** The provider returns 429, the SDK retries with exponential backoff, and without jitter, concurrent requests retry in lockstep. You pay for the retries that succeed and amplify the rate-limit problem. Fix: jitter plus a low `max_retries`.
 
-**The staging key.** A team wires up a nightly eval job that runs 12,000 completions against the production API key. Nobody notices for three weeks. That's a $6,000–$15,000 surprise depending on model. Fix: separate keys per environment, and alert when a key's daily spend exceeds 2× its 7-day median.
+**Embedding recompute.** Re-indexing the full corpus on every deploy multiplies embedding cost by deploy frequency. Hash document content and skip unchanged documents. This is a cheap change with a large effect on high-deploy-frequency teams.
 
-**The tool-schema loop.** In agent frameworks, a tool that returns an error the model doesn't understand causes a retry loop. A common failure mode is the model calling `search_docs` with a malformed argument, getting a validation error, and re-calling with a slightly different malformed argument — 30 to 60 times before the framework's `max_iterations` kicks in. If `max_iterations` is unset, it runs until the context window fills. Set `max_iterations=8` and make tool errors return a human-readable message the model can act on, not a stack trace.
+## Choosing a stack
 
-**The cache-invalidation timestamp.** Covered above, but worth repeating because it's silent. You see cache reads in the response, you assume caching works, but the hit rate is 0% because someone added `f"Current time: {now}"` to the top of the system prompt. Check `cache_read_input_tokens / prompt_tokens` — if it's below 0.5 for a stable-prefix workload, something is invalidating.
+| Category | Examples | Choose when |
+|---|---|---|
+| Managed observability | Hosted request-logging and cost-tracking services | You want per-request visibility within a day and don't want to run infrastructure |
+| OpenTelemetry instrumentation | OTel-based LLM instrumentation libraries | You already run OTel and want cost data in your existing backend |
+| Self-hosted gateway | A proxy you run yourself, or an open-source gateway | You have multiple providers and want routing, budgets, and caching in one place |
+| Local token counting | Provider tokenizer libraries | Pre-flight budget checks, not billing |
 
-**The 429 retry storm.** Provider returns 429, your SDK retries with exponential backoff, but you've set `max_retries=10` with no jitter. Now 200 concurrent requests all retry at the same instant. You pay for the retries that succeed, and you amplify the rate-limit problem. Use jitter and cap retries at 2–3.
+The build-versus-buy decision turns on how many places your code calls a provider. A single service calling one provider needs a wrapper function and nothing else. Multiple services calling multiple providers needs a gateway, because otherwise the cost logic is duplicated and the copies diverge.
 
-**Embedding recompute.** You re-index your entire corpus on every deploy because the embedding pipeline runs in CI. 500,000 documents × 800 tokens × $0.02/1M = $8 per run, which sounds fine until you deploy 30 times a day. Hash the document content, skip unchanged ones.
+Be skeptical of any tool that promises automatic traffic routing via a learned classifier. The routing is the easy part. The hard part is knowing which routes are safe to downgrade, and that requires eval data you already have. A small heuristic plus an eval set is usually enough.
 
-## Tools and libraries worth your time
+## When not to do any of this
 
-| Tool | Version | What it does | When to use |
-|---|---|---|---|
-| LiteLLM | 1.48 | Proxy + SDK, unified usage telemetry | You have multiple providers |
-| Portkey | SaaS | Gateway with cost dashboards | You want managed |
-| Helicone | SaaS/self-host | Request logging, cost tracking | You want per-request visibility fast |
-| OpenLLMetry | 0.30 | OTel instrumentation for LLM calls | You already run OTel |
-| tiktoken | 0.8 | Local token counting | Pre-flight token budget checks |
-| Redis | 7.2 | Budget counters, exact-match cache | Any budget enforcement |
-| structlog | 24.4 | Structured logging | You want queryable cost events |
+If monthly LLM spend is in the low hundreds of dollars, the engineering time to build a gateway, budget counter, and caching layer costs more than a year of savings. Set a hard `max_tokens`, use a cheaper model where quality allows, and revisit when spend crosses a threshold where an engineer-week is clearly cheaper than the bill.
 
-For a small team, Helicone or Portkey plus a Redis budget counter gets you 80% of the way in a day. For a team already running OpenTelemetry, OpenLLMetry plus a Grafana dashboard is more flexible and keeps data in your own stack. LiteLLM is the middle path — self-hosted, supports ~100 providers, and emits usage on every call.
+If every request has a unique long input with no shared prefix, prompt caching won't help. Semantic caches — returning a stored answer for a similar question — are risky wherever a wrong answer carries a cost, and in regulated environments where every prompt and response must be auditable, a shared cache is a compliance problem rather than a cost win.
 
-What I'd skip: most "AI cost optimization" SaaS that promises to route your traffic automatically via a learned classifier. The routing is the easy part; the hard part is knowing which routes are safe to downgrade, and that requires eval data you already have. Build the router yourself with a 50-line heuristic and a small eval set.
+If the team is two engineers shipping a prototype, use the provider SDK directly, log usage to a file, and move on. FinOps is a scaling problem, and premature FinOps is as wasteful as premature optimization.
 
-## When this approach is the wrong choice
-
-If your monthly LLM spend is under $500, none of this is worth the engineering time. A gateway, a budget counter, and a caching layer is 2–3 weeks of work for a senior engineer. At $500/month, that work costs more than the savings for a year. Just set a hard `max_tokens`, use the cheap model, and revisit when you cross $2,000/month.
-
-If your workload is genuinely non-cacheable — every request has a unique 10,000-token input with no shared prefix — prompt caching won't help. Semantic caches are risky for anything where a wrong answer has a cost (legal, medical, financial). Don't deploy them there.
-
-If you're in a regulated environment where every prompt and response must be audited for 7 years, a shared semantic cache is a compliance problem, not a cost win. The cache hit returns a response that wasn't generated for this user's exact context.
-
-And if your team is 2 engineers shipping a prototype, don't build a gateway. Use the provider's SDK directly, log usage to a file, and move on. FinOps is a scaling problem, and premature FinOps is just as wasteful as premature optimization.
-
-## My honest take after using this in production
-
-The lever that matters most is prompt caching, and it's also the one most teams get wrong because it requires discipline about what goes in the static prefix. The second most important is model routing, and the reason it's underused is that it requires eval data — you have to know which queries are "easy" before you can route them. Teams that skip evals end up routing everything to the cheap model and shipping worse answers, then reverting and concluding "routing doesn't work."
-
-I think the obsession with per-token price is mostly a distraction. The difference between `gpt-4o` at $2.50/1M input and a cheaper model at $0.50/1M is real, but if you're sending 6,000 tokens of context when 800 would do, you're paying 7× more than you need to regardless of model. Context discipline beats model shopping. Trim the retrieved chunks, summarize long histories, and stop pasting the entire conversation into every turn.
-
-The other thing I'd push back on: cost dashboards that only show totals. A total is a number you can't act on. A per-feature, per-tenant breakdown tells you where to point the next hour of engineering. If your dashboard can't answer "which feature got 3× more expensive last Tuesday," it's decoration.
-
-## Frequently Asked Questions
+## FAQ
 
 **How do I track LLM token costs per customer?**
-Tag every request with a `tenant_id` at the gateway or in your SDK wrapper, and emit a structured log line with the token counts from the response's `usage` field. Ship those logs to a queryable store (CloudWatch Logs, Loki, or ClickHouse) and aggregate by tenant. The key is that the token counts must come from the provider's response, not from your own `tiktoken` estimate, because the estimate drifts from the actual billed count.
+Tag every request with a tenant identifier at the gateway or in the SDK wrapper, and emit a structured log line containing the token counts from the response's usage field. Send those logs to a queryable store and aggregate by tenant. The counts must come from the provider's response, not a local tokenizer, because the estimate drifts from the billed count.
 
-**Why is my OpenAI bill higher than my token count suggests?**
-Three usual causes: retries you're not logging, prompt cache misses you assumed were hits, and output tokens priced 3–4× higher than input. Check `usage.prompt_tokens_details.cached_tokens` — if it's zero on a workload with a stable system prompt, your cache is not firing. Also check your SDK's `max_retries` setting; the SDK retries on 429 and 5xx by default, and each retry is a full billed request.
+**Why is the bill higher than the token count suggests?**
+Three usual causes: retries that aren't logged, prompt cache misses assumed to be hits, and output tokens priced higher than input. Check the cached-token field in the usage object — if it is zero on a workload with a stable system prompt, the cache is not firing. Also check the SDK's retry setting, since each retry is a full billed request.
 
-**What is prompt caching and when does it save money?**
-Prompt caching stores the KV state of a prefix so subsequent requests skip recomputation. Anthropic charges ~25% more to write a cache entry and ~90% less to read it; OpenAI gives 50% off cached input with no write surcharge. It saves money when you have a long, stable prefix (system prompt, few-shot examples, retrieved context) reused across many requests. It saves nothing if your prefix changes per request.
+**When does prompt caching actually save money?**
+When you have a long, stable prefix — a system prompt, few-shot examples, or retrieved context — reused across many requests. It saves nothing if the prefix changes per request. Monitor the ratio of cached to total input tokens to confirm it is working.
 
 **How do I stop an agent from looping and burning tokens?**
-Set `max_iterations` explicitly (8 is a reasonable default) and make tool errors return a message the model can act on rather than a raw exception. Add a per-request token budget that aborts the loop when cumulative tokens exceed a threshold. And log every tool call — the loop is invisible until you see 40 identical `search_docs` calls in a trace.
+Set an explicit iteration cap, return tool errors as messages the model can act on rather than raw exceptions, and add a per-request token budget that aborts when cumulative usage crosses a threshold. Log every tool call; a loop is invisible until you see the same call repeated dozens of times in a trace.
 
-## What to do next
+**Is a gateway required?**
+No. A single service calling one provider needs only a wrapper function. A gateway becomes worthwhile when multiple services call multiple providers, because it prevents cost logic from being duplicated and drifting.
 
-Open your LLM wrapper function — the one place all your provider calls go through — and add three fields to whatever it logs: `prompt_tokens`, `completion_tokens`, and `cached_tokens`, read directly from the response's `usage` object. If you don't have a single wrapper, that's the first problem to fix, and it's a 30-minute change. Once those three fields are flowing into your log store, run one query grouping by feature for the last 24 hours. You'll see the leak in under five minutes, and everything else in this post follows from having that number.
+## What to do in the next 30 minutes
 
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open the function that all your provider calls go through and add three fields to whatever it logs: input tokens, output tokens, and cached input tokens, read directly from the response's usage object. If no single wrapper exists, creating one is the first fix and is a small change. Once those three fields are flowing into a queryable log store, run one query grouping cost by feature over the last 24 hours. The leak will be visible, and every other technique in this article follows from having that number.

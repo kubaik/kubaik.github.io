@@ -1,26 +1,43 @@
 # WebSockets vs Server-Sent Events: latency over 3G
 
-After reviewing enough code that touches building personal, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path.
+Real-time features on mobile networks fail in ways that staging environments rarely reproduce. A connection that works on office Wi-Fi can drop every 60 seconds on a train, and the cause is usually not the protocol itself but an idle timeout, a reconnect strategy, or a proxy that quietly buffers the stream. This article compares WebSockets and Server-Sent Events (SSE) for agent-style features — status feeds, live dashboards, chat — where the client is on intermittent mobile data and the backend sits behind a load balancer.
 
-## Why this comparison matters right now
+The goal is not to declare a universal winner. It is to lay out the documented behaviour of each protocol, the failure modes that matter on unreliable links, and a way to measure which one actually performs better for your workload.
 
-In 2026, mobile internet in East Africa runs at an average of 9.2 Mbps on 4G and 3.1 Mbps on 3G, with median RTTs around 280 ms to regional AWS endpoints and packet loss rates that spike to 4–6% during peak hours. That environment is enough to make any real-time feature—like a live agent chat or status updates—feel sluggish if you rely on plain HTTP polling or REST calls. The real bottleneck isn’t the server; it’s the round trips, the TLS handshakes, and the fact that browsers and mobile devices will aggressively coalesce requests, queuing one behind another even when the user expects instant feedback.
+## Why the comparison is not obvious
 
-The part that trips people up is the assumption that a WebSocket will always outperform Server-Sent Events (SSE) under these conditions. Both protocols reduce overhead by keeping a single persistent connection open, but they behave differently under packet loss, reconnect storms, and proxy timeouts. Teams that reach for WebSockets first often hit a wall when their load balancer’s idle timeout (default 60 seconds on AWS ALB 2026) starts terminating connections during a 3G hand-off, while teams that default to SSE discover that Safari and some proxy stacks still mishandle HTTP/2 streaming, turning a perceived win into a cascade of 304 responses and re-renders. The trap isn’t the protocol—it’s choosing one without measuring what actually breaks under East African 3G/4G conditions.
+Both protocols replace polling with a single long-lived connection, so both cut the round trips, TLS handshakes, and header overhead that make REST polling feel sluggish. Beyond that they diverge:
 
-This post compares WebSockets (RFC 6455) and Server-Sent Events (W3C, 2026) specifically for low-latency agent features where the user is on intermittent 3G/4G and the backend is in AWS us-east-1 or eu-west-1. We’ll look at how each behaves under packet loss, reconnects, message ordering, and proxy timeouts, using Node.js 20 LTS on Linux 5.15 and Python 3.11 FastAPI benchmarks from a t3.medium instance in Nairobi. The goal isn’t to pick a winner for every use case, but to give you the measurements and failure modes that matter when your users are on 3G/4G in Nairobi, Kampala, or Dar es Salaam.
+- WebSockets are full-duplex and message-oriented. Either side can send at any time.
+- SSE is unidirectional and text-oriented. The server streams events; the client sends commands over separate HTTP requests.
 
-## Option A — how it works and where it shines
+The common assumption is that WebSockets are always lower latency. That is true for client-to-server messaging, where SSE has no equivalent path. It is not automatically true for server-to-client streaming, where SSE can be lighter because it avoids WebSocket framing and carries no masking bytes.
 
-WebSockets provide full-duplex, message-oriented communication over a single TCP connection upgraded from HTTP. They’re designed for low-latency, high-frequency bidirectional messages—think collaborative editing, live chat, or gaming telemetry. The protocol starts as an HTTP/1.1 or HTTP/2 request with an `Upgrade: websocket` header, and once accepted, both client and server can send frames at any time without waiting for a request/response cycle.
+The second common assumption is that SSE is always simpler to operate. That holds for client code, because browsers reconnect automatically. It does not hold for infrastructure, because a long-lived HTTP response is exactly the kind of connection that idle timeouts and buffering proxies are built to terminate.
 
-Under the hood, WebSocket frames have a small header (2–14 bytes) compared to HTTP’s verbose headers (often >80 bytes per message), which matters when bandwidth is constrained. The WebSocket standard (RFC 6455) defines a masking bit to prevent cache poisoning and a close code registry to standardize disconnect reasons. Modern browsers and most HTTP proxies support WebSockets, but some enterprise proxies and mobile carriers still block or throttle the `ws://` and `wss://` schemes unless configured to allow them.
+Both assumptions need testing against your own traffic. The rest of this article covers what to test and what tends to break.
 
-Where WebSockets shine is in scenarios that require both client-to-server and server-to-client messaging with minimal latency. A common East African use case is a ride-hailing agent receiving real-time GPS pings from drivers while simultaneously sending route updates back to them. In this setup, the agent’s dashboard opens one WebSocket, and the backend pushes driver locations every 2–3 seconds without the agent refreshing or polling. The connection stays open even when the user switches apps or the phone screen locks, assuming the OS preserves background sockets (which recent Android versions do if the app targets API 30+).
+## WebSockets: mechanics and failure modes
 
-The biggest gotcha is connection churn. If your load balancer has a 60-second idle timeout, a user who loses signal for 70 seconds will trigger a disconnect, and the next message will be a TCP reset or a 400 Bad Request from the proxy. On AWS ALB 2026, the timeout is configurable up to 4000 seconds, but the default is still 60 seconds, which bites teams that don’t tune it. Another trap is message ordering: WebSockets guarantee per-connection message order, but if you shard messages across multiple backend instances, you need a message broker (like Redis Streams or RabbitMQ) to fan out messages without violating ordering guarantees.
+A WebSocket connection starts as an HTTP/1.1 request with an `Upgrade: websocket` header. If the server accepts, the connection switches protocols and both peers exchange frames. RFC 6455 defines the frame format: a small header of 2 to 14 bytes depending on payload length, a masking bit on client-to-server frames, and a close-code registry (1000 normal closure, 1001 going away, 1006 abnormal closure) that lets clients distinguish a clean shutdown from a dropped link.
 
-Here’s a minimal WebSocket server in Node.js 20 LTS using the `ws@8.16.4` library:
+The small frame header is the main bandwidth argument for WebSockets over HTTP polling, where headers of 80 bytes or more are typical per request. Against SSE the comparison is closer, because SSE also avoids per-message request headers.
+
+Where WebSockets are the only practical option:
+
+- Client-to-server messages are frequent. A chat, a collaborative editor, or a telemetry upload path needs a persistent send channel.
+- Both directions carry latency-sensitive traffic. A ride-hailing agent receiving driver GPS pings while pushing route updates is a two-way workload.
+- You need binary payloads. SSE is text-only; binary data must be base64-encoded, which inflates it.
+
+The failure modes that show up on mobile networks:
+
+**Idle timeout disconnects.** A load balancer or proxy closes connections that carry no traffic for a configured period. The AWS Application Load Balancer default idle timeout is 60 seconds and is configurable up to 4000 seconds. A client that loses signal for longer than the timeout comes back to a dead socket. The next send fails, and the client must reconnect from scratch.
+
+**Reconnect storms.** The browser `WebSocket` API does not reconnect automatically. Every client library implements its own backoff. If the backoff is a fixed delay, or has no jitter, a regional blip can bring thousands of clients back at the same instant. Exponential backoff with random jitter is the standard mitigation.
+
+**Ordering across instances.** RFC 6455 guarantees ordering within a single connection. It says nothing about ordering across connections. If messages for one user can be served by more than one backend instance, you need a broker or a partition key to preserve order.
+
+A minimal Node.js WebSocket server:
 
 ```javascript
 import { WebSocketServer } from 'ws';
@@ -33,7 +50,6 @@ wss.on('connection', (ws) => {
   console.log('agent connected');
 
   ws.on('message', (data) => {
-    // Echo back with a latency header
     const t1 = Date.now();
     ws.send(JSON.stringify({
       type: 'agent_update',
@@ -49,12 +65,12 @@ wss.on('connection', (ws) => {
 server.listen(8080, () => console.log('ws server on 8080'));
 ```
 
-That server echoes messages back to the agent with a `server_latency_ms` field so you can measure round-trip time from the browser’s `performance.now()`. It’s intentionally simple to highlight the protocol overhead, not the business logic.
+This echoes each message back with a server-side processing timestamp. Combined with `performance.now()` in the browser, that gives you a round-trip measurement you can log and aggregate.
 
-For reconnects, most WebSocket clients implement exponential backoff with a jitter. The browser’s native `WebSocket` API doesn’t expose this, so teams often wrap it in a custom client:
+A client wrapper with capped exponential backoff and jitter:
 
 ```javascript
-const MAX_DELAY = 15000; // 15s max backoff
+const MAX_DELAY = 15000; // 15s cap
 let ws;
 let retryCount = 0;
 
@@ -68,7 +84,7 @@ function connect() {
   ws.onmessage = (e) => {
     const t0 = performance.now();
     handleIncoming(JSON.parse(e.data));
-    console.log('p99 latency:', Math.round(performance.now() - t0));
+    console.log('handler latency:', Math.round(performance.now() - t0));
   };
 
   ws.onclose = () => {
@@ -81,19 +97,41 @@ function connect() {
 connect();
 ```
 
-The client caps the backoff at 15 seconds to avoid hammering the server during a regional outage and adds jitter to prevent thundering herds. That’s the kind of detail teams miss until they see 5000 reconnects per minute in CloudWatch Logs.
+The cap prevents a client from waiting minutes after a brief outage. The jitter spreads reconnect attempts so that a shared network event does not synchronise every client. Without both, a reconnect storm is the predictable outcome.
 
-## Option B — how it works and where it shines
+## Server-Sent Events: mechanics and failure modes
 
-Server-Sent Events (SSE) give you unidirectional, server-to-client streaming over HTTP without upgrading the protocol. The client opens an HTTP GET request with `Accept: text/event-stream`, and the server responds with a stream of `data:` lines, separated by double newlines. SSE is part of the Fetch API in browsers and is supported in Safari 16.4+, Chrome 114+, Firefox 115+, and most mobile browsers. The protocol is simpler than WebSockets: no handshake upgrade, no masking, no close codes—just a long-lived HTTP connection that streams events until the client closes it or the server terminates it.
+SSE is a long-lived HTTP response with `Content-Type: text/event-stream`. The client opens a GET request, and the server writes events as `data:` lines separated by blank lines. The browser parses them and dispatches `message` events. There is no protocol upgrade, no framing layer, and no masking.
 
-Under 3G/4G, SSE’s advantage is that it rides over standard HTTP/1.1 or HTTP/2 without protocol switching. That means fewer intermediaries block or misroute it, and carriers are less likely to throttle `https://` streams than `wss://` upgrades. The payload per event is small—typically 20–100 bytes for a JSON payload plus the `data:` prefix and newlines—so it fits within a single TCP packet on 3G links. The downside is that SSE is unidirectional: the client can’t send messages to the server except via separate HTTP requests, which adds latency if you need two-way communication.
+The parsing rules are defined in the HTML standard, and the format is deliberately simple:
 
-Where SSE shines is in agent dashboards that primarily receive updates—like a live order feed, a status stream, or a real-time map of nearby drivers—while sending commands via REST. In Nairobi, teams using SSE for agent status feeds report 30–40% lower data usage than WebSocket echo tests because SSE doesn’t echo back every message. The connection stays open for hours, and the browser handles reconnects automatically if the stream is closed, which reduces client-side complexity.
+```
+data: {"agent_id":"123","status":"active"}
 
-The biggest failure mode is proxy timeouts. Many corporate proxies and mobile carriers kill HTTP connections that stay idle for more than 60–90 seconds, even if the stream is technically open. AWS ALB 2026 defaults to 60 seconds for idle timeout, which is fine for REST but too short for SSE. Teams that increase the timeout to 300 seconds see SSE streams survive hand-offs between 3G and 4G, while those that leave it at 60 seconds see periodic disconnects and client-side reconnect storms.
+data: {"agent_id":"123","status":"idle"}
 
-Here’s a minimal SSE endpoint in Python 3.11 using FastAPI 0.109:
+```
+
+Where SSE is the better fit:
+
+- The traffic is mostly server-to-client. Status feeds, notification streams, and live dashboards fit this shape.
+- You want browser-managed reconnection. `EventSource` reconnects automatically after a drop.
+- You want the stream to be inspectable with ordinary HTTP tooling. `curl -N` shows the raw event stream, which makes debugging on a constrained connection straightforward.
+- You want to reuse existing HTTP authentication, caching, and observability infrastructure without a protocol upgrade path.
+
+The failure modes:
+
+**Idle timeout disconnects.** Same mechanism as WebSockets. An SSE stream that sends an event every few seconds is usually safe, but a stream that goes quiet for longer than the proxy timeout will be closed. Many deployments send a periodic comment line (`: keepalive`) as a heartbeat to keep the connection active. This is a workaround for the timeout, not a fix, and it costs bandwidth.
+
+**Proxy buffering.** Some intermediaries buffer the response body before forwarding it, which defeats streaming entirely. The symptom is that events arrive in bursts rather than as they are produced. Disabling buffering is usually a response-header or proxy-configuration change, and it is the first thing to check when SSE latency looks wrong.
+
+**No client-to-server channel.** Commands go over a separate HTTP request. That is an extra round trip per command, but for a dashboard where the user taps a button occasionally, it is not usually the bottleneck.
+
+**Automatic reconnect timing is not configurable in the client.** `EventSource` retries on its own schedule; the server can suggest a delay with a `retry:` field, but the browser decides how to honour it. If you need backoff shaped to your network conditions, you wrap `EventSource` or use a fetch-based reader instead.
+
+**Message loss on reconnect.** SSE has no delivery guarantee. Events in flight when the connection drops are gone. The server can send an `id:` field per event and the browser will send `Last-Event-ID` on reconnect, which lets you replay from a known point — but only if your backend stores recent events.
+
+A minimal FastAPI SSE endpoint:
 
 ```python
 from fastapi import FastAPI, Request
@@ -103,10 +141,11 @@ import json
 
 app = FastAPI()
 
-async def event_stream(agent_id: str):
+async def event_stream(agent_id: str, request: Request):
     try:
         while True:
-            # Simulate a backend update every 2s
+            if await request.is_disconnected():
+                break
             await asyncio.sleep(2)
             data = {
                 "agent_id": agent_id,
@@ -115,189 +154,119 @@ async def event_stream(agent_id: str):
             }
             yield f"data: {json.dumps(data)}\n\n"
     except asyncio.CancelledError:
-        yield f"data: {{\"type\":\"close\"}}\n\n"
+        return
 
 @app.get("/agent/{agent_id}/stream")
 async def sse_stream(agent_id: str, request: Request):
     return StreamingResponse(
-        event_stream(agent_id),
+        event_stream(agent_id, request),
         media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
 ```
 
-The endpoint streams JSON events every 2 seconds. The browser receives them as `EventSource` messages, and the client can listen with:
+The `X-Accel-Buffering: no` header disables buffering in nginx-style reverse proxies. The disconnect check prevents the generator from running forever after the client has gone away.
+
+Client side:
 
 ```javascript
 const es = new EventSource('/agent/123/stream');
 es.onmessage = (e) => {
   const t0 = performance.now();
   const data = JSON.parse(e.data);
-  console.log('SSE p99 latency:', Math.round(performance.now() - t0));
+  console.log('SSE handler latency:', Math.round(performance.now() - t0));
+};
+es.onerror = () => {
+  console.warn('SSE stream error; browser will retry');
 };
 ```
 
-SSE automatically reconnects when the connection drops, but it doesn’t expose retry timing to the client. The browser implements a 3-second backoff capped at 30 seconds, which is often too aggressive for 3G hand-offs. Teams that need more control wrap `EventSource` in a custom client with exponential backoff and jitter, similar to the WebSocket wrapper above.
-
-Another gotcha is message loss during reconnects. SSE doesn’t guarantee delivery, so if a message is in flight when the connection drops, it’s gone. For agent status feeds, that’s usually acceptable, but for financial transactions, teams pair SSE with a REST endpoint for critical acks.
-
-## Head-to-head: performance
-
-We ran both options against a synthetic agent workload: 100 simulated agents sending 1 message per second (agent → server), and the server broadcasting 1 update per agent per second (server → agent). The backend ran on a t3.medium (2 vCPU, 4 GiB) in AWS us-east-1, serving traffic from a CloudFront distribution with 6 edge locations. The test client ran on a Nokia 2.2 (Android 12) on Safaricom 4G in Nairobi, average RTT 260 ms, packet loss 2.3% during peak hours. The test measured p99 end-to-end latency for both directions.
-
-| Metric                     | WebSocket (Node 20) | SSE (FastAPI) | Difference |
-|----------------------------|---------------------|---------------|------------|
-| Mean RTT (agent→server)    | 182 ms              | 221 ms        | +39 ms     |
-| p99 RTT (agent→server)     | 347 ms              | 412 ms        | +65 ms     |
-| Mean server→agent latency | 15 ms               | 8 ms          | –7 ms      |
-| p99 server→agent latency  | 32 ms               | 19 ms         | –13 ms     |
-| Data per 100 messages      | 14.2 KB             | 9.8 KB        | –31%       |
-| CPU % (backend)            | 28%                 | 18%           | –10%       |
-
-The WebSocket client wins on agent→server latency because the persistent connection avoids TCP/TLS handshake overhead per message, but SSE’s streaming beats WebSocket on server→agent latency because the browser’s `EventSource` parser is highly optimized for `data:` lines, and the server doesn’t have to frame each message.
-
-The data savings are notable: SSE uses 31% less bandwidth for the same workload because it omits WebSocket framing and masking bytes. In East Africa, where data is expensive and 3G is spotty, that’s a real cost saving—especially for users on 100 KES (~$0.75) per 100 MB plans.
-
-Where WebSocket struggles is reconnect storms. In our test, we killed the radio link for 45 seconds, then restored it. WebSocket clients reconnected after 60 seconds (ALB idle timeout), while SSE clients reconnected after 3 seconds (browser default), but the first SSE message took 8 seconds to arrive because the proxy had cached the 304 response for the original `/agent/123/stream` request. That’s the kind of edge case teams debug in production logs, not in staging.
-
-The CPU numbers are from `htop` during the test. WebSocket’s higher CPU comes from maintaining more open connections and handling bidirectional frames, while SSE’s streaming keeps the connection open but idle most of the time, letting the async server handle other requests.
-
-If you need bidirectional low latency, WebSocket is the clear winner. If you only need server-to-client streaming and want to save data, SSE wins on bandwidth and proxy friendliness, but you’ll have to handle message loss and timing yourself.
-
-## Head-to-head: developer experience
-
-WebSocket forces you to manage connection state, message framing, and reconnect logic. Node’s `ws@8.16.4` library is mature, but it gives you raw frames—you still have to implement your own protocol (JSON envelopes, ping/pong, backpressure) on top. The browser’s `WebSocket` API is stable, but Safari’s WebSocket implementation has a 10-second keepalive bug that triggers spurious disconnects on iOS 17.4+ if the app is backgrounded. Teams that target Safari often need a fallback to SSE for agent status feeds.
-
-SSE’s developer experience is simpler for unidirectional streams. The browser handles reconnects, and the stream is just HTTP, so debugging with `curl` is trivial:
-
-```bash
-curl -N https://api.example.com/agent/123/stream
-```
-
-That’s useful in Nairobi offices where engineers debug over 4G dongles. The downside is that SSE doesn’t support custom headers on reconnect, so if you need to send auth tokens, you have to include them in the query string or use a separate REST call first. Teams often pair SSE with a REST `/auth/token` endpoint, adding an extra HTTP request before the stream starts.
-
-Error handling is different. WebSocket exposes `onclose` with a code (1000=normal, 1001=going away, 1006=abnormal), which helps distinguish between user logout and network loss. SSE’s `EventSource` only gives `onerror`, and the browser doesn’t surface the HTTP status code or reason, so teams wrap SSE in a custom client to capture disconnect reasons:
+Note that `onerror` does not expose the HTTP status or the reason for the failure. If you need to distinguish an auth failure from a network drop, you have to probe separately:
 
 ```javascript
-class SafeEventSource {
-  constructor(url) {
-    this.es = new EventSource(url);
-    this.es.onerror = () => {
-      // Try to infer the cause
-      fetch('/health').then(r => {
-        if (r.status === 401) this.reason = 'auth';
-        else if (r.status === 429) this.reason = 'rate_limit';
-        else this.reason = 'network';
-      });
-    };
-  }
-}
+es.onerror = () => {
+  fetch('/health', { method: 'HEAD' }).then((r) => {
+    if (r.status === 401) showBanner('session expired');
+    else if (r.status === 429) showBanner('rate limited');
+    else showBanner('connection lost');
+  }).catch(() => showBanner('connection lost'));
+};
 ```
 
-That’s extra code, but it’s necessary when your agent dashboard needs to show a "connection lost—retrying" banner with the right reason.
+That extra request is the cost of SSE's minimal error surface.
 
-Tooling maturity is uneven. For WebSocket, there’s `wscat@5.2.0` for CLI testing, `websocat@1.11.0` for raw frame inspection, and browser DevTools’ Network → WS panel. For SSE, browser DevTools’ Network → EventStream is still flaky in Firefox 115, and `curl -N` is the most reliable way to verify the stream format.
+## Comparison table
 
-If your team is small and you only need server-to-client streaming, SSE is easier to implement and debug. If you need bidirectional messaging with strict ordering, WebSocket is the pragmatic choice despite the extra complexity.
+| Property | WebSocket | Server-Sent Events |
+|---|---|---|
+| Direction | Full duplex | Server to client only |
+| Transport | HTTP upgrade to `ws`/`wss` | Plain HTTP/1.1 or HTTP/2 |
+| Payload | Text or binary | Text only (UTF-8) |
+| Browser auto-reconnect | No | Yes |
+| Reconnect timing control | Full, in your client | Limited; server can hint via `retry:` |
+| Delivery guarantee | None beyond TCP | None; `Last-Event-ID` supports replay |
+| Frame overhead | 2–14 byte header plus masking | `data:` prefix and blank line |
+| Debugging | Requires a WS-aware client | `curl -N` works |
+| Idle-timeout sensitivity | Yes | Yes |
+| Proxy compatibility | Generally good; some networks block upgrades | Generally good; watch for buffering |
 
-## Head-to-head: operational cost
+Neither column is a verdict. The table describes behaviour; which row matters depends on your workload.
 
-The operational cost splits into three buckets: infrastructure, data transfer, and incident response.
+## How to measure the difference for your workload
 
-| Cost bucket                | WebSocket (Node 20) | SSE (FastAPI) | Notes |
-|----------------------------|---------------------|---------------|-------|
-| Backend instance (t3.medium)| $34/month           | $34/month     | Same instance size |
-| ALB request count          | 2.1M (100k agents)  | 1.8M          | SSE streams reuse connections |
-| Data transfer (GB)         | 12.4 GB             | 8.6 GB        | SSE 31% less |
-| ALB data processing cost   | $14.92/month       | $10.34/month  | SSE wins 30% on ALB cost |
-| Reconnect incident cost    | $412/month          | $287/month    | SSE fewer storms |
+Published benchmarks are close to useless here because the result depends on your network path, your proxy configuration, and your event rate. Measure it yourself. The setup below is a template, not a result.
 
-The cost difference comes from two factors: connection reuse and data size. SSE streams reuse the same HTTP connection for the lifetime of the session, so ALB processes fewer requests and terminates fewer connections. WebSocket’s bidirectional nature means more messages per session, which adds up in ALB’s request count and data processing fees. In our Nairobi deployment, teams saw ALB costs drop by 30% when switching from WebSocket chat to SSE for agent status feeds.
+**Define the workload.** Pick representative numbers for concurrent clients, messages per client per second in each direction, and payload size. A status feed might be one server-to-client event every 2 seconds and one client-to-server command every 60 seconds. A chat might be several messages per second in both directions.
 
-Incident response costs are harder to quantify, but teams report that SSE’s simplicity reduces MTTR. When a 3G hand-off triggers a disconnect, SSE reconnects automatically, and the browser shows a spinner—users accept it. With WebSocket, the client has to implement reconnect logic, and if the ALB idle timeout is misconfigured, the client may hammer the server with rapid reconnects, triggering rate limits or autoscaling events. In one Nairobi deployment, a misconfigured idle timeout led to 5000 reconnects per minute, costing $210 in ALB surge pricing and triggering 3 extra autoscaling events. Fixing it took 2 hours of logs and one CloudWatch alarm.
+**Instrument four things:**
 
-Data transfer savings are real. In East Africa, where data is sold in 100 MB increments at ~100 KES, SSE’s 31% reduction is a selling point for users on tight budgets. For teams, it’s a 31% reduction in AWS data transfer costs when agents are active for 8 hours a day.
+1. **End-to-end latency per message.** Timestamp at the producer, timestamp at the consumer, subtract. Log the distribution, not just the mean. Report p50, p95, and p99.
+2. **Reconnect rate.** Count connection establishments per minute across all clients. A healthy system shows a flat baseline; a spiking line means backoff or timeouts are wrong.
+3. **Message loss.** Give every event a monotonic sequence number per stream. On the client, log gaps. A gap is either a dropped event or a reconnect that skipped replay.
+4. **Bytes transferred per session.** Measure at the socket, not at your application layer. This is the number that matters for mobile data cost.
 
-The trade-off is that WebSocket gives you bidirectional messaging in one connection, which can simplify architecture if you’re building a chat feature. If you only need server-to-client streaming, SSE is cheaper to run and easier to debug.
+**Control the network.** You cannot reproduce a 3G hand-off on office Wi-Fi. Use a network-conditioning tool to inject latency, packet loss, and bandwidth limits, and a scheduled link drop to simulate a hand-off. Record the drop duration and compare how long each client takes to recover.
 
-## The decision framework I use
+**Compare like with like.** Run both protocols against the same backend instance type, the same load balancer configuration, and the same event rate. Change one variable at a time. The most common measurement error is comparing a tuned WebSocket deployment against an untuned SSE one, or the reverse.
 
-When a feature needs low-latency messaging over 3G/4G in East Africa, I run this decision tree:
+**Watch the configuration, not just the protocol.** The ALB idle timeout, the proxy buffering setting, and the client backoff parameters will dominate the result. If SSE reconnects every 60 seconds in your test, check the idle timeout before concluding anything about the protocol.
 
-1. Is the communication bidirectional?
-   - Yes → WebSocket is the only practical choice.
-   - No → SSE is simpler and cheaper.
+The metrics that tell you where the protocol actually breaks are reconnect rate, loss rate, and bytes per session. Latency alone will mislead you, because a protocol that reconnects cleanly can show worse p99 latency while delivering a better user experience than one that holds a stale connection open.
 
-2. Does the client need to send messages to the server more than once every 30 seconds?
-   - Yes → WebSocket avoids per-message handshake overhead.
-   - No → SSE with a separate REST endpoint for commands works fine.
+## Decision checklist
 
-3. Are your users on Safari or older Android devices?
-   - Yes → SSE is safer due to Safari’s WebSocket quirks.
-   - No → WebSocket is fine.
+Work through these before choosing:
 
-4. Is message loss unacceptable (e.g., financial transactions)?
-   - Yes → Use WebSocket with acks or fall back to REST with polling.
-   - No → SSE’s occasional message loss is acceptable for status streams.
+- **Is the client-to-server direction frequent?** If commands are more than occasional, WebSockets avoid a round trip per command. If commands are rare, SSE plus a REST endpoint is fine.
+- **Is the payload binary?** SSE requires base64, which adds roughly 33% to the payload size. If you are streaming binary, use WebSockets.
+- **Do you need replay after reconnect?** Both protocols need application-level support. SSE's `Last-Event-ID` gives you a hook; WebSockets give you nothing, so you build it yourself.
+- **What is your idle timeout, end to end?** Check every hop: load balancer, reverse proxy, CDN, and any carrier-grade NAT in the path. The smallest value wins, and that is your effective maximum silence before a disconnect.
+- **Can you configure buffering off?** If a proxy in the path buffers responses and you cannot change it, SSE streaming will not work as intended.
+- **What does your client do on disconnect?** For SSE, the browser handles it. For WebSockets, you own it. Budget the implementation and testing time accordingly.
+- **What is your mobile data budget per session?** Estimate bytes per event including framing and headers, multiply by events per session, and compare against your users' data plans. This often decides the question on its own.
 
-5. Is your team small and time-constrained?
-   - Yes → SSE reduces moving parts.
-   - No → WebSocket’s flexibility may be worth the complexity.
+## Common failure modes and how to diagnose them
 
-That framework isn’t perfect, but it’s saved us from over-engineering. The most common mistake is choosing WebSocket for a unidirectional stream because "it’s more modern," then spending two weeks debugging Safari keepalive bugs and ALB timeouts.
+**Disconnects at a suspiciously regular interval.** Almost always a timeout. Compare the interval to the idle timeouts of every hop in the path. A 60-second interval points at a default that was never changed.
 
-Another trap is ignoring the idle timeout. On AWS ALB 2026, the default is 60 seconds. For SSE, that’s fine if increased to 300 seconds. For WebSocket, that’s fine if increased to 4000 seconds—but if you forget, your users will see "connection lost" banners every minute during a 3G hand-off.
+**Events arrive in bursts.** Buffering. Check response headers and proxy configuration. `X-Accel-Buffering: no` and equivalent settings are the usual fix.
 
-Finally, measure the right thing. Don’t just look at p99 latency in staging. In production, measure:
-- Reconnect rate (events per minute)
-- Message loss rate (gaps in the stream)
-- Data transfer per session (GB/day)
-- Proxy timeout errors (408/502/504)
+**Reconnect storm after an outage.** Backoff without jitter, or a fixed retry interval. Add jitter and cap the maximum delay.
 
-Those metrics tell you where the protocol actually breaks, not where it’s theoretically optimal.
+**Latency grows over the life of a connection.** Often a head-of-line blocking problem on a shared connection, or a client that is falling behind and buffering. Check whether the consumer is keeping up.
 
-## My recommendation (and when to ignore it)
+**Messages arrive out of order.** For WebSockets, check whether messages for one logical stream can reach more than one backend instance. For SSE, check whether your replay logic can deliver an old event after a newer one.
 
-Recommendation: Use Server-Sent Events (SSE) for agent status feeds and WebSocket for agent chat or bidirectional features.
+**Works on Wi-Fi, fails on mobile.** Look for carrier-grade NAT idle timeouts and for networks that block the WebSocket upgrade. SSE over plain HTTPS traverses more networks without special handling.
 
-Why? Because in 2026, most agent dashboards in East Africa are read-heavy: the agent waits for updates, occasionally taps a button to accept a ride, and rarely needs to send a burst of messages. SSE gives you 30–40% lower data usage, 30% lower ALB costs, simpler debugging, and fewer Safari bugs. The message loss is acceptable for status streams, and the browser’s built-in reconnect logic reduces client complexity.
+## Recommendation
 
-Use WebSocket only when you need bidirectional messaging with low latency, like a live chat between agent and driver. Even then, consider SSE as a fallback for Safari users, or implement a protocol negotiation: if SSE works for status, keep it; if the user opens chat, upgrade to WebSocket for that tab only.
+For read-heavy features — status feeds, dashboards, notification streams — SSE is usually the better default. It reuses HTTP infrastructure, the browser handles reconnection, and it is inspectable with standard tools. The costs are a separate path for client-to-server commands and a minimal error surface that you may need to work around.
 
-When to ignore this recommendation:
-- If your agent feature is a real-time collaborative whiteboard or a multiplayer game, WebSocket is mandatory.
-- If your backend is already sharded and you need message ordering across instances, WebSocket with a message broker (Redis Streams, Kafka) is easier to reason about than SSE with external acks.
+For bidirectional or binary features — chat, collaboration, telemetry upload — WebSockets are the practical choice. Budget time for reconnect logic, backoff with jitter, and idle-timeout configuration, because the browser will not do any of it for you.
 
-If you’re on the fence, run a 24-hour A/B test with 10% of your Nairobi traffic. Measure p99 latency, data transfer, and reconnect rate. In our Nairobi pilot, the SSE cohort had 12% lower p99 latency for server→agent messages and 28% fewer reconnect incidents than the WebSocket cohort, even though agent→server latency was slightly higher. The difference came from fewer proxy timeouts and simpler reconnect logic.
+A hybrid is often the right answer: SSE for the status stream, WebSockets opened only for the tab or view that needs two-way messaging. That keeps the common case cheap and confines the complexity to the feature that requires it.
 
-## Final verdict
+## What to do in the next 30 minutes
 
-SSE wins for most agent status feeds in East Africa because it’s simpler, cheaper, and more resilient to 3G hand-offs. WebSocket wins only when you explicitly need bidirectional messaging with low latency.
-
-The catch is that SSE’s simplicity is fragile: one misconfigured ALB idle timeout, and your stream dies every 60 seconds. The WebSocket trap is over-engineering bidirectional features when a REST button plus SSE status stream would have worked fine.
-
-Here’s the checklist I give teams before they ship:
-- [ ] Set ALB idle timeout to 300s for SSE, 4000s for WebSocket.
-- [ ] Measure p99 server→agent latency in production, not staging.
-- [ ] Implement a client-side reconnect wrapper with exponential backoff and jitter.
-- [ ] Log disconnect codes (WebSocket) or error reasons (SSE) to distinguish network loss from auth failure.
-- [ ] Set a budget: if data transfer exceeds 100 MB/day per agent, switch to binary framing or a more efficient protocol like MQTT.
-
-If your feature is read-heavy and you’re on a tight timeline, start with SSE and add WebSocket only if users demand chat. If your feature is chat-heavy, start with WebSocket but harden the reconnect logic and proxy timeouts first.
-
-The mistake teams make is optimizing the protocol before measuring where latency actually breaks. In East Africa, the latency killer isn’t the protocol—it’s the hand-off between 3G and 4G, the proxy timeouts, and the browser’s reconnect backoff. Measure those first, then pick the tool that survives them.
-
-
-Check your ALB idle timeout now. If it’s 60 seconds and you’re using SSE, increase it to 300 seconds and redeploy. That’s the first step to surviving a 3G hand-off without a reconnect storm.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Open your load balancer configuration, find the idle timeout for the target group that serves your real-time endpoint, and write down the current value. Then find the same setting on every proxy between the load balancer and your application. If any value is lower than the longest silence your stream can produce, raise it and note the change. That single number, not the choice of protocol, is the most common cause of real-time features that work in staging and fail on a mobile network.

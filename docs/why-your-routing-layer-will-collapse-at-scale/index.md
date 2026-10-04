@@ -1,22 +1,24 @@
 # Why your routing layer will collapse at scale
 
-The dashboards look healthy right up until the incident starts. regulatory tech broke in a way our monitoring wasn't even watching for. This is the version of the write-up that includes the part that broke.
+A routing layer for LLM calls looks trivial in a demo: pick a provider, call it, return the result. The trouble starts when the same code has to survive latency spikes, cost pressure, data-residency rules, and provider-specific error behaviour at the same time. The sections below describe a design that handles those constraints, the failure modes that show up in practice, and how to measure whether it is actually working.
 
-## The gap between what the docs say and what production needs
+## Why a simple `if` statement is not enough
 
-Teams read the model-provider docs and assume routing is just an `if` statement around which LLM to call. That one-line decision tree works for demos, but production traffic breaks it in three ways: latency spikes when cold models load, cost blows up when every request tries the top-tier provider first, and GDPR compliance fails when user prompts leave the EU region.
+Routing is often described as one decision: which model do I call? In production, that decision has to be *stateful across retries*. Three constraints drive most of the complexity:
 
-The part that trips people up is that the routing logic must be *stateful* across retries, and most examples ignore the retry loop. A 2026 survey of 140 European teams found 68% hit a GDPR fine or latency SLA breach in the first month because their retry logic ignored data residency for the second attempt. The docs say nothing about persisting the chosen provider’s region across retries, so engineers ship code that works in staging but explodes when EU regulators ask for audit logs.
+- **Latency variance.** Cold model loads and provider-side queueing mean the same call can take very different amounts of time. A retry policy tuned for the median will fire too early and create retry storms.
+- **Cost.** Sending every request to the top-tier model first is the simplest policy and usually the most expensive one. A tiered policy needs a way to fall back without doubling spend.
+- **Residency.** If a prompt must be processed in a specific jurisdiction, the region is part of the routing decision, not an afterthought. A retry that silently switches region can break a compliance obligation even when the first attempt was fine.
 
-Another trap is the cache stampede. A common failure mode here is caching the model response without invalidating on model version drift. After the provider rolls out a new embedding model, teams suddenly serve stale embeddings until users complain. That usually shows up when the support ticket says “my embeddings changed overnight” even though no code changed.
+The retry loop is where these constraints collide. Provider documentation typically describes a single call. It rarely specifies what to persist between attempts, so teams ship code that works in staging and then fails an audit because the second attempt went somewhere the first one was not allowed to go.
 
-The third silent killer is provider-specific errors. A 2026 benchmark on AWS Lambda with arm64 showed that mistral-large-v1 returns `429 Too Many Requests` 3× more often than `llama-3-70b-instruct` under the same load. Teams that hardcode the retry policy for one provider hit a wall when they migrate or when traffic shifts to a different model.
+A related trap is caching model responses without tying the cache key to the model version. When a provider rolls out a new embedding or chat model, cached entries can keep being served until someone notices a quality change. The symptom is usually a support ticket describing output that changed "overnight" with no code change.
 
-This post shows how to ship routing once, update it without redeploys, and keep GDPR audit trails intact while cost stays under control.
+Provider-specific error behaviour matters too. Different providers emit rate-limit and overload errors with different status codes, retry hints, and backoff expectations. A retry policy hardcoded for one provider will misbehave when traffic shifts to another.
 
-## How How I run local + cloud model routing without the complexity exploding actually works under the hood
+## The core design
 
-The system is built around a single source of truth: a JSON config file that maps user context to model tiers, regions, and retry policies. The file looks like this simplified snippet:
+The system has one source of truth: a config file that maps a user context to model tiers, regions, and retry policies. A simplified entry looks like this:
 
 ```json
 {
@@ -24,8 +26,8 @@ The system is built around a single source of truth: a JSON config file that map
     "tier": "standard",
     "providers": [
       {
-        "name": "mistral",
-        "model": "mistral-large-2407",
+        "name": "provider-a",
+        "model": "provider-a-large",
         "region": "eu-west-1",
         "cost_per_1k_token": 0.0000018,
         "max_retries": 2,
@@ -33,8 +35,8 @@ The system is built around a single source of truth: a JSON config file that map
         "timeout_ms": 30000
       },
       {
-        "name": "openai",
-        "model": "gpt-4o-2024-08-06",
+        "name": "provider-b",
+        "model": "provider-b-flagship",
         "region": "eu-central-1",
         "cost_per_1k_token": 0.000010,
         "max_retries": 1,
@@ -46,27 +48,39 @@ The system is built around a single source of truth: a JSON config file that map
 }
 ```
 
-The router reads this file at startup, validates it against a JSON schema, and builds an in-memory table. Each time a request comes in, the router does three things:
+The router reads this file at startup, validates it against a JSON schema, and builds an in-memory table. On each request it does three things:
 
-1. **Context matching**: pulls the user’s region and tier from headers or JWT claims.
-2. **Provider selection**: picks the first available provider that hasn’t exceeded its retry budget.
-3. **Stateful retry**: stores the attempt count and last provider in Redis with a TTL equal to the longest timeout, so if the request retries, the same provider isn’t tried again.
+1. **Context matching** — read the user's region and tier from headers or verified JWT claims.
+2. **Provider selection** — pick the first provider that has not exhausted its retry budget.
+3. **Stateful retry** — persist the attempt count and the provider used, so a retry does not repeat a provider that already failed and does not cross a region boundary.
 
-The stateful retry uses a Redis list per request ID. The list holds tuples of `{provider, attempt, status}`. A Lua script atomically checks the list length against `max_retries`, pops the oldest attempt if it failed, and pushes the new attempt. This keeps the retry budget per provider intact even under high concurrency.
+State can live in a Redis list keyed by request ID. Each entry is a tuple of `{provider, attempt, status}`. A Lua script atomically checks the list length against `max_retries`, appends the new attempt, and returns the current budget. Doing this atomically matters under concurrency: a read-then-write sequence in application code will let two workers both believe they have budget left.
 
-GDPR compliance is handled by two rules baked into the config:
+Residency is enforced by two rules baked into the config:
+
 - Every provider entry must declare a region.
-- The router injects a header `X-Model-Region` into the downstream call and logs it.
+- The router injects a region header into the downstream call and logs it.
 
-The audit trail is a second Redis stream (`model_audit`) that records every decision with a timestamp, request ID, user hash, provider, region, token count, and error if any. A Lambda function flushes this stream to S3 every minute, where Athena queries can reconstruct the full history.
+The audit trail is a separate Redis stream that records every decision: timestamp, request ID, a hashed user identifier, provider, region, token count, and error if any. A scheduled job flushes the stream to object storage, where a query engine can reconstruct the full history for a given user or time window.
 
-What surprised me was how often teams forget to set the `retry_delay_ms` to at least two standard deviations above the p95 latency. In one system I reviewed, the default delay was 250 ms while the p95 was 480 ms. That produced retry storms that doubled the bill and saturated the provider’s rate limits. The fix was to auto-tune the delay based on the last 1000 requests for that provider, capped at 5000 ms.
+### Choosing the retry delay
 
-## Step-by-step implementation with real code
+A common mistake is to set `retry_delay_ms` to a round number that has no relationship to observed latency. If the delay is shorter than the provider's typical response time, retries fire while the original request is still in flight, which multiplies load instead of relieving it.
+
+The practical rule is to derive the delay from measured latency for that provider, not from intuition. Concretely:
+
+- Instrument the provider client to record the duration of every call, success or failure.
+- Compute a high percentile (p95 or p99) over a rolling window, for example the last 1,000 calls.
+- Set the base delay to at least that percentile, then add jitter so retries from different requests do not align.
+- Cap the delay at a value your latency budget can tolerate.
+
+To measure this, you need per-provider latency histograms. A Prometheus histogram with buckets spanning 50 ms to 30 s, labelled by provider and model, is enough. Compare the configured `retry_delay_ms` against the `histogram_quantile(0.95, ...)` value for the same provider. If the configured delay is below the p95, retries will overlap with in-flight requests.
+
+## Implementation walkthrough
 
 ### 1. Config schema and validation
 
-Use `ajv` 8.12.3 to validate the routing config in Node 20 LTS. The schema enforces required fields and region formats:
+Validate the config at startup and fail fast. In Node, a JSON schema validator such as Ajv can enforce required fields and region formats:
 
 ```javascript
 import Ajv from 'ajv';
@@ -100,18 +114,18 @@ const schema = {
 const validate = ajv.compile(schema);
 ```
 
-Load the config at startup and fail fast if it’s invalid. In Kubernetes this becomes a readiness check; in Lambda it throws an exception that CloudWatch alarms catch.
+In Kubernetes this becomes a readiness check; in a serverless function it throws an exception that your alerting catches. The important property is that an invalid config never reaches the request path.
 
 ### 2. Provider client factory with circuit breakers
 
-Wrap each provider’s SDK with a factory that returns a client already configured for the region and with a circuit breaker using `Opossum` 7.3.1:
+Wrap each provider's SDK in a factory that returns a client configured for the region and guarded by a circuit breaker:
 
 ```javascript
 import { CircuitBreaker } from 'opossum';
 
 function createClient(provider) {
   const breaker = new CircuitBreaker(async (prompt, options) => {
-    const client = new MistralClient({ region: provider.region });
+    const client = new ProviderClient({ region: provider.region });
     return client.chat(provider.model, prompt, options);
   }, {
     timeout: provider.timeout_ms,
@@ -122,11 +136,11 @@ function createClient(provider) {
 }
 ```
 
-The circuit breaker trips after 50% errors in 10 seconds, preventing traffic from blasting a failing provider. It also emits metrics to Prometheus that feed into dashboards.
+The breaker opens after the configured error percentage is exceeded within the rolling window, which stops traffic from hammering a provider that is already failing. It also emits events you can export as metrics.
 
 ### 3. Request router with stateful retries
 
-Here’s the core router using Express 4.19 and Redis 7.2:
+The core router needs to read the attempt history, choose a provider, call it, and record the outcome:
 
 ```javascript
 import express from 'express';
@@ -142,12 +156,10 @@ app.post('/chat', async (req, res) => {
   const ctx = config[userRegion];
   const requestId = createHash('sha256').update(req.body.prompt).digest('hex');
 
-  // Stateful retry list
   const key = `retry:${requestId}`;
   const attempts = await redis.lrange(key, 0, -1);
 
-  // Pick first provider not yet attempted
-  const available = ctx.providers.filter(p => 
+  const available = ctx.providers.filter(p =>
     !attempts.some(a => JSON.parse(a).provider === p.name)
   );
 
@@ -164,7 +176,6 @@ app.post('/chat', async (req, res) => {
       temperature: 0.7
     });
 
-    // Audit trail
     await redis.xadd('model_audit', '*', {
       requestId,
       userRegion,
@@ -176,11 +187,9 @@ app.post('/chat', async (req, res) => {
 
     res.json(response);
   } catch (err) {
-    // Record failed attempt
     await redis.rpush(key, JSON.stringify({ provider: provider.name, attempt: attempts.length + 1 }));
     await redis.expire(key, provider.timeout_ms / 1000 + 60);
 
-    // Retry if budget left
     if (attempts.length + 1 < provider.max_retries) {
       return res.status(503).json({ error: 'retry' });
     }
@@ -198,14 +207,13 @@ app.post('/chat', async (req, res) => {
 });
 ```
 
-The router uses a single Redis instance for both the retry list and the audit stream. In production we shard the retry lists by request ID’s first two hex digits to keep memory under 2 GB.
+Two things are worth noting. First, the retry budget is per provider, not per request, so a provider that failed once is not retried beyond its own limit. Second, the TTL on the retry list should be longer than the longest timeout in the config, otherwise a slow request can outlive its own state.
 
-### 4. Auto-tune retry delay
+### 4. Auto-tuning the retry delay
 
-A background worker reads the last 1000 audit entries per provider every 30 seconds and recomputes the p95 latency. If the current `retry_delay_ms` is below the p95, it updates the provider config in memory and in the config file (via an admin endpoint). The update uses a file watcher so new pods pick up the change without redeploying.
+A background worker can read recent audit entries per provider and recompute the p95 latency. If the configured delay is below the p95, it updates the in-memory config and publishes the change so other instances pick it up.
 
 ```javascript
-// worker.js
 const p95 = (arr) => {
   const sorted = [...arr].sort((a, b) => a - b);
   const pos = Math.floor(sorted.length * 0.95);
@@ -223,103 +231,60 @@ setInterval(async () => {
 }, 30000);
 ```
 
-### 5. GDPR audit export
+The multiplier and the floor are policy choices, not derived values. Pick them so the resulting delay exceeds your measured p95 and stays inside your latency budget, then revisit them when the provider's behaviour changes.
 
-A Lambda function triggered by S3 event writes the audit stream to partitioned Parquet files in `s3://model-audit-logs/year=2026/month=06/day=04/`. Athena queries join these with user data to answer regulator questions like “show every prompt processed for user XYZ in eu-central-1 between 2026-05-01 and 2026-05-31” in under 90 seconds.
+### 5. Audit export
 
-## Performance numbers from a live system
+A scheduled job reads the audit stream and writes partitioned files to object storage, organised by date. A query engine can then answer questions like "show every request processed for user X in region Y between two dates" without touching production Redis. Partitioning by date keeps scan costs bounded.
 
-We run this stack on Kubernetes 1.28 with 3 pods per AZ in eu-west-1. Each pod runs Node 20 LTS on 2 vCPU and 4 GB memory. The baseline latency without routing is 280 ms p95. With the router enabled and no retries, p95 rises to 310 ms (+10%). Under 95th percentile load (1200 req/s), the p95 with retries is 420 ms (+50%).
+## Failure modes to plan for
 
-Cost per 1000 tokens for standard users is €0.0036 on mistral-large-2407 vs €0.0062 on gpt-4o-2024-08-06. The router routes 62% of requests to mistral, saving €180 per 100k tokens compared to routing every request to the top-tier provider.
+1. **Config reload stampede.** When a config change is published, every instance may try to fetch the new file at once. Serialise reloads with a lock, or publish the change and have each instance wait a randomised jitter before fetching.
 
-The circuit breaker tripped 14 times in the last 30 days, all during mistral’s rolling deployments. Without circuit breakers, those spikes would have caused 429 errors to 45% of users.
+2. **Region drift on provider upgrade.** A provider may move a model between regions. If the config is not updated, requests can route to the wrong region and fail a residency check. Enforce region immutability in the schema and require an explicit migration step for region changes.
 
-The Redis instance holding 24 million retry lists uses 1.8 GB RAM and 300 MB disk. Memory is stable because we cap each list at `max_retries + 1` entries and let Redis evict the oldest.
+3. **Audit stream backpressure.** At high request rates, the audit stream can grow faster than the flush job drains it. Cap the stream length (`XADD ... MAXLEN`) and increase the flush frequency. Monitor the stream length as a first-class metric.
 
-## The failure modes nobody warns you about
+4. **Retry list eviction.** If Redis is configured to evict keys under memory pressure, retry lists can disappear mid-request, producing "all providers exhausted" errors when budget remains. Mark retry keys as non-evictable and rely on TTLs for cleanup.
 
-1. **Cache stampede on config reload**
-   When the background worker updates the in-memory config, it broadcasts a message. If 100 pods receive the message at once, they all try to reload the config file from S3. The S3 `getObject` call can hit the provider’s rate limit if the file is large. The fix is to serialize reloads with a Redis lock and a backoff jitter.
+5. **Trusting client-supplied region headers.** A client can claim any region. Validate the region claim against the allowed set for the user's identity, and log a warning when the header and the claim disagree. Never let an unverified header determine where a prompt is processed.
 
-2. **Region mismatch on provider upgrade**
-   A team upgraded to a new mistral model that moved from eu-west-1 to eu-central-1. The old region stayed in the config, so 40% of requests routed to the old region and failed GDPR checks. The fix was to enforce region immutability in the schema and require a manual migration step.
+## What to measure
 
-3. **Audit stream backpressure**
-   Under 2000 req/s, the audit stream’s Redis list grows faster than the Lambda flush can drain. The symptom is `ERR maxmemory limit exceeded` and elevated latency. The fix was to switch the audit stream to a capped Redis stream (`XADD ... MAXLEN 100000`) and increase the flush interval to 15 seconds instead of 60.
+Before adding routing complexity, instrument the following and compare before and after:
 
-4. **Retry list eviction race**
-   When Redis evicts keys due to maxmemory policy, retry lists can disappear before the request finishes. The symptom is “all providers exhausted” even though retries remain. The fix was to set `noevict` on the retry keys and rely on `expire` for cleanup.
+| Metric | What to instrument | How to compare |
+|---|---|---|
+| Router overhead | Time spent in routing logic per request | Histogram of router duration, compare to total request duration |
+| Retry rate | Count of retries per provider | Counter labelled by provider; alert if it exceeds your baseline |
+| Retry overlap | Retries issued while the original call is in flight | Compare configured delay to provider p95 latency |
+| Circuit breaker trips | Breaker open events per provider | Counter; correlate with provider status pages |
+| Audit lag | Difference between stream length and flush rate | Gauge of stream length; alert on sustained growth |
+| Residency violations | Requests whose region header does not match the allowed set | Counter; should be zero in steady state |
 
-5. **JWT region claim tampering**
-   A client sent a JWT with `x-user-region: us-east-1` despite being in the EU. The router obeyed the header and routed to a US provider, violating GDPR. The fix was to validate the region claim against a list of allowed regions and to log warnings when the header doesn’t match the claim.
-
-## Tools and libraries worth your time
-
-| Tool | Version | Why it matters | Typical cost | Learning curve |
-|------|---------|----------------|--------------|----------------|
-| Node LTS | 20.13 | Fast startup, good GC | €0 | Low |
-| Redis | 7.2 | In-memory lists/streams, Lua scripting | €18/month (cache.m6g.large) | Medium |
-| Opossum | 7.3.1 | Circuit breakers with metrics | Open source | Low |
-| Ajv | 8.12.3 | JSON schema validation at startup | Open source | Low |
-| Express | 4.19 | Minimal routing boilerplate | Open source | Low |
-| IORedis | 5.4 | Promises, Lua script support | Open source | Medium |
-| AWS Lambda | Node 20 | Auto-scaling, pay-per-use | €0.20 per 1M requests | Low |
-| Athena | 2026 | SQL on S3 without ETL | €5 per TB scanned | Low |
-| Kubernetes | 1.28 | Pod-level retries, blue-green | €0 (if self-hosted) | High |
-
-If you’re on Python, use `redis-py` 4.6 and `pydantic` 2.6 for schema validation. The logic is the same, but the circuit breaker library is `pybreaker` 1.1. The biggest difference is that Python’s GIL can bottleneck the audit Lua script, so you may need to shard the audit stream by request ID’s first byte.
+None of these require a specific vendor. They require that the routing layer emits structured events with provider, region, and outcome attached.
 
 ## When this approach is the wrong choice
 
-- **High-volume, low-latency** (p99 < 100 ms). The router adds at least 30 ms and Redis adds 1–3 ms. If you’re serving chat in a game, this isn’t the bottleneck you want to introduce.
-- **Single-provider, single-region**. If you only use one model in one region, a simple wrapper around the SDK is enough; the routing logic is overkill.
-- **Regional lock-in required**. If regulators demand hard code boundaries (e.g., EU data never leaves EU), then the dynamic region selection can violate policy. In that case, pre-partition the config per region and disable cross-region routing.
-- **Extremely strict budget**. The Redis instance and Lambda flushes add €120–€180/month at 10M requests. If you’re at 1M requests, it’s 12× the cost of a single Lambda function.
+- **Very low latency budgets.** Routing adds a round trip to Redis and some in-process work. If your p99 budget is under 100 ms, measure the overhead before committing; it may be the wrong place to spend latency.
+- **Single provider, single region.** A thin wrapper around the SDK is enough. The routing table, retry state, and audit stream are all overhead you do not need.
+- **Hard residency boundaries.** If regulation requires that data physically never leaves a jurisdiction, dynamic region selection is a liability. Pre-partition the config per region and disable cross-region routing entirely.
+- **Low request volume.** The fixed cost of a managed Redis instance and a scheduled flush job can dominate at small scale. A single function with in-memory retry state may be cheaper until volume grows.
 
-## My honest take after using this in production
-
-The biggest win was the GDPR audit trail. Before this, answering a regulator’s question took three days and a SQL dump. Now it’s a 30-second Athena query. The audit stream also caught a model drift issue: embeddings generated by the new mistral model had 22% lower cosine similarity than the old one, and the drop happened the same hour the new model rolled out. Without the per-request region logging, we wouldn’t have known which users were affected.
-
-What I didn’t expect was how often the retry delay needed tuning. The first version used a static 1000 ms, which was too short for gpt-4o and too long for mistral. The auto-tune worker cut the retry overhead from 18% of total latency to 6%.
-
-The circuit breaker is the unsung hero. It prevented three outages that would have cost €4k each in SLA penalties. The breaker trips are logged as `CIRCUIT_BREAKER_OPEN` events, and the on-call rotation treats them the same as a 5xx.
-
-The complexity explosion didn’t happen. The router is 87 lines of core logic. The rest is configuration and infra. That’s the exact opposite of the monolithic routing engines some teams build.
-
-The only part I’d change is the config reload serialization. The distributed lock works, but it’s another moving part. A simpler approach is to publish config changes to an SNS topic and have each pod subscribe with a 0–5 second jitter before reloading. That removes the lock entirely.
-
-## What to do next
-
-Open your current routing file and count how many places you hardcode a provider name or region. If it’s more than three, create a single JSON file with the schema shown above, install Ajv 8.12.3, and run `ajv validate -s config.json -d config.schema.json`. Delete every hardcoded provider after the validation passes. You’ll finish in under 30 minutes.
-
-
-## Frequently Asked Questions
+## FAQ
 
 **How do I handle model version upgrades without downtime?**
-Add a new provider entry to the config with the new model name and region. Keep the old entry until the new model’s p95 latency stabilizes for 24 hours. Use the audit stream to compare token counts and error rates between the two models before cutting traffic. Never delete the old entry until you’re certain no user is still routed to it.
+Add a new provider entry with the new model name and region, and keep the old entry until the new model's latency and error rate have stabilised over a full traffic cycle. Use the audit stream to compare token counts and error rates between the two before shifting traffic.
 
+**How large does the retry store need to be?**
+Size it from the number of concurrent in-flight requests, not the daily volume. Each retry list holds at most `max_retries + 1` entries and expires after the longest timeout plus a margin. Measure actual memory per key under load and multiply by peak concurrency.
 
-**What’s the smallest Redis instance that works for 50k requests/day?**
-A `cache.t4g.small` (2 GB RAM) handles 50k requests/day with 15% headroom. Set `maxmemory-policy allkeys-lru` to evict cold keys first. Monitor `evicted_keys` metric; if it grows above 100/day, increase memory.
+**How do I test the residency path in staging?**
+Run a second Redis instance and force the router to use a single region for every request. Run an export script and assert that the region header in the downstream call matches the expected value. Automate it in CI so a missing or wrong header fails the build.
 
+**Can this run outside Kubernetes?**
+Yes. The only platform-specific piece is the health check endpoint. Keep the retry store external and durable, because ephemeral local storage will lose retry state on restart.
 
-**How do I test the GDPR compliance path in staging?**
-Spin up a second Redis instance (`REDIS_URL_GDPR`) and force the router to use `eu-central-1` for every request. Run a GDPR audit export script and verify that the region header in the downstream call is `eu-central-1`. Automate this in CI with a nightly job that fails if the region header is missing or wrong.
+## One thing to do in the next 30 minutes
 
-
-**Can I run this on Fly.io instead of Kubernetes?**
-Yes. The only change is the health check endpoint; Fly’s HTTP checks replace Kubernetes readiness probes. Keep the Redis instance external (Redis Enterprise or a managed Redis) because Fly’s ephemeral volumes lose data on restart.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** September 2026
+Grep your codebase for hardcoded provider names and region strings. Count the distinct call sites. If the same provider or region appears in more than one place, extract those values into a single config file and add a startup validation step that rejects unknown regions. That one change turns an implicit policy into something you can review, test, and audit.

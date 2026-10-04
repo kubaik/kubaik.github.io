@@ -1,44 +1,32 @@
 # Agent platform abstractions: a case study
 
-The answers online were either wrong or skipped the part that mattered. platform abstractions has a habit of breaking in ways the monitoring wasn't watching for. This covers the fix, the cost of not knowing sooner, and what we monitor now.
+## The failure mode nobody instruments for
 
-## The situation (what we were trying to solve)
+Most agent incidents do not come from the model reasoning badly. They come from the plumbing underneath the agent being unobservable. A tool returns an empty list, the agent reads it as a definitive answer, and a downstream write lands in the wrong place. Nothing in the monitoring stack fires, because from the metric layer's point of view the request succeeded.
 
-A mid-sized fintech team of eight engineers set out to build an internal agent that could reconcile payment exceptions across three services: a legacy ledger, a Stripe webhook consumer, and a Postgres reconciliation table. The goal was modest: reduce the manual triage queue from roughly 400 items per day to under 50, and cut the median time-to-resolution from 22 minutes to under 5. The team had three years of Python experience, no dedicated ML engineers, and a hard constraint: no new headcount for the project.
+A representative scenario: an internal agent reconciles payment exceptions across a legacy ledger, a webhook consumer, and a reconciliation table. The tool set is small — `query_ledger`, `query_stripe`, `query_recon`, `post_adjustment` — and the happy path works in staging. In production, three failure classes dominate:
 
-The first week looked promising. A LangChain 0.1 agent with a ReAct loop and four tools (query_ledger, query_stripe, query_recon, post_adjustment) handled the happy path. Then reality arrived. The agent would call query_ledger, get a timeout, retry, call query_stripe, hallucinate a transaction ID, and post an adjustment against the wrong account. The team logged 37 such incidents in the first 10 days. Each incident required a human to reverse the adjustment, which took longer than doing the reconciliation manually.
+1. **Silent tool failures.** `query_ledger` returns an empty list after a 504 from upstream. The agent interprets "no rows" as "no matching transaction" and proceeds. There is no distinction between "not found" and "could not check."
+2. **Non-idempotent writes.** `post_adjustment` is called twice after a network blip. The ledger accepts both. The duplicate is discovered days later when a customer reports a double credit.
+3. **No replayability.** When the agent makes a bad decision, the only artifact is a text transcript. Reproducing the run requires replaying the same prompt against a live database whose contents have since changed.
 
-The deeper problem was not the model. It was that every agent run was a black box: no structured trace, no retry policy, no idempotency key on the post_adjustment tool, and no way to replay a failed run against a fixed code version. The team was debugging by reading raw LLM transcripts in a Jupyter notebook. The part that trips people up is that agent frameworks optimize for the demo, not for the failure path — and the failure path is where all the engineering time goes.
+A common name for the first class is **the confident empty result**. A tool returns `[]` or `None`, the agent treats it as an answer, and the downstream action is wrong. This is not a model problem; it is a contract problem. A signature like `list[Transaction]` cannot express `list[Transaction] | Unknown | Error`, so the agent has no way to branch on the distinction.
 
-## What we tried first and why it didn't work
+The instinctive fix — wrap everything in one Python function with `try/except` and call the model only for classification — reduces incidents but pushes complexity into hundreds of lines of imperative branching. Maintenance cost goes up, not down. Moving logic out of the agent and into hand-written code is not an abstraction; it is a relocation.
 
-The first attempt was a single LangChain 0.1 `AgentExecutor` with `max_iterations=15` and `handle_parsing_errors=True`. It worked in staging for two weeks. In production, three failure modes dominated:
+## The reframe: workflow with typed steps
 
-1. **Silent tool failures.** `query_ledger` returned an empty list on a 504 from the upstream service. The agent interpreted "no rows" as "no matching transaction" and moved on. There was no distinction between "not found" and "could not check."
+The productive shift is to stop treating the agent as a program and start treating it as a **workflow with typed steps**. Three platform-level abstractions carry most of the reliability:
 
-2. **Non-idempotent writes.** `post_adjustment` was called twice on retry after a network blip. The ledger accepted both. The team discovered this only when a customer reported a double credit 11 days later.
+1. **A typed tool contract with explicit outcome states.** Every tool returns a discriminated union: `Ok(value)`, `NotFound`, `TransientError(retryable=...)`, or `FatalError`. The agent cannot proceed on a transient error without a retry decision, and cannot treat `NotFound` as `Ok([])`.
+2. **A durable execution layer.** The agent loop moves into a workflow engine. Each tool call becomes an activity with automatic retries, timeouts, and idempotency keys. The workflow itself is deterministic; the model call is an activity with a recorded input/output pair.
+3. **A structured trace store.** Every step writes a row containing the run identifier, step index, tool name, input hash, output hash, latency, and outcome. Replay becomes mechanical: re-run the workflow from step N with the recorded inputs.
 
-3. **No replayability.** When the agent made a bad decision, the only artifact was a text log. Reproducing the run required re-running the same prompt against a live database, which by then had different data. Debugging was effectively impossible.
+The key insight is that the agent's **reasoning** does not need to be durable — only its **effects** do. The model can be called fresh on replay; tool results are cached. This makes debugging a matter of reading a table rather than a transcript.
 
-A common failure mode here is what the team started calling "the confident empty result." A tool returns `[]` or `None`, the agent treats it as a definitive answer, and the downstream action is wrong. It is not a model problem; it is a contract problem. The tool signature said `list[Transaction]` but the semantics were `list[Transaction] | Unknown | Error`, and the agent had no way to express that distinction.
+## Implementation: a typed tool contract
 
-The team also tried a second approach: wrap everything in a single Python function with `try/except` and call the LLM only for classification. That reduced incidents to 4 per week but pushed complexity into 1,200 lines of imperative branching code. Maintenance cost went up, not down. The lesson: moving logic out of the agent and into hand-written code is not an abstraction; it is a relocation.
-
-## The approach that worked
-
-The breakthrough was to stop treating the agent as a program and start treating it as a **workflow with typed steps**. The team adopted three platform-level abstractions:
-
-1. **A typed tool contract with explicit outcome states.** Every tool returned a discriminated union: `Ok(value)`, `NotFound`, `TransientError(retryable=True)`, or `FatalError`. The agent could not proceed on `TransientError` without a retry decision, and could not treat `NotFound` as `Ok([])`.
-
-2. **A durable execution layer.** They moved the agent loop into Temporal 1.24 (Python SDK 1.7). Each tool call became an activity with automatic retries, timeouts, and idempotency keys. The workflow itself was deterministic; the LLM call was an activity with a recorded input/output pair.
-
-3. **A structured trace store.** Every step wrote a row to a Postgres table with `run_id`, `step_index`, `tool_name`, `input_hash`, `output_hash`, `latency_ms`, and `outcome`. This made replay trivial: re-run the workflow from step N with the recorded inputs.
-
-The key insight was that the agent's reasoning did not need to be durable — only its **effects** did. The LLM could be called fresh on replay; the tool results were cached. This cut replay cost from ~$0.40 per run to ~$0.02 per run and made debugging a matter of reading a table, not a transcript.
-
-## Implementation details
-
-The typed tool contract was the smallest change with the largest effect. Here is the pattern in Python 3.11 using `typing.Literal` and dataclasses:
+The typed contract is the smallest change with the largest effect. In Python 3.11, using `typing.Literal` and dataclasses:
 
 ```python
 from dataclasses import dataclass
@@ -74,9 +62,11 @@ def query_ledger(tx_id: str) -> ToolResult:
     return Ok(kind="ok", value=rows)
 ```
 
-The agent's prompt was updated to include the schema and an explicit rule: "If a tool returns `transient` with `retryable=True`, you must call it again, up to 3 times. If it returns `not_found`, do not guess." This alone eliminated the confident-empty-result class of bugs.
+The agent's system prompt must then include the schema and an explicit rule: "If a tool returns `transient` with `retryable=True`, call it again, up to 3 times. If it returns `not_found`, do not guess." That single rule removes the confident-empty-result class of bugs, because the ambiguity is gone before the model ever sees the result.
 
-The Temporal workflow wrapped each tool call as an activity:
+## Implementation: durable execution
+
+Wrapping each tool call as a workflow activity moves retries, timeouts, and replay out of the agent loop. The example below uses the Temporal Python SDK shape; the same structure applies to any durable execution engine.
 
 ```python
 from temporalio import workflow, activity
@@ -107,9 +97,13 @@ class ReconcileWorkflow:
         return "reconciled"
 ```
 
-The idempotency key was derived from `run_id + step_index + tool_name`, hashed with SHA-256 and stored alongside the adjustment. The ledger API accepted an `Idempotency-Key` header; duplicate calls returned the original response. This eliminated the double-credit class of bugs entirely.
+Note the deliberate `maximum_attempts=1` on the activity. Retries are handled in the workflow loop, not by the engine's activity retry policy. This matters: retrying in two places multiplies the effective attempt count. With three activity attempts and three workflow iterations, a flaky upstream sees nine calls instead of three — a 3x amplification that can trip a downstream rate limit.
 
-The trace table was deliberately boring:
+The idempotency key for writes is derived from `run_id + step_index + tool_name`, hashed with SHA-256, and sent as an `Idempotency-Key` header (or stored in a dedupe table with a unique constraint if the downstream API does not support one). Duplicate calls then return the original response instead of creating a second effect.
+
+## Implementation: the trace table
+
+Deliberately boring schema:
 
 | Column | Type | Purpose |
 |---|---|---|
@@ -122,94 +116,66 @@ The trace table was deliberately boring:
 | latency_ms | int | Wall-clock duration |
 | created_at | timestamptz | For retention and pruning |
 
-A partial index on `(run_id, step_index)` kept lookups under 3 ms even at 40 million rows. Retention was 30 days, which kept the table under 12 GB.
+A composite index on `(run_id, step_index)` keeps lookups fast as the table grows; the exact index type and retention window depend on volume and compliance requirements. Retention of 30 days is a common starting point for operational data, but the right number is whatever satisfies the audit and debugging windows for the specific domain.
 
-## Results — the numbers before and after
+## How to measure whether any of this helped
 
-The team ran the new system in shadow mode for two weeks, then cut over. The numbers below are typical of what this pattern produces; they are illustrative of the scenario, not a formal benchmark.
+Benchmark tables for this pattern are usually fabricated, so treat any published one with suspicion. The honest approach is to instrument the four numbers that matter and compare before and after on the same workload:
 
-| Metric | Before (LangChain 0.1 loop) | After (Temporal 1.24 + typed tools) |
-|---|---|---|
-| Incidents per week | 37 | 3 |
-| Median time-to-resolution | 22 min | 4.5 min |
-| Replay cost per failed run | $0.40 | $0.02 |
-| Lines of orchestration code | 1,200 | 380 |
-| p95 workflow latency | 8.2 s | 2.1 s |
-| Manual triage queue | 400/day | 42/day |
+- **Incidents per week, split by cause.** Tag each incident as `infra` (timeout, duplicate write, parse failure) or `reasoning` (model chose the wrong action given correct inputs). The ratio is the signal. A healthy system has most failures in the `reasoning` bucket, because that is the part you cannot engineer away.
+- **Replay cost per failed run.** Measure by summing the token cost of steps re-executed during a replay. With a trace store, replay re-runs only the steps after the divergence point, so cost scales with distance from the failure, not with total run length.
+- **Duplicate-effect rate.** Count rows in the downstream system that share an idempotency key. This should be zero by construction. If it is not, the key derivation or the downstream dedupe is broken.
+- **p95 end-to-end workflow latency.** Measure at the workflow boundary, not the model boundary. Retry sleeps and activity scheduling are part of the user-visible latency.
 
-The 3 remaining incidents per week were all model reasoning errors, not infrastructure errors. That is the right ratio: you want failures to be about the hard part (deciding what to do), not the easy part (calling a tool and handling a timeout).
+The command-level version: run the same 100 recorded inputs through the old loop and the new workflow, diff the trace tables, and count how many runs produce a different terminal outcome. That diff is the actual regression suite.
 
-The line-of-code reduction is the number people underestimate. Moving retries, timeouts, and idempotency into the platform removed 820 lines of hand-written branching from the agent code. Those 820 lines were the source of most bugs.
+## Failure modes that survive the refactor
 
-## What we'd do differently
+Typed contracts and durable execution do not eliminate every class of bug. Four that commonly remain:
 
-Two things stand out.
+**Double retry.** Retries configured in both the tool and the workflow engine. Fix: exactly one retry layer, and it should be the one that can see the whole run.
 
-First, the team spent three weeks building a custom trace UI before realizing that a SQL view and a Grafana dashboard would have been enough. A `SELECT * FROM agent_steps WHERE run_id = $1 ORDER BY step_index` view in Grafana 10.4 took an afternoon and answered 90% of debugging questions. The custom UI was abandoned. The lesson: instrument first, visualize later.
+**Idempotency key collisions.** If the key is derived from a value that is not stable across retries (a timestamp, a random UUID generated inside the tool), deduplication silently fails. Fix: derive the key from workflow-level identifiers that are recorded before the call.
 
-Second, the typed tool contract should have come before the first agent run, not after 37 incidents. The cost of adding discriminated unions to four tools was about two hours. The cost of not having them was three weeks of incident response. A common trap here is treating the tool signature as a type annotation exercise rather than a contract that the agent must respect. The annotation `-> list[Transaction]` is a lie if the tool can also return "I don't know."
+**Trace table growth.** Without retention and partitioning, the trace table becomes the largest object in the database and slows every query. Fix: partition by `created_at` and drop old partitions rather than running `DELETE`.
 
-Third, the team initially set `maximum_attempts=3` on the Temporal activity and also implemented retries inside the tool. This double-retry caused a 9x amplification on a flaky upstream, which briefly took down the ledger's rate limit. The fix was to retry in exactly one place: the workflow. Tools should fail fast and let the platform decide.
+**Non-deterministic workflow code.** If the workflow body reads the wall clock, generates randomness, or calls the network directly, replay produces a different execution path than the original. Fix: all side effects go in activities; the workflow body stays pure.
 
-## The broader lesson
+## Decision checklist
 
-The principle is this: **agent reliability is a platform property, not a prompt property.** Teams that try to fix agent failures by adding more instructions to the system prompt are optimizing the wrong layer. The system prompt cannot enforce idempotency, cannot distinguish a timeout from an empty result, and cannot replay a failed run.
+Before adding a tool to an agent, answer these:
 
-What made the difference was three abstractions that existed below the agent:
+- What does this tool return when the upstream is down? When the record does not exist? When the request times out? If the answer is "an empty list" or `None` for more than one of those cases, the contract is ambiguous.
+- Is this tool's effect idempotent, or does it need an idempotency key?
+- If this tool fails mid-run, can the run be replayed from the failure point without re-executing earlier steps?
+- Where does the retry live — tool, workflow, or both? (The answer should be exactly one.)
+- What row does this tool write to the trace table, and can a failed run be reconstructed from those rows alone?
 
-- A **typed outcome contract** so the agent cannot confuse "no data" with "could not fetch data."
-- A **durable execution engine** so retries, timeouts, and idempotency are handled once, correctly, outside the agent loop.
-- A **structured trace store** so every run is replayable and every failure is a query, not a mystery.
+## FAQ
 
-None of these are specific to agents. They are the same abstractions that made microservices reliable a decade ago: typed RPC contracts, workflow engines like Temporal or AWS Step Functions, and distributed tracing. The agent is just another service that happens to make non-deterministic decisions. Treat it like one.
+**How do I stop an agent from hallucinating tool results?**
 
-The corollary is that agent frameworks are not the bottleneck. LangChain, LlamaIndex, and the various vendor SDKs are fine for prototyping. The bottleneck is the platform underneath them. A team that invests in typed tools, durable execution, and trace storage will out-ship a team that invests in prompt engineering every time, because the platform makes the failures cheap to find and cheap to fix.
+Make the tool contract explicit. If a tool can return "not found" or "transient error," those must be distinct types the agent can branch on, not empty lists. A discriminated union like `Ok | NotFound | TransientError` plus a system-prompt rule that says "do not guess on `NotFound`" removes most of this class of bug. The model is not the problem; the ambiguous contract is.
 
-## How to apply this to your situation
+**Why does an agent retry a write and double-charge a customer?**
 
-Start by auditing your tool contracts. Pull up the function signatures for every tool your agent can call. For each one, ask: what does this return when the upstream is down? When the record does not exist? When the request times out? If the answer is "an empty list" or "None" for more than one of those, you have the confident-empty-result bug waiting to happen. Replace the return type with a discriminated union this week.
-
-Next, pick one durable execution engine and move your agent loop into it. Temporal 1.24, AWS Step Functions, and Inngest 3.x all work. The migration is mechanical: each tool call becomes an activity, each retry becomes a retry policy, each write becomes idempotent. Budget two days for a four-tool agent.
-
-Finally, add the trace table. It is one Postgres table and one index. You do not need a vendor. You need `run_id`, `step_index`, `tool_name`, `input_hash`, `output_hash`, `outcome`, and `latency_ms`. That is it.
-
-## Frequently Asked Questions
-
-**How do I stop my agent from hallucinating tool results?**
-
-You stop it by making the tool contract explicit. If a tool can return "not found" or "transient error," those must be distinct types the agent can branch on, not empty lists. In practice, a discriminated union like `Ok | NotFound | TransientError` plus a system prompt rule that says "do not guess on NotFound" eliminates most of this class of bug. The model is not the problem; the ambiguous contract is.
-
-**Why does my agent retry a write and double-charge the customer?**
-
-Because the write is not idempotent. The fix is an idempotency key derived from `run_id + step_index + tool_name`, sent as a header the downstream API respects. Stripe, AWS, and most modern APIs support this. If yours does not, store the key in a dedupe table with a unique constraint and catch the conflict. Retries are safe only when the effect is idempotent.
+Because the write is not idempotent. The fix is an idempotency key derived from workflow-level identifiers, sent as a header the downstream API respects or stored in a dedupe table with a unique constraint. Retries are safe only when the effect is idempotent.
 
 **What is the best way to debug a failed agent run?**
 
-Query a structured trace, not a text log. A table with one row per step, including input hash, output hash, outcome, and latency, lets you replay the exact run against recorded data. Re-running against a live database is not debugging; it is gambling. The trace table is the single highest-leverage piece of agent infrastructure you can build.
+Query a structured trace, not a text log. A table with one row per step — input hash, output hash, outcome, latency — lets you replay the exact run against recorded data. Re-running against a live database is not debugging; it is gambling.
 
-**Do I need Temporal or can I use a simple Python loop?**
+**Do I need a full workflow engine, or can I use a simple Python loop?**
 
-A simple loop works until you need retries across process restarts, timeouts that survive deploys, or replayability. The moment you have any of those, you are rebuilding a workflow engine badly. Temporal 1.24, AWS Step Functions, and Inngest 3.x are all reasonable; pick one and stop hand-rolling. The migration for a four-tool agent is about two days.
+A simple loop works until you need retries that survive process restarts, timeouts that survive deploys, or replayability. The moment you need any of those, you are rebuilding a workflow engine badly. Durable execution engines exist precisely for this; pick one and stop hand-rolling.
 
-## Resources that helped
+## The broader lesson
 
-- Temporal Python SDK 1.7 documentation, especially the section on activity retry policies and idempotency.
-- The AWS Builders' Library article on timeouts, retries, and backoff with jitter — still the clearest explanation of why double-retry causes amplification.
-- Stripe's API documentation on idempotency keys, which is the reference implementation for the pattern.
-- The OpenTelemetry semantic conventions for GenAI, which are still evolving but give a reasonable starting schema for agent spans.
-- Grafana 10.4 and the Postgres data source, which turned the trace table into a usable debugging UI in an afternoon.
+Agent reliability is a platform property, not a prompt property. Teams that try to fix agent failures by adding more instructions to the system prompt are optimizing the wrong layer. A system prompt cannot enforce idempotency, cannot distinguish a timeout from an empty result, and cannot replay a failed run.
+
+The three abstractions that matter — typed outcome contracts, durable execution, structured traces — are not specific to agents. They are the same abstractions that made microservices reliable: typed RPC contracts, workflow engines, and distributed tracing. An agent is just another service that happens to make non-deterministic decisions. Treat it like one.
+
+The corollary is that agent frameworks are not the bottleneck. They are fine for prototyping. The bottleneck is the platform underneath them, and the platform is what makes failures cheap to find and cheap to fix.
 
 If you do one thing in the next 30 minutes: open your agent's tool definitions and list every return value each tool can produce. If any tool can return an empty list for more than one reason, write the discriminated union for that tool now. That single file is where the reliability work starts.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+===END===

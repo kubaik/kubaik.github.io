@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Starlink 4G fallback: serve pages under 800ms - Kubai Kevin</title>
-        <meta name="description" content="Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.">
+        <meta name="description" content="How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.">
         <meta name="keywords" content="4g, Cheap, BrotliLevel4, Performance, Androiddev, Redis, Nextjs">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T22:22:56.127707">
-        <meta property="article:modified_time" content="2026-09-19T11:38:05.847854+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:20:50.403997+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Starlink 4G fallback: serve pages under 800ms">
-        <meta property="og:description" content="Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.">
+        <meta property="og:description" content="How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.">
         <meta property="og:url" content="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Starlink 4G fallback: serve pages under 800ms">
-        <meta name="twitter:description" content="Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.">
+        <meta name="twitter:description" content="How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/starlink-4g-fallback-serve-pages-under-800ms.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/#article",
       "headline": "Starlink 4G fallback: serve pages under 800ms",
-      "description": "Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.",
+      "description": "How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.",
       "datePublished": "2026-06-26T22:22:56+00:00",
-      "dateModified": "2026-09-19T11:38:05+00:00",
-      "wordCount": 2274,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-04T10:20:50+00:00",
+      "wordCount": 2462,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Starlink 4G fallback: serve pages under 800ms</h1>
                 
-                <p class="post-lead">Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.</p>
+                <p class="post-lead">How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.</p>
                 
                 
                 <div class="tags">
@@ -260,132 +260,115 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2274 words
+                        12 min read
+                        &nbsp;·&nbsp; 2462 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre.</p>
-<p>The culprit wasn’t the server; it was the client stack: 256 MB RAM phones, Chrome 120 on Android 11, and 3G-era TCP settings that never got updated. In one test run, Lighthouse scored 92 on desktop and 34 on 4G. The gap wasn’t the CDN; it was image decoding, JavaScript parse time, and a missing <code>save-data</code> hint that doubled the payload.</p>
-<p>Treating every 4G user as “fast” was the first mistake. By May 2026 we had to ship two separate bundles: one for &gt;2 Mbps with full polyfills, and one for &lt;2 Mbps that stripped React, lazy-loaded everything, and used Brotli-level 4 instead of 11.</p>
-<p>So, what changed when Starlink reached East Africa? The answer isn’t “Starlink is fast”; it’s “hundreds of thousands of people who were on 2G/3G suddenly have 4G radios, but their phones, carriers, and expectations haven’t caught up.”</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You’ll need Node 20 LTS, Next.js 15, and a Redis 7.2 cluster for edge caching. We’ll target an 800 ms Time to First Byte (TTFB) on a 1 Mbps, 280 ms RTT link. The build will produce two artefacts:
-1. A server-side rendered (SSR) page with streaming HTML. 2. A lightweight client bundle (&lt;120 kB gzipped) that loads only after the HTML is interactive.</p>
-<p>We’re not building a PWA; we’re building the thinnest slice that renders something useful on a 256 MB RAM device in Chrome 120. You can run this locally with <code>node --max-old-space-size=256 server.js</code>, but for realism use a 4G throttling profile in Chrome DevTools: 1.5 Mbps down / 0.75 Mbps up, 280 ms RTT, 10 % packet loss.</p>
-<p>Expected outcomes after the steps:
-- TTFB ≤ 800 ms on 4G with &lt;2 Mbps bandwidth. - Lighthouse Performance ≥ 70 on Moto G Power (2026) with 256 MB RAM. - Bundle size ≤ 120 kB gzipped.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Start a fresh Next.js 15 project:</p>
-<pre><code class="language-bash">npx create-next-app@15 --typescript --eslint --tailwind --src-dir --import-alias '@/*'
+                <p>Satellite and rural 4G links change the shape of a performance problem. A Starlink terminal or a new 4G cell can give a village a 30–60 ms RTT link to a nearby ground station, but the last hop to the handset is still a cheap Android phone on a congested carrier network. The radio upgrade does not upgrade the device, the browser, or the TCP stack.</p>
+<p>This article is about the serving strategy that survives that mismatch: stream a tiny HTML shell fast, keep the client bundle small enough to download on a 1 Mbps link, and cache at the edge so a slow origin never blocks first paint.</p>
+<h2 id="the-failure-mode-to-design-against">The failure mode to design against</h2>
+<p>A common failure mode is treating "4G" as a synonym for "fast". A 4G radio can deliver 1 Mbps or 20 Mbps depending on load, and the client device is often the bottleneck. A 256 MB RAM Android phone running a current Chrome build spends measurable time on JavaScript parse and image decode before it can paint anything useful.</p>
+<p>Two measurements make the problem concrete:</p>
+<ul>
+<li><strong>Effective connection type (ECT)</strong> reported by the browser, via the Network Information API or the <code>Save-Data</code> and <code>Downlink</code> request headers. These are hints, not guarantees, but they are the only signal the server gets before sending bytes.</li>
+<li><strong>Time to First Byte (TTFB)</strong> measured at the client, not at the load balancer. A CDN edge that responds in 40 ms is useless if the HTML depends on a 400 ms origin round trip.</li>
+</ul>
+<p>The design goal used throughout this article is a TTFB of 800 ms or less on a 1 Mbps downlink with 280 ms RTT and 10% packet loss. That is a deliberately harsh profile; if the page meets it, ordinary 4G will feel fast.</p>
+<h2 id="prerequisites-and-target-artefacts">Prerequisites and target artefacts</h2>
+<p>The stack assumed here is Node 20 LTS, a current Next.js App Router release, and a Redis-compatible cache. Any streaming SSR framework works; the pattern is what matters.</p>
+<p>The build should produce three artefacts:</p>
+<ol>
+<li>A streamed HTML shell of roughly 1–2 kB that renders a skeleton immediately.</li>
+<li>Critical CSS inlined in the shell, with the rest deferred.</li>
+<li>A client bundle under 120 kB gzipped, loaded only after the shell is interactive.</li>
+</ol>
+<p>You can reproduce the network conditions locally without a real device. Chrome DevTools supports a custom throttling profile, and <code>tc netem</code> on Linux can add latency and loss at the interface level:</p>
+<pre><code class="language-bash"># Add 280ms RTT and 10% loss on eth0 (requires root)
+sudo tc qdisc add dev eth0 root netem delay 140ms loss 10%
+# Remove it later
+sudo tc qdisc del dev eth0 root netem
+</code></pre>
+<p>Note that <code>delay 140ms</code> produces roughly 280 ms RTT because the delay applies in each direction. Verify with <code>ping</code> before trusting any measurement.</p>
+<h2 id="step-1-set-up-the-project-and-the-cache">Step 1 — set up the project and the cache</h2>
+<p>Create a project and install the runtime dependencies:</p>
+<pre><code class="language-bash">npx create-next-app@latest --typescript --eslint --tailwind --src-dir --import-alias '@/*'
 cd my-app
+npm install redis
 </code></pre>
-<p>Install the 4G-focused stack:</p>
-<pre><code class="language-bash">npm install next@15 react@18.3 react-dom@18.3 redis@7.2
-npm install --save-dev @types/react@18.3 @types/react-dom@18.3 @types/redis@7.2
-</code></pre>
-<p>Create a <code>.env.local</code> file that overrides the default Next.js dev server to use the 4G throttling profile:</p>
-<pre><code class="language-env">NEXTJS_DEV_THROTTLE=true
-NEXTJS_THROTTLE_DOWN=1500
-NEXTJS_THROTTLE_UP=750
-NEXTJS_THROTTLE_RTT=280
-NEXTJS_THROTTLE_LOSS=10
-</code></pre>
-<p>Gotcha: the default Next.js dev server uses HTTP/1.1 without keep-alive. Pin the dev server to HTTP/2 for realism:</p>
-<pre><code class="language-bash"># package.json
-&quot;scripts&quot;: {
-  &quot;dev&quot;: &quot;next dev --http2 --port 3000&quot;
-}
-</code></pre>
-<p>Next, set up Redis 7.2 on a free-tier AWS ElastiCache t4g.micro (arm64) in the same region as your users. In <code>lib/redis.ts</code>:</p>
-<pre><code class="language-typescript">import { createClient } from 'redis';
+<p>Create a Redis client module. The important part is not the library but the timeouts: a cache call that hangs for 30 seconds is worse than a cache miss.</p>
+<pre><code class="language-typescript">// src/lib/redis.ts
+import { createClient } from 'redis';
 
 const client = createClient({
   socket: {
     host: process.env.REDIS_HOST || 'localhost',
     port: parseInt(process.env.REDIS_PORT || '6379', 10),
+    connectTimeout: 5000,
   },
   password: process.env.REDIS_PASSWORD,
-  socketTimeout: 5000,
-  connectTimeout: 5000,
 });
 
-client.on('error', (err) =&gt; console.error('Redis Client Error', err));
-await client.connect();
+client.on('error', (err) =&gt; console.error('Redis client error', err));
+
+// Connect once per process. In serverless runtimes, reuse the connection
+// across invocations via a module-level singleton.
+let connected = false;
+export async function getClient() {
+  if (!connected) {
+    await client.connect();
+    connected = true;
+  }
+  return client;
+}
+
 export default client;
 </code></pre>
-<p>Finally, create an edge function handler that reads the user’s effective connection type (ECT) from the <code>Save-Data</code> and <code>Downlink</code> headers. In <code>app/api/edge/route.ts</code>:</p>
-<pre><code class="language-typescript">import { NextResponse } from 'next/server';
+<p>A Redis-compatible cache should live in the same region as the edge function that reads it. Cross-region cache reads reintroduce exactly the latency the cache was meant to remove.</p>
+<p>Next, add a route that classifies the connection from request headers. The <code>Downlink</code> and <code>Save-Data</code> headers are client hints; they must be requested with <code>Accept-CH</code> before the browser sends them.</p>
+<pre><code class="language-typescript">// src/app/api/edge/route.ts
+import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-  const ect = request.headers.get('Save-Data') === 'on' ? 'slow-2g' :
-              (request.headers.get('Downlink') &amp;&amp; parseFloat(request.headers.get('Downlink')!) &lt; 1 ? '2g' : '4g');
-  return NextResponse.json({ ect });
+  const saveData = request.headers.get('Save-Data') === 'on';
+  const downlinkHeader = request.headers.get('Downlink');
+  const downlink = downlinkHeader ? parseFloat(downlinkHeader) : null;
+
+  let ect = '4g';
+  if (saveData) {
+    ect = 'slow-2g';
+  } else if (downlink !== null &amp;&amp; downlink &lt; 1) {
+    ect = '2g';
+  }
+
+  return NextResponse.json({ ect, downlink, saveData });
 }
 </code></pre>
-<p>Test it with curl:</p>
+<p>Test it locally:</p>
 <pre><code class="language-bash">curl -H 'Save-Data: on' http://localhost:3000/api/edge
-# {&quot;ect&quot;:&quot;slow-2g&quot;}
+# {&quot;ect&quot;:&quot;slow-2g&quot;,&quot;downlink&quot;:null,&quot;saveData&quot;:true}
 </code></pre>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>In <code>app/page.tsx</code>, we’ll split the page into three layers:
-1. Skeleton HTML (1.8 kB) streamed immediately. 2. Critical CSS (10 kB) inlined. 3. Client bundle (≤120 kB) lazy-loaded only after the skeleton is interactive.</p>
-<pre><code class="language-typescript">// app/page.tsx
+<p>Treat <code>ect</code> as a hint for choosing compression level and image quality, never as a hard gate. A user on a fast link who has <code>Save-Data: on</code> still deserves the full page, just delivered more cheaply.</p>
+<h2 id="step-2-stream-a-small-html-shell">Step 2 — stream a small HTML shell</h2>
+<p>The core idea is that the first byte of HTML should not depend on any data fetch. Render the skeleton, stream it, and let the data arrive behind it.</p>
+<pre><code class="language-typescript">// src/app/page.tsx
 import { Suspense } from 'react';
-import { unstable_cache } from 'next/cache';
-import client from '@/lib/redis';
+import Script from 'next/script';
 
 export const dynamic = 'force-dynamic';
-
-export default async function Home() {
-  const cachedData = await unstable_cache(
-    async () =&gt; ({ title: 'East Africa News', items: Array.from({ length: 20 }, (_, i) =&gt; ({ id: i, title: `Article ${i}` })) }),
-    ['homepage'],
-    { revalidate: 60 }
-  )();
-
-  return (
-    &lt;html lang=&quot;en&quot;&gt;
-      &lt;head&gt;
-        &lt;meta charSet=&quot;utf-8&quot; /&gt;
-        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
-        &lt;meta httpEquiv=&quot;Accept-CH&quot; content=&quot;Downlink, Save-Data&quot; /&gt;
-        &lt;title&gt;{cachedData.title}&lt;/title&gt;
-        &lt;style jsx global&gt;{`
-          @font-face { font-family: 'Inter'; src: url('/fonts/inter.var.woff2') format('woff2-variations'); font-weight: 100 900; }
-          body { font-family: Inter, sans-serif; margin: 0; background: #fff; color: #111; }
-        `}&lt;/style&gt;
-      &lt;/head&gt;
-      &lt;body&gt;
-        &lt;Suspense fallback={null}&gt;
-          &lt;CriticalSkeleton /&gt;
-        &lt;/Suspense&gt;
-        &lt;div suppressHydrationWarning id=&quot;root&quot; /&gt;
-        &lt;Script
-          id=&quot;load-client&quot;
-          src=&quot;/client-bundle.js&quot;
-          strategy=&quot;lazyOnload&quot;
-          onLoad={() =&gt; console.log('Client loaded')}
-        /&gt;
-      &lt;/body&gt;
-    &lt;/html&gt;
-  );
-}
 
 function CriticalSkeleton() {
   return (
     &lt;main&gt;
       &lt;header&gt;
-        &lt;h1&gt;East Africa News&lt;/h1&gt;
+        &lt;h1&gt;Regional News&lt;/h1&gt;
       &lt;/header&gt;
-      &lt;section&gt;
+      &lt;section aria-busy=&quot;true&quot;&gt;
         {Array.from({ length: 5 }).map((_, i) =&gt; (
           &lt;article key={i} className=&quot;skeleton-line&quot; /&gt;
         ))}
@@ -393,252 +376,259 @@ function CriticalSkeleton() {
     &lt;/main&gt;
   );
 }
-</code></pre>
-<p>The <code>CriticalSkeleton</code> component is 1.8 kB uncompressed and renders in ~120 ms on a 256 MB device. The inline font is Inter Variable (44 kB woff2) with <code>unicode-range</code> to load only Latin glyphs, cutting the font payload by 60 % for Swahili text.</p>
-<p>Next, build the client bundle. In <code>client/client.tsx</code>:</p>
-<pre><code class="language-typescript">'use client';
-import { useEffect, useState } from 'react';
 
-export default function App() {
-  const [data, setData] = useState&lt;{ items: Array&lt;{ id: number; title: string }&gt; } | null&gt;(null);
-
-  useEffect(() =&gt; {
-    fetch('/api/data')
-      .then((r) =&gt; r.json())
-      .then(setData);
-  }, []);
-
-  if (!data) return &lt;div&gt;Loading…&lt;/div&gt;;
-
+async function ArticleList() {
+  // This fetch happens after the shell has already been flushed.
+  const res = await fetch(`${process.env.ORIGIN}/api/data`, {
+    cache: 'no-store',
+  });
+  const data = await res.json();
   return (
-    &lt;main&gt;
-      &lt;h2&gt;{data.title}&lt;/h2&gt;
-      &lt;ul&gt;
-        {data.items.map((item) =&gt; (
-          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
-        ))}
-      &lt;/ul&gt;
-    &lt;/main&gt;
+    &lt;ul&gt;
+      {data.items.map((item: { id: number; title: string }) =&gt; (
+        &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+export default function Home() {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;head&gt;
+        &lt;meta charSet=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+        &lt;meta httpEquiv=&quot;Accept-CH&quot; content=&quot;Downlink, Save-Data&quot; /&gt;
+        &lt;title&gt;Regional News&lt;/title&gt;
+        &lt;style
+          dangerouslySetInnerHTML={{
+            __html: `
+              body { margin: 0; font-family: system-ui, sans-serif; background: #fff; color: #111; }
+              .skeleton-line { height: 1.25rem; margin: 0.75rem 0; background: #eee; border-radius: 4px; }
+            `,
+          }}
+        /&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;CriticalSkeleton /&gt;
+        &lt;Suspense fallback={null}&gt;
+          &lt;ArticleList /&gt;
+        &lt;/Suspense&gt;
+        &lt;Script
+          id=&quot;load-client&quot;
+          src=&quot;/client-bundle.js&quot;
+          strategy=&quot;lazyOnload&quot;
+        /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
   );
 }
 </code></pre>
-<p>Bundle it with esbuild targeting ES2020 and minify with esbuild’s <code>keep_names</code> disabled:</p>
-<pre><code class="language-bash"># package.json
-&quot;scripts&quot;: {
-  &quot;build:client&quot;: &quot;esbuild client/client.tsx --bundle --outfile=public/client-bundle.js --target=es2020 --minify --format=esm&quot;
+<p>Two details matter for the 800 ms target:</p>
+<ul>
+<li>The skeleton is rendered by the server, so it paints as soon as the first HTML chunk arrives. No JavaScript is required for first paint.</li>
+<li><code>ArticleList</code> is wrapped in <code>Suspense</code>, so the shell flushes before the data fetch resolves. The fetch latency is paid after the user already sees something.</li>
+</ul>
+<p>Avoid <code>will-change</code> and large <code>transform</code> layers in the skeleton CSS. On a 256 MB device, compositing layers cost memory that the device does not have.</p>
+<h2 id="step-3-keep-the-client-bundle-small">Step 3 — keep the client bundle small</h2>
+<p>The client bundle is the part most likely to blow the budget. A React tree with polyfills for old browsers can easily exceed 300 kB gzipped. The fix is to target a modern baseline and drop the polyfills.</p>
+<pre><code class="language-typescript">// src/client/client.tsx
+'use client';
+import { useEffect, useState } from 'react';
+
+type Item = { id: number; title: string };
+
+export default function App() {
+  const [items, setItems] = useState&lt;Item[] | null&gt;(null);
+
+  useEffect(() =&gt; {
+    let cancelled = false;
+    let retries = 0;
+    const maxRetries = 3;
+
+    const load = async () =&gt; {
+      try {
+        const res = await fetch('/api/data');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!cancelled) setItems(data.items);
+      } catch {
+        retries += 1;
+        if (retries &lt;= maxRetries) {
+          const delay = Math.min(1000 * 2 ** retries, 5000);
+          setTimeout(load, delay);
+        } else if (!cancelled) {
+          setItems([]);
+        }
+      }
+    };
+
+    load();
+    return () =&gt; {
+      cancelled = true;
+    };
+  }, []);
+
+  if (items === null) return null;
+
+  return (
+    &lt;ul&gt;
+      {items.map((item) =&gt; (
+        &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
 }
 </code></pre>
-<p>The result is 102 kB gzipped. On a 1 Mbps link with 280 ms RTT, the bundle downloads in ~900 ms including TLS handshake.</p>
-<p>Finally, add a lightweight API route that returns the same data from Redis, but with Brotli-level 4 and a 60 s cache:</p>
-<pre><code class="language-typescript">// app/api/data/route.ts
+<p>Bundle it with esbuild, targeting ES2020 so that no polyfills are emitted for features every current browser supports:</p>
+<pre><code class="language-bash">npx esbuild src/client/client.tsx \
+  --bundle \
+  --outfile=public/client-bundle.js \
+  --target=es2020 \
+  --minify \
+  --format=esm
+</code></pre>
+<p>Then measure the actual transferred size, not the file size on disk. Compression changes the number substantially:</p>
+<pre><code class="language-bash">gzip -c public/client-bundle.js | wc -c
+# Also measure brotli, which is what most CDNs will serve
+brotli -c public/client-bundle.js | wc -c
+</code></pre>
+<p>If the brotli figure is above the budget, the usual culprits are a date library, a state management library, or an icon set imported wholesale. Replace or lazy-load them before touching the server.</p>
+<h2 id="step-4-cache-and-compress-at-the-edge">Step 4 — cache and compress at the edge</h2>
+<p>The API route should read from cache, write back on miss, and stream the response so the first byte is not held back by serialization.</p>
+<pre><code class="language-typescript">// src/app/api/data/route.ts
 import { NextResponse } from 'next/server';
-import client from '@/lib/redis';
+import { getClient } from '@/lib/redis';
 
-const encoder = new TextEncoder();
-const stream = new ReadableStream({
-  async start(controller) {
-    const cached = await client.get('homepage:data');
-    if (cached) {
-      controller.enqueue(encoder.encode(cached));
-      controller.close();
-      return;
-    }
-    const data = JSON.stringify({ title: 'East Africa News', items: Array.from({ length: 20 }, (_, i) =&gt; ({ id: i, title: `Article ${i}` })) });
-    await client.set('homepage:data', data, { EX: 60 });
-    controller.enqueue(encoder.encode(data));
-    controller.close();
-  },
-});
+const CACHE_KEY = 'homepage:data';
+
+async function loadData() {
+  const client = await getClient();
+  const cached = await client.get(CACHE_KEY);
+  if (cached) return { value: cached, hit: true };
+
+  const data = JSON.stringify({
+    items: Array.from({ length: 20 }, (_, i) =&gt; ({
+      id: i,
+      title: `Article ${i}`,
+    })),
+  });
+  await client.set(CACHE_KEY, data, { EX: 60 });
+  return { value: data, hit: false };
+}
 
 export async function GET() {
-  return new NextResponse(stream, {
+  const { value, hit } = await loadData();
+
+  return new NextResponse(value, {
     headers: {
       'Content-Type': 'application/json',
-      'Cache-Control': 'public, s-maxage=60',
-      'Content-Encoding': 'br',
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      'X-Cache': hit ? 'HIT' : 'MISS',
     },
   });
 }
 </code></pre>
-<p>We use a streaming response so the first byte arrives in &lt;200 ms even if the full payload is 12 kB compressed.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>First, handle the case where the client bundle fails to load. In <code>app/page.tsx</code>, add a fallback UI:</p>
+<p>Two notes on compression. First, do not set <code>Content-Encoding: br</code> manually unless the body is actually brotli-compressed; a mismatched header produces a decode error in the browser. Let the CDN or the framework negotiate compression via <code>Accept-Encoding</code>. Second, brotli quality 11 is expensive at request time; most CDNs serve a precompressed quality 11 asset or a dynamic quality 4–5. The difference in size between quality 4 and quality 11 on typical HTML is small, while the CPU difference is large.</p>
+<p>To verify the edge cache is working, compare the <code>X-Cache</code> header across two requests and check the timing:</p>
+<pre><code class="language-bash">curl -s -o /dev/null -w '%{time_starttransfer}\n' https://your-host/api/data
+curl -s -o /dev/null -w '%{time_starttransfer}\n' https://your-host/api/data
+</code></pre>
+<p>The second request should be markedly faster. If it is not, the cache key is probably varying on a header or cookie it should not.</p>
+<h2 id="step-5-handle-the-failure-cases">Step 5 — handle the failure cases</h2>
+<p>Four failure modes account for most of the pain on constrained links.</p>
+<p><strong>The client bundle never arrives.</strong> Add an error handler that offers a retry rather than leaving a blank page:</p>
 <pre><code class="language-typescript">&lt;Script
   id=&quot;load-client&quot;
   src=&quot;/client-bundle.js&quot;
   strategy=&quot;lazyOnload&quot;
   onError={() =&gt; {
     const el = document.createElement('div');
-    el.innerHTML = '&lt;p style=&quot;color:red&quot;&gt;Content loaded slowly; tap to retry&lt;/p&gt;';
-    el.onclick = () =&gt; window.location.reload();
-    document.getElementById('root')?.appendChild(el);
+    el.innerHTML = '&lt;p&gt;Content loaded slowly. &lt;button type=&quot;button&quot;&gt;Retry&lt;/button&gt;&lt;/p&gt;';
+    el.querySelector('button')?.addEventListener('click', () =&gt; window.location.reload());
+    document.body.appendChild(el);
   }}
 /&gt;
 </code></pre>
-<p>Second, handle 4G instability. In <code>client/client.tsx</code>, add a retry loop with exponential backoff:</p>
-<pre><code class="language-typescript">useEffect(() =&gt; {
-  let retries = 0;
-  const maxRetries = 3;
-  const fetchData = async () =&gt; {
-    try {
-      const res = await fetch('/api/data');
-      if (!res.ok) throw new Error('HTTP error');
-      const data = await res.json();
-      setData(data);
-    } catch (err) {
-      retries += 1;
-      if (retries &lt;= maxRetries) {
-        const delay = Math.min(1000 * 2 ** retries, 5000);
-        await new Promise((r) =&gt; setTimeout(r, delay));
-        fetchData();
-      } else {
-        setData({ items: [] });
-      }
-    }
-  };
-  fetchData();
-}, []);
-</code></pre>
-<p>Third, handle low-memory devices. In the skeleton CSS, avoid <code>will-change</code> and <code>transform</code> on the skeleton lines, and cap the number of rendered skeleton lines to 5 even if the viewport is larger. I once shipped a skeleton with 20 lines and saw OOM crashes on 256 MB devices in Nairobi.</p>
-<p>Fourth, handle offline detection. In <code>client/client.tsx</code>, add a service worker registration that falls back to a cached offline page:</p>
-<pre><code class="language-typescript">useEffect(() =&gt; {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(console.error);
-  }
-}, []);
-</code></pre>
-<p>The service worker (<code>public/sw.js</code>) caches the skeleton HTML and a 404 fallback:</p>
-<pre><code class="language-javascript">const CACHE = 'v1';
+<p><strong>The fetch fails mid-request.</strong> The retry loop in Step 3 handles this with exponential backoff capped at 5 seconds. Cap the retry count; on a 10% loss link, unlimited retries turn a slow page into a hung one.</p>
+<p><strong>The device runs out of memory.</strong> Cap the number of skeleton rows and rendered list items to what fits the viewport. Rendering 20 list items on a 256 MB device to save a scroll is a bad trade.</p>
+<p><strong>The origin or CDN is unreachable.</strong> A service worker can serve a cached shell and a fallback page:</p>
+<pre><code class="language-javascript">// public/sw.js
+const CACHE = 'shell-v1';
 
-self.addEventListener('install', (e) =&gt; e.waitUntil(caches.open(CACHE).then((cache) =&gt; cache.addAll(['/', '/offline.html']))));
+self.addEventListener('install', (event) =&gt; {
+  event.waitUntil(
+    caches.open(CACHE).then((cache) =&gt; cache.addAll(['/', '/offline.html']))
+  );
+});
 
-self.addEventListener('fetch', (e) =&gt; {
-  e.respondWith(
-    caches.match(e.request).then((cached) =&gt; cached || fetch(e.request).catch(() =&gt; caches.match('/offline.html')))
+self.addEventListener('fetch', (event) =&gt; {
+  if (event.request.mode !== 'navigate') return;
+  event.respondWith(
+    fetch(event.request).catch(() =&gt;
+      caches.match('/offline.html').then((cached) =&gt; cached || caches.match('/'))
+    )
   );
 });
 </code></pre>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Instrument the edge function with OpenTelemetry and export traces to AWS X-Ray. In <code>app/api/data/route.ts</code>:</p>
-<pre><code class="language-typescript">import { trace } from '@opentelemetry/api';
-
-const tracer = trace.getTracer('api');
-
-export async function GET() {
-  return tracer.startActiveSpan('data-fetch', async (span) =&gt; {
-    try {
-      const cached = await client.get('homepage:data');
-      if (cached) {
-        span.setAttribute('cache', 'hit');
-        return new NextResponse(/* ... */);
-      }
-      span.setAttribute('cache', 'miss');
-      // ... rest
-    } catch (err) {
-      span.recordException(err as Error);
-      span.setStatus({ code: 2 });
-      throw err;
-    } finally {
-      span.end();
-    }
-  });
-}
-</code></pre>
-<p>Add a synthetic test in GitHub Actions that runs Lighthouse on a 4G profile. In <code>.github/workflows/lighthouse.yml</code>:</p>
-<pre><code class="language-yaml">jobs:
-  lighthouse:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npx @lhci/cli@0.13 https://localhost:3000 --throttling.method=provided --throttling.cpuSlowdownMultiplier=4
-        env:
-          LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
-</code></pre>
-<p>The test fails the build if Performance score &lt; 70 or First Contentful Paint &gt; 2 s on the 4G profile.</p>
-<p>Add a bundle-size check in CI:</p>
-<pre><code class="language-bash"># package.json
-&quot;scripts&quot;: {
-  &quot;check:bundle&quot;: &quot;npx bundlesize@0.18 --config=bundlesize.config.json&quot;
-}
-</code></pre>
-<p>With <code>bundlesize.config.json</code>:</p>
-<pre><code class="language-json">{
-  &quot;files&quot;: [
-    { &quot;path&quot;: &quot;public/client-bundle.js&quot;, &quot;maxSize&quot;: &quot;120 kB&quot; }
-  ]
-}
-</code></pre>
-<p>Finally, set up real-user monitoring with a lightweight RUM snippet in <code>app/layout.tsx</code>:</p>
-<pre><code class="language-typescript">import Script from 'next/script';
-
-&lt;Script
-  id=&quot;rum&quot;
-  strategy=&quot;afterInteractive&quot;
-  src=&quot;https://cdn.rum.example.com/v1/rum.js&quot;
-  data-token={process.env.RUM_TOKEN}
-  data-sample-rate=&quot;1&quot;
-/&gt;
-</code></pre>
-<p>We sample 1 % of page views to avoid blowing up the 256 MB devices.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<ul>
-<li>Median TTFB improved from 1.2 s to 580 ms on 4G &lt;2 Mbps links. - P95 TTFB stayed under 1.1 s even with 10 % packet loss. - Bundle size stayed at 102 kB gzipped; no regressions in 30 days. - Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76. - AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %. - User engagement (time-on-page) increased 18 % in the first week.</li>
-</ul>
-<p>During an incident where a fibre cut took down our primary CDN, 4G users still saw the skeleton and cached articles because the service worker served from the edge cache. That saved us from a 4-hour outage in Kampala.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>What if I don’t use Next.js?</strong>
-You can replicate the same pattern in Remix, Nuxt, or even plain Express. The key pieces are:
-- Streaming HTML (1–2 kB) immediately. - Critical CSS inlined. - Client bundle ≤120 kB gzipped, lazy-loaded. - Brotli-level 4 compression on edge. - Service worker caching the skeleton.</p>
-<p>In Express, you can use <code>compression</code> middleware with <code>level=4</code> and <code>res.setHeader('Cache-Control', 'public, s-maxage=60')</code>.</p>
-<p>Comparison table for stacks:</p>
+<p>Register it from the layout, and version the cache name whenever the shell changes so old shells are evicted.</p>
+<h2 id="step-6-measure-dont-assume">Step 6 — measure, don't assume</h2>
+<p>Every claim in this article is a design target, not a measured result. To find out whether your page meets it, instrument these four numbers:</p>
 <table>
 <thead>
 <tr>
-<th>Stack</th>
-<th>Skeleton size</th>
-<th>Client bundle</th>
-<th>Edge cache</th>
-<th>Worker needed</th>
+<th>Metric</th>
+<th>How to capture</th>
+<th>Target</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Next.js 15</td>
-<td>1.8 kB</td>
-<td>102 kB</td>
-<td>Redis 7.2</td>
-<td>Service Worker</td>
+<td>TTFB</td>
+<td><code>PerformanceNavigationTiming.responseStart - requestStart</code></td>
+<td>≤ 800 ms</td>
 </tr>
 <tr>
-<td>Remix v2</td>
-<td>2.1 kB</td>
-<td>110 kB</td>
-<td>Cloudflare KV</td>
-<td>Service Worker</td>
+<td>HTML shell size</td>
+<td><code>Content-Length</code> on the first response</td>
+<td>≤ 2 kB</td>
 </tr>
 <tr>
-<td>Nuxt 3</td>
-<td>2.4 kB</td>
-<td>125 kB</td>
-<td>Nitro cache</td>
-<td>None</td>
+<td>Client bundle size</td>
+<td><code>brotli -c bundle.js \| wc -c</code></td>
+<td>≤ 120 kB</td>
 </tr>
 <tr>
-<td>Plain Express</td>
-<td>1.2 kB</td>
-<td>98 kB</td>
-<td>Redis 7.2</td>
-<td>Service Worker</td>
+<td>Cache hit ratio</td>
+<td><code>X-Cache: HIT</code> count / total requests</td>
+<td>&gt; 80%</td>
 </tr>
 </tbody>
 </table>
+<p>A small RUM snippet captures the first two without a third-party dependency:</p>
+<pre><code class="language-typescript">// src/app/layout.tsx
+'use client';
+import { useEffect } from 'react';
+
+export function RUM() {
+  useEffect(() =&gt; {
+    const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+    if (!nav) return;
+    const ttfb = nav.responseStart - nav.requestStart;
+    navigator.sendBeacon('/api/rum', JSON.stringify({ ttfb, path: location.pathname }));
+  }, []);
+  return null;
+}
+</code></pre>
+<p>For lab measurements, Lighthouse with a throttling profile is useful but noisy on low-end devices. Run at least five iterations and compare medians rather than single runs. WebPageTest offers a 4G profile and a low-end device preset; use it when you need a repeatable number.</p>
+<p>To measure the effect of a change, hold everything constant except the variable under test. If you reduce the bundle from 200 kB to 100 kB, the expected download time on a 1 Mbps link falls by roughly 800 ms, since 100 kB is about 800 kilobits. That is arithmetic from stated assumptions, not a benchmark result. Whether the real page improves by that much depends on what was blocking on the bundle.</p>
+<h2 id="common-questions">Common questions</h2>
+<p><strong>Does this work without Next.js?</strong>
+Yes. The pattern is framework-independent: stream a shell, inline critical CSS, keep the client bundle small, cache at the edge. In Express, that means <code>res.write()</code> for the shell, <code>compression</code> middleware for the response, and a Redis read before any origin call. The specific APIs differ; the ordering does not.</p>
+<p><strong>Should I detect the connection and serve different bundles?</strong>
+Serving two bundles doubles the cache surface and risks serving the wrong one. Prefer one small bundle that works everywhere. Use <code>Save-Data</code> to reduce image quality and skip non-essential requests, not to fork the application.</p>
 <p><strong>How do I handle images?</strong>
-Use <code>next/image</code> with <code>priority={false}</code>, <code>placeholder="blur"</code>, and <code>blurDataURL</code> generated from a 10×10 PNG. On 4G, the blur placeholder renders instantly and the full image loads lazily. Set <code>sizes="(max-width: 768px) 100vw, 50vw"</code> to avoid loading 1200 px images on 320 px screens.</p>
-<p>Example:</p>
+Serve a tiny placeholder inline and let the real image load lazily. A 1×1 base64 PNG as <code>blurDataURL</code> is around 85 bytes and paints immediately:</p>
 <pre><code class="language-typescript">&lt;Image
   src=&quot;/hero.jpg&quot;
   alt=&quot;&quot;
@@ -649,29 +639,11 @@ Use <code>next/image</code> with <code>priority={false}</code>, <code>placeholde
   sizes=&quot;100vw&quot;
 /&gt;
 </code></pre>
-<p>The placeholder is 85 bytes, so the first paint shows colour immediately.</p>
-<p><strong>What about ads or third-party scripts?</strong>
-Block them by default. If you must load an ad network, use <code>loading="lazy"</code> and <code>fetchpriority="low"</code>.</p>
-<p><strong>How do I test on real devices?</strong>
-Use WebPageTest with the “Motorola G (gen 5) – Moto G Power” preset and the 4G profile. Run 5 runs and average the results. Pay attention to the “First Visual Change” metric; it’s more reliable than FCP on low-end devices.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>If you’re on a 4G-as-baseline stack today, the fastest win is to audit your largest client-side bundle. Run <code>npx bundlesize@0.18 --config=bundlesize.config.json</code> against your main entry file and cap it at 120 kB gzipped. Then strip out polyfills for anything below ES2020 and switch to Brotli-level 4. That single change usually cuts payload by 40 % and improves TTI by 300–800 ms on 4G.</p>
-<p>For the next 30 minutes:
-1. Measure your current bundle size with <code>npx bundlephobia@2.13 your-package</code>. 2. Run Lighthouse on a 4G profile against your homepage. 3. Open the Network tab and verify that the first HTML response is &lt;2 kB and the largest JS file is ≤120 kB gzipped.</p>
-<p>If any of those fail, the code snippets in Step 2 are copy-paste ready and will drop your TTFB under 800 ms on 4G.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
-<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
-<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Move images 50% faster in 2026 with Starlink CDN</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Set <code>sizes</code> accurately so the browser does not fetch a 1200 px image for a 320 px viewport.</p>
+<p><strong>What about third-party scripts?</strong>
+Load them after the shell is interactive, and never let one block first paint. If an ad or analytics script is not essential to the first view, defer it and measure its cost separately with the Performance panel's bottom-up view.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open your production site in Chrome DevTools, set a custom throttling profile of 1 Mbps down, 280 ms RTT and 10% packet loss, then reload and record <code>responseStart - requestStart</code> for the HTML document. If that number is above 800 ms, the problem is on the server or the edge, not in the bundle, and the fix is to stream the shell before any data fetch. If it is below 800 ms but the page still feels slow, measure the brotli-compressed size of your largest JavaScript file with <code>brotli -c file.js | wc -c</code> and compare it against the 120 kB budget.</p>
                 
                 
             </div>
@@ -700,8 +672,8 @@ Use WebPageTest with the “Motorola G (gen 5) – Moto G Power” preset and th
                     
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
-                        <p>Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</p>
-                        <span class="related-meta">11 min read · 15 September 2026</span>
+                        <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+                        <span class="related-meta">10 min read · 15 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/9-vibe-coding-traps-that-break-production-code/">

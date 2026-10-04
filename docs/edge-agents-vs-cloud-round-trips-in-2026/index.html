@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edge agents vs cloud round-trips in 2026 - Kubai Kevin</title>
-        <meta name="description" content="Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…">
+        <meta name="description" content="A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.">
         <meta name="keywords" content="EdgeAiAgents, OnnxRuntime, Tinyllama, AndroidMlInference, Model, Ai, Cloudcomputing, Redis, Onnxruntime116">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-23T14:09:55.983289">
-        <meta property="article:modified_time" content="2026-10-03T12:58:05.276912+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:24:04.837460+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Edge agents vs cloud round-trips in 2026">
-        <meta property="og:description" content="Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…">
+        <meta property="og:description" content="A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.">
         <meta property="og:url" content="https://kubaik.github.io/edge-agents-vs-cloud-round-trips-in-2026/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Edge agents vs cloud round-trips in 2026">
-        <meta name="twitter:description" content="Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…">
+        <meta name="twitter:description" content="A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/edge-agents-vs-cloud-round-trips-in-2026.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/edge-agents-vs-cloud-round-trips-in-2026/#article",
       "headline": "Edge agents vs cloud round-trips in 2026",
-      "description": "Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…",
+      "description": "A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.",
       "datePublished": "2026-07-23T14:09:55+00:00",
-      "dateModified": "2026-10-03T12:58:05+00:00",
-      "wordCount": 2375,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-10-04T10:24:04+00:00",
+      "wordCount": 2102,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Edge agents vs cloud round-trips in 2026</h1>
                 
-                <p class="post-lead">Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…</p>
+                <p class="post-lead">A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.</p>
                 
                 
                 <div class="tags">
@@ -258,114 +258,112 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2375 words
+                        11 min read
+                        &nbsp;·&nbsp; 2102 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The conventional advice on ondevice edge is incomplete in one specific, costly way. The answers online were either wrong or skipped the part that mattered. This is what I put together after working through it properly.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Turns out the issue wasn’t the model—it was the 240ms cross-Atlantic round-trip amplifying every token generation delay. In 2026, cloud APIs still dominate most tutorials, but the cold-start penalty for African users hasn’t improved since 2026. Edge agents finally changed this.</p>
-<p>Edge agents run ML models directly on user devices or nearby gateways, cutting round-trips to the cloud. For African developers, this isn't just about latency—it's about availability. Fiber cuts in Mombasa, power outages in Abuja, and congested ISP gateways in Nairobi all break cloud connections. On-device agents keep working when the network fails.</p>
-<p>I tested this with a Python 3.11 agent using ONNX Runtime 1.16 on a mid-range Android device in Nairobi. The cloud version (AWS Bedrock in us-east-1) averaged 380ms per request with a 95th percentile of 620ms. The edge version averaged 45ms with a 95th percentile of 85ms. That’s an 88% latency drop, but only for simple text models under 10MB. Once I added a 70MB vision model, the edge agent’s memory footprint spiked to 2.3GB and started getting killed by the Android OS. Memory limits and model size became the real bottlenecks.</p>
-<p>The marketing says edge AI is ready. The reality is: it’s ready for small models, but not for everything. If your use case fits in 100MB of RAM and 100ms latency matters more than absolute accuracy, edge is viable today. Otherwise, you’re still waiting for 2027 hardware.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>By the end of this, you’ll have a working edge agent that runs locally on a user’s device and falls back to a cloud API only when needed. We’ll use:</p>
+                <p>On-device "edge agents" run ML inference on the user's device or a nearby gateway instead of calling a remote API. The appeal is straightforward: no network round-trip, no dependency on connectivity, and no per-request egress. The catch is equally straightforward: device RAM, thermal limits, and OS process management become the bottleneck that cloud APIs used to absorb for you.</p>
+<p>This article walks through building a hybrid agent: a local model that handles most requests, plus a cloud fallback that triggers only when the local model is uncertain or the input is too large. The code targets Python 3.11 with ONNX Runtime, but the architecture applies to any runtime.</p>
+<h2 id="when-edge-inference-actually-pays-off">When edge inference actually pays off</h2>
+<p>The decision is not "edge vs cloud." It is "which requests can the device serve without hurting the user." A useful framing:</p>
 <ul>
-<li>Python 3.11 for the agent logic</li>
-<li>ONNX Runtime 1.16 for model inference</li>
-<li>FastAPI 0.109 for the local API</li>
-<li>Redis 7.2 for caching model outputs</li>
-<li>A pre-quantized TinyLlama-1.1B model (4-bit quantized, 1.7GB) from Hugging Face</li>
-<li>Android 13 or iOS 17 for device testing</li>
+<li><strong>Latency-sensitive, small-model, short-input</strong> requests are strong candidates for edge.</li>
+<li><strong>Long-context, high-accuracy, or multimodal</strong> requests generally belong in the cloud today.</li>
+<li><strong>Offline-critical</strong> requests must be edge, even if quality drops.</li>
 </ul>
-<p>Total lines of code: ~280 for the agent, ~120 for the cloud fallback layer.</p>
-<p>You’ll need:
-1. A mid-range Android device (2026 or newer) or iPhone 14+ for testing
-2. ADB for Android debugging or Xcode for iOS
-3. A cloud API key for the fallback (AWS Bedrock or Hugging Face Inference Endpoints)
-4. A 4GB RAM x86_64 machine for local development (Raspberry Pi 5 works but expect slower inference)</p>
-<p>The agent will handle text generation with a 512-token context window. It caches results for 30 seconds to avoid recomputing identical prompts. The cloud fallback only triggers when the edge model returns a confidence score below 0.65 or when the input exceeds 512 tokens.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Start with a clean Python 3.11 virtual environment:</p>
+<p>Two failure modes dominate real deployments:</p>
+<ol>
+<li><strong>Memory kill.</strong> The OS reclaims the process when resident memory exceeds the per-app limit. On Android this is enforced per-process; on iOS it is enforced more aggressively when the app is backgrounded. A model that fits at load time can still be killed mid-inference if the KV cache grows.</li>
+<li><strong>Silent quality regression.</strong> Quantized models lose accuracy in ways that are invisible in aggregate benchmarks but obvious on specific inputs (long prompts, rare tokens, non-Latin scripts). Without a confidence signal, you ship degraded answers and never notice.</li>
+</ol>
+<p>Both are addressable, but only if you instrument for them from day one.</p>
+<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
+<ul>
+<li>Python 3.11</li>
+<li>ONNX Runtime for inference</li>
+<li>FastAPI for the local HTTP surface</li>
+<li>Redis for short-lived response caching</li>
+<li>A quantized causal LM exported to ONNX</li>
+<li>Android 13+ or iOS 17+ for device testing</li>
+</ul>
+<p>You'll end up with an agent that:</p>
+<ul>
+<li>Serves text generation from a local ONNX model</li>
+<li>Caches identical prompts for 30 seconds</li>
+<li>Falls back to a cloud endpoint when a confidence heuristic drops below a threshold or the input exceeds the context window</li>
+</ul>
+<h2 id="step-1-environment-setup">Step 1 — environment setup</h2>
 <pre><code class="language-bash">python -m venv .venv
 source .venv/bin/activate  # Linux/macOS
 # or
 .venv\Scripts\activate  # Windows
 </code></pre>
-<p>Install dependencies:</p>
-<pre><code class="language-bash">pip install fastapi uvicorn onnxruntime redis transformers optimum sentencepiece
+<pre><code class="language-bash">pip install fastapi uvicorn onnxruntime redis transformers optimum sentencepiece httpx prometheus-client
 </code></pre>
-<p>Verify versions:</p>
-<pre><code class="language-bash">python --version  # 3.11.6
-onnxruntime.__version__  # 1.16.0
-fastapi.__version__  # 0.109.1
-redis.__version__  # 7.2.0
+<p>Verify what you actually installed before trusting any tutorial (including this one):</p>
+<pre><code class="language-bash">python -c &quot;import onnxruntime, fastapi, redis; print(onnxruntime.__version__, fastapi.__version__, redis.__version__)&quot;
 </code></pre>
-<p>Gotcha: ONNX Runtime 1.16 on Windows needs the Microsoft Visual C++ Redistributable 2026. Install it if you see DLL load errors.</p>
-<p>For Android, we’ll use Termux to run the agent as a background service. Install Termux from F-Droid (not the Play Store—it’s outdated there). Then in Termux:</p>
+<p>On Windows, ONNX Runtime requires the Microsoft Visual C++ Redistributable. Missing it produces DLL load errors that look like corrupt installs.</p>
+<p>For Android, Termux from F-Droid is the practical way to run Python on-device. The Play Store build is stale. Inside Termux:</p>
 <pre><code class="language-bash">pkg update &amp;&amp; pkg upgrade
 pkg install python python-pip rust
 pip install fastapi uvicorn onnxruntime redis
 </code></pre>
-<p>On iOS, you can’t run arbitrary Python, but you can embed the model in a Swift app using CoreML. We’ll cover that in the variations section.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>First, download the quantized TinyLlama model. Hugging Face provides a 4-bit quantized version that fits in 1.7GB:</p>
+<p>iOS does not permit arbitrary Python. The realistic path is embedding the model in a Swift app via CoreML (covered later).</p>
+<h2 id="step-2-export-and-load-a-quantized-model">Step 2 — export and load a quantized model</h2>
+<p>The export step is offline and slow. Run it on a development machine, not the device.</p>
 <pre><code class="language-python">from transformers import AutoModelForCausalLM, AutoTokenizer
 from optimum.onnxruntime import ORTModelForCausalLM
 import torch
 
 model_name = &quot;TinyLlama/TinyLlama-1.1B-Chat-v1.0&quot;
-quantized_model_path = &quot;tinyllama-1.1b-4bit&quot;
 
-# Quantize locally (takes ~15 minutes on a 4-core CPU)
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype=torch.float16,
-    low_cpu_mem_usage=True
+    low_cpu_mem_usage=True,
 )
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-# Export to ONNX
 ort_model = ORTModelForCausalLM.from_pretrained(
     model_name,
     export=True,
     quantization_config={&quot;load_in_4bit&quot;: True},
 )
+
+ort_model.save_pretrained(&quot;tinyllama-1.1b-4bit&quot;)
+tokenizer.save_pretrained(&quot;tinyllama-1.1b-4bit&quot;)
 </code></pre>
-<p>Save the model to disk:</p>
-<pre><code class="language-python">ort_model.save_pretrained(quantized_model_path)
-tokenizer.save_pretrained(quantized_model_path)
-</code></pre>
-<p>Now load the model in the agent:</p>
+<p>Loading on the device with bounded thread counts matters more than most guides admit. Unbounded threads cause thermal throttling on phones within seconds.</p>
 <pre><code class="language-python">import onnxruntime as ort
 from pathlib import Path
-import numpy as np
 
 MODEL_DIR = Path(&quot;tinyllama-1.1b-4bit&quot;)
 
-# Configure session options for low memory
 sess_options = ort.SessionOptions()
 sess_options.intra_op_num_threads = 2
 sess_options.inter_op_num_threads = 2
+sess_options.enable_mem_pattern = False  # reduces peak allocation on constrained devices
 
-# Load ONNX model
 sess = ort.InferenceSession(
     str(MODEL_DIR / &quot;model.onnx&quot;),
     sess_options,
-    providers=[&quot;CPUExecutionProvider&quot;]
+    providers=[&quot;CPUExecutionProvider&quot;],
 )
 </code></pre>
-<p>Next, build the FastAPI app with Redis caching:</p>
+<h2 id="step-3-the-fastapi-surface-with-redis-caching">Step 3 — the FastAPI surface with Redis caching</h2>
+<p>Caching identical prompts is the cheapest latency win available. A 30-second TTL covers retry storms and repeated UI actions without serving stale answers for long.</p>
 <pre><code class="language-python">from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import redis.asyncio as redis
-import json
+import json, hashlib
+import numpy as np
 
 app = FastAPI()
 redis_client = redis.Redis(host=&quot;localhost&quot;, port=6379, decode_responses=True)
@@ -375,95 +373,98 @@ class PromptRequest(BaseModel):
     max_tokens: int = 128
     temperature: float = 0.7
 
+def cache_key_for(req: PromptRequest) -&gt; str:
+    digest = hashlib.sha256(req.text.encode()).hexdigest()[:16]
+    return f&quot;gen:{digest}:{req.max_tokens}:{req.temperature}&quot;
+
 @app.post(&quot;/generate&quot;)
 async def generate(request: PromptRequest):
-    cache_key = f&quot;gen:{hash(request.text)}:{request.max_tokens}:{request.temperature}&quot;
-    cached = await redis_client.get(cache_key)
+    key = cache_key_for(request)
+    cached = await redis_client.get(key)
     if cached:
         return json.loads(cached)
 
-    # Convert prompt to tokens
     inputs = tokenizer(
         request.text,
         return_tensors=&quot;pt&quot;,
         truncation=True,
-        max_length=512
+        max_length=512,
     )
 
-    # Run inference
     outputs = sess.run(
         None,
         {
             &quot;input_ids&quot;: inputs[&quot;input_ids&quot;].numpy().astype(np.int64),
             &quot;attention_mask&quot;: inputs[&quot;attention_mask&quot;].numpy().astype(np.int64),
-        }
+        },
     )
 
-    # Decode tokens to text
     generated_tokens = outputs[0][0]
     response_text = tokenizer.decode(generated_tokens, skip_special_tokens=True)
 
-    # Cache for 30 seconds
-    await redis_client.setex(
-        cache_key,
-        30,
-        json.dumps({&quot;text&quot;: response_text})
-    )
-
+    await redis_client.setex(key, 30, json.dumps({&quot;text&quot;: response_text}))
     return {&quot;text&quot;: response_text}
 </code></pre>
-<p>Gotcha: The ONNX model expects int64 inputs, but ONNX Runtime 1.16 on some ARM devices defaults to int32. Use <code>.astype(np.int64)</code> explicitly or you’ll get cryptic shape errors.</p>
-<p>Run the server:</p>
+<p>Two details worth calling out:</p>
+<ul>
+<li><code>hash()</code> is not stable across processes in Python because of hash randomization. Use a real digest for cache keys, as above.</li>
+<li>ONNX Runtime expects int64 inputs on most builds but some ARM packages default differently. Casting explicitly avoids shape and dtype errors that surface as cryptic messages.</li>
+</ul>
+<p>Run it:</p>
 <pre><code class="language-bash">uvicorn edge_agent:app --host 0.0.0.0 --port 8000
 </code></pre>
-<p>Test locally:</p>
 <pre><code class="language-bash">curl -X POST http://localhost:8000/generate \
   -H &quot;Content-Type: application/json&quot; \
   -d '{&quot;text&quot;:&quot;What is edge AI?&quot;, &quot;max_tokens&quot;: 64}'
 </code></pre>
-<p>Expected response latency: 70-90ms on a 2026 M3 MacBook Pro. On a 2022 Samsung Galaxy A53, it jumps to 210-240ms due to the ARM CPU’s weaker single-core performance.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Three classes of failures break edge agents:</p>
-<ol>
-<li><strong>Memory pressure</strong>: The OS kills the process when RAM exceeds limits. 2. <strong>Cold starts</strong>: The first inference after a device reboot is slow. 3. <strong>Model drift</strong>: Quantized models lose accuracy on long prompts.</li>
-</ol>
-<p>Address memory pressure with a process watchdog. On Android, use Termux’s <code>termux-wake-lock</code> to prevent the OS from killing the agent when the screen locks:</p>
+<h2 id="step-4-handle-the-three-failure-classes">Step 4 — handle the three failure classes</h2>
+<h3 id="memory-pressure">Memory pressure</h3>
+<p>The OS will kill the process before it returns an error. Preventative measures:</p>
+<ul>
+<li>Cap thread counts (done above).</li>
+<li>Cap <code>max_length</code> on the tokenizer.</li>
+<li>Set a lower <code>max_tokens</code> default for mobile.</li>
+<li>Watch RSS explicitly.</li>
+</ul>
+<p>On Android, <code>termux-wake-lock</code> prevents the process from being frozen when the screen locks:</p>
 <pre><code class="language-bash">pkg install termux-api
 termux-wake-lock -s edge_agent
 </code></pre>
-<p>For cold starts, pre-warm the model by running a dummy inference at boot:</p>
-<pre><code class="language-python">import asyncio
-import os
-
-def warm_up_model():
-    dummy_prompt = &quot;Hello&quot;
-    inputs = tokenizer(dummy_prompt, return_tensors=&quot;pt&quot;, truncation=True, max_length=16)
-    _ = sess.run(
+<h3 id="cold-starts">Cold starts</h3>
+<p>The first inference after boot is slow because weights are paged in and the runtime initializes kernels. Pre-warm at startup:</p>
+<pre><code class="language-python">@app.on_event(&quot;startup&quot;)
+async def startup_event():
+    dummy = tokenizer(&quot;Hello&quot;, return_tensors=&quot;pt&quot;, truncation=True, max_length=16)
+    sess.run(
         None,
         {
-            &quot;input_ids&quot;: inputs[&quot;input_ids&quot;].numpy().astype(np.int64),
-            &quot;attention_mask&quot;: inputs[&quot;attention_mask&quot;].numpy().astype(np.int64),
-        }
+            &quot;input_ids&quot;: dummy[&quot;input_ids&quot;].numpy().astype(np.int64),
+            &quot;attention_mask&quot;: dummy[&quot;attention_mask&quot;].numpy().astype(np.int64),
+        },
     )
-
-@app.on_event(&quot;startup&quot;)
-async def startup_event():
-    warm_up_model()
     print(&quot;Model warmed up&quot;)
 </code></pre>
-<p>For model drift, add a fallback confidence threshold. Compute a simple perplexity score from the output tokens:</p>
-<pre><code class="language-python">def compute_confidence(output_tokens):
-    # Simple heuristic: lower perplexity means higher confidence
-    # We use the average log probability of the generated tokens
+<h3 id="confidence-and-fallback">Confidence and fallback</h3>
+<p>A confidence heuristic does not need to be perfect. It needs to correlate with the cases you care about. Average negative log-likelihood of the generated tokens is a reasonable starting point.</p>
+<pre><code class="language-python">def mean_neg_log_likelihood(logits, token_ids):
+    # logits: (seq_len, vocab); token_ids: (seq_len,)
+    # Returns average -log p(token_t | token_&lt;t)
+    import numpy as np
     log_probs = []
-    for i in range(1, len(output_tokens)):
-        logits = outputs[&quot;logits&quot;][i-1][output_tokens[i-1]].item()
-        prob = np.exp(logits)
-        log_probs.append(np.log(prob))
-    return -np.mean(log_probs)
+    for t in range(1, len(token_ids)):
+        row = logits[t - 1]
+        row = row - row.max()  # numerical stability
+        log_softmax = row - np.log(np.exp(row).sum())
+        log_probs.append(log_softmax[token_ids[t]])
+    if not log_probs:
+        return float(&quot;inf&quot;)
+    return float(-np.mean(log_probs))
 </code></pre>
-<p>If confidence &lt; 0.65, call the cloud fallback:</p>
-<pre><code class="language-python">FALLBACK_URL = &quot;https://api.edgeai.example.com/generate&quot;
+<p>Wire the fallback:</p>
+<pre><code class="language-python">import httpx
+
+FALLBACK_URL = &quot;https://your-cloud-endpoint.example.com/generate&quot;
+CONFIDENCE_THRESHOLD = 2.5  # tune empirically; higher = more fallbacks
 
 async def call_cloud_fallback(request: PromptRequest):
     async with httpx.AsyncClient(timeout=5.0) as client:
@@ -473,23 +474,25 @@ async def call_cloud_fallback(request: PromptRequest):
                 &quot;prompt&quot;: request.text,
                 &quot;max_tokens&quot;: request.max_tokens,
                 &quot;temperature&quot;: request.temperature,
-            }
+            },
         )
         if resp.status_code != 200:
             raise HTTPException(status_code=502, detail=&quot;Cloud fallback failed&quot;)
         return resp.json()
 </code></pre>
-<p>On Android, register the agent as a foreground service to avoid being killed:</p>
+<p>The threshold value is not universal. It depends on the model, the tokenizer, and the domain. Pick it by running a labeled set of ~100 prompts through the local model, computing the heuristic on each, and choosing the value that separates "acceptable" from "unacceptable" answers with the precision/recall trade-off you want.</p>
+<h3 id="keeping-the-process-alive-on-android">Keeping the process alive on Android</h3>
+<p>A foreground service is the supported way to survive backgrounding:</p>
 <pre><code class="language-xml">&lt;!-- AndroidManifest.xml --&gt;
 &lt;service
     android:name=&quot;.EdgeAgentService&quot;
     android:foregroundServiceType=&quot;dataSync&quot;
     android:exported=&quot;false&quot; /&gt;
 </code></pre>
-<p>In the service code:</p>
-<pre><code class="language-java">// EdgeAgentService.java
+<pre><code class="language-java">// EdgeAgentService.java (inside onStartCommand)
 NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-NotificationChannel channel = new NotificationChannel(&quot;agent&quot;, &quot;Edge Agent&quot;, NotificationManager.IMPORTANCE_LOW);
+NotificationChannel channel = new NotificationChannel(
+    &quot;agent&quot;, &quot;Edge Agent&quot;, NotificationManager.IMPORTANCE_LOW);
 manager.createNotificationChannel(channel);
 Notification notification = new Notification.Builder(this, &quot;agent&quot;)
     .setContentTitle(&quot;Edge Agent Running&quot;)
@@ -497,39 +500,21 @@ Notification notification = new Notification.Builder(this, &quot;agent&quot;)
     .build();
 startForeground(1, notification);
 </code></pre>
-<p>Gotcha: Termux on Android doesn’t support foreground services properly in 2026. Use Termux:Tasker to wrap the Python process in a foreground service via ADB commands.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add Prometheus metrics to track latency, cache hits, and fallback triggers:</p>
-<pre><code class="language-python">from prometheus_client import Counter, Histogram, start_http_server
+<p>Termux does not expose a proper foreground service API to Python processes. The workable pattern is to wrap the Python process with a small native service that owns the notification, or to use a Tasker-style automation that starts the process under a foreground context.</p>
+<h2 id="step-5-observability-and-load-testing">Step 5 — observability and load testing</h2>
+<p>Instrument before you optimize. Three counters and one histogram cover most of what you need:</p>
+<pre><code class="language-python">from prometheus_client import Counter, Histogram
 
 REQUEST_LATENCY = Histogram(
     &quot;edge_agent_request_latency_seconds&quot;,
     &quot;Latency of edge agent requests&quot;,
-    buckets=[0.1, 0.25, 0.5, 1.0, 2.5, 5.0]
+    buckets=[0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0],
 )
 CACHE_HITS = Counter(&quot;edge_agent_cache_hits_total&quot;, &quot;Total cache hits&quot;)
 FALLBACK_TRIGGERS = Counter(&quot;edge_agent_fallbacks_total&quot;, &quot;Total fallback triggers&quot;)
-
-@app.post(&quot;/generate&quot;)
-async def generate(request: PromptRequest):
-    cache_key = f&quot;gen:{hash(request.text)}:{request.max_tokens}:{request.temperature}&quot;
-    cached = await redis_client.get(cache_key)
-    if cached:
-        CACHE_HITS.inc()
-        return json.loads(cached)
-
-    with REQUEST_LATENCY.time():
-        # ... existing inference code ...
-
-    if confidence &lt; 0.65:
-        FALLBACK_TRIGGERS.inc()
-        return await call_cloud_fallback(request)
 </code></pre>
-<p>Start the metrics server:</p>
-<pre><code class="language-bash">python -m prometheus_client
-</code></pre>
-<p>Scrape metrics at http://localhost:8000/metrics. Set up Grafana dashboards to alert when fallback triggers exceed 5% of requests or latency spikes above 200ms.</p>
-<p>Write a simple load test with Locust:</p>
+<p>Expose <code>/metrics</code> from the same FastAPI app (the Prometheus client provides an ASGI app you can mount), then scrape it. Alert on two signals: fallback rate above your chosen budget, and p95 latency above your product's tolerance.</p>
+<p>A minimal Locust test:</p>
 <pre><code class="language-python">from locust import HttpUser, task, between
 
 class EdgeAgentUser(HttpUser):
@@ -539,166 +524,63 @@ class EdgeAgentUser(HttpUser):
     def generate(self):
         self.client.post(
             &quot;/generate&quot;,
-            json={
-                &quot;text&quot;: &quot;Explain edge AI in 50 words&quot;,
-                &quot;max_tokens&quot;: 64,
-                &quot;temperature&quot;: 0.7,
-            }
+            json={&quot;text&quot;: &quot;Explain edge AI in 50 words&quot;,
+                  &quot;max_tokens&quot;: 64, &quot;temperature&quot;: 0.7},
         )
 </code></pre>
-<p>Run with:</p>
 <pre><code class="language-bash">locust -f load_test.py
 </code></pre>
-<p>For Android testing, use Android’s <code>adb</code> to push the model and run the agent in Termux:</p>
-<pre><code class="language-bash">adb push tinyllama-1.1b-4bit /data/data/com.termux/files/home/models/tinyllama
-adb shell termux-wake-lock -s edge_agent
-adb shell &quot;cd /data/data/com.termux/files/home/models/tinyllama &amp;&amp; uvicorn edge_agent:app --host 0.0.0.0 --port 8000 &amp;&quot;
-</code></pre>
-<p>Gotcha: Android 13 restricts background network access. Add <code>android:usesCleartextTraffic="true"</code> to the Termux app’s manifest if you’re testing on localhost. For production, switch to HTTPS or use a local DNS resolver.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>I ran this agent on:
-- A 2026 Samsung Galaxy A53 (Android 13, 6GB RAM)
-- A 2023 MacBook Pro M3 (16GB RAM)
-- A 2024 Raspberry Pi 5 (4GB RAM, 64-bit OS)</p>
-<p>Latency benchmarks (p95, 1000 requests, 512-token context):</p>
-<table>
-<thead>
-<tr>
-<th>Device</th>
-<th>Edge Latency (ms)</th>
-<th>Cloud Latency (ms)</th>
-<th>Memory Usage (MB)</th>
-<th>Fallback Rate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Samsung Galaxy A53</td>
-<td>210</td>
-<td>620</td>
-<td>1850</td>
-<td>3.2%</td>
-</tr>
-<tr>
-<td>MacBook Pro M3</td>
-<td>75</td>
-<td>380</td>
-<td>1200</td>
-<td>0.8%</td>
-</tr>
-<tr>
-<td>Raspberry Pi 5</td>
-<td>310</td>
-<td>420</td>
-<td>2100</td>
-<td>12.5%</td>
-</tr>
-</tbody>
-</table>
-<p>Cost comparison (monthly, 100k requests):</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Compute Cost</th>
-<th>Egress Cost</th>
-<th>Total Cost</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cloud-only (AWS Bedrock)</td>
-<td>$185</td>
-<td>$42</td>
-<td>$227</td>
-</tr>
-<tr>
-<td>Edge-only (RPi 5)</td>
-<td>$12</td>
-<td>$0</td>
-<td>$12</td>
-</tr>
-<tr>
-<td>Hybrid (Galaxy A53)</td>
-<td>$2</td>
-<td>$0</td>
-<td>$2</td>
-</tr>
-</tbody>
-</table>
-<p>The Raspberry Pi 5’s 12.5% fallback rate was due to memory pressure causing inference failures. After reducing the context window to 256 tokens and enabling swap (zram), the fallback rate dropped to 4.1%.</p>
-<p>Accuracy loss from quantization:</p>
-<table>
-<thead>
-<tr>
-<th>Model Variant</th>
-<th>Perplexity (WikiText)</th>
-<th>Human Eval Score</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Original (FP16)</td>
-<td>12.4</td>
-<td>78.2%</td>
-</tr>
-<tr>
-<td>4-bit Quantized</td>
-<td>15.1</td>
-<td>74.8%</td>
-</tr>
-<tr>
-<td>8-bit Quantized</td>
-<td>13.8</td>
-<td>76.5%</td>
-</tr>
-</tbody>
-</table>
-<p>For most chat use cases, the 4-bit model’s 3.4% accuracy drop is acceptable given the latency and cost benefits. If you need near-FP16 accuracy, use 8-bit quantization and accept a 20% memory increase.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>Q: How do I run this on iOS without Python?</strong>
-Use CoreML. Convert the ONNX model to CoreML format and embed it in a Swift app. Start with:</p>
-<pre><code class="language-bash">pip install coremltools
-python -c &quot;
-import coremltools as ct
-from pathlib import Path
-model_path = Path('tinyllama-1.1b-4bit/model.onnx')
-mlmodel = ct.convert(model_path, inputs=[ct.TensorType(shape=(1, 512), dtype=ct.int64)])
-mlmodel.save('TinyLlama.mlmodel')
-</code></pre>
-<p>Then import the <code>.mlmodel</code> into Xcode and use <code>MLModel</code> APIs. Expect ~2x slower inference than ONNX Runtime on the same device due to CoreML’s abstraction layers.</p>
-<p><strong>Q: What about privacy? Does the model leak data?</strong>
-On-device agents process data locally, but the model itself is trained on public data. If your use case involves sensitive user data (health, finance), add differential privacy during fine-tuning or use a smaller model with stricter token filtering. For most chatbots, local processing is sufficient for GDPR/NDPA compliance, but consult a lawyer if you’re handling PII.</p>
-<p><strong>Q: Can I use Whisper for speech-to-text on device?</strong>
-Yes, but Whisper-small (244MB) is the largest model that fits comfortably on a 2026 Android device. Whisper-tiny (74MB) runs in 300-400ms on a Galaxy A53 but has poor accuracy for African accents. Whisper-medium (1.5GB) hits memory limits and crashes. Quantize to 8-bit and use ONNX Runtime with GPU delegate on Mali-G78 GPUs for best results.</p>
-<p><strong>Q: My users are on 2G networks. How do I handle that?</strong>
-The edge agent itself doesn’t care about network quality—it runs locally. But if you’re syncing state (e.g., conversation history) to the cloud, use exponential backoff and batch small payloads. For 2G, compress JSON with zstd level 3 and keep payloads under 2KB. If the network is down, queue updates locally and sync when the connection recovers.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>You now have a working edge agent that cuts latency by 88% and cloud costs by 94% for African users. The next step is to measure its real-world impact. Open your Grafana dashboard and check three metrics in the next 30 minutes:</p>
+<h3 id="how-to-measure-honestly">How to measure honestly</h3>
+<p>Benchmark numbers from a single device are not portable. What you should record:</p>
+<ul>
+<li><strong>p50 and p95 latency</strong> per request, per device, per model. Use the histogram above; do not quote a single average.</li>
+<li><strong>Peak RSS</strong> during inference, not at load. On Android: <code>adb shell dumpsys meminfo &lt;pid&gt;</code>. On Linux: <code>/proc/&lt;pid&gt;/status</code> <code>VmHWM</code>.</li>
+<li><strong>Fallback rate</strong> as a fraction of total requests, tracked over time. A rising rate is the earliest signal of memory pressure or quality drift.</li>
+<li><strong>Thermal state.</strong> On Android, <code>adb shell dumpsys thermalservice</code>. Sustained throughput on a phone is bounded by thermal throttling, not by peak FLOPS.</li>
+</ul>
+<p>Run each measurement long enough for the device to reach steady-state temperature. A 30-second benchmark will look far better than a 30-minute one.</p>
+<h2 id="quantization-trade-offs">Quantization trade-offs</h2>
+<p>Quantization is where most edge projects quietly lose quality. The right way to choose a level is to measure on your own evaluation set, not to trust published perplexity numbers.</p>
+<p>A workflow that works:</p>
 <ol>
-<li><strong>Fallback rate</strong>: If it’s above 5%, reduce the context window or switch to 8-bit quantization. 2. <strong>Memory usage</strong>: On Android, use <code>adb shell dumpsys meminfo</code> to check RSS for the Termux process. If it exceeds 2GB, switch to a smaller model. 3. <strong>User feedback</strong>: Send a simple prompt to 10 users in Nairobi, Lagos, or Johannesburg and ask them to rate the response time as "Fast", "Okay", or "Slow". If more than 20% rate it "Slow", investigate cold-start latency.</li>
+<li>Build a small eval set of 100–300 prompts that represent your real traffic, including edge cases (long inputs, code, non-Latin scripts).</li>
+<li>Score the FP16 model and each quantized variant on that set with a metric your product cares about (exact match, human rating, task success).</li>
+<li>Pick the smallest variant whose score is within your tolerance.</li>
+<li>Re-measure on-device, because runtime kernels differ from training-time numerics.</li>
 </ol>
-<p>If the fallback rate is low and memory usage is under 2GB, you’re ready to ship. Otherwise, iterate on model size and caching strategies. The edge agent you just built is the foundation—everything else (multi-modal models, larger context windows) will build on top of this.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>As a general pattern, 8-bit quantization typically preserves quality better than 4-bit at the cost of roughly double the memory for the weights. Whether that trade is worth it depends entirely on your tolerance and your device floor.</p>
+<h2 id="common-questions">Common questions</h2>
+<p><strong>Can this run on iOS?</strong>
+Not with Python. Convert the ONNX graph to CoreML and embed it in a Swift app. <code>coremltools</code> handles the conversion, but the resulting model needs to be validated on-device — CoreML's operator coverage and numerical behavior differ from ONNX Runtime.</p>
+<p><strong>Does local inference mean the data is private?</strong>
+Local inference means the input never leaves the device for the edge path. If you use a cloud fallback, the request does leave. Whether that satisfies a given compliance regime depends on what data is sent, whether it is logged by the provider, and what consent the user gave. Treat the fallback path as you would any other network call.</p>
+<p><strong>What about speech-to-text?</strong>
+The same architecture applies, but the model sizes are larger and the input is continuous. Whisper-family models in the tens-to-hundreds of MB range are the practical range for phones; larger variants hit memory limits. Quantize and test on your target hardware before committing.</p>
+<p><strong>What about slow or unreliable networks?</strong>
+The edge path doesn't care. The fallback path does. Use bounded timeouts, exponential backoff, and queue state locally so a failed sync can resume. Compress payloads; keep them small.</p>
+<h2 id="decision-checklist-before-shipping">Decision checklist before shipping</h2>
 <ul>
-<li><a href="https://kubaik.github.io/aws-local-zones-vs-localstack-ai-microservices-in/">AWS Local Zones vs LocalStack: AI microservices in</a></li>
-<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
-<li><a href="https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/">Mobile-first AI fails you didn’t plan…</a></li>
+<li>[ ] Peak RSS measured on the lowest-spec target device, not the dev machine</li>
+<li>[ ] p95 latency measured after thermal steady-state, not on first run</li>
+<li>[ ] Fallback rate measured over at least a day of realistic traffic</li>
+<li>[ ] Confidence threshold tuned on a labeled set, not guessed</li>
+<li>[ ] Cache keys stable across processes (real hash, not <code>hash()</code>)</li>
+<li>[ ] Foreground service or equivalent keeps the process alive on mobile</li>
+<li>[ ] Cold-start pre-warm runs on app launch</li>
+<li>[ ] Metrics exported and alerted on</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
-<li><a href="https://docs.locust.io/">Locust documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Pick the lowest-spec device you intend to support, install the agent there, and run this loop for 30 minutes while watching peak RSS and p95 latency:</p>
+<pre><code class="language-bash">while true; do
+  curl -s -X POST http://localhost:8000/generate \
+    -H &quot;Content-Type: application/json&quot; \
+    -d '{&quot;text&quot;:&quot;Summarize the last message in one sentence.&quot;,&quot;max_tokens&quot;:64}' \
+    -o /dev/null -w &quot;%{time_total}\n&quot;
+  adb shell dumpsys meminfo com.termux | grep -i &quot;TOTAL&quot;
+  sleep 2
+done
+</code></pre>
+<p>If peak RSS stays comfortably below the OS limit and p95 latency stays within your product budget after the device warms up, you have a viable edge path. If either degrades over the run, the bottleneck is memory or thermals — reduce the context window, lower <code>max_tokens</code>, or move to a smaller quantized variant before adding features.</p>
                 
                 
             </div>
@@ -733,14 +615,14 @@ The edge agent itself doesn’t care about network quality—it runs locally. Bu
                     
                     <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
                         <h3>Stop assuming payment APIs never fail</h3>
-                        <p>AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</p>
-                        <span class="related-meta">11 min read · 13 September 2026</span>
+                        <p>How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
+                        <span class="related-meta">12 min read · 13 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/why-your-routing-layer-will-collapse-at-scale/">
                         <h3>Why your routing layer will collapse at scale</h3>
-                        <p>Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens</p>
-                        <span class="related-meta">14 min read · 4 September 2026</span>
+                        <p>How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+                        <span class="related-meta">12 min read · 4 September 2026</span>
                     </a>
                     
                 </div>

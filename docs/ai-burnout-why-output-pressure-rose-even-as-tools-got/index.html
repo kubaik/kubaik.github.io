@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI burnout: why output pressure rose even as tools got - Kubai Kevin</title>
-        <meta name="description" content="Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.">
+        <meta name="description" content="Faster AI code generation shifts the bottleneck to review, QA and on-call. Here is how to instrument net time saved and stop review fatigue.">
         <meta name="keywords" content="AiBurnout, DeveloperProductivity, GithubCopilotEnterprise, CursorAi, PrSizeInflation, CodeReviewAutomation, AiToolMetrics, EngineeringVelocity, Ai, Artificialintelligence, Github, Devwellbeing">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T22:05:37.303748">
-        <meta property="article:modified_time" content="2026-09-20T04:07:55.295793+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:25:13.885061+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI burnout: why output pressure rose even as tools got">
-        <meta property="og:description" content="Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.">
+        <meta property="og:description" content="Faster AI code generation shifts the bottleneck to review, QA and on-call. Here is how to instrument net time saved and stop review fatigue.">
         <meta property="og:url" content="https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI burnout: why output pressure rose even as tools got">
-        <meta name="twitter:description" content="Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.">
+        <meta name="twitter:description" content="Faster AI code generation shifts the bottleneck to review, QA and on-call. Here is how to instrument net time saved and stop review fatigue.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-burnout-why-output-pressure-rose-even-as-tools-got.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/#article",
       "headline": "AI burnout: why output pressure rose even as tools got",
-      "description": "Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.",
+      "description": "Faster AI code generation shifts the bottleneck to review, QA and on-call. Here is how to instrument net time saved and stop review fatigue.",
       "datePublished": "2026-06-09T22:05:37+00:00",
-      "dateModified": "2026-09-20T04:07:55+00:00",
-      "wordCount": 2641,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T10:25:13+00:00",
+      "wordCount": 2169,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI burnout: why output pressure rose even as tools got</h1>
                 
-                <p class="post-lead">Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.</p>
+                <p class="post-lead">Faster AI code generation shifts the bottleneck to review, QA and on-call. Here is how to instrument net time saved and stop review fatigue.</p>
                 
                 
                 <div class="tags">
@@ -258,35 +258,36 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2641 words
+                        11 min read
+                        &nbsp;·&nbsp; 2169 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>AI tools in 2026 promise to cut your coding time by 40–60%, but most teams report higher, not lower, output pressure after adopting them. This happens because faster feedback loops encourage more experiments, more reviews, and more deployments, which collectively push velocity metrics up instead of down. The paradox isn’t that AI is bad; it’s that better tools don’t lower the bar for output—they reset it higher.</p>
-<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>A common mistake is to assume productivity tools reduce workload. In practice, tools that increase velocity expose new bottlenecks: code review queues, deployment pipelines, and incident response times all get stressed when throughput rises. Teams see "more features shipped" and assume the tool caused it, ignoring how their own processes adapted to the new speed. I’ve seen teams blame Copilot or Cursor for "spamming the repo with junk," only to realize later that their Jira workflow hadn’t been updated in 18 months—so reviewers were still using a 2026-era SLA on a 2026 pipeline.</p>
-<p>Another confusion is the conflation of "lines of code" with "work done." A 420-line PR isn’t necessarily 3x more valuable than a 140-line one; it might just mean the reviewer now has to parse three times as many context switches because the AI suggested more changes per file. Tools like Cursor’s "add tests for every function" mode can balloon PR size overnight, but they don’t always correlate with better test coverage or fewer bugs.</p>
-<p>Finally, people over-index on immediate tool metrics like autocomplete hit rate or latency, ignoring how those metrics feed into downstream pressure. A Copilot response time of 200ms feels instant to a developer, but if that response triggers a 5-minute context switch to review and merge the suggestion, the real cost is in attention, not keystrokes.</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of your engineering org as a water pipe system. Adding AI tools is like widening the pipe—more water (code) flows through per second. But if your valves (code review, QA, incident response) are still set to 2026 standards, the system backs up at those points, creating pressure spikes upstream. The widening pipe doesn’t reduce pressure; it redistributes it to the weakest joints.</p>
-<p>A useful analogy is traffic flow. Building a wider highway (AI tools) without adding lanes to the bridge (review capacity) just moves congestion from the on-ramp to the bridge. In engineering terms, faster AI feedback loops shift the bottleneck from "writing code" to "reviewing and deploying code." Your metrics need to reflect that shift, not just the throughput increase.</p>
-<p>The key mental shift is to stop treating AI as a productivity booster and start treating it as a velocity amplifier. Amplifiers don’t reduce effort; they reveal where effort was hiding. If your team’s "time to first review" metric hasn’t changed in six months, the AI isn’t the problem—your review capacity is.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>They migrated from manual code reviews to a hybrid AI-assisted workflow using Cursor and GitHub Copilot Enterprise over a 6-week period. Here’s what happened to their metrics:</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here is the fuller picture.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>AI coding assistants are often pitched as a way to cut coding time substantially, yet teams that adopt them frequently report higher output pressure rather than lower. The mechanism is not mysterious: faster generation produces more changes, more changes produce more review, more review produces more merge decisions, and more merges produce more deployments and more incidents. The tool did not create the workload. It moved the constraint downstream and made the new constraint visible to everyone at once.</p>
+<h2 id="why-the-concept-confuses-people">Why the concept confuses people</h2>
+<p>A common mistake is to assume a productivity tool reduces workload. Tools that increase throughput expose new bottlenecks. Code review queues, CI pipelines, QA capacity and incident response all get stressed when the rate of change rises. Teams see "more features shipped" and attribute it to the tool, ignoring how their own processes adapted to the new speed.</p>
+<p>A second confusion is conflating "lines of code" with "work done." A 420-line pull request is not automatically three times more valuable than a 140-line one. It may simply mean the reviewer now has to parse three times as many context switches. An assistant configured to add tests for every function can balloon PR size in a single session, and that ballooning does not reliably correlate with better coverage or fewer defects.</p>
+<p>A third confusion is over-indexing on immediate tool metrics. Autocomplete acceptance rate and completion latency are easy to collect and feel meaningful. They measure keystrokes, not outcomes. A completion that returns in a couple of hundred milliseconds feels instant, but if acting on it triggers a context switch into review, validation and merge, the real cost lands in attention rather than typing time.</p>
+<h2 id="the-mental-model">The mental model</h2>
+<p>Think of an engineering organization as a pipe. Adding AI assistants widens the pipe: more code flows per second. If the valves downstream — review, QA, incident response — keep their original settings, the system backs up at those points and pressure spikes upstream. Widening the pipe does not reduce pressure. It redistributes it to the weakest joints.</p>
+<p>The traffic analogy is the same shape. Adding lanes to a highway without adding capacity on the bridge moves congestion from the on-ramp to the bridge. In engineering terms, faster generation shifts the bottleneck from writing code to reviewing, validating and deploying it. Metrics need to reflect that shift, not just the throughput increase.</p>
+<p>The useful mental shift is to treat an AI assistant as a velocity amplifier rather than a productivity booster. Amplifiers do not reduce effort. They reveal where effort was already hiding. If median time-to-first-review has not changed in six months while merge rate has doubled, the assistant is not the problem. Review capacity is.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a hypothetical team of six engineers that enables an assistant with a workspace rule suggesting unit tests for every public function. The numbers below are illustrative, chosen to make the arithmetic visible. They are not a benchmark.</p>
+<p>Assume the team merges 8 PRs per day before adoption, at a median 140 changed lines and 3 review comments each. After six weeks, the same team merges 22 PRs per day at a median 420 changed lines and 8 review comments each.</p>
 <table>
 <thead>
 <tr>
 <th>Metric</th>
-<th>Before AI (Week 0)</th>
-<th>After AI (Week 6)</th>
+<th>Before</th>
+<th>After</th>
 <th>Change</th>
 </tr>
 </thead>
@@ -298,13 +299,13 @@
 <td>+175%</td>
 </tr>
 <tr>
-<td>Average PR size (lines)</td>
+<td>Median PR size (lines)</td>
 <td>140</td>
 <td>420</td>
 <td>+200%</td>
 </tr>
 <tr>
-<td>Time to first review (median)</td>
+<td>Median time to first review</td>
 <td>2 days</td>
 <td>2 hours</td>
 <td>-96%</td>
@@ -316,27 +317,21 @@
 <td>+167%</td>
 </tr>
 <tr>
-<td>Bugs found in prod (per 1k PRs)</td>
+<td>Prod defects per 1k PRs</td>
 <td>2.3</td>
 <td>3.1</td>
 <td>+35%</td>
 </tr>
-<tr>
-<td>Developer burnout score (self-reported)</td>
-<td>3/10</td>
-<td>7/10</td>
-<td>+133%</td>
-</tr>
 </tbody>
 </table>
-<p>The team’s velocity metric (PRs merged per day) skyrocketed, but their quality and sustainability metrics deteriorated. The surprise wasn’t the velocity increase—it was how quickly burnout scores followed. Our SLA for "time to first review" was still set to 48 hours in Jira, but reviewers were now expected to respond to AI-triggered PRs within 2 hours because the tools made it feel urgent.</p>
-<p>Here’s the code change that triggered the wave: a Cursor workspace rule that auto-suggests unit tests for every public function. The rule is great—it caught edge cases we’d missed—but it turned a 10-line PR into a 100-line PR overnight. The PR size metric didn’t exist before, so we didn’t notice the shift until reviewers started complaining about review fatigue.</p>
-<pre><code class="language-python"># Before: simple utility function
+<p>The arithmetic behind the review load is the part people skip. Before adoption: 8 PRs × 3 comments = 24 review comments per day. After: 22 PRs × 8 comments = 176 review comments per day. That is roughly 7.3× the review work, produced by the same six reviewers, in the same working hours. Merge rate rose 2.75×. Review workload rose faster than merge rate because both PR count and comments per PR increased.</p>
+<p>The trigger is often a single configuration change. A rule that auto-suggests tests and scaffolding for every public function can turn a 10-line change into a 100-line change without any human deciding to write more code:</p>
+<pre><code class="language-python"># Before: a small utility function
 async def process_payment(payment_id: str) -&gt; bool:
     # ... payment logic ...
     return True
 
-# After: Cursor auto-suggested tests + test scaffolding
+# After: assistant-suggested validation and test scaffolding
 async def process_payment(payment_id: str) -&gt; bool:
     &quot;&quot;&quot;Process a payment and return success status.&quot;&quot;&quot;
     if not payment_id:
@@ -345,201 +340,85 @@ async def process_payment(payment_id: str) -&gt; bool:
         raise ValueError(&quot;payment_id must be a UUID&quot;)
     # ... payment logic ...
     return True
-
-test_process_payment_valid_id()
-test_process_payment_invalid_id()
-test_process_payment_empty_id()
-test_process_payment_uuid_format()
 </code></pre>
-<p>The team’s original 2.3 bugs per 1k PRs crept up to 3.1 because reviewers, overwhelmed by the volume and size of PRs, started missing subtle issues. The AI caught more edge cases, but the sheer number of suggestions made it hard for humans to validate them all consistently.</p>
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>This pattern mirrors what happened when CI/CD pipelines became mainstream in 2018–2026. Teams that added automated testing without adjusting their release cadence ended up with flaky tests and alert fatigue. The tool (CI/CD) exposed the gap between deployment speed and test reliability. AI tools are doing the same thing today, but the gap is in review capacity and attention management instead of test coverage.</p>
-<p>Another parallel is the rise of microservices in 2016–2018. Teams that decomposed monoliths without updating their monitoring and on-call playbooks ended up with alert storms and unreliable systems. AI tools are decomposing tasks into smaller, faster feedback loops, but the monitoring and review playbooks haven’t caught up.</p>
-<p>If you’ve ever worked on a team that adopted TypeScript strict mode without updating their linting rules or migration scripts, you’ve seen this pattern before. Strict mode catches more bugs, but it also increases the number of compile-time errors, which shifts pressure from runtime debugging to build-time triage. AI tools are doing the same thing, but the build-time triage is now PR review time.</p>
-<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>Misconception 1: AI reduces cognitive load</strong>
-AI reduces keystrokes, not cognitive load. The mental effort to review a 420-line PR with 8 comments is higher than reviewing a 140-line PR with 3 comments, even if the AI wrote most of the code. I’ve seen developers spend more time validating AI-generated code than writing it from scratch because the unknowns pile up: hidden dependencies, edge cases the AI missed, and the subtle bugs that only appear after merge.</p>
-<p><strong>Misconception 2: Bigger PRs mean better code</strong>
-Bigger PRs often mean more hidden complexity. A 420-line PR with 400 lines of AI-generated scaffolding (tests, docs, boilerplate) is not necessarily better than a 140-line PR written by a human. The scaffolding can obscure the actual logic changes, making reviews harder and increasing the chance of merge mistakes.</p>
-<p><strong>Misconception 3: Faster feedback loops reduce stress</strong>
-Faster feedback loops can increase stress if the downstream capacity hasn’t scaled. A 200ms autocomplete response feels instant, but if that response triggers a 5-minute context switch to review and merge, the real cost is in attention fragmentation. Studies in 2026 (e.g., Microsoft’s "Attention Economy" report) show that developers experience higher stress levels when task switching exceeds 3 times per hour, regardless of how fast individual tasks complete.</p>
-<p><strong>Misconception 4: Blaming the tool is productive</strong>
-Teams that blame the AI tool for burnout are missing the point. The tool didn’t create the pressure; it exposed the gap between velocity and capacity. The fix isn’t to remove the tool; it’s to adjust the review SLA, add automation to triage AI-generated PRs, and update the team’s metrics to reflect the new reality.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>If you’ve already adjusted your review SLA and added triage automation, the next step is to instrument your AI usage to find where the real bottlenecks are. Not all AI suggestions are equal—some save time, others create work. The key is to measure the "net time saved" per suggestion, not just the acceptance rate.</p>
-<p>Here’s a script I wrote in Python 3.11 to analyze Copilot Enterprise logs and calculate net time saved per suggestion. It pulls the GitHub API and Cursor logs, then correlates acceptance events with time saved (estimated from PR merge timestamps).</p>
-<pre><code class="language-python">import asyncio
-import aiohttp
-from datetime import datetime, timedelta
-from typing import Dict, List, Tuple
-
-GITHUB_TOKEN = &quot;ghp_your_token_here&quot;
-REPO = &quot;your-org/your-repo&quot;
-CURSOR_LOG_PATH = &quot;/var/log/cursor/audit.log&quot;
-
-async def fetch_prs(session: aiohttp.ClientSession, repo: str, since: datetime) -&gt; List[Dict]:
-    &quot;&quot;&quot;Fetch PRs merged since `since` using GitHub GraphQL API.&quot;&quot;&quot;
-    query = &quot;&quot;&quot;
-    query($repo: String!, $since: DateTime!) {
-      repository(owner: &quot;your-org&quot;, name: &quot;your-repo&quot;) {
-        pullRequests(states: MERGED, since: $since) {
-          nodes {
-            number
-            title
-            mergedAt
-            additions
-            deletions
-            author {
-              login
-            }
-            reviews(first: 10) {
-              nodes {
-                createdAt
-              }
-            }
-          }
-        }
-      }
-    }
-    &quot;&quot;&quot;
-    async with session.post(
-        &quot;https://api.github.com/graphql&quot;,
-        json={&quot;query&quot;: query, &quot;variables&quot;: {&quot;repo&quot;: repo, &quot;since&quot;: since.isoformat()}},
-        headers={&quot;Authorization&quot;: f&quot;token {GITHUB_TOKEN}&quot;},
-    ) as resp:
-        data = await resp.json()
-        return data[&quot;data&quot;][&quot;repository&quot;][&quot;pullRequests&quot;][&quot;nodes&quot;]
-
-async def parse_cursor_logs(log_path: str) -&gt; List[Tuple[datetime, str, str]]:
-    &quot;&quot;&quot;Parse Cursor logs for AI suggestions and their timestamps.&quot;&quot;&quot;
-    events = []
-    with open(log_path) as f:
-        for line in f:
-            if &quot;copilot:inline_completion&quot; in line:
-                # Example log line: &quot;2025-11-14T12:34:56Z copilot:inline_completion accepted&quot;
-                parts = line.strip().split(&quot; &quot;)
-                ts = datetime.fromisoformat(&quot;T&quot;.join(parts[:2]))
-                action = parts[2]
-                events.append((ts, action, line))
-    return events
-
-async def calculate_net_time_saved(prs: List[Dict], cursor_events: List[Tuple]) -&gt; Dict[str, float]:
-    &quot;&quot;&quot;Calculate net time saved per PR based on AI suggestion acceptance.&quot;&quot;&quot;
-    results = {}
-    for pr in prs:
-        pr_time = datetime.fromisoformat(pr[&quot;mergedAt&quot;])
-        # Assume a suggestion was accepted if a Cursor event happened within 5 minutes of PR merge
-        accepted_events = [e for e in cursor_events if e[0] &gt; (pr_time - timedelta(minutes=5)) and e[1] == &quot;accepted&quot;]
-        time_saved = len(accepted_events) * 0.5  # Estimate 0.5 hours saved per accepted suggestion
-        results[pr[&quot;number&quot;]] = {
-            &quot;time_saved_hours&quot;: time_saved,
-            &quot;additions&quot;: pr[&quot;additions&quot;],
-            &quot;deletions&quot;: pr[&quot;deletions&quot;],
-        }
-    return results
-
-async def main():
-    async with aiohttp.ClientSession() as session:
-        prs = await fetch_prs(session, REPO, datetime(2025, 11, 1))
-        cursor_events = parse_cursor_logs(CURSOR_LOG_PATH)
-        net_saved = await calculate_net_time_saved(prs, cursor_events)
-        print(f&quot;Net time saved for {len(prs)} PRs: {sum(v['time_saved_hours'] for v in net_saved.values())} hours&quot;)
-
-if __name__ == &quot;__main__&quot;:
-    asyncio.run(main())
-</code></pre>
-<p>This script revealed something surprising: 30% of accepted AI suggestions were in tests and scaffolding, which saved time in the short term but added long-term maintenance burden. The net time saved per PR was only 0.3 hours on average, not the 2+ hours the team expected. The real bottleneck wasn’t writing code—it was maintaining the code the AI generated.</p>
-<p>The next layer is to correlate net time saved with actual productivity metrics. I used Python 3.11 and Pandas to analyze the data:</p>
+<p>The docstring and validation are improvements. The cost is that the reviewer now validates four new branches instead of one, and the diff is larger than the logic change it contains. Note also that the illustrative snippet above shows calls to test functions rather than real tests; in a real repository those belong in a separate test module, not in the production file, and a reviewer should treat that placement as a defect.</p>
+<p>The defect rate rise in the table is the predictable consequence. Reviewers facing 176 comments per day triage rather than review. Subtle issues survive. The assistant caught more edge cases in the code it generated, but humans had less capacity to validate the suggestions consistently.</p>
+<h2 id="how-this-connects-to-patterns-you-already-know">How this connects to patterns you already know</h2>
+<p>This mirrors what happened when CI/CD pipelines became standard. Teams that added automated testing without adjusting release cadence ended up with flaky suites and alert fatigue. The pipeline exposed the gap between deployment speed and test reliability.</p>
+<p>It also mirrors the microservices era. Teams that decomposed monoliths without updating monitoring and on-call playbooks ended up with alert storms and unreliable systems. The decomposition was not wrong; the operational model had not caught up.</p>
+<p>The same shape appears when a team enables strict mode in a typed language without updating lint rules and migration scripts. Strict mode catches more defects and also produces more compile-time errors, shifting pressure from runtime debugging to build-time triage. Assistants shift pressure from writing to reviewing. The pattern is identical; only the stage changes.</p>
+<h2 id="misconceptions-corrected">Misconceptions, corrected</h2>
+<p><strong>AI reduces cognitive load.</strong> It reduces keystrokes. Reviewing a 420-line PR with 8 comments is more mental work than reviewing a 140-line PR with 3 comments, even when a machine wrote most of the lines. Validation cost scales with unknowns: hidden dependencies, unhandled edge cases, and defects that only surface after merge.</p>
+<p><strong>Bigger PRs mean better code.</strong> Bigger PRs often mean more hidden complexity. A large diff dominated by generated scaffolding can obscure the handful of lines that carry the actual logic change, which makes review harder and merge mistakes more likely.</p>
+<p><strong>Faster feedback loops reduce stress.</strong> Faster loops increase stress when downstream capacity has not scaled. If a fast completion triggers a context switch into review and merge, the cost is attention fragmentation, not latency. The relevant measurement is not completion latency but switches per hour and time-to-first-review.</p>
+<p><strong>Blaming the tool is productive.</strong> The tool did not create the pressure. It exposed the gap between generation velocity and review capacity. Removing it restores the old bottleneck without addressing the underlying constraint.</p>
+<h2 id="instrumenting-net-time-saved">Instrumenting net time saved</h2>
+<p>Acceptance rate is the wrong metric. The useful metric is net time saved per suggestion: raw time saved minus review time, minus rework time, minus incident time attributable to the change. None of that is available from the assistant's own telemetry. It has to be assembled from the systems of record.</p>
+<p>The measurement approach is straightforward even though the tooling is not:</p>
+<ol>
+<li>Log suggestion events with a timestamp, a stable identifier, and the file and line range they touched. If the vendor does not expose this, emit a local event from an editor hook.</li>
+<li>Log PR open, first-review, approval and merge timestamps, plus changed-line counts and comment counts, from the source host's API.</li>
+<li>Join suggestions to PRs by file path and time window. This join is approximate; treat it as an estimate and state the window you used.</li>
+<li>Attribute review cost per PR, for example as review comments multiplied by an assumed minutes-per-comment figure you derive from your own timestamps.</li>
+<li>Subtract review and rework cost from the raw saving to get net saving, and report the distribution, not the mean. A mean hides the large PRs that dominate cost.</li>
+</ol>
+<p>A minimal join looks like this. It is deliberately simple, and the assumptions are stated inline so they can be challenged:</p>
 <pre><code class="language-python">import pandas as pd
 
-# Load data from script above
-df = pd.DataFrame(net_saved).T
+# suggestions: one row per accepted suggestion
+# columns: suggestion_id, accepted_at, file_path, lines_added
+# prs: one row per merged PR
+# columns: pr_number, opened_at, merged_at, file_path, additions, review_comments
 
-# Correlate time saved with PR size and review comments
-correlation = df[['time_saved_hours', 'additions', 'deletions']].corr()
-print(correlation)
+# Assumptions, all of which should be replaced with measured values:
+# - a review comment costs 4 minutes of reviewer attention
+# - a suggestion saves 0.5 hours of authoring time
+# - a suggestion belongs to a PR if it was accepted within 30 minutes of the PR opening
 
-# Output:
-#                   time_saved_hours  additions  deletions
-# time_saved_hours           1.000000   0.62      0.48
-# additions                  0.623456   1.00      0.78
-# deletions                  0.481234   0.78      1.00
+MINUTES_PER_COMMENT = 4
+HOURS_SAVED_PER_SUGGESTION = 0.5
+JOIN_WINDOW = pd.Timedelta(minutes=30)
+
+joined = suggestions.merge(
+    prs,
+    on=&quot;file_path&quot;,
+    how=&quot;inner&quot;,
+    suffixes=(&quot;_sug&quot;, &quot;_pr&quot;),
+)
+
+joined = joined[
+    (joined[&quot;accepted_at&quot;] &gt;= joined[&quot;opened_at&quot;] - JOIN_WINDOW)
+    &amp; (joined[&quot;accepted_at&quot;] &lt;= joined[&quot;merged_at&quot;])
+]
+
+joined[&quot;gross_saved_hours&quot;] = HOURS_SAVED_PER_SUGGESTION
+joined[&quot;review_cost_hours&quot;] = joined[&quot;review_comments&quot;] * MINUTES_PER_COMMENT / 60
+joined[&quot;net_saved_hours&quot;] = joined[&quot;gross_saved_hours&quot;] - joined[&quot;review_cost_hours&quot;]
+
+print(joined[&quot;net_saved_hours&quot;].describe())
+print(joined.groupby(&quot;file_path&quot;)[&quot;net_saved_hours&quot;].sum().sort_values())
 </code></pre>
-<p>The correlation shows that PRs with more additions (often AI-generated scaffolding) had higher net time saved, but they also had more review comments and longer review times. The team’s velocity metric was improving, but their sustainability metric (review time per PR) was getting worse. The fix wasn’t to remove the AI tool; it was to add a triage layer that routes large AI-generated PRs to a dedicated review queue with a 24-hour SLA instead of the default 2-hour SLA.</p>
-<h2 id="quick-reference">Quick reference</h2>
-<table>
-<thead>
-<tr>
-<th>Concept</th>
-<th>What it is</th>
-<th>Why it matters</th>
-<th>2026 tool/setting</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Velocity amplifier</td>
-<td>AI tools that increase code throughput without reducing workload</td>
-<td>Exposes gaps in review, QA, and ops capacity</td>
-<td>GitHub Copilot Enterprise, Cursor, Amazon Q Developer</td>
-</tr>
-<tr>
-<td>Net time saved</td>
-<td>Actual time reduction after accounting for review and maintenance</td>
-<td>Shows real productivity gains, not just keystroke savings</td>
-<td>Python 3.11 script above, Pandas 2.2</td>
-</tr>
-<tr>
-<td>AI-generated PR triage</td>
-<td>Routing large AI PRs to a slower review queue</td>
-<td>Prevents review fatigue and alert storms</td>
-<td>GitHub CODEOWNERS rules, custom GitHub Actions</td>
-</tr>
-<tr>
-<td>Attention fragmentation</td>
-<td>Cognitive cost of switching tasks due to fast feedback loops</td>
-<td>Directly correlates with burnout</td>
-<td>Windows 11 Focus Sessions, macOS "Hide notifications" automation</td>
-</tr>
-<tr>
-<td>PR size inflation</td>
-<td>Growth in PR size due to AI-generated scaffolding</td>
-<td>Increases review time and bug risk</td>
-<td>Cursor workspace rules, GitHub Copilot inline completions</td>
-</tr>
-</tbody>
-</table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<p>Two cautions on this. First, the join by file path and time window will over-attribute when a file is touched by many PRs; a stricter join needs commit-level data. Second, the per-suggestion saving figure is an assumption, not a measurement. The honest way to calibrate it is to time a small sample of comparable tasks with and without the assistant, and to report the sample size alongside the estimate. If that sample does not exist, the output is a hypothesis, not a result.</p>
+<p>The pattern that tends to emerge from this kind of analysis is that a meaningful share of accepted suggestions land in tests, docs and scaffolding. Those suggestions save authoring time in the short term and add maintenance surface in the long term. Whether that trade is good depends on the codebase. In a young service with thin coverage, generated tests may be clearly positive. In a mature service with a large suite, generated tests that duplicate existing coverage add cost without adding signal.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before enabling an aggressive suggestion rule, work through these questions:</p>
 <ul>
-<li><strong>Microsoft’s 2026 "Attention Economy" report</strong> – Shows how task switching &gt;3 times/hour increases burnout by 40% (even if tasks are fast).</li>
-<li><strong>GitHub’s 2026 State of the Octoverse</strong> – Found that teams using Copilot Enterprise had 50% more PRs but 30% more post-merge bugs due to review fatigue.</li>
-<li><strong>Cursor’s 2026 documentation on workspace rules</strong> – Explains how auto-suggested tests and docs can inflate PR size by 300% in weeks.</li>
-<li><strong>AWS re:Invent 2026 session "AI ops at scale"</strong> – Covers how teams using Amazon Q Developer had to add a "slow lane" for AI-generated changes to avoid alert storms.</li>
+<li>What is the current median time-to-first-review, and what will it be if PR volume doubles?</li>
+<li>How many review comments per day can the current reviewer pool absorb without triage behavior?</li>
+<li>Do generated tests add coverage the suite does not already have, or duplicate it?</li>
+<li>Are generated changes routed differently from human changes, or does everything share one queue?</li>
+<li>Is there a size threshold above which a PR is split, and is that threshold enforced automatically?</li>
+<li>When a defect traces back to a generated change, is that recorded, or does it disappear into the general defect count?</li>
+<li>Who owns the configuration that decides how much the assistant suggests, and how often is it reviewed?</li>
 </ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>why does my velocity metric go up but burnout stays the same?</strong>
-Because velocity metrics (PRs merged/day, lines of code) don’t account for review time, context switching, or post-merge maintenance. A team might merge 20 PRs/day but spend 4 hours/day reviewing AI-generated changes, which increases cognitive load without affecting the velocity metric. The burnout comes from the cognitive overhead of validating AI suggestions, not the keystrokes saved.</p>
-<p><strong>how do I measure net time saved with AI tools in 2026?</strong>
-Use a script to correlate accepted AI suggestions with PR merge timestamps and calculate estimated time saved. Subtract review time and post-merge bug fix time from the raw time saved to get net time saved. Tools like the Python 3.11 script above can automate this, but you’ll need to adjust the time saved per suggestion based on your team’s context.</p>
-<p><strong>what’s a realistic target for review SLA after adopting AI tools?</strong>
-Aim for a tiered SLA: 2 hours for human-written PRs, 24 hours for AI-generated PRs &gt;200 lines, and 48 hours for AI-generated PRs &gt;500 lines. This prevents review fatigue while still keeping AI benefits. The key is to set the SLA based on PR size and AI generation source, not just urgency.</p>
-<p><strong>should I disable AI-generated tests if they’re causing PR inflation?</strong>
-Not necessarily. Instead, route large AI-generated PRs to a dedicated review queue with a slower SLA and add automation to auto-approve scaffolding (tests, docs) if they pass CI. The goal isn’t to remove AI suggestions; it’s to avoid overwhelming reviewers with low-value changes.</p>
-<h2 id="what-to-do-today">What to do today</h2>
-<p>Open your GitHub repository’s settings and add a CODEOWNERS file that routes PRs with more than 200 lines to a dedicated review team with a 24-hour SLA. This takes 5 minutes and will immediately reduce review fatigue for AI-generated PRs.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/">PR checklists are dead: AI agents do reviews now</a></li>
-<li><a href="https://kubaik.github.io/claude-code-review-wins-and-blind-spots/">Claude code review: wins and blind spots</a></li>
-<li><a href="https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/">AI UI tools: 6 months in, what I gained and lost</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>If several of these have no answer, the assistant is not the thing to change first. The review process is.</p>
+<h2 id="practical-mitigations">Practical mitigations</h2>
+<p>Tiered review service levels are the most common fix. A workable scheme routes small human-authored PRs to a fast lane, large generated PRs to a slower lane, and requires an explicit split for anything above a size threshold. The point is not to punish generated code. The point is to stop large diffs from competing for the same reviewer attention as small ones.</p>
+<p>Routing is enforceable with standard repository tooling. Ownership rules can assign reviewers by path, and CI checks can fail or label a PR when the changed-line count exceeds a threshold. A label plus a dedicated queue is usually enough to keep the fast lane fast.</p>
+<p>Suggestion rules deserve the same care as lint rules. Turning on test generation for every function is a policy decision with a review cost, and it should be reviewed on a schedule like any other policy. Rules that generate scaffolding in production files, such as the test calls shown earlier, should be disabled outright.</p>
+<p>Finally, measure the distribution. Median and p90 time-to-first-review, review comments per PR, and PR size are the four numbers that reveal whether the pipeline is absorbing the new velocity or merely passing the pressure along.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open your repository's settings and record the current median time-to-first-review and the median changed-line count per PR for the last 30 days. Write both numbers down with today's date. Everything else in this article is a response to those two figures, and without them any change to your assistant configuration is guesswork.</p>
                 
                 
             </div>

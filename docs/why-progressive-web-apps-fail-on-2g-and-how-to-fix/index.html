@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Why progressive web apps fail on 2G and how to fix… - Kubai Kevin</title>
-        <meta name="description" content="Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites">
+        <meta name="description" content="How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.">
         <meta name="keywords" content="2gOptimization, MobilePerformance, ReactSsrEdge, BrotliAvif, Http2g, Cloudfront, Webpagetest2gProfile, Reactjs, Webdev">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-17T13:26:20.915553">
-        <meta property="article:modified_time" content="2026-09-26T16:04:30.152506+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:30:32.118981+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why progressive web apps fail on 2G and how to fix…">
-        <meta property="og:description" content="Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites">
+        <meta property="og:description" content="How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.">
         <meta property="og:url" content="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Why progressive web apps fail on 2G and how to fix…">
-        <meta name="twitter:description" content="Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites">
+        <meta name="twitter:description" content="How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-progressive-web-apps-fail-on-2g-and-how-to-fix.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/#article",
       "headline": "Why progressive web apps fail on 2G and how to fix…",
-      "description": "Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites",
+      "description": "How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.",
       "datePublished": "2026-07-17T13:26:20+00:00",
-      "dateModified": "2026-09-26T16:04:30+00:00",
-      "wordCount": 2708,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T10:30:32+00:00",
+      "wordCount": 2276,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Why progressive web apps fail on 2G and how to fix…</h1>
                 
-                <p class="post-lead">Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites</p>
+                <p class="post-lead">How to audit and fix a progressive web app for 2G and 3G: transport, payload, rendering, caching, and a 30-minute first step.</p>
                 
                 
                 <div class="tags">
@@ -258,280 +258,127 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2708 words
+                        11 min read
+                        &nbsp;·&nbsp; 2276 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-26
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing enough code that touches architecture decisions, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. Here's what actually works in practice, and why.</p>
-<h2 id="why-this-list-exists-the-problem-its-meant-to-solve">Why this list exists (the problem it's meant to solve)</h2>
-<p>Teams routinely promise customers in rural Nigeria and Kenya a mobile-first experience. The target: pages that load in under 3 seconds on 2G (≈100 kbps) with 10% packet loss. A first build is often a React PWA with a 2 MB bundle and a single 500 ms blocking script. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout — this post is the reference that would have shortened that work.</p>
-<p>The real problem isn’t JavaScript or React; it’s the unspoken assumption that ‘mobile-first’ equals ‘fast on 4G’. In 2026, the median mobile connection worldwide is still 2G in many regions, and even where 3G/4G exists, congestion and data caps force developers to treat 2G/3G as first-class citizens, not edge cases.</p>
-<p>Typical measurements for this kind of audience:
-- 28% of target users on 2G (2026 data, GSMA Intelligence)
-- 53% on 3G or slower 4G variants
-- Page load times averaging 12-15 seconds on a 2G emulator</p>
-<p>Those numbers force a rethink of every layer: asset size, transport, rendering, and even business logic like offline queues and retry policies.</p>
-<h2 id="how-to-evaluate-each-option">How to evaluate each option</h2>
-<p>Keep a spreadsheet with six columns: asset size, first-byte latency, TTI (Time to Interactive), cache hit ratio, data cost to the user, and implementation complexity. Also track what is known about 2026 device capabilities:</p>
+                <h2 id="the-assumption-that-breaks-pwas-on-slow-networks">The assumption that breaks PWAs on slow networks</h2>
+<p>A PWA is not slow on 2G because it is a PWA. It is slow because the architecture was designed against a fast, reliable link and never revisited. The failure mode is consistent: a large JavaScript bundle, a blocking script in the document head, images served at display resolution, and a client-side render that cannot paint anything until the bundle has downloaded, parsed, and executed.</p>
+<p>On a 100 kbps link with packet loss, every one of those decisions compounds. A 2 MB bundle is not "a bit slow" on that link; it is roughly 160 seconds of pure transfer time before a single byte of application logic runs. That number alone explains most abandonment.</p>
+<p>The useful mental model is a budget, not a checklist. Fix a target — for example, first contentful paint under 3 seconds on a throttled profile — and then allocate the budget across transport setup, HTML, critical CSS, fonts, images, and JavaScript. Anything that does not fit gets deferred, removed, or moved to a later interaction. The rest of this article works through where that budget actually goes and which changes recover the most of it.</p>
+<h2 id="how-to-measure-before-you-change-anything">How to measure before you change anything</h2>
+<p>Optimization without measurement produces confident guesses. Before touching code, establish a repeatable profile and capture a baseline.</p>
+<p><strong>Choose a throttle profile and write it down.</strong> A defensible starting point for 2G-class testing is 100 kbps downlink, 50 kbps uplink, 300 ms round-trip latency, and a small packet-loss percentage. Record the exact numbers you use, because results are only comparable across runs that share a profile.</p>
+<p><strong>Instrument the right metrics.</strong> At minimum: time to first byte, first contentful paint, largest contentful paint, time to interactive, total transferred bytes, and the number of requests. On the client, capture <code>PerformanceNavigationTiming</code> and <code>PerformanceResourceTiming</code> entries so you can see which resources dominate the transfer. On the server or CDN, log time to first byte separately from origin processing time — a slow origin and a slow network look identical to the user but have different fixes.</p>
+<p><strong>Run the test against a representative page.</strong> A product detail page with a dozen images, a few API calls, and a form is more informative than a marketing homepage. Test both a cold cache and a warm cache, because the cold-cache path is what new users experience.</p>
+<p><strong>Automate a budget check in CI.</strong> A Lighthouse budget that fails a pull request when total transfer size or time to interactive regresses is the cheapest way to stop slow-network performance from eroding. Set the thresholds from your own baseline rather than copying arbitrary numbers; a regression gate is useful even if the absolute values are not yet where you want them.</p>
+<p>Once you have a baseline, change one thing at a time and re-measure. The sections below are ordered roughly by how much of the budget they typically recover.</p>
+<h2 id="the-transport-layer-connection-setup-is-a-real-cost">The transport layer: connection setup is a real cost</h2>
+<p>On a high-latency link, connection establishment is not free. A TCP handshake plus a TLS handshake can consume several round trips before the first byte of HTML arrives. At 300 ms round-trip time, three round trips is most of a second spent on nothing but setup.</p>
+<p>Two changes address this directly:</p>
 <ul>
-<li>Median Android device RAM: 2.8 GB (2026 data, DeviceAtlas)</li>
-<li>Median storage available to web apps: 80 MB (Chrome 124)</li>
-<li>Median battery saver mode: enabled for 68% of sessions in sub-Saharan Africa (2026 survey)</li>
+<li><strong>Terminate TLS close to the user.</strong> Serving from edge locations reduces the round-trip time for the handshake itself. This is a CDN configuration change, not an application change, and it usually pays for itself immediately on slow links.</li>
+<li><strong>Reduce the number of origins.</strong> Each additional hostname means another DNS lookup, another connection, and another handshake. Consolidating static assets and API traffic onto as few origins as practical removes setup cost that no amount of minification can recover.</li>
 </ul>
-<p>Benchmarks should run on real devices using WebPageTest’s Moto G Power (2023) throttled to 2G with 300 ms RTT and 10% packet loss. A typical test URL is an e-commerce product page with 12 images, 3 API calls, and a checkout form. Baseline results for an unoptimized build:
-- Total transfer: 3.1 MB
-- First meaningful paint: 7.2 s
-- Time to interactive: 15.4 s
-- Battery drain: 18% per session</p>
-<p>Run lighthouse-ci in GitHub Actions with the same throttling profile, version 5.7.0. The CI pipeline should also generate a Lighthouse budget that blocks any PR increasing the total transfer size by more than 200 KB or the TTI by more than 200 ms.</p>
-<h2 id="the-architecture-decisions-that-let-you-serve-users-on-2g3g-as-a-first-class-experience-in-2026-the-full-ranked-list">The architecture decisions that let you serve users on 2G/3G as a first-class experience in 2026 — the full ranked list</h2>
-<ol>
-<li>
-<p><strong>Pre-render critical HTML on the edge</strong>
-   What it does: Serves a static HTML shell from CloudFront Edge locations before any JavaScript runs.
-   Strength: Reduces first byte latency from 500 ms to 120 ms in 2G tests.
-   Weakness: Increases cache size and requires careful invalidation for user-specific content.
-   Best for: Sites with mostly static content (blogs, catalogs, documentation).</p>
-</li>
-<li>
-<p><strong>Use Brotli + AVIF for images</strong>
-   What it does: Serves images in AVIF at 80% quality and Brotli-compressed JSON instead of gzip.
-   Strength: Cuts image transfer from 1.4 MB to 180 KB and JSON payloads by 45% in tests.
-   Weakness: Requires modern image processing pipelines and CDN support; AVIF decoding is CPU-heavy on low-end devices.
-   Best for: Media-heavy sites (e-commerce, news, social platforms).</p>
-</li>
-<li>
-<p><strong>Stream server-side rendered React from the edge</strong>
-   What it does: Renders React components to HTML strings on CloudFront Functions (Node 20 LTS) and streams them immediately.
-   Strength: First meaningful paint drops to 2.1 s on 2G; no waiting for hydration.
-   Weakness: Increases edge compute cost by ~$120/month for 100k daily users; debugging SSR errors is harder.
-   Best for: Apps with dynamic data that still need fast initial render (dashboards, user profiles).</p>
-</li>
-<li>
-<p><strong>Service Worker pre-caching with stale-while-revalidate</strong>
-   What it does: Pre-caches critical assets (shell, fonts, CSS) during install and serves stale responses while updating in the background.
-   Strength: 92% cache hit ratio on repeat visits, reducing transfer by 80% after first load.
-   Weakness: Increases first load latency by 300-400 ms while the service worker installs.
-   Best for: Apps with repeat visitors (marketplaces, SaaS dashboards).</p>
-</li>
-<li>
-<p><strong>HTTP/3 + QUIC on UDP</strong>
-   What it does: Uses HTTP/3 (RFC 9114) with QUIC to reduce connection setup time and head-of-line blocking.
-   Strength: Reduces 2G packet loss impact by 40% in tests; first byte latency drops from 500 ms to 220 ms.
-   Weakness: Not all 2G networks support UDP; some corporate firewalls block QUIC; requires CloudFront’s HTTP/3 support (enabled by default in 2026).
-   Best for: Global apps with users behind restrictive networks (SaaS, fintech).</p>
-</li>
-<li>
-<p><strong>API response filtering via GraphQL persisted queries</strong>
-   What it does: Sends only the fields the client explicitly requested using persisted query IDs, reducing payloads by 60%.
-   Strength: 400 KB API response trimmed to 160 KB on average; no client-side parsing needed.
-   Weakness: Requires schema discipline and versioning; adds complexity to the backend.
-   Best for: Apps with complex data needs (marketplaces, social graphs).</p>
-</li>
-<li>
-<p><strong>CDN edge redirects for slow clients</strong>
-   What it does: Detects 2G/3G via user-agent and redirects to a lightweight HTML-only version hosted on a separate subdomain.
-   Strength: 65% faster TTI for redirected users; no JavaScript execution required.
-   Weakness: Increases CDN egress costs by 15%; requires maintaining two codebases.
-   Best for: Sites with mostly content consumption (news, blogs, documentation).</p>
-</li>
-<li>
-<p><strong>Progressive image decoding with libjxl</strong>
-   What it does: Uses JPEG XL for progressive decoding so images appear usable after 20% of the file is received.
-   Strength: Perceived performance improves by 4x; users can read text over blurry images earlier.
-   Weakness: JPEG XL support is spotty on older Android devices; encoding pipeline is slower.
-   Best for: Media-heavy sites with long image lists (social feeds, product grids).</p>
-</li>
-<li>
-<p><strong>Offline-first state machine for forms</strong>
-   What it does: Uses RxDB 14.11.0 to queue form submissions and sync when online, with exponential backoff.
-   Strength: 98% of user input survives connection drops; no data loss on flaky networks.
-   Weakness: Adds 150 KB to bundle; requires conflict resolution logic.
-   Best for: Apps with form-heavy workflows (e-commerce checkout, surveys).</p>
-</li>
-<li>
-<p><strong>WebAssembly for heavy lifting</strong>
-    What it does: Offloads image resizing, PDF generation, or data processing to WebAssembly modules compiled from Rust.
-    Strength: Reduces CPU time by 65% on low-end devices; enables features like real-time OCR on 2G.
-    Weakness: Increases bundle size by 200-300 KB; debugging WASM is painful.
-    Best for: Apps with heavy computation (image editors, data dashboards).</p>
-</li>
-</ol>
-<h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
-<p>The winner is <strong>streaming server-side React from the edge</strong> (decision #3). Here’s why:</p>
-<ul>
-<li><strong>Latency</strong>: First meaningful paint drops from 7.2 s to 2.1 s on 2G, meeting a 3-second target.</li>
-<li><strong>Bundle size</strong>: Removing client-side React entirely cuts the JavaScript bundle from 450 KB to 0 KB.</li>
-<li><strong>Cache efficiency</strong>: HTML is cacheable by CDN edges, reducing origin load by 78%.</li>
-<li><strong>Developer experience</strong>: Existing React component trees can be reused, just rendered to strings on the edge.</li>
-</ul>
-<p>The implementation uses CloudFront Functions (Node 20 LTS) with React 18’s server renderer. The function reads the request, fetches minimal data (via a GraphQL persisted query), and streams the HTML directly:</p>
-<pre><code class="language-javascript">import React from 'react';
-import { renderToPipeableStream } from 'react-dom/server';
-import { CloudFrontRequestEvent } from 'aws-lambda';
-
-export const handler = async (event: CloudFrontRequestEvent) =&gt; {
-  const { request } = event.Records[0].cf;
-  const url = `https://api.example.com/graphql?queryId=${request.headers['x-persisted-query-id']}`;
-  const data = await fetch(url).then(r =&gt; r.json());
-
-  const { pipe } = renderToPipeableStream(
-    &lt;html&gt;
-      &lt;head&gt;
-        &lt;title&gt;{data.product.name}&lt;/title&gt;
-      &lt;/head&gt;
-      &lt;body&gt;
-        &lt;div id=&quot;root&quot;&gt;&lt;Product data={data.product} /&gt;&lt;/div&gt;
-        &lt;script src=&quot;/static/shell.js&quot; async&gt;&lt;/script&gt;
-      &lt;/body&gt;
-    &lt;/html&gt;,
-    { bootstrapScripts: ['/static/shell.js'] }
-  );
-
-  const response = {
-    status: '200',
-    statusDescription: 'OK',
-    headers: {
-      'content-type': [{ key: 'Content-Type', value: 'text/html; charset=utf-8' }],
-      'cache-control': [{ key: 'Cache-Control', value: 'public, max-age=300' }]
-    }
-  };
-
-  return new Promise((resolve) =&gt; {
-    pipe(new TransformStream())
-      .then(stream =&gt; {
-        response.body = stream;
-        resolve(response);
-      });
-  });
-};
+<p>HTTP/3 over QUIC is worth enabling where the CDN supports it, because it can reduce head-of-line blocking and improve behavior under loss. The honest caveat: QUIC runs over UDP, and some networks block or throttle UDP. Clients fall back to TCP, so enabling HTTP/3 is safe, but it should be treated as an improvement for the subset of users whose networks support it rather than a guaranteed win.</p>
+<h2 id="payload-the-largest-recoverable-win">Payload: the largest recoverable win</h2>
+<p>Transfer size dominates every other factor on a constrained link. The most effective changes are unglamorous.</p>
+<p><strong>Compress text with Brotli.</strong> Brotli is widely supported by modern browsers and CDNs, and it typically outperforms gzip on HTML, CSS, and JavaScript. Verify that your CDN is actually applying it — a surprising number of deployments serve uncompressed JSON because the content type was not in the compression list.</p>
+<p><strong>Serve images in modern formats with a fallback.</strong> AVIF and WebP both reduce image weight substantially compared with JPEG at comparable visual quality. The safe pattern is a <code>&lt;picture&gt;</code> element with format negotiation handled by the browser:</p>
+<pre><code class="language-html">&lt;picture&gt;
+  &lt;source type=&quot;image/avif&quot; srcset=&quot;product-400.avif 400w, product-800.avif 800w&quot; sizes=&quot;(max-width: 600px) 400px, 800px&quot; /&gt;
+  &lt;source type=&quot;image/webp&quot; srcset=&quot;product-400.webp 400w, product-800.webp 800w&quot; sizes=&quot;(max-width: 600px) 400px, 800px&quot; /&gt;
+  &lt;img src=&quot;product-800.jpg&quot; alt=&quot;Product&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot; width=&quot;800&quot; height=&quot;600&quot; /&gt;
+&lt;/picture&gt;
 </code></pre>
-<p>Cost-wise, CloudFront Functions run $0.02 per million requests. At 100k daily users, that’s $0.60/day — cheaper than maintaining a full Lambda@Edge setup. This pattern also commonly produces a 42% drop in origin requests, which can cut origin costs by roughly $1,200/month at that scale.</p>
-<p>The only real downside is debugging: stack traces from the edge are harder to read, so adding Sentry error monitoring with source maps uploaded to the edge is a common mitigation. That typically adds around $80/month but saves hours of guesswork.</p>
-<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
-<p><strong>Brotli + AVIF</strong> (decision #2) is a close second. In tests, it reduces total transfer size by 78% and is easy to implement with Cloudflare Polish (free tier). The catch: AVIF decoding on low-end Android devices (e.g., Samsung Galaxy J2) adds 400 ms to TTI. Mitigate this by falling back to WebP for devices without AVIF support, detected via user-agent sniffing in the CDN.</p>
-<p><strong>Service Worker pre-caching</strong> (decision #4) is great for repeat visitors. It commonly produces a 92% cache hit ratio after the first visit, cutting transfer by 80%. The trade-off is the 300-400 ms install time, which can be masked with a skeleton screen. Workbox 7.0.0 handles the service worker logic, precaching roughly 1.2 MB of critical assets.</p>
-<p><strong>HTTP/3 + QUIC</strong> (decision #5) shaves around 280 ms off first byte latency in 2G tests. The problem: some mobile networks (especially in Nigeria and Kenya) still block UDP, causing QUIC to fall back to TCP. Mitigate this by detecting QUIC support via <code>navigator.connection.effectiveType</code> and disabling HTTP/3 for users on networks that block UDP. CloudFront’s HTTP/3 setting is enabled by default in 2026.</p>
-<h2 id="the-options-that-get-tried-and-dropped-and-why">The options that get tried and dropped (and why)</h2>
-<p><strong>AMP (Accelerated Mobile Pages)</strong>
-What it does: Serves stripped-down HTML with custom components. Why teams drop it: AMP’s strict validation blocks React components and requires a separate codebase. Even with AMP’s performance gains (2.3 s TTI), the maintenance cost isn’t worth it. AMP-specific templates commonly add around 35% to development time.</p>
-<p><strong>Client-side hydration with React 18</strong>
-What it does: Renders React on the client with streaming hydration. Why teams drop it: On 2G, the hydration process adds 4.5 s to TTI. Even with Suspense, the user still waits for JavaScript to download, parse, and execute. Aggressive code-splitting helps, but the minimal bundle is still around 120 KB — too heavy for 2G. A Lighthouse budget that flags any PR increasing the bundle by &gt;200 KB will catch hydration as the bottleneck.</p>
-<p><strong>WebP-only images</strong>
-What it does: Serves only WebP images with fallback to JPEG. Why teams drop it: WebP reduces file sizes by 30% compared to JPEG, but AVIF cuts them by 50% with similar quality. On newer Android devices, AVIF’s progressive decoding improves perceived performance by 2x. WebP gets dropped because AVIF is the better long-term choice, despite the decoding cost on low-end devices.</p>
-<p><strong>Redis for caching API responses</strong>
-What it does: Caches GraphQL responses in Redis 7.2. Why teams drop it: On 2G, the Redis connection setup time (300 ms) negates the cache hit benefit. Switching to CDN edge caching (CloudFront) commonly yields a 20% faster response time. A Redis cluster also adds around $240/month in AWS costs for 5 million requests/day, while CloudFront’s caching is free beyond the origin costs.</p>
-<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
-<p>Use this table to decide which decisions to prioritize. The columns represent common scenarios; check the row that matches your app:</p>
+<p>Two details matter here. First, AVIF decoding is more CPU-intensive than JPEG decoding, and on low-end devices that cost can show up as a slower largest contentful paint even though fewer bytes were transferred. Measure both transfer size and paint timing before declaring victory. Second, always set intrinsic <code>width</code> and <code>height</code> so the browser can reserve layout space and avoid reflow as images arrive.</p>
+<p><strong>Send only the data the screen needs.</strong> API responses are frequently far larger than the rendered view requires. Field selection, whether through GraphQL or a REST endpoint that accepts a sparse field list, reduces bytes on the wire and parsing cost on the device. This is a backend change with a measurable frontend payoff.</p>
+<h2 id="rendering-get-pixels-on-screen-before-javascript-finishes">Rendering: get pixels on screen before JavaScript finishes</h2>
+<p>Client-side rendering is the single biggest structural obstacle on slow networks. If the initial HTML is an empty shell, the user sees nothing until the framework bundle has been fetched, parsed, executed, and has completed its first data fetch.</p>
+<p>Server rendering addresses this directly. The server produces HTML that the browser can paint immediately, and JavaScript arrives later to make the page interactive. Streaming server rendering goes further: the server flushes the document head and above-the-fold markup as soon as they are ready rather than waiting for the slowest data source, so the user sees content while the rest of the page is still being assembled.</p>
+<p>The trade-off is real and worth stating plainly. Server rendering moves work to the server, adds a runtime dependency for the initial paint, and makes debugging harder because errors occur in a different environment from the browser. It also does not eliminate JavaScript — it defers it. The correct framing is that server rendering changes <em>when</em> the user sees content, not whether the application eventually ships a bundle.</p>
+<p>A related pattern is pre-rendering static routes at build time and serving them from the edge. For content that does not vary per user — documentation, catalogs, marketing pages — this is simpler than server rendering and equally effective, because the HTML is already sitting at the edge when the request arrives.</p>
+<h2 id="caching-make-the-second-visit-nearly-free">Caching: make the second visit nearly free</h2>
+<p>A service worker that pre-caches the application shell and serves stale content while revalidating in the background can make repeat visits dramatically cheaper. The first visit still pays full cost, and the service worker installation itself adds some latency on that first load, so the benefit is concentrated in returning users.</p>
+<p>Two rules keep this from becoming a liability:</p>
+<ul>
+<li><strong>Version your caches and delete old ones on activation.</strong> A cache that is never invalidated will serve stale assets indefinitely.</li>
+<li><strong>Never cache responses that carry user-specific data unless you have thought carefully about who else might receive them.</strong> A shared cache serving one user's account page to another is a security incident, not a performance bug.</li>
+</ul>
+<p>For API responses, edge caching is often a better fit than an application-level cache tier. An in-process or network cache still requires a round trip to reach, and on a 300 ms link that round trip can consume the entire benefit of the cache hit. Caching at the edge removes the round trip as well as the origin work.</p>
+<h2 id="offline-and-flaky-connection-behavior">Offline and flaky-connection behavior</h2>
+<p>On unreliable links, requests fail partway through and users lose work. The fix is to treat the network as optional for anything the user has already typed.</p>
+<p>Queue mutations locally and replay them when connectivity returns. Give each queued operation a client-generated identifier so that a retry after an ambiguous failure does not create a duplicate record on the server — the classic case being a form submitted twice because the first response never arrived. Use exponential backoff with jitter for retries, and surface queue state in the interface so users know whether their submission has actually been accepted.</p>
+<p>The storage layer for this is a design decision, not a library decision. IndexedDB is the browser primitive; whether you wrap it in a library is a matter of team preference. What matters is that the queue survives a page reload, that replay is idempotent, and that conflicts have a defined resolution rule rather than an implicit "last write wins."</p>
+<h2 id="a-worked-budget-example">A worked budget example</h2>
+<p>The following figures are illustrative, chosen to show the arithmetic rather than to describe a measured system. Suppose the target is first contentful paint under 3 seconds on a 100 kbps link.</p>
+<p>At 100 kbps, the practical throughput is roughly 12.5 kilobytes per second, and real-world overhead usually brings this down further — assume 10 kilobytes per second to be conservative. A 3-second budget therefore allows about 30 kilobytes of transfer before paint, minus whatever the handshake consumes.</p>
+<p>If the handshake and TLS setup cost two round trips at 300 ms each, that is 600 ms, leaving 2.4 seconds, or roughly 24 kilobytes. Critical CSS for a simple layout might be 10 kilobytes compressed, the initial HTML 8 kilobytes, and a font subset 15 kilobytes — already over budget. The conclusion is not that the target is impossible; it is that the above-the-fold content must be assembled from a very small set of resources, and everything else must be deferred until after first paint.</p>
+<p>This is why the ordering in this article matters. Shrinking images helps total transfer, but if the critical path is HTML plus CSS plus a font, image optimization does not move first paint at all. Instrument the critical path specifically, and optimize the resources that actually block rendering.</p>
+<h2 id="common-failure-modes">Common failure modes</h2>
+<p><strong>Optimizing the wrong metric.</strong> Reducing total page weight while time to interactive stays flat usually means the bottleneck is JavaScript execution, not transfer. Profile the main thread before adding more compression.</p>
+<p><strong>Testing on a fast connection with throttling applied only to the network.</strong> CPU throttling matters as much as network throttling on low-end devices. A bundle that downloads quickly can still take seconds to parse and execute on a slow processor.</p>
+<p><strong>Assuming a modern format is a free win.</strong> AVIF saves bytes and costs decode time. On low-end hardware the trade can go the wrong way for large hero images. Measure paint timing, not just transfer size.</p>
+<p><strong>Shipping a performance budget that nobody enforces.</strong> A budget in a document changes nothing. A budget that fails CI changes behavior.</p>
+<p><strong>Treating offline support as a checkbox.</strong> A queue without idempotent replay and a defined conflict rule will eventually duplicate or lose user data, which is worse than failing immediately.</p>
+<h2 id="choosing-what-to-do-first">Choosing what to do first</h2>
 <table>
 <thead>
 <tr>
-<th>Scenario</th>
-<th>Critical metric</th>
-<th>Recommended decisions (ranked)</th>
-<th>Carbon cost (approx)</th>
-<th>Dev effort</th>
+<th>Constraint</th>
+<th>Highest-leverage change</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Content-heavy site (blog)</td>
-<td>First meaningful paint</td>
-<td>1, 2, 7, 4</td>
-<td>Low ($50/month)</td>
-<td>Low</td>
+<td>Empty shell until JavaScript loads</td>
+<td>Server render or pre-render the initial route</td>
 </tr>
 <tr>
-<td>E-commerce catalog</td>
-<td>Cart add latency</td>
-<td>1, 2, 4, 6, 9</td>
-<td>Medium ($300/month)</td>
-<td>Medium</td>
+<td>Large image payloads</td>
+<td>Modern formats with <code>&lt;picture&gt;</code> fallback and correct sizing</td>
 </tr>
 <tr>
-<td>SaaS dashboard</td>
-<td>TTI</td>
-<td>3, 5, 6, 9, 10</td>
-<td>High ($800/month)</td>
-<td>High</td>
+<td>Slow first byte on repeat visits</td>
+<td>Edge caching with correct cache keys and invalidation</td>
 </tr>
 <tr>
-<td>Social network feed</td>
-<td>Image load time</td>
-<td>2, 8, 4, 5, 9</td>
-<td>Medium ($400/month)</td>
-<td>Medium</td>
+<td>Work lost on connection drops</td>
+<td>Local queue with idempotent replay</td>
 </tr>
 <tr>
-<td>Offline-first forms</td>
-<td>Data loss rate</td>
-<td>9, 4, 7, 2</td>
-<td>Low ($80/month)</td>
-<td>Low</td>
+<td>Regressions after launch</td>
+<td>Automated budget check in CI</td>
 </tr>
 </tbody>
 </table>
-<p>For a content-heavy site (e.g., a news blog), start with decisions #1 (pre-render HTML on edge) and #2 (Brotli + AVIF). These two alone cut 70% of the transfer size and reduce first paint by 5x. For a SaaS dashboard, prioritize #3 (streaming SSR) and #5 (HTTP/3) — they address the biggest TTI bottlenecks.</p>
-<p>For teams with limited dev resources, the top three decisions (#1, #2, #7) give 80% of the benefit with 20% of the effort. For teams willing to invest, adding #3 and #5 pushes you into the 95% performance range.</p>
-<h2 id="frequently-asked-questions">Frequently asked questions</h2>
-<p><strong>How do I detect 2G/3G connections in JavaScript?</strong>
-Use the Network Information API: <code>navigator.connection.effectiveType</code>. It returns "slow-2g", "2g", "3g", or "4g". Fall back to user-agent sniffing for browsers that don’t support it (e.g., older UC Browser). Example:</p>
-<pre><code class="language-javascript">const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-const isSlow = connection ? /2g|3g|slow-2g/.test(connection.effectiveType) : false;
+<p>Start from the top row that matches your observed bottleneck, not from the row that sounds most modern.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does server rendering mean abandoning a client framework?</strong>
+No. The same components can render to HTML on the server and hydrate in the browser. The decision is about what the first response contains, not about which framework you use.</p>
+<p><strong>Is HTTP/3 worth enabling?</strong>
+It is worth enabling because clients fall back to TCP when UDP is unavailable, so the downside is limited. Do not assume it will help every user; some networks block UDP entirely.</p>
+<p><strong>How do I detect a slow connection in JavaScript?</strong>
+The Network Information API exposes <code>navigator.connection.effectiveType</code>, which reports values such as <code>slow-2g</code>, <code>2g</code>, <code>3g</code>, and <code>4g</code>. Support varies, so treat it as a hint for progressive enhancement rather than a hard gate:</p>
+<pre><code class="language-javascript">const connection =
+  navigator.connection ||
+  navigator.mozConnection ||
+  navigator.webkitConnection;
+
+const isSlow = connection
+  ? /(^|-)2g$|^3g$/.test(connection.effectiveType)
+  : false;
 </code></pre>
-<p><strong>What’s the best CDN for 2G/3G?</strong>
-CloudFront with HTTP/3 enabled is the safest bet in 2026. Cloudflare is a close second, but its free tier caps at 100k requests/day, which may not be enough for high-traffic apps. Benchmarking CloudFront against Fastly and BunnyCDN generally shows CloudFront’s edge locations in Africa (Lagos, Cape Town, Nairobi) giving the best 2G performance. Cost: $0.085/GB for the first 10 TB/month.</p>
-<p><strong>Do I need to drop React entirely?</strong>
-No. You can keep React for development and use streaming SSR on the edge. The key is to avoid client-side hydration for 2G users. Reuse the existing React components, just rendering to HTML strings on CloudFront Functions. The bundle size drops to 0 KB for 2G users, while 4G users still get the full SPA.</p>
-<p><strong>How do I handle image formats without breaking old devices?</strong>
-Use <code>&lt;picture&gt;</code> with AVIF as the first source, WebP as the second, and JPEG as the fallback. Example:</p>
-<pre><code class="language-html">&lt;picture&gt;
-  &lt;source type=&quot;image/avif&quot; srcset=&quot;image.avif&quot; /&gt;
-  &lt;source type=&quot;image/webp&quot; srcset=&quot;image.webp&quot; /&gt;
-  &lt;img src=&quot;image.jpg&quot; alt=&quot;Product&quot; loading=&quot;lazy&quot; /&gt;
-&lt;/picture&gt;
-</code></pre>
-<p>A Cloudflare Worker can auto-generate AVIF/WebP versions from the original JPEG/PNG. The Worker runs on every upload and caches the results in R2 (Cloudflare’s object storage). Cost: $0.015/GB for storage and $0.0005 per transformation.</p>
-<p><strong>What’s the biggest mistake teams make?</strong>
-Assuming that 3G is “good enough” and optimizing only for 4G. In 2026, 3G networks in many regions are still congested, with speeds as low as 128 kbps and 15% packet loss. Teams that don’t test on 2G/3G often ship bundles that fail to load, causing users to abandon sessions. Testing on 2G without these optimizations commonly shows a double-digit drop in conversion.</p>
-<h2 id="final-recommendation">Final recommendation</h2>
-<p>If you only do one thing today, <strong>set up streaming SSR from the edge using CloudFront Functions and React 18</strong>. Here’s the 30-minute action plan:</p>
-<ol>
-<li>Create a new CloudFront Function (Node 20 LTS) in the AWS Console.</li>
-<li>Copy the code example from the top pick section into the function editor.</li>
-<li>Deploy the function to the "<em>all</em>" event type.</li>
-<li>Point your DNS to the CloudFront distribution.</li>
-<li>Test on WebPageTest with a 2G profile (100 kbps, 300 ms RTT, 10% packet loss).</li>
-</ol>
-<p>The function will stream HTML immediately, cutting first meaningful paint to under 3 seconds. No other change gives you the same latency improvement with so little effort. If your app is content-heavy, add Brotli + AVIF images next. If it’s a SaaS dashboard, add HTTP/3 and offline queues.</p>
-<p>Start with the function. Measure. Then iterate.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/">Offline-first apps: what 3G markets taught us</a></li>
-<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
-<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-<li><a href="https://react.dev/">React documentation</a></li>
-<li><a href="https://webassembly.org/">WebAssembly</a></li>
-<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<p><strong>Should I maintain a separate lightweight site for slow connections?</strong>
+Separate codebases double maintenance and drift over time. Prefer one codebase that renders a small critical path and defers everything else. If a separate experience is unavoidable, generate it from the same source rather than maintaining it by hand.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Open your slowest representative page in a browser with the network throttled to a 2G-class profile, and record the transfer size and request count of every resource that blocks first paint. That list — not the full page weight — is your optimization target. Pick the single largest item on it and either defer it, compress it, or remove it, then re-run the same profile and compare.</p>
                 
                 
             </div>
@@ -566,13 +413,13 @@ Assuming that 3G is “good enough” and optimizing only for 4G. In 2026, 3G ne
                     
                     <a class="related-card" href="/mobile-first-ai-fails-you-didnt-plan/">
                         <h3>Mobile-first AI fails you didn’t plan…</h3>
-                        <p>Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.</p>
-                        <span class="related-meta">11 min read · 26 August 2026</span>
+                        <p>Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
+                        <span class="related-meta">12 min read · 26 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/offline-first-agents-for-field-teams/">
                         <h3>Offline-first agents for field teams</h3>
-                        <p>Offline-first agents cut last-mile failures 12% in Lagos pilots — SQLite encryption, conflict UI, and AWS AppSync for riders on 2G</p>
+                        <p>Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.</p>
                         <span class="related-meta">13 min read · 16 July 2026</span>
                     </a>
                     

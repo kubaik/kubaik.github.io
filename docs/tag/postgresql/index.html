@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Postgresql Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Idempotency keys: what they fix, what they don&#x27;t,&quot; &quot;Why our schema survived AI scaling,&quot; and &quot;Agents running hours? You&#x27;re losing context fast&quot;.">
+  <meta name="description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Idempotency keys: what they fix, what they don&#x27;t,&quot; &quot;Designing a Schema That Survives Embedding Model Upgrades,&quot; and &quot;Agents running hours? You&#x27;re losing context fast&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubaik.github.io/tag/postgresql/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Postgresql Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Idempotency keys: what they fix, what they don&#x27;t,&quot; &quot;Why our schema survived AI scaling,&quot; and &quot;Agents running hours? You&#x27;re losing context fast&quot;.">
+  <meta property="og:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Idempotency keys: what they fix, what they don&#x27;t,&quot; &quot;Designing a Schema That Survives Embedding Model Upgrades,&quot; and &quot;Agents running hours? You&#x27;re losing context fast&quot;.">
   <meta property="og:url" content="https://kubaik.github.io/tag/postgresql/">
   <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Postgresql Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Idempotency keys: what they fix, what they don&#x27;t,&quot; &quot;Why our schema survived AI scaling,&quot; and &quot;Agents running hours? You&#x27;re losing context fast&quot;.">
+  <meta name="twitter:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Idempotency keys: what they fix, what they don&#x27;t,&quot; &quot;Designing a Schema That Survives Embedding Model Upgrades,&quot; and &quot;Agents running hours? You&#x27;re losing context fast&quot;.">
   <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Postgresql Articles","url":"https://kubaik.github.io/tag/postgresql/",
-    "description":"Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including \"Idempotency keys: what they fix, what they don't,\" \"Why our schema survived AI scaling,\" and \"Agents running hours? You're losing context fast\"."}
+    "description":"Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including \"Idempotency keys: what they fix, what they don't,\" \"Designing a Schema That Survives Embedding Model Upgrades,\" and \"Agents running hours? You're losing context fast\"."}
   </script>
 </head>
 <body>
@@ -49,22 +49,22 @@
 
       <a class="post-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
         <h3>Idempotency keys: what they fix, what they don't</h3>
-        <p class="post-excerpt">Idempotency keys prevent double charges on retry, but not concurrency, key reuse, or partial failures.</p>
+        <p class="post-excerpt">How idempotency keys work, where they fail, and the failure modes they don&#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
         <p class="post-reading-time">13 min read · 21 September 2026</p>
       </a>
       <a class="post-card" href="/why-our-schema-survived-ai-scaling/">
-        <h3>Why our schema survived AI scaling</h3>
-        <p class="post-excerpt">Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
-        <p class="post-reading-time">11 min read · 13 September 2026</p>
+        <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
+        <p class="post-excerpt">Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
+        <p class="post-reading-time">10 min read · 13 September 2026</p>
       </a>
       <a class="post-card" href="/agents-running-hours-youre-losing-context-fast/">
         <h3>Agents running hours? You're losing context fast</h3>
-        <p class="post-excerpt">Keep long-running agents on track without ballooning prompts — sliding windows, archive thresholds, and PostgreSQL 16 JSONB with 3 concrete numbers and a…</p>
+        <p class="post-excerpt">How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
         <p class="post-reading-time">11 min read · 3 September 2026</p>
       </a>
       <a class="post-card" href="/replace-managed-services-with-postgres-17/">
         <h3>Replace managed services with Postgres 17</h3>
-        <p class="post-excerpt">Postgres 17 replaces Redis, Elasticsearch, and cron for startups in Southeast Asia — here’s the real latency, cost, and failure-mode trade-offs most…</p>
+        <p class="post-excerpt">How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.</p>
         <p class="post-reading-time">13 min read · 16 August 2026</p>
       </a>
       <a class="post-card" href="/agent-slos-measure-what-agents-actually-do/">
@@ -74,8 +74,8 @@
       </a>
       <a class="post-card" href="/senior-role-projects-3-real-paths/">
         <h3>Senior role projects: 3 real paths</h3>
-        <p class="post-excerpt">Senior remote roles in 2026 demand production-grade portfolio projects.</p>
-        <p class="post-reading-time">13 min read · 5 August 2026</p>
+        <p class="post-excerpt">Build three portfolio projects that demonstrate tenant isolation, retry-storm handling, and event sourcing, with concrete ways to measure each claim.</p>
+        <p class="post-reading-time">15 min read · 5 August 2026</p>
       </a>
       <a class="post-card" href="/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
         <h3>CDC pipeline death spiral: one bad LLM call can crash…</h3>
@@ -89,8 +89,8 @@
       </a>
       <a class="post-card" href="/poolers-wont-save-your-serverless-db/">
         <h3>Poolers won’t save your serverless DB</h3>
-        <p class="post-excerpt">Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</p>
-        <p class="post-reading-time">15 min read · 19 July 2026</p>
+        <p class="post-excerpt">Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
+        <p class="post-reading-time">13 min read · 19 July 2026</p>
       </a>
       <a class="post-card" href="/agent-context-short-term-vs-long-term-memory/">
         <h3>Agent context: short-term vs long-term memory</h3>
@@ -119,8 +119,8 @@
       </a>
       <a class="post-card" href="/spot-ais-hidden-cost-spike-in-your-stack/">
         <h3>Spot AI’s hidden cost spike in your stack</h3>
-        <p class="post-excerpt">Protect your salary from AI automation by mastering 3 skills — cache hit ratios, connection pools, and environment rewrites — before the bill spikes 300 % and…</p>
-        <p class="post-reading-time">15 min read · 28 June 2026</p>
+        <p class="post-excerpt">AI refactors often trade cache hits for database reads, exhausting pools and inflating bills. Here is how to detect, verify and gate the change.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
       </a>
       <a class="post-card" href="/migrations-stop-running-them-live/">
         <h3>Migrations? Stop running them live</h3>
@@ -163,9 +163,9 @@
         <p class="post-reading-time">13 min read · 20 June 2026</p>
       </a>
       <a class="post-card" href="/webhooks-2026-retries-idempotency-and-the-9995/">
-        <h3>Webhooks 2026: retries, idempotency, and the 99.95%</h3>
-        <p class="post-excerpt">Cut webhook failures 95% with Redis Streams, Lambda SnapStart, and idempotency keys — p99 latency 780 ms, cost $1.01 per 1,000 events in 2026</p>
-        <p class="post-reading-time">14 min read · 19 June 2026</p>
+        <h3>Webhook Delivery: Retries, Idempotency, and Durability</h3>
+        <p class="post-excerpt">Design reliable webhook ingestion with durable buffering, idempotency keys, bounded retries, and circuit breakers, plus how to measure each guarantee.</p>
+        <p class="post-reading-time">11 min read · 19 June 2026</p>
       </a>
       <a class="post-card" href="/why-ai-interviewers-failed-68-of-us-in-2026/">
         <h3>Why AI Interview Graders Reward Keywords Over Correct Design</h3>
@@ -179,8 +179,8 @@
       </a>
       <a class="post-card" href="/soft-deletes-fail-what-breaks-first/">
         <h3>Soft deletes fail: what breaks first</h3>
-        <p class="post-excerpt">Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed</p>
-        <p class="post-reading-time">13 min read · 9 June 2026</p>
+        <p class="post-excerpt">Soft deletes leak into every query and bloat indexes. Here is how to measure the damage and move to a tiered live/archive/cold lifecycle.</p>
+        <p class="post-reading-time">12 min read · 9 June 2026</p>
       </a>
     </div>
   </main>

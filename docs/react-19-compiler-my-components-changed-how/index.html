@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>React 19 compiler: my components changed how - Kubai Kevin</title>
-        <meta name="description" content="Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.">
+        <title>React 19 Compiler: What It Rewrites and Where It Breaks - Kubai Kevin</title>
+        <meta name="description" content="How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.">
         <meta name="keywords" content="React19Compiler, ReactForgetPerformance, UsememoVsCompiler, React19Performance, ReactCompilerBugs, Reactjs, Performance">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-15T07:49:45.982179">
-        <meta property="article:modified_time" content="2026-09-16T12:40:05.867623+00:00">
+        <meta property="article:modified_time" content="2026-10-04T09:52:45.303505+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="React 19 compiler: my components changed how">
-        <meta property="og:description" content="Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.">
+        <meta property="og:title" content="React 19 Compiler: What It Rewrites and Where It Breaks">
+        <meta property="og:description" content="How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.">
         <meta property="og:url" content="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/react-19-compiler-my-components-changed-how.png">
-        <meta property="og:image:alt" content="React 19 compiler: my components changed how">
+        <meta property="og:image:alt" content="React 19 Compiler: What It Rewrites and Where It Breaks">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="React 19 compiler: my components changed how">
-        <meta name="twitter:description" content="Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.">
+        <meta name="twitter:title" content="React 19 Compiler: What It Rewrites and Where It Breaks">
+        <meta name="twitter:description" content="How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/react-19-compiler-my-components-changed-how.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/react-19-compiler-my-components-changed-how/#article",
-      "headline": "React 19 compiler: my components changed how",
-      "description": "Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.",
+      "headline": "React 19 Compiler: What It Rewrites and Where It Breaks",
+      "description": "How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.",
       "datePublished": "2026-06-15T07:49:45+00:00",
-      "dateModified": "2026-09-16T12:40:05+00:00",
-      "wordCount": 2829,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T09:52:45+00:00",
+      "wordCount": 1993,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "React 19 compiler: my components changed how",
+          "name": "React 19 Compiler: What It Rewrites and Where It Breaks",
           "item": "https://kubaik.github.io/react-19-compiler-my-components-changed-how/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>React 19 compiler: my components changed how</span>
+            <span>React 19 Compiler: What It Rewrites and Where It Breaks</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">React 19 compiler: my components changed how</h1>
+                <h1 itemprop="headline">React 19 Compiler: What It Rewrites and Where It Breaks</h1>
                 
-                <p class="post-lead">Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.</p>
+                <p class="post-lead">How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.</p>
                 
                 
                 <div class="tags">
@@ -257,31 +257,28 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2829 words
+                        10 min read
+                        &nbsp;·&nbsp; 1993 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same react production mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>React 19 shipped with a compiler that promises to rewrite components at build time, turning <code>useMemo</code> and <code>useCallback</code> into compile-time optimizations instead of runtime overhead. That sounds great—until you realize your team’s 300-component codebase now has 1,200 implicit memoization calls you never wrote. Turns out, the compiler hoisted a function that used a prop that changed, so React skipped the re-render entirely. The compiler didn’t just change my code—it changed my assumptions about what <em>my</em> code even was.</p>
-<p>The React team calls this the React Compiler (codename: Forget). It’s not new—Dan Abramov demoed Forget in 2026—but in 2026 it’s finally enabled by default in the React 19 compiler plugin (<code>@react/compiler-runtime@19.0.0</code>). The promise: fewer <code>useMemo</code> and <code>useCallback</code>, smaller bundles, and faster renders. The risk: silent correctness bugs when the compiler inlines state or skips updates you thought were safe.</p>
-<p>Teams I’ve talked to fall into two camps. One camp turns the compiler on and trusts it blindly, only to hit edge-case bugs in async rendering or context consumers. The other camp disables it entirely, missing out on bundle savings and the promise of reduced re-renders. Neither is right. The middle path is understanding what the compiler <em>actually</em> changes under the hood and where it breaks.</p>
-<p>I’ll compare two approaches: <strong>Option A — Keep the compiler on, embrace automatic memoization</strong>, and <strong>Option B — Keep the compiler off, do manual memoization the old way</strong>. I’ll show you the latency numbers, the surprise bugs, and the lines of code saved. By the end, you’ll know when to ignore the hype and when to let the compiler rewrite your components.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>React 19’s compiler rewrites components at build time. It analyzes component scopes, detects stable inputs, and inserts <code>useMemo</code>/<code>useCallback</code> where it thinks you meant to memoize. You can see the rewritten code by running <code>NODE_OPTIONS=--experimental-react-compiler node scripts/build.js</code> with React 19. The compiler outputs a diff that looks like this:</p>
+                <p>The React compiler is a build-time tool that rewrites components to insert memoization automatically. It is the most consequential change to everyday React code in years, because it moves decisions that used to live in your source files into a build step you rarely read. This article covers what the compiler actually changes, the failure modes teams report, how to measure whether it helps, and a checklist for deciding per-component whether to keep it enabled.</p>
+<h2 id="what-the-compiler-actually-does">What the compiler actually does</h2>
+<p>The compiler analyzes each component function, tracks which values are derived from props and state, and inserts memoization around computations and values whose identity would otherwise change on every render. It also attempts to skip re-renders when it can prove the inputs to a subtree have not changed.</p>
+<p>The important word is "prove." The compiler is conservative: when it cannot establish that a value is stable, it bails out of optimizing that region and leaves your code effectively as written. That conservatism is why some components show large wins and others show none.</p>
+<p>A schematic of the transformation, using the compiler's documented output shape:</p>
 <pre><code class="language-javascript">// Original
 function UserAvatar({ user }) {
   const formattedName = formatName(user.firstName, user.lastName);
   return &lt;div&gt;{formattedName}&lt;/div&gt;;
 }
 
-// Rewritten by React 19 compiler
+// Rewritten (conceptual)
 function UserAvatar({ user }) {
   const formattedName = useMemo(
     () =&gt; formatName(user.firstName, user.lastName),
@@ -290,288 +287,136 @@ function UserAvatar({ user }) {
   return &lt;div&gt;{formattedName}&lt;/div&gt;;
 }
 </code></pre>
-<p>The compiler also hoists state updates to avoid unnecessary re-renders. It looks at <code>useState</code> and <code>useReducer</code> and tries to skip updates when the reducer logic proves the state is unchanged. That’s powerful for large lists or complex state machines. I saw a 30% drop in render time in a table component with 500 rows after upgrading to React 19 with the compiler enabled. The catch? The compiler only hoists state when it can prove referential equality. If your reducer uses a mutable object, the compiler bails out and lets React do its normal diffing.</p>
-<p>The compiler shines in three places:</p>
-<ol>
-<li><strong>List components with stable keys</strong>: The compiler can skip re-renders when the key hasn’t changed, even if props drift. In a table with 1,000 rows, render time dropped from 45ms to 18ms at 60fps. That’s the difference between a janky scroll and a smooth one.</li>
-<li><strong>Derived state</strong>: Functions that compute derived state (like <code>formatName</code> above) get memoized automatically. No more <code>useMemo</code> boilerplate.</li>
-<li><strong>Context consumers</strong>: The compiler can skip re-renders when the context value hasn’t changed, reducing the number of <code>useContext</code> subscribers that fire on every state change.</li>
-</ol>
-<p>But the compiler has a dark side: it rewrites code you didn’t write. If you rely on <code>useEffect</code> dependencies that change identity between renders, the compiler can break your code. I learned this the hard way when a <code>useEffect</code> that subscribed to a WebSocket stopped firing after the compiler hoisted a function that used a prop that changed. The fix? Add <code>useEffect</code> to the compiler’s skip list with <code>skipForget: true</code> in the component’s JSDoc.</p>
-<p>The compiler also struggles with async rendering. If your component uses <code>use</code> to read a promise, the compiler can’t prove the promise hasn’t changed, so it skips the memoization. That means you still need <code>useMemo</code> for async data. In a dashboard with 12 async cards, the compiler only saved 8% of the render budget—the rest still needed manual memoization.</p>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Option B is the classic React pattern: manual memoization with <code>useMemo</code> and <code>useCallback</code>. No compiler, no surprises. You keep full control over what gets memoized and when. The downside is the boilerplate and the risk of forgetting to memoize something that matters.</p>
-<p>Here’s a typical manual memoization pattern:</p>
-<pre><code class="language-javascript">function UserAvatar({ user }) {
-  const formattedName = useMemo(
-    () =&gt; formatName(user.firstName, user.lastName),
-    [user.firstName, user.lastName]
+<p>Two things follow from this. First, the memoization is only as good as the compiler's dependency analysis; if a dependency is an object whose identity changes each render, the memo will not help. Second, the compiler is not adding a new runtime primitive — it is emitting the same <code>useMemo</code> and <code>useCallback</code> you would have written, which means it inherits the same correctness constraints.</p>
+<h2 id="why-the-compiler-is-hard-to-reason-about">Why the compiler is hard to reason about</h2>
+<p>Manual memoization is visible. You can read a component and see exactly which values are cached and which dependencies gate the cache. Compiler output is generated, often verbose, and rarely reviewed line by line. That asymmetry produces a specific class of bug: a value that used to be recomputed every render is now cached, and a downstream effect that depended on the fresh identity stops firing.</p>
+<p>A typical failure mode looks like this:</p>
+<pre><code class="language-javascript">function ChatPanel({ socket, roomId }) {
+  const handleMessage = useCallback(
+    (event) =&gt; {
+      appendMessage(roomId, event.data);
+    },
+    [roomId]
   );
-  return &lt;div&gt;{formattedName}&lt;/div&gt;;
-}
 
-function Dashboard({ users }) {
-  const sortedUsers = useMemo(
-    () =&gt; [...users].sort((a, b) =&gt; a.name.localeCompare(b.name)),
-    [users]
-  );
-  return &lt;UserList users={sortedUsers} /&gt;;
+  useEffect(() =&gt; {
+    socket.on('message', handleMessage);
+    return () =&gt; socket.off('message', handleMessage);
+  }, [socket, handleMessage]);
+
+  return &lt;MessageList roomId={roomId} /&gt;;
 }
 </code></pre>
-<p>Manual memoization works everywhere, but it’s verbose. In a codebase with 300 components, adding <code>useMemo</code> and <code>useCallback</code> added 1,200 lines of code. That’s not just noise—it’s cognitive overhead. Developers start skipping memoization for “simple” components, which leads to performance cliffs later.</p>
-<p>Manual memoization also struggles with derived state that depends on multiple props. If your component takes <code>user</code> and <code>settings</code>, and you memoize a derived value based on both, you need to list every prop in the dependency array. Miss one, and your component re-renders unnecessarily. I’ve seen teams spend weeks chasing re-render loops caused by missing dependencies in <code>useMemo</code> arrays.</p>
-<p>But manual memoization has one big advantage: predictability. You know exactly what’s memoized and why. No surprises from a compiler that rewrites your code. And it works with async rendering, WebSockets, and any other edge case the compiler struggles with.</p>
-<p>The operational cost is also lower. No need to debug compiler output or maintain compiler configuration. Just write code and move on.</p>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>I benchmarked both options on a dashboard with 50 async cards, each rendering a user profile and a chart. The dashboard uses React 19 with TypeScript 5.5, Vite 5.2, and React DOM 19.0.0. The tests ran on a MacBook Pro M3 with 32GB RAM, Chrome 130, and React DevTools Profiler.</p>
+<p>The effect re-subscribes when <code>handleMessage</code> changes identity. If the compiler decides <code>handleMessage</code> is stable across renders where <code>roomId</code> did not change, the effect will not re-run — which is correct. The bug appears when the compiler's stability analysis disagrees with your mental model, for example when the callback closes over a value the compiler cannot track. The subscription then keeps a stale closure and messages land in the wrong room.</p>
+<p>This is not a compiler defect. It is the same class of bug that manual <code>useCallback</code> produces when a dependency is omitted. The difference is that with manual memoization you can see the dependency array and audit it. With compiler output you have to read generated code or trust the analysis.</p>
+<h2 id="what-the-compiler-cannot-optimize">What the compiler cannot optimize</h2>
+<p>The compiler's bail-out conditions are the practical boundary of its usefulness. Three categories recur.</p>
+<p><strong>Values that depend on promises or async reads.</strong> When a component reads a promise, the compiler generally cannot prove the resolved value is referentially stable across renders, so it skips memoizing computations derived from it. Async data paths therefore tend to keep their manual memoization.</p>
+<p><strong>Mutable data structures.</strong> If a reducer or helper mutates an object in place, the compiler cannot establish referential equality and bails out. Immutable updates are what make the analysis tractable.</p>
+<p><strong>Values whose identity is intentionally unstable.</strong> Refs, imperative handles, and callbacks that deliberately change identity to force an effect to re-run are all cases where automatic memoization fights your intent.</p>
+<p>The practical consequence: the compiler helps most in components that compute derived values from stable primitives — formatted strings, sorted arrays built from immutable inputs, filtered lists — and helps least in components that bridge to the outside world.</p>
+<h2 id="how-to-measure-the-effect-instead-of-trusting-a-benchmark">How to measure the effect instead of trusting a benchmark</h2>
+<p>Published before-and-after numbers for the compiler are not transferable, because the win depends entirely on how much derived state your components have and how often they re-render. Measure your own code. The procedure is short.</p>
+<p><strong>Instrument re-renders.</strong> Wrap the component under test in a counter that increments on each render, or use the React DevTools Profiler's "Highlight updates" mode and record a scripted interaction. The number to compare is renders per interaction, not renders per second.</p>
+<p><strong>Record a fixed interaction.</strong> Scroll a long list to the bottom, type into a search field, or open and close a modal — the same action, the same duration, before and after enabling the compiler. Without a fixed script the comparison is noise.</p>
+<p><strong>Capture the profile.</strong> In the React DevTools Profiler, record the interaction and export the flamegraph. Compare commit counts and the time spent in the component subtree.</p>
+<p><strong>Compare bundle output.</strong> Build once with the compiler enabled and once with it disabled, and diff the emitted chunk sizes. The compiler emits runtime helpers, so the bundle grows slightly even when memoization reduces work.</p>
+<p><strong>Watch for behavior changes, not just timing.</strong> Run your existing tests with the compiler enabled. Rendering tests that assert on effect firing order or on the number of times a callback runs are the ones most likely to catch a stability change.</p>
+<p>A useful discipline is to enable the compiler on one subtree at a time and keep the measurement script in the repository, so a regression is attributable to a specific commit rather than to "the compiler."</p>
+<h2 id="compiler-on-versus-manual-memoization-a-real-comparison">Compiler on versus manual memoization: a real comparison</h2>
+<p>The two approaches differ on axes that matter more than raw speed.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Compiler on</th>
-<th>Compiler off (manual)</th>
-<th>Difference</th>
+<th>Dimension</th>
+<th>Compiler enabled</th>
+<th>Manual memoization</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Total bundle size</td>
-<td>482KB</td>
-<td>479KB</td>
-<td>+0.6%</td>
+<td>Where caching decisions live</td>
+<td>Build output</td>
+<td>Source code</td>
 </tr>
 <tr>
-<td>First render (TTI)</td>
-<td>1.2s</td>
-<td>1.4s</td>
-<td>-14%</td>
+<td>Reviewability</td>
+<td>Requires reading generated code</td>
+<td>Visible in the component</td>
 </tr>
 <tr>
-<td>Per-card render time (avg)</td>
-<td>4.2ms</td>
-<td>5.8ms</td>
-<td>-28%</td>
+<td>Boilerplate</td>
+<td>Removed</td>
+<td>Written and maintained per component</td>
 </tr>
 <tr>
-<td>Re-renders per second</td>
-<td>12</td>
-<td>28</td>
-<td>-57%</td>
+<td>Behavior on async-derived values</td>
+<td>Frequently bails out</td>
+<td>Explicit, under your control</td>
 </tr>
 <tr>
-<td>Memory heap at idle</td>
-<td>82MB</td>
-<td>94MB</td>
-<td>+15%</td>
+<td>Behavior on mutable data</td>
+<td>Bails out</td>
+<td>Depends on your dependency arrays</td>
+</tr>
+<tr>
+<td>Debugging a stale closure</td>
+<td>Inspect compiler output</td>
+<td>Read the dependency array</td>
+</tr>
+<tr>
+<td>Onboarding cost</td>
+<td>Learning the compiler's bail-out rules</td>
+<td>Familiar React patterns</td>
+</tr>
+<tr>
+<td>Risk profile</td>
+<td>Silent behavior changes in edge cases</td>
+<td>Omitted dependencies, caught by lint</td>
 </tr>
 </tbody>
 </table>
-<p>The compiler’s biggest win is reducing re-renders. In a table with 500 rows, the compiler cut re-renders from 28 to 12 per second. That translated to a 28% drop in render time and a smoother scroll experience. The memory overhead is small—82MB vs 94MB—but noticeable in long sessions.</p>
-<p>But the compiler’s win isn’t universal. In async components, the compiler couldn’t memoize derived state that depended on promises, so manual memoization still won there. The table below shows the breakdown for async cards:</p>
-<table>
-<thead>
-<tr>
-<th>Async card type</th>
-<th>Compiler on</th>
-<th>Compiler off</th>
-<th>Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>User profile (sync)</td>
-<td>3.1ms</td>
-<td>4.8ms</td>
-<td>-35%</td>
-</tr>
-<tr>
-<td>Chart (async data)</td>
-<td>8.2ms</td>
-<td>7.9ms</td>
-<td>+4%</td>
-</tr>
-<tr>
-<td>Search box (debounced)</td>
-<td>5.4ms</td>
-<td>5.2ms</td>
-<td>+4%</td>
-</tr>
-</tbody>
-</table>
-<p>The compiler adds no value for async data because it can’t prove the promise hasn’t changed. That means you still need <code>useMemo</code> for async derived state. The compiler also struggles with components that use <code>use</code> to read promises in render. In those cases, manual memoization is faster and more reliable.</p>
-<p>The compiler’s performance win is real, but it’s not free. The compiler adds 2% to bundle size due to runtime helpers for memoization. That’s small, but it matters in resource-constrained environments like mobile browsers.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>The compiler changes the rhythm of development. With the compiler on, you write components without thinking about memoization. No more <code>useMemo</code> boilerplate, no more <code>useCallback</code> arrays. That’s liberating—until it isn’t.</p>
-<p>I turned the compiler on for a team of 8 engineers. After two weeks, we had 12 bugs filed under “compiler broke something.” Half were edge cases with async rendering, a quarter were context consumers that stopped updating, and the rest were functions that changed identity between renders. The fix? Add <code>skipForget: true</code> to the component’s JSDoc. That silences the compiler for that component, but it defeats the purpose of automatic memoization.</p>
-<p>The compiler also changes how you think about dependencies. With manual memoization, you’re taught to list every dependency in the array. With the compiler, you learn to trust the compiler to do it for you. That’s a cognitive shift. Some engineers loved it. Others found it disorienting.</p>
-<p>Manual memoization is predictable but tedious. Engineers forget to memoize derived state, which leads to re-render loops. In a codebase with 300 components, we found 47 instances of missing <code>useMemo</code> that caused unnecessary re-renders. The fix? A custom ESLint rule that flags components with derived state that isn’t memoized. That rule caught 38 of the 47 instances automatically.</p>
-<p>The compiler also changes the debugging experience. When something breaks, you can’t just look at the component and see what’s memoized. You need to inspect the compiler output, which is noisy and hard to read. With manual memoization, the dependencies are right there in the code. That makes debugging faster and more reliable.</p>
-<p>Here’s a real example. In a modal that subscribed to a WebSocket, the compiler hoisted a function that used a prop that changed. The effect stopped firing, and the UI froze. With manual memoization, the fix is obvious: add the prop to the dependency array. With the compiler, the fix is to add <code>skipForget: true</code> and hope the compiler doesn’t break something else.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>Operational cost isn’t just about runtime performance—it’s about the cost of maintaining the code and the risk of outages. The compiler adds complexity to the build pipeline. You need to configure the React compiler plugin, set up compiler output inspection, and train engineers on the new patterns. That’s not free.</p>
-<p>In a team of 8 engineers, the compiler added 3 days of onboarding. Engineers had to learn how to read compiler output, how to silence the compiler for edge cases, and how to debug when the compiler breaks something. Manual memoization has no onboarding cost—engineers already know <code>useMemo</code> and <code>useCallback</code>.</p>
-<p>The compiler also adds risk. If the compiler misfires, it can break rendering in ways that are hard to debug. In production, we saw a 0.3% error rate in a dashboard component after upgrading to React 19 with the compiler enabled. The errors were silent—no crash, just missing UI. The fix? Roll back the compiler and add manual memoization for the affected component. That took 4 hours of debugging and a rollback.</p>
-<p>Manual memoization has its own operational cost: the cost of forgetting to memoize. In our codebase, missing <code>useMemo</code> led to 12% more CPU usage in a high-traffic page. That translated to 3 extra pods in Kubernetes and $800/month in cloud costs. The fix? A custom ESLint rule and a performance budget. That added 2 days of engineering time but saved $800/month.</p>
-<p>The table below compares the operational costs:</p>
-<table>
-<thead>
-<tr>
-<th>Cost type</th>
-<th>Compiler on</th>
-<th>Compiler off</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Onboarding time</td>
-<td>3 days</td>
-<td>0 days</td>
-</tr>
-<tr>
-<td>Build pipeline changes</td>
-<td>2 days</td>
-<td>0 days</td>
-</tr>
-<tr>
-<td>Production rollbacks</td>
-<td>1 (0.3% error)</td>
-<td>0</td>
-</tr>
-<tr>
-<td>Cloud cost (per month)</td>
-<td>$120</td>
-<td>$200</td>
-</tr>
-<tr>
-<td>Debugging time (avg)</td>
-<td>2 hours</td>
-<td>30 minutes</td>
-</tr>
-</tbody>
-</table>
-<p>The compiler wins on cloud cost but loses on onboarding and debugging time. If your team values stability over performance, manual memoization is the cheaper option.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I use a simple framework to decide whether to enable the compiler or stick with manual memoization. It’s based on three questions:</p>
-<ol>
-<li>
-<p><strong>How much derived state does your app have?</strong>
-   If your components compute derived state (like sorted lists, formatted names, or chart data), the compiler will save you boilerplate and reduce re-renders. If your app is mostly async data fetching with little derived state, the compiler adds no value.</p>
-</li>
-<li>
-<p><strong>How sensitive is your UI to re-renders?</strong>
-   If your UI is a dashboard with 50+ components, the compiler’s reduction in re-renders matters. If your UI is a single form with 10 fields, the compiler’s win is negligible.</p>
-</li>
-<li>
-<p><strong>How much edge-case code do you have?</strong>
-   If your codebase uses WebSockets, async rendering, or context consumers that change identity, the compiler will break things. If your codebase is simple components with stable props, the compiler is safe.</p>
-</li>
-</ol>
-<p>Here’s a decision table I use:</p>
-<table>
-<thead>
-<tr>
-<th>Derived state</th>
-<th>Re-render sensitivity</th>
-<th>Edge-case code</th>
-<th>Recommendation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>High</td>
-<td>High</td>
-<td>Low</td>
-<td>Enable compiler</td>
-</tr>
-<tr>
-<td>High</td>
-<td>Medium</td>
-<td>Medium</td>
-<td>Enable compiler, silence edge cases</td>
-</tr>
-<tr>
-<td>Low</td>
-<td>High</td>
-<td>High</td>
-<td>Manual memoization</td>
-</tr>
-<tr>
-<td>Low</td>
-<td>Low</td>
-<td>Low</td>
-<td>Manual memoization</td>
-</tr>
-</tbody>
-</table>
-<p>I also look at the team’s experience. If the team is junior or unfamiliar with memoization, manual memoization is safer. If the team is senior and comfortable with React internals, the compiler is a productivity win.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p>My recommendation is to <strong>enable the React 19 compiler by default, but silence it for edge cases</strong>. That gives you the performance win of automatic memoization while avoiding the bugs that come from the compiler rewriting your code.</p>
-<p>Here’s how to do it:</p>
-<ol>
-<li>Enable the compiler in <code>vite.config.ts</code>:
-   ```javascript
-   import { defineConfig } from 'vite';
-   import react from '@vitejs/plugin-react';</li>
-</ol>
-<p>export default defineConfig({
-     plugins: [
-       react({
-         jsxImportSource: 'react',
-         compilerOptions: {
-           runtime: 'automatic',
-           importSource: 'react/compiler-runtime',
-         },
-       }),
-     ],
-   });
-   ```</p>
-<ol>
-<li>
-<p>Add a custom ESLint rule to silence the compiler for edge cases:
-   <code>javascript
-   // .eslintrc.js
-   module.exports = {
-     rules: {
-       'react-compiler/no-unstable-deps': 'warn',
-     },
-   };</code></p>
-</li>
-<li>
-<p>Add <code>skipForget: true</code> to components that break:
-   <code>javascript
-   // @skipForget
-   function WebSocketPanel({ socket }) {
-     // This component uses a prop that changes identity
-     useEffect(() =&gt; {
-       socket.on('message', handleMessage);
-     }, [socket]);
-   }</code></p>
-</li>
-</ol>
-<p>Ignore this recommendation if:</p>
+<p>There is no universally correct column. The compiler reduces the volume of memoization code a team writes and removes a common source of missed optimizations. Manual memoization keeps every caching decision legible. The failure modes differ: the compiler fails by changing behavior in ways that are hard to see, and manual memoization fails by omission, which lint rules and review can catch.</p>
+<h2 id="a-worked-decision-example">A worked decision example</h2>
+<p>Consider a component that renders a filtered and sorted list of 400 rows, where the filter and sort keys come from two props.</p>
+<p>With manual memoization, the code is:</p>
+<pre><code class="language-javascript">function FilteredList({ rows, filter, sortKey }) {
+  const visible = useMemo(
+    () =&gt; rows
+      .filter((row) =&gt; row.name.toLowerCase().includes(filter.toLowerCase()))
+      .sort((a, b) =&gt; a[sortKey].localeCompare(b[sortKey])),
+    [rows, filter, sortKey]
+  );
+
+  return (
+    &lt;ul&gt;
+      {visible.map((row) =&gt; (
+        &lt;li key={row.id}&gt;{row.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<p>The reasoning for enabling the compiler here is straightforward. All three inputs are primitives or a stable array reference, the computation is pure, and the result is consumed directly in render with no effect depending on its identity. This is the shape the compiler handles well: it can prove the dependencies and it will memoize the filter-and-sort chain. The manual <code>useMemo</code> becomes redundant.</p>
+<p>Now change one thing: make the list subscribe to a live data feed that pushes updates into <code>rows</code> by mutating the array in place. The compiler can no longer prove <code>rows</code> is stable, so it bails out of memoizing <code>visible</code>. Worse, if the component also passes a callback derived from <code>visible</code> into an effect, the identity of that callback becomes unpredictable. The correct move is to make the update immutable — replace the array rather than mutate it — which restores the compiler's ability to analyze the component and also fixes the underlying correctness issue.</p>
+<p>The general rule from this example: the compiler's effectiveness is a function of how disciplined your data flow already is. It rewards immutability and pure derivations, and it exposes places where those properties are missing.</p>
+<h2 id="deciding-per-component-not-per-project">Deciding per component, not per project</h2>
+<p>A project-wide switch is the wrong granularity. The compiler's behavior varies by component, and the components where it helps are exactly the ones where its analysis succeeds. A practical checklist:</p>
 <ul>
-<li>Your app is mostly async data fetching with little derived state. The compiler adds no value and adds complexity.</li>
-<li>Your team is junior or unfamiliar with React internals. Manual memoization is safer and more predictable.</li>
-<li>Your UI is simple and doesn’t suffer from re-render performance issues. The compiler’s win isn’t worth the risk.</li>
+<li><strong>Does the component compute derived values from stable primitives?</strong> If yes, the compiler is likely to help and the manual memoization is likely redundant.</li>
+<li><strong>Does the component bridge to an external system — sockets, timers, imperative APIs?</strong> If yes, treat it as a candidate for exclusion and verify effect behavior explicitly.</li>
+<li><strong>Does the component read promises during render?</strong> If yes, expect the compiler to bail out; keep manual memoization for the derived values.</li>
+<li><strong>Does any reducer or helper mutate data in place?</strong> If yes, fix the mutation first. The compiler's inability to optimize is a symptom, not the problem.</li>
+<li><strong>Do your tests assert on effect firing or callback invocation counts?</strong> If yes, run them with the compiler enabled before shipping; they are your best detector of stability regressions.</li>
 </ul>
-<p>I ignored my own recommendation on a project with a WebSocket-heavy UI. The compiler broke 3 out of 8 WebSocket components, and the fixes added more complexity than the performance win was worth. We rolled back the compiler and added manual memoization with a performance budget. That took 4 hours of debugging but saved us from future edge-case bugs.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>React 19’s compiler is a <strong>net win for teams that have derived state and re-render bottlenecks</strong>, but it’s not a silver bullet. It cuts re-renders by 57% in list components, reduces bundle bloat from manual memoization boilerplate, and speeds up first render by 14%. But it adds complexity, breaks edge cases, and changes the debugging experience in ways that frustrate junior engineers.</p>
-<p>I recommend enabling the compiler by default and silencing it only for edge cases. That gives you the performance win without the risk of silent correctness bugs. If your app is mostly async data fetching or your team isn’t comfortable with React internals, stick with manual memoization.</p>
-<p>Here’s the specific next step for you: Open your largest component file and run <code>NODE_OPTIONS=--experimental-react-compiler node scripts/build.js</code> (or your build command). Inspect the compiler output for the first component. If the compiler adds <code>useMemo</code> or <code>useCallback</code> where you didn’t write it, leave the compiler on for that component. If the compiler breaks something (like a WebSocket subscription), add <code>// @skipForget</code> to the component and revisit it later. Do this for 5 components today. If more than 2 break, disable the compiler and stick with manual memoization.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ai-ui-tools-promise-vs-production/">AI UI tools: promise vs. production</a></li>
-<li><a href="https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
-<li><a href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">Bundle size: 70% lighter with server components</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Exclusion mechanisms vary by toolchain. Some integrations read a directive comment on the component; others use a configuration file listing components to skip. Check the documentation for the specific plugin version you are using rather than copying a directive from an older release, because the opt-out syntax has changed across versions.</p>
+<h2 id="failure-mode-analysis-three-ways-the-compiler-surprises-teams">Failure-mode analysis: three ways the compiler surprises teams</h2>
+<p><strong>Stale closures in subscriptions.</strong> A callback that the compiler caches closes over a value that has since changed. The subscription keeps delivering messages to the stale closure. Detection: assert on the value passed to the callback after a prop change. Fix: make the dependency explicit, or exclude the component.</p>
+<p><strong>Effects that stop re-running.</strong> An effect whose dependency is a value the compiler now considers stable no longer fires when you expected it to. Detection: a test that changes a prop and asserts the effect ran. Fix: verify the dependency is genuinely stable; if the effect must re-run, the dependency was never stable and the manual version had a latent bug too.</p>
+<p><strong>Missing UI with no error.</strong> A subtree stops updating because a render was skipped on the basis of a stability proof that does not hold. This is the hardest case, because there is no exception and no console warning. Detection: visual regression tests or a render-count assertion. Fix: exclude the component and investigate the data flow.</p>
+<p>In all three cases the compiler is surfacing an assumption about identity that was previously implicit. That is useful information, but only if the team has tests that can see it.</p>
+<h2 id="a-30-minute-action">A 30-minute action</h2>
+<p>Pick the single component in your application that renders the most rows. Add a render counter to it — a <code>useRef</code> incremented at the top of the function body, logged once per interaction — and record the count for one fixed interaction, such as scrolling the list to the bottom. Then enable the compiler for that component only, repeat the same interaction, and compare the counts. If the count drops and your existing tests still pass, keep the compiler enabled there and move to the next component. If the count is unchanged, the compiler bailed out; inspect why, and fix the data flow before enabling it more widely. If the count drops but a test fails, you have found a real stability bug that manual memoization was hiding.</p>
                 
                 
             </div>
@@ -612,8 +457,8 @@ function Dashboard({ users }) {
                     
                     <a class="related-card" href="/audit-logs-compliance-vs-performance/">
                         <h3>Audit logs: compliance vs performance</h3>
-                        <p>A typical failure mode: the application acknowledges the user request after enqueuing the audit event, but the queue consumer lags by 200–500 ms under…</p>
-                        <span class="related-meta">24 min read · 20 September 2026</span>
+                        <p>How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.</p>
+                        <span class="related-meta">12 min read · 20 September 2026</span>
                     </a>
                     
                 </div>

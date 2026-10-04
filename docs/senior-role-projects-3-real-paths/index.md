@@ -1,56 +1,34 @@
 # Senior role projects: 3 real paths
 
-Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
+Portfolios full of CRUD apps and todo lists no longer distinguish candidates for senior remote roles. What distinguishes them is evidence that the author can reason about production constraints: partial failures, shared infrastructure, data isolation, and latency that varies by region. The three projects below are chosen because each one forces a specific senior-level decision into the open. None of them is flashy. All of them can be built and measured on modest hardware, and every performance claim in this article is something you can verify yourself rather than take on faith.
 
-## Why I wrote this (the problem I kept hitting)
+## Prerequisites and what you will build
 
-In 2026, the African engineer’s resume is no longer enough to land a senior remote role. Hiring teams in Lagos, Berlin, and Singapore have seen enough CRUD apps and Todo lists to last a decade. They now want proof you can ship production-grade software under real constraints: spotty connectivity, shared VPS costs, and latency that swings from 15ms in Lagos to 200ms in Singapore.
+You need a laptop, Node.js 20 LTS or Python 3.11+, and a container runtime. The stack used throughout:
 
-The part that trips people up is not writing the code—it’s making the right trade-offs. A project that compiles and runs locally is table stakes. The real differentiator is a project that survives the jump from "works on my machine" to "handles 50 concurrent users across three continents without breaking the bank."
+- **Node.js 20 LTS** with a lightweight HTTP framework for the API layer (the code below uses Fastify-style plugin registration, but any framework with hooks works)
+- **PostgreSQL 15** for the database
+- **Redis 7.2** for caching, rate limiting, and pub/sub
+- **Docker** for reproducible local environments
+- **GitHub Actions** (or any CI runner) for automated checks
 
-This post is about three portfolio projects that hiring managers actually approve in 2026. Each project is designed to surface real pain points—cache stampedes, retry storms, and observability gaps—that separate junior work from senior work. I’ve picked these because they mirror the constraints I’ve seen teams fight in Lagos fintech pods, Berlin SaaS startups, and Singapore e-commerce shops. The projects aren’t flashy, but they work.
+The three projects:
 
-## Prerequisites and what you'll build
+1. A multi-tenant SaaS API using PostgreSQL row-level security for tenant isolation
+2. A rate-limited service that survives retry storms without cascading failure
+3. A real-time analytics pipeline built on event sourcing and eventual consistency
 
-To follow along, you need nothing fancy: a laptop, Node 20 LTS or Python 3.11+, and a free AWS account. The projects will use:
-
-- **Node 20 LTS** with Fastify 4.22 for the API layer
-- **PostgreSQL 15** for the database (using Neon.tech’s free tier)
-- **Redis 7.2** for caching and rate limiting
-- **Docker 24** for reproducible environments
-- **GitHub Actions** for CI/CD
-
-Each project will run on a $5/month shared VPS in Lagos (Linode Nanode) and still handle 50 concurrent users with p99 latency under 250ms. That’s the constraint first: low-cost infrastructure that still feels fast from Lagos to Berlin.
-
-You’ll build three projects:
-1. **A multi-tenant SaaS API** with row-level security and tenant isolation
-2. **A rate-limited microservice** that handles retry storms without cascading failures
-3. **A real-time analytics pipeline** with event sourcing and eventual consistency
-
-Each project surfaces a different senior-level concern: security, reliability, and observability.
+Each surfaces a different senior concern: security, reliability, and observability. The constraint that ties them together is running them on a small shared VPS (2 vCPU, 2GB RAM is a reasonable target) while still behaving acceptably for users spread across regions.
 
 ## Step 1 — set up the environment
 
-Start by cloning the starter repo. It includes a `docker-compose.yml` that wires up PostgreSQL 15, Redis 7.2, and a Fastify 4.22 API with TypeScript 5.3.
+Create a `docker-compose.yml` that wires up PostgreSQL 15 and Redis 7.2, then start it:
 
 ```bash
-# Clone the repo
-git clone https://github.com/african-engineer/portfolio-starter-2026.git
-cd portfolio-starter-2026
-
-# Install dependencies
-npm install
-
-# Start the stack
 docker compose up -d
-
-# Seed the database
-npm run db:seed
 ```
 
-The stack runs on a single $5 Linode Nanode in Lagos. PostgreSQL 15 uses 2 vCPUs and 2GB RAM; Redis 7.2 shares the same instance. Total cost: $5/month.
-
-Gotcha: If you’re on macOS and Docker Desktop runs out of memory, cap the PostgreSQL container to 1GB RAM in `docker-compose.yml`:
+A note on memory: on a 2GB host, Docker Desktop or the container runtime itself can consume a large fraction of RAM before your services start. Cap the PostgreSQL container explicitly to avoid swap thrashing during load:
 
 ```yaml
 services:
@@ -59,15 +37,13 @@ services:
     cpus: 1.5
 ```
 
-This prevents swap thrashing during cache stampedes.
+This is not a performance trick; it is a guardrail. When PostgreSQL competes with Redis for the same 2GB, the kernel will swap, and swap latency is what turns a slow request into a timeout. Measuring the effect is straightforward: run `docker stats` while your load test runs and watch whether the `MEM USAGE / LIMIT` column for any container approaches its cap. If it does, you have found your bottleneck before your users did.
 
 ## Step 2 — core implementation
 
 ### Project 1: Multi-tenant SaaS API with row-level security
 
-Most junior portfolios stop at a single-tenant CRUD API. Senior work starts when you add tenant isolation without leaking data.
-
-Create a `tenants` table and use PostgreSQL’s `RLS` policies to enforce tenant boundaries.
+A single-tenant CRUD API proves almost nothing. Tenant isolation is where the interesting failure modes live, and PostgreSQL's row-level security (RLS) is the mechanism that makes the isolation a property of the database rather than a property of every query an application author remembers to write.
 
 ```sql
 -- tenants table
@@ -93,7 +69,9 @@ CREATE POLICY tenant_isolation_policy ON users
   USING (tenant_id = current_setting('app.current_tenant')::UUID);
 ```
 
-In your Fastify API, set the `app.current_tenant` context:
+Two things to notice. First, the policy uses `current_setting('app.current_tenant')`, which means the application must set that value on the connection before any query runs. Second, `current_setting` with a missing value raises an error by default rather than returning null, which is the behavior you want: a query with no tenant context should fail loudly, not silently return every row.
+
+In the API layer, resolve the tenant from a header and set the session variable:
 
 ```typescript
 // src/plugins/tenant.ts
@@ -125,13 +103,15 @@ Register the plugin in your app:
 fastify.register(tenant);
 ```
 
-Why this matters: In 2026, hiring teams in Berlin and Singapore reject portfolios that don’t show tenant isolation. A common failure mode is leaking user data across tenants during high load—exactly the kind of mistake that fails in production but passes in local testing.
+The `false` argument to `set_config` means the setting applies for the current session rather than the current transaction. That choice matters. With a connection pool, a session-scoped setting persists on the connection after the request finishes, so the next request that checks out the same connection inherits the previous tenant's context unless it sets its own. Setting the value at the start of every request, as above, makes that safe. An alternative is `SET LOCAL` inside an explicit transaction, which scopes the setting to the transaction and resets automatically on commit or rollback. Both are correct; the failure mode is mixing them.
 
-### Project 2: Rate-limited microservice with retry storms
+**Failure mode to design against:** an application-level filter (`WHERE tenant_id = $1`) that a developer forgets on one query. RLS moves the guarantee into the database, so a missing filter returns zero rows instead of another tenant's data.
 
-Many portfolios include a rate limiter, but few handle retry storms gracefully. Build a service that limits 100 requests per minute per client and survives sudden traffic spikes.
+### Project 2: Rate-limited service with retry storms
 
-Use Redis 7.2’s `INCR` with TTL for the rate limiter:
+A rate limiter is a common portfolio piece. A rate limiter that behaves correctly when clients retry aggressively is rarer, and that is where the senior signal is.
+
+The naive version, using Redis `INCR` with a TTL:
 
 ```javascript
 // src/plugins/rate-limit.js
@@ -160,9 +140,20 @@ export default fp(async (fastify) => {
 });
 ```
 
-This is the naive version—it will fail under retry storms. The gotcha: when a client gets rate-limited, it retries immediately, increasing load and crashing Redis 7.2 on a $5 VPS.
+This has a known race: if the process dies between `INCR` and `EXPIRE`, the key never expires and that client is locked out permanently. The fix is to make the two operations atomic. Redis 7.0 and later support `EXPIRE` with the `NX` flag, and the standard pattern is a small Lua script or a pipeline that sets the expiry only when the counter is created:
 
-The fix: back off the client with a `Retry-After` header and add jitter to the retry policy:
+```javascript
+const script = `
+  local count = redis.call('INCR', KEYS[1])
+  if count == 1 then
+    redis.call('EXPIRE', KEYS[1], ARGV[1])
+  end
+  return count
+`;
+const count = await redis.eval(script, 1, key, 60);
+```
+
+Now the real problem: when a client is rate-limited, a naive client retries immediately. A thousand clients doing that turns a 429 response into a self-inflicted denial of service. The server-side mitigation is to tell the client exactly how long to wait, and the client-side mitigation is jitter so that all the retries do not arrive in lockstep.
 
 ```javascript
 // With exponential backoff and jitter
@@ -170,13 +161,13 @@ const retryAfter = Math.min(10, Math.pow(2, retryCount) + Math.random() * 2);
 reply.header('Retry-After', retryAfter);
 ```
 
-Hiring teams expect portfolios to show this nuance. A common mistake is to copy-paste a rate limiter without handling retry storms—exactly the kind of gap that fails in production during Black Friday sales.
+The `Retry-After` header is the contract; the jitter is what prevents synchronized retries from re-creating the spike you just absorbed. Note that `Retry-After` accepts either a number of seconds or an HTTP date; the numeric form above is the one most clients handle without parsing ambiguity.
+
+**Failure mode to design against:** a rate limiter that returns 429 with no `Retry-After`, or with a constant value, so every client retries at the same instant.
 
 ### Project 3: Real-time analytics with event sourcing
 
-Most portfolios stop at a REST API with a SQL database. Senior work includes eventual consistency and real-time updates.
-
-Build an event-sourced analytics pipeline: every user action is an event, and the analytics table is a projection.
+A REST API that writes to SQL and polls for updates does not scale to a real-time dashboard. Event sourcing makes the write path append-only and the read path a projection, which is what allows the two to be scaled and reasoned about independently.
 
 ```python
 # src/events/handlers.py
@@ -185,6 +176,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import redis.asyncio as redis
+import uuid
 
 Base = declarative_base()
 
@@ -211,6 +203,8 @@ async def handle_event(event_type: str, user_id: str, payload: dict):
     await r.publish('events', f'{event_type}:{user_id}')
 ```
 
+The `uuid` import is required and easy to forget; without it the handler raises `NameError` on the first event. More importantly, the write-to-database-then-publish-to-Redis sequence is not atomic. If the process crashes between `commit()` and `publish()`, the event is stored but never broadcast, and any subscriber that was waiting for it misses it. The standard remedies are the transactional outbox pattern (write the event and an outbox row in one transaction, then have a separate process publish from the outbox) or accepting at-least-once delivery and making consumers idempotent. Which one you choose is exactly the kind of trade-off a senior role is about, and it is worth stating explicitly in a README.
+
 On the client, subscribe to updates:
 
 ```javascript
@@ -234,15 +228,15 @@ export default fp(async (fastify) => {
 });
 ```
 
-Why this matters: Hiring teams in Lagos fintech teams want portfolios that show event sourcing. A common failure mode is building a REST API that writes to SQL and then polling for updates—this doesn’t scale to real-time dashboards.
+**Failure mode to design against:** publishing to Redis inside the same request that commits to PostgreSQL and treating the two as if they succeed or fail together. They do not.
 
 ## Step 3 — handle edge cases and errors
 
 ### Cache stampedes
 
-A common trap is a blind cache with no eviction policy. If the cache expires while 50 users request the same resource, the database gets hammered.
+When a cached value expires and many requests arrive for it at the same moment, every one of them misses the cache and hits the database. That is a cache stampede, and it is most likely to happen on the hottest key, which is the worst possible time.
 
-Use a probabilistic early refresh: when the cache TTL drops below 10%, refresh in the background:
+A common mitigation is probabilistic early refresh: refresh the value slightly before it expires, so the expiry never coincides with a burst of misses.
 
 ```javascript
 // src/plugins/cache.js
@@ -271,11 +265,11 @@ export default fp(async (fastify) => {
 });
 ```
 
-This prevents the thundering herd problem on a $5 VPS.
+To verify this actually helps, instrument two counters: cache hits and database queries for the same key. Run a load test with a short TTL and compare the database query count with and without the early-refresh path. If the count is unchanged, your refresh window is too short relative to your request rate.
 
 ### Retry storms with circuit breakers
 
-Naive retry logic crashes Redis 7.2 on a $5 VPS under load. Use a circuit breaker:
+Naive retry logic against a struggling dependency makes the dependency's problem worse. A circuit breaker stops calling a dependency that is already failing, and gives it room to recover.
 
 ```python
 # src/libs/circuit_breaker.py
@@ -330,11 +324,11 @@ async def get_rate_limit(client_id: str):
     return await r.incr(f'rate_limit:{client_id}')
 ```
 
-This prevents Redis 7.2 from crashing under retry storms on a $5 VPS.
+The half-open state is the important part: after the reset timeout, the breaker allows a single request through. If it succeeds, the breaker closes and normal traffic resumes. If it fails, the breaker reopens. Without the half-open state you either never recover or you recover into a thundering herd.
 
 ### Tenant isolation at the edge
 
-A common failure mode is leaking tenant data in connection pools. Use separate pools per tenant:
+A connection pool shared across tenants is a subtle leak vector: if tenant context is set per session and the pool hands a connection to a different tenant without resetting, queries can see the wrong rows. One mitigation is a pool per tenant with a bounded connection count, so one tenant cannot exhaust the shared pool.
 
 ```typescript
 // src/plugins/tenant-pool.ts
@@ -359,13 +353,13 @@ export default fp(async (fastify) => {
 });
 ```
 
-This prevents connection leaks from one tenant starving others on a $5 VPS.
+This trades connection efficiency for isolation. On a small VPS with many tenants, the per-tenant `max` must be set low enough that the sum of pools does not exceed PostgreSQL's `max_connections` (default 100). If it does, new connections are refused, which is a worse failure than the one you were preventing.
 
 ## Step 4 — add observability and tests
 
 ### Logging and tracing
 
-Add OpenTelemetry 1.25 with Jaeger for distributed tracing:
+Distributed tracing is the difference between "the endpoint is slow" and "the endpoint is slow because the tenant lookup is doing a sequential scan." OpenTelemetry with a Jaeger backend is a common local setup:
 
 ```typescript
 // src/plugins/observability.ts
@@ -401,11 +395,11 @@ docker run -d --name jaeger \
   jaegertracing/all-in-one:1.48
 ```
 
-This gives hiring teams the observability they expect in a senior role.
+The Jaeger UI is on port 16686. The point of running it is not the dashboard; it is that you can point to a specific slow request and show which span consumed the time.
 
 ### Tests that simulate real constraints
 
-Use k6 to simulate 50 concurrent users from Lagos to Berlin with 150ms latency:
+A load test turns "it works on my machine" into a number. k6 is one option:
 
 ```javascript
 // load-test.js
@@ -434,106 +428,42 @@ export default function () {
 }
 ```
 
-Run it with:
+The `thresholds` block is the part that matters: it fails the run if p95 latency exceeds 250ms, so the test produces a pass/fail signal rather than a graph someone has to interpret.
 
-```bash
-k6 run --vus 50 --duration 10m load-test.js
-```
+### How to measure the claims in this article yourself
 
-A common failure mode is a test that passes locally but fails under load—exactly the kind of gap that trips up portfolios.
+Every performance claim here should be reproducible on your own hardware. The measurement plan:
 
-### Monitoring dashboard
+1. **Baseline latency.** Run the load test above against an endpoint with no cache. Record p50, p95, and p99 from the k6 summary output.
+2. **Cache effect.** Add Redis in front of the same endpoint and rerun. Compare the same percentiles. Note the TTL you used; the result is only meaningful for that TTL and that request rate.
+3. **Database load.** Query `pg_stat_statements` before and after, or watch `pg_stat_database` for the number of sequential scans. A cache that reduces latency but not database load is not doing what you think.
+4. **Circuit breaker behavior.** Point the wrapped call at a dependency you can stop (`docker stop <redis-container>`), then run the load test and confirm that after the failure threshold is crossed, requests fail fast rather than waiting on connection timeouts.
+5. **Memory headroom.** Run `docker stats` throughout. On a 2GB host, the interesting number is how close any container gets to its limit, not the average.
 
-Use Grafana 10 with Prometheus 2.45 to monitor Redis 7.2 and PostgreSQL 15:
-
-```yaml
-# docker-compose.yml snippet
-services:
-  prometheus:
-    image: prom/prometheus:v2.45.0
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-
-  grafana:
-    image: grafana/grafana:10.2.0
-    ports:
-      - "3001:3000"
-    volumes:
-      - grafana-storage:/var/lib/grafana
-```
-
-Add these metrics for Redis 7.2:
-
-```yaml
-# prometheus.yml
-scrape_configs:
-  - job_name: 'redis'
-    static_configs:
-      - targets: ['redis:6379']
-    metrics_path: '/metrics'
-```
-
-This gives hiring teams the production-grade monitoring they expect.
-
-## Real results from running this
-
-I ran these projects on a $5 Linode Nanode in Lagos with 2 vCPUs and 2GB RAM. The results:
-
-| Metric               | Baseline (no cache) | With Redis 7.2 cache | With circuit breaker |
-|----------------------|---------------------|----------------------|---------------------|
-| p99 latency          | 850ms               | 220ms                | 210ms               |
-| DB CPU usage         | 95%                 | 35%                  | 28%                 |
-| Redis memory usage   | N/A                 | 80MB                 | 85MB                |
-| Cost per 1k requests | $0.004              | $0.0008              | $0.0007             |
-
-The biggest win was reducing PostgreSQL 15 CPU usage from 95% to 28%—exactly the kind of optimization that matters on a $5 VPS.
-
-A common failure mode is a portfolio that shows a project running locally but doesn’t include load tests or observability. Hiring teams reject these because they can’t verify the project survives real constraints.
+Record the numbers in the README along with the hardware, the TTLs, and the load profile. That is what makes the result a measurement rather than a claim.
 
 ## Common questions and variations
 
-### What if I don’t have a $5 VPS to test on?
+### What if you do not have a VPS to test on?
 
-Use Neon.tech’s free PostgreSQL tier and Railway.app’s free Redis tier. The constraints are the same: you’re limited to 1 vCPU and 1GB RAM. The projects will still expose cache stampedes and retry storms.
+A free-tier managed PostgreSQL instance plus a free-tier managed Redis instance is enough to exercise every failure mode described here. The constraint you are simulating is a small connection limit and limited memory, and the free tiers impose both. The one thing you cannot simulate this way is network latency between regions; for that, run the load generator from a different region than the service.
 
-### Should I use TypeScript or Python for these projects?
+### TypeScript or Python?
 
-TypeScript 5.3 with Fastify 4.22 is the safer bet for senior roles in 2026. Python 3.11 is fine if you’re targeting data roles, but most SaaS startups in Berlin and Singapore want TypeScript.
+TypeScript is the more common choice for API-focused roles; Python is fine for data and analytics roles. The decision that matters more than the language is whether the project demonstrates a real trade-off with a stated reason.
 
-### How do I handle tenant migrations?
+### How do you handle tenant migrations?
 
-Build a tenant migration script that uses PostgreSQL’s `pg_dump` and `pg_restore` in a transaction. This is the kind of operational detail hiring teams expect.
+Run migrations per tenant inside a transaction, and keep the migration tooling aware of which tenants have been migrated. `pg_dump` and `pg_restore` are for backup and restore, not for schema migration; using them for the latter means you lose the ability to apply a migration to one tenant without affecting others. A migration ledger table keyed by tenant is the usual approach.
 
-| Scenario                     | Toolchain                     | Time to implement | Senior-level concern          |
-|------------------------------|-------------------------------|-------------------|-------------------------------|
-| Multi-tenant SaaS API        | PostgreSQL 15 RLS + TypeScript| 3 days            | Data isolation, operational safety |
-| Rate-limited microservice    | Redis 7.2 + circuit breaker   | 2 days            | Reliability, cost optimization   |
-| Real-time analytics          | Event sourcing + websockets   | 4 days            | Eventual consistency, observability |
+| Scenario | Toolchain | Senior-level concern |
+|---|---|---|
+| Multi-tenant SaaS API | PostgreSQL RLS + TypeScript | Data isolation, connection pool safety |
+| Rate-limited service | Redis + atomic increment + circuit breaker | Retry storms, cascading failure |
+| Real-time analytics | Event sourcing + pub/sub + outbox | Delivery guarantees, eventual consistency |
 
 ## Where to go from here
 
-Pick one project and deploy it to a $5 VPS in Lagos using Docker Compose. Add a Grafana 10 dashboard and a k6 load test. Write a README that explains the trade-offs you made—especially the ones that broke and how you fixed them.
+Pick one project and deploy it. Add a load test with a threshold, not just a graph. Write a README section titled "Trade-offs and failure modes" and be specific about what you chose not to do and why.
 
-Do this today: open `src/plugins/tenant.ts` and add a comment explaining why you chose RLS over application-level filtering. Commit it, push to GitHub, and add the repo link to your portfolio. Hiring teams want to see the thinking, not just the code.
-
-That’s the real differentiator in 2026.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** August 05, 2026
+**Do this in the next 30 minutes:** open your tenant middleware and add a comment above the `set_config` call explaining why the setting is session-scoped rather than transaction-scoped, and what would break if a request failed to set it. If you cannot write that comment confidently, that is the gap worth closing first.

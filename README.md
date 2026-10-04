@@ -256,3 +256,11 @@ python adsense_compliance_audit.py # dry-run, same as before, writes remove_flag
 python adsense_compliance_audit.py --delete # actually runs git rm on DELETE entries
 python adsense_compliance_audit.py --improve # writes regeneration_queue.json for IMPROVE entries
 python adsense_compliance_audit.py --delete --improve # both
+
+## Improve the blogs files
+
+delete_posts.py
+improve_posts.py
+triage.py
+post_enhancer.py
+.github/workflows/blog-automation.yml

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Audit logs: ship them fast, keep them forever - Kubai Kevin</title>
-        <meta name="description" content="Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.">
+        <meta name="description" content="Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.">
         <meta name="keywords" content="AuditLogArchitecture, S3CostOptimization, SiemQueryLatency, ImmutableAuditLogs, Performance, Rag, Vectorsearch">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-06T08:45:31.208931">
-        <meta property="article:modified_time" content="2026-09-21T04:03:09.727680+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:18:37.055933+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Audit logs: ship them fast, keep them forever">
-        <meta property="og:description" content="Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.">
+        <meta property="og:description" content="Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.">
         <meta property="og:url" content="https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Audit logs: ship them fast, keep them forever">
-        <meta name="twitter:description" content="Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.">
+        <meta name="twitter:description" content="Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/audit-logs-ship-them-fast-keep-them-forever.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/#article",
       "headline": "Audit logs: ship them fast, keep them forever",
-      "description": "Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.",
+      "description": "Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.",
       "datePublished": "2026-07-06T08:45:31+00:00",
-      "dateModified": "2026-09-21T04:03:09+00:00",
-      "wordCount": 2770,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T10:18:37+00:00",
+      "wordCount": 2660,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Audit logs: ship them fast, keep them forever</h1>
                 
-                <p class="post-lead">Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.</p>
+                <p class="post-lead">Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.</p>
                 
                 
                 <div class="tags">
@@ -259,306 +259,238 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2770 words
+                        13 min read
+                        &nbsp;·&nbsp; 2660 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>Most teams treat audit logging as a checkbox for compliance: write every event to a tamper-proof ledger, ship it to an immutable store, and never touch it again. The standard playbook goes like this:</p>
+                <p>Audit logging is usually framed as a compliance checkbox: capture every event, write it somewhere immutable, retain it for years, never look at it again. That framing conflates two different requirements — durability and searchability — and the conflation is what produces both latency spikes during peak traffic and storage bills nobody budgeted for.</p>
+<p>This article separates those concerns. It covers why the default "everything hot, forever" pipeline breaks, how to model the cost of alternatives, how to route events to tiers at write time, and how to keep integrity verifiable once data has left the hot store.</p>
+<h2 id="the-conventional-playbook-and-its-blind-spot">The conventional playbook and its blind spot</h2>
+<p>The standard advice looks roughly like this:</p>
 <ol>
-<li>Mirror every database change into a write-once table or object storage bucket. 2. Stream the same events to a security information and event management (SIEM) system like Splunk or Elasticsearch. 3. Retain everything for 7–10 years. 4. Call it a day.</li>
+<li>Mirror every database change into a write-once table or object storage bucket.</li>
+<li>Stream the same events to a SIEM.</li>
+<li>Retain everything for the maximum period any regulation might require.</li>
+<li>Consider the problem solved.</li>
 </ol>
-<p>In principle, this is bulletproof. In practice, it’s a performance tax most teams underestimate and a cost volcano most CFOs discover after the first audit.</p>
-<p>The honest answer is that the conventional wisdom conflates compliance with durability. Compliance rarely demands 7 years of hot, searchable data—it demands <em>availability</em> on demand. Durability and compliance are not synonyms.</p>
-<p>Compliance teams care about three things:
-- Can we prove an action happened? - Can we show the data hasn’t been altered? - Can we retrieve it within a reasonable time when asked?</p>
-<p>That last point is the wedge. The standard advice delivers durability and immutability, but it ignores retrieval cost. A SIEM license that costs $2 k/month at 1 TB/month ingestion balloons to $18 k/month when you keep 120 TB for 5 years. That’s not sustainable.</p>
-<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>Two patterns break in production:</p>
-<ol>
-<li>
-<p><strong>Latency inflation during peaks</strong>
-   We mirrored every write to a replicated PostgreSQL audit table and streamed it to Kafka. During a Black Friday sale in 2026, p99 write latency on the primary database jumped from 8 ms to 112 ms because the audit triggers became a hotspot. The fix required sharding the audit table and throttling the stream, but the damage was already done to customer experience.</p>
-</li>
-<li>
-<p><strong>Cost shock from long-term retention</strong>
-The worst part: 60 % of those logs were never queried. The retention policy was written by the compliance officer who assumed “you never know what you’ll need.” Reality: 95 % of audit requests are for the last 90 days.</p>
-</li>
-</ol>
-<p>These outcomes are predictable once you model the cost curve. At 5 TB/month ingestion and 7-year retention, S3-IA costs roughly $0.023/GB/month in 2026. That’s ~$1,000/month at month 1, but by year 7 it’s $11,700/month if every byte is kept hot. Move it to Glacier Deep Archive at $0.00099/GB/month and the 7-year cost drops to $480/month—still expensive, but manageable.</p>
-<p>The standard advice also ignores the ergonomics of retrieval. When an auditor asks for “all admin actions from March 15, 2026,” your SIEM query might return 4.2 million rows. Our team once waited 47 minutes for the result, only to find the query killed the cluster. The real bottleneck isn’t storage—it’s compute.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>Instead of treating audit logs as a monolithic durability problem, split them into three layers that match the lifecycle of data:</p>
+<p>This delivers durability and immutability. It does not deliver <em>retrieval</em>. Compliance obligations are usually about proving an action happened, showing the record has not been altered, and producing it within some stated window when asked. Only the third point depends on how the data is stored, and it is the one the playbook ignores.</p>
+<p>Two failure modes follow.</p>
+<p><strong>Write-path amplification.</strong> If the audit write is synchronous with the business write, every request now does two writes instead of one, and the audit destination becomes a shared hotspot. Under load, tail latency on the primary path rises because unrelated requests contend for the same audit table or broker partition. The usual mitigations — sharding the audit table, buffering through a queue, throttling the stream — add complexity after the fact rather than avoiding the coupling up front.</p>
+<p><strong>Retention cost without query demand.</strong> A retention policy set to "keep everything, you never know" stores far more than is ever read. The asymmetry is structural: storage cost grows linearly with time, while the probability that any given byte is queried falls off sharply with age. Most audit requests concern recent activity; the long tail exists to satisfy a legal hold, not an investigation.</p>
+<h2 id="modelling-the-cost-before-choosing-a-tier">Modelling the cost before choosing a tier</h2>
+<p>Tiering decisions should be arithmetic, not intuition. The inputs are: ingestion rate, retention period, and the per-GB-month price of each storage class. Multiply ingestion by retention months by price.</p>
+<p>Worked example with illustrative prices (substitute your own region's current published rates — object storage pricing changes):</p>
+<ul>
+<li>Ingestion: 5 TB/month.</li>
+<li>Retention: 84 months (7 years).</li>
+<li>Steady-state volume: 5 TB × 84 = 420 TB = 430,080 GB.</li>
+</ul>
+<p>At a hypothetical $0.023/GB-month for a standard infrequent-access class, the steady-state monthly cost is 430,080 × $0.023 ≈ $9,892. At a hypothetical $0.00099/GB-month for a deep-archive class, the same volume costs 430,080 × $0.00099 ≈ $426. The ratio between the two is roughly 23×, and that ratio — not the absolute numbers — is the argument for tiering.</p>
+<p>The arithmetic also tells you when tiering is not worth it. If ingestion is 1 GB/day, steady-state volume after seven years is about 2,555 GB, and the difference between the two classes is on the order of tens of dollars per month. At that scale the operational overhead of three storage layers and a retrieval abstraction exceeds the saving.</p>
+<p>To measure your own situation rather than estimate it:</p>
+<ul>
+<li>Pull actual usage from your cloud cost tooling, filtered by the service and a tag applied to audit buckets, over the last 90 days.</li>
+<li>Pull object counts and average object size from a storage inventory report to get true volume rather than assumed volume.</li>
+<li>Instrument the write path with a histogram of audit-write latency and compare its p99 against the p99 of the business write. If they track each other under load, the audit write is on the critical path.</li>
+<li>Log every retrieval request with the age of the data requested. After a quarter you will have a real distribution of query age, which is the only honest input to a retention policy.</li>
+</ul>
+<h2 id="a-three-layer-model">A three-layer model</h2>
+<p>Split audit data by the job it does, not by the technology that stores it.</p>
 <table>
 <thead>
 <tr>
 <th>Layer</th>
-<th>Retention</th>
-<th>Cost/GB (2026)</th>
-<th>Use case</th>
-<th>Query latency</th>
+<th>Typical retention</th>
+<th>Retrieval characteristics</th>
+<th>Primary consumer</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Hot cache</td>
-<td>7 days</td>
-<td>$0.023 (S3-IA)</td>
-<td>Real-time alerts, active investigations</td>
-<td>&lt; 1 s</td>
+<td>Hot</td>
+<td>Days to a few weeks</td>
+<td>Sub-second, indexed, ad-hoc queries</td>
+<td>On-call engineers, SOC</td>
 </tr>
 <tr>
-<td>Warm archive</td>
-<td>90 days</td>
-<td>$0.004 (S3 Glacier Instant Retrieval)</td>
-<td>Recent forensics, compliance spot checks</td>
-<td>1–5 s</td>
+<td>Warm</td>
+<td>Weeks to a year</td>
+<td>Seconds to minutes, query-in-place</td>
+<td>Incident response, spot audits</td>
 </tr>
 <tr>
-<td>Cold vault</td>
-<td>7 years</td>
-<td>$0.00099 (Glacier Deep Archive)</td>
-<td>Regulatory holds, historical audits</td>
-<td>30–600 s</td>
+<td>Cold</td>
+<td>Multi-year</td>
+<td>Minutes to hours, restore-then-read</td>
+<td>Regulatory holds, legal</td>
 </tr>
 </tbody>
 </table>
-<p>This isn’t just tiered storage—it’s tiered <em>policy</em>. Each layer has a purpose and a budget. The Hot cache is where performance teams live. The Warm archive is where security teams live. The Cold vault is where compliance teams live.</p>
-<p>The key insight is to route events to the right layer at write time, not after the fact. Use a lightweight router (I’ll show the code) that examines the event type, risk score, and age, then decides the destination bucket or index.</p>
-<p>This model also decouples durability from searchability. You don’t need to keep everything in Elasticsearch to satisfy an auditor. You keep what you need to <em>prove</em> what happened, not to <em>analyze</em> everything.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>We rebuilt our audit pipeline at the start of 2026 using this model. Here’s what changed:</p>
-<ol>
-<li>
-<p><strong>Reduced latency spikes</strong>
-The audit events arrived in the Hot cache within 200 ms, which was fast enough for real-time dashboards.</p>
-</li>
-<li>
-<p><strong>Cut S3 costs 78 %</strong>
-Total spend dropped from $42 k/year to $9.2 k/year. The remaining 5 % stayed in S3-IA for the 7-day hot window.</p>
-</li>
-<li>
-<p><strong>Improved retrieval time</strong>
-   A representative SIEM query that previously timed out after 47 minutes now finishes in 12 seconds when constrained to the Hot cache. Even when spanning warm data, the query uses S3 Select and returns in under 2 minutes.</p>
-</li>
-</ol>
-<p>A side-by-side comparison from our staging environment:</p>
-<table>
-<thead>
-<tr>
-<th>Approach</th>
-<th>1-year cost</th>
-<th>p99 query latency</th>
-<th>90-day query success rate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Full hot retention (2026)</td>
-<td>$42 k</td>
-<td>47 min</td>
-<td>62 %</td>
-</tr>
-<tr>
-<td>Tiered retention (2026)</td>
-<td>$9.2 k</td>
-<td>12 s</td>
-<td>98 %</td>
-</tr>
-</tbody>
-</table>
-<p>The data source: real AWS Cost Explorer and CloudWatch Logs Insights queries run in February 2026.</p>
-<p>Another real example: a fintech customer running Node 20 LTS with Express 4.19 and PostgreSQL 15. They mirrored every <code>Transfer</code> event to an audit table and streamed to Kafka. After adopting the tiered model, their compliance officer could still retrieve a 3-year-old transaction in 5 minutes using a custom Lambda that fetched from Glacier Deep Archive and verified the SHA-256 checksum. The performance team didn’t notice the change—because the hot cache stayed hot.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>There are two scenarios where the all-hot, all-immutable approach still wins:</p>
-<ol>
-<li>
-<p><strong>Regulatory regimes that demand instant retrieval</strong>
-   If your regulator requires “within 24 hours” for any audit request, you need hot data. Healthcare in the US under HIPAA sometimes falls here, as do certain EU financial regulations. In these cases, keep 100 % of events in S3-IA or Elasticsearch for at least 90 days, then decide on a case-by-case archival.</p>
-</li>
-<li>
-<p><strong>High-frequency, low-volume systems</strong>
-   If your system only emits 1–2 GB/day of audit events, the cost savings from tiering are negligible. The operational overhead of managing three layers may not justify the 5–10 % cost reduction. Keep it simple if the math doesn’t work.</p>
-</li>
-</ol>
-<p>I’ve seen this fail when teams assumed tiering was always better. One team tried to move 100 % of their 50 GB/day logs to Glacier Deep Archive to save money. After three support tickets from auditors asking for “the log from last Tuesday,” they relented and moved everything back to S3-IA. Lesson: tiering is a cost lever, not a compliance lever.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>Use these five questions to pick your model:</p>
-<ol>
-<li>
-<p><strong>What is your peak ingestion rate?</strong>
-   Below 5 GB/day → keep it hot for simplicity. Above 50 GB/day → tier aggressively.</p>
-</li>
-<li>
-<p><strong>How often do auditors request data older than 90 days?</strong>
-   Annual or less → cold vault is fine. Quarterly or more → warm archive required.</p>
-</li>
-<li>
-<p><strong>What is your acceptable retrieval SLA?</strong>
-   &lt; 1 minute → hot cache. 1–10 minutes → warm archive. &gt; 10 minutes → cold vault.</p>
-</li>
-<li>
-<p><strong>What is your cost ceiling per month?</strong>
-   If hot retention exceeds 20 % of your infrastructure budget, tier.</p>
-</li>
-<li>
-<p><strong>Do you have the tooling to verify checksums on retrieval?</strong>
-   If not, keep at least the last 90 days in an indexed, queryable store.</p>
-</li>
-</ol>
-<p>Here’s a quick decision tree:</p>
-<pre><code>Ingestion &gt; 50 GB/day? → Yes → Tier now
-                  → No → Hot retention OK
-
-Quarterly audits? → Yes → Keep 90 days warm
-               → No → Cold vault OK
-</code></pre>
-<p>If the answers are mixed, run a 30-day pilot: mirror 20 % of events to warm/cold layers while keeping 80 % hot. Measure cost, latency, and retrieval success. Adjust and scale.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p><strong>“Immutability is non-negotiable—any tampering voids our compliance.”</strong></p>
-<p>That’s true for the evidence you present to regulators, not for every byte you store. Tamper-evidence is enough if you can prove the original hash hasn’t changed. Glacier Deep Archive stores the SHA-256 tree hash alongside the object. When you retrieve it, you recompute the hash and compare. If they match, the data is intact. That satisfies most auditors.</p>
-<p><strong>“Tiered storage complicates our SIEM queries.”</strong></p>
-<p>Not if you abstract it. Use a thin wrapper like <code>AuditReader</code> that checks the event age and routes the query to the right backend. Here’s a minimal Python 3.11 example using boto3 and elasticsearch-py:</p>
-<pre><code class="language-python">from datetime import datetime, timedelta
-import boto3
-from elasticsearch import Elasticsearch
-
-class AuditReader:
-    def __init__(self, es_host, s3_bucket):
-        self.es = Elasticsearch(es_host)
-        self.s3 = boto3.client('s3')
-        self.s3_bucket = s3_bucket
-        self.hot_threshold = timedelta(days=7)
-        self.warm_threshold = timedelta(days=90)
-
-    def read_events(self, start: datetime, end: datetime):
-        age = end - start
-        if age &lt;= self.hot_threshold:
-            return self._query_elasticsearch(start, end)
-        elif age &lt;= self.warm_threshold:
-            return self._query_s3_select(start, end)
-        else:
-            return self._query_glacier_retrieve(start, end)
-
-    def _query_elasticsearch(self, start, end):
-        body = {&quot;query&quot;: {&quot;range&quot;: {&quot;timestamp&quot;: {&quot;gte&quot;: start.isoformat(), &quot;lte&quot;: end.isoformat()}}}}
-        result = self.es.search(index='audit-hot-*', body=body, size=10_000)
-        return result['hits']['hits']
-
-    def _query_s3_select(self, start, end):
-        prefix = f&quot;warm/audit/{start.date()}/&quot;
-        query = f&quot;SELECT * FROM s3object s WHERE s.timestamp BETWEEN '{start.isoformat()}' AND '{end.isoformat()}'&quot;
-        response = self.s3.select_object_content(
-            Bucket=self.s3_bucket,
-            Key=f&quot;{prefix}audit.json.gz&quot;,
-            ExpressionType='SQL',
-            Expression=query,
-            InputSerialization={'JSON': {'Type': 'Lines'}, 'CompressionType': 'GZIP'},
-            OutputSerialization={'JSON': {}}
-        )
-        return [r['Records']['Payload'].decode('utf-8') for r in response['Payload']]
-</code></pre>
-<p><strong>“Our SOC team needs all logs in one place for correlation.”</strong></p>
-<p>That’s a tooling problem, not a storage problem. Forward your hot cache to your SIEM (Splunk, Elastic, Datadog) and keep the warm/cold layers as backup. The SOC can still correlate events if the hot window is sufficient for their use cases. If not, extend the warm window—don’t force everything to stay hot.</p>
-<p><strong>“We can’t afford to rewrite our logging pipeline.”</strong></p>
-<p>You don’t have to. Start with a lightweight router that tags events with a retention class (HOT, WARM, COLD) and forwards them accordingly. Here’s a Node 20 LTS example using AWS Lambda and EventBridge:</p>
+<p>The important property is that routing happens at write time. If you decide the tier after the fact, you have already paid to store the event hot, and you are running a batch job whose failure modes you now own. Deciding at write time means the event never enters a tier it does not belong in.</p>
+<p>The second property is that the hot layer is bounded by <em>query need</em>, not by <em>compliance need</em>. The hot layer exists so that humans can investigate quickly. The cold layer exists so that a regulator can be satisfied eventually. Conflating them is what makes the hot layer expensive.</p>
+<h2 id="integrity-in-a-tiered-pipeline">Integrity in a tiered pipeline</h2>
+<p>The objection to tiering is usually about tamper-evidence: if data moves between storage classes, how do you prove it was not altered?</p>
+<p>The answer is to make integrity a property of the record, not of the storage medium. Compute a digest of the event's canonical serialization at write time and store that digest somewhere durable and separate. On retrieval, recompute the digest and compare. If the storage layer altered the bytes, the digests diverge regardless of which tier the object sat in.</p>
+<p>Two details matter:</p>
+<ul>
+<li><strong>Canonicalization.</strong> Hash a deterministic serialization — sorted keys, fixed number formatting, explicit encoding. Hashing <code>JSON.stringify</code> output from an arbitrary object is not reproducible across languages or key orders.</li>
+<li><strong>Digest storage.</strong> Keep the digest in a store with different access controls and a different failure domain from the log objects themselves. A digest stored alongside the object it protects provides no protection against an attacker who can write to that bucket.</li>
+</ul>
+<p>Object-lock features in object storage (retention modes that prevent deletion or overwrite for a defined period) are a useful complement, but they solve a different problem: they prevent premature deletion, not undetected modification.</p>
+<h2 id="routing-events-at-write-time">Routing events at write time</h2>
+<p>A minimal router needs three inputs: event type, a risk or sensitivity classification, and the event timestamp. The classification should come from the producer, not be inferred by the router, because only the producer knows what the event means.</p>
+<p>The Node example below writes to a tier-selected bucket and emits a notification. Note the fixes relative to a naive version: the key uses the event's own identifier rather than an undefined property, the timestamp used for routing is the event timestamp rather than wall-clock time at the router, and the body is actually compressed if it is labelled as compressed.</p>
 <pre><code class="language-javascript">// retention-router.mjs
+import { gzipSync } from 'node:zlib';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { EventBridgeClient, PutEventsCommand } from '@aws-sdk/client-eventbridge';
 
-const s3 = new S3Client({ region: 'us-east-1' });
-const eb = new EventBridgeClient({ region: 'us-east-1' });
+const s3 = new S3Client({ region: process.env.AWS_REGION });
+const eb = new EventBridgeClient({ region: process.env.AWS_REGION });
 
-const HOT_BUCKET = 'audit-hot-2026';
-const WARM_BUCKET = 'audit-warm-2026';
-const COLD_BUCKET = 'audit-cold-2026';
+const HOT_BUCKET = process.env.HOT_BUCKET;
+const WARM_BUCKET = process.env.WARM_BUCKET;
+const COLD_BUCKET = process.env.COLD_BUCKET;
+
+const WARM_AFTER_MS = 7 * 24 * 3600 * 1000;
+const COLD_AFTER_MS = 90 * 24 * 3600 * 1000;
+
+function pickBucket(eventTimeMs, riskScore) {
+  const age = Date.now() - eventTimeMs;
+  if (riskScore &gt;= 7) return HOT_BUCKET;      // sensitive: always hot
+  if (age &gt;= COLD_AFTER_MS) return COLD_BUCKET;
+  if (age &gt;= WARM_AFTER_MS) return WARM_BUCKET;
+  return HOT_BUCKET;
+}
 
 export const handler = async (event) =&gt; {
   const body = JSON.parse(event.body);
-  const { eventType, riskScore, timestamp } = body;
+  const { eventId, eventType, riskScore = 0, timestamp } = body;
 
-  let bucket = HOT_BUCKET;
-  if (riskScore &gt; 7) bucket = HOT_BUCKET;
-  else if (new Date(timestamp) &lt; new Date(Date.now() - 90 * 24 * 3600 * 1000)) {
-    bucket = WARM_BUCKET;
-  } else {
-    bucket = COLD_BUCKET;
-  }
+  const eventTimeMs = Date.parse(timestamp);
+  if (Number.isNaN(eventTimeMs)) throw new Error('invalid timestamp');
 
-  const key = `audit/${timestamp.slice(0,10)}/${event.eventId}.json.gz`;
+  const bucket = pickBucket(eventTimeMs, riskScore);
+  const day = new Date(eventTimeMs).toISOString().slice(0, 10);
+  const key = `audit/${day}/${eventId}.json.gz`;
 
   await s3.send(new PutObjectCommand({
     Bucket: bucket,
     Key: key,
-    Body: JSON.stringify(body),
+    Body: gzipSync(Buffer.from(JSON.stringify(body))),
     ContentEncoding: 'gzip',
-    Metadata: { retention: bucket.split('-')[1] }
+    ContentType: 'application/json',
+    Metadata: { retention: bucket === HOT_BUCKET ? 'hot'
+                        : bucket === WARM_BUCKET ? 'warm' : 'cold' }
   }));
 
   await eb.send(new PutEventsCommand({
-    Entries: [{ Source: 'audit.router', DetailType: 'AuditEventStored', Detail: JSON.stringify({ bucket, key }) }]
+    Entries: [{
+      Source: 'audit.router',
+      DetailType: 'AuditEventStored',
+      Detail: JSON.stringify({ bucket, key, eventId })
+    }]
   }));
 };
 </code></pre>
-<p>Deploy this as a Lambda with 512 MB memory and arm64. At 10 k events/sec and 1 KB/event, the cost is ~$18/month in 2026. That’s cheaper than the engineering time you’d spend arguing about retention policies.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<p>If I were designing an audit pipeline today, I’d make these changes up front:</p>
+<p>Two operational notes. First, routing on the event's own timestamp rather than arrival time means a late-arriving event lands in the correct tier instead of being promoted to hot by accident. Second, the risk-score override is deliberate: an event that is sensitive enough to investigate should never be cold, regardless of age.</p>
+<h2 id="reading-across-tiers">Reading across tiers</h2>
+<p>A reader abstraction hides the tier boundary from callers. The Python example below dispatches by age. It is deliberately explicit about the limitation of query-in-place: object-storage SQL selection works on line-delimited, uncompressed-or-gzip data and is not a substitute for an index, so warm queries should be scoped tightly by prefix.</p>
+<pre><code class="language-python">from datetime import datetime, timedelta
+import json
+import boto3
+from elasticsearch import Elasticsearch
+
+class AuditReader:
+    def __init__(self, es_host, bucket):
+        self.es = Elasticsearch(es_host)
+        self.s3 = boto3.client(&quot;s3&quot;)
+        self.bucket = bucket
+        self.hot = timedelta(days=7)
+        self.warm = timedelta(days=90)
+
+    def read_events(self, start: datetime, end: datetime):
+        age = datetime.now(start.tzinfo) - start
+        if age &lt;= self.hot:
+            return self._hot(start, end)
+        if age &lt;= self.warm:
+            return self._warm(start, end)
+        return self._cold(start, end)
+
+    def _hot(self, start, end):
+        body = {&quot;query&quot;: {&quot;range&quot;: {&quot;timestamp&quot;: {
+            &quot;gte&quot;: start.isoformat(), &quot;lte&quot;: end.isoformat()}}}}
+        res = self.es.search(index=&quot;audit-hot-*&quot;, body=body, size=1000)
+        return [h[&quot;_source&quot;] for h in res[&quot;hits&quot;][&quot;hits&quot;]]
+
+    def _warm(self, start, end):
+        prefix = f&quot;audit/{start.date().isoformat()}/&quot;
+        expr = (&quot;SELECT * FROM s3object s WHERE s.timestamp &gt;= &quot;
+                f&quot;'{start.isoformat()}' AND s.timestamp &lt;= '{end.isoformat()}'&quot;)
+        paginator = self.s3.get_paginator(&quot;list_objects_v2&quot;)
+        out = []
+        for page in paginator.paginate(Bucket=self.bucket, Prefix=prefix):
+            for obj in page.get(&quot;Contents&quot;, []):
+                resp = self.s3.select_object_content(
+                    Bucket=self.bucket,
+                    Key=obj[&quot;Key&quot;],
+                    ExpressionType=&quot;SQL&quot;,
+                    Expression=expr,
+                    InputSerialization={
+                        &quot;JSON&quot;: {&quot;Type&quot;: &quot;LINES&quot;}, &quot;CompressionType&quot;: &quot;GZIP&quot;},
+                    OutputSerialization={&quot;JSON&quot;: {}},
+                )
+                for ev in resp[&quot;Payload&quot;]:
+                    if &quot;Records&quot; in ev:
+                        out.append(json.loads(ev[&quot;Records&quot;][&quot;Payload&quot;]))
+        return out
+
+    def _cold(self, start, end):
+        # Restore from archive, then read. Restore is asynchronous.
+        raise NotImplementedError(&quot;implement restore-then-read&quot;)
+</code></pre>
+<p>The cold path is intentionally unimplemented here because it is a workflow, not a query: you submit a restore request, wait for the object to become readable, then read it and verify its digest. Treating it as a synchronous call is how teams end up with a reader that times out during an audit.</p>
+<h2 id="when-the-all-hot-approach-is-still-correct">When the all-hot approach is still correct</h2>
+<p>Tiering is not universally better. Two situations favour keeping everything hot:</p>
+<p><strong>Regulators with short retrieval windows.</strong> If the obligation is to produce any record within hours, the cold tier's restore latency is a liability. In that case keep the full retention window in a queryable class and accept the cost — or negotiate the retrieval SLA explicitly in your policy so the constraint is documented rather than assumed.</p>
+<p><strong>Low volume.</strong> Below roughly a few GB per day, the absolute saving from tiering is small and the operational surface — three buckets, lifecycle rules, a restore workflow, digest verification — is real. A single bucket with a lifecycle transition and no reader abstraction is often the better engineering choice.</p>
+<p>A related failure mode: tiering everything to the coldest class to minimise cost, then discovering that routine audit requests are now restore operations. Tiering is a cost lever. It is not a compliance lever, and it does not change what you are obliged to produce.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these before committing to a design:</p>
 <ol>
-<li>
-<p><strong>Hash everything at write time</strong>
-   Compute SHA-256 for each event’s canonical JSON before storing. Store the hash in a separate DynamoDB table with the key <code>{eventId: sha256}</code>. This makes tamper detection trivial—just recompute and compare.</p>
-</li>
-<li>
-<p><strong>Use AWS OpenSearch Serverless for hot cache</strong>
-   Instead of self-managed Elasticsearch, use OpenSearch Serverless with fine-grained access control. It auto-scales and costs ~$0.10 per GB ingested, which is cheaper than self-hosted at our scale.</p>
-</li>
-<li>
-<p><strong>Adopt AWS S3 Object Lock in governance mode</strong>
-   For the hot and warm layers, enable Object Lock with a retention period of 90 days. This prevents accidental deletion and satisfies most compliance regimes without the complexity of WORM tape.</p>
-</li>
-<li>
-<p><strong>Add a budget guardrail</strong>
-   Create an AWS Budgets alert at 80 % of your expected audit spend. When triggered, it emails the team and triggers a Lambda that moves older events to colder tiers automatically.</p>
-</li>
-<li>
-<p><strong>Ship a CLI for auditors</strong>
-   Build a simple <code>audit-cli</code> that wraps the retrieval logic. Auditors can run <code>audit-cli get --start 2023-03-15 --end 2023-03-16 --format csv</code> and get a file they can open in Excel. No SIEM required for routine requests.</p>
-</li>
+<li><strong>What is peak ingestion, in bytes per second, not per day?</strong> Peak determines write-path design; average determines cost.</li>
+<li><strong>Is the audit write synchronous with the business write?</strong> If yes, quantify the tail-latency impact before adding tiers — decoupling may matter more than storage class.</li>
+<li><strong>What is the distribution of retrieval age?</strong> Measure it for a quarter. Retention policy should follow this, not precede it.</li>
+<li><strong>What is the worst-case retrieval SLA you must meet?</strong> This sets the floor on how cold the coldest tier can be.</li>
+<li><strong>Can you verify integrity without the storage layer's cooperation?</strong> If not, fix that before tiering.</li>
+<li><strong>What is the monthly cost ceiling, and what fraction of infrastructure spend is audit storage today?</strong> A tiering project should have a target number attached.</li>
+<li><strong>Who owns the restore workflow, and has it been exercised?</strong> An untested restore path is not a retention strategy.</li>
 </ol>
-<p>I learned these lessons the hard way when we had to hand-carry a hard drive to an auditor because our retrieval pipeline failed during a surprise exam. The drive contained 4 TB of JSON blobs, and the SHA-256 verification script took 8 hours to run on a laptop. If we’d hashed at write time, we could have verified the integrity in seconds.</p>
-<h2 id="summary">Summary</h2>
-<p>Audit logging doesn’t have to be a tug-of-war between compliance and performance. The trick is to stop treating logs as a single undifferentiated blob. Split them into hot, warm, and cold layers that match the real needs of auditors, security teams, and your budget. Use lightweight routing at write time so you never pay for hot storage you don’t need. Verify integrity at ingest so you never scramble during an audit.</p>
-<p>The conventional wisdom is incomplete because it equates durability with compliance. Durability is a means to an end—compliance is the end. Design for the end.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how to reduce aws s3 costs for audit logs without breaking compliance</strong></p>
-<p>Start by calculating your current spend: go to AWS Cost Explorer, filter by service=S3, tag=audit, and look at the last 90 days. If you’re above $500/month, move events older than 7 days to S3 Glacier Instant Retrieval, and events older than 90 days to Glacier Deep Archive. Use S3 Object Lock in governance mode for the hot window to prevent accidental deletion. Finally, implement a lifecycle policy that transitions objects automatically—don’t rely on manual scripts.</p>
-<p><strong>what is the minimum retention period required for audit logs in fintech</strong></p>
-<p>Most fintech regulators require 5 years for transactional audit trails, but only the last 12–24 months need to be searchable within a business day. Older logs can be cold-tiered as long as you can retrieve them on demand within the regulatory timeframe. Check your specific license (e.g., FDIC, FCA, MAS) and document the retrieval SLA in your policy. In practice, 90 days hot + 5 years cold is sufficient for most jurisdictions.</p>
-<p><strong>how to handle log tampering detection in a tiered audit pipeline</strong></p>
-<p>Compute a SHA-256 hash of the canonical JSON representation of each event at write time. Store the hash in DynamoDB with the event ID as the key. When retrieving, recompute the hash for each object and compare it to the stored value. If they don’t match, flag the object as tampered. For the cold vault, store the hash alongside the object in Glacier so you can verify integrity without network calls. This approach works even when objects are moved between tiers.</p>
-<p><strong>what tools can replace elasticsearch for hot audit logs</strong></p>
-<p>AWS OpenSearch Serverless is the easiest drop-in replacement. It scales automatically, costs ~$0.10/GB ingested, and integrates with IAM. If you’re already on PostgreSQL 15+, consider pg_partman to shard your audit table by date and keep recent partitions in an unlogged table for speed. For teams on Node 20 LTS, Meilisearch or Typesense offer sub-second search with a smaller footprint than Elasticsearch. In all cases, cap the retention to 90 days and archive aggressively—no one needs 7 years of hot data.</p>
-<p>Check your S3 bucket inventory report now and move anything older than 30 days to Glacier Instant Retrieval. Do it in the AWS Console under S3 → Management → Buckets → [your-audit-bucket] → Create lifecycle rule. Set prefix to <code>audit/</code> and transition to Glacier Instant Retrieval after 30 days. Expect a 60 % cost drop within the first billing cycle.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
-<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
-<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>Late events promoted to hot.</strong> Routing on arrival time rather than event time sends backfilled events to the most expensive tier. Route on event time; use arrival time only for monitoring.</p>
+<p><strong>Digest drift.</strong> If canonicalization changes between the writer and the verifier — a library upgrade that changes number formatting, for example — every historical digest fails. Version the canonicalization scheme and record the version alongside the digest.</p>
+<p><strong>Lifecycle rules that fight the router.</strong> If the router writes directly to a warm bucket and a lifecycle rule also transitions that bucket, objects can move twice. Pick one mechanism: either the router decides the tier and lifecycle handles expiry, or the router writes hot and lifecycle handles all transitions. Mixing both without a clear owner produces surprising bills.</p>
+<p><strong>Unbounded hot queries.</strong> A reader that fans out across every hot index for a wide time range will eventually take down the cluster. Enforce a maximum range on the hot path and reject queries that exceed it, rather than letting them run.</p>
+<p><strong>Restore storms.</strong> A legal hold that requires thousands of cold objects at once will queue behind per-object restore limits. Batch and prioritise, and keep a record of what has already been restored.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do you reduce object storage cost for audit logs without breaking compliance?</strong>
+Measure first: pull 90 days of cost data filtered by the audit tag, and pull an inventory report for true object counts and sizes. Then model the saving from moving data older than your measured query horizon to a colder class. The compliance constraint is the retrieval SLA, not the storage class — so document the SLA, then choose the cheapest class that meets it.</p>
+<p><strong>What retention period applies to audit logs in financial services?</strong>
+It varies by jurisdiction and licence, and no general answer is safe. What is consistent is the shape: a long retention obligation combined with a much shorter <em>searchable</em> window. Establish both numbers in writing — how long records must exist, and how quickly they must be produced — because only the second constrains your storage design.</p>
+<p><strong>How do you detect tampering in a tiered pipeline?</strong>
+Hash a canonical serialization of each event at write time and store the digest separately from the object. Recompute on retrieval and compare. Storage-class transitions preserve bytes, so a digest computed at ingest remains valid across tiers. The digest store needs different access controls from the log store, or it protects nothing.</p>
+<p><strong>What can replace a full SIEM for hot audit search?</strong>
+A managed search service, a date-partitioned relational table, or a dedicated search engine all work for the hot window. The choice matters less than the boundary: cap the hot window at your measured query horizon and archive beyond it. A smaller hot index is cheaper to run and faster to query than a large one, so the boundary is a performance decision as much as a cost one.</p>
+<p><strong>Does object lock replace integrity hashing?</strong>
+No. Object lock prevents deletion or overwrite for a retention period. It does not detect modification made through a path that the lock does not cover, and it says nothing about data that has already been copied elsewhere. Use it for immutability guarantees and hashing for integrity guarantees; they are complementary.</p>
+<h2 id="do-this-next">Do this next</h2>
+<p>Open your object storage console, run an inventory report on the bucket that holds your audit data, and write down two numbers: total bytes, and bytes last modified more than 90 days ago. That second number is the volume currently sitting in your most expensive tier that almost certainly does not need to be there. You now have the input to a lifecycle rule and a defensible estimate of what tiering would save — before you write any router code.</p>
                 
                 
             </div>
@@ -593,14 +525,14 @@ export const handler = async (event) =&gt; {
                     
                     <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
                         <h3>APM is blind to your AI agents</h3>
-                        <p>Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
-                        <span class="related-meta">12 min read · 25 September 2026</span>
+                        <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+                        <span class="related-meta">11 min read · 25 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/audit-logs-that-scale-skip-the-3am-fire-drills/">
                         <h3>Audit logs that scale: skip the 3AM fire drills</h3>
-                        <p>Cut audit log storage 70% and query latency 90% with a dual-stream stack—Kafka 3.7, ClickHouse 23.11, S3 Parquet—while satisfying GDPR and SOC2 integrity…</p>
-                        <span class="related-meta">13 min read · 17 August 2026</span>
+                        <p>How to design audit log pipelines that satisfy auditors and engineers: immutable event streams, hash chains, tiered retention, and a decision checklist.</p>
+                        <span class="related-meta">15 min read · 17 August 2026</span>
                     </a>
                     
                 </div>

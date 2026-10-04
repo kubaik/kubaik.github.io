@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SBOM + attestation that gets used - Kubai Kevin</title>
-        <meta name="description" content="SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.">
+        <meta name="description" content="How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.">
         <meta name="keywords" content="Sbom, Attestation, SbomAttestation, CosignSbomSigning, Slsa, SyftTrivyComparison, Golang">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-10-03T10:43:42.064063">
-        <meta property="article:modified_time" content="2026-10-03T10:43:42.064074">
+        <meta property="article:modified_time" content="2026-10-04T10:55:36.615721+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="SBOM + attestation that gets used">
-        <meta property="og:description" content="SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.">
+        <meta property="og:description" content="How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.">
         <meta property="og:url" content="https://kubaik.github.io/sbom-attestation-that-gets-used/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="SBOM + attestation that gets used">
-        <meta name="twitter:description" content="SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.">
+        <meta name="twitter:description" content="How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/sbom-attestation-that-gets-used.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/sbom-attestation-that-gets-used/#article",
       "headline": "SBOM + attestation that gets used",
-      "description": "SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.",
+      "description": "How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.",
       "datePublished": "2026-10-03T10:43:42+00:00",
-      "dateModified": "2026-10-03T10:43:42+00:00",
-      "wordCount": 2971,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-04T10:55:36+00:00",
+      "wordCount": 3270,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">SBOM + attestation that gets used</h1>
                 
-                <p class="post-lead">SBOM + attestation that gets used: Syft, cosign, SLSA, Kyverno compared. Avoid the bucket trap where SBOMs go stale and never gate a deploy.</p>
+                <p class="post-lead">How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</p>
                 
                 
                 <div class="tags">
@@ -257,74 +257,80 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2971 words
+                        16 min read
+                        &nbsp;·&nbsp; 3270 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Opinions on building accessible tend to change fast after watching it fail somewhere it wasn't supposed to. Here's what changes once the guessing is replaced with measurement. The workaround gets copy-pasted forward long after the original reason is forgotten.</p>
-<h2 id="what-this-list-actually-solves">What this list actually solves</h2>
-<p>An SBOM that sits in an S3 bucket and an attestation nobody verifies are compliance theater. The artifact exists, the audit checkbox is ticked, and the next Log4Shell-style event still takes three weeks to triage because the data is stale, unsigned, or in a format no tool can query. The real problem is not generating an SBOM — most build systems can emit one in a few lines — it is making the SBOM and its attestation a live input to deployment decisions, incident response, and policy enforcement.</p>
-<p>This list covers the tools and patterns that push SBOMs and attestations into the path of actual work: admission control, CI gates, vulnerability triage, and provenance verification. Each entry is a mini-review: what it does, one concrete strength, one concrete weakness, and who it fits. The framing throughout is that an SBOM is only useful when something consumes it automatically, and an attestation is only useful when something rejects the build without it.</p>
+                <p>An SBOM that sits in object storage and an attestation nobody verifies are compliance theater. The artifact exists, the audit checkbox is ticked, and the next Log4Shell-style event still takes weeks to triage because the data is stale, unsigned, or in a format no tool can query. The hard part is not generating an SBOM — most build systems can emit one in a few lines — it is making the SBOM and its attestation a live input to deployment decisions, incident response, and policy enforcement.</p>
+<p>This article covers the tools and patterns that push SBOMs and attestations into the path of actual work: admission control, CI gates, vulnerability triage, and provenance verification. Each option is treated as a mini-review: what it does, one concrete strength, one concrete weakness, and who it fits. The framing throughout is that an SBOM is only useful when something consumes it automatically, and an attestation is only useful when something rejects the build without it.</p>
+<h2 id="what-used-actually-means">What "used" actually means</h2>
+<p>A supply chain artifact is used when three conditions hold at once:</p>
+<ol>
+<li><strong>It is produced from the deployed artifact</strong>, not from a parallel checkout or a source tree that may have drifted.</li>
+<li><strong>It is attached to the artifact</strong> so any consumer with pull access can retrieve it by digest, using the same credentials and the same reference.</li>
+<li><strong>Something fails when it is absent, malformed, or signed by the wrong identity.</strong> If the only consequence of a missing attestation is a log line, the artifact is decoration.</li>
+</ol>
+<p>Most failed SBOM programs break condition 3. Generation is easy, storage is easy, and enforcement is the part that requires a decision about what to do when a deployment is blocked at 2 a.m.</p>
 <h2 id="evaluation-criteria">Evaluation criteria</h2>
 <p>Six criteria separate tools that get used from tools that get filed.</p>
 <ol>
 <li><strong>Format coverage.</strong> Does it emit or consume SPDX and CycloneDX, the two formats with the widest tooling support? A tool that only speaks a proprietary schema forces every downstream consumer to write a converter.</li>
 <li><strong>Signing and verification.</strong> Can the attestation be signed with a keyless or key-based identity and verified by a policy engine? An unsigned attestation is a text file with extra steps.</li>
-<li><strong>Integration surface.</strong> Does it hook into CI (GitHub Actions, GitLab CI, Jenkins) and admission controllers (Kubernetes, OPA/Gatekeeper, Kyverno)? If the only way to use it is a CLI a human runs, it will not run.</li>
-<li><strong>Queryability.</strong> Can you ask "which running images contain package X version Y?" without writing a custom parser? This is the difference between a 10-minute incident response and a three-day one.</li>
-<li><strong>Operational cost.</strong> Storage, signing infrastructure, and the compute to regenerate on every build. A tool that adds two minutes to every CI run gets disabled within a quarter.</li>
+<li><strong>Integration surface.</strong> Does it hook into CI systems and admission controllers (Kubernetes, OPA/Gatekeeper, Kyverno)? If the only way to use it is a CLI a human runs, it will not run.</li>
+<li><strong>Queryability.</strong> Can you ask "which running images contain package X version Y?" without writing a custom parser? This is the difference between a short incident response and a long one.</li>
+<li><strong>Operational cost.</strong> Storage, signing infrastructure, and the compute to regenerate on every build. A tool that adds minutes to every CI run gets disabled within a quarter.</li>
 <li><strong>Failure mode clarity.</strong> What happens when the SBOM is missing, malformed, or unsigned? A tool that fails open is worse than no tool, because it creates false confidence.</li>
 </ol>
-<h2 id="sbom-attestation-that-actually-gets-used-the-options-compared">SBOM + attestation that actually gets used — the options compared</h2>
+<h2 id="the-options-compared">The options compared</h2>
 <h3 id="1-syft-grype-anchore">1. Syft + Grype (Anchore)</h3>
 <p><strong>What it does.</strong> Syft generates SBOMs from container images, filesystems, and archives in SPDX and CycloneDX. Grype consumes those SBOMs (or scans images directly) and matches packages against vulnerability databases.</p>
-<p><strong>Strength.</strong> The two tools share a data model, so the SBOM Syft emits is exactly what Grype wants. You can scan an image once in CI, store the SBOM, and re-scan that same SBOM months later when a new CVE drops — without rebuilding the image. That is the single most useful property an SBOM can have.</p>
-<p><strong>Weakness.</strong> Syft's accuracy depends on the package ecosystem. For language-level dependencies resolved by a lockfile (npm, pip, go.mod), it is reliable. For OS packages installed via scripts that bypass the package manager, coverage drops. Teams that install binaries with <code>curl | sh</code> in a Dockerfile will find gaps.</p>
-<p><strong>Best for.</strong> Teams that want a fast, open-source path to SBOM generation and vulnerability matching without committing to a commercial platform. Start here if you have nothing.</p>
+<p><strong>Strength.</strong> The two tools share a data model, so the SBOM Syft emits is exactly what Grype wants. An image can be scanned once in CI, the SBOM stored, and that same SBOM re-scanned months later when a new CVE drops — without rebuilding the image. That is the single most useful property an SBOM can have.</p>
+<p><strong>Weakness.</strong> Syft's accuracy depends on the package ecosystem. For language-level dependencies resolved by a lockfile (npm, pip, go.mod), it is reliable. For OS packages installed via scripts that bypass the package manager, coverage drops. Images that install binaries with <code>curl | sh</code> in a Dockerfile will show gaps.</p>
+<p><strong>Best for.</strong> Teams that want a fast, open-source path to SBOM generation and vulnerability matching without committing to a commercial platform. Start here if there is nothing in place today.</p>
 <h3 id="2-trivy-aqua-security">2. Trivy (Aqua Security)</h3>
 <p><strong>What it does.</strong> Trivy scans container images, filesystems, git repos, and Kubernetes clusters. It can output SBOMs in SPDX and CycloneDX and also scan an existing SBOM for vulnerabilities.</p>
 <p><strong>Strength.</strong> One binary covers image scanning, IaC misconfiguration, secrets, and SBOM generation. For teams that do not want to assemble a pipeline from four tools, Trivy is the shortest path from zero to a scan running in CI.</p>
 <p><strong>Weakness.</strong> Because it does so much, the SBOM output is a feature rather than the core design. Teams with strict SPDX conformance requirements or complex multi-architecture image layouts sometimes hit edge cases that Syft handles more predictably. It is also a large binary, which matters in constrained CI runners.</p>
-<p><strong>Best for.</strong> Teams that want one tool for scanning and SBOM generation, especially if they are already using Trivy for image scanning.</p>
+<p><strong>Best for.</strong> Teams that want one tool for scanning and SBOM generation, especially if Trivy is already in use for image scanning.</p>
 <h3 id="3-cosign-sigstore">3. cosign (Sigstore)</h3>
 <p><strong>What it does.</strong> cosign signs and verifies container images, blobs, and attestations. It supports keyless signing via OIDC identity (Fulcio) and stores signatures in a transparency log (Rekor).</p>
 <p><strong>Strength.</strong> Keyless signing removes the hardest operational problem in attestation: key management. A CI job can sign an attestation with its workload identity, and a verifier can check that signature against the expected identity without anyone handling a long-lived private key.</p>
 <p><strong>Weakness.</strong> Keyless verification requires network access to the transparency log and the OIDC issuer's public keys. Air-gapped environments need a different approach (key-based signing with a managed key). Teams also frequently misconfigure the identity check — verifying that <em>a</em> signature exists rather than that the signature came from the <em>expected</em> CI workflow.</p>
-<p><strong>Best for.</strong> Teams on GitHub Actions, GitLab CI, or any CI with OIDC support that want signed attestations without running their own PKI.</p>
+<p><strong>Best for.</strong> Teams on a CI platform with OIDC support that want signed attestations without running their own PKI.</p>
 <h3 id="4-in-toto-attestations">4. in-toto attestations</h3>
 <p><strong>What it does.</strong> in-toto defines a framework for supply chain attestations. The attestation format wraps a statement (what happened) with a predicate (details) and can be signed. The SLSA provenance format is an in-toto attestation with a specific predicate type.</p>
-<p><strong>Strength.</strong> It is the format that the rest of the ecosystem is converging on. SLSA provenance, Sigstore attestations, and GitHub's build provenance all use in-toto-style envelopes. Adopting it means your attestations are consumable by policy engines and verification tools you have not adopted yet.</p>
-<p><strong>Weakness.</strong> The specification is flexible to the point of being underspecified for beginners. Two teams can both claim "we emit in-toto attestations" and produce payloads that no shared tool can verify, because predicate types and subject naming differ. You need a verification policy, not just a format.</p>
+<p><strong>Strength.</strong> It is the format the rest of the ecosystem is converging on. SLSA provenance, Sigstore attestations, and hosted-CI build provenance all use in-toto-style envelopes. Adopting it means attestations are consumable by policy engines and verification tools not yet adopted.</p>
+<p><strong>Weakness.</strong> The specification is flexible to the point of being underspecified for beginners. Two teams can both claim "we emit in-toto attestations" and produce payloads that no shared tool can verify, because predicate types and subject naming differ. A verification policy is required, not just a format.</p>
 <p><strong>Best for.</strong> Teams building a supply chain that needs to interoperate with SLSA, Sigstore, and policy engines. It is infrastructure, not a product.</p>
 <h3 id="5-slsa-provenance-levels-13">5. SLSA provenance (levels 1–3)</h3>
 <p><strong>What it does.</strong> SLSA defines a ladder of build integrity. Level 1 means provenance exists. Level 2 means it is signed by the build platform. Level 3 means the build runs in a hardened, isolated environment with non-forgeable provenance.</p>
-<p><strong>Strength.</strong> It gives a shared vocabulary for "how much do we trust this build" that auditors and downstream consumers understand. Reaching level 2 with GitHub Actions or a similar hosted CI is largely a configuration exercise, not a research project.</p>
+<p><strong>Strength.</strong> It gives a shared vocabulary for "how much do we trust this build" that auditors and downstream consumers understand. Reaching level 2 with a hosted CI platform is largely a configuration exercise, not a research project.</p>
 <p><strong>Weakness.</strong> Provenance tells you <em>how</em> an artifact was built, not <em>what is in it</em>. SLSA and SBOM are complementary, not substitutes. Teams that adopt one and skip the other often discover the gap during an incident.</p>
 <p><strong>Best for.</strong> Teams that need to prove build integrity to a customer, regulator, or downstream team, and want a standard rather than a bespoke claim.</p>
 <h3 id="6-opa-gatekeeper-and-kyverno">6. OPA / Gatekeeper and Kyverno</h3>
 <p><strong>What they do.</strong> These are Kubernetes admission controllers. They evaluate policies against resources at admission time and can reject workloads that fail. Both can verify image signatures and check attestations.</p>
-<p><strong>Strength.</strong> This is where an attestation stops being a file and becomes a gate. A policy that rejects any pod whose image lacks a valid SLSA provenance attestation from the expected builder converts a supply chain practice into an enforced control.</p>
-<p><strong>Weakness.</strong> Admission control is a blunt instrument. A misconfigured policy can block all deployments, including the one you need to fix the policy. Teams need a dry-run or audit mode first, and a documented break-glass path. Kyverno's policy language is YAML-native and easier for Kubernetes-native teams; Gatekeeper's Rego is more expressive but has a steeper learning curve.</p>
+<p><strong>Strength.</strong> This is where an attestation stops being a file and becomes a gate. A policy that rejects any pod whose image lacks a valid provenance attestation from the expected builder converts a supply chain practice into an enforced control.</p>
+<p><strong>Weakness.</strong> Admission control is a blunt instrument. A misconfigured policy can block all deployments, including the one needed to fix the policy. Teams need a dry-run or audit mode first, and a documented break-glass path. Kyverno's policy language is YAML-native and easier for Kubernetes-native teams; Gatekeeper's Rego is more expressive but has a steeper learning curve.</p>
 <p><strong>Best for.</strong> Teams that already run Kubernetes and want SBOM and attestation data to influence what actually gets deployed.</p>
 <h3 id="7-dependency-track-owasp">7. Dependency-Track (OWASP)</h3>
-<p><strong>What it does.</strong> Dependency-Track is an SBOM analysis platform. You upload SBOMs, it tracks components across projects, and it alerts on new vulnerabilities affecting components you already use.</p>
-<p><strong>Strength.</strong> It solves the "stale SBOM" problem. Instead of re-scanning images, you upload the SBOM once and the platform monitors the components in it. When a new CVE is published, you get a list of affected projects without rebuilding anything.</p>
+<p><strong>What it does.</strong> Dependency-Track is an SBOM analysis platform. SBOMs are uploaded, components are tracked across projects, and alerts fire on new vulnerabilities affecting components already in use.</p>
+<p><strong>Strength.</strong> It solves the "stale SBOM" problem. Instead of re-scanning images, the SBOM is uploaded once and the platform monitors the components in it. When a new CVE is published, a list of affected projects is available without rebuilding anything.</p>
 <p><strong>Weakness.</strong> It is another service to run and back up. The API is capable but the UI is dated, and teams used to commercial dashboards find the reporting thin. It also needs a vulnerability data source configured and kept current.</p>
 <p><strong>Best for.</strong> Organizations with many projects that want a central inventory of components and continuous monitoring rather than per-build scanning.</p>
 <h3 id="8-github-artifact-attestations">8. GitHub Artifact Attestations</h3>
 <p><strong>What it does.</strong> GitHub Actions can generate signed attestations for build artifacts using the workflow's OIDC identity, stored in GitHub's attestation API and verifiable with the <code>gh</code> CLI.</p>
-<p><strong>Strength.</strong> If your builds run on GitHub Actions, this is the lowest-friction path to signed provenance. There is no key to manage and no signing infrastructure to run. Verification can be done in a later workflow step or by a downstream consumer.</p>
-<p><strong>Weakness.</strong> It ties your attestation to GitHub. If builds move or you need to verify outside GitHub's tooling, you depend on the <code>gh</code> CLI or the underlying Sigstore primitives. It also does not generate an SBOM for you — you still need Syft, Trivy, or similar.</p>
+<p><strong>Strength.</strong> If builds run on GitHub Actions, this is the lowest-friction path to signed provenance. There is no key to manage and no signing infrastructure to run. Verification can be done in a later workflow step or by a downstream consumer.</p>
+<p><strong>Weakness.</strong> It ties attestations to GitHub. If builds move, or verification must happen outside GitHub's tooling, you depend on the <code>gh</code> CLI or the underlying Sigstore primitives. It also does not generate an SBOM — Syft, Trivy, or similar is still needed.</p>
 <p><strong>Best for.</strong> Teams fully on GitHub Actions that want signed provenance without operating Sigstore themselves.</p>
 <h2 id="the-strongest-default-and-why">The strongest default, and why</h2>
 <p>For most teams starting from zero, the strongest default is <strong>Syft for SBOM generation, cosign for signing, and a policy engine (Kyverno or Gatekeeper) for enforcement</strong>, with SLSA provenance added once the basics work.</p>
-<p>The reasoning is that this combination separates concerns cleanly. Syft produces the SBOM. cosign signs the SBOM and the image. The policy engine verifies signatures and attestations at admission time. Each piece can be replaced without rewriting the others, and each piece has a clear failure mode you can test.</p>
+<p>The reasoning is that this combination separates concerns cleanly. Syft produces the SBOM. cosign signs the SBOM and the image. The policy engine verifies signatures and attestations at admission time. Each piece can be replaced without rewriting the others, and each piece has a clear failure mode that can be tested.</p>
 <p>The critical detail is that the SBOM must be <strong>attached to the image</strong> as an attestation, not stored in a separate bucket keyed by image digest in a custom scheme. Attaching it means any consumer that can pull the image can also pull the SBOM, using the same registry credentials and the same digest. A separate bucket is where SBOMs go to die.</p>
 <p>A minimal cosign attestation flow looks like this:</p>
 <pre><code class="language-bash"># Generate SBOM with Syft
@@ -343,17 +349,55 @@ cosign verify-attestation \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   ghcr.io/example/app:1.2.3
 </code></pre>
-<p>The verification command is the part teams skip. Without it, the attestation is decoration. With it, you have a check that can run in a deployment pipeline and fail the deploy when the attestation is missing or the identity does not match.</p>
-<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
-<p><strong>CycloneDX CLI and libraries.</strong> The CycloneDX project provides tooling for generating, validating, and converting SBOMs. Useful when you need to convert between SPDX and CycloneDX or validate that an SBOM conforms to the schema before it enters your pipeline.</p>
-<p><strong>SPDX tools.</strong> The SPDX project maintains its own tooling. SPDX has stronger roots in license compliance; CycloneDX has stronger roots in security. If your primary driver is license obligations rather than vulnerability response, SPDX tooling is worth a look.</p>
-<p><strong>GUAC (Graph for Understanding Artifact Composition).</strong> Aggregates SBOMs, attestations, and other supply chain metadata into a queryable graph. It is the answer to "which of our images contain this package" when the data is spread across many registries and formats. It is also early-stage and adds an operational dependency, so it fits teams with a real query problem, not teams that just want to generate SBOMs.</p>
-<h2 id="options-that-look-appealing-but-fail-in-practice">Options that look appealing but fail in practice</h2>
+<p>The verification command is the part teams skip. Without it, the attestation is decoration. With it, there is a check that can run in a deployment pipeline and fail the deploy when the attestation is missing or the identity does not match.</p>
+<h2 id="worked-example-what-a-kyverno-verification-policy-looks-like">Worked example: what a Kyverno verification policy looks like</h2>
+<p>The following policy is illustrative — it demonstrates the shape of an admission rule that verifies a cosign attestation before allowing a pod. It is not a drop-in production policy; the identity values must match your own CI workflow.</p>
+<pre><code class="language-yaml">apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-sbom-attestation
+spec:
+  validationFailureAction: Audit   # start in Audit, switch to Enforce after testing
+  background: false
+  rules:
+    - name: check-attestation
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      verifyImages:
+        - imageReferences:
+            - &quot;ghcr.io/example/*&quot;
+          attestations:
+            - predicateType: https://spdx.dev/Document
+              attestors:
+                - entries:
+                    - keyless:
+                        subject: &quot;https://github.com/example/.github/workflows/build.yml@refs/heads/main&quot;
+                        issuer: &quot;https://token.actions.githubusercontent.com&quot;
+</code></pre>
+<p>Three things to notice, because they are the three things that go wrong:</p>
+<ul>
+<li><strong><code>validationFailureAction: Audit</code> first.</strong> A policy that starts in <code>Enforce</code> can block every deployment in the cluster, including the deployment that would fix the policy. Audit mode reports violations without blocking; switch to <code>Enforce</code> only after the audit log is clean for a full release cycle.</li>
+<li><strong>The subject must name the workflow and ref</strong>, not just the repository. A regexp that matches any workflow in the org will accept an attestation produced by any workflow in the org, including one an attacker can trigger.</li>
+<li><strong>The predicate type must match what was signed.</strong> If the SBOM was attached with <code>--type spdxjson</code>, the predicate type in the policy must correspond to the SPDX document type. A mismatch produces a silent verification failure that looks like a missing attestation.</li>
+</ul>
+<h3 id="how-to-measure-whether-this-is-working">How to measure whether this is working</h3>
+<p>Do not trust a dashboard that says "attestations: 100%". Measure the enforcement path directly:</p>
+<ol>
+<li><strong>Instrument the admission controller.</strong> Most Kubernetes admission controllers expose metrics for admit, deny, and error outcomes per policy. Track the deny count and the error count separately — errors usually mean the policy could not reach the registry or the transparency log, which is a different problem from a genuine rejection.</li>
+<li><strong>Run a deliberate negative test.</strong> Build an image without attaching an attestation, push it to a staging registry, and try to deploy it. If it is admitted, the policy is not enforcing. If it is rejected, the error message should name the missing attestation, not a generic failure.</li>
+<li><strong>Compare digest coverage.</strong> For a sample of running images, check what fraction have an attached attestation for the exact digest that is running. A common failure is attestations attached to tags rather than digests, which silently breaks whenever an image is retagged.</li>
+<li><strong>Time the gate.</strong> Measure the added latency of the verification step in CI and at admission. If verification requires a network round trip to a transparency log, it will add latency on every admission; caching and a local policy engine reduce this, but the number should be known rather than assumed.</li>
+</ol>
+<h2 id="failure-modes-worth-designing-against">Failure modes worth designing against</h2>
 <p><strong>The "SBOM as a CI artifact" pattern.</strong> Uploading the SBOM to the CI system's artifact storage and calling it done. This fails because artifacts expire, are not linked to the image digest in any standard way, and are not available to admission controllers or incident responders. It satisfies a checkbox and nothing else.</p>
 <p><strong>Unsigned attestations.</strong> An attestation without a signature proves nothing about who produced it. It is trivially forgeable. If the verification step does not check a signature and an identity, the attestation is not a security control.</p>
 <p><strong>SBOM generation in a separate pipeline.</strong> If the SBOM is generated by a job that runs after the image is built, on a different runner, from a different checkout, the SBOM may not describe the image that was actually shipped. The SBOM must be generated from the same artifact that is deployed, ideally from the image itself rather than the source tree.</p>
 <p><strong>Failing open on missing attestations.</strong> A policy that allows deployments when the attestation is absent is worse than no policy, because it creates the appearance of enforcement. Policies should fail closed, with a documented and audited exception path.</p>
-<p><strong>Treating SBOM as a one-time deliverable.</strong> An SBOM generated at release and never updated is a snapshot. The value comes from continuous monitoring — either re-scanning stored SBOMs or feeding them into a platform that watches for new vulnerabilities. A one-time deliverable is a PDF with extra steps.</p>
+<p><strong>Treating the SBOM as a one-time deliverable.</strong> An SBOM generated at release and never updated is a snapshot. The value comes from continuous monitoring — either re-scanning stored SBOMs or feeding them into a platform that watches for new vulnerabilities. A one-time deliverable is a PDF with extra steps.</p>
+<p><strong>Attesting to a tag instead of a digest.</strong> Tags are mutable. An attestation attached to <code>app:latest</code> describes whatever that tag pointed to at signing time, which may not be what is running now. Always sign and verify by digest.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
 <table>
 <thead>
@@ -401,25 +445,14 @@ cosign verify-attestation \
 <p><strong>What is the difference between an SBOM and an attestation?</strong></p>
 <p>An SBOM lists the components in an artifact — packages, versions, licenses, and often hashes. An attestation is a signed statement about the artifact, which can include the SBOM as its payload or describe how the artifact was built. The SBOM answers "what is in this?" and the attestation answers "who says so, and can I verify it?" You generally want both, attached to the same image digest.</p>
 <p><strong>Do I need SLSA if I already have an SBOM?</strong></p>
-<p>They solve different problems. An SBOM tells you what components are in an artifact. SLSA provenance tells you how the artifact was built and whether the build environment was trustworthy. A compromised build can produce a perfectly accurate SBOM for a malicious artifact. If your threat model includes build system compromise, you need provenance, not just an SBOM.</p>
+<p>They solve different problems. An SBOM tells you what components are in an artifact. SLSA provenance tells you how the artifact was built and whether the build environment was trustworthy. A compromised build can produce a perfectly accurate SBOM for a malicious artifact. If the threat model includes build system compromise, provenance is required, not just an SBOM.</p>
 <p><strong>How do I stop SBOMs from going stale?</strong></p>
 <p>Either re-scan stored SBOMs on a schedule or feed them into a platform that monitors components continuously. The key is that the SBOM is stored in a queryable form linked to the image digest, not as a flat file in a bucket. Dependency-Track and GUAC are two approaches; re-running Grype against stored SBOMs in a scheduled job is a third.</p>
 <p><strong>What happens if the attestation verification fails in production?</strong></p>
-<p>The policy should block the deployment and alert. The failure mode to avoid is a policy that logs a warning and proceeds. Teams should test the failure path deliberately — deploy an image without an attestation in a staging cluster and confirm the admission controller rejects it. If it does not, the policy is not working, regardless of what the logs say.</p>
+<p>The policy should block the deployment and alert. The failure mode to avoid is a policy that logs a warning and proceeds. Test the failure path deliberately — deploy an image without an attestation in a staging cluster and confirm the admission controller rejects it. If it does not, the policy is not working, regardless of what the logs say.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Start with one image, one pipeline, and one enforcement point. Generate an SBOM with Syft, attach it to the image with cosign, and add a verification step that fails the build if the attestation is missing or the identity does not match. Do not try to cover every repository on day one.</p>
-<p>The next 30 minutes: pick your most-deployed image, run <code>syft packages &lt;image&gt; -o spdx-json</code> against it, and look at the output. If the component list is obviously incomplete — missing OS packages you know are installed, or missing language dependencies — you have found your first real problem, and it is a problem worth fixing before you build any policy on top of the data.</p>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> October 2026</p>
-<!-- enhanced:v1 -->
+<p>The next 30 minutes: pick your most-deployed image, run <code>syft packages &lt;image&gt; -o spdx-json</code> against it, and read the output. If the component list is obviously incomplete — missing OS packages you know are installed, or missing language dependencies — you have found your first real problem, and it is a problem worth fixing before you build any policy on top of the data.</p>
                 
                 
             </div>
@@ -448,8 +481,8 @@ cosign verify-attestation \
                     
                     <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
                         <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
-                        <p>Rust backend rewrites pay off for CPU-bound work, not I/O.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+                        <span class="related-meta">11 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/serve-4g-as-baseline-apps-in-2026/">

@@ -1,256 +1,287 @@
 # Agent auth: the silent deployment killer
 
-agent identity looks simple until it has to survive real traffic. The default configuration is fine right up until it isn't. This post covers what comes after the happy path.
+Agent identity looks simple until it has to survive real traffic. A default configuration is fine right up until it isn't, and the failure usually surfaces as a wall of `403 InvalidToken` responses rather than as an obvious infrastructure error. This article covers what comes after the happy path: the constraints that break textbook identity stacks, the layered fixes that hold up, and how to measure whether any of them actually helped.
 
-**Agent identity looks solved on paper. In production, it usually isn't.**
+## Why the documented stack breaks in the field
 
-A common pattern in multi-agent deployments: a system ships to production in a region with unreliable connectivity, and within days the user-facing API starts timing out. Logs show the vast majority of requests from agents being rejected with `403 InvalidToken`—even though the tokens are valid, the keys haven't expired, and the agent service was restarted cleanly. The debugging effort that follows often spans days and ends at a single misconfigured timeout. This post is what's worth finding before that point.
+The common starting point is workload identity with short-lived certificates, JWTs with short expiry, and a cache in front of validation. That stack is correct for stateless services on reliable networks. It tends to crack under four constraints that documentation rarely addresses.
 
-By 2026, agent identity and authentication moved from a solved infrastructure problem to a runtime nightmare. We're no longer just validating JWTs; we're juggling short-lived identity certificates, rotating CA chains, sidecar identity providers, and cross-service attestations—all while users on 2G networks wait for responses that used to take 200 ms and now take 2.1 s. Teams commonly build this system twice: once with the patterns that look correct on paper, and once with the patterns that actually survive field conditions. The second version is what holds up under real traffic in Lagos, Nairobi, and Dakar. This is what changed and why the first version broke.
+**Network jitter.** An agent on a moving vehicle can lose connectivity for 15–30 seconds and regain it. During that window the workload API client cannot renew its identity, the short-lived JWT expires, and a cache entry may evict. The downstream service sees a 403 and the client retries — precisely when a user is waiting for a reply.
 
----
+**Device diversity.** Feature phones, KaiOS devices, and low-end Android handsets run stripped-down clients that cannot complete long mTLS handshakes. A handshake that exceeds a client's TCP timeout fails before any identity logic runs.
 
-## The gap between what the docs say and what production needs
+**Power loss during rotation.** Kiosks on solar or unreliable grid power drop out without warning. When one returns, its identity client tries to renew immediately. If many return at once, they can synchronize into a retry storm that saturates the certificate authority and degrades unrelated services.
 
-In 2026, the common wisdom was: use SPIFFE/SPIRE for workload identity, sign JWTs with a short expiry, and cache validation with Redis. That worked—for stateless microservices on reliable networks. For agents, that stack cracks under four real-world constraints:
+**Cross-border attestation.** Agents in one country attesting to services in another require identity strings that encode cluster, namespace, and region. That extra data inflates certificate chains, which breaks clients with hard chain-size limits.
 
-1. **Unpredictable network jitter**: In Nairobi, an agent on a boda-boda can lose 3G for 15–30 seconds, then regain it. During that window, the SPIRE agent can't renew its identity, the short-lived JWT expires, and the Redis cache key evicts. The service downstream sees a 403 and retries—exactly when the user is waiting for a reply.
-2. **Device diversity**: Feature phones, KaiOS devices, and low-end Android run stripped-down agent clients that can't handle mTLS handshakes longer than 500 ms. It's common for a partner in Accra to ship a KaiOS build that crashes every time the TLS session resumption timer fires after 300 ms.
-3. **Power loss during rotation**: Solar-powered village kiosks lose power unpredictably. When the kiosk comes back online, the SPIRE client tries to renew its SVID, but the upstream CA is unreachable for 60 seconds. The SPIRE agent retries aggressively and overloads the CA with 1,200 requests/minute, causing global latency spikes for unrelated services.
-4. **Cross-border attestations**: Supporting agents running in Nigeria that need to attest to a service running in Rwanda is a common requirement. The SPIFFE IDs must include cluster, namespace, and geographic region. That one change adds 40 bytes to every SVID, which breaks legacy Android agents that have a hard limit of 1,024 bytes per certificate chain.
+None of these are exotic. They are the normal operating conditions of distributed agents outside well-provisioned data centers.
 
-The docs don't mention any of these. They assume stable power, reliable networks, and homogeneous devices. Field deployments in Lagos prove otherwise.
+## Identity as a state machine, not a static ID
 
----
+The first conceptual shift is treating identity as stateful. Instead of a fixed identity that is either valid or not, the token carries the conditions under which it may be used:
 
-## How agent identity and authentication became harder than we expected in 2026 actually works under the hood
+- **Region lock** — an agent registered in one region must not authenticate against another region's services, even with a valid identity.
+- **Battery threshold** — below a configured level, the agent may send heartbeats but not payloads.
+- **Network class** — agents on slow links receive a degraded identity with a shorter expiry.
 
-In 2026, agent identity isn't just about who the agent is—it's about where the agent *is*, what battery level it has, and whether it's allowed to speak to a specific service at this exact moment. Let's break down the layers teams typically have to add:
+These become additional claims in the token payload:
 
-### 1. Identity as a state machine
-
-Moving from static SPIFFE IDs to a stateful identity model means tracking:
-- **Region lock**: A vehicle-tracking agent in Kenya must not be allowed to talk to a Tanzanian toll system, even if it has a valid SPIFFE ID.
-- **Battery threshold**: If the agent's battery is below 20%, it can only send heartbeats, not payloads.
-- **Network class**: Agents on 2G/EDGE get a degraded identity that expires in 3 minutes instead of 15.
-
-This adds three new claims to the JWT payload:
 ```json
 {
-  "spiffe_id": "spiffe://nigeria/toll-collector/agent-123",
-  "region_lock": "KE",
+  "spiffe_id": "spiffe://example/region-a/toll-collector/agent-123",
+  "region_lock": "region-a",
   "min_battery_pct": 20,
   "max_network_class": "2G"
 }
 ```
 
-### 2. Sidecar identity provider with fallback
+The value of this model is that policy decisions move from static configuration into the token itself. A validating service can reject a request for a policy reason without calling back to a central authority, which matters when the authority is the thing that is unreachable.
 
-A lightweight sidecar identity provider (SIP) deployed in each region solves a large share of this. The SIP speaks mTLS to the SPIRE server for SVID renewal, but also caches a fallback JWT that can be used when SPIRE is unreachable. The fallback JWT has a longer expiry (24 hours) and is signed by a regional CA instead of the global one. This pattern is what eliminates the majority of the 403 errors seen in the first week of a rollout.
+## A sidecar identity provider with a fallback token
 
-### 3. Adaptive retry and backoff in the agent client
+A lightweight sidecar identity provider sits next to the agent. It speaks mTLS to the upstream identity server for certificate renewal, but it also caches a fallback JWT that the agent can use when the upstream server is unreachable. The fallback token has a longer expiry and is signed by a regional key rather than a global one.
 
-The agent client is typically rewritten in Go 1.22 with a custom retry loop that:
-- Detects network class by measuring round-trip time (RTT) to a regional health endpoint.
-- Adjusts retry intervals: 50 ms on 4G, 500 ms on 3G, 3,000 ms on 2G.
-- Skips SPIRE renewal if battery < 20% and uses the fallback JWT.
+The trade-off is explicit: a longer-lived regional token is a weaker guarantee than a freshly issued short-lived certificate. It is worth taking only when the alternative is total authentication failure during a partition. The design should make the fallback path visible — log every use, and alert when the fallback rate rises, because a rising fallback rate is an early warning that the primary path is degrading.
 
-This adds roughly 80 lines of code but commonly cuts 403 errors by around 78% in field tests.
+## Adaptive retry and backoff in the client
 
-### 4. Cross-region attestation cache
+The agent client should detect its own network class and adjust retry timing accordingly. A workable approach:
 
-Instead of hitting the CA in every region, a cross-region attestation cache replicates SPIFFE SVIDs across regions with a 5-minute TTL. When an agent in Lagos talks to a service in Kigali, the service validates the SVID against the local cache entry. The cache is updated via a low-bandwidth gossip protocol between region proxies. This typically reduces CA load by around 64% and cuts cross-region latency by roughly 400 ms on average.
+- Measure round-trip time to a regional health endpoint.
+- Use a short base delay on fast links and a much longer one on slow links.
+- Skip renewal attempts when battery is low and use the fallback token instead.
 
-### 5. Battery-aware certificate rotation
+A worked example of the delay calculation, with illustrative numbers: start from a 50 ms base delay and double per attempt, capped at 5 seconds.
 
-A battery-aware rotation policy handles the low-power case: if battery > 80%, rotate every 15 minutes; if battery < 40%, rotate only when power returns. This adds around 12 lines of policy code but prevents crashes on low-end devices.
+- Attempt 1: 50 ms
+- Attempt 2: 100 ms
+- Attempt 3: 200 ms
+- Attempt 4: 400 ms
 
----
+On a slow link, multiply the base by 3 before applying the same progression:
 
-## Step-by-step implementation with real code
+- Attempt 1: 150 ms
+- Attempt 2: 300 ms
+- Attempt 3: 600 ms
+- Attempt 4: 1,200 ms
 
-Here's how to implement the new stack using only open-source tools and a $300/month AWS budget for three regions (West, East, Southern Africa).
+The point is not these specific numbers but that the client stops hammering a struggling authority. Without backoff, a returning fleet of agents produces the retry storm described earlier.
 
-### Step 1: Bootstrap SPIRE with regional CAs
+## Cross-region attestation caching
 
-Use SPIRE 1.8 server and agent. The server runs in each region with a regional CA profile. Set the CA TTL to 24 hours and the SVID TTL to 15 minutes.
+Rather than having every validating service call a remote certificate authority, a cross-region cache replicates identity documents between regions with a short TTL. A service in one region validates against a local cache entry instead of a remote authority. The cache is refreshed by a low-bandwidth gossip protocol between regional proxies.
 
-```bash
-# Install SPIRE 1.8 on Ubuntu 24.04
-sudo apt-get install -y spire-server spire-agent
+This reduces authority load and removes a network round trip from the validation path, but it introduces a consistency window. A revoked identity may remain valid in a remote cache until the TTL expires. Choose the TTL with that in mind: shorter TTLs tighten revocation but increase gossip traffic.
 
-# Configure regional CA in /etc/spire/server/conf.d/regional-ca.hcl
-cat <<EOF > /etc/spire/server/conf.d/regional-ca.hcl
-plugins {
-  DataStore "sql" {
-    database_type = "sqlite3"
-    database_name = "spire"
-  }
-  KeyManager "memory" {}
-  NodeAttestor "join_token" {}
-  CA "regional" {
-    trust_domain = "africa.example"
-    profile "x509pop" {
-      ca_ttl = "24h"
-      cert_ttl = "15m"
-    }
-  }
-}
-EOF
-```
+## Battery-aware certificate rotation
 
-### Step 2: Deploy sidecar identity provider (SIP)
+Rotation should be gated on battery state rather than running on a fixed schedule. A common policy:
 
-A lightweight SIP in Go 1.22 that:
-- Listens on `:8081`
-- Renews SVIDs from SPIRE every 12 minutes (half the SVID TTL)
-- Serves JWTs signed by the regional CA with a 24-hour expiry
-- Caches JWTs in memory with a 5-minute TTL
+- Above 80%: rotate on the normal interval.
+- Between 40% and 80%: rotate less frequently.
+- Below 40%: skip rotation until power returns.
+
+This is a small amount of policy code, but it prevents certificate rotation from competing with other work during low-power events, which is a frequent cause of crashes on constrained devices.
+
+## A minimal sidecar implementation
+
+The following Go program listens on a local port, obtains an identity from the workload API, and issues a signed JWT with the policy claims described above.
 
 ```go
 package main
 
 import (
-  "context"
-  "log"
-  "net/http"
-  "time"
+	"context"
+	"log"
+	"net/http"
+	"time"
 
-  "github.com/spiffe/go-spiffe/v2/workloadapi"
-  "github.com/golang-jwt/jwt/v5"
-  "github.com/google/uuid"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
+	"github.com/spiffe/go-spiffe/v2/workloadapi"
 )
 
 type SIP struct {
-  spiffeClient *workloadapi.Client
-  jwtSecret    []byte
+	spiffeClient *workloadapi.Client
+	jwtSecret    []byte
+}
+
+type policyClaims struct {
+	RegionLock      string `json:"region_lock"`
+	MinBatteryPct   int    `json:"min_battery_pct"`
+	MaxNetworkClass string `json:"max_network_class"`
+	jwt.RegisteredClaims
 }
 
 func (s *SIP) handler(w http.ResponseWriter, r *http.Request) {
-  // Extract SPIFFE ID from workload API
-  id, err := s.spiffeClient.GetSpiffeID(context.Background())
-  if err != nil {
-    http.Error(w, "no identity", http.StatusForbidden)
-    return
-  }
+	id, err := s.spiffeClient.GetSpiffeID(context.Background())
+	if err != nil {
+		http.Error(w, "no identity", http.StatusForbidden)
+		return
+	}
 
-  // Build claims with region lock and battery threshold
-  claims := jwt.RegisteredClaims{
-    Subject:   id.String(),
-    ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
-    Issuer:    "sip-africa",
-    IssuedAt:  jwt.NewNumericDate(time.Now()),
-    NotBefore: jwt.NewNumericDate(time.Now()),
-    ID:        uuid.New().String(),
-    // Custom claims
-    Claims: map[string]interface{}{
-      "region_lock":    "KE",
-      "min_battery_pct": 20,
-      "max_network_class": "2G",
-    },
-  }
+	now := time.Now()
+	claims := policyClaims{
+		RegionLock:      "region-a",
+		MinBatteryPct:   20,
+		MaxNetworkClass: "2G",
+		RegisteredClaims: jwt.RegisteredClaims{
+			Subject:   id.String(),
+			ExpiresAt: jwt.NewNumericDate(now.Add(24 * time.Hour)),
+			Issuer:    "sip-region-a",
+			IssuedAt:  jwt.NewNumericDate(now),
+			NotBefore: jwt.NewNumericDate(now),
+			ID:        uuid.New().String(),
+		},
+	}
 
-  token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-  tokenString, err := token.SignedString(s.jwtSecret)
-  if err != nil {
-    http.Error(w, "token error", http.StatusInternalServerError)
-    return
-  }
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(s.jwtSecret)
+	if err != nil {
+		http.Error(w, "token error", http.StatusInternalServerError)
+		return
+	}
 
-  w.Write([]byte(tokenString))
+	w.Write([]byte(tokenString))
 }
 
 func main() {
-  sip := &SIP{jwtSecret: []byte("regional-secret-2026")}
-  sip.spiffeClient, _ = workloadapi.New(context.Background())
+	ctx := context.Background()
 
-  http.HandleFunc("/token", sip.handler)
-  log.Fatal(http.ListenAndServe(":8081", nil))
+	client, err := workloadapi.New(ctx)
+	if err != nil {
+		log.Fatalf("workload API client: %v", err)
+	}
+
+	sip := &SIP{
+		spiffeClient: client,
+		jwtSecret:    []byte("replace-with-a-secret-from-your-secret-store"),
+	}
+
+	http.HandleFunc("/token", sip.handler)
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
 ```
 
-### Step 3: Agent client with adaptive retry
+Two corrections matter here relative to a naive version. First, custom claims belong in the struct, not in a nested `Claims` map on `RegisteredClaims` — the latter does not serialize as intended. Second, the signing secret must come from a secret store, not a literal in source.
 
-The agent client talks to the SIP first, falls back to SPIRE if SIP is unreachable, and uses adaptive backoff.
+## An agent client with fallback and backoff
 
 ```go
 package agent
 
 import (
-  "context"
-  "net/http"
-  "time"
-
-  "github.com/go-resty/resty/v2"
+	"bytes"
+	"context"
+	"fmt"
+	"math"
+	"net/http"
+	"time"
 )
 
 type Agent struct {
-  sipURL       string
-  spireURL     string
-  batteryPct   int
-  networkClass string
+	sipURL       string
+	spireURL     string
+	batteryPct   int
+	networkClass string
 }
 
 func (a *Agent) getToken(ctx context.Context) (string, error) {
-  client := resty.New().SetTimeout(2 * time.Second)
+	client := &http.Client{Timeout: 2 * time.Second}
 
-  // Try SIP first
-  resp, err := client.R().Get(a.sipURL + "/token")
-  if err == nil && resp.StatusCode() == 200 {
-    return string(resp.Body()), nil
-  }
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, a.sipURL+"/token", nil)
+	if err == nil {
+		if resp, err := client.Do(req); err == nil {
+			defer resp.Body.Close()
+			if resp.StatusCode == http.StatusOK {
+				buf := new(bytes.Buffer)
+				if _, err := buf.ReadFrom(resp.Body); err == nil {
+					return buf.String(), nil
+				}
+			}
+		}
+	}
 
-  // Fallback to SPIRE if SIP fails
-  resp, err = client.R().Get(a.spireURL + "/spire/token")
-  if err != nil {
-    return "", err
-  }
-  return string(resp.Body()), nil
+	req, err = http.NewRequestWithContext(ctx, http.MethodGet, a.spireURL+"/spire/token", nil)
+	if err != nil {
+		return "", err
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	buf := new(bytes.Buffer)
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
+}
+
+func (a *Agent) baseDelay() time.Duration {
+	switch a.networkClass {
+	case "2G":
+		return 1500 * time.Millisecond
+	case "3G":
+		return 500 * time.Millisecond
+	default:
+		return 50 * time.Millisecond
+	}
 }
 
 func (a *Agent) adaptiveRetry(ctx context.Context, url string, payload []byte) error {
-  baseDelay := 50 * time.Millisecond
-  maxDelay := 5 * time.Second
-  attempts := 0
-  maxAttempts := 3
+	const maxAttempts = 4
+	base := a.baseDelay()
 
-  for attempts < maxAttempts {
-    token, err := a.getToken(ctx)
-    if err != nil {
-      delay := time.Duration(float64(baseDelay) * math.Pow(2, float64(attempts)))
-      if a.networkClass == "2G" {
-        delay = time.Duration(float64(baseDelay) * 3 * math.Pow(2, float64(attempts)))
-      }
-      time.Sleep(delay)
-      attempts++
-      continue
-    }
+	for attempt := 0; attempt < maxAttempts; attempt++ {
+		delay := time.Duration(float64(base) * math.Pow(2, float64(attempt)))
+		if max := 5 * time.Second; delay > max {
+			delay = max
+		}
 
-    _, err = http.Post(url, "application/json", bytes.NewReader(payload))
-    if err == nil {
-      return nil
-    }
-    time.Sleep(delay)
-  }
-  return fmt.Errorf("failed after %d attempts", maxAttempts)
+		token, err := a.getToken(ctx)
+		if err != nil {
+			time.Sleep(delay)
+			continue
+		}
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(payload))
+		if err != nil {
+			return err
+		}
+		req.Header.Set("Authorization", "Bearer "+token)
+		req.Header.Set("Content-Type", "application/json")
+
+		resp, err := http.DefaultClient.Do(req)
+		if err == nil {
+			resp.Body.Close()
+			if resp.StatusCode < 500 {
+				return nil
+			}
+		}
+
+		time.Sleep(delay)
+	}
+
+	return fmt.Errorf("failed after %d attempts", maxAttempts)
 }
 ```
 
-### Step 4: Cross-region attestation cache
+The important behavioral change is that a 4xx response stops the loop. Retrying a request that was rejected for a policy reason will never succeed and only adds load.
 
-A simple cache replicates SPIFFE SVIDs across regions using a gossip protocol over Redis Streams. Each region runs a proxy that subscribes to the stream and updates a local TTL cache.
+## A cross-region attestation cache
 
 ```python
-# redis_attest_cache.py
-import redis
 import json
-from datetime import datetime, timedelta
+import redis
+
 
 class AttestationCache:
-    def __init__(self, redis_url, region):
+    def __init__(self, redis_url, region, ttl_seconds=300):
         self.redis = redis.Redis.from_url(redis_url)
         self.region = region
-        self.ttl = 300  # 5 minutes
+        self.ttl = ttl_seconds
 
     def publish_svid(self, spiffe_id, svid_pem, expires_at):
         payload = {
@@ -262,182 +293,88 @@ class AttestationCache:
         self.redis.xadd("attestation:stream", {"data": json.dumps(payload)})
 
     def get_svid(self, spiffe_id):
-        # Try local cache first
         cached = self.redis.get(f"attestation:{spiffe_id}")
         if cached:
             return json.loads(cached)
-
-        # Replicate from another region
-        streams = self.redis.xread({"attestation:stream": "$"}, None, 500)
-        for stream, messages in streams:
-            for _, message in messages:
-                data = json.loads(message["data"])
-                if data["spiffe_id"] == spiffe_id:
-                    self.redis.setex(
-                        f"attestation:{spiffe_id}",
-                        self.ttl,
-                        json.dumps(data)
-                    )
-                    return data
         return None
+
+    def store_svid(self, spiffe_id, data):
+        self.redis.setex(f"attestation:{spiffe_id}", self.ttl, json.dumps(data))
 ```
 
-### Step 5: Battery-aware rotation policy
+Note that `get_svid` reads the local cache only. Replicating from the stream belongs in a background consumer, not in the request path — reading the stream on every lookup defeats the purpose of the cache and adds latency under load.
 
-A policy engine checks battery level before rotating certificates. The policy runs as a systemd service on the agent device.
+## Battery-aware rotation
 
 ```bash
-# /etc/systemd/system/battery-aware-rotation.service
-[Unit]
-Description=Battery-aware SPIRE rotation
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/battery_rotation.sh
-
-[Install]
-WantedBy=multi-user.target
-
-# battery_rotation.sh
 #!/bin/bash
+set -euo pipefail
+
 BATTERY=$(cat /sys/class/power_supply/BAT0/capacity)
+
 if [ "$BATTERY" -gt 80 ]; then
-  sudo spire-agent api rotate -ttl 15m
+  spire-agent api rotate
 elif [ "$BATTERY" -gt 40 ]; then
-  sudo spire-agent api rotate -ttl 30m
+  sleep 30
+  spire-agent api rotate
+else
+  echo "battery below threshold, deferring rotation"
+  exit 0
 fi
 ```
 
----
+The `-ttl` flag shown in some examples is not a documented argument for this command; rotation timing should be controlled by the agent's configured SVID TTL and by when this script runs.
 
-## Performance numbers from a live system
+## How to measure whether any of this helped
 
-A typical deployment of this stack runs in production for 90 days across three regions: West (Lagos), East (Nairobi), and Southern (Cape Town). Here are the numbers that matter:
+No table of results belongs here, because results depend entirely on the deployment. What matters is knowing what to instrument.
 
-| Metric | 2026 Stack | 2026 Stack | Change |
-|---|---|---|---|
-| P99 latency (agent→service) | 2.1 s | 420 ms | -80% |
-| 403 errors (per 1k requests) | 98 | 2.1 | -98% |
-| CA load (requests/min) | 1,200 | 430 | -64% |
-| Agent crash rate (low battery) | 12% | 0.4% | -97% |
-| Cross-region attestation time | 1.2 s | 310 ms | -74% |
+**403 rate per thousand requests, split by cause.** Log the token error reason, not just the status code. `InvalidToken`, `InvalidIssuer`, and clock-skew failures have different fixes.
 
-The biggest surprise is usually the 80% latency drop. Some improvement is expected, but not that much. The root cause is the combination of the SIP cache and the adaptive retry loop. Agents on 2G networks no longer wait for SPIRE renewals that would time out; they use the cached JWT and retry with a 3-second backoff instead of hammering the CA every 30 seconds.
+**Fallback token usage rate.** Count how often the sidecar serves a fallback token. A rising rate precedes a rise in 403s and is the earliest useful signal.
 
-Another surprise: battery-aware rotation cuts agent crashes by 97%. Battery drain looks like a minor issue on paper, but low-end Android devices in rural areas crash when SPIRE tries to rotate certificates during a low-battery event. The policy engine adds 200 ms to each rotation check, but saves the 12% crash-related support tickets.
+**Certificate authority request rate.** Instrument the authority's request counter. A synchronized retry storm shows up as a sharp spike, not a gradual rise.
 
-Cost-wise, this pattern commonly reduces AWS bills by around $180/month across three regions by:
-- Cutting CA load, which means smaller CA instances (t3.medium → t3.small)
-- Reducing Redis cache misses, which cuts eviction rates by 40%
-- Eliminating 90% of the 403 retries that were spinning up extra Lambda instances
+**P99 latency for agent-to-service calls, segmented by network class.** Aggregate latency hides the slow-link population that is actually failing.
 
----
+**Rotation failures correlated with battery level.** Log battery state alongside every rotation attempt.
 
-## The failure modes nobody warns you about
+To compare before and after a change, capture these five metrics for a fixed window, apply one change, and capture the same window again. Comparing a single latency number before and after a change tells you almost nothing on its own.
 
-1. **Clock skew in offline agents**: Agents often use hardware clocks that drift up to 60 seconds per day. When the agent comes back online, it thinks its JWT is still valid, but the SPIRE server has already rotated the CA. The result: `403 InvalidIssuer` errors. Adding a clock sync step before token renewal fixes it, but adds 120 ms to the first request after power loss.
+## Failure modes worth designing for
 
-2. **Certificate chain bloat**: The regional CA profile adds 40 bytes to each SVID. On KaiOS devices with a 1,024-byte certificate chain limit, that breaks TLS handshakes. Stripping the regional CA chain to the bare minimum reduces chain size from 1,080 bytes to 720 bytes—but breaks cross-region attestations. The fix: use a shorter OID for the regional claim.
+**Clock skew on offline agents.** Hardware clocks drift. An agent that has been offline may believe its token is valid after the issuer has rotated keys, producing an issuer mismatch. A clock sync step before renewal fixes it, at the cost of a delay on the first request after power loss.
 
-3. **Redis eviction storms**: The SIP cache uses Redis with a maxmemory-policy of allkeys-lru and 500 MB limit. During a regional power outage, all agents reconnect at once, filling the cache and causing evictions. Switching to allkeys-lfu and increasing the limit to 1 GB fixes it, but costs around $45/month per region.
+**Certificate chain bloat.** Adding regional data to identity strings inflates certificate chains. Clients with hard chain-size limits fail the handshake. Shorter identifiers or a trimmed chain help, but trimming can break cross-region validation — test both paths.
 
-4. **mTLS handshake timeouts on 2G**: The mTLS handshake between the agent and the SIP sometimes exceeds the KaiOS TCP timeout of 500 ms. Switching to TLS 1.2 with session resumption and reducing the cipher list to TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 cuts handshake time from 450 ms to 180 ms on 2G.
+**Cache eviction storms.** When a region recovers, all agents reconnect at once and fill the cache. Under an LRU policy, this evicts entries that are still needed. An LFU policy, a larger memory limit, or admission control on reconnection all reduce the effect.
 
-5. **Cross-region gossip storms**: When the network partition heals, all regions try to replicate attestations at once, overwhelming the Redis Streams. Adding a jittered backoff between 0–5 seconds for publishers cuts peak load by 80%.
+**Handshake timeouts on slow links.** If the mTLS handshake exceeds the client's TCP timeout, no identity logic runs at all. Session resumption and a reduced cipher list cut handshake time, but verify that every device in the fleet supports the ciphers you keep.
 
----
+**Gossip storms after partition healing.** When a partition heals, all regions may replicate at once. Jittered backoff of 0–5 seconds between publishers spreads the load.
 
-## Tools and libraries worth your time
+## When this stack is the wrong choice
 
-| Tool | Version | Why it matters | Setup cost |
-|---|---|---|---|
-| SPIRE | 1.8 | Workload identity with regional CAs | $0 (open source) |
-| SPIFFE/SPIRE Go SDK | 2.3.0 | Go client for SPIRE | $0 |
-| go-jwt | 5.0.0 | JWT signing and validation | $0 |
-| Resty | 2.7.0 | HTTP client with retries | $0 |
-| Redis | 7.2 | Cache and cross-region gossip | $300/region/month |
-| Systemd | 255 | Battery-aware rotation policy | $0 |
-| Go | 1.22 | Agent client and SIP | $0 |
+The layered approach is overkill when agents run on well-provisioned devices with stable power and fast networks, when there is a single region with no cross-border traffic, or when occasional multi-second latency spikes during outages are acceptable. In those cases the simpler stack — workload identity, short-lived tokens, a validation cache — is sufficient and much easier to operate. The added layers exist to handle unreliable power, slow links, and constrained devices. If none of those apply, they are pure complexity.
 
-One recurring surprise is how fragile the SPIRE Go SDK is for regional CAs. The official examples assume a single CA. Teams commonly have to fork and patch the SDK to support multiple regional CAs, which can add two weeks to the timeline. If you're using SPIRE in 2026, budget for SDK patches.
+## FAQ
 
-Another surprise: Redis 7.2's Streams are fast, but they're not durable. During a power failure in Nairobi, a Redis instance can lose 800 attestations that hadn't been replicated. Switching to Redis Enterprise for the stream in that region costs around $80/month but saves a manual recovery.
+**Why do agents get `403 InvalidToken` when the token has not expired?**
 
----
+Usually the token is valid but the validating environment disagrees. A short-lived token can expire during a connectivity gap while the validation cache evicts the key at the same time, so the service rejects a token that was valid moments earlier. Clock skew on offline devices makes it worse: a drifting hardware clock can make an agent believe a token is still valid after the issuer has rotated. The fix is typically a fallback token with a longer expiry plus a clock sync before renewal.
 
-## When this approach is the wrong choice
+**What is a sidecar identity provider and why use one?**
 
-This stack is overkill if:
-- Your agents run on high-end devices with stable power and 4G networks.
-- You only have one region and no cross-border traffic.
-- You can tolerate 2–3 second latency spikes during power loss.
+It is a local service that brokers identity tokens for the agent, speaking mTLS to the upstream identity server and caching a fallback token signed by a regional key. It exists because the upstream server is often unreachable during power loss or partitions, and short-lived certificates expire during those windows. The fallback keeps the agent authenticating instead of failing every request.
 
-In those cases, the 2026 stack (SPIFFE/SPIRE + short-lived JWTs + Redis cache) is enough. It works fine as a control in Rwanda—until the first solar outage. Then the 403 errors start, and migration to the 2026 stack becomes necessary.
+**How should certificate rotation work on battery-powered devices?**
 
----
+Gate rotation on battery level rather than a fixed schedule. Rotate normally above 80%, less often between 40% and 80%, and defer below 40% until power returns. This prevents rotation from competing with other work during low-power events, which is a common cause of crashes on constrained devices.
 
-## My honest take after using this in production
+**Why does cross-region attestation add latency, and how is it reduced?**
 
-Agent identity looks like a solved problem until it hits production. The docs make it look like SPIFFE/SPIRE + JWTs + Redis cache is all you need. In reality, you need:
+It requires reaching an authority in another region, adding a round trip on top of the handshake. A cross-region cache replicates identity documents with a short TTL so validation can happen locally. The trade-off is a revocation window: an identity revoked in one region may remain valid in another until the TTL expires.
 
-- A fallback identity provider for offline agents
-- Regional CA profiles with shorter TTLs
-- Adaptive retry logic based on network class
-- Battery-aware rotation policies
-- Cross-region attestation cache
+## Do this in the next 30 minutes
 
-The 2026 stack works, but it's complex. Debugging clock skew on KaiOS devices can consume weeks—a problem no tutorial mentions. Patching the SPIRE Go SDK to support regional CAs is often unavoidable. If you're building an agent system today, budget for SDK patches and plan for regional outages.
-
-The biggest mistake is assuming the network will be stable. In reality, agents lose connectivity for 15–30 seconds at a time, and during those windows, the identity system has to keep working. The 2026 stack does that, but it's a far cry from the simple SPIFFE + JWT pattern most teams start with.
-
----
-
-## What to do next
-
-Open your agent client code and look for the first place where you retry on 403. Change that retry loop to:
-
-1. Measure network class by doing a 500-byte POST to a regional health endpoint.
-2. Use a 50 ms base delay on 4G, 500 ms on 3G, 3,000 ms on 2G.
-3. Skip SPIRE renewal if battery < 20% and use a fallback JWT from a regional cache.
-
-Do this in the next 30 minutes and log the p95 latency before and after. If the latency drops by at least 50%, you've found the first place to optimize. If not, the problem is elsewhere—and you've just ruled out the most common cause.
-
----
-
-## Frequently Asked Questions
-
-**Why do agents get `403 InvalidToken` even when the token hasn't expired?**
-
-The most common cause is a mismatch between the token's validity window and the environment it's being validated in. Short-lived JWTs expire during network outages, and if the validation cache evicts the key at the same time, the downstream service rejects a token that was valid moments earlier. Clock skew on offline devices makes this worse: an agent's hardware clock can drift tens of seconds per day, so it may believe a token is still valid after the CA has rotated. The fix is usually a combination of a fallback token with a longer expiry and a clock sync step before renewal.
-
-**What is a sidecar identity provider (SIP) and why do agents need one?**
-
-A sidecar identity provider is a lightweight local service that brokers identity tokens for the agent, speaking mTLS to the upstream identity server (like SPIRE) and caching a fallback JWT signed by a regional CA. Agents need one because the upstream identity server is often unreachable during power loss or network partitions, and short-lived SVIDs expire during those windows. The SIP lets the agent keep authenticating with a cached token instead of failing every request with a 403. This pattern typically eliminates the majority of 403 errors in the first week of a rollout.
-
-**How do you handle certificate rotation on battery-powered agent devices?**
-
-Rotation should be gated on battery level rather than running on a fixed schedule. A common policy is to rotate every 15 minutes when battery is above 80%, rotate less frequently between 40% and 80%, and skip rotation entirely below 40% until power returns. This prevents the certificate rotation process from competing with other work during low-battery events, which is a frequent cause of crashes on low-end Android devices. The policy itself is small—often a dozen lines in a systemd unit or shell script—but the crash reduction is significant.
-
-**Why does cross-region attestation add so much latency and how do you reduce it?**
-
-Cross-region attestation requires the validating service to reach a CA in another region, which adds a full network round trip on top of the TLS handshake. A cross-region attestation cache replicates SPIFFE SVIDs between regions with a short TTL, so the validating service can check a local cache entry instead of hitting the remote CA. The cache is typically updated via a low-bandwidth gossip protocol between region proxies. This pattern commonly reduces CA load by around 64% and cuts cross-region latency by several hundred milliseconds.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 30, 2026
+Open your agent client and find the retry loop that handles authentication failures. Add a branch that stops retrying on any 4xx response and logs the token error reason separately from the status code. Then run a short load test against a slow-link profile and record the 403 count split by reason. That single change — distinguishing "retry because the network failed" from "never retry because policy rejected this" — removes a large class of self-inflicted load and gives you the data to decide whether anything else in this article applies to you.

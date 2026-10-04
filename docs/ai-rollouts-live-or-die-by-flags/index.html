@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI rollouts live or die by flags - Kubai Kevin</title>
-        <meta name="description" content="Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…">
+        <meta name="description" content="How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.">
         <meta name="keywords" content="FeatureFlagsAi, AiRolloutStrategies, FeatureFlags2026, FeatureFlagService, FeatureFlagCost, AiModelRollback, DynamodbFeatureFlags, Ai, Artificialintelligence">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T14:40:14.568805">
-        <meta property="article:modified_time" content="2026-09-28T04:26:12.005766+00:00">
+        <meta property="article:modified_time" content="2026-10-04T09:58:39.508468+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI rollouts live or die by flags">
-        <meta property="og:description" content="Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…">
+        <meta property="og:description" content="How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.">
         <meta property="og:url" content="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI rollouts live or die by flags">
-        <meta name="twitter:description" content="Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…">
+        <meta name="twitter:description" content="How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-rollouts-live-or-die-by-flags.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/#article",
       "headline": "AI rollouts live or die by flags",
-      "description": "Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…",
+      "description": "How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.",
       "datePublished": "2026-06-12T14:40:14+00:00",
-      "dateModified": "2026-09-28T04:26:12+00:00",
-      "wordCount": 2540,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-10-04T09:58:39+00:00",
+      "wordCount": 2751,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI rollouts live or die by flags</h1>
                 
-                <p class="post-lead">Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…</p>
+                <p class="post-lead">How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.</p>
                 
                 
                 <div class="tags">
@@ -259,60 +259,40 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2540 words
+                        14 min read
+                        &nbsp;·&nbsp; 2751 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-28
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In mid-2026 I was the backend lead on a team rolling out an AI assistant that wrote Jira tickets from Slack messages. We had Prometheus, Grafana, and a fancy vector database. We were good—until we weren’t.</p>
-<p>That incident cost us a customer and two engineering weeks of incident review.</p>
-<p>Feature flags weren’t the shiny part of the stack, but they became the only thing that let us ship AI without blowing up production every week. By 2026 most teams I talk to run every inference call, prompt template, and safety filter behind a feature flag. The ones that don’t are the ones still rebuilding and redeploying every time they want to tweak a temperature setting.</p>
-<p>If you’re building AI features today and you’re not using feature flags, you’re already paying the cost in downtime and rollback pain. I’ll show you the exact setup we run in production on Node 20 LTS and AWS Lambda with arm64 that handles 3 million flag evaluations per day with 99.9% availability and under 15 ms latency at the 95th percentile.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You will need:</p>
-<ul>
-<li>Node 20 LTS installed locally (we use 20.12.2)</li>
-<li>An AWS account with IAM permissions for Lambda, DynamoDB, and CloudWatch</li>
-<li>A Stripe account if you want to run the cost comparison (optional)</li>
-<li>Familiarity with GitHub Actions for CI</li>
-</ul>
-<p>What we’re building:</p>
+                <p>Most AI tutorials stop at the happy path: a prompt, a model call, a response. Production is different. Model versions get deprecated, prompt templates regress, safety filters misfire on a subset of inputs, and a temperature change can shift output quality in ways that only show up in aggregate. The practical question is not "how do I call a model" but "how do I change what the model does, for a subset of traffic, without a full redeploy and without a long incident."</p>
+<p>Feature flags answer that question. A flag is a small piece of remote configuration — usually a boolean plus optional variant and targeting rules — that an application reads at runtime. Teams commonly put every inference call, prompt template, and safety filter behind one. The alternative is rebuilding and redeploying the inference stack for each tweak, which turns a five-second kill switch into a multi-hour rollback.</p>
+<p>This article walks through a self-hosted flag service on AWS Lambda with DynamoDB, a Node client SDK, timeout and circuit-breaker handling, observability, tests, and a canary rollout pattern. It uses Node 20 LTS and ARM64 Lambda. Nothing here is specific to a particular model vendor; the flag layer sits in front of whatever inference client you already use.</p>
+<h2 id="what-youll-build">What you'll build</h2>
 <ol>
-<li>A lightweight feature-flag service that runs on AWS Lambda with DynamoDB as the store</li>
-<li>A Node SDK you import into your AI inference code to decide which model, prompt version, or safety filter to use</li>
-<li>A simple dashboard in CloudWatch that shows flag state and latency</li>
-<li>Automated canary releases that roll out to 5% of traffic before 100%</li>
+<li>A small flag-evaluation service: an AWS Lambda function backed by a DynamoDB table, defined with AWS CDK in TypeScript.</li>
+<li>A Node SDK that your inference code imports to decide which model, prompt version, or safety filter to use.</li>
+<li>Client-side timeout and circuit-breaker logic so a slow flag service cannot take down inference.</li>
+<li>Metrics and a CloudWatch dashboard, plus unit tests for the SDK.</li>
+<li>A canary rollout pattern: 5% of traffic, then 50%, then 100%, with a kill switch at each step.</li>
 </ol>
-<p>The whole stack costs about $18/month at our 2026 traffic levels and scales to 10x without touching the architecture.</p>
-<p>Concrete numbers you’ll see later:
-- 15 ms p95 latency for flag evaluation
-- 0.003% error rate over 90 days
-- 40% reduction in incident minutes after adopting flags</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<h3 id="create-the-infrastructure">Create the infrastructure</h3>
-<p>We use AWS CDK (TypeScript 5.5) to define everything in code. Install CDK once:</p>
-<pre><code class="language-bash">npm install -g aws-cdk@2.134.0
-</code></pre>
-<p>Then bootstrap the account (takes 3 minutes):</p>
-<pre><code class="language-bash">cdk bootstrap aws://ACCOUNT-NUMBER/REGION
-</code></pre>
-<p>Create a new CDK app:</p>
-<pre><code class="language-bash">mkdir ai-flag-service &amp;&amp; cd ai-flag-service
+<p>Prerequisites: Node 20 LTS locally, an AWS account with permission to create Lambda, DynamoDB, IAM, and CloudWatch resources, and basic familiarity with GitHub Actions for CI.</p>
+<h2 id="step-1-set-up-the-infrastructure">Step 1 — Set up the infrastructure</h2>
+<p>AWS CDK defines the stack in code. Install it once, then bootstrap the account and create an app.</p>
+<pre><code class="language-bash">npm install -g aws-cdk
+cdk bootstrap aws://ACCOUNT-NUMBER/REGION
+mkdir ai-flag-service &amp;&amp; cd ai-flag-service
 cdk init app --language typescript
 </code></pre>
-<p>Edit <code>lib/ai-flag-service-stack.ts</code> and paste the following. This spins up a DynamoDB table with on-demand capacity, a Lambda function, and a CloudWatch dashboard.</p>
+<p>Edit <code>lib/ai-flag-service-stack.ts</code>. This creates a DynamoDB table with on-demand capacity, a Lambda function, and the IAM permission the function needs to read the table.</p>
 <pre><code class="language-typescript">import * as cdk from 'aws-cdk-lib';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as logs from 'aws-cdk-lib/aws-logs';
-import * as iam from 'aws-cdk-lib/aws-iam';
 
 interface Props extends cdk.StackProps {
   stage: string;
@@ -322,7 +302,6 @@ export class AiFlagServiceStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props: Props) {
     super(scope, id, props);
 
-    // DynamoDB table for flags
     const table = new dynamodb.Table(this, 'FlagsTable', {
       partitionKey: { name: 'flagId', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -330,7 +309,6 @@ export class AiFlagServiceStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
-    // Lambda function
     const fn = new lambda.Function(this, 'FlagEvaluator', {
       runtime: lambda.Runtime.NODEJS_20_X,
       architecture: lambda.Architecture.ARM_64,
@@ -344,16 +322,14 @@ export class AiFlagServiceStack extends cdk.Stack {
       logRetention: logs.RetentionDays.ONE_MONTH,
     });
 
-    // Permissions
     table.grantReadData(fn);
 
-    // Outputs
     new cdk.CfnOutput(this, 'FunctionName', { value: fn.functionName });
     new cdk.CfnOutput(this, 'TableName', { value: table.tableName });
   }
 }
 </code></pre>
-<p>Create the Lambda handler in <code>lambda/index.ts</code>:</p>
+<p>Create the handler in <code>lambda/index.ts</code>. It reads a flag by ID and returns its state. Targeting logic is deliberately minimal here; the point is the shape of the contract, not a full rules engine.</p>
 <pre><code class="language-typescript">import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 
@@ -377,31 +353,27 @@ export const handler = async (event: any) =&gt; {
 
   const item = unmarshall(res.Item);
   const enabled = item.enabled as boolean;
-  const targeting = item.targeting as Record&lt;string, unknown&gt;;
+  const targeting = item.targeting as Record&lt;string, unknown&gt; | undefined;
 
-  // Simple targeting: if targeting is empty, everyone gets it
   if (!targeting || Object.keys(targeting).length === 0) {
     return { enabled, variant: item.variant || 'default' };
   }
 
-  // Add your own targeting logic here (e.g., userId in targeting.userIds)
+  // Extend with your own targeting rules, e.g. userId in targeting.userIds.
   return { enabled, variant: item.variant || 'default' };
 };
 </code></pre>
-<p>Install dependencies:</p>
+<p>Install dependencies and deploy.</p>
 <pre><code class="language-bash">npm install @aws-sdk/client-dynamodb @aws-sdk/util-dynamodb
+cdk deploy --context stage=prod
 </code></pre>
-<p>Deploy:</p>
-<pre><code class="language-bash">cdk deploy --context stage=prod
-</code></pre>
-<p>You’ll get a function name like <code>AiFlagServiceStack-FlagEvaluator...</code>. Save it; we’ll use it next.</p>
-<p>Gotcha: The first deploy creates a table with on-demand billing. If you delete the stack and redeploy, the table might stay in DELETING state for 30 minutes. Use <code>cdk destroy</code> and wait, or change the removal policy to RETAIN in dev.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<h3 id="build-the-client-sdk">Build the client SDK</h3>
-<p>Create a new package <code>ai-flag-sdk</code>:</p>
+<p>The output includes the function name. Save it; the SDK needs it.</p>
+<p>One operational note: with <code>RemovalPolicy.DESTROY</code>, deleting the stack deletes the table, and DynamoDB table deletion is not instantaneous. Redeploying immediately after a destroy can fail while the old table is still in <code>DELETING</code>. For development stacks, either wait for the table to disappear or switch the removal policy to <code>RETAIN</code> and clean up manually.</p>
+<h2 id="step-2-build-the-client-sdk">Step 2 — Build the client SDK</h2>
+<p>The SDK wraps the Lambda invocation, records latency, and gives inference code a single function to call.</p>
 <pre><code class="language-bash">mkdir ai-flag-sdk &amp;&amp; cd ai-flag-sdk
 npm init -y
-npm install @aws-sdk/client-lambda @aws-sdk/client-cloudwatch @aws-sdk/client-dynamodb
+npm install @aws-sdk/client-lambda @aws-sdk/client-cloudwatch
 </code></pre>
 <p>Edit <code>src/index.ts</code>:</p>
 <pre><code class="language-typescript">import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
@@ -422,9 +394,7 @@ interface FlagResult {
   variant?: string;
 }
 
-export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&gt; {
-  const start = Date.now();
-
+async function evaluateFlagInternal(options: FlagOptions): Promise&lt;FlagResult&gt; {
   const payload = {
     flagId: options.flagId,
     userId: options.userId,
@@ -442,10 +412,14 @@ export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&
     throw new Error(`Flag evaluation failed: ${res.StatusCode}`);
   }
 
-  const body = JSON.parse(Buffer.from(res.Payload).toString('utf-8'));
+  return JSON.parse(Buffer.from(res.Payload).toString('utf-8'));
+}
 
-  // Record latency
+export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&gt; {
+  const start = Date.now();
+  const result = await evaluateFlagInternal(options);
   const latency = Date.now() - start;
+
   await cloudwatch.send(
     new PutMetricDataCommand({
       Namespace: 'AI/FeatureFlags',
@@ -460,33 +434,27 @@ export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&
     })
   );
 
-  return body;
+  return result;
 }
 </code></pre>
-<p>Publish the SDK:</p>
-<pre><code class="language-bash">npm run build
-npm publish --access public
-</code></pre>
-<h3 id="wire-it-into-an-ai-service">Wire it into an AI service</h3>
-<p>Assume you have an AI inference Lambda that generates Jira tickets. Install the SDK:</p>
-<pre><code class="language-bash">npm install ai-flag-sdk@latest
-</code></pre>
-<p>Edit your inference handler (<code>src/inference.ts</code>):</p>
+<p>Note the split: <code>evaluateFlagInternal</code> does the work, and <code>evaluateFlag</code> wraps it with metrics. That separation matters in Step 3, where the circuit breaker needs a function to wrap.</p>
+<h3 id="wire-it-into-an-inference-handler">Wire it into an inference handler</h3>
+<p>The flag layer decides which model and which prompt template to use. The inference code does not need to know how flags are stored.</p>
 <pre><code class="language-typescript">import { evaluateFlag } from 'ai-flag-sdk';
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
 
 export const handler = async (event: any) =&gt; {
   const { userId, message } = event;
 
-  // Evaluate which model and prompt to use
   const modelFlag = await evaluateFlag({ flagId: 'ai-model-v2', userId });
   const promptFlag = await evaluateFlag({ flagId: 'ai-prompt-v3', userId });
 
-  const modelId = modelFlag.enabled ? 'anthropic.claude-3-sonnet-20250121-v1:0' : 'anthropic.claude-3-haiku-20250121-v1:0';
+  const modelId = modelFlag.enabled
+    ? process.env.MODEL_ID_PRIMARY!
+    : process.env.MODEL_ID_FALLBACK!;
   const promptTemplate = promptFlag.enabled ? 'prompt-v3.jinja' : 'prompt-v2.jinja';
 
-  // Call Bedrock
-  const client = new BedrockRuntimeClient({ region: 'us-east-1' });
+  const client = new BedrockRuntimeClient({ region: process.env.AWS_REGION });
   const cmd = new InvokeModelCommand({
     modelId,
     body: JSON.stringify({ prompt: `Use template ${promptTemplate}: ${message}` }),
@@ -498,49 +466,71 @@ export const handler = async (event: any) =&gt; {
   return { ticket: output.summary };
 };
 </code></pre>
-<p>Deploy this new Lambda and point the environment variable <code>FLAG_FUNCTION_NAME</code> to your evaluator Lambda.</p>
-<p>Gotcha: If you run both Lambdas in the same account and region, the SDK can talk to the evaluator in &lt;15 ms. If you cross regions, expect 50-80 ms. We enforce the same region in prod.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<h3 id="timeout-and-retries">Timeout and retries</h3>
-<p>The evaluator Lambda has a 5-second timeout. If it hangs, your AI inference times out too. Add a 2-second client-side timeout in the SDK:</p>
-<pre><code class="language-typescript">import { setTimeout } from 'timers/promises';
-
-export async function evaluateFlag(options: FlagOptions, timeoutMs = 2000): Promise&lt;FlagResult&gt; {
+<p>Two details are worth calling out. First, model IDs come from environment variables rather than string literals, because model identifiers change and hardcoding them across a codebase is a maintenance problem. Second, the flag call is on the critical path of the request. That is why the next section exists.</p>
+<h2 id="step-3-handle-timeouts-failures-and-caching">Step 3 — Handle timeouts, failures, and caching</h2>
+<p>A flag service that is slow or unavailable must not make inference slow or unavailable. There are three layers of defense: a client-side timeout, a circuit breaker, and a local cache.</p>
+<h3 id="client-side-timeout">Client-side timeout</h3>
+<p>The evaluator Lambda has a 5-second timeout. A client-side timeout shorter than that bounds how long inference can be blocked.</p>
+<pre><code class="language-typescript">export async function evaluateFlag(
+  options: FlagOptions,
+  timeoutMs = 2000
+): Promise&lt;FlagResult&gt; {
   const controller = new AbortController();
-  const id = setTimeout(timeoutMs, null, { signal: controller.signal });
+  const timer = setTimeout(() =&gt; controller.abort(), timeoutMs);
 
   try {
-    const res = await Promise.race([
-      _evaluate(options),
-      new Promise((_, rej) =&gt; controller.signal.addEventListener('abort', () =&gt; rej(new Error('Timeout')))),
+    return await Promise.race([
+      evaluateFlagInternal(options),
+      new Promise&lt;FlagResult&gt;((_, reject) =&gt; {
+        controller.signal.addEventListener('abort', () =&gt;
+          reject(new Error('Flag evaluation timed out'))
+        );
+      }),
     ]);
-    return res as FlagResult;
   } finally {
-    clearTimeout(id);
-    controller.abort();
+    clearTimeout(timer);
   }
 }
 </code></pre>
 <h3 id="circuit-breaker">Circuit breaker</h3>
-<p>Wrap the evaluator call with a circuit breaker to avoid cascading failures:</p>
-<pre><code class="language-typescript">import { CircuitBreaker } from 'opossum';
+<p>Timeouts bound a single call. A circuit breaker bounds repeated calls to a dependency that is already failing, so inference does not pay the timeout on every request.</p>
+<pre><code class="language-typescript">import CircuitBreaker from 'opossum';
 
-const breaker = new CircuitBreaker(
-  async (options: FlagOptions) =&gt; evaluateFlagInternal(options),
-  { timeout: 2000, errorThresholdPercentage: 50, resetTimeout: 30000 }
-);
+const breaker = new CircuitBreaker(evaluateFlagInternal, {
+  timeout: 2000,
+  errorThresholdPercentage: 50,
+  resetTimeout: 30000,
+});
 
 export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&gt; {
   try {
     return await breaker.fire(options);
   } catch (err) {
-    console.error('Circuit breaker open, falling back to default', err);
+    console.error('Flag evaluation failed, using default', err);
     return { enabled: false, variant: 'default' };
   }
 }
 </code></pre>
-<h3 id="feature-flag-schema">Feature flag schema</h3>
-<p>Store flags in DynamoDB with a strict schema. We use this TypeScript interface to validate on write:</p>
+<p>The fallback matters as much as the breaker. Returning <code>enabled: false</code> means new behavior stays off during an outage, which is the safer default for a rollout. It is not the right default for every flag — a flag that turns a safety filter <em>on</em> should fail closed in the opposite direction. Decide per flag which state is safe when the flag service is unreachable, and encode that in the flag record rather than in the call site.</p>
+<h3 id="local-cache">Local cache</h3>
+<p>A short-lived in-process cache absorbs bursts and reduces DynamoDB reads.</p>
+<pre><code class="language-typescript">import NodeCache from 'node-cache';
+
+const cache = new NodeCache({ stdTTL: 5 });
+
+export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&gt; {
+  const cacheKey = `${options.flagId}:${options.userId}`;
+  const cached = cache.get&lt;FlagResult&gt;(cacheKey);
+  if (cached) return cached;
+
+  const result = await breaker.fire(options);
+  cache.set(cacheKey, result);
+  return result;
+}
+</code></pre>
+<p>A 5-second TTL is a deliberate trade-off: it caps how long a kill switch takes to propagate. If a flag must take effect instantly, skip the cache for that flag or invalidate on write. Document the propagation delay next to the kill-switch runbook, because an operator who expects instant effect and gets five seconds of stale behavior will misread the incident.</p>
+<h3 id="flag-schema">Flag schema</h3>
+<p>Validate flags on write so a malformed record cannot silently disable a feature.</p>
 <pre><code class="language-typescript">interface FeatureFlag {
   flagId: string;
   enabled: boolean;
@@ -555,38 +545,22 @@ export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&
   updatedAt: number;
 }
 </code></pre>
-<p>On every deploy, a GitHub Action runs a schema check against the table. If the schema drifts, the deploy fails. We caught a targeting rule that referenced a deleted segment last month before it hit production.</p>
-<h3 id="rate-limiting">Rate limiting</h3>
-<p>We limit flag evaluation to 100 calls per second per user segment to avoid DynamoDB throttling. If you exceed it, the SDK returns a cached value for 5 seconds:</p>
-<pre><code class="language-typescript">import NodeCache from 'node-cache';
-const cache = new NodeCache({ stdTTL: 5 });
-
-export async function evaluateFlag(options: FlagOptions): Promise&lt;FlagResult&gt; {
-  const cacheKey = `${options.flagId}:${options.userId}`;
-  const cached = cache.get&lt;FlagResult&gt;(cacheKey);
-  if (cached) return cached;
-
-  // ... evaluation ...
-  cache.set(cacheKey, result);
-  return result;
-}
-</code></pre>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<h3 id="cloudwatch-dashboard">CloudWatch dashboard</h3>
-<p>Create a dashboard that shows:
-- p95 latency for each flag
-- error rate
-- enabled ratio per flag
-- traffic by variant</p>
-<p>We export metrics from the SDK and the evaluator Lambda. The CDK stack already adds a <code>PutMetricData</code> call on every evaluation, so the dashboard auto-populates.</p>
-<h3 id="unit-tests-with-vitest">Unit tests with vitest</h3>
-<p>Install vitest 1.5.0:</p>
-<pre><code class="language-bash">npm install -D vitest@1.5.0
-</code></pre>
-<p>Create <code>src/index.test.ts</code>:</p>
+<p>A CI job can read every row and assert it matches this shape. That catches targeting rules referencing segments that no longer exist, which is a common source of flags that quietly evaluate to <code>false</code> for everyone.</p>
+<h2 id="step-4-observability-and-tests">Step 4 — Observability and tests</h2>
+<h3 id="metrics-worth-emitting">Metrics worth emitting</h3>
+<p>Latency and error rate are the minimum. For AI rollouts, four signals are more useful:</p>
+<ul>
+<li><strong>Flag evaluation latency</strong>, per flag, so a slow flag is visible before it slows inference.</li>
+<li><strong>Enabled ratio</strong>, per flag, so an unexpected flip to 100% or 0% is visible immediately.</li>
+<li><strong>Variant distribution</strong>, so a canary at 5% can be confirmed to actually be at 5%.</li>
+<li><strong>Fallback rate</strong>, the count of evaluations that returned the default because of a timeout or open breaker. A rising fallback rate is the earliest signal that the flag layer is degrading.</li>
+</ul>
+<p>The SDK emits the latency metric above. The same <code>PutMetricData</code> call pattern covers the others. A CloudWatch dashboard combining these four is enough to run a rollout.</p>
+<h3 id="unit-tests">Unit tests</h3>
+<p>Tests should cover the contract, not the AWS SDK. Mock the client and assert on the SDK's behavior.</p>
 <pre><code class="language-typescript">import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { evaluateFlag } from './index';
-import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
+import { LambdaClient } from '@aws-sdk/client-lambda';
 
 vi.mock('@aws-sdk/client-lambda');
 
@@ -595,13 +569,16 @@ beforeEach(() =&gt; {
 });
 
 describe('evaluateFlag', () =&gt; {
-  it('returns enabled false when flag not found', async () =&gt; {
-    LambdaClient.prototype.send = vi.fn().mockResolvedValue({ StatusCode: 404 });
+  it('returns enabled false when the flag is not found', async () =&gt; {
+    LambdaClient.prototype.send = vi.fn().mockResolvedValue({
+      StatusCode: 200,
+      Payload: Buffer.from(JSON.stringify({ enabled: false, reason: 'Flag not found' })),
+    });
     const res = await evaluateFlag({ flagId: 'missing', userId: 'u1' });
     expect(res.enabled).toBe(false);
   });
 
-  it('returns enabled true and variant when flag found', async () =&gt; {
+  it('returns enabled true and the variant when the flag is found', async () =&gt; {
     LambdaClient.prototype.send = vi.fn().mockResolvedValue({
       StatusCode: 200,
       Payload: Buffer.from(JSON.stringify({ enabled: true, variant: 'beta' })),
@@ -612,148 +589,113 @@ describe('evaluateFlag', () =&gt; {
   });
 });
 </code></pre>
-<p>Run tests in CI:</p>
-<pre><code class="language-yaml"># .github/workflows/ci.yml
-- name: Test
-  run: npx vitest run
-</code></pre>
-<h3 id="canary-deployments">Canary deployments</h3>
-<p>We roll out new AI models behind flags with 5% traffic for 30 minutes, then 50%, then 100%. We use AWS Application Auto Scaling to adjust the evaluator Lambda concurrency based on the flag’s traffic weight. The scaling policy looks like:</p>
+<p>Run in CI with <code>npx vitest run</code>. Add a test for the timeout path and one for the fallback path; those are the branches that matter during an incident and the ones least likely to be exercised manually.</p>
+<h2 id="canary-rollouts-for-model-and-prompt-changes">Canary rollouts for model and prompt changes</h2>
+<p>The pattern: a new model or prompt ships behind a flag that targets a small percentage of users, and that percentage is increased only after the metrics look right.</p>
 <table>
 <thead>
 <tr>
-<th>Target value</th>
-<th>Traffic weight</th>
+<th>Stage</th>
+<th>Traffic</th>
+<th>Minimum observation</th>
+<th>Advance if</th>
+<th>Roll back if</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>100</td>
+<td>Canary</td>
 <td>5%</td>
+<td>30 minutes</td>
+<td>Error rate within baseline; latency p95 within baseline</td>
+<td>Error rate above baseline or any safety-filter failure</td>
 </tr>
 <tr>
-<td>500</td>
+<td>Partial</td>
 <td>50%</td>
+<td>1 hour</td>
+<td>Same, plus no quality regression in sampled outputs</td>
+<td>Same</td>
 </tr>
 <tr>
-<td>1000</td>
-<td>100%</td>
-</tr>
-</tbody>
-</table>
-<p>This keeps our p95 latency under 20 ms even during the 50% rollout.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>Since we moved AI rollouts behind flags in January 2026, here are the numbers:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before flags</th>
-<th>After flags</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Incident minutes per month</td>
-<td>184</td>
-<td>12</td>
-</tr>
-<tr>
-<td>Rollback count per quarter</td>
-<td>4</td>
-<td>0</td>
-</tr>
-<tr>
-<td>AI model accuracy drift</td>
-<td>8%</td>
-<td>1%</td>
-</tr>
-<tr>
-<td>Cost per 1M inferences</td>
-<td>$0.24</td>
-<td>$0.26</td>
-</tr>
-</tbody>
-</table>
-<p>The 40% reduction in incident minutes came from being able to kill a bad variant in seconds instead of rebuilding the entire inference stack.</p>
-<p>We fixed it by denormalizing the segment membership into the flag record itself and caching it for 10 seconds.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<h3 id="how-do-you-handle-gdpr-and-audit-trails">How do you handle GDPR and audit trails?</h3>
-<p>Every flag evaluation writes a row to an <code>ai_flag_audit</code> table with <code>userId</code>, <code>flagId</code>, <code>variant</code>, <code>timestamp</code>, and <code>requestId</code>. We run a nightly Athena query to export these rows to an S3 bucket in <code>eu-central-1</code> for EU customers. The export is encrypted with a KMS key that only the compliance team can access. We’ve never had a GDPR request because the audit trail is complete and immutable.</p>
-<h3 id="can-i-use-launchdarkly-or-flagsmith-instead-of-building-my-own">Can I use LaunchDarkly or Flagsmith instead of building my own?</h3>
-<p>Yes. We evaluated LaunchDarkly and Flagsmith in Q1 2026. Here’s the comparison:</p>
-<table>
-<thead>
-<tr>
-<th>Criteria</th>
-<th>Custom (2026)</th>
-<th>LaunchDarkly</th>
-<th>Flagsmith</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Latency p95</td>
-<td>15 ms</td>
-<td>22 ms</td>
-<td>35 ms</td>
-</tr>
-<tr>
-<td>Cost per 10k evals</td>
-<td>$0.02</td>
-<td>$0.06</td>
-<td>$0.03</td>
-</tr>
-<tr>
-<td>Data residency control</td>
 <td>Full</td>
-<td>Partial</td>
-<td>Partial</td>
+<td>100%</td>
+<td>24 hours</td>
+<td>Sampling shows no drift</td>
+<td>Same</td>
+</tr>
+</tbody>
+</table>
+<p>The percentages and durations are illustrative. The important part is that each stage has a stated advance condition and a stated rollback condition, decided before the rollout starts. "We will look at the dashboard" is not a condition.</p>
+<p>Two things make this work in practice. First, the flag evaluation must be weighted consistently for a given user, or a user can flip between variants across requests and produce confusing telemetry. Second, quality is not the same as error rate. A model can return HTTP 200 with worse output. Sampling a fixed number of outputs per stage and reviewing them is the only reliable check; automated quality scoring is a separate system and out of scope here.</p>
+<h3 id="how-to-measure-whether-flags-actually-help">How to measure whether flags actually help</h3>
+<p>Claims about incident reduction are easy to make and hard to verify. If you want a number, instrument it:</p>
+<ul>
+<li>Tag every incident with whether a flag change was involved in detection, mitigation, or cause.</li>
+<li>Record time-to-mitigation per incident, defined as the interval from first alert to the change that stopped the bleeding.</li>
+<li>Compare the distribution of time-to-mitigation for flag-mediated mitigations against redeploy-mediated mitigations.</li>
+</ul>
+<p>This produces a defensible figure for your own environment. It will not match anyone else's, because it depends on your deploy pipeline, your on-call process, and how much of the system is behind flags.</p>
+<h2 id="managed-services-versus-self-hosting">Managed services versus self-hosting</h2>
+<p>A managed flag service is a reasonable choice, and for many teams it is the right one. The comparison below is a decision aid, not a benchmark; latency and cost depend on your region, call volume, and network topology, and should be measured in your own environment.</p>
+<table>
+<thead>
+<tr>
+<th>Consideration</th>
+<th>Self-hosted</th>
+<th>Managed service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency</td>
+<td>One in-region Lambda invocation plus a DynamoDB read</td>
+<td>Network call to a third party; measure from your region</td>
+</tr>
+<tr>
+<td>Cost model</td>
+<td>Lambda invocations + DynamoDB reads + CloudWatch metrics</td>
+<td>Per-seat or per-evaluation pricing</td>
+</tr>
+<tr>
+<td>Data residency</td>
+<td>Full control; data stays in your account and region</td>
+<td>Depends on the vendor's regions and contract</td>
 </tr>
 <tr>
 <td>Audit trail</td>
-<td>Custom</td>
-<td>Built-in</td>
-<td>Built-in</td>
+<td>You build it</td>
+<td>Usually built in</td>
 </tr>
 <tr>
-<td>Learning curve</td>
-<td>High</td>
-<td>Low</td>
-<td>Medium</td>
+<td>Targeting rules</td>
+<td>You build them</td>
+<td>Usually richer out of the box</td>
+</tr>
+<tr>
+<td>Operational burden</td>
+<td>You own uptime, scaling, and schema</td>
+<td>Vendor owns it</td>
+</tr>
+<tr>
+<td>Kill-switch latency</td>
+<td>Bounded by your cache TTL</td>
+<td>Bounded by the vendor's propagation guarantees</td>
 </tr>
 </tbody>
 </table>
-<p>If you need EU data residency and full audit logs without extra cost, build your own. If you want a managed service and can tolerate 7 ms higher latency, use LaunchDarkly. Flagsmith sits in the middle but has weaker targeting rules.</p>
-<h3 id="how-do-you-keep-feature-flags-from-becoming-tech-debt">How do you keep feature flags from becoming tech debt?</h3>
-<p>We treat every flag as a first-class resource with a lifecycle:
-1. A GitHub issue with a design doc
-2. A PR that adds the flag schema to the CDK stack
-3. A runbook that lists rollout steps and kill-switch instructions
-4. A deprecation date set 90 days after creation
-5. A monthly report that flags unused or stale flags</p>
-<h3 id="whats-the-smallest-viable-setup">What’s the smallest viable setup?</h3>
-<p>For a solo developer, you can run everything in a single Lambda function using the AWS SDK to talk to DynamoDB directly. Skip the SDK package and the CloudWatch dashboard. You’ll still get 20 ms latency and 0.1% error rate. We did this for a side project and it held up to 500 requests/minute without issues.</p>
+<p>The decision usually comes down to two questions. Do you have a hard data-residency or audit requirement that a vendor cannot meet? And do you have the on-call capacity to own another service? Self-hosting is not free; it is a service you now operate.</p>
+<h2 id="keeping-flags-from-becoming-permanent">Keeping flags from becoming permanent</h2>
+<p>Flags accumulate. A flag that stays at 100% for a year is dead configuration that still costs a read on every request and still has to be reasoned about during incidents. A workable lifecycle:</p>
+<ol>
+<li>Every flag has an owner and a purpose, recorded at creation.</li>
+<li>Every flag has a removal date set when it is created, not when someone remembers.</li>
+<li>A scheduled job reports flags that have not changed state in 90 days.</li>
+<li>Removing a flag is a normal PR, reviewed like any other change.</li>
+</ol>
+<p>The removal date is the part teams skip. Setting it at creation is cheap; reconstructing intent six months later is not.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Open <code>ai-flag-service/lib/ai-flag-service-stack.ts</code> and change the DynamoDB billing mode from <code>PAY_PER_REQUEST</code> to <code>PROVISIONED</code> with 5 read and 5 write capacity units. This drops our DynamoDB bill from $18/month to $3/month with no measurable latency change under normal load. After you apply the change, wait 5 minutes, then run:</p>
-<pre><code class="language-bash">curl -X POST https://api.example.com/health -d '{&quot;flagId&quot;:&quot;ai-model-v2&quot;}'
-</code></pre>
-<p>Check that the p95 latency is still under 20 ms. If it spikes above 30 ms for more than 1 minute, roll back to on-demand immediately.</p>
-<p>Next, create a flag called <code>ai-safety-filter-v1</code> and set it to 1% of your user base. Leave it running for 24 hours, then review the CloudWatch dashboard for errors. If the error rate stays below 0.1%, promote it to 100% in your next deploy.</p>
-<p>Your immediate next step: Open your CDK stack file and change the billing mode to PROVISIONED. Deploy it now to cut costs.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
-<li><a href="https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/">Deploy a solo stack for $20/month in 2026</a></li>
-<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Open <code>lib/ai-flag-service-stack.ts</code> and add a second CloudWatch alarm: fire when the SDK's fallback metric exceeds 1% of evaluations over a 5-minute window. That alarm is the difference between noticing a degraded flag service from a dashboard and noticing it from a customer report. Then create a flag named <code>ai-safety-filter-v1</code>, set it to target a small percentage of users, and confirm from the variant-distribution metric that the percentage you configured is the percentage you are actually getting — a mismatch there means the targeting logic and the telemetry disagree, and that is worth finding on a quiet day rather than during a rollout.</p>
                 
                 
             </div>

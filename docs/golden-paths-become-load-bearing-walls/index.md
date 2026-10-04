@@ -1,42 +1,40 @@
 # Golden paths become load-bearing walls
 
-The same cursor claude mistake shows up across production codebases often enough to be a pattern, not bad luck. It works in the simple case and breaks in a specific way under load. Here's the version I wish someone had handed me first.
+## The pattern: convenience now, coordination tax later
 
-## The conventional wisdom (and why it's incomplete)
+A recurring failure mode in production AI systems is the internal SDK that works beautifully in the simple case and becomes an obstacle during a model or embedding migration. The code is not buggy. The design is. It optimises for the moment of creation and ignores the moment, months later, when a provider deprecates a model and nobody can determine which stored vectors were produced by it.
 
-Every platform team I've talked to in the last year is building a golden path for AI features. The pitch is always the same: give product engineers a blessed SDK, a managed vector store, a prompt registry, and a one-click deploy. The goal is to stop every team from reinventing RAG badly. It sounds right. It is mostly right. But the way most teams implement golden paths turns them into a maintenance nightmare within two quarters, and the failure mode is predictable enough that it deserves a name.
+The conventional advice is well known: abstract the model provider, pin prompts in a registry, wrap everything in an internal SDK, expose a single `generate()` function. That advice optimises for consistency at authoring time. It does not optimise for the incident, the deprecation notice, or the embedding dimension change that forces a backfill across every team.
 
-The conventional advice says: abstract the model provider, pin your prompts in a registry, wrap everything in an internal SDK, and expose a single `generate()` function. That advice optimises for consistency at the moment of creation. It does not optimise for the moment six months later when the provider deprecates a model, your embedding dimension changes, and the golden path has become a load-bearing wall that nobody wants to touch.
+The argument here is that a golden path for AI features is not a library. It is an operational contract. Most teams write the contract before they understand the failure modes. This article covers the failure modes first, then the contract.
 
-The part that trips people up is that a golden path for AI is not a library — it is an operational contract. And most teams write the contract before they understand the failure modes. That's what this post actually covers.
+## What happens when the standard advice is followed literally
 
-## What actually happens when you follow the standard advice
+Consider a common scenario. A platform team ships an internal Python package that wraps a chat model and an embedding model, adds retries, and exposes `embed(text)` and `chat(messages)`. Several product teams adopt it. For a while, everything works.
 
-A common scenario: a platform team ships an internal Python package called `ai_core` version 0.4. It wraps OpenAI's `gpt-4o` and `text-embedding-3-small`, adds retries, and exposes `ai_core.embed(text)` and `ai_core.chat(messages)`. Twelve product teams adopt it. Life is good for about ten weeks.
+Then three things happen, usually in sequence.
 
-Then three things happen in sequence.
+First, a product team needs streaming. The golden path returns a complete string. The team forks the package. Now there are two versions to maintain.
 
-First, a product team needs streaming. The golden path returns a complete string. They fork the package. Now you have two versions.
+Second, a different team needs a cheaper model for a classification task. The golden path hardcodes the model name in a config file that only the platform team can edit. The team files a ticket. It sits in a queue. The team forks the package.
 
-Second, a different team needs a cheaper model for a classification task. The golden path hardcodes the model name in a config file that only the platform team can edit. They file a ticket. It sits for a week. They fork the package.
+Third, the provider deprecates the pinned embedding model. Every document in every vector store built through the golden path must be re-embedded. Because the path abstracted away the embedding model name, nobody can say which collections used which model. What should have been a bounded migration becomes a cross-team project.
 
-Third, the provider deprecates the embedding model you pinned. You need to re-embed every document in every vector store that used the golden path. Because the path abstracted away the embedding model name, nobody knows which collections used which model. You now have a migration project that touches every team.
+This is the standard arc. The golden path starts as an accelerant and ends as a coordination tax. The root cause is not abstraction itself. It is that the abstraction hid the wrong things: the model identity, the prompt version, and the embedding dimension — the three facts needed to reason about an incident.
 
-This is the standard arc. The golden path starts as an accelerant and ends as a coordination tax. The root cause is not that abstraction is bad. It is that the abstraction hid the wrong things. It hid the model identity, the prompt version, and the embedding dimension — the three things you actually need to reason about during an incident.
-
-A typical failure message you will see in this world is something like:
+A representative error from this world looks like:
 
 ```
 openai.BadRequestError: Error code: 400 - {'error': {'message': "The model `text-embedding-ada-002` has been deprecated and is no longer available.", 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
 ```
 
-That error is not the problem. The problem is that you cannot answer, in under five minutes, which of your 40 vector collections were built with that model. The golden path made the model name an implementation detail. During a migration, the model name is the only detail that matters.
+The error is not the problem. The problem is that no one can answer, in under five minutes, which of dozens of vector collections were built with that model. The golden path made the model name an implementation detail. During a migration, the model name is the only detail that matters.
 
-## A different mental model
+## A different mental model: invariants plus a thin runtime
 
 Stop thinking of the golden path as an SDK. Think of it as a set of invariants plus a thin runtime.
 
-The invariants are the things that must be true for any AI feature in your organisation:
+The invariants are properties that must hold for any AI feature in the organisation:
 
 1. Every model call is logged with the exact model ID and version.
 2. Every prompt has a version and a hash.
@@ -46,16 +44,16 @@ The invariants are the things that must be true for any AI feature in your organ
 
 The runtime is deliberately thin. It does not hide the model. It does not hide the prompt. It enforces the invariants and gets out of the way.
 
-This is a different contract. Instead of `ai_core.chat(messages)`, you expose something like `ai_core.call(model_id, prompt_version, messages)`, and the runtime rejects any call that does not carry a model ID and a prompt version. The product engineer still writes the prompt. They still choose the model. But they cannot accidentally ship a feature that is impossible to migrate.
+This is a different contract. Instead of `chat(messages)`, the runtime exposes something like `call(model_id, prompt_version, messages)`, and it rejects any call that does not carry a model ID and a prompt version. The product engineer still writes the prompt. They still choose the model. But they cannot accidentally ship a feature that is impossible to migrate.
 
-I think this is the right trade-off because it moves the abstraction from 'hide the details' to 'make the details impossible to omit'. The first is convenient until it isn't. The second is mildly annoying every day and saves you a quarter-long migration once a year.
+The trade-off is deliberate. The abstraction moves from "hide the details" to "make the details impossible to omit." The first is convenient until it is not. The second is mildly annoying every day and saves a long migration once a year.
 
-## Evidence and examples from real systems
+## A worked example: the RAG pipeline that cannot be migrated
 
-Consider a typical RAG pipeline built on a golden path that hides the embedding model. The path stores vectors in Pinecone or pgvector. The product team writes:
+Take a typical retrieval-augmented generation pipeline built on a golden path that hides the embedding model. The path stores vectors in a vector database. The product team writes:
 
 ```python
-from ai_core import embed, search
+from ai_core import embed, search, chat
 
 def answer(question: str) -> str:
     vec = embed(question)
@@ -63,9 +61,9 @@ def answer(question: str) -> str:
     return chat([{"role": "user", "content": f"Context: {docs}\n\nQ: {question}"}])
 ```
 
-This is 6 lines. It is also a migration hazard. When the embedding model changes, `embed` silently returns vectors in a new dimension. If your vector store is configured for 1536 dimensions and the new model returns 3072, the search call fails at runtime with a dimension mismatch. If the store auto-creates a new index, you now have two indexes and no way to know which documents are in which.
+Six lines. Also a migration hazard. When the embedding model changes, `embed` silently returns vectors in a new dimension. If the vector store is configured for 1536 dimensions and the new model returns 3072, the search call fails at runtime with a dimension mismatch. If the store auto-creates a new index, there are now two indexes and no way to know which documents are in which.
 
-A safer pattern is to make the model ID explicit in the call and in the stored metadata:
+A safer pattern makes the model ID explicit in the call and in the stored metadata:
 
 ```python
 from ai_core import embed, search, chat
@@ -83,27 +81,47 @@ def answer(question: str) -> str:
     )
 ```
 
-This is 10 lines instead of 6. The extra 4 lines are the difference between a migration you can run incrementally and a migration that requires a freeze. In practice, teams that adopt the explicit pattern report that a model swap that would have taken 3 weeks of cross-team coordination takes about 2 days, because the filter `{"embed_model": EMBED_MODEL}` lets you run old and new side by side.
+Ten lines instead of six. The extra four lines are the difference between a migration that can run incrementally and one that requires a freeze. The filter `{"embed_model": EMBED_MODEL}` lets old and new indexes coexist, so reads can be switched once the backfill completes.
 
-Numbers matter here. A typical embedding call to `text-embedding-3-small` costs about $0.00002 per 1K tokens. Re-embedding 10 million documents that average 500 tokens each costs roughly $100 in API fees. The API cost is not the problem. The problem is the 40 engineering hours spent figuring out which collections need re-embedding, plus the 2 days of downtime if you cannot run both indexes at once. The golden path that hides the model turns a $100 problem into a $10,000 problem.
+### Reasoning about the cost, with stated assumptions
 
-Another documented failure mode is prompt drift. A golden path that stores prompts in a central registry but does not version them will eventually serve a prompt that was written for a different model. A common symptom is a sudden drop in answer quality after a model upgrade, with no code change. The fix is to pin prompt versions to model versions. If you upgrade the model, you must explicitly opt into a new prompt version. This is a 20-line change in the runtime and it prevents a class of incident that is otherwise very hard to debug.
+The API cost of re-embedding is usually small compared to the coordination cost. The arithmetic, using illustrative assumptions:
 
-## The cases where the conventional wisdom IS right
+- Assume an embedding price of $0.02 per 1M tokens (a plausible order of magnitude for small embedding models; check current provider pricing).
+- Assume 10 million documents at 500 tokens each: 10,000,000 × 500 = 5,000,000,000 tokens.
+- 5,000,000,000 / 1,000,000 = 5,000 units of 1M tokens.
+- 5,000 × $0.02 = $100 in API fees.
 
-I am not arguing against golden paths. I am arguing against a specific implementation of them. There are cases where the thick, hiding abstraction is correct.
+The API cost is not the problem. The problem is the engineering time spent determining which collections need re-embedding, plus any downtime if old and new indexes cannot run side by side. A hidden model turns a small, bounded backfill into an open-ended project.
 
-If your organisation has exactly one AI feature, or if all your AI features use the same model and the same prompt, a thin runtime is overhead. You should just write the code. The golden path becomes valuable when you have more than about five teams shipping AI features, or when you have a compliance requirement that every model call is logged.
+### How to measure this in your own system
 
-If your AI features are all internal and low-stakes — a summariser for support tickets, for example — the migration cost of a hidden model is low. You can afford to rewrite the summariser when the model changes. The calculus changes when the output is user-facing, or when it feeds a downstream system that has its own SLAs.
+Do not take the numbers above as a benchmark. Measure the properties that matter:
 
-There is also a real cost to explicit model IDs. It means every product engineer has to know which model to use. That is a training problem, but it is solvable with a small set of blessed models and a linter that rejects unknown model IDs. The linter is 30 lines of Python. The migration you avoid is measured in weeks.
+- **Attribution latency.** Time how long it takes to answer "which embedding model produced this vector?" for a random sample of vectors. If the answer requires reading application code rather than querying metadata, that is the finding.
+- **Backfill throughput.** Instrument documents embedded per second during a small test backfill. Divide total document count by that rate to get wall-clock time.
+- **Cost per feature.** Log model ID and token counts per call, then group by feature. This is the only reliable way to attribute spend.
+- **Incident triage time.** Record the wall-clock time from "bad answers reported" to "model and prompt version identified." Track it over time.
 
-So the conventional wisdom is right about the goal — consistency, safety, reuse — and wrong about the mechanism. Hiding the model ID is not consistency. It is deferred inconsistency.
+## Prompt drift: the second failure mode
 
-## How to decide which approach fits your situation
+A golden path that stores prompts in a central registry but does not version them will eventually serve a prompt written for a different model. A common symptom is a sudden drop in answer quality after a model upgrade, with no code change.
 
-Use this table to decide. The rows are the properties of your organisation, the columns are the two approaches.
+The fix is to pin prompt versions to model versions. Upgrading the model requires explicitly opting into a new prompt version. This is a small change in the runtime and it prevents a class of incident that is otherwise very hard to debug, because the code diff is empty.
+
+## When the thick abstraction is the right call
+
+The argument is not against golden paths. It is against one specific implementation of them. There are cases where a thick, hiding abstraction is correct.
+
+If the organisation has exactly one AI feature, or all AI features use the same model and the same prompt, a thin runtime is overhead. Write the code. A golden path becomes valuable when several teams ship AI features, or when a compliance requirement demands that every model call is logged.
+
+If AI features are all internal and low-stakes — a support-ticket summariser, for example — the migration cost of a hidden model is low. The summariser can be rewritten when the model changes. The calculus changes when the output is user-facing, or when it feeds a downstream system with its own SLAs.
+
+There is a real cost to explicit model IDs: every product engineer has to know which model to use. That is a training problem, solvable with a small set of blessed models and a linter that rejects unknown model IDs.
+
+The conventional wisdom is right about the goal — consistency, safety, reuse — and wrong about the mechanism. Hiding the model ID is not consistency. It is deferred inconsistency.
+
+## Decision checklist
 
 | Property | Thick golden path (hides model/prompt) | Thin runtime (enforces invariants) |
 |---|---|---|
@@ -112,70 +130,61 @@ Use this table to decide. The rows are the properties of your organisation, the 
 | Model churn | Low (annual) | High (quarterly) |
 | Compliance logging | Optional | Required |
 | Migration tolerance | Can freeze for a week | Cannot freeze |
-| Engineering cost to build | 2–3 weeks | 4–6 weeks |
-| Cost of a bad migration | Low | High (10x) |
+| Engineering cost to build | Lower | Higher |
+| Cost of a bad migration | Low | High |
 
-The decision rule I use: if you cannot answer 'which model produced this vector?' for every vector in your store in under 5 minutes, you need the thin runtime. If you can, you can afford the thick path.
+A useful decision rule: if the answer to "which model produced this vector?" cannot be obtained for every vector in the store in under five minutes, the thin runtime is warranted. If it can, the thick path is affordable.
 
-A practical middle ground is to start thick and add escape hatches. Expose the model ID as an optional parameter that defaults to the blessed model. Log the actual model used. Store it in metadata. This gives you 90% of the convenience with 80% of the migration safety. The remaining 20% is the case where a team overrides the model and forgets to update the metadata. A runtime check can catch that: if the model ID in the call does not match the model ID in the stored metadata, reject the write.
+A practical middle ground is to start thick and add escape hatches. Expose the model ID as an optional parameter that defaults to the blessed model. Log the actual model used. Store it in metadata. This provides most of the convenience with most of the migration safety. The residual risk is a team overriding the model and forgetting to update metadata. A runtime check can catch that: if the model ID in the call does not match the model ID in the stored metadata, reject the write.
 
-## Common objections, and responses
+## Common objections
 
-**Objection: 'This makes the API harder to use. Product engineers will just fork the package.'**
+**"This makes the API harder to use. Product engineers will fork the package."**
 
-They will fork it if the API is hard for the wrong reasons. Adding a required `model` parameter is not hard — it is one extra argument. The fork risk comes from missing features like streaming, tool calling, or async. Build those into the runtime and the fork pressure drops. A typical internal SDK that supports streaming and async has a fork rate under 5% after 6 months.
+Teams fork when the API is hard for the wrong reasons. Adding a required `model` parameter is one extra argument. Fork pressure comes from missing features such as streaming, tool calling, or async. Build those into the runtime and fork pressure drops.
 
-**Objection: 'We already have a thick golden path. Rewriting it is too expensive.'**
+**"A thick golden path already exists. Rewriting it is too expensive."**
 
-You do not have to rewrite it. Add the invariants as a wrapper. The wrapper logs the model ID, the prompt version, and the embedding dimension. It does not change the call signature. Over time, you can make the wrapper mandatory and deprecate the old path. This is a 2-week project, not a 2-quarter one.
+It does not have to be rewritten. Add the invariants as a wrapper. The wrapper logs the model ID, the prompt version, and the embedding dimension without changing the call signature. Over time, make the wrapper mandatory and deprecate the old path. This is a short project, not a multi-quarter one.
 
-**Objection: 'Our compliance team requires that we cannot change models without approval. The thick path enforces that.'**
+**"Compliance requires that models cannot change without approval. The thick path enforces that."**
 
-The thin runtime enforces it better. A thick path that hides the model can be bypassed by editing a config file. A thin runtime that requires a model ID and validates it against an allowlist cannot be bypassed without a code change. The allowlist is the compliance control.
+A thin runtime enforces it better. A thick path that hides the model can be bypassed by editing a config file. A thin runtime that requires a model ID and validates it against an allowlist cannot be bypassed without a code change. The allowlist is the compliance control.
 
-**Objection: 'This is just good engineering hygiene. Why call it a golden path?'**
+**"This is just good engineering hygiene. Why call it a golden path?"**
 
-Because the golden path is the thing you ship to product teams. The invariants are the contract. If you ship the invariants as a library with good defaults, you get the benefits of a golden path without the hiding. The name matters less than the contract.
+Because the golden path is what gets shipped to product teams. The invariants are the contract. Shipping the invariants as a library with good defaults provides the benefits of a golden path without the hiding. The name matters less than the contract.
 
-## What the alternative approach would change
+## What changes in practice
 
-The biggest change is in incident response. Today, a common incident is 'the AI feature is giving bad answers.' With a thin runtime, the first three questions are answerable from logs: which model, which prompt version, which embedding model. That turns a multi-hour debugging session into a 10-minute check.
+The biggest change is in incident response. A common incident is "the AI feature is giving bad answers." With a thin runtime, the first three questions are answerable from logs: which model, which prompt version, which embedding model. That turns a multi-hour debugging session into a short check.
 
-The second change is in cost control. A thin runtime that logs model ID and token counts per call lets you build a cost dashboard per feature. A typical team finds that 20% of features account for 80% of spend. With a thick path, you often cannot attribute spend to a feature because the model is hidden. With a thin runtime, attribution is a group-by.
+The second change is cost control. A thin runtime that logs model ID and token counts per call allows a cost dashboard per feature. Attribution becomes a group-by instead of an investigation.
 
-The third change is in migration speed. A model deprecation that used to require a cross-team project becomes a config change plus a backfill. The backfill is the expensive part, but it is bounded and can run incrementally.
+The third change is migration speed. A model deprecation that used to require a cross-team project becomes a config change plus a backfill. The backfill is the expensive part, but it is bounded and can run incrementally.
 
-The trade-off is that product engineers have to learn a slightly larger API surface. In practice, that is a 30-minute onboarding doc and a linter. The alternative is a quarterly migration meeting that nobody enjoys.
+The trade-off is a slightly larger API surface for product engineers. In practice, that is a short onboarding doc and a linter.
 
-## Frequently Asked Questions
+## FAQ
 
-**How do I version prompts in a golden path?**
-Store prompts in a registry with a semantic version. The runtime requires a prompt version on every call. When you change a prompt, you publish a new version and update the call sites. You can also support a 'latest' alias for internal tools, but never for user-facing features. This gives you a rollback path that is a one-line change.
+**How should prompts be versioned in a golden path?**
 
-**Why does my embedding model change break search?**
-Because embeddings from different models are not comparable. If you change the model, you must re-embed all documents and queries. The failure mode is either a dimension mismatch error or, worse, silently worse results because the vectors are in different spaces. Always store the model ID with the vector and filter on it at query time.
+Store prompts in a registry with a version identifier. The runtime requires a prompt version on every call. When a prompt changes, publish a new version and update the call sites. A "latest" alias can be supported for internal tools, but not for user-facing features. This provides a rollback path that is a one-line change.
+
+**Why does an embedding model change break search?**
+
+Embeddings from different models are not comparable. Changing the model requires re-embedding all documents and queries. The failure mode is either a dimension mismatch error or, worse, silently worse results because the vectors live in different spaces. Always store the model ID with the vector and filter on it at query time.
 
 **What is the right way to handle model deprecation?**
-Treat it as a data migration, not a code change. Add the new model alongside the old, backfill in batches, and switch reads when the new index is complete. A typical backfill of 1 million documents at 100 documents per second takes about 3 hours. Run it during low traffic and monitor cost.
+
+Treat it as a data migration, not a code change. Add the new model alongside the old, backfill in batches, and switch reads when the new index is complete. Run the backfill during low traffic and monitor cost. The wall-clock time is total documents divided by measured backfill throughput.
 
 **How many models should a golden path support?**
-Start with two: one high-quality model and one cheap model. Add more only when a team has a documented need. Every model you add increases the test matrix and the migration surface. A typical mature platform supports 3–5 models, each with a clear use case.
+
+Start with two: one high-quality model and one cheap model. Add more only when a team has a documented need. Every model added increases the test matrix and the migration surface. A mature platform typically supports a small set of models, each with a clear use case.
 
 ## Summary
 
-The conventional wisdom says build a thick golden path that hides the model and the prompt. I think that is backwards. The golden path should enforce invariants — model ID, prompt version, embedding dimension — and otherwise stay out of the way. The cost is a slightly larger API and a linter. The benefit is that a model deprecation becomes a 2-day migration instead of a 3-week project, and an incident becomes a 10-minute log check instead of a multi-hour hunt.
+The conventional wisdom says build a thick golden path that hides the model and the prompt. The better contract is the inverse: enforce invariants — model ID, prompt version, embedding dimension — and otherwise stay out of the way. The cost is a slightly larger API and a linter. The benefit is that a model deprecation becomes a bounded migration instead of a cross-team project, and an incident becomes a short log check instead of a long hunt.
 
-The next step you can take in the next 30 minutes: open your vector store's metadata schema and check whether every vector has an `embed_model` field. If it does not, add it to your write path today, even if you have to backfill later. That single field is the difference between a migration you can run incrementally and one that requires a freeze.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+In the next 30 minutes: open the vector store's metadata schema and check whether every vector has an `embed_model` field. If it does not, add it to the write path today, even if existing vectors must be backfilled later. That single field is the difference between a migration that can run incrementally and one that requires a freeze.

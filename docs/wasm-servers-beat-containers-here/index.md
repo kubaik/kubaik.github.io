@@ -1,250 +1,208 @@
 # WASM servers beat containers here
 
-I've hit the same webassembly server mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.
+## The one-paragraph version
 
-## The one-paragraph version (read this first)
+WebAssembly is not a universal speed-up. It is a targeted optimization for one specific case: moving a small slice of CPU-bound work into a guest module that a host process can call without forking a process or starting a container. If that is not what you are doing, keep your containers. The rest of this article explains where the boundary sits, how to measure it, and the failure modes that make teams regret the move.
 
-WebAssembly on the server is not a replacement for every container, but it is the best tool we have found for two real, production workloads: high-scale, short-lived functions that need to start in less than 5 ms and isolate untrusted code without paying the cold-start tax of a full VM or container. In our workloads at a healthtech API gateway (Node 20 LTS host, Rust-compiled WASM payloads), moving 38 % of our request path into WASM cut median latency from 8.4 ms to 3.2 ms and dropped our per-request CPU cost by 42 % compared to the same logic running in Node containers. The part that trips people up is thinking WASM is a universal speed-up; it is a targeted optimization for the specific case where you can move a small slice of CPU-bound work into a guest module that the host can call without spinning up a new process. If you are not doing that, keep your containers.
+## What "WebAssembly on the server" actually means
 
-## Why this concept confuses people
+The phrase invites a wrong mental model. Many developers picture a browser-like environment where WASM runs in a sandboxed guest and the host is JavaScript. That model produces two incorrect conclusions: that WASM is browser-only, and that it is inevitably slower because every call crosses a boundary.
 
-The confusion starts with the phrase “WebAssembly on the server.” Most developers picture a browser-like environment where WASM runs in a sandboxed guest and the host is JavaScript. That mental model leads to two wrong conclusions: first, that WASM is only for browsers, and second, that it is always slower because it must cross a boundary. Neither is true in 2026. The boundary is fast (WASM ↔ host calls cost ~50–80 ns in Node 20 LTS), and the runtime environments are mature: Wasmtime 14.0, Wasmer 4.2, and Node’s built-in WASI support all expose POSIX-like APIs and allow you to load arbitrary code compiled to WASM.
+On the server, the host is any process that can instantiate a WASM module — a Node.js service, a Rust binary embedding a runtime, an edge worker platform, or a managed function runtime. The guest is a compiled module with no ambient authority: it can only touch memory, call the imports the host provides, and return values. That is the whole contract.
 
-Another source of noise is the “containers vs. WASM” meme that treats them as mutually exclusive. Containers remain the best unit of deployment for long-lived services that need a full OS image. WASM shines when you want to run a tiny slice of logic without the overhead of process forking, container startup, or VM cold-start. The overlap is small, but it is real and measurable.
+The boundary crossing is real but small. For primitive types (i32, i64, f32, f64), marshaling is a register write plus a call. For strings and byte buffers, the host must copy into the guest's linear memory, which is where the measurable cost lives. The size of that cost is what determines whether WASM helps or hurts, and it is measurable in a few minutes with a microbenchmark — see the measurement section below.
 
-Finally, people underestimate how much tooling has matured. In 2026 you had to hand-roll a custom runner. Today, you can start with `wasm-pack` 0.12, compile Rust to WASM, and load it directly in Node 20 LTS with a single npm package. The friction is now lower than spinning up a new Lambda function.
+The "containers vs. WASM" framing is also a distraction. Containers remain the right unit of deployment for long-lived services that need a full OS image, package managers, and arbitrary system calls. WASM fits when you want to run a small, pure function without process forking or container startup. The overlap between the two is narrow but real.
 
-## The mental model that makes it click
+## The mental model
 
-Think of a container as a shipping container: it holds everything you need to run a service, but you pay a fixed cost to open and unpack it every time you need to move something small. WASM is a courier envelope: you pay per byte of payload and per microsecond of compute, but you skip the unpacking step entirely. The envelope can only carry small, CPU-bound workloads, but for those it is faster and cheaper.
+A container is a shipping container: it holds everything needed to run a service, and you pay a fixed cost to open and unpack it even when you move something small. A WASM module is a courier envelope: you pay per byte of payload and per unit of compute, and you skip the unpacking. The envelope only carries small, CPU-bound payloads well.
 
-In practice, the envelope works when:
+The envelope fits when all of these hold:
 
-- The workload is short-lived (<10 ms of CPU).
-- The workload is CPU-bound (hashing, validation, compression, regex matching).
-- You do not need network or filesystem access beyond what the host explicitly gives you.
-- You are willing to compile the logic once and load it into every host process.
+- The workload is short-lived — on the order of single-digit milliseconds of CPU.
+- The workload is CPU-bound: hashing, signature verification, validation, compression, regex matching, parsing.
+- The guest needs no network or filesystem access beyond what the host explicitly provides.
+- You are willing to compile the logic once and load it into host processes.
 
-If any of those conditions fail, the container is still the right choice.
+If any condition fails, a container is usually the better answer. The most common failure is the second: teams move I/O-bound code into a guest and discover the boundary copy costs more than the work saved.
 
-## A concrete worked example
+## A worked example: JWT validation in a gateway
 
-We run a healthtech API gateway that validates every incoming JWT against a public-key list fetched once per minute. The validation logic is pure CPU work (RSA-PSS verify) and we want to keep median latency under 5 ms so we do not blow our SLA. Here is what happened when we moved the validator from a Node container to WASM.
+Consider an API gateway that validates an incoming JWT against a public-key list refreshed periodically. Validation is pure CPU work — an RSA-PSS verify — and the service has a latency budget it must not blow. This is the shape of workload where WASM is worth evaluating.
 
-**Baseline (Node container)**
-- Image: Node 20 LTS, Debian slim, 64 MB image.
-- Cold start: ~220 ms (typical Lambda cold-start in us-east-1).
-- Median latency for a signed JWT verify: 8.4 ms (p95 18 ms).
-- Per-request CPU time: ~2.1 ms.
-- Cost per million requests: ~$0.18 on AWS Lambda (arm64, 512 MB).
+**Baseline: Node.js container**
 
-**WASM version**
-- Compile target: Rust 1.77 → WASM32-unknown-unknown → `wasm-opt` 0.128.0 with -O2.
-- Guest size: 42 KB.
-- Host: Node 20 LTS with `@wasmer/wasi@4.2.1`.
-- Cold start: ~5 ms (WASM module load time).
-- Median latency: 3.2 ms (p95 7 ms).
-- Per-request CPU time: ~1.2 ms.
-- Cost per million requests: ~$0.10 on the same Lambda tier.
+- Image: Node 20 LTS on a slim base, roughly 64 MB compressed.
+- Cold start on a serverless platform: typically hundreds of milliseconds, dominated by image pull and runtime init.
+- Median latency for a signed JWT verify: a few milliseconds, with p95 several times higher.
 
-**Key numbers**
-- Median latency drop: 62 % (8.4 → 3.2 ms).
-- p95 latency drop: 61 % (18 → 7 ms).
-- CPU cost drop: 43 % (2.1 → 1.2 ms).
-- Module load time: 5 ms vs 220 ms.
+**WASM variant**
 
-The gotcha we hit was key rotation. The Node container could reload the public key list on every request because it lived in memory. The WASM guest had no persistent store, so we had to push the key list from the host into the guest on every request. The extra marshal cost added ~0.3 ms of latency, but it was still below our SLA and saved 42 % of CPU cycles compared to the container path.
+- Compile: Rust to `wasm32-unknown-unknown`, then optimize with `wasm-opt -O2`.
+- Guest size: tens of kilobytes for a single-purpose validator.
+- Host: the same Node.js process, loading the module at startup.
+- Cold start: module instantiation, typically low single-digit milliseconds.
+- Median latency: lower than the container path, with the gap dominated by the verify itself.
 
-Code snippets
+The numbers above are illustrative, not measured here. The point is the shape: the win comes from removing process and image startup, not from the guest CPU being magically faster. To decide for your system, measure it — the next section shows how.
 
-Host side (Node 20 LTS):
+The failure mode that bites teams is state. The container kept the public-key list in process memory and reloaded it on a schedule. The WASM guest has no persistent store, so the host must push the current key list into the guest on each call or hold it in a host-owned buffer the guest reads. Design the host-guest data flow before you write the guest.
+
+## Measuring whether WASM helps
+
+Do not trust anyone's latency table, including the one above. Build a microbenchmark that isolates the boundary.
+
+**What to instrument**
+
+- Time to instantiate the module once at startup: `performance.now()` around `WebAssembly.instantiate`.
+- Per-call time for a no-op export: this is your boundary floor.
+- Per-call time for the real work with a representative payload: this is your candidate.
+- Per-call time for the same work in the host language: this is your baseline.
+
+**What to run**
+
+A loop of at least 10,000 calls per variant, discarding the first 1,000 as warmup, and reporting median and p95 rather than mean. Run it on the same machine, same CPU governor, same Node version. If you deploy on a serverless platform, run it there too — cold start is a different measurement from steady-state call cost.
+
+**What to compare**
+
+- `wasm_call - noop_call` is the cost of the work itself.
+- `wasm_call - host_call` is the win or loss versus the host implementation.
+- `instantiate_time` is the cold-start cost you pay per process.
+
+If `wasm_call` is not clearly below `host_call`, and `instantiate_time` is not clearly below your container start time, stop. You have your answer.
+
+## Host and guest code
+
+The snippets below show the shape of a host-guest integration. They use the standard `WebAssembly` API and a WASI shim; adapt the imports to whichever runtime you use.
+
+Host side (Node.js):
 
 ```javascript
-import { WASI } from '@wasmer/wasi'
-import { WasmFs } from '@wasmer/wasmfs'
 import { readFile } from 'node:fs/promises'
 
 const wasmBuffer = await readFile('./jwt-validator.wasm')
 const wasmModule = await WebAssembly.compile(wasmBuffer)
 
-const wasmFs = new WasmFs()
-const wasi = new WASI({
-  args: [],
-  env: {},
-  bindings: {
-    ...WASI.defaultBindings,
-    fs: wasmFs.fs,
+// The host owns the key list and the scratch buffers.
+// The guest only sees what the host copies into its linear memory.
+const instance = await WebAssembly.instantiate(wasmModule, {
+  env: {
+    host_log: (ptr, len) => {
+      const view = new Uint8Array(instance.exports.memory.buffer, ptr, len)
+      console.log(new TextDecoder().decode(view))
+    },
   },
 })
 
-const instance = await WebAssembly.instantiate(wasmModule, {
-  wasi_snapshot_preview1: wasi.wasiImport,
-})
+const { memory, alloc, validate_jwt } = instance.exports
 
-// Marshal the JWT and public key into the guest's memory
-const jwt = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...'
-const publicKeyPem = '-----BEGIN PUBLIC KEY-----\nMFkw...\n-----END PUBLIC KEY-----'
-
-const result = wasi.start(instance)
-```
-
-Guest side (Rust 1.77):
-
-```rust
-use wasi::fd_write;
-use wasi::types::{__wasi_fd_t, __wasi_io_vec_t};
-
-#[no_mangle]
-pub extern "C" fn validate_jwt() -> i32 {
-    // Read JWT and public key from guest memory
-    let jwt = unsafe { std::str::from_utf8_unchecked(&JWT_BUFFER) };
-    let public_key = unsafe { std::str::from_utf8_unchecked(&PUBKEY_BUFFER) };
-
-    // Pure Rust JWT verify using ring 0.17
-    let key = ring::signature::RsaPublicKeyComponents::from_pem(public_key)
-        .expect("bad key");
-    let signature = base64::decode_config(&jwt[27..], base64::URL_SAFE)
-        .expect("bad sig");
-
-    let verified = key.verify(
-        ring::signature::RsaPssKeyPair::from_components(key.n().to_vec(), key.e().to_vec())
-            .expect("key build fail"),
-        jwt.as_bytes(),
-        &signature,
-    );
-
-    verified.map(|_| 0).unwrap_or(1)
+function validate(jwtBytes, keyBytes) {
+  const jwtPtr = alloc(jwtBytes.length)
+  const keyPtr = alloc(keyBytes.length)
+  new Uint8Array(memory.buffer, jwtPtr, jwtBytes.length).set(jwtBytes)
+  new Uint8Array(memory.buffer, keyPtr, keyBytes.length).set(keyBytes)
+  return validate_jwt(jwtPtr, jwtBytes.length, keyPtr, keyBytes.length)
 }
 ```
 
-After compiling with `wasm-pack build --target web --release` and optimizing with `wasm-opt -O2`, the guest size drops to 42 KB and the validate call spends ~1.2 ms in CPU vs ~2.1 ms in the Node container.
+Guest side (Rust):
+
+```rust
+static mut HEAP: [u8; 65536] = [0; 65536];
+static mut HEAP_TOP: usize = 0;
+
+#[no_mangle]
+pub extern "C" fn alloc(len: usize) -> *mut u8 {
+    unsafe {
+        let ptr = HEAP.as_mut_ptr().add(HEAP_TOP);
+        HEAP_TOP += len;
+        ptr
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn validate_jwt(
+    jwt_ptr: *const u8,
+    jwt_len: usize,
+    key_ptr: *const u8,
+    key_len: usize,
+) -> i32 {
+    let jwt = unsafe { std::slice::from_raw_parts(jwt_ptr, jwt_len) };
+    let key = unsafe { std::slice::from_raw_parts(key_ptr, key_len) };
+
+    // Pure CPU work: parse the key, decode the signature, verify.
+    // Return 0 on success, non-zero on failure.
+    match verify(jwt, key) {
+        Ok(()) => 0,
+        Err(_) => 1,
+    }
+}
+```
+
+Two things to notice. First, the host owns the key list and copies it in per call; there is no hidden shared state. Second, the guest exports an `alloc` so the host can place bytes in linear memory. Both are deliberate — they keep the trust boundary explicit.
+
+## Failure modes to plan for
+
+**Boundary copy dominates.** If your payload is large (say, a multi-megabyte document), the copy into linear memory can exceed the compute time. Measure `noop_call` versus `real_call`; if the difference is small relative to the copy, WASM is the wrong tool.
+
+**State lives in the wrong place.** Guests have no persistent store. Any key list, config, or cache must be owned by the host and passed in. Teams that forget this end up re-fetching config per call or, worse, baking it into the module and redeploying to rotate.
+
+**Secrets cross the boundary.** The sandbox prevents the guest from reading host memory, but anything the host passes in is fully visible to the guest. If the guest is untrusted code, treat every argument as public and tokenize or encrypt accordingly.
+
+**ABI mismatch.** WASM is portable across architectures but not across ABIs. A module compiled from Rust expects a specific set of imports; a module from another toolchain expects a different set. Mixing languages inside one module is a source of confusing instantiation errors. Keep one language per module until the interface story settles.
+
+**Traps look like crashes.** A guest trap surfaces in the host as an exception or an exit code. Catch it at the host boundary and log the guest's linear memory to diagnose. Without that, a trap is an opaque failure.
 
 ## How this connects to things you already know
 
-If you have used AWS Lambda, you already understand the cold-start problem. WASM does not eliminate cold starts—it shrinks them from hundreds of milliseconds to single digits. The trick is to treat the WASM module as a shared library that every host process loads once at startup, not as a separate process per request.
+If you have dealt with serverless cold starts, you already understand the trade-off: WASM does not eliminate startup cost, it shrinks it. Treat the module as a shared library loaded once per process, not as a process per request.
 
-If you have used gRPC or Protocol Buffers, you already understand marshaling costs: moving strings and buffers across boundaries is cheap in relative terms but measurable in microbenchmarks. WASM ↔ host marshaling is in the same ballpark as gRPC’s pointer tagging for primitive types (i32, i64, f32, f64) and slightly more expensive for strings because you must copy into linear memory.
+If you have used gRPC or Protocol Buffers, you already understand marshaling. Moving primitives across a boundary is cheap; moving strings and buffers costs a copy. WASM's boundary is in the same family of costs.
 
-If you have used Docker multi-stage builds, you already understand the trade-off between image size and startup time. WASM’s 42 KB guest is analogous to a micro-container, except it starts in ~5 ms instead of ~200 ms.
+If you have used multi-stage Docker builds, you already understand the image-size-versus-startup-time trade-off. A small WASM guest is analogous to a micro-container, with a much lower startup cost.
 
-One place where the analogy breaks is networking. WASM guests do not get raw sockets; they must use the host’s WASI networking or file APIs. If you need raw UDP/TCP sockets, you must keep that logic in the host and only push the CPU-bound slice into the guest.
+One place the analogy breaks is networking. Guests do not get raw sockets. They use whatever the host exposes. If you need raw TCP or UDP, keep that logic in the host and push only the CPU-bound slice into the guest.
 
-## Common misconceptions, corrected
+## Misconceptions, corrected
 
-Myth 1: WASM is always slower than native.
+**"WASM is always slower than native."** For CPU-bound, short-lived work, a compiled guest can outperform an interpreted host language because the host does not re-optimize the guest code per call. Whether it beats a native implementation is a measurement question, not a rule.
 
-Reality: For CPU-bound, short-lived work, WASM can be faster than interpreted JavaScript or Python because the host JIT does not have to recompile the guest code on every call. In our benchmarks with RSA-PSS, the WASM guest was 1.7× faster than the same Rust logic running in Node because Node’s JIT could not inline the ring crate efficiently.
+**"You need a browser or a dedicated runtime."** Node.js, Deno, and Bun all ship WASI support in current releases. You can load a module with the standard `WebAssembly` API and call its exports without a separate runtime process.
 
-Myth 2: You need a browser or a WASM runtime to run it on the server.
+**"The sandbox means secrets are safe."** The sandbox protects host memory from the guest. It does not protect secrets the host chooses to pass in. Treat guests as untrusted code at the boundary.
 
-Reality: Node 20 LTS, Deno 1.40, and Bun 1.1 all ship with built-in WASI support. You can load a WASM module with a single require statement and call its exported functions without installing a separate runtime.
+**"Modules are portable across languages."** They are portable across CPU architectures. They are not portable across ABIs. Match the host imports to the toolchain that produced the module.
 
-Myth 3: WASM memory is sandboxed, so you can’t leak secrets.
+## Advanced patterns
 
-Reality: The sandbox prevents the guest from accessing host memory, but the guest still receives secrets as arguments. If the host passes a secret into the guest, the guest can leak it by writing it to its own linear memory and returning the memory buffer. Treat WASM guests as untrusted code—always encrypt or tokenize secrets at the host boundary.
+**Reuse across workers.** Load and compile the module once in the main thread, then share the compiled `WebAssembly.Module` with worker threads. Compilation is the expensive part; instantiation per worker is cheap, and the host can keep the key list in shared memory.
 
-Myth 4: WASM modules are portable across languages.
+**Ahead-of-time compilation.** Some runtimes support compiling a WASM module to a native artifact ahead of time, so process restarts skip the parse and compile step. The exact flags and artifact format depend on the runtime; check its documentation. The win is a lower cold start, at the cost of a build step and a per-architecture artifact.
 
-Reality: They are portable across architectures (x86, arm64) but not across ABIs. A Rust-compiled WASM module expects a specific set of host imports (wasi_snapshot_preview1). If you compile from Go, you must ensure the host bindings match TinyGo’s expectations. Stick to one language per module until WASI Preview 2 stabilizes the interface.
+**Keep the guest pure.** The most maintainable guests export a small number of functions that take pointers and lengths and return integers. Everything else — logging, networking, config — lives in the host. This keeps the boundary auditable and the guest testable in isolation.
 
-## The advanced version (once the basics are solid)
+## Decision checklist
 
-If you have validated WASM on a single host process, the next step is to scale it horizontally without duplicating module memory across every worker. Node 20 LTS supports worker threads; you can load the WASM module once in the main thread and reuse the same instance across workers. The memory is shareable, so the per-request marshal cost drops to near zero after the first load.
+| Scenario | Container | WASM guest | Reason |
+|---|---|---|---|
+| Long-running API server | Yes | No | Needs a full OS image and persistent state |
+| Short-lived CPU work (single-digit ms) | No | Yes | Avoids process and image startup |
+| Large payloads (multi-MB) | Yes | No | Boundary copy dominates |
+| Raw socket networking | Yes | No | Guests have no raw sockets |
+| Untrusted code isolation | Either | Yes | Guest sandbox is the point |
+| Per-request state | Yes | No | Guests cannot persist state |
 
-Host reuse pattern (Node 20 LTS with worker_threads):
+## FAQ
 
-```javascript
-import { Worker, isMainThread } from 'node:worker_threads'
-import { readFile } from 'node:fs/promises'
+**How do I debug a WASM module in Node.js?** Compile with debug info, enable source maps, and attach a debugger that understands WASM. The guest's linear memory is visible as a typed array, so you can inspect strings and structs directly.
 
-if (isMainThread) {
-  const wasmBuffer = await readFile('./jwt-validator.wasm')
-  const wasmModule = await WebAssembly.compile(wasmBuffer)
+**Can I compile Go or Python to WASM for server use?** Both are possible with the right toolchain, but the runtime overhead is larger than Rust or C++. For CPU-bound work, prefer a language with a small runtime footprint, and verify the ABI your host expects.
 
-  const workerCode = `
-    const { parentPort, workerData } = require('node:worker_threads');
-    const { WASI } = require('@wasmer/wasi');
-    const { WasmFs } = require('@wasmer/wasmfs');
+**What happens when the guest traps?** The host sees an exception or an exit code. Catch it at the boundary, log the linear memory, and return a clear error to the caller.
 
-    const wasmFs = new WasmFs();
-    const wasi = new WASI({ bindings: { ...WASI.defaultBindings, fs: wasmFs.fs } });
-    const instance = new WebAssembly.Instance(workerData.wasmModule, {
-      wasi_snapshot_preview1: wasi.wasiImport,
-    });
+**Is WASM cheaper at scale?** Only for the workloads described here. If you push high request volumes through a small guest, you save on startup and per-request CPU. If you run long-lived services, the savings disappear because you still need a process to host the module.
 
-    parentPort.on('message', (jwt) => {
-      // Marshal and validate
-      const result = wasi.start(instance);
-      parentPort.postMessage(result);
-    });
-  `
+## One thing to do in the next 30 minutes
 
-  const worker = new Worker(workerCode, { workerData: { wasmModule } })
-  worker.on('message', handleResult)
-} else {
-  // main thread dispatches JWTs to worker
-}
-```
-
-Memory reuse drops per-request marshal latency from ~0.3 ms to ~0.02 ms in our tests, cutting total median latency to 2.9 ms.
-
-Another advanced trick is to pre-compile the WASM module to machine code on the host using `wasmtime compile --optimize` and cache the `.so` or `.dylib` artifact. The host can then load the compiled artifact with `WebAssembly.Module.instantiate()` without re-parsing the WASM text format on every worker restart. This cuts module load time from 5 ms to 0.8 ms in our benchmarks.
-
-## Quick reference
-
-| Scenario | Container | WASM on server | Why choose WASM | Pitfall |
-|---|---|---|---|---|
-| Long-running service (API server) | ✅ | ❌ | Containers give you a full OS | WASM lacks persistent storage |
-| Short-lived CPU work (<10 ms) | ❌ | ✅ | Cold start ~5 ms vs ~220 ms | Must marshal data into guest memory |
-| High-scale request path (gateway) | ❌ | ✅ | Median latency drop 60 % | Key rotation must be pushed from host |
-| Network-heavy (raw sockets) | ✅ | ❌ | WASI sockets are limited | Keep socket logic in host |
-| Untrusted code isolation | ✅ | ✅ | Sandboxed guest | Secrets passed as args can leak |
-
-## Further reading worth your time
-
-- [wasmtime 14.0 release notes](https://github.com/bytecodealliance/wasmtime/releases/tag/v14.0.0) – WASI Preview 2 support and AOT compilation benchmarks.
-- [Node 20 LTS WASI docs](https://nodejs.org/docs/latest/api/wasi.html) – How to call WASM from Node without a separate runtime.
-- [WASM on the server: a production retrospective](https://thenewstack.io/wasm-on-the-server-a-production-retrospective/) – Fastly’s experience running WASM in edge workers.
-- [Rust and WebAssembly book](https://rustwasm.github.io/docs/book/) – Still the best intro to compiling Rust to WASM.
-- [AWS Lambda with custom runtimes](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html) – How to swap the Node runtime for a WASM runtime if you want to skip containers entirely.
-
-## Frequently Asked Questions
-
-**How do I debug a WASM module running in Node 20 LTS?**
-
-Use `--experimental-wasi-unstable-preview1` flag and enable source maps. Compile your Rust with `wasm-pack build --debug` and set breakpoints in Chrome DevTools or VS Code. The guest memory is visible as a linear array, so you can inspect strings and structs directly.
-
-**Can I use Go or Python to compile to WASM for server use?**
-
-Go works if you compile with TinyGo and target `wasm32-unknown-unknown`. Python’s Pyodide is heavier (6–8 MB) and starts slower (20–30 ms), so it is only useful for sandboxing, not for performance. Stick to Rust or C++ for CPU-bound work.
-
-**What happens if the WASM guest panics or traps?**
-
-The guest traps are caught by the host and translated to a Node error or a WASI exit code. In our tests, a trap adds ~0.1 ms of overhead and surfaces as a clear error in logs. Use `try/catch` in the host and log the guest’s linear memory to diagnose.
-
-**Is WASM cheaper than containers at scale?**
-
-Yes, but only for the specific workloads we described. If you push 10 million requests per day through a 42 KB guest, you save ~$80 per month on AWS Lambda compared to a Node container at the same memory tier. If you run long-lived services, the savings disappear because you still need a container to keep the process alive.
-
-## One thing you can do in the next 30 minutes
-
-Open your highest-latency, CPU-bound endpoint in your healthtech or fintech codebase. Pick the smallest slice of logic that does pure computation (hashing, validation, compression) and compile it to WASM using Rust 1.77 and `wasm-pack 0.12`. Load it in Node 20 LTS, run a 1000-request benchmark, and compare median latency to the container version. If the median drops below 5 ms and you save at least 20 % CPU, move that module into your staging pipeline and measure p95. Otherwise, keep the container—WASM is not a silver bullet.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** August 05, 2026
+Pick your highest-latency CPU-bound endpoint — hashing, signature verification, compression, or parsing. Write a microbenchmark that calls the current implementation 10,000 times and records median and p95. Then compile the same logic to WASM, load it in a Node.js process, and run the identical benchmark. Compare `wasm_call - noop_call` against `host_call`, and compare module instantiation time against your container start time. If WASM does not clearly win on both, keep the container.

@@ -1,210 +1,179 @@
 # Thundering Herd: The Hidden Scaling Trap
 
-I changed my mind about durable execution after watching it fail somewhere it wasn't supposed to. Here's the version I wish someone had handed me first. Nobody mentions the failure mode until it's already cost someone a bad night.
+## The one-paragraph version
 
-## The one-paragraph version (read this first)
+A thundering herd occurs when many clients or processes respond to the same stimulus at the same moment and converge on a shared resource: a cache key expiring, a service restarting, a scheduled job firing, a lock being released. Each individual action is reasonable. The collective result is a spike of identical work against a backend that was sized for steady-state traffic. The failure is not peak load in the ordinary sense; it is correlated load. It is insidious because the instinctive remedy, retrying on failure, usually makes it worse by adding synchronized pressure to a resource that is already saturated. Effective mitigations all share one property: they break the correlation, either by spreading retries across time, by letting one caller do the work while others wait, or by admitting only a bounded number of requests to the backend.
 
-The thundering herd problem occurs when a large number of clients or processes simultaneously attempt to access or recompute a shared resource, overwhelming it and often causing a cascading failure. It's not just about high traffic; it's about *coordinated, uncoordinated* access. The core issue is often a race condition where many entities, triggered by the same event (like a cache expiration or a service restart), all try to be the "first" to do something, rather than coordinating their efforts. This leads to resource exhaustion, latency spikes, and a higher probability of total system outage, even in systems designed for high availability. It's a particularly insidious scaling trap because naive attempts to fix it, like simply retrying failed requests, frequently exacerbate the problem.
+## Why the concept confuses people
 
-## Why this concept confuses people
+Most scaling intuition is capacity-based: add replicas, raise provisioned throughput, cache more aggressively. Thundering herd problems violate that model because adding capacity can raise the blast radius rather than reduce it. More application instances means more concurrent processes that can all miss the same cache key at the same instant.
 
-Many developers, myself included, first encounter scaling issues as a straightforward matter of capacity: "We need more servers," or "Our database isn't provisioned enough." The thundering herd problem throws a wrench into this intuitive model because it's not simply about *peak load*, but about *how* that load is applied and handled. The confusion often stems from a few key areas.
+Three specific sources of confusion recur.
 
-First, the problem frequently manifests as a sudden, inexplicable spike in error rates or latency, even when overall system load might not be at an all-time high. A common scenario involves a cache key expiring across many instances simultaneously. Each instance then independently attempts to regenerate the cached data by hitting a backend database or API. From the perspective of the individual client, this is a reasonable action. From the perspective of the backend, it's a sudden, uncoordinated onslaught of identical requests. This collective behavior, not individual misbehavior, is hard to diagnose because distributed tracing might show many concurrent requests, but not immediately highlight their common origin or their collective detrimental impact.
+First, the symptom and the cause look unrelated. Error rates and latency spike while overall request volume may be unremarkable. A single cache key expiry can trigger thousands of identical backend reads. Distributed tracing shows many concurrent requests, but unless spans are grouped by the key or resource they touch, the common origin is invisible. The useful diagnostic move is to aggregate traces by cache key, table partition, or downstream endpoint and look for a single resource attracting disproportionate concurrent traffic.
 
-Second, the default response to service unavailability—retries—is often the very mechanism that amplifies a thundering herd. Without carefully implemented strategies like exponential backoff with jitter, a client seeing a `503 Service Unavailable` error might immediately retry, only to find the service still down, and then retry again, adding to the load. If hundreds or thousands of clients do this, the retry storm can prevent the struggling service from ever recovering, creating a death spiral. Developers often assume retries are a universal good for resilience, overlooking their potential to become a distributed denial-of-service against their *own* services. The non-obvious part is that the *timing* and *randomness* of retries are as critical as the retries themselves.
+Second, retries are usually treated as unconditionally good. Retries improve resilience against transient, independent failures. They are harmful against correlated failures, because every client observes the same failure at the same time and retries at the same time. A retry loop without backoff and jitter converts a brief backend hiccup into a sustained overload. The timing and randomization of retries matter as much as the retry count.
 
-Finally, the thundering herd isn't always about explicit failures. It can also manifest as severe performance degradation. For example, if a batch job starts at a specific time, and multiple instances of that job attempt to acquire the same lock or process the same chunk of data without proper partitioning, the resource contention can bring the system to a crawl. The behavior is often emergent, a property of the system as a whole rather than a bug in a single component, making it genuinely hard to pinpoint and address without a holistic view of distributed interactions.
+Third, the behavior is emergent rather than localized. No single component is buggy. The system as a whole produces the failure. This makes it resistant to unit testing and to component-level capacity planning, and it means the fix is usually a coordination protocol rather than a code fix in one place.
 
-## The mental model that makes it click
+## The mental model
 
-Think of the thundering herd problem like a single-lane bridge during rush hour. Each car represents a client or process needing to cross. The bridge itself is your shared resource—a database, a caching layer, an external API. Under normal circumstances, traffic flows smoothly. Now, imagine a major accident happens on the bridge, blocking it completely. All the cars behind it stop. The equivalent in a distributed system is a cache invalidation, a network glitch, or a backend service restart.
+Picture a single-lane bridge at rush hour. The bridge is the shared resource: a database, a cache layer, an upstream API. Traffic flows normally until an incident blocks the bridge. Every driver then looks for an alternate route, and if they all choose the same moment and the same alternate road, the alternate road jams just as badly.
 
-Here’s where the "thundering herd" emerges: If every driver, upon seeing the bridge blocked, immediately tries to find an alternate route *at the exact same time*, they will all converge on the same secondary road, creating a new, equally bad traffic jam. In our system analogy, this is every client simultaneously trying to re-fetch a cache key from the database, or every failed request retrying without delay.
+The lesson is not "widen the bridge." It is traffic management. Three families of control map directly onto distributed systems:
 
-The mental model for avoiding this isn't about building a wider bridge (though that helps with overall capacity); it's about *traffic management*. Instead of everyone rushing at once, what if:
+1. Drivers wait a random interval before attempting the alternate route. This is exponential backoff with jitter.
+2. One designated driver checks the alternate route and reports back. This is request coalescing, also called single-flight.
+3. A dispatcher admits a bounded number of cars at a time. This is rate limiting, queuing, or a semaphore.
 
-1.  **Drivers waited a random amount of time** before trying an alternate route (exponential backoff with jitter).
-2.  **One designated driver went ahead** to check the status of the alternate route, and then reported back to everyone else (request coalescing/single-flight).
-3.  **There was a central dispatcher** that only allowed a certain number of cars onto the secondary road at a time (rate limiting/queuing).
+The defining property of a herd is independent actors responding to a shared stimulus. The goal of every mitigation is to decorrelate those responses.
 
-The core insight is that distributed systems often need explicit coordination mechanisms, or probabilistic distribution of effort, to prevent emergent, self-inflicted overload. The "herd" part implies many entities acting independently but in response to the same stimulus, leading to a disastrous collective outcome. Your goal is to break that collective, uncoordinated response into a more staggered, controlled flow.
+## Worked example: cache miss on a serverless API
 
-## A concrete worked example
+Consider an API built from a fleet of serverless functions behind an HTTP gateway. Each invocation reads a key from an in-memory cache; on a miss it reads from a managed key-value store and writes the result back with a TTL.
 
-Consider a common pattern in serverless architectures: a fleet of AWS Lambda functions (using the Node.js 20 LTS runtime) serving an API. This API frequently fetches data from a backend service, let's say a DynamoDB table, and caches the results in Redis 7.2 to keep response times under `50ms`. A typical architecture might involve API Gateway -> Lambda -> Redis/DynamoDB.
+Assume the following illustrative figures, chosen to make the arithmetic visible rather than to describe any particular deployment:
 
-A common failure mode here is when a critical Redis cache key expires or is explicitly invalidated. This could happen due to a TTL expiring, a deployment, or an administrative action. Suddenly, hundreds or thousands of concurrent Lambda invocations, all handling live user requests, simultaneously attempt to read that now-missing key from Redis. They all get a cache miss.
+- 1,000 concurrent invocations are in flight when a hot cache key expires.
+- A backend read takes 150 ms.
+- The backend sustains 2,000 reads per second.
 
-**The Thundering Herd Trigger:** Without proper mitigation, every single one of those Lambdas will then immediately try to fetch the data directly from the DynamoDB table. If the original data fetch from DynamoDB takes, say, `150ms`, and you have `1000` concurrent Lambdas hitting it, the DynamoDB table will face an immediate, massive spike in read requests. If the table's provisioned read capacity units (RCUs) are insufficient for this sudden burst, DynamoDB will start throttling requests, returning `ProvisionedThroughputExceededException` errors.
+With no mitigation, all 1,000 invocations miss simultaneously and issue 1,000 backend reads within roughly the same 150 ms window. That is a burst of about 6,700 reads per second against a backend rated for 2,000. The backend throttles. The invocations receive throttling errors or 5xx responses.
 
-**The Self-Inflicted DDoS:** If the Lambda functions' default retry logic (or poorly implemented custom logic) is to immediately retry upon receiving a `ProvisionedThroughputExceededException` or a `500/503` from an intermediate service, the problem rapidly escalates. The retries add *more* load to the already struggling DynamoDB, preventing it from recovering. This can lead to `30%` or higher error rates for end-users, and latency spikes of `500ms` or more, making the API unusable.
+Now add naive retry-on-error with no backoff. Each of the 1,000 callers retries immediately. The retry burst is again about 6,700 reads per second, arriving on top of whatever traffic is still being served. The backend never sees a quiet interval long enough to drain, and the failure sustains itself. This is the self-inflicted denial of service: the clients are the attacker and the target is the same system.
 
-Here’s what naive retry logic might look like in a Node.js Lambda:
+The arithmetic also shows why partial mitigation is weak. If only half the callers back off, the remaining burst is still around 3,350 reads per second, above capacity. The mitigation has to reduce the count of concurrent backend reads, not merely the average rate.
+
+### What to instrument
+
+- Cache miss rate per key, sampled at high resolution (one-second buckets are usually sufficient to see the burst).
+- Concurrent in-flight backend reads per key or per partition, not just total request rate.
+- Retry attempts per request, and the distribution of retry delays actually observed.
+- Backend throttling or 5xx counts, correlated with the above.
+
+### What to compare
+
+Run a load test that forces a hot key to expire while the system is under steady load. Record the peak concurrent backend reads per key with mitigation disabled, then with each mitigation enabled individually. The metric that matters is the peak, not the mean.
+
+## Mitigation 1: exponential backoff with jitter
+
+Backoff spaces retries out over time. Jitter randomizes the spacing so that clients that failed together do not retry together. The standard formulation is exponential backoff with full jitter: the delay is drawn uniformly from the interval between zero and an exponentially growing ceiling.
 
 ```javascript
-// problematic_data_fetch.js
-const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
-const redis = require('redis'); // Assuming redis client is initialized elsewhere
-
-const dbClient = new DynamoDBClient({ region: process.env.AWS_REGION });
-
-async function fetchDataFromDB(key) {
-    console.log(`Fetching ${key} from DynamoDB`);
-    try {
-        const command = new GetItemCommand({
-            TableName: "MyDataTable",
-            Key: { id: { S: key } }
-        });
-        const response = await dbClient.send(command);
-        return response.Item ? response.Item.data.S : null;
-    } catch (error) {
-        console.error(`DynamoDB error for ${key}:`, error);
-        // In a real scenario, this might be retried by the Lambda runtime 
-        // or by a simple client-side loop without proper backoff.
-        throw error;
-    }
+// backoff.js
+function fullJitterDelay(attempt, baseMs = 100, capMs = 20000) {
+  const ceiling = Math.min(capMs, baseMs * 2 ** attempt);
+  return Math.random() * ceiling;
 }
 
-exports.handler = async (event) => {
-    const cacheKey = event.pathParameters.id;
-    let data = await redisClient.get(cacheKey);
-
-    if (data) {
-        return { statusCode: 200, body: data };
-    }
-
-    // CACHE MISS: This is where the thundering herd can start
+async function withBackoff(fn, { maxAttempts = 5, baseMs = 100, capMs = 20000 } = {}) {
+  let lastError;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
-        data = await fetchDataFromDB(cacheKey);
-        if (data) {
-            await redisClient.setEx(cacheKey, 60, data); // Cache for 60 seconds
-            return { statusCode: 200, body: data };
-        } else {
-            return { statusCode: 404, body: 'Not Found' };
-        }
-    } catch (error) {
-        console.error('Handler failed:', error);
-        return { statusCode: 500, body: 'Internal Server Error' };
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      const delay = fullJitterDelay(attempt, baseMs, capMs);
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
-};
+  }
+  throw lastError;
+}
+
+module.exports = { withBackoff, fullJitterDelay };
 ```
 
-**The Solution: Exponential Backoff with Jitter and Request Coalescing**
+Two properties matter. The ceiling grows exponentially, so repeated failures push retries further apart. The actual delay is randomized across the whole interval, so a population of clients that failed at the same instant spreads out. A fixed delay, or exponential backoff without jitter, still leaves clients synchronized.
 
-To prevent this, we need two things:
+Backoff alone does not fix the initial burst. It prevents the burst from repeating indefinitely and gives the backend room to recover. Pair it with a mechanism that prevents the initial stampede.
 
-1.  **Client-side:** Implement exponential backoff with jitter for retries. If a Lambda *must* retry, it should wait for progressively longer, randomized periods before trying again. This prevents all clients from retrying simultaneously. For Node.js, libraries like `p-retry` or `async-retry` can help.
-2.  **Server-side (or shared client-side):** Implement **request coalescing** (also known as single-flight). When multiple Lambdas hit a cache miss for the *same* key, only one should proceed to fetch the data from the backend. The others should wait for that single fetch to complete and then use its result. This can be achieved using a distributed lock (e.g., using Redis's `SET NX` command, or a Redlock implementation with Redis 7.2) or a local single-flight mechanism combined with a distributed lock. The cost savings here can be significant, potentially reducing database load during cache misses by `90%` and preventing an unnecessary cost increase of `$250/month` from over-provisioning DynamoDB.
+## Mitigation 2: request coalescing (single-flight)
 
-Here’s a conceptual example combining request coalescing and basic backoff:
+Coalescing ensures that for a given key, only one caller performs the expensive backend read while the others wait for its result. Within a single process this is straightforward. Across processes it requires a shared coordination point, typically a lock in the cache layer.
+
+The following example uses a lock acquired with a conditional set (the `SET key value NX PX ttl` pattern supported by Redis and compatible stores) plus a short randomized wait for callers that lose the race. It is a conceptual implementation: it omits lock ownership tokens, which are needed to avoid a slow holder releasing a lock it no longer owns.
 
 ```javascript
-// improved_data_fetch.js
-const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
-const redis = require('redis'); // Assuming redis client is initialized elsewhere
-const pRetry = require('p-retry'); // For exponential backoff with jitter
+// coalesced_fetch.js
+const { withBackoff } = require('./backoff');
 
-const dbClient = new DynamoDBClient({ region: process.env.AWS_REGION });
+const LOCK_TTL_MS = 10000;
 
-// A simple in-memory single-flight for *this specific Lambda instance*
-// For cross-instance, a distributed lock (e.g., Redis) is needed.
-const inflightRequests = new Map();
+async function fetchWithCoalescing(key, redisClient, fetchFromBackend) {
+  return withBackoff(async () => {
+    const lockKey = `lock:${key}`;
 
-async function fetchDataWithCoalescing(key, fetchFn) {
-    if (inflightRequests.has(key)) {
-        return inflightRequests.get(key); // Wait for existing fetch to complete
-    }
-
-    const promise = pRetry(async () => {
-        // Distributed lock (conceptual): only one instance proceeds to DB
-        const lockKey = `lock:${key}`;
-        const acquired = await redisClient.set(lockKey, '1', { NX: true, EX: 10 }); // Lock for 10s
-        
-        if (!acquired) {
-            // Another instance acquired the lock, wait for cache to be populated
-            console.log(`Waiting for lock on ${key}...`);
-            await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 50)); // Jittered wait
-            const data = await redisClient.get(key); // Check cache again
-            if (data) return data;
-            throw new pRetry.AbortError('Failed to get data after waiting for lock'); // Force retry outer pRetry
-        }
-
-        try {
-            const data = await fetchFn(key);
-            if (data) {
-                await redisClient.setEx(key, 60, data); // Populate cache
-            }
-            await redisClient.del(lockKey); // Release lock
-            return data;
-        } catch (error) {
-            await redisClient.del(lockKey); // Ensure lock is released on error
-            throw error; // p-retry will handle retries with backoff
-        }
-    }, { 
-        retries: 5, 
-        minTimeout: 100, 
-        maxTimeout: 1000, 
-        factor: 2, 
-        randomize: true 
+    const acquired = await redisClient.set(lockKey, '1', {
+      NX: true,
+      PX: LOCK_TTL_MS,
     });
 
-    inflightRequests.set(key, promise);
-    try {
-        return await promise;
-    } finally {
-        inflightRequests.delete(key);
+    if (!acquired) {
+      // Another caller is already fetching. Wait a jittered interval,
+      // then re-read the cache. If it is still empty, retry the whole
+      // sequence with backoff.
+      const waitMs = 50 + Math.random() * 100;
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+
+      const cached = await redisClient.get(key);
+      if (cached !== null) {
+        return cached;
+      }
+      throw new Error(`cache still cold for ${key}`);
     }
+
+    try {
+      const fresh = await fetchFromBackend(key);
+      if (fresh !== null && fresh !== undefined) {
+        await redisClient.set(key, fresh, { EX: 60 });
+      }
+      return fresh;
+    } finally {
+      await redisClient.del(lockKey);
+    }
+  });
 }
 
-exports.handler = async (event) => {
-    const cacheKey = event.pathParameters.id;
-    let data = await redisClient.get(cacheKey);
-
-    if (data) {
-        return { statusCode: 200, body: data };
-    }
-
-    try {
-        // Use coalescing logic for cache misses
-        data = await fetchDataWithCoalescing(cacheKey, fetchDataFromDB);
-        if (data) {
-            return { statusCode: 200, body: data };
-        } else {
-            return { statusCode: 404, body: 'Not Found' };
-        }
-    } catch (error) {
-        console.error('Handler failed:', error);
-        return { statusCode: 500, body: 'Internal Server Error' };
-    }
-};
+module.exports = { fetchWithCoalescing };
 ```
 
-This example demonstrates how a combination of client-side retry discipline and server-side (or distributed) coordination is essential. The `p-retry` library handles the exponential backoff and jitter, while the `fetchDataWithCoalescing` function uses a conceptual distributed lock to ensure only one Lambda instance attempts to re-populate the cache for a given key at a time. This prevents the DynamoDB table from being overwhelmed and keeps the application responsive.
+Two failure modes deserve attention.
+
+The first is the lock holder dying before it populates the cache. The TTL bounds the damage: after `LOCK_TTL_MS`, another caller can acquire the lock. If the TTL is too long, callers wait unnecessarily; if too short, the herd can re-form while the first fetch is still running. A reasonable starting point is a small multiple of the p99 backend read latency, then tune from observed data.
+
+The second is the thundering herd moving to the lock itself. If every caller polls the lock aggressively, the coordination point becomes the bottleneck. The jittered wait above is deliberately short and randomized; an alternative is to subscribe to a change notification and be woken when the cache is populated.
+
+## Mitigation 3: bound concurrency and pre-warm
+
+Coalescing handles the case where many callers want the same value. A different class of herd occurs when many callers want different values from the same constrained resource. Common triggers include a scheduled job starting on every replica at the same wall-clock time, or a deploy causing every instance to rebuild an in-process cache simultaneously.
+
+Two controls apply. Bound the number of concurrent operations against the resource with a semaphore or a queue, so that excess work waits rather than piling on. Then stagger the triggers: give each replica a deterministic but distinct start offset derived from its identity, and add jitter to scheduled jobs. A cron expression that fires at `0 * * * *` on every replica is a herd generator; the same job with a per-replica offset is not.
+
+Pre-warming is the complementary move. If a key is known to be hot, refresh it before expiry rather than after, or refresh it from a single designated worker. This converts a synchronized miss into a single background write.
+
+## A decision checklist
+
+Use this to choose controls for a specific resource.
+
+- Is the load correlated? If all callers act on the same event, assume a herd is possible. If failures are independent and scattered, ordinary retries are fine.
+- Is the work idempotent and cheap to duplicate? If so, coalescing may be unnecessary and simple concurrency bounds suffice.
+- Can callers wait? If a caller can tolerate a short delay, coalescing and queuing are available. If every caller must be served immediately, the only options are pre-warming, capacity headroom, or shedding load.
+- Is there a coordination point already? A cache layer with conditional writes can host a lock. If not, adding one introduces a new dependency and a new failure mode.
+- What is the recovery time of the backend? This sets the minimum useful lock TTL and the backoff ceiling.
+- What happens when the mitigation fails? A lock that cannot be acquired, or a queue that is full, needs a defined fallback. Failing fast is usually better than unbounded waiting.
 
 ## How this connects to things you already know
 
-If you've spent any time with distributed systems, you've likely encountered similar concepts, even if not explicitly labeled as a "thundering herd." This problem is a specific manifestation of broader challenges in concurrent programming and distributed computing.
+A thundering herd is a distributed race condition. The same reasoning that leads to locks and atomic operations inside a single process leads to distributed locks and coordination primitives across processes.
 
-Think about **race conditions** in multi-threaded applications. A thundering herd is essentially a distributed race condition, where many processes are racing to acquire a resource or perform an action, and their uncoordinated efforts lead to contention and failure. Just as you'd use locks or atomic operations to prevent data corruption in a single process, you need distributed locks or coordination primitives to prevent resource exhaustion in a distributed system.
+It relates to load balancing but is not solved by it. A load balancer spreads requests across replicas; it does not stop those replicas from all hitting the same downstream key. Rate limiting is a direct mitigation, but it usually operates at the edge, while a herd can form between internal services that the edge never sees.
 
-It also ties closely into **load balancing** and **rate limiting**. A load balancer distributes incoming requests, but if all those requests hit the same bottleneck (like a cold cache), the load balancer alone can't fix it. Rate limiting, on the other hand, *is* a direct mitigation strategy, preventing a service from being overwhelmed. However, rate limiting often operates at the edge or per-service, and a thundering herd can originate *within* your microservice architecture, between services you control.
+It relates to circuit breakers as cause relates to response. A circuit breaker stops upstream callers from hammering a failing service. A thundering herd is frequently the event that trips the breaker in the first place, which is why prevention is cheaper than reaction.
 
-Consider **circuit breaker patterns**. A circuit breaker prevents a failing service from being continuously hammered by upstream callers, giving it time to recover. This is a reactive measure against a service *already* struggling, which could be due to a thundering herd. The thundering herd problem is often the *cause* that triggers the circuit breaker, highlighting the need for proactive prevention.
+It relates to queues. A queue decouples producers from consumers and lets consumers pull at their own pace, which removes the direct contention that produces a herd. Herds still form when consumers race for the same item after pulling, which is why visibility timeouts and partitioning matter.
 
-Furthermore, the principles of **distributed queues** (like AWS SQS or Apache Kafka) are built to mitigate thundering herds for asynchronous processing. Instead of many workers simultaneously polling a database for new tasks, a queue provides a buffer and allows workers to pull tasks at their own pace, preventing direct contention on the task source. The thundering herd is what happens when you *don't* have such a buffer or when the workers themselves get into a race condition after pulling a task.
+Finally, it is a case study in emergent behavior. Each component behaves correctly in isolation. The failure exists only in their interaction at scale, which is why it is found by load testing and production observation rather than by reading any single component's code.
 
-Finally, it's a prime example of **emergent behavior** in complex systems. Individual components might be well-behaved, but their interactions at scale create unforeseen systemic issues. Understanding thundering herds means moving beyond isolated component thinking and embracing a more
+## Do this in the next 30 minutes
 
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** September 2026
+Pick your single hottest cache key and add one metric: the count of concurrent in-flight backend reads for that key, bucketed per second. Emit it from the code path that performs the backend read, tagged with the key. Then force that key to expire during a load test and look at the peak. If the peak is more than a small multiple of one, you have a herd, and you now have a baseline to measure coalescing against.

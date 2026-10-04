@@ -49,8 +49,8 @@
 
       <a class="post-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
-        <p class="post-excerpt">LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</p>
-        <p class="post-reading-time">15 min read · 3 October 2026</p>
+        <p class="post-excerpt">How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+        <p class="post-reading-time">14 min read · 3 October 2026</p>
       </a>
       <a class="post-card" href="/agentic-workflows-surviving-network-partitions/">
         <h3>Agentic workflows: surviving network partitions</h3>
@@ -59,23 +59,23 @@
       </a>
       <a class="post-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
         <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
-        <p class="post-excerpt">Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
-        <p class="post-reading-time">13 min read · 29 September 2026</p>
+        <p class="post-excerpt">Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+        <p class="post-reading-time">11 min read · 29 September 2026</p>
       </a>
       <a class="post-card" href="/route-fine-tune-or-scale-pick-right/">
         <h3>Route, fine-tune, or scale: pick right</h3>
-        <p class="post-excerpt">Fine-tune, route, or use a bigger model? Build an eval set first, then a routing layer.</p>
+        <p class="post-excerpt">A practical framework for choosing between model routing, fine-tuning, and simply paying for a larger model, with code, cost math, and evaluation harnesses.</p>
         <p class="post-reading-time">13 min read · 29 September 2026</p>
       </a>
       <a class="post-card" href="/apm-is-blind-to-your-ai-agents/">
         <h3>APM is blind to your AI agents</h3>
-        <p class="post-excerpt">Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
-        <p class="post-reading-time">12 min read · 25 September 2026</p>
+        <p class="post-excerpt">Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+        <p class="post-reading-time">11 min read · 25 September 2026</p>
       </a>
       <a class="post-card" href="/multi-agent-systems-when-they-quietly-degrade/">
         <h3>Multi-agent systems: when they quietly degrade</h3>
-        <p class="post-excerpt">Multi-agent research systems degrade quietly: token growth, retry loops, and missing per-node metrics. Learn what to instrument first to catch the slide.</p>
-        <p class="post-reading-time">14 min read · 24 September 2026</p>
+        <p class="post-excerpt">Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+        <p class="post-reading-time">11 min read · 24 September 2026</p>
       </a>
       <a class="post-card" href="/when-your-agent-goes-silent-degrade-gracefully/">
         <h3>When your agent goes silent: degrade gracefully</h3>
@@ -84,68 +84,68 @@
       </a>
       <a class="post-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
         <h3>Agentic AI cost control: 7 tools, one backfire</h3>
-        <p class="post-excerpt">Agentic AI cost management ranked: CUR 2.0, Helicone, LiteLLM, and the routing agent that backfired. Which tools give ground truth and which just guess.</p>
+        <p class="post-excerpt">How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
         <p class="post-reading-time">14 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/context-windows-agents-that-run-for-days/">
         <h3>Context windows: agents that run for days</h3>
-        <p class="post-excerpt">Long-running agents forget constraints when context windows fill.</p>
-        <p class="post-reading-time">15 min read · 19 September 2026</p>
+        <p class="post-excerpt">Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.</p>
+        <p class="post-reading-time">17 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/most-llm-cost-dashboards-lie/">
         <h3>Most LLM cost dashboards lie…</h3>
-        <p class="post-excerpt">LLM bills hide 30-60% of real spend in retries, cache misses, and agent loops.</p>
-        <p class="post-reading-time">15 min read · 19 September 2026</p>
+        <p class="post-excerpt">Per-request token attribution, prompt caching, model routing and retry caps: how to instrument LLM spend so the numbers match the invoice.</p>
+        <p class="post-reading-time">12 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/multi-agent-systems-why-failures-hide/">
         <h3>Multi-agent systems: why failures hide</h3>
-        <p class="post-excerpt">Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</p>
+        <p class="post-excerpt">Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
         <p class="post-reading-time">12 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/feature-flags-became-ai-rollout-platforms/">
         <h3>Feature flags became AI rollout platforms</h3>
-        <p class="post-excerpt">Feature flags now gate AI rollouts. Ranked review of 7 platforms, the eval-metric rollback gap, and the SDK fallback mistake that takes down requests.</p>
-        <p class="post-reading-time">16 min read · 18 September 2026</p>
+        <p class="post-excerpt">How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.</p>
+        <p class="post-reading-time">17 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/stop-putting-llm-keys-in-env/">
         <h3>Stop Putting LLM Keys in .env</h3>
-        <p class="post-excerpt">Why .env files fail at 40+ LLM integrations — the env-dump leak, build-arg exposure, and the gateway pattern that fixes rotation and audit.</p>
+        <p class="post-excerpt">Why flat .env files fail at scale for LLM API keys, and how a secrets manager plus gateway brokering scoped credentials fixes rotation and leaks.</p>
         <p class="post-reading-time">14 min read · 17 September 2026</p>
       </a>
       <a class="post-card" href="/llm-agents-why-monoliths-win/">
         <h3>LLM agents: why monoliths win</h3>
-        <p class="post-excerpt">LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.</p>
-        <p class="post-reading-time">13 min read · 10 September 2026</p>
+        <p class="post-excerpt">Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.</p>
+        <p class="post-reading-time">11 min read · 10 September 2026</p>
       </a>
       <a class="post-card" href="/why-your-routing-layer-will-collapse-at-scale/">
         <h3>Why your routing layer will collapse at scale</h3>
-        <p class="post-excerpt">Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens</p>
-        <p class="post-reading-time">14 min read · 4 September 2026</p>
+        <p class="post-excerpt">How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+        <p class="post-reading-time">12 min read · 4 September 2026</p>
       </a>
       <a class="post-card" href="/agents-running-hours-youre-losing-context-fast/">
         <h3>Agents running hours? You're losing context fast</h3>
-        <p class="post-excerpt">Keep long-running agents on track without ballooning prompts — sliding windows, archive thresholds, and PostgreSQL 16 JSONB with 3 concrete numbers and a…</p>
+        <p class="post-excerpt">How to bound prompt growth in long-running LLM agents using sliding windows, token-based eviction, priority tags, and cold storage.</p>
         <p class="post-reading-time">11 min read · 3 September 2026</p>
       </a>
       <a class="post-card" href="/commit-ownership-in-ai-pair-coding/">
         <h3>Commit ownership in AI pair coding</h3>
-        <p class="post-excerpt">AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-        <p class="post-reading-time">17 min read · 31 August 2026</p>
+        <p class="post-excerpt">AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.</p>
+        <p class="post-reading-time">14 min read · 31 August 2026</p>
       </a>
       <a class="post-card" href="/llm-eval-drift-that-users-notice-first/">
         <h3>LLM eval drift that users notice first</h3>
-        <p class="post-excerpt">Detect LLM drift before users notice — real metrics from production pipelines, with concrete thresholds, code snippets, and cost figures for 2026…</p>
-        <p class="post-reading-time">17 min read · 28 August 2026</p>
+        <p class="post-excerpt">Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
+        <p class="post-reading-time">15 min read · 28 August 2026</p>
       </a>
       <a class="post-card" href="/llm-costs-fine-tune-vs-route-vs-bigger-model/">
         <h3>LLM costs: fine-tune vs route vs bigger model</h3>
-        <p class="post-excerpt">LLM costs: fine-tune vs route vs bigger model — concrete 2026 decision framework with latency and cost results from a 6-month side project on Mistral-7B…</p>
-        <p class="post-reading-time">15 min read · 22 August 2026</p>
+        <p class="post-excerpt">A practical framework for deciding between fine-tuning, prompt routing, and upgrading to a larger model, with instrumentation guidance and failure modes.</p>
+        <p class="post-reading-time">12 min read · 22 August 2026</p>
       </a>
       <a class="post-card" href="/ai-errors-hide-in-plain-latency/">
         <h3>AI errors hide in plain latency</h3>
-        <p class="post-excerpt">AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</p>
-        <p class="post-reading-time">12 min read · 21 August 2026</p>
+        <p class="post-excerpt">Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
+        <p class="post-reading-time">10 min read · 21 August 2026</p>
       </a>
       <a class="post-card" href="/ai-era-promotions-hinge-on-this-one-thing/">
         <h3>AI-era promotions hinge on this one thing</h3>
@@ -154,33 +154,33 @@
       </a>
       <a class="post-card" href="/senior-engineer-title-inflation-in-2026/">
         <h3>Senior engineer title inflation in 2026</h3>
-        <p class="post-excerpt">Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</p>
-        <p class="post-reading-time">12 min read · 13 August 2026</p>
+        <p class="post-excerpt">How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+        <p class="post-reading-time">10 min read · 13 August 2026</p>
       </a>
       <a class="post-card" href="/llm-drift-before-users-complain-catch-it-early/">
         <h3>LLM drift before users complain: catch it early</h3>
-        <p class="post-excerpt">Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%</p>
-        <p class="post-reading-time">14 min read · 10 August 2026</p>
+        <p class="post-excerpt">Track p99 latency, tokens per request, and cache hit rate against rolling baselines to catch LLM drift before users feel it.</p>
+        <p class="post-reading-time">11 min read · 10 August 2026</p>
       </a>
       <a class="post-card" href="/agent-frameworks-stop-rewriting-the-same-glue-code/">
         <h3>Agent frameworks: stop rewriting the same glue code</h3>
-        <p class="post-excerpt">Agent frameworks: stop rewriting the same glue code – cut boilerplate 70% with a job queue, credentials service, and DAG compiler in 2026</p>
-        <p class="post-reading-time">19 min read · 10 August 2026</p>
+        <p class="post-excerpt">Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+        <p class="post-reading-time">12 min read · 10 August 2026</p>
       </a>
       <a class="post-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
         <h3>AI cost attribution without the spreadsheet hell</h3>
-        <p class="post-excerpt">AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</p>
-        <p class="post-reading-time">14 min read · 7 August 2026</p>
+        <p class="post-excerpt">How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
+        <p class="post-reading-time">15 min read · 7 August 2026</p>
       </a>
       <a class="post-card" href="/apm-lied-about-our-ai-incidents/">
-        <h3>APM lied about our AI incidents</h3>
-        <p class="post-excerpt">AI incident detection in 2026: why Datadog APM 1.47 misses 80%+ of GPU-related failures — and the three metrics you need to catch them before users…</p>
-        <p class="post-reading-time">14 min read · 1 August 2026</p>
+        <h3>Why APM Misses GPU-Bound LLM Incidents</h3>
+        <p class="post-excerpt">Application monitoring traces Python calls, not CUDA kernels or batch queues. Here is how to instrument the layers where LLM latency actually hides.</p>
+        <p class="post-reading-time">11 min read · 1 August 2026</p>
       </a>
       <a class="post-card" href="/latency-trade-offs-nairobi-teams-beat-global-ai-providers/">
         <h3>Latency trade-offs: Nairobi teams beat global AI providers</h3>
-        <p class="post-excerpt">Nairobi teams ship AI features faster than global providers by treating latency as a feature.</p>
-        <p class="post-reading-time">12 min read · 26 July 2026</p>
+        <p class="post-excerpt">Why AI teams serving East African users weigh total cost of interaction, not raw p99, and how to measure the trade-offs yourself.</p>
+        <p class="post-reading-time">14 min read · 26 July 2026</p>
       </a>
       <a class="post-card" href="/context-windows-live-longer-than-you-think/">
         <h3>Context windows live longer than you think</h3>
@@ -189,7 +189,7 @@
       </a>
       <a class="post-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">
         <h3>Agents keep breaking prod: 3 boundary rules you still need</h3>
-        <p class="post-excerpt">Agent breaking prod silently: 3 boundary rules to add now — outcome polling, schema drift checks, and concurrency guards — with concrete fixes and failure costs</p>
+        <p class="post-excerpt">Agents that mutate external state fail silently when 2xx is mistaken for completion. Three boundary rules: outcome polling, schema drift gates, atomic claims.</p>
         <p class="post-reading-time">14 min read · 17 July 2026</p>
       </a>
       <a class="post-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
@@ -249,8 +249,8 @@
       </a>
       <a class="post-card" href="/ai-revives-unloved-legacy-codebases/">
         <h3>AI revives unloved legacy codebases</h3>
-        <p class="post-excerpt">Cut legacy maintenance time 70% with Psalm, CodeQL, and Ollama — connection pool mistakes, test generation surprises, and the $18/month stack that caught 8…</p>
-        <p class="post-reading-time">18 min read · 29 June 2026</p>
+        <p class="post-excerpt">A practical stack for maintaining legacy code: static analysis, generated characterization tests, and LLM documentation, with failure modes and a 30-minute first step.</p>
+        <p class="post-reading-time">14 min read · 29 June 2026</p>
       </a>
       <a class="post-card" href="/ai-observability-the-metrics-that-matter/">
         <h3>AI observability: the metrics that matter</h3>
@@ -264,8 +264,8 @@
       </a>
       <a class="post-card" href="/debug-ai-agent-failures-differently/">
         <h3>Debug AI agent failures differently</h3>
-        <p class="post-excerpt">Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them.</p>
-        <p class="post-reading-time">15 min read · 27 June 2026</p>
+        <p class="post-excerpt">Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+        <p class="post-reading-time">13 min read · 27 June 2026</p>
       </a>
       <a class="post-card" href="/llm-output-metrics-that-actually-move-the-needle/">
         <h3>LLM output metrics that actually move the needle</h3>
@@ -288,9 +288,9 @@
         <p class="post-reading-time">11 min read · 21 June 2026</p>
       </a>
       <a class="post-card" href="/ai-agent-postmortem-human-loop-vs-blind-replay/">
-        <h3>AI agent postmortem: human loop vs blind replay</h3>
-        <p class="post-excerpt">AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…</p>
-        <p class="post-reading-time">17 min read · 20 June 2026</p>
+        <h3>Postmortems for AI agents: human review vs blind replay</h3>
+        <p class="post-excerpt">Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.</p>
+        <p class="post-reading-time">15 min read · 20 June 2026</p>
       </a>
       <a class="post-card" href="/llm-metrics-that-stop-wasting-time/">
         <h3>LLM metrics that stop wasting time</h3>

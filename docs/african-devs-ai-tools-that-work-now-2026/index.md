@@ -1,41 +1,38 @@
 # African devs: AI tools that work now (2026)
 
-After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.
+AI coding assistants are usually documented as if every user has fibre, a recent laptop and an unmetered cloud budget. That assumption breaks down for a large share of developers worldwide, and the failure is rarely announced — the tool simply becomes slow, expensive or unreliable, and the developer concludes that "AI doesn't work here" rather than "this tool's assumptions don't match my environment."
 
-# AI tools for African developers in 2026: what actually exists now
+This article treats that mismatch as an engineering problem. It covers the three failure modes that dominate on constrained networks, how to diagnose each one, how to measure whether a fix actually worked, and how to choose tools that fit rather than fight your setup.
 
-## The error and why it's confusing
+## The three constraints that actually matter
 
-In 2026, every developer on the continent is told they *need* AI tools to stay competitive. But when you search for "AI coding assistant for African developers", you get two kinds of results: (1) global tools that ignore local constraints, and (2) marketing pages promising magical solutions that fall apart on the first load test. The marketing copy promised "90% less debugging time", but after 45 minutes, the AI suggestions were still suggesting I use `pip install tensorflow` in a project that didn’t need it — and the VM froze when it tried to import the package.
+Most tool-selection advice focuses on model quality. In practice, model quality is rarely the binding constraint. Three environmental factors decide whether an assistant is usable:
 
-The confusion isn’t just about hype. It’s about mismatched expectations:
-- **Global tools** assume stable internet, fast GPUs, and unlimited cloud credits. - **Local constraints** include 4G throttling, unreliable power, and data costs that average 1,200 NGN/GB (≈$1.40/GB) in Nigeria as of 2026. - **Language barriers** persist even with "African-language" models — most support only Swahili, Yoruba, and Hausa, leaving Amharic, Twi, and Lingala underserved.
+**Bandwidth and latency.** Cloud assistants send request payloads — file context, cursor position, surrounding code — on every completion. Response payloads are smaller but frequent. On a metered mobile connection, the cost is both financial and in round-trip latency, which determines whether a suggestion arrives before you have already typed the line yourself.
 
-The real question isn’t whether AI tools exist — it’s whether they *fit*.
+**Memory and compute.** Local models compete for RAM with your editor, browser, container runtime and language server. A model that technically "runs" on 4GB may still push the machine into swap, at which point every editor action stutters.
 
-## What's actually causing it (the real reason, not the surface symptom)
+**Network policy.** Corporate firewalls, captive portals, VPNs and ISP-level filtering can block or throttle API endpoints. A tool that works on a home connection may fail entirely on an office or campus network, often with an unhelpful error.
 
-The root issue is a mismatch between the **assumptions built into AI tools** and the **operational reality** of African developers in 2026. Three factors dominate:
+Power reliability is a fourth factor, but it interacts with the first two: a machine on battery has less headroom for background inference, and an unexpected shutdown mid-download wastes whatever data was already spent.
 
-1. **Bandwidth assumptions**: Most global AI tools assume 50+ Mbps downloads and <200ms latency. In Kenya, the median 4G speed is 14 Mbps with 180ms latency. In rural areas, it drops to 2 Mbps and 450ms. Tools like GitHub Copilot’s inline chat send 10KB+ requests per suggestion — multiplying data usage and latency.
+## Failure mode 1: background traffic you did not ask for
 
-2. **Hardware constraints**: The median developer machine in Africa is a 4–8GB RAM laptop running on battery power. Tools like JetBrains AI Assistant ship with 2GB+ model weights. Even if you use a cloud instance, costs add up: a g5.xlarge GPU instance on AWS costs $1.006/hour. Run it for 8 hours a day, and you’re at $241/month — more than the average junior developer’s salary in Kenya (KES 70,000 ≈ $525/month) or Ghana (GHS 3,500 ≈ $300/month).
+**Symptom.** The editor becomes sluggish after the first suggestion. A data monitor shows sustained traffic even when you are reading, not typing. On a metered connection, the daily allowance disappears within an hour or two of ordinary work.
 
-3. **Localization gaps**: Most AI models are trained on English-centric datasets. Even when they support African languages, they’re often limited to the top 5. In Nigeria alone, there are over 520 languages. Tools like Codeium claim "100+ language support", but in practice, Yoruba autocomplete works; Fulani doesn’t.
+**Cause.** Autocomplete, "explain this" hover actions and background indexing features are frequently enabled by default. Many of them transmit on every keystroke pause, not only when you explicitly invoke the assistant.
 
-The symptom — "AI tool is slow/unusable" — is just the surface. The cause is **infrastructure mismatch** combined with **economic reality**: tools are built for Silicon Valley stacks, not African workflows.
+**Diagnosis.** Identify which process is consuming bandwidth before changing any settings:
 
-## Fix 1 — the most common cause
+```bash
+# Per-process bandwidth, sorted by usage
+sudo apt update && sudo apt install -y nethogs
+sudo nethogs
+```
 
-**Symptom**: The AI tool freezes your IDE or terminal after the first suggestion, and your internet meter shows 300MB+ used in 10 minutes.
+On macOS, `nettop -P -l 1` gives a comparable per-process view. Run the monitor for five minutes of normal typing and note which process dominates. If the assistant's language-server process is responsible, configuration is the lever.
 
-This usually points to **auto-complete or background scan features** enabled by default. These tools send every keystroke to a cloud server for analysis, even when you’re offline. In 2026, most tools still do this unless explicitly disabled.
-
-Here’s what to do:
-
-1. **Disable auto-complete in your IDE** if you’re on low bandwidth. 2. **Switch to local-only models** where possible.
-
-For example, if you’re using **VS Code**, disable Copilot like this:
+**Fix.** Disable the features you are not actively using. In VS Code, the relevant settings key for GitHub Copilot is:
 
 ```json
 // settings.json
@@ -44,264 +41,183 @@ For example, if you’re using **VS Code**, disable Copilot like this:
     "*": false,
     "editor": false,
     "terminal": false,
-    "markdown": false,
-    "global": false
+    "markdown": false
   }
 }
 ```
 
-If you’re using **JetBrains IDEs**, go to:
-- Settings > Languages & Frameworks > AI Assistant > uncheck "Enable AI Assistant"
+Note that disabling Copilot's inline suggestions does not necessarily stop other extensions you have installed. Check the extension list as well as the settings.
 
-But these tools still bill you per API call. The real fix is to **use tools that cache locally**. For Python, try **Continue.dev** with local models:
+In JetBrains IDEs, AI Assistant features are toggled under Settings > Languages & Frameworks > AI Assistant. Turning them off removes the background requests but also removes the feature; there is no partial "only when I ask" mode in every version, so verify the behaviour on your build.
 
-```bash
-# Install Continue with local inference
-pip install --user continue
-# Use a lightweight model like Phi-3-mini (3.8B params)
-continue settings set --model "microsoft/Phi-3-mini-4k-instruct-gguf" --local
-```
+**Trade-off.** Disabling autocomplete removes the feature that many developers find most valuable. A more targeted approach is to keep suggestions in files where they help (application code) and disable them where they generate noise (configuration, lockfiles, generated code).
 
-Disabling it cut my daily data usage from 200MB to 10MB.
+## Failure mode 2: local models that exceed the machine
 
-## Fix 2 — the less obvious cause
+**Symptom.** The assistant loads, then the whole system becomes unresponsive. `dmesg` or the system monitor shows the out-of-memory killer terminating processes. Alternatively, the model loads but produces a token every few seconds.
 
-**Symptom**: The AI suggests code that works in the demo video but fails on your machine with a 404 error on import.
+**Cause.** Model memory requirements scale with parameter count and quantisation. A rough planning figure for quantised weights is bytes ≈ parameters × bytes-per-parameter. At 4-bit quantisation that is roughly 0.5 bytes per parameter, so:
 
-This points to **version drift** between the AI’s training data and your runtime environment. For example, in 2026, many tools were trained on Python 3.10 datasets, but Ubuntu 24.04 defaults to Python 3.11. The AI suggests `urllib3>=2.0`, but your system has urllib3 1.26, causing a compatibility error.
+- A 3.8B-parameter model needs about 1.9GB for weights alone.
+- A 7B-parameter model needs about 3.5GB for weights alone.
 
-The fix is twofold:
+Add context (the KV cache grows with sequence length), the runtime's own overhead, and everything else the machine is doing. A 4GB machine running a 7B model at 4-bit quantisation has essentially no headroom, which is why it swaps.
 
-1. **Pin your runtime** to match the AI’s training environment. 2. **Use a container** to isolate dependencies.
-
-Example with Docker:
-
-```dockerfile
-FROM python:3.10-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["python", "app.py"]
-```
-
-Then, run the AI inside the container:
+**Diagnosis.** Measure actual resident memory rather than trusting the model card:
 
 ```bash
-# Install Continue inside the container
-docker exec -it myapp bash
-pip install --user continue
-continue settings set --model "mistralai/Mistral-7B-v0.1" --local
+# Watch memory while the model loads and answers a prompt
+watch -n 1 'free -m'
 ```
 
-Another common issue: **Node.js version mismatch**. If you’re using Node 20 LTS, but the AI was trained on Node 18, it will suggest deprecated APIs like `http.createServer()` without `.once()`, which throws an error in Node 20.
+If available memory approaches zero and swap usage climbs, the model is too large for the machine as configured.
 
-I once spent a day debugging why a Next.js app failed in production — the AI suggested a dynamic import that only worked in Node 18. Shifting to a containerized Node 18 environment fixed it.
-
-## Fix 3 — the environment-specific cause
-
-**Symptom**: The AI tool works fine at home but fails at the office, in a co-working space, or on a client’s network.
-
-This usually points to **corporate firewalls, VPNs, or DNS blocking** AI endpoints. In 2026, many African ISPs and corporate networks still block or throttle AI APIs due to bandwidth concerns or compliance rules.
-
-Here’s how to diagnose:
-
-1. **Test connectivity** to the AI provider’s endpoint:
+**Fix.** Choose a smaller model, or reduce quantisation further, or reduce context length. Ollama is a common local runtime:
 
 ```bash
-# Replace with actual endpoint (check your AI tool docs)
-curl -v https://api.copilot.github.com/v1/chat/completions
-```
-
-If you see a timeout or HTTP 403, the network is blocking you.
-
-2. **Use a VPN or proxy** to route around blocks. In Nigeria, many developers use **Afrihost’s AI-optimized proxy** or **TunnelBear’s African endpoints** to bypass throttling.
-
-3. **Switch to offline models** during critical work:
-
-```bash
-# Install Ollama for local LLM inference
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull phi3:3.8b
 ollama serve
 ```
 
-In one case, a Lagos startup’s team couldn’t use Copilot at all — their ISP, Glo, was blocking GitHub’s AI API. Switching to a local Phi-3 model cut latency from 1.2s per suggestion to 300ms.
+Then point your editor extension at the local endpoint rather than a cloud provider. The exact configuration depends on the extension; most local-first assistants accept a base URL for an OpenAI-compatible API.
 
-## How to verify the fix worked
+**Trade-off.** Smaller models are faster and lighter but weaker at multi-file reasoning and less reliable at following long instructions. For autocomplete and short refactors they are often adequate; for architectural questions they are not. Match the model to the task rather than expecting one model to cover everything.
 
-After applying Fix 1, 2, or 3, verify with these steps:
+## Failure mode 3: the network blocks the endpoint
 
-1. **Measure data usage**: Use your system’s data monitor or run `nethogs` to track per-process bandwidth:
+**Symptom.** The tool works on one network and fails on another. Errors may be timeouts, TLS failures, HTTP 403, or a connection reset.
+
+**Cause.** Firewalls and proxies may block or intercept the API host. TLS interception in particular produces certificate errors that look like a bug in the tool.
+
+**Diagnosis.** Test the endpoint directly, outside the editor, so you can separate tool bugs from network policy:
 
 ```bash
-# Install nethogs on Ubuntu
-sudo apt update && sudo apt install -y nethogs
-sudo nethogs
+# Substitute the host your tool actually calls
+curl -v --max-time 10 https://api.example-ai-provider.com/v1/models
 ```
 
-You should see the AI process drop from 5MB/min to <500KB/min if you disabled auto-complete or switched to a local model.
+Read the output carefully. A DNS failure, a connection timeout, a TLS handshake failure and an HTTP 403 all point to different causes and different owners (your resolver, the network, the proxy, or the provider).
 
-2. **Time per suggestion**: Use a stopwatch or `time` command to measure latency. A good offline model should return in <1s. Cloud models should average <500ms on 4G.
+**Fix.** Options, in rough order of preference:
 
-3. **Error rate**: Track how often the AI suggests code that fails to run. For a new project, aim for <5% error rate. Use a simple script:
+1. Use a local model for the work that must continue regardless of network state.
+2. Ask the network administrator to allowlist the API host if policy permits.
+3. Route through an approved proxy if one exists.
+
+Avoid disabling TLS verification as a workaround. It converts a connectivity problem into a security problem, and on a network that is already intercepting traffic, it removes the only signal that interception is happening.
+
+## Measuring whether a fix worked
+
+Claims about "reduced data usage" or "faster suggestions" are only meaningful if you can reproduce the measurement. Instrument three things.
+
+**Bandwidth per unit of work.** Use `nethogs` or `nettop` and record usage over a fixed task — for example, implementing one function with ten accepted completions. Compare before and after. Report the number alongside the task, because "MB per hour" depends entirely on how much you typed.
+
+**Latency to first token.** Measure from the moment you trigger a completion to the moment text appears. A stopwatch is adequate for a rough figure; for anything more precise, timestamp requests in the client if the tool exposes a log. Compare like with like: same task, same network, same time of day.
+
+**Suggestion acceptance and correctness rate.** This is the metric that actually predicts value, and it is the one vendors never publish for your codebase. A minimal harness:
 
 ```python
-# test_ai_suggestions.py
-import subprocess
-import json
+# evaluate_suggestions.py
+# Illustrative harness: replace the client with your tool's API.
+import statistics
 
-results = []
-for i in range(10):
-    suggestion = ai.get_suggestion()  # Replace with your AI tool’s API
-    code = suggestion['code']
-    try:
-        compile(code, '<string>', 'exec')
-        results.append(True)
-    except SyntaxError:
-        results.append(False)
+def evaluate(client, prompts):
+    accepted = 0
+    compiled = 0
+    latencies = []
 
-print(f"Error rate: {sum(not x for x in results) / len(results):.1%}")
+    for prompt in prompts:
+        suggestion = client.complete(prompt)
+        latencies.append(suggestion.latency_ms)
+        if suggestion.accepted:
+            accepted += 1
+        try:
+            compile(suggestion.code, "<suggestion>", "exec")
+            compiled += 1
+        except SyntaxError:
+            pass
+
+    n = len(prompts)
+    return {
+        "acceptance_rate": accepted / n,
+        "syntax_valid_rate": compiled / n,
+        "median_latency_ms": statistics.median(latencies),
+    }
 ```
 
-I once found that even with Fix 1 applied, the error rate dropped from 12% to 3%, but only after I also pinned the Python version in the test script.
+Two cautions. First, `compile()` only checks syntax; it does not check that the code is correct or that the imports exist. For a stronger signal, run the suggested code against a test suite. Second, keep the environment fixed across runs — same interpreter version, same dependency set — or you will measure environment drift instead of model behaviour.
 
-## How to prevent this from happening again
+## A decision checklist for tool selection
 
-Prevention comes down to **tool selection and workflow design**:
+Work through these in order. The first "no" usually determines the answer.
 
-1. **Use tools that respect offline-first**: In 2026, the best options are:
-   - **Continue.dev** (supports local models)
-   - **Tabby** (self-hosted)
-   - **Ollama** (for LLM inference)
+1. **Does the tool work fully offline, or only degrade gracefully?** If offline operation is a hard requirement, only local-inference tools qualify.
+2. **What is the measured memory footprint at your chosen model size?** Check with `free -m` under load, not from the model card.
+3. **What is the measured bandwidth per working hour?** Check with `nethogs` on a representative task.
+4. **Does the endpoint survive your most restrictive network?** Test with `curl` before rolling the tool out to a team.
+5. **Can you pin the model version?** A model that updates silently will change behaviour and invalidate your measurements.
+6. **What is the failure mode when the network drops?** A tool that blocks the editor is worse than one that simply stops suggesting.
+7. **Who owns the licence and the data?** Self-hosted tools shift cost from subscription to infrastructure and operations; that trade is worth stating explicitly.
 
-2. **Build a local fallback**: Always have a local model ready. For example, keep a 2GB Phi-3 model on a USB drive for emergencies.
+## Cost arithmetic you can check yourself
 
-3. **Set data budgets**: Use tools like `vnstat` to cap daily usage:
+Vendor pricing changes and regional pricing varies, so no fixed table is reliable for long. Instead, build the estimate from stated assumptions. A worked example, clearly illustrative:
+
+- Assume a cloud GPU instance at $1.00 per hour (check current pricing for your region and instance type).
+- Assume 8 hours of use per working day, 22 days per month: 176 hours.
+- 176 × $1.00 = $176 per month for the instance alone.
+
+Now compare against a local model on hardware you already own:
+
+- Assume the machine draws 60W under inference load.
+- 176 hours × 0.06 kW = 10.56 kWh per month.
+- At $0.20 per kWh, that is about $2.11 per month in electricity, plus the amortised hardware cost.
+
+The comparison is not "cloud bad, local good." The cloud instance has no upfront cost, needs no maintenance, and can run a much larger model. The local model has near-zero marginal cost but is capped by your RAM. The point is to compute both numbers with your own figures rather than accepting either vendor's framing.
+
+The same discipline applies to data. If a completion costs roughly 10KB of request and 2KB of response, then 1,000 completions per day is about 12MB per day, or roughly 260MB per month. That is trivial on a fixed connection and material on a metered one. Substitute your provider's actual payload sizes, which you can observe with `nethogs`.
+
+## Failure modes to expect after the main fixes
+
+**Out-of-memory during model load.** The model is too large for available RAM. Reduce parameter count or quantisation, or close other memory-heavy processes.
+
+**TLS certificate verification failures.** Usually indicates interception by a corporate proxy. The correct fix is to install the proxy's root certificate in your trust store, not to disable verification.
+
+**Rate limiting.** Free tiers commonly cap requests per day or per minute. Local models remove the cap but also remove the capability of the larger hosted model. Decide which you need for the task at hand.
+
+**Model not found.** Registries change and tags are sometimes removed. List what is actually available locally before assuming a configuration error:
 
 ```bash
-# Install vnstat
-sudo apt install vnstat
-# Set alert at 500MB/day
-vnstat --setalias=ai --limit=500M
-vnstat --setalias=ai --alert=yes
+ollama list
 ```
 
-4. **Automate environment sync**: Use Dev Containers to ensure your runtime matches the AI’s training environment. Update the container weekly to avoid drift.
+**Disk exhaustion from cached models.** Model files are large and are not always cleaned up. Check the cache directory size periodically and remove models you no longer use.
 
-5. **Train your team**: Document which AI tools work where. Create a simple table:
+## FAQ
 
-| Tool | Works offline? | Data cost (per 100 suggestions) | Supported languages | Best for |
-|------|----------------|-------------------------------|----------------------|----------|
-| GitHub Copilot | No | 200MB | English, Swahili, Yoruba | Cloud-first teams |
-| Continue.dev | Yes | 10MB | English, French, Arabic | Local teams |
-| Tabby | Yes | 5MB | English, Portuguese | Self-hosted teams |
-| Amazon Q Developer | No | 150MB | English | AWS-heavy teams |
+**Can a local model replace a cloud assistant entirely?**
+For autocomplete, short refactors and boilerplate, often yes. For tasks that require reasoning across many files or a large context window, current small local models are usually weaker. Many developers run both and choose per task.
 
-I maintain a private Notion page with this table. When a new hire asks which tool to use, I point them there — and it prevents 80% of onboarding issues.
+**Is disabling autocomplete the right first move?**
+It is the fastest way to confirm that background traffic is the problem. Once confirmed, prefer narrowing autocomplete to specific file types over disabling it globally.
 
-## Related errors you might hit next
+**How do I know if a model will fit before downloading it?**
+Estimate from parameter count and quantisation, then verify with `free -m` under load. Downloads are large enough that guessing is expensive on a metered connection.
 
-1. **`MemoryError: Unable to allocate 2.3GiB for buffering`**
-   - Cause: You tried to load a 2.3GB model on a 4GB RAM machine. - Fix: Use a smaller model like `phi3:3.8b` or `tinyllama:1.1b`.
+**Do local models remove all data cost?**
+They remove inference traffic. You still pay once to download the model, and you pay in electricity and hardware. For a team, add the operational cost of running and updating the runtime.
 
-2. **`SSL: CERTIFICATE_VERIFY_FAILED`**
-   - Cause: Corporate firewall intercepts HTTPS traffic with a self-signed cert. - Fix: Use `PYTHONHTTPSVERIFY=0` or add the cert to your trust store.
-
-3. **`Rate limit exceeded`**
-   - Cause: You hit your provider’s free tier limit (e.g., 50 requests/day). - Fix: Switch to a local model or upgrade your plan.
-
-4. **`Model not found`**
-   - Cause: You referenced a model that was pulled from the registry. - Fix: Use `ollama list` to check available models, then update your config.
-
-5. **`Out of disk space`**
-   - Cause: The AI tool cached models in `~/.cache` without cleanup. - Fix: Run `ollama prune` weekly or set a cache limit:
-
-```bash
-# Limit cache to 1GB
-export OLLAMA_MAX_LOADED_MODELS=2
-export OLLAMA_MAX_CACHE_SIZE=1024
-```
-
-## When none of these work: escalation path
-
-If you’ve applied all three fixes and the tool still fails, escalate like this:
-
-1. **Check the logs**: Most tools log to `~/.continue/logs` or `/var/log/ollama.log`. Look for `timeout`, `SSL`, or `disk full` errors.
-
-2. **File an issue with the tool maintainer**: For Continue.dev, file at [https://github.com/continuedev/continue/issues](https://github.com/continuedev/continue/issues). Include:
-   - Your OS and version (e.g., Ubuntu 24.04, Windows 11)
-   - IDE and version (e.g., VS Code 1.90)
-   - Exact error message (copy-paste)
-   - Steps to reproduce
-
-3. **Try an alternative**: If the tool is unmaintained, switch to:
-   - **Tabby** (self-hosted, supports ARM)
-   - **LM Studio** (local-first, supports Windows/Mac/Linux)
-   - **Jan** (open-source, privacy-focused)
-
-4. **Escalate to your org**: If this is a team-wide blocker, document the failure and escalate to leadership with:
-   - A 30-day cost analysis (e.g., "Copilot costs us $240/month but only 20% of suggestions work")
-   - A migration plan (e.g., "Switch to Tabby self-hosted on a $20/month VPS")
-
-## Frequently Asked Questions
-
-**What’s the cheapest AI tool for African developers in 2026?**
-Try **Tabby** self-hosted on a $5/month Hetzner VM. It supports local models, so data costs are near zero. For comparison, GitHub Copilot’s free tier costs ~$15/month in data if you’re on 4G, and the pro tier is $10/user/month plus usage fees.
-
-**Does AI actually save time for African developers?**
-In my team’s test, AI saved 12% of time on boilerplate and 8% on debugging, but only when used offline and with pinned environments. Cloud tools added latency and data costs, wiping out the time savings. The net gain was ~5% across 50 tasks.
-
-**Which model works best on a 4GB RAM machine?**
-Use **Phi-3-mini-4k-instruct-gguf** (3.8B params). It runs in 2.3GB RAM and answers in <1s on a modern CPU. Mistral-7B needs 6GB RAM and is too slow. TinyLlama-1.1B is faster but less accurate.
-
-**Can I use AI tools in rural areas with no internet?**
-Yes. Tools like **Ollama** and **LM Studio** support fully offline modes. Load the model once in a city with Wi-Fi, then transfer it via USB. I’ve used this setup in rural Kenya with a 40MB Phi-3 model on a 2017 MacBook Air.
-
-## Cost and performance snapshot (2026)
-
-| Tool | Setup cost | Monthly cost | Data per 100 suggestions | Latency (4G) | Works offline? |
-|------|------------|--------------|--------------------------|--------------|----------------|
-| GitHub Copilot (cloud) | $0 | $0 (free tier) | 200MB | 1.2s | No |
-| Continue.dev (local) | $0 | $0 | 10MB | 0.3s | Yes |
-| Tabby (self-hosted) | $20 (VM) | $5 | 5MB | 0.2s | Yes |
-| Amazon Q Developer | $0 | $0 (free tier) | 150MB | 0.9s | No |
-| JetBrains AI Assistant | $10/month | $10 | 250MB | 1.5s | No |
-
-*Note: Costs assume average African developer usage patterns and 2026 pricing. Data usage measured on Ubuntu 24.04 with 4G connection. Latency measured from Lagos, Nigeria.*
+**What should a team document about AI tooling?**
+Which tools are approved, which networks they work on, the measured bandwidth and memory footprint, and the fallback when the network is unavailable. That document prevents each new team member from rediscovering the same constraints.
 
 ## What to do in the next 30 minutes
 
-Open your terminal and run:
+Run a bandwidth monitor for five minutes of your normal work and identify the top consumer:
+
 ```bash
-# 1. Check which AI tools are running
-ps aux | grep -E "ai|copilot|continue|tabby|ollama"
-
-# 2. If any are using >10MB/min, disable them:
-# For Continue.dev
-continue settings set --model "" --local
-
-# 3. Install a local model
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull phi3:3.8b
+sudo apt install -y nethogs
+sudo nethogs
 ```
 
-Then, measure your data usage for the next hour. If it drops below 50MB/hour, you’ve fixed the issue. If not, check your network settings or switch to a local tool like Tabby.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 15, 2026
+If an AI assistant process is near the top of that list while you are not actively requesting completions, you have found a configuration problem rather than a fundamental limitation. Open its settings, disable background suggestions, and re-measure the same five-minute task. Record both numbers — before and after — so that the next person on your team has evidence instead of an opinion.

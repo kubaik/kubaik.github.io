@@ -1,32 +1,36 @@
 # Who signs off on AI code?
 
-The dashboards look healthy right up until the incident starts. Somewhere between the traditional observability tutorial and the incident channel, a step goes missing. Here's the fuller picture, with the tradeoffs left in.
+AI coding assistants compress the distance between intent and diff. A prompt produces a patch; the patch passes CI; the patch merges. What that flow often omits is the step that matters most in high-stakes codebases: a named human approving code they did not write, cannot fully trace, and may not understand line by line. That is not a tooling gap. It is an ownership gap, and it widens as teams grow and as generated diffs get larger.
 
-## The gap between what the docs say and what production needs
+The documented behavior of most assistants — suggestion acceptance, inline completion, chat-driven edits — says nothing about who is responsible when a suggestion is wrong. The responsibility does not transfer to the model. It stays with the person who clicked merge.
 
-Every AI coding assistant demo ends the same way: a prompt, a diff, a merge. The vendor shows a green checkmark and a 40% productivity bump. What the demo skips is the part that matters in a regulated or high-stakes codebase — the part where a human reviewer signs [off on code](/test-ai-code-without-testing-the-ai/) they did not write, cannot fully trace, and may not understand line by line. That is not a tooling problem. It is an ownership problem, and it gets worse as the team scales.
+## The gap between demo behavior and production requirements
 
-The documentation for tools like GitHub Copilot, Cursor, and Amazon CodeWhisperer talks about suggestions accepted and time saved. It rarely talks about the moment a junior developer merges a 200-line AI-generated function that passes tests but quietly changes a retry policy from exponential backoff to fixed 1-second intervals. That change will not fail CI. It will fail at 2 a.m. when a downstream service starts returning 429s and the on-call engineer has no idea why.
+Vendor material for AI coding assistants tends to describe suggestion acceptance and time saved. It rarely describes the moment a junior developer merges a 200-line generated function that passes tests but quietly changes a retry policy from exponential backoff to fixed one-second intervals. That change will not fail CI. It will fail at 02:00 when a downstream service starts returning 429s.
 
-In sub-Saharan African teams, this is compounded by constraints that vendors do not design for: unreliable power during deploy windows, limited budget for per-seat AI tooling, and a shortage of senior reviewers who can catch subtle logic errors. A team of five in Nairobi or Lagos cannot afford a dedicated platform engineer to audit every AI-assisted commit. They need a lightweight process that keeps accountability intact without adding 30 minutes to every pull request.
+A typical failure mode is not "the AI wrote bad code." It is "the AI wrote plausible code that satisfied the tests but changed a behavioral contract nobody was watching." Tests encode what someone thought to assert. Review encodes what someone actually understands. Generated code can pass the first while failing the second.
 
-The part that trips people up is not whether AI can write code — it can. The part that trips people up is deciding who is responsible when it writes the wrong code, and building a review workflow that makes that responsibility explicit before the merge button is clicked.
+Constraints make this harder in some environments than others. Teams working with intermittent power during deploy windows, limited per-seat tooling budgets, or few senior reviewers available cannot afford a dedicated platform engineer to audit every AI-assisted commit. They need a lightweight process that preserves accountability without adding half an hour to every pull request.
 
-## How How we run AI-augmented teams without destroying code ownership and accountability actually works under the hood
+The hard question is not whether AI can write code. It is who is responsible when it writes the wrong code, and how to make that responsibility explicit before the merge button is pressed.
 
-Accountability in an AI-augmented team rests on three mechanical guarantees: traceability, bounded trust, and explicit sign-off. Traceability means every AI-generated hunk is marked in the diff. Bounded trust means the team agrees on which file types and risk levels can accept AI suggestions without extra review. Explicit sign-off means a named human approves every merge, and that approval is recorded against a specific commit SHA.
+## The three mechanical guarantees
 
-Traceability is the easiest to implement. Git trailers work. A commit message like `Assisted-by: copilot` or `Generated-by: cursor` is a convention, not a platform feature, and it survives rebases. The harder part is enforcing it. A pre-commit hook can reject commits that touch sensitive paths without a trailer, but that adds friction. A better approach is a CI check that scans the diff for AI-generated markers and fails the build if a high-risk file changed without one.
+Accountability in an AI-augmented team rests on three properties: traceability, bounded trust, and explicit sign-off.
 
-Bounded trust is a policy decision. A typical policy might say: AI suggestions are allowed without extra review in test files, documentation, and utility functions under 50 lines. They require a second reviewer in authentication code, payment logic, and infrastructure-as-code. They are forbidden entirely in cryptographic key handling and database migration scripts. That policy lives in a `CODEOWNERS` file or a custom CI rule, not in a wiki page nobody reads.
+Traceability means every AI-generated hunk is marked in the diff. Bounded trust means the team agrees in advance on which file types and risk levels can accept AI suggestions without extra review. Explicit sign-off means a named human approves every merge, and that approval is recorded against a specific commit SHA.
 
-Explicit sign-off is where most teams fail. A thumbs-up emoji on a pull request is not sign-off. Sign-off is a commit status check that names the reviewer, the timestamp, and the commit SHA. GitHub branch protection can require this. GitLab merge request approvals can too. The key is that the approval is tied to the exact code being merged, not to a conversation that happened three days earlier.
+Traceability is the easiest to implement. Git trailers work. A commit message line like `Assisted-by: copilot` or `Generated-by: cursor` is a convention, not a platform feature, and it survives rebases and merges. The harder part is enforcement. A pre-commit hook can reject commits that touch sensitive paths without a trailer, but that adds friction. A CI check that scans the diff for AI markers and fails the build when a high-risk file changed without one is usually less disruptive.
 
-Under the hood, this looks like a pipeline: developer prompts AI, AI generates a diff, developer reviews and commits with a trailer, CI runs tests and policy checks, a human reviewer approves, branch protection enforces the approval, merge happens. Every step is logged. Every step is reversible. The AI is a tool inside the process, not a replacement for it.
+Bounded trust is a policy decision, not a technical one. A typical policy might say: AI suggestions are allowed without extra review in test files, documentation, and small utility functions; they require a second reviewer in authentication code, payment logic, and infrastructure-as-code; they are forbidden entirely in cryptographic key handling and database migration scripts. That policy lives in a `CODEOWNERS` file or a custom CI rule, not in a wiki page nobody reads.
 
-## Step-by-step implementation with real code
+Explicit sign-off is where most teams fail. A thumbs-up emoji on a pull request is not sign-off. Sign-off is a commit status check that names the reviewer, the timestamp, and the commit SHA. Branch protection can require this. The key property is that the approval is tied to the exact code being merged, not to a conversation that happened three days earlier and may not apply to the current diff.
 
-Start with a pre-commit hook that flags AI-generated code in sensitive paths. This is a Python script using `pre-commit` 3.5 and `gitpython` 3.1.40. It checks the staged diff for a trailer and compares the file path against a policy list.
+Put together, the pipeline looks like this: developer prompts the assistant, the assistant generates a diff, the developer reviews and commits with a trailer, CI runs tests and policy checks, a human reviewer approves, branch protection enforces the approval, merge happens. Every step is logged. Every step is reversible. The AI is a tool inside the process, not a replacement for it.
+
+## Implementing traceability with hooks and CI
+
+Start with a pre-commit hook that flags AI-generated code in sensitive paths. The following Python script uses `pre-commit` and `gitpython`. It checks the staged diff for a trailer and compares the file path against a policy list.
 
 ```python
 # .pre-commit-hooks/check_ai_trailer.py
@@ -58,9 +62,9 @@ if __name__ == "__main__":
     main()
 ```
 
-This hook runs in under 200 ms on a typical diff. It does not block AI usage; it forces the developer to declare it. That declaration is the first link in the accountability chain.
+Note the limitation: this checks the file contents for the trailer string, not the commit message. If the trailer is intended to live in the commit message, the hook should inspect `repo.head.commit.message` instead of the blob. Either convention works as long as the team picks one and the CI check reads the same location.
 
-Next, add a CI policy check. This is a GitHub Actions step using `actions/checkout@v4` and a small Node 20 script. It reads a `policy.json` file and enforces review requirements based on file paths and AI markers.
+Next, add a CI policy check. The following GitHub Actions step uses `actions/checkout` and a small Node script. It reads a `policy.json` file and enforces review requirements based on file paths and AI markers.
 
 ```javascript
 // scripts/enforce-ai-policy.js
@@ -93,91 +97,60 @@ if (requiresSecondReview) {
 }
 ```
 
-This script runs in about 1.2 seconds on a 50-file diff. It is not fast enough for every commit, but it is fine for pull requests. The policy file is version-controlled and reviewed like any other code.
+Two caveats worth stating plainly. First, `git diff --name-only HEAD~1 HEAD` only inspects the last commit; for a multi-commit PR, use the merge-base form, e.g. `git diff --name-only $(git merge-base HEAD origin/main) HEAD`. Second, counting reviews via the GitHub API counts review submissions, not distinct approving reviewers, so a single reviewer who submits twice can satisfy a threshold of two. If distinct approvals matter, deduplicate by reviewer login before comparing.
 
-Finally, enforce sign-off with branch protection. In GitHub, enable "Require a pull request before merging" and "Require approvals" with a minimum of 1. For high-risk repositories, set it to 2. Enable "Require review from Code Owners" so that changes to critical paths need the right reviewer. This is a configuration change, not code, and it takes 5 minutes in the repository settings.
+Finally, enforce sign-off with branch protection. In GitHub, enable "Require a pull request before merging" and "Require approvals" with a minimum of one. For high-risk repositories, set it to two. Enable "Require review from Code Owners" so that changes to critical paths require the right reviewer. This is a configuration change, not code.
 
-## Performance numbers from a live system
+## Measuring whether the policy works
 
-A typical mid-sized team — 8 developers, 3 repositories, 40 pull requests per week — sees the following numbers after adopting this workflow. These are illustrative figures based on common experiences, not a single benchmark.
+Any claim about the effect of a review policy has to come from measurement on the team's own repository. The instrumentation is straightforward.
 
-| Metric | Before AI policy | After AI policy | Change |
-|--------|------------------|-----------------|--------|
-| Median PR review time | 4.2 hours | 5.1 hours | +21% |
-| AI-assisted commits per week | 0 | 62 | — |
-| Escaped defects per 1,000 lines | 0.8 | 0.3 | -62% |
-| Time to first review | 45 minutes | 38 minutes | -16% |
-| Reviewer context switches per day | 6 | 4 | -33% |
+To measure review latency, record the timestamp of the first commit on a PR and the timestamp of the merge. Both are available from the Git history and the PR API. Compare the distribution before and after the policy change, not just the mean.
 
-The counterintuitive part is that review time goes up, not down. AI generates more code, and more code takes longer to review even when it is correct. The defect rate drops because the policy forces a second pair of eyes on risky changes. The net effect is slower merges but fewer incidents. For a team that has been burned by a production outage, that trade-off is usually worth it.
+To measure escaped defects, tag incidents with the commit SHA that introduced the fault. That requires post-incident discipline, but it is the only way to attribute a production failure to a specific change. Without it, defect-rate comparisons are guesswork.
 
-The numbers also depend on the AI tool. GitHub Copilot with GPT-4 class models tends to produce more idiomatic code than older models, which reduces review time. Cursor with a 128k context window can generate larger coherent changes, which increases review time but reduces the number of round trips. There is no universal winner; the policy matters more than the tool.
+To measure AI-assisted commit share, count commits whose message contains the trailer. This is exact if the trailer is enforced and approximate if it is voluntary.
 
-## The failure modes nobody warns about
+To measure reviewer load, count distinct reviewers per PR and the number of PRs each reviewer touches per day. A policy that doubles approvals but leaves the same three people approving everything has not distributed ownership; it has concentrated it.
 
-Failure mode one: the silent dependency change. An AI assistant asked to "fix the retry logic" might replace `backoff.expo` with a fixed `time.sleep(1)`. The tests pass because they mock the sleep. The production system fails because the downstream API rate-limits after 10 requests per second. This is a common trap. The fix is to require that any change to retry, timeout, or backoff parameters includes a comment explaining the rationale and a link to the downstream API documentation.
+A worked example, using illustrative numbers only. Suppose a team merges 40 PRs per week, and the policy adds one extra reviewer to 25% of them. That is 10 extra review events per week. If each takes 15 minutes of focused reading, the added cost is 2.5 person-hours per week. If the policy prevents one production incident per quarter, and each incident costs 4 person-hours of response plus downstream impact, the break-even is one prevented incident every five weeks. The arithmetic is simple; the inputs are the hard part, and the only honest source for them is the team's own incident log.
 
-Failure mode two: the hallucinated import. AI models sometimes invent package names that do not exist. A common error message is `ModuleNotFoundError: No module named 'requests_async'`. The package is real but the import path is wrong. The fix is to run a dependency check in CI that verifies every import resolves to an installed package. Tools like `pip-check` or `npm ls` can catch this, but they need to be part of the pipeline.
+## Failure modes worth designing against
 
-Failure mode three: the security blind spot. AI models are trained on public code, which includes insecure patterns. A generated SQL query might use string concatenation instead of parameterized queries. A generated Terraform block might open a security group to `0.0.0.0/0`. Static analysis tools like Semgrep 1.45 or Bandit 1.7 can catch some of these, but they need to be configured to fail the build on high-severity findings. A common mistake is to run them in report-only mode, which nobody reads.
+**The silent behavior change.** An assistant asked to "fix the retry logic" may replace exponential backoff with a fixed sleep. Tests pass because they mock the sleep. Production fails because the downstream API rate-limits after a burst. A useful control is to require that any change to retry, timeout, or backoff parameters carries a comment explaining the rationale and a reference to the downstream API's documented limits.
 
-Failure mode four: the ownership vacuum. When an AI generates a function and a developer merges it without understanding it, the developer is still the owner. If it breaks at 3 a.m., they are on the hook. This is not a technical failure; it is a cultural one. The fix is to make it explicit in the pull request template: "I have read and understand every line of this change." If the developer cannot check that box, they should not merge.
+**The hallucinated import.** Generated code sometimes references packages or import paths that do not exist. The error surfaces at runtime as `ModuleNotFoundError`. A dependency check in CI that verifies every import resolves to an installed package catches this before merge. Most language ecosystems have a tool for this; the important part is running it in the pipeline rather than on developer machines.
 
-## Tools and libraries worth your time
+**The security blind spot.** Models trained on public code reproduce public code's patterns, including insecure ones. A generated SQL query may use string concatenation instead of parameterized queries. A generated Terraform block may open a security group to `0.0.0.0/0`. Static analysis can catch some of these, but only if it is configured to fail the build on high-severity findings. Report-only mode is a common way to run a scanner that nobody ever reads.
 
-`pre-commit` 3.5 is the standard for Git hooks. It is language-agnostic, fast, and widely supported. `gitpython` 3.1.40 is a Python library for interacting with Git repositories; it is useful for custom hooks. `semgrep` 1.45 is a static analysis tool that supports custom rules; it can detect AI-generated patterns if you write the rules. `bandit` 1.7 is a Python-specific security linter. `checkov` 3.1 is a Terraform and CloudFormation security scanner. `gh` CLI 2.40 is useful for querying pull request metadata in CI.
+**The ownership vacuum.** When an assistant generates a function and a developer merges it without understanding it, the developer is still the owner. If it breaks at 03:00, they are on the hook. This is a cultural failure, not a technical one. Making it explicit in the pull request template — a checkbox that says "I have read and understand every line of this change" — is a cheap forcing function. If the box cannot be checked honestly, the change is not ready.
 
-For AI-specific traceability, there is no standard tool yet. Most teams roll their own with Git trailers and CI scripts. Some use `git-ai` or similar experimental tools, but they are not production-ready. The good news is that you do not need a dedicated tool; a 50-line script and a policy file will get you 90% of the way there.
+## A decision checklist before adding policy
 
-On the AI side, GitHub Copilot, Cursor, and Codeium all support some form of inline suggestions. None of them natively enforce a review policy. That is by design; they are editors, not governance platforms. The governance layer is your responsibility.
+Not every team needs the full workflow. Use the following checklist to decide how much to add.
 
-## When this approach is the wrong choice
+- Is the codebase handling money, personal data, or shared infrastructure? If no, light-touch traceability is probably enough.
+- Are there at least two people who can meaningfully review the sensitive paths? If not, the bottleneck is staffing, not process.
+- Does the team already track escaped defects by commit? If not, no policy change can be evaluated.
+- Is the current policy narrow enough that it will not be routed around? Start with authentication, payments, and infrastructure, and expand only with data.
+- Can the CI check run in a few seconds on a typical diff? If not, it will be disabled.
 
-If your team is a solo developer or a two-person startup racing to find product-market fit, this workflow is overkill. The overhead of trailers, policy checks, and second reviews will slow you down more than it protects you. In that case, use AI freely and rely on comprehensive test coverage and fast rollbacks. You can add governance later when the team grows.
+If the answer to the first question is no and the answer to the second is no, the right next step is test coverage and fast rollbacks, not review ceremony. If the answer to the first is yes, the workflow above is the minimum viable version.
 
-If your codebase is entirely greenfield and low-risk — a prototype, a hackathon project, an internal tool — the policy is unnecessary. The cost of a defect is low, and the speed of iteration matters more. The policy is for code that handles money, personal data, or infrastructure that other services depend on.
+## Frequently asked questions
 
-If your team already has a strong review culture and high test coverage, you may not need the AI-specific checks. A good reviewer will catch a silent retry change regardless of whether it was AI-generated. The trailer is still useful for metrics, but the policy enforcement can be lighter.
+**How should AI-generated code be marked in Git?**
+Use a Git trailer in the commit message, such as `Assisted-by: <tool>`. This is a convention, not a standard, but it is widely understood and it survives rebases and merges. Enforce it in sensitive paths with a hook or a CI check that reads the same location the trailer is written to.
 
-## Common production pitfalls and what they cost
+**Does the choice of AI assistant matter for review burden?**
+Somewhat, but less than the policy around it. Assistants differ in context window, multi-file editing, and how idiomatic their output is, and those differences shift review time. The policy determines whether risky changes get a second reader regardless of which tool produced them. Pick a tool, measure the defect rate and review time, and adjust the policy rather than chasing tool swaps.
 
-Pitfall one: the trailer is added but the reviewer ignores it. This happens when the trailer is just a string in the commit message. The fix is to surface it in the pull request UI. A GitHub Action can post a comment that lists all AI-assisted files and highlights sensitive ones. That comment takes 2 seconds to read and makes the risk visible.
+**How can AI-introduced security vulnerabilities be caught before merge?**
+Run static analysis in CI and fail the build on high-severity findings. Require a second reviewer for changes to authentication, authorization, and data handling code. Because models reproduce patterns from public code, human review of security-relevant diffs remains necessary even when scanners are clean.
 
-Pitfall two: the policy is too broad and blocks legitimate work. If every file requires two approvals, the team will route around the policy. Start with a narrow list of critical paths and expand gradually. A good starting point is authentication, payments, and infrastructure. Add more paths only after you have data showing they need it.
+**Which metrics actually indicate the policy is working?**
+Four are enough to start: AI-assisted commit count, escaped defects per thousand lines, median review time, and time to first review. If the defect rate falls and review time stays roughly flat, the policy is earning its cost. If review time doubles without a defect-rate change, the policy is too heavy for the risk it addresses.
 
-Pitfall three: the CI check is slow and developers disable it. A policy check that takes 30 seconds per pull request will be disabled within a week. Keep it under 5 seconds. Use caching, limit the diff size, and run it in parallel with tests. The example scripts above are designed for speed.
+## One action to take in the next 30 minutes
 
-Pitfall four: no metrics. Without metrics, you cannot tell if the policy is working. Track the number of AI-assisted commits, the defect rate, and the review time. A simple dashboard using GitHub Actions and a CSV file is enough. Review it monthly and adjust the policy.
-
-The cost of these pitfalls is measured in incidents. A single production outage from an unreviewed AI change can cost 4 hours of engineering time, plus customer trust. For a team of 8, that is 32 person-hours. The policy overhead is maybe 30 minutes per week. The math is clear.
-
-## Frequently Asked Questions
-
-**How do I mark AI-generated code in Git?**
-Use a Git trailer in the commit message, such as `Assisted-by: copilot` or `Generated-by: cursor`. This is a convention, not a standard, but it is widely understood. You can enforce it with a pre-commit hook that checks for the trailer in sensitive files. The trailer survives rebases and merges, so it stays with the commit.
-
-**What is the best AI coding assistant for a small team?**
-There is no single best tool. GitHub Copilot is the most integrated with GitHub and has good code completion. Cursor has a larger context window and better multi-file editing. Codeium is free for individuals and small teams. The choice matters less than the policy around it. Pick one, measure the defect rate, and adjust.
-
-**How do I prevent AI from introducing security vulnerabilities?**
-Run static analysis in CI and fail the build on high-severity findings. Semgrep and Bandit are good starting points. Also, require a second reviewer for any change to authentication, authorization, or data handling code. AI models are trained on public code, which includes insecure patterns, so human review is still necessary.
-
-**What metrics should I track for AI-assisted development?**
-Track the number of AI-assisted commits, the defect rate (escaped defects per 1,000 lines), the median review time, and the time to first review. These four metrics will tell you if the policy is working. If defect rate drops and review time stays flat, you are in good shape. If review time doubles, the policy is too heavy.
-
-## What to do next
-
-The next step is to add a single Git trailer to your commit template. Open your repository's `.gitmessage` file or your commit template configuration, and add a line that says `Assisted-by: <tool>`. Then, in your next pull request, check that the trailer appears in the commit message. That one change takes 5 minutes and starts the traceability chain. From there, you can add the pre-commit hook and the CI policy check. But start with the trailer. It is the smallest possible step toward accountability, and it costs nothing.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** October 2026
+Open the repository's commit template — `.gitmessage` in the repo root, or the path configured via `git config commit.template` — and add a single line: `Assisted-by: <tool-name>`. If no template exists, create one and point Git at it with `git config commit.template .gitmessage`. Then make one commit and confirm the trailer appears in `git log -1 --format=%B`. That is the smallest possible step toward traceability, and it costs nothing. The hook and the CI policy can wait until the trailer is a habit.

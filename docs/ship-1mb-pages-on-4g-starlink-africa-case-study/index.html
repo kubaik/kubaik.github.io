@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ship 1MB pages on 4G: Starlink Africa case study - Kubai Kevin</title>
-        <meta name="description" content="Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…">
+        <meta name="description" content="How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.">
         <meta name="keywords" content="4gWebPerformance, BrotliCompression2026, CloudfrontQuic2026, StarlinkAfricaLatency, LighthouseCiMobile, Webdev, Cloudcomputing">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T09:06:49.300435">
-        <meta property="article:modified_time" content="2026-09-26T04:10:51.459184+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:16:56.707699+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship 1MB pages on 4G: Starlink Africa case study">
-        <meta property="og:description" content="Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…">
+        <meta property="og:description" content="How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.">
         <meta property="og:url" content="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Ship 1MB pages on 4G: Starlink Africa case study">
-        <meta name="twitter:description" content="Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…">
+        <meta name="twitter:description" content="How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ship-1mb-pages-on-4g-starlink-africa-case-study.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/#article",
       "headline": "Ship 1MB pages on 4G: Starlink Africa case study",
-      "description": "Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…",
+      "description": "How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.",
       "datePublished": "2026-06-12T09:06:49+00:00",
-      "dateModified": "2026-09-26T04:10:51+00:00",
-      "wordCount": 3087,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-04T10:16:56+00:00",
+      "wordCount": 2484,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Ship 1MB pages on 4G: Starlink Africa case study</h1>
                 
-                <p class="post-lead">Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…</p>
+                <p class="post-lead">How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.</p>
                 
                 
                 <div class="tags">
@@ -259,54 +259,54 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3087 words
+                        12 min read
+                        &nbsp;·&nbsp; 2484 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-26
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Worse, our Lighthouse performance scores tanked from 95 to 68 in three weeks.</p>
-<p>What changed after Starlink reached East Africa in late 2025?</p>
+                <p>Most tutorials demonstrate the happy path: a fast laptop, a fast office connection, a fast origin. Production traffic is not like that. Mobile and satellite-backed links introduce latency asymmetry, jitter and burst loss that a lab benchmark will never show you. This article covers how to serve a large HTML page on a constrained mobile network, how to measure whether your changes actually helped, and which failure modes to plan for.</p>
+<h2 id="why-large-pages-break-on-mixed-satellite-terrestrial-paths">Why large pages break on mixed satellite-terrestrial paths</h2>
+<p>A page that feels instant on office Wi-Fi can feel broken on a mobile link that partly traverses a satellite hop. Four properties of those paths matter:</p>
 <ol>
-<li><strong>Latency asymmetry</strong> – uplink became 3× slower than downlink in mixed satellite-terrestrial paths, breaking half-duplex assumptions in WebRTC and long-polling APIs. 2. <strong>Variable RTT jitter</strong> – RTT swings of ±80 ms within a single TCP flow made congestion windows oscillate wildly. 3. <strong>Burst losses</strong> – satellite handoffs caused 5–15% burst losses lasting 200–500 ms, enough to stall TLS renegotiation. 4. <strong>Cost asymmetry</strong> – downlink is free for users on Starlink’s 2026 “Basic” tier, but uplink bandwidth now carries real metered costs for providers.</li>
+<li><strong>Latency asymmetry.</strong> Uplink can be several times slower than downlink. Protocols and application patterns that assume roughly symmetric round trips, such as long-polling or chatty request/response loops, degrade badly.</li>
+<li><strong>Variable RTT jitter.</strong> Round-trip time can swing by tens of milliseconds within a single TCP flow. Congestion windows oscillate, and throughput becomes unstable even when average bandwidth looks fine.</li>
+<li><strong>Burst loss.</strong> Handoffs between beams or between satellite and terrestrial segments can drop a burst of packets over a few hundred milliseconds. That is long enough to stall TLS activity, trigger retransmission timeouts and stall a request that was otherwise progressing.</li>
+<li><strong>Cost asymmetry.</strong> Some satellite consumer plans meter or throttle uplink while treating downlink as cheap. For a provider, that means the bytes your users send cost more than the bytes they receive, which changes the economics of retries, telemetry and prefetching.</li>
 </ol>
-<p>Our stack didn’t anticipate these spikes. By March 2026, support tickets tripled for users on mixed networks.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>By the end you will have:
-- A Node 20 LTS + Express 4.19 stack that serves a 1 MB page in &lt;1.5 s median on 4G. - Brotli compression at level 6, with gzip fallback for legacy clients. - A CloudFront CDN with edge caching, stale-while-revalidate 30 s, and a 5-minute TTL edge. - Observability via CloudWatch RUM and OpenTelemetry traces. - Automated Lighthouse CI checks on every PR.</p>
-<p>You will need:
-- Node 20.13 LTS (arm64 recommended for AWS Graviton3 savings)
-- npm 10.5
-- AWS account with CloudFront enabled
-- A domain you control
-- GitHub Actions runner (optional, but speeds up deployments)</p>
-<p>Cost ballpark: ~$18/month for CloudFront + Lambda@Edge requests at 2026 rates.</p>
+<p>A typical failure mode: a team optimizes downlink payload size, ships a large win on paper, and still sees stalls because uplink retransmissions and handoff timeouts dominate the user-visible delay. The fix is not one setting. It is compression, transport choice, caching and measurement together.</p>
+<h2 id="what-you-will-build">What you will build</h2>
+<p>By the end you will have:</p>
+<ul>
+<li>A Node 20 LTS + Express stack that serves a roughly 1 MB HTML page.</li>
+<li>Brotli compression with a correct gzip fallback and a correct <code>Vary: Accept-Encoding</code> header.</li>
+<li>A CDN in front of the origin with edge caching and stale-while-revalidate.</li>
+<li>Instrumentation that tells you transfer time, time to first byte and Core Web Vitals separately.</li>
+<li>A Lighthouse CI check that fails a pull request when a performance budget regresses.</li>
+</ul>
+<p>You will need Node 20 LTS, npm, an AWS account with CloudFront, a domain you control, and optionally a CI runner. Exact provider pricing changes frequently, so treat any cost figure below as illustrative and verify current rates before committing.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Start a fresh repo:</p>
 <pre><code class="language-bash">mkdir 4g-baseline &amp;&amp; cd 4g-baseline
 git init
-node -v  # should print 20.13.x
+node -v  # confirm a Node 20 LTS release
 npm init -y
-npm i express@4.19 brotli@1.0.9 compression@1.7.4
+npm i express compression accepts
 </code></pre>
 <p>Create <code>server.js</code>:</p>
 <pre><code class="language-javascript">import express from 'express';
 import compression from 'compression';
-import { createBrotliCompress } from 'zlib';
 import fs from 'fs';
 
 const app = express();
 
-// Middleware order matters
+// Middleware order matters: compression must be registered before routes.
 app.use(compression({ threshold: 0, filter: () =&gt; true }));
 
-// Serve a 1 MB HTML page (simulate real content)
 app.get('/', (req, res) =&gt; {
   const html = fs.readFileSync('index.html', 'utf8');
   res.set('Content-Type', 'text/html');
@@ -316,7 +316,7 @@ app.get('/', (req, res) =&gt; {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =&gt; console.log(`Listening on ${PORT}`));
 </code></pre>
-<p>Create a 1 MB synthetic HTML file:</p>
+<p>Generate a synthetic page of roughly 1 MB:</p>
 <pre><code class="language-bash">node -e &quot;
 const fs = require('fs');
 let s = '&lt;html&gt;&lt;body&gt;';
@@ -325,62 +325,75 @@ s += '&lt;/body&gt;&lt;/html&gt;';
 fs.writeFileSync('index.html', s);
 console.log('Wrote index.html:', fs.statSync('index.html').size, 'bytes');
 &quot;
-# Prints: Wrote index.html 1043649 bytes
 </code></pre>
-<p>Verify raw transfer:</p>
+<p>The exact byte count depends on your loop content, so read the printed size rather than assuming a number.</p>
+<p>Measure the raw transfer with <code>curl</code>:</p>
 <pre><code class="language-bash">curl -w &quot;\nDNS: %{time_namelookup}s\nTCP: %{time_connect}s\nTLS: %{time_appconnect}s\nTotal: %{time_total}s\n&quot; \
   --compressed http://localhost:3000/
 </code></pre>
-<p>On my 2026 MacBook Pro (Wi-Fi 6), raw median over 10 runs is 1.02 s on localhost — already too slow for 4G baseline.</p>
-<p>Gotcha: <code>compression</code> middleware uses gzip by default. We’ll override to Brotli later.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>Replace the compression middleware with Brotli and gzip fallback:</p>
+<p>Run it ten times and take the median. On localhost this mostly measures your own machine, so it is useful only as a baseline before you introduce network distance. The <code>compression</code> middleware negotiates gzip by default; the next step replaces that with Brotli and an explicit fallback.</p>
+<h2 id="step-2-brotli-with-a-gzip-fallback">Step 2 — Brotli with a gzip fallback</h2>
+<p>Replace the default compression with a handler that negotiates the encoding itself:</p>
 <pre><code class="language-javascript">import express from 'express';
+import fs from 'fs';
 import { createBrotliCompress, createGzip } from 'zlib';
 import accepts from 'accepts';
 
-const BROTLI_QUALITY = 6;
-const BROTLI_WINDOW = 22;
+const app = express();
+
+const BROTLI_PARAMS = {
+  [zlib.constants.BROTLI_PARAM_QUALITY]: 6,
+  [zlib.constants.BROTLI_PARAM_SIZE_HINT]: fs.statSync('index.html').size,
+};
 
 function brotliOrGzip(req, res, next) {
   const accept = accepts(req);
-  if (!accept.types(['br', 'gzip'])) {
-    return next();
-  }
+  const encoding = accept.type(['br', 'gzip']);
 
   res.set('Vary', 'Accept-Encoding');
-  const encoding = accept.type(['br', 'gzip']);
 
   if (encoding === 'br') {
     res.set('Content-Encoding', 'br');
-    const brotli = createBrotliCompress({ params: { [BROTLI_QUALITY]: BROTLI_QUALITY, [BROTLI_WINDOW]: BROTLI_WINDOW } });
-    fs.createReadStream('index.html').pipe(brotli).pipe(res);
+    fs.createReadStream('index.html')
+      .pipe(createBrotliCompress({ params: BROTLI_PARAMS }))
+      .pipe(res);
   } else if (encoding === 'gzip') {
     res.set('Content-Encoding', 'gzip');
-    const gzip = createGzip();
-    fs.createReadStream('index.html').pipe(gzip).pipe(res);
+    fs.createReadStream('index.html').pipe(createGzip()).pipe(res);
   } else {
-    res.set('Content-Encoding', 'identity');
     fs.createReadStream('index.html').pipe(res);
   }
 }
 
 app.get('/', brotliOrGzip);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =&gt; console.log(`Listening on ${PORT}`));
 </code></pre>
-<p>Update dependencies:</p>
-<pre><code class="language-bash">npm i accepts@1.3.8
+<pre><code class="language-bash">npm i accepts
 </code></pre>
-<p>Brotli level 6 shrinks the 1 MB file to 194 KB (81% reduction). On a 2026 4G median of 12 Mbps downlink and 1.5 Mbps uplink, that cuts transfer time from 820 ms to 160 ms — before any latency.</p>
-<p>Add preconnect hints:</p>
-<pre><code class="language-html">&lt;!-- index.html --&gt;
-&lt;head&gt;
+<p>Two details are easy to get wrong. First, <code>accepts</code> returns <code>false</code> when no acceptable type is found, so the fallback branch must handle that case rather than assuming a string. Second, <code>Vary: Accept-Encoding</code> must be present on every response that can differ by encoding, or a shared cache will serve the wrong body to the wrong client.</p>
+<p>Brotli quality 6 is a common production choice: it captures most of the size reduction while keeping CPU cost reasonable. Do not assume a fixed ratio. Measure it:</p>
+<pre><code class="language-bash">gzip -9 -c index.html | wc -c
+brotli -q 6 -c index.html | wc -c
+</code></pre>
+<p>If <code>brotli</code> is not installed, use the Node API to write both files to disk and compare their sizes. The ratio depends heavily on how repetitive your HTML is. A synthetic page of repeated paragraphs compresses far better than real markup with varied content, so treat any ratio from a synthetic test as an upper bound, not a promise.</p>
+<p>Add resource hints to the head of the page:</p>
+<pre><code class="language-html">&lt;head&gt;
   &lt;link rel=&quot;preconnect&quot; href=&quot;https://cdn.example.com&quot; crossorigin&gt;
-  &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+  &lt;link rel=&quot;dns-prefetch&quot; href=&quot;https://cdn.example.com&quot;&gt;
 &lt;/head&gt;
 </code></pre>
-<p>Deploy to AWS Lambda@Edge using Serverless Framework:</p>
-<pre><code class="language-yaml"># serverless.yml
-service: 4g-baseline
+<p>Preconnect helps only for origins you actually contact early. Adding hints for origins you do not use costs a connection for nothing.</p>
+<h2 id="step-3-put-a-cdn-in-front">Step 3 — Put a CDN in front</h2>
+<p>A CDN shortens the network path and lets you terminate modern transport closer to the user. With CloudFront, the settings that matter most for this workload are:</p>
+<ul>
+<li>Cache policy that includes <code>Accept-Encoding</code> in the cache key.</li>
+<li>A TTL long enough to get cache hits, with stale-while-revalidate so a revalidation does not block the response.</li>
+<li>HTTP/3 enabled so clients that support QUIC can use it.</li>
+</ul>
+<p>A minimal Serverless Framework service to deploy the origin:</p>
+<pre><code class="language-yaml">service: 4g-baseline
 
 provider:
   name: aws
@@ -401,101 +414,57 @@ package:
     - '!node_modules/**'
     - 'index.html'
 </code></pre>
-<p>Build and deploy:</p>
-<pre><code class="language-bash">npm i -g serverless@3.38
+<pre><code class="language-bash">npm i -g serverless
 serverless deploy --stage prod
 </code></pre>
-<p>CloudFront distribution auto-created with default settings. Copy the domain and test:</p>
-<pre><code class="language-bash">curl -H &quot;Accept-Encoding: br&quot; -w &quot;\nTotal: %{time_total}s\nSize: %{size_download} bytes\n&quot; \
-  https://d12345.cloudfront.net/
+<p>Then verify what the edge actually returns:</p>
+<pre><code class="language-bash">curl -sI -H &quot;Accept-Encoding: br&quot; https://your-distribution.example.com/ | grep -i -E 'content-encoding|vary|cache-control'
+curl -w &quot;\nTotal: %{time_total}s\nSize: %{size_download} bytes\n&quot; \
+  -o /dev/null -H &quot;Accept-Encoding: br&quot; https://your-distribution.example.com/
 </code></pre>
-<p>Median over 10 runs from Nairobi to CDN edge: 320 ms (latency + transfer).</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Edge case 1: Brotli not supported by Safari 16 on iOS 16 (still ~8% of East African traffic in 2026).</p>
-<p>Solution: fallback to gzip, but only if client explicitly supports it:</p>
-<pre><code class="language-javascript">const accept = accepts(req);
-const encoding = accept.type(['br', 'gzip']);
-
-// Safari 16 sends &quot;gzip, deflate&quot; without br
-if (!req.headers['user-agent'].includes('Safari/16') &amp;&amp; encoding === 'br') {
-  // use Brotli
-} else if (encoding === 'gzip') {
-  // use gzip
-} else {
-  res.statusCode = 406;
-  res.set('Content-Type', 'text/plain');
-  res.send('Not Acceptable: no supported compression');
-}
+<p>Run the second command repeatedly and record the median. Do not compare a localhost number to a CDN number and call it a win; compare like with like, from the same client location, before and after each change.</p>
+<h2 id="step-4-handle-the-fallback-and-error-cases">Step 4 — Handle the fallback and error cases</h2>
+<p><strong>Unsupported Brotli.</strong> Some clients in the wild still do not advertise <code>br</code>. The negotiation above already handles this through <code>accepts</code>, which reads the <code>Accept-Encoding</code> header. Do not branch on the user agent string. User-agent sniffing is brittle and will misclassify clients, and a client that sends <code>Accept-Encoding: gzip, deflate</code> will be served gzip correctly by header negotiation alone.</p>
+<p>If a client advertises neither <code>br</code> nor <code>gzip</code>, serving the identity body is the correct behavior. Returning <code>406 Not Acceptable</code> is legal but hostile: the client asked for a resource, not for a specific encoding, and most real clients will retry without the header. Prefer the uncompressed body.</p>
+<p><strong>Burst loss during handoff.</strong> TCP treats loss as congestion and backs off, which is exactly the wrong response to a handoff-induced burst. QUIC, the transport under HTTP/3, handles this better because stream multiplexing means one lost packet does not block unrelated streams, and its loss recovery is more aggressive about distinguishing congestion from random loss. Enable HTTP/3 where your CDN supports it and confirm it with:</p>
+<pre><code class="language-bash">curl -I --http3 https://your-distribution.example.com/
 </code></pre>
-<p>Edge case 2: Burst loss during satellite handoff causes TCP retransmits.</p>
-<p>Mitigate with QUIC + HTTP/3 on CloudFront:</p>
-<pre><code class="language-yaml"># serverless.yml
-provider:
-  httpApi:
-    payload: '2.0'
-    architectures:
-      - arm64
-    environment:
-      NODE_OPTIONS: --enable-source-maps
-  httpApi:
-    useHttp2: true
-    useHttp3: true
-</code></pre>
-<p>Edge case 3: Uplink metered cost for providers.</p>
-<p>Add an edge lambda to strip large assets from mobile view for known slow networks:</p>
-<pre><code class="language-javascript">// handler.js
-import { CloudFrontRequestEvent } from 'aws-lambda';
-
-exports.handler = async (event: CloudFrontRequestEvent) =&gt; {
-  const request = event.Records[0].cf.request;
-  const ua = request.headers['user-agent']?.[0].value || '';
-
-  if ((ua.includes('Mobile') || ua.includes('Android')) &amp;&amp; 
-      request.querystring.includes('mobile=1')) {
-    request.uri = '/mobile/index.html';
-  }
-  return request;
-};
-</code></pre>
-<p>Deploy and tag:</p>
-<pre><code class="language-bash">serverless deploy --stage prod
-</code></pre>
-<p>Edge cache key now includes <code>Accept-Encoding</code> and <code>User-Agent</code>, so mobile users get gzip while desktop gets Brotli.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add OpenTelemetry instrumentation:</p>
-<pre><code class="language-bash">npm i @opentelemetry/sdk-node@0.52 @opentelemetry/auto-instrumentations-node@0.43 \
-  @opentelemetry/exporter-jaeger@1.22 @opentelemetry/resources@1.22 \
-  @opentelemetry/semantic-conventions@1.22
-</code></pre>
-<p>Create <code>tracer.js</code>:</p>
+<p>If the command fails, the client or the edge does not have HTTP/3 available; that is a capability check, not a performance measurement.</p>
+<p><strong>Uplink cost.</strong> If uplink is metered, reduce what the client sends. Practical options:</p>
+<ul>
+<li>Batch telemetry and send it on a timer instead of per event.</li>
+<li>Avoid client-side polling; prefer server push or long-lived connections that do not retry aggressively.</li>
+<li>Do not prefetch resources the user is unlikely to request.</li>
+</ul>
+<p>Each of these reduces uplink bytes and, just as importantly, reduces the number of round trips that can be lost to a handoff.</p>
+<h2 id="step-5-measure-the-right-things">Step 5 — Measure the right things</h2>
+<p>A single "page load time" number hides the parts you need to fix. Instrument these separately:</p>
+<ul>
+<li><strong>DNS, TCP, TLS and total time</strong> from <code>curl</code>'s <code>-w</code> output, run repeatedly and reported as a median.</li>
+<li><strong>Time to first byte</strong> at the CDN edge, which isolates origin and cache behavior from transfer time.</li>
+<li><strong>Transfer time and decoded size</strong>, to confirm the encoding actually applied.</li>
+<li><strong>Core Web Vitals</strong> in the field, not just in the lab.</li>
+</ul>
+<p>For server-side tracing, OpenTelemetry's Node SDK with auto-instrumentation gives you spans for HTTP handling and outbound calls:</p>
 <pre><code class="language-javascript">import { NodeSDK } from '@opentelemetry/sdk-node';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
-import { Resource } from '@opentelemetry/resources';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
-
-const exporter = new JaegerExporter({ endpoint: 'http://jaeger-collector:14268/api/traces' });
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+import { resourceFromAttributes } from '@opentelemetry/resources';
 
 const sdk = new NodeSDK({
-  resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: '4g-baseline',
-  }),
-  traceExporter: exporter,
+  resource: resourceFromAttributes({ 'service.name': '4g-baseline' }),
+  traceExporter: new OTLPTraceExporter({ url: 'http://localhost:4318/v1/traces' }),
   instrumentations: [getNodeAutoInstrumentations()],
 });
 
 sdk.start();
 </code></pre>
-<p>Wrap server:</p>
+<p>Import it before your server module so instrumentation patches the modules first:</p>
 <pre><code class="language-javascript">import './tracer.js';
 import express from 'express';
 </code></pre>
-<p>Add CloudWatch RUM snippet to <code>index.html</code>:</p>
-<pre><code class="language-html">&lt;script src=&quot;https://rum.us-west-2.amazonaws.com/1.0/rum.js&quot; data-rum-domain=&quot;dataplane.rum.us-west-2.amazonaws.com&quot;&gt;&lt;/script&gt;
-</code></pre>
-<p>Create Lighthouse CI GitHub Action:</p>
-<pre><code class="language-yaml"># .github/workflows/lighthouse.yml
-name: Lighthouse CI
+<p>For lab checks, Lighthouse CI can enforce budgets on every pull request:</p>
+<pre><code class="language-yaml">name: Lighthouse CI
 on: [pull_request]
 jobs:
   lhci:
@@ -507,418 +476,56 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npx lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 </code></pre>
-<p>Run locally for quick feedback:</p>
-<pre><code class="language-bash">npx lhci collect --url http://localhost:3000
-npx lhci assert --config=./lighthouserc.js
+<p>A Lighthouse run executes on a fast CI machine with a simulated throttle. It is a regression detector, not a prediction of your users' experience. Use it to catch a bundle that grew by 200 KB, and use field data to decide whether the change matters on real networks.</p>
+<h2 id="worked-example-where-the-time-actually-goes">Worked example: where the time actually goes</h2>
+<p>Assume an illustrative page of 1,000 KB uncompressed, a link with 12 Mbps downlink, and an RTT of 120 ms. These numbers are chosen for arithmetic, not measured from a specific network.</p>
+<p>Transfer time for the uncompressed body, ignoring protocol overhead:</p>
+<pre><code>1,000 KB = 8,000 Kbit
+8,000 Kbit / 12 Mbps = 0.667 s
 </code></pre>
-<p>Assertions:
-- first-contentful-paint &lt; 1.5 s
-- largest-contentful-paint &lt; 2.5 s
-- cumulative-layout-shift &lt; 0.1</p>
-<p>On my machine, median FCP drops from 2.1 s (raw) to 1.1 s after Brotli + CDN.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>Numbers (median over 14 days, 95th percentile in parentheses):</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before</th>
-<th>After</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Page load (4G median)</td>
-<td>2.8 s (6.2 s)</td>
-<td>1.3 s (2.9 s)</td>
-<td>-54% (-53%)</td>
-</tr>
-<tr>
-<td>Lighthouse Performance</td>
-<td>68</td>
-<td>92</td>
-<td>+24 pts</td>
-</tr>
-<tr>
-<td>Brotli acceptance</td>
-<td>0%</td>
-<td>82%</td>
-<td>+82%</td>
-</tr>
-<tr>
-<td>Support tickets (slow load)</td>
-<td>42/week</td>
-<td>8/week</td>
-<td>-81%</td>
-</tr>
-</tbody>
-</table>
-<p>Cost delta at 500k requests/month:
-- CloudFront egress: $12.40 → $12.40 (unchanged, Brotli is CPU-bound)
-- Lambda@Edge invocations: $3.80 → $4.10 (+8%)
-- RUM ingest: $1.90</p>
-<p>Total: $18.10/month — acceptable for 500k requests.</p>
-<p>The biggest surprise was uplink asymmetry. Even though we saved 600 KB on downlink, uplink retransmissions during satellite handoffs still caused visible stalls. Adding QUIC cut retransmit timeouts from 500 ms to 120 ms on average.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>Can I do this without CloudFront?</strong>
-Yes, but you lose edge caching and QUIC. On a bare VPS in 2026, serving 1 MB pages under 1.5 s on 4G is hard without aggressive compression and preconnect. A $5 DigitalOcean droplet in Mombasa still shows 450 ms median latency to clients in rural areas due to last-mile asymmetry.</p>
-<p><strong>What about image loading?</strong>
-Use <code>loading="lazy"</code>, <code>fetchpriority="high"</code> on hero images, and AVIF at 50% quality. A 300 KB hero AVIF compresses to 42 KB — bigger than Brotli savings.</p>
-<p><strong>Does Brotli level 6 always win?</strong>
-Not for every asset. JavaScript often compresses better at level 4 (19 KB vs 21 KB), while HTML benefits from level 6 (194 KB vs 205 KB). Profile with <code>brotli --best</code> vs <code>brotli -q4</code> on your actual files.</p>
-<p><strong>What about older Android devices?</strong>
-Safari and older Android WebViews don’t support Brotli. Keep gzip fallback, but serve Brotli to 90%+ of modern clients. The fallback path adds &lt;20 ms on gzip decode.</p>
-<p><strong>Can I use a CDN other than CloudFront?</strong>
-Cloudflare 2026 supports Brotli at the edge and QUIC by default. Akamai’s Adaptive Acceleration can also do this, but pricing is opaque. Fastly’s real-time purging is useful if you update assets frequently.</p>
-<p><strong>What about WebP vs AVIF?</strong>
-AVIF 1.1.0 in 2026 achieves 30% smaller files than WebP at same SSIM. Use <code>picture</code> tag with AVIF first, WebP second, PNG fallback. The decode time on mid-range phones is &lt;100 ms, acceptable for hero images.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>If you only do two things today:</p>
-<ol>
-<li>Add Brotli compression at level 6 to your static assets and set <code>Content-Encoding: br</code> with <code>Vary: Accept-Encoding</code>. 2. Open your Lighthouse CI config and add a first-contentful-paint assertion of &lt;1.5 s for mobile 4G profiles.</li>
-</ol>
-<p>Run:</p>
-<pre><code class="language-bash">npm i -g @lhci/cli@0.13
-lhci autorun --config=./lighthouserc.js
+<p>Now suppose Brotli reduces the body to 250 KB, a 4:1 ratio:</p>
+<pre><code>250 KB = 2,000 Kbit
+2,000 Kbit / 12 Mbps = 0.167 s
 </code></pre>
-<p>Then open the report and check the “Opportunities” tab. The top suggestion will usually be “Serve static assets with compression” — fix that first.</p>
-<hr />
-<h3 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h3>
-<p>One edge case that nearly derailed a deployment in February 2026 involved <strong>TCP_NODELAY misconfiguration in mixed satellite-terrestrial paths</strong>. During Starlink’s beam handoffs over Lake Victoria, RTT spikes of 200 ms would trigger Nagle’s algorithm in Node.js, causing 500 ms delays in WebSocket messages for our real-time dashboard. The fix required explicitly disabling Nagle’s algorithm on the Express server socket:</p>
-<pre><code class="language-javascript">import net from 'net';
-
-const server = app.listen(PORT);
-server.on('upgrade', (req, socket, head) =&gt; {
-  socket.setNoDelay(true);  // Critical for mixed-path networks
-  // handle WebSocket upgrade
-});
-</code></pre>
-<p>Another recurring issue was <strong>Brotli decompression failures on ARMv8 devices running Android 13 with old Chromium builds</strong>. The root cause was a bug in <code>brotli-js@1.0.9</code> where certain window sizes (specifically <code>BROTLI_WINDOW=18</code>) caused silent failures during decompression. The temporary workaround was to downgrade to <code>brotli-js@1.0.8</code> and pin the window size to 20:</p>
-<pre><code class="language-javascript">const brotli = createBrotliCompress({
-  params: {
-    [BROTLI_QUALITY]: BROTLI_QUALITY,
-    [BROTLI_WINDOW]: 20   // Stable across ARMv8
-  }
-});
-</code></pre>
-<p>The most insidious case was <strong>QUIC connection reuse with non-idempotent requests</strong>. CloudFront’s HTTP/3 implementation in 2026 reused QUIC streams aggressively, but certain mobile networks would reset the connection mid-request without properly draining the stream. This manifested as partial responses reaching the client, causing JSON.parse() failures in our React frontend. The mitigation layered two strategies:</p>
-<ol>
-<li>Added request deduplication at the CDN edge using CloudFront Functions:</li>
-</ol>
-<pre><code class="language-javascript">// CloudFront Function for deduplication
-function handler(event) {
-  var request = event.request;
-  var cacheKey = request.querystring + request.method + request.uri;
-
-  // Only cache GET requests to avoid side effects
-  if (request.method === 'GET') {
-    var cached = caches.default.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
-  }
-
-  var response = fetch(request);
-  if (request.method === 'GET') {
-    caches.default.put(cacheKey, response.clone());
-  }
-  return response;
-}
-</code></pre>
-<ol>
-<li>Implemented client-side request IDs with exponential backoff for failed requests:</li>
-</ol>
-<pre><code class="language-javascript">const makeRequest = async (url, retries = 3) =&gt; {
-  const requestId = crypto.randomUUID();
-  try {
-    const res = await fetch(url, { headers: { 'X-Request-ID': requestId } });
-    return res;
-  } catch (err) {
-    if (retries &lt;= 0) throw err;
-    await new Promise(r =&gt; setTimeout(r, 100 * Math.pow(2, 3 - retries)));
-    return makeRequest(url, retries - 1);
-  }
-};
-</code></pre>
-<p>These cases highlight why 4G-as-baseline in 2026 isn’t just about compression ratios—it’s about handling the new failure modes introduced by satellite networks. The key insight: always validate your assumptions about transport behavior at the edge of your network path, not just in lab conditions.</p>
-<hr />
-<h3 id="integration-with-real-tools-with-working-snippets">Integration with real tools (with working snippets)</h3>
-<p><strong>Integration 1: Cloudflare Workers + KV for dynamic Brotli caching</strong></p>
-<p>Cloudflare’s 2026 Workers platform with KV storage provides a lightweight alternative for serving Brotli-compressed assets when you can’t use Lambda@Edge. The following Worker compresses and caches HTML responses on first request:</p>
-<pre><code class="language-javascript">// worker.js (Cloudflare Workers @2.0.0)
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-    const cacheKey = url.pathname + request.headers.get('Accept-Encoding');
-    const cache = caches.default;
-
-    let response = await cache.get(cacheKey);
-    if (!response) {
-      const upstream = await fetch(`https://origin.example.com${url.pathname}`);
-      const html = await upstream.text();
-
-      // Compress with Brotli using wasm-brotli
-      const { compress } = await import('https://cdn.jsdelivr.net/npm/wasm-brotli@1.0.0/+esm');
-      const compressed = await compress(html, { quality: 6 });
-
-      response = new Response(compressed, {
-        headers: {
-          'Content-Encoding': 'br',
-          'Content-Type': upstream.headers.get('Content-Type'),
-          'Cache-Control': 'public, max-age=300'
-        }
-      });
-      await cache.put(cacheKey, response.clone());
-    }
-    return response;
-  }
-};
-</code></pre>
-<p>Deploy via Wrangler:</p>
-<pre><code class="language-bash">npm install -g wrangler@3.14
-wrangler deploy --name 4g-baseline-worker
-</code></pre>
-<p><strong>Integration 2: Fastly Compute@Edge with Brotli and edge dictionaries</strong></p>
-<p>Fastly’s Compute@Edge in 2026 supports Brotli natively and provides edge dictionaries for compression level tuning. This snippet uses a dictionary to improve compression on repetitive Kenyan content (e.g., Swahili phrases):</p>
-<pre><code class="language-rust">// fastly-compute@3.0.0
-use fastly::{
-    http::{header, StatusCode},
-    request, response,
-};
-
-#[fastly::main]
-fn main(req: Request&lt;Body&gt;) -&gt; Result&lt;Response&lt;Body&gt;, Error&gt; {
-    let accept_encoding = req.get_header(header::ACCEPT_ENCODING).unwrap_or_default();
-    let should_compress = accept_encoding.contains(&quot;br&quot;);
-
-    let resp = if should_compress {
-        response::Builder::new()
-            .header(header::CONTENT_ENCODING, &quot;br&quot;)
-            .header(header::VARY, &quot;Accept-Encoding&quot;)
-            .body(Body::from(compress_with_dict(&amp;read_asset(&amp;req)?)))?
-    } else {
-        response::Builder::new()
-            .body(read_asset(&amp;req)?)?
-    };
-
-    Ok(resp)
-}
-
-fn compress_with_dict(html: &amp;[u8]) -&gt; Vec&lt;u8&gt; {
-    // Use Fastly's built-in Brotli with edge dictionary
-    fastly::compress::brotli(html, 6, Some(&quot;kenyan_swahili_dict&quot;))
-}
-</code></pre>
-<p><strong>Integration 3: NGINX + Brotli dynamic module with satellite-aware caching</strong></p>
-<p>For on-prem deployments or bare-metal servers in East Africa, NGINX 1.25 with the <code>ngx_brotli</code> dynamic module (v1.0.0rc1) can serve Brotli at the edge while handling QUIC via <code>ngx_http_quic_module</code>. This configuration adds satellite-aware caching with stale-while-revalidate:</p>
-<pre><code class="language-nginx"># nginx.conf
-load_module modules/ngx_http_brotli_filter_module.so;
-load_module modules/ngx_http_brotli_static_module.so;
-load_module modules/ngx_http_quic_module.so;
-
-events {
-    worker_connections 1024;
-}
-
-http {
-    brotli on;
-    brotli_comp_level 6;
-    brotli_types text/html text/css application/javascript;
-
-    server {
-        listen 443 quic reuseport;
-        listen 443 ssl;
-
-        ssl_certificate /etc/ssl/certs/cert.pem;
-        ssl_certificate_key /etc/ssl/private/key.pem;
-
-        location / {
-            brotli_static on;
-            add_header Vary Accept-Encoding;
-            proxy_cache my_cache;
-            proxy_cache_valid 200 5m;
-            proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
-            proxy_cache_background_update on;
-            proxy_cache_lock on;
-
-            proxy_pass http://backend;
-        }
-
-        proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m inactive=60m use_temp_path=off;
-    }
-}
-</code></pre>
-<p>Restart NGINX and test QUIC support:</p>
-<pre><code class="language-bash">sudo nginx -t &amp;&amp; sudo systemctl restart nginx
-curl -I --http3 https://your-server.example.com/
-</code></pre>
-<hr />
-<h3 id="beforeafter-comparison-with-actual-numbers">Before/After comparison with actual numbers</h3>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before Starlink (Late 2026, Nairobi CBD)</th>
-<th>After Starlink (March 2026, Rural Kenya)</th>
-<th>After Optimization (April 2026)</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Median Latency (4G)</strong></td>
-<td>20 ms</td>
-<td>120 ms</td>
-<td>75 ms</td>
-<td>QUIC reduced RTT jitter from ±80 ms to ±30 ms</td>
-</tr>
-<tr>
-<td><strong>Median Bandwidth (Downlink)</strong></td>
-<td>22 Mbps</td>
-<td>12 Mbps</td>
-<td>12 Mbps</td>
-<td>Starlink beams over Lake Victoria shared spectrum</td>
-</tr>
-<tr>
-<td><strong>Median Bandwidth (Uplink)</strong></td>
-<td>10 Mbps</td>
-<td>1.5 Mbps</td>
-<td>1.5 Mbps</td>
-<td>Metered uplink increased provider costs</td>
-</tr>
-<tr>
-<td><strong>Packet Loss (TCP)</strong></td>
-<td>&lt;1%</td>
-<td>12% (burst)</td>
-<td>2%</td>
-<td>QUIC reduced loss impact via stream multiplexing</td>
-</tr>
-<tr>
-<td><strong>Page Weight (HTML)</strong></td>
-<td>980 KB (gzip)</td>
-<td>980 KB (gzip)</td>
-<td>194 KB (Brotli)</td>
-<td>80% reduction via Brotli level 6</td>
-</tr>
-<tr>
-<td><strong>Time to First Byte</strong></td>
-<td>120 ms</td>
-<td>280 ms</td>
-<td>110 ms</td>
-<td>Edge lambda + CDN shaved 170 ms</td>
-</tr>
-<tr>
-<td><strong>First Contentful Paint</strong></td>
-<td>1.8 s</td>
-<td>3.2 s</td>
-<td>1.1 s</td>
-<td>Brotli + preconnect + QUIC</td>
-</tr>
-<tr>
-<td><strong>Largest Contentful Paint</strong></td>
-<td>2.5 s</td>
-<td>5.1 s</td>
-<td>2.1 s</td>
-<td>Image lazy loading + AVIF hero</td>
-</tr>
-<tr>
-<td><strong>Cumulative Layout Shift</strong></td>
-<td>0.05</td>
-<td>0.28</td>
-<td>0.03</td>
-<td>Proper image aspect ratios + font preloading</td>
-</tr>
-<tr>
-<td><strong>Lines of Code Changed</strong></td>
-<td>N/A</td>
-<td>N/A</td>
-<td>+147</td>
-<td>Added Brotli middleware, QUIC config, observability</td>
-</tr>
-<tr>
-<td><strong>Monthly Cloud Cost (500k req)</strong></td>
-<td>$15.20</td>
-<td>$22.80</td>
-<td>$18.10</td>
-<td>Uplink metered costs offset by CDN efficiency</td>
-</tr>
-<tr>
-<td><strong>Support Tickets (Slow Load)</strong></td>
-<td>5/week</td>
-<td>42/week</td>
-<td>8/week</td>
-<td>Down 81% via performance improvements</td>
-</tr>
-<tr>
-<td><strong>Brotli Acceptance Rate</strong></td>
-<td>0%</td>
-<td>N/A</td>
-<td>82%</td>
-<td>Modern clients automatically negotiate br</td>
-</tr>
-<tr>
-<td><strong>Gzip Acceptance Rate</strong></td>
-<td>100%</td>
-<td>N/A</td>
-<td>18%</td>
-<td>Legacy fallback for &lt;8% of traffic</td>
-</tr>
-<tr>
-<td><strong>QUIC Adoption Rate</strong></td>
-<td>0%</td>
-<td>N/A</td>
-<td>65%</td>
-<td>Older devices fall back to TCP/H2</td>
-</tr>
-<tr>
-<td><strong>CDN Cache Hit Ratio</strong></td>
-<td>78%</td>
-<td>N/A</td>
-<td>92%</td>
-<td>Vary header + edge caching improved hit ratio</td>
-</tr>
-<tr>
-<td><strong>WebSocket Message Latency</strong></td>
-<td>15 ms</td>
-<td>510 ms (Nagle’s)</td>
-<td>25 ms</td>
-<td>Explicit <code>setNoDelay</code> resolved satellite-induced delays</td>
-</tr>
-<tr>
-<td><strong>TLS Handshake Time</strong></td>
-<td>80 ms</td>
-<td>180 ms</td>
-<td>95 ms</td>
-<td>QUIC reduced handshake overhead by 47%</td>
-</tr>
-<tr>
-<td><strong>Uplink Cost for Provider</strong></td>
-<td>$0.00</td>
-<td>$8.40</td>
-<td>$4.20</td>
-<td>QUIC reduced retransmits by 50%</td>
-</tr>
-</tbody>
-</table>
-<p>The most dramatic shift came from <strong>accepting Starlink’s reality</strong>: uplink asymmetry made us rethink entire transport assumptions. Before, we assumed symmetric bandwidth; after, we instrumented uplink metrics and discovered that providers serving mixed networks needed to meter uplink aggressively. This led to edge logic that strips non-critical assets for mobile users on slow uplinks, reducing uplink usage by 45% without visible UX degradation.</p>
-<p>The <strong>code complexity delta</strong> reflects the learning curve: adding Brotli compression and QUIC support required new middleware and configuration patterns, but the actual changes were minimal (+147 lines across 4 files). The biggest surprise was how much <strong>observability</strong> improved outcomes—CloudWatch</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The transfer saving is about 0.5 s. But the connection setup still costs roughly two RTTs before any body byte moves: one for TCP and one for TLS. At 120 ms RTT that is about 240 ms, and it is unaffected by compression. This is why compression alone cannot fix a high-latency path, and why connection reuse, preconnect and a CDN edge close to the user matter as much as the byte count.</p>
+<p>It also explains why the same optimization can look dramatic on one network and marginal on another. On a 100 Mbps link, saving 750 KB buys about 60 ms. On a 12 Mbps link, it buys about 500 ms. The ratio of the win is a function of the bandwidth you started with.</p>
+<h2 id="failure-modes-to-plan-for">Failure modes to plan for</h2>
+<p><strong>Compressing already-compressed content.</strong> Applying Brotli to JPEG, PNG, WebP or video wastes CPU and can slightly increase size. Restrict compression to text types.</p>
+<p><strong>Caching the wrong variant.</strong> Omitting <code>Vary: Accept-Encoding</code> lets a shared cache store the gzip body and serve it to a client that asked for Brotli, or vice versa. This shows up as intermittent decode errors that are hard to reproduce.</p>
+<p><strong>Buffering the whole response.</strong> Streaming the compressed output avoids holding the full body in memory, which matters when several large responses are in flight.</p>
+<p><strong>Trusting a single measurement.</strong> One <code>curl</code> run tells you almost nothing. Report medians over at least ten runs and compare the same client, same location, same time of day.</p>
+<p><strong>Optimizing downlink only.</strong> If handoffs and uplink retries dominate, a smaller body will not fix the stall. Check whether the delay appears before the first byte or during transfer.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before you ship a performance change, confirm:</p>
 <ul>
-<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
-<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
-<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+<li>[ ] The response sets <code>Content-Encoding</code> and <code>Vary: Accept-Encoding</code> correctly.</li>
+<li>[ ] The fallback path serves a valid body, not an error, when no supported encoding is advertised.</li>
+<li>[ ] Compression is applied only to compressible content types.</li>
+<li>[ ] The CDN cache key includes the encoding.</li>
+<li>[ ] HTTP/3 is enabled and verified where the CDN supports it.</li>
+<li>[ ] You have before-and-after medians from the same client location.</li>
+<li>[ ] You can separate connection setup time from transfer time in your data.</li>
+<li>[ ] A CI budget fails the build when the page grows past a threshold.</li>
+<li>[ ] Uplink traffic is batched and not retried aggressively.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Can this be done without a CDN?</strong>
+Yes. You lose edge caching and edge-terminated QUIC, so connection setup cost stays on the full path. On a single origin, aggressive compression plus preconnect can still help, but the latency component will dominate.</p>
+<p><strong>Does Brotli always beat gzip?</strong>
+For text, usually, but the margin varies by content. For very small responses the framing overhead can make compression a net loss, which is why a size threshold exists in most middleware. Measure on your real assets.</p>
+<p><strong>Should I branch on user agent for encoding?</strong>
+No. Negotiate on <code>Accept-Encoding</code>. User-agent strings are unreliable, and a header-based negotiation already covers every client that matters.</p>
+<p><strong>What about images?</strong>
+Image bytes usually dominate page weight. Serve modern formats with a <code>&lt;picture&gt;</code> fallback, set explicit width and height to avoid layout shift, lazy-load below-the-fold images, and give the hero image a high fetch priority. Verify which formats your target browsers support rather than assuming.</p>
+<p><strong>Is HTTP/3 worth enabling?</strong>
+It helps most where loss and handoffs are common, because one lost packet does not block unrelated streams. Confirm support at your edge and in your client population before relying on it.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Open your production HTML response and check two headers:</p>
+<pre><code class="language-bash">curl -sI -H &quot;Accept-Encoding: br, gzip&quot; https://your-site.example.com/ \
+  | grep -i -E 'content-encoding|vary|cache-control'
+</code></pre>
+<p>If <code>Content-Encoding</code> is missing or <code>Vary</code> does not include <code>Accept-Encoding</code>, fix that first. Then run ten timed requests before and after the fix and compare the medians from the same machine. That single comparison will tell you more than any benchmark table.</p>
                 
                 
             </div>
@@ -953,8 +560,8 @@ curl -I --http3 https://your-server.example.com/
                     
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
                         <h3>Cost tools fail when agents scale autonomously</h3>
-                        <p>Traditional cloud cost tools report hours after autonomous agents make scaling decisions — the attribution gap that turns $12,000 surprise bills into…</p>
-                        <span class="related-meta">14 min read · 9 September 2026</span>
+                        <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
+                        <span class="related-meta">10 min read · 9 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/hybrid-cloud-routing-cost-speed-balance-for-sea/">

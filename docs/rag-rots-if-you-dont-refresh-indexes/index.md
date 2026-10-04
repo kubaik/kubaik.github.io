@@ -1,225 +1,257 @@
 # RAG rots if you don’t refresh indexes
 
-production rag looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.
+A retrieval-augmented generation (RAG) pipeline is easy to stand up and hard to keep correct. The failure is rarely dramatic: no crash, no error page. Answers simply drift away from the source of truth as documents change underneath a fixed index. This article covers why that happens, how to detect it, and how to build a refresh path that scales with the actual rate of change in your corpus.
 
-## The conventional wisdom (and why it's incomplete)
+## The conventional playbook and its blind spot
 
-The standard playbook for production RAG goes like this: chunk your documents, embed them with a recent model, stick them in a vector DB, and call it a day. Most tutorials stop there. They treat the embeddings as a one-time artifact, not as something that needs to rot-proofing. In my experience, this is the root cause of why so many RAG systems degrade silently after a few weeks. I’ve seen a production chatbot’s answer accuracy drop from 82% to 47% in 30 days because the index wasn’t refreshed when the source documents changed. The honest answer is that most teams treat the indexed corpus like a static library and forget that real data changes.
+The standard RAG recipe is well known: chunk documents, embed the chunks with a sentence embedding model, store the vectors in a vector database, and retrieve nearest neighbours at query time. It is a good recipe. Its blind spot is that it treats the embedding set as a one-time artifact rather than a derived view of mutable data.
 
-The conventional advice also over-indexes on embedding quality while under-indexing on change detection and incremental updates. It’s common to see teams spend weeks tuning the embedding model’s hyperparameters while ignoring whether the vector store even knows a document was updated. This imbalance leads to systems that are fast on day one but brittle on day thirty.
+Two consequences follow.
 
-## What actually happens when you follow the standard advice
+First, teams often spend their tuning budget on the embedding model while spending nothing on change detection. Whether a document was edited, deleted, or replaced is a separate question from whether the embedding model is good, and it is the question that determines whether retrieved chunks are still true.
 
-You build a RAG pipeline that works beautifully in staging. You chunk, embed, and push to your vector store. Then you ship it to production. Three weeks later, users start complaining that answers are wrong or outdated. You dig in and realize that the documents you indexed haven’t changed, but the *context* around them has. Maybe a policy PDF was updated, a product spec was revised, or a pricing table was corrected. Your embeddings still point to the old version, and your retriever happily returns stale chunks because the index hasn’t been refreshed.
+Second, fixed-size chunking interacts badly with edits. A 512-token window over a document is a function of that document's exact text. Edit the document and the same chunk offset now covers different words. If the index is not rebuilt, the retriever returns a chunk ID whose payload no longer matches the source — the vector is stale, and the text shown to the model is stale with it.
 
-I ran into this when I shipped a customer support chatbot in 2026 using Pinecone as the vector store and embeddings from `text-embedding-3-small`. We chunked the knowledge base into 512-token pieces and set up a nightly batch job to re-embed and re-index. It worked great for three weeks. Then a new product release changed 18% of the docs. Our nightly job didn’t detect those changes because it only re-indexed documents that had been modified in the source system. The other 82% of chunks stayed stale. By the time we noticed, user trust had cratered and support tickets spiked by 200%. We had to rebuild the index manually and re-crawl every document. That mistake cost us three days of engineering time and a week of user confidence.
+The honest framing: a vector index is a materialised view. Materialised views go stale unless something refreshes them.
 
-The other silent killer is chunking strategy. Most teams default to fixed-size chunks based on token limits. That’s fine for static content, but breaks when documents change. A 512-token chunk that used to be three paragraphs can suddenly become two paragraphs plus a table if the document is edited. Your retriever still returns the same chunk ID, but the semantic content is now different. This mismatch causes answers to drift even though the index itself hasn’t changed.
+## Failure modes to design against
 
-## A different mental model
+Four patterns account for most staleness incidents.
 
-Stop thinking of your vector index as a static artifact. Treat it like a database table that needs change data capture (CDC). Every time a source document updates, you need to know which chunks are affected and update or invalidate them in the vector store. This is not optional for production RAG. It’s the price of correctness.
+**Undetected edits.** The refresh job only looks at documents the source system reports as modified. If the source system's modification flag is unreliable, or if the job filters on a field that is not updated (for example, a `last_modified` column that only changes on creation), edits slip through. The job runs on schedule and reports success while the index stays wrong.
 
-The mental model I use now is: *document → chunks → embeddings → vector store* should be a pipeline with three gates: change detection, incremental update, and consistency validation. If any gate is missing, the system will rot. The first gate is the hardest to implement well because it requires tracking changes at the document level, not just at the file level. Tools like Debezium or AWS Database Migration Service can stream change events from your content source, but most teams don’t wire them up to their RAG pipeline.
+**Chunk drift.** Even when a document is re-embedded, the chunk boundaries move. A paragraph insertion near the top shifts every subsequent chunk. If chunk IDs are positional (for example, `doc-42-chunk-7`), the ID now refers to different content than it did before. Any downstream cache, evaluation set, or click log keyed on chunk ID is silently invalidated.
 
-Another shift is to treat chunks as ephemeral records tied to a document version. When a document is updated, you don’t just re-embed the whole thing; you invalidate all previous chunks and generate new ones based on the updated content. This avoids the stale chunk problem entirely. It also means your retriever needs to handle chunk versioning, which is why I now include a `doc_version` field in every chunk metadata schema.
+**Partial invalidation.** A document is updated, but only some of its chunks are re-embedded. The rest remain, and the retriever mixes old and new content in the same context window. This is worse than a fully stale index because the model receives contradictory passages and may synthesise an answer that matches neither version.
 
-Finally, accept that not every document needs real-time updates. Some content is stable enough to batch-update nightly. Others need sub-minute refresh. The key is to classify your documents by change frequency and set refresh policies accordingly. A pricing page might update daily. A legal disclaimer might update quarterly. A product spec might update weekly. Your index refresh strategy should mirror that cadence.
+**Deletion blindness.** Source documents get removed or access-restricted, but their chunks stay in the index. The retriever keeps surfacing content that should no longer be visible. In regulated settings this is a compliance problem, not just a quality problem.
 
-## Evidence and examples from real systems
+## A refresh model: three gates
 
-In 2026, I audited three production RAG systems at different companies. All followed the standard advice but had different failure modes:
+A useful mental model is a pipeline with three gates, each of which can fail independently:
 
-| System | Domain | Chunk Size | Refresh Cadence | Staleness Window | Impact |
-|--------|--------|------------|-----------------|------------------|--------|
-| A | Fintech docs | 512 tokens | Weekly | 7 days | 38% of answers wrong |
-| B | E-commerce help center | 256 tokens | Nightly | 1 day | 12% of answers outdated |
-| C | Hospital protocols | 1024 tokens | Manual | N/A | 65% of answers stale |
+1. **Change detection** — determine which documents changed since the last successful index build.
+2. **Incremental update** — re-chunk and re-embed only the affected documents, and remove their previous chunks.
+3. **Consistency validation** — assert that the index matches the source, and surface a metric when it does not.
 
-System A used a fixed-size chunker and a weekly batch job. After a major policy update, users got answers based on the old policy for a full week. We measured answer correctness by comparing model outputs to a ground-truth set of questions. The staleness directly correlated with the refresh window.
+The second gate is usually the easiest. The first is the hardest, because it depends on what the content source can tell you. The third is the one teams skip, and it is the one that turns an invisible problem into a monitored one.
 
-System B used a nightly job and a 256-token chunker. The smaller chunks helped with partial updates, but the nightly cadence still left a 24-hour gap. We measured a 12% drop in user satisfaction scores during that window.
+### Change detection options
 
-System C had no automation at all. A human ran a script manually every few weeks. The staleness window was unbounded. We measured 65% of answers were based on outdated protocols, leading to compliance risks.
+| Source capability | Detection method | Typical latency | Notes |
+|---|---|---|---|
+| Emits change events (CDC, webhooks, event notifications) | Consume the event stream | Seconds | Most reliable; requires wiring the source to a queue |
+| Exposes `updated_at` per record | Query by timestamp watermark | Poll interval | Only works if the field is maintained correctly |
+| Exposes content only | Hash or checksum each document | Poll interval | Costs a read per document per cycle |
+| Object storage | Bucket event notifications | Seconds | Covers create/delete; verify coverage of metadata-only changes |
 
-I also benchmarked two indexing strategies on the same dataset: full re-indexing vs. incremental updates. The incremental approach used a content hash to detect changes and only updated affected chunks. On a 10,000-document corpus with 1% daily change rate, the incremental strategy reduced total indexing time from 45 minutes to 3 minutes. That’s a 15x improvement in refresh latency and a 93% reduction in compute cost.
+The important property is not which method you pick but that the chosen method has a defined latency and a defined failure mode. "The nightly job re-indexes modified docs" is a detection method with an undefined failure mode if nobody has verified that the modified flag is trustworthy.
 
-Another surprising result: chunk size matters more than embedding model choice for staleness resistance. I tested `text-embedding-3-small`, `text-embedding-3-large`, and `mistral-embed` on the same corpus with 256, 512, and 1024-token chunks. The embedding model choice had less than 5% impact on answer accuracy when the chunks were stale. The chunking strategy and refresh cadence had a 30% impact. This tells me that most teams are optimizing the wrong layer.
+### Incremental update
 
-## The cases where the conventional wisdom IS right
-
-There are scenarios where the standard advice holds. If your corpus is truly static—like a historical archive or a closed legal library—then a one-time indexing job is fine. Similarly, if your content changes so rarely that a manual refresh is acceptable, you don’t need CDC. Another exception is when your users are tolerant of occasional stale answers, like in a research assistant tool where citations are secondary.
-
-Also, if your entire pipeline is built on immutable data—like logs or event streams—then change detection is easier because every event is a new record. In those cases, you can skip the document-level CDC and just append new chunks to the index.
-
-Finally, if your vector store supports real-time updates natively, like Weaviate with its `batch` API or Milvus with incremental indexing, then you can get close to the “static” model without the brittleness. But even in those stores, you still need to wire up change detection from your source of truth.
-
-## How to decide which approach fits your situation
-
-Start by classifying your documents into three buckets:
-
-| Bucket | Change Frequency | Refresh Cadence | Tooling Needed |
-|--------|------------------|-----------------|----------------|
-| Green | <1% per month | Quarterly | Manual or batch |
-| Yellow | 1-10% per month | Weekly or daily | CDC or incremental |
-| Red | >10% per month | Real-time or sub-hour | Event streaming |
-
-Green bucket docs can use a simple batch job. Yellow needs change data capture. Red needs event streaming and real-time indexing.
-
-Next, decide on chunking strategy. Fixed-size chunking is easiest but risks splitting semantic units. Semantic chunking (using agents like Unstructured or LayoutParser to split on headings and tables) is more robust but slower. I now default to semantic chunking for Yellow and Red buckets because it reduces the risk of stale chunks splitting meaningful content.
-
-Then, choose your refresh mechanism. For Yellow bucket docs, a CDC pipeline using Debezium or AWS DMS to stream changes from your content source to a message queue (SQS or Kafka) works well. For Red bucket docs, use a change feed or event log from your CMS or database. Connect that feed to a stream processor (Kafka Streams, AWS Lambda, or Apache Flink) that triggers re-chunking and re-embedding only for affected documents.
-
-Finally, validate your setup with a staleness metric. Run a nightly job that compares every indexed chunk against the current source document. If the chunk no longer exists or has drifted beyond a threshold (say, 20% semantic similarity drop), flag it for refresh. I’ve found that a 15% similarity threshold catches 95% of stale chunks without too many false positives.
-
-## Objections I've heard and my responses
-
-**“Real-time indexing will kill our costs.”**
-Not if you scope it correctly. Start with Yellow bucket docs and use incremental updates. Only move to real-time for Red bucket docs. In my 2026 audit, the median cost per refresh for incremental updates was $0.004 per document. That’s cheaper than a single support ticket caused by a stale answer.
-
-**“Our CMS doesn’t expose change events.”**
-Then you’re forced to poll, but you can still reduce risk. Use a checksum-based polling job that compares file hashes every 15 minutes for Red bucket docs. For Yellow, do it hourly. For Green, weekly. The key is to make the polling interval proportional to the risk of staleness.
-
-**“Embedding fresh chunks takes too long.”**
-Use a smaller embedding model for incremental updates. In my tests, `text-embedding-3-small` is 3x faster than `text-embedding-3-large` with only a 4% drop in answer quality on average. For Red bucket docs, you can use a distilled model like `bge-small-en-v1.5` to hit sub-second latencies. Also, batch embeddings by document to amortize the cost.
-
-**“Users don’t care if answers are slightly stale.”**
-That’s a product decision, not a technical one. But even if users tolerate stale answers, your compliance team might not. In healthcare and fintech, stale answers can trigger regulatory violations. In 2026, a European bank was fined €2.3M for serving stale disclosures in their chatbot. The cost of a refresh pipeline is trivial compared to that risk.
-
-## What I'd do differently if starting over
-
-If I were building a RAG system today with zero legacy constraints, here’s exactly what I would do:
-
-1. **Start with CDC from day one.** I would integrate Debezium with my content source (whether it’s a CMS, a database, or a file store) and stream every change to a Kafka topic. That gives me an immutable log of every document mutation, which I can use for both indexing and auditing.
-
-2. **Use semantic chunking with versioning.** I would adopt Unstructured 2.0 for chunking because it handles tables, headings, and code blocks better than fixed-size splitters. I would include a `doc_version` field in every chunk metadata so I can track which version of the document a chunk came from.
-
-3. **Implement incremental indexing with a write-ahead log.** I would use Weaviate 1.24 with its `batch` API for incremental updates. For each change event, I would compute a content hash of the new document version. If the hash changes, I would invalidate all previous chunks and re-chunk the document. This avoids the stale chunk problem entirely.
-
-4. **Add a staleness validator.** I would run a nightly job that compares every indexed chunk against the current source document using cosine similarity. If similarity drops below 15%, I would flag the chunk for refresh and log the incident. This gives me a concrete metric to track index health.
-
-5. **Use a tiered refresh policy.** I would classify documents into Green, Yellow, and Red buckets as described earlier. Green docs get quarterly refresh. Yellow gets weekly. Red gets real-time. This balances risk and cost.
-
-6. **Cache embeddings for unchanged documents.** For Yellow bucket docs, I would cache embeddings for unchanged chunks to avoid re-computing them every refresh. This cut our refresh time by 40% in a 2025 pilot.
-
-7. **Expose a health endpoint.** I would add a `/health` endpoint that returns the staleness ratio (number of stale chunks / total chunks) and the time since last refresh. This gives me a single metric to monitor in Grafana.
-
-Here’s a minimal code sketch for the incremental refresh pipeline using Python 3.11, FastAPI 0.110, and Weaviate 1.24:
+The core operation is: compute a stable identity for the current version of a document, compare it to what is indexed, and if it differs, delete that document's existing chunks and write new ones. Content hashing gives you a cheap identity:
 
 ```python
-from fastapi import FastAPI, BackgroundTasks
-from weaviate import Client
-from unstructured.partition.auto import partition
-from sentence_transformers import SentenceTransformer
 import hashlib
-import httpx
 
-app = FastAPI()
-weaviate_client = Client("http://weaviate:8080")
-embedding_model = SentenceTransformer("BAAI/bge-small-en-v1.5")
-
-@app.post("/refresh/{doc_id}")
-async def refresh_document(doc_id: str, background_tasks: BackgroundTasks):
-    background_tasks.add_task(incremental_refresh, doc_id)
-    return {"status": "queued", "doc_id": doc_id}
-
-async def incremental_refresh(doc_id: str):
-    # 1. Fetch current document
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(f"https://cms/api/docs/{doc_id}")
-        doc = resp.json()
-    
-    # 2. Compute content hash for change detection
-    doc_hash = hashlib.sha256(doc["content"].encode()).hexdigest()
-    
-    # 3. Check if this doc version is already indexed
-    query = {
-        "query": "",
-        "filter": {
-            "path": ["doc_id"],
-            "operator": "Equal",
-            "valueString": doc_id,
-        },
-    }
-    result = weaviate_client.query.get("Chunk", ["doc_version", "content_hash"]).with_where(query).do()
-    
-    if result["data"]["Get"]["Chunk"]:
-        latest = result["data"]["Get"]["Chunk"][0]
-        if latest["content_hash"] == doc_hash:
-            return  # Already up to date
-    
-    # 4. Invalidate old chunks
-    weaviate_client.data_object.delete(
-        class_name="Chunk",
-        where={
-            "path": ["doc_id"],
-            "operator": "Equal",
-            "valueString": doc_id,
-        }
-    )
-    
-    # 5. Re-chunk and re-embed
-    elements = partition(text=doc["content"], strategy="auto")
-    for elem in elements:
-        embedding = embedding_model.encode(elem.text)
-        chunk = {
-            "doc_id": doc_id,
-            "doc_version": doc["version"],
-            "content": elem.text,
-            "embedding": embedding.tolist(),
-            "content_hash": doc_hash,
-        }
-        weaviate_client.data_object.create(class_name="Chunk", properties=chunk)
+def content_hash(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 ```
 
-## Summary
+Two details matter. Hash the content you actually embed, not a rendered or normalised variant, or the hash will disagree with the index for reasons that are hard to debug. And store the hash alongside the chunks so that a validation pass can compare without re-embedding.
 
-RAG systems rot because we treat embeddings as static artifacts. The moment your source data changes, your index starts drifting. The standard advice—chunk, embed, store—is incomplete without change detection, incremental updates, and staleness validation. 
+### Chunk versioning
 
-I’ve seen systems go from 82% answer accuracy to 47% in 30 days because of this gap. The fix is to build a CDC pipeline, classify documents by change frequency, and implement incremental refresh. Start with the Yellow bucket docs, use semantic chunking, and add a staleness validator. That’s the minimum viable RAG that doesn’t rot.
+Give every chunk a version identifier derived from the document version, and make retrieval aware of it. A minimal metadata schema:
 
+```json
+{
+  "doc_id": "policy-2024-11",
+  "doc_version": 7,
+  "chunk_index": 3,
+  "content_hash": "9f2c...",
+  "text": "..."
+}
+```
 
-## Frequently Asked Questions
+With this, retrieval can filter to the highest `doc_version` per `doc_id`, and a validation job can find chunks whose `content_hash` no longer matches any current document version. Positional chunk IDs become unnecessary; identity comes from `doc_id` plus version plus index within that version.
 
-**How do I detect changes in a CMS that doesn’t expose webhooks?**
-Poll the CMS API with a checksum-based strategy. Compute a SHA-256 hash of the document content every 15 minutes for Red bucket docs, hourly for Yellow, and daily for Green. Store the last known hash in a Redis 7.2 cache. If the hash changes, trigger a refresh. Use conditional GET requests to minimize bandwidth. For file-based CMS like S3, use S3 Event Notifications to detect PUT and DELETE events, then compute hashes locally.
+## Worked example: sizing an incremental refresh
 
+Consider a corpus of 10,000 documents, each producing 20 chunks, so 200,000 chunks total. Suppose 1% of documents change per day — 100 documents, or 2,000 chunks.
 
-**What’s the smallest embedding model that still works for incremental updates?**
-`BAAI/bge-small-en-v1.5` is my default for incremental updates. It’s 32M parameters, runs in ~20ms on a CPU, and delivers 68% accuracy on the MTEB benchmark. For Red bucket docs, I’ve used `all-MiniLM-L6-v2` with a 10ms latency on a CPU. Avoid models larger than 100M parameters for real-time refresh unless you have GPU acceleration. Benchmark on your corpus—sometimes a smaller model with domain fine-tuning beats a larger general model.
+Full rebuild: re-chunk and re-embed 200,000 chunks.
+Incremental: re-chunk and re-embed 2,000 chunks, plus delete 2,000 stale chunks.
 
+The arithmetic is straightforward. The incremental path touches 1% of the embedding work of a full rebuild, so if embedding throughput is the bottleneck, the daily refresh window shrinks by roughly the same factor. That ratio is the whole argument for incremental updates, and it holds regardless of the absolute speed of your embedding model.
 
-**Can I use PostgreSQL with pgvector instead of a dedicated vector store?**
-Yes, but be aware of the trade-offs. PostgreSQL 16 with pgvector 0.7.0 supports HNSW indexing and incremental updates. However, refreshing a single document requires deleting and re-inserting all its chunks, which can lock tables during high load. For Yellow bucket docs, this can cause p99 latency spikes. Use PostgreSQL only if your refresh cadence is daily or slower, and your corpus is under 100k chunks. For anything faster, use a dedicated vector store like Weaviate or Milvus.
+What the ratio does *not* tell you is the cost of the delete path. Deleting by `doc_id` is fast if the vector store indexes that field; it can be slow if it requires a scan. Measure both halves before assuming the incremental path is cheap.
 
+### How to measure it
 
-**How do I handle chunk versioning in the retriever?**
-Include a `doc_version` field in every chunk metadata and in the retriever’s query response. When you return results to the LLM, sort by `doc_version` descending and pick the latest version of each chunk. This ensures the LLM sees the most recent content. Also, add a `staleness` field to the retriever’s output so downstream systems can filter or flag stale chunks. In a 2026 audit, this reduced incorrect answers by 35% when documents were updated mid-conversation.
+Do not trust a vendor's throughput number or a blog's benchmark. Measure on your own corpus:
 
+- Instrument the embedding call: log wall-clock time and token count per batch. Compute chunks per second.
+- Instrument the delete: log the time to remove all chunks for one document. Run it against a store with realistic size, not an empty one.
+- Instrument the end-to-end refresh: record the timestamp of the change event and the timestamp when the new chunks are queryable. That difference is your staleness window, and it is the number that matters to users.
+- Compare full rebuild versus incremental on the same 100-document change set. Report both wall-clock time and compute cost.
 
-**What’s the cost of running a CDC pipeline for 10k documents with 1% daily change?**
-In 2026, on AWS, this costs about $120/month. Breakdown:
-- Debezium on t3.medium: $45
-- Kafka on MSK basic: $35
-- Lambda for incremental refresh (10k docs * 1% = 100 docs/day, 512ms per doc): $20
-- Weaviate on r6g.xlarge: $20
-Total is $120/month. That’s cheaper than the cost of a single compliance audit triggered by stale answers.
+## Staleness as a monitored metric
 
+Define staleness explicitly, then expose it. A practical definition: a chunk is stale if its `content_hash` does not appear in the current version of its `doc_id`, or if its `doc_id` no longer exists in the source.
 
----
+A validation job can then emit two numbers:
 
-### About this article
+- **Stale chunk ratio** = stale chunks / total chunks.
+- **Time since last successful refresh** per document bucket.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+Both are cheap to compute if `content_hash` is stored on the chunk. Neither requires re-embedding, only re-hashing the source and comparing sets. Alert on the ratio crossing a threshold you choose, and on the refresh timestamp exceeding the cadence you promised.
 
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
+## Classifying documents by change rate
 
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
+Not every document deserves the same pipeline. Classify by observed change frequency, not by intuition.
 
-**Last generated:** August 04, 2026
+| Bucket | Observed change rate | Refresh approach | Validation cadence |
+|---|---|---|---|
+| Stable | Less than ~1% of docs per month | Scheduled batch rebuild | Monthly |
+| Active | ~1–10% of docs per month | Change detection plus incremental update | Weekly |
+| Volatile | More than ~10% of docs per month | Event-driven, near-real-time update | Daily or continuous |
+
+The thresholds are illustrative, not universal — set them from your own change logs. The point is that the refresh mechanism should be proportional to the observed churn, because both the cost and the risk scale with it.
+
+Two caveats. Change rate is not the only input; a single high-stakes document that changes quarterly may deserve event-driven refresh regardless of bucket. And bucketing is a policy, not a technical constraint — it is fine to start everything in "Active" and promote documents as their churn is measured.
+
+## When the conventional advice is right
+
+The static-index approach is correct in several genuine cases:
+
+- The corpus is immutable by construction — a frozen archive, a published standard, a versioned legal library where new versions are new documents rather than edits.
+- Changes are rare enough that a manual or scheduled rebuild is within the tolerance of the product.
+- The data is append-only — logs, event streams, telemetry. New records are new chunks; nothing is invalidated. Change detection collapses to "process the tail."
+- The application tolerates stale answers and says so explicitly, with citations and timestamps shown to the user.
+
+In the last case, the design decision is a product decision. It should be written down, because "we accept a 24-hour staleness window" is a very different commitment from "the index is always current," and users will hold you to whichever one they inferred.
+
+## A decision checklist
+
+Before building, answer these in writing:
+
+1. What is the maximum staleness window the product can tolerate, per document class?
+2. What is the source of truth, and what change signal does it emit? What is that signal's known failure mode?
+3. Is every document's identity stable, or do documents get renamed, merged, or split?
+4. What happens to chunks when a document is deleted or access-restricted?
+5. How will you detect that the index has drifted, without a user reporting a wrong answer?
+6. What is the measured cost of a full rebuild, and of an incremental update, on your corpus?
+7. Who is paged when the stale chunk ratio crosses the threshold?
+
+If any answer is "we'll figure that out later," that is the gate most likely to fail.
+
+## A minimal refresh implementation
+
+The sketch below shows the shape of an incremental refresh: fetch the document, hash it, compare against what is indexed, and if it differs, delete the old chunks and write new ones. It uses a generic vector store client and a generic chunker interface, so adapt the calls to your stack.
+
+```python
+import hashlib
+from dataclasses import dataclass
+
+@dataclass
+class Chunk:
+    doc_id: str
+    doc_version: int
+    chunk_index: int
+    content_hash: str
+    text: str
+
+def content_hash(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+def refresh_document(doc_id, fetch_document, chunker, embedder, store):
+    """Idempotent refresh of one document. Safe to call repeatedly."""
+    doc = fetch_document(doc_id)          # {"content": str, "version": int}
+    new_hash = content_hash(doc["content"])
+
+    indexed = store.get_chunks_by_doc(doc_id)
+    if indexed and all(c.content_hash == new_hash for c in indexed):
+        return {"status": "unchanged", "doc_id": doc_id}
+
+    # Delete before writing: avoids mixing versions in the same namespace.
+    store.delete_chunks_by_doc(doc_id)
+
+    texts = chunker.split(doc["content"])
+    vectors = embedder.encode(texts)
+
+    chunks = [
+        Chunk(
+            doc_id=doc_id,
+            doc_version=doc["version"],
+            chunk_index=i,
+            content_hash=new_hash,
+            text=text,
+        )
+        for i, text in enumerate(texts)
+    ]
+    store.upsert_chunks(chunks, vectors)
+    return {"status": "updated", "doc_id": doc_id, "chunks": len(chunks)}
+```
+
+The important properties, independent of the specific libraries:
+
+- **Delete before write.** If you write first and delete second, a crash between the two leaves both versions in the index and the retriever can return either.
+- **Idempotence.** Re-running the function for an unchanged document is a no-op, so a retry after a partial failure is safe.
+- **Hash on the embedded text.** The hash must describe exactly what was chunked, or validation will produce false positives.
+- **Version on every chunk.** Without it, retrieval cannot prefer the newest content when old chunks linger.
+
+## Handling sources that emit no events
+
+When the content source offers no change feed, polling is the fallback. Make the poll interval proportional to the risk:
+
+- Compute a hash per document and store the last-seen hash.
+- Poll the volatile bucket frequently and the stable bucket rarely.
+- Use conditional requests where the source supports them, so unchanged documents cost a 304 rather than a full body.
+- For object storage, prefer native event notifications over listing the bucket, and verify that the notification covers the operations you care about.
+
+The failure mode of polling is that it has a latency floor equal to the poll interval, and that a poll cycle can be skipped under load. Log every cycle's start and end so that a missed cycle is visible rather than silent.
+
+## Retrieval-side handling of versions
+
+Even with a clean refresh pipeline, in-flight queries can hit the index mid-update. Two mitigations:
+
+- Filter retrieval to the highest `doc_version` per `doc_id` so a lingering old chunk cannot be returned.
+- Include `doc_version` and `content_hash` in the retrieval response, so downstream evaluation and logging can attribute an answer to a specific index state.
+
+The second point matters for debugging. When an answer is wrong, you want to know whether the model was reasoning over stale content or over correct content it mishandled. Without version metadata on the result, that question is unanswerable after the fact.
+
+## Cost model, with stated assumptions
+
+A refresh pipeline's cost has four components. Using illustrative figures so the arithmetic is visible:
+
+- **Change detection:** a queue or event bus. Cost scales with event volume, which scales with change rate, not corpus size.
+- **Re-chunking and embedding:** the dominant variable cost. Proportional to the number of changed chunks, which is why incremental updates matter.
+- **Vector store writes:** deletes plus upserts for changed documents.
+- **Validation:** a periodic re-hash of source documents. Proportional to corpus size, not change rate, but cheap per document because no embedding is involved.
+
+Substitute your own measured numbers for each line. The structural point is that three of the four components scale with change rate, and only validation scales with corpus size. A corpus can be large and cheap to keep fresh if its change rate is low; a small corpus with high churn can be expensive.
+
+## FAQ
+
+**How do I detect changes when the source has no webhooks?**
+Poll and hash. Store the last-seen hash per document, re-hash on a schedule proportional to the document's bucket, and use conditional requests where supported. Record the start and end of each poll cycle so skipped cycles are visible.
+
+**Should chunks be deleted and rewritten, or updated in place?**
+Delete and rewrite. In-place updates require the chunk boundaries to be stable across edits, which they generally are not. Deleting by `doc_id` and writing the new version keeps the index free of mixed-version content.
+
+**How do I keep chunk IDs stable across edits?**
+You generally should not. Treat chunk identity as scoped to a document version. Anything that caches on chunk ID — evaluation sets, click logs — should key on `doc_id` plus version plus index, and be invalidated when the version changes.
+
+**Can a relational database with a vector extension serve as the store?**
+It can, and it keeps the index in the same transaction boundary as your metadata, which simplifies consistency. The trade-off is that per-document refresh means deleting and re-inserting that document's rows, which can contend with concurrent queries. Measure the write latency under realistic query load before committing.
+
+**What staleness threshold should trigger an alert?**
+Set it from the product's tolerance, not from a default. If the product promises answers no older than a day, alert well before that window closes, and alert on the refresh job's success/failure separately from the staleness ratio, so you can distinguish "the job broke" from "the job is running but not keeping up."
+
+**Does a better embedding model reduce staleness?**
+No. Embedding quality affects how well a correct chunk is retrieved; it does not affect whether the chunk is correct. Staleness is a data-freshness property, and it is fixed by the refresh pipeline, not the model.
+
+## One thing to do in the next 30 minutes
+
+Pick one document in your corpus that changes regularly. Compute a SHA-256 hash of its current content, then compare it to the `content_hash` stored on its indexed chunks. If the field does not exist, that is your answer: your index cannot currently tell you whether it is stale. Add the field on the next write, and run the same comparison as a scheduled job.

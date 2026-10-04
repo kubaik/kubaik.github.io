@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-improve_posts.py - LLM rewrite of every IMPROVE-verdict post so it is honest, grounded and genuinely useful.
+improve_posts.py - scan docs/, identify every post worth saving, and LLM-rewrite it so it is honest, grounded and
+genuinely useful. No verdict file is needed: triage.analyze() scans docs/ on every run.
 
 Uses the SAME provider fallback chain as blog_system.py (DeepSeek -> Groq -> Gemini -> OpenRouter -> ...), so it
 needs no new secrets. Per post it:
@@ -15,11 +16,11 @@ needs no new secrets. Per post it:
 
 Bounded + resumable: `--limit` posts per run (default 10), worst offenders first, already-improved posts skipped.
 
-  python improve_posts.py                          # dry run: lists what would be sent to the LLM
+  python improve_posts.py                          # dry run: scans docs/, lists what would be sent to the LLM
   python improve_posts.py --confirm --limit 10     # rewrite 10 posts
   python improve_posts.py --confirm --slug my-slug # one post
   python improve_posts.py --confirm --limit 0      # everything (long; mind provider rate limits)
-Run delete_posts.py first so no LLM budget is spent on posts that are going away.
+Posts the scan marks DELETE are never rewritten; run delete_posts.py first so none are left over.
 """
 
 import argparse
@@ -226,21 +227,36 @@ async def improve_one(bs, d: dict, attempts: int, verify_online: bool):
     return None, None, None, attempts, last_errs
 
 
-def load_candidates(verdicts: Path, docs: Path, slugs):
-    rows = [
-        r
-        for r in csv.DictReader(open(verdicts, encoding="utf-8"))
-        if r["verdict"] == "IMPROVE"
-    ]
+def load_candidates(verdicts, docs: Path, slugs):
+    """verdicts=None -> scan docs/ now (default). Otherwise read a saved verdicts.csv."""
+    if verdicts:
+        all_rows = list(csv.DictReader(open(verdicts, encoding="utf-8")))
+    else:
+        all_rows, _ = triage.analyze(docs)
+    pending_deletes = sum(1 for r in all_rows if r["verdict"] == "DELETE")
+    if pending_deletes:
+        print(
+            f"⚠ {pending_deletes} post(s) are flagged DELETE and will be skipped — run delete_posts.py --confirm first."
+        )
+    rows = [r for r in all_rows if r["verdict"] == "IMPROVE"]
+    print(
+        f"review result: {len(all_rows)} posts -> {pending_deletes} DELETE, {len(rows)} IMPROVE"
+    )
     if slugs:
         rows = [r for r in rows if r["slug"] in set(slugs)]
     rows.sort(key=lambda r: -float(r.get("fab_density") or 0))
     out = []
     for r in rows:
         pj = docs / r["slug"] / "post.json"
-        if not pj.exists():
-            continue
-        d = json.loads(pj.read_text("utf-8"))
+        try:
+            d = json.loads(pj.read_text("utf-8"))
+        except (
+            OSError,
+            ValueError,
+        ):  # missing/corrupt post.json: rebuild from index.md
+            if not (docs / r["slug"] / "index.md").exists():
+                continue
+            d = triage._md_post(r["slug"], docs / r["slug"] / "index.md")
         if d.get("llm_improved_at"):
             continue
         out.append((r, d, pj))
@@ -250,10 +266,22 @@ def load_candidates(verdicts: Path, docs: Path, slugs):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--docs", default="docs")
-    ap.add_argument("--verdicts", default="triage_report/verdicts.csv")
+    ap.add_argument(
+        "--verdicts", help="use a saved verdicts.csv instead of scanning docs/"
+    )
     ap.add_argument("--config", default="config.yaml")
     ap.add_argument("--slug", action="append")
-    ap.add_argument("--limit", type=int, default=10, help="posts per run (0 = all)")
+    ap.add_argument(
+        "--limit",
+        type=int,
+        default=10,
+        help="max LLM rewrites per run (the REVIEW always covers every post); 0 = all",
+    )
+    ap.add_argument(
+        "--all",
+        action="store_true",
+        help="rewrite every remaining IMPROVE post this run (same as --limit 0)",
+    )
     ap.add_argument("--attempts", type=int, default=3)
     ap.add_argument("--backup-dir", default=".quality_review_backups")
     ap.add_argument(
@@ -266,11 +294,17 @@ def main():
     a = ap.parse_args()
 
     docs = Path(a.docs)
-    cands = load_candidates(Path(a.verdicts), docs, a.slug)
-    if a.limit:
+    cands = load_candidates(Path(a.verdicts) if a.verdicts else None, docs, a.slug)
+    total_pending = len(cands)
+    if a.limit and not a.all:
         cands = cands[: a.limit]
     print(
-        f"{'REWRITING' if a.confirm else 'DRY RUN —'} {len(cands)} post(s) with the LLM"
+        f"{'REWRITING' if a.confirm else 'DRY RUN —'} {len(cands)} of {total_pending} pending post(s) with the LLM"
+        + (
+            f" ({total_pending - len(cands)} remain; re-run to continue, or use --all)"
+            if total_pending > len(cands)
+            else ""
+        )
     )
     if not a.confirm:
         for r, d, _ in cands:
@@ -314,6 +348,33 @@ def main():
         now = datetime.now(timezone.utc).isoformat()
         d["updated_at"] = now
         d["llm_improved_at"] = now
+        for k in (
+            "slug",
+            "tags",
+            "featured_image",
+            "created_at",
+            "seo_keywords",
+            "affiliate_links",
+            "monetization_data",
+            "twitter_hashtags",
+        ):
+            d.setdefault(
+                k,
+                (
+                    slug
+                    if k == "slug"
+                    else (
+                        []
+                        if k in ("tags", "seo_keywords", "affiliate_links")
+                        else ({} if k == "monetization_data" else "")
+                    )
+                ),
+            )
+        if not d.get("created_at"):
+            d["created_at"] = now
+        d.pop("_no_json", None)
+        d.pop("_path", None)
+        d.pop("_slug", None)
         pj.write_text(json.dumps(d, indent=2, ensure_ascii=False), "utf-8")
         (pj.parent / "index.md").write_text(f"# {d['title']}\n\n{body}\n", "utf-8")
         report["improved"].append(
@@ -332,21 +393,19 @@ def main():
             "Posts that cannot be fixed automatically: re-run triage.py, review, then delete_posts.py --slug <slug>."
         )
     if report["improved"] and not a.no_finalize:
-        subprocess.run(
-            [
-                sys.executable,
-                str(Path(__file__).resolve().parent / "post_enhancer.py"),
-                "--docs",
-                a.docs,
-                "--verdicts",
-                a.verdicts,
-                "--backup",
-                a.backup_dir,
-                "--verify-links",
-                "--confirm",
-            ],
-            check=False,
-        )
+        cmd = [
+            sys.executable,
+            str(Path(__file__).resolve().parent / "post_enhancer.py"),
+            "--docs",
+            a.docs,
+            "--backup",
+            a.backup_dir,
+            "--verify-links",
+            "--confirm",
+        ]
+        if a.verdicts:
+            cmd += ["--verdicts", a.verdicts]
+        subprocess.run(cmd, check=False)
 
 
 if __name__ == "__main__":

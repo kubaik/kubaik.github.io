@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI tools won’t help if everyone writes the same code - Kubai Kevin</title>
-        <meta name="description" content="AI tools create two classes of engineers unless you measure outcomes, not output.">
+        <meta name="description" content="AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.">
         <meta name="keywords" content="AiTeamNorms, Engineering, AiCopilotPolicy, DistributedTeamAi, AiCodeReview, Ai, Softwareengineering">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-29T02:53:12.108815">
-        <meta property="article:modified_time" content="2026-10-03T11:38:08.271425+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:29:33.510908+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI tools won’t help if everyone writes the same code">
-        <meta property="og:description" content="AI tools create two classes of engineers unless you measure outcomes, not output.">
+        <meta property="og:description" content="AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.">
         <meta property="og:url" content="https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI tools won’t help if everyone writes the same code">
-        <meta name="twitter:description" content="AI tools create two classes of engineers unless you measure outcomes, not output.">
+        <meta name="twitter:description" content="AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-tools-wont-help-if-everyone-writes-the-same-code.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/#article",
       "headline": "AI tools won’t help if everyone writes the same code",
-      "description": "AI tools create two classes of engineers unless you measure outcomes, not output.",
+      "description": "AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.",
       "datePublished": "2026-07-29T02:53:12+00:00",
-      "dateModified": "2026-10-03T11:38:08+00:00",
-      "wordCount": 2874,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-10-04T10:29:33+00:00",
+      "wordCount": 2577,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI tools won’t help if everyone writes the same code</h1>
                 
-                <p class="post-lead">AI tools create two classes of engineers unless you measure outcomes, not output.</p>
+                <p class="post-lead">AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.</p>
                 
                 
                 <div class="tags">
@@ -259,217 +259,263 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2874 words
+                        13 min read
+                        &nbsp;·&nbsp; 2577 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>There's a gap between how building healthy is taught and how it actually behaves under load. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>In late 2026, a distributed team at a Lagos-based SaaS company hit a growth ceiling. They’d hired aggressively across Berlin, Singapore, and San Francisco, but code quality started diverging so wildly that every pull request became a negotiation. Two classes of engineers emerged: the "fast ones" who used AI copilots to ship features in hours, and everyone else who still wrote tests, documented APIs, and actually waited for CI to finish before merging. The problem wasn’t intent—everyone wanted to move fast—but the collateral damage was real. The fast cohort averaged 40% fewer review comments per PR, but their code also had 3× more production incidents in the first 30 days. A Berlin teammate bluntly said, "I don’t trust a single AI-generated endpoint without a human second pass."</p>
-<p>The core tension wasn’t technical; it was cultural. They’d built a culture where speed trumped rigor, and AI became the amplifier. By February 2026, 68% of new features shipped with at least one AI-assisted commit, but their incident rate for AI-written endpoints had climbed to 18%—double the baseline for human-written code. Their SLA for API response time was 500ms p95, but endpoints with heavy AI scaffolding often spiked to 1.2s during traffic bursts. The real cost wasn’t the copilot licenses ($12/user/month in 2026) but the hidden tax: every incident meant a rollback, a post-mortem, and a Slack thread apologizing to customers in Nigeria and Singapore who paid for uptime.</p>
-<p>Their goal wasn’t to ban AI—it was to stop the divergence. They needed norms that let engineers move fast without creating a permanent underclass of reviewers and firefighters.</p>
-<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
-<p>Their first attempt was a blunt policy: "AI suggestions must be reviewed by a human before merge." They published it in March 2026. Within two weeks, the fast cohort routed around it. They’d paste AI output, mark the PR as "ready for review," and let their teammates do the cleanup. The review load didn’t decrease—it just shifted to the same people. Worse, the review comments now included lines like "This function looks AI-generated; please add tests." That single phrase added 20 minutes per PR to the review cycle, and morale cratered. By April, their average PR review time jumped from 2.1 hours to 5.3 hours, even though the code itself was smaller.</p>
-<p>Then they tried automation. They built a GitHub Action that flagged AI-generated diffs by checking for Google’s 2026 fingerprinting tokens in the commit messages. The action ran in 400ms, but it was brittle: developers could bypass it by stripping the tokens, or by using local LLM wrappers that didn’t emit them. The false-positive rate hit 12%—mostly on legitimate codebases that happened to use certain variable naming patterns. One false positive in a Singapore PR blocked a hotfix for 90 minutes while they untangled a merge conflict. That incident alone cost them $840 in engineer time.</p>
-<p>Their third try was social pressure: they asked senior engineers to mentor newcomers on "responsible AI use." The problem was timing. Mentorship sessions happened after the damage was done—when the code was already in staging and the on-call rotation was getting paged. The mentors burned out fast. By May, three of their Berlin seniors had quietly stopped reviewing AI-heavy PRs altogether, effectively creating the two classes they’d set out to avoid.</p>
-<p>In hindsight, all three attempts failed for the same reason: they treated AI use as a binary choice—either "on" or "off"—and they ignored the power dynamics. The fast engineers had the leverage because they delivered features fastest, and the rest had to clean up the mess. They needed to redistribute that leverage, not just police it.</p>
-<h2 id="the-approach-that-worked">The approach that worked</h2>
-<p>They stopped policing AI and started measuring what mattered: <strong>incident rate per author, not per feature</strong>. In June 2026, they built a lightweight dashboard that tracked three metrics for every engineer:
-- Incident count in the first 30 days after their code merged
-- Average PR size (lines of code added + deleted)
-- Time from PR open to first human review</p>
-<p>The dashboard ran on a cron job every 6 hours, pulling data from GitHub and PagerDuty. It cost them $48/month on AWS Lambda with arm64 and DynamoDB. What surprised them was how quickly the data changed behavior. Engineers who’d been racing to ship suddenly saw their names next to incident counts, and the numbers were public to the team. Within two weeks, the average incident rate per author dropped from 0.42 to 0.18—less than half—and the gap between the top and bottom performers shrank from 4× to 1.8×.</p>
-<p>The key insight was transparency without shaming. The dashboard didn’t name individuals in Slack or email; it lived in a private Grafana instance that anyone could open. When someone clicked through, they saw only their own stats. This turned AI use from a moral question into a practical one: if you rely on AI to write your code, you’d better test it, because your name is on the incidents.</p>
-<p>They paired the dashboard with a simple rule: <strong>every AI-assisted PR must include a test plan in the description</strong>, even if the test was trivial. The plan didn’t have to be novel—it just had to exist. This rule added 3 minutes per PR on average, but it cut the incident rate for AI-written endpoints by 62%. By August, their p95 API response time stabilized at 480ms, down from the 1.2s spike they’d seen in February.</p>
-<h2 id="implementation-details">Implementation details</h2>
-<p>Their stack for the dashboard was intentionally minimal:</p>
+                <h2 id="the-problem-ai-amplifies-whatever-your-team-already-rewards">The problem: AI amplifies whatever your team already rewards</h2>
+<p>AI coding assistants do not create new team dynamics; they amplify existing ones. A team that already rewards raw output over verification will find that AI makes the output side cheaper and the verification side more expensive. A team that already has a small group of senior engineers doing most of the review will find that group absorbing an even larger share of the load.</p>
+<p>The failure mode is consistent enough to describe generically. A subset of engineers adopts AI assistance and ships features quickly. Because their throughput is visible and their defects are not yet visible, they accumulate social capital. Meanwhile, the engineers who write tests, document interfaces, and wait for CI before merging become the de facto cleanup crew. Review comments shift from technical critique to process complaints. Review latency rises even though individual diffs get smaller. Eventually the reviewers disengage, and the team has two classes of contributors: those who generate code and those who are accountable for it.</p>
+<p>This is not a tooling problem, and it is not solved by banning or mandating AI. It is a measurement and incentive problem. The rest of this article describes a concrete approach: pick one metric that captures real-world impact, instrument it cheaply, and make the feedback private to each engineer while keeping the aggregate visible.</p>
+<h2 id="why-policy-first-approaches-fail">Why policy-first approaches fail</h2>
+<p>Three interventions are common and reliably fail. Understanding why is useful before designing anything.</p>
+<p><strong>Blanket review mandates.</strong> A rule like "all AI-assisted code must be reviewed by a human before merge" sounds reasonable. In practice it relocates work rather than reducing it. Engineers who are optimizing for speed will mark a pull request ready for review and let someone else do the cleanup. The review queue grows, the same senior people absorb the load, and review comments become meta-commentary about process instead of substance. The mandate changes nothing about who bears the cost.</p>
+<p><strong>Automated AI detection.</strong> Tools that flag AI-generated diffs by inspecting commit metadata, watermarking tokens, or stylistic heuristics are brittle by construction. Any signal embedded in the commit can be stripped. Any heuristic based on naming patterns or formatting produces false positives on legitimate code. A false positive that blocks a hotfix during an incident is expensive in a way that is hard to recover from socially—the tool becomes something people route around rather than something they trust.</p>
+<p><strong>Senior mentorship programs.</strong> Asking senior engineers to coach others on responsible AI use fails on timing. Coaching happens after the code is already in staging and the on-call rotation is already paged. The mentor absorbs the cost of someone else's speed, and burnout follows. When the mentors quietly stop reviewing AI-heavy changes, the two-class split becomes permanent.</p>
+<p>The common thread: all three approaches treat AI use as a binary to be policed. None of them change the underlying incentive, which is that shipping fast is rewarded and cleaning up is not.</p>
+<h2 id="the-metric-that-changes-behavior-incident-rate-per-author">The metric that changes behavior: incident rate per author</h2>
+<p>The intervention that tends to work is unglamorous. Stop measuring AI usage. Start measuring outcomes per person.</p>
+<p>Pick one metric that everyone already agrees is broken. The most useful candidate in most teams is <strong>incident count attributable to an author within a fixed window after their code merges</strong>. Thirty days is a reasonable default; adjust based on your deploy cadence and how quickly incidents surface.</p>
+<p>Why incidents rather than coverage, PR count, or lines changed:</p>
 <ul>
-<li><strong>Data source</strong>: GitHub’s GraphQL API v4, via the ... library in Python 3.11</li>
-<li><strong>Incident tracking</strong>: PagerDuty REST API v2, with a custom integration that tagged incidents by author email</li>
-<li><strong>Storage</strong>: DynamoDB table with a sort key on <code>author_email#merge_date</code>, costing $0.25/GB/month</li>
-<li><strong>Compute</strong>: AWS Lambda (Python 3.11, 512MB memory), triggered by EventBridge every 6 hours, runtime 1.8s, cost $0.000004 per invocation</li>
-<li><strong>Frontend</strong>: A private Grafana dashboard using the [Grafana GitHub data source ... v2.4.0</li>
+<li>Coverage is trivially gameable by AI-generated tests that assert nothing meaningful.</li>
+<li>PR count rewards fragmentation.</li>
+<li>Lines changed rewards verbosity and punishes refactoring.</li>
+<li>Incidents are expensive, hard to fake, and directly connected to customer impact.</li>
 </ul>
-<p>The cron job fetches three things per author:
-1. All PRs merged in the last 30 days
-2. All incidents in the same window where the author was in the <code>assignee</code> field
-3. Average PR size from GitHub’s API</p>
-<p>Here’s the core Lambda handler:</p>
+<p>The metric does not need to be perfect. Attribution is genuinely hard when multiple authors touch a service, when incidents stem from configuration rather than code, or when a defect ships from an old change. Accept a coarse signal. The goal is not a performance review artifact; it is a feedback loop that makes consequences visible at the moment of decision.</p>
+<h3 id="defining-the-metric-precisely">Defining the metric precisely</h3>
+<p>Before building anything, write down the definition. A workable starting point:</p>
+<ul>
+<li><strong>Numerator:</strong> count of production incidents in the trailing 30 days where the author of the most recent change to the implicated code path is identified as the responsible party.</li>
+<li><strong>Denominator:</strong> count of merged pull requests by that author in the same window, or simply report the raw count if PR volume is similar across the team.</li>
+<li><strong>Exclusions:</strong> incidents caused by third-party outages, infrastructure changes not tied to a code merge, and incidents where attribution is genuinely ambiguous.</li>
+</ul>
+<p>Record the exclusions in writing. Ambiguity in the definition is where trust in the metric erodes.</p>
+<h2 id="instrumentation-what-to-collect-and-from-where">Instrumentation: what to collect and from where</h2>
+<p>The data you need already exists in most organizations. You are joining two systems that were never designed to talk to each other.</p>
+<p><strong>From your source control host:</strong> merged pull requests in the trailing window, with author identity, merge timestamp, additions, deletions, and the list of files touched. Both GitHub's GraphQL API and GitLab's REST API expose all of this. Use the API rather than scraping the web UI; rate limits are documented and stable.</p>
+<p><strong>From your incident management system:</strong> incidents in the same window, with the responder or assignee identity and creation timestamp. PagerDuty, Opsgenie, and similar tools all expose this via documented REST endpoints.</p>
+<p><strong>The join key</strong> is a stable identity. Email address is the usual choice, but it only works if the same address is used across both systems. Verify this before building; mismatched identities produce a dashboard that silently under-counts.</p>
+<p><strong>Storage:</strong> a single table keyed by author and period is sufficient. Any managed key-value or relational store works. Do not over-invest here.</p>
+<p><strong>Compute:</strong> a scheduled job that runs every few hours and writes one row per author per period. A serverless function on a timer is adequate. The workload is small: a few hundred API calls and a few hundred writes per run.</p>
+<p><strong>Presentation:</strong> a dashboard with per-author views. The critical design decision is access control, discussed below.</p>
+<h3 id="a-minimal-handler">A minimal handler</h3>
+<p>The following illustrates the shape of the job. It fetches merged pull requests and incidents for each team member and writes one summary row per person. Error handling is intentionally left as an exercise; in production, wrap each author's processing in a try/except so one failure does not abort the run.</p>
 <pre><code class="language-python">import os
-import boto3
-from github3 import GitHub
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
-DYNAMODB_TABLE = ...
-ddb = ...
-table = ...
+import boto3
+import requests
+
+TABLE_NAME = os.environ[&quot;METRICS_TABLE&quot;]
+GITHUB_TOKEN = os.environ[&quot;GITHUB_TOKEN&quot;]
+GITHUB_ORG = os.environ[&quot;GITHUB_ORG&quot;]
+PAGERDUTY_TOKEN = os.environ[&quot;PAGERDUTY_TOKEN&quot;]
+WINDOW_DAYS = 30
+
+dynamodb = boto3.resource(&quot;dynamodb&quot;)
+table = dynamodb.Table(TABLE_NAME)
+
+
+def fetch_merged_prs(login, cutoff):
+    &quot;&quot;&quot;Return merged PRs authored by `login` since `cutoff`.&quot;&quot;&quot;
+    query = &quot;&quot;&quot;
+    query($org: String!, $cursor: String) {
+      organization(login: $org) {
+        repositories(first: 50, after: $cursor) {
+          pageInfo { hasNextPage endCursor }
+          nodes {
+            name
+            pullRequests(first: 50, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+              nodes {
+                number
+                title
+                mergedAt
+                additions
+                deletions
+                author { login }
+              }
+            }
+          }
+        }
+      }
+    }
+    &quot;&quot;&quot;
+    headers = {&quot;Authorization&quot;: f&quot;bearer {GITHUB_TOKEN}&quot;}
+    results = []
+    cursor = None
+
+    while True:
+        response = requests.post(
+            &quot;https://api.github.com/graphql&quot;,
+            json={&quot;query&quot;: query, &quot;variables&quot;: {&quot;org&quot;: GITHUB_ORG, &quot;cursor&quot;: cursor}},
+            headers=headers,
+            timeout=30,
+        )
+        response.raise_for_status()
+        payload = response.json()[&quot;data&quot;][&quot;organization&quot;][&quot;repositories&quot;]
+
+        for repo in payload[&quot;nodes&quot;]:
+            for pr in repo[&quot;pullRequests&quot;][&quot;nodes&quot;]:
+                merged_at = datetime.fromisoformat(pr[&quot;mergedAt&quot;].replace(&quot;Z&quot;, &quot;+00:00&quot;))
+                if merged_at &lt; cutoff:
+                    continue
+                if pr[&quot;author&quot;] and pr[&quot;author&quot;][&quot;login&quot;] == login:
+                    results.append(
+                        {
+                            &quot;repo&quot;: repo[&quot;name&quot;],
+                            &quot;number&quot;: pr[&quot;number&quot;],
+                            &quot;additions&quot;: pr[&quot;additions&quot;],
+                            &quot;deletions&quot;: pr[&quot;deletions&quot;],
+                            &quot;merged_at&quot;: merged_at.isoformat(),
+                        }
+                    )
+
+        if not payload[&quot;pageInfo&quot;][&quot;hasNextPage&quot;]:
+            break
+        cursor = payload[&quot;pageInfo&quot;][&quot;endCursor&quot;]
+
+    return results
+
+
+def fetch_incidents(email, since):
+    &quot;&quot;&quot;Return incidents assigned to `email` since the given ISO timestamp.&quot;&quot;&quot;
+    headers = {
+        &quot;Authorization&quot;: f&quot;Token token={PAGERDUTY_TOKEN}&quot;,
+        &quot;Accept&quot;: &quot;application/vnd.pagerduty+json;version=2&quot;,
+    }
+    params = {&quot;since&quot;: since, &quot;until&quot;: datetime.now(timezone.utc).isoformat()}
+    response = requests.get(
+        &quot;https://api.pagerduty.com/incidents&quot;,
+        headers=headers,
+        params=params,
+        timeout=30,
+    )
+    response.raise_for_status()
+    incidents = response.json()[&quot;incidents&quot;]
+    return [i for i in incidents if email in [a.get(&quot;email&quot;) for a in i.get(&quot;assignments&quot;, [])]]
+
 
 def lambda_handler(event, context):
-    github_token = ...
-    gh = GitHub(token=github_token)
+    cutoff = datetime.now(timezone.utc) - timedelta(days=WINDOW_DAYS)
+    since = cutoff.isoformat()
 
-    # Get all active team members from AWS SSM
-    ssm = boto3.client('ssm')
-    team_emails = ssm.get_parameters_by_path(
-        Path='/team/emails',
-        Recursive=True,
-        WithDecryption=True
-    )['Parameters']
+    ssm = boto3.client(&quot;ssm&quot;)
+    params = ssm.get_parameters_by_path(
+        Path=&quot;/team/emails&quot;, Recursive=True, WithDecryption=True
+    )[&quot;Parameters&quot;]
 
-    cutoff = datetime.utcnow() - timedelta(days=30)
+    period = cutoff.strftime(&quot;%Y-%m&quot;)
 
-    for email_param in team_emails:
-        email = email_param['Value']
-        user = gh.user()  # Assumes token belongs to a user with access to org
-        repos = user.repositories()
+    for param in params:
+        email = param[&quot;Value&quot;]
+        login = email.split(&quot;@&quot;)[0]  # replace with an explicit mapping if needed
 
-        # Fetch PRs merged by this author
-        prs = []
-        for repo in repos:
-            for pr in ...
-                if pr.merged_at &gt; cutoff and pr.user.login == user.login:
-                    prs.append({
-                        'repo': repo.name,
-                        'number': pr.number,
-                        'title': pr.title,
-                        'merged_at': ...
-                        'additions': pr.additions,
-                        'deletions': pr.deletions
-                    })
+        try:
+            prs = fetch_merged_prs(login, cutoff)
+            incidents = fetch_incidents(email, since)
+        except Exception as exc:  # noqa: BLE001 - log and continue
+            print(f&quot;skipping {email}: {exc}&quot;)
+            continue
 
-        # Fetch incidents from PagerDuty
-        pager = ...
-        incidents = pager.list_incidents(
-            ...
-            assignee_ids=[email]
-        )
+        total_lines = sum(p[&quot;additions&quot;] + p[&quot;deletions&quot;] for p in prs)
+        avg_pr_size = total_lines / len(prs) if prs else 0
 
-        # Calculate metrics
-        incident_count = len(incidents)
-        avg_pr_size = sum(p['additions'] + p['deletions'] for p in prs) / len(prs) if prs else 0
-
-        # Store in DynamoDB
         table.put_item(
             Item={
-                'author': email,
-                'period': ...
-                'incident_count': incident_count,
-                'avg_pr_size': avg_pr_size,
-                'pr_count': len(prs)
+                &quot;author&quot;: email,
+                &quot;period&quot;: period,
+                &quot;incident_count&quot;: len(incidents),
+                &quot;pr_count&quot;: len(prs),
+                &quot;avg_pr_size&quot;: round(avg_pr_size, 1),
+                &quot;computed_at&quot;: datetime.now(timezone.utc).isoformat(),
             }
         )
 
-    return {'statusCode': 200}
+    return {&quot;statusCode&quot;: 200}
 </code></pre>
-<p>The Grafana dashboard uses two panels:
-1. A time-series chart showing incident count per author over the last 30 days
-2. A bar chart ranking authors by average PR size, with a threshold line at 300 lines (their heuristic for "too big")</p>
-<p>They also added a Slack bot that posts a weekly summary to <code>#ai-usage</code>:</p>
-<pre><code class="language-javascript">// Slack bot using Bolt for JavaScript v3.19.0
-const { App } = ...
-const { DynamoDBClient, ScanCommand } = ...
+<p>Two notes on this code. First, deriving the source-control login from the email local part is a shortcut that will break for anyone whose login differs from their email prefix; maintain an explicit mapping instead. Second, the GraphQL query above fetches a bounded page of repositories and pull requests for illustration. In production you would paginate pull requests within each repository and filter server-side by author and merge date where the API supports it.</p>
+<h3 id="the-weekly-summary">The weekly summary</h3>
+<p>A scheduled message that posts aggregate, anonymized movement to a team channel keeps the metric present without putting individuals on the spot. The following posts the five largest incident counts without naming authors.</p>
+<pre><code class="language-javascript">const { App } = require(&quot;@slack/bolt&quot;);
+const { DynamoDBClient, ScanCommand } = require(&quot;@aws-sdk/client-dynamodb&quot;);
 
-const app = new App({ token: ... signingSecret: ... });
+const app = new App({
+  token: process.env.SLACK_BOT_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+});
 
-... async ({ ack, say }) =&gt; {
-  await ack();
+const ddb = new DynamoDBClient({ region: process.env.AWS_REGION });
 
-  const ddb = new DynamoDBClient({ region: 'us-east-1' });
-  const result = await ddb.send(new ScanCommand({
-    TableName: ...
-    Limit: 100
+app.message(&quot;weekly-metrics&quot;, async ({ say }) =&gt; {
+  const result = await ddb.send(
+    new ScanCommand({ TableName: process.env.METRICS_TABLE, Limit: 200 })
+  );
+
+  const items = (result.Items || []).map((item) =&gt; ({
+    incidents: Number(item.incident_count.N),
+    prCount: Number(item.pr_count.N),
+    avgPrSize: Number(item.avg_pr_size.N),
+    period: item.period.S,
   }));
 
-  const sorted = result.Items.sort((a, b) =&gt; b.incident_count - a.incident_count);
-  let message = 'Weekly AI usage summary:\n\n';
+  const totalIncidents = items.reduce((sum, i) =&gt; sum + i.incidents, 0);
+  const totalPrs = items.reduce((sum, i) =&gt; sum + i.prCount, 0);
+  const overallAvgSize = totalPrs
+    ? items.reduce((sum, i) =&gt; sum + i.avgPrSize * i.prCount, 0) / totalPrs
+    : 0;
 
-  for (const item of sorted.slice(0, 5)) {
-    message += `• ... ${item.incident_count.N} incidents, ... avg PR size\n`;
-  }
+  const withIncidents = items.filter((i) =&gt; i.incidents &gt; 0).length;
 
-  await say(message);
+  await say(
+    [
+      `*Weekly engineering metrics* (${items[0]?.period ?? &quot;n/a&quot;})`,
+      `• Merged PRs: ${totalPrs}`,
+      `• Incidents attributed: ${totalIncidents}`,
+      `• Contributors with at least one incident: ${withIncidents} of ${items.length}`,
+      `• Mean PR size: ${overallAvgSize.toFixed(0)} lines`,
+    ].join(&quot;\n&quot;)
+  );
 });
+
+(async () =&gt; {
+  await app.start(process.env.PORT || 3000);
+})();
 </code></pre>
-<p>The bot posts every Monday at 9am Berlin time, which is 8am Lagos and 5pm Singapore—prime hours for all three offices.</p>
-<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
-<p>| Metric                          | Feb 2026 (before) | Aug 2026 (after) | Change       |
-...
-| Avg PR review time              | 5.3 hours         | 2.1 hours         | -60%         |
-| Incident rate per author        | 0.42              | 0.18              | -57%         |
-| API p95 response time           | 1.2s              | 480ms             | -60%         |
-| Top/bottom author gap           | 4×                | 1.8×              | -55%         |
-| AI copilot license cost         | $12/user/month    | $12/user/month    | 0%           |
-| On-call rotation load           | High              | Medium            | -            |
-| Engineer retention (6-month)    | 87%               | 94%               | +7%          |</p>
-<p>The biggest win wasn’t speed—it was parity. In February, the fastest 20% of engineers had 3× fewer incidents, but by August, the gap had closed to 1.8×. More importantly, the slowest 20% had improved their incident rate by 68%, which meant reviewers stopped treating them as second-class citizens.</p>
-<p>Their SLA compliance also improved: they hit 99.8% uptime in Q3 2026, up from 98.1% in Q1. That 1.7% jump translated to $24,000 in avoided SLA credits for their Lagos customers alone—more than enough to cover the $48/month dashboard cost.</p>
-<h2 id="what-wed-do-differently">What we’d do differently</h2>
-<ol>
-<li>
-<p><strong>We over-rotated on transparency</strong>. The public dashboard created anxiety for some engineers, especially those in Singapore where incident post-mortems are culturally sensitive. Next time, they’d start with a private view for each engineer, then open it up only after they opt in.</p>
-</li>
-<li>
-<p><strong>We ignored the tooling feedback loop</strong>. Engineers quickly learned to game the system by splitting large AI-generated PRs into tiny ones. Their average PR size dropped from 280 lines to 180 lines, but the total number of PRs surged. They should have paired the dashboard with a rule: "If your PR is smaller than 50 lines, it must be part of a larger feature branch." That would have prevented the micro-PR inflation.</p>
-</li>
-<li>
-<p><strong>We forgot to measure morale</strong>. The dashboard showed metrics, but not sentiment. In July, they ran a quick anonymous survey and found that 31% of engineers felt "watched" rather than "measured." Next time, they’d add a quarterly pulse survey to catch drift before it becomes a problem.</p>
-</li>
-<li>
-<p><strong>We didn’t enforce the test plan rule strictly enough</strong>. Some engineers pasted a single "I tested this locally" into the PR description and called it a day. In hindsight, they needed a lightweight CI check that blocked merges unless the PR description contained the word "TEST:" followed by a non-empty string.</p>
-</li>
-</ol>
-<p>Most importantly, they assumed AI use was a technical problem when it was always a social one. The dashboard helped, but the real fix was rebuilding trust—not by policing AI, but by making sure everyone’s work was judged by the same standards.</p>
-<h2 id="the-broader-lesson">The broader lesson</h2>
-<p><strong>Transparency works best when it redistributes power, not when it redistributes blame.</strong></p>
-<p>AI tools amplify existing team dynamics. If your team already has an underclass of reviewers and firefighters, pairing those engineers with AI copilots won’t fix the imbalance—it’ll deepen it. The only way to prevent two classes of engineers is to make sure every contributor’s work is measured by the same yardstick: incidents, not lines of code; reviews, not speed; and ownership, not output.</p>
-<p>The dashboard gave every engineer a mirror. What they saw wasn’t a ranking—it was a reflection of their own choices. That’s the difference between a policy that controls behavior and one that enables it. Controls create resentment; mirrors create responsibility.</p>
-<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
-<p>Start with <strong>one metric that everyone can agree is broken</strong>. In their case, it was incident rate per author. In yours, it might be review time, deployment frequency, or bug escape rate. Pick something that’s already causing pain, not something you wish would improve.</p>
-<p>Next, <strong>build the minimal dashboard that can deliver that metric in under a week</strong>. Don’t aim for perfection—aim for "good enough to change behavior." Their stack cost $48/month and took 2 days to build. If you can’t ship it in a week, you’re over-engineering.</p>
-<p>Then, <strong>tie the metric to a lightweight rule with teeth</strong>. Their rule was "test plan in PR description," but yours could be "no merges after 5pm without a passing test run." The rule must be specific, enforceable, and tied directly to the metric. Vague rules like "be careful with AI" don’t work—they just create loopholes.</p>
-<p>Finally, <strong>make the feedback loop visible without making it punitive</strong>. Their Slack bot posted to a public channel, but the dashboard itself was private to each engineer. That balance—public summary, private details—reduced shame without sacrificing transparency.</p>
-<h2 id="resources-that-helped">Resources that helped</h2>
-<ul>
-<li>[GitHub GraphQL API v4 ... – Essential for pulling PR data without rate limits.</li>
-<li>[PagerDuty REST API ... – Simple and well-documented for incident tracking.</li>
-<li>[Grafana GitHub data source plugin ... – Saved them from building a frontend from scratch.</li>
-<li>[AWS Lambda with ... – 20% cheaper than x86 for their workload.</li>
-<li>[github3.py ... – Python wrapper that saved them from raw HTTP calls.</li>
-<li>[Slack Bolt for JavaScript ... – Easy to set up, hard to mess up.</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why did you choose incidents per author instead of something like code coverage?</strong>
-Incidents are the ultimate measure of real-world impact. Code coverage is easy to game—AI can generate 100% coverage in minutes, but that doesn’t mean the code is production-ready. Incidents, on the other hand, are unforgiving. They tried coverage first, but engineers quickly learned to write trivial tests just to hit the threshold. When they switched to incidents, the behavior changed overnight. Engineers who’d been gaming the system suddenly started writing meaningful tests and reviewing their own PRs before asking for reviews.</p>
-<p><strong>What if a junior engineer uses AI and their mentor takes too long to review?</strong>
-They ran into this in Singapore, where mentors were juggling multiple junior engineers. The fix wasn’t to speed up mentors—it was to pair juniors with AI in a structured way. They introduced a "buddy system": every junior’s first three AI-assisted PRs must be reviewed by a designated buddy within 24 hours. If the buddy misses the deadline, the PR auto-merges but triggers a mandatory post-mortem with the team lead. This created accountability without slowing down the juniors. The 24-hour window was tight enough to keep momentum but loose enough to account for timezone differences.</p>
-<p><strong>How did you handle engineers who refused to use the dashboard?</strong>
-They didn’t force anyone. Instead, they made the dashboard opt-in for the first month, then added it to the engineering onboarding checklist. Engineers who opted in early became advocates, and their public metrics acted as social proof. For the holdouts, they framed the dashboard as a tool for personal growth—not a surveillance system. One engineer in Berlin initially refused, but after seeing his peers cut their incident rates by 70%, he came around. The key was making it about <strong>his</strong> improvement, not <strong>their</strong> monitoring.</p>
-<p><strong>What’s the biggest mistake you made in the implementation?</strong>
-They assumed the data would speak for itself. In reality, engineers needed coaching to interpret the metrics. Some saw a low incident rate and assumed they were doing great, even if their PRs were tiny and brittle. Others fixated on PR size and started gaming the metric by splitting work into micro-PRs. They should have paired the dashboard with a short guide: "If your incident rate is 0, ask yourself if you’re shipping enough. If your PR size is below 50 lines, ask if you’re hiding complexity." Data without context is just noise.</p>
-<p>Take your team’s incident rate spreadsheet (or CSV dump from PagerDuty), sort by author, and calculate the ratio between the top and bottom 20%. If the gap is greater than 2×, you’ve got your metric. Open it in Google Sheets, share it privately with each engineer, and schedule a 15-minute team retro next week to review it together.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/">Two engineer classes: the AI tool norm trap</a></li>
-<li><a href="https://kubaik.github.io/who-owns-ai-generated-code/">Who owns AI-generated code?</a></li>
-<li><a href="https://kubaik.github.io/40-ai-code-meant-60-more-alerts/">40% AI code meant 60% more alerts</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="the-design-decision-that-matters-most-private-detail-public-aggregate">The design decision that matters most: private detail, public aggregate</h2>
+<p>The difference between a metric that improves a team and one that poisons it is who sees what.</p>
+<p><strong>Per-author detail should be visible only to that author.</strong> Each engineer can open a view showing their own incident count, PR count, and average PR size over time. Nobody else can see the breakdown. This converts the metric from a ranking into a mirror. The question an engineer asks themselves shifts from "am I beating my colleagues" to "is my own trend moving the right direction."</p>
+<p><strong>Aggregates should be visible to everyone.</strong> Total incidents, total merged PRs, distribution of PR sizes, and the spread between the highest and lowest contributors. Aggregates let the team see whether the overall system is improving without exposing individuals.</p>
+<p><strong>Nothing should be pushed to individuals automatically.</strong> No direct messages, no mentions in a channel, no weekly email with a personal score. Push notifications turn a reflective tool into a surveillance system, and the first thing people do with a surveillance system is route around it.</p>
+<p>This combination is what makes the feedback loop work. Consequences become visible at the moment of decision—an engineer about to merge an AI-assisted change knows their name is attached to whatever happens next—without the social cost of public comparison.</p>
+<h2 id="pairing-the-metric-with-a-lightweight-rule">Pairing the metric with a lightweight rule</h2>
+<p>Metrics alone change attention; they do not change behavior reliably. A single enforceable rule, tightly coupled to the metric, closes the gap.</p>
+<p>A workable example: <strong>every pull request description must contain a test plan, marked with a recognizable prefix.</strong> The content can be minimal. The requirement is that it exists and is specific enough that a reviewer can tell whether it was written after the change or before it.</p>
+<p>Enforce it with a CI check rather than human vigilance. A small script that reads the pull request body and fails the check if the marker is absent is enough. This removes the rule from the realm of social enforcement, where it would be applied unevenly, and puts it in the build pipeline, where it is applied identically to everyone.</p>
+<p>The rule should be tied to the metric. If the metric is incidents per author, the rule should be something that plausibly reduces incidents. "Test plan in the description" qualifies. "Be careful with AI" does not, because it is not checkable and creates no shared expectation.</p>
+<h2 id="failure-modes-to-watch-for">Failure modes to watch for</h2>
+<p><strong>Gaming by fragmentation.</strong> When average PR size becomes visible, engineers may split large changes into many small ones to move the number. The metric improves; the underlying risk does not. Watch the PR count alongside the average size. If the count rises sharply while the average falls, the metric is being gamed. The remedy is not a new rule but a conversation about what the metric is for.</p>
+<p><strong>Attribution disputes.</strong> The first time someone is told an incident is theirs, they will disagree. Have a written definition of attribution and a documented process for contesting it. If attribution is arbitrary, the metric loses credibility within weeks.</p>
+<p><strong>Metric fixation.</strong> A team that optimizes incident count will eventually under-ship. Pair the incident metric with a throughput signal—merged PRs, deployment frequency, or lead time—so that the two are read together. A team with zero incidents and zero deploys is not healthy.</p>
+<p><strong>Timezone and handoff effects.</strong> In distributed teams, incidents are often discovered by someone other than the author. If your incident system assigns based on who responded rather than who wrote the code, the metric will attribute incidents to the on-call engineer. Fix the join before you trust the number.</p>
+<p><strong>Silent disengagement.</strong> If per-author data leaks into performance reviews without warning, engineers will stop trusting the tool and stop using it honestly. Decide in advance what the data is and is not used for, and say so explicitly.</p>
+<h2 id="how-to-measure-this-on-your-own-team">How to measure this on your own team</h2>
+<p>You do not need a dashboard to start. You need one query and one honest conversation.</p>
+<p><strong>Step 1.</strong> Export the last 30 days of merged pull requests from your source control host, including author and merge date. Most hosts offer a CSV export or a one-line API call.</p>
+<p><strong>Step 2.</strong> Export the same window of incidents from your incident management tool, including the responder identity.</p>
+<p><strong>Step 3.</strong> Join the two on email address in a spreadsheet. Count incidents per author.</p>
+<p><strong>Step 4.</strong> Sort by incident count and compute the ratio between the highest and lowest contributors. If the gap exceeds roughly 2×, you have a measurable imbalance worth addressing.</p>
+<p><strong>Step 5.</strong> Share the aggregate distribution with the team—not the per-person breakdown—and ask whether the current review and testing practices are producing the outcomes people expect.</p>
+<p>The number itself is not the point. The point is that the conversation moves from opinion to evidence, and that the evidence is about outcomes rather than tooling choices.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open your incident management tool, export the last 30 days of incidents as CSV, and open the result in a spreadsheet. Add a column for the author of the most recent change to the implicated code path, using your source control history. Count incidents per author. Sort descending. If the top contributor has more than twice the incidents of the median, you have found the metric worth instrumenting—and the first conversation worth having.</p>
                 
                 
             </div>
@@ -498,19 +544,19 @@ They assumed the data would speak for itself. In reality, engineers needed coach
                     
                     <a class="related-card" href="/scope-agent-permissions-per-task/">
                         <h3>Scope agent permissions per task</h3>
-                        <p>Least-privilege for AI agents fails when permissions are static. Scope tokens per task, cut blast radius to one resource, and keep developer friction low.</p>
-                        <span class="related-meta">16 min read · 19 September 2026</span>
+                        <p>Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
+                        <span class="related-meta">19 min read · 19 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-access-for-non-ai-engineers/">
                         <h3>Agent access for non-AI engineers</h3>
-                        <p>Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.</p>
-                        <span class="related-meta">14 min read · 17 September 2026</span>
+                        <p>A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+                        <span class="related-meta">15 min read · 17 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/self-service-is-broken-without-ai-ops/">
                         <h3>Self-service is broken without AI ops</h3>
-                        <p>How AI turned &amp;#x27;self-service&amp;#x27; from a permissions problem into a guardrail system — with concrete AWS examples, Terraform snippets, and the metrics that…</p>
+                        <p>Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
                         <span class="related-meta">12 min read · 24 August 2026</span>
                     </a>
                     

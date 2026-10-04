@@ -1,260 +1,212 @@
 # Bank APIs broke under African 2G
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## The problem with cache-first advice on unreliable links
 
-## The conventional wisdom (and why it's incomplete)
+Most API design guidance assumes a stable last mile: reliable DNS, a CDN close by, and a client that stays connected long enough to complete a request. Cache aggressively, rate-limit defensively, validate inputs thoroughly. That advice is sound when the network is a minor variable.
 
-Most API design guides in 2026 still teach the same three rules from 2026: cache aggressively, rate-limit defensively, and validate inputs thoroughly. These rules work fine when you’re building an app for users on stable Wi-Fi with reliable DNS and CDNs. But in Africa, the honest answer is that these rules often break the first time someone tries to load your API over a *2G fallback* after midnight on a MTN network.
+In many markets it is the dominant variable. Mobile data is frequently the primary access path, and connections can drop from 4G to 3G to 2G within a single session, sometimes several times a minute. A typical failure mode looks like this:
 
-Our caching layer (Redis 7.2) was returning `200 OK` responses with stale data because the TTLs were set assuming a 50ms RTT to our origin, not the 800ms we measured on mobile data. Worse, we had no way to invalidate the cache when a user’s balance changed because the webhook from the bank (GTBank) only fires once every 15 minutes. The result? Users saw a balance from 14 minutes ago while their actual balance had already dropped.
+1. A client sends a request. The connection stalls before the response arrives.
+2. The client times out and retries.
+3. The retry reaches an edge cache that is still within its TTL, so it returns a response computed before the first request ever completed.
+4. The user sees stale state (for example, a balance that has already changed), acts on it, and a dispute follows.
 
-The standard advice also assumes you control the entire stack: your API, your CDN, and your user’s network. In Africa, you don’t control the last mile. MTN’s 2G fallback adds 300–1200ms of jitter, and when the signal drops for 5 seconds, your TCP connection resets, your TLS session expires, and your browser retries with a new TCP handshake. All this happens *after* your CDN has already served a stale response from the edge because your cache TTL wasn’t accounting for network partitions.
+None of the individual steps is exotic. The combination is what breaks the standard playbook, because the playbook assumes that cache freshness and client retries are independent concerns. On a flaky link they are tightly coupled.
 
-The fintech regulations that came into force in 2026 made this worse. Now, every API that touches customer funds must support idempotency keys, provide real-time balance updates within 5 seconds, and allow users to dispute transactions with evidence within 24 hours. These rules were designed for web and mobile apps on stable connections. But they ignore the reality that most Africans access the internet via mobile data with intermittent connectivity. Your API must work when the user’s connection is up for 3 seconds, down for 10, and up again — and your caching strategy must survive that.
+This article works through why the conventional setup fails, what a network-aware design looks like, how to measure whether you actually have the problem, and how to decide which parts apply to your system. It deliberately avoids quoting results from other companies' systems; instead it shows what to instrument so you can produce your own numbers.
 
-## What actually happens when you follow the standard advice
+## A worked failure: five-minute TTL, remote idempotency store
 
-Let’s take the standard caching playbook and apply it to a real fintech API in 2026. We’ll use a payments endpoint that returns the user’s balance and recent transactions. Here’s the conventional setup:
+Consider a conventional payments API with these components:
 
-- **Redis 7.2** for caching, with a **5-minute TTL**
-- **CloudFront CDN** in front of the API
-- **Rate limiting** at 100 requests/minute per user using NGINX 1.25
-- **Idempotency keys** stored in DynamoDB with a 24-hour expiry
+- A cache (any key-value store) in front of the balance endpoint, TTL 5 minutes.
+- A CDN in front of the API, also caching the balance response.
+- Per-user rate limiting implemented as a lookup in a shared remote store.
+- Idempotency keys stored in a managed remote database with a 24-hour expiry.
 
-Now, let’s simulate a user in Accra on a Vodafone 3G connection at 2 AM. Their phone switches from 4G to 3G, which adds 400ms of latency. The first request times out after 5 seconds, so the browser retries. The second request hits our CloudFront edge, but the edge cache is warm with a 5-minute TTL. CloudFront returns the cached response — which is 3 minutes old. The user’s actual balance has dropped by 200 GHS since then because they made a transfer that succeeded on the bank’s side but the bank’s webhook hasn’t fired yet.
+Now walk through a single user session on a slow link, with reasoning shown at each step:
 
-The user sees a stale balance and initiates a dispute. Our system tries to invalidate the cache when the bank’s webhook arrives, but the webhook fires 8 minutes later (because the bank batches updates). By then, the user has already disputed the transaction, and our support team has to manually reconcile the dispute because the evidence (the stale balance) doesn’t match the actual transaction.
+- **t=0s.** The client requests its balance. The origin computes it and returns 500 GHS. The cache stores this with a 5-minute TTL.
+- **t=180s.** The user completes a transfer elsewhere. The balance is now 300 GHS, but the webhook that would notify your system is batched by the bank and has not arrived.
+- **t=185s.** The client requests its balance again. The connection stalls; the client times out after 5 seconds and retries.
+- **t=190s.** The retry hits the cache. The entry is 190 seconds old but well within its 5-minute TTL, so the cache returns 500 GHS.
+- **t=200s.** The user sees 500 GHS, believes they have funds, and initiates a second transfer that will fail or overdraw. A dispute follows.
 
-The numbers tell the story:
-- **Cache hit rate**: 78% (good for latency, bad for freshness)
-- **Stale response rate**: 12% of requests return data older than 30 seconds
-- **Dispute rate**: 4.2% of transactions are disputed, 18% of which are due to stale data
-- **Cost**: We’re paying $1,200/month for Redis and $800/month for CloudFront cache invalidations, but 60% of those invalidations happen too late to prevent disputes
+The webhook may arrive minutes later and invalidate the cache, but by then the user has already acted on stale data. Invalidation that is correct but late is indistinguishable from no invalidation, from the user's point of view.
 
-The standard advice also assumes your rate limiter is stateful and can be updated in real time. In practice, most teams use Redis for rate limiting, which means every request does a Redis lookup. On a 3G connection with 600ms RTT, that adds 600ms to every API call just for rate limiting. We measured a 22% increase in API latency when we enabled rate limiting with Redis compared to a local token bucket in the API process.
+Two structural faults produce this:
 
-And then there’s the idempotency key problem. The regulation says you must accept an idempotency key for 24 hours, but most teams store it in DynamoDB with a TTL. If the user’s connection drops after sending the key but before getting a response, they retry with the same key. Our system accepted the key, checked DynamoDB, found no record (because the TTL hadn’t expired yet), and treated it as a new request — which caused a duplicate transaction.
+- **TTL is being used as a proxy for freshness.** A TTL bounds how long data *may* be served; it says nothing about whether the data is still true. When the underlying value changes on an external system's schedule, a time-based bound is the wrong tool.
+- **The idempotency store is remote.** If the connection drops between sending a request and receiving the response, the client retries. If the retry reaches a different edge node, or the remote store lookup itself times out, the system may treat the retry as a new request. That is how duplicate transactions happen: not because idempotency keys were missing, but because the store holding them was unreachable at exactly the moment it mattered.
 
-## A different mental model
+A third, quieter fault: rate limiting that performs a remote lookup on every request adds the lookup's round-trip time to every call. On a link where round-trip time is already hundreds of milliseconds, this is a meaningful tax on latency that buys little, since the limiter's state does not need global consistency to be useful.
 
-The mental model we need is not "cache to reduce load" but "cache to survive the network". In Africa, the network is the constraint, not the CPU or the database. Your caching strategy must assume:
+## The mental model: design for the connection, not the server
 
-- The user’s connection will drop for 5–30 seconds at least once per session
-- The bank’s webhook will be delayed by 1–15 minutes
-- The user’s phone will switch from 4G to 2G to Wi-Fi in the same session
-- The user will retry the same request 3–5 times in quick succession
+Reframe the goal. The cache is not primarily there to reduce origin load; it is there to let a client get a usable answer when the network is briefly unusable. Under that framing, the design assumptions change:
 
-This means:
+- A session will include at least one multi-second drop.
+- External notifications (webhooks, settlement callbacks) will arrive late and out of order.
+- The client's network type will change mid-session.
+- Clients will retry the same request several times in quick succession.
 
-1. **TTLs must be short enough to account for network partitions**, but long enough to reduce load. A 30-second TTL is reasonable for balance data, but only if you can invalidate it quickly when the actual balance changes.
+From those assumptions, four design rules follow.
 
-2. **Cache invalidation must be event-driven, not time-driven**. Instead of waiting for a TTL to expire, invalidate the cache when the bank’s webhook arrives or when the user explicitly refreshes. But the webhook might arrive late, so you need a way to reconcile stale cache with the truth.
+**1. Separate freshness from caching.** The TTL should bound how long a value may be *served without revalidation*, not how long it may be *trusted*. Pair every cached value with an event that invalidates it, and treat the TTL as a backstop for when the event never arrives.
 
-3. **Rate limiting must be connection-aware**. If a user’s connection drops and reconnects, their rate limit should reset, not accumulate. Using a local token bucket (e.g., in Go’s `golang.org/x/time/rate`) is better than Redis for this, even if it means slightly higher memory usage.
+**2. Make invalidation event-driven, with TTL as fallback.** When the source of truth signals a change, invalidate immediately. When it does not, fall back to TTL expiry. The important part is that the fallback is explicitly a degraded mode, not the primary mechanism.
 
-4. **Idempotency keys must be durable across restarts**. Store them in a write-ahead log or a local SQLite file on the edge, not in a remote database. If the user retries after a connection drop, the edge node should accept the key and return the previous response, even if the origin hasn’t processed it yet.
+**3. Keep rate limiting local.** A per-process token bucket (for example, Go's `golang.org/x/time/rate`) avoids a network round trip on every request and degrades gracefully: if the process restarts, the bucket resets, which is acceptable for abuse prevention and unacceptable only if you need exact global quotas. Choose accordingly.
 
-Here’s what this looks like in practice. We moved our balance endpoint to use a **two-tier cache**:
+**4. Make idempotency state durable and local to the request path.** If the store that answers "have I seen this key?" is unreachable, the retry cannot be safely deduplicated. A local, durable store on the node that receives the retry removes that dependency.
 
-- **Tier 1**: Local LRU cache in the API process (1000 entries, 5-second TTL) for connection drops
-- **Tier 2**: Redis cluster (Redis 7.2) with 30-second TTL for hot data, invalidated by webhooks
-- **Tier 3**: CloudFront CDN with 2-minute TTL for geographic caching
+## A layered design
 
-We also switched from DynamoDB to **SQLite with WAL mode** for idempotency keys on the edge nodes. Each edge node (running on AWS Lambda with arm64) has its own SQLite file. When a user retries after a connection drop, the edge node checks its local SQLite file. If the key exists, it returns the previous response immediately, without hitting the origin. If not, it proxies the request to the origin and stores the response and key in SQLite.
+A workable shape for a balance endpoint under these constraints:
 
-The result? Dispute rate dropped from 4.2% to 1.8%, stale response rate dropped from 12% to 2%, and our Redis bill went down by $400/month because we’re invalidating less often.
+- **Tier 1 — in-process cache.** A small LRU (order of a few thousand entries) with a very short TTL, on the order of seconds. Its job is to absorb retry storms from a single client, not to serve as the system's cache.
+- **Tier 2 — shared cache.** A key-value store with a short TTL (tens of seconds) for balance data, invalidated by events from the source of truth. This is the tier that carries most of the load reduction.
+- **Tier 3 — CDN.** A short TTL (low minutes at most) for geographic distribution. Be explicit about which responses are cacheable; balance responses usually should not be cached at the CDN at all unless the response is scoped to a single authenticated user and the CDN is configured to respect that.
 
-## Evidence and examples from real systems
+For idempotency keys, a local SQLite database in WAL mode on each node that can receive retries gives durable, low-latency deduplication. The node checks its local store first; on a hit it returns the previously stored response without contacting the origin. On a miss it forwards the request, then stores the key and response locally.
 
-Let’s look at three real systems that implemented these changes in 2026 and the hard numbers they reported.
+Sketch of the deduplication path:
 
-**System 1: Paystack Checkout (Nigeria, 2026 Q1)**
+```sql
+-- Run once per node.
+PRAGMA journal_mode = WAL;
+PRAGMA synchronous = FULL;
 
-Paystack’s checkout flow had a 7% dispute rate due to stale balance data. They implemented:
+CREATE TABLE IF NOT EXISTS idempotency (
+  key         TEXT PRIMARY KEY,
+  response    BLOB NOT NULL,
+  status      INTEGER NOT NULL,
+  created_at  INTEGER NOT NULL
+);
 
-- **Redis 7.2** for balance cache with 15-second TTL
-- **Webhook-driven invalidation** from banks (GTBank, First Bank, UBA)
-- **Local token bucket** for rate limiting in the API process (Go `golang.org/x/time/rate`)
-- **SQLite** for idempotency keys on the edge (AWS Lambda arm64)
-
-Results after 3 months:
-- Dispute rate: 7% → 2.1%
-- API p95 latency: 180ms → 140ms (despite shorter TTLs, because most requests hit the local LRU cache)
-- CloudFront cache invalidations: 40% reduction
-- Cost: $2,100/month saved on Redis and CloudFront
-
-**System 2: Flutterwave Payouts (Ghana and Kenya, 2026 Q2)**
-
-Flutterwave’s payout endpoint had a 15% failure rate when users tried to initiate payouts over 2G. They switched to:
-
-- **Local LRU cache** in the API process (500 entries, 10-second TTL)
-- **Redis 7.2** for hot data with 1-minute TTL
-- **Deduplication** using idempotency keys stored in SQLite on the edge
-- **Fallback to 2G-friendly responses**: If the connection is slow, return a lightweight JSON response with a `Retry-After` header instead of waiting for the full balance
-
-Results:
-- Payout success rate: 85% → 94%
-- Stale response rate: 8% → 1.2%
-- User complaints: 30% reduction
-
-**System 3: M-Pesa STK Push (East Africa, 2026 Q3)**
-
-Safaricom’s STK Push API had a 12% failure rate when users tried to pay via USSD fallback. They implemented:
-
-- **Edge caching** with CloudFront and Redis 7.2
-- **Idempotency keys** stored in a local SQLite file on the edge nodes
-- **Connection-aware rate limiting** using a sliding window in the API process
-- **Graceful degradation**: If the balance service is slow, return a cached balance with a `Cache-Control: max-age=5, stale-while-revalidate=10` header
-
-Results:
-- STK Push success rate: 88% → 95%
-- Dispute rate: 6% → 1.5%
-- API errors: 18% reduction
-
-Here’s a comparison table of the old vs. new approaches:
-
-| Metric                     | Old Approach (2026) | New Approach (2026) |
-|----------------------------|---------------------|---------------------|
-| Balance cache TTL          | 5 minutes           | 15–30 seconds       |
-| Idempotency key storage    | DynamoDB            | SQLite on edge      |
-| Rate limiting              | Redis lookup        | Local token bucket  |
-| Webhook invalidation       | Manual polling      | Event-driven        |
-| Dispute rate               | 4.2%                | 1.8%                |
-| Stale response rate        | 12%                 | 2%                  |
-| CloudFront invalidations   | 1200/month          | 720/month           |
-
-The pattern is clear: shorter TTLs, event-driven invalidation, and local state at the edge reduce disputes and improve reliability, despite the conventional wisdom that longer TTLs are always better.
-
-## The cases where the conventional wisdom IS right
-
-There are still situations where the standard advice holds. For example:
-
-- **High-frequency trading APIs**: If your API serves market data or trading, TTLs of 100ms or less are standard. Event-driven invalidation is not feasible because the data changes too fast. - **Static content APIs**: If you’re serving product catalogs or blog posts, a 1-hour or 1-day TTL is fine. The data doesn’t change often, and stale data is not a compliance risk. - **Internal admin APIs**: If your API is used by internal tools and not exposed to end users, you can afford longer TTLs and less aggressive invalidation. - **APIs with strong consistency requirements**: If your system cannot tolerate any stale data (e.g., stock trading), then caching is not appropriate. You need to serve data from the source every time.
-
-In these cases, the standard advice is correct. But for fintech APIs that touch customer funds and must comply with African regulations, the network is the constraint, not the data freshness requirement.
-
-## How to decide which approach fits your situation
-
-Ask these three questions:
-
-1. **How often does the data change, and how critical is freshness?**
-   - If the data changes every few seconds and freshness is critical (e.g., balance checks), use shorter TTLs and event-driven invalidation. - If the data changes hourly and freshness is not critical (e.g., product catalog), use longer TTLs.
-
-2. **How reliable is the user’s connection?**
-   - If your users are on stable Wi-Fi or 4G, the standard advice is fine. - If your users are on 2G or 3G with frequent drops, you need shorter TTLs and local state at the edge.
-
-3. **What are the compliance requirements?**
-   - If the regulation requires real-time updates (e.g., "balance must be updated within 5 seconds"), you need event-driven invalidation. - If the regulation is more lenient (e.g., "balance must be updated within 24 hours"), longer TTLs are acceptable.
-
-Here’s a decision tree you can use:
-
-```
-Does the API touch customer funds?
-  No → Standard caching is fine
-  Yes →
-    Is the user on stable connection?
-      Yes → Standard caching is fine
-      No → Use shorter TTLs, event-driven invalidation, and local state at the edge
+CREATE INDEX IF NOT EXISTS idx_idempotency_created
+  ON idempotency (created_at);
 ```
 
-If you’re building a new fintech API in 2026, start with the following defaults:
+```go
+// Pseudocode: check-then-store on the request path.
+func handleWithIdempotency(w http.ResponseWriter, r *http.Request) {
+    key := r.Header.Get("Idempotency-Key")
+    if key == "" {
+        http.Error(w, "missing Idempotency-Key", http.StatusBadRequest)
+        return
+    }
 
-- Balance cache TTL: 15 seconds
-- Idempotency key storage: SQLite on the edge (e.g., AWS Lambda arm64 with local disk)
-- Rate limiting: Local token bucket in the API process
-- Webhook invalidation: Event-driven, with a fallback to TTL expiration
+    if rec, ok := lookupLocal(key); ok {
+        // Replay the stored response. Do not re-execute the operation.
+        w.Header().Set("Idempotent-Replay", "true")
+        w.WriteHeader(rec.Status)
+        w.Write(rec.Response)
+        return
+    }
 
-Adjust these based on your data freshness requirements and user connection patterns.
+    rec := executeOperation(r)
+    // Store before responding so a crash after the write but before the
+    // response still leaves a replayable record.
+    storeLocal(key, rec)
+    w.WriteHeader(rec.Status)
+    w.Write(rec.Response)
+}
+```
 
-## Objections I've heard and my responses
+Two things to get right: store the record *before* sending the response, so a crash mid-response still leaves a deduplication record; and expire records on a schedule that matches the contract you advertise to clients (the retention window you promise in your API docs).
 
-**Objection 1: "Shorter TTLs will kill our cache hit rate and increase load on the origin."**
+## How to measure whether you have this problem
 
-My response: In my experience, the opposite happens. With shorter TTLs and event-driven invalidation, the cache hit rate stays high because the cache is always fresh. In the Paystack example, the cache hit rate stayed at 78%, but the stale response rate dropped from 12% to 2%. The origin load didn’t increase because we’re invalidating less often — we’re just doing it at the right time.
+The failure mode above is invisible in aggregate latency dashboards. Measure it directly.
 
-**Objection 2: "Local state at the edge is risky. What if the edge node crashes?"**
+**Instrument these on the server:**
 
-My response: Yes, local state is risky, but so is stale data. In 2026, edge nodes (e.g., AWS Lambda, Cloudflare Workers) are ephemeral and stateless by default. But if you need local state for idempotency keys, use a durable local store like SQLite with WAL mode. We ran an experiment where we killed edge nodes randomly and measured the impact: less than 0.1% of requests failed due to missing idempotency keys. The trade-off is worth it.
+- Age of the data served, in seconds, for every response that comes from a cache. Emit it as a histogram. The p99 of this metric is the number that matters.
+- Cache hit ratio, split by tier. A high hit ratio is not good news if the hits are stale.
+- Rate limiter lookup latency, as a separate span from the endpoint's own work.
+- Idempotency key outcomes: new, replayed, and rejected, as counters.
 
-**Objection 3: "Event-driven invalidation is complex. Why not just poll the bank’s API?"**
+**Instrument these on the client or in synthetic probes:**
 
-My response: Polling is simpler, but it’s also slower and less reliable. In the Flutterwave example, polling the bank’s API every 30 seconds added 300ms to every balance check. Event-driven invalidation (via webhooks) reduced the latency to 50ms and the stale response rate to 1.2%. Polling is the lazy approach — event-driven is the robust one.
+- Time to first byte and time to last byte, per network type if the client can report it.
+- Retry counts per logical operation. A distribution with a long tail here is the signature of the drop-and-retry pattern.
+- Whether the client ever observed a value that later turned out to be wrong. This is the only metric that directly measures user-visible staleness; it requires the client to compare a cached value against a later authoritative one.
 
-**Objection 4: "This adds complexity. Why not just increase the TTL and accept some staleness?"**
+**Compare before and after.** Run the same synthetic probe against the old and new configurations and compare the *age-of-served-data histogram*, not just latency. A redesign that keeps latency flat while collapsing the p99 age from minutes to seconds is a win even if no other number moves.
 
-My response: Because staleness leads to disputes, and disputes lead to chargebacks and regulatory fines. In 2026, the cost of a dispute is higher than the cost of implementing event-driven invalidation. We measured the cost of a single dispute at $12 in support time and $8 in potential fines. With 4.2% dispute rate, that’s $816 per 10,000 transactions. The event-driven system cost $200 to implement and saved $616.
-
-## What I'd do differently if starting over
-
-If I were building a new fintech API in 2026, here’s what I’d do differently:
-
-1. **Start with the edge.** Don’t build the API first. Build the edge layer (e.g., Cloudflare Workers or AWS Lambda@Edge) with local caching and idempotency key storage. The edge is where the network constraints hit hardest, so it’s where you need the most resilience.
-
-2. **Use SQLite for local state.** Don’t rely on Redis for everything. Use SQLite for local state (idempotency keys, rate limiting counters) on the edge. It’s durable, fast, and works even when the network is down.
-
-3. **Measure network conditions.** Don’t assume your users are on 4G. Measure the RTT, packet loss, and jitter for your users in each market. In Nigeria, we measured 800ms RTT on MTN 3G at midnight. That’s not a typo — it’s real.
-
-4. **Build for connection drops.** Assume every request might be the last one before a 10-second drop. Return a `Retry-After` header if the request is slow, and let the client retry. Don’t make the user wait for a timeout.
-
-5. **Test with real network conditions.** Use tools like `tc` (traffic control) on Linux to simulate 2G, 3G, and network drops. We built a test harness that simulates a 3G connection with 600ms RTT and 2% packet loss. Without it, we never would have caught the stale cache issue.
-
-Here’s the command I use to simulate a 3G connection on my local machine:
+**Simulate the network.** On Linux, `tc` (traffic control) with `netem` can emulate delay, jitter, and loss on a loopback or test interface:
 
 ```bash
-# Simulate 3G with 600ms RTT and 2% packet loss
+# Emulate a slow, lossy link on loopback for local testing.
 tc qdisc add dev lo root handle 1: htb default 11
- tc class add dev lo parent 1: classid 1:1 htb rate 1mbit
- tc class add dev lo parent 1:1 classid 1:11 htb rate 1mbit
- tc qdisc add dev lo parent 1:11 handle 10: netem delay 600ms loss 2%
+tc class add dev lo parent 1: classid 1:1 htb rate 1mbit
+tc class add dev lo parent 1:1 classid 1:11 htb rate 1mbit
+tc qdisc add dev lo parent 1:11 handle 10: netem delay 600ms loss 2%
 ```
 
-Run this before your API tests. You’ll be shocked at how many edge cases surface.
+Adjust `delay` and `loss` to match the conditions you care about, and remove the qdisc with `tc qdisc del dev lo root` when finished. Run your integration tests under these conditions in CI. The specific parameters are a starting point, not a recommendation; derive yours from measurements of your actual user base.
+
+## Decision checklist
+
+Work through this before changing anything.
+
+- **Does the endpoint return data whose truth is controlled by an external system?** If yes, TTL alone is not sufficient; you need an invalidation signal.
+- **Can the client safely act on data that is N seconds old?** If no, the TTL must be short and the response must carry enough information for the client to know its age.
+- **Does the operation mutate state?** If yes, it needs idempotency, and the idempotency store must be reachable on the retry path.
+- **Is the idempotency store on the same node that receives retries?** If no, a retry that lands on a different node can duplicate the operation.
+- **Does rate limiting require a network round trip?** If yes, measure how much latency it adds and whether exact global limits are actually required.
+- **Have you tested under emulated loss and delay?** If not, you have not tested the conditions that produce these failures.
+
+## When the conventional advice is correct
+
+The standard playbook is not wrong; it is conditional. It holds when:
+
+- **The data is not authoritative for money movement.** Product catalogs, marketing content, and reference data tolerate long TTLs because staleness has no financial consequence.
+- **The client can tolerate staleness by contract.** If the API documents that a value may be up to an hour old, a long TTL is honest rather than a bug.
+- **The data changes faster than any invalidation could propagate.** Market data feeds are the canonical example; there, short TTLs and client-side interpolation are the norm, and event-driven invalidation is not feasible.
+- **The endpoint is internal.** Admin tools and internal dashboards can accept longer TTLs and coarser invalidation.
+- **Strong consistency is required.** If no staleness is acceptable, caching is the wrong tool and the endpoint should read from the source.
+
+The distinguishing question is not "fintech or not" but "what happens to the user if this value is wrong, and for how long." Answer that and the caching policy follows.
+
+## Comparison of the two shapes
+
+| Concern | Time-driven only | Event-driven with local state |
+|---|---|---|
+| Freshness bound | TTL, set by guesswork | Event plus TTL backstop |
+| Retry safety | Depends on remote store reachability | Local durable store on the retry path |
+| Rate limiting cost | One remote lookup per request | Local, no round trip |
+| Behaviour during a partition | Serves stale data until TTL expires | Serves stale data only until the event or backstop |
+| Operational complexity | Lower | Higher: needs an event pipeline and local storage |
+| Failure mode when the event is lost | Silent staleness until TTL | Silent staleness until TTL (same backstop) |
+
+The last row matters: event-driven invalidation does not remove the need for a TTL. It changes the TTL from the primary mechanism to a safety net.
+
+## Common objections
+
+**"Shorter TTLs will destroy the cache hit ratio and overload the origin."**
+
+Test it rather than assuming. The hit ratio depends on request arrival patterns, not only on TTL. If the same user retries several times within seconds, a short-TTL in-process cache still absorbs those retries. Measure origin request rate before and after; if it rises, that is the cost of freshness, and you can decide whether to pay it.
+
+**"Local state on edge nodes is fragile."**
+
+It is, which is why the local store must be durable (WAL mode, `synchronous = FULL`) and why the design should tolerate a node losing its local state. If a node restarts and loses its idempotency records, the worst case is that a retry is treated as new. You can bound that risk by also writing keys to a shared store asynchronously, accepting that the shared store is a backstop rather than the primary path.
+
+**"Why not just poll the source of truth?"**
+
+Polling is simpler to build and easier to reason about, but it has a fixed latency floor equal to the poll interval and it scales with the number of entities you poll. Event-driven invalidation has lower steady-state latency but requires handling out-of-order and duplicate events. Choose based on whether your source of truth offers events at all; if it does not, polling with a short interval and a short TTL is a reasonable compromise.
+
+**"Isn't this just accepting eventual consistency?"**
+
+Yes. The point is to make the consistency window explicit and bounded, rather than an accident of a TTL chosen for load reasons. Document the window in the API contract, expose the data's age in the response, and let clients decide what to do with it.
 
 ## Summary
 
-The fintech regulations that came into force in 2026 forced us to rethink API design for African users. The conventional wisdom — cache aggressively, rate-limit defensively, validate thoroughly — often breaks when the network is the constraint, not the CPU. In Africa, the network is intermittent, slow, and expensive. Your API must work when the user’s connection is up for 3 seconds, down for 10, and up again.
+The conventional caching playbook assumes a stable last mile and a reachable control plane. On intermittent mobile links, both assumptions fail. The fixes are structural: separate freshness from caching, make invalidation event-driven with a TTL backstop, keep rate limiting local, and put idempotency state on the retry path. None of these is exotic, and none requires abandoning caching. They require being explicit about what the cache is for.
 
-The solution is not to ignore caching or rate limiting, but to adapt them for the network. Shorter TTLs, event-driven invalidation, and local state at the edge reduce disputes and improve reliability. The numbers prove it: dispute rates drop, stale responses vanish, and costs go down.
+The measurement discipline matters as much as the design. Track the age of served data, not just latency. Simulate loss and delay in CI. Compare configurations on the staleness histogram, not on aggregate throughput.
 
-The cases where the standard advice is correct are clear: high-frequency trading, static content, internal tools, and systems with strong consistency requirements. For fintech APIs that touch customer funds, the network is the constraint, and your API must be built for it.
+## Do this in the next 30 minutes
 
-Start by measuring your users’ network conditions. Simulate 2G and 3G drops in your tests. Move idempotency keys to the edge. Invalidate caches based on events, not timers. These changes are not optional — they’re the cost of doing business in Africa in 2026.
-
-Check your balance endpoint’s cache headers and TTLs right now. If your TTL is more than 30 seconds, change it to 15 seconds and set up webhook-driven invalidation. Do it today — your users will thank you tomorrow.
-
-
-## Frequently Asked Questions
-
-**How do I invalidate cache when the bank’s webhook arrives late?**
-
-Use a message queue (e.g., AWS SQS) to buffer webhooks and process them in order. When a webhook arrives, publish an invalidation event to the queue. The API edge nodes subscribe to the queue and invalidate the cache for the affected user. If the webhook is delayed, the invalidation happens when it arrives — not when the TTL expires. We used this approach in Paystack and reduced stale responses by 80%.
-
-**What if the user’s connection drops after sending a payment but before getting a response?**
-
-Store the idempotency key and response in a local SQLite file on the edge node. When the user retries, check the local file. If the key exists, return the previous response immediately. This works even if the origin hasn’t processed the payment yet. We measured less than 0.1% failure rate with this approach in Flutterwave.
-
-**How do I simulate 2G and 3G conditions for testing?**
-
-Use Linux’s `tc` (traffic control) to add delay, jitter, and packet loss. For 2G, use `delay 1000ms loss 5%`, for 3G, use `delay 400ms loss 2%`. Run your API tests with these conditions. We built a test harness that does this automatically in CI/CD. Without it, we never would have caught the stale cache issue in Nigeria.
-
-**Is SQLite on the edge really durable enough for idempotency keys?**
-
-Yes, if you use WAL mode and fsync. SQLite with WAL mode is atomic and durable for local state. We ran chaos experiments by killing edge nodes randomly and measured less than 0.1% failure rate due to missing keys. The trade-off is worth it for the reliability gain.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 28, 2026
+Open your balance or account-state endpoint and add a response header or log field recording the age in seconds of the data being served, measured from the moment the value was produced by the source of truth. Deploy it to one environment. If you cannot populate that field because nothing in your stack tracks when the value was produced, that is the finding: you are serving data whose freshness you cannot measure, and every other decision in this article depends on fixing that first.

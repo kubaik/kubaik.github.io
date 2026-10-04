@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Context windows: agents that run for days - Kubai Kevin</title>
-        <meta name="description" content="Long-running agents forget constraints when context windows fill.">
+        <meta name="description" content="Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.">
         <meta name="keywords" content="ContextWindow, AgentMemory, Llm, Generativeai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-19T08:48:07.286152">
-        <meta property="article:modified_time" content="2026-09-19T08:48:07.286163">
+        <meta property="article:modified_time" content="2026-10-04T10:44:46.211914+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Context windows: agents that run for days">
-        <meta property="og:description" content="Long-running agents forget constraints when context windows fill.">
+        <meta property="og:description" content="Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.">
         <meta property="og:url" content="https://kubaik.github.io/context-windows-agents-that-run-for-days/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Context windows: agents that run for days">
-        <meta name="twitter:description" content="Long-running agents forget constraints when context windows fill.">
+        <meta name="twitter:description" content="Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/context-windows-agents-that-run-for-days.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/context-windows-agents-that-run-for-days/#article",
       "headline": "Context windows: agents that run for days",
-      "description": "Long-running agents forget constraints when context windows fill.",
+      "description": "Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.",
       "datePublished": "2026-09-19T08:48:07+00:00",
-      "dateModified": "2026-09-19T08:48:07+00:00",
-      "wordCount": 3021,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-10-04T10:44:46+00:00",
+      "wordCount": 3302,
+      "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Context windows: agents that run for days</h1>
                 
-                <p class="post-lead">Long-running agents forget constraints when context windows fill.</p>
+                <p class="post-lead">Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.</p>
                 
                 
                 <div class="tags">
@@ -250,42 +250,41 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3021 words
+                        17 min read
+                        &nbsp;·&nbsp; 3302 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>african engineering problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. Here's what changed once we stopped guessing and started measuring. The gap between the demo and the incident report is where this actually lives.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>A long-running agent has a context window that fills up. The naive fix — just summarize old turns and keep going — works for a few hours and then fails in a way that's hard to debug: the agent forgets a constraint it was told at hour 2, or it re-reads a file it already modified, or it starts hallucinating a tool result that never happened. The real fix is to stop treating the context window as a log and start treating it as a working set. You keep a small, structured state object outside the prompt, you retrieve only the slices you need per step, and you let the raw transcript age out. That's the whole idea. The part that trips people up is that "summarize and continue" looks like it preserves state when it actually destroys the exact details agents depend on — and that's what this post actually covers.</p>
+                <h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>A long-running agent has a context window that fills up. The naive fix — summarize old turns and keep going — works for a few hours and then fails in a way that is hard to debug: the agent forgets a constraint it was given early on, re-reads a file it already modified, or hallucinates a tool result that never happened. The more robust approach is to stop treating the context window as a log and start treating it as a working set. Keep a small, structured state object outside the prompt, retrieve only the slices needed per step, and let the raw transcript age out. The part that trips people up is that "summarize and continue" looks like it preserves state when it actually destroys the exact details agents depend on.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>When you build a chatbot, the context window is basically a conversation. Turn 1, turn 2, turn 3, all appended. It grows, you hit the limit, you truncate the oldest turns, done. That mental model is correct for chat and wrong for agents, and the confusion comes from the fact that both use the same API shape.</p>
-<p>An agent is not a conversation. It's a loop: observe, decide, act, observe. Each iteration appends a tool call and a tool result. A single <code>read_file</code> on a 2,000-line source file can burn more tokens than the entire preceding conversation. A <code>grep</code> that returns 400 matching lines can do the same. Over a multi-hour run, the transcript is dominated not by reasoning but by tool output — and tool output is the least useful thing to keep around once you've extracted what you needed from it.</p>
-<p>Here's the trap. Teams hit the limit, reach for summarization, and the summary drops the things that matter. A common failure mode looks like this: an agent is told at step 4 that the staging database is read-only and it must not run migrations. By step 300, that constraint has been summarized into "working on staging database tasks." The agent then runs a migration. Nothing in the summary was wrong, exactly. It just wasn't load-bearing.</p>
-<p>There's a second source of confusion: people conflate the model's context limit with the agent's memory. They're different. The context limit is a hard wall — GPT-4o at 128k tokens, Claude 3.5 Sonnet at 200k, Gemini 1.5 Pro at 1M. Memory is whatever you decide to persist outside that wall. If your only memory is the context window, you have no memory, you have a buffer.</p>
+<p>An agent is not a conversation. It is a loop: observe, decide, act, observe. Each iteration appends a tool call and a tool result. A single <code>read_file</code> on a 2,000-line source file can burn more tokens than the entire preceding conversation. A <code>grep</code> that returns 400 matching lines can do the same. Over a multi-hour run, the transcript is dominated not by reasoning but by tool output — and tool output is the least useful thing to keep around once you have extracted what you needed from it.</p>
+<p>Here is the trap. Teams hit the limit, reach for summarization, and the summary drops the things that matter. A common failure mode: an agent is told at step 4 that the staging database is read-only and it must not run migrations. By step 300, that constraint has been summarized into "working on staging database tasks." The agent then runs a migration. Nothing in the summary was wrong, exactly. It just was not load-bearing.</p>
+<p>There is a second source of confusion: people conflate the model's context limit with the agent's memory. They are different. The context limit is a hard wall — for example, 128k tokens on GPT-4o, 200k on Claude 3.5 Sonnet, 1M on Gemini 1.5 Pro. Memory is whatever you decide to persist outside that wall. If your only memory is the context window, you do not have memory, you have a buffer.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of it like a chef working a 12-hour service. The context window is the counter in front of them. It holds what they're actively working on: the ticket they're plating, the ingredients for that dish, the pan on the burner. It does not hold the entire walk-in fridge, and it should not — you can't cook on a counter that's also a warehouse.</p>
-<p>The walk-in fridge is your external state. It's a database, a JSON file, a Redis key, a vector store, whatever. The chef walks over, grabs what they need for this ticket, comes back. The counter stays small.</p>
-<p>The mistake most teams make is treating the counter as the fridge. They keep piling things on it because "the model might need it later." It won't need all of it. It needs the specific things relevant to the current step, and the skill is knowing which those are.</p>
+<p>Think of it like a chef working a 12-hour service. The context window is the counter in front of them. It holds what they are actively working on: the ticket they are plating, the ingredients for that dish, the pan on the burner. It does not hold the entire walk-in fridge, and it should not — you cannot cook on a counter that is also a warehouse.</p>
+<p>The walk-in fridge is your external state. It is a database, a JSON file, a Redis key, a vector store, whatever fits. The chef walks over, grabs what they need for this ticket, comes back. The counter stays small.</p>
+<p>The mistake most teams make is treating the counter as the fridge. They keep piling things on it because "the model might need it later." It will not need all of it. It needs the specific things relevant to the current step, and the skill is knowing which those are.</p>
 <p>So the model is: <strong>external state + retrieval + bounded working set.</strong> Three pieces.</p>
-<p>External state is a structured record of facts the agent has established: file paths it has touched, decisions it has made, constraints it was given, results it has committed. It's small. It's queryable. It survives process restarts, which matters when your agent runs for three days and the worker gets OOM-killed at hour 40.</p>
-<p>Retrieval is how you pull slices of that state into the prompt. Sometimes it's a simple key lookup ("give me the constraints list"). Sometimes it's semantic search over past tool results. Sometimes it's just "the last 5 actions."</p>
-<p>Bounded working set is the discipline of capping what actually goes into the prompt per step. You decide a budget — say 8k tokens for context, 4k for the current task — and you enforce it. When something doesn't fit, it gets summarized or dropped, and you decide which, explicitly, per category.</p>
+<p>External state is a structured record of facts the agent has established: file paths it has touched, decisions it has made, constraints it was given, results it has committed. It is small. It is queryable. It survives process restarts, which matters when your agent runs for three days and the worker gets OOM-killed at hour 40.</p>
+<p>Retrieval is how you pull slices of that state into the prompt. Sometimes it is a simple key lookup ("give me the constraints list"). Sometimes it is semantic search over past tool results. Sometimes it is just "the last 5 actions."</p>
+<p>Bounded working set is the discipline of capping what actually goes into the prompt per step. You decide a budget — say 8k tokens for context, 4k for the current task — and you enforce it. When something does not fit, it gets summarized or dropped, and you decide which, explicitly, per category.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Say you're building an agent that monitors a codebase and opens PRs for dependency updates. It runs continuously, checks for new releases every 30 minutes, and when it finds one it reads the changelog, checks the repo for usage, and either opens a PR or logs "skip."</p>
-<p>Run that for a week and you'll process maybe 300 updates. If you append everything to context, you're looking at 300 changelogs plus 300 grep results plus 300 decisions. At an average of 1,500 tokens per cycle, that's 450k tokens — well past most models' limits, and even on a 1M-token model you're paying for tokens that are 99% irrelevant to the current decision.</p>
+<p>Consider an agent that monitors a codebase and opens PRs for dependency updates. It runs continuously, checks for new releases every 30 minutes, and when it finds one it reads the changelog, checks the repo for usage, and either opens a PR or logs "skip."</p>
+<p>Run that for a week and you will process roughly 300 updates. If you append everything to context, you are looking at 300 changelogs plus 300 grep results plus 300 decisions. At an average of 1,500 tokens per cycle, that is about 450k tokens (300 cycles × 1,500 tokens) — well past most models' limits, and even on a 1M-token model you are paying for tokens that are mostly irrelevant to the current decision.</p>
 <p>The fix is to split state into three stores:</p>
 <ol>
 <li><strong>Decisions log</strong> — append-only, structured. <code>{package, version, action, reason, timestamp}</code>. One line per cycle. This is what you retrieve when the agent needs to know "have I already handled this?"</li>
-<li><strong>Constraints</strong> — a small, stable list. "Don't touch packages in the <code>@internal/*</code> scope." "Major version bumps require a human review flag." This never gets summarized; it's always injected verbatim, because it's the thing summarization destroys.</li>
+<li><strong>Constraints</strong> — a small, stable list. "Do not touch packages in the <code>@internal/*</code> scope." "Major version bumps require a human review flag." This never gets summarized; it is always injected verbatim, because it is the thing summarization destroys.</li>
 <li><strong>Working context</strong> — the current cycle only. Changelog for this package, grep results for this package, the relevant package.json lines. Discarded when the cycle ends.</li>
 </ol>
-<p>Here's a minimal version of that in Python, using a plain SQLite file for state (no vector DB needed for this shape):</p>
+<p>Here is a minimal version of that in Python, using a plain SQLite file for state (no vector DB needed for this shape):</p>
 <pre><code class="language-python">import sqlite3
 import json
 from datetime import datetime, timezone
@@ -343,24 +342,24 @@ def record(conn, package, version, action, reason):
     )
     conn.commit()
 </code></pre>
-<p>Three things to notice. First, constraints are injected verbatim every cycle — no summarization, ever. Second, the working set is truncated by character count, not summarized. Truncation is lossy but predictable; summarization is lossy and unpredictable, and unpredictability is what kills long runs. Third, the decisions table is the actual memory, and it's tiny — a week of cycles is maybe 300 rows, a few hundred KB.</p>
-<p>A common failure mode here is forgetting to cap <code>recent_decisions</code>. Six months in, that LIMIT 20 query is fine, but if someone "improves" it to "all decisions" to give the agent more history, you're back to the same problem. Cap everything that goes into the prompt.</p>
+<p>Three things to notice. First, constraints are injected verbatim every cycle — no summarization, ever. Second, the working set is truncated by character count, not summarized. Truncation is lossy but predictable; summarization is lossy and unpredictable, and unpredictability is what kills long runs. Third, the decisions table is the actual memory, and it is tiny — a week of cycles is roughly 300 rows, a few hundred KB.</p>
+<p>A common failure mode here is forgetting to cap <code>recent_decisions</code>. Six months in, that <code>LIMIT 20</code> query is fine, but if someone "improves" it to "all decisions" to give the agent more history, you are back to the same problem. Cap everything that goes into the prompt.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you've done any backend work, this is a cache eviction problem. The context window is your L1 cache. External state is your database. Retrieval is your cache-miss handler. You already know that you don't put the whole database in L1, and you already know that LRU isn't always right.</p>
-<p>The specific eviction policy matters, and it's where the analogy gets useful. For a long-running agent, you want something closer to <strong>category-based eviction</strong> than LRU. Constraints never evict. Decisions evict by recency. Tool results evict by relevance-to-current-task. Raw transcripts evict immediately after the step that produced them.</p>
-<p>It's also the same shape as a stream processor's state management. If you've used Kafka Streams or Flink, you know that a long-running stream operator can't keep everything in memory — it keeps a bounded state store and checkpoints it. Agent state is the same: bounded, checkpointed, recoverable.</p>
-<p>And it's the same as session management in a web app. You don't put the whole user session in a cookie. You put a session ID, and the server looks up the rest. Your agent's prompt should include a state pointer, not the state itself.</p>
+<p>If you have done any backend work, this is a cache eviction problem. The context window is your L1 cache. External state is your database. Retrieval is your cache-miss handler. You already know that you do not put the whole database in L1, and you already know that LRU is not always right.</p>
+<p>The specific eviction policy matters, and it is where the analogy gets useful. For a long-running agent, you want something closer to <strong>category-based eviction</strong> than LRU. Constraints never evict. Decisions evict by recency. Tool results evict by relevance-to-current-task. Raw transcripts evict immediately after the step that produced them.</p>
+<p>It is also the same shape as a stream processor's state management. If you have used Kafka Streams or Flink, you know that a long-running stream operator cannot keep everything in memory — it keeps a bounded state store and checkpoints it. Agent state is the same: bounded, checkpointed, recoverable.</p>
+<p>And it is the same as session management in a web app. You do not put the whole user session in a cookie. You put a session ID, and the server looks up the rest. Your agent's prompt should include a state pointer, not the state itself.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p><strong>"Bigger context windows solve this."</strong> They delay it. A 1M-token window at 300 cycles still fills in a few days. More importantly, models degrade on long contexts — the "lost in the middle" effect is well-documented, where information in the middle of a long prompt is retrieved less reliably than information at the start or end. Even if you fit, you lose. Anthropic's own docs on long-context prompting recommend putting key instructions at the beginning and end for exactly this reason.</p>
-<p><strong>"Summarization is memory."</strong> Summarization is compression, and compression is lossy in ways you can't predict. A summary of "the agent worked on authentication" loses "the agent must not touch the OAuth token refresh path." The constraint is what matters; the summary is what survives.</p>
-<p><strong>"Vector search over the transcript is enough."</strong> It helps, but it's a retrieval layer over a growing pile, not a replacement for bounded state. You still need to cap what goes in. A vector store that returns 50 chunks per query is just a slower way to blow your context budget.</p>
-<p><strong>"The agent should just remember."</strong> Models don't remember between calls. Every call is stateless. If you're not persisting state explicitly, it doesn't exist.</p>
+<p><strong>"Bigger context windows solve this."</strong> They delay it. A 1M-token window at 300 cycles still fills in a few days. More importantly, models can degrade on long contexts — the "lost in the middle" effect is documented, where information in the middle of a long prompt is retrieved less reliably than information at the start or end. Even if you fit, you may lose. Long-context prompting guidance commonly recommends putting key instructions at the beginning and end for exactly this reason.</p>
+<p><strong>"Summarization is memory."</strong> Summarization is compression, and compression is lossy in ways you cannot predict. A summary of "the agent worked on authentication" loses "the agent must not touch the OAuth token refresh path." The constraint is what matters; the summary is what survives.</p>
+<p><strong>"Vector search over the transcript is enough."</strong> It helps, but it is a retrieval layer over a growing pile, not a replacement for bounded state. You still need to cap what goes in. A vector store that returns 50 chunks per query is just a slower way to blow your context budget.</p>
+<p><strong>"The agent should just remember."</strong> Models do not remember between calls. Every call is stateless. If you are not persisting state explicitly, it does not exist.</p>
 <p><strong>"Tool results should be kept for audit."</strong> Audit them to a log file, not to the prompt. The audit log and the working set are different artifacts with different lifetimes.</p>
 <h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
 <p>Once you have external state and bounded working sets, the next problems are retrieval quality and checkpointing.</p>
-<p>Retrieval quality: a flat <code>LIMIT 20</code> on decisions works until it doesn't. When an agent handles 20 different packages and needs to know about package #3 specifically, recency is the wrong axis. The fix is hybrid retrieval — filter by entity ("decisions where package = lodash") first, then rank by recency within that. This is a SQL <code>WHERE</code> clause, not a vector search, for structured state. Vectors are for unstructured state like changelog text where you don't have a clean key.</p>
-<p>Checkpointing: a 3-day run will survive process restarts, deploys, and OOM kills. If your state is only in memory, you lose it. SQLite (as above) is fine for single-writer agents. For concurrent agents, Redis 7.2 with AOF persistence or Postgres 16 both work; Redis is faster for the read-heavy pattern, Postgres is better if you want transactional guarantees across multiple state tables.</p>
-<p>Here's a checkpoint pattern using Redis 7.2 that survives a worker restart mid-cycle:</p>
+<p>Retrieval quality: a flat <code>LIMIT 20</code> on decisions works until it does not. When an agent handles 20 different packages and needs to know about package #3 specifically, recency is the wrong axis. The fix is hybrid retrieval — filter by entity ("decisions where package = lodash") first, then rank by recency within that. This is a SQL <code>WHERE</code> clause, not a vector search, for structured state. Vectors are for unstructured state like changelog text where you do not have a clean key.</p>
+<p>Checkpointing: a 3-day run will survive process restarts, deploys, and OOM kills. If your state is only in memory, you lose it. SQLite (as above) is fine for single-writer agents. For concurrent agents, a Redis instance with AOF persistence or a Postgres instance both work; Redis is faster for the read-heavy pattern, Postgres is better if you want transactional guarantees across multiple state tables.</p>
+<p>Here is a checkpoint pattern using Redis that survives a worker restart mid-cycle:</p>
 <pre><code class="language-javascript">import { createClient } from 'redis';
 
 const redis = createClient({ url: process.env.REDIS_URL });
@@ -391,8 +390,8 @@ async function resume(agentId) {
   return JSON.parse(raw);
 }
 </code></pre>
-<p>The distinction between the two Redis keys is the whole point. The <code>cycle</code> key has a TTL because it's scratch space. The <code>decisions</code> hash has no TTL because it's the agent's actual memory. Getting this backwards — TTL on decisions, no TTL on cycle — produces an agent that forgets everything and a Redis instance that fills with garbage.</p>
-<p>One more advanced concern: token accounting. You should log prompt token counts per cycle. A typical healthy long-running agent stays under 10k input tokens per cycle even at hour 200. If you see it creeping toward 40k, something is leaking into the working set. That's your alarm.</p>
+<p>The distinction between the two Redis keys is the whole point. The <code>cycle</code> key has a TTL because it is scratch space. The <code>decisions</code> hash has no TTL because it is the agent's actual memory. Getting this backwards — TTL on decisions, no TTL on cycle — produces an agent that forgets everything and a Redis instance that fills with garbage.</p>
+<p>One more advanced concern: token accounting. Log prompt token counts per cycle. A healthy long-running agent typically stays under 10k input tokens per cycle even at hour 200. If you see it creeping toward 40k, something is leaking into the working set. That is your alarm.</p>
 <table>
 <thead>
 <tr>
@@ -435,44 +434,51 @@ async function resume(agentId) {
 </tr>
 </tbody>
 </table>
+<p>The context-cost figures above are illustrative, not measured; the way to get your own numbers is described in the next section.</p>
+<h2 id="how-to-measure-your-own-context-behavior">How to measure your own context behavior</h2>
+<p>The table above is a set of hypotheses, not a benchmark. To get real numbers, instrument the loop.</p>
+<ol>
+<li><strong>Log input token count per cycle.</strong> Most provider SDKs return usage metadata on each response (for example, <code>response.usage.input_tokens</code> on the OpenAI and Anthropic APIs). Write it to a structured log line: <code>{cycle, agent_id, input_tokens, output_tokens, timestamp}</code>.</li>
+<li><strong>Log the size of each prompt category.</strong> Before you send the request, record how many characters went into constraints, decisions, tool results, and reasoning. A few lines of code around your <code>build_prompt</code> function is enough.</li>
+<li><strong>Plot input tokens over cycle index.</strong> A flat line is healthy. A line with positive slope means something is leaking into the working set. A step function means a category was added or a cap was removed.</li>
+<li><strong>Compare against a baseline.</strong> Run the agent for 50 cycles with your caps in place, then remove one cap (for example, set <code>LIMIT 20</code> to <code>LIMIT 1000</code>) and run again. The difference in input tokens tells you the marginal cost of that category.</li>
+<li><strong>Track task success rate, not just tokens.</strong> A cheaper prompt that fails more often is not a win. Log whether each cycle produced the intended outcome (PR opened, skip logged, error raised) and compare success rate across configurations.</li>
+</ol>
+<p>The specific commands depend on your stack, but the pattern is universal: emit structured events from the agent loop, ship them to whatever you already use for logs (stdout, a log aggregator, a metrics backend), and query them. If you do not have a metrics backend, a CSV file and a plotting library will do for the first week.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <ul>
 <li><strong>Context window is a working set, not a log.</strong> Cap it explicitly per cycle.</li>
 <li><strong>Constraints go in verbatim, every cycle.</strong> Never summarize them.</li>
-<li><strong>Decisions go in a structured store</strong> (SQLite, Redis 7.2, Postgres 16). Query by entity, not just recency.</li>
-<li><strong>Tool results are scratch.</strong> Truncate by character count, don't summarize.</li>
-<li><strong>Working set gets a TTL. Durable state doesn't.</strong> Getting this backwards is the #1 bug.</li>
-<li><strong>Log prompt tokens per cycle.</strong> &gt;40k input tokens on a simple agent means a leak.</li>
-<li><strong>Models degrade on long contexts</strong> (lost-in-the-middle). Fitting isn't the same as working.</li>
-<li><strong>Every model call is stateless.</strong> If you didn't persist it, it's gone.</li>
+<li><strong>Decisions go in a structured store</strong> (SQLite, Redis with AOF, Postgres). Query by entity, not just recency.</li>
+<li><strong>Tool results are scratch.</strong> Truncate by character count, do not summarize.</li>
+<li><strong>Working set gets a TTL. Durable state does not.</strong> Getting this backwards is a common bug.</li>
+<li><strong>Log prompt tokens per cycle.</strong> A creeping input token count on a simple agent means a leak.</li>
+<li><strong>Models can degrade on long contexts</strong> (lost-in-the-middle). Fitting is not the same as working.</li>
+<li><strong>Every model call is stateless.</strong> If you did not persist it, it is gone.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How many tokens can a long-running agent actually use before it degrades?</strong></p>
-<p>It's not a hard number, but empirically most agents show quality drops well before the model's stated limit. On a 128k model, degradation often shows up past 30-40k of mixed context, especially when key constraints are buried in the middle. The practical move is to keep per-cycle input under 10k tokens regardless of the model's ceiling. That gives you headroom and keeps you in the region where retrieval is reliable.</p>
+<p>It is not a hard number, and it depends on the model, the task, and how the context is arranged. Quality degradation on long contexts has been observed well before the model's stated limit in published evaluations of the lost-in-the-middle effect. The practical move is to keep per-cycle input small — many teams target under 10k tokens — regardless of the model's ceiling. That gives you headroom and keeps you in the region where retrieval is reliable. Measure your own degradation by running the same task with prompts of increasing length and comparing success rate.</p>
 <p><strong>Why does my agent forget instructions I gave it at the start?</strong></p>
-<p>Because those instructions got summarized or evicted as the transcript grew. If you're using summarize-and-continue, the summarizer has no way to know which details are load-bearing. The fix is to move constraints out of the transcript entirely and inject them verbatim on every call. They're small — a few hundred tokens — and they're the one category that should never be compressed.</p>
+<p>Because those instructions got summarized or evicted as the transcript grew. If you are using summarize-and-continue, the summarizer has no way to know which details are load-bearing. The fix is to move constraints out of the transcript entirely and inject them verbatim on every call. They are small — a few hundred tokens — and they are the one category that should never be compressed.</p>
 <p><strong>Should I use a vector database for agent memory?</strong></p>
-<p>Only for unstructured history where you don't have a clean key. If you can answer "what do I need?" with a SQL <code>WHERE</code> clause, use SQL. Vector search adds latency (typically 20-80ms per query plus embedding cost) and returns fuzzy results, which is the wrong tradeoff for structured state like decisions and constraints. Use vectors for "find past changelogs that mentioned breaking changes," not for "what's the status of package lodash."</p>
+<p>Only for unstructured history where you do not have a clean key. If you can answer "what do I need?" with a SQL <code>WHERE</code> clause, use SQL. Vector search adds latency and returns fuzzy results, which is the wrong tradeoff for structured state like decisions and constraints. Use vectors for "find past changelogs that mentioned breaking changes," not for "what is the status of package lodash."</p>
 <p><strong>How do I handle an agent that runs for days and gets killed mid-cycle?</strong></p>
-<p>Checkpoint the cycle state to a TTL'd key and the durable decisions to a non-TTL store, as in the Redis example above. On startup, try to resume the cycle; if the key expired, start fresh. The important part is idempotency: recording a decision twice should be a no-op (<code>INSERT OR REPLACE</code> or <code>HSET</code>), so a restart mid-write doesn't corrupt state. If your agent can't survive a <code>kill -9</code> at any point, it's not ready to run for days.</p>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<p>Anthropic's long-context prompting guidance is worth reading in full — the lost-in-the-middle finding is the single most useful thing to internalize before you build anything that runs past an hour. The original "Lost in the Middle" paper (Liu et al., 2026, arXiv:2307.03172) is the source. For state management patterns, the Kafka Streams documentation on state stores is a good mental model even if you never touch Kafka — it's the same bounded-state-with-checkpointing problem, solved at a different layer. And if you're running agents on Kubernetes, the Kubernetes documentation on liveness probes is a useful reminder that a process that's alive isn't necessarily healthy; your agent needs an equivalent signal for "my context is leaking."</p>
-<p><strong>Do this in the next 30 minutes:</strong> open your agent's main loop file and search for where you build the prompt. Count the categories of things you're putting in. If constraints and tool results are in the same list, split them — pull constraints into a module-level constant that gets injected verbatim, and cap tool results with a character slice. Then add one log line printing the input token count per cycle. That single number will tell you within a day whether you have a leak.</p>
-<h2 id="official-documentation">Official documentation</h2>
+<p>Checkpoint the cycle state to a TTL'd key and the durable decisions to a non-TTL store, as in the Redis example above. On startup, try to resume the cycle; if the key expired, start fresh. The important part is idempotency: recording a decision twice should be a no-op (<code>INSERT OR REPLACE</code> or <code>HSET</code>), so a restart mid-write does not corrupt state. If your agent cannot survive a <code>kill -9</code> at any point, it is not ready to run for days.</p>
+<p><strong>Do I need a separate process for state, or can I keep it in the agent?</strong></p>
+<p>For a single agent on a single host, an embedded store like SQLite is enough and avoids operational overhead. You need a separate process (Redis, Postgres, or similar) when multiple agents share state, when the agent runs on ephemeral compute like containers or serverless, or when you need the state to outlive the agent host. The decision is about failure domains, not performance.</p>
+<h2 id="a-decision-checklist-before-you-ship-a-long-running-agent">A decision checklist before you ship a long-running agent</h2>
 <ul>
-<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
-<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+<li>Can the agent survive a <code>kill -9</code> at any point in its loop and resume correctly?</li>
+<li>Are constraints stored outside the transcript and injected verbatim on every call?</li>
+<li>Is every category that enters the prompt capped by an explicit limit?</li>
+<li>Is there a log line emitting input token count per cycle?</li>
+<li>Is durable state stored separately from scratch state, with different TTLs?</li>
+<li>Can you query decisions by entity (package, file, user), not just by recency?</li>
+<li>Have you measured task success rate at your current context size, not just assumed it?</li>
+<li>Do you have an alarm for input tokens trending upward over time?</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p><strong>Do this in the next 30 minutes:</strong> open your agent's main loop file and find where you build the prompt. Count the categories of things you are putting in. If constraints and tool results are in the same list, split them — pull constraints into a module-level constant that gets injected verbatim, and cap tool results with a character slice. Then add one log line printing the input token count per cycle. That single number will tell you within a day whether you have a leak.</p>
                 
                 
             </div>
@@ -501,8 +507,8 @@ async function resume(agentId) {
                     
                     <a class="related-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
                         <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
-                        <p>LangSmith vs Promptfoo 0.95+ for production LLM evals: run latency, CI integration, and per-trace cost — plus the dataset mistake that makes pass rates…</p>
-                        <span class="related-meta">15 min read · 3 October 2026</span>
+                        <p>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+                        <span class="related-meta">14 min read · 3 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">
@@ -513,8 +519,8 @@ async function resume(agentId) {
                     
                     <a class="related-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
                         <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
-                        <p>Multi-agent handoffs add 200-600ms of hidden latency per request. Why full-history payloads and serial orchestration are the real tax, and how to cut it.</p>
-                        <span class="related-meta">13 min read · 29 September 2026</span>
+                        <p>Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+                        <span class="related-meta">11 min read · 29 September 2026</span>
                     </a>
                     
                 </div>

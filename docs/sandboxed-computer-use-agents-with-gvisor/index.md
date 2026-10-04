@@ -1,20 +1,16 @@
 # Sandboxed computer-use agents with gVisor
 
-Inherited productionizing computer setups tend to come with no explanation, just a working system and a long reverse-engineering session. It works in the simple case and breaks in a specific way under load. Here's what actually worked, and why.
+Computer-use agents — models that drive a real browser or desktop session through screenshots, clicks, and keystrokes — are among the most dangerous components a team can deploy. Not because the models are malicious, but because the permission model around them is usually an afterthought. A typical setup gives the agent a headless browser, a service account with broad IAM rights, and a filesystem it can write to. That combination means a single prompt-injection payload on a page the agent visits can turn into an outbound request that reads from an object store or posts to an internal admin endpoint.
 
-## The problem, in general terms
+The failure mode is not hypothetical. The OWASP Top 10 for LLM Applications lists prompt injection as LLM01, and computer-use agents are the clearest case where injection crosses from "the model says something wrong" into "the model does something wrong on a real system." Vendors shipping computer-use features commonly warn that the agent should run in a container with no access to sensitive data — advice that production rollouts often quietly ignore because the agent needs credentials to be useful.
 
-Computer-use agents — models that drive a real browser or desktop session through screenshots, clicks, and keystrokes — are the most dangerous thing most teams will deploy this year. Not because the models are malicious, but because the permission model around them is usually an afterthought. A typical setup gives the agent a headless Chrome instance, a service account with broad IAM rights, and a filesystem it can write to. That combination means a single prompt-injection payload on a page the agent visits can turn into an outbound request that reads from your object store or posts to an internal admin endpoint.
-
-The failure mode is not hypothetical. The OWASP Top 10 for LLM Applications lists prompt injection as LLM01, and computer-use agents are the clearest case where injection crosses from "the model says something wrong" into "the model does something wrong on a real system." The 2026 Anthropic computer-use demo and the OpenAI Operator launch both shipped with explicit warnings that the agent should run in a container with no access to sensitive data — advice that most production rollouts quietly ignore because the agent needs credentials to be useful.
-
-The part that trips people up is that the obvious mitigations (a system prompt saying "don't visit untrusted sites," a regex filter on tool calls) don't hold under adversarial input, and the mitigations that do hold — kernel-level isolation, network egress allowlists, short-lived scoped credentials — require you to rebuild the deployment shape rather than tune the prompt. That's what this post actually covers: the architecture that works, the numbers to expect, and the specific places teams get burned.
+The part that trips teams up is that the obvious mitigations (a system prompt saying "don't visit untrusted sites," a regex filter on tool calls) don't hold under adversarial input, and the mitigations that do hold — kernel-level isolation, network egress allowlists, short-lived scoped credentials — require rebuilding the deployment shape rather than tuning the prompt. This article covers the architecture that works, the numbers to plan against, and the specific places teams get burned.
 
 ## The approaches that commonly fail, and why
 
 Three patterns show up repeatedly in teams that get this wrong. All three look reasonable in a design doc and fail in production.
 
-**Prompt-level guardrails.** The agent gets a system prompt like "only interact with domains on this allowlist." This fails because the model is processing untrusted text from the page it's driving. A page can contain text that reads as an instruction, and the model has no reliable way to distinguish "content I was asked to read" from "instruction I should follow." Simon Willison's writeup on the lethal trifecta — private data access, untrusted content, and external communication — is the clearest framing: if an agent has all three, exfiltration is a matter of when, not if. Prompt filtering reduces the rate of accidental failures but does nothing against a determined page.
+**Prompt-level guardrails.** The agent gets a system prompt like "only interact with domains on this allowlist." This fails because the model is processing untrusted text from the page it's driving. A page can contain text that reads as an instruction, and the model has no reliable way to distinguish "content I was asked to read" from "instruction I should follow." Simon Willison's framing of the lethal trifecta — private data access, untrusted content, and external communication — is the clearest summary: if an agent has all three, exfiltration is a matter of when, not if. Prompt filtering reduces the rate of accidental failures but does nothing against a determined page.
 
 **Tool-call validation in the orchestrator.** This is better. The orchestrator inspects each tool call before executing it — block `curl`, block writes outside `/tmp`, block navigation to non-allowlisted hosts. The problem is that computer-use agents don't emit clean tool calls. They emit `click(x=430, y=612)` and `type("...")`. The semantic meaning of a click depends on what's rendered at those coordinates. A validation layer that tries to infer intent from pixel coordinates is a research project, not a deployment.
 
@@ -33,7 +29,7 @@ The pattern across all three failures is the same: teams treat the agent as a tr
 
 Run the agent inside a sandboxed container with a kernel boundary, restrict its network egress to an explicit allowlist, and give it credentials that expire before the session ends. Three layers, each cheap on its own, and together they contain the failure modes above.
 
-For the kernel boundary, gVisor is the pragmatic choice on Linux. It intercepts syscalls in userspace, so a container escape requires a gVisor bug rather than a kernel bug — and gVisor's syscall surface is much smaller than the host kernel's. The tradeoff is syscall overhead: filesystem-heavy workloads run 2–5x slower under gVisor than under runc, and CPU-bound work is closer to 1.2–1.5x. For a browser agent that spends most of its time waiting on network and rendering, the overhead is usually acceptable. Firecracker microVMs are the alternative if you need near-native performance and can accept a heavier cold start (typically 125 ms for the microVM plus whatever your guest init costs).
+For the kernel boundary, gVisor is the pragmatic choice on Linux. It intercepts syscalls in userspace, so a container escape requires a gVisor bug rather than a kernel bug — and gVisor's syscall surface is much smaller than the host kernel's. The tradeoff is syscall overhead: filesystem-heavy workloads run roughly 2–5x slower under gVisor than under runc, and CPU-bound work is closer to 1.2–1.5x. For a browser agent that spends most of its time waiting on network and rendering, the overhead is usually acceptable. Firecracker microVMs are the alternative when near-native performance is required and a heavier cold start is acceptable (typically 125 ms for the microVM plus whatever guest init costs).
 
 For egress, don't rely on the container's default network. Put the sandbox on a network with a default-deny egress policy and an explicit allowlist of hostnames the agent is permitted to reach. In Kubernetes this is a `NetworkPolicy` plus a DNS-resolving egress gateway; outside Kubernetes it's an iptables rule set or a sidecar proxy. The allowlist should be hostnames, not IPs, because CDN IPs rotate and you'll be chasing them forever.
 
@@ -127,11 +123,11 @@ const server = http.createServer((req, res) => {
 server.listen(3128, '127.0.0.1');
 ```
 
-Two things to watch. First, the allowlist must include the hosts the agent's OAuth flows redirect through, or you'll get 403s on login pages that look like agent bugs. Second, HTTP CONNECT for HTTPS requires handling the `connect` event separately — the snippet above handles plain HTTP and TLS-terminated proxying; for true CONNECT tunneling you need to inspect the SNI in the TLS hello, which is more code than fits here but is well-documented in the `http-proxy` README.
+Two things to watch. First, the allowlist must include the hosts the agent's OAuth flows redirect through, or you'll get 403s on login pages that look like agent bugs. Second, HTTP CONNECT for HTTPS requires handling the `connect` event separately — the snippet above handles plain HTTP and TLS-terminated proxying; for true CONNECT tunneling you need to inspect the SNI in the TLS hello, which is more code than fits here but is documented in the `http-proxy` README.
 
-## Results — the numbers to expect, and their limits
+## Planning figures and how to measure your own
 
-These are typical ranges for a browser agent running 1–2 vCPU and 2–4 GB RAM per session, not measured results from a specific deployment. Treat them as planning figures and benchmark on your own workload.
+The ranges below are illustrative planning figures for a browser agent running 1–2 vCPU and 2–4 GB RAM per session, not measured results from a specific deployment. Benchmark on your own workload before committing to a runtime.
 
 - **Cold start:** runc container ~150–300 ms; gVisor `runsc` ~400–800 ms; Firecracker microVM ~125 ms for the VM plus guest boot. Warm pools cut this to 50–100 ms for all three.
 - **Syscall overhead:** gVisor adds roughly 2–5x on filesystem-heavy syscalls and 1.2–1.5x on CPU-bound work. For a browser agent, end-to-end session latency typically increases 10–25% versus runc.
@@ -139,7 +135,9 @@ These are typical ranges for a browser agent running 1–2 vCPU and 2–4 GB RAM
 - **Credential issuance:** `sts:AssumeRole` typically returns in 80–200 ms. Cache the credentials for the session, don't re-assume per tool call.
 - **Cost:** a 10-minute session on a 2 vCPU instance at typical on-demand rates runs roughly $0.01–$0.03 in compute. The sandbox overhead is not the cost driver; the model inference is.
 
-The limit of these numbers is that they assume the agent is doing browser work. If you're running a computer-use agent against a native GUI app with heavy file I/O, the gVisor filesystem penalty dominates and you should benchmark Firecracker instead. If your sessions are long (30+ minutes), the warm-pool math changes and you may be better off with a long-lived sandbox and rotating credentials inside it.
+To replace these with your own numbers, measure three things. First, container start time: wrap `runsc run` in a timestamp diff and log the delta between process spawn and the first successful health check from inside the sandbox, repeated across 50 launches to get a distribution rather than a single sample. Second, syscall overhead: run a fixed filesystem workload (`fio` with a small block size and a known file count, or `sysbench fileio`) under both runc and `runsc` on the same host and compare IOPS and p99 latency. Third, end-to-end session latency: instrument the orchestrator to record the wall-clock time from session request to first agent action and to session teardown, and compare the same agent task with and without the proxy hop. Anything you can't measure this way is a guess.
+
+The limit of the planning figures is that they assume the agent is doing browser work. If you're running a computer-use agent against a native GUI app with heavy file I/O, the gVisor filesystem penalty dominates and you should benchmark Firecracker instead. If your sessions are long (30+ minutes), the warm-pool math changes and you may be better off with a long-lived sandbox and rotating credentials inside it.
 
 ## What to watch out for
 
@@ -147,25 +145,25 @@ The limit of these numbers is that they assume the agent is doing browser work. 
 
 **DNS rebinding.** If your proxy resolves hostnames to IPs and caches the result, an attacker-controlled DNS record can point at an internal IP after the check. Resolve to IP, verify the IP is not in RFC1918 space, then connect to the IP — not to the hostname. This is the same defense browsers use for their SSRF protections.
 
-**Screenshot exfiltration.** The agent's screenshots go somewhere. If that somewhere is a bucket the agent can also write to with a broad token, a compromised agent can upload a screenshot of your internal dashboard and then read it back. Keep the artifact bucket write-only from the agent's perspective, and read-only from the orchestrator's.
+**Screenshot exfiltration.** The agent's screenshots go somewhere. If that somewhere is a bucket the agent can also write to with a broad token, a compromised agent can upload a screenshot of an internal dashboard and then read it back. Keep the artifact bucket write-only from the agent's perspective, and read-only from the orchestrator's.
 
 **The "just this once" credential.** The most common regression is a team that hits a session timeout mid-task and extends the token lifetime to 24 hours to "fix" it. That single change undoes the containment. If sessions need to be longer, issue a new short-lived token when the old one expires, and re-verify the session is still doing what it's supposed to do.
 
-**Logging what the agent did.** You need a record of every tool call, every navigation, and every credential issuance, with the session ID as the correlation key. Without it, incident response on a compromised session is guesswork. Ship logs to a destination the agent's credentials cannot reach.
+**Logging what the agent did.** A record of every tool call, every navigation, and every credential issuance is needed, with the session ID as the correlation key. Without it, incident response on a compromised session is guesswork. Ship logs to a destination the agent's credentials cannot reach.
 
 ## The broader lesson
 
 The principle here is not "sandbox your agents." It's that **the trust boundary must be enforced by something the untrusted component cannot influence.** A prompt is influenceable. A tool-call validator that reads pixel coordinates is influenceable. A kernel syscall filter and a network policy enforced by a separate process are not — the agent can't talk its way past them because they don't parse language.
 
-This is the same reason we don't run untrusted code as root and hope it behaves. The agent is untrusted code. The fact that it's generated by a model rather than written by a person doesn't change the threat model; it only changes the input distribution. Treat the agent's decisions as adversarial, and design the environment so that the worst decision it can make is still contained.
+This is the same reason untrusted code isn't run as root in the hope that it behaves. The agent is untrusted code. The fact that it's generated by a model rather than written by a person doesn't change the threat model; it only changes the input distribution. Treat the agent's decisions as adversarial, and design the environment so that the worst decision it can make is still contained.
 
-The corollary is that you should measure the cost of containment and decide if it's worth it. For a read-only research agent that summarizes public pages, the sandbox is cheap insurance. For an agent that needs to write to your production database, the answer is usually no — not because the sandbox can't be built, but because the agent's failure modes are too varied to enumerate, and you'll spend more time on the allowlist than on the feature.
+The corollary is that the cost of containment should be measured against the value of the feature. For a read-only research agent that summarizes public pages, the sandbox is cheap insurance. For an agent that needs to write to a production database, the answer is usually no — not because the sandbox can't be built, but because the agent's failure modes are too varied to enumerate, and the allowlist will consume more engineering time than the feature is worth.
 
 ## How to apply this to your situation
 
-Start by mapping what your agent can actually reach today. If it can read a secret, talk to the internet, and be influenced by content it reads, you have the lethal trifecta and should treat that as a P0. The fix order that works: cut the credential scope first (fastest, biggest impact), then add egress allowlisting (medium effort, blocks exfiltration), then move to gVisor or Firecracker (highest effort, contains the rest).
+Start by mapping what the agent can actually reach today. If it can read a secret, talk to the internet, and be influenced by content it reads, that's the lethal trifecta and should be treated as a P0. The fix order that works: cut the credential scope first (fastest, biggest impact), then add egress allowlisting (medium effort, blocks exfiltration), then move to gVisor or Firecracker (highest effort, contains the rest).
 
-If you're on Kubernetes, the egress policy is a `NetworkPolicy` plus a DNS-aware egress gateway like Cilium's `toFQDNs`. If you're on a single VM, it's `runsc` plus an iptables default-deny and a local proxy. Either way, the shape is the same: the agent runs in a place where the only way out is a path you control.
+On Kubernetes, the egress policy is a `NetworkPolicy` plus a DNS-aware egress gateway such as Cilium's `toFQDNs`. On a single VM, it's `runsc` plus an iptables default-deny and a local proxy. Either way, the shape is the same: the agent runs in a place where the only way out is a path you control.
 
 ## Frequently Asked Questions
 
@@ -185,28 +183,6 @@ OAuth and SSO flows redirect through hosts you didn't allowlist — often an ide
 
 Shorter than the session. If a session is capped at 10 minutes, issue credentials valid for 9 minutes with `sts:AssumeRole` and `DurationSeconds=540`. Never extend the token lifetime to fix a timeout — issue a fresh one and re-verify the session's task is still what you expect. A 24-hour token turns a single compromised session into a day-long incident.
 
-## Resources that helped
-
-- OWASP Top 10 for LLM Applications (LLM01: Prompt Injection) — the canonical list, updated annually.
-- Simon Willison's writing on the lethal trifecta — the clearest explanation of why data access plus untrusted content plus egress equals exfiltration.
-- gVisor documentation on syscall interception and the `runsc` runtime — read the performance section before you commit.
-- Firecracker's design doc on the microVM model and its security boundary.
-- Kubernetes `NetworkPolicy` and Cilium's `toFQDNs` egress policy documentation for the DNS-aware allowlist pattern.
-- The `http-proxy` README for the CONNECT/SNI handling that the snippet above deliberately omits.
-
 ## The next 30 minutes
 
-Open your agent's IAM role definition and check the `DurationSeconds` on its `sts:AssumeRole` call. If it's longer than your session timeout, change it to `SESSION_TIMEOUT - 60` right now — that single edit is the highest-impact containment change you can make today, and it takes less time than reading this sentence twice.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Open the IAM role definition your agent assumes and check the `DurationSeconds` on its `sts:AssumeRole` call. If it's longer than your session timeout, change it to `SESSION_TIMEOUT - 60` right now — that single edit is the highest-impact containment change available today, and it takes less time than reading this sentence twice.

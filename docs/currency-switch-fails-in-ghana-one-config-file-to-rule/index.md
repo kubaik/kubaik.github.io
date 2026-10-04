@@ -1,26 +1,36 @@
 # Currency switch fails in Ghana: one config file to rule…
 
-I've hit the same building fintech mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. This is the version of the write-up that includes the part that broke.
+A recurring failure mode in multi-country payment backends is a currency switch that silently resolves to the wrong currency. The UI renders Ghanaian cedi, the log line says the service fell back to Kenyan shillings, and no exception is thrown. The symptom is confusing because nothing looks broken: the request succeeds, a price is returned, and only the currency is wrong.
 
-## The error and why it's confusing
+This article covers the underlying cause, a layered fix, and how to verify the fix before it reaches production. The examples use Node.js and Python, but the pattern applies to any stack.
 
-The most common failure you’ll see when rolling out a new fintech feature across Kenya, Nigeria, Ghana, and Senegal isn’t a timeout or a database error—it’s a currency switch that silently defaults to KES instead of GHS, or worse, fails to switch at all. The symptom looks like this in the logs:
+## The failure mode
+
+A typical log line looks like this:
 
 ```
 2026-05-15T09:32:37.441Z ERROR currency_service: using fallback currency KES for request 8f3a1…
 ```
 
-What trips people up is that the request came from a Ghanaian user on MTN, the UI rendered GHS, but the backend treated it as KES. The error message doesn’t say “wrong currency”; it just logs a fallback. Teams usually assume the problem is in the frontend or the mobile app’s locale detection, so they spend hours adding `GHS` to a list of supported currencies and redeploying. That patch works locally because the local environment variables are hard-coded, but in staging it fails again within 24 hours. The real issue is that the currency code isn’t being passed through the network layer correctly, and the backend’s fallback logic is triggered before any other code runs.
+The request came from a Ghanaian user, the app displayed GHS, and the backend treated it as KES. The message does not say "wrong currency" — it reports a fallback, which reads like expected behavior.
 
-Another confusing twist: the same feature works fine in Nigeria but fails in Ghana. The code path is identical, so the bug isn’t in the business logic. The difference is that Ghana’s mobile money providers sometimes send the currency in a header named `X-Currency-Code`, while Kenyan traffic sends it in a query param called `currency`. Teams that hard-code the source of the currency code (e.g., `req.query.currency`) will succeed in Kenya but fail in Ghana.
+Two things make this hard to diagnose:
 
-The part that trips people up is the silent fallback behavior and the inconsistent header/query param conventions across providers. That’s what this post actually covers.
+1. **The fallback is silent.** No exception, no 4xx, no alert. Downstream pricing, ledger entries, and receipts are all internally consistent — just denominated in the wrong currency.
+2. **The code path is identical across countries.** The same service that works for Kenyan traffic fails for Ghanaian traffic because the currency code arrives through a different channel.
 
-## What's actually causing it (the real reason, not the surface symptom)
+Teams commonly assume the bug is in the frontend locale detection, add the new currency code to a supported list, and redeploy. That works in a local environment where the currency source is hard-coded, then fails again in staging because the actual traffic never populated that field.
 
-The root cause is a mismatch between the API contract and the reality of mobile money traffic in each country. Mobile money APIs in West Africa don’t follow a single standard for currency codes. In Kenya, Safaricom’s M-Pesa API sends the currency code in the request body as `currencyCode`, while in Ghana, MTN’s MoMo API sends it in the `X-Currency` header. Nigeria’s Flutterwave API sends it as a query parameter `currency`, and Senegal’s Orange Money API sometimes sends it as `currency_code` in the body.
+## Why the currency code gets lost
 
-On top of that, the backend service that handles currency switching is usually built to trust the first source it sees—the path of least resistance. If the service is written in Node.js and uses Express, the first middleware to read the currency will win:
+Mobile money and card APIs do not share a single convention for transmitting the currency code. A non-exhaustive set of patterns seen in the wild:
+
+- The code arrives in a request body field such as `currencyCode`.
+- The code arrives in a custom header such as `X-Currency` or `X-Currency-Code`.
+- The code arrives as a query parameter such as `currency`.
+- The code arrives in a body field named `currency_code`.
+
+A first-pass Express middleware often looks like this:
 
 ```javascript
 // typical first-pass implementation
@@ -30,19 +40,13 @@ app.use((req, res, next) => {
 });
 ```
 
-This code defaults to KES, which is wrong for Ghana. But the bigger problem is that it assumes the currency is always in the same place. When a Ghanaian user hits the API via MTN, the header `X-Currency` exists, but the middleware above ignores it because it only checks `query` and `body`. So the service falls back to KES, logs the error, and the Ghanaian user sees prices in Kenyan shillings.
+This has two defects. First, the default is a specific currency, so any request that does not match the two checked locations is silently mislabeled. Second, adding more sources as `else if` branches produces a combinatorial mess as providers multiply.
 
-The environmental mismatch is compounded by the fact that most fintech stacks in Africa are built on top of global payment gateways (Stripe, PayPal, Wise), which assume a single currency per account. These gateways don’t natively support per-request currency switching based on mobile money headers. Teams that rely on these gateways end up writing shims that break when a Ghanaian user’s request includes a custom header.
+Global payment gateways add a second layer of friction: many assume a single settlement currency per account, so per-request currency switching has to be handled in your own layer before the gateway call. Teams that skip that layer end up forking codebases per country, which doubles review load and blocks cross-border features.
 
-Historically, this led to country-specific forks: one codebase for Kenya (M-Pesa), another for Nigeria (Flutterwave), and a third for Ghana (MTN MoMo). But forking is expensive—it doubles the review load, increases merge conflicts, and makes it impossible to roll out cross-border features like multi-currency wallets without weeks of regression testing.
+## Fix 1: extract from all sources in a deterministic order
 
-## Fix 1 — the most common cause
-
-The most common cause is assuming the currency code is always in the same place. The fix is to stop assuming and instead collect the currency code from all possible sources, then apply a priority order that matches the actual traffic patterns in each country.
-
-Here’s a concrete example. A team in Lagos built a wallet service that handled only NGN. When they expanded to Ghana, they added GHS support by adding `GHS` to a hard-coded list. But they didn’t change the source of the currency code. The result was the silent fallback to KES shown earlier.
-
-The fix is to build a currency extractor that reads from multiple sources in a deterministic order:
+Replace the assumption that the currency is always in the same place with an ordered list of candidate locations. The first valid match wins.
 
 ```javascript
 // currencyExtractor.js
@@ -55,15 +59,14 @@ const currencyPriority = [
   'headers.currency'
 ];
 
+function getNested(obj, path) {
+  return path.split('.').reduce((acc, part) => acc?.[part], obj);
+}
+
 function extractCurrency(req) {
   for (const path of currencyPriority) {
-    const parts = path.split('.');
-    let value = req;
-    for (const part of parts) {
-      value = value?.[part];
-      if (value === undefined) break;
-    }
-    if (value && /^[A-Z]{3}$/.test(value)) {
+    const value = getNested(req, path);
+    if (typeof value === 'string' && /^[A-Z]{3}$/.test(value)) {
       return value;
     }
   }
@@ -71,39 +74,13 @@ function extractCurrency(req) {
 }
 ```
 
-This extractor will return GHS for a Ghanaian MTN request because it finds the currency in `headers.x-currency` before falling back to the query or body. The regex `/^[A-Z]{3}$/` ensures only valid ISO currency codes are accepted, which stops malformed inputs like `ghs` or `GHS ` from leaking through.
+Two details matter. The regex `/^[A-Z]{3}$/` rejects lowercase, whitespace-padded, and malformed values, so `ghs` and `GHS ` do not leak into pricing logic. And the priority order is data, not control flow, so adding a provider means adding one string to an array rather than adding a branch.
 
-Teams that skip this step usually try to “fix” the currency issue by adding more if statements:
+Note that the fallback here is still dangerous. A safer production version throws instead of defaulting; see Fix 2.
 
-```javascript
-if (req.headers['x-currency']) {
-  req.currency = req.headers['x-currency'];
-} else if (req.query.currency) {
-  req.currency = req.query.currency;
-}
-```
+## Fix 2: validate at extraction time, not in the business logic
 
-That approach leads to a combinatorial explosion of conditionals as new providers are added. The priority list scales cleanly and is easier to test.
-
-After deploying this extractor, the Ghanaian log line changes from:
-
-```
-ERROR currency_service: using fallback currency KES for request 8f3a1…
-```
-
-to:
-
-```
-INFO currency_service: using GHS for request 8f3a1… from MTN MoMo
-```
-
-The deployment takes 10 minutes and reduces the Ghanaian error rate from 8% to 0.2% in one rollout.
-
-## Fix 2 — the less obvious cause
-
-The less obvious cause is currency code validation that happens too late. Many teams validate the currency code in the business logic layer, after the currency has already been used to build a price object. By that point, the damage is done—prices are rendered in KES, even if the log line says GHS.
-
-A common failure scenario: a Senegalese user requests a price in XOF. The backend receives `XOF` in the `body.currency_code` field. The middleware extracts it correctly, but the validation step in the service layer throws an error because the validation list only includes GHS, NGN, KES, and UGX.
+A second common failure is validation that runs too late. A Senegalese user sends XOF in `body.currency_code`. The extractor returns it correctly. Then the service layer rejects it because the allow-list was written when only four currencies were supported:
 
 ```javascript
 // typical late validation
@@ -117,7 +94,7 @@ function createPrice(req) {
 }
 ```
 
-This error surfaces as a 400 Bad Request, but the user has already seen a spinner for 3 seconds. The backend response is:
+By the time this throws, the request has already spent time in the service layer, a spinner has been shown, and the client receives a 400 after a multi-second wait:
 
 ```json
 {
@@ -125,39 +102,39 @@ This error surfaces as a 400 Bad Request, but the user has already seen a spinne
 }
 ```
 
-The fix is to validate the currency code at extraction time, not in the business logic. Move the validation into the extractor:
+Move validation into the extractor so failure is fast and the error is precise:
 
 ```javascript
-const ALLOWED_CURRENCIES = new Set(['GHS', 'NGN', 'KES', 'UGN', 'XOF', 'ZAR']);
+const ALLOWED_CURRENCIES = new Set(['GHS', 'NGN', 'KES', 'UGX', 'XOF', 'ZAR']);
 
 function extractCurrency(req) {
   for (const path of currencyPriority) {
-    let value = getNested(req, path);
-    if (value && ALLOWED_CURRENCIES.has(value.toUpperCase())) {
-      return value.toUpperCase();
+    const value = getNested(req, path);
+    if (typeof value !== 'string') continue;
+    const normalized = value.toUpperCase();
+    if (ALLOWED_CURRENCIES.has(normalized)) {
+      return normalized;
     }
   }
-  throw new Error(`No valid currency found in request`);
+  throw new Error('No valid currency found in request');
 }
 ```
 
-Now the Senegalese request fails immediately, before any rendering or pricing happens. The error message is still user-facing, but the latency cost drops from 3 seconds to 50ms because the failure happens in middleware, not in the service layer.
+The latency difference is the point: rejection now happens in middleware, before any pricing or rendering work. The exact saving depends on where the old validation sat, but the failure moves from "after the expensive path" to "before it."
 
-Teams that skip this step usually spend days debugging why their staging environment in Nigeria passes but staging in Senegal fails—only to realize the validation list is hard-coded to West African currencies.
+One caution: if the allow-list is shared between services, keep it in one place. A stale copy in a downstream service reintroduces the same bug.
 
-## Fix 3 — the environment-specific cause
+## Fix 3: normalize casing per provider and environment
 
-The environment-specific cause is the mismatch between the runtime environment (Node.js on AWS Lambda, Python on EC2, Go on GCP) and the expectations of the mobile money API gateways. Each gateway expects the currency code to be in a specific format, and the format varies by provider and environment.
+Some gateways are case-sensitive about the currency code, and the expected case can differ between sandbox and production for the same provider. A request that passes in one environment fails in the other with an error like:
 
-For example, MTN’s MoMo sandbox expects the currency code to be lowercase (`ghs`), but their production API expects uppercase (`GHS`). If the team’s staging environment uses the sandbox, the extractor will fail because it only accepts uppercase codes. The result is a 422 Unprocessable Entity error:
-
-```
+```json
 {
   "error": "Invalid currency code. Expected lowercase 3-letter code."
 }
 ```
 
-The fix is to normalize the currency code to the expected case based on the environment. Build a provider-specific adapter that knows the expected case for each gateway:
+Handle this with a provider-aware normalizer rather than a country-aware one. Country is the wrong axis because the same provider is used across environments and, increasingly, across countries.
 
 ```python
 # currency_provider_adapter.py
@@ -181,7 +158,7 @@ def normalize_currency(currency: str, provider: Provider) -> str:
     return currency.lower() if rule == "lower" else currency.upper()
 ```
 
-The adapter is fed by a provider detector that looks at the `X-Provider` header or the domain of the incoming request:
+A detector supplies the provider:
 
 ```python
 # provider_detector.py
@@ -196,24 +173,30 @@ def detect_provider(req) -> Provider:
     return Provider.MTN_MOMO_PROD  # default
 ```
 
-Teams that skip this step usually fix the issue by hard-coding the case based on the country, not the provider. That leads to a new failure when the same provider is used across multiple environments (e.g., MTN sandbox in staging vs. MTN prod in live).
+Host-based detection is fragile if traffic is proxied. Prefer an explicit provider identifier set by your gateway routing layer over string matching on the host.
 
-The table below shows the typical case expectations by provider and environment for 2026:
+The failure mode when this step is skipped is predictable: someone hard-codes casing by country, then a new environment for the same provider breaks the assumption.
 
-| Provider               | Sandbox Case | Production Case | Common Error Message                     |
-|------------------------|--------------|-----------------|------------------------------------------|
-| MTN MoMo               | lower        | upper           | Invalid currency code. Expected lowercase |
-| Flutterwave            | upper        | upper           | (none)                                   |
-| Orange Money           | upper        | upper           | (none)                                   |
-| PayPal (fallback)      | upper        | upper           | (none)                                   |
+## The two-layer pipeline
 
-After applying the adapter, a Ghanaian user on MTN sandbox will have their currency normalized from `GHS` to `ghs` before the request is sent to the gateway. The error rate for sandbox environments drops from 12% to 0%.
+Putting the fixes together, every request should pass through:
 
-## How to verify the fix worked
+1. **Extraction** — read from the ordered candidate list, normalize to uppercase, reject anything not matching `^[A-Z]{3}$`.
+2. **Validation** — check membership in a single shared allow-list; fail fast with a clear error.
+3. **Normalization** — convert to the casing the target provider expects, based on provider and environment, immediately before the outbound call.
 
-The fastest way to verify the fix is to run a synthetic test that simulates traffic from each country’s primary mobile money provider. Use a load testing tool like k6 to replay recorded traffic from Kenya, Nigeria, Ghana, and Senegal.
+Extraction and validation belong in middleware. Normalization belongs in the outbound adapter. Keeping them separate means the internal representation of a currency is always canonical uppercase ISO 4217, and only the wire format varies.
 
-Here’s a k6 script that replays 100 requests per provider, checking for the correct currency code in the response:
+## How to verify the fix
+
+A passing unit test on the extractor is necessary but not sufficient. What matters is that real-shaped traffic from each provider produces the right currency end to end. Two things to instrument:
+
+- The resolved currency on every request, tagged by provider.
+- The count of requests that hit the fallback path or threw, tagged by provider.
+
+Both should be exported as counters. A non-zero fallback counter after a deploy is the signal that a provider is sending the currency somewhere the extractor does not look.
+
+For replay, a load-testing tool that can issue requests with custom headers, query strings, and bodies works. A minimal k6 script:
 
 ```javascript
 // test_currency_switch.js
@@ -240,38 +223,28 @@ export default function () {
     const res = http.get(url, params);
 
     check(res, {
-      [`${provider.name} returns correct currency`]: (r) => 
+      [`${provider.name} returns correct currency`]: (r) =>
         r.json().currency === provider.currency,
-      [`${provider.name} latency < 200ms`]: (r) => 
+      [`${provider.name} latency < 200ms`]: (r) =>
         r.timings.duration < 200
     });
   });
 }
 ```
 
-Run the script with:
+Run it against a staging environment that mirrors production routing:
 
 ```bash
 k6 run --vus 20 --duration 60s test_currency_switch.js
 ```
 
-A passing run shows 100% success for all providers and p99 latency under 200ms. If any provider fails, the error message in the k6 output will point to the exact provider and the step where the currency code was lost.
+Interpret the results by provider tag, not by aggregate. An aggregate pass rate of 99% can hide a single provider failing 100% of the time if it is a small share of traffic. The 200ms threshold is illustrative; set it from your own baseline rather than copying it.
 
-Teams that skip this verification usually deploy to production and wait for user reports—by which point the damage is already done. The k6 test catches the issue in CI/CD, so the fix is merged before it reaches users.
+For the fallback counter, the check to run is: after replaying one request per provider, does any provider increment the fallback counter? If yes, the extractor is missing a location for that provider.
 
-## How to prevent this from happening again
+## Preventing recurrence
 
-The best prevention is to bake the currency extraction and normalization into a shared library that all services import. Do not copy-paste the extractor into every microservice. Instead, publish a versioned npm package or Python wheel:
-
-```json
-{
-  "name": "@fintech/currency-extractor",
-  "version": "2.1.0",
-  "main": "dist/index.js"
-}
-```
-
-The library should export a single function:
+The extraction logic should live in one versioned package that every service imports, not in copy-pasted middleware. The package should export a single entry point and own the candidate list, the allow-list, and the provider casing rules.
 
 ```javascript
 // index.js
@@ -282,13 +255,14 @@ module.exports = (req, res, next) => {
     req.currency = extractAndNormalizeCurrency(req);
     next();
   } catch (err) {
-    req.currency = 'KES'; // safe fallback
     next(err);
   }
 };
 ```
 
-Pin the version in your service’s package.json:
+Note the absence of a fallback currency in the catch block. Defaulting to a currency on an extraction failure is how the original bug reached production; failing the request is the correct behavior.
+
+Pin the version explicitly:
 
 ```json
 {
@@ -298,7 +272,7 @@ Pin the version in your service’s package.json:
 }
 ```
 
-The shared library should also include a test matrix that runs against recorded traffic from each provider. The matrix is triggered on every commit:
+Run the provider replay test on every commit that touches the package:
 
 ```yaml
 # .github/workflows/test_currency.yml
@@ -314,116 +288,62 @@ jobs:
       - run: npx k6 run tests/test_currency_switch.js
 ```
 
-Teams that skip this step usually find themselves debugging the same currency issue months later when a new provider is onboarded. The shared library reduces the onboarding time for a new provider from 3 days to 2 hours.
+The value of centralizing is not the code itself — it is that the candidate list and allow-list have exactly one definition. When a new provider is onboarded, one array entry and one casing rule cover every service.
 
-## Related errors you might hit next
+## Adjacent failures worth checking
 
-1. **Currency code mismatch in webhook signatures**
-   *Symptom:* Webhook signatures fail verification because the currency code in the payload doesn’t match the one used to generate the signature.
-   *Root cause:* The webhook handler extracts the currency code from the body, but the signature generator uses the header. The mismatch causes the HMAC to fail.
-   *Fix:* Normalize the currency code in the webhook handler before signature verification.
+These are related but distinct problems that surface in the same systems.
 
-2. **Database index bloat from currency switching**
-   *Symptom:* Query performance degrades after enabling multi-currency. The `prices` table has an index on `(product_id, currency)`, but the query planner starts using a full table scan.
-   *Root cause:* The index isn’t selective enough because the same product has many currency rows. The planner switches to a sequential scan.
-   *Fix:* Add a partial index for the most common currency:
-   ```sql
-   CREATE INDEX idx_prices_product_currency ON prices (product_id, currency) 
-   WHERE currency IN ('NGN', 'GHS', 'KES');
-   ```
+**Webhook signature mismatch.** The webhook handler extracts the currency from the body while the signature was generated over the header. The HMAC fails even though the payload is genuine. Fix: normalize the currency to canonical form before signature verification, and verify against the raw bytes the sender signed.
 
-3. **Localization mismatch between UI and API**
-   *Symptom:* The UI shows prices in GHS, but the API returns prices in KES. The user’s locale is set to Ghana, but the currency header is ignored.
-   *Root cause:* The UI is reading the currency from `navigator.language` instead of the API response. The API’s currency header is not included in the CORS response.
-   *Fix:* Add the currency header to CORS responses:
-   ```http
-   Access-Control-Expose-Headers: X-Currency
-   ```
+**Index selectivity collapse.** After enabling multi-currency, a `prices` table indexed on `(product_id, currency)` can become unattractive to the planner if the same product has many currency rows. A partial index for the currencies that dominate query traffic can help:
 
-4. **Rate limit by currency code**
-   *Symptom:* Requests from Ghana are rate-limited at 100 req/min, while requests from Kenya are limited at 1000 req/min.
-   *Root cause:* The rate limiter groups requests by IP, but Ghanaian traffic is routed through a shared CDN edge that serves multiple countries. The edge IP doesn’t reflect the country.
-   *Fix:* Group requests by the `X-Currency` header instead of IP:
-   ```javascript
-   const rateLimiter = new RateLimiterMemory({
-     points: 100,
-     duration: 60,
-     blockDuration: 60,
-     keyPrefix: 'currency'
-   });
-   ```
-
-## When none of these work: escalation path
-
-If you’ve applied all three fixes and the currency switch still fails in one country, the issue is likely in the mobile money gateway’s sandbox vs. production discrepancy. The escalation path is:
-
-1. **Check the gateway’s API changelog** for the past 90 days. MTN and Orange Money update their sandbox APIs monthly, and the changes are not always backwards compatible.
-2. **Replay the exact request** that failed using the gateway’s curl examples. Compare the sandbox curl output to the production curl output. Look for differences in header casing or body field names.
-3. **Open a ticket with the gateway’s support team** and include:
-   - The exact request payload (sanitized)
-   - The exact error message from the gateway
-   - The curl command that reproduces the issue
-   - The environment (sandbox vs. production)
-4. **Temporarily route traffic for the failing country to a fallback gateway** while the support ticket is open. Use a feature flag to disable the primary gateway for that country only:
-
-```yaml
-# feature_flag.yaml
-feature_flags:
-  mtn_momo_ghana:
-    enabled: true
-    rollout: 1.0
-    country_override:
-      - GH
-      - country_code: GH
-        gateway: primary
-      - country_code: KE
-        gateway: primary
+```sql
+CREATE INDEX idx_prices_product_currency ON prices (product_id, currency)
+WHERE currency IN ('NGN', 'GHS', 'KES');
 ```
 
-Document the fallback in your runbook so on-call engineers can disable the primary gateway in under 2 minutes if a regression hits production.
+Measure before adding this. Check the query plan with `EXPLAIN ANALYZE` on the actual workload; a partial index that does not match the query predicate will not be used.
 
-## Frequently Asked Questions
+**UI/API currency divergence.** The UI reads the currency from `navigator.language` instead of the API response, so it renders one currency while the API charges in another. Fix: make the API response the single source of truth, and if the currency is communicated via a header, expose it to the browser:
 
-**Why does my Node.js backend default to KES even though the user is in Ghana?**
-The backend is likely using a hard-coded default or only checking the query parameter. The currency code for Ghanaian users typically arrives in the `X-Currency` header from MTN MoMo, but your middleware ignores headers. Start by adding the header to your currency extractor’s priority list.
-
-**How do I handle sandbox vs. production differences for the same provider?**
-Use a provider adapter that normalizes the currency code to the expected case based on the environment. For MTN MoMo, sandbox expects lowercase (`ghs`) while production expects uppercase (`GHS`). The adapter should detect the environment from the request host or a custom header.
-
-**What’s the fastest way to test currency switching before merging to main?**
-Run a synthetic load test using k6 that replays traffic from all four countries. The test should check that the response includes the correct currency code and that latency stays under 200ms. If the test passes, merge the change—otherwise, the issue will surface in production.
-
-**Do I need to fork my codebase for each country now?**
-No. A shared currency extraction library with provider-specific adapters removes the need for country forks. The library should be versioned and tested against recorded traffic from each provider, so new providers can be added without code duplication.
-
-## One thing you can do today
-
-Open your main API entry file (e.g., `app.js`, `main.py`, or `server.go`) and check the first middleware that sets the currency. If it looks like this:
-
-```javascript
-app.use((req, res, next) => {
-  req.currency = req.query.currency || 'KES';
-  next();
-});
+```http
+Access-Control-Expose-Headers: X-Currency
 ```
 
-Replace it with the extractor from Fix 1. Then run your local server and use curl to send a Ghanaian-style request:
+**Rate limiting by the wrong key.** A rate limiter keyed on client IP misbehaves when traffic is routed through shared CDN edges. Keying on the currency header is one option, but it changes the semantics of the limit — you are now limiting per currency rather than per client. Decide deliberately which axis you want to throttle on.
+
+## Escalation when the fixes do not resolve it
+
+If extraction, validation, and normalization are all correct and one country still fails, the likely cause is a gateway-side discrepancy between sandbox and production. The path forward:
+
+1. Check the gateway's API changelog for the period since your last successful integration test. Sandbox APIs change without always being backward compatible.
+2. Replay the exact failing request with the gateway's own curl examples against both sandbox and production. Compare header casing and body field names byte for byte.
+3. Open a support ticket including the sanitized payload, the exact error, the reproducing curl command, and the environment.
+4. If the failure is blocking, route that country's traffic to a fallback gateway behind a feature flag. Keep the flag scoped to the country and provider so it can be reverted without touching other traffic.
+
+Document the fallback so on-call engineers can disable the primary gateway quickly. The value of the runbook is the time-to-revert, not the elegance of the flag.
+
+## FAQ
+
+**Why does the backend default to one currency when the user is elsewhere?**
+Because the middleware that sets the currency has a hard-coded default and only checks one or two locations. If the user's provider sends the code in a header the middleware does not read, the default wins silently.
+
+**How should sandbox versus production differences be handled?**
+With a provider-and-environment adapter that normalizes casing at the outbound boundary. Do not branch on country, because the same provider spans environments and countries.
+
+**What is the fastest way to catch a currency regression before merge?**
+Replay one request per provider in CI and assert on the returned currency, plus a counter that increments whenever the fallback path is taken. The counter is what catches a new provider sending the code somewhere unexpected.
+
+**Is a country-specific fork ever justified?**
+Rarely. A shared extraction and normalization package with per-provider rules covers the same ground without duplicating review load or blocking cross-border features.
+
+## One thing to do in the next 30 minutes
+
+Open the middleware that sets the request currency and check whether it has a hard-coded default. If it does, replace the default with a thrown error and add the header candidates to the priority list. Then send a request that carries the currency only in a header:
 
 ```bash
 curl -H "X-Currency: GHS" http://localhost:3000/v1/price
 ```
 
-If the response includes `"currency":"GHS"`, the fix is working. If not, add the header to your extractor’s priority list and redeploy. This takes 15 minutes and prevents the silent fallback that trips up most teams.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+If the response contains `"currency":"GHS"`, the header path works. If it fails loudly instead of returning a price, the default is gone and the next missing source will surface as an error rather than a wrong charge.

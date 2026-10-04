@@ -1,18 +1,18 @@
 # Idempotency keys: what they fix, what they don't
 
-The conventional advice on idempotency keys is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. Nobody mentions the failure mode until it's already cost someone a bad night.
+Idempotency keys are widely presented as the fix for duplicate writes on retry. That framing is incomplete in a specific and costly way. Keys solve the retry problem and nothing else: not concurrency, not partial failures, not a client that generates a fresh key for what is logically the same operation. This article covers the mechanics, the four failure modes keys leave open, and the mitigations for each.
 
 ## The problem this solves
 
-A payment API without idempotency is a bet that the network never fails. That bet loses regularly. A client sends `POST /charges`, the request reaches your server, you charge the card, write the transaction, and then the connection drops before the response gets back. The client sees a timeout, retries, and now the customer has been charged twice. This is not an edge case. It's the normal behavior of any mobile client on a flaky connection, any load balancer that closes idle sockets, and any queue that redelivers on visibility timeout.
+A write API without idempotency is a bet that the network never fails. That bet loses regularly. A client sends `POST /charges`, the request reaches the server, the card is charged, the transaction is written, and then the connection drops before the response gets back. The client sees a timeout, retries, and the customer is charged twice. This is not an edge case. It is the normal behavior of a mobile client on a flaky connection, a load balancer that closes idle sockets, and a queue that redelivers on visibility timeout.
 
-Idempotency keys are the standard fix. Stripe, Square, Adyen, PayPal, and most modern payment APIs support them. The idea is simple: the client generates a unique key per logical operation and sends it with the request. The server stores the key alongside the response, and on a retry with the same key, it returns the original response instead of executing the operation again.
+Idempotency keys are the standard fix. Most modern payment APIs support them. The idea is simple: the client generates a unique key per logical operation and sends it with the request. The server stores the key alongside the response, and on a retry with the same key, it returns the original response instead of executing the operation again.
 
-The part that trips people up is that idempotency keys only solve the retry problem. They don't solve concurrency, they don't solve partial failures, and they don't solve the fact that a client might generate a new key for what is logically the same payment. This post covers how to implement them correctly, where they fail, and what to do about the failure modes that keys alone can't fix.
+The part that trips teams up is that idempotency keys only solve the retry problem. They don't solve concurrency, they don't solve partial failures, and they don't solve the fact that a client might generate a new key for what is logically the same payment. The rest of this article covers how to implement them correctly, where they fail, and what to do about the failure modes that keys alone can't fix.
 
 ## Prerequisites and what you'll build
 
-You'll need a working knowledge of HTTP, a relational database, and a web framework. The examples use Python 3.11 with FastAPI 0.115 and SQLAlchemy 2.0, but the pattern translates directly to Node 20 LTS with Express 4.21 and Prisma 5.22, or Go 1.22 with the standard library. The database is PostgreSQL 16, which matters because we'll use `INSERT ... ON CONFLICT` and advisory locks.
+You'll need a working knowledge of HTTP, a relational database, and a web framework. The examples use Python 3.11 with FastAPI and SQLAlchemy 2.0, but the pattern translates directly to Node with Express, or Go with the standard library. The database is PostgreSQL 16, which matters because the implementation uses `INSERT ... ON CONFLICT` and advisory locks.
 
 What you'll build is a middleware layer that wraps any handler with idempotent semantics. The middleware will:
 
@@ -23,11 +23,11 @@ What you'll build is a middleware layer that wraps any handler with idempotent s
 - Return a 409 Conflict if the same key is currently in flight.
 - Expire keys after 24 hours, matching the typical retention window used by payment processors.
 
-The goal is not to build a Stripe clone. The goal is to understand the failure modes well enough that you can debug a double-charge incident at 2 AM without guessing.
+The goal is not to build a payment processor clone. The goal is to understand the failure modes well enough that a double-charge incident can be debugged without guessing.
 
 ## Step 1 — set up the environment
 
-Start with the schema. The idempotency table needs a unique constraint on the key, a reference to the response, and a timestamp for expiry. A common mistake is to make the key the primary key and forget the uniqueness constraint on the combination of key and endpoint. Two different endpoints can legitimately use the same key value if the client generates keys per operation, but if the client generates keys per request, you'll see collisions across endpoints.
+Start with the schema. The idempotency table needs a unique constraint on the key, a reference to the response, and a timestamp for expiry. A common mistake is to make the key the primary key and forget the uniqueness constraint on the combination of key and endpoint. Two different endpoints can legitimately use the same key value if the client generates keys per operation, but if the client generates keys per request, collisions across endpoints will appear.
 
 ```sql
 CREATE TABLE idempotency_keys (
@@ -105,10 +105,11 @@ The 30-second lock is a safety valve. If the handler crashes without writing a r
 
 ## Step 2 — core implementation
 
-The middleware above only checks and reserves. The actual handler needs to write the response back to the idempotency record before returning. This is the step people skip, and it's the one that causes double charges on retry.
+The middleware above only checks and reserves. The actual handler needs to write the response back to the idempotency record before returning. This is the step teams skip, and it's the one that causes double charges on retry.
 
 ```python
 from fastapi import FastAPI, Request, Response
+from sqlalchemy import update
 
 app = FastAPI()
 
@@ -148,7 +149,7 @@ async def create_charge(request: Request, session):
 
 The critical ordering is: charge the card, then update the idempotency record, then return. If you update the record first and then charge, a crash between the two leaves a cached success response for a charge that never happened. If you charge and then crash before updating, the client retries, and you charge again. Neither is perfect, but the second is the lesser evil because the client sees a timeout and knows something went wrong. The first is a silent lie.
 
-This is where idempotency keys stop being a complete solution. The window between the charge and the record update is small, usually under 50ms, but it exists. The only way to close it is to make the charge itself idempotent at the processor level, which most processors support by accepting your own idempotency key and deduplicating on their side. If you're using Stripe, you pass the same key to Stripe's API, and Stripe will return the original charge if you retry. That's the real belt-and-suspenders approach: your key protects your database, their key protects their ledger.
+This is where idempotency keys stop being a complete solution. The window between the charge and the record update is small, but it exists. The only way to close it is to make the charge itself idempotent at the processor level, which most processors support by accepting your own idempotency key and deduplicating on their side. The real belt-and-suspenders approach is to pass the same key to the downstream processor: your key protects your database, their key protects their ledger.
 
 ## Step 3 — handle edge cases and errors
 
@@ -156,9 +157,9 @@ There are four failure modes that idempotency keys alone don't fix. Each has a d
 
 **Concurrent requests with the same key.** Two requests arrive at the same millisecond. One inserts the row, the other gets an `IntegrityError`. The second one returns 409. The client should retry after a short delay, but many clients don't. A common pattern is to use a Postgres advisory lock instead of a unique constraint, so the second request blocks until the first completes and then returns the cached response. The tradeoff is that advisory locks are held for the duration of the transaction, and a slow handler will hold the lock for seconds. For payment APIs, a 409 with a `Retry-After: 1` header is usually better than blocking.
 
-**Key reuse with different payloads.** This is the silent failure. A client library that generates a UUID once and reuses it for every request in a session will hit this on the second request. The 422 response is correct, but it's a breaking change for clients that were previously working. The mitigation is to version the API and document the behavior clearly. Stripe returns a 400 with the message `Keys for idempotent requests can only be used with the same parameters they were first used with.` That's a real error message you can grep for in logs.
+**Key reuse with different payloads.** This is the silent failure. A client library that generates a UUID once and reuses it for every request in a session will hit this on the second request. The 422 response is correct, but it's a breaking change for clients that were previously working. The mitigation is to version the API and document the behavior clearly. One documented example: Stripe returns a 400 with the message `Keys for idempotent requests can only be used with the same parameters they were first used with.` That's a real error message you can grep for in logs.
 
-**Expired keys.** After 24 hours, the key is gone. A client that retries after 25 hours will create a new charge. This is rare but happens with batch jobs that retry on a daily schedule. The mitigation is to make the retention window configurable and to log when a request arrives with a key that was recently expired. A 24-hour window is standard, but some processors keep keys for 7 days.
+**Expired keys.** After the TTL, the key is gone. A client that retries after expiry will create a new charge. This is rare but happens with batch jobs that retry on a daily schedule. The mitigation is to make the retention window configurable and to log when a request arrives with a key that was recently expired. A 24-hour window is common; some processors keep keys for 7 days.
 
 **Partial failures in multi-step operations.** If a charge involves creating a customer, then a payment method, then a charge, and the second step fails, the idempotency key covers the whole operation. On retry, the first step will be skipped because the key exists, but the second step will run again. This is why idempotency keys should wrap the entire logical operation, not individual steps. If you have a multi-step flow, either make each step idempotent or wrap the whole thing in a single key.
 
@@ -167,7 +168,7 @@ There are four failure modes that idempotency keys alone don't fix. Each has a d
 | Network timeout on retry | Yes | None needed |
 | Concurrent duplicate requests | Partially | 409 with Retry-After, or advisory lock |
 | Key reuse with different body | No | 422 response, client-side key generation |
-| Expired key after 24h | No | Configurable TTL, expiry logging |
+| Expired key after TTL | No | Configurable TTL, expiry logging |
 | Partial failure in multi-step flow | Partially | Wrap whole operation in one key |
 
 ## Step 4 — add observability and tests
@@ -193,20 +194,23 @@ def log_idempotency(key, endpoint, outcome, status):
     )
 ```
 
-For tests, the important cases are the ones that are hard to reproduce manually. Use `pytest 8.3` with `httpx` for async tests. Write a test that fires two concurrent requests with the same key and asserts that only one charge is created. Write a test that reuses a key with a different body and asserts a 422. Write a test that simulates a crash between the charge and the record update and asserts that the retry creates a second charge, so you understand the window.
+For tests, the important cases are the ones that are hard to reproduce manually. Use `pytest` with `httpx` for async tests. Write a test that fires two concurrent requests with the same key and asserts that only one charge is created. Write a test that reuses a key with a different body and asserts a 422. Write a test that simulates a crash between the charge and the record update and asserts that the retry creates a second charge, so you understand the window.
 
-The crash test is the one people skip. It's uncomfortable because it documents a real bug. But knowing the window exists is better than assuming it doesn't. If the test fails, you've found a real gap. If it passes, you've confirmed that your processor-level idempotency is doing the work.
+The crash test is the one teams skip. It's uncomfortable because it documents a real bug. But knowing the window exists is better than assuming it doesn't. If the test fails, you've found a real gap. If it passes, you've confirmed that your processor-level idempotency is doing the work.
 
-## Real results from running this
+## Measuring the cost and the failure rates
 
-Typical numbers from a payment API with this pattern, based on publicly documented behavior from Stripe, Square, and similar processors:
+Claims about idempotency overhead are easy to make and easy to get wrong. Instead of trusting a number, measure the four quantities that matter in your own system.
 
-- Idempotency check adds 2-5ms to a request, mostly database round-trip time.
-- The unique constraint on `(key, endpoint)` prevents duplicate inserts with near-zero overhead; Postgres handles this in under 1ms.
-- A 24-hour retention window with a daily cleanup job keeps the table under 10 million rows for an API doing 100,000 requests per day.
-- The 409 path is hit in under 0.1% of requests in normal operation, but spikes to 2-5% during client-side retry storms.
+**Added latency per request.** Instrument the middleware with a timer around the lookup and insert. Compare the p50 and p99 of the endpoint with and without the `Idempotency-Key` header present. The dominant cost is the database round-trip, so the number tracks your database latency closely. Run the comparison under load, not on an idle box.
 
-These figures are typical for a mid-sized API. Your numbers will vary with database latency and request volume, but the shape is consistent: the check is cheap, the constraint is cheaper, and the failure modes are rare but expensive.
+**Constraint overhead.** Wrap the insert in a timer and compare a run where every key is new against a run where every key collides. Postgres enforces a unique index on insert; the collision path adds an index probe and an exception, which is measurable but small relative to the network round-trip.
+
+**Table growth.** Track `pg_total_relation_size('idempotency_keys')` over a week. From the observed request rate you can compute how many rows a given TTL accumulates: `rows ≈ requests_per_second × 86400 × ttl_days × (1 + retry_fraction)`. That arithmetic is the honest way to size the retention window, rather than quoting a row count.
+
+**Conflict and mismatch rates.** Count requests by outcome (`hit`, `miss`, `conflict`, `mismatch`) and alert on the ratio. A rising conflict ratio means clients are retrying too aggressively. A rising mismatch ratio means a client library is reusing keys. Both are leading indicators of an incident, and both are cheap to compute from the log fields above.
+
+Run these measurements once, record the numbers for your deployment, and revisit them when the database or the client mix changes.
 
 ## Common questions and variations
 
@@ -214,27 +218,17 @@ These figures are typical for a mid-sized API. Your numbers will vary with datab
 Client. The whole point is that the client can retry the same logical operation. If the server generates the key, the client has no way to reference the original request. The exception is server-to-server calls where the caller controls both sides; in that case, a deterministic key derived from the operation (e.g., `charge:{order_id}`) works and avoids the key-reuse problem entirely.
 
 **What's the right TTL for idempotency keys?**
-24 hours is the standard, used by Stripe and most processors. The tradeoff is storage cost versus the risk of a retry after expiry. If your clients retry on a daily schedule, use 7 days. If your storage is expensive, use 1 hour and accept that long-delayed retries will create duplicates. There's no universal right answer, but 24 hours covers the vast majority of real retry scenarios.
+24 hours is common, used by several processors. The tradeoff is storage cost versus the risk of a retry after expiry. If your clients retry on a daily schedule, use 7 days. If your storage is expensive, use 1 hour and accept that long-delayed retries will create duplicates. There's no universal right answer, but 24 hours covers the vast majority of real retry scenarios.
 
 **How do I handle idempotency keys in a distributed system with multiple services?**
 The key should be scoped to the service that owns the operation. If Service A calls Service B, Service A generates a key for the call to B, and B stores it. A's own idempotency key is separate. Don't try to share keys across services; it creates coupling and makes the retention policy impossible to reason about. Each service owns its own idempotency table.
 
 **Can I use Redis instead of Postgres for idempotency keys?**
-Yes, and it's faster, but you lose durability. Redis with AOF persistence and `SET key value NX EX 86400` gives you atomic insert-and-expire in a single command, which is elegant. The risk is that a Redis failover can lose recent writes, and losing an idempotency record means a retry creates a duplicate. For payment APIs, Postgres is the safer default. For lower-stakes operations, Redis 7.2 with AOF is fine.
+Yes, and it's faster, but you lose durability. Redis with AOF persistence and `SET key value NX EX 86400` gives you atomic insert-and-expire in a single command, which is elegant. The risk is that a Redis failover can lose recent writes, and losing an idempotency record means a retry creates a duplicate. For payment APIs, Postgres is the safer default. For lower-stakes operations, Redis with AOF is fine.
+
+**What about a managed gateway or processor that handles this for me?**
+Many payment processors and managed LLM gateways accept a client-supplied idempotency key and deduplicate on their side. That protects their ledger, not your database. You still need your own record if you have side effects beyond the downstream call, such as writing to your own tables or sending a notification. Treat the processor's key as a second layer, not a replacement.
 
 ## Where to go from here
 
 The next step is to add a test that fires two concurrent requests with the same idempotency key and asserts that only one charge is created. Open your test file for the charges endpoint, add the test, and run it with `pytest -k idempotency`. If it passes, you've confirmed the core guarantee. If it fails, you've found the exact line where your implementation diverges from the pattern. Run it today, before the next retry storm finds the gap for you.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026

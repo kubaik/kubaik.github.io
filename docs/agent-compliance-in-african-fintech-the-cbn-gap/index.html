@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Agent compliance in African fintech: the CBN gap - Kubai Kevin</title>
-        <meta name="description" content="Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.">
+        <meta name="description" content="How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.">
         <meta name="keywords" content="Fintech, AutonomousAgents, CbnAgentCompliance, Ndpa, Ai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-20T09:44:53.685889">
-        <meta property="article:modified_time" content="2026-09-20T09:44:53.685900">
+        <meta property="article:modified_time" content="2026-10-04T10:40:05.364904+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent compliance in African fintech: the CBN gap">
-        <meta property="og:description" content="Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.">
+        <meta property="og:description" content="How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.">
         <meta property="og:url" content="https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Agent compliance in African fintech: the CBN gap">
-        <meta name="twitter:description" content="Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.">
+        <meta name="twitter:description" content="How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-compliance-in-african-fintech-the-cbn-gap.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/#article",
       "headline": "Agent compliance in African fintech: the CBN gap",
-      "description": "Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.",
+      "description": "How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.",
       "datePublished": "2026-09-20T09:44:53+00:00",
-      "dateModified": "2026-09-20T09:44:53+00:00",
-      "wordCount": 3185,
+      "dateModified": "2026-10-04T10:40:05+00:00",
+      "wordCount": 3106,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Agent compliance in African fintech: the CBN gap</h1>
                 
-                <p class="post-lead">Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.</p>
+                <p class="post-lead">How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.</p>
                 
                 
                 <div class="tags">
@@ -255,37 +255,37 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3185 words
+                        &nbsp;·&nbsp; 3106 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Most regulatory compliance writeups assume the reader has already made the mistake they're warning about. This is the version of the write-up that includes the part that broke. It works in the simple case and breaks in a specific way under load.</p>
-<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>A Lagos-based payments team shipped an autonomous agent in early 2026 to handle chargeback disputes for merchants on their platform. The agent read transaction logs, drafted responses, and — with a human approving anything above ₦50,000 — filed them with the acquirer. It worked. Dispute resolution time dropped from a typical 36 hours to under 4 hours for the auto-handled tier. <a href="/audit-logs-compliance-vs-performance/">Then the compliance</a> review landed, and the question that stopped the rollout was not "does it work" but "who is the regulated entity when it acts."</p>
-<p>This is the gap that catches almost every African fintech team building agents in 2026. The engineering is tractable. The regulatory surface is not, and it is not the same surface a team in Berlin or San Francisco is working against. A US team deploying an agent that touches money movement answers to a framework where the CFPB has published interpretive guidance on automated decisioning, where model risk management (SR 11-7) is a known quantity, and where the worst case is usually a documented examination finding. <a href="/african-fintech-rules-broke-our-stack/">An African fintech</a> team answers to a patchwork: the Central Bank of Nigeria (CBN), the Nigeria Data Protection Commission (NDPC) under the NDPA 2023, the Securities and Exchange Commission where the agent touches anything resembling investment advice, and — if the agent moves money across borders — the recipient country's own regulator plus whatever the correspondent bank's compliance desk decides it wants that week.</p>
-<p>The part that trips people up is that none of these regulators published a document titled "Rules for Autonomous Agents." The obligations are scattered across consumer protection circulars, data protection statutes, outsourcing guidelines, and payment system rules that were written before anyone imagined a system that could take an action without a human in the loop. Your job is to map the agent's behavior onto those existing obligations, and the mapping is where teams lose weeks.</p>
-<p>What follows is a case study of that mapping exercise — what a typical team tries first, why the obvious approach fails, and the architecture that actually survives a compliance review. The numbers are realistic figures for a mid-size fintech processing on the order of 200,000 transactions a month, not a single team's audited results.</p>
-<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
-<p>The first attempt was the natural one: wrap the agent in a human approval step and call it done. Any action above a threshold goes to a human reviewer; everything below runs autonomously. The team set the threshold at ₦50,000 and moved on.</p>
-<p>This failed for three reasons that only became visible under review.</p>
-<p>First, the threshold was the wrong control. The CBN's consumer protection framework does not care about transaction size when it comes to dispute handling — it cares about whether the consumer received a fair hearing and whether the institution can produce a record of the decision. An agent that auto-rejects a ₦2,000 dispute has still made a regulated decision. The threshold controlled financial exposure, not regulatory exposure, and those are different axes.</p>
-<p>Second, the audit trail was a log file. The team's agent wrote structured logs to stdout, which went to CloudWatch. When the compliance officer asked "show me every decision this agent made on customer X between March 1 and March 31, and the basis for each," the answer required a log query that took 20 minutes to construct and returned unstructured text. The NDPA 2026 gives data subjects the right to meaningful information about automated decision-making, and "we have logs" is not the same as "we can produce a decision record."</p>
-<p>Third — and this is the one that is genuinely hard — the agent's model was a hosted endpoint. The team was calling a third-party LLM API. Under the CBN's outsourcing guidelines, a regulated institution remains responsible for the activities of its service providers, and the service provider here was processing customer data outside the jurisdiction. That triggered a cross-border data transfer question under NDPA 2023 that the team had not even considered, because from an engineering perspective it was just an HTTPS call.</p>
-<p>A common failure mode at this stage is to treat compliance as a checkbox that lives in a document, separate from the system. The team had a compliance policy. The policy said the agent's decisions were reviewable. The system did not make them reviewable in any way a regulator would accept. The gap between policy and system is where the rollout stalled — roughly six weeks of back-and-forth, with the agent running in shadow mode the entire time.</p>
-<h2 id="the-approach-that-worked">The approach that worked</h2>
-<p>The resolution was to stop treating the agent as a monolith and split it into three layers, each with its own regulatory posture.</p>
-<p><strong>Layer 1: The decision engine.</strong> This is the LLM call. It produces a recommendation, not an action. It is stateless, it receives only the minimum data needed, and its output is a structured object with a confidence score and a cited basis. Crucially, this layer is replaceable — the team could swap the model provider without changing anything downstream, which matters because you cannot predict which provider will be acceptable to your regulator in 18 months.</p>
-<p><strong>Layer 2: The policy gate.</strong> This is deterministic code, not a model. It takes the recommendation and applies the institution's rules: is this action permitted at all, does it require human sign-off, does it need to be logged to the immutable store, does it trigger a customer notification. The policy gate is where the regulatory logic lives, and because it is code, it can be reviewed, tested, and version-controlled. When the regulator asks "what are your rules," you hand them a git tag.</p>
+                <h2 id="the-regulatory-surface-nobody-named">The regulatory surface nobody named</h2>
+<p>Compliance writeups about autonomous agents tend to skip the part where the system breaks, because the failure is rarely in the code. It is in the mapping between what the agent does and what existing regulation already requires of the institution deploying it.</p>
+<p>A common scenario in Lagos and other African fintech hubs: a payments team ships an agent to handle chargeback disputes. The agent reads transaction logs, drafts responses, and files them with the acquirer, with a human approving anything above a threshold. Resolution time for the auto-handled tier drops from a typical 36 hours to under 4 hours. The engineering works. Then a compliance review lands, and the question that stalls the rollout is not "does it work" but "who is the regulated entity when it acts."</p>
+<p>That question is where most teams lose weeks. The engineering is tractable. The regulatory surface is not, and it is not the same surface a team in Berlin or San Francisco works against. A US team deploying an agent that touches money movement answers to a framework where the CFPB has published interpretive guidance on automated decisioning, where model risk management guidance (SR 11-7) is a known quantity, and where the worst case is usually a documented examination finding. An African fintech team answers to a patchwork: the Central Bank of Nigeria (CBN), the Nigeria Data Protection Commission (NDPC) under the NDPA 2023, the Securities and Exchange Commission where the agent touches anything resembling investment advice, and — if the agent moves money across borders — the recipient country's regulator plus whatever the correspondent bank's compliance desk decides it wants that week.</p>
+<p>None of these regulators published a document titled "Rules for Autonomous Agents." The obligations are scattered across consumer protection circulars, data protection statutes, outsourcing guidelines, and payment system rules written before anyone imagined a system that could take an action without a human in the loop. The job is to map the agent's behavior onto those existing obligations, and the mapping is where teams lose weeks.</p>
+<p>What follows is a worked case study of that mapping exercise: what a typical team tries first, why the obvious approach fails, and the architecture that survives a compliance review. Figures used are illustrative for a mid-size fintech processing on the order of 200,000 transactions a month, not audited results from a specific firm.</p>
+<h2 id="the-obvious-first-attempt-and-why-it-fails">The obvious first attempt and why it fails</h2>
+<p>The natural first design is to wrap the agent in a human approval step and call it done. Any action above a threshold goes to a human reviewer; everything below runs autonomously. A team sets the threshold at ₦50,000 and moves on.</p>
+<p>This fails for three reasons that only become visible under review.</p>
+<p><strong>The threshold is the wrong control.</strong> Consumer protection frameworks generally do not care about transaction size when it comes to dispute handling — they care about whether the consumer received a fair hearing and whether the institution can produce a record of the decision. An agent that auto-rejects a ₦2,000 dispute has still made a regulated decision. The threshold controls financial exposure, not regulatory exposure, and those are different axes.</p>
+<p><strong>The audit trail is a log file.</strong> An agent that writes structured logs to stdout, which flow to a managed logging service, has logs. When a compliance officer asks "show me every decision this agent made on customer X between March 1 and March 31, and the basis for each," the answer requires a log query that takes 20 minutes to construct and returns unstructured text. The NDPA 2023 gives data subjects the right to meaningful information about automated decision-making, and "we have logs" is not the same as "we can produce a decision record."</p>
+<p><strong>The model is a hosted endpoint.</strong> A team calling a third-party LLM API is, from an engineering perspective, just making an HTTPS call. From a regulatory perspective, under CBN outsourcing guidelines, a regulated institution remains responsible for the activities of its service providers — and the service provider here is processing customer data outside the jurisdiction. That triggers a cross-border data transfer question under NDPA 2023 that the team may not have considered at all.</p>
+<p>A common failure mode at this stage is treating compliance as a checkbox that lives in a document, separate from the system. The policy says the agent's decisions are reviewable. The system does not make them reviewable in any way a regulator would accept. The gap between policy and system is where rollouts stall — often weeks of back-and-forth, with the agent running in shadow mode the entire time.</p>
+<h2 id="the-three-layer-architecture">The three-layer architecture</h2>
+<p>The resolution is to stop treating the agent as a monolith and split it into three layers, each with its own regulatory posture.</p>
+<p><strong>Layer 1: The decision engine.</strong> This is the LLM call. It produces a recommendation, not an action. It is stateless, it receives only the minimum data needed, and its output is a structured object with a confidence score and a cited basis. Crucially, this layer is replaceable — the model provider can be swapped without changing anything downstream, which matters because no one can predict which provider will be acceptable to a regulator in 18 months.</p>
+<p><strong>Layer 2: The policy gate.</strong> This is deterministic code, not a model. It takes the recommendation and applies the institution's rules: is this action permitted at all, does it require human sign-off, does it need to be logged to the immutable store, does it trigger a customer notification. The policy gate is where the regulatory logic lives, and because it is code, it can be reviewed, tested, and version-controlled. When a regulator asks "what are your rules," the answer is a git tag.</p>
 <p><strong>Layer 3: The execution layer.</strong> This performs the action — filing the dispute response, sending the notification, updating the ledger. It writes to an append-only audit store before it acts, not after. If the action fails, the audit record still exists.</p>
-<p>The key insight is that only Layer 1 is non-deterministic. Layers 2 and 3 are ordinary software with ordinary test coverage. This means the regulatory argument reduces to a tractable question: "can you show that the deterministic gate prevents the model from taking any action outside your stated policy?" That is a question you can answer with a test suite, not a promise.</p>
-<p>This split also solved the cross-border data problem. The decision engine receives a redacted payload — no account numbers, no names, just the transaction pattern and the dispute reason code. The policy gate and execution layer run in-region, on infrastructure the team controls. The LLM provider sees a fraction of the data, and the team can document exactly what that fraction is.</p>
-<h2 id="implementation-details">Implementation details</h2>
-<p>The policy gate is the piece worth showing. This is Python 3.12, using Pydantic 2.7 for the schema validation, because you want the recommendation object to fail loudly if the model returns something malformed.</p>
+<p>The key insight is that only Layer 1 is non-deterministic. Layers 2 and 3 are ordinary software with ordinary test coverage. This reduces the regulatory argument to a tractable question: "can you show that the deterministic gate prevents the model from taking any action outside your stated policy?" That is a question answerable with a test suite, not a promise.</p>
+<p>This split also solves the cross-border data problem. The decision engine receives a redacted payload — no account numbers, no names, just the transaction pattern and the dispute reason code. The policy gate and execution layer run in-region, on infrastructure the institution controls. The LLM provider sees a fraction of the data, and the institution can document exactly what that fraction is.</p>
+<h2 id="implementation-the-policy-gate">Implementation: the policy gate</h2>
+<p>The policy gate is the piece worth showing. This is Python 3.12 using Pydantic 2.7 for schema validation, so the recommendation object fails loudly if the model returns something malformed.</p>
 <pre><code class="language-python">from pydantic import BaseModel, Field
 from enum import Enum
 from datetime import datetime, timezone
@@ -340,7 +340,9 @@ def apply_policy(rec: Recommendation, customer_tier: str) -&gt; Decision:
         decided_at=datetime.now(timezone.utc),
     )
 </code></pre>
-<p>The important property is that <code>apply_policy</code> is pure. Given the same recommendation and customer tier, it returns the same decision. That means it is testable, and the test suite is the compliance artifact. The team wrote 140 tests against this function, covering each branch and the boundaries. When the regulator's examiner asked how the institution ensures the agent cannot auto-reject a dispute without human review, the answer was a test named <code>test_auto_reject_always_requires_human</code> and a CI pipeline that fails if it is removed.</p>
+<p>The important property is that <code>apply_policy</code> is pure. Given the same recommendation and customer tier, it returns the same decision. That makes it testable, and the test suite becomes the compliance artifact. A team would typically write tests against this function covering each branch and the boundaries. When an examiner asks how the institution ensures the agent cannot auto-reject a dispute without human review, the answer is a test named <code>test_auto_reject_always_requires_human</code> and a CI pipeline that fails if it is removed.</p>
+<p>Note the confidence threshold: 0.72 is a policy choice, not a documented default. It should be set by measuring the model's calibration on a labelled sample of real disputes and choosing a cutoff where the false-escalation rate is acceptable to the operations team. The measurement is straightforward: run the model over a held-out set of past disputes, bucket outputs by confidence, and plot accuracy against confidence. Pick the threshold where accuracy meets the bar the business is willing to defend.</p>
+<h2 id="implementation-the-audit-store">Implementation: the audit store</h2>
 <p>The audit store is the second piece. It is append-only, and it is written before execution. A minimal version using PostgreSQL 16 with a write-only role:</p>
 <pre><code class="language-sql">CREATE TABLE agent_decisions (
     id            BIGSERIAL PRIMARY KEY,
@@ -363,92 +365,43 @@ REVOKE UPDATE, DELETE ON agent_decisions FROM app_role;
 -- financial records; personal data is minimized at write time.
 </code></pre>
 <p>The pseudonymization matters. The <code>customer_ref</code> is a token that maps to the real customer ID in a separate table with stricter access controls. The decision record itself contains no directly identifying information, which means producing a decision history for a data subject access request does not require exporting the whole table, and the cross-border exposure of the audit store is limited.</p>
-<p>One gotcha worth naming: teams commonly discover that their cloud provider's managed logging service does not offer true append-only semantics. A role with write access to a log group can usually delete from it too. If your audit trail is CloudWatch Logs or an equivalent, you have a log, not an audit record. The distinction is exactly the kind of thing an examiner probes.</p>
-<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (monolithic agent)</th>
-<th>After (three-layer)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Dispute resolution time (auto tier)</td>
-<td>~36 hours</td>
-<td>under 4 hours</td>
-</tr>
-<tr>
-<td>Audit record production time</td>
-<td>20+ minutes (log query)</td>
-<td>under 30 seconds (indexed query)</td>
-</tr>
-<tr>
-<td>Data sent to third-party model</td>
-<td>full transaction payload</td>
-<td>redacted pattern + reason code</td>
-</tr>
-<tr>
-<td>Policy change deployment</td>
-<td>code change + review</td>
-<td>git tag + CI, ~15 minutes</td>
-</tr>
-<tr>
-<td>Compliance review duration</td>
-<td>~6 weeks, stalled</td>
-<td>~2 weeks, approved</td>
-</tr>
-<tr>
-<td>Test coverage on regulatory logic</td>
-<td>0 tests</td>
-<td>140 tests</td>
-</tr>
-<tr>
-<td>Customer data in cross-border transfer</td>
-<td>names, account numbers</td>
-<td>pseudonymous reference only</td>
-</tr>
-</tbody>
-</table>
-<p>The resolution-time improvement is not the point — it was already fast. The point is that the audit production time dropped from a 20-minute manual query to a sub-30-second indexed lookup, and that is the difference between a system a compliance officer can supervise and one they cannot. A supervisor who can pull a decision record in 30 seconds will actually spot-check the agent. One who needs 20 minutes will not, and an unsupervised agent is the regulatory problem.</p>
-<p>The compliance review duration is the number that matters most to the business case. Six weeks of stalled rollout on a system that was already built is a real cost, and it is the cost that teams consistently fail to budget for when they plan agent deployments in this market.</p>
-<h2 id="what-wed-do-differently">What we'd do differently</h2>
-<p>The biggest mistake was sequencing. The team built the agent first and asked the compliance question second. The right order is to write the policy gate first — before the model, before the prompt, before anything. The policy gate is the specification. It tells you what the model needs to output, what data it needs, and what the audit record must contain. Building the model first means reverse-engineering the gate from whatever the model happens to do, which is harder and produces worse controls.</p>
-<p>The second thing is to involve the compliance function at the architecture diagram stage, not the code review stage. Compliance officers are not engineers, but they can read a diagram that says "the model recommends, the gate decides, the ledger records." That sentence, delivered early, saves weeks. Delivered late, it reads as a retrofit.</p>
-<p>The third is to treat the model provider as a vendor with a contract, not an API with a key. The cross-border data question is real, and the answer is partly technical (redact before sending) and partly contractual (data processing agreement, sub-processor disclosure, breach notification terms). Teams that skip the contractual half discover during review that their provider's standard terms do not actually permit the processing they are doing.</p>
-<h2 id="the-broader-lesson">The broader lesson</h2>
-<p>The principle is this: in a regulated environment, the agent's autonomy is not a property of the model — it is a property of the deterministic code around it. You do not make an agent compliant by making the model safer. You make it compliant by constraining what the model's output can cause to happen, and by making that constraint inspectable.</p>
-<p>This is why the three-layer split works across jurisdictions. The CBN, the NDPC, the SEC, and whatever regulator you have not thought of yet all ask variations of the same question: can you show that the system behaves within stated bounds, and can you produce a record of what it did. A deterministic gate answers the first. An append-only audit store answers the second. Neither requires the regulator to understand transformers.</p>
-<p>The regional gap matters here. A team in a jurisdiction with mature automated-decisioning guidance can point to a framework and say "we comply with X." An African fintech team usually cannot, because the guidance is implicit in older instruments. That is harder, but it is not worse — an implicit obligation you have mapped and documented is more defensible than an explicit one you have merely asserted. The work is the mapping, and the mapping is engineering work, not legal work. Treat it that way and it gets done.</p>
-<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
-<p>Start by listing every action your agent can take that a customer would experience as a decision about them — approving, rejecting, flagging, scoring, prioritizing. Each of those is a regulated decision in most African jurisdictions, regardless of the dollar amount attached. Then, for each one, write the deterministic rule that governs it. Not the prompt. The rule.</p>
-<p>If you cannot write the rule, you do not yet know what your agent is allowed to do, and that is the finding a regulator will write up.</p>
-<p>The second step is to check where your audit records actually live and whether they are truly append-only. Pick one decision your agent made in the last week and try to produce a complete record of it — the input, the recommendation, the rule applied, the action taken, the timestamp — without querying a general-purpose log. If you cannot, you have a gap.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p>One gotcha worth naming: managed logging services commonly do not offer true append-only semantics. A role with write access to a log group can usually delete from it too. If the audit trail is a managed log service, the institution has a log, not an audit record. The distinction is exactly the kind of thing an examiner probes.</p>
+<p>A second gotcha: the <code>REVOKE UPDATE, DELETE</code> statement above only works if the application connects as <code>app_role</code> and not as a superuser or table owner. Table owners retain the ability to drop or alter the table. In practice, the audit store should live in a separate database with separate credentials, and the application should hold only <code>INSERT</code> and <code>SELECT</code> on the one table. Verifying this is a two-minute exercise: connect as the application role and attempt a <code>DELETE</code>. If it succeeds, the control is not in place.</p>
+<h2 id="what-to-measure-and-how">What to measure, and how</h2>
+<p>Rather than trust a vendor's or a blog post's numbers, the useful exercise is to measure the properties that matter in the institution's own environment. Four measurements are worth running.</p>
+<p><strong>Audit record production time.</strong> Instrument the query path that produces a full decision record for a single customer over a date range. Time it. If it requires a general-purpose log search rather than an indexed lookup against <code>agent_decisions</code>, the number will be in the tens of minutes. The target is a sub-second indexed lookup, and the way to get there is to index on <code>(customer_ref, decided_at)</code>.</p>
+<p><strong>Override rate.</strong> Log every case where a human reviewer changed the agent's recommendation. The ratio of overrides to total reviews is the single best signal of whether human review is meaningful. A very low override rate combined with a very short median review time is strong evidence that the review is a formality, which regulators treat as functionally automated decisioning.</p>
+<p><strong>Cross-border payload content.</strong> For each call site to an external model, capture the outbound payload and run a regex sweep for account-number-like patterns, names, and identifiers. The count of matches should be zero. This is a CI check, not a one-off audit.</p>
+<p><strong>Policy gate coverage.</strong> Use coverage tooling on the policy gate module specifically. Branch coverage below 100% on this module means there is a code path that has never been exercised and therefore has never been reviewed.</p>
+<h2 id="a-decision-checklist-before-shipping">A decision checklist before shipping</h2>
+<p>Before an agent that touches customer money or customer data goes live, the following questions should have documented answers. If any answer is "we'll figure it out later," that is the finding.</p>
+<ul>
+<li>Can you list every action the agent can take that a customer would experience as a decision about them? Approving, rejecting, flagging, scoring, prioritizing — each is a regulated decision in most African jurisdictions, regardless of the amount attached.</li>
+<li>For each of those actions, is there a deterministic rule that governs it? Not a prompt. A rule, in code, under version control.</li>
+<li>Can you produce a complete decision record for any single decision the agent made last week — input, recommendation, rule applied, action taken, timestamps — without querying a general-purpose log?</li>
+<li>Is the audit store genuinely append-only for the credentials the application holds? Have you tested this by attempting a delete?</li>
+<li>Does the outbound payload to any external model contain directly identifying information? Have you verified this with a regex sweep in CI?</li>
+<li>Is there a data processing agreement in place with the model provider, with sub-processor disclosure and breach notification terms?</li>
+<li>Is the human review meaningful — can you show the override rate and the median review time?</li>
+<li>If the policy changes, how long does it take to deploy, and is the change traceable to a specific version?</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <p><strong>Does the CBN have specific rules for AI agents in fintech?</strong>
 Not under that name. The obligations come from the consumer protection framework, the outsourcing guidelines, and the payment system rules, all of which predate autonomous agents. The practical effect is that you map your agent's behavior onto existing obligations rather than pointing to an AI-specific rule. This is more work but it is not ambiguous — the underlying obligations are clear even when the technology is not named.</p>
 <p><strong>Is calling a foreign LLM API a cross-border data transfer under NDPA 2023?</strong>
 If the payload contains personal data, yes, and the transfer has to be justified under the Act's provisions. The cleanest mitigation is to redact before the call so the payload contains no directly identifying information. That does not eliminate the question entirely — pseudonymous data can still be personal data — but it substantially narrows the exposure and makes the documentation far easier.</p>
-<p><strong>How long do I need to retain agent decision records?</strong>
+<p><strong>How long do agent decision records need to be retained?</strong>
 Financial record-keeping obligations typically run to several years, and data protection law pulls in the other direction by requiring you not to keep personal data longer than necessary. The resolution is to minimize personal data at write time and retain the minimized record for the financial period. Storing full payloads for seven years is the wrong answer; storing a pseudonymous decision record for seven years is usually the right one.</p>
-<p><strong>Can I just put a human in the loop for everything and avoid the problem?</strong>
-You can avoid some of it, but a human approving a decision the agent made is still an automated decision if the human is rubber-stamping. Regulators look at whether the human review is meaningful. If the reviewer approves 99% of recommendations in under two seconds each, the review is a formality and the decision is functionally automated. Meaningful review means the reviewer can and does override, and you can show the override rate.</p>
-<h2 id="resources-that-helped">Resources that helped</h2>
-<p>The Nigeria Data Protection Act 2023 text itself is the primary source and is worth reading in full rather than relying on summaries — the automated decision-making provisions are in the sections on data subject rights, not in a separate AI section. The CBN's consumer protection framework and its outsourcing guidelines are both published and both relevant; read them together, because the agent touches both. The CBN's payment system vision documents provide context on where the regulator's thinking is heading. For the engineering side, the append-only audit pattern is well documented in the event-sourcing literature, and PostgreSQL 16's role-based access controls are sufficient to implement it without a separate ledger product.</p>
-<p>The action to take in the next 30 minutes: open your agent's repository and search for every place it calls an external model API. For each call site, check whether the payload contains a customer name, account number, or any other directly identifying field. If it does, that is your first fix, and it is usually a one-function change — redact before the call, rehydrate after the response. Do that before you do anything else, because it is the change that most reduces your cross-border exposure and it is the one you can ship today.</p>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p><strong>Can a human in the loop for everything avoid the problem?</strong>
+It avoids some of it, but a human approving a decision the agent made is still an automated decision if the human is rubber-stamping. Regulators look at whether the human review is meaningful. If the reviewer approves nearly all recommendations in under two seconds each, the review is a formality and the decision is functionally automated. Meaningful review means the reviewer can and does override, and the override rate is observable.</p>
+<p><strong>Does this architecture work outside Nigeria?</strong>
+The pattern generalizes. The CBN, the NDPC, the SEC, and most other regulators ask variations of the same question: can you show that the system behaves within stated bounds, and can you produce a record of what it did. A deterministic gate answers the first. An append-only audit store answers the second. Neither requires the regulator to understand transformers. The jurisdiction-specific work is in the content of the policy gate — which rules apply, which thresholds are defensible — not in the architecture.</p>
+<h2 id="the-underlying-principle">The underlying principle</h2>
+<p>In a regulated environment, the agent's autonomy is not a property of the model — it is a property of the deterministic code around it. An agent does not become compliant because the model is safer. It becomes compliant because the model's output is constrained in what it can cause to happen, and because that constraint is inspectable.</p>
+<p>This is why the three-layer split travels across jurisdictions. It also explains why the regional gap in automated-decisioning guidance is less of a disadvantage than it first appears. A team in a jurisdiction with mature guidance can point to a framework and say "we comply with X." A team in a jurisdiction where the guidance is implicit in older instruments has to do the mapping work itself. That is harder, but it is not worse — an implicit obligation that has been mapped and documented is more defensible than an explicit one that has merely been asserted. The work is the mapping, and the mapping is engineering work, not legal work. Treated that way, it gets done.</p>
+<p>A final note on sequencing, because it is the mistake that costs the most. The right order is to write the policy gate first — before the model, before the prompt, before anything. The policy gate is the specification. It tells you what the model needs to output, what data it needs, and what the audit record must contain. Building the model first means reverse-engineering the gate from whatever the model happens to do, which is harder and produces worse controls. The second sequencing rule is to bring the compliance function in at the architecture-diagram stage, not the code-review stage. Compliance officers are not engineers, but a diagram that says "the model recommends, the gate decides, the ledger records" is readable by anyone, and delivered early it saves weeks. Delivered late, it reads as a retrofit.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the agent's repository and search for every place it calls an external model API. For each call site, check whether the payload contains a customer name, account number, or any other directly identifying field. If it does, that is the first fix, and it is usually a one-function change — redact before the call, rehydrate after the response. Do that before anything else, because it is the change that most reduces cross-border exposure and it is the one that can ship today.</p>
                 
                 
             </div>
@@ -483,14 +436,14 @@ You can avoid some of it, but a human approving a decision the agent made is sti
                     
                     <a class="related-card" href="/who-signs-off-on-ai-code/">
                         <h3>Who signs off on AI code?</h3>
-                        <p>AI writes code fast, but who owns the merge? Add Git trailers, CI policy checks, and branch protection to keep accountability without slowing down.</p>
-                        <span class="related-meta">14 min read · 2 October 2026</span>
+                        <p>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
+                        <span class="related-meta">11 min read · 2 October 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agent-architecture-the-new-model-trap/">
                         <h3>Agent architecture: the new model trap</h3>
-                        <p>Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.</p>
-                        <span class="related-meta">17 min read · 27 September 2026</span>
+                        <p>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
+                        <span class="related-meta">16 min read · 27 September 2026</span>
                     </a>
                     
                 </div>

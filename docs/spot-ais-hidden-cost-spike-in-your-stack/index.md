@@ -1,42 +1,41 @@
 # Spot AI’s hidden cost spike in your stack
 
-After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.
+## Why a faster refactor can cost more
 
-## The error and why it’s confusing
+An AI coding assistant rewrites a loop into a set join. Local tests pass, latency drops, and the code looks cleaner. Two weeks later the database line item on the cloud bill has tripled while CPU utilisation and response time look unchanged.
 
-You show up to work tomorrow and the AI pair programmer you trusted refactored every junior SQL query into a single vectorised operation that now runs 50× faster… and your manager asks why the bill just jumped 300 %. You stare at the dashboard: CPU usage is flat, response time is under 10 ms, but the **AWS Cost Explorer** line for “Amazon RDS for PostgreSQL” just spiked from $48 / month to $144 / month. You run `SELECT pg_stat_statements()` and see the same 3 queries are now running hundreds of thousands of times per second. The symptom looks like a runaway query, but the cause is the opposite: the AI removed all the buffering and overhead that previously hid the true load.
+This is a common failure mode, not a rare one. The confusion comes from the fact that AI tools optimise for the code in front of them, not for the system around it. A rewrite can make a function measurably faster in isolation while removing the implicit buffering, caching, or batching that was absorbing most of the production load. The surface symptoms — high database I/O, latency spikes, budget alerts — look like classic performance problems. The root cause is usually an architectural change that only manifests under real traffic.
 
-The team spent two days chasing a non-existent memory leak before realising the cache hit ratio had dropped from 92 % to 18 % overnight.
+Three broad categories account for most of these incidents:
 
-The confusion comes from the fact that AI tools can make code run faster locally while making it dramatically more expensive in production. The surface symptoms—high CPU, long rollbacks, budget alerts—are classic performance problems, but the root cause is usually a change to the architecture that only manifests under real traffic. If you’re the solo engineer and the one who has to explain the bill to the CFO, you need to spot these patterns before the credit card gets declined.
+- **Cache bypass.** The rewrite replaces a cached read path with a direct database read path.
+- **Concurrency mismatch.** The rewrite changes the shape of the workload so that it no longer fits the connection pool, transaction timeout, or provisioned capacity.
+- **Environment drift.** The rewrite changes how the application talks to a managed service, but the timeout, IAM policy, or capacity setting was not updated to match.
 
-## What’s actually causing it (the real reason, not the surface symptom)
+Each is diagnosable. None requires guessing.
 
-AI-assisted refactoring falls into two buckets: **surface-level rewrites** and **architectural rewrites**. Surface-level rewrites touch just the code: they change variable names, extract functions, or swap a `for` loop for a list comprehension. Architectural rewrites change how the system talks to the database, the cache, or the message queue. The 300 % bill spike usually comes from the architectural rewrite, not the surface one.
+## Cache bypass: the most common cause
 
-The most common architectural rewrite is **N+1 query elimination**. An LLM sees 12 lines of Django ORM code that fetches a list of users and then loops over them to fetch each user’s avatar, and it replaces it with a single `SELECT … IN` or a JOIN. That looks like an improvement, but if the original code had a **caching layer** (Redis 7.2) that absorbed 90 % of those fetches, the rewrite just turned 90 % cache hits into 100 % database hits. The CPU is flat because the database is now doing the work the cache used to do, and the bill explodes because database I/O is still the most expensive operation in most web apps.
+A frequent rewrite pattern is N+1 query elimination. An LLM sees a loop that fetches a list of parent records and then fetches a child record for each one, and replaces it with a single `SELECT ... IN` or a join. That is often a genuine improvement. But if the original per-item fetch was served from a cache layer, the rewrite converts cache hits into database reads.
 
-Another rewrite is **transaction batching**. The AI collapses 50 small writes into a single batched write. That reduces round-trips, but if the batch size exceeds the connection pool size (e.g., `POOL_SIZE=20` in SQLAlchemy 2.0) or the transaction timeout (`statement_timeout=5000 ms` in PostgreSQL 15), the application starts queuing writes. The surface symptom is “high latency on writes”, but the real cause is a rewrite that ignored connection limits.
+The arithmetic is worth stating explicitly. Suppose an endpoint serves 1,000 requests per minute, each request previously issuing 10 child fetches, and the cache absorbs 90% of those fetches. That is 10,000 fetches per minute, of which 1,000 reach the database and 9,000 are served from cache. Remove the cache from the path and the database now handles 10,000 fetches per minute — a tenfold increase in database work for the same user-visible traffic. Database I/O is typically the most expensive operation in a web application, so the bill scales roughly with that multiplier.
 
-Finally, AI tools often **inline small functions** that contained logging or metrics. The removed logging call turns out to be the only place where `duration_ms` was recorded, so the observability stack now samples 1 % of requests instead of 100 %. The symptom is “missing traces”, but the root cause is the observability rewrite that nobody noticed.
+### How to detect it
 
-## Fix 1 — the most common cause
-
-The first thing to check is the **cache hit ratio** before and after the AI change. If the ratio drops below 70 % for a workload that was previously above 85 %, you’re almost certainly looking at an architectural rewrite that bypassed the cache.
-
-Here’s the command I run on every Redis 7.2 cache fronting PostgreSQL:
+Compare the cache hit ratio before and after the change. For a Redis-compatible cache, the relevant counters are exposed by `INFO stats`:
 
 ```bash
-redis-cli --latency-history -h your-cache-endpoint -p 6379 --csv | awk -F, '{print $3}' | sort -n | tail -n 1
+redis-cli -h your-cache-endpoint -p 6379 INFO stats | grep -E 'keyspace_hits|keyspace_misses'
 ```
 
-That gives me the 95th-percentile latency in milliseconds. If it’s below 1 ms, the cache is working. If it jumps to 10 ms or higher, the cache is cold or missing.
+Compute the ratio as `keyspace_hits / (keyspace_hits + keyspace_misses)`. A workload that previously sat above 85% and now sits below 70% is a strong signal that an architectural rewrite bypassed the cache.
 
-Next, run the comparison query. In Django, the query counter is in `django.db.connection.queries`. In Flask, you can do:
+Latency is a secondary signal, not a primary one. A cold or missing cache shows up as elevated command latency, but so do network issues and slow commands, so confirm with the hit ratio before acting.
+
+To count queries per request, use the instrument your framework already provides. In Django, `django.db.connection.queries` records executed queries when `DEBUG` is enabled. A minimal Flask equivalent:
 
 ```python
 from flask import Flask, g
-import logging
 
 app = Flask(__name__)
 
@@ -46,30 +45,31 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    g.queries = list(getattr(g, 'queries', []))
-    app.logger.info(f"Queries executed: {len(g.queries)}")
+    app.logger.info("Queries executed: %d", len(g.queries))
     return response
 ```
 
-After the AI change, run the same endpoint 100 times with `curl` and compare the median query count. I’ve seen teams go from 3 queries per page load to 300 after an AI rewrite that removed pagination caching.
+In production, prefer a query counter that does not depend on debug mode — a database proxy that logs statement counts, or an APM agent that reports queries per transaction. Run the same endpoint 100 times before and after the change and compare the median query count. A jump from single digits to hundreds per request is the signature of a removed cache or a reintroduced N+1.
 
-The fix is usually to **re-introduce the caching layer** explicitly. In Django, that means decorating the view or serializer with `@cache_page` or using `cache.set(key, value, timeout=300)`. In Express.js, it’s `apicache.middleware('5 minutes')`. The boring rule is: if the endpoint returns data that doesn’t change per-user, cache it.
+### The fix
 
-Remember: the AI tool didn’t set the cache TTL. You did. Set it to 5 minutes for dynamic data, 1 hour for semi-static, and never cache user-specific pages unless you’re using a per-user key (Redis `SET user:123:page /html 300`).
+Reintroduce the caching layer explicitly rather than relying on the AI to preserve it. In Django, that means `@cache_page` on a view or `cache.set(key, value, timeout=...)` around the expensive call. In Express, it means a response-caching middleware. The rule that matters: if an endpoint returns data that is not user-specific and does not change second to second, cache it, and choose the TTL deliberately. Five minutes is a reasonable starting point for dynamic data, one hour for semi-static reference data. Never cache user-specific pages under a shared key.
 
-## Fix 2 — the less obvious cause
+## Connection pool and transaction limits
 
-The second culprit is **connection pool exhaustion**, especially after an AI rewrite that collapsed many small operations into a single batched operation. The symptom is “high latency on writes” even though CPU is low and the database is idle.
+The second category is a concurrency mismatch. An AI rewrite collapses many small operations into one batched operation, or splits one operation into many. Either direction can exceed a configured limit.
 
-In PostgreSQL 15, the default pool size is 100, but most ORMs default to 5–20. If your AI rewrite turns 500 small writes into a single batched write that exceeds the pool size, the application starts waiting for a connection. The error message you see is:
+The symptom is high write latency while CPU is low and the database looks idle. The application is waiting for a connection, not for the database to work.
+
+A representative error from psycopg2 is:
 
 ```
 psycopg2.OperationalError: connection limit exceeded for non-replication connection
 ```
 
-I hit this at a client in Tallinn when an AI tool collapsed 200 small inserts into a single COPY statement. The local dev server had a pool size of 20, so the single batched write blocked until a connection freed up. The fix is to raise the pool size in your ORM configuration:
+Note that the pool size that matters is the one your ORM or connection pooler enforces, not the database's `max_connections`. Most ORMs default to a pool in the range of 5 to 20 connections. If a rewrite turns 500 small writes into one batched write that occupies a connection for the duration of the batch, and your pool is 20, the remaining requests queue behind it.
 
-In SQLAlchemy 2.0:
+In SQLAlchemy:
 
 ```python
 engine = create_engine(
@@ -100,36 +100,36 @@ DATABASES = {
 }
 ```
 
-The hard-to-reverse decision here is the pool size. If you set it too high, you risk running out of memory; too low, and you get latency spikes. A safe starting point is `pool_size=2 * max_concurrent_requests`, where `max_concurrent_requests` is the number of simultaneous users your load test shows. For a solo SaaS, that’s usually 50–100.
+Pool size is a hard-to-reverse decision in the sense that it is coupled to the database's own connection limit and to memory. Raising it without checking `max_connections` on the database simply moves the failure. A defensible starting point is to size the pool to the number of concurrent requests your load test actually sustains, not to a guess. Multiply concurrent requests by a small headroom factor, then verify against the database's connection limit and the memory cost per connection.
 
-Another subtle cause is **transaction timeout**. The AI rewrite might collapse 10 small transactions into a single long transaction. PostgreSQL’s default `statement_timeout` is 0 (no timeout), but many managed services set it to 30000 ms. If your transaction now runs for 35000 ms, it gets killed and the client retries, creating a thundering herd. Set a conservative timeout:
+Transaction timeouts are the companion problem. A rewrite that merges ten short transactions into one long transaction can exceed `statement_timeout`. PostgreSQL's default is `0`, meaning no timeout, but many managed services set a finite value. If the transaction now exceeds it, the statement is cancelled:
+
+```
+psycopg2.errors.QueryCanceled: canceling statement due to statement timeout
+```
+
+The client retries, the retries stack up, and a thundering herd forms. Set a timeout deliberately and split long batches:
 
 ```sql
 ALTER SYSTEM SET statement_timeout = '5000';
 SELECT pg_reload_conf();
 ```
 
-Then watch the error:
+Then confirm the timeout is the cause by checking whether the cancellation errors correlate with the new code path. If they do, either lower the timeout further or chunk the batch.
 
-```
-psycopg2.errors.QueryCanceled: canceling statement due to statement timeout
-```
+## Managed-service rewrites
 
-If you see that, lower the timeout or split the batched write into smaller chunks.
+The third category is environment drift. The rewrite changes how the application talks to a managed service, but the configuration around that service was not updated.
 
-## Fix 3 — the environment-specific cause
+### Synchronous call replaced by a queue publish
 
-The third cause is **infrastructure-native**, not code-native. It shows up when the AI rewrite changes how your app talks to AWS services like Lambda, SQS, or DynamoDB, and the environment variables or IAM roles weren’t updated to match.
-
-A common rewrite is **changing a synchronous REST call to an async SNS/SQS fan-out**. The LLM sees a slow external API call and replaces it with a message to a queue, but the environment still expects the REST response within 5 seconds. The symptom is “Lambda timeout at 5 seconds” even though the function is now just publishing a message.
-
-The error message is:
+A common rewrite replaces a slow external API call with a publish to a message queue. That is often correct. But the compute function's timeout may still be set to the value that suited the original synchronous call. The function now finishes in milliseconds, yet it is configured with a multi-second timeout, and any downstream consumer that expects a synchronous result sees a timeout:
 
 ```
 Task timed out after 5.01 seconds
 ```
 
-The function’s timeout was still set to 5 seconds, but the actual work was now publishing a message, which should take <100 ms. The fix was to lower the timeout to 1 second and add a step function to poll for the result:
+The fix has two parts. First, lower the function timeout to something close to the actual work:
 
 ```python
 import boto3
@@ -139,7 +139,7 @@ sqs = boto3.client('sqs', region_name='eu-west-1')
 queue_url = os.getenv('STRIPE_EVENT_QUEUE')
 
 def handler(event, context):
-    response = sqs.send_message(
+    sqs.send_message(
         QueueUrl=queue_url,
         MessageBody=event['body'],
         MessageGroupId='stripe'
@@ -147,11 +147,13 @@ def handler(event, context):
     return {"statusCode": 202, "body": "Accepted"}
 ```
 
-The hard-to-reverse decision here is the async boundary. Once you publish to SQS, you’ve committed to eventual consistency. If your product promises “charge created in 2 seconds”, you need to either keep the synchronous call or add a polling step with a deadline. I recommend the latter only if you can tolerate 2–5 seconds of latency.
+Second, decide whether the async boundary is acceptable. Once you publish to a queue, you have committed to eventual consistency. If the product promises a result within two seconds, you need either a synchronous path or a polling step with a deadline. This is an architectural decision, not a bug fix, and it should be made before the rewrite ships.
 
-Another environment-specific rewrite is **changing DynamoDB GetItem to Query**. The LLM sees a single item fetch and replaces it with a Query that scans a GSI. The symptom is a sudden spike in RCUs (read capacity units) and a bill that jumps from $8 / month to $120 / month.
+### Point read replaced by a query
 
-The fix is to revert to GetItem or add a filter expression to the Query:
+Another recurring pattern replaces a single-item read with a query against a secondary index. The read capacity cost is not the same. A point read of a single item consumes a fixed, small amount of read capacity, while a query consumes capacity proportional to the number of items examined. If the query scans a thousand items where the original read touched one, the capacity consumed per request can be orders of magnitude higher.
+
+If the access pattern genuinely needs a query, keep it but constrain the result set with a key condition and a projection. If it only needs one item, revert to the point read:
 
 ```python
 import boto3
@@ -159,41 +161,42 @@ import boto3
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('Orders')
 
-# Before (Query)
+# Query against a secondary index
 response = table.query(
     IndexName='user_id-index',
     KeyConditionExpression='user_id = :uid',
     ExpressionAttributeValues={':uid': 'user123'}
 )
 
-# After (GetItem with GSI key)
+# Point read when the primary key is known
 response = table.get_item(
-    Key={'order_id': 'order456'},
-    ExpressionAttributeValues={'user_id': 'user123'}
+    Key={'order_id': 'order456'}
 )
 ```
 
-The RCU cost difference is roughly 1 RCU per item scanned vs 0.5 RCU per GetItem. For a workload that was previously 100 GetItem calls, the Query can jump to 10,000 RCUs if it scans 1000 items.
+The point read above uses only the primary key. Passing `ExpressionAttributeValues` to `get_item` for an attribute that is not part of the key has no effect and is a common mistake in AI-generated code; remove it.
 
-## How to verify the fix worked
+## How to verify a fix
 
-Start with a **before/after comparison** using production traffic replay. Clone a slice of production traffic with `go-replay` or `tcpreplay` and replay it against a staging environment that mirrors the post-AI state. Measure three metrics:
+Detection is not verification. A fix is verified when the same workload produces the same or better metrics on the new code path.
 
-1. **Cache hit ratio** (Redis 7.2 `INFO stats | grep keyspace_hits`)
-2. **Query count per endpoint** (Django `django.db.connection.queries`)
-3. **95th percentile latency** (CloudWatch `p95` for API Gateway)
+Start with a traffic replay against a staging environment that mirrors the post-change state. A production traffic slice, captured and replayed, is the closest thing to a controlled experiment available without risking live users. Measure three things:
 
-I set up a 10 GB traffic slice for a client in Manila and found the cache hit ratio dropped from 88 % to 12 % after the AI rewrite. Re-introducing the cache brought it back to 85 %, and the latency went from 45 ms to 8 ms.
+1. **Cache hit ratio**, from the cache's own statistics endpoint.
+2. **Query count per endpoint**, from your ORM instrumentation or database proxy logs.
+3. **Tail latency**, such as p95 or p99 from your metrics backend.
 
-Next, run a **load test** with k6 or Locust. Simulate 100 concurrent users hitting the endpoint that was refactored. The goal is to see the same metrics under load as you saw in the replay. If the latency is still high, you haven’t fixed the root cause—you’ve just masked it with a cache.
+Compare the same three metrics before and after the change, under the same load. If the hit ratio returns to its previous level and query counts fall, the cache fix worked. If tail latency remains high, you have masked the symptom rather than fixed the cause.
 
-Finally, check the **cost delta** in AWS Cost Explorer. Filter for the service that changed (RDS, Lambda, DynamoDB, SQS). If the bill is still 300 % higher, you missed something. I once missed a hidden SQS long-polling loop that added 2 million requests per day—it showed up as a $1.20 line item that I ignored until the monthly bill.
+Then run a load test with a tool such as k6 or Locust at a concurrency level you expect in production. The replayed slice tells you whether the change is directionally correct; the load test tells you whether it holds under pressure. A fix that works at 10 concurrent users and fails at 100 is not a fix.
 
-## How to prevent this from happening again
+Finally, check the cost delta in your cloud provider's cost explorer, filtered to the service that changed. Cost data lags, so allow for the billing period before concluding. If the delta persists after the metrics have normalised, something else in the change set is responsible.
 
-The only reliable prevention is to **gate AI refactors behind a feature flag** and run a **shadow deployment**. The feature flag lets you compare the old and new code paths in real time without affecting users. The shadow deployment lets you replay production traffic against the new code and measure the metrics before you cut over.
+## Gating AI refactors before they ship
 
-Here’s the Django pattern I use:
+Prevention is cheaper than diagnosis. Three controls cover most of the risk.
+
+**Gate the change behind a feature flag.** A flag lets you compare the old and new code paths in the same environment without affecting all users. A minimal Django decorator:
 
 ```python
 from django.conf import settings
@@ -207,141 +210,53 @@ def ai_refactor(flag_name):
         @wraps(view_func)
         def wrapper(request, *args, **kwargs):
             if getattr(settings, flag_name, False):
-                response = view_func(request, *args, **kwargs)
                 logger.info('AI refactor path taken', extra={'path': request.path})
-                return response
             return view_func(request, *args, **kwargs)
         return wrapper
     return decorator
 
 @ai_refactor('USE_AI_REFACTOR')
 def order_list(request):
-    # old code
     pass
 ```
 
-The shadow deployment uses Envoy or AWS ALB to mirror traffic:
+Note that the decorator above logs the path but does not select between two implementations. To actually compare paths, the flag must dispatch to two separate functions; otherwise the flag is decorative.
 
-```yaml
-# traffic-mirror.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: order-list-shadow
-spec:
-  ports:
-  - port: 80
-    targetPort: 8000
-  selector:
-    app: order-list
-    track: shadow
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: order-list-shadow
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: order-list
-        track: shadow
-    spec:
-      containers:
-      - name: app
-        image: your-app:ai-refactor
-        env:
-        - name: USE_AI_REFACTOR
-          value: "true"
-```
+**Mirror traffic to a shadow deployment.** A service mesh or load balancer can duplicate live requests to a second deployment that runs the new code and discards the responses. The shadow deployment must not write to production data stores, or the comparison is invalid. Kubernetes manifests for this are straightforward: a second Deployment with the new image, a Service selecting it, and a mirroring rule on the ingress or mesh.
 
-The boring rule is: **no AI refactor ships to production without a shadow deployment and a rollback plan**. The rollback plan is a single Git revert, not a database migration.
+**Add a cost check to CI.** A cost-estimation tool run against your infrastructure-as-code can report the delta between the current branch and the main branch. Set a threshold — 20% is a common choice — and fail the build above it. This catches capacity changes that would otherwise only appear on the bill.
 
-Second, **add a “cost budget” check to your CI**. Before merging the AI refactor, run a local cost simulation with `infracost`:
+The rule that ties these together: no AI-assisted refactor reaches production without a comparison against the previous behaviour and a documented rollback path. The rollback path should be a revert of the code change, not a database migration.
 
-```bash
-infracost breakdown --path /path/to/terraform --usage-file infracost-usage.yml
-```
+## Decision checklist
 
-If the delta is >20 %, block the merge. I set up this check for a client in Tallinn and caught a DynamoDB Query rewrite that would have added $90 / month before it shipped.
+Use this when reviewing an AI-generated refactor that touches data access, caching, or a managed service.
 
-Third, **train your non-technical co-founder** on three metrics: cache hit ratio, query count, and 95th percentile latency. Give them a one-page dashboard with red/yellow/green thresholds. If the cache hit ratio drops below 70 %, they’ll call you before the bill spikes.
+- Does the change alter the number of database round-trips per request? If yes, measure the count before and after.
+- Does the change remove a cache read from the path? If yes, check the hit ratio and decide whether the cache should be reinstated.
+- Does the change alter the shape of the workload — batching, fan-out, or fan-in? If yes, check pool size, transaction timeout, and provisioned capacity.
+- Does the change cross a synchronous/asynchronous boundary? If yes, confirm the product's latency contract and update timeouts.
+- Does the change touch a managed service's access pattern? If yes, confirm the capacity model for the new pattern.
+- Is there a feature flag and a rollback plan? If not, do not ship.
 
-## Related errors you might hit next
+A short table of the failure modes and how to confirm each:
 
-| Error pattern | Likely cause | How to confirm | Hard-to-reverse? |
+| Symptom | Likely cause | How to confirm | Reversible by config? |
 |---|---|---|---|
-| `Redis cache miss storm` | TTL set to 0 or key pattern changed | `redis-cli --scan --pattern "user:*" | wc -l` | Yes (data freshness) |
-| `Lambda timeout after 5 s` | Async rewrite without timeout change | CloudWatch Logs: `Task timed out` | No (just redeploy) |
-| `PostgreSQL too many connections` | Pool size too small after batch rewrite | `SELECT count(*) FROM pg_stat_activity;` | Yes (requires downtime to tune) |
-| `DynamoDB throttling` | RCU spike from Query rewrite | CloudWatch: `ThrottledRequests` | No (just raise RCU) |
-| `API Gateway 502 Bad Gateway` | Lambda async rewrite without ALB health check | `curl -v https://api.example.com/health` | No (just redeploy) |
+| Cache hit ratio collapses | Cached read path replaced by direct read | Cache statistics before and after | Yes, if the cache still exists |
+| Write latency rises, CPU flat | Pool exhaustion after batching change | Connection count vs pool size | Yes, with a redeploy |
+| Statement cancellations | Long transaction exceeds timeout | Error logs correlated with new path | Yes, by chunking or raising timeout |
+| Capacity throttling | Point read replaced by a query | Capacity metrics per request | Yes, if the access pattern allows |
+| Function timeouts | Async rewrite without timeout change | Function duration vs configured timeout | Yes, with a redeploy |
 
-I once spent three days debugging a cache miss storm that turned out to be a single line change in the key pattern. The Redis key went from `user:123:profile` to `user:profile:123`, and the cache never hit again. The fix was to revert the key pattern and set a TTL of 5 minutes to force a rebuild.
+## When the cause is not obvious
 
-## When none of these work: escalation path
+If the bill remains elevated after the cache, pool, and environment checks, bisect the change set. Find the commit range that introduced the refactor and test each commit against a cost or load metric in staging. `git bisect` automates the search when you can express the condition as a pass/fail test — for example, whether database connections exceed a threshold during a fixed load run.
 
-If the bill is still 300 % higher after the three fixes and you’ve ruled out cache, pool, and environment changes, the last resort is **binary search the change set**. Find the exact commit that introduced the AI rewrite and revert it one commit at a time.
+One further possibility is observability drift. An AI rewrite can inline a function that contained the only logging or metrics call on a hot path. The symptom is missing traces or absent data in your metrics backend, and the underlying load is invisible rather than reduced. Confirm by adding a temporary counter or log line to the hot path and comparing its volume before and after the change. If the volume is unchanged but the traces are missing, the change removed instrumentation, not load.
 
-Use `git bisect` with a cost metric:
+The most disruptive case is a data model change — a rewrite that alters cardinality or key structure. That is the only category here that may require downtime to reverse, which is why it belongs behind a flag and a migration plan.
 
-```bash
-git bisect start
-for commit in $(git rev-list HEAD~20..HEAD); do
-  git checkout $commit
-  make deploy-staging
-  aws cloudwatch get-metric-statistics --namespace AWS/RDS --metric-name DatabaseConnections --start-time $(date -u -v-5M +%Y-%m-%dT%H:%M:%SZ) --end-time $(date -u +%Y-%m-%dT%H:%M:%SZ) --period 60 --statistics Sum --dimensions Name=DBInstanceIdentifier,Value=your-db > /tmp/cost.json
-  connections=$(jq '.Datapoints[0].Sum' /tmp/cost.json)
-  if [ "$connections" -gt 100 ]; then
-    git bisect bad $commit
-  else
-    git bisect good $commit
-  fi
-done
-git bisect reset
-```
+## One action for the next 30 minutes
 
-If the cost delta is still unexplained, the issue is likely **observability drift**—the AI tool removed logging or metrics that hid the true load. The symptom is “missing traces” or “no data in CloudWatch”. The fix is to add a manual logging call in the hottest path and compare the log volume before and after.
-
-In extreme cases, the AI rewrite has changed the **data model**, turning a 1:many relationship into a many:many or vice versa. The symptom is “foreign key constraint violation” or “unique constraint violation”. The fix is to add a database migration or revert the model change. This is the hardest-to-reverse scenario—plan for downtime.
-
-## Frequently Asked Questions
-
-### Why does my AI refactor make the cache hit ratio drop from 92% to 18%?
-
-The AI often removes caching decorators or inlines functions that contained cache keys. In Django, it might remove `@cache_page` or `cache.set(key, value)`. In Express, it might remove `apicache` middleware. The fix is to re-introduce the decorator or middleware and set a TTL that matches your traffic pattern. For dynamic pages, use 5 minutes; for semi-static, use 1 hour.
-
-### How do I know if my connection pool is exhausted after an AI rewrite?
-
-PostgreSQL 15 exposes connection counts in `pg_stat_activity`. If the count is close to your pool size (e.g., 95/100), you’re exhausted. The error message is `psycopg2.OperationalError: connection limit exceeded`. The fix is to raise the pool size in your ORM config and set `pool_pre_ping=True` to avoid stale connections.
-
-### What’s the safest way to roll out an AI refactor without breaking production?
-
-Use a feature flag and a shadow deployment. The feature flag lets you compare old vs new code paths in real time. The shadow deployment replays production traffic against the new code and measures metrics before you cut over. I use Django’s `@ai_refactor` decorator and Envoy traffic mirroring for this.
-
-### How can I stop the bill from spiking again after an AI rewrite?
-
-Add a cost budget check to your CI with `infracost`. If the delta is >20 %, block the merge. Also, train your non-technical co-founder on three metrics: cache hit ratio, query count, and 95th percentile latency. Give them a one-page dashboard with red/yellow/green thresholds.
-
-### Why does my Lambda timeout after an AI rewrite changed a REST call to an async SNS publish?
-
-The function’s timeout is still set to 5 seconds, but the actual work is now publishing a message (<100 ms). The fix is to lower the timeout to 1 second and return a 202 Accepted. If your product promises “charge created in 2 seconds”, you need to either keep the synchronous call or add a polling step with a deadline.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 28, 2026
+Pick the single endpoint most likely to have been touched by an AI refactor in the last two weeks. Run it 100 times against staging, record the query count per request and the cache hit ratio, then compare both against the same measurements from before the refactor. If the query count has risen or the hit ratio has fallen, you have found the cause of the bill change and can decide on a fix before the next billing cycle closes.

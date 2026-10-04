@@ -1,34 +1,28 @@
 # Supervisor vs swarm vs debate vs pipeline
 
-Most multiagent orchestration guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
+Most multi-agent orchestration guides assume a clean environment and a patient timeline. The failure mode that matters in production rarely appears in those guides: the orchestrator itself becomes the outage. A retry storm, a health check that returns 200 while the queue behind it grows without bound, a restart loop that consumes a cluster — these are orchestration failures, not model failures.
 
-## The gap between what the docs say and what production needs
+The gap between a tutorial and a production system is not about scaling. It is about **recovery**. A multi-agent system that survives production needs three properties that toy examples skip:
 
-Most docs show a toy example with two agents passing a JSON blob between each other. Then the same code hits production and suddenly you’re debugging:
-- Why did AgentB hang after AgentA sent 4,231 messages? - Why does the supervisor’s health check return 200 when half the swarm is down? - How did 132 CPU cores disappear into the void after a single retry loop?
+1. A deterministic way to restart failed agents without cascading retries.
+2. A circuit breaker that stops the orchestrator from spamming the message broker.
+3. A way to replay a conversation when a downstream service times out, rather than only retrying the last call.
 
-The gap isn’t about scaling — it’s about **recovery**. A multi-agent system that survives production needs three things the tutorials skip:
-1. A deterministic way to restart failed agents without cascading retries. 2. A circuit breaker that actually stops the supervisor from spamming the message broker. 3. A way to replay the conversation when the downstream service times out, not just retry the last call.
+A common failure mode illustrates why: a single `TimeoutError` from an external API triggers thousands of retries in under a minute, and the retry queue grows faster than the supervisor can drain it. The supervisor becomes the denial-of-service vector against its own dependencies. The fix is rarely more RAM. It is a circuit breaker and a maximum retry count encoded in the supervisor's state machine.
 
-I learned this the hard way when a single `TimeoutError` from an external API triggered 8,000 retries in 90 seconds, melting the supervisor’s CPU. The retry queue grew faster than the supervisor could process it; the supervisor itself became the denial-of-service vector.
+Multi-agent orchestration is not about making agents smarter. It is about making the **orchestrator dumber** — deliberately limiting its power so it cannot destroy itself when something downstream fails.
 
-That episode cost three days of debugging and a 40% spike in AWS Lambda bills. The fix wasn’t more RAM — it was a simple circuit breaker and a max retry count baked into the supervisor’s state machine. This post is what I wish I’d had then.
-
-Multi-agent orchestration isn’t about making agents smarter; it’s about making the **orchestrator dumber** — intentionally limiting its power so it can’t destroy itself when things go wrong.
-
-## How Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline) actually works under the hood
+## How the four patterns work under the hood
 
 ### Supervisor: the strict parent
 
-A supervisor pattern treats agents like child processes: it spawns them, monitors their health, and replaces them if they crash. The key is **idempotent restarts**.
+A supervisor pattern treats agents like child processes: it spawns them, monitors their health, and replaces them if they crash. The key property is **idempotent restarts**.
 
-In practice, this means the supervisor keeps a heartbeat table in Redis 7.2 with three columns: `agent_id`, `last_seen`, and `status`. If `status` is `unhealthy` for 3 consecutive heartbeats (9 seconds with a 3-second interval), the supervisor kills the agent and spawns a fresh instance with the same configuration. No memory, no state, no drama.
+In practice, the supervisor keeps a heartbeat table in a shared store with three columns: `agent_id`, `last_seen`, and `status`. If `status` is `unhealthy` for three consecutive heartbeats — nine seconds at a three-second interval — the supervisor kills the agent and spawns a fresh instance with the same configuration. No memory, no state, no drama.
 
-The supervisor also enforces a **max restart budget**: 5 crashes per agent per hour. After that, it blacklists the agent and alerts the on-call engineer. This prevents the supervisor from looping forever on a broken agent.
+The supervisor also enforces a **max restart budget**: for example, five crashes per agent per hour. After that, it blacklists the agent and alerts the on-call engineer. This prevents the supervisor from looping forever on a broken agent. A corrupted container image is a classic trigger: without a budget, the supervisor will restart the same broken agent indefinitely, and each restart consumes scheduling and I/O resources.
 
-I once watched a supervisor burn through 1,200 restarts in 20 minutes because the agent’s Docker image had a corrupted layer. The budget cut it off after the 5th alert and saved the entire cluster from meltdown.
-
-The supervisor’s state machine is tiny:
+The supervisor's state machine is tiny:
 ```python
 from dataclasses import dataclass
 from enum import Enum, auto
@@ -47,43 +41,39 @@ class AgentHeartbeat:
 
 ### Swarm: the anarchist collective
 
-A swarm pattern removes the supervisor entirely. Agents broadcast their presence via mDNS or a gossip protocol, and any agent can handle a task. This is seductive until you realize **no agent knows if the others are alive**. A swarm can lose half its nodes and the remaining agents will keep working — until they try to talk to a dead peer and hang indefinitely.
+A swarm pattern removes the supervisor entirely. Agents broadcast their presence via mDNS or a gossip protocol, and any agent can handle a task. This is seductive until you notice that **no agent has a global view**. A swarm can lose half its nodes and the remaining agents will keep working — until they try to talk to a dead peer and hang indefinitely.
 
-The only way to survive production with a swarm is to bake **ephemeral state** into every message. If AgentA sends a message to AgentB and AgentB never replies, AgentA must eventually assume AgentB is dead and either:
-- reroute the message to another agent, or
-- fail the task gracefully.
+The only way to survive production with a swarm is to bake **ephemeral state** into every message. If AgentA sends a message to AgentB and AgentB never replies, AgentA must eventually assume AgentB is dead and either reroute the message to another agent or fail the task gracefully.
 
-I tested a swarm of 12 agents processing 5,000 requests per second. After 45 minutes, two agents got stuck in a deadlock loop and stopped responding to heartbeats. The swarm kept routing messages to them because no agent had a global view. The fix was to add a `last_ack` timestamp to every task and a TTL of 30 seconds — if a task’s `last_ack` is older than 30 seconds, the swarm marks the agent as dead and reroutes.
+The mechanism that makes this work is a `last_ack` timestamp on every task plus a TTL. If a task's `last_ack` is older than the TTL — 30 seconds is a reasonable starting point — the swarm marks the agent as dead and reroutes. Without that timestamp, routing decisions are based on stale presence data, and messages flow to nodes that stopped responding minutes ago.
 
-The swarm’s simplicity is also its fragility. Without a supervisor, you’re betting on your agents being **stateless** and your network being **reliable** — neither is true in practice.
+The swarm's simplicity is also its fragility. Without a supervisor, the design bets on agents being **stateless** and the network being **reliable**. Neither holds in practice.
 
 ### Debate: the courtroom drama
 
-A debate pattern turns orchestration into a **consensus protocol**. Agents argue over the best answer to a question, and the final output is the consensus view. This works well for subjective tasks (e.g., summarizing a document) but falls apart for **deterministic tasks** (e.g., calculating a total).
+A debate pattern turns orchestration into a **consensus protocol**. Agents argue over the best answer to a question, and the final output is the consensus view. This works for subjective tasks such as summarizing a document, and falls apart for **deterministic tasks** such as calculating a total.
 
-The debate protocol I’ve used in production is a round-robin tournament with a quorum. Each agent produces an answer, then the next agent critiques it. After N rounds, the system picks the answer with the highest average score from all critiques. If no answer reaches a 2/3 quorum, the task fails.
+A workable debate protocol is a round-robin tournament with a quorum. Each agent produces an answer, then the next agent critiques it. After N rounds, the system picks the answer with the highest average score from all critiques. If no answer reaches a two-thirds quorum, the task fails.
 
-The catch: **agents forget their own answers** between rounds. This means the system needs to store intermediate state externally — Redis again, with a key pattern like `debate:{task_id}:round:{round_num}`.
+The catch: **agents do not retain their own answers** between rounds. The system must store intermediate state externally, keyed by task and round — for example, `debate:{task_id}:round:{round_num}`.
 
-I ran this pattern on 8 agents processing 200 debates per minute. The round-trip latency was 1,200 ms per debate, and 12% of debates failed to reach quorum. The failures clustered around ambiguous prompts where agents couldn’t agree on the scoring criteria. The fix was to add a **tiebreaker agent** that re-scores ambiguous cases using a stricter rubric — but this added another 400 ms per debate and doubled the Redis writes.
-
-The debate pattern is the most expensive of the four — it trades CPU and latency for **quality**. Use it only when correctness outweighs speed.
+Debate is the most expensive of the four patterns in both latency and compute. It trades CPU and wall-clock time for **quality**. Use it when correctness on a subjective judgment outweighs speed.
 
 ### Pipeline: the waterfall that never dries up
 
 A pipeline pattern treats agents like stages in a factory assembly line. Each agent does one thing well, and the output of one agent feeds the input of the next. The key to survival is **backpressure**.
 
-In practice, this means each pipeline stage has:
-- a bounded queue (max 100 items)
-- a timeout (30 seconds per stage)
-- a retry policy (3 retries, exponential backoff)
+In practice, each pipeline stage has:
+- a bounded queue (the bound is a design choice; 100 items is a common starting point)
+- a per-stage timeout
+- a retry policy with exponential backoff
 - a dead-letter queue for items that fail all retries
 
-The first stage (agent A) handled validation, the second (agent B) enriched the data, the third (agent C) ran business logic, the fourth (agent D) wrote to a database, and the fifth (agent E) sent a webhook.
+A typical five-stage pipeline: validation, enrichment, business logic, database write, and webhook delivery.
 
-The failure mode I didn’t anticipate was **stage D blocking stage C**. Agent C would send 10,000 enriched items to agent D, but agent D’s database writes slowed to 50 items/second. Agent C’s queue grew to 8,000 items, and its memory usage ballooned. The supervisor (yes, even pipelines need supervisors) didn’t notice because agent C’s health check was still returning 200.
+The failure mode that catches teams is **a downstream stage blocking an upstream one**. The enrichment stage sends items to the database-write stage, but database writes slow to 50 items/second. The enrichment stage's queue grows, and its memory usage balloons. The supervisor does not notice, because the enrichment stage's health check still returns 200 — the process is alive and answering probes. It is just drowning.
 
-The fix was to add **queue depth metrics** to the health check. If a stage’s queue depth exceeds 80% of its max size, the stage is marked unhealthy and the supervisor restarts it. This added 3 lines of code and cut the memory spike from 2.4 GB to 300 MB.
+The fix is to add **queue depth metrics** to the health check. If a stage's queue depth exceeds 80% of its max size, the stage is marked unhealthy and the supervisor restarts it. This is a few lines of code and turns an invisible failure into a visible one.
 
 | Pattern    | Pros                          | Cons                          | Best for                          |
 |------------|-------------------------------|-------------------------------|-----------------------------------|
@@ -92,11 +82,11 @@ The fix was to add **queue depth metrics** to the health check. If a stage’s q
 | Debate     | Higher quality output         | Expensive, slow               | Subjective tasks, consensus tasks |
 | Pipeline   | Predictable flow              | Backpressure surprises        | Ordered, multi-step workflows     |
 
-## Step-by-step implementation with real code
+## Step-by-step implementation
 
-### Supervisor in Go 1.22 with Redis 7.2
+### Supervisor in Go with Redis
 
-Here’s a minimal supervisor that spawns agents and restarts them on failure. It uses Redis for heartbeats and a simple state machine.
+A minimal supervisor spawns agents and restarts them on failure, using Redis for heartbeats and a small state machine.
 
 ```go
 package supervisor
@@ -190,37 +180,36 @@ func (s *Supervisor) restartAgent(ctx context.Context, agentID string) {
 }
 ```
 
-Key lessons:
-- Use Redis for **shared state** — don’t trust in-memory maps in a multi-agent system. - Restart counts are **persistent** — they survive agent crashes. - Blacklist durations are **short** — 1 hour is long enough to cool down, short enough to recover quickly.
+Three properties matter here:
+- Shared state lives in Redis, not in an in-memory map, so it survives a supervisor restart.
+- Restart counts are **persistent**, so they survive agent crashes.
+- Blacklist durations are **short** — one hour is long enough to cool down and short enough to recover.
 
-### Swarm in Node 20 LTS with NATS 2.10
+Note that `KEYS` is dangerous on a large keyspace because it scans everything. In production, use `SCAN` with a cursor, or maintain a set of active agent IDs instead of discovering them by pattern.
 
-Here’s a minimal swarm implementation using NATS for message routing and gossip.
+### Swarm in Node.js with NATS
+
+A minimal swarm uses NATS for message routing and heartbeats.
 
 ```javascript
 // agent.js
 import { connect } from 'nats.ws'
+import { randomUUID } from 'node:crypto'
 import { setTimeout } from 'timers/promises'
 
 const natsUrl = process.env.NATS_URL || 'nats://localhost:4222'
-const agentId = process.env.AGENT_ID || crypto.randomUUID()
+const agentId = process.env.AGENT_ID || randomUUID()
 
 const nc = await connect({ servers: natsUrl })
 const js = nc.jetStream()
 
-// Gossip channel
-const gossip = nc.subscribe('gossip.agents')
-
-// Task channel
-gossip.unsubscribe()
-
 // Heartbeat loop
 setInterval(async () => {
-  await js.publish('gossip.agents', {
+  await js.publish('gossip.agents', JSON.stringify({
     type: 'heartbeat',
     agentId,
     timestamp: Date.now(),
-  })
+  }))
 }, 3000)
 
 // Task processing
@@ -230,10 +219,18 @@ const sub = nc.subscribe('tasks.>', { callback: async (err, msg) => {
     return
   }
 
-  const task = JSON.parse(msg.data.toString())
+  let task
+  try {
+    task = JSON.parse(msg.data.toString())
+  } catch (e) {
+    console.error('Malformed task payload:', e)
+    msg.term() // Do not redeliver unparseable messages
+    return
+  }
+
   try {
     const result = await processTask(task)
-    await js.publish(`results.${task.taskId}`, { result })
+    await js.publish(`results.${task.taskId}`, JSON.stringify({ result }))
     msg.ack()
   } catch (e) {
     // No retry logic here — swarm relies on upstream to reroute
@@ -243,17 +240,16 @@ const sub = nc.subscribe('tasks.>', { callback: async (err, msg) => {
 }})
 ```
 
-The critical detail: **no agent ever blocks**. If an agent can’t process a task, it acks the message and lets the upstream decide what to do. This keeps the swarm alive even when nodes fail.
+The critical detail: **no agent blocks indefinitely**. If an agent cannot process a task, it acks the message and lets the upstream decide what to do. This keeps the swarm alive when nodes fail. Note the distinction between `ack` and `term`: a malformed message should be terminated, not acked, so it does not consume redelivery budget.
 
-### Debate in Python 3.11 with FastAPI and Redis 7.2
+### Debate in Python with FastAPI and Redis
 
-Here’s a debate pattern with round-robin scoring.
+A debate pattern with round-robin scoring:
 
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import redis.asyncio as redis
-import asyncio
 import json
 
 app = FastAPI()
@@ -307,11 +303,13 @@ async def get_result(task_id: str):
     raise HTTPException(status_code=202, detail="No quorum yet")
 ```
 
-The debate pattern’s latency is dominated by **Redis writes**. Each round writes 10–20 KB of JSON, and Redis 7.2’s pipelining helps, but the round-trip still adds 100–300 ms per round. For 4 rounds, that’s 400–1,200 ms total — expensive for high-throughput systems.
+This is illustrative scaffolding, not a finished service. The quorum counter increments on every result read, which is almost certainly not the intended semantics — quorum should be computed from the round data, not incremented as a side effect of a GET. Treat the snippet as a sketch of the data model: one key per round, one status key, one winner key.
 
-### Pipeline in Rust 1.75 with Tokio and PostgreSQL 16
+The debate pattern's latency is dominated by **Redis round trips**. Each round writes a JSON blob of answers and critiques. Pipelining helps, but each round still adds a network hop. For four rounds, that is four sequential write-then-read cycles before a winner emerges — expensive for high-throughput systems.
 
-Here’s a pipeline with backpressure and bounded queues.
+### Pipeline in Rust with Tokio and PostgreSQL
+
+A pipeline with backpressure and bounded queues:
 
 ```rust
 use tokio::sync::mpsc;
@@ -337,7 +335,7 @@ impl Pipeline {
                         .execute(&pool)
                         .await
                     {
-                        eprintln!("Dead letter failed: {}", e);
+                        eprintln("Dead letter failed: {}", e);
                     }
                 }
             }
@@ -356,36 +354,36 @@ async fn process_stage_a(pool: &sqlx::PgPool, item: &str) -> Result<(), sqlx::Er
 }
 ```
 
-The pipeline’s health check is simple: if the channel’s `len()` exceeds 80% of its capacity, the supervisor marks the stage as unhealthy. This prevents memory blowups and keeps the pipeline flowing.
+The pipeline's health check is simple: if the channel's `len()` exceeds 80% of its capacity, the supervisor marks the stage as unhealthy. This prevents memory blowups and keeps the pipeline flowing. Note that `mpsc::Sender` does not expose `len()` directly — you need to share the receiver's length via an `Arc<AtomicUsize>` updated on send, or use a channel type that reports depth.
 
-## Performance numbers from a live system
+## How to measure performance instead of guessing
 
-I ran a 10-agent system on AWS EKS (k8s 1.28) with:
-- 8 vCPU, 16 GB RAM per pod
-- Redis 7.2 for shared state
-- NATS 2.10 for message routing
-- Node 20 LTS for agents
+Published benchmark tables for multi-agent patterns are close to useless, because performance depends on message size, serialization format, network topology, and the ratio of I/O to compute. Measure your own system. The instrumentation is straightforward:
 
-The system processed 12,000 requests per second with a P99 latency of 180 ms. Here’s the breakdown by pattern:
+**What to instrument:**
+- Per-stage queue depth, sampled every second.
+- End-to-end latency at P50, P95, and P99, recorded at the point where a task enters and where its result is acknowledged.
+- Error rate split by category: timeout, malformed input, downstream rejection, and internal exception.
+- Retry count per task, with a histogram rather than an average.
+- Broker metrics: publish rate, deliver rate, pending messages, and memory used by the stream.
+- Shared-store metrics: operations per second, CPU utilization, and blocked clients.
 
-| Pattern    | P95 latency | P99 latency | Error rate | Cost per 1M requests |
-|------------|-------------|-------------|------------|---------------------|
-| Supervisor | 80 ms       | 150 ms      | 0.02%      | $0.42               |
-| Swarm      | 120 ms      | 300 ms      | 0.12%      | $0.55               |
-| Debate     | 400 ms      | 1,200 ms    | 0.08%      | $1.80               |
-| Pipeline   | 90 ms       | 180 ms      | 0.03%      | $0.48               |
+**What to compare:**
+Run the same workload through each pattern with identical payloads and identical downstream services. Hold concurrency constant. Then vary one dimension at a time — payload size, worker count, downstream latency — and record where each pattern breaks first.
 
-The debate pattern’s cost is 4x higher because of Redis writes and agent CPU usage. The swarm’s error rate is 6x higher because of deadlocks and message loss.
+**What to expect, qualitatively:**
+- The supervisor adds one heartbeat write per agent per interval plus one restart decision per failure. Its overhead scales with agent count, not request count.
+- The swarm adds one broadcast per heartbeat per agent, and its routing decisions depend on the freshness of presence data. Overhead scales with agent count squared if every agent gossips to every other.
+- The debate adds one round of full fan-out per debate round. Its cost scales with rounds × agents × payload size.
+- The pipeline adds one queue operation per item per stage. Its overhead is linear in items and stages, and its failure mode is queue growth, not CPU.
 
-Surprise: the supervisor’s P99 latency spiked to 500 ms during a Redis failover. The supervisor itself was healthy, but its health checks timed out waiting for Redis. The fix was to add a **local cache** of agent statuses with a 3-second TTL — if Redis is down, the supervisor uses stale data to avoid killing healthy agents.
+The one number worth watching above all others is **queue depth**. Latency rises before error rate does, and queue depth rises before latency does. If you instrument only one thing, instrument queue depth.
 
-Another surprise: the pipeline’s backpressure prevented a downstream database outage. When the database slowed to 50 writes/second, the pipeline’s queue depth hit 80% and the supervisor restarted the writer agent. The database never saw the full load, and recovery was automatic.
+## Failure modes that appear in real deployments
 
-## The failure modes nobody warns you about
+### 1. The heartbeat table becomes a hotspot
 
-### 1. The supervisor’s heartbeat table becomes a hotspot
-
-Redis 7.2’s single-threaded nature means every heartbeat write is serialized. At 12,000 heartbeats per second, the supervisor’s Redis instance was at 95% CPU and 3,000 blocked clients. The fix was to shard the heartbeat keys by agent ID hash:
+A single-threaded shared store serializes every heartbeat write. At high heartbeat rates, the store's CPU saturates and clients block. The fix is to shard heartbeat keys by agent ID hash:
 ```python
 # Before
 key = f"heartbeat:{agent_id}"
@@ -394,23 +392,23 @@ key = f"heartbeat:{agent_id}"
 shard = hash(agent_id) % 16
 key = f"heartbeat:{shard}:{agent_id}"
 ```
-This cut Redis CPU from 95% to 12% and reduced P99 latency from 45 ms to 3 ms.
+Sharding distributes writes across slots and reduces contention. Measure the store's CPU before and after to confirm the effect; the improvement depends on your client library's connection pooling as much as on the key layout.
 
-### 2. NATS jetStream silently drops messages under load
+### 2. The message broker silently drops messages under load
 
-NATS 2.10’s jetStream has a default max memory of 1 GB. At 12,000 messages per second, the stream filled in 83 seconds and started dropping messages. The fix was to set `max_memory` to 10 GB and `max_file` to 50 GB, plus add a monitoring alert when the stream size exceeds 8 GB.
+Streaming brokers typically have a configured maximum memory or disk budget for retained messages. When the stream fills, behavior depends on the retention policy: some configurations drop old messages, some block publishers, and some reject new publishes. None of these is obvious from the client side. Set explicit limits, monitor stream size against them, and alert at 80% of the configured maximum.
 
 ### 3. Agent memory leaks compound across restarts
 
-In the supervisor pattern, agents restart every few minutes. If an agent leaks 100 MB per hour, after 10 restarts it leaks 1 GB — but the agent process exits, so the leak is invisible to the OS. The fix was to enable Go’s `GODEBUG=memprofilerate=1000000` and log memory usage every 30 seconds. The leak was in a third-party library parsing large JSON blobs.
+In the supervisor pattern, agents restart periodically. If an agent leaks memory at a steady rate, each restart resets the process and hides the leak from the operating system's view. The fix is to log resident memory every 30 seconds and alert on a positive slope across restarts, not just on absolute usage. A leak in a JSON parsing library, for example, will show up as a sawtooth pattern in a memory graph — rising within each process lifetime, dropping at restart, rising again.
 
 ### 4. Debate quorum deadlocks on ambiguous prompts
 
-Debate patterns assume agents will reach consensus. In practice, ambiguous prompts (e.g., "summarize this legal document") cause agents to argue forever. The fix was to add a **tiebreaker agent** that reruns the debate with a stricter rubric. This added 400 ms per debate but cut quorum failures from 12% to 2%.
+Debate patterns assume agents converge. Ambiguous prompts cause agents to disagree indefinitely, and the quorum never forms. A tiebreaker agent with a stricter rubric resolves most cases, at the cost of an extra round trip and additional state writes. The alternative is to fail fast: set a maximum round count and return the highest-scoring answer with a confidence flag, rather than blocking forever.
 
-### 5. Pipeline stages block each other
+### 5. Pipeline stages block each other invisibly
 
-In the pipeline pattern, stage D (database writer) slowed to 50 writes/second. Stage C kept sending 10,000 items/second, and its queue grew to 8,000 items. The supervisor didn’t notice because stage C’s health check was still returning 200. The fix was to add **queue depth metrics** to the health check:
+A downstream stage slows; an upstream stage's queue grows; the upstream stage's health check still returns 200 because the process is alive. The supervisor sees a healthy fleet while memory climbs toward the limit. The fix is to make queue depth part of the health signal:
 ```go
 func (s *Supervisor) checkHealth(ctx context.Context, agentID string) bool {
     queueDepth, err := s.redisClient.LLen(ctx, "queue:"+agentID).Result()
@@ -422,73 +420,74 @@ func (s *Supervisor) checkHealth(ctx context.Context, agentID string) bool {
 }
 ```
 
-## Tools and libraries worth your time
+## Tool categories and what to look for
 
-| Tool/Library           | Version | Use case                          | Why it’s worth it                          |
-|------------------------|---------|-----------------------------------|--------------------------------------------|
-| Redis                  | 7.2     | Shared state, heartbeats, queues  | Single-threaded, fast, battle-tested       |
-| NATS                   | 2.10    | Message routing, jetStream        | Low latency, persistent streams            |
-| Go                     | 1.22    | Supervisor pattern                | Compile-time safety, concurrency primitives |
-| Node.js                | 20 LTS  | Swarm pattern                     | Async I/O, lightweight agents              |
-| Python                 | 3.11    | Debate pattern                    | Fast prototyping, rich ML ecosystem        |
-| Rust                   | 1.75    | Pipeline pattern                  | Zero-cost abstractions, memory safety      |
-| Kubernetes             | 1.28    | Multi-agent deployment            | Self-healing, horizontal scaling           |
-| Prometheus             | 2.47    | Monitoring agent health           | Metrics, alerts, dashboards                |
-| Grafana                | 10.2    | Visualizing pipeline backpressure | Real-time dashboards                       |
+Rather than a list of specific versions, here is what each category needs to provide:
 
-Avoid:
-- **Apache Kafka** for multi-agent orchestration — it’s overkill for most patterns and adds 50–200 ms of latency. - **gRPC** for inter-agent communication — JSON over NATS is simpler and faster for most use cases. - **Custom message brokers** — Redis and NATS cover 90% of needs.
+| Category               | Role                              | What to verify                          |
+|------------------------|-----------------------------------|------------------------------------------|
+| Shared state store     | Heartbeats, locks, debate rounds  | Atomic increments, TTL support, predictable latency under contention |
+| Message broker         | Task routing, streams, retries    | Explicit retention limits, ack semantics, dead-letter support |
+| Supervisor runtime     | Process lifecycle, restarts       | Concurrency primitives, graceful shutdown, structured logging |
+| Agent runtime          | Async I/O, lightweight processes  | Non-blocking I/O, memory visibility, fast startup |
+| Metrics and dashboards | Queue depth, latency, errors      | Histograms, not just averages; alerting on rate of change |
+
+Two notes on tooling choices. A general-purpose distributed log is usually the wrong tool for inter-agent messaging: it adds commit latency and operational weight that a lightweight pub/sub system does not. And a binary RPC framework is often unnecessary for agent-to-agent calls where payloads are small and schemas are loose; JSON over a pub/sub transport is simpler to debug and usually fast enough.
 
 ## When this approach is the wrong choice
 
 ### 1. You need sub-10 ms latency
 
-Multi-agent orchestration adds at least 30 ms of overhead (message routing, serialization, Redis lookups). If your use case needs sub-10 ms P99, build a monolith or use a single process with in-memory queues.
+Multi-agent orchestration adds overhead from message routing, serialization, and shared-state lookups. If your P99 budget is under 10 ms, use a single process with in-memory queues or a monolith.
 
 ### 2. Your agents are stateful
 
-Supervisor, swarm, and pipeline patterns assume agents are **stateless** or **ephemeral**. If agents need to persist state (e.g., a user session), use a stateful service like PostgreSQL or Redis Streams, not a multi-agent system.
+Supervisor, swarm, and pipeline patterns assume agents are **stateless** or **ephemeral**. If agents must persist session state, put that state in a database or a stream with explicit durability guarantees, and keep the agents themselves disposable.
 
-### 3. You’re on a tight budget
+### 3. You are cost-constrained at high volume
 
-The debate pattern costs 4x more than the supervisor pattern. If you’re processing 1,000 requests/second, the debate pattern will cost you $1,800/month vs $420/month for the supervisor. Choose wisely.
+Debate costs multiples of the other patterns because every round fans out to every agent and writes intermediate state. At high request rates, the difference between debate and supervisor is the difference between a viable budget and an unviable one. Do the arithmetic with your own token and compute prices before committing.
 
-### 4. Your team doesn’t know Go/Rust/Python
+### 4. Your team does not know the implementation language
 
-Building a multi-agent system in a language your team hates is a recipe for technical debt. If your stack is Java/Spring, consider using a framework like Akka or Quarkus instead of rolling your own.
+Building orchestration in a language the team does not maintain well creates technical debt that outlives the prototype. If the stack is JVM-based, use a JVM actor or workflow library rather than introducing Go or Rust for the orchestrator alone.
 
-### 5. You’re solving a simple problem
+### 5. The workflow is a straight line
 
-If your workflow is just "call API A, then API B, then API C", a pipeline pattern is overkill. Use a simple script or a workflow engine like Temporal instead.
+If the workflow is "call A, then B, then C", a pipeline pattern is overkill. A workflow engine or a simple script with retries is easier to operate.
 
-## My honest take after using this in production
+## Decision checklist
 
-I’ve run all four patterns in production for 18 months. Here’s what surprised me:
+Work through these in order. The first "yes" usually decides the pattern.
 
-1. **The supervisor pattern is the most robust** — it’s simple, predictable, and easy to debug. The only time it failed was when Redis was down, and even then the supervisor kept running (albeit with stale data).
+1. Is the task deterministic with a single correct answer? If yes, debate is the wrong tool.
+2. Is the workflow a fixed sequence of stages? If yes, use a pipeline and invest in queue-depth monitoring.
+3. Do agents need to share mutable state? If yes, you need a supervisor or an external state store; a pure swarm will not work.
+4. Must the system survive the loss of any single node without coordination? If yes, a swarm is the only fit, and you must accept weaker debugging.
+5. Is output quality more important than latency and cost? If yes, debate with a round cap and a tiebreaker.
+6. None of the above? Start with a supervisor. It is the easiest to reason about and the easiest to instrument.
 
-2. **The swarm pattern is the most fragile** — without a supervisor, agents get stuck, messages get lost, and debugging is a nightmare. I’ve seen swarms lose 40% of their nodes and keep running — but the lost nodes were the ones holding the critical state.
+## FAQ
 
-3. **The debate pattern is the most expensive** — it trades CPU and latency for **quality**, but the quality gain is often smaller than expected. Most debates reach consensus without needing 4 rounds; 2 rounds are usually enough.
+**Do pipelines need a supervisor?**
+Yes, in practice. The supervisor's job in a pipeline is not to manage agents but to watch queue depth and restart saturated stages. Without it, a slow downstream stage turns into an out-of-memory kill.
 
-4. **The pipeline pattern is the most predictable** — backpressure works, and it’s easy to tune. The only surprise was how quickly queue depth metrics became your most important health check.
+**How many rounds should a debate run?**
+Start with two. Most disagreements resolve after one critique round, and additional rounds add cost faster than they add agreement. Set a hard cap and return the best-scoring answer when the cap is hit.
 
-The biggest mistake I made was **assuming agents were stateless**. In reality, agents accumulate state (file handles, open connections, memory
+**What is the right heartbeat interval?**
+It depends on how fast you need to detect failure versus how much write load you can tolerate. A three-second interval with a three-strike rule detects failure in roughly nine seconds. Shorten the interval only if your shared store can absorb the write rate.
 
----
+**Can you combine patterns?**
+Yes, and most production systems do. A supervisor managing a set of pipeline stages is a common combination. The failure modes compose too: you inherit the supervisor's single point of failure and the pipeline's backpressure problems.
 
-### About this article
+**How do you debug a swarm?**
+Add correlation IDs to every message and log every routing decision with the presence data that informed it. Without that, a lost message is untraceable, because no component has a global view of what happened.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+## The takeaway
 
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
+The pattern matters less than the recovery properties around it. A supervisor with a restart budget and queue-depth health checks will outperform a swarm with none, even on workloads the swarm is theoretically better suited to. Build the instrumentation first — queue depth, latency histograms, retry counts — then pick the pattern that makes those numbers easy to interpret.
 
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
+## Do this in the next 30 minutes
 
-**Last generated:** August 03, 2026
+Pick your busiest multi-agent workflow and add one metric: queue depth at the point where tasks enter each stage. Emit it every second, and set an alert at 80% of the maximum queue size. If you do not have a maximum, choose one now. That single metric will surface backpressure problems before they become outages, and it is the cheapest change in this article.

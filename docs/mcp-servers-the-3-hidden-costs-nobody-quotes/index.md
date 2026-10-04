@@ -1,138 +1,237 @@
 # MCP servers: the 3 hidden costs nobody quotes
 
-The conventional advice on mcp production is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This is the version of the write-up that includes the part that broke.
+Most MCP (Model Context Protocol) tutorials stop at a working localhost demo. The gap between that demo and a production deployment is where the operational costs live: memory that grows with concurrency, proxy timeouts that don't match long-lived streams, bandwidth overhead from protocol framing, and a security surface that expands the moment you leave localhost.
 
-## The gap between what the docs say and what production needs
+This article covers what actually changes when MCP moves into production, how to measure each cost yourself, and where the protocol is the wrong tool for the job.
 
-I once watched a team ship MCP (Model Context Protocol) in 3 days, only to spend the next two weeks untangling a memory leak that didn’t show up in the tutorial. The docs tell you how to wire up a server in Python using `mcp` 0.8.0, how to stream tokens back to the client, and how to keep the connection alive. What they don’t tell you is that your server process will quietly grow to 1.4 GB RSS after 500 concurrent streams because Python’s garbage collector is too polite to step in while JSON-RPC messages are still referenced in the event loop.
+## Why MCP behaves differently from a REST API
 
-The bigger lie is the “just throw it behind nginx” advice. Docs show a clean reverse proxy config with keepalive turned on, but they omit the fact that nginx’s default `proxy_read_timeout` of 60 s is too short for a 20-minute MCP stream. You’ll see `upstream prematurely closed connection` errors under load and spend hours tweaking `proxy_read_timeout`, `proxy_send_timeout`, and `client_max_body_size` before you realize the real problem is in the MCP server’s own idle timeout, which defaults to 15 s and is buried in the SDK docs under “advanced settings.”
+MCP is a JSON-RPC 2.0 protocol, commonly carried over WebSocket. A single connection can multiplex multiple independent tool calls, each with its own request/response lifecycle. The server is a stateful process: it holds tool manifests in memory, may cache resource contents, and may run background workers for long-running tasks.
 
-Costs also hide in places the marketing slides never mention. A single MCP server fronted by a basic ALB in us-east-1 costs ~$0.022 per GB of data transferred after the first 10 GB. Under a modest load of 500 requests/minute with 2 MB average payload, that’s an extra $1,320/month on the AWS bill you didn’t budget for. The docs list the protocol overhead (JSON-RPC framing, base64 blobs) but not the bandwidth tax, which becomes noticeable once you exceed the free tier.
+That statefulness is the root of most production surprises. A REST endpoint can be treated as stateless and horizontally scaled with a load balancer. An MCP server holds per-connection state, which means:
 
-Security is another blind spot. The SDK ships with TLS disabled by default because “it’s easier to demo.” Teams copy-paste the example, run it over plain HTTP in staging, and then wonder why their internal token vault keeps leaking secrets in the MCP tool manifests. The threat model isn’t just external actors; it’s junior engineers who paste their AWS keys into the `env` field of a tool definition because the docs never warn against it.
+- Memory scales with the number of concurrent streams and the size of payloads in flight.
+- Long-lived connections interact badly with default proxy and load balancer timeouts.
+- A single process's event loop becomes a shared bottleneck for all concurrent tool calls.
 
-Finally, there’s the documentation tax. The MCP spec moves fast: `mcp` 0.8.0 in March 2026 already feels dated by August 2026. Breaking changes land without deprecation warnings, and the migration guide is a 12-line diff buried in a GitHub issue. Keeping your tool definitions and runbooks in sync with the SDK costs at least 0.5 engineer-week per quarter — something the ROI spreadsheet never included.
+The practical consequence: an MCP server in production behaves more like a small application server or notebook kernel than like a stateless API endpoint. Plan capacity accordingly.
 
-In short, the docs give you a toy server that works locally. Production gives you a memory-hungry daemon, an overloaded proxy, a bandwidth bill, and a security surface you didn’t sign up for.
+## Cost 1: Memory growth under concurrency
 
-## How MCP in production: the hidden operational costs and security gotchas nobody talks about actually works under the hood
+### Why it happens
 
-MCP is a JSON-RPC 2.0 protocol running over WebSocket. One connection can multiplex multiple independent tool calls, each with its own request/response lifecycle. The server you write is a stateful process that keeps tool manifests in memory, caches resource contents, and may spawn background workers for long-running tasks. That statefulness is the source of most production surprises.
+In async Python servers, each inbound WebSocket frame is typically held in a queue or coroutine frame until its handler completes. If tool calls return large payloads — multi-megabyte resource files, for example — the working set grows faster than the garbage collector reclaims it. The result is RSS that climbs with concurrency and payload size rather than settling at a fixed baseline.
 
-Memory growth is the most predictable failure mode. The Python SDK uses `asyncio` under the hood, and every inbound WebSocket frame is stored in an `asyncio.Queue` until the handler finishes. If your tool calls return large blobs (think 10 MB resource files), the queue fills up faster than the garbage collector can reclaim memory. Worse, the SDK doesn’t expose a backpressure mechanism; your server simply OOMs when RSS crosses ~1.2 GB on a 1 vCPU container. I’ve seen teams hit this after 400 concurrent streams with 5 MB average payloads, leading to kernel OOM killer logs and container restarts every 90 minutes.
+A second amplifier is resource caching. If the server caches every resource it reads and there is no eviction policy, the cache grows monotonically with the number of distinct resources accessed. Ten thousand distinct 1 MB resources is 10 GB of resident memory if nothing evicts them.
 
-Latency is another hidden cost. Each JSON-RPC round trip adds ~15–20 ms of serialization overhead on top of your tool’s actual runtime. Under load, that overhead compounds because Python’s GIL serializes every coroutine switch. The SDK ships with a thread pool (`ThreadPoolExecutor`) to run blocking tools, but the default pool size is 4 threads. If you have 120 concurrent tool calls, 116 of them will queue up behind the GIL, turning a 50 ms tool call into a 300 ms call. That’s the difference between a snappy UI and a user rage-clicking.
+### How to measure it
 
-Bandwidth is the third silent killer. The protocol prefixes every binary payload with a base64 header and a JSON envelope, inflating total traffic by ~37%. A 500 KB file becomes 685 KB on the wire. Under the free ALB tier, that’s 685 GB/month at 1000 requests/day. With AWS ALB at $0.022/GB beyond the first 10 GB, that’s an extra $12/month — not life-altering, but it adds up when you have 20 MCP servers.
+Do not trust a single `docker stats` reading. Measure the relationship between concurrency and RSS:
 
-Security isn’t optional once you move beyond localhost. The SDK lets you embed secrets directly in tool manifests via the `env` field, which is immediately serialized into the MCP server’s memory and logged if you enable debug mode. More insidious is the resource URI scheme: `mcp://resource/file.txt` can point to an internal S3 bucket with an IAM role attached. If your MCP server runs with the EC2 instance profile, every tool call that fetches that resource inherits the same permissions. I’ve seen teams accidentally grant `s3:GetObject` to every MCP client simply by copying a tool manifest from a staging runbook.
+1. Instrument the process to expose RSS. On Linux, read `/proc/self/statm` and multiply the resident pages by the page size, or use `psutil.Process().memory_info().rss`.
+2. Drive load at increasing concurrency levels (for example 50, 100, 200, 400 streams) with a fixed payload size, holding each level for several minutes.
+3. Record steady-state RSS at each level. If RSS grows roughly linearly with concurrency and does not plateau, you have a per-connection retention problem. If RSS grows with the number of distinct resources accessed, you have a cache eviction problem.
 
-Resource exhaustion is the fourth gotcha. The SDK caches every accessed resource in memory by default. If you have 2000 unique resources and each is 2 MB, the cache grows to 4 GB. There’s no LRU policy in the SDK; you must implement it yourself or set `max_resources` to a sane value. Without it, you’ll OOM again, but this time the error is “too many open files” because the server hits the container’s file descriptor limit before it hits the memory limit.
+For a quick check on a running container:
 
-Finally, there’s the versioning trap. The SDK tags every tool call with its own version string. If you upgrade the server but forget to bump the tool version, clients that pinned an older version will reject the call, throwing `invalid_method`. The error message is opaque, and the fix is buried in the changelog under “breaking changes in 0.8.0.” Most teams don’t discover this until staging, at which point rollback becomes a 15-minute fire drill.
-
-In practice, an MCP server in production behaves less like a stateless API endpoint and more like a mini-Jupyter kernel with RAM, CPU, and bandwidth quotas you didn’t budget for.
-
-## Step-by-step implementation with real code
-
-Below is a minimal MCP server that streams tokens and fetches resources, with the knobs you actually need in production. It uses Python 3.11, `mcp` 0.8.3, `aiohttp` 3.9.3, and `uvloop` 0.19.0 for GIL relief.
-
-First, install the stack:
 ```bash
-pip install mcp==0.8.3 aiohttp==3.9.3 uvloop==0.19.0 backoff==2.2.1
+docker stats --format "{{.Name}}\t{{.MemUsage}}\t{{.NetIO}}" --no-stream $(docker ps --format '{{.Names}}' | grep mcp)
 ```
 
-Here’s the server code (`mcp_server.py`):
+Watch the memory column over several minutes of real traffic. A steady climb with no plateau is the signal to investigate.
+
+### Mitigations
+
+- Replace the standard `json` module with a faster serializer such as `orjson` if profiling shows serialization is a significant allocation source. Measure before and after; the gain depends on payload shape.
+- Cap resource caching with an explicit LRU policy and a maximum entry count.
+- Explicitly drop large buffers after use rather than relying on reference counting to do it promptly.
+- Set a container memory limit and alert on RSS approaching it, so you find the ceiling before the kernel OOM killer does.
+
+## Cost 2: Latency from serialization and the event loop
+
+Each JSON-RPC round trip adds serialization and deserialization overhead on top of the tool's actual work. In a single-threaded async runtime, CPU-bound serialization competes with every other coroutine on the same event loop.
+
+Two effects compound:
+
+- **Serialization overhead per message.** Measured with a profiler, not assumed. JSON encoding of a multi-megabyte payload is real CPU time.
+- **Event loop contention.** If a tool call blocks the event loop — synchronous I/O, CPU-heavy work, a slow library — every other in-flight request waits. Thread pool executors help only if the blocking work is actually dispatched to them and the pool is sized for the expected concurrency.
+
+### How to measure it
+
+Instrument three separate histograms rather than one end-to-end latency number:
+
+- Time spent in serialization (encode and decode).
+- Time spent inside the tool handler.
+- Time a request waits in a queue before its handler starts.
+
+If queue wait dominates, the problem is concurrency or pool sizing. If serialization dominates, the problem is payload size or the serializer. If handler time dominates, the problem is the tool itself. End-to-end p50 hides all three.
+
+Also measure p99 and p99.9, not just p50 and p95. Spikes that last a few hundred milliseconds are exactly what a coarse sampling interval misses. If your metrics scrape interval is 10 seconds, a 500 ms spike may never appear in the data. Use a histogram with fine buckets and a scrape interval short enough to catch the tail you care about, or record the distribution in-process and export percentiles.
+
+## Cost 3: Bandwidth and protocol framing overhead
+
+Base64 encoding of binary payloads inflates size by a known, computable factor. Base64 represents 3 bytes as 4 characters, so encoded size is 4/3 of the original, a 33.3% increase. Add JSON envelope overhead and the total inflation depends on payload shape.
+
+### Worked example (illustrative)
+
+Assume a 500 KB binary resource and a JSON envelope of roughly 1 KB per message.
+
+- Base64-encoded payload: 500 KB × 4/3 ≈ 667 KB.
+- Plus envelope: ≈ 668 KB on the wire.
+- Inflation versus the raw 500 KB: (668 − 500) / 500 ≈ 33.6%.
+
+At 1,000 requests per day, that is roughly 668 MB/day versus 500 MB/day of raw payload — about 168 MB/day of framing overhead. Multiply by your egress rate to get the monthly cost. These figures are illustrative; substitute your own payload sizes and pricing.
+
+### How to measure it
+
+Compare bytes at three points: bytes of raw payload, bytes written to the socket by the server, and bytes billed by your cloud provider. The difference between the first two is protocol overhead; the difference between the last two is provider-side accounting you cannot control. Export a counter for bytes sent and received per connection, and reconcile it against the provider's billing report monthly.
+
+## Cost 4: Security surface beyond localhost
+
+The protocol itself does not enforce authentication or transport security. Those are deployment concerns, and the defaults in example code are usually tuned for demos, not production.
+
+Common failure modes:
+
+1. **Secrets embedded in tool manifests.** Some SDKs allow an `env` field on tool definitions. If a manifest is serialized into memory and logged at debug level, embedded credentials end up in logs and process memory. Treat tool manifests as untrusted input: strip credential-bearing fields before the server accepts them, and use workload identity or short-lived credentials instead of long-lived keys.
+
+2. **Resource URI traversal.** A resource URI scheme like `mcp://resource/...` maps to a backing store. If the resolver does not normalize and constrain paths, a crafted URI can escape the intended root. Resolve URIs to absolute paths, reject relative segments (`..`), and enforce an allowlist of permitted roots.
+
+3. **Ambient credentials via instance roles.** If the server runs with an instance profile or service account, every tool call that fetches a resource inherits those permissions. A single overly broad role can turn one MCP client into a broad data-access path. Scope the role to exactly the resources the server needs, and audit what the server can reach.
+
+4. **Transport security.** Run TLS in production. If the SDK or example configuration disables TLS for convenience, that choice must not survive into a shared environment.
+
+5. **Missing audit trail.** Tool arguments are not logged by default. If you need an audit trail, wrap tool handlers with a logging decorator that records the caller identity, tool name, and argument shape (with sensitive values redacted).
+
+## Cost 5: Version drift and maintenance
+
+Protocols and SDKs in this space evolve quickly. Breaking changes may land without a long deprecation window, and migration notes may live in changelogs or issue threads rather than a dedicated guide.
+
+The maintenance burden shows up in three places:
+
+- **Tool version mismatches.** If the server tags tool calls with a version and a client pins an older version, calls can be rejected with an opaque error. Automate version bumps in CI and keep client and server manifests in sync.
+- **Runbook drift.** Operational runbooks that reference specific SDK behavior go stale. Version the runbook alongside the code.
+- **Dependency churn.** Pin dependencies, test upgrades in staging, and treat SDK upgrades as you would any other dependency with breaking-change potential.
+
+## A corrected minimal server
+
+The code below is a minimal aiohttp-based WebSocket server. It is not a full MCP implementation; it shows the shape of the process and the production knobs that matter. Pin versions to whatever your environment has validated rather than copying the numbers here.
+
+```bash
+pip install aiohttp orjson uvloop
+```
+
 ```python
-import asyncio, json, logging, os
-from mcp.server import Server
-from mcp.server.models import InitializationOptions
+import asyncio
+import json
+import logging
+import os
+
 from aiohttp import web
-import uvloop
-from typing import Dict, Any
 
-# Configure logging to stderr so it works in containers
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
-logger = logging.getLogger('mcp')
-
-# --- Tools ---
-async def list_resources() -> list[dict[str, Any]]:
-    """List all resources available to this server."""
-    # In real life, this would read from S3 or a database
-    return [
-        {"uri": "mcp://resource/config.json", "name": "config"},
-        {"uri": "mcp://resource/logs/app.log", "name": "app logs"},
-    ]
-
-async def read_resource(uri: str) -> str:
-    """Read a resource by URI."""
-    # Mock implementation
-    if uri.endswith("config.json"):
-        return json.dumps({"max_tokens": 4096, "timeout": 30})
-    if uri.endswith("app.log"):
-        return "2026-08-01 12:34:56 INFO Starting MCP server\n2026-08-01 12:35:01 WARN High memory usage\n"
-    raise ValueError(f"Unknown resource {uri}")
-
-# --- Server setup ---
-server = Server(
-    name="prod-mcp",
-    version="0.8.3",
-    tools=[
-        {"name": "list_resources", "description": "List available resources", "inputSchema": {"type": "object", "properties": {}}},
-        {"name": "read_resource", "description": "Read a resource", "inputSchema": {"type": "object", "properties": {"uri": {"type": "string"}}}},
-    ],
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
 )
+logger = logging.getLogger("mcp")
 
-@server.list_resources()
-def _(uri: str = None):
-    return list_resources()
+# Cache with a hard bound. Without this, resident memory grows with the
+# number of distinct resources accessed.
+RESOURCE_CACHE_MAX = 200
+_resource_cache: dict[str, bytes] = {}
 
-@server.read_resource()
-def _(uri: str):
-    return read_resource(uri)
 
-# --- WebSocket handler ---
-async def websocket_handler(request: web.Request):
-    ws = web.WebSocketResponse(protocols=["mcp"])
+def cache_get(uri: str) -> bytes | None:
+    return _resource_cache.get(uri)
+
+
+def cache_put(uri: str, value: bytes) -> None:
+    if len(_resource_cache) >= RESOURCE_CACHE_MAX:
+        # Simple eviction: drop the oldest inserted entry.
+        _resource_cache.pop(next(iter(_resource_cache)))
+    _resource_cache[uri] = value
+
+
+async def read_resource(uri: str) -> bytes:
+    cached = cache_get(uri)
+    if cached is not None:
+        return cached
+    # Replace with a real fetch. Keep the read off the event loop if it
+    # is blocking, e.g. via asyncio.to_thread.
+    data = await asyncio.to_thread(_fetch_resource_sync, uri)
+    cache_put(uri, data)
+    return data
+
+
+def _fetch_resource_sync(uri: str) -> bytes:
+    raise NotImplementedError("wire up your backing store here")
+
+
+def handle_request(payload: dict) -> dict:
+    """Dispatch a single JSON-RPC style request."""
+    method = payload.get("method")
+    request_id = payload.get("id")
+    if method == "read_resource":
+        uri = payload.get("params", {}).get("uri", "")
+        if not _uri_is_allowed(uri):
+            return _error(request_id, -32602, "invalid resource uri")
+        data = asyncio.get_event_loop().run_until_complete(read_resource(uri))
+        return {"jsonrpc": "2.0", "id": request_id, "result": data.decode("utf-8", "replace")}
+    return _error(request_id, -32601, "method not found")
+
+
+def _uri_is_allowed(uri: str) -> bool:
+    # Reject traversal and anything outside the permitted root.
+    if ".." in uri.split("/"):
+        return False
+    return uri.startswith("mcp://resource/")
+
+
+def _error(request_id, code: int, message: str) -> dict:
+    return {"jsonrpc": "2.0", "id": request_id, "error": {"code": code, "message": message}}
+
+
+async def websocket_handler(request: web.Request) -> web.WebSocketResponse:
+    ws = web.WebSocketResponse(heartbeat=30.0)
     await ws.prepare(request)
-
-    # Use uvloop to reduce GIL contention
-    loop = uvloop.new_event_loop()
-    asyncio.set_event_loop(loop)
-
     try:
         async for msg in ws:
             if msg.type == web.WSMsgType.TEXT:
-                data = json.loads(msg.data)
-                logger.debug("Incoming: %s", data)
-                result = await server.handle_request(data)
-                await ws.send_json(result)
+                try:
+                    payload = json.loads(msg.data)
+                except json.JSONDecodeError:
+                    await ws.send_json(_error(None, -32700, "parse error"))
+                    continue
+                response = await asyncio.to_thread(handle_request, payload)
+                await ws.send_json(response)
             elif msg.type == web.WSMsgType.ERROR:
-                logger.error("WebSocket connection closed with exception %s", ws.exception())
-    except asyncio.CancelledError:
-        logger.info("Client disconnected")
+                logger.error("websocket error: %s", ws.exception())
     finally:
         await ws.close()
     return ws
 
-# --- App ---
+
 app = web.Application()
 app.router.add_get("/mcp", websocket_handler)
-app.router.add_post("/mcp", websocket_handler)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "8080"))
     web.run_app(app, port=port, access_log=None)
 ```
 
-Key production knobs:
-- `uvloop` reduces GIL contention in Python 3.11, cutting round-trip latency by ~18% on small payloads. - Logging is stderr-only so it works in containers without volume mounts. - No built-in keepalive or backpressure; you must handle it in the client or add a wrapper.
+Notes on the changes from a naive example:
 
-Now, the nginx config that actually works under load (`nginx.conf`):
+- `heartbeat=30.0` sends WebSocket pings so idle connections are detected rather than sitting in `ESTABLISHED` until a proxy timeout fires.
+- Blocking work is dispatched with `asyncio.to_thread` so it does not stall the event loop.
+- The resource cache has a hard maximum. Without it, memory grows with the working set.
+- URIs are validated before use.
+- Logging goes to stderr, which works in containers without volume mounts.
+
+## A reverse proxy configuration that matches long-lived streams
+
+Default proxy timeouts are tuned for short request/response cycles. Long-lived WebSocket streams need explicit configuration.
+
 ```nginx
 worker_processes auto;
-
 worker_rlimit_nofile 65536;
 
 events {
@@ -142,157 +241,115 @@ events {
 http {
     upstream mcp_backend {
         server 127.0.0.1:8080;
-        keepalive 1000;
-        # Critical timeouts
-        proxy_read_timeout 180s;
-        proxy_send_timeout 180s;
-        client_max_body_size 64M;
+        keepalive 64;
     }
 
     server {
         listen 80;
         server_name mcp.example.com;
+
         location /mcp {
             proxy_pass http://mcp_backend;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
             proxy_set_header Host $host;
+
+            # Match these to the longest expected tool call, not to a default.
+            proxy_read_timeout 300s;
+            proxy_send_timeout 300s;
+            client_max_body_size 64M;
+
+            # Streaming responses must not be buffered by the proxy.
             proxy_buffering off;
         }
     }
 }
 ```
 
-The differences from the “just proxy it” template:
-- `worker_rlimit_nofile 65536` prevents “too many open files” under 500 concurrent streams. - `proxy_read_timeout 180s` accommodates 20-minute tool calls. - `client_max_body_size 64M` prevents truncation of large JSON blobs.
+Key points:
 
-Deploy it behind an ALB in us-east-1 with an arm64 t4g.small instance ($0.0168/hour). You’ll pay ~$12/month for the instance and ~$45/month for ALB data processing if you exceed the free tier (1 GB/day).
+- `proxy_read_timeout` and `proxy_send_timeout` must exceed the longest expected quiet period on the connection. Set them from measurement, not from a template.
+- `proxy_buffering off` is required for streaming; buffering delays or truncates responses.
+- `worker_rlimit_nofile` must be raised if you expect many concurrent connections, or the worker hits the file descriptor limit before the process hits its memory limit.
+- `keepalive` in the upstream block should reflect realistic backend concurrency, not an arbitrary large number.
 
-## Performance numbers from a live system
+## Failure modes to design against
 
-I ran this exact stack for 14 days on a t4g.small (2 vCPU, 4 GB RAM) with 500 concurrent MCP streams, 2 MB average payload, and 5 MB resource files. Here’s what broke and when:
+1. **Memory growth without a plateau.** Symptom: RSS climbs with concurrency and never settles. Cause: per-connection buffers not released, or an unbounded cache. Response: bound the cache, drop large buffers explicitly, and set a container memory limit with alerting.
 
-| Metric | Baseline (no tuning) | With uvloop & nginx tuning | Improvement |
-|---|---|---|---|
-| p50 latency | 85 ms | 62 ms | 27% lower |
-| p95 latency | 420 ms | 180 ms | 57% lower |
-| Memory RSS (steady) | 1.4 GB | 620 MB | 56% lower |
-| Memory RSS (spike) | 2.1 GB | 850 MB | 60% lower |
-| Error rate (timeouts) | 3.2% | 0.1% | 97% lower |
+2. **Proxy closes long-lived connections.** Symptom: `upstream prematurely closed connection` in proxy logs, or clients silently stop receiving data. Cause: proxy read timeout shorter than the quiet period between messages. Response: raise the timeout to match measured behavior and add application-level heartbeats.
 
-The plateau at 850 MB RSS came from Python’s garbage collector, which never collected large JSON blobs aggressively enough. Switching to `orjson` for JSON serialization cut RSS another 150 MB, bringing the steady-state to ~700 MB.
+3. **Truncated large payloads.** Symptom: clients report JSON parse errors on large responses. Cause: proxy buffer size or `client_max_body_size` too small. Response: raise both to match the largest expected message, and measure it rather than guessing.
 
-Bandwidth was the real shock. The system served 420 GB over 14 days, costing $9.24/month in ALB data processing after the free tier. Without the base64 inflation, the same traffic would have been 306 GB and $6.73/month — a 37% tax that vanished from every budget spreadsheet.
+4. **URI traversal.** Symptom: resource reads succeed for paths outside the intended root. Cause: no normalization or allowlist. Response: normalize to absolute paths, reject `..`, and enforce a root allowlist.
 
-The tuning steps that moved the needle most:
-1. Replacing `json` with `orjson` in the WebSocket handler saved 180 MB RSS and shaved 12 ms off p50. 2. Setting `asyncio.set_blocking_limit(5000)` capped thread-pool waits at 5 ms, preventing GIL-induced latency spikes. 3. Adding a 5-minute idle timeout in the client (not server) dropped error rate from 3.2% to 0.1% because clients no longer held dead WebSocket connections open.
+5. **Credential leakage via manifests or logs.** Symptom: secrets appear in debug logs or process memory. Cause: credential-bearing fields accepted in manifests, or debug logging enabled in production. Response: strip credential fields on input, disable debug logging in production, and use short-lived credentials.
 
-The numbers confirm what the docs never mention: MCP isn’t a stateless API, so the usual latency/scaling tricks don’t apply cleanly. You’re running a mini-Jupyter kernel in production, and its resource hunger scales with concurrency and payload size.
+6. **Version mismatch between client and server.** Symptom: opaque `invalid_method` or similar errors after an upgrade. Cause: client pinned to an older tool version. Response: automate version bumps in CI and keep manifests in sync.
 
-## The failure modes nobody warns you about
+7. **Dead connections consuming resources.** Symptom: connection count stays high after clients disconnect. Cause: no heartbeat or ping/pong, so the kernel holds sockets open until a timeout fires. Response: enable application-level heartbeats and set proxy timeouts consistently.
 
-1. Resource URI poisoning
-   A client can request `mcp://resource/../../../etc/passwd` if your resource router doesn’t sanitize URIs. The SDK doesn’t validate URIs by default, so a malicious manifest can read arbitrary files on the server’s host. Fix: normalize URIs to absolute paths and reject relative segments.
+## Measuring the right things
 
-2. Tool manifest injection
-   Clients can declare tools with `env` fields containing AWS keys. The SDK serializes the entire manifest into memory for every connection, so the key lives in RAM until the connection closes. If you enable debug logging (`MCP_DEBUG=1`), the key appears in stdout. Fix: strip `env` from manifests in staging and production, or use IAM roles instead of keys.
+Export at least these metrics, with fine-grained histograms rather than averages:
 
-3. Memory amplification from caching
-   The SDK caches every accessed resource in memory. If you have 10,000 unique resources at 5 MB each, the cache grows to 50 GB. The SDK provides no eviction policy; you must implement an LRU cache or set `max_resources` to a fixed number. Without it, the server OOMs after ~90 minutes under moderate load.
+- Request duration, split into queue wait, handler time, and serialization time.
+- Queue depth over time.
+- Resident memory, sampled frequently enough to catch growth trends.
+- Bytes sent and received per connection.
+- Error counts by category (timeouts, parse errors, rejected URIs).
+- Active connection count.
 
-4. Proxy buffer exhaustion
-   nginx’s default buffer size (8 KB) is too small for 5 MB JSON blobs. Without `proxy_buffer_size 16k;` and `proxy_buffers 8 16k;`, nginx truncates blobs and returns 413 errors. Teams discover this only after 1000 requests, when logs show truncated JSON and clients throw `SyntaxError: Unexpected end of JSON input`.
+Scrape at an interval short enough to catch the tail latency you care about. If your scrape interval is longer than the spikes you are trying to find, you will not find them.
 
-5. WebSocket ping/pong race
-   When the client loses network, the WebSocket stays open in the kernel’s ESTABLISHED state until the proxy’s `proxy_read_timeout` fires. Under heavy load, the kernel’s backlog fills up, and new connections are rejected with `ECONNREFUSED`. Fix: set `proxy_read_timeout 60s;` and enable `proxy_socket_keepalive on;` in nginx to detect dead sockets faster.
+## When MCP is the wrong choice
 
-6. Version drift in tool manifests
-   The SDK tags every tool call with the server version. If you upgrade the server but forget to bump the tool version in the client’s manifest, the client rejects the call with `invalid_method`. The error message is opaque (no version mismatch hint), and rollback becomes a 15-minute fire drill. Fix: automate version bumps in CI and pin tool versions in manifests.
+MCP is a reasonable fit when you need bidirectional streaming between a client and long-running tools. It is a poor fit when:
 
-The client kept the WebSocket open for 20 minutes, nginx dropped the connection after 60 s, and the client never detected the closure, causing silent failures. Adding a 5-minute client-side ping/pong loop fixed 90% of those cases with zero server changes.
+- **Payloads are small and latency-sensitive.** JSON-RPC framing overhead is a fixed cost per message. For sub-kilobyte payloads with tight latency budgets, HTTP/2 or gRPC may be cheaper.
+- **The host is memory-constrained.** An async Python runtime plus its dependencies has a non-trivial baseline footprint. On devices with a few hundred megabytes of RAM, the baseline plus working set can exceed available memory quickly. Measure the baseline before committing.
+- **The team cannot maintain async Python.** The runtime is async-first. Blocking the event loop stalls every other request. If nobody on the team can debug that class of problem, choose a stack you can operate.
+- **You need a strict audit trail out of the box.** Tool arguments are not logged by default. If compliance requires it, budget for the wrapper code.
+- **Clients are browsers with strict CORS constraints.** Browser support is limited; most deployments end up with a local bridge process.
 
-## Tools and libraries worth your time
+For fire-and-forget tasks, a plain HTTP API or a message queue is simpler. For data-heavy pipelines, a streaming RPC framework may be a better fit.
 
-| Tool | Version | Use case | Cost / risk |
-|---|---|---|---|
-| `mcp` (Python SDK) | 0.8.3 | Core server & client | Free, but watch changelog for breaking changes every quarter |
-| `orjson` | 3.9.15 | Fast JSON serialization | Reduces RSS by 150 MB, no license issues |
-| `uvloop` | 0.19.0 | GIL relief | Cuts p50 latency by 18%, but adds ~5 MB binary size |
-| `aiohttp` | 3.9.3 | WebSocket & HTTP | No hidden costs, but memory leaks if you don’t set timeouts |
-| `backoff` | 2.2.1 | Retry logic | Prevents cascade failures on transient errors |
-| `prometheus-client` | 0.19.0 | Metrics export | Add `/metrics` endpoint to track p50/p95 latency and memory |
-| `mcp-client` (CLI) | 0.4.2 | Local testing | Useful for quick smoke tests, but flaky under load |
+## Decision checklist
 
-Avoid `fastapi-mcp` unless you really need FastAPI’s middleware stack; it adds ~200 MB RSS and 15 ms latency on small payloads.
+Before committing to MCP in production, answer these:
 
-For observability, export three custom metrics:
-- `mcp_tool_duration_seconds` (histogram): tracks tool runtime excluding serialization overhead. - `mcp_queue_depth`: number of pending tool calls in the server’s queue. - `mcp_memory_rss_bytes`: RSS from `/proc/self/statm` divided by 1024^2.
+- What is the largest payload a tool can return, and have you measured the proxy and server behavior at that size?
+- What is the longest quiet period on a connection, and do your proxy and load balancer timeouts exceed it?
+- What is the maximum number of concurrent streams, and what is RSS at that level?
+- Does the resource cache have a hard bound and an eviction policy?
+- Are resource URIs normalized and constrained to an allowlist of roots?
+- Are credential-bearing fields stripped from tool manifests on input?
+- Is debug logging disabled in production?
+- Is there an audit log of tool invocations, and does it redact sensitive arguments?
+- How are client and server tool versions kept in sync?
+- What is the alerting threshold on RSS, and what happens when it fires?
 
-I once used Datadog’s MCP integration until I realized it samples every 10 s, missing the p99 spike that only lasts 500 ms. Switching to Prometheus with 1 s resolution caught those spikes and let me tune timeouts accurately.
+## FAQ
 
-## When this approach is the wrong choice
+**How do I find a memory leak in an MCP server written in Python?**
+Drive load at increasing concurrency with a fixed payload and record steady-state RSS at each level. If RSS grows linearly with concurrency and never plateaus, look at per-connection buffers and queues. If it grows with the number of distinct resources accessed, look at the resource cache. Use a memory profiler to attribute allocations to the code paths responsible.
 
-MCP shines when you need bidirectional streaming between a client and long-running tools, but it’s a poor fit if:
+**Why do WebSocket connections drop under load?**
+The most common causes are a proxy read timeout shorter than the quiet period between messages, a client that never sends pings so idle sockets are reaped, and a blocking call stalling the event loop. Check the proxy error log for connection-closed messages, confirm heartbeat configuration on both sides, and profile the event loop for blocking calls.
 
-- Your payloads are tiny (< 1 KB) and latency-sensitive (< 20 ms). JSON-RPC framing adds ~15 ms overhead; REST over HTTP/2 or gRPC is cheaper. - You’re running on constrained hardware (< 512 MB RAM). The SDK and uvloop alone consume ~200 MB RSS; resource files push you over the edge. - Your team can’t write async Python. The SDK is async-first; blocking any coroutine for >50 ms stalls the entire event loop. - You need strict audit trails. MCP doesn’t log tool arguments by default; you must wrap every tool with a logging decorator to capture inputs. - Your clients run in browsers with strict CORS and no WebSocket support. Browser MCP clients are rare; most teams end up with a local daemon that bridges WebSocket to HTTP.
+**What is the cheapest way to run this at scale?**
+That depends on your traffic shape, not on a fixed recipe. Measure bytes in and out per request, average connection duration, and peak concurrency. Then compare a small always-on instance against a serverless container that scales to zero, using your own measured numbers. Include the cost of the load balancer, which is often the dominant fixed cost at low traffic.
 
-I tried to run MCP on a Raspberry Pi 4 with 4 GB RAM for a demo. The server OOMed after 12 concurrent streams with 1 MB payloads. Switching to gRPC cut memory to 180 MB, proving MCP isn’t always the right tool for edge devices.
+**Is base64 the only source of bandwidth overhead?**
+No. Base64 accounts for a 33.3% increase on binary payloads by itself, and the JSON envelope adds more. Measure actual bytes on the wire against raw payload bytes to get the true factor for your workload.
 
-## My honest take after using this in production
+## Action for the next 30 minutes
 
-MCP is a solid protocol for interactive agents, but it’s not an off-the-shelf product. The SDK ships as a library, not a service, so you inherit all the operational baggage of async Python: memory growth, GIL contention, and the need for careful timeout tuning. If you treat it like a REST endpoint, you’ll be surprised when your server OOMs after 500 concurrent streams.
-
-The security surface is larger than most teams realize. Secrets leak via tool manifests, resource URIs can traverse the filesystem, and the SDK doesn’t validate URIs by default. You must sanitize inputs, strip sensitive fields from manifests, and run the server with a read-only filesystem profile.
-
-Cost-wise, the bandwidth tax is real. A 2 MB payload becomes 2.74 MB on the wire; at scale, that’s a 37% tax you never budgeted for. The proxy and ALB costs add up quickly once you exceed the free tier.
-
-On the plus side, once tuned, the system is remarkably stable. With uvloop, orjson, and nginx timeouts set correctly, p99 latency stayed below 200 ms even under 500 concurrent streams. The bidirectional streaming model eliminates polling loops, cutting client-side complexity.
-
-I’d only use MCP again if the use case demanded real-time tool interaction. For fire-and-forget tasks, REST + S3 presigned URLs is simpler and cheaper. For data-heavy pipelines, gRPC or message queues are better. MCP is a specialist tool, not a general-purpose API layer.
-
-The biggest mistake I made was assuming the SDK’s defaults were production-ready. They’re not; they’re demo-ready. Production requires memory caps, timeout tuning, and URI sanitization. Skip those steps, and your server will crash and burn within hours.
-
-## What to do next
-
-If you already have an MCP server running, open the port 8080 log stream right now and run this one-liner to check memory growth:
+Pick one running MCP server and run the following against it for five minutes of real traffic:
 
 ```bash
 docker stats --format "{{.Name}}\t{{.MemUsage}}\t{{.NetIO}}" --no-stream $(docker ps --format '{{.Names}}' | grep mcp)
 ```
 
-Watch the `MemUsage` column for 5 minutes. If it climbs steadily without falling, you’ve got a memory leak. Next, check your nginx access logs for `upstream prematurely closed connection` errors; if you see more than 1 per 1000 requests, your proxy timeouts are too tight. Fix it before your next deploy.
-
-If you’re starting from scratch, copy the server and nginx configs above, deploy to a t4g.small instance behind an ALB, and measure p50/p95 latency and memory under load. The numbers will surprise you — and that’s the point of this post.
-
-## Frequently Asked Questions
-
-**How do I prevent memory leaks in an MCP server written in Python?**
-Strip large JSON blobs immediately after use by setting them to `None` or using `del` in async handlers. Replace the standard `json` module with `orjson` to reduce memory churn. Add an explicit `asyncio` garbage collection step every 1000 requests (`loop.create_task(asyncio.get_event_loop().run_in_executor(None, gc.collect))`). Finally, cap the number of cached resources with an LRU cache (use `functools.lru_cache(maxsize=200)`) and monitor RSS via `/proc/self/statm`. Without these steps, the server will grow to 1.4 GB RSS within hours under moderate load.
-
-**What’s the best way to secure an MCP server in production?**
-Sanitize all resource URIs to absolute paths and reject relative segments (`..`). Strip the `env` field from tool manifests in staging and production; never embed secrets in manifests. Run the server with `--read-only-rootfs` in Docker and drop all Linux capabilities except `NET_BIND_SERVICE`. Use IAM roles instead of long-lived keys, and rotate tool manifests via CI/CD so clients can’t inject arbitrary tools. Finally, enable TLS everywhere; the SDK ships with TLS disabled by default because “it’s easier to demo,” but production requires it.
-
-**Why does my MCP server keep dropping WebSocket connections under load?**
-Most teams hit one of three culprits: nginx’s default `proxy_read_timeout` of 60 s is too short for 20-minute tool calls, the client never sends ping frames so the proxy kills idle sockets, or the server process is blocking the event loop with a CPU-bound task. Fix by setting `proxy_read_timeout 180s` in nginx, adding a 5-minute client-side ping/pong loop, and replacing blocking tool calls with thread-pool workers (`ThreadPoolExecutor` with `max_workers=8`). Monitor `/var/log/nginx/error.log` for `upstream prematurely closed connection`; if you see it, the timeouts are misaligned.
-
-**What’s the cheapest way to run MCP at scale?**
-Use AWS Fargate with 0.5 vCPU and 1 GB memory per task, and set the task to stop after 5 minutes of idle time. Fargate charges $0.00001667 per vCPU-second and $0.00000334 per GB-second; a task that runs 1000 requests/day with 2 MB payloads costs ~$1.10/month. Pair it with CloudFront ($0.085/GB beyond the first 10 TB) to cache static tool manifests and reduce bandwidth costs. Avoid ALB if possible; use a Network Load Balancer ($0.0225/LCU-hour) for raw WebSocket throughput. The savings are significant once you exceed the ALB free tier.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** August 05, 2026
+Record the memory reading every 30 seconds. If it climbs steadily without plateauing, you have a retention problem to fix before the next deploy. If it plateaus, note the plateau value and compare it against your container memory limit — that gap is your safety margin.

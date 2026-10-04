@@ -1,129 +1,108 @@
 # Why monoliths die slowly in 2026
 
-I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+## The conventional wisdom, and where it stalls
 
-## The conventional wisdom (and why it's incomplete)
+The standard advice for decomposing a monolith is the Strangler Fig pattern: put a façade in front of the system, route a slice of traffic to a new service, move logic over domain by domain, and let the old code keep serving everything else until it is empty. The shape of that advice is sound. The trouble is that it treats extraction as a traffic-routing problem, and traffic routing is rarely what makes the migration hurt.
 
-Most teams are told to extract services from a monolith using the Strangler Fig pattern: route traffic through a façade, peel off one domain at a time, and ship new logic to the new service while the old code still runs. That sounds clean until your façade is a Node 20 LTS proxy that doubles latency for every edge case you never wrote tests for.
+A typical failure mode looks like this. A team stands up a façade — a reverse proxy, an API gateway, or a small application that proxies requests — and points a small percentage of traffic at a new service. The new service is written in a different language, deployed on different infrastructure, and queries its own database. The p50 latency looks fine. Then the p95 does not. The façade has become a new hop on every request, and the new service has to fetch data that the monolith already had in a local cache. Two costs appear at once: an extra network hop, and a cross-region or cross-AZ round trip for data that used to be a memory read.
 
-We’d followed the playbook: new checkout service in Go 1.22, traffic routed via path prefixes, old view deprecated but still mounted. The honest answer is the façade became the new bottleneck because we forgot to account for the cost of JSON round-trips between services when the network between Lagos and Frankfurt is saturated at 2 AM.
+The second cost is the one that kills migrations. It is also the one the traffic-routing mental model hides, because the façade is the visible new component and the data path is invisible until you instrument it.
 
-The standard advice also assumes you have the infra budget to run two systems in parallel for weeks. In 2026, a shared VPS in West Africa costs $12/month and a m6g.large EKS node in us-east-2 costs $78/month. Keeping both around long enough to be confident risks a 6.5× burn on infra alone.
+The conventional advice also assumes a budget for running two systems in parallel for weeks or months. That assumption is worth stating explicitly rather than leaving implicit: if you cannot afford to operate the old and new paths simultaneously for the full overlap window, the plan has to be sequenced so that the expensive overlap is short and the cheap parts come first.
 
-## What actually happens when you follow the standard advice
+## What actually goes wrong
 
-You start with a façade—Envoy, NGINX, or a small Node 20 LTS proxy—and route 5 % of traffic to the new service to test. You pick a simple domain: user profile, maybe orders. The latency graph looks fine until you hit the 90th percentile. Suddenly you see 70 ms added by the façade for every request that crosses the Atlantic.
+Work through the standard playbook honestly and the failure modes are predictable.
 
-The error budget for that domain jumped from 100 ms to 180 ms, and the business noticed.
+**The façade becomes the bottleneck.** Every request that crosses it pays for serialization, an extra connection, and whatever middleware the team adds later — auth, rate limiting, header rewriting, tracing. A middleware that re-validates a token against a remote auth service on every request can add tens of milliseconds to a path that used to be a local cache lookup. The monolith had the token cached; the façade does not. This is a design error, not an infrastructure limit, and it is easy to make because the façade starts as a few lines of proxy configuration.
 
-Monitoring also becomes fragmented. With Prometheus 2.47 scraping both the monolith (Python 3.11) and the new service (Go 1.22), the cardinality of labels exploded: `service`, `path`, `method`, `instance`, `dc`, `region`, `shard`, `version`. We hit 500 k active series before we tuned the recording rules, and our Prometheus server on a t3.medium started OOMing at 1.8 GB RSS.
+**Observability fragments.** Once two systems serve one domain, metrics have to be joined to answer questions that used to be trivial. Label cardinality grows as you add dimensions to distinguish the old path from the new one: service, path, method, instance, zone, version. Dashboards that used to show one latency curve now show two, and the interesting number — the end-to-end latency a user actually experiences — is no longer on any single dashboard.
 
-Costs compound when you duplicate data. The monolith keeps its PostgreSQL 15 read replicas for reporting, while the new service adds its own Aurora PostgreSQL 3.06 cluster. Suddenly your monthly DB spend jumps from $420 to $1 300—mostly because Aurora charges for I/O, and cross-AZ replication between the two clusters doubled write volume.
+**Data duplication compounds cost.** The monolith keeps its database and read replicas for reporting. The new service adds its own cluster. Now you pay for both, you replicate between them, and you have created a consistency problem that did not exist before. Storage is usually the smaller part of this bill; cross-AZ or cross-region replication traffic and per-request I/O charges are the larger part, and they scale with traffic rather than with data size.
 
-## A different mental model
+**Rollback stops being free.** Once writes go to two places, "roll back" means reconciling two stores, not reverting a deploy. Teams that plan for seamless rollback often end up running two full stacks precisely so that the rollback is possible, which is the most expensive way to buy safety.
 
-Instead of treating extraction as a traffic-routing problem, treat it as a data-locality problem. The real latency killer is not the façade; it is the round-trip to fetch data the new service needs but the monolith already has in cache. In 2026, the median API call in Lagos expects 30 ms to Redis, but a cross-AZ call to Aurora PostgreSQL 15 can take 40–60 ms even on gp3.
+## A different mental model: extract data first
 
-We shifted from "route traffic then extract logic" to "extract data first, route traffic later." The steps are:
+Treat extraction as a data-locality problem rather than a traffic-routing problem. The latency that matters is the round trip the new service makes to fetch state that the monolith already holds in a local cache. If the new service's data lives next to the monolith's data, the façade stays thin and the extra hop is cheap. If it does not, no amount of proxy tuning will fix the p95.
 
-1. Identify a bounded context that owns its own data (e.g., user identity). 2. Move the data to a dedicated Redis 7.2 cluster co-located with the monolith’s own Redis. Keep the monolith as the source of truth, but replicate writes asynchronously to the new cluster. 3. Update the monolith to read from both clusters while you validate consistency. Expect a 10–15 ms overhead for dual reads during the overlap window. 4. Once the new service can serve reads from the local Redis, route 5 % of traffic. The façade now proxies to an in-region endpoint, so the extra hop is gone. 5. Finally, deprecate the monolith’s copy and switch writes to the new service.
+The sequence that follows from that model:
 
-This model keeps the façade simple—often just a NGINX 1.25 config with `proxy_pass`—because it no longer has to fan out to multiple services. The complexity moves into the data layer where we already have monitoring and backups.
+1. **Pick a bounded context that owns its own data.** The best first candidate is read-heavy, has a clear owner, and does not participate in transactions with other domains. User profile and search are common starting points; billing and inventory are usually not.
+2. **Move a copy of that data next to the monolith.** Stand up a cache or index co-located with the monolith's existing store — same region, ideally the same availability zone. Keep the monolith as the source of truth and replicate writes to the new store asynchronously.
+3. **Make the monolith read from both stores and compare.** During this phase the monolith reads from the new store and falls back to its own on a miss, and the two results are compared. This is the phase that catches replication lag, ordering bugs, and serialization mismatches. Expect some added latency here; you are paying for correctness, not speed.
+4. **Route a small percentage of traffic to the new service.** Because the new service reads from a co-located store, the façade proxies to an endpoint in the same region and the cross-region hop is gone. Start small and watch the p95, not the p50.
+5. **Cut writes over, then deprecate the monolith's copy.** Only after reads have been served from the new path long enough to trust it does the write path move. Then the old store can be retired.
 
-## Evidence and examples from real systems
+The façade in this model stays simple — often just a proxy rule that forwards a path prefix — because it never has to fan out to multiple services. The complexity moves into the data layer, where replication, backups, and monitoring already exist as solved problems.
 
-In our largest domain—billing—the old flow was Django → Aurora PostgreSQL 15 (300 km away) → Redis 7.2 for cache. After splitting, we did the following:
+## Instrumenting the claim instead of asserting it
 
-| Step | Latency p95 | Cost change | Risk |
-|---|---|---|---|
-| Dual reads from both Aurora clusters | +12 ms | +$280/month (extra Aurora I/O) | Low (eventual consistency) |
-| Replicate writes to new Redis 7.2 in same AZ | +2 ms | +$45/month (Redis cluster) | Low (idempotent writes) |
-| Route 5 % traffic to new Go 1.22 service | +0 ms (in-region) | $0 (same infra) | Medium (new service logic) |
-| Full cut-over | 0 ms change | -$325/month (shut old Aurora) | High (during rollback) |
+The model above makes a testable prediction: if the new service's data is co-located, the added latency of the extraction is small; if it is not, the added latency is dominated by the data round trip. Do not take that on faith. Measure it before committing.
 
-The billing service p95 dropped from 240 ms to 180 ms after cut-over, and our AWS bill fell by $325/month because we shut the cross-region Aurora replica. We also reduced Prometheus cardinality by dropping the `region` label for billing metrics—only one region now serves billing.
+What to instrument:
 
-Another team in Berlin extracted the search domain. They kept the monolith’s PostgreSQL 15 full-text search but moved the search index to OpenSearch 2.11 co-located with the monolith. They measured a 28 ms latency reduction at p95 because the search query no longer crossed the Atlantic to Frankfurt. They also saved €110/month by retiring a dedicated search node.
+- **End-to-end latency at the edge**, split by which path served the request. This is the only number a user experiences, and it is the one that must not regress.
+- **Time spent inside the façade**, as a separate histogram from time spent in the downstream service. Without this split you cannot tell whether the façade or the service is slow.
+- **Data-fetch latency inside the new service**, broken down by store and by hit/miss. A cache miss rate rising during the overlap window is the earliest signal that the new store is not keeping up.
+- **Replication lag** between the monolith's store and the new store, if writes are replicated asynchronously. Lag is the input to your consistency reasoning, so it needs to be a first-class metric, not a log line.
+- **Error budget burn per path**, so a small percentage of traffic to a broken new path shows up as a burn rather than as a rounding error in the aggregate.
 
-The pattern works best when the bounded context is read-heavy. For write-heavy domains like inventory, we still route through the façade but keep the write path inside the monolith until we can tolerate eventual consistency in the new service.
+What to compare: the same percentile, over the same time window, for the old path and the new path, at matched request rates. A p95 comparison between a path serving 5% of traffic and a path serving 95% is not meaningful until you account for the different request mix, so segment by endpoint before drawing conclusions.
 
-## The cases where the conventional wisdom IS right
+A useful gate, stated as arithmetic rather than as a number pulled from nowhere: if the new path's p95 exceeds the old path's p95 by more than the tolerance you have written down in advance, roll back. Pick the tolerance from your own SLO, not from a blog post. If your SLO is a p95 of 200 ms and the old path sits at 150 ms, your headroom is 50 ms, and any extraction that consumes more than that is over budget regardless of how elegant the architecture is.
 
-If your monolith is latency-sensitive in a single region and your team has the infra budget to run parallel systems for weeks, the Strangler Fig façade approach is fine. The pain is manageable when you:
+## A worked example (illustrative numbers)
 
-- Use a service mesh like Linkerd 1.6 with automatic mTLS—you get retries, timeouts, and metrics out of the box. - Keep the façade in the same AZ as the monolith so the extra hop is <1 ms. - Budget for a 3× infra multiplier during the overlap period.
+The arithmetic below uses invented figures purely to show the reasoning; substitute your own measurements.
 
-Teams in San Francisco with 5–10 engineers and a $5 k/month infra budget can afford this. Teams in Lagos with a $1.2 k monthly budget cannot.
+Suppose a monolith serves a read-heavy domain with a p95 of 150 ms, and the SLO is 200 ms. The team extracts the domain into a new service in a different region. The new service's handler logic takes 20 ms, but every request fetches state from a store in the other region at 45 ms p95, and the façade adds 10 ms. New p95: 20 + 45 + 10 = 75 ms of added latency, taking the path to 225 ms. That is over the 200 ms SLO, and the extraction has failed on latency even though every individual component looks fast.
 
-I’ve seen this fail when the façade became the new source of truth for auth. A misconfigured JWT middleware in the façade added 40 ms to every request because it re-validated the token with a cross-AZ call to the auth service. The monolith had cached the token locally in Redis, but the façade did not. Always ask: does the façade do more work than the monolith it replaces?
+Now move the store next to the monolith. The data fetch drops to 3 ms. New p95: 20 + 3 + 10 = 33 ms, for a total of 183 ms. The extraction now fits inside the SLO with 17 ms of headroom. Nothing about the service code changed; only the location of the data did.
 
-## How to decide which approach fits your situation
+This is why "extract data first, route traffic later" is not a stylistic preference. It is the difference between a migration that fits the budget and one that does not, and the arithmetic is available before you write any service code — you only need to know the cross-region round-trip time and your SLO headroom.
 
-Use this simple 2×2 to decide:
+## When the conventional advice is right
 
-| Budget | Latency tolerance | Recommended strategy |
-|---|---|---|
-| High ($5k+/month) | Strict (p95 < 100 ms) | Strangler Fig with service mesh (Linkerd 1.6) and dual-write tooling |
-| High | Moderate (p95 < 200 ms) | Extract data first, route later—keep façade thin |
-| Low (<$2k/month) | Strict | Extract data first, route later; keep façade as NGINX 1.25 |
-| Low | Moderate | Keep monolith; optimise DB queries and Redis cache first |
+The façade-first approach is not wrong; it is appropriate under conditions that are worth naming.
 
-If your infra budget is low and your latency tolerance is strict, your only viable path is to co-locate the new service’s data with the monolith and gradually route traffic. If you have budget and strict latency needs, the façade approach is safer—just don’t let the façade become the new bottleneck.
+- **The new service needs no data the monolith does not already serve locally.** If the domain is stateless or its state is already remote, there is no locality problem to solve and the façade adds only its own overhead.
+- **The façade sits in the same zone as both the monolith and the new service.** In that case the extra hop is sub-millisecond and the traffic-routing model is accurate.
+- **The team can afford to run both paths for the full overlap window.** Parallel operation is the safety mechanism; if it is unaffordable, the sequence has to change.
+- **The domain is write-heavy and requires strong consistency.** Here the data-first approach is harder, because replicating writes asynchronously changes the consistency model. Keeping the write path in the monolith while reads move out is often the pragmatic compromise.
 
-## Objections I've heard and my responses
+A decision checklist, in the order the questions matter:
 
-**“But we need seamless rollback!”**
+1. Does the new service need data that the monolith currently serves from a local cache? If no, façade-first is fine.
+2. Can the new service's data store be co-located with the monolith's? If no, budget for the round trip explicitly and check it against your SLO headroom before starting.
+3. Is the domain read-heavy or write-heavy? Read-heavy domains tolerate eventual consistency during the overlap; write-heavy ones usually do not.
+4. Can you afford to run both paths for the full overlap window? If not, sequence data extraction first so the overlap is short.
+5. Does the façade do more work than the monolith it fronts? If yes, it is not a façade, it is a new monolith.
 
-The honest answer is that seamless rollback is a myth once you cross the chasm from single process to distributed. In 2026, teams that rely on seamless rollback usually run two full stacks in parallel, which costs money and doubles the blast radius of any config change. Instead, design for fast-forward rollback: the façade can instantly route 100 % back to the monolith by flipping a NGINX config and restarting the service. The key is making that flip atomic and observable—Prometheus metrics should show the change within 30 seconds.
+## Common objections
 
-We added a single Prometheus metric `service_rollback_duration_seconds` that tracks how long it took to revert. In six incidents, the median rollback time dropped from 7 minutes to 90 seconds once we automated the NGINX reload.
+**"We need seamless rollback."** Seamless rollback across a distributed boundary is not achievable in general; it requires either two full stacks or a reconciliation process. What is achievable is fast-forward rollback: the façade can send all traffic back to the monolith by changing one routing rule. Make that flip atomic, observable, and rehearsed. A useful metric is the time from decision to full traffic restoration, measured in drills rather than assumed. If the routing change is a config edit plus a reload, the number is seconds; if it requires a deploy, it is minutes, and that difference should drive how you implement the flip.
 
-**“What about shared databases?”**
+**"What about shared databases?"** Two services sharing a table are not independent services; they are one service with two deployment units. That is sometimes the right call for a small domain where the cost of dual writes and eventual consistency exceeds the benefit of separation. The mistake is calling it a microservice and expecting independent deployability.
 
-Shared databases kill bounded contexts. If two services share a table, they are not independent. In 2026, most teams that extract services also split the database. The exception is when the domain is so small that the cost of dual writes and eventual consistency outweighs the benefit. In that case, keep the monolith and optimise queries instead.
+**"How do we test the new service without affecting production?"** Traffic shadowing: the façade duplicates production requests to the new service and discards the responses. Both NGINX (the `mirror` directive) and Envoy (shadow policy) support this. The risk is that shadowed requests still hit downstream stores, so shadow reads and not writes, and cap the shadowed fraction. Shadowing is how concurrency bugs that only appear under real request interleaving get caught before users see them.
 
-**“How do we test the new service without breaking prod?”**
+**"Won't this slow down our deploys?"** Deploy frequency and extraction are largely independent. Small, frequent deploys of the new service keep the diff small; infrequent deploys accumulate merge conflicts regardless of architecture. Container builds and rolling updates are fast enough that deploy latency is rarely the constraint.
 
-Use a traffic shadowing setup: the façade duplicates prod traffic to the new service but discards the responses. You can do this with NGINX mirror directive or Envoy’s shadow policy. The risk is doubling request volume on your DB, so route only 5 % of reads and 0 % of writes during shadowing. We used this to catch a race condition in the billing service where two concurrent requests tried to update the same inventory record. The shadow caught it before prod users saw it.
+## Practical guidance
 
-**“Will this make our deployments slower?”**
+**Prefer boring infrastructure for the new service.** A container on a small instance in the same zone as the monolith is often sufficient for a single extracted domain, and it avoids the fixed cost and operational surface of a cluster. Kubernetes earns its keep when you have many services and a platform team; for the first extraction it is usually overhead.
 
-Not if you keep the new service deployments small and frequent. In 2026, teams that deploy the new service 10–20 times a day see no measurable impact on prod. Teams that deploy once a week create merge conflicts and slow everyone down. Use GitHub Actions with OIDC to AWS ECR and EKS; a Go 1.22 service deploys in under 90 seconds once the image is built.
+**Avoid adding a service mesh until you need one.** A mesh buys you mutual TLS, retries, timeouts, and uniform metrics, and it costs nodes, operational complexity, and a new failure domain. If the façade is a proxy rule and the services are few, the mesh is solving problems you do not have yet.
 
-## What I'd do differently if starting over
+**Add one health metric that encodes the migration's success criterion.** Something like a boolean endpoint that reports whether the new path is serving the domain's critical path within a stated multiple of the monolith's p95. Wire it to the routing rule so a sustained breach triggers automatic rollback. The value is not the metric itself; it is that writing it down forces the team to agree on the threshold before the migration starts, when the decision is cheap.
 
-I would start with data extraction, not traffic extraction. The first thing I’d move is the Redis 7.2 cache for the domain I’m targeting. That cuts latency immediately and gives me a safe place to experiment with new logic without touching the DB.
+**Keep one team owning both sides for the first phase.** Migrations stall when the monolith team and the new-service team optimize for different things. A single owner for the overlap window removes the coordination cost.
 
-I’d also avoid Kubernetes for the new service if the team is small. EKS clusters in 2026 still require 2–3 nodes to run Linkerd 1.6 reliably, which costs $78/month per node. Instead, I’d run the new service on a single t4g.small EC2 instance with Docker 25.0 and use the host’s cgroup v2 limits for isolation. The latency overhead of an extra hop is <1 ms when the instance is in the same AZ as the monolith.
+## The order that works
 
-I would also add a single, high-impact metric from day one: `service_extraction_health`. It’s a boolean exposed via a `/health` endpoint that returns 1 if the new service can serve the domain’s critical path within 110 % of the monolith’s p95 latency. Any regression above that threshold triggers an automatic rollback via the façade. We built this in Go 1.22 and it cut our rollback incidents by 70 %.
+Decomposition is a data-locality problem before it is a traffic-routing problem. Move a copy of the domain's data next to the monolith, validate consistency while the monolith still owns writes, then route a small share of traffic to a service that reads locally. Keep the façade thin, measure the added latency against a pre-agreed SLO headroom, and only then move the write path. If the data cannot be co-located, do the arithmetic first: cross-region round trip plus handler time plus façade overhead, compared against your headroom. If it does not fit, the extraction is not ready, regardless of how the architecture diagram looks.
 
-Finally, I’d insist on a single team owning both the monolith and the new service for the first 90 days. Knowledge silos kill migrations faster than any technical constraint.
+## Your next 30 minutes
 
-## Summary
-
-Splitting a monolith is less about traffic routing and more about data locality. Move the data first to a co-located store (Redis 7.2, OpenSearch 2.11), then route traffic only after the new service can serve reads locally. Keep the façade thin—NGINX 1.25 is enough—and avoid Linkerd or Envoy unless you have the infra budget and latency budget to justify them.
-
-If your infra budget is tight and your latency tolerance is moderate, extract data first and route later. If you have budget and strict latency needs, use a façade with a service mesh, but budget for the infra multiplier.
-
-Decide today which quadrant you’re in; the rest is implementation detail.
-
-Open your monolith’s main Django settings file right now and count the number of Redis hosts configured. If you see more than one hostname per environment, you’re already halfway to extracting that domain. That’s your next 30-minute action.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 19, 2026
+Open your monolith's configuration and list every data store it talks to for the domain you are considering extracting. For each one, write down whether it is in the same availability zone as the application. Any store that is not is the first thing to fix — before any façade, any new service, or any routing rule.

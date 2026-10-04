@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI features rot faster than you build them - Kubai Kevin</title>
-        <meta name="description" content="AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.">
+        <meta name="description" content="Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.">
         <meta name="keywords" content="AiFeatureMaintenance, AiFeatureOutages, FastapiAi, Redis, AiContractVersioning, Ai, Fastapi0109ai">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-27T22:00:41.355509">
-        <meta property="article:modified_time" content="2026-09-27T16:41:30.147261+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:23:27.707730+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI features rot faster than you build them">
-        <meta property="og:description" content="AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.">
+        <meta property="og:description" content="Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.">
         <meta property="og:url" content="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI features rot faster than you build them">
-        <meta name="twitter:description" content="AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.">
+        <meta name="twitter:description" content="Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-features-rot-faster-than-you-build-them.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/#article",
       "headline": "AI features rot faster than you build them",
-      "description": "AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.",
+      "description": "Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.",
       "datePublished": "2026-08-27T22:00:41+00:00",
-      "dateModified": "2026-09-27T16:41:30+00:00",
-      "wordCount": 3496,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-04T10:23:27+00:00",
+      "wordCount": 2772,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI features rot faster than you build them</h1>
                 
-                <p class="post-lead">AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.</p>
+                <p class="post-lead">Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.</p>
                 
                 
                 <div class="tags">
@@ -255,34 +255,33 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3496 words
+                        14 min read
+                        &nbsp;·&nbsp; 2772 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-27
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've hit the same building golden mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>Teams are told to ship AI features like any other feature: wrap a model call behind a REST endpoint, add some caching, ship it. The canonical path looks clean on paper: a LangChain pipeline in Python 3.11, a FastAPI 0.109 app, a Redis 7.2 cache for hot model responses, and a sidecar for rate limiting. Throw in a feature flag for gradual rollout, and you’re done. Most runbooks even include a one-liner about "monitoring token usage" and call it production-ready.</p>
-<p>The problem isn’t the stack choice; it’s the hidden life cycle. In 2026, model drift, API deprecations, and payment rail changes hit AI features harder than traditional ones because the surface area is larger: prompts, tokens, embeddings, vector DB schemas, and downstream API contracts all age at different speeds. A single prompt change can break validation rules in Flutterwave’s 2026 callback schema. A model version bump can double your embedding dimension overnight, turning a 500 MB Redis cache into a 2 GB problem that evicts everything else. The part that trips people up is that these failures don’t look like infra failures—they look like "our cache hit rate dropped" or "our LLM costs exploded." That’s what this post actually covers.</p>
-<p>Conventional wisdom says: "Treat AI features like any other API." But in practice, AI features are more like distributed systems with non-deterministic outputs, where the contract between caller and model is implicit and fragile. The standard advice ignores that the model itself is a moving target. Most teams learn this the hard way: after shipping their first AI feature, they spend the next quarter fighting fires that don’t map cleanly to any existing runbook.</p>
-<p>A common trap here is to assume the model’s behavior will stay stable once it’s in production. Teams run into this when they hardcode prompt templates or expected token outputs in validation logic. One Nigerian fintech team I’ve seen repeatedly hit this when their fraud-detection LLM started returning longer explanations after a model update. Their downstream service, expecting 20 tokens per response, started rejecting valid calls with 403 errors. The error message in their logs? "Invalid response schema." The fix took three engineers two days: a schema bump, a cache flush, and a gradual rollout. The root cause was a brittle assumption baked into the API contract.</p>
+                <h2 id="the-problem-is-not-the-stack-it-is-the-implicit-contract">The problem is not the stack, it is the implicit contract</h2>
+<p>Most teams are told to ship AI features like any other feature: wrap a model call behind an HTTP endpoint, add caching, add a rate limiter, put the rollout behind a feature flag, and ship. On paper the path is clean. A typical stack might be an orchestration library in Python, a FastAPI app, Redis for hot model responses, and a sidecar for rate limiting. The runbook usually ends with a line about "monitoring token usage" and calls the feature production-ready.</p>
+<p>The stack choice is rarely the problem. The problem is the hidden lifecycle. Model drift, API deprecations, and payment rail changes hit AI features harder than conventional ones because the surface area is larger. Prompts, token budgets, embeddings, vector store schemas, and downstream API contracts all age at different speeds. A prompt change can violate a validation rule in a payment provider's callback schema. A model version bump can change your embedding dimension overnight, turning a 500 MB cache into a multi-gigabyte problem that evicts everything else.</p>
+<p>The reason these failures are hard to diagnose is that they do not present as infrastructure failures. They present as "our cache hit rate dropped" or "our LLM costs exploded." The contract between the caller and the model is implicit, so nothing in the code says what the caller actually requires.</p>
+<p>The conventional advice — treat an AI feature like any other API — is incomplete for one reason: the model is a moving target that you do not control. A typical failure mode is hardcoding prompt templates or expected output shapes into validation logic. When the model's output shape shifts, validation starts rejecting valid responses, and the error surfaces as a generic schema error rather than as a model change.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>Let’s take a realistic scenario: a Nairobi-based logistics startup shipping an AI routing feature in early 2026. They use a LangChain pipeline with OpenRouter’s 2026 API, a Redis 7.2 cache for "last-mile" routing decisions, and a FastAPI 0.109 backend. Their runbook says: cache hot responses, limit concurrency, and monitor token usage. That runbook is wrong in practice.</p>
-<p>Within 48 hours of launch, their cache hit rate dropped from 78% to 24%. The team dug in and found the cache was being invalidated by a single field change: the API started returning <code>estimated_duration_minutes</code> where it previously returned <code>estimated_duration_seconds</code>. The new field caused the cache key to change, evicting every cached route. Their Redis memory usage spiked from 1.2 GB to 4.8 GB as the cache churned. Within a week, their Redis bill tripled, and their p99 latency jumped from 140 ms to 680 ms because the cold path now had to hit the LLM every time.</p>
-<p>The standard advice also misses the fact that model APIs change behavior without warning. In 2026, OpenRouter’s 2026 API deprecated the <code>include_reasoning</code> parameter without notice. Teams using it in their LangChain pipeline woke up to 500 errors from their Python 3.11 backend. The error was generic: "Invalid parameter." Teams that didn’t pin their model versions saw this failure cascade across environments. The fix required a code change, a Docker rebuild, and a redeploy—downtime included.</p>
-<p>Payment rails add another layer of fragility. A Ghanaian e-commerce site integrated Flutterwave’s 2026 callback schema for AI-driven discount recommendations. They assumed the schema would stay stable. It didn’t. A new field, <code>discount_reason</code>, was added to the callback payload. Their Flask 2.3 app, using a hardcoded request model, started rejecting valid callbacks with 400 errors. The error message? "Missing required field: discount_reason." The site lost 12 hours of transactions while they patched the schema and redeployed.</p>
-<p>This isn’t edge-case noise. In a 2026 internal survey of 42 African tech teams, 31 reported at least one AI feature outage caused by model drift or API deprecation within the first 90 days. The average recovery time was 9.2 hours, and the average cost per outage was $4,200 in lost revenue or support tickets. The teams that recovered fastest had one thing in common: they treated the AI feature as a distributed system with an explicit, versioned contract—not as a simple API wrapper.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>The honest answer is that shipping AI features isn’t about wrapping a model call behind an endpoint. It’s about shipping a contract that can evolve without breaking downstream systems. The golden path isn’t the path you ship; it’s the path you can change without a fire drill.</p>
-<p>Think of the AI feature as a state machine where the states are versions of the prompt, the model, the schema, and the payment callback. Each state must be versionable, testable, and reversible. The contract between the AI system and the rest of the stack must be explicit, versioned, and enforced at the boundary—not assumed in the middle.</p>
-<p>Here’s a concrete example. A Tanzanian health-tech startup built a symptom-checker AI in 2026. They defined their contract as a JSON Schema document with a version field:</p>
+<p>Consider a plausible scenario: a logistics company ships an AI routing feature. The pipeline calls a hosted model through an aggregator API, Redis caches "last-mile" routing decisions, and a FastAPI backend serves requests. The runbook says: cache hot responses, limit concurrency, monitor token usage.</p>
+<p>Within days of launch, the cache hit rate collapses. The cause is not a bug in the cache. The upstream API started returning a duration field in a different unit than before. Because the cache key is derived from the response payload, every cached entry is now unreachable, and the cache churns. Memory usage climbs, the cold path hits the model on nearly every request, and p99 latency rises sharply because the previously cached fast path is gone.</p>
+<p>The standard advice also misses that model APIs change behavior without warning. Parameters get deprecated, defaults change, and token limits move. Teams that did not pin a model version see the failure cascade across environments simultaneously, because every environment resolves "latest" to the same new version. The fix requires a code change, a rebuild, and a redeploy.</p>
+<p>Payment rails add another layer. A callback schema that gains a new required field will cause a strict request model to reject otherwise valid callbacks. The error looks like a validation failure in your service, but the root cause is upstream: an external contract changed and your code assumed it would not.</p>
+<p>None of this is edge-case noise. It is the normal behavior of systems that depend on external, versioned-by-someone-else services. The teams that recover fastest share one property: they treat the AI feature as a distributed system with an explicit, versioned contract rather than as a thin wrapper around a model call.</p>
+<h2 id="a-different-mental-model-versioned-contracts">A different mental model: versioned contracts</h2>
+<p>Shipping an AI feature is not about wrapping a model call behind an endpoint. It is about shipping a contract that can evolve without breaking downstream systems. The path you ship is less important than the path you can change without a fire drill.</p>
+<p>Think of the AI feature as a state machine whose states are versions of the prompt, the model, the response schema, and any external callback schema. Each state must be versionable, testable, and reversible. The contract between the AI system and the rest of the stack must be explicit and enforced at the boundary, not assumed in the middle.</p>
+<p>A concrete example: a symptom-checker service defines its request contract as a JSON Schema document with a version field:</p>
 <pre><code class="language-json">{
-  &quot;$schema&quot;: &quot;http://json-schema.org/draft/2020-12/schema#&quot;,
+  &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
   &quot;type&quot;: &quot;object&quot;,
   &quot;properties&quot;: {
     &quot;version&quot;: { &quot;const&quot;: &quot;1.2.0&quot; },
@@ -292,133 +291,180 @@
   &quot;required&quot;: [&quot;version&quot;, &quot;symptoms&quot;]
 }
 </code></pre>
-<p>Their API accepted only requests with <code>version: "1.2.0"</code>. The backend used this version to route to the correct prompt template, model version, and response schema. When they needed to update the prompt, they incremented the version to <code>1.3.0</code>, deployed the new template alongside the old one, and gradually shifted traffic. The old version remained active for rollback. No downstream system broke because the contract was explicit and versioned.</p>
-<p>This approach turns the AI feature into a set of versioned contracts instead of a single, fragile endpoint. It’s not about caching or rate limiting—it’s about making change safe. The tooling needed is minimal: a schema registry, a versioned prompt store, and a way to roll traffic between versions. In practice, this means using tools like Dapr 1.12 for sidecar-based version routing, or FastAPI’s dependency injection with a version header.</p>
-<p>Critics of this model argue it adds complexity. They’re right—it does. But the alternative is complexity in production fires, where every outage is a surprise and every fix is a panic. In 2026, the complexity of shipping AI features safely is not optional. The question isn’t whether to add complexity; it’s where to put it.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>Let’s look at three real systems shipping AI features in East Africa in 2026. Each took a different approach to the contract problem, and the outcomes are starkly different.</p>
-<h3 id="example-1-the-naive-wrapper-failure">Example 1: The naive wrapper (failure)</h3>
-<p>A Kenyan agri-fintech shipped an AI pricing tool using a single FastAPI 0.109 endpoint with a LangChain pipeline. They cached responses in Redis 7.2 using a composite key of user_id and product_id. Their prompt template was hardcoded in the pipeline. Within two weeks, OpenRouter’s 2026 API changed its token limits, causing the pipeline to truncate responses silently. Users saw prices but no explanations. The team’s Redis hit rate dropped from 82% to 19% as the cache churned due to new fields in the response. They spent 11 engineer-days debugging cache invalidation before realizing the issue was upstream in the model output.</p>
-<p>The cost of this approach wasn’t just time—it was trust. After the outage, user trust in the AI tool dropped by 42% in their analytics dashboard. Recovery required a full redeploy, a cache flush, and a gradual rollout with feature flags. The total blast radius was 6 hours of downtime and $18k in support tickets.</p>
-<h3 id="example-2-the-versioned-contract-success">Example 2: The versioned contract (success)</h3>
-<p>A Rwandan health-tech startup built a triage bot using a versioned contract approach. They defined their API contract in JSON Schema 2026-12, pinned their model version in the request headers, and stored prompts in a versioned file store. Their FastAPI 0.109 backend used a dependency to inject the correct prompt template and model version based on the version header.</p>
-<p>When they needed to update the prompt, they incremented the version to 2.0.0, deployed the new prompt alongside the old one, and used Dapr 1.12 to route 10% of traffic to the new version for testing. After validation, they shifted traffic gradually. The old version remained active for 7 days to allow rollback. Their Redis 7.2 cache used versioned keys, so cache invalidation was explicit and predictable.</p>
-<p>The result? Zero outages from model drift. Their cache hit rate stayed above 75%. Their total engineering time spent on AI maintenance dropped from 25% to 8% within three months. Their user trust metric increased by 23%.</p>
-<h3 id="example-3-the-hybrid-approach-partial-success">Example 3: The hybrid approach (partial success)</h3>
-<p>A Ugandan e-commerce site used a hybrid model: they wrapped their AI feature in a REST endpoint but added a sidecar that validated responses against a versioned schema before caching. Their schema enforced token limits, required fields, and expected response structures. When OpenRouter’s 2026 API changed its behavior, their sidecar rejected invalid responses immediately, preventing cache corruption.</p>
-<p>The downside? Their sidecar added 28 ms to their p99 latency. They mitigated this by running the sidecar as a separate process and using gRPC for internal communication. Their cache hit rate stayed high, but their operational overhead increased because the sidecar had to be updated whenever the schema changed.</p>
-<p>This shows that there’s no free lunch. But the hybrid approach at least contained the blast radius to the sidecar, not the entire system.</p>
+<p>The API accepts only requests declaring a known version. The backend uses that version to select the prompt template, the model version, and the response schema. When the prompt needs to change, the version is incremented, the new template is deployed alongside the old one, and traffic shifts gradually. The old version stays active for rollback. No downstream system breaks, because the contract was explicit and versioned.</p>
+<p>This turns the AI feature into a set of versioned contracts rather than a single fragile endpoint. The tooling required is modest: a schema registry (even a directory in a repository works), a versioned prompt store, and a way to shift traffic between versions. In practice this can be done with a reverse proxy, a service mesh, or a small weighted router in your own application. A managed LLM gateway can also absorb some of this if you already run one.</p>
+<p>The objection is that versioning adds complexity. It does. But the complexity does not disappear if you skip it; it moves to production, where every outage is a surprise and every fix is a scramble. The question is not whether to add complexity, but where to put it.</p>
+<h2 id="three-approaches-and-what-each-one-costs">Three approaches and what each one costs</h2>
+<h3 id="the-naive-wrapper">The naive wrapper</h3>
+<p>A pricing service exposes a single endpoint backed by an orchestration pipeline and a Redis cache keyed on user and product identifiers. The prompt template is hardcoded. When the upstream API changes token limits, the pipeline truncates responses silently. Users see prices but no explanations. The cache hit rate falls because new fields appear in responses and change the derived cache keys. Debugging takes days because the symptom (cache churn) is far from the cause (upstream output change).</p>
+<p>The cost is not only engineering time. Once users notice degraded output, trust in the feature drops, and recovery requires a redeploy, a cache flush, and a gradual rollout behind flags. The blast radius is the whole feature.</p>
+<h3 id="the-versioned-contract">The versioned contract</h3>
+<p>A triage service defines its API contract in JSON Schema, pins the model version in request headers, and stores prompts in a versioned file store. The backend injects the correct prompt template and model version based on the version header.</p>
+<p>When the prompt needs to change, the version is incremented, the new prompt is deployed alongside the old one, and a small percentage of traffic is routed to the new version. After validation, traffic shifts gradually. The old version remains active for a rollback window. Cache keys include the version, so invalidation is explicit and predictable.</p>
+<p>The result is that model drift does not cause outages, because drift is detected at the boundary rather than discovered by users. Engineering time spent on AI maintenance falls because failures are localized and reversible.</p>
+<h3 id="the-hybrid-approach">The hybrid approach</h3>
+<p>A hybrid wraps the AI feature in a REST endpoint but adds a validation step that checks responses against a versioned schema before caching. The schema enforces token limits, required fields, and expected response structures. When the upstream API changes behavior, validation rejects invalid responses immediately, preventing cache corruption.</p>
+<p>The tradeoff is added latency and operational overhead: the validator must be updated whenever the schema changes, and it sits in the hot path. Running the validator as a separate process with an efficient internal protocol can reduce the latency cost, but it does not eliminate it.</p>
+<h3 id="comparing-the-three">Comparing the three</h3>
 <table>
 <thead>
 <tr>
 <th>Approach</th>
-<th>Outages in 90 days</th>
-<th>Avg recovery time</th>
-<th>Engineering time on AI maintenance</th>
-<th>User trust impact</th>
+<th>Failure detection</th>
+<th>Recovery cost</th>
+<th>Ongoing overhead</th>
+<th>Blast radius</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Naive wrapper</td>
-<td>3</td>
-<td>11 hours</td>
-<td>25%</td>
-<td>-42%</td>
+<td>Users notice degraded output</td>
+<td>Redeploy, cache flush, rollout</td>
+<td>Low until it fails</td>
+<td>Whole feature</td>
 </tr>
 <tr>
 <td>Versioned contract</td>
-<td>0</td>
-<td>0 hours</td>
-<td>8%</td>
-<td>+23%</td>
+<td>Boundary validation rejects mismatches</td>
+<td>Shift traffic back to prior version</td>
+<td>Moderate: schema, prompt store, router</td>
+<td>One version</td>
 </tr>
 <tr>
 <td>Hybrid</td>
-<td>1</td>
-<td>2 hours</td>
-<td>15%</td>
-<td>+8%</td>
+<td>Validator rejects bad responses before cache</td>
+<td>Update validator, redeploy</td>
+<td>Moderate to high: validator in hot path</td>
+<td>Validator and cache</td>
 </tr>
 </tbody>
 </table>
-<p>The pattern is clear: teams that version their contracts avoid outages. Teams that don’t, pay for it in firefighting and lost trust.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>Not every AI feature needs a versioned contract. If the feature is low-risk, short-lived, or internal, the conventional approach is fine. For example, a team building an internal Slack bot for engineering onboarding in 2026 can safely use a single endpoint with a hardcoded prompt. The blast radius is small, the usage is low, and the cost of failure is minimal.</p>
-<p>Another case: a feature that uses a stable, version-pinned model with a fixed prompt. If the model’s outputs are deterministic and the prompt rarely changes, the conventional approach works. For instance, a feature that generates CSV exports from structured data using a fixed prompt and a pinned model version can be shipped as a simple API.</p>
-<p>The key litmus test is risk. Ask: what’s the blast radius if this feature breaks? If the answer is "low," the conventional approach is acceptable. If the answer is "high," versioning the contract is non-negotiable.</p>
-<p>Teams shipping AI features in regulated industries—like healthcare or finance—should assume high risk by default. A single outage in a fraud-detection system can trigger compliance fines, lost transactions, and reputational damage. In these cases, the conventional wisdom is dangerously incomplete.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>The decision tree is simple but often ignored:</p>
+<p>The pattern is that detection moves earlier and blast radius shrinks as you add explicit contracts. None of these numbers are universal; the shape of the tradeoff is what matters.</p>
+<h2 id="how-to-measure-whether-you-have-this-problem">How to measure whether you have this problem</h2>
+<p>Rather than trusting a benchmark, instrument your own system. The following measurements are cheap and will tell you whether your AI feature is fragile.</p>
+<ul>
+<li><strong>Cache hit rate over time.</strong> Export a counter for cache hits and misses, and compute the ratio on a dashboard. A sudden drop that is not explained by traffic mix usually means the cache key changed because the response shape changed.</li>
+<li><strong>Schema validation failure rate.</strong> Increment a counter every time a response fails validation. This is your earliest warning that the model's behavior changed.</li>
+<li><strong>Model version in use.</strong> Emit the resolved model version as a label on every request metric. If it changes without a deploy, you have an unpinned dependency.</li>
+<li><strong>Token usage per request, as a distribution.</strong> Track p50 and p99, not just the mean. Truncation and verbosity changes show up in the tail first.</li>
+<li><strong>p99 latency split by cache hit and miss.</strong> If the miss path is dominating, the cache is no longer doing its job.</li>
+<li><strong>Cost per successful request.</strong> Divide total model spend by successful requests. A rising ratio means you are paying for failures.</li>
+</ul>
+<p>A useful exercise is to run a script that fetches the current schema or model metadata from your provider and diffs it against the version you have pinned. If the diff is non-empty and you have not deployed, your contract is implicit. This is the single highest-value check you can automate.</p>
+<h2 id="when-the-conventional-approach-is-fine">When the conventional approach is fine</h2>
+<p>Not every AI feature needs a versioned contract. If the feature is low-risk, short-lived, or internal, a single endpoint with a hardcoded prompt is acceptable. An internal onboarding bot with a handful of users, no external dependencies, and no downstream consumers has a small blast radius and a low cost of failure.</p>
+<p>A second case: a feature that uses a pinned model version with a fixed prompt and deterministic outputs. A tool that generates structured exports from structured data using a fixed prompt and a pinned model can be shipped as a simple API, because the contract surface is small and stable.</p>
+<p>The litmus test is risk. Ask what happens if this feature breaks. If the answer is "a few people wait a bit," the conventional approach is fine. If the answer is "payments fail," "users lose data," or "we breach a compliance obligation," versioning is not optional.</p>
+<p>Teams in regulated industries — healthcare, finance, anything touching payment rails — should assume high risk by default. A single outage in a fraud-detection system can trigger compliance findings, lost transactions, and reputational damage.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these questions in order. The first "yes" tells you where to start.</p>
 <ol>
-<li><strong>Risk assessment</strong>: What’s the blast radius? If the feature touches payment rails (M-Pesa, Flutterwave, Paystack), user data, or compliance, assume high risk. If it’s internal or low-stakes, assume low risk.</li>
-<li><strong>Change frequency</strong>: How often will the prompt, model, or schema change? If the answer is "often," versioning is mandatory. If it’s "rarely," the conventional approach may suffice.</li>
-<li><strong>Downstream dependency</strong>: Are downstream systems tightly coupled to the AI output? If yes, versioning is necessary to avoid breaking contracts.</li>
-<li><strong>Team velocity</strong>: Can your team afford the operational overhead of versioning? If not, start with the conventional approach but plan to migrate as the feature matures.</li>
+<li>Does the feature touch payment rails, user data, or a compliance obligation? If yes, version the contract from day one.</li>
+<li>Do downstream systems parse the AI output? If yes, version the response schema and validate at the boundary.</li>
+<li>Will the prompt, model, or schema change more than once a quarter? If yes, versioning is mandatory.</li>
+<li>Can you roll back a model version change without a redeploy? If no, add version routing before your next model change.</li>
+<li>Do you know which model version served a given request last week? If no, add version labels to your metrics.</li>
+<li>Is the feature internal and low-traffic with no downstream consumers? If yes, start simple and revisit when usage grows.</li>
 </ol>
-<p>A concrete scenario: a Kenyan SaaS company shipping an AI-driven invoice generator in 2026. Their customers expect the AI to generate invoices in the exact format required by Kenyan tax authorities. The prompt is stable (the tax rules rarely change), but the model’s outputs can vary. They chose a hybrid approach: they pinned their model version, versioned their schema, and added a sidecar to validate responses before caching. This gave them safety without the full overhead of a versioned contract.</p>
-<p>Another scenario: a Tanzanian logistics startup shipping an AI-driven route optimizer. Their prompt changes frequently as they add new constraints (traffic data, fuel costs, driver availability). They chose a versioned contract approach from day one, using Dapr 1.12 to route traffic between versions. The overhead was worth it: they avoided outages and reduced their debugging time by 60%.</p>
-<p>The litmus test is this: if you can’t afford a surprise outage, version your contract. If you can, start simple and migrate later.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p><strong>Objection 1: "Versioning adds too much complexity."</strong></p>
-<p>Response: The complexity doesn’t disappear—it just moves from production fires to design time. A versioned contract is more work upfront, but it prevents weeks of debugging later. In 2026, teams shipping AI features without versioning are effectively outsourcing complexity to their on-call rotation. The question isn’t whether to add complexity; it’s where to put it.</p>
-<p><strong>Objection 2: "Our model is stable; we don’t need versions."</strong></p>
-<p>Response: Model stability is an assumption, not a guarantee. OpenRouter’s 2026 API changed its token limits without notice. A model that’s stable today can become unstable tomorrow. Versioning protects against silent changes and makes rollbacks trivial. The cost of a versioning system is tiny compared to the cost of an outage.</p>
-<p><strong>Objection 3: "Our team is small; we can’t afford this."</strong></p>
-<p>Response: Versioning doesn’t require a large team. In 2026, tools like FastAPI 0.109, JSON Schema 2026-12, and Dapr 1.12 make versioning accessible even to small teams. The overhead is a few hundred lines of code and a small increase in deployment complexity. The alternative is spending days debugging cache invalidation or schema mismatches. Versioning is cheaper than firefighting.</p>
-<p><strong>Objection 4: "Our users don’t care about versions."</strong></p>
-<p>Response: Users don’t care about versions, but they care about uptime. A versioned contract is an implementation detail that prevents outages. The user-facing benefit is reliability, not version numbers. If your users notice your AI feature, you’ve already failed. The goal is for the AI feature to be invisible—reliable and unremarkable.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<p>If I were starting an AI feature project in 2026, here’s what I’d do differently:</p>
-<ol>
-<li><strong>Start with a versioned contract</strong>: Even if the feature is small, define the API contract in JSON Schema 2026-12 from day one. Pin the version in the request headers. This forces you to think about change from the start.</li>
-<li><strong>Use a sidecar for validation</strong>: Add a lightweight sidecar that validates responses against the schema before caching. This prevents silent corruption of your cache.</li>
-<li><strong>Pin your model version</strong>: Don’t rely on "latest." Pin the model version in your pipeline. When you need to upgrade, deploy the new version alongside the old one and shift traffic gradually.</li>
-<li><strong>Store prompts in versioned files</strong>: Don’t hardcode prompts in your pipeline. Store them in a versioned file store and inject them at runtime based on the version header.</li>
-<li><strong>Use Dapr 1.12 for traffic routing</strong>: Dapr’s sidecar makes it trivial to route traffic between versions without changing your main codebase. It’s a small increase in complexity, but it pays off in safety.</li>
-<li><strong>Monitor schema drift</strong>: Add a metric for schema drift—track the number of times a response fails validation. This gives you early warning when the model’s behavior changes.</li>
-<li><strong>Plan for rollback</strong>: Always assume you’ll need to roll back. Keep old versions active for at least 7 days after a change. This is cheap insurance against surprises.</li>
-</ol>
-<p>In practice, this means a small increase in upfront work, but a massive reduction in firefighting. The systems I’ve seen that follow this approach spend less than 10% of their engineering time on AI maintenance after launch. The rest of the time is spent on building features, not debugging failures.</p>
-<h2 id="summary">Summary</h2>
-<p>The golden path for AI features isn’t about caching or rate limiting. It’s about making change safe. The conventional wisdom—wrap the model call, cache the response, ship it—is incomplete because it ignores the fragility of the AI contract. Model drift, API deprecations, and schema changes hit AI features harder than traditional ones because the surface area is larger and the contracts are often implicit.</p>
-<p>The evidence is clear: teams that version their contracts avoid outages. Teams that don’t, pay for it in firefighting, lost trust, and blown budgets. The hybrid and versioned approaches aren’t about complexity for its own sake—they’re about containing blast radius. If your AI feature touches payment rails, user data, or compliance, versioning isn’t optional. It’s the only sane choice.</p>
-<p>The litmus test is simple: if you can’t afford a surprise outage, version your contract. If you can, start simple and migrate later. But start somewhere. The worst mistake is assuming the model will stay stable. It won’t.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I version prompts in a LangChain pipeline?</strong></p>
-<p>Start by storing your prompts in a versioned file store, like a Git repository with directories per version (e.g., <code>prompts/v1.0.0/route_optimizer.txt</code>). In your LangChain pipeline, load the prompt at runtime based on the version header from the request. Use a dependency injection pattern to inject the correct prompt template into your chain. This keeps your pipeline clean and makes rollbacks trivial.</p>
-<p><strong>What’s the smallest versioning system I can build?</strong></p>
-<p>The smallest versioning system is a JSON Schema document with a version field, a version header in your API, and a way to route to the correct prompt and model version. In FastAPI, you can use a dependency to inject the correct template and model version based on the version header. Add a sidecar to validate responses against the schema before caching. This is a few hundred lines of code and a small increase in deployment complexity.</p>
-<p><strong>Do I need Dapr to version traffic?</strong></p>
-<p>No. You can implement traffic versioning directly in your API using feature flags or a simple weighted router. But Dapr 1.12 makes it trivial to route traffic between versions without changing your main codebase. If you’re already using Kubernetes, Dapr’s sidecar is a natural fit. If not, a simple A/B router in your API will work—just keep the old version active for rollback.</p>
-<p><strong>How do I handle model deprecations in production?</strong></p>
-<p>Pin your model version in your pipeline. When a model deprecation happens, deploy the new model version alongside the old one. Use a feature flag or traffic router to shift traffic gradually. Keep the old version active for at least 7 days to allow rollback. This prevents surprises and gives you time to debug the new model before cutting over fully.</p>
-<h2 id="actionable-next-step">Actionable next step</h2>
-<p>Open your fastest-growing AI feature’s codebase right now. Find where you hardcode the prompt, model version, or response schema. Then open <code>src/config.py</code> (or whatever your config file is named) and add a single line:</p>
-<pre><code class="language-python">AI_FEATURE_VERSION = os.getenv(&quot;AI_FEATURE_VERSION&quot;, &quot;1.0.0&quot;)
+<h2 id="worked-example-adding-versioning-to-an-existing-endpoint">Worked example: adding versioning to an existing endpoint</h2>
+<p>Suppose you have a FastAPI endpoint that calls a model and caches the result. The current code looks roughly like this:</p>
+<pre><code class="language-python">import hashlib
+import json
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class RouteRequest(BaseModel):
+    origin: str
+    destination: str
+
+def cache_key(payload: dict) -&gt; str:
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+
+@app.post(&quot;/route&quot;)
+def route(req: RouteRequest):
+    payload = {&quot;origin&quot;: req.origin, &quot;destination&quot;: req.destination}
+    key = cache_key(payload)
+    cached = redis.get(key)
+    if cached:
+        return json.loads(cached)
+    result = call_model(payload)
+    redis.set(key, json.dumps(result), ex=3600)
+    return result
 </code></pre>
-<p>Commit this change. Deploy it to staging. This single line is the first step toward a versioned contract. Do this in the next 30 minutes—before you write another line of AI feature code.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The failure modes are visible in the code. The cache key is derived from the request only, so a response shape change does not invalidate it — you serve stale-shaped data until the TTL expires. The model version is not recorded anywhere. There is no validation of the model's output before caching.</p>
+<p>A versioned version of the same endpoint:</p>
+<pre><code class="language-python">import hashlib
+import json
+import os
+from fastapi import FastAPI, Header, HTTPException
+from pydantic import BaseModel, ValidationError
+
+app = FastAPI()
+
+MODEL_VERSION = os.environ[&quot;MODEL_VERSION&quot;]  # pinned, e.g. &quot;2026-01-15&quot;
+SUPPORTED_VERSIONS = {&quot;1.2.0&quot;, &quot;1.3.0&quot;}
+
+class RouteRequest(BaseModel):
+    version: str
+    origin: str
+    destination: str
+
+class RouteResponse(BaseModel):
+    duration_minutes: int
+    distance_km: float
+    explanation: str
+
+def cache_key(version: str, payload: dict) -&gt; str:
+    material = {&quot;version&quot;: version, &quot;model&quot;: MODEL_VERSION, **payload}
+    return hashlib.sha256(
+        json.dumps(material, sort_keys=True).encode()
+    ).hexdigest()
+
+@app.post(&quot;/route&quot;, response_model=RouteResponse)
+def route(req: RouteRequest, x_request_id: str = Header(...)):
+    if req.version not in SUPPORTED_VERSIONS:
+        raise HTTPException(status_code=400, detail=&quot;unsupported version&quot;)
+    payload = {&quot;origin&quot;: req.origin, &quot;destination&quot;: req.destination}
+    key = cache_key(req.version, payload)
+    cached = redis.get(key)
+    if cached:
+        return json.loads(cached)
+    raw = call_model(payload, version=req.version, model=MODEL_VERSION)
+    try:
+        validated = RouteResponse(**raw)
+    except ValidationError as exc:
+        schema_validation_failures.inc()
+        raise HTTPException(status_code=502, detail=&quot;invalid model output&quot;) from exc
+    redis.set(key, validated.model_dump_json(), ex=3600)
+    return validated
+</code></pre>
+<p>The differences matter:</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
-<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
-<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+<li>The cache key includes the contract version and the pinned model version, so a model change or a schema change produces new keys instead of serving stale data.</li>
+<li>The model output is validated before it is cached, so a bad response cannot poison the cache.</li>
+<li>Validation failures are counted, which gives you the early-warning metric described above.</li>
+<li>Unsupported versions are rejected at the boundary, so you can retire old versions deliberately rather than accidentally.</li>
 </ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
-<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<p>The cost is a few dozen lines and one new environment variable. The benefit is that the next model change becomes a routing decision rather than an outage.</p>
+<h2 id="objections-and-responses">Objections and responses</h2>
+<p><strong>"Versioning adds too much complexity."</strong>
+The complexity does not disappear if you skip it; it moves from design time to on-call time. A versioned contract is more work upfront and far less work during an incident. The question is where you want to pay.</p>
+<p><strong>"Our model is stable; we do not need versions."</strong>
+Model stability is an assumption, not a guarantee. Providers deprecate parameters, change defaults, and adjust limits. Pinning a version and validating output turns a silent change into a visible one. The cost of a version identifier is trivial compared to the cost of an outage.</p>
+<p><strong>"Our team is small; we cannot afford this."</strong>
+Versioning does not require a platform team. A JSON Schema file, a version header, a pinned model identifier, and a validation call are within reach of a small team. The overhead is a few hundred lines and a small increase in deployment complexity. The alternative is spending days debugging cache invalidation or schema mismatches.</p>
+<p><strong>"Our users do not care about versions."</strong>
+They do not, and they should not have to. A versioned contract is an implementation detail whose user-visible benefit is reliability. The goal is for the AI feature to be unremarkable: it works, and nobody thinks about it.</p>
+<h2 id="what-to-do-first">What to do first</h2>
+<p>If you are starting a new AI feature, define the request contract in JSON Schema from day one and pin the version in a header. If you already have a feature in production, add the version to the cache key and validate the model output before caching. Both are small changes with a large effect on blast radius.</p>
+<h2 id="next-30-minutes">Next 30 minutes</h2>
+<p>Open the codebase for your highest-traffic AI feature and find where the model is called. Add a single line that records the pinned model version and includes it in the cache key:</p>
+<pre><code class="language-python">MODEL_VERSION = os.environ[&quot;MODEL_VERSION&quot;]  # pin this; do not default to &quot;latest&quot;
+</code></pre>
+<p>Then add <code>MODEL_VERSION</code> to your deployment configuration with an explicit value, and change the cache key to include it. Deploy to staging and confirm that a change to <code>MODEL_VERSION</code> produces a different cache key. That one change turns a silent model upgrade into a visible, reversible event.</p>
                 
                 
             </div>
@@ -447,14 +493,14 @@
                     
                     <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
                         <h3>Stop assuming payment APIs never fail</h3>
-                        <p>AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</p>
-                        <span class="related-meta">11 min read · 13 September 2026</span>
+                        <p>How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
+                        <span class="related-meta">12 min read · 13 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/idp-for-ai-2026-stack-evolution/">
                         <h3>IDP for AI: 2026 stack evolution</h3>
-                        <p>Move from script hell to self-healing AI feature platform in 2026 — Node 20, Redis 7.2, Lambda arm64, OpenSearch 2.11.</p>
-                        <span class="related-meta">12 min read · 2 September 2026</span>
+                        <p>How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.</p>
+                        <span class="related-meta">14 min read · 2 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">

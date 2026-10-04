@@ -341,16 +341,16 @@ jobs:
       # 3. improve_posts.py LLM rewrite of IMPROVE posts, validated; failures leave the original untouched
       # 4. post_enhancer    related-reading + official-docs links + honest AI-disclosure footer (run by 3)
       # Enable with workflow_dispatch inputs; both default to a small safe batch.
-      - name: 🧮 Triage corpus (report only)
+      - name: 🧮 Review all posts (report only)
         run: python triage.py --docs ./docs --out ./triage_report
 
-      - name: 🗑️ Delete DELETE-verdict posts + block their topics
+      - name: 🗑️ Delete flagged posts + block their topics (scans docs/)
         run: |
-          python delete_posts.py --docs ./docs --verdicts ./triage_report/verdicts.csv \
+          python delete_posts.py --docs ./docs \
             --max "${{ github.event.inputs.triage_max_deletions || '10' }}" \
             --backup-dir ./.triage_backups --confirm
 
-      - name: ✨ LLM-improve IMPROVE-verdict posts
+      - name: ✨ LLM-improve flagged posts (scans docs/)
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -364,18 +364,12 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ENTITY_VERIFY_ONLINE: "1"
         run: |
-          python triage.py --docs ./docs --out ./triage_report
-          python improve_posts.py --docs ./docs --verdicts ./triage_report/verdicts.csv \
+          python improve_posts.py --docs ./docs \
             --limit "${{ github.event.inputs.improve_limit || '5' }}" --verify-online --confirm || \
             echo "WARNING: improve_posts.py failed — continuing with the build"
 
-      # Idempotent, no LLM: replaces the false legacy footer on EVERY kept post, strips leftover invented
-      # claims, adds related-reading/official-docs links, repairs links to deleted posts.
-      - name: 🔗 Apply code-driven post improvements (all posts)
-        run: |
-          python triage.py --docs ./docs --out ./triage_report
-          python post_enhancer.py --docs ./docs --verdicts ./triage_report/verdicts.csv \
-            --backup ./.quality_review_backups --verify-links --confirm
+      - name: 🔗 Apply code-driven post improvements (scans docs/)
+        run: python post_enhancer.py --docs ./docs --backup ./.quality_review_backups --verify-links --confirm
 
       - name: 🔁 Rebuild site after automated fixes
         run: |

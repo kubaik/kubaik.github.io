@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI memory systems: context that survives sessions - Kubai Kevin</title>
-        <meta name="description" content="Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.">
+        <meta name="description" content="Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.">
         <meta name="keywords" content="AiAgentMemory, PersistentAiContext, Ai, Redis, Vectordb">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T17:15:04.501281">
-        <meta property="article:modified_time" content="2026-09-20T09:47:17.142134+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:35:26.598579+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI memory systems: context that survives sessions">
-        <meta property="og:description" content="Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.">
+        <meta property="og:description" content="Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.">
         <meta property="og:url" content="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI memory systems: context that survives sessions">
-        <meta name="twitter:description" content="Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.">
+        <meta name="twitter:description" content="Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-memory-systems-context-that-survives-sessions.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/#article",
       "headline": "AI memory systems: context that survives sessions",
-      "description": "Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.",
+      "description": "Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.",
       "datePublished": "2026-07-02T17:15:04+00:00",
-      "dateModified": "2026-09-20T09:47:17+00:00",
-      "wordCount": 3653,
-      "timeRequired": "PT18M",
+      "dateModified": "2026-10-04T10:35:26+00:00",
+      "wordCount": 2361,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI memory systems: context that survives sessions</h1>
                 
-                <p class="post-lead">Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.</p>
+                <p class="post-lead">Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.</p>
                 
                 
                 <div class="tags">
@@ -255,54 +255,50 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3653 words
+                        12 min read
+                        &nbsp;·&nbsp; 2361 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-20
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches memory systems, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h1 id="ai-memory-systems-context-that-survives-sessions">AI memory systems: context that survives sessions</h1>
-<p>The error and why it's confusing</p>
-<p>You boot up your AI agent, ask it a question, get a reasonable answer, then shut it down. Later, you ask the same agent the same question and get a completely different answer. No error is thrown. No log shows a failure. Just silent, inconsistent behavior that makes the agent feel flaky and unreliable.</p>
-<p>The agent started returning different answers for the same prompt within minutes, not days. We spent a week chasing non-existent bugs in the LLM layer before realizing the memory layer wasn’t persisting state correctly. The confusion comes from how we frame "memory" in AI systems. We expect persistence — like a database — but most tutorials treat memory as a temporary variable. When the agent restarts, the context is gone unless you explicitly save and restore it.</p>
-<p>The surface symptom is inconsistent responses, but the real problem is state loss across sessions. The agent isn’t broken; it’s just not saving its own brain when it shuts down. You’ll see this with agents using local files, Redis, or even cloud vector stores if the connection string changes or the session token expires. The worst part? It often works fine during development when the agent never truly restarts, so the bug only appears in production.</p>
-<p>This isn’t just a toy problem. In 2026, agents handle real user workflows — scheduling, compliance checks, data analysis — and users expect continuity. If your agent forgets the user’s name or their last action after a restart, they’ll stop trusting it. And once trust is broken, it’s hard to rebuild.</p>
-<p>What's actually causing it (the real reason, not the surface symptom)</p>
-<p>The root cause is almost always a mismatch between where you store memory and how you restore it. Most developers treat memory as a side effect of the current process. They save embeddings to a vector store but forget to tag or index the session. When the agent restarts, it queries the vector store without a session filter, so it pulls the most recent unrelated entries instead of the user’s specific history.</p>
-<p>Another common cause is session token expiration. If your agent uses short-lived tokens (like JWTs with 1-hour expiry) and you don’t refresh them on restart, the memory layer becomes inaccessible. I’ve seen this with agents connecting to Pinecone or Weaviate using ephemeral credentials. The agent starts, can’t authenticate, and silently fails to load memory — returning empty or stale context.</p>
-<p>Environment variables are another silent killer. Many teams store memory connection strings in env vars, which get reset when the container restarts or the pod scales. In Kubernetes, if you don’t use a ConfigMap or Secret volume, the agent starts with a blank slate. I once debugged a production agent for three days before realizing the Redis connection string was injected from a secret that got rotated during a rolling deploy — no error, just an empty cache.</p>
-<p>The worst offender is local file storage. If your agent saves memory to <code>/tmp/agent_memory.json</code> and you’re running in a container, <code>/tmp</code> is ephemeral. Restart the pod, and the file vanishes. This is why even simple demos fail in production — we assume <code>/tmp</code> is persistent, but it’s not.</p>
-<p>Finally, there’s the session identifier problem. If your memory layer doesn’t include a user or session ID in its queries, it returns the wrong user’s history. I’ve seen agents return Alice’s data when Bob restarted his session because the query didn’t filter by session ID. This is especially common with shared vector stores where multiple users’ data coexists.</p>
-<p>Fix 1 — the most common cause</p>
-<p>Symptom pattern: inconsistent responses after agent restart, no errors in logs.</p>
-<p>The most common cause is using a vector store without a session filter. The agent saves embeddings for user actions, but when it restarts, it queries the vector store without restricting to the current session. So it pulls the most recent unrelated embeddings instead of the user’s history.</p>
-<p>Here’s how to fix it. First, ensure every memory write includes a session ID. In Python with Weaviate, that looks like:</p>
+                <h2 id="the-symptom-identical-prompts-different-answers">The symptom: identical prompts, different answers</h2>
+<p>An agent answers a question sensibly, the process is restarted, and the same question now produces a different answer. No exception is raised, no error line appears in the logs, and the health check still reports healthy. The behavior looks like model flakiness, which is why debugging often starts in the wrong layer.</p>
+<p>The confusion comes from the word "memory." In most tutorials, memory is a variable in the current process: a list of messages appended to the prompt. That is working memory, and it disappears when the process exits. Persistence is a separate concern that requires explicit writes to storage, explicit reads on startup, and a stable key that connects the two.</p>
+<p>A typical failure mode is a system that writes memory correctly but reads it back without a scope. The write path stores entries tagged with a user or conversation, the read path queries the most recent entries regardless of owner, and after a restart the agent loads whatever is newest in the shared store. The result is not an error but a plausible-looking answer built from the wrong context.</p>
+<p>This failure is easy to miss in development because the process rarely restarts, the dataset is small, and a single user owns every entry. In production the same code runs across restarts, deploys, and multiple concurrent users, and the missing scope becomes visible.</p>
+<h2 id="root-cause-1-memory-written-without-a-session-scope">Root cause 1: memory written without a session scope</h2>
+<p>The most common defect is an unscoped memory store. The write includes a session identifier, but the read does not filter on it, so the query returns the most recent entries in the collection rather than the current session's entries.</p>
+<p>The fix is to make the session identifier a required part of both the write and the read. With a vector store that supports metadata filters, the write looks like this:</p>
 <pre><code class="language-python">import weaviate
-from datetime import datetime
+from datetime import datetime, timezone
 
 client = weaviate.Client(&quot;https://your-cluster.weaviate.network&quot;)
 
-# Create or update a memory entry with session context
 client.data_object.create(
     data_object={
         &quot;content&quot;: &quot;User asked about pricing&quot;,
-        &quot;session_id&quot;: &quot;user_123_session_456&quot;,
-        &quot;created_at&quot;: datetime.utcnow().isoformat()
+        &quot;session_id&quot;: &quot;user_123_conversation_456&quot;,
+        &quot;created_at&quot;: datetime.now(timezone.utc).isoformat(),
     },
     class_name=&quot;AgentMemory&quot;,
-    vector=[0.1, 0.2, ...]  # your embedding vector
+    vector=embedding,  # your embedding vector
 )
 </code></pre>
-<p>Then, when restoring memory, query with a session filter:</p>
+<p>The matching read must carry the same filter:</p>
 <pre><code class="language-python">response = client.graphql_raw_query(f&quot;&quot;&quot;
 {{
   Get {{
-    AgentMemory(where: {{ path: [&quot;session_id&quot;], operator: Equal, valueString: &quot;user_123_session_456&quot; }}) {{
+    AgentMemory(
+      where: {{
+        path: [&quot;session_id&quot;],
+        operator: Equal,
+        valueString: &quot;user_123_conversation_456&quot;
+      }}
+    ) {{
       content
       created_at
     }}
@@ -310,61 +306,50 @@ client.data_object.create(
 }}
 &quot;&quot;&quot;)
 </code></pre>
-<p>If you’re using Redis with RedisJSON, the pattern is similar. Store memory as JSON with a key prefix that includes the session ID:</p>
+<p>With a key-value store the same discipline applies through key naming. A key prefix that includes the session identifier makes the scope structural rather than optional:</p>
 <pre><code class="language-python">import redis
+
 r = redis.Redis(host=&quot;your-redis.internal&quot;, port=6379, decode_responses=True)
 
-# Save memory with session context
-r.json().set(&quot;agent:memory:user_123_session_456:action_789&quot;, &quot;.&quot;, {
-    &quot;content&quot;: &quot;User reviewed plan&quot;,
-    &quot;timestamp&quot;: &quot;2026-06-05T14:30:00Z&quot;
-})
+r.json().set(
+    &quot;agent:memory:user_123_conversation_456:action_789&quot;,
+    &quot;.&quot;,
+    {&quot;content&quot;: &quot;User reviewed plan&quot;, &quot;timestamp&quot;: &quot;2026-06-05T14:30:00Z&quot;},
+)
 
-# Restore memory by scanning keys with session prefix
-keys = r.keys(&quot;agent:memory:user_123_session_456:*&quot;)
+keys = r.keys(&quot;agent:memory:user_123_conversation_456:*&quot;)
 memory = [r.json().get(key) for key in keys]
 </code></pre>
-<p>The key insight is that your memory layer must be scoped to the session. Without that, the agent will pull the wrong data or none at all. I’ve seen teams save memory correctly but forget to filter on restore — resulting in agents that hallucinate based on other users’ data.</p>
-<p>Also, validate that your session ID is stable across restarts. If it changes every time the agent starts (like using a random UUID), your memory won’t accumulate. Use a deterministic session ID derived from user ID and a stable context (e.g., conversation ID).</p>
-<p>Fix 2 — the less obvious cause</p>
-<p>Symptom pattern: agent restarts and memory is empty, but no error is thrown; logs show successful connection.</p>
-<p>The less obvious cause is credential rotation or ephemeral access tokens. Many vector stores (Pinecone, Weaviate, Qdrant) use short-lived API keys. If your agent doesn’t refresh the token on restart, it can’t read or write memory. The connection succeeds (because the token is valid at start time), but after a few minutes, it fails silently.</p>
-<p>In Kubernetes, this often happens when secrets are mounted but not updated. The pod starts with the old token, which expires, and the agent never retries with a fresh token. I’ve seen this in production with Pinecone API keys that rotate every 24 hours. The agent would work for a few hours, then start returning empty memory — no errors, just empty responses.</p>
-<p>To fix this, use a token refresh mechanism. In Python with Pinecone, you can use a retry decorator with token refresh:</p>
-<pre><code class="language-python">import pinecone
-from functools import wraps
+<p>Two details matter here. First, <code>KEYS</code> performs a full scan and blocks the server on large keyspaces; in production use <code>SCAN</code> with a cursor or maintain an index set per session. Second, the session identifier must be stable. A random UUID generated at process start produces a new scope on every restart, so memory never accumulates. Derive the identifier from something durable, such as <code>user_id</code> plus a conversation identifier that outlives the process.</p>
+<p>A useful design rule: the storage layer should have no API that reads memory without a session argument. If the interface makes an unscoped read impossible to express, the bug class disappears.</p>
+<h2 id="root-cause-2-credentials-that-expire-while-the-process-runs">Root cause 2: credentials that expire while the process runs</h2>
+<p>A second failure mode produces empty memory rather than wrong memory. The agent connects successfully at startup, writes and reads for a while, and then silently stops seeing its own entries. Logs show a successful connection because the connection was successful — at the time it was made.</p>
+<p>The cause is a credential that expires mid-run: a short-lived API key, a rotating secret, or temporary cloud credentials issued to a role. The client library holds the old credential, the storage layer rejects requests, and depending on the client, the rejection surfaces as an empty result rather than an exception.</p>
+<p>The fix has two parts. First, wrap storage calls so that authentication failures trigger a credential refresh and a bounded retry:</p>
+<pre><code class="language-python">import os
 import time
+from functools import wraps
 
-def refresh_token_on_failure(func):
+def refresh_on_auth_failure(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        max_retries = 3
-        for i in range(max_retries):
+        for attempt in range(3):
             try:
                 return func(*args, **kwargs)
-            except pinecone.ApiError as e:
-                if &quot;invalid API key&quot; in str(e):
-                    # Refresh token and retry
-                    pinecone.init(api_key=os.getenv(&quot;PINECONE_API_KEY_NEW&quot;), environment=&quot;us-west1-gcp&quot;)
-                    time.sleep(1)
-                else:
+            except AuthError as exc:  # your client's auth exception type
+                if attempt == 2:
                     raise
-        raise Exception(&quot;Failed after token refresh attempts&quot;)
+                reinit_client(os.environ[&quot;MEMORY_API_KEY&quot;])
+                time.sleep(2 ** attempt)
+        raise RuntimeError(&quot;unreachable&quot;)
     return wrapper
-
-@refresh_token_on_failure
-def save_memory(session_id, content):
-    index = pinecone.Index(&quot;agent-memory&quot;)
-    index.upsert([(session_id, content, {&quot;timestamp&quot;: time.time()})])
 </code></pre>
-<p>Alternatively, use a sidecar that refreshes the token and exposes it via a local endpoint. The agent calls <code>http://localhost:8080/token</code> to get a fresh key, avoiding the need for the agent to handle token logic.</p>
-<p>Another variant is using IAM roles with short-lived credentials. In AWS, if your Lambda or ECS task uses an IAM role with a 1-hour session, the vector store client must refresh the credentials before expiry. If not, the connection silently fails.</p>
-<p>The subtle failure mode is that the first few requests succeed (because the token is fresh), so the agent doesn’t detect the problem until hours later. By then, users have experienced inconsistent behavior. The fix is to make credential refresh part of your agent’s startup and maintainence loop, not just a one-time setup.</p>
-<p>Fix 3 — the environment-specific cause</p>
-<p>Symptom pattern: memory works in dev but fails in staging/production; no logs show errors; agent restarts cause data loss.</p>
-<p>The environment-specific cause is usually ephemeral storage or misconfigured volumes. In Kubernetes, <code>/tmp</code> is not persistent. If your agent saves memory to a local file in <code>/tmp/agent_memory.json</code>, it vanishes on pod restart. Similarly, in serverless (AWS Lambda, Google Cloud Functions), the <code>/tmp</code> directory is cleared between invocations.</p>
-<p>The issue was that the StatefulSet used an emptyDir volume for <code>/tmp</code>, but the agent wrote to <code>/app/tmp</code> — which was ephemeral. The pod logs showed no errors because the file system behaved as expected — just not persistently.</p>
-<p>To fix this, use a persistent volume claim (PVC) for memory storage. In Kubernetes, that looks like:</p>
+<p>Second, make credential refresh part of the process lifecycle rather than a one-time setup step. A common pattern is a sidecar that refreshes the credential and exposes it on a local endpoint, so the agent fetches a fresh value instead of holding a long-lived one. On managed cloud platforms, prefer workload identity or instance roles over static keys, since the platform refreshes those credentials for you.</p>
+<p>The diagnostic signature to watch for is a time-correlated failure: memory works for the first minutes or hours after deploy and then degrades. Instrument the age of the credential used on each storage call and alert when it approaches its expiry.</p>
+<h2 id="root-cause-3-storage-that-is-not-actually-persistent">Root cause 3: storage that is not actually persistent</h2>
+<p>A third failure mode is storage that behaves like persistence in development and like a scratchpad in production. Container filesystems are ephemeral, and <code>/tmp</code> is cleared between serverless invocations. An agent that writes memory to <code>/tmp/agent_memory.json</code> appears to work until the first restart.</p>
+<p>The same trap appears in Kubernetes when a volume is mounted at one path and the application writes to another. A pod spec that mounts an <code>emptyDir</code> at <code>/tmp</code> while the agent writes to <code>/app/tmp</code> will lose data on restart with no error, because both paths behave exactly as configured — one of them is simply ephemeral.</p>
+<p>For a single-writer agent, a persistent volume claim mounted at the application's data path is sufficient:</p>
 <pre><code class="language-yaml">apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -378,263 +363,172 @@ spec:
   template:
     spec:
       containers:
-      - name: agent
-        image: your-ai-agent:2026.06
-        volumeMounts:
-        - name: memory-volume
-          mountPath: /app/persistent-memory
+        - name: agent
+          image: your-ai-agent:latest
+          volumeMounts:
+            - name: memory-volume
+              mountPath: /app/persistent-memory
       volumes:
-      - name: memory-volume
-        persistentVolumeClaim:
-          claimName: agent-memory-pvc
+        - name: memory-volume
+          persistentVolumeClaim:
+            claimName: agent-memory-pvc
 </code></pre>
-<p>Then, have your agent save memory to <code>/app/persistent-memory/agent_memory.json</code> instead of <code>/tmp</code>.</p>
-<p>For serverless, use a managed storage service. In AWS Lambda, use Amazon EFS or S3. For memory that needs fast access, use EFS with a Redis container running in the same VPC. For slower but durable storage, use S3 with versioning enabled.</p>
-<p>Another environment-specific trap is using environment variables for connection strings that get reset on restart. In Kubernetes, if you inject a Redis connection string via an env var from a Secret, but the Secret is updated (e.g., password rotation), the pod doesn’t automatically restart. The agent continues to use the old (now invalid) connection string.</p>
-<p>To avoid this, use a sidecar that watches the Secret and restarts the agent pod when it changes. Or, use a ConfigMap that’s updated via a rolling restart policy.</p>
-<p>The fix is to treat memory storage as a first-class persistent resource, not an afterthought. If your agent’s memory doesn’t survive a pod restart in staging, it won’t survive a node failure in production.</p>
-<p>How to verify the fix worked</p>
-<p>After applying any of the fixes, you need to verify that memory persists across restarts. The best way is to automate this in your CI/CD pipeline. Here’s a script that simulates an agent restart and checks for memory consistency:</p>
+<p>The agent must be configured to write to <code>/app/persistent-memory</code>, not <code>/tmp</code>. For serverless runtimes, use a managed storage service instead of the local filesystem, and choose based on access pattern: object storage for durable archives, a network filesystem or managed cache for low-latency reads.</p>
+<p>A related trap is configuration injected as an environment variable. Environment variables are read once at process start. If a secret is rotated and the pod is not restarted, the process keeps using the old value indefinitely. Either watch the secret and trigger a rollout on change, or have the process read the current value from a mounted volume or a local endpoint on each connection attempt.</p>
+<h2 id="a-worked-example-tracing-a-silent-memory-loss">A worked example: tracing a silent memory loss</h2>
+<p>Consider an agent that stores conversation summaries in a vector collection. The write path is:</p>
+<pre><code class="language-python">def save_summary(session_id, summary, embedding):
+    client.data_object.create(
+        data_object={
+            &quot;content&quot;: summary,
+            &quot;session_id&quot;: session_id,
+            &quot;created_at&quot;: datetime.now(timezone.utc).isoformat(),
+        },
+        class_name=&quot;AgentMemory&quot;,
+        vector=embedding,
+    )
+</code></pre>
+<p>The read path, written early in development, is:</p>
+<pre><code class="language-python">def load_recent(limit=10):
+    return client.query.get(&quot;AgentMemory&quot;, [&quot;content&quot;]).with_limit(limit).do()
+</code></pre>
+<p>Now trace what happens. During development, one user, one session, no restarts: <code>load_recent</code> returns that user's entries and everything looks correct. In production, three things change. Multiple users write to the same collection. The process restarts on every deploy. And the collection accumulates entries from all sessions.</p>
+<p>After a restart, <code>load_recent</code> returns the ten most recent entries across all users. If another user was active more recently, the agent loads that user's context. The answer it produces is fluent and wrong. Nothing in the logs indicates a problem, because every call succeeded.</p>
+<p>The fix is not to add a filter at the call site but to remove the unscoped function entirely:</p>
+<pre><code class="language-python">def load_recent(session_id, limit=10):
+    return (
+        client.query.get(&quot;AgentMemory&quot;, [&quot;content&quot;])
+        .with_where({
+            &quot;path&quot;: [&quot;session_id&quot;],
+            &quot;operator&quot;: &quot;Equal&quot;,
+            &quot;valueString&quot;: session_id,
+        })
+        .with_limit(limit)
+        .do()
+    )
+</code></pre>
+<p>The reasoning generalizes: when a defect is caused by a missing constraint, the durable fix is to make the constraint unrepresentable to omit. Deleting the unscoped function is stronger than remembering to filter at each call site.</p>
+<h2 id="how-to-measure-whether-memory-actually-persists">How to measure whether memory actually persists</h2>
+<p>Verification should be automated, not manual. The core test is a restart cycle with a unique marker.</p>
 <pre><code class="language-python">import subprocess
 import time
+import uuid
 import requests
 
 def start_agent():
-    # Simulate starting the agent process
     return subprocess.Popen(
         [&quot;python&quot;, &quot;agent.py&quot;],
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.PIPE,
     )
 
 def test_memory_persistence():
-    # Start agent
+    marker = f&quot;marker-{uuid.uuid4()}&quot;
+    session_id = &quot;test-session-fixed&quot;
+
     proc = start_agent()
-    time.sleep(5)  # let it initialize
+    time.sleep(5)
 
-    # Ask a question that should be remembered
-    response1 = requests.post(
-        &quot;http://localhost:8000/ask&quot;,
-        json={&quot;question&quot;: &quot;What did I ask about earlier?&quot;}
+    requests.post(
+        &quot;http://localhost:8000/remember&quot;,
+        json={&quot;session_id&quot;: session_id, &quot;content&quot;: marker},
+        timeout=10,
     )
-    print(&quot;First response:&quot;, response1.json())
 
-    # Kill and restart
     proc.kill()
     proc.wait()
     time.sleep(2)
 
-    # Restart agent
     proc = start_agent()
     time.sleep(5)
 
-    # Ask the same question
-    response2 = requests.post(
-        &quot;http://localhost:8000/ask&quot;,
-        json={&quot;question&quot;: &quot;What did I ask about earlier?&quot;}
+    response = requests.post(
+        &quot;http://localhost:8000/recall&quot;,
+        json={&quot;session_id&quot;: session_id},
+        timeout=10,
     )
-    print(&quot;Second response:&quot;, response2.json())
 
-    # Verify memory persisted
-    assert response1.json()[&quot;answer&quot;] == response2.json()[&quot;answer&quot;], &quot;Memory did not persist!&quot;
-    print(&quot;✅ Memory persisted across restart&quot;)
+    assert marker in response.text, &quot;memory did not survive restart&quot;
+    proc.kill()
 
 test_memory_persistence()
 </code></pre>
-<p>This script runs in CI and fails the build if memory doesn’t persist. It’s simple but catches most regression bugs.</p>
-<p>You can also use a synthetic test in production. Run a background job every 5 minutes that:
-1. Stores a unique memory entry (e.g., current timestamp + random string)
-2. Waits 10 minutes
-3. Restarts the agent
-4. Checks if the memory entry is still retrievable</p>
-<p>If the entry is missing, the test fails and pages your on-call engineer. This catches credential rotation and storage failures that logs won’t show.</p>
-<p>Another verification step is to check the actual storage layer. For Redis, run:</p>
-<pre><code class="language-bash">redis-cli --scan --pattern &quot;agent:memory:*&quot; | wc -l
+<p>Use a unique marker per run so a passing test cannot be explained by stale data. Run this in CI against a real storage backend, not an in-memory fake, since the fake is exactly what hides the bug.</p>
+<p>For production, a synthetic canary extends the same idea. Periodically write a marker under a dedicated session, wait longer than the credential lifetime, and read it back. If the read fails while the write succeeded, the storage layer or credential path is at fault. This catches expiry and rotation failures that application logs do not surface.</p>
+<p>To inspect the storage layer directly, count entries scoped to a session before and after a restart:</p>
+<pre><code class="language-bash">redis-cli --scan --pattern &quot;agent:memory:user_123_conversation_456:*&quot; | wc -l
 </code></pre>
-<p>If the count decreases after a restart, your memory isn’t persisting. For vector stores, query the count of entries with your session ID before and after restart. A drop means the filter or connection failed.</p>
-<p>Finally, monitor the agent’s response consistency. Use a canary deployment that compares responses from agents that have and haven’t restarted. Log the rate of inconsistent answers. If it’s &gt;0%, your memory layer is broken.</p>
-<p>How to prevent this from happening again</p>
-<p>Prevention starts at design time. Treat memory as a stateful resource, not a stateless variable. That means:</p>
-<ul>
-<li>Define a clear memory interface: save(session_id, content), load(session_id) → List[content]</li>
-<li>Enforce session scoping in your storage layer — no global queries without a session filter</li>
-<li>Use deterministic session IDs (e.g., user_id + conversation_id + hash(timestamp))</li>
-<li>Store connection strings in secrets, not environment variables that get reset</li>
-<li>Run a memory persistence test in CI/CD that fails the build if memory is lost</li>
-</ul>
-<p>I once built an agent that passed all unit tests but failed in staging because the memory layer assumed <code>/tmp</code> was persistent. The fix required rewriting the storage layer to use a PVC. The lesson: test persistence the same way you test correctness.</p>
-<p>A practical prevention step is to add a startup health check that verifies memory can be saved and loaded. In Python with FastAPI, that looks like:</p>
-<pre><code class="language-python">from fastapi import FastAPI, HTTPException
-import os
-import uuid
-
-app = FastAPI()
-
-@app.on_event(&quot;startup&quot;)
-async def verify_memory_persistence():
-    session_id = f&quot;test_session_{uuid.uuid4()}&quot;
-    test_content = &quot;This is a persistence test&quot;
-
-    # Save test memory
-    save_memory(session_id, test_content)
-
-    # Wait 2 seconds
-    import time
-    time.sleep(2)
-
-    # Simulate restart by reinitializing the memory client
-    # (In real code, this would happen on pod restart)
-    memory_client = get_memory_client()
-
-    # Load test memory
-    loaded = load_memory(session_id)
-
-    if test_content not in loaded:
-        raise HTTPException(
-            status_code=500,
-            detail=&quot;Memory persistence check failed — storage is not persistent&quot;
-        )
-</code></pre>
-<p>If this check fails, the agent won’t start, preventing production failures.</p>
-<p>Another prevention step is to use infrastructure-as-code to enforce persistence. In Terraform for AWS ECS, ensure your task definition mounts an EFS volume for memory:</p>
-<pre><code class="language-hcl">resource &quot;aws_ecs_task_definition&quot; &quot;ai_agent&quot; {
-  family                   = &quot;ai-agent&quot;
-  network_mode             = &quot;awsvpc&quot;
-  requires_compatibilities = [&quot;FARGATE&quot;]
-  cpu                      = 1024
-  memory                   = 2048
-
-  volume {
-    name = &quot;memory-volume&quot;
-    efs_volume_configuration {
-      file_system_id = aws_efs_file_system.agent_memory.id
-      root_directory = &quot;/&quot;
-    }
-  }
-
-  container_definitions = jsonencode([{
-    name      = &quot;agent&quot;
-    image     = &quot;your-ai-agent:2026.06&quot;
-    mountPoints = [
-      {
-        sourceVolume  = &quot;memory-volume&quot;
-        containerPath = &quot;/app/persistent-memory&quot;
-      }
-    ]
-  }])
-}
-</code></pre>
-<p>Without this, your task will lose memory on every restart.</p>
-<p>Finally, document your memory layer’s assumptions. Write a short README in your repo that answers:
-- Where is memory stored? (Redis, EFS, S3, etc.)
-- What’s the session ID format? - How long do credentials last? - What happens if storage fails?</p>
-<p>This prevents future engineers from assuming <code>/tmp</code> is safe or that Redis is always available.</p>
-<p>Related errors you might hit next</p>
-<p>After fixing the core memory persistence bug, you may encounter these related issues:</p>
+<p>A decreasing count after restart means the data is not durable. A stable count with failing reads means the scope or credential is wrong. Separating those two cases is the fastest way to localize the fault.</p>
+<h2 id="choosing-a-storage-layer">Choosing a storage layer</h2>
 <table>
 <thead>
 <tr>
-<th>Error</th>
-<th>Symptom</th>
-<th>Likely Cause</th>
-<th>Fix</th>
+<th>Option</th>
+<th>Access pattern</th>
+<th>Persistence caveat</th>
+<th>Operational cost</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>InvalidSessionError: Session ID not found</code></td>
-<td>Agent restarts and claims no memory exists</td>
-<td>Session ID changed between restarts (e.g., using random UUID)</td>
-<td>Use deterministic session ID derived from user context</td>
+<td>Managed vector store</td>
+<td>Semantic search across sessions</td>
+<td>Metadata filters must be indexed; auth tokens may expire</td>
+<td>Managed, per-query pricing</td>
 </tr>
 <tr>
-<td><code>PineconeClientError: API key expired</code></td>
-<td>Memory operations fail silently after hours</td>
-<td>Short-lived API key without refresh</td>
-<td>Implement token refresh or use long-lived IAM roles</td>
+<td>Key-value store with JSON support</td>
+<td>Low-latency per-session reads and writes</td>
+<td>In-memory by default; requires persistence configuration</td>
+<td>Self-managed or managed</td>
 </tr>
 <tr>
-<td><code>RedisConnectionError: Connection refused</code></td>
-<td>Memory layer fails to initialize</td>
-<td>Redis pod restarted or network policy blocking</td>
-<td>Add health checks and retry logic, ensure network policies allow traffic</td>
+<td>Relational database</td>
+<td>Structured queries, transactional writes</td>
+<td>Requires schema and connection management</td>
+<td>Well-understood, widely supported</td>
 </tr>
 <tr>
-<td><code>WeaviateTimeoutError: 30s timeout exceeded</code></td>
-<td>Slow queries return empty</td>
-<td>Vector index not optimized for session queries</td>
-<td>Add composite index on session_id + timestamp, or use filter caching</td>
-</tr>
-<tr>
-<td><code>MemoryTooLargeError: Entry exceeds 1MB</code></td>
-<td>Save operations fail</td>
-<td>Embedding vector too large or metadata too verbose</td>
-<td>Compress embeddings, truncate metadata, or use chunking</td>
+<td>Local files</td>
+<td>Prototyping only</td>
+<td>Ephemeral in containers and serverless</td>
+<td>Lowest until it fails</td>
 </tr>
 </tbody>
 </table>
-<p>The most common next error is <code>InvalidSessionError</code>. This happens when your session ID isn’t stable. For example, if you generate a new UUID every time the agent starts, the memory layer can’t associate new writes with old reads. The fix is to derive the session ID from a stable context: user ID + conversation ID + a hash of the agent’s configuration. That way, restarts don’t break continuity.</p>
-<p>Another trap is query timeouts. If your vector store query takes 30 seconds and your agent has a 25-second timeout, it will fail silently. The error is rare in dev because the dataset is small, but catastrophic in production. Add a timeout to your query client and log slow queries. In Python with Weaviate:</p>
-<pre><code class="language-python">from weaviate import Client
-from weaviate.util import generate_uuid5
-
-client = Client(
-    url=&quot;https://your-cluster.weaviate.network&quot;,
-    timeout_config=(5, 15)  # connect timeout, read timeout in seconds
-)
-</code></pre>
-<p>Without this, you’ll get timeouts in production that look like memory corruption.</p>
-<p>The last trap is memory growth. If your agent saves every user interaction as a separate embedding, the vector store will bloat. In Pinecone, after 10k entries, queries slow down. The fix is to chunk interactions (e.g., save only every 5th message) or use a rolling window (e.g., keep only the last 100 interactions per session).</p>
-<p>When none of these work: escalation path</p>
-<p>If you’ve applied all three fixes and memory still doesn’t persist, escalate systematically:</p>
-<ol>
-<li>
-<p><strong>Check the storage layer directly.</strong> Use the CLI or SDK to query memory before and after a restart. If the data is there but the agent doesn’t see it, the bug is in the agent’s restore logic. If the data is gone, the bug is in the storage or connection layer.</p>
-</li>
-<li>
-<p><strong>Verify credentials and network.</strong> Ensure the agent’s IAM role or API key has the correct permissions. Use <code>aws sts get-caller-identity</code> (AWS) or <code>gcloud auth list</code> (GCP) to confirm the identity. Check VPC routes and security groups if using private endpoints.</p>
-</li>
-<li>
-<p><strong>Inspect pod events.</strong> In Kubernetes, run <code>kubectl describe pod &lt;pod-name&gt;</code> and look for events like <code>FailedMount</code> or <code>Evicted</code>. These indicate storage or resource issues.</p>
-</li>
-<li>
-<p><strong>Test with a minimal agent.</strong> Strip your agent down to just memory save/load. If it works, the bug is in your agent’s logic. If not, the bug is in the environment.</p>
-</li>
-<li>
-<p><strong>Check for race conditions.</strong> If your agent restarts while a memory write is in flight, the write may be lost. Add a lock or use atomic operations (e.g., Redis transactions).</p>
-</li>
-<li>
-<p><strong>Review storage quotas.</strong> If your vector store has a size limit (e.g., Pinecone’s 100k vectors), and you’re approaching it, queries may fail silently. Check usage metrics.</p>
-</li>
-</ol>
-<p>If all else fails, escalate to your platform team with:
-- The exact session ID you tested with
-- The time of the restart
-- The storage layer’s API logs
-- The agent’s logs (with debug enabled)</p>
-<p>Most teams hit one of these walls when moving from demo to production. The key is to isolate whether the bug is in the agent, the storage, or the environment — then fix the root cause, not the symptom.</p>
-<p>Frequently Asked Questions</p>
-<p><strong>Why does my AI agent forget everything after a restart even though I'm using Redis?</strong></p>
-<p>Most teams assume Redis is persistent by default, but it’s not. Redis is in-memory by default, and data is lost on restart unless you enable persistence. You need to configure Redis to save to disk using <code>save</code> in redis.conf or use Redis Enterprise with persistence enabled. Also, check that your Redis client is connecting to the persistent instance — sometimes a typo in the hostname points to a test Redis that’s ephemeral. Finally, ensure your session keys include a stable session ID; if you use random strings, the agent won’t find its own memory.</p>
-<p><strong>What's the best way to store AI agent memory in 2026 — vector DB, Redis, or files?</strong></p>
-<p>Use a vector DB if you need semantic search across sessions (e.g., “find all users who asked about pricing last month”). Use Redis if you need low-latency key-value access per session (e.g., “what was the last action for user 123?”). Avoid files unless you’re prototyping — they’re slow, not atomic, and require manual locking. In 2026, managed vector DBs (Pinecone, Weaviate, Milvus) and Redis 7.2 with RedisJSON are the most robust choices. I’ve seen teams try to use SQLite for memory and hit performance walls when scaling to 10k+ entries; it’s fine for demos but not production.</p>
-<p><strong>How do I handle session IDs when users log in and out?</strong></p>
-<p>Use a conversation ID that persists across logins. For example, generate a UUID when the user starts a new conversation. Store that UUID in your auth token (JWT) as <code>conversation_id</code>. When the user logs out, don’t clear the conversation — it’s still valid for future logins. This way, memory persists across sessions even if the user logs out and back in. If you use a new conversation ID on every login, your agent will lose history. I once built a system that reset conversation IDs on login, so returning users got blank slates — a UX disaster that took a month to fix.</p>
-<p><strong>What’s the smallest change I can make to fix memory loss right now?</strong></p>
-<p>Change your session ID to be deterministic. Instead of generating a new UUID every time the agent starts, use <code>f"{user_id}_{conversation_id}"</code>. Then, ensure every memory write includes this session ID as a filter. In Redis, that means your key becomes <code>agent:memory:{user_id}_{conversation_id}:{action_id}</code>. This single change will make memory persist across restarts if your storage layer is correct. If you’re using a vector store, add the session ID as a metadata field and filter on it. No new services, no config changes — just fix the session scoping.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The choice follows the query pattern, not popularity. Semantic retrieval across sessions needs a vector index with a filtered search path. Session-scoped key-value access is served well by a cache with persistence enabled. Structured history with joins and transactions belongs in a relational database. Local files are acceptable only where the filesystem is known to be durable and single-writer.</p>
+<p>One sizing note worth stating explicitly: any store that answers queries by scanning an ever-growing collection will slow down as the collection grows. Retention policy is part of the design. Keep a bounded window per session, or summarize older entries into a compact record, rather than appending indefinitely.</p>
+<h2 id="prevention-checklist">Prevention checklist</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
-<li><a href="https://kubaik.github.io/ai-glue-code-3-ways-to-avoid-duct-taping-models/">AI glue code: 3 ways to avoid duct-taping models</a></li>
-<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
+<li>Define a memory interface with no unscoped reads: <code>save(session_id, content)</code> and <code>load(session_id)</code>.</li>
+<li>Derive session identifiers from durable context, never from a process-local random value.</li>
+<li>Store credentials in a form that refreshes, and instrument credential age on each storage call.</li>
+<li>Mount persistent storage at the exact path the application writes to, and verify the path in a staging restart test.</li>
+<li>Run a restart persistence test in CI against real storage.</li>
+<li>Run a production canary that writes a marker, waits past the credential lifetime, and reads it back.</li>
+<li>Set a retention window per session so the store does not grow without bound.</li>
+<li>Document where memory lives, how long credentials last, and what happens when storage is unavailable.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="escalation-path-when-memory-still-does-not-persist">Escalation path when memory still does not persist</h2>
+<ol>
+<li>Query the storage layer directly, outside the agent, before and after a restart. This separates "data is gone" from "agent cannot see data."</li>
+<li>Confirm the identity in use. On AWS, <code>aws sts get-caller-identity</code>; on GCP, <code>gcloud auth list</code>. Verify the identity has read and write permissions on the specific resource.</li>
+<li>Inspect pod events with <code>kubectl describe pod &lt;pod-name&gt;</code> for <code>FailedMount</code> or <code>Evicted</code>, which point at storage or resource problems rather than application logic.</li>
+<li>Reduce the agent to a minimal save/load program. If the minimal version persists, the fault is in agent logic; if not, it is in the environment.</li>
+<li>Check for in-flight writes lost during restart. A write that has not been acknowledged before the process exits is lost unless the client uses atomic or transactional operations.</li>
+<li>Check storage quotas and collection limits. A store at its size limit can reject writes while returning empty reads.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does an agent lose memory after restart even when a cache like Redis is in use?</strong></p>
+<p>Redis is in-memory by default. Data survives a client restart but not a server restart unless persistence is configured. Verify that persistence is enabled on the instance the client actually connects to, and confirm the session keys are stable across restarts.</p>
+<p><strong>How should session identifiers behave when users log in and out?</strong></p>
+<p>Tie memory to a conversation identifier that outlives the login session. Store that identifier in the authentication token and reuse it on subsequent logins. Generating a new identifier per login resets the agent's history for a returning user.</p>
+<p><strong>What is the smallest change that fixes most memory loss?</strong></p>
+<p>Make the session identifier deterministic and make it required on every read. Replace process-local random identifiers with a value derived from user and conversation context, and remove any storage function that can read without a session scope.</p>
+<p><strong>Does memory need to be summarized or can it grow indefinitely?</strong></p>
+<p>Unbounded growth degrades query latency and increases cost. Apply a retention window per session, or periodically summarize older entries into a compact record, so the active set stays bounded.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Open the module that reads memory in your agent and search for any query that does not take a session identifier. If one exists, add the identifier to the function signature, add the filter to the query, and delete the unscoped version so it cannot be called again. Then write a single test that saves a unique marker under a fixed session, restarts the process, and asserts the marker is still readable. That test is the difference between memory that works in a demo and memory that survives a deploy.</p>
                 
                 
             </div>
@@ -663,8 +557,8 @@ client = Client(
                     
                     <a class="related-card" href="/idp-for-ai-2026-stack-evolution/">
                         <h3>IDP for AI: 2026 stack evolution</h3>
-                        <p>Move from script hell to self-healing AI feature platform in 2026 — Node 20, Redis 7.2, Lambda arm64, OpenSearch 2.11.</p>
-                        <span class="related-meta">12 min read · 2 September 2026</span>
+                        <p>How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.</p>
+                        <span class="related-meta">14 min read · 2 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
@@ -675,8 +569,8 @@ client = Client(
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
-                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

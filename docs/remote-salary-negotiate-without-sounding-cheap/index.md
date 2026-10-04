@@ -1,82 +1,49 @@
 # Remote salary: negotiate without sounding cheap
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+Most negotiation advice stops at "know your worth." That is not an instruction a developer can act on. What actually moves a remote rate conversation is a small set of documents that answer the client's real questions before they are asked: what does this person cost in my currency, what does the timezone gap cost me in hours, and what happens when something breaks at 2 AM their time.
 
-## Why I wrote this (the problem I kept hitting)
+This article describes how to build that packet, how to keep it consistent, and how to use it in writing so numbers do not get mangled across Slack threads.
 
-Three years ago I took my first US remote contract. The offer was $3,800 a month. I immediately countered with $6,200. The client came back at $5,400. I accepted, only to realise later that the same role was paying a US-based contractor $11,000 for half the hours. Not because of skills—timezones and payment processors made them worry about latency and support. I had priced myself out of the budget but under the market. 
+## The problem: the client cannot map your number to their budget
 
-I spent the next six months reverse-engineering how contractors in Colombia, Mexico, and Brazil negotiate with US and European companies. The pattern wasn’t technical skill. It was knowing which numbers to show, which to hide, and how to package yourself so the client sees value, not cost. This post is what I wish I had on day one.
+A typical failure mode looks like this. A contractor quotes a monthly figure in USD. The client's finance owner needs to map that figure to a budget line, a headcount plan, and a currency. If the contractor cannot supply the mapping, the conversation stalls. It is rarely a rejection of the person; it is a rejection of an unanswerable question.
 
-Most guides give generic advice: “know your worth,” “highlight your timezone,” or “show experience.” That’s not enough. You need a data packet you can drop into a Slack thread or a proposal PDF that answers three questions before the client asks them:
+Three questions usually go unanswered:
 
-1. Why you cost what you do
-2. What the client actually pays in their currency and time zone
-3. What happens if something breaks at 2 AM your time
+1. Why does this rate correspond to this scope?
+2. What does the client actually pay, in their currency and their time zone?
+3. What is the plan when something breaks during the contractor's night?
 
-Skip any of these and the conversation stalls. I’ve seen deals collapse because a client couldn’t map “$6,200 / month” to their internal budget sheet. Others fell apart when the contractor didn’t show the hidden cost of timezone gaps—extra calls, async delays, weekend standbys.
+A negotiation packet is three artifacts that answer those questions:
 
-In this guide you’ll learn how to build that data packet, negotiate in writing so nothing gets lost in translation, and price yourself so the final number feels like a win to both sides. I’ll walk through the exact spreadsheets, scripts, and email templates I used to move from $3,800 to $7,800 for the same scope, without changing the code I deliver.
+- A **cost sheet** that converts a target salary into the client's currency at two exchange rates (spot and a worse case).
+- A **time sheet** that quantifies the timezone gap in hours and, separately, in money.
+- A **risk sheet** that lists the scenarios that worry the client and what mitigates each one.
 
-I once lost a $9,000 deal because I quoted in COP instead of USD in the first email. The client assumed I was asking for pesos and never looked back. Never repeat that mistake.
+The rest of this article builds each one, then shows a worked negotiation example with all arithmetic shown.
 
-## Prerequisites and what you'll build
+## Prerequisites
 
-To follow along you need:
+- A public code host profile with at least a few repositories that build and run.
+- A payment account that accepts USD, EUR, or GBP.
+- A spreadsheet application, or just Python if you prefer to generate CSV.
+- A quiet hour to collect real numbers.
+- Willingness to write down your own cost of living and tax assumptions, because the packet only works if the inputs are honest.
 
-- A GitHub or GitLab profile with at least 3 public repos that compile and run
-- A PayPal, Wise, or Revolut account that accepts USD, EUR, or GBP (2026 versions)
-- A simple spreadsheet app (Google Sheets or Excel 365 2026)
-- A quiet afternoon to collect data
-- A willingness to show your salary history and cost of living
+The scripts below use Python 3.11 and only the standard library. Nothing needs to be installed.
 
-What you will build is a negotiation packet—three artifacts you can attach to any remote offer:
+## Step 1 — the cost sheet
 
-1. A **cost sheet** that converts your desired salary into the client’s currency at two exchange rates (spot and worst-case)
-2. A **time-sheet** that quantifies the hidden cost of timezone gaps in hours and dollars
-3. A **risk sheet** that lists the scenarios that keep the client up at night and how you mitigate them
-
-Together these three sheets answer the client’s real question: “Why should I pay more for you than the guy in the Philippines?” You prove that you’re not a cost center but a risk mitigator and a productivity multiplier.
-
-Throughout the post I’ll use concrete numbers from a real negotiation I ran in Q1 2026 for a US-based SaaS company hiring a full-stack engineer. All amounts are in USD unless noted.
-
-## Step 1 — set up the environment
-
-Start by cloning a small repo that will hold your negotiation artifacts. I use a private repo called `negotiation-kit` on GitHub.
+Create a repository to hold the artifacts.
 
 ```bash
-# Create the repo and clone locally
 mkdir negotiation-kit && cd negotiation-kit
 git init
 git remote add origin git@github.com:YOURUSER/negotiation-kit.git
 git pull origin main
 ```
 
-Inside the repo create three files:
-
-- `cost-sheet.csv`
-- `time-sheet.csv`
-- `risk-sheet.csv`
-
-Version-pin the format so you can reuse it. I use CSV because it loads cleanly in Google Sheets and Excel 365 2026.
-
-Here is the header for `cost-sheet.csv`:
-
-```csv
-Metric,Amount,Currency,Source
-Base salary (desired),7500,USD,Negotiation target
-Exchange rate (spot),4.15,COP/USD,Reuters 2026-05-15
-Exchange rate (worst-case),4.45,COP/USD,Reuters 2026-05-15
-Salary in COP (spot),31125000,COP,Calculated
-Salary in COP (worst-case),33375000,COP,Calculated
-Taxes and social security (Colombia 2026),25,%,DIAN 2026
-Take-home in COP (spot),23343750,COP,Calculated
-Take-home in COP (worst-case),25031250,COP,Calculated
-Cost to client in USD,7500,USD,Same as base salary
-Effective hourly rate (160h),46.88,USD,Calculated
-```
-
-Create a Python 3.11 script called `cost_sheet.py` that regenerates the sheet from a config file. This lets you tweak the base salary and exchange rates without editing the CSV manually.
+Create three files: `cost-sheet.csv`, `time-sheet.csv`, `risk-sheet.csv`. Generate the cost sheet from a script so the numbers are reproducible and diffable.
 
 ```python
 # cost_sheet.py
@@ -88,250 +55,173 @@ CONFIG = {
     "tax_rate": Decimal("0.25"),
     "exchange_rates": {
         "spot": Decimal("4.15"),
-        "worst_case": Decimal("4.45")
-    }
+        "worst_case": Decimal("4.45"),
+    },
 }
 
-rows = []
-rows.append(["Metric", "Amount", "Currency", "Source"])
+rows = [["Metric", "Amount", "Currency", "Source"]]
 
-base_in_cop_spot = CONFIG["base_salary_usd"] * CONFIG["exchange_rates"]["spot"]
-base_in_cop_worst = CONFIG["base_salary_usd"] * CONFIG["exchange_rates"]["worst_case"]
+rows.append(["Base salary (desired)", CONFIG["base_salary_usd"], "USD", "Negotiation target"])
+rows.append(["Exchange rate (spot)", CONFIG["exchange_rates"]["spot"], "LOCAL/USD", "Set your own rate"])
+rows.append(["Exchange rate (worst-case)", CONFIG["exchange_rates"]["worst_case"], "LOCAL/USD", "Set your own rate"])
 
-rows.append([
-    "Base salary (desired)",
-    CONFIG["base_salary_usd"],
-    "USD",
-    "Negotiation target"
-])
+base_spot = CONFIG["base_salary_usd"] * CONFIG["exchange_rates"]["spot"]
+base_worst = CONFIG["base_salary_usd"] * CONFIG["exchange_rates"]["worst_case"]
 
-rows.append([
-    "Exchange rate (spot)",
-    CONFIG["exchange_rates"]["spot"],
-    "COP/USD",
-    "Reuters 2026-05-15"
-])
+rows.append(["Salary in local currency (spot)", base_spot.quantize(Decimal("1"), rounding=ROUND_HALF_UP), "LOCAL", "Calculated"])
+rows.append(["Salary in local currency (worst-case)", base_worst.quantize(Decimal("1"), rounding=ROUND_HALF_UP), "LOCAL", "Calculated"])
+rows.append(["Tax rate", f"{CONFIG['tax_rate'] * 100:.1f}", "%", "Your jurisdiction"])
 
-rows.append([
-    "Exchange rate (worst-case)",
-    CONFIG["exchange_rates"]["worst_case"],
-    "COP/USD",
-    "Reuters 2026-05-15"
-])
+take_home_spot = base_spot * (1 - CONFIG["tax_rate"])
+take_home_worst = base_worst * (1 - CONFIG["tax_rate"])
 
-rows.append([
-    "Salary in COP (spot)",
-    base_in_cop_spot.quantize(Decimal("1"), rounding=ROUND_HALF_UP),
-    "COP",
-    "Calculated"
-])
-
-rows.append([
-    "Salary in COP (worst-case)",
-    base_in_cop_worst.quantize(Decimal("1"), rounding=ROUND_HALF_UP),
-    "COP",
-    "Calculated"
-])
-
-rows.append([
-    "Taxes and social security (Colombia 2026)",
-    f"{CONFIG['tax_rate'] * 100:.1f}",
-    "%",
-    "DIAN 2026"
-])
-
-take_home_cop_spot = base_in_cop_spot * (1 - CONFIG["tax_rate"])
-take_home_cop_worst = base_in_cop_worst * (1 - CONFIG["tax_rate"])
-
-rows.append([
-    "Take-home in COP (spot)",
-    take_home_cop_spot.quantize(Decimal("1"), rounding=ROUND_HALF_UP),
-    "COP",
-    "Calculated"
-])
-
-rows.append([
-    "Take-home in COP (worst-case)",
-    take_home_cop_worst.quantize(Decimal("1"), rounding=ROUND_HALF_UP),
-    "COP",
-    "Calculated"
-])
-
-rows.append([
-    "Cost to client in USD",
-    CONFIG["base_salary_usd"],
-    "USD",
-    "Same as base salary"
-])
-
+rows.append(["Take-home (spot)", take_home_spot.quantize(Decimal("1"), rounding=ROUND_HALF_UP), "LOCAL", "Calculated"])
+rows.append(["Take-home (worst-case)", take_home_worst.quantize(Decimal("1"), rounding=ROUND_HALF_UP), "LOCAL", "Calculated"])
+rows.append(["Cost to client in USD", CONFIG["base_salary_usd"], "USD", "Same as base salary"])
 rows.append([
     "Effective hourly rate (160h)",
     (CONFIG["base_salary_usd"] / 160).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP),
     "USD",
-    "Calculated"
+    "Calculated",
 ])
 
 with open("cost-sheet.csv", "w", newline="") as f:
-    writer = csv.writer(f)
-    writer.writerows(rows)
+    csv.writer(f).writerows(rows)
 ```
 
-Run it to generate the sheet:
+Run it:
 
 ```bash
 python3.11 cost_sheet.py
 ```
 
-Git commit the CSV and the script so you can diff changes later.
+Two design choices matter here. First, the exchange rate is a configuration value, not something you look up once and hardcode, because the rate moves. Second, the sheet records the source of every number. A client who cannot see where a figure came from will assume it is arbitrary.
 
-Next, the time-sheet. Create `time-sheet.csv`:
+The worst-case rate is not a prediction. It is a sensitivity check: if the rate moves against you by the amount you configured, what does your take-home become? That is the number that determines whether a contract is still worth signing in a bad month.
 
-```csv
-Day,Client TZ,Your TZ,Overlap (hours),Notes
-Monday,EST,COP,1,Weekend handoff
-Tuesday,EST,COP,1,
-Wednesday,EST,COP,0,Client standup at 9 AM EST
-Thursday,EST,COP,1,
-Friday,EST,COP,1,
-Saturday,EST,COP,-5,Asked for weekend standby
-Sunday,EST,COP,-5,
-Total overlap per week,4,hours,
-Effective delay on async tasks,+24,hours,Because you miss Friday night
-Weekly cost in hours,4,+24,Calculated
-Hourly cost to client,125,USD,From cost-sheet at 160h
-Monetised delay cost,3000,USD/month,
-```
+## Step 2 — the time sheet
 
-Build a small script `time_sheet.py` that multiplies the delay hours by your effective hourly rate from the cost sheet. This gives you a dollar figure for the timezone gap.
+The timezone gap has two components that are often conflated: overlap hours (when you and the client are both working) and delay hours (how long an async request waits because you are asleep). Overlap is the smaller and less important number.
 
 ```python
 # time_sheet.py
 from decimal import Decimal, ROUND_HALF_UP
 
-# From cost-sheet.csv after running it
-HOURLY_RATE = Decimal("46.88")  # effective hourly rate
-OVERLAP_HOURS_PER_WEEK = 4
-DELAY_HOURS_PER_WEEK = 24
+HOURLY_RATE = Decimal("46.88")   # from cost-sheet.csv
+OVERLAP_HOURS_PER_WEEK = Decimal("4")
+DELAY_HOURS_PER_WEEK = Decimal("24")
 
-monetised_delay_cost = HOURLY_RATE * DELAY_HOURS_PER_WEEK
+monetised_delay = HOURLY_RATE * DELAY_HOURS_PER_WEEK
 weekly_cost = HOURLY_RATE * (OVERLAP_HOURS_PER_WEEK + DELAY_HOURS_PER_WEEK)
 
 print(f"Weekly overlap hours: {OVERLAP_HOURS_PER_WEEK}")
 print(f"Weekly delay hours: {DELAY_HOURS_PER_WEEK}")
-print(f"Monetised delay cost: ${monetised_delay_cost:.2f}/week")
+print(f"Monetised delay cost: ${monetised_delay:.2f}/week")
 print(f"Total weekly cost: ${weekly_cost:.2f}/week")
 ```
 
-Finally, the risk sheet. Create `risk-sheet.csv`:
+Note the honesty constraint: the delay figure is an assumption, not a measurement. Say so in the sheet. A delay of 24 hours means a request filed Friday evening is answered Monday morning. If your client's work is genuinely async, that number is close to zero in practice, and the sheet should show that. If the client expects same-day turnaround, the number is real and should appear as a line item.
+
+The value of this sheet is not the dollar figure. It is that it forces the conversation onto a concrete question: which tasks actually need same-day turnaround, and which can wait? Many "we need overlap" requests collapse once the client lists the tasks that require it.
+
+## Step 3 — the risk sheet
 
 ```csv
 Risk,Probability,Impact (hours),Mitigation cost (USD),Mitigation description
-Timezone emergency at 2 AM your time,High,4,250,On-call rotation with US buddy
-API outage during your night,Medium,8,400,Automated rollback script + status page
-Data loss on your laptop,Low,24,300,Daily encrypted backups to S3
-Client changes scope mid-sprint,Medium,12,600,Prepaid buffer of 10 hours
+Emergency during your night,High,4,250,On-call rotation with a counterpart in the client's timezone
+Third-party outage during your night,Medium,8,400,Automated rollback script and status page
+Local machine or data loss,Low,24,300,Encrypted daily backups to object storage
+Mid-sprint scope change,Medium,12,600,Prepaid buffer of hours
 ```
 
-Add a summary row that annualises the mitigation costs so you can fold them into your salary if the client wants a fixed monthly retainer.
+The probability column is a judgement, and should be labelled as one. What matters is that each row has a mitigation with a cost, so the client sees that the risk is being handled rather than absorbed silently.
 
-Run the scripts, commit the CSVs, and you have a negotiation packet that updates with one command: `python3.11 cost_sheet.py && python3.11 time_sheet.py`.
+Annualise the mitigation costs if the client wants a fixed monthly retainer, so the buffer is priced in rather than discovered later.
 
-## Step 2 — core implementation
+## Step 4 — the role brief
 
-With the packet in place, the next step is to package yourself for the client. 
-
-Start by writing a one-page “Role Brief” in Markdown. The brief answers three questions:
-
-- What problem you solve
-- How you solve it (your stack and practices)
-- What the client can expect in terms of availability and communication
-
-Here is a real brief I used for the same SaaS company in March 2026:
+The packet needs a one-page summary the client can skim. Keep it to three questions: what problem you solve, how you solve it, and what availability and response behaviour the client can expect.
 
 ```markdown
-# Role Brief: Full-Stack Engineer (Remote, Colombia)
+# Role Brief: Full-Stack Engineer (Remote)
 
-**Problem to solve:** Reduce critical path latency for the billing microservice that handles 8 k QPS during peak hours. The service currently has P99 latency of 450 ms and 3% tail latency spikes.
+**Problem to solve:** Reduce critical-path latency for a billing service under peak load.
 
 **Stack:**
-- Node 20 LTS (runtime)
-- PostgreSQL 15 with pgBouncer 1.21 and PgCat 0.5 for read replicas
-- Redis 7.2 cluster with 3 shards and active-active replication
-- AWS Lambda with arm64 for async tasks
-- Terraform 1.6 for IaC
+- Node 20 LTS
+- PostgreSQL with a connection pooler and read replicas
+- Redis cluster for hot-path caching
+- Terraform for infrastructure
 - GitHub Actions for CI/CD
 
 **Practices:**
-- Incident response within 15 minutes (SLA)
-- Async standup via GitHub Discussions at 9 AM Colombia time
-- On-call rotation with US-based buddy for 2 AM emergencies
-- Daily observability: Grafana dashboards, Sentry, and Datadog synthetic checks
+- Incident response within a stated SLA
+- Async standup in a written channel
+- On-call rotation with a counterpart in the client's timezone
+- Dashboards for latency, error rate, and saturation
 
 **Availability:**
-- Core overlap: 1 hour daily (EST/COP)
-- Weekend standby: 5 hours Saturday and Sunday (rotating)
-- Response SLA: 2 hours for P1, 4 hours for P2
+- Core overlap: state the hours explicitly
+- Weekend standby: state whether it is included or billed
+- Response SLA: separate P1 from P2 and P3
 
 **Deliverables:**
-- Latency P99 ≤ 150 ms within 4 weeks
-- Zero unplanned downtime for billing service in first 90 days
+- A latency target with a measurement method
+- An uptime target with a measurement method
 ```
 
-Attach the role brief to every proposal. Clients skim it in under 60 seconds and decide if you understand their pain.
+The deliverables section is where most briefs go wrong. "Improve latency" is not a deliverable. "P99 latency at or below X milliseconds, measured by this dashboard, over a rolling seven-day window" is. Write the measurement method into the brief, because it is the thing that will be argued about later.
 
-Next, price the packet. Take the numbers from the cost sheet and multiply by the risk sheet’s annual mitigation cost.
+## Step 5 — a worked pricing example
 
-| Item | Cost (USD/month) | Notes |
-|------|------------------|-------|
-| Base salary | 7500 | Desired take-home |
-| Timezone gap | 650 | 4 overlap + 24 delay hours at $46.88/hour |
-| Risk mitigation | 250 | On-call buddy, backups, rollback scripts |
-| **Effective cost** | **8400** | Rounded to nearest $100 |
+All figures below are illustrative. The point is the method, not the numbers.
 
-I offered 8 400 USD/month. The client countered at 7 800 USD/month. I accepted because the risk sheet convinced them that even at 7 800 USD the mitigation costs were lower than hiring a US-based engineer at 11 000 USD who would still have the same timezone gap.
+Assume a desired base of 7,500 USD per month, an effective hourly rate of 46.88 USD (7,500 ÷ 160), a timezone gap of 4 overlap plus 24 delay hours per week, and a risk mitigation cost of 250 USD per month.
 
-I made one mistake here: I didn’t include the cost of benefits. US contractors often get health insurance, 401k match, or HSA contributions. In Colombia those costs are paid by the employee via payroll taxes, so they don’t appear on the client’s balance sheet. Had I included a 12% benefits buffer for the client’s internal model, the negotiation might have landed at 8 800 USD. Lesson: always ask the client what their internal benefits load is.
+| Item | Monthly cost (USD) | Derivation |
+|------|--------------------|------------|
+| Base salary | 7,500 | Target |
+| Timezone gap | 650 | 650 ≈ 46.88 × 4.33 weeks × 3.2 hours, rounded |
+| Risk mitigation | 250 | Sum of mitigation rows |
+| **Effective cost** | **8,400** | Rounded to the nearest 100 |
 
-Package the final number into a Google Doc proposal. Use the following structure:
+The timezone row deserves a note. The naive calculation is 46.88 × 28 hours per week, which is 1,312 USD per week and obviously wrong as a monthly figure. The reason it is wrong is that delay hours are not billed hours; they are a cost to the client in elapsed time, not in your labour. Pricing them at your full hourly rate double-counts. A more defensible approach is to price only the hours you are actually on call or actively working outside your normal window, and to present the delay figure separately as an operational cost the client can reduce by changing their own expectations.
 
-1. Title: “Full-Stack Engineer – 8 400 USD/month, 40 h/week (Colombia)”
-2. Summary: 2–3 bullet points showing latency and uptime targets
-3. Cost breakdown: link to the cost sheet, time sheet, and risk sheet
-4. Timeline: 4-week onboarding, 12-week SLA
-5. Accept/reject buttons at the bottom
+That distinction is the single most common error in timezone pricing, and clients who have hired remote contractors before will spot it immediately.
 
-Share the doc with edit permissions so the client can comment and counter. Most remote offers die in Slack threads where numbers get copied and pasted incorrectly. A single Google Doc with live links keeps the data consistent.
+Now the currency side. Suppose the local currency is quoted at 4.15 to the dollar at spot and 4.45 in the worse case. Then:
 
-## Step 3 — handle edge cases and errors
+- Spot: 7,500 USD × 4.15 = 31,125 local units.
+- Worst case: 7,500 USD × 4.45 = 33,375 local units.
 
-The first edge case is currency risk. If you’re paid in USD but your rent is in COP, an adverse exchange rate swing can wipe out your margin overnight. In 2026 the COP/USD rate moved 12% in two weeks after a central bank announcement. I protect against that by negotiating a 5% buffer above my desired salary. The client accepted because the risk sheet showed that the buffer was cheaper than hiring a replacement in a volatile market.
+At a 25% tax rate, the take-home is 75% of each:
 
-Second edge case: payment rails. Wise and Revolut support USD→COP in 2026, but PayPal still charges 4.5% + $0.30 per withdrawal. For a 7 800 USD salary that’s $351 per month—nearly 5% gone. I moved to Wise and saved $273/month. Always compare the net take-home, not the gross salary.
+- Spot take-home: 31,125 × 0.75 = 23,343.75 local units.
+- Worst-case take-home: 33,375 × 0.75 = 25,031.25 local units.
 
-Third edge case: contract type. US companies prefer 1099 or C Corp in Colombia; Colombian companies prefer full-time payroll. I used a US-based LLC owned by me (single-member) and invoiced as a US service provider. The client didn’t have to run payroll in Colombia, and I kept the tax treaty benefits. The downside is that I have to file US taxes annually, but the savings on payroll taxes in Colombia outweigh that cost.
+Notice what this shows the client: your take-home in local currency is higher in the worst case, because the same dollar amount buys more local currency when the local currency weakens. That is the opposite of the risk for a client paying in dollars, and it is worth stating plainly, because it tells the client that currency movement in their favour is not a windfall you will renegotiate over.
 
-Fourth edge case: scope creep. The client’s initial brief was for “improve latency and reliability.” I countered with a fixed-scope statement: “Deliver P99 ≤ 150 ms and zero unplanned downtime for the billing service within 12 weeks.” I attached a burn-down chart that showed 40 story points and 12 sprints. Scope creep kills remote contracts faster than low salaries.
+## Step 6 — edge cases worth writing into the contract
 
-Fifth edge case: timezone standbys. I once agreed to “on-call for emergencies” without defining “emergency.” A 3 AM “urgent” Slack message turned out to be a typo in a config file. I spent two hours debugging it. The next contract defined emergencies as: “billing service down, payment failures > 1%.” Everything else goes into the next sprint.
+**Currency risk.** If you are paid in USD but your costs are in local currency, a sharp move in the rate changes your real income. The mitigation is not a clause; it is a re-pricing cadence. State in the contract how often the rate is reviewed and what triggers a review.
 
-Always convert edge cases into clauses in the contract or the SLA. The client’s lawyer will ask for definitions; you’ll want to provide them before the contract is written.
+**Payment rails.** Fees differ substantially between providers and between corridors. Before quoting a net figure, check the actual fee schedule for your corridor and compute the net. A percentage fee plus a fixed fee per withdrawal can remove a meaningful fraction of a monthly payment. Compare net take-home, never gross.
 
-## Step 4 — add observability and tests
+**Contract type.** A direct contractor agreement, a local entity, and an employer-of-record arrangement have different tax and compliance profiles. An EOR adds a markup, typically a percentage of the invoice, which the client will see. Decide which party absorbs that markup before you quote.
 
-Before you sign, prove that you can meet the SLA. Build a small dashboard that shows:
+**Scope creep.** The client's brief will be vague. Convert it into a fixed-scope statement with measurable acceptance criteria before signing. A burn-down chart showing story points and sprints is a useful artifact, but the contract clause is what matters.
 
-- Latency P99 over the last 7 days (< 150 ms)
-- Uptime % over the last 30 days (99.9%)
-- On-call response time (≤ 15 minutes)
+**Standby.** Define emergencies precisely. "Billing service down" is not precise; "payment failure rate above a stated threshold for more than a stated duration" is. Everything else goes into the next sprint.
 
-I used a combination of:
+## Step 7 — proving you can meet the SLA
 
-- Grafana 10.2 with Node Exporter and PostgreSQL exporter
-- Sentry for error tracking
-- Datadog synthetic checks hitting the billing endpoint every 5 minutes
-- A simple Python 3.11 script that posts the metrics to a public status page
+Before sending a proposal that promises a latency or uptime target, have a dashboard that shows the target being met. The dashboard does not need to be elaborate. It needs three panels:
 
-Here is the Grafana panel JSON snippet for P99 latency:
+- Latency percentile over a rolling window.
+- Uptime percentage over a rolling window.
+- On-call response time.
+
+A Grafana panel for P99 latency looks like this:
 
 ```json
 {
@@ -348,24 +238,20 @@ Here is the Grafana panel JSON snippet for P99 latency:
 }
 ```
 
-The dashboard must be live and accessible via a public URL before you send the proposal. Clients will click the link; if it’s down or broken, they assume you can’t run production systems.
+Three checks are worth automating in the first week:
 
-Next, write three tests you can run in the first week:
+1. **Latency check.** Run 100 requests against the health endpoint and record the distribution, not just the mean. A mean of 80 ms with a P99 of 900 ms is a failing service.
+2. **Uptime check.** A scheduled function that pings the endpoint on an interval and alerts on failure.
+3. **On-call check.** A simulated incident that measures how long the response actually takes, including at an inconvenient hour.
 
-1. **Latency test**: `curl -w "%{time_total}\n" -o /dev/null https://billing.example.com/health` should return < 0.150 s 95% of the time over 100 calls.
-2. **Uptime test**: a Lambda function that pings the endpoint every 5 minutes and alerts if it fails.
-3. **On-call test**: a Slack bot that simulates a P1 incident at 2 AM your time and measures response time.
-
-Automate the tests in GitHub Actions. The workflow should run on every push and post results to a dedicated Slack channel. I named the channel `#status-billing`. The client can join the channel to watch the metrics in real time.
-
-Finally, document the escalation path. Publish a simple Markdown file called `ESCALATION.md` in the repo:
+Document the escalation path in the repository:
 
 ```markdown
 # Escalation guide
 
-- P1: Billing service down or payment failures > 1% → Slack #incident + call US buddy immediately
-- P2: Latency > 200 ms or uptime < 99.9% → GitHub issue + async response within 4 hours
-- P3: Everything else → GitHub issue + next sprint
+- P1: service down or payment failures above the agreed threshold → incident channel, immediate page
+- P2: latency above target or uptime below target → tracked issue, response within the agreed window
+- P3: everything else → tracked issue, next sprint
 
 Response SLA:
 - P1: ≤ 15 minutes
@@ -373,89 +259,36 @@ Response SLA:
 - P3: ≤ 24 hours
 ```
 
-Attach `ESCALATION.md` to the proposal. Clients love when you’ve already thought about their worst day.
+## How to measure whether the packet worked
 
-## Real results from running this
+There is no benchmark table here because results depend entirely on the client, the market, and the role. What can be measured is the negotiation process itself. Instrument these:
 
-I ran this exact negotiation for a US SaaS company in March 2026. The numbers below are the first three months of production data.
+- **Time to first substantive reply.** If the packet is clear, the client's next message should contain a question about scope or a counter-offer, not a request to clarify the numbers.
+- **Number of clarification rounds.** Count them. More than two usually means the cost sheet is missing a mapping the client needs.
+- **Conversion of the delay-hours line.** Did the client reduce their same-day expectations after seeing it? That is the sheet doing its job.
+- **Renewal rate.** The packet is a long-term artifact; its value shows up at renewal, when the numbers can be updated rather than renegotiated from scratch.
 
-**Latency:**
-- Week 0 (baseline): P99 = 450 ms
-- Week 4 (after changes): P99 = 138 ms
-- Week 12 (SLA): P99 = 121 ms
+Keep the CSVs in version control and diff them between negotiations. Over several contracts, the diffs show which assumptions you consistently get wrong, which is more useful than any single outcome.
 
-**Uptime:**
-- Week 0: 96.2%
-- Week 12: 99.94% (7 minutes downtime)
+## Common questions
 
-**Cost:**
-- Gross salary: 7 800 USD/month
-- Wise withdrawal fee: 0 USD (Wise 2026)
-- Effective take-home: 7 800 USD/month
-- Taxes paid in Colombia: 1 950 USD/month (25%)
-- Net: 5 850 USD/month
+**The client says the rate is well above local contractors. How should that be handled?**
+Compare like with like. Local contractor rates and remote rates for the same role are different products: different overlap, different contract type, different tax treatment. Put the comparison in the cost sheet as an explicit row with the source of the local figure. If the client cannot supply a source, the comparison is not a comparison.
 
-**Timezone gap cost:**
-- Overlap hours recorded: 3.8 hours/week (close to the 4 we predicted)
-- Delay hours recorded: 22 hours/week (slightly better than 24 because I automated rollbacks)
-- Monetised cost: 593 USD/week → 2 570 USD/month
+**What if there is no tax treaty between the client's country and mine?**
+Withholding may apply at the source. Two common approaches: a gross-up clause, where the client pays the withholding so the net is unchanged, or a higher gross figure that nets to the target after withholding. Show the arithmetic. For example, to net 7,000 with a 30% withholding, the gross must be 7,000 ÷ 0.7 = 10,000. Put that calculation in the sheet rather than asserting the conclusion.
 
-**Risk mitigation cost:**
-- On-call buddy: 200 USD/month (shared with another contractor)
-- Backups and rollbacks: 50 USD/month (S3 costs)
-- Total: 250 USD/month
+**Should an employer-of-record be used?**
+An EOR handles payroll and compliance in exchange for a markup, often a percentage of the invoice. Whether that is worth it depends on whether the client is willing to absorb the markup and whether you want to run your own entity. Model both in the cost sheet so the client sees the difference rather than discovering it at contract time.
 
-**Net client cost:** 7 800 + 2 570 + 250 = 10 620 USD/month
+**What is needed to prove SLA capability?**
+At minimum, a metrics source, a status page, and an alerting path. The specific tools matter less than that the status page is live and public before the proposal is sent. A broken link in a reliability proposal is a strong negative signal.
 
-For comparison, the US-based contractor they almost hired was quoted at 11 000 USD/month with no timezone gap buffer and no risk mitigation included. My package was 3.5% cheaper and came with lower operational risk.
-
-The client renewed for a second term at the same rate. They cited “lower risk of outage during billing cycles” as the deciding factor.
-
-One surprise: the client asked for weekend standby explicitly after the first month. I had to reopen the risk sheet and add 5 weekend hours to the delay cost. The new monthly gap rose to 3 050 USD, but the client accepted because the renewal margin was still positive for them. Always revisit the time-sheet after the first sprint.
-
-## Common questions and variations
-
-**“How do I respond when the client says your rate is 30% above local contractors?”**
-Use the cost sheet to show the effective hourly rate in USD (48.75 USD/hour in my case) versus a US contractor at 68.75 USD/hour. Highlight the 29% discount and the 4-hour overlap. Offer a 6-month trial with a kill switch if the latency or uptime targets aren’t met. Most clients will accept a trial if the upside (lower cost) is clear and the downside (exit clause) is explicit.
-
-**“What if my country doesn’t have a tax treaty with the US?”**
-In countries without a treaty (e.g., Nigeria 2026), the client may withhold 30% under FATCA. Negotiate a gross-up clause: the client pays the withholding so your net is unchanged. If they refuse, increase your base salary by the withholding amount. Example: if you want 7 000 USD net and the withholding is 30%, ask for 10 000 USD gross so you net 7 000 USD. Always attach a tax calculator to the proposal.
-
-**“Can I use an EOR like Remote or Deel to simplify payroll?”**
-EORs simplify payroll but add 8–12% markup. In 2026 Remote charges 8% for contractors in Latin America. If your desired salary is 7 500 USD, the EOR will invoice the client for 8 100 USD. The client may balk at the extra 8%. Instead, set up your own LLC and invoice directly. The savings (8%) can cover your accountant fees for a year.
-
-**“What tools do I need to prove I can meet the SLA?”**
-You need three: a metrics exporter (Prometheus 2.47 + Node Exporter), a status page (Upptime or Better Stack), and an incident bot (Opsgenie 2026 or a simple Slack webhook). Publish the status page URL in the proposal. If the page shows red for more than 5 minutes, the client loses confidence before you even start.
-
-**“How do I negotiate if I’m early-career (0–3 years)?”**
-Early-career candidates should avoid salary negotiation and focus on scope negotiation. Offer a 3-month paid trial with a clear deliverable (e.g., “build the new API endpoint”). At the end of the trial, convert to a full contract at a rate 15–20% above your current take-home. Early-career candidates rarely win salary battles; they win scope battles.
+**How should early-career developers approach this?**
+Negotiate scope before rate. A short paid trial with a clearly defined deliverable gives both sides evidence. The rate conversation is much easier after the client has seen the work than before.
 
 ## Where to go from here
 
-Take the negotiation packet you just built—cost sheet, time sheet, risk sheet—and run it against the next offer you receive, even if it’s only a back-of-napkin number. Paste the Google Doc link into Slack or email and watch the client’s questions narrow from “Why so high?” to “How do we start?”
+The packet only works if the inputs are real. Start with the cost sheet, because every other number depends on the effective hourly rate.
 
-Now open `cost-sheet.csv` and change the base salary to the number you actually want. Run `python3.11 cost_sheet.py` and attach the updated CSV to a new Google Doc. Send the doc to yourself first to check the formatting. If the numbers align with your take-home after taxes and Wise fees, hit “Share” with the client.
-
-Your next step today is to edit `cost-sheet.csv`, run the script, and email the updated cost sheet to yourself before 3 PM your local time. That single action puts you ahead of 90% of contractors who never quantify their ask.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 08, 2026
+Open `cost-sheet.csv`, set `base_salary_usd` to the number you actually want, and set the two exchange rates to today's spot rate and a rate roughly 5–10% worse. Run `python3.11 cost_sheet.py`, open the resulting CSV, and check two things: that the take-home figure matches what you would actually receive after tax and payment fees, and that the worst-case take-home is still a number you would accept. If the worst case is not acceptable, the base salary is too low, and you have found that out before the client did.

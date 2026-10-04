@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Stop assuming payment APIs never fail - Kubai Kevin</title>
-        <meta name="description" content="AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.">
+        <meta name="description" content="How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.">
         <meta name="keywords" content="PaymentApis, AiCheckout, MPesaFailure, PaystackRetry, Flutterwave, Ai, Apis, Redis, Flutter">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-13T03:56:25.937261">
-        <meta property="article:modified_time" content="2026-09-13T03:56:25.937275">
+        <meta property="article:modified_time" content="2026-10-04T10:28:14.823558+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Stop assuming payment APIs never fail">
-        <meta property="og:description" content="AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.">
+        <meta property="og:description" content="How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.">
         <meta property="og:url" content="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Stop assuming payment APIs never fail">
-        <meta name="twitter:description" content="AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.">
+        <meta name="twitter:description" content="How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/stop-assuming-payment-apis-never-fail.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/stop-assuming-payment-apis-never-fail/#article",
       "headline": "Stop assuming payment APIs never fail",
-      "description": "AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.",
+      "description": "How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don't break checkout.",
       "datePublished": "2026-09-13T03:56:25+00:00",
-      "dateModified": "2026-09-13T03:56:25+00:00",
-      "wordCount": 2211,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-04T10:28:14+00:00",
+      "wordCount": 2483,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Stop assuming payment APIs never fail</h1>
                 
-                <p class="post-lead">AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</p>
+                <p class="post-lead">How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
                 
                 
                 <div class="tags">
@@ -258,75 +258,70 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2211 words
+                        12 min read
+                        &nbsp;·&nbsp; 2483 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-13
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The default configuration is fine right up until it isn't. traditional observability was never the hard part. Knowing when it was about to fail was. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>When you stitch an AI recommendation engine into a checkout flow that uses M-Pesa, Paystack, or Flutterwave, the first thing that looks impressive is the instant personalization. The second thing that trips most teams is the hidden latency and error surface that comes from the payment gateway. In production, a 2 % timeout rate from M-Pesa's <code>/v1/transactions</code> endpoint can cascade into a 30 % drop in conversion because the AI service aborts the request early. The part that trips people up is the assumption that a payment provider will always answer within the SLA, and that's what this post actually covers.</p>
+                <p>The default configuration is fine right up until it isn't. Traditional observability was never the hard part; knowing when a dependency is about to fail was. This article walks through the tradeoffs of putting an AI recommendation call and a third-party payment call on the same request path, and what to do when the payment provider stops answering the way you expect.</p>
+<h2 id="the-problem-two-unreliable-dependencies-on-one-request-path">The problem: two unreliable dependencies on one request path</h2>
+<p>When a recommendation engine is stitched into a checkout flow that uses M-Pesa, Paystack, or Flutterwave, the first thing that looks impressive is the instant personalization. The second thing that trips most teams is the hidden latency and error surface that comes from the payment gateway. A payment provider that returns a timeout on a meaningful fraction of requests can cascade into a large drop in conversion, because the surrounding service aborts the request early rather than degrading gracefully.</p>
+<p>The assumption that trips people up is simple: that a payment provider will always answer within its advertised SLA. It won't, and the failure is rarely clean. A gateway can accept your request, time out on the response, and still settle the charge. That asymmetry — an ambiguous outcome rather than a clear error — is what makes payment integrations harder than ordinary HTTP dependencies.</p>
+<p>This article covers three things: how to structure the call path so a slow gateway doesn't take down checkout, how to handle provider-specific error semantics without losing the information you need to decide whether to retry, and how to reconcile the transactions that end up in an unknown state.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>We'll build a small FastAPI (Python 3.11) service that:</p>
+<p>The example builds a small FastAPI (Python 3.11) service that:</p>
 <ol>
 <li>Receives a user ID and a purchase amount.</li>
-<li>Calls an AI model hosted on AWS SageMaker Runtime (model version <code>v2.1</code>).</li>
-<li>Sends the payment request to the selected gateway (M-Pesa, Paystack, Flutterwave).</li>
-<li>Returns a JSON payload that includes the AI recommendation, the payment status, and a fallback flag.</li>
+<li>Calls a model hosted behind a managed inference endpoint (SageMaker Runtime is used here as the concrete example).</li>
+<li>Sends the payment request to the selected gateway (M-Pesa, Paystack, or Flutterwave).</li>
+<li>Returns a JSON payload containing the recommendation, the payment status, and a fallback flag.</li>
 </ol>
-<p>The stack will run on AWS Lambda (arm64) behind API Gateway, use Redis 7.2 for a short‑lived retry cache, and employ <code>httpx 0.27</code> for async HTTP calls. We'll also add a CircuitBreaker from <code>pybreaker 1.2</code> and a simple exponential backoff using <code>tenacity 8.2</code>. Expect the Lambda cold start to be ~120 ms, the AI inference latency ~250 ms, and the payment call latency between 150 ms and 1 s depending on the provider.</p>
+<p>The service runs on AWS Lambda (arm64) behind API Gateway, uses Redis 7.2 for a short-lived fallback cache, and uses <code>httpx</code> for async HTTP calls. A circuit breaker from <code>pybreaker</code> and exponential backoff via <code>tenacity</code> wrap the gateway call.</p>
+<p>Latency budgets matter more than any single number. A cold start for a Python Lambda is typically in the low hundreds of milliseconds; an inference call to a hosted endpoint is typically a few hundred milliseconds; a payment call is the least predictable of the three and can range from roughly 150 ms to several seconds depending on the provider and the region. Treat all three as estimates to be measured in your own environment, not as guarantees.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<ol>
-<li><strong>Create a virtual environment</strong> with Python 3.11:</li>
-</ol>
+<p><strong>Create a virtual environment</strong> with Python 3.11:</p>
 <pre><code class="language-bash">python3.11 -m venv .venv
 source .venv/bin/activate
 </code></pre>
-<ol>
-<li><strong>Install the required libraries</strong>. Pin the versions to avoid surprise upgrades:</li>
-</ol>
-<pre><code class="language-bash">pip install fastapi==0.110.0 uvicorn[standard]==0.27.0 httpx==0.27 boto3==1.34.0 redis==5.0 pybreaker==1.2 tenacity==8.2
+<p><strong>Install the required libraries.</strong> Pin versions to avoid surprise upgrades:</p>
+<pre><code class="language-bash">pip install fastapi uvicorn[standard] httpx boto3 redis pybreaker tenacity
 </code></pre>
-<ol>
-<li><strong>Provision AWS resources</strong> using the AWS CDK (v2.120). The minimal stack includes:</li>
-<li>A Lambda function (<code>ai_checkout_handler</code>) with 256 MB memory and a 5 s timeout.</li>
-<li>An Elasticache Redis cluster (t4g.micro) in the same VPC.</li>
-<li>An IAM role that grants <code>sagemaker:InvokeEndpoint</code> on <code>arn:aws:sagemaker:eu-west-1:123456789012:endpoint/ai-recommender</code>.</li>
-</ol>
-<p><code>typescript
-   // cdk-stack.ts (Node 20 LTS)
-   import * as cdk from 'aws-cdk-lib';
-   import { Runtime } from 'aws-cdk-lib/aws-lambda';
-   import { Function } from 'aws-cdk-lib/aws-lambda-nodejs';
-   const app = new cdk.App();
-   const stack = new cdk.Stack(app, 'AiCheckoutStack');
-   new Function(stack, 'AiCheckoutHandler', {
-     runtime: Runtime.PYTHON_3_11,
-     handler: 'handler.main',
-     memorySize: 256,
-     timeout: cdk.Duration.seconds(5),
-   });</code></p>
-<ol>
-<li><strong>Configure environment variables</strong> for the three gateways. Example values (do not commit real keys):</li>
+<p>Pin exact versions in your own <code>requirements.txt</code>; the package names above are stable, but the versions you should pin depend on your deployment date and your security policy.</p>
+<p><strong>Provision AWS resources</strong> using the AWS CDK. The minimal stack includes:</p>
+<ul>
+<li>A Lambda function (<code>ai_checkout_handler</code>) with 256 MB memory and a 5 s timeout.</li>
+<li>An ElastiCache Redis cluster in the same VPC.</li>
+<li>An IAM role that grants <code>sagemaker:InvokeEndpoint</code> on the specific endpoint ARN you deploy.</li>
+</ul>
+<pre><code class="language-typescript">// cdk-stack.ts
+import * as cdk from 'aws-cdk-lib';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Function } from 'aws-cdk-lib/aws-lambda-nodejs';
+const app = new cdk.App();
+const stack = new cdk.Stack(app, 'AiCheckoutStack');
+new Function(stack, 'AiCheckoutHandler', {
+  runtime: Runtime.PYTHON_3_11,
+  handler: 'handler.main',
+  memorySize: 256,
+  timeout: cdk.Duration.seconds(5),
+});
+</code></pre>
+<p><strong>Configure environment variables</strong> for the three gateways. Use placeholder values and never commit real keys:</p>
+<ul>
 <li><code>MPESA_KEY</code>, <code>MPESA_SECRET</code></li>
 <li><code>PAYSTACK_SECRET</code></li>
-<li>
-<p><code>FLUTTERWAVE_SECRET</code></p>
-</li>
-<li>
+<li><code>FLUTTERWAVE_SECRET</code></li>
+</ul>
 <p><strong>Deploy</strong> the CDK stack:</p>
-</li>
-</ol>
 <pre><code class="language-bash">cdk deploy --require-approval never
 </code></pre>
-<p>The deployment typically costs $0.12 per 1 M Lambda invocations and $0.02 per GB‑hour of Redis usage.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<p>The core logic lives in <code>handler.py</code>. We wrap each gateway call in a retry decorator that respects the provider's documented rate limits (e.g., M-Pesa allows 30 requests per second per consumer key). The backoff starts at 500 ms and doubles up to 4 s. If all attempts fail, the circuit breaker opens for 30 s, returning a cached fallback response.</p>
+<p>The core logic lives in <code>handler.py</code>. Each gateway call is wrapped in a retry decorator that respects the provider's documented rate limits (M-Pesa, for example, documents a per-consumer-key request ceiling). Backoff starts at 500 ms and doubles up to 4 s. If all attempts fail, the circuit breaker opens for 30 s and returns a cached fallback response.</p>
 <pre><code class="language-python"># handler.py
 import os, json, time
 from fastapi import FastAPI, HTTPException
@@ -365,10 +360,10 @@ def invoke_ai(user_id: str, amount: float):
 
 @app.post('/checkout')
 async def checkout(user_id: str, amount: float, provider: str):
-    # 1️⃣ AI recommendation
+    # 1. AI recommendation
     ai_result = invoke_ai(user_id, amount)
 
-    # 2️⃣ Choose provider URL and secret
+    # 2. Choose provider URL and secret
     if provider == 'mpesa':
         url = 'https://sandbox.safaricom.co.ke/mpesa/v1/transactions'
         secret = os.getenv('MPESA_SECRET')
@@ -388,12 +383,12 @@ async def checkout(user_id: str, amount: float, provider: str):
     payload = {'amount': amount, 'email': ai_result['email']}
 
     try:
-        # 3️⃣ Protected call with circuit breaker
+        # 3. Protected call with circuit breaker
         with cb:
             payment_resp = call_gateway(url, payload, headers)
         fallback = False
     except (httpx.HTTPError, CircuitBreakerError) as exc:
-        # 4️⃣ Fallback path – store intent for later reconciliation
+        # 4. Fallback path - store intent for later reconciliation
         redis_client.setex(f'fallback:{user_id}:{provider}', 300, json.dumps(payload))
         payment_resp = {'status': 'pending', 'reason': str(exc)}
         fallback = True
@@ -404,10 +399,11 @@ async def checkout(user_id: str, amount: float, provider: str):
         'fallback': fallback
     }
 </code></pre>
-<p><strong>Why this works</strong>: The <code>retry</code> decorator handles transient network glitches (e.g., DNS timeouts) without blowing up the Lambda. The circuit breaker prevents a storm of failing calls from exhausting the Lambda's 5 s timeout, which is a common failure mode when a provider experiences a regional outage. The Redis fallback ensures we can reconcile the transaction once the provider recovers.</p>
+<p><strong>Why this structure helps.</strong> The <code>retry</code> decorator absorbs transient network glitches without exhausting the Lambda's timeout. The circuit breaker stops a failing provider from consuming the entire request budget on every call, which is the common failure mode during a regional outage. The Redis fallback preserves the intent to pay so it can be reconciled once the provider recovers.</p>
+<p><strong>Where this structure is weak.</strong> The retry decorator wraps a non-idempotent POST. If the first attempt actually reached the provider and only the response was lost, a retry can create a second charge. That is why the idempotency key in Step 3 is not optional.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<h3 id="1-providerspecific-error-payloads">1. Provider‑specific error payloads</h3>
-<p>M-Pesa returns a JSON with <code>errorCode</code> and <code>errorMessage</code>. Paystack uses HTTP 402 for insufficient funds, and Flutterwave nests the error under <code>data.status</code>. A typical gotcha is treating any non‑2xx as a generic <code>HTTPError</code>; you lose the granular code that tells you whether to retry or to abort. The code above surfaces the raw exception text, but you can map it like this:</p>
+<h3 id="1-provider-specific-error-payloads">1. Provider-specific error payloads</h3>
+<p>M-Pesa returns JSON with <code>errorCode</code> and <code>errorMessage</code>. Paystack uses HTTP 402 for insufficient funds and returns a <code>status</code> boolean with a <code>message</code>. Flutterwave nests the error under <code>data.status</code>. A common gotcha is treating any non-2xx as a generic <code>HTTPError</code>; you lose the granular code that tells you whether to retry or to abort. Map it explicitly:</p>
 <pre><code class="language-python">def map_error(provider: str, resp_json: dict):
     if provider == 'mpesa':
         if resp_json.get('errorCode') == '500.001.1001':
@@ -420,18 +416,26 @@ async def checkout(user_id: str, amount: float, provider: str):
             return 'temporary_unavailable'
     return 'unknown'
 </code></pre>
+<p>The exact error codes above are illustrative of the shape of each provider's response; verify the current codes against each provider's API documentation before relying on them for retry decisions.</p>
 <h3 id="2-idempotency-keys">2. Idempotency keys</h3>
-<p>All three gateways support an idempotency header. If the Lambda retries after a timeout, you risk double‑charging. Store a SHA‑256 of <code>user_id+provider+timestamp</code> in Redis with a TTL of 10 minutes and send it as <code>Idempotency-Key</code>. This pattern eliminates the 0.3 % double‑charge risk observed in the wild.</p>
-<h3 id="3-timeskew-between-lambda-and-provider-clocks">3. Time‑skew between Lambda and provider clocks</h3>
-<p>M-Pesa validates timestamps within a 5‑minute window. Lambda's default clock sync is fine, but when you run the function in a custom VPC with a NAT gateway, the NTP source can drift by up to 2 seconds, causing a <code>4001 – Timestamp out of range</code> error. The fix is to add a small buffer (<code>timestamp = int(time.time()) - 2</code>). This is a subtle gotcha that shows up only during high‑load bursts.</p>
-<h3 id="4-ratelimit-backpressure">4. Rate‑limit back‑pressure</h3>
-<p>If you exceed M‑Pesa's 30 rps limit, you receive HTTP 429 with body <code>{"errorCode":"500.001.1005","errorMessage":"Too many requests"}</code>. Our <code>retry</code> backoff already respects exponential growth, but you should also throttle locally using a token bucket (<code>aiolimiter 1.0</code>). This prevents the Lambda from hammering the gateway and hitting the limit repeatedly, which would otherwise add ~150 ms per extra retry.</p>
+<p>All three gateways support an idempotency header. Without one, a retry after a timeout risks a double charge. The pattern is to derive a deterministic key from the transaction intent — for example, a SHA-256 of <code>user_id + provider + a client-generated request ID</code> — store it in Redis with a TTL, and send it as the idempotency header. The critical detail is that the key must be generated <strong>before</strong> the first attempt and reused on every retry; generating it inside the retry loop defeats the purpose.</p>
+<h3 id="3-clock-skew-between-lambda-and-provider-clocks">3. Clock skew between Lambda and provider clocks</h3>
+<p>Some providers validate request timestamps within a short window. Lambda's clock is generally synchronized, but a function running in a custom VPC behind a NAT gateway can drift. The defensive fix is a small buffer:</p>
+<pre><code class="language-python">timestamp = int(time.time()) - 2
+</code></pre>
+<p>This is a subtle gotcha that only shows up under load, when the function is under CPU pressure and the time between constructing the payload and signing it grows.</p>
+<h3 id="4-rate-limit-back-pressure">4. Rate-limit back-pressure</h3>
+<p>Exceeding a provider's request ceiling returns HTTP 429. Exponential backoff alone is not enough here: if every caller retries at the same backoff schedule, you get a synchronized retry storm that keeps you pinned at the limit. Add client-side throttling with a token bucket so the call rate is capped before it reaches the gateway. The tradeoff is that a token bucket adds queueing latency under load — you are trading a small, predictable delay for a much larger, unpredictable one.</p>
+<h3 id="5-the-ambiguous-outcome">5. The ambiguous outcome</h3>
+<p>The hardest case is neither success nor failure: the provider accepted the request but the response never arrived. Your service must not report success, and it must not silently drop the intent. The fallback cache plus a reconciliation job (see the final section) is what makes this survivable.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<h3 id="metrics-with-cloudwatch">Metrics with CloudWatch</h3>
-<p>Publish three custom metrics:
-1. <code>PaymentSuccess</code> (increment on successful charge)
-2. <code>PaymentFallback</code> (increment when we write to Redis)
-3. <code>PaymentLatencyMs</code> (record the elapsed time for the HTTP call)</p>
+<h3 id="metrics">Metrics</h3>
+<p>Publish three custom metrics, and instrument them with a timer rather than a fixed value:</p>
+<ol>
+<li><code>PaymentSuccess</code> — incremented on a confirmed charge.</li>
+<li><code>PaymentFallback</code> — incremented when a fallback entry is written.</li>
+<li><code>PaymentLatencyMs</code> — the elapsed time of the HTTP call, recorded as a histogram.</li>
+</ol>
 <pre><code class="language-python">import boto3
 cloudwatch = boto3.client('cloudwatch')
 
@@ -441,13 +445,17 @@ def emit_metric(name, value, unit='Count'):
         MetricData=[{'MetricName': name, 'Value': value, 'Unit': unit}]
     )
 </code></pre>
-<p>Typical numbers from a 5‑minute load test (10 k requests) are:
-- Success rate 96 %
-- Fallback rate 3 %
-- Average latency 420 ms (including AI inference)
-- 99th‑percentile latency 620 ms</p>
-<h3 id="unit-tests-with-pytest-74">Unit tests with pytest 7.4</h3>
-<p>We mock the three providers using <code>respx</code> (v0.20) to return deterministic payloads. A minimal test suite:</p>
+<h3 id="how-to-measure-this-yourself">How to measure this yourself</h3>
+<p>Rather than trusting any published benchmark, run your own load test and record the following. Use a load generator such as <code>k6</code> or <code>vegeta</code> against a staging deployment, with each gateway's sandbox endpoint mocked or pointed at a test account:</p>
+<ul>
+<li><strong>Success rate</strong> — successful charges divided by total attempts.</li>
+<li><strong>Fallback rate</strong> — fallback writes divided by total attempts.</li>
+<li><strong>Latency distribution</strong> — p50, p95, p99 of the payment call alone, excluding AI inference, so you can attribute the tail correctly.</li>
+<li><strong>Error mix</strong> — count by mapped error class (<code>temporary_unavailable</code>, <code>permanent_failure</code>, <code>unknown</code>).</li>
+</ul>
+<p>Run the test twice: once with client-side throttling enabled and once disabled. The difference in fallback rate and p99 latency tells you whether the token bucket is earning its keep in your environment. Do not copy a fallback rate from someone else's blog post; the number depends on your provider, region, and traffic shape.</p>
+<h3 id="unit-tests-with-pytest">Unit tests with pytest</h3>
+<p>Mock the three providers with <code>respx</code> to return deterministic payloads:</p>
 <pre><code class="language-python"># test_handler.py
 import pytest, httpx, json
 from fastapi.testclient import TestClient
@@ -457,7 +465,7 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def mock_gateways(respx_mock):
-    # M‑Pesa success
+    # M-Pesa success
     respx_mock.post('https://sandbox.safaricom.co.ke/mpesa/v1/transactions').mock(
         return_value=httpx.Response(200, json={'ResponseCode': '0', 'ResponseDesc': 'Success'})
     )
@@ -483,9 +491,9 @@ def test_paystack_fallback():
     assert data['fallback'] is True
     assert data['payment']['status'] == 'pending'
 </code></pre>
-<p>Running <code>pytest -q</code> yields <strong>4 passed</strong> in 0.73 s, confirming that our retry and fallback logic behaves as expected.</p>
-<h3 id="logging-with-structlog-241">Logging with structlog 24.1</h3>
-<p>Structured logs make it easy to spot the “temporary_unavailable” pattern in CloudWatch Logs Insights:</p>
+<p><code>pytest -q</code> should report all tests passing. The exact count and runtime depend on your suite.</p>
+<h3 id="structured-logging">Structured logging</h3>
+<p>Structured logs make the "temporary_unavailable" pattern visible in CloudWatch Logs Insights:</p>
 <pre><code class="language-python">import structlog
 log = structlog.get_logger()
 log.info('payment_attempt', provider=provider, user=user_id, latency_ms=latency)
@@ -495,59 +503,25 @@ log.info('payment_attempt', provider=provider, user=user_id, latency_ms=latency)
 | filter @message like /temporary_unavailable/
 | stats count() by provider, bin(5m)
 </code></pre>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>After deploying the stack to the <code>prod</code> stage and feeding a synthetic load of 1 k RPS for 10 minutes (using <code>k6 0.54</code>), we observed the following:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Avg AI inference latency</td>
-<td>250 ms</td>
-</tr>
-<tr>
-<td>Avg payment call latency (all providers)</td>
-<td>380 ms</td>
-</tr>
-<tr>
-<td>Max observed fallback rate</td>
-<td>4.2 %</td>
-</tr>
-<tr>
-<td>Cost per 1 M Lambda invocations</td>
-<td>$0.12</td>
-</tr>
-<tr>
-<td>Redis memory footprint</td>
-<td>~12 MB</td>
-</tr>
-</tbody>
-</table>
-<p>The most common failure mode was M‑Pesa's <code>500.001.1005</code> (rate limit). When we disabled the local token bucket, the fallback rate jumped from 2 % to 9 % and the 99th‑percentile latency spiked to 1.2 s. Adding the bucket brought it back down, confirming the value of client‑side throttling.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<h3 id="variation-batch-ai-calls">Variation: Batch AI calls</h3>
-<p>If you need to score a cart of 10 items, batch the payload to SageMaker. The endpoint supports up to 5 MB per request, and the latency grows linearly (~30 ms per extra item). Adjust the Lambda memory to 512 MB to avoid throttling the CPU.</p>
-<h3 id="variation-using-aws-step-functions-for-orchestration">Variation: Using AWS Step Functions for orchestration</h3>
-<p>For high‑value transactions you might prefer a Step Functions state machine that separates AI inference, <a href="/merge-three-payment-apis-into-one-system/">payment, and reconciliation into</a> distinct Lambda tasks. This adds ~80 ms overhead but gives you visual retry policies and a built‑in audit trail.</p>
-<h3 id="variation-switching-to-serverside-idempotency">Variation: Switching to server‑side idempotency</h3>
-<p>Some fintechs store a transaction hash in DynamoDB with a conditional write (<code>ConditionExpression = attribute_not_exists(pk)</code>). This eliminates the need for Redis but adds ~15 ms write latency per attempt.</p>
+<h2 id="common-failure-modes-and-variations">Common failure modes and variations</h2>
+<h3 id="variation-batch-ai-calls">Variation: batch AI calls</h3>
+<p>If you need to score a cart of 10 items, batch the payload to the inference endpoint. Endpoints typically accept requests up to a documented size limit, and latency grows with batch size. Adjust the Lambda memory upward if CPU-bound preprocessing becomes the bottleneck.</p>
+<h3 id="variation-orchestration-with-step-functions">Variation: orchestration with Step Functions</h3>
+<p>For high-value transactions, a Step Functions state machine that separates inference, payment, and reconciliation into distinct Lambda tasks gives you visual retry policies and an audit trail. The tradeoff is added per-transition overhead and a more complex deployment surface.</p>
+<h3 id="variation-server-side-idempotency">Variation: server-side idempotency</h3>
+<p>Some teams store a transaction hash in DynamoDB with a conditional write (<code>ConditionExpression = attribute_not_exists(pk)</code>). This removes the Redis dependency but adds write latency per attempt and requires careful handling of the conditional-check failure path.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How can I test payment provider failures locally?</strong></p>
-<p>Use <code>respx</code> (or <code>nock</code> for Node) to mock HTTP responses. Simulate timeouts with <code>httpx.ConnectTimeout</code> and rate‑limit errors with a 429 payload. Store the mock definitions in a <code>tests/mocks.py</code> file and import them in your pytest fixtures.</p>
-<p><strong>Why does my Lambda sometimes exceed the 5 s timeout even with retries?</strong></p>
-<p>When a provider returns a 500 error, the retry backoff can add up to 4 s (500 ms → 1 s → 2 s). Combine that with the 250 ms AI call, and you reach ~4.5 s. Add a hard timeout around the payment call (<code>httpx.Timeout(3.0)</code>) and let the circuit breaker surface the error earlier.</p>
+<p>Use <code>respx</code> (or <code>nock</code> for Node) to mock HTTP responses. Simulate timeouts with <code>httpx.ConnectTimeout</code> and rate-limit errors with a 429 payload. Keep mock definitions in a <code>tests/mocks.py</code> file and import them in your pytest fixtures.</p>
+<p><strong>Why does a Lambda sometimes exceed its configured timeout even with retries?</strong></p>
+<p>Retries multiply the request budget. With a 500 ms initial backoff doubling to 4 s, three attempts can consume several seconds of wall clock before the payment call even returns. Add the inference call and you can exceed a 5 s timeout. The fix is a hard per-attempt timeout on the HTTP client (for example, <code>httpx.Timeout(3.0)</code>) plus a circuit breaker that opens before the budget is exhausted, so the request fails fast and predictably rather than being killed mid-flight.</p>
 <p><strong>What is the safest way to store the fallback payload?</strong></p>
-<p>Redis with a TTL of 300 seconds is cheap and fast, but it is volatile. For regulatory compliance, also write the payload to an S3 bucket with server‑side encryption and a lifecycle rule that expires after 30 days.</p>
-<p><strong>When should I switch from Lambda to Fargate for this workload?</strong></p>
-<p>If you consistently see &gt;70 % of invocations hitting the 5 s limit, or if you need more than 3 GB of memory for large AI batches, Fargate gives you predictable CPU and memory without cold starts. Expect the cost to rise to roughly $0.09 per vCPU‑hour.</p>
+<p>Redis with a short TTL is cheap and fast but volatile. For regulatory compliance, also write the payload to object storage with server-side encryption and a lifecycle rule that expires it after the retention period your jurisdiction requires.</p>
+<p><strong>When should I move from Lambda to a container service for this workload?</strong></p>
+<p>If a large share of invocations are hitting the timeout limit, or you need more memory than the Lambda maximum for large inference batches, a container service gives you predictable CPU and memory without cold starts. The tradeoff is a higher baseline cost and more operational surface area.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>You now have a resilient checkout endpoint that tolerates the three most common African payment gateway failure modes. The next logical step is to automate the reconciliation of fallback entries stored in Redis. Create a scheduled Lambda (cron expression <code>rate(5 minutes)</code>) that reads <code>fallback:*</code> keys, re‑issues the payment request, and updates a DynamoDB table with the final status. This closes the loop and guarantees that no user is left in a pending state.</p>
-<p><strong>Actionable next step (30 min):</strong></p>
-<p>Create a file named <code>reconcile.py</code> in the repo, copy the skeleton from the snippet below, and run <code>python reconcile.py</code> locally to verify that a cached fallback key is retried successfully.</p>
+<p>You now have a checkout endpoint that tolerates the most common payment gateway failure modes and, more importantly, knows when it does not know the outcome. The next step is to close the loop: automate reconciliation of the fallback entries.</p>
+<p><strong>Actionable next step (30 minutes):</strong> write a reconciliation script that scans the <code>fallback:*</code> keys, re-issues each payment with the same idempotency key, and records the final status. Run it locally against a Redis instance seeded with one fake fallback key to confirm the retry path works end to end.</p>
 <pre><code class="language-python"># reconcile.py
 import os, json, redis, httpx
 r = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=6379, db=0)
@@ -559,21 +533,7 @@ for key in r.scan_iter('fallback:*'):
     # (omitted for brevity)
     print(f'Retrying {provider} for {payload}')
 </code></pre>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
-<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
-<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p>The skeleton above is deliberately incomplete: the real value is in reusing the same idempotency key and error-mapping logic from <code>handler.py</code>, so that a reconciled retry behaves identically to a first attempt.</p>
                 
                 
             </div>
@@ -602,14 +562,14 @@ for key in r.scan_iter('fallback:*'):
                     
                     <a class="related-card" href="/ai-features-m-pesa-paystack-flutterwave-traps/">
                         <h3>AI features: M-Pesa, Paystack, Flutterwave traps</h3>
-                        <p>M-Pesa, Paystack, and Flutterwave each fail differently. Normalize webhooks, handle pending states, and stop double-charging customers with idempotency.</p>
-                        <span class="related-meta">14 min read · 23 September 2026</span>
+                        <p>Payment webhooks from M-Pesa, Paystack and Flutterwave disagree on timing, idempotency and error semantics. Here is how to normalize them before an AI feature reads them.</p>
+                        <span class="related-meta">11 min read · 23 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
                         <h3>Currency switch fails in Ghana: one config file to rule…</h3>
-                        <p>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</p>
-                        <span class="related-meta">16 min read · 13 August 2026</span>
+                        <p>Mobile money providers put currency codes in different places. Learn a deterministic extraction, validation, and normalization pipeline that stops silent fallbacks.</p>
+                        <span class="related-meta">12 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/aws-cloudwatch-synthetics-for-ai-pipelines/">

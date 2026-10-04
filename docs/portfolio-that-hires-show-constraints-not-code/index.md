@@ -1,49 +1,71 @@
 # Portfolio that hires: show constraints, not code
 
-Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what a portfolio built under real constraints actually looks like.
+Most portfolio advice assumes a clean environment and a patient timeline. Production gives you neither. A portfolio that gets read by a hiring manager is not the one with the most polished UI; it is the one where the constraints are visible and the trade-offs are written down.
 
-## The situation (what we were trying to solve)
+## What a portfolio is actually being judged on
 
-In 2026, hiring managers in Lagos and Nairobi see a flood of résumés that look identical: “Built a SaaS with Next.js, Tailwind, and Vercel + AI autocomplete.” The signal-to-noise ratio is terrible. A 12-person fintech startup in Kenya that grew from 3 to 42 engineers in 24 months faces the same problem every hiring round: every new hire has to stand out from the sea of boilerplate projects. This becomes acute when hiring a senior backend engineer; out of hundreds of applications, only a handful typically look like they could actually ship code under load on Safaricom’s 3G network. The rest look like they were copied from the same GitHub template and only tested on Wi-Fi.
+A reviewer scanning a portfolio is trying to answer three questions, usually in under two minutes:
 
-What is needed is a portfolio that proves you can (1) ship a product that survives intermittent mobile data, (2) reason about latency under load, and (3) write code that a 20-person team can maintain without onboarding drama. It also helps to avoid the “AI-assisted” trap: recruiters commonly report seeing a dozen or more identical “AI-powered expense tracker” projects in a single month. The answer is to make the portfolio a living artifact with three pillars: live traffic, synthetic load tests, and a written debenture that explains every trade-off.
+1. Can this person ship something that survives a bad network?
+2. Can this person reason about latency, cost and failure under load?
+3. Can this person write code and documentation that a team of twenty can maintain without a long onboarding?
 
-The first constraint to set is that “good enough for Chrome on fibre” is not the bar—mobile-first, intermittent-connection-tolerant is. A median 3G RTT of around 280 ms in Nairobi is a reasonable planning figure, so a hard latency budget makes sense: 400 ms p95 for page loads and 200 ms for API calls. Anything slower gets flagged in the CI pipeline.
+A CRUD app with a green Lighthouse score answers none of them. Lighthouse runs on a fast, stable connection and rewards optimizations that often do not matter on mobile networks. A page can score 98 and still freeze for twelve seconds when the connection drops, because Lighthouse never drops the connection.
 
-## What tends to fail first, and why
+The fix is not more features. It is making the constraints explicit and measurable, so a reviewer can see the reasoning without having to run the code.
 
-The standard Next.js + Supabase template on Vercel is the usual starting point. It looks polished, passes all the linters, and even posts a cute Lighthouse score of 98. But when a 3G drop is simulated for 5 seconds (using Chrome DevTools’ “offline” mode for 20 users), the UI freezes and the web socket reconnect takes around 12 s. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout in the Supabase client—this post is what a developer would wish they had found then.
+## The failure modes that show up first
 
-Next comes the “serverless everything” stack: API Gateway → Lambda (Node 20 LTS) → DynamoDB. Cold starts commonly average 870 ms, which breaks a 200 ms API budget on the first load. Provisioned concurrency can cut cold starts to around 120 ms but typically doubles the AWS bill from roughly $42 to $87 per month. That is still acceptable for a demo, but recruiters consistently say they would not hire a candidate whose app costs more to run than a junior engineer’s salary in Nairobi.
+### The template stack that passes every linter
 
-Finally, an AI-generated README that lists “AI-powered expense tracker” as a bullet tends to produce a callback rate around 15 %—but when those candidates are invited for a take-home, most fail the mobile-first test. The portfolio looks good on paper, but few can explain why their “optimized” query takes 1.8 s on a 3G drop.
+The standard Next.js plus a hosted backend template deploys in minutes, looks polished, and passes lint and type checks. A typical failure mode appears when the connection is throttled: the UI blocks on a request that never resolves, and reconnection logic either does not exist or assumes a clean disconnect.
 
-## The approach that works
+Two things usually cause this:
 
-Scrap the template and build a portfolio that is literally a product: **PortfolioOS**. It’s a single-page React app (Next.js 14, App Router) that runs on a $12/month Fly.io shared-cpu-1x instance with Redis 7.2 for caching. The twist is to instrument every page load and API call and expose the raw JSON to the recruiter—no pretty graphs, just plain numbers and logs.
+- A client-side timeout that is longer than the user's patience, so the UI waits instead of degrading.
+- Reconnect logic with no backoff, which turns a brief drop into a retry storm that makes recovery slower.
 
-Key constraints to lock in:
-- Mobile-first: every endpoint must respond within 200 ms p95 on a synthetic 3G profile (250 ms RTT, 1.5 Mbps, 100 ms jitter).
-- Intermittent-connection-tolerant: simulate 3G drops every 30 s for 5 s and verify the UI recovers within 2 s.
-- Cost-controlled: the whole stack runs on $12/month Fly.io with a 1 GB Redis 7.2 instance.
-- Maintainable: the codebase has a 200-line README that explains every caching strategy, database index, and retry policy.
+Neither is visible in a Lighthouse report. Both are visible in a throttled load test.
 
-Also add a debenture: a 500-word “post-mortem” that explains every latency spike, cache miss, and cost spike. Recruiters consistently say this is the part they value most—it proves the candidate can reason about trade-offs instead of just shipping a green Lighthouse score.
+### Serverless cold starts against a tight API budget
 
-## Implementation details
+A serverless API behind a managed gateway is a reasonable default, but cold starts commonly land in the hundreds of milliseconds. If the API budget is 200 ms p95, the first request after an idle period will blow it.
 
-Here is the stack that ends up working:
+Provisioned concurrency removes most of the cold-start penalty, but it also changes the cost model from pay-per-request to pay-for-idle-time. That is a legitimate trade-off, but it has to be stated as one. A portfolio that shows the cost of both configurations, and explains which one was chosen and why, is more convincing than one that quietly pays for always-on capacity.
 
-| Layer | Tool | Version | Notes |
-|---|---|---|---|
-| Frontend | Next.js | 14.2.3 (App Router) | Static export disabled; SSR for API calls |
-| Hosting | Fly.io | 2026.04.1 | $12/month shared-cpu-1x |
-| Cache | Redis | 7.2 | 1 GB, eviction policy: `allkeys-lru` |
-| Database | PostgreSQL | 15.6 on Fly.io | 1 shared-cpu, 256 MB RAM |
-| Load testing | k6 | 0.51.0 | Synthetic 3G profile |
-| CI/CD | GitHub Actions | 2026.04 | Runs k6 on every PR |
+### The AI-generated project description
 
-The critical part is the synthetic 3G profile. Use k6 to simulate a 3G network:
+A generic "AI-powered" project description reads the same as a hundred others. The problem is not that the project is bad; it is that the description contains no evidence of judgement. There is no constraint, no measurement, and no rejected alternative.
+
+The remedy is the same in all three cases: instrument the system, publish the numbers, and write down what you chose not to do.
+
+## The approach: a portfolio as an instrumented product
+
+Build the portfolio as a small production system with four locked constraints:
+
+- **Mobile-first latency budget.** Every endpoint responds within 200 ms p95 under a synthetic 3G profile. Page loads within 400 ms p95.
+- **Intermittent-connection tolerance.** Simulate a 5-second drop every 30 seconds and verify the UI recovers within 2 seconds.
+- **Cost ceiling.** The whole stack runs on a small shared-CPU instance plus a single cache node, with the monthly cost stated in the README.
+- **Maintainability.** A README of roughly 200 lines that explains every caching strategy, database index and retry policy, plus a short post-mortem.
+
+The post-mortem is the part reviewers tend to value most, because it is the only artifact that shows reasoning rather than output. Keep it to about 500 words and cover three things: latency spikes observed, cache misses observed, cost changes observed — each with the fix that was applied.
+
+## Choosing the stack
+
+| Layer | Category | Notes |
+|---|---|---|
+| Frontend | React framework with server rendering | SSR for API-backed pages; avoid static export if data must be fresh |
+| Hosting | Small shared-CPU container host | Scale-to-zero preview environments for CI |
+| Cache | Redis-compatible key-value store | Set an explicit eviction policy and maxmemory |
+| Database | Managed PostgreSQL | One small instance; add indexes only where a query plan justifies them |
+| Load testing | k6 or an equivalent scriptable load tester | Runs in CI on every pull request |
+| CI/CD | Hosted CI runner | Runs load tests and unit tests; blocks merge on threshold breach |
+
+Pin versions in the README rather than in the article, because versions move and the reasoning does not.
+
+## Measuring the 3G profile
+
+The critical piece is the throttled load test. The example below uses k6 with a constant-VU scenario and two thresholds: one for page loads and one for API calls.
 
 ```javascript
 import { check } from 'k6';
@@ -56,64 +78,73 @@ export const options = {
       vus: 20,
       duration: '2m',
       tags: { scenario: '3g_mobile' },
-      // 250 ms RTT, 1.5 Mbps down, 0.75 Mbps up, 100 ms jitter
-      thresholds: {
-        http_req_duration: ['p(95)<400'], // page load
-        http_req_duration: ['p(95)<200'], // api
-      },
     },
   },
   thresholds: {
+    // Page loads: 400 ms p95. API calls: 200 ms p95.
     'http_req_duration{scenario:3g_mobile}': ['p(95)<400'],
+    'http_req_duration{scenario:3g_mobile,kind:api}': ['p(95)<200'],
   },
 };
 
 export default function () {
-  const res = http.get('https://portfolioos.fly.dev/api/projects');
+  const res = http.get('https://example.com/api/projects', {
+    tags: { kind: 'api' },
+  });
+
   check(res, {
     'status is 200': (r) => r.status === 200,
     'latency < 200 ms': (r) => r.timings.duration < 200,
   });
-  // Simulate 3G drop every 30 s for 5 s
-  if (__ENV.THROTTLE_DROP) {
-    if (__VU % 30 === 0) {
-      http.get('http://throttle/5s');
-    }
-  }
 }
 ```
 
-Run this in GitHub Actions on every PR. If the p95 latency exceeds 400 ms for pages or 200 ms for APIs, the job fails and the candidate’s PR is blocked until they fix it.
+Two notes on correctness. First, a scenario-level `thresholds` block inside `scenarios` is not how k6 applies thresholds; thresholds belong at the top level of `options`, which is where they are above. Second, k6 does not throttle the network by itself. To emulate a 3G profile you either run k6 behind a network emulator such as `tc netem` on the load generator, or drive the test through a proxy that applies latency and bandwidth limits. The RTT, bandwidth and jitter values belong in the README next to the test, so a reviewer can see the assumptions.
 
----
+Run this in CI on every pull request. If p95 exceeds the budget, the job fails and the change is blocked until it is fixed.
 
-### Advanced edge cases that commonly surface
+## Worked example: setting a retry policy
 
-1. **MTN Uganda’s “bursty” 3G with 400 ms RTT spikes**
-   In Kampala, MTN’s network doesn’t just drop—it oscillates between 100 kbps and 2 Mbps every 10–15 seconds. A portfolio’s retry policy that assumes constant degradation will freeze the UI for 6–8 seconds while the client retries every 250 ms. The fix is to implement an exponential backoff with jitter (base 150 ms, max 3 s) and a fast-fail after 2 s if the connection doesn’t stabilize. These spikes belong in the debenture, ideally with an RTT graph from Cloudflare Radar Kampala (Q2 2026).
+Suppose the observed distribution of request durations on a throttled connection looks like this (illustrative figures, chosen to make the arithmetic visible):
 
-2. **Safaricom’s USSD fallback triggered mid-session**
-   On 3G, Safaricom often falls back to USSD for voice calls, which can silently interrupt data sessions for 3–5 seconds. WebSocket reconnect logic that assumes a clean disconnect will break, because USSD drops leave the socket half-open. The fix is a TCP keep-alive (SO_KEEPALIVE) and a 1-second heartbeat from the server. If the client misses two heartbeats, it forces a reconnect with a fresh session token. This adds about 12 lines of code but cuts reconnect time from 12 s to 1.8 s under real Safaricom 3G.
+- 50th percentile: 180 ms
+- 90th percentile: 420 ms
+- 99th percentile: 2.4 s
+- Occasional stalls: 6–8 s
 
-3. **Flutterwave’s webhook signature validation on flaky networks**
-   When testing an M-Pesa integration, roughly 8 % of webhook calls from Flutterwave (v3.2.1) commonly fail signature validation on the first attempt under 3G. The cause is usually the signature header being truncated by the network stack before hitting the handler. The fix is a 512-byte buffer in the ingress middleware and a retry policy with idempotency keys derived from the signature. The fix costs about 19 lines of Go (with the API in Go 1.22) but reduces validation failures from 8 % to 0.2 %.
+A naive retry policy — retry every 250 ms until success — will, in the stall case, issue roughly 24–32 requests over 6–8 seconds. Each of those is a fresh request that competes for the same congested link, which makes recovery slower, not faster.
 
-4. **Redis eviction storms during cache stampedes**
-   Caching project metadata in Redis 7.2 with `allkeys-lru` and a maxmemory-policy of 1 GB works fine until a traffic spike (e.g., a candidate’s LinkedIn post goes viral) sends 500 req/s at the same uncached endpoint, causing a stampede that evicts hot keys. Switching to `volatile-ttl` with a 30-second TTL for cached responses and adding a local in-memory cache (BigCache v2.0.2) in the Fly.io instance cuts evictions from 120/s to 3/s and reduces p95 latency from 310 ms to 180 ms under load.
+A better policy: exponential backoff with full jitter, capped, plus a fast-fail.
 
-5. **Fly.io’s shared-cpu preemptions**
-   Fly.io’s $12/month shared-cpu-1x instances can be preempted after 5 minutes of 100 % CPU usage. SSR occasionally spikes to 110 % CPU when rendering a large project list. A CPU throttle in the Next.js API route (using `os.cpus()` and `process.binding('constants').os_cpu_usage`) that returns a 503 if CPU > 90 % for > 2 s keeps the instance alive. The debenture should include a CPU spike graph from Fly.io’s metrics API.
+- Base delay 150 ms, doubling: 150, 300, 600, 1200, 2400 ms.
+- Cap at 3 s.
+- Full jitter: sleep `random(0, delay)` rather than `delay`.
+- Fast-fail: if two consecutive attempts exceed 2 s, stop retrying and surface a degraded state to the UI.
 
----
+The fast-fail is what keeps the UI responsive. The user sees a cached or partial view within about 2 seconds instead of a spinner for 8.
 
-### Integration with real tools (names, versions, code)
+The same reasoning applies on the server side. A heartbeat that expects a response every second, and forces a reconnect after two missed beats, detects a half-open socket in about 2 seconds rather than waiting for a TCP timeout that can take much longer. This is a small amount of code and it is the difference between a UI that recovers quickly and one that appears hung.
 
-**1. M-Pesa STK Push via Daraja API (v1.1.0)**
-M-Pesa can be integrated to accept payments in a portfolio’s “hire me” feature. Daraja’s API is notoriously flaky on 3G, so a retry wrapper with idempotency is essential.
+## Failure-mode analysis: cache stampedes
+
+Caching metadata in Redis with an LRU eviction policy works until a traffic spike hits the same uncached endpoint. When many requests miss simultaneously, they all go to the origin, the origin slows down, and the cache fills with short-lived entries that evict the keys you actually wanted to keep.
+
+Three mitigations, in increasing order of complexity:
+
+1. **Short TTLs on volatile keys.** If cached responses have a 30-second TTL, a spike evicts keys that were going to expire anyway rather than hot keys with long TTLs. This pairs well with a `volatile-ttl` eviction policy.
+2. **Single-flight.** On a cache miss, only one request per key goes to the origin; the rest wait on the same promise. This is a few lines in most languages and removes the thundering herd entirely.
+3. **Local in-memory cache in front of Redis.** A small process-local cache with a very short TTL absorbs repeated reads of the same key within a single instance. The trade-off is staleness and per-instance memory; it is worth it only for read-heavy keys where a few seconds of staleness is acceptable.
+
+The post-mortem should say which of these was chosen and why the others were rejected.
+
+## Handling real payment and messaging APIs
+
+A portfolio that accepts payments or sends messages has to deal with third-party APIs that are themselves unreliable. Two patterns matter.
+
+**Retry with idempotency.** Any write operation that can be retried must carry an idempotency key so a duplicate request does not create a duplicate charge or message. The example below uses a retry-capable HTTP client in Go.
 
 ```go
-// go-mpesa v1.1.0 (2026-05-01)
-package mpesa
+package payments
 
 import (
 	"bytes"
@@ -126,98 +157,82 @@ import (
 	"github.com/hashicorp/go-retryablehttp"
 )
 
-type STKRequest struct {
-	PhoneNumber string `json:"PhoneNumber"`
-	Amount      string `json:"Amount"`
-	Reference   string `json:"Reference"`
+type ChargeRequest struct {
+	PhoneNumber    string `json:"phone_number"`
+	Amount         string `json:"amount"`
+	IdempotencyKey string `json:"idempotency_key"`
 }
 
-func (c *Client) STKPush(ctx context.Context, req STKRequest) (string, error) {
-	url := "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+func (c *Client) Charge(ctx context.Context, req ChargeRequest) (string, error) {
+	const url = "https://api.example.com/v1/charges"
 
 	retryClient := retryablehttp.NewClient()
 	retryClient.RetryMax = 3
 	retryClient.RetryWaitMin = 100 * time.Millisecond
 	retryClient.RetryWaitMax = 2 * time.Second
 	retryClient.CheckRetry = func(ctx context.Context, resp *http.Response, err error) (bool, error) {
-		// Retry on 5xx, 429, or network errors
-		if resp != nil && (resp.StatusCode >= 500 || resp.StatusCode == 429) {
+		if resp != nil && (resp.StatusCode >= 500 || resp.StatusCode == http.StatusTooManyRequests) {
 			return true, nil
 		}
 		return retryablehttp.DefaultRetryPolicy(ctx, resp, err)
 	}
 
-	jsonData, _ := json.Marshal(req)
-	httpReq, _ := retryablehttp.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonData))
+	body, err := json.Marshal(req)
+	if err != nil {
+		return "", fmt.Errorf("encode charge request: %w", err)
+	}
+
+	httpReq, err := retryablehttp.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		return "", fmt.Errorf("build charge request: %w", err)
+	}
 	httpReq.Header.Set("Content-Type", "application/json")
 	httpReq.Header.Set("Authorization", "Bearer "+c.token)
+	httpReq.Header.Set("Idempotency-Key", req.IdempotencyKey)
 
 	resp, err := retryClient.Do(httpReq)
 	if err != nil {
-		return "", fmt.Errorf("stk push failed after retries: %w", err)
+		return "", fmt.Errorf("charge failed after retries: %w", err)
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("stk push failed: %s", resp.Status)
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("charge failed: %s", resp.Status)
 	}
 
 	var result struct {
-		CheckoutRequestID string `json:"CheckoutRequestID"`
+		ChargeID string `json:"charge_id"`
 	}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return "", fmt.Errorf("decode stk response: %w", err)
+		return "", fmt.Errorf("decode charge response: %w", err)
 	}
 
-	return result.CheckoutRequestID, nil
+	return result.ChargeID, nil
 }
 ```
 
-**2. Flutterwave Rave (v3.2.1) with mobile money fallback**
-Flutterwave can handle card payments, with a fallback to MTN Mobile Money (Momo) for users on 2G/3G.
+Two details matter here. The idempotency key is generated by the caller and must be stable across retries — a timestamp generated inside the retry loop would defeat the purpose. And the retry policy retries on 5xx and 429 but not on 4xx, because a malformed request will fail the same way every time.
+
+**Network-aware payment method selection.** On a slow connection, a card form that requires several round trips is worse than a redirect-based flow. A simple heuristic: measure the connection's effective RTT before rendering the payment UI, and prefer the flow with fewer round trips when RTT is high.
 
 ```javascript
-// @flutterwave/rave-react-native v3.2.1 (2026-04-15)
-import { RaveCardPayment, RaveMomoPayment } from 'flutterwave-react-native';
+async function choosePaymentFlow(amount, email) {
+  const rtt = await measureRtt(); // e.g. median of three small HEAD requests
+  const slowNetwork = rtt > 200;
 
-const handlePayment = async (amount, email, phone) => {
-  const is3G = await checkNetworkType(); // Returns true if RTT > 200 ms
-  const config = {
-    tx_ref: `hire-${Date.now()}`,
+  return {
     amount,
     email,
     currency: 'KES',
-    payment_options: is3G ? 'mobilemoneygh' : 'card',
+    // Fewer round trips on a slow link; richer form on a fast one.
+    method: slowNetwork ? 'redirect' : 'inline',
   };
-
-  if (is3G) {
-    // MTN Mobile Money Ghana (network-dependent)
-    RaveMomoPayment({
-      ...config,
-      phone: phone.replace('+', ''),
-      network: 'MTN',
-      public_key: process.env.FLUTTERWAVE_PUBLIC_KEY,
-    })
-      .then((res) => {
-        if (res.status === 'successful') {
-          window.location.href = '/success';
-        } else {
-          // Fallback to card after 10 s timeout
-          setTimeout(() => RaveCardPayment(config), 10000);
-        }
-      })
-      .catch(() => RaveCardPayment(config));
-  } else {
-    RaveCardPayment(config);
-  }
-};
+}
 ```
 
-**3. Cloudflare Workers KV (v2026.5.0) for offline-first caching**
-Recruiter-facing metrics can be cached in Cloudflare KV so the portfolio works in airplane mode for 5-minute bursts.
+**Edge caching for read paths.** A key-value store at the edge is a good fit for read-heavy metrics that change slowly. The pattern is a cache-aside read with an explicit fallback to origin.
 
 ```typescript
-// @cloudflare/workers-types v2026.5.0
 export interface Env {
   PORTFOLIO_KV: KVNamespace;
 }
@@ -225,76 +240,71 @@ export interface Env {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+
     if (url.pathname === '/api/metrics') {
       try {
-        // Try KV first
         const cached = await env.PORTFOLIO_KV.get('metrics', { type: 'json' });
-        if (cached) return new Response(JSON.stringify(cached), { headers: { 'Content-Type': 'application/json' } });
+        if (cached) {
+          return new Response(JSON.stringify(cached), {
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
       } catch {
-        // Fall back to origin
+        // Fall through to origin on cache error.
       }
     }
-    // ... fetch from origin ...
+
+    return fetch(request);
   },
 };
 ```
 
----
+The catch block is deliberate: a cache outage should degrade to origin reads, not to a 500.
 
-### Before/after comparison (typical numbers)
+## What to measure, and how
 
-| Metric | Before (Next.js + Supabase on Vercel) | After (PortfolioOS on Fly.io) |
+Do not publish benchmark tables copied from a blog post. Publish how to reproduce your own. For each metric below, the instrumentation is the deliverable.
+
+| Claim | What to instrument | How to compare |
 |---|---|---|
-| **Page load p95 latency (simulated 3G)** | 1.2 s | 380 ms |
-| **API call p95 latency** | 870 ms (cold Lambda) → 120 ms (provisioned) | 160 ms |
-| **Cost per month** | $42 (Lambda) / $12 (Vercel Pro) → $87 (provisioned Lambda) | $12 (Fly.io shared-cpu-1x + Redis 1 GB) |
-| **Lines of code** | 89 (Next.js + Supabase template) | 940 (Next.js 14 + Go API + Redis + monitoring) |
-| **3G drop recovery time** | 12 s freeze + 5 s reconnect | 1.8 s reconnect |
-| **Synthetic load test (k6 0.51.0, 20 VUs, 2 min)** | 32 % failures (p95 > 400 ms) | 0 % failures |
-| **Cold start time (API)** | 870 ms (Lambda Node 20) | 45 ms (Fly.io Go 1.22) |
-| **Cache hit ratio (Redis 7.2)** | 42 % | 87 % (with `volatile-ttl`) |
-| **MTN Uganda RTT spike handling** | UI freeze for 6–8 s | Reconnect in 1.8 s |
-| **Safaricom USSD drop recovery** | Socket half-open → 12 s freeze | 1.8 s reconnect with heartbeat |
-| **CI pipeline duration** | 3 min (Lighthouse + Jest) | 8 min (k6 0.51.0 + Go tests + debenture lint) |
-| **Recruiter callback rate** | 15 % (AI-generated README) | 68 % (live metrics + debenture) |
+| API latency under load | Request duration histogram, tagged by endpoint | Run the load test before and after the change; compare p50, p95, p99 |
+| Cold-start penalty | Time from request received to first byte, for the first request after idle | Issue one request after a 10-minute idle period, repeat 20 times |
+| Cache effectiveness | Hit ratio and eviction count from the cache server's own metrics | Compare hit ratio across two eviction policies under the same load |
+| Reconnect time | Time from connection drop to first successful request after reconnect | Throttle the connection in the load test and record the gap |
+| Cost | Provider's billing page, itemised | State the monthly figure and the assumptions behind it |
 
----
+A reviewer who can run your load test and reproduce your numbers is far more convinced than one who reads a table.
 
-## Frequently Asked Questions
+## A decision checklist
 
-### Why does a portfolio need a synthetic 3G profile instead of just a Lighthouse score?
+Before publishing, check each of these:
 
-Lighthouse runs on a fast, stable connection and rewards optimizations that often don’t matter on mobile networks. A synthetic 3G profile (250 ms RTT, 1.5 Mbps, 100 ms jitter) exercises the failure modes that real users hit: cold starts, cache misses, and reconnect storms. A portfolio that passes Lighthouse at 98 can still freeze for 12 seconds when the connection drops, because Lighthouse never drops the connection. Testing against a throttled profile with enforced p95 thresholds catches those regressions before a recruiter does.
+- [ ] Every endpoint has a stated latency budget, and the budget is enforced in CI.
+- [ ] The load test runs against a throttled profile, not a local loopback.
+- [ ] Retry logic uses backoff with jitter and has a fast-fail path.
+- [ ] Write operations carry idempotency keys.
+- [ ] The cache has an explicit eviction policy and a stated TTL rationale.
+- [ ] The README states the monthly cost and the assumptions behind it.
+- [ ] The post-mortem names at least one rejected alternative and why it was rejected.
+- [ ] No claim in the README is unsupported by a number you can reproduce.
 
-### How do I keep a portfolio’s monthly infrastructure cost low while still running load tests?
+## FAQ
 
-The trick is to separate the load-test environment from the production environment. Run k6 in CI against a preview deployment that scales to zero when idle, and keep the production instance on a small shared-CPU plan with a single Redis node. A shared-cpu-1x instance plus a 1 GB Redis cache typically lands around $12/month, and the CI runner is free for public repositories. Avoid provisioned concurrency and always-on database replicas unless the portfolio is actually receiving traffic; those are the line items that double the bill.
+**Why not just use a Lighthouse score?**
+Lighthouse measures a fast, stable connection. It does not drop the connection, does not simulate jitter, and does not exercise cold starts. It is a useful signal for front-end rendering, but it is not a substitute for a throttled load test with enforced thresholds.
 
-### What should a “debenture” or post-mortem section actually contain?
+**How do I keep the infrastructure cost low while running load tests?**
+Separate the load-test target from production. Run the load test in CI against a preview environment that scales to zero when idle, and keep production on a small shared-CPU plan with a single cache node. Avoid always-on replicas and provisioned capacity unless the portfolio is genuinely receiving traffic; those are the line items that change the bill.
 
-A useful debenture is short—around 500 words—and covers three things: the latency spikes that were observed, the cache misses that were observed, and the cost changes that were observed, each with the fix that was applied. It should name the specific trade-off (for example, “switched from `allkeys-lru` to `volatile-ttl` to stop evicting hot keys”) rather than restating the architecture. Recruiters read it to see whether the candidate can reason about trade-offs, so concrete numbers and rejected alternatives matter more than polished prose.
+**What should the post-mortem contain?**
+Roughly 500 words covering latency spikes observed, cache misses observed, and cost changes observed, each with the fix applied. Name the specific trade-off — for example, "switched eviction policy from LRU to volatile-TTL to stop evicting hot keys" — rather than restating the architecture.
 
-### How do I handle intermittent connectivity without writing a full offline-first app?
+**How do I handle intermittent connectivity without building a full offline-first app?**
+Start with three cheap mechanisms: exponential backoff with jitter on every client retry, a server-side heartbeat so half-open sockets are detected within a couple of seconds, and a short-TTL cache layer so a brief drop does not trigger a stampede on the origin. These cover most intermittent-connection failures. Reach for a full offline-first sync layer only if the product must accept writes while disconnected.
 
-Start with three cheap mechanisms: exponential backoff with jitter on every client retry, a server-side heartbeat so half-open sockets are detected within a couple of seconds, and a short-TTL cache layer (local in-memory plus Redis) so a brief drop doesn’t trigger a stampede on the origin. These three changes cover most intermittent-connection failures and add relatively little code. Only reach for a full offline-first sync layer if the product genuinely needs to accept writes while disconnected; for a portfolio, read-path resilience is usually enough.
+**Does the portfolio need to be a real product with users?**
+No. It needs to be a real system with real constraints and honest measurements. A small app with a documented latency budget, a reproducible load test, and a post-mortem that names rejected alternatives demonstrates more than a larger app with no instrumentation.
 
----
+## Do this in the next 30 minutes
 
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 16, 2026
+Pick one endpoint in your portfolio, add a top-level k6 threshold for it (`'http_req_duration{kind:api}': ['p(95)<200']`), run the test once against your deployed environment, and paste the resulting p95 into your README next to the budget. If it fails, you have just found the first entry for your post-mortem.

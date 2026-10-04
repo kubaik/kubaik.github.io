@@ -1,83 +1,130 @@
 # Latency trade-offs: Nairobi teams beat global AI providers
 
-I ran into this nairobibased teams problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch.
+Edge cases in AI serving tend to surface only once real users hit the system in real network conditions. This article walks through the reasoning behind latency-aware architecture for East African users, and how to measure the trade-offs rather than assume them.
 
-## The one-paragraph version (read this first)
+## The short version
 
-Nairobi-based teams are shipping AI features that global providers can’t compete with because they treat latency as a feature, not a bug. By running inference on-premises with lower-quality but cheaper models, they cut costs 70% while delivering features 3× faster to users in East Africa. This isn’t about raw speed—it’s about understanding that latency is only half the equation when your users are paying for every extra millisecond in bandwidth and device time. I ran into this when a client’s AI chatbot in Kampala kept timing out on AWS Bedrock, costing them $18k/month in retries and support tickets. Moving to a local Kubernetes cluster with Mistral 7B running on NVIDIA T4 GPUs cut response times from 1.2s to 450ms and slashed the bill to $5k—while adding Swahili and Luganda support on day one.
+For users in Nairobi, Lagos, or Kampala, the dominant cost of an AI feature is rarely the model's raw inference speed. It is the sum of compute, bandwidth, and user friction — what you might call total cost of interaction (TCI). Teams that serve these users well tend to treat latency as a design constraint rather than a performance target. That often means smaller models, regional or on-premises inference, aggressive caching, and a routing layer that knows when to fall back to a large hosted model.
 
+None of this is a claim that local inference is always better. It is a claim that the optimization target is different when your users pay per megabyte and charge their phones from a shared source.
 
-## Why this concept confuses people
+## Why the default assumption misleads
 
-Most engineers start with the same assumption: lower latency is always better. That’s what AWS Bedrock, Google Vertex AI, and Azure OpenAI tell you in their marketing—sub-100ms responses, global endpoints, enterprise SLAs. But when your users are in Nairobi, Lagos, or Kampala, those 100ms benchmarks hide two costs you don’t pay in San Francisco or London:
+Most engineers start with the assumption that lower latency is always better, and that a global provider's sub-100ms p99 is the number to beat. That assumption comes from a specific user profile: someone in a well-provisioned data center region, on unmetered broadband, with a device that can afford to wait.
 
-1. **Bandwidth charges**: Every extra millisecond of latency adds to the total payload size because TCP slow-starts and congestion windows expand. In 2026, a typical AI chat response from AWS us-east-1 to Nairobi costs $0.00012 per KB of payload *per round-trip*. A verbose model response that takes 1.2s to generate might be 8KB, but if your client’s phone is on Safaricom 4G, that response grows to 12KB by the time it reaches the device—adding $1.44 per 1000 requests just in bandwidth.
+When your users are elsewhere, two additional costs dominate:
 
-2. **Device battery life**: A study by Kenya’s iHub Research (2025) found that AI inference on mobile in East Africa drains batteries 22% faster when latency exceeds 600ms. Users in informal settlements often share chargers or rely on solar, so longer waits mean fewer interactions per charge cycle.
+1. **Bandwidth and retransmission cost.** Mobile data in many East African markets is metered. A verbose model response is not just slow to generate — it is more bytes to transmit, and TCP behavior under loss means more retransmits. The cost scales with payload size and with how often the connection stalls, not just with round-trip time.
 
-The confusion comes from optimizing for the wrong metric. Global providers optimize for p99 latency from their data centers because that’s what their enterprise customers in New York or Tokyo care about. Nairobi teams optimize for total cost of interaction (TCI)—the sum of compute, bandwidth, and user friction—because that’s what determines whether people actually use the feature.
+2. **Device and attention cost.** Users on shared chargers or solar power have a fixed energy budget per day. A feature that takes 1.2 seconds per interaction uses more of that budget than one that takes 450ms. Attention is also finite: a user waiting at a bus stop has a window measured in tens of seconds, not minutes.
 
+Global providers optimize for p99 latency from their data centers because that is what their largest enterprise customers measure. That is a legitimate optimization. It is simply not the same objective function as TCI for a user on a metered 4G connection in Nairobi.
 
-## The mental model that makes it click
+## A mental model
 
-Think of AI inference like a restaurant order:
-- **Global provider**: You’re at a drive-thru in downtown Nairobi, but the kitchen is in Johannesburg. The food tastes great, but the 45-minute wait for your ugali means you’ll probably go home and cook instead.
-- **Nairobi team**: You’re at a kibanda next to the bus stop. The ugali takes 5 minutes to cook because they’re using a smaller stove and local ingredients, but you get it while the matatu is still loading passengers. You’ll come back tomorrow.
+Think of inference like ordering food:
 
-The key insight is that **latency is a tax on attention**. Every extra 100ms taxes the user’s patience, not just their network. In 2026, attention spans in East Africa are measured in seconds, not minutes—especially when users are paying per kilobyte for data. The Nairobi model treats latency as a design constraint, not a performance goal.
+- **Centralized provider:** The kitchen is in another country. The food may be excellent, but the wait and the delivery cost are part of the meal.
+- **Regional or local inference:** The kitchen is next door. It may use a smaller stove and a narrower menu, but the food arrives while the customer is still deciding whether to wait.
 
+The useful framing is that **latency acts as a tax on attention**. Every extra 100ms is a small tax on the user's patience and, on metered connections, on their data budget. The design question is not "how do we minimize latency" but "how do we minimize the total cost of a successful interaction."
 
 ### The three levers
 
-| Lever | Global Provider Focus | Nairobi Team Focus |
-|-------|-----------------------|-------------------|
-| Model size | Bigger models = better accuracy | Smaller models = faster local inference |
-| Infrastructure | Centralized, multi-region | On-premises or regional edge |
-| Cost model | Pay-per-token, high bandwidth | Pay-per-watt, low bandwidth |
+| Lever | Centralized provider | Regional or local |
+|-------|----------------------|-------------------|
+| Model size | Larger models, more parameters | Smaller models, often fine-tuned |
+| Infrastructure | Multi-region cloud | On-premises or regional edge |
+| Cost model | Pay-per-token, bandwidth billed separately | Fixed hardware plus power and cooling |
 
-I was surprised that even with a 3B parameter model, Nairobi teams could match the accuracy of a 13B model running on AWS Bedrock—because they fine-tuned on Swahili news articles, Luganda parliament transcripts, and Kenyan parliamentary debates. The smaller model had 4× fewer parameters but was trained on domain-specific data, so it hallucinated 38% less on local topics.
+None of these levers is free. A smaller model can be less accurate on general benchmarks; fine-tuning on domain data is what recovers the gap. On-premises hardware has an upfront cost and an operational burden. The point is to choose deliberately rather than by default.
 
+## A worked example (illustrative)
 
-## A concrete worked example
+The numbers below are illustrative and chosen to show the arithmetic. Substitute your own measured values before making a decision.
 
-Let’s compare two setups for a customer support chatbot serving 50,000 users in Nairobi’s industrial area:
+Assume a customer support chatbot serving 50,000 monthly active users, averaging 20 interactions each, so 1,000,000 requests per month.
 
-### Setup A: AWS Bedrock (us-east-1)
-- Model: Anthropic Claude 3 Haiku
-- Latency: 1.2s p99
-- Cost: $0.0008 per 1K tokens
-- Bandwidth: 6KB per response (after TCP slow-start)
-- Monthly compute: $2,800
-- Monthly bandwidth: $1,440
-- Total: $4,240
+**Setup A: hosted API in a distant region**
+- Model: a small hosted model
+- Measured p99 latency from your users: 1.2s
+- Price: $0.0008 per 1K tokens
+- Average response: 400 tokens, so $0.00032 per request
+- Monthly compute: 1,000,000 × $0.00032 = $320
+- Average response size: 6KB including protocol overhead
+- Monthly egress: 1,000,000 × 6KB = 6,000,000 KB ≈ 6 GB
+- At $0.09/GB egress (a common cloud list price), bandwidth: ~$0.54
 
-### Setup B: Local Kubernetes cluster (Nairobi)
-- Model: Fine-tuned Mistral 7B (3 epochs on Swahili corpus)
-- Latency: 450ms p99
-- Cost: $0.00012 per 1K tokens (self-hosted)
-- Bandwidth: 3.2KB per response (local CDN edge)
-- Monthly compute: $800 (NVIDIA T4 GPUs, 4× instances)
-- Monthly bandwidth: $250
-- Total: $1,050
+**Setup B: self-hosted on regional GPUs**
+- Model: a 7B model fine-tuned on domain data
+- Measured p99 latency from your users: 450ms
+- Hardware: 4 GPUs in a colo, amortized at $800/month including power and cooling
+- Monthly compute: $800 (fixed, independent of request count at this volume)
+- Average response size: 3.2KB with a local CDN edge
+- Monthly egress: 3.2 GB, negligible if you peer locally
 
-**Savings**: 75% on compute and 83% on bandwidth.
-**Latency delta**: 750ms faster, which aligns with the iHub Research finding that East African users abandon interactions after 800ms of wait time.
+The comparison here is not "75% cheaper." It is that Setup A's cost scales with usage while Setup B's cost is largely fixed. At 1M requests/month, Setup B is more expensive on compute alone. At 10M requests/month, the fixed cost is amortized and the hosted API cost has grown tenfold. The break-even point is the number you need to compute for your own traffic, and it depends on your token prices, egress rates, and hardware amortization.
 
-Here’s the Terraform snippet we used to deploy the local stack:
+The latency difference (750ms) is real but should be measured from your users, not assumed from provider documentation. Provider p99 numbers are typically measured from within their network, not from a mobile device in Nairobi.
+
+## How to measure this yourself
+
+Do not trust a table like the one above. Instrument your own system:
+
+1. **Measure client-side latency, not server-side.** Add timing to the client that captures time-to-first-token and time-to-last-token as experienced by the device. Server-side p99 will look much better than what users see.
+2. **Measure payload size in bytes.** Log the actual response size including headers and any framing. This is the number that drives bandwidth cost.
+3. **Measure retransmission rate.** On a lossy mobile connection, retransmits dominate. Tools like `mtr` or `tcpdump` on a representative device will show this.
+4. **Measure abandonment.** Track the fraction of interactions where the user closes the app or navigates away before the response arrives. This is the metric that actually matters for product outcomes.
+5. **Compute TCI.** For each candidate architecture, sum (compute cost per request) + (bandwidth cost per request) + (a proxy for user friction, such as abandonment rate × value per interaction).
+
+A simple instrumentation sketch in Python:
+
+```python
+# app/metrics.py
+import time
+import logging
+
+logger = logging.getLogger("ai_metrics")
+
+async def timed_generate(llm, query, sampling_params, user_region):
+    start = time.monotonic()
+    first_token_at = None
+    chunks = []
+    async for chunk in llm.generate_stream(query, sampling_params):
+        if first_token_at is None:
+            first_token_at = time.monotonic()
+        chunks.append(chunk)
+    end = time.monotonic()
+    response = "".join(chunks)
+    logger.info(
+        "ai_request",
+        extra={
+            "region": user_region,
+            "ttft_ms": int((first_token_at - start) * 1000) if first_token_at else None,
+            "total_ms": int((end - start) * 1000),
+            "response_bytes": len(response.encode("utf-8")),
+        },
+    )
+    return response
+```
+
+Run this for a week, then compare regions. The gap between your best and worst region is the size of the problem you are trying to solve.
+
+## A concrete deployment sketch
+
+The following Terraform and Python are illustrative of the shape of a regional deployment. Adjust names and paths to your environment.
 
 ```hcl
 # main.tf
 module "ai_inference" {
-  source = "./modules/ai-inference"
-  model_path = "models/mistral-7b-swahili-v3"
-  replicas = 4
-  gpu_type = "nvidia-tesla-t4"
-  region = "af-south-1"
-  cdns = ["cloudflare", "africaonline"]
+  source     = "./modules/ai-inference"
+  model_path = "models/domain-7b-v3"
+  replicas   = 4
+  gpu_type   = "nvidia-tesla-t4"
+  region     = "af-south-1"
+  cdns       = ["cloudflare", "africaonline"]
 }
 ```
-
-And the Python code to handle swapping between the local model and a fallback to AWS when the local cluster is under load:
 
 ```python
 # app/ai_service.py
@@ -86,15 +133,12 @@ from vllm import LLM, SamplingParams
 from fastapi import FastAPI
 
 app = FastAPI()
+
 local_llm = LLM(
-    model="mistral-7b-swahili-v3",
+    model="domain-7b-v3",
     tensor_parallel_size=1,
     dtype="float16",
     max_num_batched_tokens=2048,
-)
-aws_fallback = Anthropic(
-    api_key=os.getenv("ANTHROPIC_KEY"),
-    model="claude-3-haiku-20240307",
 )
 
 @app.post("/chat")
@@ -105,54 +149,40 @@ async def chat(query: str, user_id: str):
             SamplingParams(temperature=0.7, max_tokens=512),
         )
         return {"response": output.outputs[0].text}
-    except Exception as e:
-        if "CUDA out of memory" in str(e):
-            return await aws_fallback.chat(query, user_id)
-        raise
+    except RuntimeError as e:
+        # GPU memory pressure or other runtime failure: fall back to hosted model
+        return await hosted_fallback.chat(query, user_id)
 ```
 
-I spent two weeks tuning the vLLM parameters to squeeze every millisecond out of the T4 GPUs. The default settings added 180ms of overhead because the batching was too aggressive for our 4-replica cluster. Reducing the `max_num_batched_tokens` from 8192 to 2048 and setting `tensor_parallel_size=1` cut the latency by 42% without hurting throughput.
+Two notes on the code above. First, catch a specific exception type rather than string-matching on an error message; the message text is not a stable API. Second, `max_num_batched_tokens` controls how many tokens are batched before the scheduler runs. Setting it too high increases time-to-first-token for the earliest request in the batch. Setting it too low reduces throughput. The right value is workload-dependent and should be tuned against your own latency and throughput measurements.
 
+## Common misconceptions
 
-## How this connects to things you already know
+### 1. "Smaller models are always less accurate."
 
-This isn’t about AI or Africa—it’s about **edge economics**. You’ve probably seen the same pattern in other domains:
+Accuracy depends on the data and the task, not only on parameter count. A 3B model fine-tuned on domain-specific text — court rulings, local news, government transcripts — can outperform a much larger general-purpose model on that domain. The way to know is to build a held-out evaluation set from your own domain and measure both models on it. Do not assume; measure.
 
-- **CDNs**: You cache images at the edge because serving from origin adds 300ms, but the cache is only 20KB. The bandwidth saved pays for the edge nodes.
-- **Mobile apps**: WhatsApp uses end-to-end encryption not because it’s faster, but because it’s cheaper—no central server to bill per message.
-- **Databases**: Redis is fast not because it’s in-memory, but because it’s close to your app. Moving Redis from us-east-1 to af-south-1 cut latency from 70ms to 12ms for a Johannesburg user, and the bandwidth dropped from 4KB to 1.2KB because fewer TCP retransmits happened.
+### 2. "On-premises AI is only for large companies."
 
-The pattern is consistent: **locality beats centralization when the cost of moving data exceeds the cost of computing it locally**. Nairobi teams just pushed this logic to its extreme because the numbers work out differently in East Africa.
+The relevant question is break-even volume. If hardware costs $3,200 upfront and $400/month to run, and the hosted alternative costs $320/month at your current volume, self-hosting does not pay back until your volume grows roughly tenfold. Below that threshold, the hosted API is cheaper. Above it, the fixed cost is amortized. The decision is arithmetic, not ideology.
 
+### 3. "Edge AI requires exotic hardware."
 
-## Common misconceptions, corrected
+Consumer and prosumer GPUs are sufficient for 3B–7B models at moderate throughput. The operational challenge is not the hardware; it is the surrounding system — model versioning, health checks, autoscaling, and a fallback path when the local cluster is saturated.
 
-### 1. “Smaller models are always less accurate.”
+### 4. "Local inference automatically satisfies data protection requirements."
 
-Wrong. Accuracy depends on the data, not the size. A 2025 paper from Makerere University showed that fine-tuning a 3B model on Luganda parliamentary transcripts achieved 87% accuracy on local legal queries, beating a 13B general model at 79%. The smaller model’s domain specificity compensated for its size. I saw this firsthand when a client’s legal chatbot hallucinated case law until we fine-tuned on actual Kenyan court rulings—accuracy jumped from 65% to 92% with a 3B model.
+It does not. Data protection law typically constrains how personal data is collected, stored, transferred, and processed, not which physical machine runs the model. Running inference locally can help with data residency, but you still need encryption in transit and at rest, access controls, retention limits, and an audit trail. Consult a qualified advisor for your jurisdiction rather than assuming that locality equals compliance.
 
-### 2. “On-premises AI is only for big companies.”
+## Latency-aware routing
 
-Not in 2026. A Nairobi startup with 10 employees runs Mistral 7B on two NVIDIA T4 GPUs hosted at a shared colo in Westlands. The hardware costs $3,200 upfront and $400/month in power and cooling. Compare that to AWS Bedrock’s $2,800/month compute bill for the same usage—break-even is 3.5 months. For teams shipping customer-facing features, that’s a no-brainer.
+Once a local deployment is working, the next step is routing. A router can direct each request to the cheapest path that meets the user's latency budget:
 
-### 3. “Edge AI requires exotic hardware.”
+1. Serve from cache if the query is a known frequent one.
+2. Use the local model if the local cluster has capacity.
+3. Fall back to a hosted model if the local cluster is saturated or unhealthy.
 
-Nope. We’re using off-the-shelf NVIDIA T4 GPUs ($2,500 each in 2026) and running vLLM on Ubuntu 22.04 with CUDA 12.4. The same stack works for a Swahili sentiment analysis service in Dar es Salaam as it does for a Luganda translation bot in Kampala. The trick is containerizing the model and using KServe for auto-scaling—both are battle-tested in production.
-
-### 4. “Local inference violates compliance.”
-
-Not if you design it right. The Kenyan Data Protection Act (2023) requires user data to be processed within the country, but it doesn’t mandate a specific cloud provider. We encrypt all inference payloads at rest and in transit, and we log nothing that could identify a user—just model inputs and outputs for debugging. The local cluster passes all compliance checks because it’s physically in Kenya and run by a Kenyan entity.
-
-
-## The advanced version (once the basics are solid)
-
-If you’ve got the basics working, the next step is **latency-aware routing**. Instead of always hitting the local model, your API should decide whether to:
-
-1. Use the local model (450ms, cheap)
-2. Fall back to AWS Bedrock (1.2s, expensive)
-3. Use a distilled model running on a user’s device (150ms, but battery-heavy)
-
-Here’s a latency-aware router in Go that uses the user’s geolocation and historical latency data to choose the best path:
+A sketch in Go:
 
 ```go
 // pkg/ai_router/ai_router.go
@@ -161,141 +191,129 @@ package ai_router
 import (
 	"context"
 	"time"
+)
 
-	"github.com/knative/serving/pkg/apis/serving/v1"
+type Route string
+
+const (
+	RouteCache   Route = "cache"
+	RouteLocal   Route = "local"
+	RouteHosted  Route = "hosted"
 )
 
 type Router struct {
-	localLatency    time.Duration
-	edgeLatency     time.Duration
-	awsLatency      time.Duration
-	batterySaver    bool
+	localLatency  time.Duration
+	hostedLatency time.Duration
 }
 
-func (r *Router) Route(ctx context.Context, user *User) (*v1.Route, error) {
-	// Check user's battery level and location
-	if user.BatteryPercent < 20 && user.Country == "KE" {
-		// Use distilled model on device
-		return r.deviceModelRoute(), nil
+func (r *Router) Route(ctx context.Context, user *User, query string) Route {
+	if user.Country == "KE" && user.BatteryPercent < 20 {
+		// Prefer cache to minimize radio use on low battery.
+		if isCacheable(query) {
+			return RouteCache
+		}
 	}
 
-	// Use historical latency data
 	if user.HistoricalLatency < 500*time.Millisecond {
-		return r.localModelRoute(), nil
+		return RouteLocal
 	}
 
-	// Fall back to AWS
-	return r.awsRoute(), nil
+	return RouteHosted
 }
 ```
 
-The real win comes when you combine this with **model caching**. Instead of regenerating every response, you cache the top 20% most frequent queries (e.g., "What’s the M-Pesa fee for sending 1000 KES?"). The first time a user asks, you hit the local model; subsequent times, you serve from Redis with a 10ms response time:
+The specific thresholds are placeholders. The important design property is that the routing decision is explicit and observable — log which route was chosen and why, so you can tune it against real data.
+
+## Caching, and how it goes wrong
+
+Caching is often the single largest latency win, because a cache hit costs roughly one network round-trip instead of a full generation. It is also where subtle bugs live.
+
+A common failure mode is caching a response under a key that does not include all the variables that affect the answer. A query like "What is the transfer fee for 1000 KES?" has a different correct answer depending on the destination country, the sender's account tier, and the current fee schedule. If the cache key is only the query text, users in different contexts receive each other's answers.
+
+The fix is to make the cache key a hash of the full input tuple: the normalized query, the user's locale, the relevant account attributes, and a version identifier for the model and prompt. When any of those change, the key changes and the cache misses cleanly.
 
 ```python
 # app/cache_service.py
-from redis import Redis
+import hashlib
 import json
+from redis import Redis
 
 redis = Redis(host="redis-edge", port=6379, db=0)
 
-async def cached_chat(query: str, user_id: str):
-    cache_key = f"chat:{user_id}:{hash(query)}"
-    cached = redis.get(cache_key)
+def cache_key(query: str, locale: str, account_tier: str, model_version: str) -> str:
+    raw = json.dumps(
+        {
+            "q": query.strip().lower(),
+            "locale": locale,
+            "tier": account_tier,
+            "model": model_version,
+        },
+        sort_keys=True,
+    )
+    return "chat:" + hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+async def cached_chat(query, locale, account_tier, model_version):
+    key = cache_key(query, locale, account_tier, model_version)
+    cached = redis.get(key)
     if cached:
         return json.loads(cached)
-    
-    # Hit the local model
-    response = await local_llm.generate(
-        query,
-        SamplingParams(temperature=0.7, max_tokens=512),
-    )
-    
-    # Cache for 5 minutes
-    redis.setex(cache_key, 300, json.dumps({"response": response.outputs[0].text}))
-    return {"response": response.outputs[0].text}
+
+    response = await local_llm.generate(query)
+    redis.setex(key, 300, json.dumps({"response": response}))
+    return {"response": response}
 ```
 
-I got this wrong at first by caching every response for 1 hour. That broke when a user asked the same question in a different context (e.g., "What’s the M-Pesa fee for 1000 KES in Kenya?" vs. "What’s the M-Pesa fee for 1000 KES in Uganda?"). The cache invalidation strategy had to include the user’s country and currency to avoid stale responses.
+Two things to note. First, the TTL is a policy decision: shorter TTLs reduce staleness risk, longer TTLs reduce cost. Second, the model version is part of the key, so deploying a new model automatically invalidates old entries rather than serving answers from a model you no longer run.
 
+## GPU failure and capacity planning
 
-## Quick reference
+Local hardware fails. The design question is what happens when it does.
 
-| Concept | Global Provider | Nairobi Approach |
-|---------|-----------------|------------------|
-| Model size | 13B–70B parameters | 3B–7B parameters |
-| Hosting | Multi-region cloud | On-premises or regional edge |
-| Latency target | <100ms p99 | <500ms p99 |
-| Cost model | Pay-per-token, high bandwidth | Pay-per-watt, low bandwidth |
-| Data privacy | Centralized logs | No central logging |
-| Accuracy metric | General benchmarks | Local domain benchmarks |
-| Fallback | Always cloud | Cloud only when needed |
+- **Redundancy.** Run more replicas than you need for steady-state traffic, so a single failure does not take the service down.
+- **Health checks.** Probe the model endpoint, not just the pod. A pod can be running while the model is unresponsive.
+- **Fallback.** The router should detect a saturated or unhealthy local cluster and route to a hosted model rather than queueing requests indefinitely.
+- **Capacity headroom.** If your local cluster runs at 80% utilization at peak, a single replica failure pushes it past capacity. Plan for failure, not for average load.
 
-**When to use this approach**:
-- Your users are in East/Southern Africa
-- Your AI features are customer-facing
-- Bandwidth and battery life matter more than raw speed
-- You need local language support day-one
+The specific recovery time depends on your orchestration and your health check intervals. Measure it with a deliberate failure injection rather than assuming a number.
 
-**When NOT to use this approach**:
-- Your users are in North America or Europe
-- You need sub-100ms p99 latency
-- Your model must run on a mobile device
-- You can’t host GPUs locally
+## Decision checklist
 
+Use this before committing to a regional or on-premises deployment:
 
-## Frequently Asked Questions
+- [ ] You have measured client-side p99 latency for your actual users, not just server-side latency.
+- [ ] You have measured average response payload size in bytes.
+- [ ] You know your monthly request volume and its growth rate.
+- [ ] You have computed break-even volume for self-hosting versus hosted API.
+- [ ] You have a held-out evaluation set from your domain to compare model accuracy.
+- [ ] You have a fallback path when local capacity is exhausted.
+- [ ] You have a cache invalidation strategy that accounts for all input variables.
+- [ ] You have a data protection review, not just a locality assumption.
+- [ ] You have a plan for hardware failure and a measured recovery time.
 
-**Why can’t I just use a smaller global model like Google’s Gemma 2B?**
+If you cannot answer most of these, the deployment is premature regardless of which architecture you choose.
 
-Gemma 2B is a great model, but it’s trained on global data. In 2026 benchmarks, it scores 78% accuracy on Swahili sentiment analysis, while a locally fine-tuned 3B model scores 91%. The difference comes from domain-specific data—local news, social media, and government transcripts. If your users are asking about Kenyan politics or Tanzanian boda-boda routes, a global model will hallucinate more and require more post-processing.
+## FAQ
 
+**Why not just use a small hosted model instead of self-hosting?**
 
-**How do I handle GPU failures in a local cluster?**
+A small hosted model is often the right first step. It removes the hardware burden and lets you measure your actual traffic before committing capital. Self-hosting becomes worthwhile when your volume is high enough that the fixed cost is amortized, or when data residency requirements make hosted inference impractical.
 
-We run two NVIDIA T4 GPUs per node and use Kubernetes pod disruption budgets to ensure at least one GPU is always available. When a GPU fails, the pod is rescheduled to another node within 45 seconds. For critical services, we run a hot standby cluster in a different Nairobi colo (e.g., Safaricom’s data center). The total downtime for a single GPU failure is under 2 minutes, which aligns with our 99.9% SLA.
+**How do I compare accuracy between a fine-tuned small model and a large hosted model?**
 
+Build a held-out evaluation set from your own domain — real queries with known correct answers, reviewed by someone qualified to judge them. Score both models on the same set. General benchmarks will not tell you which model is better for your users.
 
-**Isn’t self-hosting AI models a compliance nightmare?**
+**Is self-hosting a compliance requirement?**
 
-Not in Kenya’s 2026 Data Protection Act if you encrypt data at rest and in transit. We use AES-256 for data at rest and TLS 1.3 for data in transit. The local cluster is audited quarterly by a Kenyan cybersecurity firm, and we log nothing that could identify a user—just model inputs and outputs for debugging. The key is to treat the local cluster like you would any other production system: write runbooks, run chaos tests, and monitor aggressively.
+Not by itself. Data protection law typically governs how personal data is handled, not where the compute runs. Locality can help with residency requirements, but you still need encryption, access control, retention limits, and audit logging. Get jurisdiction-specific advice.
 
+**What is the biggest hidden cost?**
 
-**What’s the biggest hidden cost in local AI?**
+Power and cooling, especially in warm climates. GPUs draw significant power under load, and cooling them in a non-climate-controlled space requires planning. Budget for both before purchasing hardware, and monitor GPU temperatures under sustained load.
 
-Power. A single NVIDIA T4 GPU draws 70W under load. Four GPUs in a cluster draw 280W, which costs ~$400/month in Nairobi’s industrial areas (where power is cheaper than in residential zones). But the hidden cost is cooling—rack-mounted GPUs in a non-air-conditioned colo can overheat if you don’t budget for additional fans or liquid cooling. We started with passive cooling and saw GPU temps hit 92°C during peak load, causing thermal throttling. Adding a $150 server fan per rack cut temps to 78°C and restored full performance.
+**How do I handle model updates without downtime?**
 
+Version your models and include the version in your cache keys and routing decisions. Deploy the new version alongside the old, shift traffic gradually, and roll back if quality metrics regress. This is the same pattern as any other canary deployment.
 
-## Further reading worth your time
+## Action for the next 30 minutes
 
-- [vLLM GitHub](https://github.com/vllm-project/vllm) – The serving engine we use for Mistral 7B. Version 0.4.2 in 2026 adds Swahili tokenization support.
-- [Kenya’s Data Protection Act (2023)](https://odpc.go.ke) – The legal framework for local data processing.
-- [iHub Research: Mobile AI in East Africa (2025)](https://ihub.co.ke/research) – The study on battery drain and latency.
-- [Mistral AI fine-tuning guide](https://docs.mistral.ai/guides/fine-tuning/) – How to adapt Mistral 7B for Swahili.
-- [KServe documentation](https://kserve.github.io/website/) – The Kubernetes-native model serving stack we rely on.
-
-
-I spent three weeks debugging a cache stampede in our Redis cluster that only happened during load spikes. The fix was to use a probabilistic early expiration strategy—caching 80% of responses for 80% of their TTL, then probabilistically evicting the rest. That cut our cache misses by 40% during peak traffic.
-
-
----
-
-**Action for the next 30 minutes**: Open your AI service’s latency dashboard and check the p99 for users in Kenya, Uganda, and Tanzania. If any region exceeds 800ms, add a 3B model fine-tuned on Swahili/Luganda data and route traffic locally using the Terraform snippet above. Deploy only if the new p99 drops below 500ms.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-
-**How this article was produced:** This site publishes AI-generated technical articles as
-part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
-they are not individually fact-checked or hand-edited by a human before publishing. Treat
-code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
-than independently verified, and check them against current official documentation before
-relying on them in production.
-
-**Corrections:** If you spot an error or outdated information,
-please contact me and I'll review and correct it.
-
-**Last generated:** July 26, 2026
+Open your AI service's client-side latency instrumentation and pull the p99 for your users in Kenya, Uganda, and Tanzania over the last 24 hours. If you do not have client-side instrumentation, add the `timed_generate` logging shown above and deploy it to 1% of traffic. You cannot make an informed architecture decision without that number, and you can have it today.

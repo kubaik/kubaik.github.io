@@ -1,82 +1,90 @@
 # IDP for AI: 2026 stack evolution
 
-Most run local guides assume a clean environment and a patient timeline. The edge cases only show up once real users hit the system. Here's the root cause, not just the symptom.
+A local guide usually assumes a clean environment and a patient timeline. The edge cases only appear once real traffic hits the system. This article is about one specific edge case: **keeping an internal developer platform (IDP) in sync with embedding models whose output shape changes**.
 
-## Why I wrote this (the problem I kept hitting)
+The failure mode is well documented in teams that ship AI features. A model update changes the vector dimension — say from 768 to 1024. The staging embeddings job runs, fails quietly because the index mapping does not auto-resize, and the next deploy ships a 768-dimension endpoint against a 1024-dimension index. The error surfaces as an index size mismatch deep in the retrieval path, long after the deploy went green. Teams fix it by hand, push a hot patch, and promise to automate it later. The next model update repeats the cycle.
 
-In 2026, solo founders shipping AI features hit a wall: every new model or prompt update broke the build. The model card changed, the weights moved, the context length jumped, and suddenly the vector index overflowed. Worse, the staging environment was three days behind production because regenerating embeddings took 90 minutes on a single 4-core CPU instance. Teams running into this usually see CI pipelines red for 20–30 minutes while the embeddings rebuild, then another 45 minutes for the E2E suite that hits the new embedding endpoint. The part that trips people up is **keeping the internal developer platform in sync with models that change shape every week**, and that’s what this post actually covers.
+The fix is not clever. It is to bake the embedding pipeline into the platform so that a model change triggers a rebuild through the same deploy path as everything else, with validation that fails loudly at the boundary. This article walks through that design, the code, and the failure modes it does and does not remove.
 
-Most solo-engineer stacks solve this with one-off scripts or a cron job, but the first production incident reveals why that’s a time bomb. Here’s what usually happens: a model update increases the vector dimension from 768 to 1024. The staging embeddings job runs, fails silently because the index schema doesn’t auto-resize, and the next deploy ships with a 768-dim endpoint hitting a 1024-dim index. The error message you’ll see in CloudWatch is `IndexError: index size mismatch`. Teams fix it by hand, push a hot patch, and promise to automate it later—until the next model update repeats the cycle.
+## The shape of the problem
 
-This post shows the boring, proven path: bake the embedding pipeline into the platform so every model update triggers a rebuild without anyone touching the CI file. The stack we ended up with in mid-2026 is:
+Three properties of embedding models make them awkward platform citizens:
 
-- Node 20 LTS (runtime)
-- Fastify 4.25 (web framework)
-- Redis 7.2 (vector cache and job queue)
-- AWS Lambda with arm64 (embedding compute)
-- Pulumi 3.78 (infrastructure as code)
-- OpenSearch 2.11 (vector store)
+1. **They change shape, not just weights.** A dimension change is a schema change for every downstream store: vector indexes, caches, and any serialized vectors in object storage.
+2. **Rebuilds are expensive and slow.** Regenerating embeddings for a large corpus is a batch job, not a request-time operation, and it competes with serving traffic.
+3. **The failure is silent until it isn't.** A mismatched index often accepts writes and only fails at query time, or fails on a subset of documents.
 
-We’ll walk through the exact changes that moved us from “script hell” to “model updates just work.”
+A useful mental model: treat the embedding model like a database schema with a version number. Every artifact that stores vectors carries that version. Anything that reads or writes vectors asserts the version matches. When the version changes, a migration runs — and that migration is a first-class platform resource, not a shell script someone remembers to run.
 
-## Prerequisites and what you'll build
+## Reference stack
 
-You need a working internal developer platform (IDP) that already deploys a Node.js service to AWS. If you’re starting from scratch, do the minimal setup first:
-1. One AWS account with a sandbox VPC and private subnets.
-2. A GitHub repo with a Pulumi stack already creating an ECS Fargate service using Node 20 LTS.
-3. IAM roles that allow the pipeline to push Docker images and update ECS tasks.
-4. An OpenSearch serverless collection with vector search enabled (OpenSearch 2.11).
+The stack below is one reasonable choice among several. Each component is described by category so you can substitute your own.
 
-What you’ll build is a small service that:
-- Exposes an embedding endpoint (`POST /embeddings`)
-- Uses Redis 7.2 as a write-through cache so repeated calls return in <5 ms
-- Triggers a background Lambda (arm64) to rebuild the vector index when the model changes
-- Publishes a Pulumi resource so the next deploy pulls the new index automatically
+- Node.js 20 LTS — application runtime
+- A Node HTTP framework (any will do; the routing code is trivial)
+- Redis 7.2 — write-through vector cache and job coordination
+- AWS Lambda on arm64 — background embedding and index rebuild compute
+- Pulumi — infrastructure as code, so the rebuild job is a versioned resource
+- OpenSearch with k-NN vector support — vector store
 
-The whole change is about 200 lines of Pulumi and 80 lines of Node code, but it stops the “model update broke the build” cycle for good.
+None of these are load-bearing for the design. The same shape works with pgvector instead of OpenSearch, a container job instead of Lambda, and Terraform instead of Pulumi.
 
-## Step 1 — set up the environment
+## Prerequisites
 
-Start in your existing Pulumi 3.78 project. Add a new file `vector-infra.ts`. The goal is to create:
-- One Redis 7.2 cluster (cache.t3.micro, 2 shards)
-- One Lambda function (Python 3.11, arm64) that regenerates the OpenSearch 2.11 index
-- An IAM policy so the Lambda can write to the index
-- A Pulumi ComponentResource that exposes the new embedding endpoint URL and the Lambda ARN as stack outputs
+You need a working IDP that already deploys a Node.js service to your cloud of choice. If you are starting from scratch, the minimal setup is:
+
+1. One cloud account with a sandbox VPC and private subnets.
+2. A repository with an infrastructure-as-code stack that creates a container service running Node.js 20 LTS.
+3. IAM roles that let the pipeline push images and update the service.
+4. A vector store with k-NN search enabled.
+
+What you will build:
+
+- An embedding endpoint (`POST /embeddings`) backed by a write-through cache.
+- A background job that rebuilds the vector index when the model changes.
+- A platform resource that publishes the new index version so the next deploy picks it up.
+- Validation at three boundaries: request, index, and cache.
+
+## Step 1 — model the vector index as a platform resource
+
+The first change is conceptual. Instead of a script that creates an index, define a component that owns the index, its dimension, and its model version together.
 
 ```typescript
 // vector-infra.ts
-import * as pulumi from "@pulumi/pulumi";
+import *pulumi* as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
+
+export interface VectorInfraArgs {
+  indexName: string;
+  dimension: number;
+  modelVersion: string;
+}
 
 export class VectorInfra extends pulumi.ComponentResource {
-  public readonly embeddingEndpoint: pulumi.Output<string>;
-  public readonly refreshLambdaArn: pulumi.Output<string>;
+  public readonly cacheEndpoint: pulumi.Output<string>;
+  public readonly refreshJobArn: pulumi.Output<string>;
 
-  constructor(name: string, opts?: pulumi.ComponentResourceOptions) {
+  constructor(name: string, args: VectorInfraArgs, opts?: pulumi.ComponentResourceOptions) {
     super("custom:vector:infra", name, {}, opts);
 
-    // Redis 7.2 cluster
     const redisSubnetGroup = new aws.elasticache.SubnetGroup("redisSubnetGroup", {
-      subnetIds: pulumi.output(aws.ec2.getSubnetIds({})).apply(subnets => subnets.ids),
+      subnetIds: pulumi.output(aws.ec2.getSubnetIds({})).apply(s => s.ids),
     }, { parent: this });
 
     const redis = new aws.elasticache.Cluster("embeddingCache", {
       engine: "redis",
+      engineVersion: "7.2",
       nodeType: "cache.t3.micro",
       numCacheNodes: 2,
-      parameterGroupName: "redis7-cluster-on",
-      engineVersion: "7.2",
       subnetGroupName: redisSubnetGroup.name,
       securityGroupIds: [/* your security group */],
     }, { parent: this });
 
-    // Lambda function (Python 3.11, arm64)
     const lambdaRole = new aws.iam.Role("lambdaRole", {
       assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({ Service: "lambda.amazonaws.com" }),
     }, { parent: this });
 
-    const lambdaPolicy = new aws.iam.RolePolicy("lambdaPolicy", {
+    new aws.iam.RolePolicy("lambdaPolicy", {
       role: lambdaRole.id,
       policy: pulumi.output(aws.iam.getPolicyDocument({
         statements: [
@@ -89,172 +97,152 @@ export class VectorInfra extends pulumi.ComponentResource {
             resources: ["*"],
           },
         ],
-      }).then(doc => doc.json),
+      }).then(doc => doc.json)),
     }, { parent: this });
 
-    const lambda = new aws.lambda.Function("refreshIndex", {
+    const refreshJob = new aws.lambda.Function("refreshIndex", {
       runtime: "python3.11",
       handler: "refresh_index.handler",
       role: lambdaRole.arn,
       code: new pulumi.asset.AssetArchive({
         "refresh_index.py": new pulumi.asset.StringAsset(`
+import os
 import boto3
-import json
 
 def handler(event, context):
     client = boto3.client('opensearchserverless')
-    # Assume collection name comes from env
-    collection = os.environ['OPENSEARCH_COLLECTION']
     index = os.environ['INDEX_NAME']
-    # Recreate index with new mapping
-    client.batch_create_collection(
-        collection=collection,
+    dimension = int(os.environ['DIMENSION'])
+    client.create_index(
         index=index,
-        mapping={"properties": {"embedding": {"type": "knn_vector", "dimension": 1024}}}
+        mapping={"properties": {"embedding": {"type": "knn_vector", "dimension": dimension}}},
     )
-    return {"status": "ok"}
-        `),
+    return {"status": "ok", "index": index, "dimension": dimension}
+`),
       }),
       memorySize: 512,
       timeout: 300,
       architectures: ["arm64"],
       environment: {
         variables: {
-          OPENSEARCH_COLLECTION: "embeddings-2026",
-          INDEX_NAME: "embeddings-1024",
+          INDEX_NAME: args.indexName,
+          DIMENSION: String(args.dimension),
+          MODEL_VERSION: args.modelVersion,
         },
       },
     }, { parent: this });
 
-    this.embeddingEndpoint = pulumi.interpolate`http://${redis.cacheNodes[0].address}:6379`;
-    this.refreshLambdaArn = lambda.arn;
+    this.cacheEndpoint = pulumi.interpolate`${redis.cacheNodes[0].address}:6379`;
+    this.refreshJobArn = refreshJob.arn;
 
     this.registerOutputs({
-      embeddingEndpoint: this.embeddingEndpoint,
-      refreshLambdaArn: this.refreshLambdaArn,
+      cacheEndpoint: this.cacheEndpoint,
+      refreshJobArn: this.refreshJobArn,
     });
   }
 }
 ```
 
-Apply it:
+The important detail is not the resource shapes; it is that `indexName`, `dimension`, and `modelVersion` are constructor arguments. Changing the model version in the stack definition changes the index name and dimension in one place, and the diff is reviewable like any other infrastructure change.
+
+A note on the Lambda body: the real rebuild job will be larger than this. It needs to read the corpus, call the embedding model in batches, write to the new index, and then flip an alias. The skeleton above only creates the index. Keep the rebuild logic in the same repository as the stack so the job and the schema move together.
+
+## Step 2 — the embedding service
+
+The service has two responsibilities: serve embeddings with a cache, and expose a control endpoint that a model registry can call. Keep the control endpoint behind the same auth as your other internal endpoints; it is not a public API.
+
 ```bash
-pulumi up -y
+npm install redis
 ```
 
-This is the boring, proven stack: Redis 7.2 for caching, Lambda arm64 for background work, Pulumi 3.78 for reproducibility. The hard-to-reverse decision here is the Redis cluster shape—scaling up later means data migration, so pick a node type you can live with for six months.
-
-Gotcha: OpenSearch serverless collections require the index mapping to be created before any embeddings land. If you skip this, the first Lambda run fails with `ResourceNotFoundException` and the whole pipeline stalls. Most teams running into this just rerun the deploy and hope it sticks—the fix is to create the collection and index in the same Pulumi stack that creates the Lambda.
-
-## Step 2 — core implementation
-
-Now wire the embedding endpoint into your Node 20 LTS service. Install the Redis client:
-```bash
-npm install redis@4.6.13
-```
-
-Create `src/vector.ts`:
 ```typescript
+// src/vector.ts
 import { createClient } from 'redis';
-import { pipeline } from 'stream/promises';
 
 const redis = createClient({
-  url: process.env.REDIS_URL!, // set by Pulumi stack output
-  socket: { reconnectStrategy: (retries) => Math.min(retries * 100, 5000) }
+  url: process.env.REDIS_URL!,
+  socket: { reconnectStrategy: (retries) => Math.min(retries * 100, 5000) },
 });
 
-let modelDimension = 768; // defaults to initial model
+export const MODEL_VERSION = process.env.MODEL_VERSION ?? 'v1';
+export const MODEL_DIMENSION = Number(process.env.MODEL_DIMENSION ?? 768);
 
 export async function embed(texts: string[]): Promise<number[][]> {
-  const cacheKey = `embeddings:${texts.join(':')}`;
-  const cached = await redis.json.get(cacheKey);
-  if (cached) return cached;
+  const vectors = await Promise.all(texts.map(async (text) => {
+    const cacheKey = `embeddings:${MODEL_VERSION}:${text}`;
+    const cached = await redis.json.get(cacheKey);
+    if (cached) return cached as number[];
 
-  // In production you would call an embedding model API here.
-  // For this example we simulate a 768-dim vector.
-  const vectors = texts.map(() => Array(modelDimension).fill(0.1));
+    // Replace with a real call to your embedding model.
+    const vector = Array(MODEL_DIMENSION).fill(0.1);
+    validateDimension(vector);
 
-  // Write-through cache
-  await redis.json.set(cacheKey, '$', vectors);
-  await redis.expire(cacheKey, 3600);
+    await redis.json.set(cacheKey, '$', vector);
+    await redis.expire(cacheKey, 3600);
+    return vector;
+  }));
   return vectors;
 }
 
-export async function updateModelDimension(dim: number) {
-  modelDimension = dim;
-  // Trigger index rebuild
-  const lambda = new aws.lambda.Function('refreshIndex');
-  await lambda.invoke({
-    FunctionName: process.env.REFRESH_LAMBDA_ARN!,
-    Payload: JSON.stringify({ newDimension: dim }),
-  });
+export function validateDimension(vector: number[]): void {
+  if (vector.length !== MODEL_DIMENSION) {
+    throw new Error(
+      `Dimension mismatch: expected ${MODEL_DIMENSION}, got ${vector.length}`
+    );
+  }
 }
 ```
 
-In `src/server.ts` wire the endpoint:
+Two details matter more than they look:
+
+- The cache key includes `MODEL_VERSION`. Without it, a model update silently serves vectors from the old model. Including the version makes old entries unreachable rather than wrong, and the TTL reclaims the space.
+- `validateDimension` runs before the cache write and before the response. It converts a downstream index error into a request-time error with a clear message.
+
+The HTTP layer is intentionally small:
+
 ```typescript
+// src/server.ts
 import fastify from 'fastify';
-import { embed, updateModelDimension } from './vector';
+import { embed } from './vector';
 
 const app = fastify({ logger: true });
 
 app.post('/embeddings', async (req, reply) => {
   const { texts } = req.body as { texts: string[] };
-  const vectors = await embed(texts);
-  reply.send({ vectors });
-});
-
-app.post('/model/update', async (req, reply) => {
-  const { dimension } = req.body as { dimension: number };
-  await updateModelDimension(dimension);
-  reply.send({ ok: true });
-});
-
-app.listen({ port: 3000 }).then(() => console.log('ready'));
-```
-
-Key design choices:
-- Write-through cache so repeated calls hit Redis in <5 ms
-- Background Lambda rebuilds the index without blocking the API
-- A single `/model/update` endpoint lets the model registry push dimension changes
-
-The hard-to-reverse decision here is the cache TTL—set it too short and you lose the benefit; set it too long and you serve stale vectors. Most teams running into this use a 1-hour TTL and accept the risk, but there’s no undo button—changing the TTL later requires a rolling redeploy and a cache flush.
-
-## Step 3 — handle edge cases and errors
-
-The two failure modes that break solo-engineer stacks are:
-1. Model dimension drift after an update
-2. OpenSearch index mapping mismatch
-
-Here’s the boring defense we added:
-
-1. Dimension validation
-```typescript
-// src/vector.ts
-export function validateDimension(vectors: number[][]): boolean {
-  const dim = vectors[0]?.length;
-  if (!dim) throw new Error('Empty vector');
-  if (dim !== modelDimension) {
-    throw new Error(`Dimension mismatch: expected ${modelDimension}, got ${dim}`);
+  if (!Array.isArray(texts) || texts.length === 0) {
+    return reply.code(400).send({ error: 'texts must be a non-empty array' });
   }
-  return true;
-}
+  const vectors = await embed(texts);
+  reply.send({ vectors, modelVersion: process.env.MODEL_VERSION });
+});
+
+app.get('/healthz', async (_req, reply) => reply.send({ ok: true }));
+
+app.listen({ port: 3000, host: '0.0.0.0' });
 ```
 
-2. OpenSearch index mapping template
+Note the response includes `modelVersion`. Clients that store vectors alongside metadata can record which model produced them, which makes later migrations auditable.
+
+## Step 3 — validate the index, not just the request
+
+Request-time validation catches the case where the model returns the wrong shape. It does not catch the case where the index was created with the wrong dimension. Add an explicit check at service startup and in the rebuild job.
+
 ```typescript
 // src/opensearch.ts
-import { Client } = '@opensearch-project/opensearch';
+import { Client } from '@opensearch-project/opensearch';
 
 const client = new Client({ node: process.env.OPENSEARCH_ENDPOINT });
 
-export async function ensureIndex(index: string, dim: number) {
+export async function ensureIndex(index: string, dim: number): Promise<void> {
   const exists = await client.indices.exists({ index });
   if (exists.body) {
     const mapping = await client.indices.getMapping({ index });
     const currentDim = mapping.body[index]?.mappings?.properties?.embedding?.dimension;
     if (currentDim !== dim) {
-      throw new Error(`Index ${index} has dimension ${currentDim}, expected ${dim}`);
+      throw new Error(
+        `Index ${index} has dimension ${currentDim}, expected ${dim}. ` +
+        `Create a new index and reindex instead of mutating this one.`
+      );
     }
     return;
   }
@@ -273,106 +261,104 @@ export async function ensureIndex(index: string, dim: number) {
 }
 ```
 
-3. Lambda retry policy
-In the Lambda code (`refresh_index.py`), wrap the OpenSearch call in a retry with jitter:
+The error message is deliberate. A dimension mismatch on an existing index is not something to fix in place — the correct response is to create a new index with a new name and reindex. Making the error say so removes the temptation to patch the mapping.
+
+## Step 4 — make the rebuild idempotent
+
+The most common production failure in this design is not a wrong dimension; it is two rebuild jobs running at once. A model registry that retries on timeout, combined with a job that takes minutes, produces duplicate indexes and, worse, partially written ones.
+
+The fix is a lock with a TTL, held in the same Redis instance used for caching:
+
 ```python
-import backoff
+# refresh_index.py
+import os
+import time
+import boto3
+import redis
 
-@backoff.on_exception(backoff.expo, Exception, max_tries=3)
-def recreate_index():
-    client.batch_create_collection(...)
+LOCK_KEY = "vector:rebuild:lock"
+LOCK_TTL_SECONDS = 900
+
+def handler(event, context):
+    r = redis.Redis.from_url(os.environ["REDIS_URL"])
+    acquired = r.set(LOCK_KEY, context.aws_request_id, nx=True, ex=LOCK_TTL_SECONDS)
+    if not acquired:
+        return {"status": "skipped", "reason": "rebuild already in progress"}
+
+    try:
+        index = os.environ["INDEX_NAME"]
+        dimension = int(os.environ["DIMENSION"])
+        client = boto3.client("opensearchserverless")
+        client.create_index(
+            index=index,
+            mapping={"properties": {"embedding": {"type": "knn_vector", "dimension": dimension}}},
+        )
+        return {"status": "ok", "index": index, "dimension": dimension}
+    finally:
+        r.delete(LOCK_KEY)
 ```
 
-Common failure mode: when the Lambda retries, it creates duplicate collections because the backoff runs before the previous attempt finishes. Most teams running into this add a collection lock key in Redis with 60-second TTL—if the key exists, the Lambda exits early. The lock key is the hard-to-reverse part: if you remove it later, you risk concurrent rebuilds again.
+Two properties make this safe enough: the lock is acquired with `nx` and `ex`, so it is atomic and self-healing if the job dies; and the job deletes the lock in a `finally` block, so a successful run does not block the next one. The TTL is a backstop, not the primary mechanism.
 
-## Step 4 — add observability and tests
+The remaining gap: if the job runs longer than the TTL, a second job can start. Size the TTL comfortably above the worst-case rebuild time and alert when a rebuild exceeds half the TTL.
 
-Add three things that save hours of debugging:
-1. Embedding latency histogram (Redis + Lambda)
-2. Dimension drift alert
-3. Cache hit/miss counters
+## Step 5 — observability that answers the right question
 
-```typescript
-// src/metrics.ts
-import { createClient } from 'redis';
+Three signals are worth instrumenting, and they are worth choosing carefully because each one answers a specific question:
 
-const redis = createClient({ url: process.env.REDIS_URL });
-
-async function recordLatency(start: number, endpoint: string) {
-  const duration = Date.now() - start;
-  await redis.zAdd('embedding:latency', { value: Date.now(), score: duration });
-  if (duration > 200) {
-    console.warn(`Slow embed: ${endpoint} ${duration}ms`);
-  }
-}
-
-// Expose Prometheus endpoint
-app.get('/metrics', async (_req, reply) => {
-  const metrics = await redis.zRangeWithScores('embedding:latency', 0, -1);
-  reply.send(metrics.map(m => `${m.value} ${m.score}`).join('\n'));
-});
-```
-
-For tests, simulate dimension drift:
-```typescript
-// tests/vector.test.ts
-import { embed, updateModelDimension } from '../src/vector';
-
-test('should throw on dimension drift', async () => {
-  await updateModelDimension(1024);
-  await expect(embed(['hello'])).rejects.toThrow('Dimension mismatch');
-});
-```
-
-Add a GitHub Actions job that runs the test suite on every PR and publishes the latency histogram to Datadog (if you have it). The suite takes 40 seconds on a 2-core runner, which is cheap enough to keep in the critical path.
-
-Observability trap: most teams running into this forget to tag the Lambda invocations with the model version. The result is a p99 latency spike with no label to explain which model caused it. The boring fix is to inject the model version into the Lambda environment and append it to every CloudWatch log line.
-
-## Real results from running this
-
-We measured three outcomes over 8 weeks in a solo-founder stack:
-
-| Metric | Before | After |
+| Signal | Question it answers | How to collect it |
 | --- | --- | --- |
-| CI pipeline red time on model update | 25–30 min | 0 min |
-| Embedding endpoint p99 latency | 180 ms | 45 ms |
-| Embedding build cost (Lambda + OpenSearch) | $112/month | $42/month |
+| Embedding request latency, labeled by `modelVersion` | Did a model change make serving slower? | Histogram in your metrics system, incremented in the request handler |
+| Index dimension vs. configured dimension | Is the running service pointed at the wrong index? | Startup check that emits a gauge and exits non-zero on mismatch |
+| Rebuild job duration and outcome | How long does a model migration take, and does it succeed? | Job start/end timestamps and a success/failure counter |
 
-The cost drop came from switching to arm64 Lambda and Redis cluster mode. The latency drop came from the write-through cache and connection pooling in Redis 7.2.
+The labeling detail matters. Without `modelVersion` on the latency histogram, a p99 regression after a model update is unattributable. With it, the answer is a single query.
 
-A typical failure that disappeared: the staging environment embeddings job ran for 90 minutes on a 4-core CPU instance and often timed out. After moving to the Lambda regeneration triggered by `/model/update`, the same rebuild finishes in 6 minutes and runs only when the model changes.
+To measure the rebuild cost before committing to a design, instrument the job itself: log the number of documents processed, the wall-clock time, and the total tokens sent to the embedding model. Run it once against a staging copy of the corpus and compare the projected cost against your budget. This is a measurement you can do in an afternoon and it will tell you more than any published benchmark, because the numbers depend entirely on your corpus size, your batch size, and your model's per-token price.
 
-The model registry now pushes a dimension change → `/model/update` → Lambda rebuilds the index → the new endpoint is live. No manual steps, no hot patches, no forgotten schema migrations.
+## A worked example: the dimension change, step by step
 
-## Common questions and variations
+To make the failure mode concrete, here is the sequence with a 768-to-1024 change, assuming the design above is in place.
 
-### How do I handle multiple models with different dimensions?
-Create one index per model in OpenSearch and route requests via a prefix: `POST /v1/embeddings` vs `POST /v2/embeddings`. The routing layer is a lightweight Fastify plugin that picks the index based on the URL. The cache keys become `embeddings:v1:hello` so they don’t collide. This pattern adds about 30 lines of code but removes the dimension drift problem entirely.
+1. The model registry updates the stack configuration: `dimension: 1024`, `modelVersion: v2`, `indexName: embeddings-v2`.
+2. `pulumi preview` shows a new index resource and a new Lambda environment. A reviewer sees the dimension change in the diff.
+3. The deploy creates the new index with 1024 dimensions. The old index is untouched.
+4. The service restarts with `MODEL_DIMENSION=1024` and `MODEL_VERSION=v2`. Its startup check confirms the index it points at has 1024 dimensions.
+5. The rebuild job runs, reading the corpus, calling the v2 model, and writing to `embeddings-v2`. The lock prevents a concurrent run.
+6. Once the rebuild completes and a spot check passes, traffic is switched to the new index and the old one is retained for a rollback window.
+7. Cache entries under `embeddings:v2:*` are written fresh; `embeddings:v1:*` entries expire on their own.
 
-### What if my model weights change but the dimension stays the same?
-You don’t need to rebuild the index. Just update the embedding endpoint to use the new weights and the cache will flush stale entries via TTL. The only time you rebuild is when the vector dimension changes—this keeps the pipeline simple and fast.
+The property that makes this work is that the new index is created before the old one is removed, and the switch is a separate, reversible step. Compare that with mutating the existing index in place: there is no rollback, and the window between the mapping change and the reindex completion serves wrong results.
 
-### How do I run this outside AWS?
-Replace the Pulumi stack with Terraform and use MemoryDB instead of Redis. The Lambda becomes a Cloud Run job. The code changes are minimal—just swap the `@pulumi/aws` imports for `@pulumi/google-native` and change the cache client. The observability layer (latency histogram, dimension validation) stays identical.
+## Decision checklist
 
-### What’s the simplest way to start without OpenSearch?
-Use pgvector in a small Postgres instance. The Pulumi stack becomes a single RDS instance and a Lambda. The dimension validation and caching logic are the same. Most solo founders running into this choose Postgres because it’s already in their stack and eliminates one moving part.
+Before adopting this pattern, answer these questions. If any answer is unclear, that is the part of the design that needs work.
 
-## Where to go from here
+- **Can you rebuild the index without serving stale results?** If not, you need a dual-index or alias-based switch, not an in-place update.
+- **Do you know your worst-case rebuild time?** If not, measure it against a staging corpus before you rely on a lock TTL.
+- **Is the model version recorded with every stored vector?** If not, a future migration cannot tell which vectors need regenerating.
+- **Does a dimension mismatch fail at startup or at query time?** Startup is strictly better; query-time failures are partial and hard to reproduce.
+- **Is the rebuild job idempotent?** If running it twice creates two indexes, a retry will eventually do exactly that.
+- **Can you roll back a model change without a data migration?** If the answer is no, the rollback plan is "restore from backup," which is a different conversation.
 
-If you already have a Node 20 LTS service and a working IDP, apply the Pulumi stack in this post, wire the `/embeddings` endpoint, and set the cache TTL to 60 minutes. Then push a model update and watch the pipeline stay green. The next step is to add a canary deploy for the embedding endpoint so you catch latency regressions before they hit users—do that by adding a Fastify route `/canary` that returns `{ ok: true }` and a GitHub Actions job that hits it every 5 minutes from a small runner.
+## Common questions
 
-Deploy the Pulumi stack now and push a model update within the next hour to prove the pipeline works end to end.
+### What if the model weights change but the dimension stays the same?
 
+No index rebuild is required. The vectors are the same shape, so the existing index accepts them. The stale-vector problem is real, though: cached and indexed vectors from the old weights are not comparable with new ones. The clean approach is to treat a weights change as a new `modelVersion` even when the dimension is unchanged, which gives you the same dual-index switch. If that is too expensive, at minimum version the cache key and re-embed on read.
 
----
+### How do I handle several models with different dimensions?
 
-### About this article
+One index per model, with the model version in the index name and in the cache key prefix. Route by path or by a header, and keep the routing table in configuration rather than code. The cost is one more index per model; the benefit is that a change to one model cannot break another.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+### Can this run outside AWS?
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
+Yes. Every component maps to a category: the container runtime, the cache, the background job, the vector store, and the infrastructure-as-code tool. Substituting pgvector for a dedicated vector store removes one moving part at the cost of index performance at large scale — a reasonable trade for a small corpus. The validation and versioning logic is unchanged.
 
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
+### What is the simplest starting point?
 
-**Last generated:** September 2026
+A single Postgres instance with pgvector, the embedding service as a container, and a cron-triggered rebuild job. Skip the cache until you have measured that it is needed. The versioning and validation logic described above is what prevents incidents; the cache is a performance optimization and can be added later.
+
+## Next step
+
+Open your infrastructure-as-code stack and add the `modelVersion` and `dimension` values as explicit inputs to whatever resource creates your vector index. Then add a startup check in your embedding service that compares the configured dimension against the index mapping and exits non-zero on mismatch. That is a small change — likely under an hour — and it converts the most common silent failure in this pipeline into a loud one at deploy time.

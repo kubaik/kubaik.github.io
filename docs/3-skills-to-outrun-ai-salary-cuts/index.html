@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>3 skills to outrun AI salary cuts - Kubai Kevin</title>
-        <meta name="description" content="Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut…">
+        <meta name="description" content="AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.">
         <meta name="keywords" content="ConnectionPoolTuning, Supabase, Ai, Cloudcomputing, Nextjs, Serverless">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-30T10:13:26.149608">
-        <meta property="article:modified_time" content="2026-09-21T12:30:56.650342">
+        <meta property="article:modified_time" content="2026-10-04T10:56:26.851179+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="3 skills to outrun AI salary cuts">
-        <meta property="og:description" content="Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut…">
+        <meta property="og:description" content="AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.">
         <meta property="og:url" content="https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="3 skills to outrun AI salary cuts">
-        <meta name="twitter:description" content="Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut…">
+        <meta name="twitter:description" content="AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/3-skills-to-outrun-ai-salary-cuts.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/#article",
       "headline": "3 skills to outrun AI salary cuts",
-      "description": "Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut…",
+      "description": "AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.",
       "datePublished": "2026-06-30T10:13:26+00:00",
-      "dateModified": "2026-09-21T12:30:56+00:00",
-      "wordCount": 3291,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-10-04T10:56:26+00:00",
+      "wordCount": 3012,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">3 skills to outrun AI salary cuts</h1>
                 
-                <p class="post-lead">Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut…</p>
+                <p class="post-lead">AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.</p>
                 
                 
                 <div class="tags">
@@ -261,265 +261,271 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3291 words
+                        15 min read
+                        &nbsp;·&nbsp; 3012 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>If you’re a solo founder or indie hacker who’s also the sole engineer, you’ve probably noticed something unsettling: the junior-level tasks you used to bill for are disappearing. In 2026, Copilot Enterprise, Cursor, and Amazon Q Developer can scaffold a full CRUD app in minutes, auto-fix lint errors, and even write unit tests. But when you hand those tasks to AI, your clients don’t pay the same rate—or any rate at all. A common version of this plays out when a client asks for a small internal dashboard: within a couple of hours, Cursor generates most of the React components, a working GraphQL schema, and even Jest tests. The client looks at the output, says “Looks good,” and pays a fraction of the usual rate because “the hard work was already done.” That’s the moment many solo engineers realize the real value isn’t in writing code—it’s in making sure the code didn’t break things in production.</p>
-<p>What’s confusing isn’t the AI’s speed—it’s the assumption that faster output equals higher value. In reality, clients only pay premium rates when you reduce their risk. And in 2026, the biggest risk isn’t missing features—it’s hidden latency, flaky tests, and security leaks that surface after deployment. So instead of fighting the AI wave, treat it like a junior dev who occasionally forgets to close database connections. Your job now is to be the senior engineer who catches those oversights before they cost real money.</p>
-<p>At first, the instinct is to learn prompt engineering or switch to low-code tools. But after auditing solo products and mentoring indie hackers, a pattern emerges: three skills consistently protect your salary when AI automates the rest. These aren’t “AI skills” in the buzzword sense—they’re the boring, proven engineering skills that prevent outages, reduce support tickets, and give you the credibility to charge rates that AI can’t undercut.</p>
-<hr />
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The mistake isn’t that AI is replacing junior developers—it’s that solo founders are still billing for junior-level outputs instead of senior-level outcomes. A junior dev’s output is code that compiles and passes tests. A senior dev’s outcome is code that doesn’t crash at 2 AM, doesn’t leak customer data, and doesn’t bankrupt the company with cloud bills.</p>
-<p>This shows up clearly when taking over a solo SaaS product. A typical case: the previous owner used Cursor to scaffold a Next.js dashboard with Supabase. It works great for two weeks. Then, during a Black Friday sale, the database connection pool exhausts and the entire app freezes. Customers can’t check out. Support emails flood in. By the time the deployment is rolled back, thousands of dollars in revenue are gone and hundreds more in wasted compute are burned.</p>
-<p>The real cause isn’t the AI code—it’s the lack of observability and the absence of a single senior-level guardrail. The AI wrote a connection pool config with <code>max_connections: 20</code>, but under load, the pool hits 20 connections in seconds and freezes. No one added Prometheus metrics, no one monitored the pool depth, and no one set an alert for pool exhaustion.</p>
-<p>This pattern repeats across solo products. AI generates code fast, but it rarely adds production-grade safeguards: health checks, circuit breakers, structured logging, and cost-aware scaling. Clients don’t pay for fast code. They pay for safe, reliable systems. So the real problem isn’t AI—it’s that solo engineers are still optimizing for velocity instead of resilience.</p>
-<hr />
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p><strong>Symptom:</strong> Your app runs fine in development, but under real user load it slows down or crashes, and clients complain about “random freezes.”</p>
-<p><strong>Real cause:</strong> Missing horizontal scaling and connection pooling limits. AI scaffolds fast, but it often ignores database and API rate limits. In 2026, most solo SaaS apps run on AWS RDS or Supabase. Both have connection pool defaults that are dangerously low under load. For example, Supabase’s default pool size is 20 connections. If your app handles 20 concurrent users, each making 3 queries, you’re already at the limit. A single burst of traffic can exhaust the pool and freeze your app.</p>
-<p>A common version of this mistake: a Supabase and Next.js project where the AI generated a simple <code>SELECT * FROM users</code> query in a route handler. No pagination. No connection pooling config. During a load test with 100 simulated users, the app slows from 200ms to 8,400ms within 30 seconds. Supabase hits its 20-connection limit. The Postgres logs show <code>connection limit exceeded</code> errors. Clients see timeouts. A retainer is lost because the app became unusable.</p>
-<p><strong>Fix:</strong> Add a connection pool with a safe upper bound and monitor its depth. Use a library like <code>pg-pool</code> for Node.js or <code>SQLAlchemy</code> with <code>pool_pre_ping=True</code> in Python. Set the pool size to <code>(max_connections * 0.8) / expected_concurrency</code>. For Supabase, bump the pool size from 20 to 80 in your connection string:</p>
-<pre><code class="language-javascript">// Node.js with pg and connection pooling
+                <p>AI coding tools have made scaffolding cheap. A CRUD dashboard, a GraphQL schema, and a first pass at tests can appear in an afternoon. What they rarely produce is the set of production safeguards that determine whether a system survives contact with real traffic: bounded connection pools, retry logic that does not amplify outages, and cache headers that stop error responses from being stored and replayed.</p>
+<p>The gap matters commercially. When the visible work of writing code gets cheaper, the value of an engineer shifts toward reducing operational risk: fewer outages, fewer support tickets, fewer silent payment failures. This article covers three failure modes that show up repeatedly in AI-scaffolded applications, the code that fixes each one, and how to verify the fix with measurements rather than assurances.</p>
+<h2 id="why-fast-output-is-not-the-same-as-safe-output">Why fast output is not the same as safe output</h2>
+<p>A language model generates the most probable continuation of the code it has seen. That corpus is dominated by examples that compile and demonstrate a concept, not examples that survive a traffic spike. The result is code that is correct in the narrow sense and fragile in the broad one.</p>
+<p>A junior-level output is code that runs. A senior-level outcome is code that degrades predictably when a dependency fails, that does not exhaust a shared resource under load, and that does not turn a transient upstream error into a sustained outage.</p>
+<p>Three safeguard categories cover a large share of the gap between those two states:</p>
+<ol>
+<li><strong>Bounded resource use.</strong> Database connections, file handles, and worker threads are finite. Code that acquires them without a ceiling will eventually hit that ceiling.</li>
+<li><strong>Failure isolation.</strong> Retrying a failing dependency without backoff or a circuit breaker converts one upstream problem into a client-facing outage.</li>
+<li><strong>Response hygiene.</strong> Caching an error response, or letting a cold start produce one, turns a one-second blip into minutes of visible downtime.</li>
+</ol>
+<p>The sections below address each in turn. Every code sample is runnable, and every verification step is a command or a metric rather than a claim.</p>
+<h2 id="safeguard-1-bound-your-database-connection-pool">Safeguard 1: Bound your database connection pool</h2>
+<p><strong>Symptom.</strong> The application performs acceptably in development and degrades or stalls under concurrent production traffic. Users report timeouts that do not reproduce locally.</p>
+<p><strong>Cause.</strong> An unbounded or default-sized connection pool. Many managed Postgres providers set a modest default connection limit on the instance, and application-side pools often inherit a small default as well. A route handler that opens a connection per request, or a pool configured with a low <code>max</code>, will queue or fail once concurrent demand exceeds the limit.</p>
+<p>The arithmetic is worth doing explicitly. Suppose a route handler issues three sequential queries per request, each taking 30 ms. That is 90 ms of connection-held time per request. With a pool of 20 connections, the theoretical ceiling is roughly 20 divided by 0.09 seconds, or about 220 requests per second, assuming perfectly uniform arrival. Real traffic is bursty, so the effective ceiling is lower. If each request instead holds a connection for 300 ms because of a slow query, the ceiling drops to about 66 requests per second. Those figures are illustrative arithmetic from the stated assumptions, not measured results; the point is that pool size and query latency jointly determine throughput.</p>
+<p><strong>Fix.</strong> Configure an explicit pool ceiling, set timeouts, and expose pool depth as a metric.</p>
+<pre><code class="language-javascript">// Node.js with pg
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.SUPABASE_URL,
-  max: 80, // safe upper bound under 250ms latency
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  connectionString: process.env.DATABASE_URL,
+  max: 20,                       // keep below the database's own connection limit
+  idleTimeoutMillis: 30000,      // close idle clients after 30s
+  connectionTimeoutMillis: 2000, // fail fast instead of queueing forever
+});
+
+pool.on('error', (err) =&gt; {
+  console.error('idle client error', err.message);
 });
 </code></pre>
-<p>Add a health check endpoint that queries <code>SELECT 1</code> to confirm the pool is healthy. Then add a Prometheus metric to expose pool depth:</p>
-<pre><code class="language-javascript">// expose pool depth on /health
-app.get('/health', async (req, res) =&gt; {
-  const client = await pool.connect();
-  const { rows } = await client.query('SELECT COUNT(*) as active_connections FROM pg_stat_activity WHERE usename = current_user');
-  client.release();
-  res.json({
-    status: 'ok',
-    active_connections: parseInt(rows[0].active_connections),
+<p>The <code>max</code> value should be derived, not guessed. A workable starting rule is to keep the application pool below the database's configured connection limit, leaving headroom for administrative connections and migrations. If the database allows 100 connections, a pool of 20 to 40 is a reasonable starting point for a single application instance. Multiply by the number of application instances and compare against the database limit before deploying.</p>
+<p>Expose pool state so the ceiling is observable:</p>
+<pre><code class="language-javascript">app.get('/health', async (req, res) =&gt; {
+  let dbOk = false;
+  try {
+    await pool.query('SELECT 1');
+    dbOk = true;
+  } catch (err) {
+    console.error('health check failed', err.message);
+  }
+
+  res.status(dbOk ? 200 : 503).json({
+    status: dbOk ? 'ok' : 'degraded',
     pool_size: pool.totalCount,
-    pool_available: pool.idleCount,
+    pool_idle: pool.idleCount,
+    pool_waiting: pool.waitingCount,
   });
 });
 </code></pre>
-<p>Finally, set an alert in Grafana Cloud or AWS CloudWatch: trigger when <code>active_connections &gt; 0.7 * max_pool_size</code>. That’s your early warning before the pool freezes.</p>
-<hr />
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p><strong>Symptom:</strong> Your AI-generated API returns 200 OK, but downstream services time out or return 500 errors. Clients see “API unavailable” banners.</p>
-<p><strong>Real cause:</strong> Missing retry logic and circuit breakers. AI often writes API clients with one retry and no backoff. Under partial outages, this amplifies failures and burns through client budgets. In 2026, with 60% of SaaS apps running on AWS Lambda and 40% on Fly.io or Render, transient errors are common. A single 500 from Stripe or SendGrid can cascade into 10,000 client-side timeouts if your retry logic is naive.</p>
-<p>A common version of this mistake: integrating Stripe webhooks into a solo product. The AI generated a webhook handler with <code>fetch</code> and a single <code>try/catch</code>. When Stripe has a 30-second outage, the handler keeps retrying immediately. Each retry triggers Stripe’s rate limit. After 5 minutes, Stripe blocks the account for 15 minutes. Customers’ payments fail silently. Support tickets pour in. Refunds become necessary. The real loss isn’t the refunds—it’s the trust. Clients don’t care that Stripe failed. They care that the app amplified the failure.</p>
-<p><strong>Fix:</strong> Add exponential backoff and a circuit breaker. Use <code>p-retry</code> for Node.js or <code>tenacity</code> for Python. Wrap your HTTP calls and add circuit breaker state (closed, open, half-open) using <code>opossum</code> for Node or <code>pybreaker</code> for Python. Here’s a Node.js example:</p>
+<p><code>pool.waitingCount</code> is the important number. It is the count of callers blocked waiting for a connection. A sustained non-zero value means demand exceeds capacity, and it is the earliest reliable signal that the pool is the bottleneck.</p>
+<p><strong>How to measure it.</strong> Two measurements matter: pool saturation under load, and query latency. Drive concurrent traffic with a load tool and record <code>pool_waiting</code> alongside response latency. A simple loop using a load-testing tool or a shell loop against a staging endpoint will surface saturation if it exists:</p>
+<pre><code class="language-bash"># 200 requests, 20 at a time, against a staging endpoint
+seq 1 200 | xargs -P 20 -I{} curl -s -o /dev/null -w &quot;%{http_code} %{time_total}\n&quot; \
+  https://staging.example.com/api/users
+</code></pre>
+<p>Compare the latency distribution at low concurrency against the distribution at high concurrency. If p95 latency grows faster than concurrency, and <code>pool_waiting</code> is above zero during the run, the pool is the constraint. Raising <code>max</code> should move the knee of that curve; if it does not, the bottleneck is elsewhere, most likely a slow query.</p>
+<h2 id="safeguard-2-retries-that-do-not-amplify-failure">Safeguard 2: Retries that do not amplify failure</h2>
+<p><strong>Symptom.</strong> A dependency has a brief outage. Your service returns errors long after the dependency recovers, or the dependency's rate limiter starts rejecting your traffic.</p>
+<p><strong>Cause.</strong> Naive retry logic. A loop that retries immediately on failure multiplies load on a service that is already struggling. If a hundred clients each retry five times with no delay, a one-second blip becomes five hundred requests arriving in the same window. Many upstream APIs respond to that pattern with rate limiting, which extends the outage.</p>
+<p><strong>Fix.</strong> Combine exponential backoff with a circuit breaker. Backoff spaces retries out; the breaker stops retrying entirely once the failure rate crosses a threshold, giving the dependency room to recover.</p>
 <pre><code class="language-javascript">import CircuitBreaker from 'opossum';
 import pRetry from 'p-retry';
 
-const breaker = new CircuitBreaker(async () =&gt; {
-  const res = await fetch('https://api.stripe.com/v1/events', {
-    headers: { Authorization: `Bearer ${process.env.STRIPE_KEY}` },
+async function callUpstream() {
+  const res = await fetch('https://api.example.com/v1/events', {
+    headers: { Authorization: `Bearer ${process.env.UPSTREAM_KEY}` },
   });
-  if (!res.ok) throw new Error(`Stripe error: ${res.status}`);
+  if (!res.ok) throw new Error(`upstream error: ${res.status}`);
   return res.json();
-}, {
+}
+
+const breaker = new CircuitBreaker(callUpstream, {
   timeout: 5000,
   errorThresholdPercentage: 50,
   resetTimeout: 30000,
+  volumeThreshold: 5, // do not trip on a tiny sample
 });
 
-// Exponential backoff
-const retryFetch = async () =&gt; {
-  return pRetry(() =&gt; breaker.fire(), {
+breaker.on('open', () =&gt; console.warn('breaker open'));
+breaker.on('halfOpen', () =&gt; console.warn('breaker half-open'));
+breaker.on('close', () =&gt; console.info('breaker closed'));
+
+const callWithRetry = () =&gt;
+  pRetry(() =&gt; breaker.fire(), {
     retries: 5,
     minTimeout: 100,
     maxTimeout: 5000,
     factor: 2,
   });
-};
 </code></pre>
-<p>This turns a single Stripe outage into a graceful degradation: your app returns cached data or a “Payment processing delayed” banner instead of cascading failures. Clients still see an error, but it’s controlled—and you keep their trust.</p>
-<hr />
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p><strong>Symptom:</strong> Your app works in staging, but fails in production with 5xx errors and <code>504 Gateway Timeout</code> from your CDN.</p>
-<p><strong>Real cause:</strong> Cold starts in serverless environments and CDN caching misconfigurations. Solo founders often deploy to Vercel, Netlify, or Fly.io. These platforms use serverless functions with cold starts. If your AI-generated API runs on a cold Lambda, the first request can take 2–5 seconds. If your CDN (Cloudflare, Vercel Edge) caches a 504 response, every subsequent request returns the error for 5 minutes. Clients see downtime even though your app is healthy.</p>
-<p>A common version of this mistake: moving a solo product from a cheap VPS to Fly.io with Next.js. The AI scaffolded a simple <code>/api/users</code> endpoint. In staging, it responds in 150ms. In production, the first request takes 3.2s, triggering a 504. Cloudflare caches the 504. For 6 minutes, every user sees “Service unavailable.” Support tickets spike. A contract is lost before the issue is understood.</p>
-<p><strong>Fix:</strong> Warm the function on a schedule and set cache-control headers to avoid caching 5xx responses. Use Fly.io’s <code>[[services]]</code> with a <code>[[services.concurrency]]</code> of 10 to keep the instance warm, or add a CRON job on Vercel that hits <code>/api/health</code> every 5 minutes. Then, set <code>Cache-Control: private, no-store, must-revalidate</code> on all API responses:</p>
-<pre><code class="language-javascript">// Next.js API route
+<p>Two parameters deserve attention. <code>volumeThreshold</code> prevents the breaker from tripping on a single failure in a low-traffic window. <code>resetTimeout</code> controls how long the breaker stays open before allowing a trial request; too short and the dependency is hammered again, too long and recovery is delayed for your users.</p>
+<p>The fallback path matters as much as the breaker. When the breaker is open, the caller should receive a defined response, not an unhandled rejection:</p>
+<pre><code class="language-javascript">async function getEventsWithFallback() {
+  try {
+    return await callWithRetry();
+  } catch (err) {
+    // serve last known good data or a degraded response
+    return { data: [], degraded: true, reason: 'upstream_unavailable' };
+  }
+}
+</code></pre>
+<p><strong>How to measure it.</strong> Measure two things: the latency cost of the breaker when everything is healthy, and the behaviour when the upstream fails. For the first, record p50 and p95 latency for a fixed request volume before and after introducing the breaker. The overhead of the breaker itself is small; the observable change should be within noise. For the second, point the client at a stub that returns 503 on demand and confirm that the breaker opens, that requests fail fast rather than hanging, and that the fallback path returns a usable response. The breaker should open after the configured error threshold is crossed and close again after a successful trial request following <code>resetTimeout</code>.</p>
+<h2 id="safeguard-3-stop-caching-error-responses">Safeguard 3: Stop caching error responses</h2>
+<p><strong>Symptom.</strong> A brief origin failure becomes minutes of downtime for all users, including users who never hit the failing instance.</p>
+<p><strong>Cause.</strong> A CDN or edge cache storing a 5xx response. Many caches do not store 5xx by default, but misconfiguration, a proxy in front of the origin, or an origin that returns a 200 with an error body can all produce a cached failure. Cold starts on serverless platforms make this worse: the first request after a scale-to-zero event can be slow enough to time out, and if that timeout is cached, subsequent requests receive it too.</p>
+<p><strong>Fix.</strong> Set explicit cache headers on API responses, and ensure error responses are never stored.</p>
+<pre><code class="language-javascript">// Next.js route handler
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  return NextResponse.json({ ok: true }, {
-    headers: {
-      'Cache-Control': 'private, no-store, must-revalidate',
-      'CDN-Cache-Control': 'private, no-store, must-revalidate',
-    },
-  });
-}
-</code></pre>
-<p>If you’re on Cloudflare, add a Worker that strips the <code>CF-Cache-Status: HIT</code> header for 5xx responses:</p>
-<pre><code class="language-javascript">// Cloudflare Worker snippet
-addEventListener('fetch', (event) =&gt; {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  const response = await fetch(request);
-  if (response.status &gt;= 500) {
-    const newHeaders = new Headers(response.headers);
-    newHeaders.set('Cache-Control', 'private, no-store, must-revalidate');
-    return new Response(response.body, { ...response, headers: newHeaders });
+  try {
+    const data = await loadData();
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': 'private, no-store, must-revalidate',
+      },
+    });
+  } catch (err) {
+    console.error('route failed', err.message);
+    return NextResponse.json(
+      { error: 'temporarily_unavailable' },
+      {
+        status: 503,
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+          'Retry-After': '5',
+        },
+      }
+    );
   }
-  return response;
 }
 </code></pre>
-<p>This prevents a single cold start from poisoning your CDN cache for minutes.</p>
-<hr />
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>After applying these fixes, verify the changes using three concrete tests. First, run a load test with 100 concurrent users using <code>k6</code> or <code>artillery</code>. Measure latency and error rate. In a typical case, after adding the connection pool and circuit breaker, latency drops from 8,400ms to 210ms under load, and error rate falls from 12% to 0.2%.</p>
-<p>Second, check your health endpoint. It should return <code>active_connections &lt; pool_size * 0.7</code> and <code>circuit_breaker_state: closed</code>. A healthy <code>/health</code> endpoint typically shows:</p>
-<pre><code class="language-json">{
-  &quot;status&quot;: &quot;ok&quot;,
-  &quot;active_connections&quot;: 42,
-  &quot;pool_size&quot;: 80,
-  &quot;circuit_breaker_state&quot;: &quot;closed&quot;,
-  &quot;last_stripe_call&quot;: &quot;2026-05-12T14:33:01Z&quot;
-}
+<p>The <code>Retry-After</code> header is a signal to well-behaved clients and crawlers that the failure is transient. It does not prevent a misconfigured intermediary from caching the response, which is why the <code>no-store</code> directive matters.</p>
+<p>If an intermediary sits in front of the origin and insists on caching, a small edge function can rewrite headers on error responses before they are stored:</p>
+<pre><code class="language-javascript">// edge worker: strip cacheability from 5xx responses
+export default {
+  async fetch(request) {
+    const response = await fetch(request);
+
+    if (response.status &gt;= 500) {
+      const headers = new Headers(response.headers);
+      headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+      headers.delete('Expires');
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+
+    return response;
+  },
+};
 </code></pre>
-<p>Third, simulate a downstream failure. Use <code>mockoon</code> to return 503 from Stripe for 30 seconds. Your circuit breaker should open after 3 failures, and your app should return cached data or a graceful error. In practice, the breaker opens after 2 seconds and stays open for 30 seconds, preventing further retries. Clients see a banner: “Payment processing delayed. We’ll retry automatically.”</p>
-<p>Finally, check your CDN logs. Cloudflare’s Logflare should show no <code>504</code> responses after the fix. In a typical case, 504 errors drop from 420 per hour to zero within 30 minutes of deploying the edge worker.</p>
-<hr />
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Add a “production readiness checklist” to your deployment pipeline. Every solo founder who avoids these mistakes tends to use a lightweight checklist. Here’s the one worth enforcing for every project:</p>
+<p><strong>How to measure it.</strong> Inspect the actual headers returned by the edge, not just the origin. A request that passes through a CDN can be cached even when the origin sends <code>no-store</code> if the CDN is configured to override it. Check the cache status header your provider exposes, and confirm that a forced 5xx response is not served from cache on a subsequent request:</p>
+<pre><code class="language-bash"># first request should miss, second should also miss for a 5xx
+curl -sI https://example.com/api/health | grep -i -E 'cache-control|cache-status|age'
+</code></pre>
+<p>For cold-start mitigation, the goal is to keep the function warm enough that the first request after a quiet period does not time out. A scheduled request to a lightweight health endpoint at an interval shorter than the platform's idle timeout achieves this. The interval depends on the platform; check the documented idle timeout for the runtime in use and schedule accordingly.</p>
+<h2 id="a-production-readiness-checklist">A production readiness checklist</h2>
+<p>The three safeguards above are the highest-value items, but they are not the only ones. The checklist below is a starting point for a review before any deployment that will receive real traffic.</p>
 <table>
 <thead>
 <tr>
 <th>Check</th>
-<th>Tool</th>
-<th>Pass Condition</th>
-<th>Time to Fix</th>
+<th>What to confirm</th>
+<th>Why it matters</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Connection pool &gt; 50</td>
-<td>pg-pool/SQLAlchemy</td>
-<td>max_connections &gt;= 50</td>
-<td>&lt; 10 min</td>
+<td>Connection pool bounded</td>
+<td><code>max</code> set and below the database limit</td>
+<td>Prevents connection exhaustion under load</td>
 </tr>
 <tr>
-<td>Health endpoint</td>
-<td>/health</td>
-<td>returns pool depth &amp; circuit breaker state</td>
-<td>&lt; 5 min</td>
+<td>Pool depth observable</td>
+<td><code>waitingCount</code> exported as a metric</td>
+<td>Detects saturation before users do</td>
 </tr>
 <tr>
-<td>Circuit breaker</td>
-<td>opossum/pybreaker</td>
-<td>opens on 50% error threshold</td>
-<td>&lt; 15 min</td>
+<td>Query latency measured</td>
+<td>p95 recorded per route</td>
+<td>Distinguishes pool limits from slow queries</td>
 </tr>
 <tr>
-<td>Exponential backoff</td>
-<td>p-retry/tenacity</td>
-<td>retries with factor 2</td>
-<td>&lt; 5 min</td>
+<td>Retries use backoff</td>
+<td>Non-zero delay, capped retries</td>
+<td>Avoids amplifying upstream failures</td>
 </tr>
 <tr>
-<td>CDN cache headers</td>
-<td>Next.js/Cloudflare Worker</td>
-<td>no-cache on 5xx</td>
-<td>&lt; 10 min</td>
+<td>Circuit breaker configured</td>
+<td>Threshold and reset timeout set</td>
+<td>Fails fast during sustained outages</td>
 </tr>
 <tr>
-<td>Cold start warmup</td>
-<td>Fly.io CRON/Vercel CRON</td>
-<td>hits /health every 5 min</td>
-<td>&lt; 5 min</td>
+<td>Fallback path defined</td>
+<td>Degraded response, not an exception</td>
+<td>Keeps the UI usable during outages</td>
 </tr>
 <tr>
-<td>Metrics export</td>
-<td>Prometheus/Grafana Cloud</td>
-<td>exposes pool depth &amp; error rate</td>
-<td>&lt; 20 min</td>
+<td>API responses uncacheable</td>
+<td><code>no-store</code> on all API routes</td>
+<td>Prevents cached errors from persisting</td>
+</tr>
+<tr>
+<td>Error responses uncacheable</td>
+<td>Verified at the edge, not just origin</td>
+<td>A CDN can override origin headers</td>
+</tr>
+<tr>
+<td>Cold start mitigated</td>
+<td>Warm-up schedule shorter than idle timeout</td>
+<td>Avoids first-request timeouts</td>
+</tr>
+<tr>
+<td>Secrets not logged</td>
+<td>Log output reviewed for credentials</td>
+<td>Prevents credential leakage</td>
 </tr>
 </tbody>
 </table>
-<p>Total time: 65 minutes. That’s the cost of resilience in 2026. The checklist lives in <code>README.md</code> so every solo founder or future co-founder can run it before deploying.</p>
-<p>Enforcing this checklist on a project shows the payoff. A junior dev (or AI) could have scaffolded the whole app in 2 hours. But the checklist forces the safeguards in 65 minutes. Two months later, during a 3x traffic spike, the app stays up, latency stays under 300ms, and no client complains. Clients pay the full rate because the system didn’t break—not because the code was fast.</p>
-<hr />
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<p>If you’ve fixed the three causes above, you’ll likely hit these next. They’re not fatal, but they cost time and credibility if you don’t catch them early:</p>
+<h2 id="failure-modes-that-follow-these-fixes">Failure modes that follow these fixes</h2>
+<p>Once the three primary issues are addressed, a second tier of problems tends to surface. Each is worth recognising before it costs a client relationship.</p>
 <ul>
-<li><strong>Connection leak detected</strong>: <code>error: too many connections for role</code>, <code>pg_stat_activity</code> shows idle connections that never closed.</li>
-<li><strong>Circuit breaker stuck open</strong>: Clients see “Service unavailable” even after the downstream service recovers.</li>
-<li><strong>Cache stampede</strong>: A cold endpoint receives 100 requests at once, all hitting the database, causing 10s latency spikes.</li>
-<li><strong>Memory leak in serverless</strong>: Lambda runs out of memory under load, logs show <code>Process exited before completing request</code>.</li>
-<li><strong>Secret leakage in logs</strong>: AI-generated code logs full API keys to stdout, triggering AWS GuardDuty alerts.</li>
+<li><strong>Connection leaks.</strong> A code path that acquires a client and returns early on an error without releasing it will exhaust the pool slowly. The symptom is a pool that saturates at low traffic. The fix is <code>try/finally</code> around every acquisition, or a library that manages release automatically.</li>
+<li><strong>Breaker stuck open.</strong> If <code>resetTimeout</code> is long and the health check that closes the breaker is itself failing, the breaker never closes. Confirm that the half-open trial request exercises the same path as normal traffic.</li>
+<li><strong>Cache stampede.</strong> A cold cache plus a burst of traffic sends every request to the origin simultaneously. Mitigate with request coalescing or a short jittered TTL on cached values.</li>
+<li><strong>Serverless memory exhaustion.</strong> A function that loads a large dataset into memory per invocation will fail under concurrency. Raise the memory limit only after confirming the allocation is necessary; often the fix is to stream or paginate.</li>
+<li><strong>Credential leakage in logs.</strong> Structured logging that serialises entire request or config objects will capture API keys. Redact known-sensitive field names at the logger level rather than at each call site.</li>
 </ul>
-<p>Each of these has a clear fix, but they’re harder to reverse once they’ve burned client trust. The key is to add small, reversible safeguards early—like structured logging that redacts secrets, or a Lambda memory limit set to 80% of max.</p>
-<hr />
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If your app still crashes under load after applying these fixes, escalate in this order:</p>
+<h2 id="an-escalation-path-when-the-fixes-are-not-enough">An escalation path when the fixes are not enough</h2>
+<p>If the application still fails under load after the safeguards above, the problem is usually visibility rather than code.</p>
 <ol>
-<li>
-<p><strong>Check your observability stack</strong>: If you’re not exporting pool depth, error rate, and memory usage to Prometheus or Datadog, you’re flying blind. In 2026, solo founders use Grafana Cloud’s free tier or Fly.io’s built-in metrics. Set them up in &lt;20 minutes.</p>
-</li>
-<li>
-<p><strong>Simulate the failure outside production</strong>: Use <code>chaos-monkey</code> or Fly.io’s <code>flyctl scale count 0</code> to kill a node and watch your circuit breakers trigger. If your app doesn’t degrade gracefully, fix the breaker logic before deploying to users.</p>
-</li>
-<li>
-<p><strong>Ask for help in the right place</strong>: Post in r/selfhosted or the Fly.io community Slack with:</p>
-</li>
-<li>The exact error message (e.g., <code>PostgresError: connection limit exceeded</code>)</li>
-<li>Your <code>pool</code> config (max, idleTimeout, connectionTimeout)</li>
-<li>
-<p>Your <code>/health</code> output
-   Don’t ask “Why is my app slow?”—ask “Why does my pool hit 20 connections at 50 concurrent users?” Be specific. That’s the difference between getting ignored and getting a 5-minute fix.</p>
-</li>
-<li>
-<p><strong>Last resort</strong>: If your stack is too complex for a solo fix, consider downgrading your architecture. Move from serverless to a small VPS on Hetzner ($6/month) with PM2 and Nginx. A single instance is easier to debug than 20 Lambda functions. This approach commonly reduces outages dramatically. The tradeoff: you lose auto-scaling, but you gain control.</p>
-</li>
+<li><strong>Confirm the metrics exist.</strong> Pool depth, error rate, and latency percentiles should be collected and retained. Without them, diagnosis is guesswork. A managed observability service or a self-hosted metrics stack both work; the requirement is that the data exists before the incident.</li>
+<li><strong>Reproduce the failure outside production.</strong> Kill an instance, or point the client at a stub that returns errors, and observe whether the system degrades as designed. A breaker that has never been exercised in a test is an assumption, not a safeguard.</li>
+<li><strong>Ask a precise question.</strong> When requesting help, include the exact error, the relevant configuration values, and the health endpoint output. A question like "why does my pool reach its limit at 50 concurrent users when each request holds a connection for 200 ms" can be answered; "why is my app slow" cannot.</li>
+<li><strong>Consider simplifying the architecture.</strong> A single well-monitored instance is easier to reason about than a distributed system with many moving parts. If the operational surface is larger than the team can maintain, reducing it is a legitimate engineering decision, not a retreat.</li>
 </ol>
-<hr />
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do AI tools still generate flaky code if they’re trained on GitHub?</strong></p>
-<p>AI tools are trained on GitHub, but GitHub is full of legacy code, quick hacks, and undocumented edge cases. Copilot Enterprise and Cursor surface the most popular patterns, not the safest ones. For example, most GitHub React apps don’t include <code>React.StrictMode</code> in production, but it catches lifecycle bugs that only surface in Safari. The AI won’t warn you—it will just scaffold the unsafe pattern. That’s why you need production-grade safeguards: connection pools, circuit breakers, and health checks. These aren’t in the training data because they’re boring.</p>
-<p><strong>How much slower is a circuit breaker compared to no retry logic?</strong></p>
-<p>With a well-tuned circuit breaker (open after 3 failures, reset after 30 seconds), the latency overhead is 2–5ms per call. Without it, a single 500 error can cascade into 10,000 timeouts, each burning 200–500ms in retries. In practice, adding <code>opossum</code> increases median latency from 15ms to 17ms—but reduces 95th percentile latency from 2,400ms to 180ms during outages. The tradeoff is worth it for client trust.</p>
-<p><strong>What’s the smallest pool size that prevents freezes in Supabase?</strong></p>
-<p>Supabase’s default pool is 20 connections. Under 20 concurrent users making 3 queries each, you’re at the limit. For a solo SaaS with 50–100 daily active users, set your pool to 80. Monitor <code>/health</code> and increase by 20 if <code>active_connections &gt; 0.7 * max</code>. That’s the “sweet spot” before you need read replicas. This config runs fine on Supabase Pro ($25/month) for 18 months without a freeze.</p>
-<p><strong>Why does my Next.js API return 504 on the first request after deploy?</strong></p>
-<p>Next.js API routes on Vercel use serverless functions with cold starts. The first request initializes the function, which can take 2–5 seconds. If your CDN (Cloudflare, Vercel Edge) caches the 504 response, every subsequent request returns the error for 5 minutes. The fix is twofold: warm the function with a CRON job, and set <code>Cache-Control: private, no-store</code> on all API responses. In practice, this reduces 504 errors from 420/hour to zero in under 30 minutes.</p>
-<p><strong>Should I pay for Copilot Enterprise if I’m a solo founder?</strong></p>
-<p>Only if you audit the output. In 2026, Copilot Enterprise costs $39/user/month. But it still generates connection leaks, missing health checks, and unsafe retry logic. Many solo founders cancel after a couple of months when it scaffolds a Stripe webhook with <code>try/catch</code> and no exponential backoff. The tool is fast, but it’s not safe. Use it for scaffolding only, then add the safeguards manually. If you do, you’ll save the $39 and keep client trust.</p>
-<hr />
-<h2 id="the-boring-skills-that-outlast-ai">The boring skills that outlast AI</h2>
-<p>The three skills covered here aren’t flashy. They’re not “learn AI prompt engineering” or “switch to low-code.” They’re connection pooling, circuit breakers, and CDN cache control. These skills are boring because they’re proven—they’ve been around since the 90s. But in 2026, they’re the difference between charging $50/hour and $200/hour. Clients don’t pay for fast code. They pay for safe, reliable systems.</p>
-<p>This lesson tends to arrive the hard way, when a client pays far less because Cursor generated most of the code. The mistake isn’t the AI—it’s assuming the code is production-ready. The fix isn’t learning AI tools—it’s adding the boring safeguards that prevent outages. Now, when deploying, the checklist runs in 65 minutes. Two months later, during a 3x traffic spike, the app stays up, latency stays under 300ms, and the client renews at full rate.</p>
-<p>The AI wave isn’t erasing junior tasks—it’s exposing the gap between fast code and safe systems. Close that gap, and your salary stays safe too.</p>
-<hr />
-<p><strong>Your next step in the next 30 minutes:</strong>
-Open your project’s main API file, add a connection pool with <code>max: 80</code>, and deploy it to staging. Then hit the endpoint with <code>curl -v</code> 50 times in a loop. If the latency jumps above 500ms or you see <code>connection limit exceeded</code>, you’ve just found your first fix. Do that now, before the next traffic spike.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/ai-proof-your-mid-level-salary/">AI-proof your mid-level salary</a></li>
-<li><a href="https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/">AI steals junior tasks: 3 skills that protect pay</a></li>
-<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Why does AI-generated code omit these safeguards?</strong></p>
+<p>Because they are rarely present in the examples the models learn from. Tutorials and sample repositories optimise for demonstrating a concept, not for surviving production. A connection pool with a conservative default, a retry loop with no delay, and an API route with no cache headers all look correct in isolation. The omission is a property of the training distribution, not a defect in any particular tool.</p>
+<p><strong>How much latency does a circuit breaker add?</strong></p>
+<p>The breaker itself adds a small constant overhead per call, typically in the low single-digit milliseconds, dominated by the bookkeeping of recording success and failure. The measurable benefit appears during outages: without a breaker, a failing dependency causes callers to wait for the full timeout on every request; with one, calls fail immediately once the threshold is crossed. Measure both states on your own stack rather than relying on a general figure.</p>
+<p><strong>What pool size should a small application use?</strong></p>
+<p>Start from the database's configured connection limit, subtract headroom for administrative connections, and divide by the number of application instances. Then verify with a load test: raise the pool size and observe whether the knee in the latency curve moves. If it does not, the pool was not the constraint. There is no universal correct value.</p>
+<p><strong>Why does the first request after a quiet period fail?</strong></p>
+<p>Serverless platforms scale to zero, and the first request after that pays an initialisation cost. If that cost exceeds the platform's request timeout, the platform returns a 5xx. If a cache stores that response, the failure persists for the cache's TTL. The fix is twofold: keep the function warm with scheduled requests, and ensure error responses are not cacheable.</p>
+<p><strong>Is it worth paying for an AI coding assistant?</strong></p>
+<p>That depends on whether the output is reviewed. These tools reduce the cost of producing a first draft, which is genuinely useful. They do not reduce the cost of reviewing that draft for production readiness, and that review is where the risk lives. The economics work when the time saved on scaffolding exceeds the time spent auditing the result.</p>
+<h2 id="the-skills-that-hold-their-value">The skills that hold their value</h2>
+<p>The three areas covered here — bounded resource use, failure isolation, and response hygiene — are not new. They predate the current generation of tooling by decades. What has changed is the ratio: the cost of producing code has fallen, so the share of an engineer's value that comes from producing it has fallen with it. What remains is judgement about how systems fail and what to do about it.</p>
+<p>That judgement is not demonstrated by a checklist alone. It is demonstrated by measurements: a latency curve that shows where the pool saturates, a breaker that opens and closes as configured, a cache status header that confirms an error was not stored. Each of those is something you can produce in an afternoon, and each one is evidence that the system was designed rather than merely generated.</p>
+<p><strong>Your next step, in the next 30 minutes:</strong> open the file that creates your database pool, set an explicit <code>max</code> value below your database's connection limit, and add a <code>/health</code> endpoint that returns <code>pool.totalCount</code>, <code>pool.idleCount</code>, and <code>pool.waitingCount</code>. Deploy it to staging and run a concurrent load against a route that queries the database. If <code>waitingCount</code> is above zero during the run, you have found your first bottleneck and you have the measurement to prove it.</p>
                 
                 
             </div>
@@ -554,8 +560,8 @@ Open your project’s main API file, add a connection pool with <code>max: 80</c
                     
                     <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
                         <h3>Senior engineer title inflation in 2026</h3>
-                        <p>Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</p>
-                        <span class="related-meta">12 min read · 13 August 2026</span>
+                        <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+                        <span class="related-meta">10 min read · 13 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/aws-cloudwatch-synthetics-for-ai-pipelines/">

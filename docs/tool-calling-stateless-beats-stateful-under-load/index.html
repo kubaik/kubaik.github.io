@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tool calling: stateless beats stateful under load - Kubai Kevin</title>
-        <meta name="description" content="Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…">
+        <meta name="description" content="How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.">
         <meta name="keywords" content="ToolCalls, StatelessVsStateful, ConnectionPoolTuning, P99Latency, ToolCallingPatterns, Redis">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T09:01:43.310641">
-        <meta property="article:modified_time" content="2026-09-18T13:04:42.348345+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:02:16.320064+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Tool calling: stateless beats stateful under load">
-        <meta property="og:description" content="Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…">
+        <meta property="og:description" content="How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.">
         <meta property="og:url" content="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Tool calling: stateless beats stateful under load">
-        <meta name="twitter:description" content="Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…">
+        <meta name="twitter:description" content="How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/tool-calling-stateless-beats-stateful-under-load.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/#article",
       "headline": "Tool calling: stateless beats stateful under load",
-      "description": "Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…",
+      "description": "How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.",
       "datePublished": "2026-06-19T09:01:43+00:00",
-      "dateModified": "2026-09-18T13:04:42+00:00",
-      "wordCount": 3126,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-10-04T10:02:16+00:00",
+      "wordCount": 2133,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Tool calling: stateless beats stateful under load</h1>
                 
-                <p class="post-lead">Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…</p>
+                <p class="post-lead">How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.</p>
                 
                 
                 <div class="tags">
@@ -260,24 +260,23 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3126 words
+                        11 min read
+                        &nbsp;·&nbsp; 2133 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, every microservice I touch either talks to Postgres, Redis, or an external API. The patterns we pick for those calls decide whether the system survives traffic spikes or collapses under its own weight. After three hours of flamegraphs and tcpdumps, the culprit wasn’t the SQL query or the Redis SET—it was the unbounded fan-out of tool calls inside a single handler. State-keeping tool calls (ones that keep a session alive across multiple invocations) looked fine in unit tests, but exploded into 400 open connections at 1000 RPS and hit the kernel’s file-descriptor limit. That taught me the hard way: the tool-calling pattern that works on the laptop rarely survives in production.</p>
-<p>The difference isn’t theoretical. In a 2025 study of 200 production services, 67 % of outages traced to tool calls that maintained state across requests—stateful tool calls, retry storms, or unbounded async work queues. The remaining 33 % were plain old CPU or memory pressure, but the pattern that broke fastest was always the same: keeping a long-lived connection or context per request instead of creating a fresh one.</p>
-<p>If you’re running anything more complex than a ‘Hello World’, you need to know which pattern survives load and which one becomes the next pager.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>Option A is the stateless, request-scoped tool call. Every invocation opens a new connection, performs the work, closes it, and forgets everything. It’s the classic ‘open-transport, call, close’ cycle you’ve seen in every tutorial using Python’s <code>requests</code>, Node 20 LTS <code>fetch</code>, or Go’s <code>net/http</code> client.</p>
-<pre><code class="language-python"># Python 3.11 + httpx 0.27
+                <h2 id="the-failure-mode-this-comparison-addresses">The failure mode this comparison addresses</h2>
+<p>Most tool-calling bugs that surface in production are not logic bugs. They are resource bugs. A handler that opens a connection per call, or one that shares a long-lived connection across requests, can both pass unit tests and then fail at scale for opposite reasons: the first exhausts ephemeral ports and file descriptors, the second exhausts pool slots and blocks every caller behind one slow upstream.</p>
+<p>The pattern that breaks fastest in incident reports is usually the one that keeps a long-lived connection or context per request instead of creating a fresh one, or the one that opens a fresh connection per request with no bound on concurrency. Both mistakes look reasonable in isolation. The point of this article is to describe how each pattern behaves, how to measure the difference on your own workload, and how to decide.</p>
+<p>The comparison is not "stateless is always better." It is that stateless and pooled tool calls fail in different ways, and you should know which failure mode your system can tolerate before you pick.</p>
+<h2 id="option-a-stateless-request-scoped-tool-calls">Option A — stateless, request-scoped tool calls</h2>
+<p>A stateless tool call opens a new connection, performs the work, closes it, and keeps nothing. It is the classic open-transport, call, close cycle used by Python's <code>requests</code> or <code>httpx</code>, Node's <code>fetch</code>, and Go's <code>net/http</code> client.</p>
+<pre><code class="language-python"># Python 3.11 + httpx
 import httpx
 
 def call_tool(query: str) -&gt; str:
@@ -290,12 +289,22 @@ def call_tool(query: str) -&gt; str:
         r.raise_for_status()
         return r.json()[&quot;result&quot;]
 </code></pre>
-<p>Under the hood, this uses a fresh TCP connection per request. The OS kernel tears down the socket immediately, so the process never leaks file descriptors. Reusing the same client instance across many requests (a common micro-optimisation) is tempting, but it silently keeps the socket alive and accumulates TIME_WAIT entries. I’ve seen a single mis-configured <code>requests.Session()</code> balloon a container from 1024 open files to 8192 in under 15 minutes at 2000 RPS.</p>
-<p>Where it shines:
-- Simple mental model: one call, one socket, one result. - Predictable latency: no connection reuse means no head-of-line blocking across calls. - Resilient to upstream failures: a crashed upstream service only affects the single request that hit it, not every caller sharing a pool.</p>
-<p>It also fits the 12-factor app pattern: each new request starts clean, no leftover state can poison the next call.</p>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Option B keeps a persistent session across multiple invocations—think a Redis pipeline, a Postgres connection, or a WebSocket that stays open between tool calls. This is the pattern you reach for when you need low latency or when the upstream charges per connection.</p>
+<p>Under the hood this uses a fresh TCP connection per request. The kernel tears the socket down when the call returns, so the process does not accumulate file descriptors. Reusing a single client instance across many requests is a common micro-optimisation, but it changes the pattern: a client held open keeps the socket alive and can accumulate sockets in <code>TIME_WAIT</code>. A misconfigured session object that is never closed can balloon a container's open file count under sustained load.</p>
+<p>Where stateless calls are strong:</p>
+<ul>
+<li>Simple mental model: one call, one socket, one result.</li>
+<li>Predictable latency: no connection reuse means no head-of-line blocking across calls.</li>
+<li>Failure isolation: a crashed upstream affects only the requests that hit it, not every caller sharing a pool.</li>
+<li>Fits the twelve-factor model: each request starts clean, so no leftover state can poison the next call.</li>
+</ul>
+<p>Where stateless calls are weak:</p>
+<ul>
+<li>Every call pays handshake cost (TCP, and TLS if applicable).</li>
+<li>Under high request rates with non-trivial upstream latency, sockets pile up in <code>TIME_WAIT</code> and can exhaust the ephemeral port range.</li>
+<li>If the upstream bills per connection, cost scales linearly with request volume.</li>
+</ul>
+<h2 id="option-b-pooled-session-reusing-tool-calls">Option B — pooled, session-reusing tool calls</h2>
+<p>A pooled tool call keeps a persistent session across invocations: a Redis client, a Postgres connection pool, a message-bus channel, or a WebSocket held open between calls. This is the pattern to reach for when you need low latency or when the upstream charges per connection.</p>
 <pre><code class="language-javascript">// Node 20 LTS + redis@4.6
 import { createClient } from 'redis';
 
@@ -310,318 +319,83 @@ async function batchLookup(keys: string[]) {
   return await client.mGet(keys);
 }
 </code></pre>
-<p>The same pattern applies to Postgres: <code>psycopg3</code>’s connection pool or <code>pgBouncer</code> in transaction pooling mode keeps a handful of connections open and reuses them. The trick is that the pool is bounded—you decide the size at start-up and the kernel’s file descriptor limit becomes an explicit dial, not an invisible grenade.</p>
-<p>Where it shines:
-- Lower latency for high-frequency operations (e.g., rate-limit lookups, feature-flag checks). - Reduced upstream load: one connection can serve many tool calls instead of opening a new one each time. - Lower cost on services that bill per connection (looking at you, Anthropic API).</p>
-<p>The catch is that every shared resource needs a timeout, backoff, and a circuit breaker. Without them, a slow upstream or a misbehaving query can pin the pool and starve every other request.</p>
-<p>I once left a Postgres pool size at 10 for a service expecting 500 RPS. Under 1000 RPS, every API call waited 2–3 s for a connection. The fix wasn’t bigger hardware—it was a 30-line patch to set <code>max_connections=50</code> and add <code>statement_timeout=2000</code> on every query.</p>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>We benchmarked both patterns on a simulated 1000 RPS workload with 10 ms upstream latency and 2 % failure rate. The stateless tool calls ran in 32-node Kubernetes pods using Node 20 LTS and <code>axios 1.6</code>. The stateful pool used a single Node 20 LTS pod with a <code>redis@4.6</code> pool of 100 connections.</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Stateless (per-request)</th>
-<th>Stateful (pooled)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Mean latency</td>
-<td>29 ms</td>
-<td>12 ms</td>
-</tr>
-<tr>
-<td>P95 latency</td>
-<td>68 ms</td>
-<td>28 ms</td>
-</tr>
-<tr>
-<td>P99 latency</td>
-<td>142 ms</td>
-<td>86 ms</td>
-</tr>
-<tr>
-<td>Error rate</td>
-<td>0.18 %</td>
-<td>0.23 %</td>
-</tr>
-<tr>
-<td>CPU usage (container)</td>
-<td>32 %</td>
-<td>18 %</td>
-</tr>
-<tr>
-<td>Open sockets (pod)</td>
-<td>0 (kernel reclaims)</td>
-<td>100 (stable)</td>
-</tr>
-</tbody>
-</table>
-<p>The pooled approach cut latency by 60 % at the median and 40 % at the tail. The stateless approach stayed flat under load because each request paid the TCP handshake cost, but it never ran out of file descriptors. The pooled approach needed careful tuning—anything less than 100 connections and latency spiked; anything more and the pod’s RSS climbed 300 MB.</p>
-<p>The surprise was the error rate: the pooled version had slightly more failures because a single upstream 503 would block the pool until the retry drained. That taught me to wrap pooled calls in a circuit breaker, which cut the error rate back to 0.12 % with no extra infra.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>Stateless tool calls are trivial to reason about. If the call fails, the next one is independent. You can unit-test with <code>pytest</code> 7.4 or Jest without mocking a connection pool, and your integration tests can run in parallel without port conflicts. The only knobs are timeout and retries—both easy to set via environment variables.</p>
-<pre><code class="language-python"># pytest 7.4
-import pytest
-from unittest.mock import patch
-
-def test_call_tool_success():
-    with patch('httpx.post') as mock_post:
-        mock_post.return_value.json.return_value = {&quot;result&quot;: &quot;ok&quot;}
-        assert call_tool(&quot;hello&quot;) == &quot;ok&quot;
-</code></pre>
-<p>Stateful tool calls introduce complexity: pool sizing, connection leaks, idle timeouts, and transaction isolation. A junior engineer once set <code>idleTimeoutMillis=0</code> on a Redis pool, which leaked one connection per request until the pod OOMKilled. Debugging it took two hours because the leak looked like a memory issue in the container logs.</p>
-<p>Stateless wins on onboarding speed. Stateful wins when you need sub-10 ms round-trips or when the upstream bills per connection. Pick stateless if you value debuggability and predictability; pick pooled if you value latency and cost at scale.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>In a 2026 cloud bill for a 24-hour spike of 1000 RPS, the stateless pattern cost us $183. The pooled pattern cost $142—a 22 % saving. The saving came from two places: less upstream compute (fewer concurrent connections) and lower egress bandwidth (reused TCP connections compress better).</p>
-<p>But the stateless pattern scaled horizontally without reconfiguring the pool. We spun up 3 extra pods in under two minutes and the latency stayed flat. The pooled pattern required editing the pool size in the Helm chart and redeploying—adding two minutes of toil and a canary pipeline step.</p>
-<p>Cost isn’t just the bill. The stateless pattern also reduced our monitoring surface: we only needed to watch CPU and latency per pod, not connection counts and pool saturation. The pooled pattern required Prometheus scrape targets for <code>redis_connected_clients</code> and <code>pg_stat_database</code>—extra dashboards, extra alerts, extra paging.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
+<p>The same idea applies to Postgres: a connection pool inside the process, or an external pooler in transaction pooling mode, keeps a bounded set of connections open and reuses them. The important property is that the pool is bounded. The size is decided at start-up, so the kernel's file descriptor limit becomes an explicit dial rather than an invisible ceiling.</p>
+<p>Where pooled calls are strong:</p>
+<ul>
+<li>Lower latency for high-frequency operations such as rate-limit lookups or feature-flag checks.</li>
+<li>Reduced upstream load: one connection serves many calls instead of one per call.</li>
+<li>Lower cost on services that bill per connection or per concurrent request.</li>
+</ul>
+<p>Where pooled calls are weak:</p>
+<ul>
+<li>Every shared resource needs a timeout, a backoff, and a circuit breaker. Without them, one slow upstream or one misbehaving query can pin the pool and starve every other request.</li>
+<li>Pool sizing is a tuning problem. Too small and latency spikes under load; too large and memory and upstream connection limits become the constraint.</li>
+<li>Leaks are silent. A pool that never releases a slot looks healthy in logs until callers start timing out.</li>
+</ul>
+<h2 id="how-to-measure-the-difference-on-your-own-workload">How to measure the difference on your own workload</h2>
+<p>Rather than trusting a table of numbers from someone else's environment, instrument both patterns and compare. The measurement is straightforward.</p>
+<p>What to instrument:</p>
+<ul>
+<li>Latency distribution, not just the mean: record p50, p95, and p99.</li>
+<li>Error rate, split by cause (upstream 5xx, timeout, connection refused, pool exhausted).</li>
+<li>Open file descriptors per process, sampled every second.</li>
+<li>Socket state counts: <code>ss -tan state time-wait | wc -l</code> and <code>ss -s</code>.</li>
+<li>Pool saturation, if pooled: in-use slots divided by total slots.</li>
+<li>Upstream connection count, if the upstream exposes it.</li>
+</ul>
+<p>How to run the comparison:</p>
 <ol>
-<li>
-<p>Measure first: run a load test at 2× expected traffic for 10 minutes. Record latency, error rate, and open file descriptors. If the stateless pattern stays below 100 ms P99 and uses fewer than 512 open files per pod, choose stateless.</p>
-</li>
-<li>
-<p>Check upstream billing: if the upstream charges per connection or per concurrent request, a pooled pattern can cut cost regardless of latency.</p>
-</li>
-<li>
-<p>Evaluate team maturity: if the team has seen connection leaks or pool exhaustion before, stateless is safer. If the team has used connection pools successfully for over a year, pooled is fine.</p>
-</li>
-<li>
-<p>Time budget: if you have one engineer for two weeks, choose stateless. If you have a platform team that can tune pool sizes, choose pooled.</p>
-</li>
+<li>Fix the workload: a constant request rate, a fixed upstream latency, and a fixed upstream failure rate. If you cannot control upstream latency, note it and repeat the test at different times.</li>
+<li>Run each pattern for at least ten minutes at twice your expected peak rate. Short runs miss <code>TIME_WAIT</code> accumulation and pool warm-up effects.</li>
+<li>Record the metrics above for the whole run, not just the end.</li>
+<li>Change one variable at a time: pool size, timeout values, concurrency limit. A two-variable change tells you nothing about which knob mattered.</li>
 </ol>
-<p>I keep a 20-line YAML snippet in my repo that toggles between stateless and pooled via an environment variable. The snippet sets timeouts, pool sizes, and circuit-breaker thresholds in one place. This lets me validate both patterns in staging without touching the application code.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p>Recommendation: use <strong>stateless tool calls by default</strong>. They are simpler to reason about, safer under load, and cheaper to operate once you hit scale. The only time I override this is when all three of these conditions are true:
-- The upstream latency is &gt;50 ms per call. - The upstream bills per connection or per concurrent request. - The team has production experience with connection pools and can tune them.</p>
-<p>Even then, I start with a tiny pool size (10–20 connections) and strict timeouts (200 ms per call, 1 s total timeout) and only increase once I’ve proven the pattern survives a load test at 3× expected traffic.</p>
-<p>I ignored this rule for a batch feature-flag service that talked to LaunchDarkly. I used a single persistent client across 100 pods to cut latency. Under a 30 % traffic spike, 12 pods ran out of file descriptors because the kernel hit <code>net.ipv4.ip_local_port_range</code>. The service fell over while the upstream kept serving flags. Rewriting to stateless calls fixed it in 45 minutes.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>Stateless tool calls beat stateful ones in 80 % of production cases. They avoid the hidden tax of connection leaks, pool exhaustion, and kernel limits. They scale horizontally without configuration changes and keep the operational surface small. The 60 % latency win you get from pooling rarely outweighs the two hours of debugging I’ve spent per incident on pool-related issues.</p>
-<p>If you’re unsure, run a 10-minute load test with both patterns and compare P99 latency and open file descriptors. You’ll know in minutes which one your system tolerates.</p>
-<p>Measure before you optimise—your pager will thank you.</p>
-<p>Run <code>curl -s https://your-service.local/health | jq .latency_p99</code> on your staging endpoint right now. If the value is below 100 ms at 100 RPS, stay stateless. If it’s above, consider a bounded pool with a circuit breaker.</p>
-<hr />
-<h3 id="1-advanced-edge-cases-i-personally-encountered">1. Advanced edge cases I personally encountered</h3>
-<h4 id="edge-case-1-the-netipv4ip_local_port_range-starvation-under-ephemeral-load">Edge Case #1: The <code>net.ipv4.ip_local_port_range</code> starvation under ephemeral load</h4>
-<p>In June 2026, while running a stateless pattern against a third-party AI inference API (v2.3.1), I watched a Kubernetes pod crashloop in Jakarta after a 30 % traffic spike. The pod’s <code>netstat -tan</code> showed 64,512 sockets in <code>TIME_WAIT</code> state, and <code>ss -s</code> reported 1024 open file descriptors exceeded. The root cause wasn’t the code—it was the default <code>ip_local_port_range</code> on the host OS (<code>32768 60999</code>, 28,232 ports). Under 1200 RPS with 50 ms upstream latency, the pod exhausted the range in 8 minutes. The fix wasn’t code—it was tuning <code>/etc/sysctl.conf</code>:</p>
-<pre><code class="language-bash">net.ipv4.ip_local_port_range = 10240 65535
-net.ipv4.tcp_tw_reuse = 1
+<p>The result you are looking for is not "which is faster." It is "which one fails first, and how." A stateless pattern that stays under your p99 target and never approaches the file descriptor limit is a safe default. A pooled pattern that holds p99 steady but saturates its pool at 80 percent of peak is a capacity problem waiting for a traffic spike.</p>
+<h2 id="worked-example-sizing-a-pool-from-first-principles">Worked example: sizing a pool from first principles</h2>
+<p>Suppose a service makes tool calls that take 20 ms of upstream time each, and the service must sustain 500 calls per second. The concurrency needed to sustain that rate is the arrival rate multiplied by the service time:</p>
+<pre><code>concurrency = 500 calls/s × 0.020 s = 10 concurrent calls
 </code></pre>
-<p>This increased the available ephemeral ports by 37 % and reused TIME_WAIT sockets aggressively. The pod now survives 2500 RPS without socket exhaustion. Lesson: even stateless patterns can hit kernel limits if upstream latency is &gt;20 ms. Measure <code>net.ipv4.ip_local_port_range</code> exhaustion with:</p>
+<p>So a pool of 10 connections is the theoretical minimum, assuming zero variance. Real upstream latency varies, so size for the tail. If the p99 upstream latency is 100 ms, the same formula gives:</p>
+<pre><code>concurrency = 500 calls/s × 0.100 s = 50 concurrent calls
+</code></pre>
+<p>That is the number to start from. Add headroom for retries and for the fact that a pool slot is held for the entire call, including any client-side processing. A pool of 50 to 75 connections is a reasonable starting range for this workload. Below 50, callers queue during tail-latency events. Above 75, you are paying for connections that sit idle most of the time and consuming upstream connection budget.</p>
+<p>This arithmetic is illustrative. Substitute your own measured service time and p99 latency.</p>
+<p>The same arithmetic applies to the stateless pattern in reverse: if each call opens a socket and the upstream takes 100 ms at p99, then at 500 calls per second you have roughly 50 sockets open at any instant, plus every socket that has closed but is still in <code>TIME_WAIT</code>. <code>TIME_WAIT</code> duration is typically twice the maximum segment lifetime, which on Linux defaults to 60 seconds. That means the number of sockets in <code>TIME_WAIT</code> can be much larger than the number of in-flight sockets. This is the mechanism behind ephemeral port exhaustion, and it is why stateless patterns can fail even though they "hold no state."</p>
+<h2 id="failure-modes-to-watch-for">Failure modes to watch for</h2>
+<h3 id="ephemeral-port-exhaustion">Ephemeral port exhaustion</h3>
+<p>A stateless service running at high request rates with non-trivial upstream latency can accumulate sockets in <code>TIME_WAIT</code> faster than the kernel reclaims them. Symptoms: connection refused or cannot assign requested address errors, rising error rate under load, and <code>ss -s</code> showing a large <code>TIME_WAIT</code> count. Diagnostic:</p>
 <pre><code class="language-bash">watch -n 1 &quot;ss -tan state time-wait | wc -l&quot;
 </code></pre>
-<h4 id="edge-case-2-the-redis-pipeline-deadlock-under-lua-script-contention">Edge Case #2: The Redis pipeline deadlock under Lua script contention</h4>
-<p>In a feature-flag service using <code>redis@4.6</code> with Lua scripts, a traffic spike from Dublin caused 47 % of Redis commands to stall. Profiling with <code>redis-cli --latency-history -h prod-redis -p 6379</code> showed 95th percentile latency jumping from 3 ms to 1.8 s during the spike. The bottleneck was a Lua script blocking the pipeline for 800 ms while iterating over a 10,000-key dataset. The fix wasn’t pool sizing—it was splitting the Lua script into smaller chunks and using <code>EVALSHA</code> with <code>redis-py</code>’s <code>pipeline.execute()</code> batching. The new median latency dropped to 4 ms, and P99 to 12 ms under 3000 RPS. Lesson: pooled patterns can deadlock under Lua script contention. Always profile Redis with:</p>
-<pre><code class="language-bash">redis-cli --latency --latency-history -h prod-redis -p 6379
+<p>Mitigations include reducing upstream latency (which reduces in-flight sockets), capping client concurrency so you do not open more sockets than you can retire, and on the host side widening the ephemeral port range or enabling <code>tcp_tw_reuse</code>. Host-level tuning is a mitigation, not a fix; if you need it, your concurrency is probably higher than the workload justifies.</p>
+<h3 id="pool-starvation-behind-a-slow-upstream">Pool starvation behind a slow upstream</h3>
+<p>A pooled service with a fixed pool size will queue callers once every slot is in use. If one upstream call hangs, it holds its slot for the full timeout. With a pool of 50 and a 30-second timeout, 50 hung calls take the entire service down for 30 seconds. Symptoms: latency climbing in lockstep across all endpoints, pool saturation at 100 percent, and a flat upstream request rate. Mitigations: set a per-call timeout well below the pool's tolerance, add a circuit breaker so repeated failures stop consuming slots, and monitor pool saturation as a first-class metric.</p>
+<p>A circuit breaker wraps pooled calls and trips after a configured failure rate, then stops issuing calls for a cooldown period. The shape of the configuration matters less than having one:</p>
+<pre><code class="language-javascript">const breaker = {
+  failureThreshold: 0.5,      // trip at 50% failures
+  minimumCalls: 20,           // do not trip on a tiny sample
+  cooldownMs: 5000,           // wait before probing
+  halfOpenCalls: 3            // probe with a few calls first
+};
 </code></pre>
-<h4 id="edge-case-3-the-connection-pool-silent-leak-with-http2-multiplexing">Edge Case #3: The Connection Pool “Silent Leak” with HTTP/2 multiplexing</h4>
-<p>A GraphQL aggregation endpoint using <code>Node 20 LTS + axios 1.6</code> with HTTP/2 multiplexing leaked 1200 idle connections per pod under 1500 RPS. The leak wasn’t in application code—it was in the <code>http2</code> session layer. The <code>nghttp2</code> library (v1.56.0) kept idle sessions open for 300 seconds by default, and the OS kernel’s <code>tcp_keepalive_time</code> (7200 s) didn’t reclaim them fast enough. The fix was setting:</p>
-<pre><code class="language-javascript">axios.create({
-  httpAgent: new http2.Http2Agent({ maxSessions: 10, maxEmptySessions: 5 }),
-  httpsAgent: new https.Agent({ maxSockets: 10 })
-});
-</code></pre>
-<p>This capped the pool at 10 HTTP/2 sessions and 10 HTTPS sockets. The pod’s open file descriptors dropped from 2048 to 256, and P95 latency fell from 800 ms to 120 ms. Lesson: HTTP/2 multiplexing can silently leak connections. Always set <code>maxSessions</code> and <code>maxEmptySessions</code> explicitly.</p>
-<hr />
-<h3 id="2-integration-with-real-tools-2026-versions">2. Integration with real tools (2026 versions)</h3>
-<h4 id="tool-1-opentelemetry-otel-http-for-stateless-calls">Tool 1: OpenTelemetry + <code>otel-http</code> for stateless calls</h4>
-<p>Use OpenTelemetry 1.30.0’s <code>otel-http</code> to instrument stateless calls with automatic context propagation. Add the following to your Python 3.11 service:</p>
-<pre><code class="language-python"># pip install opentelemetry-sdk==1.30.0 opentelemetry-instrumentation-httpx==0.45b0
-from opentelemetry import trace
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
-import httpx
-
-# Setup tracing
-trace.set_tracer_provider(TracerProvider())
-trace.get_tracer_provider().add_span_processor(
-    BatchSpanProcessor(ConsoleSpanExporter())  # Replace with Jaeger/OtlpExporter
-)
-HTTPXClientInstrumentor().instrument()
-
-# Your stateless call remains unchanged
-def call_tool(query: str) -&gt; str:
-    with httpx.Client(timeout=5.0) as client:
-        r = client.post(
-            &quot;https://api.example.com/v1/search&quot;,
-            json={&quot;q&quot;: query},
-            headers={&quot;X-API-Key&quot;: &quot;prod-key&quot;}
-        )
-        r.raise_for_status()
-        return r.json()[&quot;result&quot;]
-</code></pre>
-<p>This instruments every request with trace IDs, upstream latency, and status codes. Use it to detect slow upstream calls and retry storms in real time.</p>
-<h4 id="tool-2-pgbouncer-1221-psycopg3-319-for-pooled-postgres-calls">Tool 2: <code>pgBouncer 1.22.1</code> + <code>psycopg3 3.19</code> for pooled Postgres calls</h4>
-<p>Use <code>pgBouncer</code> in transaction pooling mode to manage Postgres connections at the connection pooler level, not the application level. Configure <code>pgbouncer.ini</code>:</p>
-<pre><code class="language-ini">[databases]
-mydb = host=postgres1 port=5432 dbname=mydb
-
-[pgbouncer]
-pool_mode = transaction
-max_client_conn = 1000
-default_pool_size = 50
-reserve_pool_size = 10
-server_idle_timeout = 30
-</code></pre>
-<p>Then use <code>psycopg3</code> in your Python 3.11 service:</p>
-<pre><code class="language-python"># pip install psycopg[binary]==3.19.0
-import psycopg
-
-def get_user(user_id: int) -&gt; dict:
-    with psycopg.connect(
-        &quot;postgresql://user:pass@pgbouncer:6432/mydb&quot;,
-        autocommit=True,
-        prepare_threshold=5
-    ) as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                &quot;SELECT id, name FROM users WHERE id = %s&quot;,
-                (user_id,)
-            )
-            return cur.fetchone()
-</code></pre>
-<p>This pools connections at the proxy level, not the app. The app never touches Postgres directly, so you can tune pool sizes without redeploying.</p>
-<h4 id="tool-3-resilience4j-210-circuit-breaker-for-pooled-calls">Tool 3: <code>resilience4j 2.1.0</code> circuit breaker for pooled calls</h4>
-<p>Wrap pooled calls in a circuit breaker to prevent retry storms. Use <code>resilience4j-circuitbreaker</code> with <code>Node 20 LTS</code>:</p>
-<pre><code class="language-javascript">// npm install resilience4j-circuitbreaker@2.1.0
-import { CircuitBreaker } from 'resilience4j-circuitbreaker';
-
-const breaker = CircuitBreaker.of({
-  name: 'redisPoolBreaker',
-  failureRateThreshold: 50,
-  waitDurationInOpenState: 5000,
-  slidingWindowSize: 100,
-  permittedNumberOfCallsInHalfOpenState: 3
-});
-
-async function safeBatchLookup(keys) {
-  return breaker.executeAsync(async () =&gt; {
-    const client = await redisPool.acquire();
-    try {
-      return await client.mGet(keys);
-    } finally {
-      await redisPool.release(client);
-    }
-  });
-}
-</code></pre>
-<p>This trips the breaker after 50 % failure rate, waits 5 s, then allows 3 calls in half-open state. The breaker prevents pooled connections from retrying on every failure.</p>
-<hr />
-<h3 id="3-beforeafter-comparison-with-actual-numbers">3. Before/after comparison with actual numbers</h3>
-<h4 id="scenario-jakarta-traffic-spike-on-a-feature-flag-service">Scenario: Jakarta traffic spike on a feature-flag service</h4>
-<ul>
-<li><strong>Workload</strong>: 2000 RPS for 30 minutes, 50 ms upstream latency, 3 % failure rate.</li>
-<li><strong>Tool</strong>: <code>Node 20 LTS + redis@4.6</code> pool with stateless Redis client vs pooled client.</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (Stateless)</th>
-<th>After (Pooled + Circuit Breaker)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Mean latency</td>
-<td>98 ms</td>
-<td>18 ms</td>
-</tr>
-<tr>
-<td>P95 latency</td>
-<td>212 ms</td>
-<td>34 ms</td>
-</tr>
-<tr>
-<td>P99 latency</td>
-<td>512 ms</td>
-<td>78 ms</td>
-</tr>
-<tr>
-<td>Error rate</td>
-<td>3.2 %</td>
-<td>0.8 %</td>
-</tr>
-<tr>
-<td>Open file descriptors (pod)</td>
-<td>2048 (exceeded)</td>
-<td>256 (stable)</td>
-</tr>
-<tr>
-<td>Cloud cost (30 min)</td>
-<td>$127</td>
-<td>$98</td>
-</tr>
-<tr>
-<td>Lines of code changed</td>
-<td>0</td>
-<td>42</td>
-</tr>
-<tr>
-<td>Incident pager count</td>
-<td>3 (file descriptor leaks)</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<h4 id="key-changes">Key changes:</h4>
+<h3 id="silent-connection-leaks">Silent connection leaks</h3>
+<p>A pool that never releases a slot looks healthy until callers start timing out. Common causes: a code path that acquires a connection and returns early without releasing it, an exception thrown between acquire and release, or an idle timeout set to zero so connections are never reclaimed. Symptoms: pool saturation that does not recover after traffic drops, and a slow climb in open file descriptors. Mitigation: acquire and release in a <code>try/finally</code> block, set an explicit idle timeout, and alert on pool saturation above a threshold for more than a few minutes.</p>
+<h3 id="http2-session-accumulation">HTTP/2 session accumulation</h3>
+<p>Clients that multiplex over HTTP/2 can keep idle sessions open longer than expected. If the session layer's idle timeout exceeds the kernel's TCP keepalive interval, idle sessions accumulate. Symptoms: open file descriptors climbing while request rate is flat. Mitigation: set explicit caps on the number of sessions and empty sessions in the client configuration, and verify with <code>ss -tan</code> that session counts track request rate.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order. The first question that has a clear answer usually settles it.</p>
 <ol>
-<li><strong>Pool sizing</strong>: Increased <code>maxClients</code> in <code>redis@4.6</code> from 50 to 200, added <code>idleTimeoutMillis=30000</code>.</li>
-<li><strong>Circuit breaker</strong>: Added <code>resilience4j-circuitbreaker@2.1.0</code> with 50 % failure threshold and 5 s wait.</li>
-<li><strong>Timeouts</strong>: Set <code>connectTimeout=1000</code>, <code>socketTimeout=2000</code> on Redis client.</li>
-<li><strong>Monitoring</strong>: Added Prometheus scrape for <code>redis_pool_size</code>, <code>redis_in_use_connections</code>, and <code>resilience4j_circuitbreaker_state</code>.</li>
+<li><strong>What is the upstream p99 latency?</strong> If it is under roughly 10 ms and the service is in the same region or network, the handshake cost of stateless calls is a small fraction of total call time. Stateless is usually fine.</li>
+<li><strong>What is the expected peak request rate?</strong> At low rates (under a few hundred per second), neither pattern is likely to hit resource limits. At high rates, the arithmetic above determines whether you need a pool.</li>
+<li><strong>Does the upstream bill per connection or per concurrent request?</strong> If yes, pooling can reduce cost directly. If no, cost is not a differentiator.</li>
+<li><strong>Can you bound concurrency in the stateless case?</strong> If you can cap in-flight calls with a semaphore or a worker pool, stateless becomes safe at high rates because you control socket creation. If you cannot, stateless is a liability at high rates.</li>
+<li><strong>Does the team have production experience with connection pools?</strong> Pools require tuning, monitoring, and leak discipline. If the team has not operated one, the first incident will be expensive. Start stateless and add a pool when the latency or cost case is proven.</li>
+<li><strong>What is the blast radius of a slow upstream?</strong> With stateless calls, a slow upstream slows the requests that hit it. With a pool, a slow upstream can stall every caller. If the upstream is unreliable, stateless plus a circuit breaker is the safer combination.</li>
 </ol>
-<h4 id="result">Result:</h4>
-<ul>
-<li><strong>Latency</strong>: P99 dropped from 512 ms to 78 ms—a 85 % improvement.</li>
-<li><strong>Reliability</strong>: Error rate dropped from 3.2 % to 0.8 % due to circuit breaker.</li>
-<li><strong>Cost</strong>: Saved 23 % on cloud bill by reducing upstream compute and egress.</li>
-<li><strong>Operational</strong>: Pager count dropped from 3 incidents to 0 in 3 months.</li>
-</ul>
-<h4 id="code-diff">Code diff:</h4>
-<pre><code class="language-diff">- // Stateless Redis client
-- const client = createClient({ url: 'redis://prod-redis:6379' });
-+ // Pooled Redis client with circuit breaker
-+ const client = createClient({
-+   url: 'redis://prod-redis:6379',
-+   socket: { reconnectStrategy: (retries) =&gt; Math.min(retries * 100, 5000) }
-+ });
-+ const breaker = CircuitBreaker.of({
-+   name: 'redisPoolBreaker',
-+   failureRateThreshold: 50,
-+   waitDurationInOpenState: 5000
-+ });
-+
-- async function batchLookup(keys) {
--   return client.mGet(keys);
-- }
-+ async function batchLookup(keys) {
-+   return breaker.executeAsync(async () =&gt; {
-+     return client.mGet(keys);
-+   });
-+ }
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick one service that makes tool calls to an external dependency. Run this against its staging endpoint under your current load test:</p>
+<pre><code class="language-bash">watch -n 1 &quot;ss -tan state time-wait | wc -l&quot;
 </code></pre>
-<h4 id="why-the-improvement">Why the improvement?</h4>
-<p>The pooled pattern reused connections, cutting TCP handshake overhead. The circuit breaker prevented retry storms from amplifying upstream failures. The pool sizing tuned the trade-off between latency and resource usage.</p>
-<h4 id="when-to-revert">When to revert:</h4>
-<p>If upstream latency drops to &lt;10 ms (e.g., in-region Redis), the stateless pattern may become competitive again. Always rerun the load test when upstream characteristics change.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
-<li><a href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
-<li><a href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">7 skills senior engineers need now agents are live</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Note the number. Then run the same load test with a client-side concurrency cap equal to your expected peak rate multiplied by the upstream p99 latency in seconds. Note the number again. If the second number is materially lower and your latency did not regress, you have found a cheap improvement: bound the concurrency rather than changing the pattern. If the number is unchanged and your p99 is already acceptable, leave the pattern alone and spend the time on something else.</p>
                 
                 
             </div>
@@ -650,20 +424,20 @@ async function safeBatchLookup(keys) {
                     
                     <a class="related-card" href="/ai-errors-hide-in-plain-latency/">
                         <h3>AI errors hide in plain latency</h3>
-                        <p>AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</p>
-                        <span class="related-meta">12 min read · 21 August 2026</span>
+                        <p>Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
+                        <span class="related-meta">10 min read · 21 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/dead-letter-queues-stop-poison-messages/">
                         <h3>Dead-letter queues: stop poison messages</h3>
-                        <p>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</p>
-                        <span class="related-meta">13 min read · 21 September 2026</span>
+                        <p>Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/memory-systems-for-production-agents/">
                         <h3>Memory Systems for Production Agents</h3>
-                        <p>Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</p>
-                        <span class="related-meta">11 min read · 15 September 2026</span>
+                        <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+                        <span class="related-meta">10 min read · 15 September 2026</span>
                     </a>
                     
                 </div>

@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Why our schema survived AI scaling - Kubai Kevin</title>
-        <meta name="description" content="Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.">
+        <title>Designing a Schema That Survives Embedding Model Upgrades - Kubai Kevin</title>
+        <meta name="description" content="Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.">
         <meta name="keywords" content="EmbeddingSchema, VectorStoreMigration, Ai, Dataengineering, Postgresql, Vectordb">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-13T16:15:34.720467">
-        <meta property="article:modified_time" content="2026-09-13T16:15:34.720478">
+        <meta property="article:modified_time" content="2026-10-04T10:52:41.020460+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="Why our schema survived AI scaling">
-        <meta property="og:description" content="Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.">
+        <meta property="og:title" content="Designing a Schema That Survives Embedding Model Upgrades">
+        <meta property="og:description" content="Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.">
         <meta property="og:url" content="https://kubaik.github.io/why-our-schema-survived-ai-scaling/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/why-our-schema-survived-ai-scaling.png">
-        <meta property="og:image:alt" content="Why our schema survived AI scaling">
+        <meta property="og:image:alt" content="Designing a Schema That Survives Embedding Model Upgrades">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Why our schema survived AI scaling">
-        <meta name="twitter:description" content="Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.">
+        <meta name="twitter:title" content="Designing a Schema That Survives Embedding Model Upgrades">
+        <meta name="twitter:description" content="Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-our-schema-survived-ai-scaling.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/why-our-schema-survived-ai-scaling/#article",
-      "headline": "Why our schema survived AI scaling",
-      "description": "Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.",
+      "headline": "Designing a Schema That Survives Embedding Model Upgrades",
+      "description": "Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.",
       "datePublished": "2026-09-13T16:15:34+00:00",
-      "dateModified": "2026-09-13T16:15:34+00:00",
-      "wordCount": 2237,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-04T10:52:41+00:00",
+      "wordCount": 2040,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Why our schema survived AI scaling",
+          "name": "Designing a Schema That Survives Embedding Model Upgrades",
           "item": "https://kubaik.github.io/why-our-schema-survived-ai-scaling/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>Why our schema survived AI scaling</span>
+            <span>Designing a Schema That Survives Embedding Model Upgrades</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">Why our schema survived AI scaling</h1>
+                <h1 itemprop="headline">Designing a Schema That Survives Embedding Model Upgrades</h1>
                 
-                <p class="post-lead">Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
+                <p class="post-lead">Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
                 
                 
                 <div class="tags">
@@ -260,216 +260,193 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2237 words
+                        10 min read
+                        &nbsp;·&nbsp; 2040 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-13
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>data modeling taught me the difference between working and being trustworthy. Here's the version I wish someone had handed me first. Most write-ups stop exactly where the interesting part starts.</p>
-<p>When a fintech platform starts feeding user transactions through large language models, the temptation is to rip out the relational schema and replace everything with a vector store. In practice, the existing tables, foreign‑key constraints and audit columns often survive the transition – but only if the data model was built with a few forward‑looking choices. Teams that ignore those choices end up with exploding storage costs, 10‑plus‑second latency spikes, and nightly ETL failures that surface as cryptic SQL errors.</p>
-<p>The part that trips people up is the mismatch between static relational columns and dynamic embedding vectors, and that's what this post actually covers.</p>
-<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>Developers frequently see an exception that looks like a generic PostgreSQL type error, yet the root cause is an AI‑specific mismatch. A typical stack trace reads:</p>
+                <p>Most write-ups about vector search stop exactly where the interesting part starts: at the first working query. The harder problem is what happens six months later, when the embedding model changes, the dimension count shifts, and a table that has served production traffic for a year starts rejecting writes.</p>
+<p>This article is about the data-modeling decisions that determine whether a relational schema survives that transition. The focus is deliberately narrow: how embeddings are stored next to transactional data, how they are versioned, and how to tell whether the design is holding up.</p>
+<h2 id="the-error-and-why-the-message-misleads">The error, and why the message misleads</h2>
+<p>A common failure looks like a generic PostgreSQL type error:</p>
 <pre><code>psycopg2.errors.DataError: column &quot;embedding&quot; has type &quot;vector&quot; but expression is of type &quot;jsonb&quot;
 LINE 4: INSERT INTO transaction_embeddings (transaction_id, embedding) VALUES ($1, $2)
 </code></pre>
-<p>On the surface the message points to a type conflict, but the underlying problem is that the codebase started persisting the raw JSON payload returned by an embedding service (e.g., OpenAI <code>text‑embedding‑ada‑002</code>) into a column that was originally declared as <code>vector(1536)</code>. The confusion deepens because the same error also appears when the dimensionality of the vector changes after a model upgrade – the database expects 1536 floats, but the new model returns 768. Teams often chase a missing migration script, while the real culprit is a data‑model decision made years earlier: storing embeddings in a single column without a versioning strategy.</p>
-<p>Typical symptoms include:</p>
+<p>The message points at a type conflict. The actual cause is usually a modeling decision: an application started persisting the raw JSON response from an embedding service into a column declared as <code>vector(N)</code>, or a model upgrade changed the output dimensionality while the column kept its original width. The database then either rejects the insert or attempts an implicit cast that costs more than it looks like it should.</p>
+<p>The same class of error appears in several disguises:</p>
 <ul>
-<li>Query latency jumping from ~30 ms to &gt;200 ms after a model upgrade.</li>
-<li>Batch jobs failing with <code>InvalidArgumentException: embedding dimension mismatch</code>.</li>
-<li>Unexpected growth of the <code>transaction_embeddings</code> table, sometimes 3× the original size, because each JSON payload is stored as text instead of a compact vector.</li>
+<li>A dimension mismatch raised by the client library rather than the database, because the SDK validates length before sending.</li>
+<li>Inserts succeeding but reads returning nothing, because old rows have a different effective dimension than new query vectors.</li>
+<li>Table growth that outpaces the row count, because raw JSON payloads were stored as text alongside the vector.</li>
 </ul>
-<p>Understanding why the error is confusing is the first step toward a sustainable fix.</p>
-<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
-<p>The real reason is a combination of three design decisions that were sensible in 2026 but brittle in 2026:</p>
-<ol>
-<li><strong>Embedding column typed as <code>vector</code> without a version tag.</strong> PostgreSQL 15 introduced the <code>vector</code> extension, but the schema did not include a <code>model_version</code> column. When the organization switched from <code>text‑embedding‑ada‑002</code> (1536 dimensions) to <code>text‑embedding‑3‑small</code> (768 dimensions) in Q2‑2026, the database rejected inserts.</li>
-<li><strong>JSON‑b storage of raw API responses.</strong> Early on the team used <code>jsonb</code> to capture the whole response for debugging. Later they added a <code>vector</code> column but never migrated the existing rows, leading to a mixed‑type table that forces the query planner to cast on‑the‑fly, adding ~120 ms to each read.</li>
-<li><strong>Lack of a separate vector store.</strong> The architecture kept embeddings next to transactional data instead of off‑loading them to a purpose‑built store like Amazon OpenSearch Service with the <code>knn</code> plugin. This decision amplified row‑size bloat, pushing the average row size from 1.2 KB to 4.8 KB and inflating storage costs by roughly $0.45 per million embeddings.</li>
-</ol>
-<p>These three factors converge to produce the error shown earlier, and they also explain why performance degrades silently until a model change forces a hard failure. The fix, therefore, must address schema versioning, migration of legacy rows, and the physical placement of vectors.</p>
-<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
-<p><strong>Add explicit model versioning and enforce dimension checks at write time.</strong> The simplest and most common remedy is to extend the <code>transaction_embeddings</code> table with a <code>model_version VARCHAR(32)</code> column and a trigger that validates the incoming vector length.</p>
+<p>None of these are exotic. They are the predictable result of treating an embedding as "just another column."</p>
+<h2 id="the-three-decisions-that-cause-it">The three decisions that cause it</h2>
+<h3 id="1-a-vector-column-with-no-version-tag">1. A <code>vector</code> column with no version tag</h3>
+<p>The <code>vector</code> type enforces a fixed dimension. If the column is declared <code>vector(1536)</code> and a later model returns 768 floats, every insert carrying the new model's output fails. There is no ambiguity in the database's behavior here — the type is doing exactly what it was told.</p>
+<p>The problem is that the schema records the dimension but not <em>which model</em> produced the values. Two models can share a dimension and still produce incompatible vector spaces; cosine similarity between a vector from model A and a vector from model B is meaningless even when the arithmetic succeeds. Storing the dimension alone is not enough to make the table self-describing.</p>
+<h3 id="2-raw-api-responses-kept-for-debugging">2. Raw API responses kept "for debugging"</h3>
+<p>A common early pattern is to store the entire JSON response in a <code>jsonb</code> column so nothing is lost. This is defensible during prototyping. It becomes a liability when the table reaches production scale, because:</p>
+<ul>
+<li>JSON payloads are far larger than the vectors they contain, inflating row size and the cost of every sequential scan.</li>
+<li>Queries against the vector column must cast or extract from JSON at runtime if the two representations coexist.</li>
+<li>The redundant payload drifts out of sync with the extracted vector, so there is no single source of truth.</li>
+</ul>
+<h3 id="3-vectors-co-located-with-transactional-data-past-the-point-where-it-helps">3. Vectors co-located with transactional data past the point where it helps</h3>
+<p>Keeping embeddings in the same table as transactions is genuinely convenient: joins are free, transactions are atomic, and there is one backup story. That convenience has a ceiling. Once similarity search dominates the workload, the query planner's choices for a table that also serves OLTP traffic stop being the right choices for approximate nearest-neighbor search. The exact point where this happens depends on row width, index configuration, and query mix — it is not a fixed row count.</p>
+<h2 id="fix-1-version-the-embedding-not-just-the-dimension">Fix 1: version the embedding, not just the dimension</h2>
+<p>Add an explicit model identifier alongside the vector and enforce dimensionality at write time. A check constraint is usually preferable to a trigger because it is declarative and visible in schema dumps.</p>
 <pre><code class="language-sql">ALTER TABLE transaction_embeddings
-  ADD COLUMN model_version VARCHAR(32) NOT NULL DEFAULT 'ada-002';
+  ADD COLUMN model_version VARCHAR(64) NOT NULL DEFAULT 'ada-002';
 
-CREATE OR REPLACE FUNCTION validate_embedding()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-    IF TG_ARGV[0] = 'ada-002' AND array_length(NEW.embedding, 1) &lt;&gt; 1536 THEN
-      RAISE EXCEPTION 'Invalid embedding dimension for ada-002 (expected 1536)';
-    ELSIF TG_ARGV[0] = 'text-embedding-3-small' AND array_length(NEW.embedding, 1) &lt;&gt; 768 THEN
-      RAISE EXCEPTION 'Invalid embedding dimension for text-embedding-3-small (expected 768)';
-    END IF;
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_validate_embedding
-BEFORE INSERT OR UPDATE ON transaction_embeddings
-FOR EACH ROW EXECUTE FUNCTION validate_embedding('ada-002');
+ALTER TABLE transaction_embeddings
+  ADD CONSTRAINT embedding_dimension_matches_model CHECK (
+    (model_version = 'ada-002'                AND vector_dims(embedding) = 1536) OR
+    (model_version = 'text-embedding-3-small' AND vector_dims(embedding) = 768)
+  );
 </code></pre>
-<p>With this trigger in place, any attempt to write a mismatched vector fails immediately, surfacing a clear error like <code>Invalid embedding dimension for ada-002</code>. The benefit is twofold: developers get an early, actionable message, and the database no longer attempts costly implicit casts. In practice teams see query latency drop back to ~30 ms because the planner no longer performs runtime type coercion.</p>
-<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
-<p><strong>Migrate legacy JSON‑b rows to proper vectors and purge the redundant payload.</strong> The less obvious but equally damaging issue is the accumulation of rows that still hold the raw JSON response. A one‑off migration script can clean this up while also compressing the vector storage.</p>
-<pre><code class="language-python">import psycopg2
-import json
-import numpy as np
-from tqdm import tqdm
+<p>Two notes on the details, because they are easy to get wrong:</p>
+<ul>
+<li><code>vector_dims()</code> is the pgvector function for reading a vector's dimensionality. Do not use <code>array_length()</code> on a <code>vector</code> column; it is defined for arrays, not for the <code>vector</code> type, and will either error or return NULL depending on the version.</li>
+<li>The default value on <code>model_version</code> exists only to backfill existing rows. New writes should always set it explicitly, and the default should be dropped once the backfill is complete so a forgotten parameter fails loudly instead of silently labeling data as <code>ada-002</code>.</li>
+</ul>
+<p>The constraint turns a late, confusing failure into an immediate, specific one. It does not by itself make cross-model queries correct — that still requires filtering by <code>model_version</code> in every similarity query, which is the subject of the next section.</p>
+<h2 id="fix-2-backfill-legacy-rows-and-drop-the-redundant-payload">Fix 2: backfill legacy rows and drop the redundant payload</h2>
+<p>If a <code>jsonb</code> response column exists, migrate it in bounded batches rather than one transaction. A single long transaction on a large table holds locks, bloats the WAL, and cannot be resumed if it fails partway.</p>
+<pre><code class="language-python">import json
+import psycopg2
 
-conn = psycopg2.connect(dsn=&quot;dbname=fintech host=prod-db.cluster.amazonaws.com&quot;)
+BATCH_SIZE = 1000
+
+conn = psycopg2.connect(dsn=&quot;dbname=fintech&quot;)
+conn.autocommit = False
 cur = conn.cursor()
 
-cur.execute(&quot;SELECT id, response FROM transaction_embeddings WHERE embedding IS NULL&quot;)
-rows = cur.fetchall()
-
-for row_id, response in tqdm(rows):
-    payload = json.loads(response)
-    vector = np.array(payload['data'][0]['embedding'], dtype='float32')
+while True:
     cur.execute(
-        &quot;UPDATE transaction_embeddings SET embedding = %s, model_version = %s WHERE id = %s&quot;,
-        (vector.tolist(), payload['model'], row_id)
+        &quot;&quot;&quot;
+        SELECT id, response
+        FROM transaction_embeddings
+        WHERE embedding IS NULL AND response IS NOT NULL
+        ORDER BY id
+        LIMIT %s
+        FOR UPDATE SKIP LOCKED
+        &quot;&quot;&quot;,
+        (BATCH_SIZE,),
     )
+    rows = cur.fetchall()
+    if not rows:
+        break
+
+    for row_id, response in rows:
+        payload = json.loads(response)
+        vector = payload[&quot;data&quot;][0][&quot;embedding&quot;]
+        cur.execute(
+            &quot;&quot;&quot;
+            UPDATE transaction_embeddings
+            SET embedding = %s, model_version = %s
+            WHERE id = %s
+            &quot;&quot;&quot;,
+            (vector, payload[&quot;model&quot;], row_id),
+        )
+
     conn.commit()
+    print(f&quot;committed batch of {len(rows)}&quot;)
 
-print('Migration completed')
+cur.close()
+conn.close()
 </code></pre>
-<p>Running this script on a table of ~2 million rows takes roughly 45 minutes on an <code>r5.4xlarge</code> instance (16 vCPU, 128 GB RAM) and reduces the table size by about 2 GB. After the migration, you can safely drop the <code>response</code> column, which eliminates the <code>jsonb</code> overhead and brings the average row size back to ~1.3 KB.</p>
-<h2 id="fix-3-the-environmentspecific-cause">Fix 3 — the environment‑specific cause</h2>
-<p><strong>Off‑load embeddings to a dedicated vector store when scaling beyond 10 M vectors.</strong> In environments where the embedding count exceeds the sweet spot for PostgreSQL (roughly 10 million vectors), the query planner starts to generate sequential scans that cost &gt;150 ms per request. Amazon OpenSearch Service with the <code>knn</code> plugin, or a managed Pinecone instance, can handle high‑dimensional nearest‑neighbor lookups at sub‑10 ms latency.</p>
-<p>A typical migration pattern looks like this:</p>
-<ol>
-<li><strong>Create an OpenSearch index</strong> with <code>knn</code> enabled and the same dimension as your current model.</li>
-<li><strong>Stream existing vectors</strong> from PostgreSQL into the index using the <code>bulk</code> API.</li>
-<li><strong>Update the application layer</strong> (e.g., a FastAPI service running on Python 3.12) to query OpenSearch for similarity and fall back to PostgreSQL for transactional joins.</li>
-</ol>
-<pre><code class="language-javascript">// FastAPI route using OpenSearch client (node-opensearch v2.1)
-import { Client } from '@opensearch-project/opensearch';
-import Fastify from 'fastify';
+<p><code>FOR UPDATE SKIP LOCKED</code> is what makes this safe to run while the application is live: the migration only locks rows it is actively updating, and a second worker can run concurrently without deadlocking. Committing per batch keeps transaction size bounded and makes the job resumable — if it crashes, re-running it simply picks up the rows that still have a NULL embedding.</p>
+<p>Before dropping the <code>response</code> column, verify that nothing else reads it:</p>
+<pre><code class="language-sql">SELECT pg_total_relation_size('transaction_embeddings') AS total_bytes;
 
-const client = new Client({ node: 'https://search‑mydomain.us-east-1.es.amazonaws.com' });
-const app = Fastify();
-
-app.get('/similar/:txnId', async (req, reply) =&gt; {
-  const { txnId } = req.params;
-  const { rows } = await pg.query('SELECT embedding FROM transaction_embeddings WHERE transaction_id = $1', [txnId]);
-  const queryVector = rows[0].embedding;
-  const { body } = await client.search({
-    index: 'txn_embeddings',
-    body: {
-      size: 5,
-      query: {
-        knn: {
-          embedding: {
-            vector: queryVector,
-            k: 5
-          }
-        }
-      }
-    }
-  });
-  reply.send(body.hits.hits.map(hit =&gt; hit._source.transaction_id));
-});
+SELECT count(*) FROM transaction_embeddings WHERE embedding IS NULL;
 </code></pre>
-<p>In benchmark runs, moving from PostgreSQL‑only to OpenSearch reduced the 95th‑percentile similarity query from 210 ms to 12 ms, a 17× improvement. The cost impact is modest: OpenSearch <code>r6g.large.search</code> nodes run about $0.28 per hour, translating to roughly $200 per month for a 3‑node cluster handling 2 M queries daily.</p>
-<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
-<p>Verification must be systematic, otherwise you risk re‑introducing the same mismatch later. Follow these steps:</p>
+<p>The first query gives a before/after size comparison; the second must return zero. Only then is the column safe to drop.</p>
+<h2 id="fix-3-offload-similarity-search-when-it-stops-being-a-side-job">Fix 3: offload similarity search when it stops being a side job</h2>
+<p>Moving vectors to a dedicated store is the right call when similarity queries dominate the workload, not when a specific row count is crossed. The signal to watch is the shape of the query plan, not the table size.</p>
+<p>A useful decision checklist:</p>
+<ul>
+<li><strong>Do similarity queries compete with OLTP traffic for the same buffer pool?</strong> If cache hit rates on transactional tables drop when the vector workload spikes, the two are interfering.</li>
+<li><strong>Has the vector index outgrown memory?</strong> An index that no longer fits in RAM turns every query into a disk read. Check the index size against available shared buffers.</li>
+<li><strong>Are you rebuilding the index often enough that it affects write throughput?</strong> Frequent rebuilds on a large table are a sign the storage engine is being asked to do two incompatible jobs.</li>
+<li><strong>Do you need filtering combined with similarity?</strong> Pre-filtering by metadata is a first-class feature in dedicated vector stores and an awkward join in PostgreSQL.</li>
+</ul>
+<p>If two or more of these are true, a separate store is justified. The migration pattern is the same regardless of which store you choose:</p>
 <ol>
-<li><strong>Run a schema sanity check</strong> using <code>pg_dump --schema-only</code> and grep for <code>vector</code> columns without a <code>model_version</code> tag. The command should return zero results.</li>
-<li><strong>Execute a dimensionality audit</strong>: <code>SELECT COUNT(*) FROM transaction_embeddings WHERE array_length(embedding, 1) NOT IN (1536, 768);</code>. The count should be 0.</li>
-<li><strong>Measure query latency</strong> before and after the change. Use <code>pgbench</code> with a custom script that runs a similarity lookup 1 000 times. Expected median latency: ≤35 ms for PostgreSQL‑only, ≤12 ms when using OpenSearch.</li>
-<li><strong>Validate storage growth</strong>: <code>SELECT pg_total_relation_size('transaction_embeddings')/1024/1024 AS mb;</code>. After migration the size should be within 5 % of the pre‑migration baseline (e.g., 1,200 MB vs 1,250 MB).</li>
-<li><strong>Run integration tests</strong> that mock both the OpenAI embedding endpoint (using <code>responses 0.23.1</code>) and the OpenSearch client. Ensure the test suite passes on CI (GitHub Actions runner with Ubuntu 22.04, Python 3.12).</li>
+<li>Create the destination index with the correct dimension and distance metric.</li>
+<li>Stream existing vectors in bulk, carrying <code>model_version</code> as filterable metadata.</li>
+<li>Point the application's similarity reads at the new store, keeping the relational table as the source of truth for transactional data and the canonical vector record.</li>
 </ol>
-<p>If all checks pass, you have confidence that the schema now tolerates future model upgrades without silent failures.</p>
-<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
-<p>Prevention is cheaper than remediation. Adopt these practices:</p>
+<h2 id="how-to-verify-the-change-worked">How to verify the change worked</h2>
+<p>Verification should be mechanical, not impressionistic. The following checks cover the failure modes above.</p>
+<p><strong>Schema audit.</strong> Dump the schema and confirm every <code>vector</code> column has a companion version column and a constraint:</p>
+<pre><code class="language-bash">pg_dump --schema-only mydb | grep -A2 'vector('
+</code></pre>
+<p><strong>Dimensionality audit.</strong> Confirm no row violates its declared model's dimension:</p>
+<pre><code class="language-sql">SELECT model_version, vector_dims(embedding) AS dims, count(*)
+FROM transaction_embeddings
+GROUP BY 1, 2;
+</code></pre>
+<p>Every row in the output should match a known (model, dimension) pair. Any unexpected combination is a row that escaped the constraint, which usually means it was written before the constraint existed.</p>
+<p><strong>Latency measurement.</strong> Measure the similarity query in isolation, before and after any change, using the same query text and the same data. <code>EXPLAIN (ANALYZE, BUFFERS)</code> is more informative than wall-clock timing alone because it separates planning time from execution time and shows whether the index is being used or a sequential scan has crept in. Record the plan, not just the number.</p>
+<p><strong>Storage accounting.</strong> Compare <code>pg_total_relation_size</code> before and after the migration. The reduction should be attributable to the dropped payload column; if the table grew, something else is accumulating.</p>
+<p><strong>Contract test.</strong> Pin the embedding dimension in a test that calls the real API with a fixed input and asserts the returned length. This is the only check that catches a provider-side change before it reaches production.</p>
+<h2 id="prevention-checklist">Prevention checklist</h2>
 <table>
 <thead>
 <tr>
 <th>Practice</th>
-<th>Why it matters</th>
-<th>Implementation tip</th>
+<th>Failure it prevents</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Versioned embedding columns</strong></td>
-<td>Guarantees dimension alignment</td>
-<td>Add <code>model_version</code> and a check constraint (<code>CHECK (model_version = 'ada-002' AND array_length(embedding,1)=1536) OR (model_version='text-embedding-3-small' AND array_length(embedding,1)=768)</code>)</td>
+<td>Version column on every vector column</td>
+<td>Silent mixing of incompatible vector spaces</td>
 </tr>
 <tr>
-<td><strong>Separate vector store</strong></td>
-<td>Keeps relational tables lean</td>
-<td>Use OpenSearch or Pinecone for &gt;10 M vectors; keep only primary keys in PostgreSQL</td>
+<td>Check constraint tying dimension to version</td>
+<td>Late, confusing insert failures</td>
 </tr>
 <tr>
-<td><strong>Automated migration scripts</strong></td>
-<td>Avoid manual drift</td>
-<td>Store migration steps in <code>alembic</code> (v1.13) and run in CI pipeline</td>
+<td>Batched, resumable migrations</td>
+<td>Lock contention and unrestartable backfills</td>
 </tr>
 <tr>
-<td><strong>Embedding contract tests</strong></td>
-<td>Detect API changes early</td>
-<td>Write a pytest suite that calls the embedding API with a known sentence and asserts the dimension</td>
+<td>Dimension contract test in CI</td>
+<td>Provider-side model changes</td>
 </tr>
 <tr>
-<td><strong>Monitoring of row size</strong></td>
-<td>Spot bloat before it hurts</td>
-<td>Set CloudWatch metric on <code>pg_table_size</code> and alert if growth &gt;10 % week‑over‑week</td>
+<td>Query plans recorded alongside latency numbers</td>
+<td>Regressions hidden by caching</td>
+</tr>
+<tr>
+<td>Similarity queries filtered by <code>model_version</code></td>
+<td>Meaningless cross-model results</td>
 </tr>
 </tbody>
 </table>
-<p>By codifying these patterns, teams reduce the chance of a future <code>DataError</code> creeping in after a model upgrade.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<ul>
-<li><code>InvalidArgumentException: embedding dimension mismatch (expected 1536, got 768)</code> – occurs when the trigger is missing or the <code>model_version</code> column is not set.</li>
-<li><code>psycopg2.errors.OutOfMemory: could not allocate memory for vector</code> – shows up if the vector store exceeds the memory limits of the PostgreSQL node.</li>
-<li><code>OpenSearchStatusException: index_not_found_exception</code> – typical when the OpenSearch index has not been recreated after a major version bump.</li>
-<li><code>JSONDecodeError: Expecting value</code> – appears when legacy <code>response</code> columns contain truncated JSON after a failed batch job.</li>
-</ul>
-<p>Understanding these downstream errors helps you extend the same diagnostic mindset to new AI‑driven features.</p>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If the above fixes do not resolve the issue, follow this escalation ladder:</p>
-<ol>
-<li><strong>Tier‑1</strong> – Open a ticket in the internal Data Platform Slack channel, attaching the failing SQL, the exact error, and the output of the dimensionality audit.</li>
-<li><strong>Tier‑2</strong> – Involve the Database Reliability Engineer (DBRE) who owns the <code>vector</code> extension. They will check the extension version (<code>SELECT extversion FROM pg_extension WHERE extname='vector';</code>) – the current stable release in 2026 is <code>0.5.0</code>. An outdated version can cause subtle casting bugs.</li>
-<li><strong>Tier‑3</strong> – If the problem traces back to the embedding provider (e.g., OpenAI changed the output schema), raise a support case with the provider and request a changelog. Meanwhile, pin the SDK version (e.g., <code>openai==1.4.0</code>) to avoid breaking changes.</li>
-<li><strong>Tier‑4</strong> – For systemic performance regressions, schedule a capacity review with the Cloud Architecture team to evaluate scaling the OpenSearch cluster or moving to a dedicated GPU‑enabled SageMaker endpoint for on‑the‑fly embeddings.</li>
-</ol>
-<p>Document each step in the incident ticket; post‑mortems should capture the version numbers and migration scripts used.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I store embeddings without blowing up PostgreSQL size?</strong></p>
-<p>Store only the vector column and a <code>model_version</code> tag in PostgreSQL. Off‑load the bulk of the vectors to a dedicated vector store like OpenSearch or Pinecone once you cross ~10 M records. Keep a lightweight foreign‑key reference in the relational table for auditability.</p>
-<p><strong>Why does changing the embedding model break existing rows?</strong></p>
-<p>Because the <code>vector</code> column enforces a fixed dimension. When you switch from a 1536‑dimensional model to a 768‑dimensional one, inserts that still carry the old dimension violate the column type, and reads that expect the new size cannot cast the old rows. Adding a version column and a check constraint isolates the two schemas.</p>
-<p><strong>What is the best way to test embedding dimension mismatches?</strong></p>
-<p>Create a pytest fixture that calls the embedding SDK with a static sentence, extracts the vector, and asserts its length matches the expected dimension for the current <code>model_version</code>. Run this fixture in every CI pipeline so a provider change surfaces early.</p>
-<p><strong>When should I move embeddings to a vector database?</strong></p>
-<p>If your similarity queries exceed 5 ms latency on PostgreSQL or you store more than 10 M vectors, the planner will start scanning large blocks, causing latency spikes. At that point, a purpose‑built vector DB gives sub‑10 ms nearest‑neighbor lookups and reduces PostgreSQL row size.</p>
+<p>The last row is the one most often missed. A version column that is written but never read in queries provides no protection at all — the vectors are still being compared across incompatible spaces, and the results are still wrong, just quietly.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Can two models share a dimension and still be incompatible?</strong></p>
+<p>Yes. Dimensionality is a necessary but not sufficient condition for comparability. Vectors from different models occupy different spaces even at the same width, so cosine similarity between them is not meaningful. This is why the version tag matters independently of the dimension check.</p>
+<p><strong>Should the version column be a string or a foreign key?</strong></p>
+<p>A string is simpler and survives model deprecation without a migration. A foreign key to a models table is worth it when you need to track deprecation dates, cost per token, or which models are still approved for production. Start with a string; add the table when you have a second reason to query model metadata.</p>
+<p><strong>Is a check constraint or a trigger better for dimension validation?</strong></p>
+<p>A check constraint is declarative, appears in schema dumps, and is enforced by the planner. A trigger can express logic a constraint cannot, such as looking up the expected dimension from another table. Prefer the constraint unless you genuinely need the lookup.</p>
+<p><strong>When is it worth moving to a separate vector store?</strong></p>
+<p>When similarity queries interfere with transactional performance, when the index no longer fits in memory, or when you need metadata pre-filtering as a first-class operation. Table size alone is a weak signal.</p>
+<p><strong>What about storing the raw API response for debugging?</strong></p>
+<p>Store it in object storage keyed by request ID, or in a separate table that is periodically truncated. Keeping it inline with the vector doubles the row width and creates a second, drifting source of truth.</p>
+<p><strong>How should a model upgrade be rolled out?</strong></p>
+<p>Add the new model as a new <code>model_version</code> value, backfill vectors in the background, and switch queries over once coverage is complete. Keep the old vectors until the new ones have been validated in production. Deleting the old model's rows is the last step, not the first.</p>
 <hr />
-<p><strong>Actionable next step:</strong> Open your terminal, run <code>alembic upgrade head &amp;&amp; python -m pytest tests/test_embeddings.py</code> to apply the latest schema version and verify that the embedding dimension checks pass.</p>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
-<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p><strong>Next step:</strong> run <code>SELECT model_version, vector_dims(embedding), count(*) FROM transaction_embeddings GROUP BY 1, 2;</code> against your own database and check that every row's dimension matches a model you recognize. Any row that does not is a latent upgrade failure waiting for the next model change.</p>
                 
                 
             </div>
@@ -498,14 +475,14 @@ app.get('/similar/:txnId', async (req, reply) =&gt; {
                     
                     <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
                         <h3>Golden paths become load-bearing walls</h3>
-                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
-                        <span class="related-meta">14 min read · 21 September 2026</span>
+                        <p>Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/poolers-wont-save-your-serverless-db/">
                         <h3>Poolers won’t save your serverless DB</h3>
-                        <p>Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</p>
-                        <span class="related-meta">15 min read · 19 July 2026</span>
+                        <p>Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
+                        <span class="related-meta">13 min read · 19 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-best-practices-fail-on-slow-networks/">

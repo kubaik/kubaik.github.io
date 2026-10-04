@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Portfolio projects that hire remote senior devs - Kubai Kevin</title>
-        <meta name="description" content="A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…">
+        <meta name="description" content="Build a portfolio that proves operational rigor: caching, rate limiting, observability, and load tests that survive a senior remote technical screen.">
         <meta name="keywords" content="Softwareengineering">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-03T03:37:01.086541">
-        <meta property="article:modified_time" content="2026-09-19T08:27:14.371194+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:43:23.669632+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Portfolio projects that hire remote senior devs">
-        <meta property="og:description" content="A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…">
+        <meta property="og:description" content="Build a portfolio that proves operational rigor: caching, rate limiting, observability, and load tests that survive a senior remote technical screen.">
         <meta property="og:url" content="https://kubaik.github.io/portfolio-projects-that-hire-remote-senior-devs/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Portfolio projects that hire remote senior devs">
-        <meta name="twitter:description" content="A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…">
+        <meta name="twitter:description" content="Build a portfolio that proves operational rigor: caching, rate limiting, observability, and load tests that survive a senior remote technical screen.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/portfolio-projects-that-hire-remote-senior-devs.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/portfolio-projects-that-hire-remote-senior-devs/#article",
       "headline": "Portfolio projects that hire remote senior devs",
-      "description": "A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…",
+      "description": "Build a portfolio that proves operational rigor: caching, rate limiting, observability, and load tests that survive a senior remote technical screen.",
       "datePublished": "2026-09-03T03:37:01+00:00",
-      "dateModified": "2026-09-19T08:27:14+00:00",
-      "wordCount": 2831,
+      "dateModified": "2026-10-04T10:43:23+00:00",
+      "wordCount": 2700,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Portfolio projects that hire remote senior devs</h1>
                 
-                <p class="post-lead">A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…</p>
+                <p class="post-lead">Build a portfolio that proves operational rigor: caching, rate limiting, observability, and load tests that survive a senior remote technical screen.</p>
                 
                 
                 <div class="tags">
@@ -238,54 +238,46 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2831 words
+                        &nbsp;·&nbsp; 2700 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026, the remote job market for African engineers is flooded with generic tutorials on "how to build a CRUD app" and "deploy a full-stack app in 10 minutes." These projects get junior roles or mid-level roles in local companies, but they don’t cut it for senior remote roles targeted at companies in Berlin, Singapore, or San Francisco. The hiring managers in those markets are looking for proof that you can design, operate, and scale systems under real-world constraints — not just write code that runs locally.</p>
-<p>The part that trips people up is the mismatch between what looks impressive on a GitHub README and what actually matters during a technical screen or take-home assignment. I’ve seen engineers with 5–7 years of experience fail take-home tests because their "portfolio projects" were single-container Docker apps with a React frontend and a PostgreSQL backend — impressive on paper, but impossible to scale or debug under load. The failure mode isn’t the tech stack; it’s the lack of operational rigor.</p>
-<p>This gap isn’t theoretical. A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly asked for evidence of production-grade systems. That means: observability, error handling, performance under load, and cost awareness. Only 12% mentioned a specific tech stack; the rest wanted proof you can solve real problems, not just write clean code.</p>
-<p>So: if you’re building a portfolio to land a senior remote role in 2026, stop building "to-do apps." Start building systems that fail in ways real users notice — and show how you fixed them.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>This tutorial assumes you have:
-- A laptop with Docker Desktop installed (Docker Engine 25.0 or later)
-- AWS CLI v2 installed and configured with a sandbox account (free tier is fine)
-- Node.js 20 LTS or Python 3.11+ installed locally
-- A GitHub account and basic git workflow</p>
-<p>You don’t need prior AWS experience. We’ll use AWS services that are free or cheap in 2026:
-- AWS Lambda (arm64, 512MB memory) — $0.0000133333 per GB-second
-- Amazon RDS for PostgreSQL (db.t4g.micro) — ~$12/month if left running
-- Amazon API Gateway (HTTP API) — $1.00 per million requests
-- AWS CloudWatch Logs — free tier covers 5GB/month for logs and metrics
-- AWS X-Ray — first 100,000 traces free per month</p>
-<p>What you’ll build: a production-grade URL shortener with:
-- A REST API (Node.js + Express 4.20)
-- A Redis 7.2 cache layer (on ElastiCache for Redis)
-- A PostgreSQL 15.4 database (RDS)
-- A rate limiter (using Redis) to handle 1,000 req/sec with p99 &lt; 150ms
-- Automated tests (Jest 29.7) and observability (Prometheus metrics + Grafana)
-- A Dockerfile and GitHub Actions workflow for CI/CD (Node 20 LTS)</p>
-<p>Why this combo? It’s not the flashiest stack, but it’s the one that trips up most African engineers in take-home tests. A common failure mode here is building the API without the cache or rate limiter — and then watching it melt under 500 concurrent users during the interview.</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<h3 id="11-create-the-project-skeleton">1.1 Create the project skeleton</h3>
+                <p>Generic tutorials produce portfolios that pass a junior screen and stall at a senior one. The gap is rarely the framework. It is the absence of evidence that you can design, operate, and debug a system when it misbehaves under real constraints.</p>
+<p>This article walks through building a URL shortener that demonstrates that evidence: a REST API with a Redis cache, a Redis-backed rate limiter, structured logging, connection pooling, metrics, and a load test you can point at in an interview. The stack is deliberately unglamorous. The interesting part is what happens when it fails.</p>
+<h2 id="what-senior-remote-screens-actually-probe">What senior remote screens actually probe</h2>
+<p>A hiring manager reading a portfolio usually has one question: can this person own a system we would have to page someone about? That translates into a handful of concrete signals.</p>
+<ul>
+<li><strong>Observability.</strong> Can you tell what the system is doing without attaching a debugger? Metrics, structured logs, and a health endpoint answer this.</li>
+<li><strong>Failure behavior.</strong> What happens when the cache is cold, the database is saturated, or a dependency drops a connection mid-request?</li>
+<li><strong>Resource discipline.</strong> Do you pool connections, bound retries, and know your memory and cost footprint?</li>
+<li><strong>Measurement.</strong> Can you state a latency number and explain how you obtained it?</li>
+</ul>
+<p>Most portfolio projects answer none of these because they were built to run once on a laptop. The sections below build each signal into the same small service.</p>
+<h2 id="prerequisites-and-the-target-system">Prerequisites and the target system</h2>
+<p>You need a machine with Docker, a cloud account with billing alerts configured, Node.js 20 LTS or later, and a GitHub account. No prior cloud experience is required; the services used here are the small, cheap tiers.</p>
+<p>The service is a URL shortener with these components:</p>
+<ul>
+<li>A REST API in Node.js with Express</li>
+<li>A PostgreSQL database for durable storage of short-code mappings</li>
+<li>A Redis cache in front of the database</li>
+<li>A Redis-backed rate limiter on the write path</li>
+<li>Structured JSON logging</li>
+<li>Prometheus metrics exposed on a <code>/metrics</code> endpoint</li>
+<li>A Jest test suite plus a Docker Compose integration setup</li>
+</ul>
+<p>A URL shortener is a good teaching vehicle because the read path is cacheable, the write path is not, and the ratio between them is enormous. That asymmetry is where the interesting failure modes live.</p>
 <pre><code class="language-bash">git init url-shortener
 cd url-shortener
 npm init -y
-npm install express redis pg ioredis rate-limiter-flexible cors helmet express-rate-limit winston winston-daily-rotate-file dotenv
-npm install --save-dev jest @types/jest ts-jest supertest typescript @types/node nodemon
+npm install express redis pg ioredis rate-limiter-flexible cors helmet winston winston-daily-rotate-file dotenv
+npm install --save-dev jest supertest typescript @types/node @types/express @types/jest nodemon
 </code></pre>
-<p>Use Node.js 20 LTS (Iron). This stack adds ~3.2MB to node_modules — small enough to deploy quickly in regions with slow connections to npm registries.</p>
-<h3 id="12-add-typescript-for-production-grade-type-safety">1.2 Add TypeScript for production-grade type safety</h3>
-<pre><code class="language-bash">npx tsc --init
-</code></pre>
-<p>Update <code>tsconfig.json</code> to target ES2022 and enable strict mode:</p>
+<p>Use TypeScript for the type safety it gives you across the request and database boundary. A <code>tsconfig.json</code> targeting ES2022 with <code>strict</code> enabled is the baseline:</p>
 <pre><code class="language-json">{
   &quot;compilerOptions&quot;: {
     &quot;target&quot;: &quot;ES2022&quot;,
@@ -299,8 +291,8 @@ npm install --save-dev jest @types/jest ts-jest supertest typescript @types/node
   }
 }
 </code></pre>
-<h3 id="13-create-a-minimal-api-entry-point">1.3 Create a minimal API entry point</h3>
-<p><code>src/index.ts</code>:</p>
+<h2 id="step-1-the-api-skeleton">Step 1 — the API skeleton</h2>
+<p><code>src/index.ts</code> wires the middleware and routes. Keep this file thin; the interesting logic belongs in modules you can test in isolation.</p>
 <pre><code class="language-typescript">import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -320,28 +312,32 @@ app.listen(PORT, () =&gt; {
   console.log(`Server running on port ${PORT}`);
 });
 </code></pre>
-<h3 id="14-set-up-redis-and-postgresql-on-aws">1.4 Set up Redis and PostgreSQL on AWS</h3>
-<p>The gotcha here is region selection. Most AWS services in Africa run in <code>af-south-1</code> (Cape Town), which has higher latency to Europe and the US than <code>us-east-1</code>. A common failure mode is assuming your Redis cache will be fast from Nigeria or Kenya — but in reality, <code>af-south-1</code> Redis to <code>eu-west-1</code> Lambda adds ~120ms round-trip latency on cold starts.</p>
-<p>So: deploy everything in the same region. Use <code>af-south-1</code> for both RDS and ElastiCache. If you don’t have an AWS account, create a sandbox account with billing alerts enabled (set a $50 limit).</p>
+<h3 id="region-placement-is-a-design-decision">Region placement is a design decision</h3>
+<p>Latency between your compute and your data stores is not a detail you fix later. A cache that sits in a different region from the API adds a round trip to every request, which can erase the benefit of caching entirely. A common failure mode is deploying the API and the cache in different regions and then wondering why p99 does not improve.</p>
+<p>The fix is to co-locate everything: API, database, and cache in one region. Pick the region closest to your expected users, verify the round-trip latency with a simple timing test, and keep it consistent across environments.</p>
+<p>Create the database and cache with the provider CLI. Substitute your own region and credentials:</p>
 <pre><code class="language-bash">aws rds create-db-instance \
   --db-instance-identifier url-shortener-db \
   --db-instance-class db.t4g.micro \
   --engine postgres \
   --engine-version 15.4 \
   --master-username admin \
-  --master-user-password $(openssl rand -base64 16) \
+  --master-user-password &quot;$(openssl rand -base64 16)&quot; \
   --allocated-storage 20 \
-  --region af-south-1
-</code></pre>
-<p>Create an ElastiCache Redis cluster (Redis 7.2, cache.t4g.micro, single AZ):</p>
-<pre><code class="language-bash">aws elasticache create-cache-cluster \
+  --region &lt;your-region&gt;
+
+aws elasticache create-cache-cluster \
   --cache-cluster-id url-shortener-cache \
   --cache-node-type cache.t4g.micro \
   --engine redis \
   --num-cache-nodes 1 \
-  --region af-south-1
+  --region &lt;your-region&gt;
 </code></pre>
-<p>Wait for both services to be available. This takes ~10–15 minutes. While waiting, create a <code>.env</code> file:</p>
+<p>Both take several minutes to become available. Retrieve the endpoints when they are ready:</p>
+<pre><code class="language-bash">aws rds describe-db-instances --region &lt;your-region&gt;
+aws elasticache describe-cache-clusters --region &lt;your-region&gt;
+</code></pre>
+<p>Put the endpoints in a <code>.env</code> file for local development. In production, read secrets from a managed secrets store rather than a file in the image.</p>
 <pre><code>NODE_ENV=development
 DB_HOST=&lt;rds-endpoint&gt;
 DB_PORT=5432
@@ -354,13 +350,9 @@ PORT=3000
 RATE_LIMIT_WINDOW_MS=60000
 RATE_LIMIT_MAX=100
 </code></pre>
-<p>Get endpoints from the AWS console or CLI:</p>
-<pre><code class="language-bash">aws rds describe-db-instances --region af-south-1
-aws elasticache describe-cache-clusters --region af-south-1
-</code></pre>
-<p>Store the Redis password in AWS Secrets Manager for production later, but for now, use <code>.env</code>.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<h3 id="21-connect-to-postgresql-with-connection-pooling">2.1 Connect to PostgreSQL with connection pooling</h3>
+<h2 id="step-2-connection-pooling-and-the-cache-layer">Step 2 — connection pooling and the cache layer</h2>
+<h3 id="pool-do-not-connect-per-request">Pool, do not connect per request</h3>
+<p>Opening a database connection per request is the single most common cause of "too many connections" errors in Node services under load. A pool bounds the number of live connections and reuses them.</p>
 <p><code>src/db.ts</code>:</p>
 <pre><code class="language-typescript">import { Pool } from 'pg';
 
@@ -370,21 +362,21 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  max: 20, // pool size
+  max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
 });
 
 export default pool;
 </code></pre>
-<p>Why 20 connections? In <code>af-south-1</code>, RDS <code>db.t4g.micro</code> supports up to 114 max connections by default, but a single Lambda function rarely needs more than 20. Over-pooling here wastes memory and increases cold-start time.</p>
-<h3 id="22-build-the-url-shortener-logic-with-redis-cache">2.2 Build the URL shortener logic with Redis cache</h3>
-<p><code>src/routes/shortener.ts</code>:</p>
+<p>The <code>max</code> value is a budget, not a suggestion. Every connection costs memory on both the client and the server. Size it to the concurrency your instance can actually sustain, and watch <code>pool.waitingCount</code> to see whether requests are queueing for a connection. If it is consistently above zero, you are either under-pooled or your queries are too slow.</p>
+<h3 id="the-read-path-with-cache-aside">The read path with cache-aside</h3>
+<p><code>src/routes/shortener.ts</code> implements the write path as a transaction and the read path as a cache-aside lookup.</p>
 <pre><code class="language-typescript">import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 import Redis from 'ioredis';
 import pool from '../db';
+import logger from '../logger';
 
 const redis = new Redis({
   host: process.env.REDIS_HOST,
@@ -392,7 +384,7 @@ const redis = new Redis({
   retryStrategy: (times) =&gt; Math.min(times * 50, 2000),
 });
 
-const CACHE_TTL = 3600; // 1 hour
+const CACHE_TTL = 3600;
 
 export const createShortUrl = async (req: Request, res: Response) =&gt; {
   const { url } = req.body;
@@ -400,14 +392,12 @@ export const createShortUrl = async (req: Request, res: Response) =&gt; {
     return res.status(400).json({ error: 'URL is required' });
   }
 
-  // Generate short code
   const shortCode = crypto
     .createHash('sha256')
-    .update(uuidv4())
+    .update(crypto.randomUUID())
     .digest('hex')
     .slice(0, 8);
 
-  // Insert into PostgreSQL
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -416,14 +406,11 @@ export const createShortUrl = async (req: Request, res: Response) =&gt; {
       [shortCode, url]
     );
     await client.query('COMMIT');
-
-    // Cache the mapping
     await redis.setex(shortCode, CACHE_TTL, url);
-
     res.json({ shortUrl: `${process.env.API_BASE_URL}/${shortCode}` });
   } catch (err) {
     await client.query('ROLLBACK');
-    console.error('DB error:', err);
+    logger.error('Database error on insert', { error: (err as Error).message });
     res.status(500).json({ error: 'Failed to shorten URL' });
   } finally {
     client.release();
@@ -433,13 +420,11 @@ export const createShortUrl = async (req: Request, res: Response) =&gt; {
 export const getOriginalUrl = async (req: Request, res: Response) =&gt; {
   const { shortCode } = req.params;
 
-  // Try Redis first
   const cachedUrl = await redis.get(shortCode);
   if (cachedUrl) {
     return res.redirect(302, cachedUrl);
   }
 
-  // Fallback to PostgreSQL
   const client = await pool.connect();
   try {
     const result = await client.query(
@@ -452,21 +437,89 @@ export const getOriginalUrl = async (req: Request, res: Response) =&gt; {
     }
 
     const originalUrl = result.rows[0].original_url;
-
-    // Cache miss: update Redis
     await redis.setex(shortCode, CACHE_TTL, originalUrl);
-
     res.redirect(302, originalUrl);
   } catch (err) {
-    console.error('DB error:', err);
+    logger.error('Database error on lookup', { error: (err as Error).message });
     res.status(500).send('Server error');
   } finally {
     client.release();
   }
 };
 </code></pre>
-<p>The gotcha here is cache stampede. If 1,000 concurrent requests hit a missing key, they’ll all fall through to PostgreSQL at once. The fix: Redis SETEX is atomic, so the first request to insert the key wins, and the rest get the cached value immediately. But if the TTL is too short, you’ll see repeated cache misses. A realistic TTL for a URL shortener is 1 hour.</p>
-<h3 id="23-add-a-rate-limiter-using-redis">2.3 Add a rate limiter using Redis</h3>
+<p>Note the <code>finally</code> block on both paths. A connection that is not released is a connection that is permanently unavailable, and the pool will eventually starve.</p>
+<h2 id="step-3-failure-modes-worth-designing-for">Step 3 — failure modes worth designing for</h2>
+<h3 id="cache-stampede">Cache stampede</h3>
+<p>When a popular key expires, every concurrent request for it misses the cache and hits the database at the same time. Under high read volume this produces a latency spike that looks like a database problem but is really a cache-coordination problem.</p>
+<p>The standard mitigation is a short-lived lock so that one request rebuilds the value while the others wait briefly.</p>
+<p><code>src/cache.ts</code>:</p>
+<pre><code class="language-typescript">import Redis from 'ioredis';
+
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT || '6379', 10),
+});
+
+export const getWithCacheRebuild = async (
+  key: string,
+  ttl: number,
+  fetchFn: () =&gt; Promise&lt;string&gt;
+): Promise&lt;string&gt; =&gt; {
+  const cached = await redis.get(key);
+  if (cached) {
+    return cached;
+  }
+
+  const lockKey = `${key}:lock`;
+  const acquired = await redis.set(lockKey, '1', 'EX', 10, 'NX');
+  if (!acquired) {
+    await new Promise((resolve) =&gt; setTimeout(resolve, 50));
+    const retry = await redis.get(key);
+    if (retry) return retry;
+    return fetchFn();
+  }
+
+  try {
+    const value = await fetchFn();
+    await redis.setex(key, ttl, value);
+    return value;
+  } finally {
+    await redis.del(lockKey);
+  }
+};
+</code></pre>
+<p>Two details matter here. First, <code>SET ... NX EX</code> is atomic, so only one caller acquires the lock. Second, the lock has an expiry, so a process that dies while holding it cannot deadlock the key forever. The fallback <code>fetchFn()</code> call after the wait handles the case where the lock holder failed without writing a value.</p>
+<h3 id="connection-leaks-and-the-health-endpoint">Connection leaks and the health endpoint</h3>
+<p>A health endpoint that reports pool statistics turns an invisible resource problem into a visible one.</p>
+<p><code>src/routes/health.ts</code>:</p>
+<pre><code class="language-typescript">import { Request, Response } from 'express';
+import pool from '../db';
+
+export const healthCheck = async (_req: Request, res: Response) =&gt; {
+  const stats = await pool.query('SELECT count(*) FROM pg_stat_activity');
+  res.json({
+    status: 'ok',
+    dbConnections: parseInt(stats.rows[0].count, 10),
+    poolSize: pool.totalCount,
+    available: pool.idleCount,
+    waiting: pool.waitingCount,
+  });
+};
+</code></pre>
+<p>Register it with <code>app.get('/health', healthCheck);</code>. When <code>waiting</code> climbs during a load test, you have found your bottleneck without guessing.</p>
+<h3 id="redis-reconnection">Redis reconnection</h3>
+<p>If the Redis client gives up after a failed connection, the API hangs or errors on every read. Configure bounded retries with backoff and a connect timeout so failures surface quickly instead of cascading.</p>
+<pre><code class="language-typescript">const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT || '6379', 10),
+  retryStrategy: (times) =&gt; Math.min(times * 50, 2000),
+  connectTimeout: 5000,
+  maxRetriesPerRequest: 3,
+});
+</code></pre>
+<p>The tradeoff is explicit: fail fast and let the caller see an error, rather than block a request thread waiting on a dependency that may not recover.</p>
+<h3 id="rate-limiting-on-the-write-path">Rate limiting on the write path</h3>
+<p>Writes are expensive and unbounded. A Redis-backed limiter survives process restarts and works across multiple instances, which an in-memory limiter does not.</p>
 <p><code>src/middleware/rateLimiter.ts</code>:</p>
 <pre><code class="language-typescript">import { RateLimiterRedis } from 'rate-limiter-flexible';
 import Redis from 'ioredis';
@@ -485,150 +538,38 @@ const rateLimiter = new RateLimiterRedis({
 });
 
 export const rateLimiterMiddleware = (req: any, res: any, next: any) =&gt; {
-  rateLimiter.consume(req.ip)
-    .then(() =&gt; {
-      next();
-    })
-    .catch(() =&gt; {
-      res.status(429).json({ error: 'Too many requests' });
-    });
+  rateLimiter
+    .consume(req.ip)
+    .then(() =&gt; next())
+    .catch(() =&gt; res.status(429).json({ error: 'Too many requests' }));
 };
 </code></pre>
-<p>Apply it to the <code>/shorten</code> endpoint only:</p>
-<pre><code class="language-typescript">import { rateLimiterMiddleware } from '../middleware/rateLimiter';
-
-app.post('/shorten', rateLimiterMiddleware, createShortUrl);
-</code></pre>
-<p>Why Redis for rate limiting? In 2026, most African engineers still use in-memory rate limiters (like <code>express-rate-limit</code>) that break under load. Redis-backed limiters survive container restarts and scale horizontally.</p>
-<h3 id="24-add-structured-logging">2.4 Add structured logging</h3>
+<p>Apply it only to the write route: <code>app.post('/shorten', rateLimiterMiddleware, createShortUrl);</code>. Reads are cheap and cacheable; limiting them would hurt legitimate traffic.</p>
+<h2 id="step-4-observability-and-tests">Step 4 — observability and tests</h2>
+<h3 id="structured-logging">Structured logging</h3>
+<p>Unstructured logs are nearly useless once you have more than one service. Emit JSON with a timestamp so your log aggregator can index fields.</p>
 <p><code>src/logger.ts</code>:</p>
 <pre><code class="language-typescript">import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   transports: [
     new winston.transports.Console(),
     new DailyRotateFile({
       filename: 'logs/url-shortener-%DATE%.log',
       datePattern: 'YYYY-MM-DD',
       maxSize: '5m',
-      maxFiles: '7d'
-    })
-  ]
+      maxFiles: '7d',
+    }),
+  ],
 });
 
 export default logger;
 </code></pre>
-<p>Update error handling in <code>shortener.ts</code> to use the logger:</p>
-<pre><code class="language-typescript">console.error('DB error:', err);
-logger.error('Database error', { error: err.message });
-</code></pre>
-<p>A common failure mode here is unstructured logs that break log aggregation tools like Loki or Grafana. Structured JSON logs with timestamps make it easier to query.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<h3 id="31-handle-cache-stampede-and-thundering-herd">3.1 Handle cache stampede and thundering herd</h3>
-<p>The thundering herd happens when the cache expires and 100 requests hit the database simultaneously. The fix: use a lock in Redis to serialize cache rebuilds.</p>
-<p><code>src/cache.ts</code>:</p>
-<pre><code class="language-typescript">import Redis from 'ioredis';
-
-const redis = new Redis({
-  host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT || '6379', 10),
-});
-
-export const getWithCacheRebuild = async (key: string, ttl: number, fetchFn: () =&gt; Promise&lt;string&gt;) =&gt; {
-  const cached = await redis.get(key);
-  if (cached) {
-    return cached;
-  }
-
-  // Use Redis SETNX as a lock
-  const lockKey = `${key}:lock`;
-  const acquired = await redis.setnx(lockKey, '1');
-  if (!acquired) {
-    // Someone else is rebuilding the cache; wait briefly
-    await new Promise(resolve =&gt; setTimeout(resolve, 50));
-    return await redis.get(key);
-  }
-
-  // Hold lock for max 10 seconds
-  await redis.expire(lockKey, 10);
-
-  try {
-    const value = await fetchFn();
-    await redis.setex(key, ttl, value);
-    return value;
-  } finally {
-    await redis.del(lockKey);
-  }
-};
-</code></pre>
-<p>Update <code>getOriginalUrl</code> to use this:</p>
-<pre><code class="language-typescript">const originalUrl = await getWithCacheRebuild(
-  shortCode,
-  CACHE_TTL,
-  async () =&gt; {
-    const client = await pool.connect();
-    try {
-      const result = await client.query(
-        'SELECT original_url FROM short_urls WHERE short_code = $1',
-        [shortCode]
-      );
-      if (result.rows.length === 0) throw new Error('Not found');
-      return result.rows[0].original_url;
-    } finally {
-      client.release();
-    }
-  }
-);
-</code></pre>
-<p>This adds ~5ms to the first request after cache expiry, but prevents a 100ms spike under load.</p>
-<h3 id="32-handle-postgresql-connection-leaks">3.2 Handle PostgreSQL connection leaks</h3>
-<p>A common failure mode in take-home tests: engineers open a new DB connection per request and never close it. In Node.js, this leads to "too many connections" errors under load.</p>
-<p>The fix: always use a connection pool and release connections in <code>finally</code> blocks. The pool in <code>src/db.ts</code> already does this, but add a health check endpoint to expose pool stats:</p>
-<p><code>src/routes/health.ts</code>:</p>
-<pre><code class="language-typescript">import { Request, Response } from 'express';
-import pool from '../db';
-
-export const healthCheck = async (req: Request, res: Response) =&gt; {
-  const stats = await pool.query('SELECT count(*) FROM pg_stat_activity');
-  const activeConnections = parseInt(stats.rows[0].count, 10);
-
-  res.json({
-    status: 'ok',
-    dbConnections: activeConnections,
-    poolSize: pool.totalCount,
-    available: pool.idleCount,
-    waiting: pool.waitingCount
-  });
-};
-</code></pre>
-<p>Add the route:</p>
-<pre><code class="language-typescript">app.get('/health', healthCheck);
-</code></pre>
-<p>A realistic pool size under 1,000 req/min is 5–10 connections. Monitor <code>waitingCount</code> in production.</p>
-<h3 id="33-handle-redis-connection-timeouts">3.3 Handle Redis connection timeouts</h3>
-<p>In <code>af-south-1</code>, Redis can drop connections during network glitches. The gotcha: if the Redis client doesn’t reconnect, your API hangs.</p>
-<p>Fix: configure <code>ioredis</code> with automatic reconnection:</p>
-<pre><code class="language-typescript">const redis = new Redis({
-  host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT || '6379', 10),
-  retryStrategy: (times) =&gt; Math.min(times * 50, 2000),
-  connectTimeout: 5000,
-  maxRetriesPerRequest: 3,
-});
-</code></pre>
-<p>This means: if Redis is down for 2 seconds, the client retries 3 times with exponential backoff (50ms, 100ms, 200ms), then fails fast. This prevents cascading failures under transient network issues.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<h3 id="41-add-prometheus-metrics">4.1 Add Prometheus metrics</h3>
-<p>Install <code>prom-client</code>:</p>
-<pre><code class="language-bash">npm install prom-client
-</code></pre>
-<p><code>src/metrics.ts</code>:</p>
+<h3 id="metrics">Metrics</h3>
+<p><code>prom-client</code> gives you counters and histograms that a Prometheus server can scrape.</p>
 <pre><code class="language-typescript">import client from 'prom-client';
 
 const register = new client.Registry();
@@ -658,85 +599,68 @@ register.registerMetric(cacheMisses);
 
 export { register, httpRequestDuration, cacheHits, cacheMisses };
 </code></pre>
-<p>Update the Express app to collect metrics:</p>
+<p>Wire the histogram into Express and expose the registry:</p>
 <pre><code class="language-typescript">import { register, httpRequestDuration } from './metrics';
 
 app.use((req, res, next) =&gt; {
   const end = httpRequestDuration.startTimer();
   res.on('finish', () =&gt; {
-    end({ method: req.method, route: req.route?.path || req.path, status_code: res.statusCode });
+    end({
+      method: req.method,
+      route: req.route?.path || req.path,
+      status_code: res.statusCode,
+    });
   });
   next();
 });
 
-app.get('/metrics', async (req, res) =&gt; {
+app.get('/metrics', async (_req, res) =&gt; {
   res.set('Content-Type', register.contentType);
   res.end(await register.metrics());
 });
 </code></pre>
-<p>This exposes <code>/metrics</code> on port 3000. In production, you’d scrape this with Prometheus every 15 seconds.</p>
-<h3 id="42-add-unit-tests-with-jest">4.2 Add unit tests with Jest</h3>
-<p><code>src/routes/shortener.test.ts</code>:</p>
+<p>The cache hit and miss counters are the ones that matter most for this service. Their ratio tells you directly whether the cache is earning its keep.</p>
+<h3 id="unit-tests">Unit tests</h3>
+<p>Mock the external dependencies so tests run without infrastructure.</p>
 <pre><code class="language-typescript">import request from 'supertest';
 import app from '../index';
 import Redis from 'ioredis-mock';
-import { Pool } from 'pg';
 
 jest.mock('ioredis', () =&gt; Redis);
 jest.mock('pg', () =&gt; ({
   Pool: jest.fn(() =&gt; ({
     connect: jest.fn(() =&gt; ({
       query: jest.fn().mockResolvedValue({ rows: [{ original_url: 'https://example.com' }] }),
-      release: jest.fn()
+      release: jest.fn(),
     })),
     totalCount: 0,
     idleCount: 0,
-    waitingCount: 0
-  }))
+    waitingCount: 0,
+  })),
 }));
 
 describe('URL Shortener', () =&gt; {
-  it('should create a short URL', async () =&gt; {
-    const res = await request(app)
-      .post('/shorten')
-      .send({ url: 'https://example.com' });
-
+  it('creates a short URL', async () =&gt; {
+    const res = await request(app).post('/shorten').send({ url: 'https://example.com' });
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('shortUrl');
   });
 
-  it('should redirect to original URL', async () =&gt; {
-    const res = await request(app)
-      .get('/abc123');
-
+  it('redirects to the original URL', async () =&gt; {
+    const res = await request(app).get('/abc123');
     expect(res.statusCode).toEqual(302);
     expect(res.headers.location).toEqual('https://example.com');
   });
 
-  it('should return 404 for missing URL', async () =&gt; {
-    const res = await request(app)
-      .get('/missing');
-
+  it('returns 404 for a missing URL', async () =&gt; {
+    const res = await request(app).get('/missing');
     expect(res.statusCode).toEqual(404);
   });
 });
 </code></pre>
-<p>Run tests:</p>
-<pre><code class="language-bash">npx jest
-</code></pre>
-<p>Typical output:</p>
-<pre><code>PASS  src/routes/shortener.test.ts
-  URL Shortener
-    ✓ should create a short URL (42 ms)
-    ✓ should redirect to original URL (21 ms)
-    ✓ should return 404 for missing URL (18 ms)
-
-Test Suites: 1 passed, 1 total
-Tests:       3 passed, 3 total
-</code></pre>
-<p>A common failure mode here is mocking Redis and PostgreSQL incorrectly. Use <code>ioredis-mock</code> and <code>pg-mock</code> for unit tests, not real services.</p>
-<h3 id="43-add-integration-tests-with-docker-compose">4.3 Add integration tests with Docker Compose</h3>
-<p><code>docker-compose.yml</code>:</p>
+<p>Run them with <code>npx jest</code>. A passing suite is table stakes; the point is that mocking the database and cache correctly is itself a demonstration of understanding the boundaries.</p>
+<h3 id="integration-tests-with-docker-compose">Integration tests with Docker Compose</h3>
+<p>Unit tests with mocks will not catch a broken query or a misconfigured pool. Run the same tests against real services.</p>
 <pre><code class="language-yaml">version: '3.8'
 services:
   app:
@@ -781,13 +705,10 @@ services:
       timeout: 3s
       retries: 5
 </code></pre>
-<p>Run integration tests:</p>
-<pre><code class="language-bash">docker-compose up --build --exit-code-from app
-</code></pre>
-<p>This spins up a real PostgreSQL and Redis, runs the tests, then tears down the stack. A realistic test run takes ~25 seconds on a mid-tier laptop.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<h3 id="51-performance-under-load-k6-test">5.1 Performance under load (k6 test)</h3>
-<p>We ran a k6 load test from a VPS in Lagos to the API deployed in <code>af-south-1</code>:</p>
+<p>Run with <code>docker-compose up --build --exit-code-from app</code>. The <code>depends_on</code> plus healthchecks ensure the app starts only after the dependencies are ready, which eliminates a class of flaky test failures.</p>
+<h2 id="how-to-produce-your-own-numbers">How to produce your own numbers</h2>
+<p>Do not put a latency figure in a README unless you can reproduce it. Here is how to get one that means something.</p>
+<p>Instrument the request duration histogram, then run a load test against a deployed instance. A k6 script that ramps virtual users gives you a distribution rather than a single number:</p>
 <pre><code class="language-javascript">import http from 'k6/http';
 import { check } from 'k6';
 
@@ -804,41 +725,46 @@ export const options = {
 };
 
 export default function () {
-  const res = http.post('http://&lt;api-gateway-url&gt;/shorten', {
-    url: 'https://example.com'
-  });
-  check(res, {
-    'status is 200': (r) =&gt; r.status === 200,
-  });
+  const res = http.post('http://&lt;api-url&gt;/shorten', { url: 'https://example.com' });
+  check(res, { 'status is 200': (r) =&gt; r.status === 200 });
 }
 </code></pre>
-<p>Results:
-- p50: 85ms
-- p95: 142ms
-- p99: 180ms
-- Error rate: 0.3% (mostly Redis timeouts on cold starts)</p>
-<p>Without Redis, p95 spikes to 450ms under 200 concurrent users — a common failure mode in unoptimized portfolios.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/senior-role-projects-3-real-paths/">Senior role projects: 3 real paths</a></li>
-<li><a href="https://kubaik.github.io/portfolio-projects-hiring-managers-skip/">Portfolio projects hiring managers skip</a></li>
-<li><a href="https://kubaik.github.io/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
-</ul>
-<h2 id="official-documentation">Official documentation</h2>
-<ul>
-<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
-<li><a href="https://redis.io/docs/">Redis documentation</a></li>
-<li><a href="https://docs.docker.com/">Docker documentation</a></li>
-<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> September 2026</p>
-<!-- enhanced:v1 -->
+<p>Run it from a host near your deployment region, not from your laptop, and record the p50, p95, and p99 from the summary. Then repeat the same test with the cache disabled. The difference between the two runs is the number worth quoting, because it demonstrates that you measured the effect of a specific design decision.</p>
+<p>If you want a concrete target to design against, this is a reasonable one: a cache-aside read path should keep p95 well under the database-only p95 under the same load. If it does not, the cache is not being hit often enough, the TTL is too short, or the cache is too far from the API.</p>
+<h2 id="what-this-project-proves-in-an-interview">What this project proves in an interview</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Where it appears in the project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Observability</td>
+<td><code>/metrics</code> endpoint, structured JSON logs, <code>/health</code> pool stats</td>
+</tr>
+<tr>
+<td>Failure handling</td>
+<td>Cache rebuild lock, bounded Redis retries, transaction rollback</td>
+</tr>
+<tr>
+<td>Resource discipline</td>
+<td>Bounded connection pool, released connections, explicit timeouts</td>
+</tr>
+<tr>
+<td>Measurement</td>
+<td>Load test script, histogram buckets, before/after cache comparison</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>Mocked unit tests plus real-service integration tests</td>
+</tr>
+</tbody>
+</table>
+<p>The interview conversation is the real deliverable. When asked about the project, describe a failure you designed around, explain the tradeoff you chose, and show the metric that confirmed the fix. That is what distinguishes a senior candidate from someone who has only written code that runs.</p>
+<h2 id="in-the-next-30-minutes">In the next 30 minutes</h2>
+<p>Pick one project you already have, add a request-duration histogram and a <code>/metrics</code> endpoint to it, and run a short load test against it. Whatever number comes back is the first honest performance figure you can put in a README.</p>
                 
                 
             </div>
@@ -867,20 +793,20 @@ export default function () {
                     
                     <a class="related-card" href="/chaos-engineering-without-an-sre-team/">
                         <h3>Chaos engineering without an SRE team</h3>
-                        <p>Chaos engineering for teams without SREs: lightweight fault injection with FastAPI, Redis 7.2, and AWS FIS.</p>
+                        <p>How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.</p>
                         <span class="related-meta">13 min read · 30 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/settlement-vs-clearing-backend-engineers-guide/">
                         <h3>Settlement vs clearing: backend engineer&#39;s guide</h3>
-                        <p>Clearing vs settlement: why your ledger doesn&amp;#x27;t balance. A backend engineer&amp;#x27;s guide to obligations, netting, and settlement finality.</p>
+                        <p>Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</p>
                         <span class="related-meta">14 min read · 28 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/portfolio-projects-hiring-managers-skip/">
                         <h3>Portfolio projects hiring managers skip</h3>
-                        <p>Portfolio projects get skipped when reviewers can&amp;#x27;t parse them in 90 seconds. Here&amp;#x27;s the legibility fix: problem, constraint, decision, measured result.</p>
-                        <span class="related-meta">17 min read · 25 September 2026</span>
+                        <p>Portfolio projects often fail screening for legibility, not code quality. Here is how to restructure a repo so a reviewer understands it fast.</p>
+                        <span class="related-meta">19 min read · 25 September 2026</span>
                     </a>
                     
                 </div>

@@ -1,143 +1,160 @@
 # Cost tools fail when agents scale autonomously
 
-traditional cloud looks simple until it has to survive real traffic. The dashboards look healthy right up until the incident starts. Here's the root cause, not just the symptom.
+Autonomous scaling agents make provisioning decisions on sub-second cadences. Cost reporting systems were built around human review cycles. The mismatch is structural, not a tooling bug, and it produces a specific failure: a cost spike with no traceable cause.
 
-## Why this comparison matters right now
+## The attribution gap
 
-Autonomous scaling agents are no longer experimental. Teams running Kubernetes clusters in Nairobi, Lagos, and Kampala are deploying agent-driven autoscalers that react to traffic patterns in sub-second windows, adjusting replica counts, Lambda concurrency limits, and spot instance pools without human approval. The tooling around cost visibility has not caught up. Traditional cloud cost tools were built for a world where a human reviewed the dashboard, made a decision, and committed the change. That feedback loop — human eyes on a graph, then a Terraform apply — is what these tools optimize for.
+Traditional cloud cost tooling — provider cost explorers, Kubernetes cost allocation tools, cloud management platforms — operates on a pull-based model. Billing data is ingested, normalized by tags or labels, and presented in dashboards optimized for weekly or monthly review. The strength of that model is authority: the cost signal is reconciled against the invoice and is auditable. When a finance team needs to justify spend, these tools produce numbers that hold up.
 
-When an agent is making 200 scaling decisions per hour, the existing cost tooling reports on decisions already made, not on the trajectory the agent is carving. The part that trips people up is the attribution gap: you cannot tell which specific scaling event caused the cost spike because the cost tool's granularity is hourly and the agent's decision cadence is per-second. This post compares the two approaches head-to-head so you can pick the right observability layer before the bill arrives.
+The weakness appears when infrastructure is dynamic. An agent that scales on queue depth, CPU saturation, or predicted traffic creates and destroys resources faster than an hourly aggregation window can attribute them. The dashboard shows that spend rose in a given hour. It cannot say which of the several hundred scaling decisions in that hour caused the rise.
 
-A common trap here is the predictive scaling agent that overshoots during a flash crowd. The agent sees a 3x traffic ramp and provisions 50 extra pods across three availability zones. The cost tool, reporting on a 1-hour aggregation window, shows the spike 47 minutes after the damage is done. By then the agent has already made 14 more scaling decisions based on the original signal, compounding the overshoot. The team gets a $12,000 surprise line item and no actionable root cause.
+A typical failure mode: an agent observes a threefold traffic ramp and provisions a large batch of extra replicas across several availability zones. An hourly cost report surfaces the resulting spend increase well after the fact. By then the agent has made many more decisions based on the same original signal, compounding the overshoot. The bill shows a large surprise line item and the cost tool offers no actionable root cause, because the granularity of the report is coarser than the granularity of the decisions.
 
-## Option A — how it works and where it shines
+The fix is not a better dashboard. It is a second signal: cost per decision, emitted by the agent itself, at the same cadence the agent acts.
 
-Traditional cloud cost tools — AWS Cost Explorer, Kubecost 0.120, CloudHealth, Apptio — operate on a pull-based model. They ingest billing data, normalize it by tags or labels, and present it in dashboards optimized for weekly or monthly review cycles. The strength of this approach is stability: the cost signal is authoritative, reconciled against the invoice, and auditable. When a finance team needs to justify spend to a board, these tools produce the reports that hold up.
+## What the two layers actually do
 
-These tools shine when infrastructure changes are deliberate and infrequent. A team running a static workload on AWS EC2 with tagged resources gets clean cost allocation by service, environment, and project. Kubecost 0.120, for example, can break down cluster costs per namespace with 95% accuracy when labels are consistently applied. The reporting latency is 24-48 hours for most cloud providers, which is fine when the provisioning cadence is days or weeks.
+It helps to separate the two systems by the question each answers.
 
-The weakness surfaces when the infrastructure is dynamic. An agent that scales based on queue depth, CPU saturation, or predicted traffic patterns will create and destroy resources faster than the cost tool can reconcile. You end up with a dashboard that shows last-hour spend but cannot explain the per-decision cost of the agent's actions. The tools also lack APIs that agents can query in real time to inform their scaling logic — they are read-only observers, not participants in the control loop.
+**Cost accounting layer.** Provider cost explorers, Kubernetes cost allocation tooling, and cloud management platforms answer "where did the money go." They reconcile against billing data, allocate by tag or label, and are authoritative for audit and chargeback. Reporting latency for major cloud providers is typically measured in hours to a day or more. That latency is a property of how billing data is produced, not a defect.
 
-## Option B — how it works and where it shines
+**Decision telemetry layer.** The agent's own metrics — replicas added, concurrency changed, instance pool resized, and the estimated cost delta of each — answer "what did the system just decide, and what did it cost." These are emitted at decision time, in the same metrics pipeline the agent already uses for performance signals.
 
-Agent-driven cost-aware scaling embeds cost signals directly into the scaling decision loop. Tools like KEDA 2.14 with custom metrics adapters, AWS Application Auto Scaling with predictive policies, or bespoke agents built on Prometheus 2.51 and Grafana 11.0 alerting rules can query cost-per-request or cost-per-transaction in near real time and factor that into the scaling equation.
+Neither layer replaces the other. The accounting layer tells you whether the month was expensive. The telemetry layer tells you which decision made it expensive. Teams that only have the first layer spend their incident response time reconstructing decisions from billing data, which is slow and often inconclusive.
 
-The architecture typically works like this: the agent reads a custom metric from Prometheus — say, `cost_per_request_total` — alongside the standard performance metrics like request latency and error rate. The scaling policy then optimizes for a composite objective: maintain p99 latency under 200ms while keeping cost per request below $0.003. This is fundamentally different from traditional autoscaling, which optimizes for a single dimension (CPU, memory, queue depth) and treats cost as an afterthought.
+## Measuring cost per scaling decision
 
-Where this shines is in volatile workloads. A fintech API serving mobile money transactions in East Africa sees traffic spikes during salary disbursement days. An agent-aware scaler can pre-warm capacity 15 minutes before the predictable spike and then scale down aggressively after, because it has direct visibility into the per-minute cost of keeping pods alive. Teams report 30-40% cost reduction compared to static threshold autoscaling for these bursty patterns.
+The core instrumentation is a counter incremented every time the agent changes capacity, labelled by decision type and by the workload it acted on. A minimal Prometheus-style metric:
 
-The weakness is complexity. You now have two control loops interacting — the scaling agent and the cost reporting pipeline — and they can conflict. If the cost signal lags the scaling decision by even 30 seconds, the agent may scale based on stale cost data, making the problem worse rather than better.
+```python
+from prometheus_client import Counter
 
-## Head-to-head: performance
+scaling_decision_cost = Counter(
+    "scaling_decision_cost_total",
+    "Estimated cost delta of each scaling decision, in USD",
+    ["decision_type", "workload", "direction"],
+)
 
-| Metric | Traditional Cost Tools | Agent-Driven Cost-Aware Scaling |
-|---|---|---|
-| Decision latency | 24-48 hours | 10-60 seconds |
-| Scaling granularity | Per-hour aggregation | Per-request or per-second |
-| Cost signal freshness | Stale by design | Near real-time |
-| Performance optimization | Single dimension (CPU/memory) | Multi-objective (latency + cost) |
-| Typical p99 latency impact | No direct effect | 15-40ms overhead from metric queries |
-
-The performance comparison is not close for real-time workloads. An agent that can query `cost_per_request` from Prometheus 2.51 and adjust replica count within 30 seconds will always outperform a human reviewing a daily cost report. But the 15-40ms overhead from the metric query itself matters at scale. At 10,000 requests per second, that overhead adds up to 150-400ms of additional latency across the request lifecycle, which can push a p99 that was already at 180ms over a 200ms SLO.
-
-A common failure mode here is the metric staleness problem. Prometheus 2.51 scrapes targets at the configured interval — typically 15 seconds. If the agent's scaling decision depends on a metric that is 15 seconds stale, and the traffic pattern is changing faster than that, the agent is reacting to yesterday's signal. Teams running into this usually see oscillation: the agent scales up, the cost metric updates, the agent scales down, the traffic spike continues, and the cycle repeats. The result is higher cost than static scaling and worse latency than no scaling at all.
-
-## Head-to-head: developer experience
-
-Traditional cost tools require developers to think about tagging, resource allocation reporting, and monthly review cadences. The developer experience is passive — you tag your resources, the tool does the rest. This works well for teams with dedicated platform engineers who manage the tagging taxonomy and cost allocation models.
-
-Agent-driven scaling demands active developer involvement in defining the cost-performance tradeoff. You need to write scaling policies that reference cost metrics, set composite objectives, and handle the edge cases where cost and performance goals conflict. A typical policy in KEDA 2.14 might look like this:
-
-```yaml
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: api-cost-aware
-spec:
-  scaleTargetRef:
-    name: api-deployment
-  minReplicaCount: 2
-  maxReplicaCount: 50
-  triggers:
-    - type: prometheus
-      metadata:
-        serverAddress: http://prometheus:9090
-        metricName: cost_per_request_total
-        threshold: "0.003"
-        query: sum(rate(aws_ecs_service_cost_total[5m])) / sum(rate(http_requests_total[5m]))
-    - type: prometheus
-      metadata:
-        serverAddress: http://prometheus:9090
-        metricName: latency_p99
-        threshold: "200"
-        query: histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
+def record_decision(decision_type, workload, direction, delta_usd):
+    scaling_decision_cost.labels(
+        decision_type=decision_type,
+        workload=workload,
+        direction=direction,
+    ).inc(delta_usd)
 ```
 
-This YAML defines a composite scaling trigger that considers both cost per request and p99 latency. The developer must understand both the metric query language and the scaling behavior implications. Teams with strong SRE practices adapt quickly; teams without that background find the cognitive load significant.
+Call `record_decision` at the point where the agent commits a capacity change, not where it computes one. A decision that is computed and then rejected by a cooldown or a policy guardrail should not be counted as spend.
 
-The debugging experience also differs sharply. With traditional tools, you investigate a cost anomaly by filtering the dashboard by service, environment, and tag. With agent-driven scaling, you need to trace the decision chain: what metric triggered the scale-up, what was the cost signal at that moment, and did the subsequent scale-down actually reduce cost or just shift it. This requires distributed tracing integration — tools like Jaeger or AWS X-Ray — that most cost dashboards do not natively support.
+Query it as a rate to see spend velocity per decision type:
 
-## Head-to-head: operational cost
+```promql
+sum by (decision_type, direction) (
+  rate(scaling_decision_cost_total[5m])
+)
+```
 
-The operational cost of running the observability layer itself is often overlooked. Traditional cost tools like AWS Cost Explorer are included in the AWS bill — there is no additional infrastructure cost. Kubecost 0.120 running on a small Kubernetes cluster requires approximately 0.5 CPU cores and 1GB RAM for the aggregator, plus storage for the time-series database. At typical East African cloud pricing, this adds roughly $15-25/month.
+Two caveats matter here.
 
-Agent-driven scaling adds operational cost in a different dimension: the compute cost of running the agent itself plus the cost of the metrics pipeline. A Prometheus 2.51 instance scraping 500 targets at 15-second intervals generates approximately 2GB of time-series data per day. Storing and querying that data in Grafana 11.0 on a managed service like Grafana Cloud runs $40-80/month depending on retention. The agent logic itself — whether KEDA, a custom Python 3.11 service, or AWS Lambda with arm64 — adds another $20-50/month in compute.
+First, `delta_usd` is an estimate. The agent knows how many replicas it added and what instance type they run on; it does not know the exact billed rate, spot interruptions, or committed-use discounts. Label the metric as an estimate in its help text and reconcile it against the accounting layer periodically. The point of the metric is direction and magnitude, not invoice accuracy.
 
-So the total observability cost for agent-driven scaling is typically $75-155/month, compared to $15-25/month for traditional cost tools. The question is whether the cost savings from better scaling decisions justify the higher observability overhead. For teams with volatile traffic patterns and compute costs above $5,000/month, the answer is usually yes. For teams with steady, predictable workloads, the traditional approach is cheaper overall.
+Second, the counter must survive agent restarts. Use a persistent counter or accept resets and query with `rate()`, which handles counter resets correctly. Do not use a gauge that you set to a running total; that breaks under restarts and under multiple agent replicas.
 
-A concrete scenario: a mobile money API in Kampala serving 2 million requests per day. With static threshold autoscaling, the monthly compute cost is $4,200. With agent-driven cost-aware scaling, compute drops to $2,800 — a $1,400/month saving — but the observability stack costs $120/month more. Net savings: $1,280/month. The ROI is clear, but only because the traffic pattern is volatile enough to justify the complexity.
+## Failure modes when the feedback loop is broken
 
-## The decision framework I use
+**Stale metric feedback.** An agent that scales on a cost signal scraped every 15 seconds is acting on data that is up to 15 seconds old. If traffic changes faster than the scrape interval, the agent reacts to a signal that no longer describes the system. The observable symptom is oscillation: scale up, the cost metric updates, scale down, the spike continues, repeat. The result can be worse latency and higher cost than static thresholds.
 
-When evaluating whether to adopt agent-driven cost-aware scaling, I run through three questions. First: how volatile is the workload? If traffic varies by more than 5x between peak and off-peak within a single day, agent-driven scaling pays for itself. If traffic is steady within 20% variance, traditional cost tools with scheduled scaling are sufficient.
+Mitigation is hysteresis, not a faster scrape interval. Require the triggering condition to hold for several consecutive evaluation periods before acting, and add a stabilization window after each change.
 
-Second: what is the cost of a scaling mistake? If an overscaled pod costs $0.08/hour and the agent can spin up 50 of them in 3 minutes, a single bad decision costs $4/hour. If your cost tool takes 6 hours to surface that anomaly, the damage is $24 per incident. Multiply by the number of incidents per month and you have the hidden cost of slow observability.
+**Unbounded decision cost.** If the agent's maximum scale-up is large and its cooldown is short, a single misread signal can commit a large amount of capacity before any corrective signal arrives. The cost per decision metric makes this visible: a single `decision_type` with an outsized rate is the signature.
 
-Third: does your team have the SRE maturity to debug agent decisions? Agent-driven scaling shifts the debugging burden from "why is this resource expensive" to "why did the agent make this specific decision at this specific time." That requires distributed tracing, metric correlation, and the ability to replay decision history. Teams without these capabilities will spend more time firefighting than they save in compute costs.
+Mitigation is a per-decision cost ceiling in the agent's policy, enforced before the change is committed, plus a rate limit on total decisions per unit time.
 
-The framework is not about picking a side permanently. It is about matching the tooling to the workload characteristics and the team's operational maturity. A team running a stable internal API on a fixed EC2 fleet should not adopt agent-driven scaling — the complexity outweighs the benefit. A team running a customer-facing API with unpredictable traffic in multiple regions should treat cost-aware autoscaling as table stakes.
+**Silent disagreement between layers.** The agent's estimated cost and the accounting layer's reconciled cost drift apart. This is normal in small amounts (spot pricing, discounts) and a bug in large amounts. A useful check is a weekly comparison: sum the agent's estimated spend deltas for a workload over a period and compare against the accounting layer's figure for the same workload and period. A persistent large gap usually means the agent is mispricing an instance type or missing a resource class entirely.
 
-## My recommendation (and when to ignore it)
+## A worked example
 
-For most teams building customer-facing APIs in sub-Saharan Africa — where traffic patterns are bursty, cloud budgets are tight, and the cost of overprovisioning is felt immediately — I recommend agent-driven cost-aware scaling with Prometheus 2.51 as the metrics backbone and KEDA 2.14 as the scaling engine. The key is to start with a narrow scope: pick one service, instrument it with cost metrics, and validate that the agent's decisions actually reduce cost before rolling out broadly.
+Suppose a service runs on 4 replicas of a node type priced at an illustrative $0.10 per node-hour. Traffic ramps and the agent adds 20 replicas.
 
-Ignore this recommendation if your workload is stable, your team lacks SRE tooling experience, or your cloud provider already offers built-in cost-aware autoscaling that meets your needs. AWS Application Auto Scaling with predictive policies, for example, handles many common patterns without the custom instrumentation overhead. The mistake I see teams make is adopting agent-driven scaling because it is novel, not because it solves a specific cost problem they are currently experiencing.
+Incremental hourly cost of that single decision, assuming the replicas run for the full hour:
 
-When you do adopt it, instrument the agent itself. Track metrics like `scaling_decisions_total`, `cost_per_decision`, and `decision_latency_ms`. Without these, you are flying blind — the agent optimizes for something, and if you cannot see what that something is costing you, you have replaced one black box with another.
+```
+20 replicas x $0.10/node-hour = $2.00/hour
+```
 
-## Frequently Asked Questions
+If the ramp is transient and the replicas run for 6 minutes before scaling back down:
 
-**Can traditional cost tools like Kubecost report in real time for agent-driven workloads?**
-Kubecost 0.120 can reduce reporting latency to approximately 5 minutes with aggressive scrape intervals, but it is still fundamentally a pull-based system that reconciles against billing data. For agent-driven workloads where scaling decisions happen per-second, 5-minute granularity is too coarse to inform the next decision. You need a metrics pipeline that emits cost signals as events, not as aggregated reports.
+```
+20 x $0.10 x (6 / 60) = $0.20
+```
 
-**What is the typical cost of running Prometheus 2.51 + Grafana 11.0 for cost-aware scaling?**
-A typical setup scraping 200-500 targets at 15-second intervals runs 1-2 CPU cores and 4-8GB RAM for the Prometheus server, plus a Grafana instance. On AWS with on-demand pricing, this totals approximately $60-120/month. On cheaper providers like Hetzner or DigitalOcean, the same setup runs $20-40/month. The cost is justified when compute savings exceed the observability overhead by 3x or more.
+Now suppose the agent makes this decision 40 times in an hour because its cooldown is too short and the cost signal is stale:
 
-**How do you prevent the agent from oscillating between scale-up and scale-down?**
-The standard approach is to add cooldown periods and hysteresis to the scaling policy. In KEDA 2.14, set `fallback` thresholds and `stabilizationWindowSeconds` to prevent rapid flapping. A typical configuration uses a 60-second stabilization window and requires the triggering metric to stay above or below threshold for at least 3 consecutive evaluation periods before acting. This alone eliminates 80% of oscillation issues.
+```
+40 x $0.20 = $8.00 in one hour
+```
 
-**Is agent-driven scaling worth it for small teams with under $1,000/month compute spend?**
-Usually not. The observability overhead of $75-155/month for the metrics pipeline represents 8-15% of a $1,000/month budget. At that scale, scheduled scaling with static thresholds and monthly cost reviews is more practical. Agent-driven scaling becomes worthwhile when compute spend exceeds $3,000/month and traffic volatility justifies the complexity.
+Against a baseline of 4 replicas running continuously:
 
-## Final verdict
+```
+4 x $0.10 = $0.40/hour
+```
 
-Traditional cloud cost tools are not broken — they are optimized for a different problem. They answer "where did my money go" with daily and monthly precision. Agent-driven cost-aware scaling answers "what should I do next" with sub-minute precision. The teams that win are the ones that use both: traditional tools for audit, compliance, and monthly review; agent-driven scaling for real-time decision-making on volatile workloads.
+The transient decisions cost twenty times the steady-state baseline for that hour. No hourly cost report will attribute that to a decision type. The `scaling_decision_cost_total` counter, labelled by `decision_type`, will show one series dominating the rate — which is the whole point of instrumenting it.
 
-The blind spot is assuming one tool can do both jobs. It cannot. The cost tool reports on what happened; the agent decides what happens next. If the feedback between them is broken — and it is, in most setups today — you get either delayed cost signals that the agent cannot use, or cost signals that are too noisy to trust.
+These figures are illustrative and chosen for arithmetic clarity. Substitute your own node pricing and replica counts; the reasoning is the same.
 
-Fix the feedback loop first. Instrument your scaling agent to emit a `scaling_decision_cost` metric. Feed that into Prometheus 2.51. Build a Grafana 11.0 dashboard that shows cost per decision alongside performance per decision. Only then does agent-driven scaling become observable, and only then can you trust the cost savings it promises.
+## Decision checklist
 
-Action step: in the next 30 minutes, add a `scaling_decision_cost` counter metric to your agent's scaling loop and query it in Prometheus 2.51 with `sum(rate(scaling_decision_cost_total[5m])) by (decision_type)`. If the metric does not exist yet, create it in your scaling service code — the file to edit is whichever service handles your autoscaling decisions, and the metric name should follow your existing Prometheus naming convention. Check the value after the next scaling event and compare it against the actual cloud cost delta. That single metric is the bridge between your agent and your cost visibility.
+Before adopting cost-aware scaling, work through these questions. They are ordered by how often they change the answer.
 
+- **How volatile is the workload?** Compare peak and off-peak capacity over a week. If the ratio is small, scheduled scaling on static thresholds is simpler and cheaper to operate.
+- **What does a bad decision cost?** Multiply the maximum scale-up by the node price by the time to detection. If the accounting layer takes hours to surface an anomaly, that product is your exposure per incident.
+- **Can the agent see a cost signal at decision time?** If not, the agent is optimizing for performance alone and cost is an afterthought. That may be the right call — but make it deliberately.
+- **Can you replay a decision?** Given a cost anomaly, can you identify the decisions in the window, their inputs, and their estimated deltas? If the answer requires reconstructing from billing data, the telemetry layer is missing.
+- **Does the agent emit its own decision cost?** If not, you have replaced one black box with another. The agent optimizes for something; without the metric you cannot see what that something costs.
 
----
+If the first two answers point away from cost-aware scaling, stop. The complexity is not justified by the workload.
 
-### About this article
+## Operational overhead of the telemetry layer
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+The observability stack has its own cost, and it is worth sizing before committing.
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
+A Prometheus server scraping a few hundred targets at a 15-second interval typically needs on the order of 1–2 CPU cores and several gigabytes of RAM, plus storage for the time series. Storage volume scales with the number of active series and the retention period; the practical way to size it is to run the stack against a representative scrape configuration for a week and measure `prometheus_tsdb_storage_blocks_bytes` growth, then multiply by your intended retention.
 
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
+The agent-side instrumentation is nearly free: a counter increment per decision is negligible compared to the scaling API calls the agent already makes.
 
-**Last generated:** September 2026
+The real question is whether the telemetry layer's monthly cost is small relative to the compute spend it is meant to reduce. If the observability stack is a large fraction of the compute budget, the workload is too small for this approach — static thresholds and periodic review are the better trade.
+
+## Preventing oscillation
+
+Oscillation is the most common operational complaint about cost-aware scaling, and it is almost always a feedback timing problem rather than a policy-tuning problem.
+
+The standard mitigations:
+
+- **Stabilization window.** After a scaling action, ignore further triggering signals for a fixed period. This gives the metric pipeline time to reflect the change.
+- **Consecutive breach requirement.** Act only after the triggering condition holds for N consecutive evaluation periods, not on a single sample.
+- **Asymmetric thresholds.** Scale up on a lower threshold than you scale down, so the system sits in a stable band rather than flipping between states at a single boundary.
+- **Rate limit on total decisions.** Cap the number of capacity changes per unit time regardless of signal, as a backstop.
+
+The diagnostic signature of remaining oscillation is a `scaling_decision_cost_total` rate that alternates direction at a regular period. If the period matches your scrape interval or your evaluation interval, the problem is timing, and adding hysteresis will fix it. If the period is irregular, the problem is likely a genuinely noisy input metric, and the fix is upstream.
+
+## FAQ
+
+**Can Kubernetes cost allocation tools report fast enough for agent-driven workloads?**
+Some can reduce reporting latency to a few minutes with aggressive scrape intervals, but they remain reconciliation systems that compare against billing data. For decisions made per-second, minute-level granularity is still too coarse to inform the next decision. The decision-time signal has to come from the agent.
+
+**How much does a Prometheus and dashboard stack cost to run?**
+It depends almost entirely on series count, scrape interval, and retention. The reliable method is to measure TSDB growth over a representative week and extrapolate, rather than to use a rule of thumb. On a single small node, a modest stack is inexpensive; at high cardinality it is not.
+
+**How do you stop the agent flapping between scale-up and scale-down?**
+Stabilization windows, consecutive-breach requirements, asymmetric thresholds, and a rate limit on total decisions. See the section above for the diagnostic signature that distinguishes a timing problem from a noisy input.
+
+**Is cost-aware scaling worth it for small compute budgets?**
+Usually not. When the telemetry stack is a large fraction of the compute spend, the overhead dominates any savings. Static thresholds with scheduled scaling and periodic review are the better trade at that scale.
+
+**Do you still need the accounting layer?**
+Yes. The accounting layer is the source of truth for what was actually billed, including discounts and committed-use pricing that the agent cannot see. The telemetry layer explains decisions; the accounting layer settles the invoice. Use both, and reconcile them periodically.
+
+## What to do next
+
+Pick one service that scales automatically, and confirm whether its scaling loop emits any cost signal at all. If it does not, add a single counter — `scaling_decision_cost_total`, labelled by decision type and direction — incremented at the point where the agent commits a capacity change, with `delta_usd` computed from replica count and node price. Run it for a week, then query the per-decision-type rate and compare the total against the accounting layer's figure for the same service and period. The size of that gap tells you how much of your cost story is currently invisible.

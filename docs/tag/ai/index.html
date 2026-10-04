@@ -54,93 +54,93 @@
       </a>
       <a class="post-card" href="/who-signs-off-on-ai-code/">
         <h3>Who signs off on AI code?</h3>
-        <p class="post-excerpt">AI writes code fast, but who owns the merge? Add Git trailers, CI policy checks, and branch protection to keep accountability without slowing down.</p>
-        <p class="post-reading-time">14 min read · 2 October 2026</p>
+        <p class="post-excerpt">AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</p>
+        <p class="post-reading-time">11 min read · 2 October 2026</p>
       </a>
       <a class="post-card" href="/agent-architecture-the-new-model-trap/">
         <h3>Agent architecture: the new model trap</h3>
-        <p class="post-excerpt">Claude 4 and GPT-5 agents fail in production when teams delete the policy layer, not the prompt chaining. Here is the architecture that holds up.</p>
-        <p class="post-reading-time">17 min read · 27 September 2026</p>
+        <p class="post-excerpt">Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
+        <p class="post-reading-time">16 min read · 27 September 2026</p>
       </a>
       <a class="post-card" href="/apm-is-blind-to-your-ai-agents/">
         <h3>APM is blind to your AI agents</h3>
-        <p class="post-excerpt">Traditional APM misses AI incidents like empty retrieval and token overruns.</p>
-        <p class="post-reading-time">12 min read · 25 September 2026</p>
+        <p class="post-excerpt">Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+        <p class="post-reading-time">11 min read · 25 September 2026</p>
       </a>
       <a class="post-card" href="/world-models-wont-replace-your-backend/">
         <h3>World models won't replace your backend</h3>
-        <p class="post-excerpt">World models won&#x27;t replace your backend stack. Learn the time-series and edge-sync patterns that actually matter for physical AI in 2026.</p>
+        <p class="post-excerpt">World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.</p>
         <p class="post-reading-time">14 min read · 24 September 2026</p>
       </a>
       <a class="post-card" href="/ai-features-m-pesa-paystack-flutterwave-traps/">
         <h3>AI features: M-Pesa, Paystack, Flutterwave traps</h3>
-        <p class="post-excerpt">M-Pesa, Paystack, and Flutterwave each fail differently. Normalize webhooks, handle pending states, and stop double-charging customers with idempotency.</p>
-        <p class="post-reading-time">14 min read · 23 September 2026</p>
+        <p class="post-excerpt">Payment webhooks from M-Pesa, Paystack and Flutterwave disagree on timing, idempotency and error semantics. Here is how to normalize them before an AI feature reads them.</p>
+        <p class="post-reading-time">11 min read · 23 September 2026</p>
       </a>
       <a class="post-card" href="/agent-compliance-the-layer-you-build-after-failure/">
         <h3>Agent compliance: the layer you build after failure</h3>
-        <p class="post-excerpt">Agent governance after a compliance failure needs decision traces, not just policy gates.</p>
-        <p class="post-reading-time">15 min read · 22 September 2026</p>
+        <p class="post-excerpt">Pre-execution policy gates miss most agent compliance failures. Build a decision trace that reconstructs what happened, why, and what would have stopped it.</p>
+        <p class="post-reading-time">16 min read · 22 September 2026</p>
       </a>
       <a class="post-card" href="/golden-paths-become-load-bearing-walls/">
         <h3>Golden paths become load-bearing walls</h3>
-        <p class="post-excerpt">Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
-        <p class="post-reading-time">14 min read · 21 September 2026</p>
+        <p class="post-excerpt">Why thick internal SDKs for AI features become migration hazards, and how to design a thin runtime that enforces model ID, prompt version and embedding dimension.</p>
+        <p class="post-reading-time">12 min read · 21 September 2026</p>
       </a>
       <a class="post-card" href="/agent-compliance-in-african-fintech-the-cbn-gap/">
         <h3>Agent compliance in African fintech: the CBN gap</h3>
-        <p class="post-excerpt">Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.</p>
+        <p class="post-excerpt">How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.</p>
         <p class="post-reading-time">16 min read · 20 September 2026</p>
       </a>
       <a class="post-card" href="/ai-supply-chain-attacks-what-actually-broke/">
-        <h3>AI supply chain attacks: what actually broke</h3>
-        <p class="post-excerpt">AI supply chain attacks hide in pickle files and trust_remote_code. Hash pinning, safetensors, and a 30-minute audit that finds the real exposure.</p>
-        <p class="post-reading-time">16 min read · 19 September 2026</p>
+        <h3>AI Supply Chain Security: Trust Boundaries for Model Artifacts</h3>
+        <p class="post-excerpt">How to reason about trust boundaries for AI artifacts when pickle, torch.load and remote code execution are the format, plus a practical detection stack.</p>
+        <p class="post-reading-time">15 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
         <h3>Agentic AI cost control: 7 tools, one backfire</h3>
-        <p class="post-excerpt">Agentic AI cost management ranked: CUR 2.0, Helicone, LiteLLM, and the routing agent that backfired. Which tools give ground truth and which just guess.</p>
+        <p class="post-excerpt">How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
         <p class="post-reading-time">14 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/purpose-built-ai-is-a-trap-for-solo-founders/">
         <h3>Purpose-built AI is a trap for solo founders</h3>
-        <p class="post-excerpt">Purpose-built AI platforms promise speed but bury control flow. For solo founders, a thin provider-SDK pipeline is fewer dependencies and faster to debug.</p>
-        <p class="post-reading-time">14 min read · 19 September 2026</p>
+        <p class="post-excerpt">When a purpose-built AI framework helps a small team and when a thin layer over the provider SDK is simpler to debug, operate and migrate.</p>
+        <p class="post-reading-time">15 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/scope-agent-permissions-per-task/">
         <h3>Scope agent permissions per task</h3>
-        <p class="post-excerpt">Least-privilege for AI agents fails when permissions are static. Scope tokens per task, cut blast radius to one resource, and keep developer friction low.</p>
-        <p class="post-reading-time">16 min read · 19 September 2026</p>
+        <p class="post-excerpt">Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
+        <p class="post-reading-time">19 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/negotiating-pay-when-ai-inflates-output/">
         <h3>Negotiating pay when AI inflates output</h3>
-        <p class="post-excerpt">AI inflates output, not accountability. Learn to negotiate pay by quantifying business outcomes and the 20% of AI code you catch before it ships.</p>
+        <p class="post-excerpt">AI speeds up code generation, not accountability. How to frame a raise around verification and risk ownership instead of ticket velocity.</p>
         <p class="post-reading-time">16 min read · 19 September 2026</p>
       </a>
       <a class="post-card" href="/spot-instances-vs-on-demand-for-ai-experiments/">
         <h3>Spot instances vs on-demand for AI experiments</h3>
-        <p class="post-excerpt">Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.</p>
-        <p class="post-reading-time">13 min read · 18 September 2026</p>
+        <p class="post-excerpt">How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.</p>
+        <p class="post-reading-time">12 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/local-llm-agents-vllm-vs-ollama-for-fintech/">
         <h3>Local LLM agents: vLLM vs Ollama for fintech</h3>
-        <p class="post-excerpt">vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</p>
+        <p class="post-excerpt">Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.</p>
         <p class="post-reading-time">15 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/agent-drift-the-failure-mode-you-didnt-log/">
         <h3>Agent drift: the failure mode you didn't log</h3>
-        <p class="post-excerpt">Agent drift hides in flat latency and clean eval suites.</p>
+        <p class="post-excerpt">Agent drift is a distribution failure, not a model failure. How to detect it with categorical signatures and PSI, and contain it with state guards.</p>
         <p class="post-reading-time">14 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/feature-flags-became-ai-rollout-platforms/">
         <h3>Feature flags became AI rollout platforms</h3>
-        <p class="post-excerpt">Feature flags now gate AI rollouts. Ranked review of 7 platforms, the eval-metric rollback gap, and the SDK fallback mistake that takes down requests.</p>
-        <p class="post-reading-time">16 min read · 18 September 2026</p>
+        <p class="post-excerpt">How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.</p>
+        <p class="post-reading-time">17 min read · 18 September 2026</p>
       </a>
       <a class="post-card" href="/agent-access-for-non-ai-engineers/">
         <h3>Agent access for non-AI engineers</h3>
-        <p class="post-excerpt">Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.</p>
-        <p class="post-reading-time">14 min read · 17 September 2026</p>
+        <p class="post-excerpt">A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+        <p class="post-reading-time">15 min read · 17 September 2026</p>
       </a>
       <a class="post-card" href="/self-service-ai-tooling-where-it-breaks-first/">
         <h3>Self-service AI tooling: where it breaks first</h3>
@@ -149,23 +149,23 @@
       </a>
       <a class="post-card" href="/zero-trust-ai-skip-the-latency-tax/">
         <h3>Zero-trust AI: skip the latency tax</h3>
-        <p class="post-excerpt">Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.</p>
-        <p class="post-reading-time">15 min read · 15 September 2026</p>
+        <p class="post-excerpt">How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.</p>
+        <p class="post-reading-time">14 min read · 15 September 2026</p>
       </a>
       <a class="post-card" href="/why-our-schema-survived-ai-scaling/">
-        <h3>Why our schema survived AI scaling</h3>
-        <p class="post-excerpt">Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
-        <p class="post-reading-time">11 min read · 13 September 2026</p>
+        <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
+        <p class="post-excerpt">Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
+        <p class="post-reading-time">10 min read · 13 September 2026</p>
       </a>
       <a class="post-card" href="/stop-assuming-payment-apis-never-fail/">
         <h3>Stop assuming payment APIs never fail</h3>
-        <p class="post-excerpt">AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</p>
-        <p class="post-reading-time">11 min read · 13 September 2026</p>
+        <p class="post-excerpt">How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&#x27;t break checkout.</p>
+        <p class="post-reading-time">12 min read · 13 September 2026</p>
       </a>
       <a class="post-card" href="/why-do-production-agents-still-need-humans/">
         <h3>Why do production agents still need humans?</h3>
-        <p class="post-excerpt">Human-in-the-loop for production agents cuts 30% failure risk and avoids costly retries on flaky networks and regional payment rails.</p>
-        <p class="post-reading-time">18 min read · 9 September 2026</p>
+        <p class="post-excerpt">Why production agents still need humans: designing HITL boundaries, error-code routing, cache fallbacks, and how to measure the results.</p>
+        <p class="post-reading-time">11 min read · 9 September 2026</p>
       </a>
       <a class="post-card" href="/two-engineer-classes-the-ai-tool-norm-trap/">
         <h3>Two engineer classes: the AI tool norm trap</h3>
@@ -179,28 +179,28 @@
       </a>
       <a class="post-card" href="/idp-for-ai-2026-stack-evolution/">
         <h3>IDP for AI: 2026 stack evolution</h3>
-        <p class="post-excerpt">Move from script hell to self-healing AI feature platform in 2026 — Node 20, Redis 7.2, Lambda arm64, OpenSearch 2.11.</p>
-        <p class="post-reading-time">12 min read · 2 September 2026</p>
+        <p class="post-excerpt">How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.</p>
+        <p class="post-reading-time">14 min read · 2 September 2026</p>
       </a>
       <a class="post-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
         <h3>Agent drift: why prod breaks without human checkpoints</h3>
-        <p class="post-excerpt">Agent drift in 2026: why 68% of production agents degrade 15%+ within 30 days without human checkpoints — and how to stop it with confidence thresholds…</p>
-        <p class="post-reading-time">13 min read · 1 September 2026</p>
+        <p class="post-excerpt">Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
+        <p class="post-reading-time">14 min read · 1 September 2026</p>
       </a>
       <a class="post-card" href="/only-boring-stacks-survive-ai-services/">
         <h3>Only boring stacks survive AI services</h3>
-        <p class="post-excerpt">Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
-        <p class="post-reading-time">17 min read · 31 August 2026</p>
+        <p class="post-excerpt">Why monoliths beat microservices for solo AI builders, how to spot the &quot;one more abstraction&quot; trap, and how to measure when vertical scaling stops working.</p>
+        <p class="post-reading-time">15 min read · 31 August 2026</p>
       </a>
       <a class="post-card" href="/commit-ownership-in-ai-pair-coding/">
         <h3>Commit ownership in AI pair coding</h3>
-        <p class="post-excerpt">AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</p>
-        <p class="post-reading-time">17 min read · 31 August 2026</p>
+        <p class="post-excerpt">AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.</p>
+        <p class="post-reading-time">14 min read · 31 August 2026</p>
       </a>
       <a class="post-card" href="/ai-features-rot-faster-than-you-build-them/">
         <h3>AI features rot faster than you build them</h3>
-        <p class="post-excerpt">AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.</p>
-        <p class="post-reading-time">17 min read · 27 August 2026</p>
+        <p class="post-excerpt">Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.</p>
+        <p class="post-reading-time">14 min read · 27 August 2026</p>
       </a>
       <a class="post-card" href="/agent-code-review-gap-nobody-admits/">
         <h3>agent code review gap nobody admits</h3>
@@ -209,8 +209,8 @@
       </a>
       <a class="post-card" href="/mobile-first-ai-fails-you-didnt-plan/">
         <h3>Mobile-first AI fails you didn’t plan…</h3>
-        <p class="post-excerpt">Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.</p>
-        <p class="post-reading-time">11 min read · 26 August 2026</p>
+        <p class="post-excerpt">Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
+        <p class="post-reading-time">12 min read · 26 August 2026</p>
       </a>
       <a class="post-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
         <h3>AI on slow networks: Nairobi teams' 2026 playbook</h3>
@@ -219,33 +219,33 @@
       </a>
       <a class="post-card" href="/pypi-poisoned-models-hit-prod-in-2025/">
         <h3>PyPI poisoned models hit prod in 2025</h3>
-        <p class="post-excerpt">PyPI poisoned models hit prod in 2025 — deterministic pins, hash verification, and dataset commit pins that teams actually used to stop supply-chain…</p>
-        <p class="post-reading-time">14 min read · 25 August 2026</p>
+        <p class="post-excerpt">How to pin, hash and audit Python packages and datasets so a poisoned model or tampered dataset cannot reach training or production.</p>
+        <p class="post-reading-time">10 min read · 25 August 2026</p>
       </a>
       <a class="post-card" href="/self-service-is-broken-without-ai-ops/">
         <h3>Self-service is broken without AI ops</h3>
-        <p class="post-excerpt">How AI turned &#x27;self-service&#x27; from a permissions problem into a guardrail system — with concrete AWS examples, Terraform snippets, and the metrics that…</p>
+        <p class="post-excerpt">Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
         <p class="post-reading-time">12 min read · 24 August 2026</p>
       </a>
       <a class="post-card" href="/ai-payments-break-in-m-pesa-first/">
         <h3>AI payments break in M-Pesa first</h3>
-        <p class="post-excerpt">AI payments in Brazil, Colombia, and Mexico break on duplicate webhooks, idempotency key collisions, and sandbox lies—here’s what actually fails in 2026…</p>
-        <p class="post-reading-time">19 min read · 23 August 2026</p>
+        <p class="post-excerpt">Payment webhooks arrive duplicated and out of order. Here is how to normalize provider events, dedupe them, and reconcile an AI feature store safely.</p>
+        <p class="post-reading-time">14 min read · 23 August 2026</p>
       </a>
       <a class="post-card" href="/agentic-finops-is-a-trap/">
         <h3>Agentic FinOps is a trap</h3>
-        <p class="post-excerpt">Agentic FinOps traps $3k+/month in hidden costs — state bloat, retry loops, and human hand-offs go unmeasured by LangSmith.</p>
-        <p class="post-reading-time">13 min read · 22 August 2026</p>
+        <p class="post-excerpt">Standard FinOps tracks per-call cost and latency. Agents with retries, growing state and human hand-offs leak cost that never shows on the dashboard.</p>
+        <p class="post-reading-time">11 min read · 22 August 2026</p>
       </a>
       <a class="post-card" href="/llm-costs-fine-tune-vs-route-vs-bigger-model/">
         <h3>LLM costs: fine-tune vs route vs bigger model</h3>
-        <p class="post-excerpt">LLM costs: fine-tune vs route vs bigger model — concrete 2026 decision framework with latency and cost results from a 6-month side project on Mistral-7B…</p>
-        <p class="post-reading-time">15 min read · 22 August 2026</p>
+        <p class="post-excerpt">A practical framework for deciding between fine-tuning, prompt routing, and upgrading to a larger model, with instrumentation guidance and failure modes.</p>
+        <p class="post-reading-time">12 min read · 22 August 2026</p>
       </a>
       <a class="post-card" href="/ai-errors-hide-in-plain-latency/">
         <h3>AI errors hide in plain latency</h3>
-        <p class="post-excerpt">AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</p>
-        <p class="post-reading-time">12 min read · 21 August 2026</p>
+        <p class="post-excerpt">Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
+        <p class="post-reading-time">10 min read · 21 August 2026</p>
       </a>
       <a class="post-card" href="/40-ai-code-meant-60-more-alerts/">
         <h3>Validating AI-Generated Code Before It Reaches Production</h3>
@@ -254,8 +254,8 @@
       </a>
       <a class="post-card" href="/ai-unit-costs-the-metric-both-teams-fight-over/">
         <h3>AI unit costs: the metric both teams fight over</h3>
-        <p class="post-excerpt">The gap between what the docs say and what production needs Most AI docs talk about tokens, embeddings, and vector search, but they skip the part that…</p>
-        <p class="post-reading-time">18 min read · 18 August 2026</p>
+        <p class="post-excerpt">Why per-call AI cost estimates break down, and how to instrument a shared cost-per-outcome metric that product and finance both accept.</p>
+        <p class="post-reading-time">13 min read · 18 August 2026</p>
       </a>
       <a class="post-card" href="/ai-era-promotions-hinge-on-this-one-thing/">
         <h3>AI-era promotions hinge on this one thing</h3>
@@ -264,13 +264,13 @@
       </a>
       <a class="post-card" href="/senior-engineer-title-inflation-in-2026/">
         <h3>Senior engineer title inflation in 2026</h3>
-        <p class="post-excerpt">Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</p>
-        <p class="post-reading-time">12 min read · 13 August 2026</p>
+        <p class="post-excerpt">How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+        <p class="post-reading-time">10 min read · 13 August 2026</p>
       </a>
       <a class="post-card" href="/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/">
         <h3>Foreign AI models vs sovereign fintech stacks: 2026 reality</h3>
-        <p class="post-excerpt">African fintech AI stacks compared: global models vs sovereign inference in 2026 — latency, cost, and the one mistake that breaks compliance</p>
-        <p class="post-reading-time">14 min read · 13 August 2026</p>
+        <p class="post-excerpt">How to choose between offshore LLM APIs and locally hosted inference for regulated fintech, with latency math, cost break-even, and a compliance checklist.</p>
+        <p class="post-reading-time">11 min read · 13 August 2026</p>
       </a>
       <a class="post-card" href="/african-fintech-agents-the-compliance-cliff-most-miss/">
         <h3>African fintech agents: the compliance cliff most miss</h3>
@@ -289,13 +289,13 @@
       </a>
       <a class="post-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
         <h3>AI cost attribution without the spreadsheet hell</h3>
-        <p class="post-excerpt">AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</p>
-        <p class="post-reading-time">14 min read · 7 August 2026</p>
+        <p class="post-excerpt">How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
+        <p class="post-reading-time">15 min read · 7 August 2026</p>
       </a>
       <a class="post-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
-        <h3>AI micro-SaaS under $150/month: the real infra choices</h3>
-        <p class="post-excerpt">Launch an AI micro-SaaS and keep infra under $150/month in 2026.</p>
-        <p class="post-reading-time">15 min read · 5 August 2026</p>
+        <h3>Designing AI Micro-SaaS Infra on a $150/Month Budget</h3>
+        <p class="post-excerpt">How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
+        <p class="post-reading-time">14 min read · 5 August 2026</p>
       </a>
       <a class="post-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
         <h3>Kubernetes or Nomad: the real experiment cost split</h3>
@@ -308,19 +308,19 @@
         <p class="post-reading-time">17 min read · 3 August 2026</p>
       </a>
       <a class="post-card" href="/m-pesa-failures-cost-us-40-hours/">
-        <h3>M-Pesa failures cost us 40 hours</h3>
-        <p class="post-excerpt">Reality: 90% of the time they arrived in 1.2 seconds, but 10% of the time they took 12 seconds or more.</p>
-        <p class="post-reading-time">16 min read · 1 August 2026</p>
+        <h3>Designing Reliable Webhook Pipelines for African Payment APIs</h3>
+        <p class="post-excerpt">How to build idempotent, resilient webhook pipelines for M-Pesa, Paystack and Flutterwave APIs, including retries, deduplication and failure modes.</p>
+        <p class="post-reading-time">11 min read · 1 August 2026</p>
       </a>
       <a class="post-card" href="/apm-lied-about-our-ai-incidents/">
-        <h3>APM lied about our AI incidents</h3>
-        <p class="post-excerpt">AI incident detection in 2026: why Datadog APM 1.47 misses 80%+ of GPU-related failures — and the three metrics you need to catch them before users…</p>
-        <p class="post-reading-time">14 min read · 1 August 2026</p>
+        <h3>Why APM Misses GPU-Bound LLM Incidents</h3>
+        <p class="post-excerpt">Application monitoring traces Python calls, not CUDA kernels or batch queues. Here is how to instrument the layers where LLM latency actually hides.</p>
+        <p class="post-reading-time">11 min read · 1 August 2026</p>
       </a>
       <a class="post-card" href="/ai-tools-wont-help-if-everyone-writes-the-same-code/">
         <h3>AI tools won’t help if everyone writes the same code</h3>
-        <p class="post-excerpt">AI tools create two classes of engineers unless you measure outcomes, not output.</p>
-        <p class="post-reading-time">14 min read · 29 July 2026</p>
+        <p class="post-excerpt">AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.</p>
+        <p class="post-reading-time">13 min read · 29 July 2026</p>
       </a>
       <a class="post-card" href="/global-state-is-the-wrong-tool-for-ai-features/">
         <h3>Global state is the wrong tool for AI features</h3>
@@ -329,23 +329,23 @@
       </a>
       <a class="post-card" href="/track-ai-agent-costs-in-fractal-workflows/">
         <h3>Track AI agent costs in fractal workflows</h3>
-        <p class="post-excerpt">Agentic FinOps: measuring the real cost of autonomous AI workflows — why standard dashboards underreport by 44-93% and how to trace the fractal burn of…</p>
-        <p class="post-reading-time">16 min read · 27 July 2026</p>
+        <p class="post-excerpt">Standard FinOps dashboards miss sub-agent, idle, and retry costs. A dependency-graph cost model shows where agent spend actually lands.</p>
+        <p class="post-reading-time">12 min read · 27 July 2026</p>
       </a>
       <a class="post-card" href="/latency-trade-offs-nairobi-teams-beat-global-ai-providers/">
         <h3>Latency trade-offs: Nairobi teams beat global AI providers</h3>
-        <p class="post-excerpt">Nairobi teams ship AI features faster than global providers by treating latency as a feature.</p>
-        <p class="post-reading-time">12 min read · 26 July 2026</p>
+        <p class="post-excerpt">Why AI teams serving East African users weigh total cost of interaction, not raw p99, and how to measure the trade-offs yourself.</p>
+        <p class="post-reading-time">14 min read · 26 July 2026</p>
       </a>
       <a class="post-card" href="/edge-agents-vs-cloud-round-trips-in-2026/">
         <h3>Edge agents vs cloud round-trips in 2026</h3>
-        <p class="post-excerpt">Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…</p>
-        <p class="post-reading-time">12 min read · 23 July 2026</p>
+        <p class="post-excerpt">A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.</p>
+        <p class="post-reading-time">11 min read · 23 July 2026</p>
       </a>
       <a class="post-card" href="/ai-code-in-prod-postmortems-still-work/">
         <h3>AI code in prod? Postmortems still work</h3>
-        <p class="post-excerpt">AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.</p>
-        <p class="post-reading-time">14 min read · 21 July 2026</p>
+        <p class="post-excerpt">AI-generated code hides its assumptions. Capture the prompt, model snapshot and runtime context so incident reviews explain decisions, not just stack traces.</p>
+        <p class="post-reading-time">11 min read · 21 July 2026</p>
       </a>
       <a class="post-card" href="/purpose-built-beats-general-ai-tools/">
         <h3>Purpose-built beats general AI tools</h3>
@@ -354,8 +354,8 @@
       </a>
       <a class="post-card" href="/poolers-wont-save-your-serverless-db/">
         <h3>Poolers won’t save your serverless DB</h3>
-        <p class="post-excerpt">Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</p>
-        <p class="post-reading-time">15 min read · 19 July 2026</p>
+        <p class="post-excerpt">Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
+        <p class="post-reading-time">13 min read · 19 July 2026</p>
       </a>
       <a class="post-card" href="/ai-features-as-tech-debt-or-golden-paths/">
         <h3>AI features as tech debt or golden paths</h3>
@@ -389,8 +389,8 @@
       </a>
       <a class="post-card" href="/ai-in-local-currency-costs-that-surprise/">
         <h3>AI in local currency: costs that surprise…</h3>
-        <p class="post-excerpt">Six weeks in, their AWS bill jumped 300% because the model was running on on-demand p3.8xlarge instances 24/7, and their finance team had no way to…</p>
-        <p class="post-reading-time">19 min read · 7 July 2026</p>
+        <p class="post-excerpt">How to choose where to run AI inference: decouple variable compute cost from fixed per-region compliance cost, and measure the trade-off.</p>
+        <p class="post-reading-time">15 min read · 7 July 2026</p>
       </a>
       <a class="post-card" href="/ai-feature-drift-why-your-model-died-at-midnight/">
         <h3>AI feature drift: why your model died at midnight</h3>
@@ -454,8 +454,8 @@
       </a>
       <a class="post-card" href="/ai-memory-systems-context-that-survives-sessions/">
         <h3>AI memory systems: context that survives sessions</h3>
-        <p class="post-excerpt">Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.</p>
-        <p class="post-reading-time">18 min read · 2 July 2026</p>
+        <p class="post-excerpt">Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.</p>
+        <p class="post-reading-time">12 min read · 2 July 2026</p>
       </a>
       <a class="post-card" href="/ai-chats-hidden-wcag-fails/">
         <h3>AI chat's hidden WCAG fails</h3>
@@ -463,9 +463,9 @@
         <p class="post-reading-time">14 min read · 2 July 2026</p>
       </a>
       <a class="post-card" href="/ai-tools-rewrote-my-engineering-rules/">
-        <h3>AI tools rewrote my engineering rules</h3>
-        <p class="post-excerpt">Cut error rates 80% after AI tools broke my workflow — the principles I updated and why resilience beats velocity in 2026.</p>
-        <p class="post-reading-time">15 min read · 2 July 2026</p>
+        <h3>AI Code Generation Shifts Engineering Judgment</h3>
+        <p class="post-excerpt">AI coding tools move effort from writing to auditing. A practical framework for invariants, resilience patterns, and measuring what matters.</p>
+        <p class="post-reading-time">13 min read · 2 July 2026</p>
       </a>
       <a class="post-card" href="/ai-agents-killed-dev-tool-sales-cycles/">
         <h3>AI agents killed dev tool sales cycles</h3>
@@ -484,8 +484,8 @@
       </a>
       <a class="post-card" href="/ai-proof-your-mid-level-salary/">
         <h3>AI-proof your mid-level salary</h3>
-        <p class="post-excerpt">Cut salary risk 50% with three AI-resistant skills — own the stack, measure outcomes, and automate incidents. Backed by 2026 salary data and concrete metrics.</p>
-        <p class="post-reading-time">16 min read · 1 July 2026</p>
+        <p class="post-excerpt">Tracking commits and story points keeps engineers in the layer AI automates best. Here is how to measure p99 latency, cost per request and error rate instead.</p>
+        <p class="post-reading-time">14 min read · 1 July 2026</p>
       </a>
       <a class="post-card" href="/ai-wrote-the-docs-humans-wrote-the-gaps/">
         <h3>AI wrote the docs — humans wrote the gaps</h3>
@@ -499,8 +499,8 @@
       </a>
       <a class="post-card" href="/3-skills-to-outrun-ai-salary-cuts/">
         <h3>3 skills to outrun AI salary cuts</h3>
-        <p class="post-excerpt">Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut…</p>
-        <p class="post-reading-time">16 min read · 30 June 2026</p>
+        <p class="post-excerpt">AI scaffolds fast but skips connection pooling, retries, and cache headers. Here is how to add three safeguards and verify each one under load.</p>
+        <p class="post-reading-time">15 min read · 30 June 2026</p>
       </a>
       <a class="post-card" href="/ai-ui-tools-promise-vs-production/">
         <h3>AI UI tools: promise vs. production</h3>
@@ -524,8 +524,8 @@
       </a>
       <a class="post-card" href="/ai-revives-unloved-legacy-codebases/">
         <h3>AI revives unloved legacy codebases</h3>
-        <p class="post-excerpt">Cut legacy maintenance time 70% with Psalm, CodeQL, and Ollama — connection pool mistakes, test generation surprises, and the $18/month stack that caught 8…</p>
-        <p class="post-reading-time">18 min read · 29 June 2026</p>
+        <p class="post-excerpt">A practical stack for maintaining legacy code: static analysis, generated characterization tests, and LLM documentation, with failure modes and a 30-minute first step.</p>
+        <p class="post-reading-time">14 min read · 29 June 2026</p>
       </a>
       <a class="post-card" href="/show-real-work-not-ai-clones/">
         <h3>Show real work, not AI clones</h3>
@@ -533,9 +533,9 @@
         <p class="post-reading-time">18 min read · 29 June 2026</p>
       </a>
       <a class="post-card" href="/ai-pair-prompts-9-setups-we-tried-in-2026/">
-        <h3>AI pair prompts: 9 setups we tried in 2026</h3>
-        <p class="post-excerpt">Cut PR cycle time 50% with AI pair programming in 2026 — GitHub Copilot Chat vs Cursor vs Amazon Q ranked with benchmarks and setup files</p>
-        <p class="post-reading-time">16 min read · 29 June 2026</p>
+        <h3>Choosing an AI Pair Programming Setup: A Practical Guide</h3>
+        <p class="post-excerpt">How to evaluate AI pair programming tools by latency, signal-to-noise, cost, and privacy, with configs, failure modes, and a decision checklist.</p>
+        <p class="post-reading-time">14 min read · 29 June 2026</p>
       </a>
       <a class="post-card" href="/price-ai-proof-skills-in-2026/">
         <h3>Price AI-proof skills in 2026</h3>
@@ -554,18 +554,18 @@
       </a>
       <a class="post-card" href="/aws-local-zones-vs-localstack-ai-microservices-in/">
         <h3>AWS Local Zones vs LocalStack: AI microservices in</h3>
-        <p class="post-excerpt">Cut AI microservice latency 60% with AWS Local Zones in Africa — cost, performance, and the LocalStack trap most teams miss.</p>
-        <p class="post-reading-time">17 min read · 28 June 2026</p>
+        <p class="post-excerpt">Compare AWS Local Zones and LocalStack for AI microservices: latency, cost, compliance, and a decision framework, plus how to measure p99 at the edge.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
       </a>
       <a class="post-card" href="/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">
         <h3>CI/CD pipelines stall with GPU pods: 2026 benchmarks</h3>
-        <p class="post-excerpt">Cut CI/CD pipeline stalls 80% with GPU quotas and scheduler fixes — 2026 benchmarks, cost trade-offs, and rollout playbooks for AI workloads.</p>
-        <p class="post-reading-time">14 min read · 28 June 2026</p>
+        <p class="post-excerpt">GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
       </a>
       <a class="post-card" href="/spot-ais-hidden-cost-spike-in-your-stack/">
         <h3>Spot AI’s hidden cost spike in your stack</h3>
-        <p class="post-excerpt">Protect your salary from AI automation by mastering 3 skills — cache hit ratios, connection pools, and environment rewrites — before the bill spikes 300 % and…</p>
-        <p class="post-reading-time">15 min read · 28 June 2026</p>
+        <p class="post-excerpt">AI refactors often trade cache hits for database reads, exhausting pools and inflating bills. Here is how to detect, verify and gate the change.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
       </a>
       <a class="post-card" href="/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">
         <h3>AI agents vs Argo, Tekton: which pipeline heals itself?</h3>
@@ -584,8 +584,8 @@
       </a>
       <a class="post-card" href="/debug-ai-agent-failures-differently/">
         <h3>Debug AI agent failures differently</h3>
-        <p class="post-excerpt">Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them.</p>
-        <p class="post-reading-time">15 min read · 27 June 2026</p>
+        <p class="post-excerpt">Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+        <p class="post-reading-time">13 min read · 27 June 2026</p>
       </a>
       <a class="post-card" href="/who-owns-ai-generated-code/">
         <h3>Who owns AI-generated code?</h3>
@@ -614,8 +614,8 @@
       </a>
       <a class="post-card" href="/negotiate-pay-in-2026-with-ai-proof-points/">
         <h3>Negotiate pay in 2026 with AI proof points</h3>
-        <p class="post-excerpt">Prove your value in 2026 with AI-proof compensation evidence — human-commit ratios, delivery metrics, and negotiation slides that finance actually accepts.</p>
-        <p class="post-reading-time">10 min read · 25 June 2026</p>
+        <p class="post-excerpt">A repeatable method for turning Git history into reviewable evidence of human-owned engineering work, plus how to measure it honestly.</p>
+        <p class="post-reading-time">11 min read · 25 June 2026</p>
       </a>
       <a class="post-card" href="/self-healing-pipelines-argo-vs-crossplane-in-2026/">
         <h3>Self-healing pipelines: Argo vs Crossplane in 2026</h3>
@@ -688,14 +688,14 @@
         <p class="post-reading-time">11 min read · 21 June 2026</p>
       </a>
       <a class="post-card" href="/ai-agent-postmortem-human-loop-vs-blind-replay/">
-        <h3>AI agent postmortem: human loop vs blind replay</h3>
-        <p class="post-excerpt">AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…</p>
-        <p class="post-reading-time">17 min read · 20 June 2026</p>
+        <h3>Postmortems for AI agents: human review vs blind replay</h3>
+        <p class="post-excerpt">Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.</p>
+        <p class="post-reading-time">15 min read · 20 June 2026</p>
       </a>
       <a class="post-card" href="/ai-glue-code-3-ways-to-avoid-duct-taping-models/">
         <h3>AI glue code: 3 ways to avoid duct-taping models</h3>
-        <p class="post-excerpt">Cut irrelevant AI answers 80% by fixing prompt drift, adapter decay, and cold starts — concrete costs, Lambda code, and rollback commands for Nairobi startups…</p>
-        <p class="post-reading-time">16 min read · 20 June 2026</p>
+        <p class="post-excerpt">Low-code AI platforms hide prompt drift, adapter decay and cold starts. Detect each with logged queries, a golden set and pre-warming, wired into CI.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
       </a>
       <a class="post-card" href="/use-feature-flags-to-deploy-ai-models-safely/">
         <h3>Use feature flags to deploy AI models safely</h3>
@@ -709,8 +709,8 @@
       </a>
       <a class="post-card" href="/ai-interviews-break-systems-5-real-mistakes-in-2026/">
         <h3>AI interviews break systems: 5 real mistakes in 2026</h3>
-        <p class="post-excerpt">The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…</p>
-        <p class="post-reading-time">18 min read · 20 June 2026</p>
+        <p class="post-excerpt">AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.</p>
+        <p class="post-reading-time">14 min read · 20 June 2026</p>
       </a>
       <a class="post-card" href="/code-ai-wont-rewrite/">
         <h3>Code AI won’t rewrite</h3>
@@ -724,8 +724,8 @@
       </a>
       <a class="post-card" href="/ai-ate-the-niches-first/">
         <h3>AI ate the niches first</h3>
-        <p class="post-excerpt">2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state.</p>
-        <p class="post-reading-time">12 min read · 17 June 2026</p>
+        <p class="post-excerpt">A framework for judging whether a vertical SaaS product is defensible against free, integrated AI features, with code for auditing your own UI surface.</p>
+        <p class="post-reading-time">9 min read · 17 June 2026</p>
       </a>
       <a class="post-card" href="/9-ai-wrapper-plays-that-worked-in-2026/">
         <h3>AI wrapper business models: what survives contact with users</h3>
@@ -734,13 +734,13 @@
       </a>
       <a class="post-card" href="/rebalance-pay-when-ai-fills-half-your-role/">
         <h3>Rebalance pay when AI fills half your role</h3>
-        <p class="post-excerpt">Raise your 2026 salary 20% with GitHub Copilot Enterprise stats — concrete numbers, Levels.fyi 2026 bands, and the memo template managers actually read.</p>
+        <p class="post-excerpt">Measure AI&#x27;s share of your codebase, then renegotiate scope, level, and pay with evidence instead of anecdotes or cost-of-living framing.</p>
         <p class="post-reading-time">12 min read · 15 June 2026</p>
       </a>
       <a class="post-card" href="/african-devs-ai-tools-that-work-now-2026/">
         <h3>African devs: AI tools that work now (2026)</h3>
-        <p class="post-excerpt">Save 200MB/day with AI tools for African devs in 2026: offline models, 4G-friendly options, and real cost comparisons. Find what actually works now.</p>
-        <p class="post-reading-time">12 min read · 15 June 2026</p>
+        <p class="post-excerpt">How to evaluate AI coding assistants under limited bandwidth, modest hardware and unreliable power, with concrete measurement steps instead of vendor claims.</p>
+        <p class="post-reading-time">11 min read · 15 June 2026</p>
       </a>
       <a class="post-card" href="/found-niche-in-2026-saas-that-ai-cant-copy/">
         <h3>Found niche in 2026: SaaS that AI can’t copy</h3>
@@ -799,8 +799,8 @@
       </a>
       <a class="post-card" href="/ai-rollouts-live-or-die-by-flags/">
         <h3>AI rollouts live or die by flags</h3>
-        <p class="post-excerpt">Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…</p>
-        <p class="post-reading-time">13 min read · 12 June 2026</p>
+        <p class="post-excerpt">How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.</p>
+        <p class="post-reading-time">14 min read · 12 June 2026</p>
       </a>
       <a class="post-card" href="/3-ai-coders-ranked-cursor-windsurf-claude-code-in/">
         <h3>3 AI coders ranked: Cursor, Windsurf, Claude Code in</h3>
@@ -814,8 +814,8 @@
       </a>
       <a class="post-card" href="/which-ai-wrappers-made-money-in-2026/">
         <h3>Which AI wrappers made money in 2026</h3>
-        <p class="post-excerpt">Cut AI wrapper failure 65% in 2026 with the 3 wrappers that survived rigorous production testing and cost audits.</p>
-        <p class="post-reading-time">11 min read · 12 June 2026</p>
+        <p class="post-excerpt">Most AI wrapper products fail on latency, cost, and churn rather than model quality. Here is a rubric, failure analysis, and code to build one that lasts.</p>
+        <p class="post-reading-time">10 min read · 12 June 2026</p>
       </a>
       <a class="post-card" href="/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
         <h3>Self-healing agents vs rule-based deployment rollback</h3>
@@ -823,9 +823,9 @@
         <p class="post-reading-time">12 min read · 11 June 2026</p>
       </a>
       <a class="post-card" href="/negotiate-2026-pay-when-ai-steals-40-of-your-job/">
-        <h3>Negotiate 2026 pay when AI steals 40% of your job</h3>
-        <p class="post-excerpt">Cut compensation talks 40% faster with GitHub Copilot telemetry — build a CLI, pull 90 days of data, and negotiate using real hours saved in 2026.</p>
-        <p class="post-reading-time">15 min read · 11 June 2026</p>
+        <h3>Turn AI coding telemetry into a salary negotiation case</h3>
+        <p class="post-excerpt">Build a CLI that pulls AI coding-assistant session data, maps it to tickets, and produces defensible productivity numbers for pay talks.</p>
+        <p class="post-reading-time">11 min read · 11 June 2026</p>
       </a>
       <a class="post-card" href="/ai-interviews-broke-system-design-3-patterns-that/">
         <h3>AI interviews broke system design: 3 patterns that</h3>
@@ -854,8 +854,8 @@
       </a>
       <a class="post-card" href="/ai-burnout-why-output-pressure-rose-even-as-tools-got/">
         <h3>AI burnout: why output pressure rose even as tools got</h3>
-        <p class="post-excerpt">Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.</p>
-        <p class="post-reading-time">13 min read · 9 June 2026</p>
+        <p class="post-excerpt">Faster AI code generation shifts the bottleneck to review, QA and on-call. Here is how to instrument net time saved and stop review fatigue.</p>
+        <p class="post-reading-time">11 min read · 9 June 2026</p>
       </a>
       <a class="post-card" href="/ai-code-traps-copilot-vs-cursor-smackdown/">
         <h3>AI code traps: Copilot vs Cursor smackdown</h3>

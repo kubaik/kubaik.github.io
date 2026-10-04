@@ -1,69 +1,53 @@
 # LLM costs: fine-tune vs route vs bigger model
 
-finetune route looks simple until it has to survive real traffic. The gap between the demo and the incident report is where this actually lives. This post covers what comes after the happy path.
+The decision between spending more on a larger model, fine-tuning an existing one, or building a router that sends each prompt to the smallest model that can handle it looks straightforward in a design doc. It stops being straightforward once real traffic arrives. This article covers what comes after the happy path: how to measure each option, what breaks, and how to decide.
 
-## Why I wrote this (the problem I kept hitting)
+## The three options and what each actually costs
 
-You have three ways to squeeze more performance out of an LLM without losing money or velocity:
-- spend more on a bigger model
-- fine-tune the one you already have
-- build a router that sends each prompt to the smallest model that can handle it
+There are three common ways to improve quality or reduce cost on an LLM workload:
 
-The part that trips people up is deciding which of those three actually saves money and time **today**, not in some hypothetical future. Most solo founders pick the first option because it’s the easiest to reason about, but it’s usually the slowest to iterate and the most expensive to ship. Others go straight to fine-tuning because they read that it cuts token cost by 30-40%, yet forget that fine-tuning locks them into a specific model version and usually adds weeks of engineering work. The router approach sounds smart until you realize you now have to maintain three prompts, three fallbacks, and a load balancer that still needs observability.
+- **Scale up**: call a larger, more capable model for every request.
+- **Fine-tune**: train the model you already use on task-specific data.
+- **Route**: classify incoming prompts and send each to the smallest model that can handle it.
 
-Teams running into this usually see one of two failure modes. Either they over-optimize the router and end up with 10 micro-models and a 200-line prompt selector, or they fine-tune too early and then discover the fine-tuned model hallucinates when they try to add a new feature. Both paths end in rework and cost surprises. The real bottleneck isn’t compute; it’s the time it takes to ship a change and the money it takes to keep the lights on when traffic doubles overnight.
+Each has a different cost structure. Scaling up raises per-token cost linearly with usage. Fine-tuning adds a large fixed cost in engineering and GPU time before it saves anything, and it couples the system to a specific model version. Routing adds a permanent operational component — a classifier, a fallback path, and the monitoring to keep both honest.
 
-This post gives you a 2026 decision framework that skips the hype and focuses on the concrete trade-offs. You’ll see real numbers from a 6-month side project that started on Mistral-7B and ended up on a routed stack with one fine-tuned model and two smaller ones. The dataset is public, the code is in GitHub, and every latency and cost figure is pulled from AWS CloudWatch and Hugging Face logs in the same region (us-east-1).
+A typical failure mode is picking the option that is easiest to reason about rather than the one that matches the workload. Teams often scale up because it requires no new infrastructure, then discover the cost grows faster than revenue. Others fine-tune early because they read that it reduces token cost, then discover the fine-tuned model degrades when a new label or feature is introduced. A third group builds a router with a dozen micro-models and a prompt selector no one can debug.
 
-## Prerequisites and what you'll build
+The bottleneck is rarely raw compute. It is the time required to ship a change and the cost of keeping the system running when traffic doubles.
 
-You need nothing more than a laptop and an AWS account with billing alarms already on. We’ll use these tools at the versions below because they’re boring, proven, and won’t break between now and 2027:
+## Prerequisites and what you will build
+
+The examples below assume a working Python environment and an AWS account with billing alarms configured. The stack is deliberately boring:
+
 - Python 3.12
-- FastAPI 0.110
-- Hugging Face Transformers 4.47
-- vLLM 0.5.3 (the inference engine that actually matters in 2026, not the model itself)
-- Redis 7.2 with RedisJSON 2.8 (for prompt caching and routing state)
-- AWS Lambda (Python 3.12 arm64) for the router (why Lambda? because it’s the cheapest proven option at ~$0.000000032 per ms for the first 1M requests/month)
-- AWS Bedrock for the "bigger model" fallback (us-east-1 region, claude-3-7-sonnet-20250225-v1:0)
+- FastAPI
+- Hugging Face Transformers
+- vLLM as the inference engine
+- Redis for prompt caching and routing state
+- AWS Lambda for the router
+- A managed LLM gateway or hosted API for the large-model fallback
 
-The repo you’ll clone has three branches:
-- main: a monolithic FastAPI app that calls Mistral-7B-Instruct directly (baseline)
-- routed: adds a Lambda router that decides at runtime which model to hit
-- fine-tuned: replaces the direct call with a fine-tuned version of the same model
+The application is a customer-support ticket tagger: it reads JSON, calls a model to classify the ticket (spam, billing, support, feature request), and writes the label to a database. The only thing that changes between approaches is how the model is called and what it costs per 10,000 prompts. Keeping the task fixed makes the comparison clean; the framework applies to any task that fits within the model's context window.
 
-Clone it now so you can diff the branches as you read:
-```bash
-git clone --branch main https://github.com/kevin-kubai/llm-routing-demo.git
-cd llm-routing-demo
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+An illustrative setup: Redis on a small managed node, a DynamoDB table for results, and a container image for the inference service. Actual costs depend on region, instance type, and traffic; measure them rather than assuming.
 
-The app is a simple customer-support ticket tagger that reads JSON from S3, calls the LLM to classify the ticket (spam, billing, support, feature request), and writes the label back to DynamoDB. In each branch the only thing that changes is how the model is called and how much it costs per 10k prompts. That simplicity keeps the experiment clean; the decision framework scales to any task that fits into 32k tokens.
+## Step 1 — establish a baseline you can trust
 
-Expected time to set up: 35 minutes if you already have Docker and AWS credentials configured. If you don’t, the Dockerfile will build the runtime image for Lambda in 12 minutes on an M1 Mac.
+Before comparing approaches, build a baseline that calls one model directly and logs everything needed to compare later.
 
-## Step 1 — set up the environment
+Create a dataset split and export it in the prompt template your application uses:
 
-1. Create a new Hugging Face dataset from the public ticket dataset (50k rows) and push it to a private repo so you can fine-tune later without permission issues. Use the `datasets` library 2.20 to split the data 80/10/10 and export the labels in the prompt template:
 ```python
-from datasets import load_dataset, DatasetDict
+from datasets import load_dataset
 
 ds = load_dataset("csv", data_files="tickets.csv")
-ds = ds.rename_column("label", "text")
-ds = ds.train_test_split(test_size=0.2, stratify_by_column="text")
+ds = ds.train_test_split(test_size=0.2, stratify_by_column="label")
 ds.save_to_disk("ticket_dataset")
 ```
 
-2. Spin up Redis in ElastiCache with cluster mode disabled (single node cache.t4g.small) and enable RedisJSON. The connection string goes into AWS Systems Manager Parameter Store so Lambda can pull it at runtime:
-```bash
-aws ssm put-parameter --name /llm-router/redis_url --type SecureString --value 'rediss://redis-001.xxxxxx.ng.0001.use1.cache.amazonaws.com:6379'
-```
+Deploy the baseline API. A minimal Terraform module:
 
-3. Create a DynamoDB table `ticket_tags` with primary key `ticket_id` (string) and sort key `ts` (number). Enable auto-scaling so you don’t get throttled. Cost so far for a single-region dev stack: ~$8/month for Redis, ~$3/month for DynamoDB, and $0 for SSM.
-
-4. Deploy the baseline API with Terraform. The module is already in the repo under `terraform/baseline.tf`:
 ```hcl
 module "api" {
   source      = "./modules/api"
@@ -73,25 +57,31 @@ module "api" {
 }
 ```
 
-Run `terraform apply -auto-approve` and note the API Gateway endpoint. Call it with 100 prompts (curl loop) to get a baseline latency and cost. On my 2026 M2 Mac the median p99 latency was 1.8 seconds and the cost per 10k prompts was $0.12 (vLLM on a g5.xlarge).
+Then measure. The baseline is only useful if the numbers are reproducible, so instrument the following:
 
-Hard-to-reverse decision here: choosing a model family that doesn’t have a fine-tuned version on Hugging Face. If you pick a model that’s discontinued in 6 months, you’ll have to redo the fine-tuning work later. Stick to models with active Hugging Face repos (e.g., Mistral 7B, Llama 3.2 3B, Phi-3.5-mini-instruct).
+- **Latency**: record p50 and p95 end-to-end request time, not just model time. Include the router, network hop, and any cache lookup.
+- **Cost**: compute cost per 1,000 prompts from actual token counts multiplied by the current per-token price. Do not estimate from request counts.
+- **Quality**: hold out a labelled evaluation set and compute accuracy or F1 per class. Track it on every deploy.
 
-## Step 2 — core implementation
+A simple way to capture latency and cost is to log token counts and timestamps per request, then aggregate with a script:
 
-The router pattern is just a state machine that maps prompt characteristics to model choices. In 2026 the cheapest proven way to run that state machine is a 128MB Lambda function written in Python 3.12 with arm64, because the cold-start penalty is <200ms and the cost per call is ~$0.0000002. The router has three paths:
-- if the prompt contains the word "spam", route to a 1B-parameter spam-classifier model (distilbert-spam-2026)
-- if the prompt is longer than 200 tokens, route to the fine-tuned Mistral model (because the base model starts to truncate)
-- otherwise, route to the base Mistral model
+```bash
+python scripts/aggregate.py --input logs/requests.jsonl --group-by model
+```
 
-The routing logic is in `router/lambda_function.py`:
+The output should give you cost per 1,000 prompts and p50/p95 latency per model. Run this for at least a few thousand real or representative prompts before drawing conclusions.
+
+A hard-to-reverse decision at this stage is the model family. If you pick a model whose weights or tokenizer are later removed from public distribution, fine-tuning work must be redone. Prefer model families with active, stable release channels.
+
+## Step 2 — implement the router
+
+The router is a state machine that maps prompt characteristics to model choices. A common implementation is a small Lambda function that inspects the prompt and returns a model identifier.
+
+A minimal router:
+
 ```python
 import json
-import boto3
 from transformers import AutoTokenizer
-
-s3 = boto3.client("s3")
-redis = boto3.client("ssm")
 
 def load_tokenizer(model_id: str):
     return AutoTokenizer.from_pretrained(model_id)
@@ -101,8 +91,8 @@ def route(prompt: str, tokenizer) -> str:
         return "spam_model"
     tokens = tokenizer(prompt, return_tensors="pt").input_ids.shape[1]
     if tokens > 200:
-        return "fine_tuned_mistral"
-    return "base_mistral"
+        return "fine_tuned_model"
+    return "base_model"
 
 def lambda_handler(event, context):
     prompt = json.loads(event["body"])["prompt"]
@@ -114,10 +104,10 @@ def lambda_handler(event, context):
     }
 ```
 
-The Lambda is 124 lines including comments. Deploy it with `sam deploy --guided`; the first 1M requests are free, so you can test for a week without spending money.
+The FastAPI app calls the router first, then proxies to the chosen model:
 
-In the routed branch, the FastAPI app now calls the router endpoint first, then proxies the prompt to the correct model. The change is minimal:
 ```python
+import os
 import httpx
 
 async def classify_ticket(ticket: str):
@@ -126,28 +116,23 @@ async def classify_ticket(ticket: str):
         r = await client.post(router_url, json={"prompt": ticket})
         model_id = r.json()["model"]
         if model_id == "spam_model":
-            async with await client.post(
+            resp = await client.post(
                 "http://spam-model:8000/v1/chat/completions",
                 json={"messages": [{"role": "user", "content": ticket}]},
                 timeout=3.0
-            ) as resp:
-                return resp.json()["choices"][0]["message"]["content"]
-        # ... same for fine_tuned_mistral and base_mistral
+            )
+            return resp.json()["choices"][0]["message"]["content"]
+        # ... same pattern for the other models
 ```
 
-The key gotcha: the router itself adds ~45ms of latency on cold starts. If your workload is latency-sensitive (<200ms p95), run the router in a container on ECS Fargate instead of Lambda. The trade-off is cost: Fargate costs ~$0.000007 per ms vs Lambda’s ~$0.0000002, so you pay 35x more for the container. Measure the router’s p95 before you ship.
+The router adds latency. On a cold start, a Lambda-based router can add tens of milliseconds. If the workload is latency-sensitive, run the router in a long-lived container instead. The trade-off is cost: a container runs continuously and bills by the hour, while Lambda bills per invocation. Measure the router's p95 before committing.
 
 ## Step 3 — handle edge cases and errors
 
-The three most common failure modes in a routed stack are:
-1. Prompt drift: a new ticket style that the spam classifier didn’t see during training
-2. Timeout cascade: the fine-tuned model starts to stall when load spikes
-3. Cache stampede: Redis gets thrashed because every new ticket re-queries the router
+Three failure modes account for most routed-stack incidents.
 
-Handle them with these boring, proven patterns:
+**Prompt drift.** A new ticket style appears that the classifier was not trained on. Mitigate by adding a confidence threshold: if the chosen model returns a confidence below a threshold you set from your evaluation data, fall back to the large model. Log the fallback with a `model_used` field so you can review drift later.
 
-**Prompt drift**
-Add a fallback to Bedrock in the router when the chosen model returns a confidence score below 0.65. Store the fallback result in DynamoDB with a `model_used` column so you can log the drift later. The fallback call adds ~2.1 seconds of latency and costs ~$0.025 per call (Bedrock sonnet in us-east-1).
 ```python
 async def safe_classify(ticket: str):
     router_url = os.getenv("ROUTER_URL")
@@ -157,32 +142,33 @@ async def safe_classify(ticket: str):
         try:
             if model_id == "spam_model":
                 resp = await client.post(
-                    "http://spam-model:8000/v1/chat/completions", json={...},
+                    "http://spam-model:8000/v1/chat/completions",
+                    json={"messages": [{"role": "user", "content": ticket}]},
                     timeout=3.0
                 )
                 if resp.json()["confidence"] < 0.65:
-                    return await bedrock_fallback(ticket)
+                    return await large_model_fallback(ticket)
                 return resp.json()["label"]
         except Exception:
-            return await bedrock_fallback(ticket)
+            return await large_model_fallback(ticket)
 ```
 
-**Timeout cascade**
-Set a per-model timeout in vLLM (the actual inference engine) so one slow model doesn’t block the whole queue. In the Terraform module, add:
+**Timeout cascade.** One slow model can block a queue. Set a per-model timeout in the inference engine and catch the exception in the router so a single prompt falls back rather than the whole batch.
+
 ```hcl
 module "fine_tuned" {
-  model_id = "mistralai/Mistral-7B-Instruct-v0.3-finetuned-2026-04"
+  model_id = "mistralai/Mistral-7B-Instruct-v0.3"
   vllm_args = [
     "--max-model-len", "8192",
     "--timeout-seconds", "10",
   ]
 }
 ```
-If vLLM times out, the Lambda router catches the exception and falls back to Bedrock for that single prompt, not for the whole batch.
 
-**Cache stampede**
-Use a distributed lock in Redis to prevent multiple Lambda invocations from recalculating the same prompt. The lock TTL is 5 seconds, which is enough for the longest possible cold start. The code pattern is simple:
+**Cache stampede.** When many requests arrive for the same uncached prompt, they can all recompute it. A distributed lock in Redis prevents this. Set the lock TTL to cover the longest expected computation.
+
 ```python
+import os
 from redis.asyncio import Redis
 
 redis = Redis.from_url(os.getenv("REDIS_URL"))
@@ -195,26 +181,30 @@ async def cached_route(prompt: str) -> str:
         if cached:
             return cached
         pipe.multi()
-        pipe.set(cache_key, "base_mistral", ex=3600)
+        pipe.set(cache_key, "base_model", ex=3600)
         await pipe.execute()
-    return "base_mistral"
+    return "base_model"
 ```
 
-This pattern adds ~2ms of latency on a cache hit and prevents the stampede. The lock is hard to reverse if you later move to a multi-region Redis cluster; plan to refactor the cache key scheme when you scale beyond 10k RPM.
+The lock adds a small amount of latency on a cache hit and prevents the stampede. It is harder to change later if you move to a multi-region cache, so plan the key scheme before scaling beyond a single region.
 
-## Step 4 — add observability and tests
+## Step 4 — observability and tests
 
-You cannot debug a routed stack without three boring dashboards:
-1. Prometheus metrics scraped from FastAPI (`/metrics` endpoint) and vLLM (`/metrics`)
-2. AWS X-Ray traces to see the 45ms router latency vs the 1.8s model latency
-3. CloudWatch Synthetics canaries that replay 100 prompts every hour and alert if the p95 latency exceeds 2.5s
+A routed stack cannot be debugged without three things:
 
-Install the Prometheus client in FastAPI:
+- **Metrics** scraped from the API and inference engine.
+- **Traces** that separate router latency from model latency.
+- **Synthetic checks** that replay a fixed prompt set on a schedule and alert when p95 latency or error rate crosses a threshold.
+
+Expose Prometheus metrics from FastAPI:
+
 ```python
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 from fastapi import FastAPI, Response
 
 REQUEST_COUNT = Counter("api_requests_total", "Total API requests", ["model"])
+
+app = FastAPI()
 
 @app.get("/metrics")
 def metrics():
@@ -224,79 +214,80 @@ def metrics():
     )
 ```
 
-In Grafana, create a panel that shows the 95th percentile latency split by model. A common failure mode here is that the spam classifier starts to lag when the traffic pattern shifts to late-night spam waves. The panel will show the lag before your users complain.
+Build a dashboard that shows p95 latency and cost per 1,000 prompts split by model. A common failure mode is that the spam classifier lags when traffic shifts to late-night spam waves; the dashboard shows this before users complain.
 
-For tests, use pytest 7.4 with pytest-asyncio. The test suite has 15 tests that cover:
-- router logic for each prompt type
-- timeout and fallback behavior
-- cache hit/miss scenarios
-- cost simulation (the test doubles the AWS SDK to return mock costs so you can assert the per-10k cost without spending money)
+For tests, cover the router logic, timeout and fallback behavior, and cache hit/miss scenarios. Mock the model calls so tests run without GPU or network access:
 
-A typical test looks like:
 ```python
+import pytest
+
 @pytest.mark.asyncio
 async def test_spam_route():
     prompt = "win a free iphone click here"
     model = await route(prompt, tokenizer)
     assert model == "spam_model"
-    # mock the spam model call
-    async with aioresponses() as m:
-        m.post("http://spam-model:8000/v1/...", payload={"label": "spam"})
-        label = await classify_ticket(prompt)
-        assert label == "spam"
 ```
 
-Run the suite every push with GitHub Actions. The suite takes 42 seconds on a 2-core runner. If any test fails, the action posts a comment on the PR with the exact error message so you don’t waste time reproducing it.
+Run the suite on every push. If a test fails, have the pipeline post the exact error so no one has to reproduce it manually.
 
-Hard-to-reverse decision: choosing a custom metric namespace that later collides with another team’s metrics. Stick to the OpenTelemetry semantic conventions (`gen_ai.prompt`, `gen_ai.completion`, `gen_ai.routing`) so your dashboards are portable when you eventually migrate to a centralized telemetry stack.
+A hard-to-reverse decision here is the metric namespace. Use OpenTelemetry semantic conventions so dashboards remain portable when you migrate to a centralized telemetry stack.
 
-## Real results from running this
+## How to compare the approaches
 
-I ran the three branches side-by-side for 6 months on the same input dataset (50k prompts). The table below shows the median p99 latency and cost per 10k prompts in us-east-1 during the last 30 days of the experiment:
+Rather than trusting a benchmark table, measure the three approaches on your own workload. The table below shows what to instrument and what each approach tends to change.
 
-| Approach         | Median p99 latency | Cost per 10k prompts | Engineering hours to ship | Reversible? |
-|------------------|--------------------|----------------------|---------------------------|-------------|
-| Baseline (Mistral 7B direct) | 1.8 s              | $0.12                | 8                         | Easy        |
-| Fine-tuned Mistral 7B         | 1.5 s              | $0.09                | 60                        | Hard        |
-| Routed (3 models)             | 0.9 s              | $0.06                | 24                        | Medium      |
+| Approach | What it changes | What to measure | Reversibility |
+|---|---|---|---|
+| Scale up | Per-token cost rises with usage | Cost per 1,000 prompts, accuracy | Easy |
+| Fine-tune | Large fixed cost, model version lock-in | GPU hours, accuracy on held-out set, drift over time | Hard |
+| Route | Adds classifier, fallback, monitoring | Router p95, fallback rate, blended cost | Medium |
 
-The routed stack cut latency in half and reduced cost by 50% compared to the baseline, while the fine-tuned stack only saved 25% cost and took 7.5x longer to ship. The fine-tuned model’s hallucination rate on new labels was 4.2%, which required an extra 12 hours of prompt engineering to bring down. The router’s fallback to Bedrock added $0.025 per 100 prompts, but that only triggered on 0.4% of traffic, so the blended cost stayed at $0.06.
+To compare, run the same evaluation set through each approach and record:
 
-A concrete failure that showed up after two weeks: the spam classifier started to misclassify "support" tickets that contained the word "refund" because the training data had few refund examples. The router’s confidence threshold of 0.65 caught it, and the fallback to Bedrock returned the correct label. Without the threshold, the spam model would have labeled 3% of legitimate tickets as spam, which would have broken the downstream workflow.
+- **Cost per correct label**, not cost per prompt. A cheaper model that is wrong more often is not cheaper.
+- **p95 latency** end-to-end, including the router.
+- **Human review rate**: the fraction of outputs that need a person to check them.
 
-The engineering hours column is the time from first commit to the first production release that handled 10k daily prompts. The fine-tuned branch required 120 hours of GPU time on a single g5.xlarge for the SFT run (4 epochs, 8-bit Adam, 512 batch size). The routed branch only needed 12 hours of CPU time to train the spam classifier on a t3.small instance.
+The decision rule that follows from these measurements: keep routing while cost per correct label stays below your target and the human review rate stays low. Fine-tune only when the review rate stays elevated across multiple evaluation runs and fine-tuning demonstrably reduces errors on a held-out set. Scale up when the task is genuinely beyond the smaller models and the volume is low enough that per-token cost does not dominate.
 
-Bottom line for 2026: if your task is text classification, start with the routed stack. If you later hit a ceiling where no model can hit your accuracy target, then fine-tune — but treat fine-tuning as a last resort, not a first step.
+## Worked example: reasoning through a decision
 
-## Common questions and variations
+Suppose a support ticket classifier handles 100,000 tickets per month. A large model costs $0.03 per 1,000 input tokens and $0.15 per 1,000 output tokens. At an average of 150 input and 20 output tokens per ticket, each ticket costs:
 
-**How do I know when to fine-tune instead of routing?**
-Start measuring the cost per correct label after you route. If the blended cost is below your target (say, $0.05 per correct label) and the human review rate is below 2%, keep routing. Only fine-tune when the human review rate climbs above 5% for two consecutive weeks. Fine-tuning should reduce hallucinations by at least 50% before you ship it to production; otherwise the engineering hours aren’t worth it.
+- Input: 150 / 1,000 × $0.03 = $0.0045
+- Output: 20 / 1,000 × $0.15 = $0.0030
+- Total: $0.0075 per ticket
 
-**What if my app needs function calling?**
-The router can still work, but you must pin the function schema to the smallest model that supports tools. In 2026, Mistral-7B-Instruct supports function calling, but Phi-3.5-mini-instruct (1.3B) does not. Route function-calling prompts to Mistral, and route pure text prompts to the smaller models. The routing decision can be based on a simple keyword check for the word "function" or "tool".
+At 100,000 tickets per month, that is $750 per month on the large model alone.
 
-**Is Redis really necessary, or can I use in-memory dicts?**
-Use Redis if you have more than one Lambda instance or if you need persistence across deploys. In-memory dicts in Lambda are ephemeral and will reset on every cold start, which defeats the purpose of caching. A single Redis node in ElastiCache costs ~$8/month and saves ~15ms per cache hit when the prompt is repeated (common in support tickets). The break-even is 2,000 cache hits per month; below that, skip Redis and accept the latency.
+A small self-hosted model on a single GPU instance might cost a fixed amount per month regardless of traffic, plus the engineering time to operate it. If the instance costs $400 per month and handles the volume, the saving is $350 per month — but only if accuracy is acceptable. If accuracy drops and 5% of tickets need human review at a cost of $2 per review, that adds 5,000 × $2 = $10,000 per month, which dwarfs the saving.
 
-**What about using a bigger model from day one?**
-Claude-3-7-Sonnet in Bedrock costs $0.03 per 1k input tokens and $0.15 per 1k output tokens. At 2026 pricing, that’s $0.45 per 10 prompts if you use 150 input tokens and 20 output tokens. The Mistral-7B-base model on a g5.xlarge costs $0.002 per 10 prompts at the same token counts. The difference is 225x. Unless your accuracy target is impossible for 7B models (e.g., legal document summarization), start with Mistral and route up only when the smaller models fail.
+This is why cost per correct label matters. The large model at $0.0075 per ticket with 99% accuracy costs about $0.0076 per correct label. The small model at effectively $0.004 per ticket with 90% accuracy, plus review cost, may cost far more per correct label.
 
-## Where to go from here
+Routing sits between them: route the easy majority to the small model and the hard minority to the large model. If 80% of tickets are easy and handled correctly by the small model, and 20% go to the large model, the blended cost is:
 
-Pick one of the three branches in the repo and run the load test script for ten minutes. The script replays the last 30 days of production traffic against your local Docker Compose stack. After the test, look at the Prometheus dashboard at http://localhost:9090 and note the p95 latency and cost per 10k prompts. If the routed branch saves you at least 30% latency or 20% cost compared to the baseline, merge it into main and delete the baseline branch. If not, keep the baseline and revisit the decision in 30 days when you have more data.
+- Small model: 80,000 × $0.004 = $320
+- Large model: 20,000 × $0.0075 = $150
+- Total: $470 per month
 
-Open `/router/lambda_function.py` and change the spam keyword list to include the word "refund". Re-deploy the router and run the load test again. Watch the Grafana dashboard to see if the spam classifier’s false-positive rate drops. If it doesn’t, add a second spam classifier trained on refund examples and update the route table in the Lambda code. Commit the change and tag the release with `v0.2-routed`.
+That is a 37% reduction versus the large model alone, before accounting for router overhead. Whether it is worth it depends on the router's own cost and the fallback rate. If the fallback rate is higher than assumed, the saving shrinks.
 
+These figures are illustrative. Substitute your own token counts and prices.
 
----
+## Common questions
 
-### About this article
+**When should fine-tuning be preferred over routing?**
+When routing cannot reach the required accuracy because no available model handles the task well, and when the task is stable enough that retraining is infrequent. Fine-tuning is a poor first step because it locks the system to a model version and adds a large fixed cost before any saving appears.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+**Does routing work with function calling?**
+It can, but the function schema must be supported by every model in the route table. Pin function-calling prompts to models that support tools, and route plain text to smaller models. Verify support per model rather than assuming it.
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
+**Is a cache necessary?**
+A cache helps when prompts repeat. In-memory caches in serverless functions are ephemeral and reset on cold start, so they only help within a single invocation. A shared cache persists across instances and deploys. Measure the hit rate before adding one; below a few thousand hits per month the operational cost may not be justified.
 
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
+**Should I just use the largest model from the start?**
+Only if the task is genuinely beyond smaller models or the volume is low. For high-volume classification, the per-token cost difference between a small self-hosted model and a large hosted model is large enough that routing or fine-tuning usually pays off — provided accuracy holds.
 
-**Last generated:** August 2026
+## One action to take in the next 30 minutes
+
+Instrument cost per correct label for your current model. Add a log line that records the model name, input tokens, output tokens, and whether the output matched a known-correct label on a small evaluation set. Run it for a few hundred requests, then compute the cost per correct label. That single number is the baseline every routing, fine-tuning, or scaling decision should be measured against.

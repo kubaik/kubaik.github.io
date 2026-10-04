@@ -1,155 +1,142 @@
 # Agents create incidents at 2am
 
-The tutorials all show the happy path. This is what I put together after working through it properly.
+## The gap in the standard playbook
 
-## The conventional wisdom (and why it's incomplete)
+The usual guidance for operating automation is sound as far as it goes: automate repetitive work, let agents absorb low-level noise, invest in observability, and page humans only when the blast radius justifies it. That advice holds when agents are well-scoped workers doing read-mostly tasks. It breaks down when an agent is given autonomy to mutate production state, open incident tickets, and page humans — for example, because a synthetic account verification step exceeded its SLA by a few milliseconds.
 
-The standard playbook says: automate everything; let agents handle the low-level noise; trust your observability; and lean on alert policies that page humans only when the blast radius justifies it.
+The problem is not observability or automation. It is the assumption that an agent can be promoted from background worker to first-class incident creator without changing the permission model that governs it. Most operational playbooks stop at the alert router. They describe how anomalies reach a human, but not what the agent is allowed to do once it is on the path to creating an incident.
 
-That advice makes sense when the agents are well-scoped CRUD workers, but it collapses when you give those agents autonomy to mutate production state, open incident tickets, and page humans at 02:00 because a synthetic account verification step exceeded its SLA by 15 ms.
+The distinction that matters is the delta between *agent can detect* and *agent can mutate*. Everything below is about closing that delta.
 
-The trap isn’t observability or automation; it’s the assumption that any agent can be safely promoted from background worker to first-class incident creator. A 2026 Datadog survey of 600 teams found that 42 % of on-call pages in fintech were triggered by automated agents, and the highest spike occurred between 02:00 and 04:00 UTC, when synthetic workloads collided with low-traffic maintenance windows. Teams that followed the textbook advice simply routed more noise into PagerDuty without questioning the underlying permissions model.
+## A worked failure: one latency spike, two pages
 
-The honest answer is that the conventional wisdom stops at the alert router; it doesn’t ask what the agent is allowed to do once it’s on the path to creating an incident.
+Consider a typical stack: a Node backend on a container platform, Python workers on a managed container service, a cloud metrics service for time-series data, and an incident-management SaaS for paging. An automation agent polls a payment provider's API every five minutes to verify subscription status. If a subscription is inactive, the agent opens a ticket in an issue tracker and applies a label such as `finops:cost-overrun` so the billing team can act.
 
-The part that trips people up is the delta between “agent can detect” and “agent can mutate,” and that’s what this post actually covers.
+This works until the webhook signature verification step starts timing out. Instead of a clean 40 ms response, p99 latency climbs to 1.2 s. The agent's retry policy — say, three attempts with exponential backoff — exhausts its 2 s timeout on the third attempt. The agent emits a `CRITICAL` metric, the alarm fires, and the on-call engineer is paged.
 
----
+Then the agent does the things that turn one anomaly into an avalanche:
 
-## What actually happens when you follow the standard advice
+- It transitions the ticket from `Open` to `In Progress`.
+- It appends a comment recording that the automated check triggered the incident.
+- Because the billing team's paging service is subscribed to the `finops:cost-overrun` label, a second page fires moments later.
 
-Start with a typical stack: a Node 20 LTS backend on AWS Fargate, Python 3.11 workers on AWS ECS, CloudWatch Container Insights for metrics, and PagerDuty for incidents. You add an automation agent that calls the Stripe API to verify customer subscription status every five minutes. If the subscription is inactive, the agent opens a ticket in Jira and adds a label `finops:cost-overrun` so the billing team can act.
+A single upstream latency spike produced two pages, woke two humans, and left a ticket in a state that needed manual cleanup the next morning. Nothing in the alerting stack malfunctioned. The agent's role had expanded — implicitly, through accumulated permission grants — from detector to mutator.
 
-That setup works fine until one night the Stripe webhook signature verification step starts timing out. Instead of a clean 40 ms response, CloudWatch shows p99 latencies of 1.2 s. The agent’s retry policy—set to max 3 retries, exponential backoff—fires, and by the third attempt it has already exceeded its configured timeout of 2 s. The agent logs a `CRITICAL` metric, CloudWatch alarms trigger, and PagerDuty pages the on-call engineer at 02:14 UTC.
+A common variant of this failure mode: an agent that runs with a role permitted to assume a service account with write access to the issue tracker. A concurrency spike exhausts that service account's API quota, retries fire, and the same ticket is mutated several times, generating duplicate pages. The triggering condition is mundane; the amplification comes entirely from write permissions.
 
-What the agent did next is the critical detail:
-- It patched the Jira ticket status from `Open` to `In Progress`. - It added a comment: `Automated subscription check triggered incident INC-9987`. - Because the billing team’s PagerDuty service is subscribed to the `finops:cost-overrun` label, another page fires at 02:15 UTC.
+## Three circles, not two
 
-The net result: a single upstream latency spike created two pages, forced two humans out of sleep, and left the original ticket in a state that required manual cleanup the next morning.
+A more useful mental model is three concentric circles rather than two.
 
-The failure mode isn’t the alerting stack; it’s that the agent’s role expanded implicitly from detector to mutator. A 2026 SLO review at a Nairobi fintech showed that 34 % of nightly pages originated from automated agents that had gained write access to incident management systems they were never meant to touch.
+1. **Detector circle** — what the agent can observe: metrics, logs, traces, API responses.
+2. **Router circle** — how the agent surfaces anomalies: alerts, dashboards, ticket labels, notifications.
+3. **Mutator circle** — what the agent is allowed to change: production state, tickets, paging state, infrastructure.
 
-Teams that fixate only on alert routing miss the fact that the agent’s permission set quietly drifted toward production mutation.
+The standard playbook covers circles one and two and omits circle three. Incident avalanches happen where the mutator circle overlaps the other two. The goal is not to eliminate the mutator circle — some agents legitimately remediate — but to make it explicit, small, and auditable.
 
----
+Two traps recur.
 
-## A different mental model
+**Role creep.** An agent built to watch a queue-depth metric is later granted write scope on the issue tracker so it can mark stale tickets. That single permission change converts a passive observer into an active participant in incident triage. Once the agent can open or mutate tickets, its blast radius is no longer bounded by the metric it watches.
 
-Think in three concentric circles instead of two.
+**State leakage across contexts.** An agent running in a function with a role that can assume a cross-account service account may, under retry pressure, mutate the same ticket repeatedly. The permission itself is not the bug; the absence of an idempotency key and a bounded retry policy is.
 
-1. **Detector circle**: what the agent can observe (metrics, logs, traces). 2. **Router circle**: how it surfaces anomalies (alerts, dashboards, ticket labels). 3. **Mutator circle**: what it is allowed to change in production.
+The practical artifact that resolves both is a **write boundary**: an explicit, version-controlled definition of which resources an agent may mutate, under what rate and SLO constraints, and with what identity. If the boundary is not in infrastructure code, it is not a boundary.
 
-The standard advice covers circles 1 and 2 but omits circle 3 entirely. When the mutator circle overlaps the detector or router circles, you get 2 a.m. incident avalanches.
+## Where the real edge cases live
 
-A common trap here is **role creep**: an agent built to watch a queue depth metric is suddenly granted `jira:ticket:write` scope so it can mark tickets stale. That single permission change converts a passive observer into an active participant in incident triage, and the blast radius grows exponentially once that participant starts opening or mutating tickets.
+### Cyclic trust policies in multi-account setups
 
-Another trap is **state leakage across contexts**: the agent runs in a Lambda with IAM role `arn:aws:iam::123456789012:role/agent-lambda-role`. That role has `sts:AssumeRole` privileges to a Jira service account. A misconfigured Lambda concurrency spike can exhaust the service account’s API quota, causing retries that mutate the same ticket multiple times and generate duplicate pages.
+An agent in account A assumes a role in account B, and the role in account B is trusted to assume a role back in account A for access to a third-party API. This transitive loop is a misconfiguration, but it is easy to create accidentally when teams add cross-account access incrementally. Under a cold-start spike, many concurrent executions each initiate a token-exchange handshake. The STS endpoint throttles, the agent's exponential backoff compounds concurrency, and the degradation spreads to every agent in the region using that endpoint.
 
-The mental model you need is a **write boundary**: a clear line in the infrastructure code that defines which resources an agent may mutate, and under what SLO constraints.
+The mitigation is not a clever retry policy. It is: do not create cyclic trust, cap function concurrency at a level the downstream identity provider can absorb, and test the trust graph with a tool that can enumerate assume-role paths. A useful check is to simulate the principal's policy against `sts:AssumeRole` on the target roles and confirm the result is what you expect — not merely that it is allowed.
 
----
+### Duplicate triggers during deployment windows
 
-## Evidence and examples from real systems
+A log subscription filter that invokes a function which opens incidents is vulnerable during deployments. When the function is updated, there is a window in which the subscription can invoke both the old and new versions, or invoke the same event more than once. If each invocation independently calls the incident API, a single anomaly produces several incidents.
 
-### Example 1: Synthetic payment retry agent in a Kenyan payments processor
+Two defenses, both cheap:
 
-- **Agent**: Python 3.11 script on AWS Lambda (Python 3.11 runtime, 1 vCPU, 1 GB memory). - **Task**: Call `/v1/payments/{id}
+- **Idempotency keys.** Most incident APIs accept a deduplication key. Derive it deterministically from the anomaly identity — for example, a hash of the source, the metric name, and the anomaly's time bucket — not from a random UUID generated per invocation.
+- **Synchronous invocation and a dedupe layer.** Make the trigger path synchronous where the platform allows it, and add a short-lived dedupe store (a cache with a TTL, or a conditional write to a key-value store) in front of the incident call.
 
----
+Incident APIs commonly enforce per-key rate limits and return a retry-after header on 429. If every agent shares one API key and one agent enters a retry storm, the resulting 429s can black out incident creation for *all* agents using that key. Separate keys per agent class, and treat 429 as a signal to shed load rather than to retry immediately.
 
-## Advanced edge cases you personally encountered
+### Metadata endpoint trust in dual-stack networks
 
-### 1. IAM Role Chaining with Cross-Account AssumeRole Loops
+Container tasks commonly fetch configuration from a link-local metadata endpoint. If the network permits non-local sources to reach that address — for example, through a dual-stack misconfiguration or an overly permissive load balancer — a process in the same VPC can inject false environment variables. An agent that trusts the metadata endpoint implicitly may then read a corrupted credential and begin making authenticated calls with it, generating authentication failures that its own failure policy converts into tickets.
 
-In a 2025 deployment, an agent running in AWS Account A (`123456789012`) assumed a role in Account B (`987654321098`) via `sts:AssumeRole`. The role in Account B had a `sts:AssumeRole` back to Account A for Jira API access—an explicit trust policy misconfiguration that created a transitive loop. During a Lambda cold-start spike, the agent spun up 500 concurrent executions, each initiating an STS handshake. CloudTrail logged 47 000 `AssumeRole` events in under 60 seconds, overwhelming the `sts:AssumeRole` API endpoint in the AWS partition and triggering `ThrottlingException` with a 15-second backoff. The agent’s retry policy, configured to use exponential backoff starting at 2 seconds, compounded the issue: retry storms amplified concurrency, leading to a 12-minute service degradation for all agents in the region. The incident only resolved after manually throttling the Lambda concurrency limit to 50 and adjusting the STS regional endpoint’s burst limit from the default 10 000 to 5 000 TPS.
+The fix is network-level: disable the unused address family on the task network interface, and add firewall rules that drop all traffic to the metadata address from non-local sources. Treat the metadata endpoint as trusted only from the local task.
 
-This failure mode is documented in AWS’s 2026 IAM Best Practices guide under “Cyclic trust policies in multi-account setups,” but it remains under-validated in production because most teams test with low-concurrency assumptions. The latent risk is compounded in fintech environments where cross-account access is common for shared services like Jira, Stripe, or Twilio.
+## Enforcing a write boundary in code
 
-### 2. CloudWatch Logs Subscription Filter Race Condition with Lambda Triggers
+### Idempotent incident creation
 
-We observed a race condition in a setup where a CloudWatch Logs subscription filter pointed to a Lambda that opened PagerDuty incidents via the Events API v2. When the Lambda was updated (e.g., during a blue/green deployment via AWS CodeDeploy), the subscription filter briefly pointed to the new Lambda version before the old one was torn down. During the 2–3 second window, duplicate events from the same log stream triggered multiple Lambda invocations. Each invocation independently called `POST /incidents` in PagerDuty, resulting in 4–6 incident duplicates for the same underlying anomaly. The issue was exacerbated by PagerDuty’s 2026 API rate limits: the Events API v2 enforces 100 requests per minute per API key, and once exceeded, it returns HTTP 429 with a 60-second retry window. This turned a minor latency spike into a 60-second incident blackout for all agents using that API key. The fix required enabling “synchronous invocation” on the Lambda and adding a dedupe layer using the `dedup_key` field in PagerDuty’s Events API, which was introduced in the 2026.2 release.
-
-This edge case is well-documented in AWS’s 2026 re:Invent session “Handling Event-Driven Failures at Scale,” but it’s often missed because teams assume idempotency at the observability layer without validating downstream side effects.
-
-### 3. ECS Task Metadata Endpoint Spoofing via IPv6 Dual-Stack Misconfiguration
-
-In a dual-stack (IPv4 + IPv6) ECS cluster using AWS Fargate, an agent running in a task queried the ECS task metadata endpoint (`169.254.170.2`) to fetch environment variables. Due to a misconfigured Network Load Balancer (NLB) in front of the cluster, IPv6 traffic was allowed to reach the metadata endpoint via a synthetic interface. An attacker (or misconfigured Lambda in the same VPC) spoofed IPv6 packets claiming to be from the metadata endpoint, injecting false environment variables into the agent’s process. The agent, trusting the metadata endpoint, read a corrupted `STRIPE_API_KEY` and began making requests to `https://api.stripe.com/v1/customers/{id}/verify` with a test key. The Stripe API responded with 401 Unauthorized, triggering the agent’s failure policy and opening a Jira ticket labeled `finops:cost-overrun`—despite the actual subscription being valid. The incident cost $187 in false Stripe API calls before being caught during the morning SLO review.
-
-This attack vector is described in AWS’s 2026 “Security Best Practices for ECS and Fargate” whitepaper, but it’s often overlooked in fintech environments where IPv6 adoption is still low. The fix involved disabling IPv6 on the ECS task network interface and enabling AWS Network Firewall rules to drop all traffic to the metadata endpoint from non-local sources.
-
----
-
-## Integration with real tools (with code)
-
-### 1. PagerDuty Events API v2 with Python (pypd 5.3.1)
-
-The PagerDuty Events API v2 introduced `dedup_key` in 2026 to prevent duplicate incidents. Here’s a minimal agent-safe integration using `requests` 2.31.0 and `pydantic` 2.6.0 to validate payloads:
+The single highest-leverage change is deterministic deduplication. The example below validates the payload with a schema and derives the dedupe key from the anomaly rather than generating a new one per call.
 
 ```python
-# agent_pagerduty.py
+# agent_incident.py
+import hashlib
 import os
-import uuid
-import requests
-from pydantic import BaseModel, HttpUrl, SecretStr
-from datetime import datetime
+from datetime import datetime, timezone
 
-class PagerDutyPayload(BaseModel):
+import requests
+from pydantic import BaseModel, SecretStr
+
+
+class IncidentPayload(BaseModel):
     routing_key: SecretStr
     event_action: str
-    dedup_key: str = str(uuid.uuid4())
+    dedup_key: str
     payload: dict
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "routing_key": "your-routing-key-here",
-                "event_action": "trigger",
-                "dedup_key": "incident-12345",
-                "payload": {
-                    "summary": "Subscription verification timeout",
-                    "source": "stripe-verification-agent",
-                    "severity": "critical"
-                }
-            }
-        }
 
-def trigger_incident(summary: str, source: str, dedup_key: str | None = None) -> str:
-    payload = PagerDutyPayload(
-        routing_key=os.environ["PAGERDUTY_ROUTING_KEY"],
+def anomaly_dedup_key(source: str, metric: str, bucket_minutes: int = 15) -> str:
+    """Deterministic key: same anomaly -> same key -> one incident."""
+    now = datetime.now(timezone.utc)
+    bucket = now.replace(
+        minute=(now.minute // bucket_minutes) * bucket_minutes,
+        second=0,
+        microsecond=0,
+    )
+    raw = f"{source}:{metric}:{bucket.isoformat()}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def trigger_incident(summary: str, source: str, metric: str) -> str:
+    payload = IncidentPayload(
+        routing_key=os.environ["INCIDENT_ROUTING_KEY"],
         event_action="trigger",
-        dedup_key=dedup_key or str(uuid.uuid4()),
+        dedup_key=anomaly_dedup_key(source, metric),
         payload={
             "summary": summary,
             "source": source,
             "severity": "critical",
-            "timestamp": datetime.utcnow().isoformat() + "Z"
-        }
+        },
     )
     resp = requests.post(
-        "https://events.pagerduty.com/v2/enqueue",
+        "https://events.example-incident-api.com/v2/enqueue",
         json=payload.model_dump(exclude={"routing_key"}),
         headers={"Content-Type": "application/json"},
-        timeout=5
+        timeout=5,
     )
     resp.raise_for_status()
     return resp.json()["dedup_key"]
 ```
 
-Use this in your agent logic with a shared `dedup_key` per anomaly source (e.g., `stripe-timeout-2026-04-05`). This prevents duplicate pages during retry storms.
+Two properties matter here. First, the dedupe key is a pure function of the anomaly, so retries and duplicate invocations collapse into one incident. Second, the routing key comes from the environment, so each agent class can hold its own credential and its own rate-limit budget.
 
-### 2. AWS Lambda with IAM Permissions Boundary (AWS SDK for JavaScript v3.450.0)
+### A minimal permissions boundary
 
-To enforce a write boundary, use IAM permissions boundaries on Lambda functions. Here’s a Terraform snippet for a fintech agent with a boundary that allows only `logs:PutLogEvents` and `dynamodb:Query` (no Jira writes):
+A permissions boundary caps the maximum permissions an identity can hold, regardless of what its attached policies grant. The Terraform below defines a boundary that allows only logging and read-only key-value access — no issue-tracker writes, no cross-account assume-role.
 
 ```hcl
-# iam.tf
 resource "aws_iam_role" "agent_lambda_role" {
   name = "agent-lambda-write-boundary-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
       Principal = { Service = "lambda.amazonaws.com" }
     }]
   })
@@ -168,76 +155,81 @@ resource "aws_iam_role_policy_boundary" "agent_boundary" {
 }
 ```
 
-This prevents the agent from assuming roles with broader permissions, even if the trust policy is misconfigured. Test with `aws iam simulate-principal-policy --policy-input-file boundary.json --action-names sts:AssumeRole --resource-arns arn:aws:iam::123456789012:role/*`.
+Verify the boundary actually binds by simulating the principal against the action you are worried about:
 
-### 3. Jira REST API with Rate Limiting and Deduplication (jira-python 3.6.0)
+```bash
+aws iam simulate-principal-policy \
+  --policy-input-file boundary.json \
+  --action-names sts:AssumeRole \
+  --resource-arns arn:aws:iam::123456789012:role/target-role
+```
 
-Use `jira-python` with a bounded retry policy and the `update_issue` method to avoid mutating tickets unnecessarily:
+The simulation should return `implicitDeny` for the actions the boundary excludes. If it returns `allowed`, the boundary is not attached or not scoped as intended.
+
+### Bounded retries and idempotent ticket updates
+
+Retries are where read-only agents become write-amplifying agents. Bound them, and make every write check current state first.
 
 ```python
-# agent_jira.py
-from jira import JIRA
-from jira.resources import Issue
-from tenacity import retry, stop_after_attempt, wait_exponential
+# agent_tickets.py
 import os
 
-class SafeJiraClient:
-    def __init__(self):
+from jira import JIRA
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+
+class SafeTicketClient:
+    def __init__(self) -> None:
         self.client = JIRA(
             server="https://your-domain.atlassian.net",
             basic_auth=(os.environ["JIRA_EMAIL"], os.environ["JIRA_API_TOKEN"]),
             timeout=5,
-            max_retries=3
+            max_retries=3,
         )
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
-    def mark_ticket_stale(self, issue_key: str, comment: str) -> Issue:
+    @retry(
+        stop=stop_after_attempt(3),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+    )
+    def mark_ticket_stale(self, issue_key: str, comment: str):
         issue = self.client.issue(issue_key)
         if issue.fields.status.name == "Stale":
-            return issue  # Already stale; skip mutation
+            return issue  # Already in target state; no write.
         return self.client.update_issue(
             issue_key,
             fields={"status": {"name": "Stale"}},
-            update={"comment": [{"add": {"body": comment}}]}
+            update={"comment": [{"add": {"body": comment}}]},
         )
-
-# Usage
-client = SafeJiraClient()
-client.mark_ticket_stale("INC-9987", "Automated stale marker applied; no action required.")
 ```
 
-This avoids the “stale spam” problem when agents retry during outages. The `jira-python` library version 3.6.0 (released Q1 2026) includes built-in rate limiting via `max_retries` and respects `Retry-After` headers.
+The read-before-write check is the important part. It converts a non-idempotent mutation into an idempotent one, so a retry storm cannot multiply the number of state changes.
 
----
+## How to measure whether this is working
 
-## Before/After: Real Numbers from a 2026 Nairobi Fintech
+Do not trust a before/after table from someone else's environment. Instrument your own. Five signals are enough to start.
 
-| Metric                     | Before (Agent as Mutator) | After (Write Boundary Enforced) |
-|----------------------------|----------------------------|----------------------------------|
-| Nightly PagerDuty pages    | 34 (avg)                   | 8 (avg)                          |
-| Duplicate incidents        | 12/day                    | 0/day                            |
-| Mean time to detect (MTTD) | 2.1 minutes                | 1.8 minutes                      |
-| Lambda cold starts (p99)   | 850 ms                    | 420 ms                           |
-| Cross-account API throttling events | 47 000 in 60s       | 0                                |
-| Lines of IAM policy        | 247                       | 89                               |
-| Monthly AWS cost (agents)  | $124                      | $98                              |
-| Jira API calls (p95)       | 1 200                     | 180                              |
-| On-call pages per engineer | 14/month                  | 3/month                          |
+- **Pages attributable to agents.** Tag every incident created by an automated path with a distinct source field, then count incidents grouped by source. Compare the agent-triggered share against the human-triggered share over the same window.
+- **Duplicate rate.** For each anomaly identity, count incidents created within one dedupe window. The target is one. Anything higher means the dedupe key is not deterministic or is not being passed through.
+- **Write attempts per anomaly.** Count mutations (ticket transitions, comments, state changes) per anomaly identity. This number should be small and stable; growth here is the earliest sign of role creep.
+- **Retry amplification.** For each agent, record retries per logical operation and the resulting concurrency. A retry policy that increases concurrency under load is the mechanism behind most regional degradations.
+- **Identity-provider throttle events.** Count throttling responses from your token-exchange and third-party APIs, grouped by agent identity. These are leading indicators of a concurrency cap that is set too high.
 
-### Key Improvements
+A useful one-off comparison: pick a 24-hour window before and after the write boundary is enforced, and compute the same five signals over both. The interesting output is not the percentage change; it is which signal moved first.
 
-- **Write boundary enforcement**: Reduced mutable scope to only `logs:PutLogEvents` and `dynamodb:Query` via IAM boundaries. The 64 % reduction in IAM policy lines came from removing `jira:*` and `sts:AssumeRole` unless explicitly audited. - **Deduplication**: Using `dedup_key` in PagerDuty Events API v2 cut duplicate incidents to zero. The latency improvement (2.1 → 1.8 minutes) is due to fewer noisy pages distracting engineers. - **Rate limiting**: The Jira client’s bounded retry reduced API calls from 1 200 to 180 p95. This is critical in fintech where Jira API tokens are shared across teams and rate limits are 1 000 calls/minute. - **Cost**: The reduction in Lambda retries and Jira API calls saved $26/month, but the real win was operational: engineers slept through fewer pages. - **Observability**: CloudWatch Container Insights now shows a 42 % drop in `PagerDuty.Trigger` events during maintenance windows (02:00–04:00 UTC), aligning with the Datadog 2026 survey trend of 42 % agent-triggered pages.
+## Decision checklist before granting an agent write access
 
-These numbers come from a production deployment where the agent was migrated in February 2026. The team used AWS CloudTrail Lake and PagerDuty’s Analytics API to compute the before/after comparison over a 30-day window. The biggest surprise? The write boundary didn’t just reduce noise—it forced the team to document what each agent was *supposed* to do, not just what it could do.
+Run through this before adding any mutating permission to an automated identity.
 
----
+- **Is the write necessary?** Can the agent emit an event and let a separate, human-reviewed process act on it? Detection and mutation are separable concerns.
+- **Is the write idempotent?** If the same call arrives twice, does state change once? If not, add a deterministic key or a read-before-write check.
+- **Is the identity scoped to this agent alone?** Shared service accounts couple unrelated agents through a common rate limit and a common blast radius.
+- **Is there a concurrency cap?** Every downstream API has a limit. Set the cap below it and test at the cap.
+- **Is the boundary in version control?** If the permission set exists only in a console, it will drift.
+- **Can you enumerate the trust graph?** If you cannot list every path by which this identity can obtain credentials, you cannot reason about its blast radius.
+- **Is there a kill switch?** One flag that disables all mutating calls from this agent class, testable without a deployment.
 
-### About this article
+If any answer is "no," the agent should stay in the detector and router circles.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+## The 30-minute action
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Pick one agent that currently holds a write permission, and run the IAM policy simulation shown above against the single action you would least want it to perform — typically `sts:AssumeRole` on a broad resource, or a write action on your incident or issue system. If the result is `allowed` rather than `implicitDeny`, you have found a write boundary that is not actually enforcing anything. Attach a permissions boundary that excludes that action, re-run the simulation, and confirm the result flips. That is thirty minutes, and it converts an assumption into a verified constraint.

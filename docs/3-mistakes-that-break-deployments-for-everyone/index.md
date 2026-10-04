@@ -1,278 +1,195 @@
 # 3 mistakes that break deployments for everyone
 
-It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke.
+Deployment tooling is usually chosen by the person who understands the stack best, then handed to people who do not. The result is a pipeline that is fast for its author and hostile to everyone else. The failure is rarely a single bad tool choice; it is a mismatch between the defaults that suit an expert and the guardrails a newcomer needs. This article covers three recurring mistakes, what each one actually breaks, and how to fix them without adding a second platform to maintain.
 
-## Why this list exists (what I was actually trying to solve)
+## The tension you are actually managing
 
-You are the solo engineer and the platform owner. You wrote the product, you fixed the tests, and now you have to deploy it so your non-technical co-founder in Cape Town can demo it to a client in Manila tomorrow. At the same time, your most senior engineer in Tallinn expects the deployment pipeline to surface performance regressions, log the exact build where a 200 ms endpoint became 800 ms, and roll back in under thirty seconds when it happens. Those two needs are in direct conflict: the safest defaults for a new hire are different from the fastest path for someone who knows every layer of the stack.
+Two people can share one repository and have opposite requirements for the same pipeline.
 
-The part that trips people up is the last mile—how the code leaves your laptop and lands in front of users without becoming a daily fire drill. The common failure mode is to optimize for one audience first (usually the senior engineer) and then retrofit safety nets for everyone else. By the time you add a 50-line README, a new hire has already pushed a change that broke the staging environment because they didn’t realize the `depends_on` field in docker-compose.yaml was still pointing to an old database container. Production stays green, but staging is red for three hours while the new hire debugs a dependency that is obvious to you.
+One is the engineer who wrote most of the system. They want fast feedback, direct access to logs, the ability to run arbitrary commands against the environment, and a rollback path they can trigger in seconds. Every abstraction between them and the running system is friction.
 
-This post is about the three mistakes that break deployments for both camps and how to avoid them without doubling your ops surface area.
+The other is someone who joined recently, possibly without deep infrastructure experience. They need the pipeline to refuse dangerous actions, to explain what it did, and to fail loudly and specifically when something is wrong. Every implicit assumption is a trap.
 
-## How I evaluated each option
+A pipeline tuned only for the first person accumulates hidden state: a runner with a warm cache, a locally installed CLI, a database container that was started manually months ago. None of that is written down, so none of it survives contact with a new contributor. A pipeline tuned only for the second person adds so many gates that the senior engineer routes around it, and the guardrails stop mattering.
 
-I tested every approach against two fixed constraints: the solo founder has less than 24 hours a week to spend on platform work, and the deployment system must survive a three-day vacation where no one touches it. Every option was measured on four metrics that matter to a solo founder:
+The three mistakes below are the most common ways this tension turns into an outage or a stalled onboarding.
 
-- Time to first deploy from a fresh laptop: benchmarked on a 2026 MacBook Air running Node 20 LTS and Python 3.11, Wi-Fi in a coworking space in Cape Town with 12 Mbps down / 3 Mbps up. - Median deployment latency to a single-region AWS EC2 t3.medium (2 vCPU, 4 GB RAM) running Ubuntu 24.04 LTS. - Cost per 1,000 deployments at 2026 AWS on-demand pricing (us-east-1). - Onboarding failure rate: percentage of new hires who trigger a preventable error in their first two deployments. I used a controlled dataset of 12 new hires who had never seen the stack before.
+## Mistake 1: mutable build hosts
 
-The table below shows the raw numbers I collected over two weeks of parallel runs.
+A self-hosted runner, a long-lived CI VM, or a build machine that persists between jobs is convenient. It keeps dependency caches warm, avoids re-pulling base images, and makes builds faster on the second run. It also accumulates state that nobody tracks.
 
-| Option                                     | First deploy (minutes) | Median latency (seconds) | Cost per 1k deploys | Onboarding failure rate |
-|--------------------------------------------|------------------------|--------------------------|---------------------|-------------------------|
-| GitHub Actions + self-hosted runner        | 23                     | 32                       | $0.45               | 42%                     |
-| AWS CodePipeline + CloudFormation          | 41                     | 68                       | $2.10               | 18%                     |
-| Fly.io + Dockerfile                        | 8                      | 22                       | $0.95               | 33%                     |
-| Render.com                                 | 15                     | 28                       | $1.25               | 25%                     |
-| Self-hosted Argo CD + Kubernetes           | 55                     | 85                       | $3.75               | 9%                      |
-| Heroku (2026 dyno type)                    | 5                      | 15                       | $1.80               | 58%                     |
+### What breaks
 
-The most surprising result: Heroku’s first-deploy speed is fast, but its onboarding failure rate is astronomical because the buildpacks hide too much. New hires don’t learn that their Python 3.11 app is actually running on Ubuntu 22.04 behind the scenes until they hit a missing system dependency in production.
+The classic failure mode is disk exhaustion. A runner that has been alive for weeks fills its cache volume during a large dependency update and then hangs on the next job rather than failing fast. The job sits in a queued or running state until someone notices. Meanwhile every subsequent job is blocked behind it.
 
-I also looked at the long-term cost of lock-in. Platforms like Heroku and Render abstract away so much that migrating off them later requires rewriting Dockerfiles, provisioning new databases, and reconfiguring CI—each incident typically costs two days of engineering time. GitHub Actions has the lowest monetary cost, but the runner maintenance overhead grows linearly with team size, and the runner itself becomes a single point of failure when it runs out of disk space during a large dependency update.
+Less obvious is version drift. If the build host has a toolchain installed at the OS level, the version of that toolchain is now part of your build definition, but it is not in the repository. A new hire who builds locally gets a different result than CI. The failure surfaces as a confusing "works on my machine" bug that costs hours to trace.
 
-## Building a deployment platform that works for both senior engineers and new hires — the full ranked list
+### The fix
 
-### 1) GitHub Actions + self-hosted runner (Linux arm64) with ephemeral runners
+Make build hosts disposable. Whether you use ephemeral cloud instances, container-based runners, or a hosted CI service, the property that matters is that each job starts from a known image and leaves nothing behind. Caches should be explicit artifacts keyed by lockfile hash, not incidental state on a disk.
 
-What it does: GitHub Actions orchestrates the workflow; the self-hosted runner on an arm64 EC2 instance (t4g.micro, $0.0152/hour) pulls the code, builds a multi-stage Docker image, pushes it to Amazon ECR, and runs a smoke suite before tagging the image and updating an AWS ECS service.
+If you run self-hosted runners, the standard pattern is a controller that creates a runner per job and destroys it afterward. The runner image is versioned in Git, so the toolchain is part of the repository rather than a property of a machine.
 
-Strength: Zero lock-in. Your Dockerfile and workflow YAML are plain text; you can move to any other runner or CI service without rewriting anything. The runner itself is disposable and recreated from an AMI every night to avoid drift.
+### How to measure whether you have this problem
 
-Weakness: Onboarding failure rate is 42%, mostly because new hires forget to install the `docker` CLI on their laptop before cloning the repo. The runner also needs 8 GB of disk space for large dependency caches; if you don’t rotate the AMI weekly, the runner can run out of space during a Node or Python dependency update and hang indefinitely.
-
-Best for: Solo founders who want to avoid vendor lock-in and already run everything else on AWS.
-
-### 2) Fly.io + Dockerfile with `flyctl` deploy
-
-What it does: Fly.io packages your app into a Docker image, provisions a dedicated VM in the region you choose, and handles rolling deploys with health checks. The CLI (`flyctl` v0.3.48) is a single binary that works on macOS, Windows, and Linux.
-
-Strength: First deploy in 8 minutes from a fresh laptop, median latency 22 seconds. Fly.io’s build cache is smart—subsequent deploys skip the full rebuild if only a few files changed, which saves 30–40 seconds on every deploy.
-
-Weakness: The `fly launch` command generates opinionated config that can surprise senior engineers. A common trap here is that Fly.io automatically provisions a Postgres cluster unless you explicitly opt out, and the database URL it prints is only valid inside the Fly.io network. If you try to connect to it from outside (e.g., a local Python shell), the connection fails with `no pg_hba.conf entry for host`, which confuses new hires until they realize the DB is in a private network.
-
-Best for: Teams that want the fastest path to production without managing servers, and who can tolerate Fly.io’s opinionated defaults.
-
-### 3) Render.com with Git-connected blueprints
-
-What it does: Render reads your GitHub repo, parses a `render.yaml` manifest, and provisions a web service, a Redis instance, and a Postgres database in one click. The dashboard is intentionally minimal; it hides most of the underlying infrastructure.
-
-Strength: First deploy in 15 minutes, median latency 28 seconds, and onboarding failure rate 25%. New hires can deploy by clicking a button in the dashboard, which is safer than teaching them to use the CLI.
-
-Weakness: Vendor lock-in is real. A team I worked with tried to migrate off Render after 18 months and discovered they had to rewrite their Dockerfile, re-provision databases, and reconfigure TLS certificates because Render’s managed services use custom connection strings and non-standard ports. The migration took two engineers three days.
-
-Best for: Non-technical founders who need a quick demo environment and solo engineers who want to avoid ops work for the first six months.
-
-### 4) AWS CodePipeline + CloudFormation
-
-What it does: CodePipeline listens to GitHub, runs a build in AWS CodeBuild, produces an ECR image, and deploys it to an ECS Fargate service via a CloudFormation stack.
-
-Strength: Median latency 68 seconds, onboarding failure rate 18%. The CloudFormation stack is declarative, so a new hire can see exactly what infrastructure is being created or updated.
-
-Weakness: Time to first deploy is 41 minutes because you must manually create IAM roles, build projects, and pipeline stages via the AWS console before the first automated run. The AWS console is also the slowest part of the workflow; the web UI can take 10–15 seconds to load a single page, which frustrates senior engineers who expect instant feedback.
-
-Best for: Teams that are already heavily invested in AWS and need fine-grained control over IAM policies and deployment rollback behavior.
-
-### 5) Self-hosted Argo CD + Kubernetes
-
-What it does: Argo CD (v2.10) continuously syncs Kubernetes manifests from Git to a cluster. The UI shows the exact diff between the desired state and live state, and a new hire can trigger a rollback by clicking a button.
-
-Strength: Onboarding failure rate 9%, the lowest in the list, because every configuration change is peer-reviewed via Git and visible in the UI.
-
-Weakness: Median latency 85 seconds and first deploy 55 minutes. The cluster itself is a 24/7 tax: you must patch Kubernetes, maintain etcd, and manage node auto-scaling. A solo founder who spends less than 24 hours a week on platform work cannot sustain this.
-
-Best for: Teams with dedicated SREs or companies that already run Kubernetes at scale.
-
-### 6) Heroku (2026 dyno type)
-
-What it does: Heroku’s 2026 dyno type bundles a container runtime, a slug compiler, and a managed runtime. You push code with `git push heroku main`, and Heroku builds and runs it.
-
-Strength: First deploy in 5 minutes, the fastest in the list.
-
-Weakness: Onboarding failure rate 58%. New hires routinely push a change that works locally but fails on Heroku because the buildpack didn’t install a system package or because the dyno ran out of memory. The error messages are opaque; a failed deploy returns a generic `Application Error` without the actual cause, which forces new hires to dig through logs for 30 minutes.
-
-Best for: Prototypes and quick demos where ops overhead must be zero.
-
-## The top pick and why it won
-
-GitHub Actions + self-hosted runner on Linux arm64 wins because it gives you the best balance between lock-in, cost, and onboarding safety once you fix the two biggest failure modes.
-
-The first failure mode is the runner disk filling up. The fix is to replace the single persistent runner with ephemeral runners created by the [GitHub Actions runner scale set](https://github.com/actions/actions-runner-controller/tree/gha-runner-scale-set-release-0.8.3/charts/actions-runner-controller-runner-scale-set) (ARSS v0.8.3). Each runner is a fresh t4g.micro instance that pulls the code, builds the image, and then self-destructs after the job completes. Disk issues disappear because each runner starts from scratch, and the controller scales up and down automatically based on queue depth. The controller itself runs in a t3.small ($0.0208/hour) for under $50 a month even at peak load.
-
-The second failure mode is new hires forgetting to install Docker. The fix is a two-line script in the repo’s README that installs Docker and the runner-scaleset controller with one command:
+Instrument two things: the age of your build hosts and the failure mode of the last ten failed jobs. If any host has been running for more than a few days, or if any failure was a hang rather than an error, you have mutable-host problems. A simple check on a Linux runner:
 
 ```bash
-#!/usr/bin/env bash
-set -e
-
-# Install Docker (Ubuntu 24.04 LTS)
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER
-
-# Install GitHub Actions runner scale set controller
-helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
-helm install arc --namespace arc-system --create-namespace actions-runner-controller/actions-runner-controller-runner-scale-set -f .github/runners/values.yaml
+uptime -p
+df -h /var/lib/docker
 ```
 
-That single command drops the onboarding failure rate from 42% to 12% in my tests. The new hire runs it, clones the repo, and the first deploy works the first time.
+If the uptime is measured in weeks and the disk is above 80 percent, the next large dependency update is a coin flip.
 
-Cost at 1,000 deploys per month is $0.45, the lowest in the list, and the entire stack is defined in code. If you ever need to move, you export the workflow YAML, the Dockerfile, and the Helm values—nothing is hidden behind a vendor API.
+## Mistake 2: implicit local prerequisites
 
-Senior engineers get the speed they need: the workflow runs in under 32 seconds median latency, and they can extend the pipeline with custom steps without touching the runner itself.
+The pipeline assumes the developer's machine is already set up. The README says "clone and run," but the actual requirements are a specific Docker version, a cloud CLI, credentials in a particular file, and a database container that was started by hand.
 
-## Honorable mentions worth knowing about
+### What breaks
 
-### Buildpacks (Heroku-style) with a custom builder
+New contributors fail at step zero, before they can even reproduce the failure they are trying to fix. The failure is not interesting, so it does not get fixed; it just becomes a tax on every new hire. Senior engineers never see it because their machines have been configured for years.
 
-What it does: You create a custom buildpack that installs exactly the system libraries and language versions you need, then push to Render or Fly.io as if it were a standard app.
+A related failure mode is that the setup instructions drift from reality. Someone adds a dependency on a new CLI tool, updates their own machine, and forgets the README. The instructions are now wrong in a way that only a newcomer can detect.
 
-Strength: New hires never install Docker; they just push code. The builder is reproducible and versioned in Git.
+### The fix
 
-Weakness: Buildpacks are opaque. A common failure mode is that the buildpack silently upgrades a minor version of a library, which breaks a senior engineer’s feature branch during CI because the lockfile wasn’t updated. Debugging this requires reading the buildpack’s internal scripts, which few engineers enjoy doing.
+Put the environment in the repository. A container definition that describes the build and run environment, plus a single setup script that installs the host-level prerequisites, removes most of the ambiguity. The key is that the setup script is idempotent and checks for what it needs rather than assuming.
 
-Best for: Teams that want Heroku’s UX but cannot accept Heroku’s lock-in.
-
-### Nomad + Waypoint (HashiCorp 2026)
-
-What it does: Nomad 1.8 schedules jobs, and Waypoint 0.11 packages and deploys them. Waypoint’s `waypoint up` command builds, pushes, and deploys in one step.
-
-Strength: First deploy in 12 minutes, median latency 26 seconds, and the workflow is reproducible across environments.
-
-Weakness: Nomad is less battle-tested than Kubernetes for stateful workloads. A team in Tallinn tried to run a Postgres cluster on Nomad and lost data when a node failed; the cluster did not automatically fail over because the Nomad Postgres driver wasn’t configured for high availability. Restoring from backup took six hours.
-
-Best for: Teams that already run Nomad and need a simple deployment surface.
-
-### AWS Copilot
-
-What it does: Copilot scaffolds a full ECS stack from a few CLI commands and keeps the infrastructure-as-code in your repo.
-
-Strength: Median latency 55 seconds, and the CLI is fast and responsive. Senior engineers can tweak the generated CloudFormation if needed.
-
-Weakness: Copilot locks you into AWS primitives. If you ever want to move to Fly.io, you must rewrite the entire infrastructure definition by hand. The lock-in surface is smaller than Render’s, but it’s still there.
-
-Best for: AWS-first teams that want a CLI that feels like Heroku but stays inside AWS.
-
-## The ones I tried and dropped (and why)
-
-### GitHub Actions + GitHub-hosted runners
-
-I started here because it’s zero setup. The first deploy from a fresh laptop took 18 minutes, median latency 25 seconds, and cost $0.25 per 1,000 deploys. The problem appeared after three weeks: the GitHub-hosted runner ran out of disk space during a large dependency update (Node 20 → 20.14), and every subsequent job stalled. The fix was to switch to a self-hosted runner, which added 5 minutes to the first-deploy time but eliminated the disk issue.
-
-Hard to reverse: yes. Once you rely on GitHub-hosted runners, you cannot control the disk layout or the OS patches they run. Migrating to self-hosted requires reconfiguring secrets, rebuilding Docker images, and updating workflow YAML—about two hours of work.
-
-### Kubernetes + Skaffold
-
-I tried Skaffold 2.11 with a single-node k3s cluster to keep ops overhead low. The first deploy took 35 minutes, and the median latency was 58 seconds. The deal-breaker was the kubectl learning curve. New hires routinely ran `kubectl apply -f deployment.yaml` without understanding that it didn’t rebuild the image, so their changes didn’t appear in production. The error surfaced only after 20 minutes of debugging logs.
-
-Hard to reverse: yes. Migrating away from a k3s cluster requires tearing down the cluster and reprovisioning VMs or using a managed service, which is at least a half-day of work.
-
-### Docker Compose + watchtower on a single VM
-
-I ran `docker compose up` on an EC2 t3.medium and used watchtower to auto-update images from ECR. First deploy took 12 minutes, median latency 45 seconds, and cost $0.90 per 1,000 deploys. The failure mode hit during a regional AWS outage: the VM’s ENI got stuck in a detached state, and watchtower couldn’t pull the new image. The VM stayed in a crashed state for two hours because the health check wasn’t sensitive enough to trigger a replacement.
-
-Hard to reverse: medium. You can replace the VM with a new instance, but the Docker volumes and network configs are tied to the instance metadata, so migrations are manual.
-
-## How to choose based on your situation
-
-Use this table to pick the right option in five minutes.
-
-| Situation                                                      | Best choice                              | Runner-up               | Why                                                                                     |
-|----------------------------------------------------------------|-------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------|
-| You need the fastest possible first deploy                     | Heroku (2026 dyno)                        | Fly.io                  | 5-minute first deploy beats everything else. |
-| You are already on AWS and want fine-grained control           | AWS CodePipeline + CloudFormation         | AWS Copilot             | IAM policies and rollback behavior are explicit in CloudFormation. |
-| You want zero vendor lock-in                                   | GitHub Actions + self-hosted runner       | Buildpacks + Render     | Your Dockerfile and workflow YAML stay the same if you ever move. |
-| Your team is non-technical and needs a GUI                     | Render.com                                | Fly.io                  | The dashboard hides infrastructure details, which is safer for new hires. |
-| You have Kubernetes experience and want GitOps                 | Self-hosted Argo CD                       | Nomad + Waypoint        | Argo CD’s UI shows the exact diff, which reduces onboarding errors. |
-| You are bootstrapping and cannot spend more than $50/month     | GitHub Actions + self-hosted runner       | Fly.io                  | $0.45 per 1,000 deploys vs $1.80 for Heroku. |
-
-If you fall between two rows, pick the one with the lower onboarding failure rate. A solo founder can recover from a $50 cost mistake much faster than from a new hire who pushes a broken build to production on their first day.
-
-## Frequently asked questions
-
-### What’s the smallest change I can make to reduce onboarding errors without rewriting my pipeline?
-
-Add a one-line `Dockerfile` if you don’t have one, and a two-line `README.md` that installs Docker and the GitHub Actions runner scale set controller. In my tests, this alone dropped the onboarding failure rate from 42% to 12%. The Dockerfile can be minimal:
+Here is a minimal container definition for a Python service:
 
 ```dockerfile
-# Dockerfile
 FROM python:3.11-slim-bookworm
 WORKDIR /app
-COPY . .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 CMD ["python", "main.py"]
 ```
 
-The README snippet:
-
-```markdown
-### First-time setup
+And a setup script that a new hire can run without reading it first:
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://get.docker.com)"
-sudo usermod -aG docker $USER
-# Restart your shell or log out and back in.
-```
-```
+#!/usr/bin/env bash
+set -euo pipefail
 
-### Why does my Docker build take 3 minutes longer than my local build?
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Docker not found. Install it from https://docs.docker.com/engine/install/ and re-run."
+  exit 1
+fi
 
-Docker builds on CI runners are slower because the runner pulls a clean image each time, and layer caching is less effective than on a local machine with a warm cache. The fix is to use Docker layer caching in GitHub Actions by adding one flag to your workflow:
+if ! docker info >/dev/null 2>&1; then
+  echo "Docker is installed but the daemon is not reachable. Start Docker and re-run."
+  exit 1
+fi
 
-```yaml
-# .github/workflows/deploy.yml
-jobs:
-  build:
-    runs-on: arc-runner-set
-    steps:
-      - uses: actions/checkout@v4
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v2
-      - name: Build, tag, and push image
-        run: |
-          docker build --cache-from type=registry,ref=123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp:cache -t myapp:latest .
-          docker push myapp:latest
+echo "Environment looks ready."
 ```
 
-That `--cache-from` flag reuses the previous image layers, cutting build time from 3.2 minutes to 1.8 minutes in my benchmarks.
+The script does not try to install Docker for the user, because package managers differ and a script that guesses wrong is worse than no script. It checks and tells the user exactly what to do.
 
-### How do I roll back a broken deploy without downtime?
+### How to measure whether you have this problem
 
-The boring, proven option is to tag every image with a Git commit SHA and keep the last five images in ECR. Your ECS service or Kubernetes deployment can reference the SHA directly. To roll back:
+Ask someone who has never touched the repository to set it up while you watch, without helping. Time how long it takes to get a successful local build. If it takes more than thirty minutes, or if you had to intervene more than once, the prerequisites are implicit.
+
+## Mistake 3: opaque failures
+
+When a deployment fails, the pipeline reports something generic. "Build failed." "Application error." "Health check failed." The actual cause is buried in a log the new hire does not know how to find.
+
+### What breaks
+
+Debugging time explodes. A failure that should take five minutes to diagnose takes thirty because the error message does not name the component that failed. New hires learn to fear the pipeline, which is the opposite of what you want.
+
+The deeper problem is that opaque failures hide real defects in the pipeline itself. If a health check fails without saying which check failed or what it received, you cannot tell whether the application is broken or the check is misconfigured. That ambiguity is where multi-hour incidents come from.
+
+### The fix
+
+Make every failure name its cause. A health check should log the endpoint it called, the status code or error it received, and the timeout it used. A build failure should print the failing command and its exit code. A deploy failure should distinguish between "the new version did not become healthy" and "the deploy command itself failed."
+
+This is mostly a matter of not swallowing errors. A shell script with `set -e` and no output on failure is a common culprit. So is a CI step that captures output into a variable and never prints it.
+
+### How to measure whether you have this problem
+
+Take the last five failed deployments and read only the top-level error message shown in the CI UI. If you cannot tell from that message alone which component failed and roughly why, the failures are opaque.
+
+## A worked example: rollback that actually works
+
+Rollback is where the three mistakes compound. If build hosts are mutable, you may not be able to rebuild the previous version. If prerequisites are implicit, the person doing the rollback may not have the right CLI. If failures are opaque, you will not know whether the rollback succeeded.
+
+The reliable pattern is to make every deployed artifact addressable by an immutable identifier, and to keep the last few around. Tag images with the Git commit SHA, and reference that tag in the deploy step.
 
 ```bash
-# List the last five images
-aws ecr describe-images --repository-name myapp --query 'imageDetails[].imageTags[]' --max-items 5
-
-# Update the service to the known-good tag
-aws ecs update-service --cluster myapp-cluster --service myapp-service --force-new-deployment --image 123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp@sha256:abc123
+# Build and tag with the commit SHA
+SHA=$(git rev-parse --short HEAD)
+docker build -t myapp:${SHA} .
+docker tag myapp:${SHA} 123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp:${SHA}
+docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp:${SHA}
 ```
 
-This gives you a 30-second rollback, and the image stays in ECR for 30 days, so you can redeploy it even if the build pipeline is broken.
-
-### What’s the one metric I should watch first when things go wrong?
-
-Watch the deployment frequency. If it drops below once per day for more than 48 hours, your pipeline is too fragile for new hires to use. In my dataset, teams with a deployment frequency under once per day had an onboarding failure rate above 30%. The fix is usually one of three things: simplify the workflow, add the ephemeral runner fix, or replace a flaky health check.
-
-## Final recommendation
-
-If you are a solo founder and the sole engineer, start with GitHub Actions + self-hosted runner on Linux arm64 with ephemeral runners. It costs $0.45 per 1,000 deploys, keeps your stack vendor-neutral, and lowers the onboarding failure rate to 12% with a two-line README fix. The entire setup is defined in code, so you can migrate later without rewriting your infrastructure.
-
-Open your terminal and run this one command right now to check if your runner is configured correctly:
+To roll back, redeploy the previous SHA. The exact command depends on your runtime; the property that matters is that the deploy step takes an image reference as input rather than always building from the current branch.
 
 ```bash
-docker info | grep -i "operating system" && echo "Docker is installed and running" || echo "Install Docker first"
+# Redeploy a specific image tag
+aws ecs update-service \
+  --cluster myapp-cluster \
+  --service myapp-service \
+  --force-new-deployment \
+  --task-definition myapp:42
 ```
 
-If the command prints `Docker is installed and running`, you are ready to proceed. If not, open your project’s README and paste the two-line installation snippet from the top pick section. You’ll be able to deploy from a fresh laptop in under 25 minutes.
+Two things make this work. First, the image registry must retain old tags for long enough to matter; a lifecycle policy that keeps the last ten tags is usually enough. Second, the deploy step must be able to run without a build, so a broken build pipeline does not block a rollback.
 
----
+### Why this is worth the setup cost
 
-### About this article
+A rollback that takes thirty seconds changes how a team behaves. People deploy more often because the cost of a mistake is low. That in turn makes each change smaller, which makes failures easier to diagnose. The investment is a few hours of pipeline work; the return is a different deployment culture.
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
+## Choosing defaults: a decision checklist
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
+When you are setting up or revising a pipeline, work through these questions in order. The answers usually point to one option.
 
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
+1. **Who is the least experienced person who will deploy?** If the answer is "someone who has never used a CLI," your pipeline needs a UI or a single command that does everything.
+2. **What happens if the build host is destroyed right now?** If the answer is "we lose the cache and it takes an extra two minutes," you are fine. If the answer is "we cannot rebuild," you have a problem.
+3. **How long does setup take on a clean machine?** Measure it. Do not estimate.
+4. **What does a failed deploy look like in the CI UI?** If it is one line with no component name, fix that before adding any other tooling.
+5. **Can you roll back without building?** If not, add image tagging by commit SHA and a deploy step that accepts an image reference.
+6. **What is the blast radius of a bad deploy?** If it is the whole production environment, add a staging step. If staging is already there, make sure a new hire can deploy to it without help.
+7. **How much does this cost at your current deploy frequency?** Compute it from your actual numbers rather than a vendor's marketing page.
 
-**Last generated:** August 2026
+The last question deserves a note. Deployment costs are usually dominated by the compute that runs your application, not by the CI minutes. Optimizing CI cost before you have fixed the onboarding and rollback problems is usually a distraction.
+
+## Failure modes to watch for after you fix the obvious ones
+
+Once build hosts are disposable, prerequisites are explicit, and failures name their cause, a few subtler problems tend to surface.
+
+**Cache poisoning.** An explicit cache keyed by lockfile hash is safe. A cache keyed by branch name is not, because two branches can produce incompatible artifacts. Key caches on the inputs that determine their contents.
+
+**Secret sprawl.** Making setup easy often means making credentials easy to obtain. Keep the number of places a secret can live as small as possible, and make the pipeline fetch secrets at runtime rather than storing them in the repository or on the build host.
+
+**Health checks that pass too easily.** A health check that returns 200 as soon as the process starts will pass before the application is ready to serve traffic. The check should exercise the dependency the application actually needs, such as a database connection, and fail if that dependency is unavailable.
+
+**Environments that drift.** If staging and production are configured differently, a deploy that passes staging can fail in production for reasons unrelated to the code. Keep the configuration difference to a small, explicit set of variables.
+
+## FAQ
+
+### Should the pipeline build from a Dockerfile or use a buildpack?
+
+Use a Dockerfile when you need control over the system libraries, the base image, or the runtime version. Use a buildpack when you want the platform to manage those choices and you are willing to accept its defaults. The tradeoff is control versus convenience, not correctness. If you choose a buildpack, pin the language version explicitly so an upstream default change does not silently alter your runtime.
+
+### How many environments do you need?
+
+Two is the minimum for anything with users: one that resembles production and one that is production. A third, ephemeral environment per pull request is useful for teams that deploy frequently, but it adds cost and configuration surface. Add it when the cost of a bad merge exceeds the cost of running it.
+
+### What if the senior engineer refuses to use the pipeline?
+
+That is a signal, not a personality problem. Ask what the pipeline makes slower or more annoying. Common answers are "it takes too long to get logs" and "I cannot run a one-off command against the environment." Both are fixable without removing the guardrails that protect everyone else.
+
+### How do you keep the README from going stale?
+
+Make the setup script the source of truth and have the README describe what the script does rather than duplicating the commands. If the script is the only place the commands live, it cannot drift from itself.
+
+### Is a self-hosted runner worth it?
+
+It depends on whether you need capabilities a hosted runner does not provide, such as a specific architecture, a private network, or a larger machine type. If you do not have such a requirement, hosted runners remove an entire class of maintenance work. If you do run self-hosted runners, make them ephemeral.
+
+## What to do in the next thirty minutes
+
+Pick the last failed deployment in your CI system and read only the top-level error message. If it does not tell you which component failed and roughly why, rewrite that error message to include the failing step, the command it ran, and its exit code. That single change is the highest-leverage fix available, because it makes every future failure cheaper to diagnose.

@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AI agent postmortem: human loop vs blind replay - Kubai Kevin</title>
-        <meta name="description" content="AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…">
+        <title>Postmortems for AI agents: human review vs blind replay - Kubai Kevin</title>
+        <meta name="description" content="Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.">
         <meta name="keywords" content="AiAgentPostmortem, AiIncidentResponse, DeterministicReplay, LlmFailureAnalysis, AiAgentMonitoring, PostmortemForAi, AiAgentDebugging, AiAgentRegression, Ai, Llm">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T22:43:19.173545">
-        <meta property="article:modified_time" content="2026-09-21T11:42:57.271039+00:00">
+        <meta property="article:modified_time" content="2026-10-04T10:06:17.462444+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="AI agent postmortem: human loop vs blind replay">
-        <meta property="og:description" content="AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…">
+        <meta property="og:title" content="Postmortems for AI agents: human review vs blind replay">
+        <meta property="og:description" content="Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.">
         <meta property="og:url" content="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/ai-agent-postmortem-human-loop-vs-blind-replay.png">
-        <meta property="og:image:alt" content="AI agent postmortem: human loop vs blind replay">
+        <meta property="og:image:alt" content="Postmortems for AI agents: human review vs blind replay">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="AI agent postmortem: human loop vs blind replay">
-        <meta name="twitter:description" content="AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…">
+        <meta name="twitter:title" content="Postmortems for AI agents: human review vs blind replay">
+        <meta name="twitter:description" content="Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-agent-postmortem-human-loop-vs-blind-replay.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -60,12 +60,12 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/#article",
-      "headline": "AI agent postmortem: human loop vs blind replay",
-      "description": "AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…",
+      "headline": "Postmortems for AI agents: human review vs blind replay",
+      "description": "Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.",
       "datePublished": "2026-06-20T22:43:19+00:00",
-      "dateModified": "2026-09-21T11:42:57+00:00",
-      "wordCount": 3318,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-04T10:06:17+00:00",
+      "wordCount": 3098,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "AI agent postmortem: human loop vs blind replay",
+          "name": "Postmortems for AI agents: human review vs blind replay",
           "item": "https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/"
         }
       ]
@@ -206,13 +206,13 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>AI agent postmortem: human loop vs blind replay</span>
+            <span>Postmortems for AI agents: human review vs blind replay</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">AI agent postmortem: human loop vs blind replay</h1>
+                <h1 itemprop="headline">Postmortems for AI agents: human review vs blind replay</h1>
                 
-                <p class="post-lead">AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…</p>
+                <p class="post-lead">Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.</p>
                 
                 
                 <div class="tags">
@@ -260,287 +260,229 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3318 words
+                        15 min read
+                        &nbsp;·&nbsp; 3098 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-21
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, companies are shipping AI agents faster than they can audit their failures. A common pattern is a production agent that runs for hours before anyone notices it is quoting stale prices in a local currency for a client in another region — the hallucinated data usually comes from an old local PDF that the RAG pipeline ranked higher than years of live pricing. Incidents like this commonly cost thousands of dollars in chargebacks and several days of engineering time, but the real surprise is how little existing incident response playbooks help. Regular incidents give you logs, stack traces, and a reproducible chain of calls; with an AI agent, the failure often lives in the prompt, the retrieval context, or the agent's internal state that never made it to the logs. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout — this post is what I wished I had found then.</p>
-<p>Most teams still treat AI agent failures like traditional software incidents: collect logs, file a ticket, schedule a retro. That approach misses the new failure modes introduced by non-determinism, external tool calls, and prompt drift. The two options we'll compare here are the most common ways teams actually investigate AI agent incidents today:</p>
+                <h2 id="the-failure-mode-this-article-addresses">The failure mode this article addresses</h2>
+<p>An agent runs for hours before anyone notices it is quoting stale prices from a local PDF that a retrieval pipeline ranked above live pricing data. The output looked plausible. No stack trace fired. The guardrail passed. By the time a human notices, the failure has been live for a long time and the evidence is scattered across prompt versions, retrieved chunks, tool responses, and model provider state.</p>
+<p>Traditional incident response assumes a reproducible chain of calls. Agent failures often live in the prompt, the retrieval context, or internal state that never reached the logs. That mismatch is why teams keep re-litigating the same question: should a human review the failure, or should a machine replay it?</p>
+<p>Two approaches dominate:</p>
 <ul>
-<li>Human-loop postmortems: a human reviewer re-runs the agent with the same inputs, inspects intermediate steps, and validates the output before it reaches the user.</li>
-<li>Blind-replay postmortems: automated capture and replay of the entire agent trace (prompts, tool calls, memory state) without human review at the time of failure.</li>
+<li><strong>Human-loop postmortems.</strong> A reviewer re-runs the agent with the same inputs, inspects intermediate steps, and validates the output before it reaches the user. The human is in the loop at review time.</li>
+<li><strong>Blind-replay postmortems.</strong> The system captures the entire trace (prompts, tool calls, memory state, outputs) and replays it deterministically in a staging environment. No human is involved at review time; the replay produces a pass/fail regression result.</li>
 </ul>
-<p>By 2026, most teams running multi-agent workflows have tried both, but only a minority have quantified which one catches more failures faster. The data we'll use comes from a controlled failure-injection experiment run on a customer-support agent cluster handling 8k tickets/day between Brazil, Colombia, and Mexico during Q2 2026. The experiment injected 432 distinct failure modes (prompt injection, retrieval drift, LLM latency spikes, tool-execution errors) and measured both approaches on three axes: time-to-detection, time-to-resolution, and false-positive rate.</p>
-<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
-<p>Human-loop postmortems rely on a human reviewer to inspect the agent's behavior after a failure is reported. The agent records a trace (prompts, tool calls, outputs) and flags any output that fails a guardrail or triggers an alert. A human reviewer then replays the trace, annotates the incident, and decides whether to patch the prompt, the RAG index, or the tool configuration. The key difference from blind replay is that the human is in the loop at review time, not at runtime.</p>
-<p>A typical stack uses the open-source tool <strong>Tracecat 0.12.3</strong> (Python 3.11) to capture agent traces and <strong>Label Studio 1.8</strong> for human review. An incident response bot (built on <strong>Discord.py 2.3</strong>) posts each trace to a private channel and assigns it to the on-call engineer. The reviewer's job is to validate the output, inspect the retrieved chunks, and mark the failure as either prompt-related, retrieval-related, or tool-related. A common setup is a 30-minute SLA for human review during business hours and 2 hours overnight.</p>
-<p>Human-loop works best when:
-- Your agent's outputs are user-facing and need semantic review anyway (e.g., support replies, marketing copy). - Your team has domain experts who can judge correctness faster than an automated guardrail. - You're still iterating on prompts and want to collect real examples for fine-tuning.</p>
-<p>The biggest win is usually a large reduction in false positives — commonly around 47%. Guardrails like PII redaction and toxicity filters still fire, but the human reviewer can override them when the context justifies it (e.g., a medical term flagged as toxic). Logging every human override is the standard way to improve the guardrails over time.</p>
-<pre><code class="language-python"># Minimal Tracecat trace collector
-from tracecat import AgentTrace
+<p>This article compares them on detection speed, resolution speed, false positives, developer experience, and cost. Every number below is either a documented default, arithmetic shown from stated assumptions, or explicitly labelled illustrative. Where a benchmark would normally appear, you get the instrumentation recipe instead, because your numbers will differ from anyone else's.</p>
+<h2 id="what-a-trace-actually-contains">What a trace actually contains</h2>
+<p>Before comparing approaches, it helps to be precise about the artifact both depend on. A useful agent trace records, at minimum:</p>
+<ul>
+<li>The exact system prompt and any prompt template version identifier.</li>
+<li>The full message history sent to the model, including tool schemas.</li>
+<li>Every tool call: name, arguments, raw response, and wall-clock duration.</li>
+<li>The retrieval step: query, index snapshot identifier, top-k chunks with scores.</li>
+<li>Model parameters: temperature, top_p, seed, max tokens, and the provider's model version string.</li>
+<li>The final output, plus any guardrail verdicts and their thresholds.</li>
+</ul>
+<p>If any of these are missing, neither approach can do its job. A reviewer cannot judge a retrieval failure without the chunks; a replay engine cannot reproduce a call without the exact arguments and the index snapshot. The single highest-leverage investment in agent postmortems is making the trace complete, not choosing between the two methods.</p>
+<h2 id="option-a-human-loop-postmortems">Option A: human-loop postmortems</h2>
+<h3 id="how-it-works">How it works</h3>
+<p>The agent records a trace and flags outputs that fail a guardrail or trigger an alert. A reviewer replays the trace, annotates the incident, and decides whether to patch the prompt, the retrieval index, or a tool configuration. The human is in the loop at review time, not at runtime.</p>
+<p>A typical stack captures traces to durable storage, surfaces them in a review UI, and notifies an on-call engineer through whatever channel the team already uses. The reviewer's job is to validate the output, inspect retrieved chunks, and classify the failure as prompt-related, retrieval-related, or tool-related.</p>
+<h3 id="where-it-shines">Where it shines</h3>
+<p>Human review is strongest when correctness is semantic and hard to assert programmatically: support replies, summaries, marketing copy, anything where a domain expert can judge quality faster than a rule can. It is also the right default while prompts are still changing weekly, because the reviewer generates labelled examples you can later use for evaluation sets or fine-tuning.</p>
+<p>The other advantage is override capability. A toxicity or PII filter that fires on a legitimate medical term can be overridden by a reviewer who understands the context. Logging every override is the standard way to tighten guardrails over time: overrides are your ground-truth labels for "the filter was wrong."</p>
+<h3 id="the-failure-mode-to-watch">The failure mode to watch</h3>
+<p>Reviewer cognitive load is the dominant cost, and it is easy to underestimate. A raw trace with thirty retrieved chunks and a dozen tool calls takes real effort to read. When traces are long, on-call engineers skip reviews, and a skipped review is indistinguishable from a passing one in most dashboards.</p>
+<p>The mitigation is a summary view containing only the prompt, the top few retrieved chunks, the tool calls, and the final output, with a link to the raw trace for the minority of cases that need it. This is a UI change, not an architecture change, and it is usually the single cheapest improvement available.</p>
+<h3 id="illustrative-sketch">Illustrative sketch</h3>
+<p>The following is a simplified illustration of the shape of a trace collector, not a working integration with any specific library. Treat it as pseudocode for the data model.</p>
+<pre><code class="language-python"># Illustrative only: shape of a human-review trace collector.
+from dataclasses import dataclass, field
 
-class HumanReviewTrace(AgentTrace):
-    def on_failure(self, output: str, trace: dict):
-        trace[&quot;reviewer&quot;] = None
-        trace[&quot;status&quot;] = &quot;pending&quot;
-        self.storage.save(trace)
-        self.bot.post_to_channel(trace)
-        return trace[&quot;id&quot;]
+@dataclass
+class ReviewTrace:
+    trace_id: str
+    prompt_version: str
+    messages: list
+    tool_calls: list
+    retrieved_chunks: list
+    final_output: str
+    guardrail_verdicts: list
+    reviewer: str | None = None
+    status: str = &quot;pending&quot;
+    overrides: list = field(default_factory=list)
+
+def on_guardrail_failure(trace: ReviewTrace, store, notifier):
+    trace.status = &quot;pending&quot;
+    store.save(trace)
+    notifier.notify(trace.trace_id)
+    return trace.trace_id
 </code></pre>
-<p>One trap teams fall into is underestimating the reviewer's cognitive load. It is common to see on-call engineers skipping the review a third of the time because the traces are too long. Switching to a summary view that only includes the prompt, the top 3 retrieved chunks, the tool calls, and the final output typically cuts review time from around 12 minutes to 4 minutes per incident and reduces skipping to under 10%.</p>
-<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
-<p>Blind-replay postmortems capture the entire agent trace automatically and replay it deterministically in a staging environment to reproduce the failure. No human is involved at review time; instead, the system runs a regression test suite against the trace and generates a bug report. The replay engine must be bit-for-bit deterministic: the same LLM version, the same vector DB snapshot, the same tool stubs. In practice this means pinning every dependency to exact versions and recording the model provider's response (e.g., caching the LLM output with <strong>litellm 1.27.7</strong>'s <code>cache_responses=True</code>).</p>
-<p>Two common replay engines are <strong>LangSmith 0.20</strong> (SaaS) and <strong>Agenta 0.15</strong> (self-hosted). LangSmith gives you a 1-click replay button and automatic assertion templates, but it commonly costs around $4.20 per 1k traces — often too expensive at scale. Agenta is free but requires pinning every dependency: <code>ollama 0.2.6</code>, <code>chromadb 0.5.3</code>, and <code>postgresql 15.5</code> for the trace store. The replay itself typically takes around 4.2 seconds on average (95th percentile) compared to 15 seconds for the live agent, which means the regression suite can run every time the prompt or the RAG index is updated.</p>
-<p>Blind replay shines when:
-- Your agent's output is not user-facing or the user impact is low (e.g., internal data enrichment). - You need to reproduce failures that happen only under specific retrieval conditions (e.g., a stale vector index). - You want to gate deployments with a regression test that runs on every change.</p>
-<p>The replay engine also catches retrieval drift bugs that human review tends to miss for weeks. A common case: the agent uses a vector index that has been rebuilt with a new embedding model (text-embedding-3-large) but the old index snapshot remains in the retrieval pipeline. Blind replay detects a 12% drop in embedding similarity for a known set of queries, which translates to 8% more incorrect answers in production. Human-loop reviewers miss it because the guardrails are still passing — the output sounds plausible even though the retrieval is off.</p>
-<pre><code class="language-yaml"># Agenta replay config snippet
+<p>The important design choices are visible here: the prompt version is stored alongside the trace, guardrail verdicts are recorded rather than just acted on, and reviewer overrides are captured as data.</p>
+<h2 id="option-b-blind-replay-postmortems">Option B: blind-replay postmortems</h2>
+<h3 id="how-it-works_1">How it works</h3>
+<p>Blind replay captures the full trace automatically and replays it deterministically in a staging environment. The replay engine must be deterministic in every input it touches: the same model version, the same vector index snapshot, the same tool stubs, the same sampling parameters. In practice that means pinning dependencies to exact versions and recording or caching model responses so a replay does not depend on a live provider.</p>
+<p>Determinism is the whole game. If any input varies between the original run and the replay, the comparison is meaningless. The usual sources of non-determinism are:</p>
+<ul>
+<li>Sampling: temperature above zero, or a provider that does not honour a seed. Setting temperature to zero and a fixed seed removes most of it, but not all providers guarantee this.</li>
+<li>Retrieval: a live index that has been rebuilt or re-embedded since the original run.</li>
+<li>Tools: live web searches, rate-limited APIs, and anything with wall-clock or randomness in its response.</li>
+<li>Model version: providers deprecate and silently update models. Pin the version string and record it in the trace.</li>
+</ul>
+<h3 id="where-it-shines_1">Where it shines</h3>
+<p>Blind replay is strongest when the output is not directly user-facing, or when user impact is low: internal enrichment, classification, routing, batch summarisation. It is also the only practical way to catch retrieval drift, because drift is invisible to guardrails. If an index is rebuilt with a new embedding model but an old snapshot is still wired into the pipeline, outputs degrade gradually and continue to sound plausible. A similarity assertion against a known query set catches this; a human reading one output usually does not.</p>
+<p>The second advantage is deployment gating. Once a replay suite exists, it runs on every prompt or index change, which turns postmortems into regression tests. That is a genuine workflow shift: engineers fix the prompt or the index rather than triaging a ticket.</p>
+<h3 id="the-failure-mode-to-watch_1">The failure mode to watch</h3>
+<p>Prompt drift breaks blind replay. When the system prompt changes, every old trace is replayed against the new prompt, and assertions written for the old behaviour fire on differences that are harmless or even intended. The result is a flood of spurious failures, which is worse than no signal because it trains the team to ignore the suite.</p>
+<p>The mitigation is a prompt-diff step: compare the prompt version recorded in the trace against the current prompt, and only re-run assertions that are still relevant to the changed sections. Assertions should be scoped to behaviour, not to exact string matches on the output.</p>
+<h3 id="illustrative-sketch_1">Illustrative sketch</h3>
+<p>The following illustrates the shape of a replay configuration. It is not tied to a specific product.</p>
+<pre><code class="language-yaml"># Illustrative only: shape of a replay configuration.
 replay:
   llm_cache: true
-  ollama_model: &quot;llama3.2:1b&quot;
-  chroma_snapshot: &quot;2026-06-15-14-30&quot;
+  model: &quot;&lt;pinned-model-version&gt;&quot;
+  index_snapshot: &quot;2026-06-15T14:30Z&quot;
+  temperature: 0
+  seed: 12345
   assertions:
-    - type: similarity
-      threshold: 0.85
-    - type: p95_latency
-      max_ms: 5000
+    - type: retrieval_similarity
+      min_score: 0.85
+    - type: p95_latency_ms
+      max: 5000
+    - type: output_schema
+      strict: true
 </code></pre>
-<p>One pitfall with blind replay is prompt drift detection. If you update the system prompt, every old trace will fail the new prompt's guardrails even though the failure might be harmless. Adding a prompt comparison step that diffs the old and new prompts and only reruns assertions that are still relevant typically cuts spurious bug reports by around 63%.</p>
-<h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>The experiment injected 432 failures across three categories: prompt-related (180), retrieval-related (144), and tool-related (108). Both approaches were measured on four metrics: time-to-detect, time-to-resolve, false-positive rate, and CPU seconds per incident.</p>
+<h2 id="how-to-measure-both-approaches-on-your-own-traffic">How to measure both approaches on your own traffic</h2>
+<p>Published benchmarks for agent postmortems are close to worthless because the numbers depend entirely on your trace completeness, your guardrail design, and your incident mix. Measure it yourself. Here is what to instrument.</p>
+<p><strong>Time-to-detect.</strong> Timestamp the moment the failure occurs (the trace's final output timestamp) and the moment an alert or ticket is created. For human-loop, detection depends on a guardrail firing or a user reporting. For blind replay, detection happens when the replay suite next runs. Record the distribution, not the mean; the tail is what hurts.</p>
+<p><strong>Time-to-resolve.</strong> From the detection timestamp to the timestamp the fix is deployed and verified. Break this into triage time and fix time, because the two approaches differ mainly in triage.</p>
+<p><strong>False-positive rate.</strong> Count flagged incidents that a reviewer or a replay assertion marked as not-a-real-failure, divided by total flagged incidents. You need a consistent definition of "real failure" or this metric drifts.</p>
+<p><strong>Reviewer minutes per incident.</strong> Instrument the review UI to record time-on-page. Self-reported estimates are consistently too low.</p>
+<p><strong>Replay determinism rate.</strong> Run the same trace twice through the replay engine and diff the outputs. If they differ, the replay is not deterministic and every result from it is suspect. Track this as a first-class metric.</p>
+<p><strong>Cost.</strong> Reviewer time is <code>reviewer_minutes / 60 × loaded_hourly_rate</code>, including benefits and overhead, not just salary. Replay infrastructure is the marginal cost of the nodes or SaaS tier you actually run, divided by incidents processed.</p>
+<p>A controlled experiment is straightforward: inject synthetic failures of known type into a staging agent, then run both approaches against the same set and compare. Fifty failures across prompt, retrieval, and tool categories is enough to see whether one approach is clearly ahead for your workload. The point is not to reproduce anyone else's numbers; it is to replace assumptions with your own measurements before committing.</p>
+<h2 id="head-to-head-comparison">Head-to-head comparison</h2>
+<p>The table below compares the two approaches qualitatively. No numeric results are given because they are workload-specific; the right-hand column tells you what to measure to fill in the blanks for your team.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
+<th>Dimension</th>
 <th>Human-loop</th>
-<th>Blind-replay</th>
-<th>Winner</th>
-<th>Notes</th>
+<th>Blind replay</th>
+<th>What to measure</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Time-to-detect (median)</td>
-<td>38 min</td>
-<td>5 min</td>
-<td>Blind-replay</td>
-<td>Detection is automatic in blind replay.</td>
+<td>Detection</td>
+<td>Depends on guardrail firing or user report</td>
+<td>Automatic when the replay suite runs</td>
+<td>Time from failure to first alert</td>
 </tr>
 <tr>
-<td>Time-to-resolve (median)</td>
-<td>210 min</td>
-<td>45 min</td>
-<td>Blind-replay</td>
-<td>Human-loop waits for reviewer.</td>
+<td>Triage speed</td>
+<td>Bounded by reviewer availability</td>
+<td>Bounded by replay runtime</td>
+<td>Triage minutes per incident</td>
 </tr>
 <tr>
-<td>False-positive rate</td>
-<td>7.2%</td>
-<td>1.8%</td>
-<td>Blind-replay</td>
-<td>Guardrails still fire; humans override.</td>
+<td>Semantic quality judgement</td>
+<td>Strong</td>
+<td>Weak; assertions only</td>
+<td>Rate of "plausible but wrong" outputs caught</td>
 </tr>
 <tr>
-<td>CPU seconds per incident</td>
-<td>11.3 s</td>
-<td>4.2 s</td>
-<td>Blind-replay</td>
-<td>Replay engine is lightweight.</td>
+<td>Retrieval drift detection</td>
+<td>Weak; drift is invisible to guardrails</td>
+<td>Strong; similarity assertions catch it</td>
+<td>Similarity score delta on a fixed query set</td>
 </tr>
 <tr>
-<td>Reviewer minutes per incident</td>
-<td>4 min</td>
-<td>0 min</td>
-<td>Blind-replay</td>
-<td>Human-loop requires reviewer time.</td>
-</tr>
-</tbody>
-</table>
-<p>The most surprising result was that blind replay was 4.7× faster to resolve even though it added a replay step. The bottleneck in human-loop is the reviewer's availability: during peak hours a 3.4-hour backlog is common, which means users are exposed to the failure longer. Blind replay removes that variable by automating the regression step.</p>
-<p>The cost of running each approach at scale also differs. Human-loop typically requires one reviewer per shift (3 shifts/day) at an average cost of $32/hour in Mexico City and $48/hour in São Paulo. Blind replay runs on two idle Kubernetes nodes (4 vCPU, 8 GB RAM) and commonly costs around $112/month for the replay cluster plus $420/month for LangSmith if you stay on the SaaS plan. The break-even point is around 168 incidents/month — above that, blind replay is cheaper.</p>
-<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
-<p>Human-loop feels more natural at first because it leverages existing incident workflows. Engineers already know how to triage a ticket, assign it, and schedule a retro. The tooling is mature: <strong>Sentry 8.18</strong>, <strong>Datadog 1.56</strong>, and <strong>Discord</strong> integrations are plug-and-play. The cognitive load on reviewers, however, is higher than most teams expect. A typical on-call rotation reports a noticeable increase in fatigue scores (measured via a weekly survey) after a few weeks. The issue isn't the time per incident (4 minutes) but the context switching: reviewers have to read the prompt, the retrieved chunks, the tool calls, and the output, then decide if the failure is real or a guardrail false positive. A summary view helps, but reviewers still spend around 38% of their time digging into the raw trace when the summary isn't enough.</p>
-<p>Blind replay changes the developer workflow entirely. Instead of a ticket, you get a regression test that fails. Engineers focus on fixing the prompt or the RAG index, not on validating whether the output was harmful. The workflow feels more like TDD than incident response. The downside is the setup cost: you must pin every dependency, cache LLM responses, and maintain a snapshot of the vector index. Getting Agenta to replay production traces deterministically commonly takes around two weeks — the main culprit is non-deterministic token sampling in the LLM. Once you set <code>temperature=0</code> and seed the random generator, the replay becomes reliable.</p>
-<p>Here's the kind of developer feedback teams typically collect after 8 weeks:</p>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Human-loop</th>
-<th>Blind-replay</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Onboarding time</td>
-<td>1 day</td>
-<td>3 days</td>
-<td>Blind replay requires dependency pinning.</td>
-</tr>
-<tr>
-<td>Cognitive load</td>
-<td>High</td>
-<td>Low</td>
-<td>Reviewers vs. regression tests.</td>
-</tr>
-<tr>
-<td>Tooling maturity</td>
-<td>High</td>
-<td>Medium</td>
-<td>Sentry vs. Agenta/LangSmith.</td>
-</tr>
-<tr>
-<td>Integration friction</td>
-<td>Low</td>
-<td>Medium</td>
-<td>Discord vs. Kubernetes.</td>
-</tr>
-</tbody>
-</table>
-<p>The biggest surprise is how much reviewers appreciate the summary view. After rolling it out, satisfaction scores commonly jump from around 6.2/10 to 8.7/10. They still have to do the work, but the interface makes it feel lighter.</p>
-<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>Human-loop costs are dominated by reviewer time and opportunity cost. In a typical setup, each incident requires 4 minutes of review on average, plus the time to file a ticket, assign it, and schedule the retro. That works out to roughly $0.53 per incident in reviewer wages (Mexico City rate) plus $0.12 in tooling (Datadog and Sentry). At 100 incidents/month, that's $65/month in tooling and $53 in wages — not counting the retro time.</p>
-<p>Blind replay costs are split between infrastructure and tooling. Running Agenta on two spot nodes (4 vCPU, 8 GB RAM) in AWS us-east-1 typically costs $0.042 per node-hour. At 200 incidents/day, that's 6k incidents/month and 2.1 CPU-hours/day, or $26/month. Staying on LangSmith's SaaS plan at $4.20 per 1k traces would cost $252/month — still cheaper than human-loop at 168+ incidents/month.</p>
-<p>The cost of false positives also matters. Human-loop commonly has a 7.2% false-positive rate, which translates to 72 unnecessary reviews per 1k incidents. Each review costs $0.53, so the false-positive tax is $38 per 1k incidents. Blind replay's false-positive rate is typically 1.8%, cutting that tax to $9.60 per 1k incidents.</p>
-<table>
-<thead>
-<tr>
-<th>Cost element</th>
-<th>Human-loop</th>
-<th>Blind-replay</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Reviewer wages per incident</td>
-<td>$0.53</td>
-<td>$0.00</td>
-<td>Human-loop only.</td>
-</tr>
-<tr>
-<td>Tooling per incident</td>
-<td>$0.12</td>
-<td>$0.04</td>
-<td>Agenta vs. Datadog+Sentry.</td>
-</tr>
-<tr>
-<td>False-positive tax per 1k</td>
-<td>$38.00</td>
-<td>$9.60</td>
-<td>Human-loop over-flagging.</td>
-</tr>
-<tr>
-<td>Monthly infra cost</td>
-<td>$0</td>
-<td>$26</td>
-<td>Agenta on spot nodes.</td>
-</tr>
-<tr>
-<td>Break-even volume</td>
-<td>168</td>
-<td>N/A</td>
-<td>Human-loop cheaper below 168/month.</td>
-</tr>
-</tbody>
-</table>
-<p>The break-even volume is critical for teams in Latin America where labor is cheaper. If you're running fewer than 168 incidents/month, human-loop is cheaper. Above that, blind replay wins on both speed and cost.</p>
-<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>When I'm asked to choose between the two, I run a 2-week spike that answers five questions:</p>
-<ol>
-<li><strong>User impact</strong>: Is the agent user-facing and safety-critical (e.g., medical triage, financial advice)? If yes, lean human-loop for the extra semantic review.</li>
-<li><strong>Volume</strong>: How many incidents do we expect per month? Use the break-even volume from the cost table above (168 incidents/month in our setup).</li>
-<li><strong>Determinism</strong>: Can we replay the agent deterministically? If our vector index snapshots are large or the LLM uses non-deterministic sampling, blind replay will be harder to set up.</li>
-<li><strong>Expertise</strong>: Do we have domain experts available for review? If not, blind replay is safer because it doesn't rely on human judgment at review time.</li>
-<li><strong>Tooling maturity</strong>: Do we already have incident tools (Sentry, Datadog) that integrate with human review? If yes, human-loop is easier to adopt.</li>
-</ol>
-<p>Here's the decision matrix we use internally:</p>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>Human-loop</th>
-<th>Blind-replay</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>User-facing</td>
-<td>Yes</td>
+<td>Determinism required</td>
 <td>No</td>
-<td>Human review for subjective quality.</td>
+<td>Yes, absolutely</td>
+<td>Replay determinism rate (same trace twice)</td>
 </tr>
 <tr>
-<td>Volume &gt; 168/month</td>
-<td>No</td>
+<td>Setup cost</td>
+<td>Low; uses existing incident tooling</td>
+<td>High; pinning, caching, snapshots</td>
+<td>Engineer-weeks to first reliable replay</td>
+</tr>
+<tr>
+<td>Marginal cost per incident</td>
+<td>Reviewer time</td>
+<td>Compute plus tooling</td>
+<td>Cost per incident at your volume</td>
+</tr>
+<tr>
+<td>Scales with volume</td>
+<td>Poorly; reviewer hours are linear</td>
+<td>Well; compute is elastic</td>
+<td>Cost curve as incidents per month grows</td>
+</tr>
+<tr>
+<td>Handles live external tools</td>
 <td>Yes</td>
-<td>Cost break-even.</td>
+<td>Poorly</td>
+<td>Fraction of incidents involving live tools</td>
 </tr>
 <tr>
-<td>Deterministic replay</td>
-<td>Doesn't matter</td>
-<td>Must have</td>
-<td>Blind replay requires pinning.</td>
-</tr>
-<tr>
-<td>Domain experts</td>
-<td>Available</td>
-<td>Not needed</td>
-<td>Human-loop relies on expertise.</td>
-</tr>
-<tr>
-<td>Existing incident stack</td>
-<td>Yes</td>
-<td>No</td>
-<td>Human-loop leverages Sentry/Datadog.</td>
+<td>Best fit</td>
+<td>User-facing, semantic, low volume</td>
+<td>Internal, high volume, deterministic</td>
+<td>Your incident mix</td>
 </tr>
 </tbody>
 </table>
-<p>A useful practice is to run a small controlled experiment: inject 50 synthetic failures and measure both approaches. Look at time-to-detect, time-to-resolve, and false-positive rate. If blind replay is at least 2× faster to resolve and the false-positive rate is below 3%, choose blind replay even for user-facing agents. In a typical experiment, blind replay resolves around 89% of failures within 1 hour, while human-loop takes 4 hours for the same set.</p>
-<p>One edge case teams often miss the first time is prompt versioning. If you update the prompt frequently, blind replay will flag every old trace as failing the new prompt, even if the failure is harmless. Adding a prompt comparison step that only reruns assertions that are still relevant typically cuts spurious bug reports from around 34% to 6%.</p>
-<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
-<p><strong>Recommendation: Use blind replay for most AI agent postmortems in 2026, unless the agent is highly user-facing and safety-critical or your incident volume is below 168/month.</strong></p>
-<p>Blind replay catches failures that human review alone tends to miss (retrieval drift, prompt drift, tool-execution errors that don't trigger guardrails). It's faster to resolve, cheaper at scale, and less prone to cognitive overload for reviewers. The setup cost is higher — pinning dependencies, caching LLM responses, maintaining snapshots — but the payoff in reduced false positives and faster MTTR is worth it.</p>
-<p><strong>When to ignore this recommendation:</strong>
-- Your agent is user-facing and the output can harm users (e.g., medical advice, financial recommendations). In that case, keep the human in the loop for semantic review. - Your team is small and your incident volume is low (&lt; 150/month). The human-loop setup is simpler and cheaper below the break-even point. - Your agent relies on non-deterministic tools (e.g., live web searches, external APIs with rate limits). Blind replay will struggle to reproduce those failures deterministically.</p>
-<p>Teams that ignore this recommendation sometimes regret it. A common case: a blind-replay system is rolled out for a customer-support agent handling 1.2k tickets/day. After two weeks, customer complaints about "rude" responses rise by around 5%, even though the guardrails are still passing. The blind replay isn't triggering because the guardrails are using a cached version of the output. The fix is to switch back to human review for a couple of weeks while rebuilding the guardrails to include runtime output comparison. The lesson: blind replay works best when you can reproduce the failure deterministically, including the final output.</p>
-<h2 id="final-verdict">Final verdict</h2>
-<p>Blind replay is the better default for AI agent postmortems in 2026 because it's faster, cheaper at scale, and less prone to cognitive overload. Human-loop is still the right choice for highly user-facing agents where semantic correctness matters more than speed, or for teams with low incident volume.</p>
-<p>If you're on the fence, run a 2-week spike with 50 synthetic failures. Measure time-to-detect, time-to-resolve, and false-positive rate. If blind replay resolves 80% of failures within 1 hour and the false-positive rate is below 3%, commit to it. Otherwise, stick with human-loop until you can meet those thresholds.</p>
-<p>In the next 30 minutes, check your agent's incident log for the last 30 days. Count how many incidents were marked as "needs human review" versus "automated regression." If more than 20% of incidents required human review, blind replay will likely save you time and money.</p>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how to set up blind replay for an AI agent in production</strong></p>
-<p>Start with <strong>Agenta 0.15</strong> or <strong>LangSmith 0.20</strong>. Pin every dependency: your LLM provider, vector DB, and tool stubs. Cache LLM responses with <code>litellm 1.27.7</code>'s <code>cache_responses=True</code> to ensure deterministic replays. Capture the full agent trace (prompts, tool calls, outputs) and store it in PostgreSQL 15.5. Write assertions that compare the replayed output to the original output and check retrieval quality. Run the replay in a staging environment first to validate determinism.</p>
-<p><strong>what's the biggest mistake teams make when switching to human-loop postmortems</strong></p>
-<p>Underestimating the reviewer's cognitive load. Teams assume reviewers can quickly skim the prompt and output, but in practice they spend 38% of their time digging into retrieved chunks and tool calls. Reduce the load by adding a summary view that only includes the prompt, top 3 retrieved chunks, tool calls, and final output. Measure reviewer satisfaction weekly and adjust the interface accordingly.</p>
-<p><strong>when does human-loop postmortem outperform blind replay</strong></p>
-<p>When the agent is highly user-facing and safety-critical (e.g., medical triage, financial advice) or when your incident volume is below 168/month. Human review can override guardrails that are too strict for the domain, reducing false positives. At low volume, the reviewer time cost is lower than the infrastructure cost of blind replay.</p>
-<p><strong>how to handle prompt drift in blind replay</strong></p>
-<p>Prompt drift breaks blind replay because old traces fail the new prompt's guardrails even when the failure is harmless. Add a prompt comparison step that diffs the old and new prompts and only reruns assertions that are still relevant. In our setup, this cut spurious bug reports from 34% to 6%. If you update the prompt frequently, consider keeping a rolling window of prompts in your trace store so you can replay against the correct version.</p>
-<h2 id="related-reading">Related reading</h2>
+<p>The pattern that emerges is not "one wins." Human review wins on semantic judgement and setup cost. Blind replay wins on detection latency, scale, and catching drift. Most mature teams end up with both: replay as the default gate, human review reserved for the category of failures where correctness is a judgement call.</p>
+<h2 id="a-worked-decision-example">A worked decision example</h2>
+<p>Consider a support agent handling 5,000 tickets per day across three markets. Assume, illustratively, that the team sees 300 flagged incidents per month, that a reviewer spends 6 minutes per incident, and that the loaded reviewer rate is $45 per hour.</p>
 <ul>
-<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
-<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Fix AI agent failures: postmortem guide</a></li>
-<li><a href="https://kubaik.github.io/debug-ai-agent-failures-differently/">Debug AI agent failures differently</a></li>
+<li>Reviewer cost: <code>300 × (6 / 60) × $45 = 300 × 0.1 × $45 = $1,350</code> per month.</li>
+<li>If a summary view halves review time to 3 minutes: <code>300 × 0.05 × $45 = $675</code> per month. The saving is $675 per month for a UI change.</li>
+<li>If the false-positive rate is 20%, then 60 of those 300 reviews are wasted: <code>60 × 0.05 × $45 = $135</code> per month spent on non-failures. Improving guardrails attacks that line directly.</li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
+<p>Now the replay side. Assume two small nodes at $0.05 per node-hour, running continuously: <code>2 × 0.05 × 24 × 30 = $72</code> per month, plus whatever SaaS tier the team uses for trace storage. If the replay suite catches 40% of the same incidents automatically and those no longer need a reviewer, reviewer cost drops to <code>180 × 0.05 × $45 = $405</code> per month, and total cost is <code>$405 + $72 = $477</code>, versus $675 for review-only. The break-even is sensitive to the reviewer rate and the catch rate, which is exactly why you should compute it with your own numbers rather than adopting someone else's threshold.</p>
+<p>The decision rule that falls out: if <code>replay_monthly_cost &lt; reviewer_cost_saved + value_of_faster_detection</code>, run replay as the default. Otherwise keep review as the default and use replay only for the categories it handles well.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order. The first "no" usually settles it.</p>
+<ol>
+<li><strong>Is the output user-facing and safety-critical?</strong> Medical, financial, legal, or anything where a wrong answer causes harm. If yes, a human must review semantic correctness. Replay alone is not sufficient.</li>
+<li><strong>Can you replay deterministically today?</strong> Do you pin model versions, cache responses, and snapshot your index? If not, estimate the work before choosing replay; it is usually measured in engineer-weeks, not days.</li>
+<li><strong>What is your incident volume?</strong> Below roughly 100 to 150 incidents per month, reviewer time is usually cheaper than replay infrastructure. Above that, compute the break-even with your own rates.</li>
+<li><strong>Do you have domain experts available?</strong> If not, human review degrades into rubber-stamping, and replay is the safer default.</li>
+<li><strong>How often does the prompt change?</strong> Frequent prompt changes make replay noisy unless you invest in prompt-diffing. If prompts change weekly and you have no diffing, start with review.</li>
+<li><strong>Do incidents involve live external tools?</strong> Web search, rate-limited APIs, and other non-reproducible dependencies make replay unreliable. Route those to review.</li>
+<li><strong>Do you already have incident tooling?</strong> Existing alerting, ticketing, and on-call rotation make review cheaper to adopt. Replay needs its own harness.</li>
+</ol>
+<h2 id="implementation-notes-that-apply-to-both">Implementation notes that apply to both</h2>
+<p><strong>Version everything.</strong> Prompt version, index snapshot, model version, tool schemas, and guardrail thresholds should all be recorded in the trace. Without this, neither approach can reproduce anything, and you cannot tell whether a change caused an improvement.</p>
+<p><strong>Separate detection from diagnosis.</strong> Detection can be automated cheaply: schema validation, similarity thresholds, latency bounds, and output comparison. Diagnosis is where humans add value. Mixing the two is why reviewer queues get long.</p>
+<p><strong>Scope assertions to behaviour.</strong> An assertion that the output equals a stored string will fire on every harmless rephrasing. Assert on structure, on required facts being present, and on retrieval quality, not on exact text.</p>
+<p><strong>Track override rates.</strong> Every human override of a guardrail is a label. If a guardrail is overridden often, it is miscalibrated. If it is never overridden, check whether reviewers are actually reading it.</p>
+<p><strong>Measure determinism first.</strong> Before trusting any replay result, run the same trace twice and diff. A replay suite with a 70% determinism rate produces 30% noise, and noise destroys trust in the suite faster than missing failures does.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I set up deterministic replay for an agent in production?</strong></p>
+<p>Start by pinning every input: exact model version string, temperature zero, a fixed seed where the provider supports it, a snapshot identifier for the vector index, and stubs or recordings for every tool. Cache model responses so a replay does not depend on a live provider. Then verify determinism empirically: run the same trace twice and diff the outputs. Only after that rate is 100% should you write assertions, because assertions on a non-deterministic replay measure noise.</p>
+<p><strong>What is the biggest mistake teams make with human-loop postmortems?</strong></p>
+<p>Underestimating reviewer cognitive load. Teams assume a reviewer can skim a prompt and an output, but in practice long traces cause skipping, and a skipped review looks like a pass in most dashboards. The fix is a summary view with the prompt, a few retrieved chunks, the tool calls, and the final output, plus a link to the raw trace.</p>
+<p><strong>When does human review genuinely outperform replay?</strong></p>
+<p>When correctness is a judgement call rather than a checkable property, when the output is safety-critical, when incident volume is low enough that reviewer time is cheaper than infrastructure, or when incidents depend on live external tools that cannot be reproduced.</p>
+<p><strong>How do I handle prompt drift in a replay suite?</strong></p>
+<p>Record the prompt version in every trace, and before re-running assertions, diff the trace's prompt against the current one. Re-run only the assertions that remain relevant to the changed sections. Without this step, every prompt edit produces a wave of spurious failures, and the team learns to ignore the suite.</p>
+<p><strong>Can we run both?</strong></p>
+<p>Yes, and most teams that operate agents at any scale do. Replay runs as a deployment gate on every prompt or index change, catching drift and regressions automatically. Human review handles the subset of incidents where the failure is real but the correct behaviour is a judgement call. The split is usually decided by incident category, not by incident volume.</p>
+<p><strong>What if our agent calls a live search API?</strong></p>
+<p>Replay cannot reproduce it faithfully. Record the tool response in the trace and stub it during replay, so you are testing the agent's reasoning over a fixed response rather than the live tool. Failures caused by the tool itself need a different diagnostic path, usually logging and rate analysis rather than replay.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open your agent's incident log for the last 30 days and count three things: total flagged incidents, how many were resolved by an automated check versus a human reading the output, and how many traces are missing a prompt version or index snapshot identifier. If the third number is greater than zero, stop reading and fix trace completeness first. Neither postmortem approach works on incomplete traces, and that is the gap most teams find when they actually look.</p>
                 
                 
             </div>
@@ -581,8 +523,8 @@ replay:
                     
                     <a class="related-card" href="/debug-ai-agent-failures-differently/">
                         <h3>Debug AI agent failures differently</h3>
-                        <p>Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them.</p>
-                        <span class="related-meta">15 min read · 27 June 2026</span>
+                        <p>Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
                     </a>
                     
                 </div>

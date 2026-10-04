@@ -2,7 +2,7 @@
 """
 post_enhancer.py - code-driven IMPROVE pass for docs/*/post.json (idempotent, backs up, no LLM).
 
-Reads triage_report/verdicts.csv (from triage.py) and, per post, applies only the fixes tagged there:
+Scans docs/ itself (triage.analyze; pass --verdicts FILE only to use a saved report) and, per post, applies only the fixes tagged there:
   strip_experience_claims  remove sentences asserting invented first-hand metrics/incidents
   add_inline_links         insert 'Related reading' with the 3 most similar KEPT posts (TF-IDF)
   add_sources              append 'Official documentation' links for tools the post actually names
@@ -10,7 +10,7 @@ Reads triage_report/verdicts.csv (from triage.py) and, per post, applies only th
   retitle                  report only (title shape needs regeneration)
 
 Usage:
-  python post_enhancer.py --docs docs --verdicts triage_report/verdicts.csv --backup .quality_review_backups            # dry run
+  python post_enhancer.py --docs docs --backup .quality_review_backups            # dry run
   python post_enhancer.py ... --confirm [--verify-links]
 """
 
@@ -204,7 +204,7 @@ def related(slug, posts, sims, k=3):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--docs", default="docs")
-    ap.add_argument("--verdicts", default="triage_report/verdicts.csv")
+    ap.add_argument("--verdicts", help="saved verdicts.csv (default: scan docs/)")
     ap.add_argument("--backup", default=".quality_review_backups")
     ap.add_argument("--base-url", default="https://kubaik.github.io")
     ap.add_argument("--confirm", action="store_true")
@@ -212,11 +212,14 @@ def main():
     ap.add_argument("--max-posts", type=int, default=0, help="0 = all")
     a = ap.parse_args()
     docs = Path(a.docs)
-    rows = [r for r in csv.DictReader(open(a.verdicts)) if r["verdict"] == "IMPROVE"]
+    all_rows = (
+        list(csv.DictReader(open(a.verdicts)))
+        if a.verdicts
+        else triage.analyze(docs)[0]
+    )
+    rows = [r for r in all_rows if r["verdict"] == "IMPROVE"]
     posts = triage.load(docs)
-    deleted = {
-        r["slug"] for r in csv.DictReader(open(a.verdicts)) if r["verdict"] == "DELETE"
-    }
+    deleted = {r["slug"] for r in all_rows if r["verdict"] == "DELETE"}
     keep = {s: d for s, d in posts.items() if s not in deleted}
     # similarity among KEPT posts only, so we never link to something about to be deleted
     from sklearn.feature_extraction.text import TfidfVectorizer

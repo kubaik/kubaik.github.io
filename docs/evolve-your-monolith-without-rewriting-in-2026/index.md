@@ -1,153 +1,168 @@
 # Evolve your monolith without rewriting in 2026
 
-The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.
+A monolith does not become a problem because it is a monolith. It becomes a problem when its structure makes every change expensive. The usual failure is not the technology choice; it is that the original shortcut — one file, one session, one import graph — hardens into something nobody wants to touch.
 
-## Why I wrote this (the problem I kept hitting)
+This article describes a small, boring structure for a Python service that keeps the option to change open. The example is a FastAPI backend, but the layering applies to any web framework. The code is deliberately small so the shape is visible. Everything below is reproducible on a laptop.
 
-Solo founders ship fast, but the first "golden path" you pave often hardens into a golden handcuff. In 2026 the average solo-founder codebase is 4.7 years old, and the founder has rewritten it 1.2 times already—not because the tech stack was bad, but because the original golden path became a cage.
+## The failure mode: a one-file backend
 
-The most common trap is the one-file backend: a single Python 3.11 FastAPI app with 2 400 lines of synchronous routes, 3 SQLAlchemy models per endpoint, and a 400-line `main.py` that grew over three years. Teams running into this usually see the same symptoms: a p99 latency spike from 120 ms to 2.1 s after deploy because the one-file ORM session is not thread-safe, a 45-minute redeploy that blocks releases, and a non-technical co-founder who can’t read the codebase but has to explain it to clients.
+The common starting point looks like this: a single Python module with a few hundred lines of synchronous routes, SQLAlchemy models declared next to handlers, and a `main.py` that also owns configuration, connection setup, and a couple of background tasks. It works. It ships. Then it accumulates.
 
-The part that trips people up is the hidden dependency graph. When the monolith is small, you can keep everything in memory. Once the cache key "user:1234" grows beyond 32 kB, you start seeing MongoDB 7.0 eviction storms and Redis 7.2 connection leaks. That moment is when the paved road stops being a road and becomes a cul-de-sac.
+Symptoms that show up in this shape, in roughly the order teams notice them:
 
-This post is about the boring, proven choices that let you keep the paved road evolvable. We’ll build a minimal FastAPI 0.111.3 backend, then split it into three layers without touching Kubernetes or a service mesh. By the end you’ll have a directory layout that scales to 100k requests/day on a $48/month AWS t4g.small (arm64), and you can explain every layer to a non-technical co-founder in 90 seconds.
+- **Latency spikes after deploy.** A single shared ORM session or connection is reused across concurrent requests. Under load, requests serialize on it. A p99 that was 120 ms can jump into the seconds without any code change, because the traffic pattern changed, not the code.
+- **Slow releases.** The module is imported by everything, so every change touches everything. Test suites grow to cover unrelated paths, and a redeploy blocks other work.
+- **Unreadable to non-engineers.** When a non-technical stakeholder asks how the product works, the only artifact is a file that mixes HTTP, business rules, and SQL.
+- **Hidden coupling.** Cache keys, database sessions, and request context are module-level globals. The dependency graph is implicit and only discoverable by reading the whole file.
 
-## Prerequisites and what you'll build
+None of these are caused by FastAPI, SQLAlchemy, or Python. They are caused by the absence of a boundary between "how a request arrives", "what the business rule is", and "where the bytes live".
 
-You need nothing beyond a laptop and an AWS account in 2026. The whole stack fits on the AWS Free Tier for the first three months.
+## The three layers
 
-Tool versions pinned for reproducibility:
-- Python 3.11 (arm64)
-- FastAPI 0.111.3
-- Uvicorn 0.30.1 with `--lifespan off`
-- SQLAlchemy 2.0.32 (async)
-- Redis 7.2.5 (Amazon MemoryDB for Redis)
-- pytest 8.3.4
-- Docker 27.0.3 (for local dev, not production)
+The structure below separates three concerns and nothing else.
 
-We will build three evolvable layers:
-1. API surface (FastAPI routes)
-2. Business logic (plain Python functions, no framework)
-3. Data layer (async SQLAlchemy + Redis)
+1. **API surface** — HTTP routing, request/response shapes, status codes. Framework-specific.
+2. **Domain** — plain Python functions and objects. No framework imports, no database imports. This is the part that describes what the product does.
+3. **Infrastructure** — database engines, cache clients, queues, external HTTP calls. Framework-agnostic but implementation-specific.
 
-The directory structure after this tutorial:
+The rule that makes this work: dependencies point inward. The API layer imports the domain. The domain imports nothing from the API or the infrastructure. Infrastructure is passed into the domain or called through an interface the domain owns.
+
+Target layout:
+
 ```
 myapp/
 ├── app/
 │   ├── api/
 │   │   └── v1/
-│   │       └── users.py          # 60 lines
+│   │       └── users.py
 │   ├── domain/
-│   │   └── user_service.py        # 120 lines
+│   │   ├── errors.py
+│   │   └── user_service.py
 │   ├── infra/
-│   │   ├── database.py           # 40 lines
-│   │   └── cache.py               # 30 lines
+│   │   ├── cache.py
+│   │   └── database.py
 ├── tests/
-│   ├── unit/
-│   └── integration/
-└── main.py                        # 20 lines
+│   ├── integration/
+│   └── unit/
+└── main.py
 ```
-Total lines of production code: ≈270. That’s the boring option.
 
-Why this split? A common failure mode here is splitting too late. Teams that wait until the codebase hits 5 000 lines usually end up with 15 Python packages and a CI pipeline that runs 37 minutes. The 270-line layout you’ll build today can absorb a 10× traffic jump by adding two new files and one environment variable.
+Roughly 250–300 lines of production code for a small service. The point is not the line count; it is that each file has one reason to change.
 
-## Step 1 — set up the environment
+A common mistake is to split too late, after the codebase is already large. At that point the split becomes a migration project with a long-lived branch. Splitting at a few hundred lines is cheap and reversible.
 
-Create a new virtual environment and pin versions:
+## Step 1 — environment and smoke test
+
+Pin versions explicitly so the example is reproducible. Exact pins matter less than the habit of pinning; substitute current versions of the same libraries if you prefer.
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install "fastapi==0.111.3" "uvicorn[standard]==0.30.1" "sqlalchemy[asyncio]==2.0.32" "redis==5.0.1" "pytest==8.3.4" "mypy==1.11.0" "ruff==0.5.6"
+pip install "fastapi" "uvicorn[standard]" "sqlalchemy[asyncio]" "asyncpg" "redis" "pytest" "pytest-asyncio" "mypy" "ruff"
 ```
 
-Set up a local Redis 7.2 container for development:
+For local development, a Redis container is convenient:
+
 ```bash
-docker run -d --name redis72 -p 6379:6379 redis:7.2-alpine --save "" --appendonly no
+docker run -d --name redis-dev -p 6379:6379 redis:7-alpine
 ```
 
-Create `requirements.txt` with exact pins:
-```
-fastapi==0.111.3
-uvicorn[standard]==0.30.1
-sqlalchemy==2.0.32
-redis==5.0.1
-pytest==8.3.4
-mypy==1.11.0
-ruff==0.5.6
-```
+Minimal application:
 
-Run a quick smoke test:
 ```python
 # main.py
 from fastapi import FastAPI
+
 app = FastAPI()
+
 @app.get("/")
 async def root():
     return {"status": "ok"}
 ```
+
 ```bash
-uvicorn main:app --reload --lifespan off
-curl http://localhost:8000/ | jq .
+uvicorn main:app --reload
+curl http://localhost:8000/
 # {"status":"ok"}
 ```
-Gotcha: If you see `RuntimeError: no running event loop`, you forgot `--lifespan off`. That flag is the boring fix for a real failure mode that shows up in CI runners.
 
-## Step 2 — core implementation
+If you see `RuntimeError: no running event loop` in a test runner or CI, the usual causes are (a) a module-level `asyncio.get_event_loop()` call, or (b) an async fixture that is not marked as async. The fix is to use `pytest-asyncio` and mark the test, not to disable the lifespan.
 
-We’ll implement a minimal user API with three layers.
+## Step 2 — domain first, framework later
 
-1. API layer (FastAPI route)
-2. Domain layer (plain Python function)
-3. Infrastructure layer (async SQLAlchemy + Redis)
+Write the domain layer before the routes. It has no FastAPI import.
 
-Create the directory tree:
-```bash
-mkdir -p app/api/v1 app/domain app/infra tests/unit tests/integration
-```
-
-Write the domain function first—no framework:
 ```python
 # app/domain/user_service.py
+from datetime import datetime
 from typing import Optional
-from datetime import datetime, timedelta
+
 from pydantic import BaseModel
+
 
 class UserDTO(BaseModel):
     id: int
     email: str
     created_at: datetime
 
+
 class CreateUserRequest(BaseModel):
     email: str
 
+
 class UserService:
+    def __init__(self, repo: "UserRepository") -> None:
+        self._repo = repo
+
     async def create_user(self, email: str) -> UserDTO:
-        # In a real app this would insert into DB, but we’ll fake it
-        return UserDTO(id=1, email=email, created_at=datetime.utcnow())
+        existing = await self._repo.find_by_email(email)
+        if existing is not None:
+            raise UserAlreadyExistsError(email)
+        return await self._repo.insert(email)
 
     async def get_user(self, user_id: int) -> Optional[UserDTO]:
-        if user_id == 1:
-            return UserDTO(id=1, email="test@example.com", created_at=datetime.utcnow())
-        return None
+        return await self._repo.find_by_id(user_id)
 ```
 
-The domain layer is only 40 lines here, but it already exposes the interface your API will call. The boring trick is to keep the domain free of framework annotations—no `@app.route`, no `@db.session`. That makes it testable in 30 seconds and movable to another framework later.
+`UserRepository` is a protocol or an abstract base class owned by the domain layer. The domain never imports SQLAlchemy. The repository is injected, which is what makes the domain testable without a database.
 
-Write the infrastructure layer:
+```python
+# app/domain/errors.py
+class DomainError(Exception):
+    """Base class for errors the domain knows how to describe."""
+
+
+class UserAlreadyExistsError(DomainError):
+    def __init__(self, email: str) -> None:
+        super().__init__(f"User with email {email!r} already exists")
+        self.email = email
+```
+
+The domain layer here is small. Its value is the interface it exposes: `create_user`, `get_user`, and a small set of named exceptions. That interface is what the API layer depends on, and it is what you can move to another framework or another transport later.
+
+## Step 3 — infrastructure behind the interface
+
+The infrastructure layer implements the repository interface using a real database, and provides a cache client.
+
 ```python
 # app/infra/database.py
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/dev"
+
 engine = create_async_engine(DATABASE_URL, pool_size=5, max_overflow=0)
-AsyncSessionLocal = sessionmaker(
-    bind=engine,
-    class_=AsyncSession,
-    expire_on_commit=False,
-)
-Base = declarative_base()
+SessionLocal = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 ```
+
+Two notes on the defaults above:
+
+- `pool_size=5, max_overflow=0` caps concurrent database connections at five. That is a deliberate ceiling, not a recommendation. The correct value depends on the database's own connection limit and on how many application instances are running. Setting `max_overflow` to zero means a request waits for a free connection instead of opening a new one; that converts a database overload into queueing latency, which is usually the failure you want.
+- `expire_on_commit=False` avoids an implicit refresh after commit, which would otherwise trigger an extra round trip and can fail after the session is closed.
+
 ```python
 # app/infra/cache.py
 import redis.asyncio as redis
@@ -155,343 +170,332 @@ import redis.asyncio as redis
 cache = redis.Redis(host="localhost", port=6379, decode_responses=True)
 ```
 
-Now the API layer:
+The repository implementation lives in the infrastructure layer and is the only place that knows SQLAlchemy exists:
+
+```python
+# app/infra/user_repository.py
+from datetime import datetime, timezone
+
+from sqlalchemy import select
+
+from app.domain.user_service import UserDTO
+from app.infra.database import SessionLocal
+from app.infra.models import User
+
+
+class SqlUserRepository:
+    async def find_by_email(self, email: str) -> UserDTO | None:
+        async with SessionLocal() as session:
+            row = await session.scalar(select(User).where(User.email == email))
+            return _to_dto(row) if row else None
+
+    async def find_by_id(self, user_id: int) -> UserDTO | None:
+        async with SessionLocal() as session:
+            row = await session.get(User, user_id)
+            return _to_dto(row) if row else None
+
+    async def insert(self, email: str) -> UserDTO:
+        async with SessionLocal() as session:
+            row = User(email=email, created_at=datetime.now(timezone.utc))
+            session.add(row)
+            await session.commit()
+            await session.refresh(row)
+            return _to_dto(row)
+
+
+def _to_dto(row: User) -> UserDTO:
+    return UserDTO(id=row.id, email=row.email, created_at=row.created_at)
+```
+
+One session per operation. This is the single most important detail for the latency-spike failure mode described earlier: a session is not safe to share across concurrent tasks, and a request-scoped session is the simplest correct unit.
+
+## Step 4 — the API layer
+
+The routes translate HTTP into domain calls and domain exceptions into status codes. Nothing else.
+
 ```python
 # app/api/v1/users.py
 from fastapi import APIRouter, Depends, HTTPException
-from app.domain.user_service import UserService, UserDTO, CreateUserRequest
 
-router = APIRouter(prefix="/v1/users")
+from app.domain.errors import DomainError, UserAlreadyExistsError
+from app.domain.user_service import CreateUserRequest, UserService
+from app.infra.user_repository import SqlUserRepository
+
+router = APIRouter(prefix="/v1/users", tags=["users"])
+
+
+def get_user_service() -> UserService:
+    return UserService(repo=SqlUserRepository())
+
 
 @router.post("/")
-async def create_user(payload: CreateUserRequest):
-    svc = UserService()
-    user = await svc.create_user(payload.email)
+async def create_user(
+    payload: CreateUserRequest,
+    svc: UserService = Depends(get_user_service),
+):
+    try:
+        user = await svc.create_user(payload.email)
+    except UserAlreadyExistsError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except DomainError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     return {"id": user.id, "email": user.email}
 
+
 @router.get("/{user_id}")
-async def get_user(user_id: int):
-    svc = UserService()
+async def get_user(
+    user_id: int,
+    svc: UserService = Depends(get_user_service),
+):
     user = await svc.get_user(user_id)
-    if not user:
+    if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return {"id": user.id, "email": user.email}
 ```
 
-Wire it up in `main.py`:
 ```python
 # main.py
 from fastapi import FastAPI
+
 from app.api.v1 import users
 
 app = FastAPI()
 app.include_router(users.router)
+
 
 @app.get("/health")
 async def health():
     return {"status": "ok"}
 ```
 
-Run it:
-```bash
-uvicorn main:app --reload --lifespan off
-curl -X POST http://localhost:8000/v1/users/ -H "Content-Type: application/json" -d '{"email":"alice@example.com"}'
-curl http://localhost:8000/v1/users/1
-```
+The API layer now contains no SQL, no cache keys, and no business rules. Changing the database touches `app/infra/`, not the routes. Adding a new transport — a CLI, a worker, a WebSocket handler — means calling the same `UserService` from a new entry point.
 
-This split already solves the one-file trap. The API layer is 15 lines, the domain is 40 lines, and the infra is 20 lines. Changing the database now only requires editing `app/infra/database.py` and the domain function signature—no route changes.
+## Failure mode: cache stampede
 
-## Step 3 — handle edge cases and errors
+Caching `get_user` by id is a natural next step. The naive version has a well-known failure: when a popular key expires, every concurrent request misses the cache and hits the database at once. If the database call takes 200 ms and 50 requests arrive in that window, the database sees 50 identical queries.
 
-The boring way to handle errors is to wrap the domain call and translate exceptions into HTTP codes. The common trap here is to leak infrastructure errors (e.g., `sqlalchemy.exc.IntegrityError`) into the API layer. Teams running into this usually see 5xx errors with stack traces in Sentry that confuse non-technical stakeholders.
-
-Create a domain-level exception:
-```python
-# app/domain/errors.py
-class DomainError(Exception):
-    pass
-
-class UserAlreadyExistsError(DomainError):
-    pass
-```
-
-Update the domain service to raise it:
-```python
-# app/domain/user_service.py
-from app.domain.errors import UserAlreadyExistsError
-
-class UserService:
-    async def create_user(self, email: str) -> UserDTO:
-        # Simulate a unique constraint violation
-        if email == "duplicate@example.com":
-            raise UserAlreadyExistsError("Email already exists")
-        return UserDTO(id=1, email=email, created_at=datetime.utcnow())
-```
-
-Wrap the call in the API layer:
-```python
-# app/api/v1/users.py
-from app.domain.errors import DomainError
-
-@router.post("/")
-async def create_user(payload: CreateUserRequest):
-    svc = UserService()
-    try:
-        user = await svc.create_user(payload.email)
-    except UserAlreadyExistsError as e:
-        raise HTTPException(status_code=409, detail=str(e))
-    except DomainError as e:
-        raise HTTPException(status_code=422, detail=str(e))
-    return {"id": user.id, "email": user.email}
-```
-
-This keeps the API layer clean and the domain errors explicit. The next time you swap databases, you won’t have to touch the route signatures.
-
-Cache stampede is another common failure mode. When the cache key `user:1` expires, 50 concurrent requests hit the database at once. The boring fix is a lock around the cache miss:
+The fix is a short-lived lock around the miss path, with a re-check inside the lock:
 
 ```python
 # app/infra/cache.py
 import asyncio
 from contextlib import asynccontextmanager
 
+import redis.asyncio as redis
+
 cache = redis.Redis(host="localhost", port=6379, decode_responses=True)
 
+
 @asynccontextmanager
-async def cache_lock(key: str, ttl: int = 10):
-    lock = await cache.set(f"lock:{key}", "1", ex=ttl, nx=True)
-    if not lock:
-        raise RuntimeError("Cache lock failed")
-    try:
-        yield
-    finally:
-        await cache.delete(f"lock:{key}")
+async def cache_lock(key: str, ttl_seconds: int = 10, wait_seconds: float = 2.0):
+    lock_key = f"lock:{key}"
+    acquired = await cache.set(lock_key, "1", ex=ttl_seconds, nx=True)
+    if acquired:
+        try:
+            yield True
+        finally:
+            await cache.delete(lock_key)
+        return
+
+    # Someone else holds the lock. Wait briefly, then proceed without it.
+    deadline = asyncio.get_running_loop().time() + wait_seconds
+    while asyncio.get_running_loop().time() < deadline:
+        if not await cache.exists(lock_key):
+            break
+        await asyncio.sleep(0.02)
+    yield False
 ```
 
-Use it in the domain layer:
-```python
-# app/domain/user_service.py
-from app.infra.cache import cache, cache_lock
+Used in the service:
 
-class UserService:
-    async def get_user(self, user_id: int) -> Optional[UserDTO]:
-        cache_key = f"user:{user_id}"
-        cached = await cache.get(cache_key)
-        if cached:
-            return UserDTO(**cached)
-        async with cache_lock(cache_key):
-            # Re-check inside lock
+```python
+async def get_user(self, user_id: int) -> UserDTO | None:
+    cache_key = f"user:{user_id}"
+    cached = await cache.get(cache_key)
+    if cached is not None:
+        return UserDTO.model_validate_json(cached)
+
+    async with cache_lock(cache_key) as acquired:
+        if acquired:
             cached = await cache.get(cache_key)
-            if cached:
-                return UserDTO(**cached)
-            # Expensive fetch here
-            user = await self._expensive_fetch(user_id)
-            await cache.set(cache_key, user.json(), ex=300)
+            if cached is not None:
+                return UserDTO.model_validate_json(cached)
+            user = await self._repo.find_by_id(user_id)
+            if user is not None:
+                await cache.set(cache_key, user.model_dump_json(), ex=300)
             return user
+
+    # Lock was not acquired and the holder did not populate the cache in time.
+    return await self._repo.find_by_id(user_id)
 ```
 
-Benchmarks on a t4g.small with 50 concurrent requests show p99 latency drops from 2.1 s to 180 ms when the lock is enabled. The trade-off is an extra 100 ms when the cache is cold, which is a fair price for stability.
+Two properties of this pattern are worth being explicit about:
 
-## Step 4 — add observability and tests
+- **The lock is best-effort.** If it cannot be acquired within `wait_seconds`, the request falls through to the database rather than failing. A stampede of a few requests is acceptable; a request that errors because a lock is held is not.
+- **The lock has a TTL.** If the holder crashes, the lock expires. Without a TTL, a single failure would block the key indefinitely.
 
-Observability should be boring too. Add logging and a `/metrics` endpoint without touching Prometheus yet.
+The trade-off is that cold-cache requests are slower by the lock round trip, and requests that lose the lock race may still hit the database. Both are usually acceptable compared to a thundering herd.
 
-Logging setup:
-```python
-# app/infra/logging.py
-import logging
-import sys
+## How to measure whether this helps
 
-def configure_logging():
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
-        stream=sys.stdout,
-    )
-```
+Do not trust latency numbers from an article, including this one. Measure your own. The instrumentation is small:
 
-Add structured logging to the domain:
-```python
-# app/domain/user_service.py
-import logging
-logger = logging.getLogger(__name__)
+1. **Instrument the request path.** Add a middleware that records the wall-clock duration of each request and emits it to your metrics backend as a histogram, labelled by route and status code.
+2. **Instrument the database call.** Time each repository method and emit a separate histogram. Without this, you cannot tell whether a slow request is slow because of the database, the cache, or the framework.
+3. **Generate load.** Use a load generator that can hold a fixed number of concurrent connections — `hey`, `wrk`, or `locust` all work. Run at a concurrency level that is realistic for your service, not the maximum your laptop can produce.
+4. **Compare configurations, not absolutes.** Run the same load against the one-file version and the layered version, or against the cache with and without the lock, on the same machine. Report the delta.
 
-class UserService:
-    async def create_user(self, email: str) -> UserDTO:
-        logger.info("Creating user", extra={"email": email})
-        ...
-```
+A useful measurement recipe, stated generically:
 
-FastAPI includes `/docs` and `/openapi.json` out of the box. They’re the golden path you don’t have to write. Keep them enabled until you hit 10k daily users; at that point you can swap to a static OpenAPI spec served from S3.
+- Fix the request mix (for example, 90% reads of an existing id, 10% creates).
+- Warm the cache, then measure steady-state p50/p95/p99.
+- Expire the cache, then measure the same percentiles during the cold window. This is where the stampede shows up.
+- Repeat each run at least three times and report the spread. A single run on a shared machine is noise.
 
-Write unit tests with pytest:
+The specific numbers depend on your hardware, your database, and your network. What is stable across environments is the shape: a shared session produces p99 spikes under concurrency, and a lock around the cache miss converts a spike into a slightly higher median.
+
+## Testing the layers
+
+Unit tests exercise the domain with a fake repository. No database, no network, no fixtures that need cleanup.
+
 ```python
 # tests/unit/test_user_service.py
 import pytest
-from app.domain.user_service import UserService, UserAlreadyExistsError
+
+from app.domain.errors import UserAlreadyExistsError
+from app.domain.user_service import UserDTO, UserService
+
+
+class FakeRepo:
+    def __init__(self, existing: dict[str, UserDTO] | None = None) -> None:
+        self._by_email = existing or {}
+        self._next_id = 100
+
+    async def find_by_email(self, email: str) -> UserDTO | None:
+        return self._by_email.get(email)
+
+    async def find_by_id(self, user_id: int) -> UserDTO | None:
+        return next((u for u in self._by_email.values() if u.id == user_id), None)
+
+    async def insert(self, email: str) -> UserDTO:
+        from datetime import datetime, timezone
+
+        user = UserDTO(id=self._next_id, email=email, created_at=datetime.now(timezone.utc))
+        self._next_id += 1
+        self._by_email[email] = user
+        return user
+
 
 @pytest.mark.asyncio
 async def test_create_user():
-    svc = UserService()
+    svc = UserService(repo=FakeRepo())
     user = await svc.create_user("new@example.com")
-    assert user.id == 1
     assert user.email == "new@example.com"
+
 
 @pytest.mark.asyncio
 async def test_create_duplicate_raises():
-    svc = UserService()
+    from datetime import datetime, timezone
+
+    existing = UserDTO(id=1, email="dup@example.com", created_at=datetime.now(timezone.utc))
+    svc = UserService(repo=FakeRepo({"dup@example.com": existing}))
     with pytest.raises(UserAlreadyExistsError):
-        await svc.create_user("duplicate@example.com")
+        await svc.create_user("dup@example.com")
 ```
 
-Integration test with a real Redis:
+Integration tests exercise the real database and cache. Keep them few and focused on the wiring, not the business rules.
+
 ```python
-# tests/integration/test_api.py
+# tests/integration/test_users_api.py
 import pytest
-from fastapi.testclient import TestClient
+from httpx import ASGITransport, AsyncClient
+
 from main import app
 
-client = TestClient(app)
 
-@pytest.fixture(autouse=True)
-def clear_cache():
-    import redis
-    r = redis.Redis(host="localhost", port=6379)
-    r.flushdb()
+@pytest.mark.asyncio
+async def test_create_and_get_user():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        resp = await client.post("/v1/users/", json={"email": "alice@example.com"})
+        assert resp.status_code in (200, 409)
 
-def test_create_and_get_user():
-    resp = client.post("/v1/users/", json={"email": "alice@example.com"})
-    assert resp.status_code == 200
-    assert resp.json()["email"] == "alice@example.com"
-    
-    resp = client.get("/v1/users/1")
-    assert resp.status_code == 200
-    assert resp.json()["email"] == "alice@example.com"
+        resp = await client.get("/v1/users/1")
+        assert resp.status_code in (200, 404)
 ```
 
-Run the suite:
-```bash
-pytest tests/unit tests/integration -v
-```
+The assertions are loose on purpose: integration tests that assert on exact ids or exact status codes become brittle when the database is shared. Assert on the contract (the response shape, the error code for a known conflict) and leave the specifics to unit tests.
 
-Type checking with mypy:
-```bash
-mypy app tests
-```
+## Decision checklist
 
-The boring stack now gives you:
-- 100% line coverage on the domain layer
-- 95% on the API layer
-- No flaky tests because the infra layer is faked in unit tests and real in integration tests
+Use this when deciding whether to split a module.
 
-## Real results from running this
+- **Does the file mix HTTP concerns with SQL?** If yes, extract the repository first. That is the highest-value split and the least disruptive.
+- **Is there a module-level session, client, or cache object?** If yes, replace it with an injected dependency. This is the cause of most concurrency bugs in this shape.
+- **Can you describe what the service does without naming a framework or a database?** If not, the domain layer is missing.
+- **Would a new transport (a worker, a CLI) be able to reuse the logic?** If yes, the layering is working.
+- **Is the split reversible?** It should be. If merging the layers back would require rewriting tests, the boundary is in the wrong place.
+- **Are there more than three layers?** Probably too many. API, domain, infra covers most small services. Add a layer only when a real second consumer exists.
 
-I ran this stack on an AWS t4g.small (arm64) in eu-central-1 with:
-- MemoryDB for Redis 7.2 (1 shard, 1 GB)
-- Aurora Serverless v2 PostgreSQL (0.5 ACU)
-- 100k requests/day from a synthetic load generator
+## A comparison worth making
 
-Observed metrics over one week:
-- Median latency: 45 ms
-- p95 latency: 180 ms
-- p99 latency: 420 ms
-- Memory usage: 280 MB (Python), 320 MB (Redis)
-- AWS cost: $48/month (on-demand pricing 2026)
+| Concern | Layered (this article) | Single module |
+|---|---|---|
+| Adding a new endpoint | New route file, reuses domain | Edit the shared file |
+| Changing the database | Edit `app/infra/` | Edit routes and models together |
+| Unit testing business rules | Fake repository, no I/O | Requires a database or heavy mocking |
+| Concurrency safety | Session per operation | Depends on reviewer discipline |
+| Onboarding a new contributor | Read three small files | Read one large file |
+| Cost of reversal | Low — files can be merged | Low initially, high after growth |
 
-The same traffic on a 2-file monolith (one file for routes, one for models) hit p99 2.1 s because of missing connection pooling. The evolvable split cut latency by 79% and added 12 ms to the median.
+The table is qualitative on purpose. Latency and cost figures depend entirely on your workload and infrastructure, and any specific number quoted without your measurements is not evidence.
 
-The directory layout stayed stable for six months. We added:
-- A billing service (new file `app/domain/billing_service.py`)
-- A multi-tenant shim in `app/infra/database.py`
-- A new cache key namespace in `app/infra/cache.py`
+## FAQ
 
-No routes were touched, no CI pipelines were rewritten, and the non-technical co-founder could still explain the three layers in 90 seconds.
+**Do I need a message queue to do this?**
+No. A queue is an infrastructure detail. If you add one, put the client in `app/infra/` and expose a small interface the domain calls. The domain should not import the queue library.
 
-## Common questions and variations
+**How do I handle database migrations?**
+Use a migration tool that runs outside the application process, such as Alembic. Point its environment at the same database URL the application uses, and run migrations as a separate deployment step. Do not run migrations on application startup; with more than one instance, they will race.
 
-**Question 1: How do I split the monolith without downtime?**
-Start by adding a new `v2` router alongside `v1`. Route 1% of traffic to `v2` via a feature flag in your CDN (CloudFront or Cloudflare). Keep the old `v1` running until v2 proves stable for 30 days. The flag can be a simple header or cookie.
+**What about WebSockets or background tasks?**
+Add a new entry point under `app/api/` or a new worker module that calls the same domain services. The domain and infrastructure layers do not change. That is the test of whether the boundary is real.
 
-**Question 2: What if I need a message queue?**
-Add a new file `app/infra/queue.py` with a tiny interface:
-```python
-# app/infra/queue.py
-from redis.asyncio import Redis
+**When should I stop splitting?**
+When each layer has a single reason to change and you can name it. If you cannot articulate why a file exists separately, merge it back.
 
-queue = Redis(host="localhost", port=6379)
+## Do this next
 
-async def publish(event: str, data: dict):
-    await queue.publish(event, data)
-```
-Then create a background task:
-```python
-# app/api/v1/users.py
-from app.infra.queue import publish
+Add a `/health` endpoint that actually checks the database and the cache, and run it before you write any other code:
 
-@router.post("/")
-async def create_user(payload: CreateUserRequest):
-    ...
-    await publish("user.created", {"id": user.id})
-    return ...
-```
-This keeps the queue an implementation detail behind the same domain interface. You can swap Redis Streams for SQS later without touching the route.
-
-**Question 3: How do I handle database migrations?**
-Use Alembic with async support. Create a new file `migrations/env.py` that points to your `AsyncSessionLocal`. Run `alembic revision --autogenerate -m "add email index"` and `alembic upgrade head`. The migration script is 20 lines—boring and proven.
-
-**Question 4: What about WebSockets?**
-Add a new router in `app/api/v2/ws.py`. The domain and infra layers don’t change. That’s the point of the separation: new protocols can arrive without rewriting the core.
-
-Comparison table: boring vs clever
-
-| Aspect                | Boring split (this post) | Clever split (often fails)       |
-|-----------------------|---------------------------|----------------------------------|
-| Lines of core code    | 270                       | 3 200                            |
-| p99 latency (100k rps) | 420 ms                    | 1.2 s                            |
-| Time to add a new API  | 15 minutes                | 4 hours                          |
-| Non-tech explanation   | 90 seconds                | 20 minutes + whiteboard drawing  |
-| Hard to reverse? | No                        | Yes (service mesh, 15 packages) |
-| Cost (AWS t4g.small)   | $48/month                 | $120/month                       |
-
-The clever split often includes Kafka, gRPC, OpenTelemetry, and four new services. That’s the golden handcuff: once you have four services, you can’t explain them to clients anymore, and you can’t change the queue technology without rewriting the consumer.
-
-## Where to go from here
-
-Your next concrete step is to add a simple health check endpoint that proves the infra layer is reachable. Open `app/infra/database.py` and add:
-
-```python
-# app/infra/database.py
-def health() -> dict:
-    return {"db": "ok", "redis": "ok"}
-```
-
-Then expose it in `main.py`:
 ```python
 # main.py
-from app.infra.database import health as db_health
+from fastapi import FastAPI
+from sqlalchemy import text
+
 from app.infra.cache import cache
+from app.infra.database import SessionLocal
+
+app = FastAPI()
+
 
 @app.get("/health")
 async def health():
+    db_ok = False
     try:
-        await cache.ping()
-        db_status = await db_health()
-        return {"status": "ok", "db": db_status, "redis": "ok"}
-    except Exception as e:
-        return {"status": "error", "error": str(e)}
+        async with SessionLocal() as session:
+            await session.execute(text("SELECT 1"))
+        db_ok = True
+    except Exception:
+        db_ok = False
+
+    try:
+        redis_ok = bool(await cache.ping())
+    except Exception:
+        redis_ok = False
+
+    status = "ok" if (db_ok and redis_ok) else "degraded"
+    return {"status": status, "db": db_ok, "redis": redis_ok}
 ```
 
-Run `curl http://localhost:8000/health` and fix any connection errors immediately. This single endpoint will save you 2–3 hours of debugging during your first deploy when the security group blocks Redis.
-
-Do this now—before you touch Docker, before you write a single test—and you’ll know the paved road is still passable.
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the contact page. Corrections are applied promptly.
-
-**Last generated:** August 2026
+Then run `curl http://localhost:8000/health` and fix any connection errors immediately. A health check that only returns a static string will not tell you that a security group is blocking the cache port; this one will, and it takes about ten minutes to write.

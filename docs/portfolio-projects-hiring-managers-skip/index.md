@@ -1,54 +1,52 @@
 # Portfolio projects hiring managers skip
 
-After enough code that touches actually gets gets reviewed, the same failure pattern keeps showing up. This is the writeup with the mistakes left in, not edited out. The failure is quiet — no errors, just wrong answers.
+A recurring pattern shows up in code that actually gets reviewed by strangers: the project is competent, the reviewer never finds out. The failure is quiet. There are no errors, no broken builds, no stack traces. The reviewer simply closes the tab.
 
-## The conventional wisdom (and why it's incomplete)
+## The conventional advice and where it stops short
 
-Ask ten developers what gets a portfolio project noticed and you'll get the same list: build something real, deploy it, write tests, add a README, use a modern stack. This advice is not wrong. It's just incomplete in a way that matters enormously in 2026, because the bar it sets is now the floor, not the ceiling.
+Ask a group of developers what makes a portfolio project noticeable and the list tends to be the same: build something real, deploy it, write tests, add a README, use a modern stack. None of that is wrong. It is incomplete in a way that matters, because the bar it sets has become the floor rather than the ceiling.
 
-The standard advice assumes the bottleneck is technical competence. It isn't. For most junior and mid-level candidates, the bottleneck is signal-to-noise. A hiring manager reviewing 80 applications for one backend role does not have 40 minutes per candidate. They have roughly 90 seconds for the first pass, and the portfolio project is usually the second thing they look at, after the resume's most recent job title. If your project doesn't answer a specific question in that window, it gets filed under "probably fine" and never revisited.
+The standard advice assumes the bottleneck is technical competence. For most junior and mid-level candidates, the bottleneck is signal-to-noise. A hiring manager working through a large applicant pool for one backend role does not have forty minutes per candidate. The first pass is measured in seconds, and the portfolio project is usually the second thing examined, after the most recent job title on the resume. A project that does not answer a specific question in that window gets filed under "probably fine" and never revisited.
 
-The conventional wisdom also quietly assumes that complexity equals credibility. Build a microservices app, add Kafka, add Kubernetes, add a GraphQL gateway. This produces projects that look impressive in a screenshot and terrifying in a code review, because the author had to learn six new systems simultaneously and the seams show. A common failure mode here is a project with a beautiful architecture diagram and a `docker-compose.yml` that only works on the author's machine because three services were never actually wired together.
+The conventional advice also assumes that complexity equals credibility. Build a microservices app, add a message broker, add Kubernetes, add a GraphQL gateway. This produces projects that look impressive in a screenshot and alarming in a code review, because the author had to learn several new systems simultaneously and the seams show. A common failure mode is a project with a clean architecture diagram and a `docker-compose.yml` that only works on the author's machine because three of the services were never actually wired together.
 
-So the conventional advice isn't wrong, it's just answering the wrong question. The question isn't "is this project technically impressive?" The question is "does this project let a stranger trust my judgment in under two minutes?" Those are different questions, and they have different answers. The part that trips people up is that the second question is about legibility, not capability, and that's what this post actually covers.
+So the advice is not wrong; it answers a different question. The question is not "is this project technically impressive?" The question is "does this project let a stranger trust the author's judgment in under two minutes?" Those are different questions with different answers. The second one is about legibility, not capability.
 
-## What actually happens when you follow the standard advice
+## What the review pass actually looks like
 
-You build the thing. You deploy it to a free tier. You write a README that says "A full-stack app for tracking X." You link it on your resume. Then you wait.
+The reviewer clicks the GitHub link. They read the repo name and description. They scan the file tree for a few seconds. They open one or two files, usually the entry point or the largest file. They check the commit history. They look for a live demo link. Friction at any of those five points ends the pass.
 
-What the reviewer actually does is this: they click the GitHub link. They see the repo name and the description. They scroll the file tree for about four seconds. They click into one or two files, usually the entry point or the largest file. They check the commit history. They look for a live demo link. If any of those four checks produce friction, they leave.
+That friction is where most projects die. The repo has a `src` folder with forty-odd files and no obvious entry point. The largest file is over a thousand lines because everything was dumped into `main.py`. The commit history is a single commit called "initial commit," or two hundred commits all called "fix" or "update." The live demo link is dead because the free tier spun down, or it sits behind a login the reviewer has no credentials for.
 
-That friction is where most projects die. The repo has a `src` folder with 47 files and no obvious entry point. The largest file is 1,200 lines because everything got dumped into `main.py`. The commit history is one commit called "initial commit" or, worse, 200 commits all called "fix" or "update." The live demo link is dead because the free tier spun down, or it's behind a login the reviewer doesn't have credentials for.
+None of this reflects on the developer's actual ability. A perfectly competent engineer can produce a repo that fails all five checks. But the reviewer cannot reliably distinguish "competent engineer who did not think about legibility" from "incompetent engineer" in the time available, and the cost of a bad hire is asymmetric, so the default assumption is unflattering.
 
-None of this reflects on the developer's actual ability. A perfectly competent engineer can produce a repo that fails all four of these checks. But the reviewer cannot distinguish "competent engineer who didn't think about legibility" from "incompetent engineer." They have 90 seconds. They will assume the worst, because the cost of a bad hire is asymmetric.
+A second failure mode is subtler. The project is technically excellent but solves a problem the reviewer does not immediately recognize. A distributed task queue with custom backpressure handling is genuinely hard to build. But if the README opens with "A distributed task queue," the reviewer has to do work to understand why it matters. If it opens with a one-line statement of the problem it solves and the constraint it was built under, the reviewer understands the problem and the solution immediately. Same code, different legibility.
 
-There's a second failure mode that's more subtle. The project is technically excellent but solves a problem the reviewer doesn't recognize. A distributed task queue with custom backpressure handling is genuinely hard to build. But if the README opens with "A distributed task queue," the reviewer has to do work to understand why it matters. If it opens with "A task queue that survives worker crashes without dropping jobs, built because our cron-based retry system lost 0.3% of jobs per week," the reviewer immediately understands the problem and the solution. Same code, different legibility.
+The standard advice produces projects that are technically real but narratively invisible. That gap is the whole problem.
 
-The standard advice produces projects that are technically real but narratively invisible. That's the gap.
-
-## A different mental model
+## A different mental model: the compressed case study
 
 Treat the portfolio project as a compressed case study, not a demo. A case study has four parts: a specific problem, a specific constraint, a specific decision, and a measurable outcome. A demo has one part: the thing works.
 
-This reframe changes what you build and how you present it. Under the case study model, a 400-line project with a clear problem statement beats a 4,000-line project with no narrative. Under the demo model, the opposite is true, because more code looks like more work.
+This reframe changes what gets built and how it is presented. Under the case study model, a 400-line project with a clear problem statement beats a 4,000-line project with no narrative. Under the demo model the opposite holds, because more code looks like more work.
 
-The case study model also forces you to answer questions you'd otherwise dodge. What was the actual constraint? Was it latency? Cost? A flaky third-party API? A specific compliance requirement? Constraints are what make engineering interesting, and constraints are what reviewers remember. "I built a REST API" is forgettable. "I built a REST API that had to stay under 200ms p99 on a $5/month hosting budget, which meant choosing SQLite over Postgres and caching aggressively" is memorable, because it shows a tradeoff and a reason.
+The case study model also forces answers to questions that are otherwise easy to dodge. What was the actual constraint? Latency? Cost? A flaky third-party API? A specific compliance requirement? Constraints are what make engineering interesting, and constraints are what reviewers remember. "A REST API" is forgettable. A REST API that had to hold a specific latency target on a fixed monthly hosting budget, which forced a choice between an embedded database and a client-server one plus aggressive caching, is memorable, because it shows a tradeoff and a reason for it.
 
-This is also where the reviewer's actual job enters the picture. Hiring managers are not evaluating your ability to write code in the abstract. They are trying to predict whether you will make good decisions on their team, with their constraints, under their deadlines. A project that shows one well-reasoned tradeoff is more predictive than a project that shows ten technologies used competently. The tradeoff reveals judgment. The technology list reveals only exposure.
+This is also where the reviewer's actual job enters the picture. Hiring managers are not evaluating the ability to write code in the abstract. They are trying to predict whether the candidate will make good decisions on their team, with their constraints, under their deadlines. A project that shows one well-reasoned tradeoff is more predictive than a project that shows ten technologies used competently. The tradeoff reveals judgment. The technology list reveals only exposure.
 
-So the mental model is: build one thing, constrain it honestly, make one or two decisions visible, and measure something. Everything else is decoration.
+So the model is: build one thing, constrain it honestly, make one or two decisions visible, and measure something. Everything else is decoration.
 
-## Evidence and examples from real systems
+## Two projects, same stack, different outcomes
 
-Consider two projects that a reviewer might see in the same afternoon. Both are deployed, both have tests, both use reasonable stacks. The difference is entirely in legibility.
+Consider two projects a reviewer might see in the same afternoon. Both are deployed, both have tests, both use reasonable stacks. The difference is entirely in legibility.
 
-Project A is a URL shortener built with FastAPI 0.115, Redis 7.2, and Postgres 16. It has 2,400 lines across 30 files. The README is four paragraphs describing the architecture. The live demo is up. The commit history is 60 commits with messages like "add endpoint" and "fix bug."
+Project A is a URL shortener built with a Python web framework, Redis, and Postgres. It has roughly 2,400 lines across 30 files. The README is four paragraphs describing the architecture. The live demo is up. The commit history is 60 commits with messages like "add endpoint" and "fix bug."
 
-Project B is also a URL shortener, built with the same stack. It has 900 lines across 12 files. The README opens with: "URL shortener optimized for the read-heavy case: 95% of requests are redirects, 5% are creates. Chose Redis as the primary store with Postgres as a write-behind log, which trades durability on the last 5 seconds of writes for a 10x reduction in p99 redirect latency (from ~40ms to ~4ms in local benchmarks)." The commit history has 25 commits, each scoped to one change, with messages like "swap primary store to Redis, keep Postgres as write-behind."
+Project B is also a URL shortener, built with the same stack. It has roughly 900 lines across 12 files. The README opens with: "URL shortener optimized for the read-heavy case: most requests are redirects, a small fraction are creates. Chose Redis as the primary read store with Postgres as a write-behind log, which trades durability on the last few seconds of writes for a large reduction in p99 redirect latency in local benchmarks." The commit history has 25 commits, each scoped to one change, with messages like "swap primary store to Redis, keep Postgres as write-behind."
 
-Project B gets the interview. Not because it's better code, but because it demonstrates three things in the first paragraph: the developer understood the workload, made a non-obvious decision, and measured the result. Project A might be better code. The reviewer will never find out.
+Project B gets the interview. Not because it is better code, but because it demonstrates three things in the first paragraph: the developer understood the workload, made a non-obvious decision, and measured the result. Project A might be better code. The reviewer will never find out.
 
-Here's a concrete example of the kind of decision that reads well, expressed in code. This is the kind of thing that belongs in a README or a short design note, not buried in a commit:
+Here is a concrete example of the kind of decision that reads well, expressed in code. This belongs in a README or a short design note, not buried in a commit:
 
 ```python
 # cache.py — read-through cache with explicit staleness bound
@@ -81,9 +79,9 @@ def get_target(slug: str) -> str | None:
     return None
 ```
 
-The code is not the point. The comment is the point. The comment tells the reviewer that the developer thought about staleness, picked a bound, and measured the effect. That's the signal.
+The code is not the point. The comment is the point. The comment tells the reviewer that the developer thought about staleness, picked a bound, and measured the effect. That is the signal.
 
-The same principle applies to failure handling. A project that demonstrates awareness of a specific failure mode is more credible than one that doesn't. For example, a common trap in any service that calls a third-party API is that the third party will eventually return a 429 or a 503, and naive retry logic will make the problem worse. A project that shows a bounded retry with jitter and a circuit breaker is demonstrating operational awareness, not just coding ability.
+The same principle applies to failure handling. A project that demonstrates awareness of a specific failure mode is more credible than one that does not. A common trap in any service that calls a third-party API is that the third party will eventually return a 429 or a 503, and naive retry logic will make the problem worse by piling on requests. A project that shows a bounded retry with jitter and a circuit breaker is demonstrating operational awareness, not just coding ability.
 
 ```javascript
 // retry.js — bounded retry with jitter and circuit breaker
@@ -123,33 +121,35 @@ async function callWithRetry(fn, maxAttempts = 3) {
 }
 ```
 
-Again, the code is ordinary. The comment and the observed number are the signal. A reviewer reading this learns that the developer understands that retries can amplify load, and that they tested the behavior rather than assuming it. That is a hiring signal.
+Again, the code is ordinary. The comment and the observed number are the signal. A reviewer reading this learns that the developer understands that retries can amplify load, and that they tested the behavior rather than assuming it.
 
-## The cases where the conventional wisdom IS right
+If you want to produce numbers like these rather than invent them, here is how to measure. For the cache case, instrument the redirect handler to record a histogram of request durations, then run a load generator against the service with the cache disabled and again with it enabled, and compare the p99 buckets. For the retry case, stand up a stub dependency that returns 503 at a fixed rate, run the client against it, and count outbound requests per unit time with and without the circuit breaker. Report the method alongside the number, because a reviewer who can see the method will trust the number.
 
-There are real situations where the standard advice is exactly correct, and it's worth being honest about them.
+## When the conventional advice is right
 
-First, if you are applying for a role where the team's stack is highly specific and the employer is explicitly screening for it, matching that stack matters. A fintech team hiring a Go developer will look more favorably on a Go project than a Rust one, even if the Rust project is better. This is not irrational. It reduces onboarding cost, and onboarding cost is real. In these cases, build in the stack they use, and don't overthink it.
+There are real situations where the standard advice is exactly correct, and it is worth being honest about them.
 
-Second, if you are early enough in your career that you have no production experience at all, the conventional advice is doing important work: it's forcing you to finish something and deploy it. Finishing and deploying are non-trivial skills that many candidates lack. A deployed, working project is a genuine signal, even if the narrative is weak. The case study framing is an improvement on top of that, not a replacement for it.
+First, if the role's stack is highly specific and the employer is explicitly screening for it, matching that stack matters. A fintech team hiring Go developers will look more favorably on a Go project than a Rust one, even if the Rust project is better. This is not irrational; it reduces onboarding cost, and onboarding cost is real. In these cases, build in the stack they use.
 
-Third, some roles genuinely reward breadth. A platform or DevOps role may value a project that touches Kubernetes, Terraform, and CI/CD, because the job is about integrating systems. In those cases, the complexity is the point, and the reviewer is looking for evidence that you can hold multiple systems in your head at once.
+Second, if you are early enough in your career that you have no production experience at all, the conventional advice is doing important work: it forces you to finish something and deploy it. Finishing and deploying are non-trivial skills that many candidates lack. A deployed, working project is a genuine signal even if the narrative is weak. The case study framing is an improvement layered on top of that, not a replacement for it.
 
-Fourth, and this is the one people miss: if your project is being reviewed by a technical screener rather than a hiring manager, the calculus shifts. A senior engineer doing a code review will read more of your code and care more about structure, tests, and edge cases than about narrative. For that audience, the conventional advice is closer to correct. The case study framing still helps, but it's not the deciding factor.
+Third, some roles genuinely reward breadth. A platform or DevOps role may value a project that touches container orchestration, infrastructure-as-code, and CI/CD, because the job is about integrating systems. In those cases the complexity is the point, and the reviewer is looking for evidence that you can hold multiple systems in your head at once.
 
-The honest position is that the conventional advice is right about half the time, and the case study framing is right for the other half. The skill is knowing which situation you're in.
+Fourth, if your project is being reviewed by a technical screener rather than a hiring manager, the calculus shifts. A senior engineer doing a code review will read more of your code and care more about structure, tests, and edge cases than about narrative. For that audience, the conventional advice is closer to correct. The case study framing still helps, but it is not the deciding factor.
 
-## How to decide which approach fits your situation
+The honest position is that the conventional advice is right about half the time and the case study framing is right for the other half. The skill is knowing which situation you are in.
 
-Ask three questions about the role you're targeting.
+## How to decide which approach fits
 
-Who screens first? If it's a recruiter or a hiring manager without deep technical background, legibility wins. If it's a senior engineer doing a technical screen, depth wins. Most companies do both, in that order, which means legibility gets you to the technical screen and depth gets you through it. You need both, but the order matters.
+Ask three questions about the role you are targeting.
 
-What is the team's biggest pain point right now? If the job posting mentions reliability, show a project that handles a specific failure mode. If it mentions performance, show a project with a measured latency number. If it mentions scale, show a project that had to make a tradeoff because of scale. The project should mirror the pain.
+Who screens first? If it is a recruiter or a hiring manager without a deep technical background, legibility wins. If it is a senior engineer doing a technical screen, depth wins. Most companies do both, in that order, which means legibility gets you to the technical screen and depth gets you through it. You need both, but the order matters.
 
-How much time do you have? A full case-study treatment takes maybe 4 to 6 hours on top of the project itself: writing the README, cleaning the commit history, adding the design note, recording a short demo. If you have a weekend, do it. If you have an evening, at minimum fix the README and the commit history, because those are the two highest-leverage changes per minute spent.
+What is the team's biggest pain point right now? If the job posting mentions reliability, show a project that handles a specific failure mode. If it mentions performance, show a project with a measured latency number and the method used to obtain it. If it mentions scale, show a project that had to make a tradeoff because of scale. The project should mirror the pain.
 
-Here's a comparison of the two approaches across the dimensions that matter:
+How much time do you have? A full case-study treatment takes a few hours on top of the project itself: writing the README, cleaning the commit history, adding a short design note, recording a brief demo. If you have a weekend, do it. If you have an evening, at minimum fix the README and the commit history, because those are the two highest-leverage changes per minute spent.
+
+A comparison across the dimensions that matter:
 
 | Dimension | Demo approach | Case study approach |
 |---|---|---|
@@ -163,39 +163,49 @@ Here's a comparison of the two approaches across the dimensions that matter:
 | Works for technical screen | Well | Well, if depth is real |
 | Risk of overclaiming | Low | Medium (if you exaggerate) |
 
-The last row is the one to watch. The case study framing rewards specificity, and specificity is easy to fake badly. If you claim a 10x latency improvement, a technical reviewer will ask how you measured it, and "it felt faster" ends the conversation. Only claim numbers you actually produced, and be ready to explain the method.
+The last row is the one to watch. The case study framing rewards specificity, and specificity is easy to fake badly. If you claim a large latency improvement, a technical reviewer will ask how you measured it, and "it felt faster" ends the conversation. Only claim numbers you actually produced, and be ready to explain the method.
 
-## Common objections, and responses
+## A worked example of the reframe
 
-"This sounds like marketing, not engineering." It is partly marketing, and that's fine. A portfolio project is a communication artifact. The code is the evidence; the README is the argument. Pretending the argument doesn't matter is how good engineers get passed over for worse ones who communicate better. You can be both rigorous and legible.
+Suppose the project is a small CLI that syncs a local directory to object storage. Under the demo framing, the README says "A CLI for syncing files to S3." Under the case study framing, the same code gets a different first paragraph.
 
-"I don't have time to write a design note." You don't need a design note. You need three sentences at the top of the README: the problem, the constraint, the decision. That's 10 minutes. If you can't spare 10 minutes, the project wasn't going to get noticed anyway.
+Start with the problem. The local directory contains files that change frequently, and the sync runs on a schedule. The constraint is bandwidth: the connection is slow enough that re-uploading unchanged files is the dominant cost. The decision is to keep a local index of file hashes and sizes and to skip uploads when both match, accepting that a file modified without a size or hash change will be missed until the next full scan. The outcome is that a typical run uploads a small fraction of the files present.
 
-"My project doesn't have interesting tradeoffs." Every project has tradeoffs. You chose a database. You chose a deployment target. You chose to cache or not to cache. The tradeoff exists; you just haven't articulated it. Articulating it is the exercise.
+Now measure it rather than assert it. Instrument the sync loop to log three counters per run: files scanned, files uploaded, bytes uploaded. Run it twice against a directory of a few thousand files, once with the index disabled and once with it enabled, and record both runs. The ratio of bytes uploaded between the two runs is the number you can defend, and the method is two commands and a log file. That number, plus the stated limitation about files that change without changing size or hash, is what a reviewer can evaluate. The limitation is not a weakness in the writeup; it is evidence that the author understood the tradeoff they made.
 
-"Won't this make my project look simple?" Yes, and that's usually an improvement. A reviewer who understands your project in 30 seconds is more likely to dig into the code than one who is still confused after 3 minutes. Simplicity is legible. Legibility is the goal.
+The same exercise works for almost any project. The question is always: what did I choose, what did I give up, and how would I know if it helped?
 
-"What if the reviewer doesn't read the README?" Some won't. But the ones who do are the ones whose opinion matters, and the README is also what gets pasted into Slack when a hiring manager asks a senior engineer "is this person worth a call?" The README travels further than you think.
+## Common objections
 
-## What the alternative approach would change
+"This sounds like marketing, not engineering." It is partly marketing, and that is fine. A portfolio project is a communication artifact. The code is the evidence; the README is the argument. Pretending the argument does not matter is how strong engineers get passed over for weaker ones who communicate better. You can be both rigorous and legible.
 
-The practical changes are smaller than the philosophical ones. You'd stop adding technologies and start adding reasoning. You'd stop measuring lines of code and start measuring one thing: the time it takes a stranger to understand what you built and why.
+"I don't have time to write a design note." You do not need a design note. You need three sentences at the top of the README: the problem, the constraint, the decision. That is ten minutes. If ten minutes is not available, the project was not going to get noticed anyway.
 
-You'd also change what you build next. Instead of "what's a cool project?" the question becomes "what's a project where I can make one interesting decision and measure its effect?" That's a much easier question to answer, and it produces better projects. A small tool that solves a specific annoyance with a measured improvement is a better portfolio piece than a sprawling app with no thesis.
+"My project doesn't have interesting tradeoffs." Every project has tradeoffs. You chose a database. You chose a deployment target. You chose to cache or not to cache. The tradeoff exists; it just has not been articulated yet. Articulating it is the exercise.
 
-You'd change your commit history. Instead of one commit at the end, you'd commit in scoped chunks with messages that describe the change and the reason. This is not just for the reviewer; it's how you'll actually work on a team, and the habit is worth building now.
+"Won't this make my project look simple?" Yes, and that is usually an improvement. A reviewer who understands your project in thirty seconds is more likely to dig into the code than one who is still confused after three minutes. Simplicity is legible. Legibility is the goal.
 
-You'd change your README from a description to an argument. Not longer, just more structured: problem, constraint, decision, result, how to run it. Five sections, each a few sentences. That structure alone puts you ahead of most applicants.
+"What if the reviewer doesn't read the README?" Some will not. But the ones who do are the ones whose opinion matters, and the README is also what gets pasted into a chat channel when a hiring manager asks a senior engineer whether a candidate is worth a call. The README travels further than you think.
 
-And you'd change how you evaluate your own work. The question stops being "is this impressive?" and becomes "is this legible?" Those are different questions, and the second one is the one that gets you the interview.
+## What the alternative approach changes
 
-## Frequently Asked Questions
+The practical changes are smaller than the philosophical ones. Stop adding technologies and start adding reasoning. Stop measuring lines of code and start measuring one thing: the time it takes a stranger to understand what you built and why.
+
+Change what you build next. Instead of "what's a cool project?" the question becomes "what's a project where I can make one interesting decision and measure its effect?" That is a much easier question to answer, and it produces better projects. A small tool that solves a specific annoyance with a measured improvement is a better portfolio piece than a sprawling app with no thesis.
+
+Change your commit history. Instead of one commit at the end, commit in scoped chunks with messages that describe the change and the reason. This is not just for the reviewer; it is how you will actually work on a team, and the habit is worth building now.
+
+Change your README from a description to an argument. Not longer, just more structured: problem, constraint, decision, result, how to run it. Five sections, each a few sentences. That structure alone puts you ahead of most applicants.
+
+Change how you evaluate your own work. The question stops being "is this impressive?" and becomes "is this legible?" Those are different questions, and the second one is the one that gets you the interview.
+
+## FAQ
 
 **How many projects should I have on my portfolio?**
-Two or three well-presented projects beat ten shallow ones. A reviewer will look at the top one or two and stop. If those are strong, they'll assume the rest are similar. If those are weak, they'll assume the same. Curate ruthlessly. If a project isn't something you'd defend in a technical interview, either improve it or remove it from the list.
+Two or three well-presented projects beat ten shallow ones. A reviewer will look at the top one or two and stop. If those are strong, they will assume the rest are similar. If those are weak, they will assume the same. Curate ruthlessly. If a project is not something you would defend in a technical interview, either improve it or remove it from the list.
 
 **Should I include a live demo link?**
-Yes, but only if it actually works when the reviewer clicks it. A dead demo link is worse than no link, because it signals that you didn't check. If you're on a free tier that spins down, either pay for a cheap always-on instance or add a note explaining the cold start. Even better: record a 60-second screen capture and link that alongside the live demo, so the reviewer can see it working even if the demo is asleep.
+Yes, but only if it works when the reviewer clicks it. A dead demo link is worse than no link, because it signals that you did not check. If you are on a free tier that spins down, either pay for a cheap always-on instance or add a note explaining the cold start. Better still, record a short screen capture and link that alongside the live demo, so the reviewer can see it working even if the demo is asleep.
 
 **What if my project is a tutorial follow-along?**
 Rebuild it with one meaningful change and document why. Tutorial projects are recognizable and reviewers discount them heavily. But a tutorial project that you extended, broke, and fixed is a real project. The extension is the signal. Write down what you changed and what happened when you changed it.
@@ -203,23 +213,13 @@ Rebuild it with one meaningful change and document why. Tutorial projects are re
 **How do I handle a project that's incomplete?**
 Be explicit. "This is a work in progress. The auth flow is stubbed; the core data pipeline is complete and tested." Reviewers respect honesty about scope far more than they respect a project that pretends to be finished. An incomplete project with a clear boundary is legible. An incomplete project with no boundary is a red flag.
 
+**Do I need a benchmark to be credible?**
+No. A stated constraint, a decision, and the reasoning behind it are already most of the signal. A benchmark strengthens the case only if you can describe how you produced it. If you cannot, say "I expected X but did not measure it" and move on. That is more credible than an unsupported number.
+
 ## Summary
 
-The conventional advice [about portfolio projects](/portfolio-projects-that-hire-remote-senior-devs/) is not wrong, it's just aimed at the wrong target. Building something real and deploying it is necessary but no longer sufficient, because the reviewer's bottleneck is attention, not technical evaluation. The projects that get noticed are the ones that make a specific decision visible and measurable in the first minute of reading. That means a README that argues rather than describes, a commit history that shows scoped work, and one or two honest numbers that you can defend.
+The conventional advice is not wrong; it is aimed at the wrong target. Building something real and deploying it is necessary but no longer sufficient, because the reviewer's bottleneck is attention, not technical evaluation. The projects that get noticed make a specific decision visible and measurable within the first minute of reading. That means a README that argues rather than describes, a commit history that shows scoped work, and one or two honest numbers you can defend with a method.
 
-The alternative approach doesn't require more work. It requires different work: less time adding technologies, more time articulating tradeoffs. The code is the evidence; the narrative is what makes the evidence findable.
+The alternative approach does not require more work. It requires different work: less time adding technologies, more time articulating tradeoffs. The code is the evidence; the narrative is what makes the evidence findable.
 
-Your next step, in the next 30 minutes: open the README of your most recent project and rewrite the first paragraph to state the problem, the constraint, and one decision you made, in three sentences. If you can't, that's the signal to pick a different project or to make a decision explicit. Then commit the change with a message that says what you changed and why. That single edit is the highest-leverage 30 minutes you can spend on your portfolio this week.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+Your next step, in the next thirty minutes: open the README of your most recent project and rewrite the first paragraph to state the problem, the constraint, and one decision you made, in three sentences. If you cannot, that is the signal to pick a different project or to make a decision explicit. Then commit the change with a message that says what you changed and why.

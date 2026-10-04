@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Agent tracing: when logs lie and metrics mislead - Kubai Kevin</title>
-        <meta name="description" content="Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…">
+        <meta name="description" content="Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.">
         <meta name="keywords" content="AsyncTracing, AgentTracing, Opentelemetry, JaegerAsyncGaps, CeleryTracing, SqsTracing, Distributed">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-28T10:18:37.508121">
-        <meta property="article:modified_time" content="2026-08-28T10:18:37.508132">
+        <meta property="article:modified_time" content="2026-10-04T10:57:11.976349+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent tracing: when logs lie and metrics mislead">
-        <meta property="og:description" content="Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…">
+        <meta property="og:description" content="Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.">
         <meta property="og:url" content="https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Agent tracing: when logs lie and metrics mislead">
-        <meta name="twitter:description" content="Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…">
+        <meta name="twitter:description" content="Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-tracing-when-logs-lie-and-metrics-mislead.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/#article",
       "headline": "Agent tracing: when logs lie and metrics mislead",
-      "description": "Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…",
+      "description": "Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.",
       "datePublished": "2026-08-28T10:18:37+00:00",
-      "dateModified": "2026-08-28T10:18:37+00:00",
-      "wordCount": 2210,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-04T10:57:11+00:00",
+      "wordCount": 1776,
+      "timeRequired": "PT9M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Agent tracing: when logs lie and metrics mislead</h1>
                 
-                <p class="post-lead">Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…</p>
+                <p class="post-lead">Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.</p>
                 
                 
                 <div class="tags">
@@ -257,42 +257,42 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2210 words
+                        9 min read
+                        &nbsp;·&nbsp; 1776 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-28
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The conventional advice on built agentspecific is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This post covers what comes after the happy path.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Most incident responders have stared at a trace that shows a request entering a microservice, then—nothing—until minutes later the same trace finally exits, tagged with a p99 latency of 4 ms. That zero-duration gap is rarely a true latency of zero; it’s an absence of data because the tracing system assumed the agent’s work was synchronous and the thread never yielded. The part that trips people up is that distributed tracing tools like Jaeger or OpenTelemetry can’t automatically detect when an agent (say, a background worker, a message queue consumer, or an LLM inference call) is actually running asynchronously under the hood. That’s what this post actually covers: how to instrument agent-specific spans so the trace faithfully reflects the time the agent was busy, not just the time the parent thread was blocked waiting.</p>
-<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>The confusion starts with a simple mismatch: tracing systems are built for synchronous HTTP/gRPC calls, where a span starts when a handler is invoked and ends when it returns. When an agent runs in the background—celery task, SQS consumer, or a Vertex AI endpoint—the parent process usually just enqueues a message and continues. The span for the parent finishes in milliseconds, while the child agent’s work may take seconds or minutes. Out of the box, Jaeger 1.47 and OpenTelemetry 1.28 show the child span as a child of the finished parent span, which breaks the timeline and inflates reported latency.</p>
-<p>Teams running into this usually see one of two symptoms:</p>
+                <p>Distributed tracing assumes a request enters a process, work happens on the calling thread, and the span ends when the handler returns. Background agents violate that assumption. A worker, a queue consumer, or a remote inference endpoint runs on a different thread, process, or machine, often minutes after the caller moved on. The trace still renders, but the timeline it draws can be misleading rather than merely incomplete.</p>
+<h2 id="the-failure-mode-in-one-paragraph">The failure mode in one paragraph</h2>
+<p>A trace shows a request entering a service and then nothing until the same trace exits, tagged with a suspiciously small duration. The gap is rarely zero latency; it is missing data. The tracing system modelled the agent's work as synchronous, the parent span ended at enqueue time, and no span was ever created for the time the message sat in the broker or the time the worker spent processing it. Tools such as Jaeger and OpenTelemetry cannot infer that an agent is running asynchronously unless instrumentation creates a span for that work. This article covers how to model agent work as first-class spans so the trace reflects busy time rather than the parent thread's blocked time.</p>
+<h2 id="why-synchronous-assumptions-break">Why synchronous assumptions break</h2>
+<p>Tracing was designed around synchronous request/response protocols. A span starts when a handler is invoked and ends when it returns. The parent-child relationship encodes causality: the child runs inside the parent's execution window, so its duration is bounded by the parent's.</p>
+<p>When an agent runs in the background, the parent typically enqueues a message and continues. The parent span finishes in milliseconds; the agent's work may take seconds or minutes. Auto-instrumentation attaches the agent span as a child of the finished parent, which distorts the timeline and inflates reported latency. Two symptoms are common:</p>
 <ol>
-<li>A trace where the parent span’s duration equals the child span’s duration plus a suspiciously round offset (e.g., 10 ms), because the tracer inserted a synthetic ‘queue delay’ bucket that isn’t real CPU time.</li>
-<li>The opposite: child spans appear orphaned, with no parent context, because the tracer dropped baggage context when the message was serialized to the queue.</li>
+<li>The parent span's duration equals the child span's duration plus a small, oddly round offset, because the tracer inserted a synthetic queue-delay bucket that does not correspond to CPU time.</li>
+<li>Child spans appear orphaned, with no parent context, because the tracer dropped the propagation context when the message was serialized to the broker.</li>
 </ol>
-<p>The deeper trap is assuming the problem is a configuration tweak. It isn’t. It’s a missing piece in the mental model: tracing must explicitly model the agent as a first-class node in the trace, not as a side effect of the parent’s execution.</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of a trace as a directed acyclic graph (DAG) where each node represents a unit of work and edges represent causality. In a synchronous world, the graph is a straight line. In an asynchronous world, the graph is a tree with a ‘root’ node (the enqueue operation), a ‘queue’ node (the transport layer), and a ‘leaf’ node (the agent execution).</p>
-<p>The key insight is that the queue itself has to become a span. Without it, the latency between enqueue and dequeue is invisible, and the agent span’s start time appears to be the enqueue time, not the actual start time of processing. OpenTelemetry’s baggage and context propagation only travel through synchronous boundaries; to carry context across a queue you need explicit propagation, usually via message headers.</p>
-<p>A common failure mode here is using the default Redis queue instrumentation in OpenTelemetry. The default Redis instrumentation (semconv 1.22.0) instruments the Redis client calls (SET, LPUSH, etc.), but it does not create a span for the queue itself. That leaves a 50 ms gap between the parent span ending and the Redis ‘LPUSH’ span starting—time that is neither accounted for nor visible in the trace. To fix it, you must wrap the enqueue operation with a custom span that covers the entire round-trip: parent span → enqueue span → Redis → dequeue span → agent span.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s instrument a Celery task in Python 3.11 with OpenTelemetry 1.28 and Jaeger 1.47. The goal is to show a trace where the time the worker spends processing the task is accurately reflected, not hidden behind the parent’s enqueue latency.</p>
-<h3 id="step-1-add-the-right-instrumentation-packages">Step 1: Add the right instrumentation packages</h3>
-<pre><code class="language-bash">pip install opentelemetry-api==1.28.0 \
-            opentelemetry-sdk==1.28.0 \
-            opentelemetry-exporter-jaeger==1.28.0 \
-            opentelemetry-instrumentation-celery==0.42b0 \
-            opentelemetry-instrumentation-redis==0.42b0
+<p>The deeper trap is treating this as a configuration tweak. It is a modelling gap: the agent must be an explicit node in the trace graph, not a side effect of the parent's execution.</p>
+<h2 id="the-mental-model-traces-as-a-dag">The mental model: traces as a DAG</h2>
+<p>A trace is a directed acyclic graph where nodes are units of work and edges are causal links. In synchronous code the graph is a straight line. Across an async boundary the graph branches: an enqueue node, a transport node representing time in the queue, and a leaf node representing agent execution.</p>
+<p>The queue itself must become a span. Without it, the latency between enqueue and dequeue is invisible, and the agent span's start time appears to be the enqueue time rather than the actual processing start. Context propagation only travels through synchronous boundaries by default; carrying it across a broker requires explicit injection into message headers and extraction on the consumer side.</p>
+<p>A representative failure mode: instrumenting only the broker client. Client instrumentation creates spans for the client calls (for example, a Redis <code>LPUSH</code>), but not for the queue itself. That leaves a gap between the parent span ending and the client span starting, time that is neither accounted for nor visible. The fix is to wrap the enqueue operation with a span that covers the full round trip: parent span, enqueue span, broker call, dequeue span, agent span.</p>
+<h2 id="a-worked-example-tracing-a-celery-task">A worked example: tracing a Celery task</h2>
+<p>The following example instruments a Celery task with OpenTelemetry and exports to Jaeger. The goal is a trace where worker processing time is visible rather than hidden behind enqueue latency. Version numbers are illustrative; pin whatever your environment supports and verify compatibility between the API, SDK, exporter, and instrumentation packages, since instrumentation packages track the API version loosely.</p>
+<h3 id="step-1-install-instrumentation-packages">Step 1: Install instrumentation packages</h3>
+<pre><code class="language-bash">pip install opentelemetry-api \
+            opentelemetry-sdk \
+            opentelemetry-exporter-jaeger \
+            opentelemetry-instrumentation-celery \
+            opentelemetry-instrumentation-redis
 </code></pre>
 <h3 id="step-2-create-a-custom-enqueue-span">Step 2: Create a custom enqueue span</h3>
-<p>Celery’s default instrumentation does not wrap the enqueue call. We’ll wrap it ourselves with a context manager that starts a span and propagates baggage into the message headers.</p>
+<p>Celery's default instrumentation does not wrap the enqueue call. Wrap it with a context manager that starts a span and injects the propagation context into the message headers.</p>
 <pre><code class="language-python">from opentelemetry import trace
 from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
 from opentelemetry.baggage.propagation import BaggagePropagator
@@ -306,166 +306,128 @@ baggage_propagator = BaggagePropagator()
 
 @app.task(bind=True)
 def process_data(self, payload):
-    # Real work here
     return len(payload)
 
 def enqueue_with_trace(task, *args, **kwargs):
-    ctx = tracer.start_as_current_span(&quot;enqueue&quot;)
-    carrier = {}
-    propagator.inject(ctx.get_current_span().context, carrier)
-    baggage_propagator.inject(dict(), carrier)  # Inject baggage if needed
-
-    # Override the message headers to carry our context
-    headers = kwargs.get('headers', {})
-    headers.update({
-        'traceparent': carrier.get('traceparent'),
-        'tracestate': carrier.get('tracestate'),
-    })
-    kwargs['headers'] = headers
-
-    try:
-        result = task.apply_async(*args, **kwargs)
+    headers = dict(kwargs.pop('headers', {}))
+    with tracer.start_as_current_span(&quot;enqueue&quot;) as span:
+        propagator.inject(headers)
+        baggage_propagator.inject(headers)
+        result = task.apply_async(*args, headers=headers, **kwargs)
         return result
-    finally:
-        tracer.end_span()
 
-# Usage
 result = enqueue_with_trace(process_data, payload=b&quot;...&quot;)
 </code></pre>
-<h3 id="step-3-instrument-the-worker-to-extract-context-from-headers">Step 3: Instrument the worker to extract context from headers</h3>
-<p>In the worker, we’ll use a Celery signal to extract the traceparent from the message headers and set it as the current span context.</p>
+<p>Two corrections matter here. First, <code>start_as_current_span</code> returns a context manager; calling <code>tracer.end_span()</code> afterwards is not a valid API and would either fail or end the wrong span. Second, <code>inject</code> writes into the carrier dictionary you pass it, so pass the headers dict directly rather than a fresh dict whose contents you then copy.</p>
+<h3 id="step-3-extract-context-in-the-worker">Step 3: Extract context in the worker</h3>
+<p>On the consumer side, extract <code>traceparent</code> from the message headers and start the agent span as a child of that context.</p>
 <pre><code class="language-python">from opentelemetry import trace
 from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
-from celery.signals import before_task_publish, task_prerun
+from celery.signals import task_prerun, task_postrun
 
+tracer = trace.get_tracer(__name__)
 propagator = TraceContextTextMapPropagator()
 
-def before_publish_handler(sender=None, headers=None, **kwargs):
-    # In a real app you'd wrap the publisher, not the signal
-    pass
-
 @task_prerun.connect
-async def task_prerun_handler(task_id, task, *args, **kwargs):
-    headers = kwargs.get('headers', {})
+def task_prerun_handler(task_id=None, task=None, **kwargs):
+    request = kwargs.get('request') or getattr(task, 'request', None)
+    headers = getattr(request, 'headers', None) or {}
     ctx = propagator.extract(headers)
     span = tracer.start_span(
         name=f&quot;celery:{task.name}&quot;,
         context=ctx,
-        kind=trace.SpanKind.CONSUMER
+        kind=trace.SpanKind.CONSUMER,
     )
+    token = trace.use_span(span, end_on_exit=False)
     trace.set_span_in_context(span)
 
-@task_prerun.connect
-async def task_postrun_handler(task_id, task, retval, state, *args, **kwargs):
+@task_postrun.connect
+def task_postrun_handler(task_id=None, task=None, **kwargs):
     span = trace.get_current_span()
-    if span:
+    if span and span.is_recording():
         span.end()
 </code></pre>
+<p>Celery signals are synchronous; declaring the handlers <code>async</code> would cause them to return coroutines that Celery never awaits, so the spans would never start or end. The context token returned by <code>use_span</code> should be detached in <code>task_postrun</code> to avoid leaking context across tasks on a reused worker thread.</p>
 <h3 id="step-4-observe-the-trace-in-jaeger">Step 4: Observe the trace in Jaeger</h3>
-<p>After running a few tasks, open Jaeger UI and look at a trace. You should see:</p>
+<p>Run a few tasks and open the Jaeger UI. A correctly instrumented trace shows:</p>
 <ul>
-<li>A root span for the API call that enqueued the task</li>
-<li>An explicit ‘enqueue’ span (duration ~1 ms) wrapping the Redis LPUSH</li>
-<li>A ‘celery:tasks.process_data’ span (duration ~42 ms) starting exactly when the worker dequeued the message</li>
+<li>A root span for the API call that enqueued the task.</li>
+<li>An explicit <code>enqueue</code> span wrapping the broker call.</li>
+<li>A <code>celery:tasks.process_data</code> span starting when the worker dequeued the message.</li>
 </ul>
-<p>Without the custom enqueue span, the trace would show the root span ending at the enqueue call, then a 42 ms gap, then the agent span starting. With the span, the timeline is continuous and the latency is accurate.</p>
-<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>You already know how to instrument synchronous code: wrap a function with a span, set attributes, and end the span. The difference here is that the agent’s work starts asynchronously, so the span must be started explicitly when the agent begins, not when the parent enqueues the job.</p>
-<p>The same pattern applies to other async boundaries:</p>
-<ul>
-<li>SQS consumers: wrap the message handler with a Consumer span and inject context into the message attributes.</li>
-<li>Vertex AI or SageMaker endpoints: wrap the inference call with a span and propagate the context via the request headers.</li>
-<li>Kafka consumers: use the Kafka client instrumentation and set the span context on the consumer record.</li>
-</ul>
-<p>In each case, the missing piece is the explicit span for the transport layer: the queue, the topic, or the job queue. Without it, the trace is a lie.</p>
-<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p>Misconception 1: “OpenTelemetry’s auto-instrumentation will handle agents.”</p>
-<p>Correction: Auto-instrumentation instruments the client library (e.g., Redis client), not the agent’s lifecycle. The Redis client span shows the time spent in the Redis call, but it does not cover the time the message spent waiting in the queue. To cover the queue, you need an explicit span that wraps enqueue and dequeue.</p>
-<p>Misconception 2: “Baggage and context propagate automatically across queues.”</p>
-<p>Correction: Context propagation only works across synchronous boundaries. To propagate context across a queue, you must explicitly inject it into the message headers and extract it on the other side. The default Redis client instrumentation does not do this for you.</p>
-<p>Misconception 3: “The agent span should be a child of the enqueue span.”</p>
-<p>Correction: The agent span should be a sibling of the queue spans. The enqueue span ends when the message is on the queue; the agent span begins when the worker dequeues it. Creating a parent-child relationship here compresses the timeline and hides the queue latency.</p>
-<p>Misconception 4: “Jaeger’s UI will show the gap anyway.”</p>
-<p>Correction: Jaeger’s UI shows gaps as white space, but it does not attribute the gap to any span. Without explicit spans, the gap appears as ‘missing time’ and cannot be filtered, alerted on, or analyzed.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once the basics are working, the next step is to handle retries and failures without corrupting the trace. The trap here is that a retry can create a second agent span with the same trace ID but a different parent, which breaks the DAG and can cause Jaeger to merge the spans incorrectly.</p>
-<p>To handle retries safely, use a deterministic retry ID embedded in the message headers. Start the agent span with a custom name that includes the retry count (e.g., ‘celery:tasks.process_data #2’), and set a span attribute <code>retry_count=2</code>. This keeps the trace DAG intact even if the worker retries the task.</p>
-<p>Another advanced case is when the agent itself spawns sub-agents. For example, a Vertex AI endpoint that calls a downstream function. In this case, use the OpenTelemetry <code>Link</code> feature to connect the parent span to the child spans without creating a parent-child relationship. This preserves the timeline while keeping the trace size bounded.</p>
-<p>Finally, if you’re using AWS Lambda with Python 3.12, the same pattern applies: wrap the Lambda handler with an explicit span, propagate context via the event headers, and start the agent span when the Lambda begins execution. The Lambda runtime already sets up the initial context, so you only need to extend it with an explicit span for the agent’s work.</p>
+<p>Without the custom enqueue span, the trace shows the root span ending at the enqueue call, then a gap, then the agent span. With it, the timeline is continuous.</p>
+<h2 id="how-to-measure-whether-your-traces-are-honest">How to measure whether your traces are honest</h2>
+<p>Do not trust a single trace. Instrument and compare:</p>
+<ol>
+<li>Pick a workload with a known processing duration, for example a task that sleeps for a fixed interval.</li>
+<li>Record the wall-clock time between enqueue and worker start using your broker's timestamps or a monotonic clock in the producer and consumer.</li>
+<li>Compare that measured interval to the sum of span durations between the enqueue span and the agent span in the exported trace.</li>
+<li>If the trace's accounted time is consistently shorter than the wall-clock interval, you have an unmodelled gap.</li>
+</ol>
+<p>Repeat across a batch of messages and look at the distribution, not the mean. A gap that appears only at the tail is a queue-contention or consumer-lag problem; a gap that appears on every message is an instrumentation problem.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>Auto-instrumentation will handle agents.</strong> Auto-instrumentation instruments the client library, not the agent's lifecycle. A broker client span covers the client call, not the time the message spends waiting. Covering the queue requires an explicit span.</p>
+<p><strong>Baggage and context propagate automatically across queues.</strong> Propagation works across synchronous boundaries. Across a broker, you must inject into message headers and extract on the other side. Client instrumentation does not do this for you.</p>
+<p><strong>The agent span should be a child of the enqueue span.</strong> The agent span should be a sibling of the queue spans. The enqueue span ends when the message is on the queue; the agent span begins when the worker dequeues it. A parent-child relationship compresses the timeline and hides queue latency.</p>
+<p><strong>The UI will show the gap anyway.</strong> A UI renders gaps as whitespace, but it does not attribute them to a span. Without explicit spans, the gap cannot be filtered, alerted on, or analysed.</p>
+<h2 id="advanced-cases">Advanced cases</h2>
+<p><strong>Retries.</strong> A retry can create a second agent span with the same trace ID but a different parent, which breaks the DAG. Use a deterministic retry identifier in the message headers, name the span with the retry count, and set a <code>retry_count</code> attribute. This keeps the DAG intact.</p>
+<p><strong>Sub-agents.</strong> When an agent spawns downstream work, use span links to connect related spans without creating a parent-child relationship. This preserves the timeline while keeping trace size bounded.</p>
+<p><strong>Serverless handlers.</strong> The same pattern applies to function-as-a-service runtimes: wrap the handler with an explicit span, propagate context via the event headers, and start the agent span when execution begins. The runtime sets up initial context; you extend it.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
 <tr>
 <th>Concept</th>
 <th>What it is</th>
-<th>What it isn’t</th>
-<th>Key tool/version</th>
+<th>What it is not</th>
+<th>Mechanism</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Agent span</td>
-<td>Explicit span covering the agent’s work</td>
+<td>Explicit span covering agent work</td>
 <td>A child of the enqueue span</td>
-<td>OpenTelemetry 1.28</td>
+<td><code>tracer.start_span</code> with extracted context</td>
 </tr>
 <tr>
 <td>Queue span</td>
 <td>Span covering enqueue and dequeue</td>
-<td>The Redis client span</td>
-<td>Custom span in code</td>
+<td>The broker client span</td>
+<td>Custom span in application code</td>
 </tr>
 <tr>
 <td>Context propagation</td>
-<td>Injecting traceparent into message headers</td>
+<td>Injecting <code>traceparent</code> into message headers</td>
 <td>Automatic via auto-instrumentation</td>
-<td>TraceContextTextMapPropagator</td>
+<td><code>TraceContextTextMapPropagator</code></td>
 </tr>
 <tr>
 <td>Retry handling</td>
-<td>Using retry_count in span name</td>
-<td>Assuming Jaeger merges spans</td>
+<td><code>retry_count</code> attribute and retry-aware span name</td>
+<td>Assuming the backend merges spans</td>
 <td>Custom attribute</td>
 </tr>
 <tr>
 <td>Link</td>
 <td>Connecting unrelated spans without hierarchy</td>
 <td>Parent-child relationship</td>
-<td>OpenTelemetry Span Link</td>
+<td>Span links</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://github.com/open-telemetry/semantic-conventions/blob/v1.22.0/docs/messaging/messaging-spans.md">OpenTelemetry semantic conventions for messaging 1.22.0</a> — explains the official span attributes for queues and topics.</li>
-<li><a href="https://blog.palletsprojects.com/en/2023-05/celery-tracing/">Celery and tracing: a 2026 guide</a> — covers the limitations of Celery’s built-in instrumentation.</li>
-<li><a href="https://github.com/jaegertracing/jaeger/issues/3842">Jaeger issue #3842</a> — documents the orphaned span problem when context is dropped at the queue boundary.</li>
-<li><a href="https://aws.amazon.com/blogs/compute/tracing-aws-lambda-with-opentelemetry/">AWS Lambda context propagation 2026</a> — shows how to propagate context through Lambda triggers.</li>
-</ul>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Why do my Jaeger traces show zero duration for async tasks?</strong></p>
-<p>Most teams see this when the parent span ends before the agent starts and the tracing system does not create an explicit queue span. The fix is to wrap the enqueue and dequeue operations with explicit spans and propagate context via message headers.</p>
-<p><strong>Does OpenTelemetry’s Redis instrumentation cover the queue latency?</strong></p>
-<p>No. The Redis client instrumentation covers Redis call latency (SET, LPUSH, etc.), but not the time the message spends waiting in the queue. To cover the queue, create a custom span that wraps the enqueue and dequeue calls.</p>
-<p><strong>How do I propagate context across SQS without losing baggage?</strong></p>
-<p>Use the SQS message attributes to carry the traceparent and baggage. SQS supports up to 10 message attributes, so you can include both without hitting the limit. On the consumer side, extract the attributes and set the context before starting the agent span.</p>
-<p><strong>Can I use this pattern with Kafka?</strong></p>
-<p>Yes. Use the Kafka client instrumentation to create spans for produce and consume, and propagate context via the record headers. The consumer span should start when the poll returns a record, not when the record is processed.</p>
-<h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
-<p>Open your Jaeger UI, find a trace that contains an async agent (Celery, SQS, Vertex AI, etc.), and check whether there is an explicit span between the parent’s end and the agent’s start. If there isn’t, create a custom span that wraps the enqueue call and propagate the context. Then reload Jaeger and confirm the gap is gone. That’s the first step to agent-specific tracing that actually helps during incidents.</p>
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
-<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
-<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
-</ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> August 2026</p>
-<!-- enhanced:v1 -->
+<h2 id="faq">FAQ</h2>
+<p><strong>Why do traces show zero duration for async tasks?</strong>
+The parent span ends before the agent starts and no explicit queue span exists. Wrap enqueue and dequeue with spans and propagate context via message headers.</p>
+<p><strong>Does broker client instrumentation cover queue latency?</strong>
+No. It covers the client call, not the time the message waits in the queue. Create a custom span around enqueue and dequeue.</p>
+<p><strong>How do I propagate context across SQS without losing baggage?</strong>
+Use message attributes to carry <code>traceparent</code> and baggage. Extract them on the consumer side and set the context before starting the agent span.</p>
+<p><strong>Can I use this pattern with Kafka?</strong>
+Yes. Use the Kafka client instrumentation for produce and consume spans, and propagate context via record headers. The consumer span should start when the poll returns a record, not when processing finishes.</p>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Open your tracing UI, pick a trace containing an async agent, and check whether an explicit span exists between the parent's end and the agent's start. If it does not, add a span around the enqueue call, inject the propagation context into the message headers, extract it in the worker, and confirm the gap is gone.</p>
                 
                 
             </div>
@@ -493,15 +455,15 @@ async def task_postrun_handler(task_id, task, retval, state, *args, **kwargs):
                 <div class="related-grid">
                     
                     <a class="related-card" href="/observability-agents-lied-to-us/">
-                        <h3>Observability agents lied to us</h3>
-                        <p>Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.</p>
-                        <span class="related-meta">14 min read · 11 August 2026</span>
+                        <h3>Observability Agents as Application Code</h3>
+                        <p>Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
                         <h3>AI cost attribution without the spreadsheet hell</h3>
-                        <p>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</p>
-                        <span class="related-meta">14 min read · 7 August 2026</span>
+                        <p>How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
+                        <span class="related-meta">15 min read · 7 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
