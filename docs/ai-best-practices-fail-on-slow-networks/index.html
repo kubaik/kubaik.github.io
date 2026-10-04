@@ -1,0 +1,497 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AI best practices fail on slow networks - Kubai Kevin</title>
+        <meta name="description" content="Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.">
+        <meta name="keywords" content="MobileLatency, DataCosts, Ai, Dataengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-04T04:58:45.940738">
+        <meta property="article:modified_time" content="2026-10-04T04:58:45.940750">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="AI best practices fail on slow networks">
+        <meta property="og:description" content="Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.">
+        <meta property="og:url" content="https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ai-best-practices-fail-on-slow-networks.png">
+        <meta property="og:image:alt" content="AI best practices fail on slow networks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AI best practices fail on slow networks">
+        <meta name="twitter:description" content="Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-best-practices-fail-on-slow-networks.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/#article",
+      "headline": "AI best practices fail on slow networks",
+      "description": "Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.",
+      "datePublished": "2026-10-04T04:58:45+00:00",
+      "dateModified": "2026-10-04T04:58:45+00:00",
+      "wordCount": 2607,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/"
+      },
+      "keywords": "MobileLatency, DataCosts, Ai, Dataengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI best practices fail on slow networks",
+          "item": "https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>AI best practices fail on slow networks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">AI best practices fail on slow networks</h1>
+                
+                <p class="post-lead">Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MobileLatency</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DataCosts</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2607 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Teams often end up shipping global best twice — the second time because the first version failed quietly. The vendor docs cover the setup and go quiet on the failure modes. Here's what a colleague hitting this for the first time needs to know.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>Most AI engineering guidance is written by and for people running on fast, cheap, unmetered connectivity. It assumes you can stream tokens from a US-hosted model endpoint, retry aggressively on failure, keep a persistent websocket open, and ship multi-megabyte payloads without anyone noticing. In markets where mobile data is metered, expensive per megabyte, and latency to the nearest hyperscaler region is measured in hundreds of milliseconds, those same patterns turn into silent cost bombs and user-visible hangs. The fix is not "use a smaller model" — it is to treat the network as a scarce resource and design the AI feature around the request budget, not around the model's capabilities. This post explains why the gap exists, gives you a mental model for reasoning about it, and ends with a concrete thing to check in your own codebase today.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Here is the trap. Almost every "best practice" in the LLM application space is a best practice <em>conditional on a network assumption that is never stated</em>. Take streaming responses. Streaming is genuinely better UX on a fast connection: the user sees tokens appear, perceived latency drops, and a 20-second generation feels responsive. Now put that same feature on a 3G connection in a market where data is billed per megabyte and the user is on a prepaid bundle. The stream is not free — every token you render is bytes on the wire. A verbose model that streams 800 tokens of preamble before answering is not just slow; it is <em>charging the user</em> for the privilege of waiting.</p>
+<p>The confusion comes from the fact that the guidance is not wrong in its original context. It is wrong <em>here</em>, and the people writing it usually have no reason to know that. So a Nairobi or Lagos or Jakarta team reads "always stream, always retry with exponential backoff, always keep the connection warm" and implements all three. Two of the three are actively harmful in their deployment environment, and nothing in the source material flags it.</p>
+<p>There is a second layer of confusion: engineers often attribute the problem to the <em>model</em>. They see a 12-second response and assume the model is slow, so they switch to a smaller model. Sometimes that helps. Often the model was fine and the time was spent in TCP handshakes, TLS negotiation, DNS resolution, and retransmits on a lossy link. Optimizing the model when the problem is the network is the single most common misdiagnosis in this space.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of it like a taxi meter that runs on <em>distance</em>, not time — and the roads are bad. Every byte you send over the mobile network is distance on the meter. Latency is how long the trip takes, which depends on traffic. And packet loss is potholes: when you hit one, the taxi has to go back and redo part of the trip.</p>
+<p>Three quantities matter, and they are independent:</p>
+<ol>
+<li><strong>Round-trip time (RTT).</strong> The time for one packet to go to the server and back. This sets the floor on any request-response interaction. If RTT to your model endpoint is 250 ms, then a naive chat flow that does <em>five</em> sequential round trips (auth check, session fetch, model call, tool call, response write) has already spent over a second before the model has produced a single token.</li>
+<li><strong>Bandwidth / cost per byte.</strong> How much data moves, and what it costs the user. On metered connections this is a budget, not a free resource.</li>
+<li><strong>Loss rate.</strong> On mobile links this is not zero. TCP treats loss as congestion and backs off, so a single lost packet can add a full RTT of delay even when bandwidth is fine.</li>
+</ol>
+<p>The key insight: <strong>these three compound multiplicatively, not additively.</strong> High RTT plus loss means retries are expensive. High RTT plus large payloads means streaming is expensive. High cost per byte plus verbose models means every "helpful" preamble has a price tag. You cannot fix a multiplicative problem with an additive solution like "make the model 20% faster."</p>
+<p>A useful reframe: design the feature around a <strong>request budget</strong> — a fixed number of round trips and a fixed number of bytes — and then fit the model inside that budget, rather than picking a model and hoping the network cooperates.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Suppose you are building an AI assistant for a fintech app. The user asks a question in a chat box. Here is the naive flow, the one that falls out of following generic best practices:</p>
+<pre><code>1. Client → API gateway (auth)          ~1 RTT
+2. API → session store (fetch history)  ~1 RTT
+3. API → model endpoint (stream)        ~1 RTT + generation time
+4. Model → tool call → API → tool       ~2 RTT (if using function calling)
+5. API → client (stream final answer)   ~1 RTT + stream duration
+</code></pre>
+<p>Assume, purely as an illustration:</p>
+<ul>
+<li>RTT to your backend: 80 ms (regional, reasonable)</li>
+<li>RTT from backend to model endpoint: 200 ms (cross-region, typical when the model is hosted far away)</li>
+<li>Model generation: 3 seconds for a 400-token answer</li>
+<li>Streaming overhead: the client receives ~400 tokens ≈ 1.6 KB of text, but with JSON framing and metadata, call it 3 KB</li>
+</ul>
+<p>Naive total time before first token reaches the user: roughly 80 + 80 + 200 + 200 + 200 = 760 ms of pure network, then generation starts. If you stream, the user waits ~760 ms + time-to-first-token. That sounds fine. But now add packet loss: at 2% loss on a mobile link, TCP retransmits will occasionally add a full RTT here and there, and the tail latency (p95, p99) balloons. The <em>median</em> looks okay; the <em>tail</em> is where users churn.</p>
+<p>Now the cost side. 3 KB per response. If the user asks 30 questions a day, that is 90 KB. Over a month, ~2.7 MB just for chat text — before you count the app's other traffic. On a metered prepaid bundle, that is a real line item for the user, and it competes with everything else they do on the phone.</p>
+<p>Now the optimized flow:</p>
+<pre><code>1. Client → API (auth + session in one call, cached)  ~1 RTT
+2. API → model (single non-streaming call, capped)    ~1 RTT + generation
+3. API → client (compact response)                    ~1 RTT
+</code></pre>
+<p>Same feature, three round trips instead of five, and you can cap the output length so the payload is predictable. Notice what changed: not the model, but the <em>number of network interactions</em> and the <em>size of the response</em>. You can go further — cache the session client-side so step 1 becomes zero round trips on repeat questions, and use a local embedding or rules layer to answer trivial queries without hitting the model at all.</p>
+<p>The arithmetic is illustrative, but the shape is real: in high-RTT environments, <strong>round-trip count dominates</strong>, and in metered environments, <strong>payload size dominates</strong>. Both are under your control. The model choice is often the least important lever.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you have built anything for low-bandwidth users, this is the same discipline as:</p>
+<ul>
+<li><strong>Image optimization for slow connections.</strong> You already resize and compress images rather than shipping 4 MB JPEGs. Apply the same thinking to model payloads and responses.</li>
+<li><strong>Database query batching.</strong> You already know that N+1 queries kill performance. Sequential round trips to a model endpoint are N+1 over the network.</li>
+<li><strong>CDN design.</strong> You already put static assets close to users. The same logic applies to any inference you can run at the edge or cache.</li>
+<li><strong>Mobile-first API design.</strong> You already paginate aggressively and avoid chatty APIs. AI endpoints deserve the same treatment.</li>
+</ul>
+<p>The difference is that AI endpoints are <em>new</em>, so the accumulated folk wisdom that protects your image pipeline has not yet been applied to them. Teams are shipping LLM features with the network discipline of a 2010 desktop app.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>"Just use a smaller model."</strong> Sometimes right, often a distraction. A smaller model reduces generation time, which helps if generation dominates. But if your p95 latency is dominated by round trips and retransmits, a smaller model changes almost nothing. Measure first.</p>
+<p><strong>"Streaming is always better UX."</strong> Streaming improves <em>perceived</em> latency on fast, unmetered connections. On metered connections it can increase total bytes and expose the user to a longer connection that is more likely to drop. For short answers, a single compact response is often better. For long answers, streaming still wins — but cap the length.</p>
+<p><strong>"Retries with exponential backoff make things robust."</strong> Retries are correct for transient server errors. They are <em>wrong</em> as a response to network loss, because TCP already retries at the transport layer, and your application-level retry multiplies the cost. A retry storm on a lossy link is how you turn one slow request into five slow requests and five times the data cost.</p>
+<p><strong>"Keep the connection warm."</strong> Persistent connections (HTTP keep-alive, websockets) help on stable networks. On mobile, the radio state machine means an idle connection is not actually free — the device may drop to a low-power state and re-establishing costs a full RTT plus radio wake-up. Keep-alive helps for bursty traffic, hurts for sparse traffic.</p>
+<p><strong>"The model is the bottleneck."</strong> Usually it is not. Instrument your request path end-to-end before you touch the model.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once you have the request budget under control, the next levers are:</p>
+<p><strong>Edge inference for small tasks.</strong> Classification, intent detection, and short extractions can often run on-device or at a nearby edge location. This eliminates the cross-region RTT entirely for a meaningful fraction of requests. The tradeoff is model quality and the cost of shipping the model to the device — for anything beyond tiny models, this is not yet practical on low-end phones, so be honest about which tasks qualify.</p>
+<p><strong>Response caching keyed on normalized input.</strong> Many user queries repeat. A cache layer that normalizes the query (lowercase, strip punctuation, canonicalize) can serve a large fraction of requests with zero model calls and zero cross-region traffic. The hard part is cache invalidation and avoiding stale or wrong answers — scope the cache to safe categories.</p>
+<p><strong>Speculative local answers with server verification.</strong> Return an instant local answer, then reconcile with the server asynchronously. This is the pattern behind "optimistic UI" applied to AI. It works when wrong answers are cheap to correct and the user understands the answer may update.</p>
+<p><strong>Compression at the application layer.</strong> If your model responses are text, they compress well. Gzip or Brotli on the response body is table stakes and often forgotten on AI endpoints because the payloads "feel" small. They are not small once you multiply by request volume.</p>
+<p><strong>Batching and debouncing on the client.</strong> If the UI fires a model call on every keystroke, you are paying for every keystroke. Debounce, and batch related queries into one request where the model can handle it.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Reduces RTT cost</th>
+<th>Reduces byte cost</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fewer round trips</td>
+<td>Yes (large)</td>
+<td>Neutral</td>
+<td>Biggest single win on high-RTT links</td>
+</tr>
+<tr>
+<td>Smaller/capped responses</td>
+<td>Neutral</td>
+<td>Yes (large)</td>
+<td>Cap max tokens, strip preamble</td>
+</tr>
+<tr>
+<td>Response caching</td>
+<td>Yes (large)</td>
+<td>Yes (large)</td>
+<td>Scope carefully to safe categories</td>
+</tr>
+<tr>
+<td>Edge/on-device inference</td>
+<td>Yes (large)</td>
+<td>Yes</td>
+<td>Only for small tasks today</td>
+</tr>
+<tr>
+<td>Compression (gzip/brotli)</td>
+<td>Neutral</td>
+<td>Yes (moderate)</td>
+<td>Easy, often forgotten</td>
+</tr>
+<tr>
+<td>Streaming</td>
+<td>Neutral</td>
+<td>Sometimes worse</td>
+<td>Better perceived latency, more bytes</td>
+</tr>
+<tr>
+<td>Aggressive retries</td>
+<td>Worse</td>
+<td>Worse</td>
+<td>Let TCP handle transport loss</td>
+</tr>
+<tr>
+<td>Smaller model</td>
+<td>Sometimes</td>
+<td>Neutral</td>
+<td>Only if generation dominates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision checklist:</strong></p>
+<ol>
+<li>Measure p50 and p95 latency for your AI endpoint, split by network phase (DNS, TLS, request, generation, response).</li>
+<li>Count the round trips in your happy path. If it is more than three, consolidate.</li>
+<li>Cap response size in tokens and in bytes.</li>
+<li>Add response compression if it is missing.</li>
+<li>Replace application-level retries on network errors with a single retry at most, and only on idempotent requests.</li>
+<li>Cache aggressively where correctness allows.</li>
+<li>Only then consider changing the model.</li>
+</ol>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I measure whether latency is network or model?</strong>
+Instrument each phase of the request separately: DNS lookup, TCP connect, TLS handshake, time to first byte from the model endpoint, and total generation time. Most APM tools can break this down, or you can log timestamps at each step. If time-to-first-byte is high but generation is fast, the problem is the network path, not the model.</p>
+<p><strong>Why does my p99 spike even though the median is fine?</strong>
+Tail latency on mobile networks is dominated by packet loss and radio state transitions. A single lost packet causes TCP to retransmit after a timeout, which can add hundreds of milliseconds. This affects a small fraction of requests but disproportionately affects the slowest ones. Reducing round trips reduces the number of opportunities for loss to bite.</p>
+<p><strong>Is streaming ever the right choice on metered connections?</strong>
+Yes, for long-form answers where the alternative is a very long wait with no feedback. The user needs to see progress. But cap the output length, and consider whether the answer can be shorter. Streaming a 2000-token essay to a user on a prepaid bundle is a cost decision, not just a UX one.</p>
+<p><strong>Can I just host the model in-region to fix latency?</strong>
+If a suitable model is available in a region close to your users, yes, that eliminates a large chunk of RTT. The tradeoff is model quality and cost — in-region options are often smaller or more expensive per token. For many tasks that is the right trade. For others, the cross-region call is worth it, and you should optimize round trips instead.</p>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<p>The topics worth going deeper on are TCP behavior on lossy links (any good networking textbook covers retransmit and congestion control), HTTP/2 and HTTP/3 connection reuse, and the general literature on optimizing for low-bandwidth users, which predates LLMs by decades and still applies. The AI-specific part is new; the network discipline is not.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Open your AI endpoint's request handler and count the network round trips in the happy path. Write them down in order. If the number is greater than three, pick the two you can merge or cache and do it today. That single change will do more for your users on slow, metered connections than any model swap.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/golden-paths-become-load-bearing-walls/">
+                        <h3>Golden paths become load-bearing walls</h3>
+                        <p>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/local-llm-agents-vllm-vs-ollama-for-fintech/">
+                        <h3>Local LLM agents: vLLM vs Ollama for fintech</h3>
+                        <p>vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</p>
+                        <span class="related-meta">15 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-our-schema-survived-ai-scaling/">
+                        <h3>Why our schema survived AI scaling</h3>
+                        <p>Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
+                        <span class="related-meta">11 min read · 13 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

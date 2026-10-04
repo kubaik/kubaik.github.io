@@ -10,7 +10,6 @@ ai-apps-break-when-you-treat-them-like-regular-software,72,3711,AI apps break wh
 choose-no-code-only-when,72,1929,Choose no-code only when,2026-06-09T04:30:23.126966,2,"first-person incident: 'In our waitlist example, the no-code stack cost $360 plus 12 dev hours to work a' | no fenced code block"
 istio-and-cilium-what-really-breaks-in-production,72,3080,Istio and Cilium: what really breaks in production,2026-06-24T09:26:52.873534,2,"first-person incident: 'During a rolling deployment of a new version of a payment service, I watched the' | no fenced code block"
 micro-saas-niches-eaten-by-ai-in-2026,72,3693,Micro-SaaS niches eaten by AI in 2026,2026-06-29T09:34:39.935425,2,"first-person incident: 'When Adobe Firefly killed our color grading tool, we spent six months pivoting t' | no fenced code block"
-monolith-to-services-without-a-rewrite,72,3229,Monolith to services without a rewrite,2026-06-27T20:07:07.246730,2,first-person incident: 'The team reverted the extraction after three months and spent six weeks normaliz' | no fenced code block
 pass-interviews-without-a-cs-degree,72,3269,Pass interviews without a CS degree,2026-06-09T10:55:19.993756,2,"first-person incident: 'In 2026, a client in Berlin hired a self-taught engineer who had spent six month' | no fenced code block"
 agent-auth-where-the-docs-ended-up-lying,75,3403,Agent auth: where the docs ended up lying,2026-08-24T01:29:32.768869,2,first-person incident: 'GPS modules cost $12 but cut failures from 40% to 2.9%.' | no FAQ section
 agent-drift-why-prod-breaks-without-human-checkpoints,75,2525,Agent drift: why prod breaks without human checkpoints,2026-09-01T04:14:50.129093,2,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."" | no FAQ section"
@@ -26,10 +25,8 @@ dead-letter-queues-stop-poison-messages,75,2693,Dead-letter queues: stop poison 
 debug-ai-agent-failures-differently,75,2938,Debug AI agent failures differently,2026-06-27T15:03:09.620372,2,first-person incident: 'The cleanup cost $28K in refunds and 14 engineering days.' | no FAQ section
 ebpf-observability-in-2026-what-actually-works,75,2985,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026, every platform team h' | no FAQ section"
 edge-agents-vs-cloud-round-trips-in-2026,75,2375,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nTurns out the issue wasn’t the' | no FAQ section
-evaluate-agents-with-spark-vs-custom-harness,75,2144,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,2,"first-person incident: 'Over six months, the Spark team spent $32k in engineering time versus $4k for th' | no FAQ section"
 evolve-your-monolith-without-rewriting-in-2026,75,2476,Evolve your monolith without rewriting in 2026,2026-08-19T06:58:57.859019,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nSolo founders ship fast, but t' | no FAQ section"
 idp-for-ai-2026-stack-evolution,75,2452,IDP for AI: 2026 stack evolution,2026-09-02T03:37:36.606872,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026, solo founders shippin' | no FAQ section"
-internal-platform-adoption-one-metric-kills-velocity,75,2596,Internal platform adoption: one metric kills velocity,2026-07-21T07:54:25.219668,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026 I ran a platform team ' | no FAQ section
 llm-costs-fine-tune-vs-route-vs-bigger-model,75,2964,LLM costs: fine-tune vs route vs bigger model,2026-08-22T01:23:52.067990,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nYou have three ways to squeeze' | no FAQ section
 m-pesa-failures-cost-us-40-hours,75,3262,M-Pesa failures cost us 40 hours,2026-08-01T14:05:22.082759,2,first-person incident: 'The system I ended up with in production looks like this:\n\n1.' | no FAQ section
 map-legacy-code-with-ai-before-it-breaks,75,3708,Map legacy code with AI before it breaks,2026-06-23T21:25:55.506108,2,"first-person incident: 'After the fixes, it cost $300/month and generated 8 pages per week.' | no FAQ section"
@@ -63,6 +60,7 @@ agentic-ai-cost-control-7-tools-one-backfire,80,2823,"Agentic AI cost control: 7
 agents-keep-breaking-prod-3-boundary-rules-you-still-need,80,2778,Agents keep breaking prod: 3 boundary rules you still need,2026-07-17T13:47:16.525594,1,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."""
 ai-agent-postmortem-human-loop-vs-blind-replay,80,3318,AI agent postmortem: human loop vs blind replay,2026-06-20T22:43:19.173545,1,"first-person incident: ""Staying on LangSmith's SaaS plan at $4.20 per 1k traces would cost $252/month — """
 ai-ate-the-niches-first,80,2494,AI ate the niches first,2026-06-17T19:55:02.675961,1,"first-person incident: 'In 2026 I built ""DocMerge AI""—a service that merges clinical notes from EHRs int'"
+ai-best-practices-fail-on-slow-networks,80,2610,AI best practices fail on slow networks,2026-10-04T04:58:45.940738,1,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."""
 ai-code-in-prod-postmortems-still-work,80,2887,AI code in prod? Postmortems still work,2026-07-21T14:01:05.993241,1,first-person incident: 'Storing that in Redis with a TTL of 7 days can cost $50/month if you have 30 inc'
 ai-cost-attribution-without-the-spreadsheet-hell,80,2852,AI cost attribution without the spreadsheet hell,2026-08-07T13:11:54.801112,1,first-person incident: 'Others cost $1.20 per thousand requests—more than the AI inference itself.'
 ai-errors-hide-in-plain-latency,80,2395,AI errors hide in plain latency,2026-08-21T16:58:29.625499,1,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."""
@@ -95,7 +93,6 @@ pick-one-stripe-lemon-squeezy-paddle-in-2026,80,4108,"Pick one: Stripe, Lemon Sq
 portfolio-projects-hiring-managers-skip,80,3491,Portfolio projects hiring managers skip,2026-09-25T16:52:21.903774,1,"first-person incident: '""I built a REST API"" is forgettable.'"
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
 rag-rots-if-you-dont-refresh-indexes,80,2930,RAG rots if you don’t refresh indexes,2026-08-04T14:24:04.500365,1,first-person incident: 'That mistake cost us three days of engineering time and a week of user confidenc'
-save-12kmonth-cloud-egress-costs-in-2026,80,3468,Save $12k/month: cloud egress costs in 2026,2026-06-11T09:49:21.554478,1,"first-person incident: 'In a head-to-head test against caching at the edge, the internal-only approach s'"
 scope-agent-permissions-per-task,80,3166,Scope agent permissions per task,2026-09-19T09:21:55.925855,1,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."""
 self-service-ai-tooling-where-it-breaks-first,80,2860,Self-service AI tooling: where it breaks first,2026-09-16T09:53:25.584787,1,"first-person incident: 'A product manager can spin up a vector store in 90 seconds, but nothing in that '"
 self-service-is-broken-without-ai-ops,80,2375,Self-service is broken without AI ops,2026-08-24T12:59:05.104603,1,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."""
@@ -180,6 +177,7 @@ code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,
 debug-ai-agents-failures-arent-just-bugs,95,2173,Debug AI agents: failures aren't just bugs,2026-07-01T12:23:14.341291,1,no FAQ section
 detect-lazy-agents-without-false-alarms,95,2887,Detect lazy agents without false alarms,2026-07-04T14:45:28.353414,1,no markdown table
 duckdb-in-production-when-it-replaces-a-warehouse,95,2461,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,1,no FAQ section
+evaluate-agents-with-spark-vs-custom-harness,95,2436,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,1,no FAQ section
 failed-ai-wrappers-2026-what-the-survivors-did-right,95,2474,Failed AI wrappers 2026: what the survivors did right,2026-06-26T23:58:50.342123,1,no FAQ section
 fintech-features-break-in-ghana-the-real-fix,95,2564,Fintech features break in Ghana: the real fix,2026-07-18T13:24:23.053992,1,no FAQ section
 fix-ai-agent-failures-postmortem-guide,95,2378,"Postmortems for AI agents: drift, cost, replay",2026-06-29T21:20:13.013851,1,no FAQ section
@@ -267,7 +265,7 @@ ai-interviews-broke-system-design-3-patterns-that,100,2995,AI interviews broke s
 ai-interviews-now-ask-for-this,100,3152,AI interviews now ask for this,2026-06-10T07:28:02.725896,0,
 ai-made-self-service-platforms-trivial-in-2026,100,1962,AI made self-service platforms trivial in 2026,2026-07-03T23:08:55.907087,0,
 ai-memory-systems-context-that-survives-sessions,100,3653,AI memory systems: context that survives sessions,2026-07-02T17:15:04.501281,0,
-ai-model-poisoning-3-real-attacks-on-datasets,100,3800,AI model poisoning: 3 real attacks on datasets,2026-07-04T03:21:11.093312,0,
+ai-model-poisoning-3-real-attacks-on-datasets,100,3064,AI model poisoning: 3 real attacks on datasets,2026-07-04T03:21:11.093312,0,
 ai-native-apps-forget-the-old-stack,100,2028,AI-native apps: forget the old stack,2026-06-12T23:10:41.835738,0,
 ai-on-slow-networks-nairobi-teams-2026-playbook,100,2669,AI on slow networks: Nairobi teams' 2026 playbook,2026-08-26T01:29:12.285987,0,
 ai-ops-vs-human-ops-the-incidents-that-broke-them,100,2433,AI-First vs Human-First Incident Response,2026-06-23T01:31:13.503099,0,
@@ -307,6 +305,7 @@ event-driven-beats-agent-driven-910-times,100,2948,Event-driven beats agent-driv
 event-sourcing-pay-the-complexity-tax-only-here,100,2091,Event sourcing: pay the complexity tax only here,2026-06-09T09:48:26.237900,0,
 feature-flags-became-ai-rollout-platforms,100,3221,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
 golden-paths-become-load-bearing-walls,100,2705,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
+internal-platform-adoption-one-metric-kills-velocity,100,2832,Internal platform adoption: one metric kills velocity,2026-07-21T07:54:25.219668,0,
 json-modes-hidden-costs-revealed,100,2534,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2142,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
 keep-multi-model-systems-stable-6-rules-that-worked,100,3027,Stabilize multi-model agent routers: six production rules,2026-07-15T02:44:07.331590,0,
@@ -328,6 +327,7 @@ migrations-stop-running-them-live,100,2276,Migrations? Stop running them live,20
 mobile-first-ai-fails-you-didnt-plan,100,2246,Mobile-first AI fails you didn’t plan…,2026-08-26T17:38:26.304775,0,
 mobile-money-agent-fees-why-your-bot-keeps-failing,100,2427,Mobile money agent fees: why your bot keeps failing,2026-08-05T14:16:59.891393,0,
 mobile-money-agents-when-m-pesa-api-fails,100,2961,Mobile money agents: when M-Pesa API fails,2026-09-18T16:47:51.592278,0,
+monolith-to-services-without-a-rewrite,100,2878,Monolith to services without a rewrite,2026-06-27T20:07:07.246730,0,
 multi-agent-handoffs-the-latency-tax-nobody-measures,100,2607,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,0,
 multi-agent-systems-when-they-quietly-degrade,100,2706,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,0,
 neon-vs-planetscale-vs-turso-which-broke-first,100,3346,Neon vs PlanetScale vs Turso: which broke first?,2026-06-10T18:51:10.449001,0,
@@ -358,6 +358,7 @@ replace-managed-services-with-postgres-17,100,2687,Replace managed services with
 run-apis-in-50-spots-what-breaks-first,100,2344,Run APIs in 50 spots: what breaks first,2026-06-19T21:55:04.362560,0,
 rust-rewrites-where-they-pay-off-where-they-dont,100,2804,"Rust rewrites: where they pay off, where they don't",2026-09-21T10:01:49.793555,0,
 sandboxed-computer-use-agents-with-gvisor,100,2907,Sandboxed computer-use agents with gVisor,2026-09-21T18:02:36.068591,0,
+save-12kmonth-cloud-egress-costs-in-2026,100,2606,Cutting cloud egress costs: architecture that works,2026-06-11T09:49:21.554478,0,
 sbom-attestation-that-gets-used,100,2971,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,0,
 self-healing-pipelines-argo-vs-crossplane-in-2026,100,2592,Self-healing pipelines: Argo vs Crossplane in 2026,2026-06-25T13:16:29.832770,0,
 settlement-vs-clearing-backend-engineers-guide,100,2782,Settlement vs clearing: backend engineer's guide,2026-09-28T04:25:56.078134,0,

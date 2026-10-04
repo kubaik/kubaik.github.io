@@ -514,5 +514,11 @@
     "title": "Debug async Python before it deadlocks…",
     "reason": "Near-duplicate of tame-python-asyncs-hidden-traps",
     "deleted_at": "2026-10-03T11:59:38.285599+00:00"
+  },
+  {
+    "slug": "legacy-codebases-let-ai-own-the-boring-parts",
+    "title": "Legacy codebases? Let AI own the boring parts",
+    "reason": "Near-duplicate of ai-revives-unloved-legacy-codebases",
+    "deleted_at": "2026-10-04T04:59:06.911009+00:00"
   }
 ]

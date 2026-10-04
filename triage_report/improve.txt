@@ -60,6 +60,7 @@ docs/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/index.md
 docs/ai-alert-triage-cut-pages-80-in-production/index.md
 docs/ai-apps-break-when-you-treat-them-like-regular-software/index.md
 docs/ai-ate-the-niches-first/index.md
+docs/ai-best-practices-fail-on-slow-networks/index.md
 docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/index.md
 docs/ai-chats-hidden-wcag-fails/index.md
 docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/index.md

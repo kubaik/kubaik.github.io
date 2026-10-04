@@ -763,5 +763,10 @@
     "removed_at": "2026-10-03T11:59:38.285599+00:00",
     "reason": "Near-duplicate of tame-python-asyncs-hidden-traps",
     "source": "delete_posts.py"
+  },
+  "legacy-codebases-let-ai-own-the-boring-parts": {
+    "removed_at": "2026-10-04T04:59:06.911009+00:00",
+    "reason": "Near-duplicate of ai-revives-unloved-legacy-codebases",
+    "source": "delete_posts.py"
   }
 }

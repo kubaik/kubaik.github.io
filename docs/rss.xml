@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Oct 2026 15:59:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 05:00:55 +0000</lastBuildDate>
+    <item>
+      <title>AI best practices fail on slow networks</title>
+      <link>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</link>
+      <description>Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.</description>
+      <pubDate>Sun, 04 Oct 2026 04:58:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</guid>
+    </item>
     <item>
       <title>SBOM + attestation that gets used</title>
       <link>https://kubaik.github.io/sbom-attestation-that-gets-used/</link>
@@ -138,13 +145,6 @@
       <description>World models won&amp;#x27;t replace your backend stack. Learn the time-series and edge-sync patterns that actually matter for physical AI in 2026.</description>
       <pubDate>Thu, 24 Sep 2026 03:50:12 +0000</pubDate>
       <guid>https://kubaik.github.io/world-models-wont-replace-your-backend/</guid>
-    </item>
-    <item>
-      <title>AI features: M-Pesa, Paystack, Flutterwave traps</title>
-      <link>https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/</link>
-      <description>M-Pesa, Paystack, and Flutterwave each fail differently. Normalize webhooks, handle pending states, and stop double-charging customers with idempotency.</description>
-      <pubDate>Wed, 23 Sep 2026 16:25:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/</guid>
     </item>
   </channel>
 </rss>

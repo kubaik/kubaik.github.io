@@ -1,27 +1,27 @@
 {
   "improved": [
     {
-      "slug": "evaluate-agents-with-spark-vs-custom-harness",
+      "slug": "tame-python-asyncs-hidden-traps",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "internal-platform-adoption-one-metric-kills-velocity",
+      "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "monolith-to-services-without-a-rewrite",
-      "attempts": 2,
+      "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
+      "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "save-12kmonth-cloud-egress-costs-in-2026",
+      "slug": "map-legacy-code-with-ai-before-it-breaks",
       "attempts": 1,
-      "retitled": true
+      "retitled": false
     },
     {
-      "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
+      "slug": "micro-saas-niches-eaten-by-ai-in-2026",
       "attempts": 1,
       "retitled": false
     }

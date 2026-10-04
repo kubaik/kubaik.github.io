@@ -1,19 +1,19 @@
 {
   "changed": [
     {
-      "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
-      "sentences_removed": 0,
-      "sections_added": 1,
-      "footer_migrated": false
-    },
-    {
-      "slug": "internal-platform-adoption-one-metric-kills-velocity",
+      "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
     },
     {
-      "slug": "save-12kmonth-cloud-egress-costs-in-2026",
+      "slug": "micro-saas-niches-eaten-by-ai-in-2026",
+      "sentences_removed": 0,
+      "sections_added": 1,
+      "footer_migrated": false
+    },
+    {
+      "slug": "tame-python-asyncs-hidden-traps",
       "sentences_removed": 0,
       "sections_added": 1,
       "footer_migrated": false
@@ -45,27 +45,5 @@
     "temporal-changed-our-agent-retries-for-good",
     "why-does-my-agent-version-break-clients",
     "why-our-schema-survived-ai-scaling"
-  ],
-  "dead_links_fixed": [
-    {
-      "slug": "ai-fixes-legacy-code-nobody-owns",
-      "count": 1
-    },
-    {
-      "slug": "ai-revives-unloved-legacy-codebases",
-      "count": 1
-    },
-    {
-      "slug": "code-ai-wont-rewrite",
-      "count": 1
-    },
-    {
-      "slug": "map-legacy-code-with-ai-before-it-breaks",
-      "count": 1
-    },
-    {
-      "slug": "replace-env-with-these-in-2026",
-      "count": 1
-    }
   ]
 }

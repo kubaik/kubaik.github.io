@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AWS CloudWatch Synthetics for AI pipelines - Kubai Kevin</title>
-        <meta name="description" content="AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…">
+        <meta name="description" content="Build CloudWatch Synthetics canaries that exercise a full AI pipeline journey, not just an endpoint ping, and alarm on whole-flow failure.">
         <meta name="keywords" content="CloudwatchSynthetics, AiPipelineMonitoring, MPesaIntegration, Flutterwave, SyntheticTesting, CloudObservability, AwsLambdaCanary, PagerDutyReduction, Ai, Cloudcomputing, Flutter">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-10T13:16:49.252829">
-        <meta property="article:modified_time" content="2026-10-03T11:59:34.058692+00:00">
+        <meta property="article:modified_time" content="2026-10-04T05:00:06.795842+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AWS CloudWatch Synthetics for AI pipelines">
-        <meta property="og:description" content="AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…">
+        <meta property="og:description" content="Build CloudWatch Synthetics canaries that exercise a full AI pipeline journey, not just an endpoint ping, and alarm on whole-flow failure.">
         <meta property="og:url" content="https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AWS CloudWatch Synthetics for AI pipelines">
-        <meta name="twitter:description" content="AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…">
+        <meta name="twitter:description" content="Build CloudWatch Synthetics canaries that exercise a full AI pipeline journey, not just an endpoint ping, and alarm on whole-flow failure.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/aws-cloudwatch-synthetics-for-ai-pipelines.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/#article",
       "headline": "AWS CloudWatch Synthetics for AI pipelines",
-      "description": "AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…",
+      "description": "Build CloudWatch Synthetics canaries that exercise a full AI pipeline journey, not just an endpoint ping, and alarm on whole-flow failure.",
       "datePublished": "2026-08-10T13:16:49+00:00",
-      "dateModified": "2026-10-03T11:59:34+00:00",
-      "wordCount": 2256,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-10-04T05:00:06+00:00",
+      "wordCount": 2527,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AWS CloudWatch Synthetics for AI pipelines</h1>
                 
-                <p class="post-lead">AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…</p>
+                <p class="post-lead">Build CloudWatch Synthetics canaries that exercise a full AI pipeline journey, not just an endpoint ping, and alarm on whole-flow failure.</p>
                 
                 
                 <div class="tags">
@@ -258,54 +258,59 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2256 words
+                        13 min read
+                        &nbsp;·&nbsp; 2527 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>There's a gap between how most selfhealing is taught and how it actually behaves under load. The gap between the demo and the incident report is where this actually lives. Here's what I'd tell a colleague hitting this for the first time.</p>
-<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Anyone shipping AI pipelines in Lagos, Nairobi, or Accra knows the drill: you ship a model that works on your laptop, and somewhere between 02:00 and 04:00 a Slack pager fires because an upstream service returned 503 three times in a minute. The logs say <em>self-healing</em>, but the page still lands in your inbox. The part that trips people up is the gap between <strong>canary health checks</strong> and <strong>actual user flows</strong> — most pipelines test the endpoint, not the scenario that real users hit at 2am on a 4G-only phone in Oshodi or Kibera.</p>
-<p>What changed in our stack is that we stopped treating the canary as a ping endpoint and instead ran a <strong>real user journey</strong> through the pipeline — complete with retries, timeouts, and regional payment rails — every 5 minutes. That single change cut human pages by 70 % in four weeks. Below is the step-by-step we used to do it, starting from a fresh AWS account in 2026.</p>
-<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
-<p>You need:
-- an AWS account with billing alerts already on (because CloudWatch Synthetics is cheap, but synthetic tests can run away if you misconfigure payloads)
-- Node 20 LTS (used in the canary scripts)
-- Python 3.11 or later (for the downstream service we’re testing)
-- an internet connection that can reach AWS endpoints from your laptop (not from a fibre line — a 4G dongle in a moving matatu is fine)</p>
-<p>What you’ll build:
-1. a Python 3.11 Flask service that simulates an AI pipeline endpoint
-2. a CloudWatch Synthetic canary script that performs a realistic user journey (signup → model call → M-Pesa payment → confirmation) every 5 minutes
-3. CloudWatch alarms that trigger only when the whole user flow fails, not just the endpoint
-4. a Terraform 1.5 module that wires it all together so you can reproduce it in 10 minutes</p>
-<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
-<p>Spin up a fresh Ubuntu 22.04 VM or EC2 instance in us-east-1 (or any region you actually deploy to). Install:</p>
+                <h2 id="why-endpoint-only-canaries-miss-real-outages">Why endpoint-only canaries miss real outages</h2>
+<p>A health check that returns 200 proves one thing: the process answered. It does not prove that a user can complete the flow. In an AI pipeline the user flow typically spans several hops — an inference endpoint, a queue or job store, a payment rail, and a confirmation step. Any one of those can fail while the endpoint the canary pings stays green.</p>
+<p>The failure mode is easy to describe and hard to notice. An upstream dependency starts returning intermittent 503s. Your endpoint-only canary still gets a 200 from the front door because the front door is up. Meanwhile users abandon checkout. The pager stays quiet until a human notices the drop in conversions, which is usually much later than the first failed request.</p>
+<p>The fix is not more canaries. It is a canary that runs the same sequence of calls a real user triggers, asserts on each step, and alarms only when the whole journey fails or when a specific step fails repeatedly. This article walks through building that, from a local service to a scheduled canary with alarms and a dashboard.</p>
+<h2 id="what-you-will-build">What you will build</h2>
+<ol>
+<li>A small Python service that simulates an AI pipeline endpoint with realistic latency and an occasional upstream failure.</li>
+<li>A CloudWatch Synthetics canary script that performs a multi-step journey: request a prediction, submit a payment, confirm the result.</li>
+<li>CloudWatch alarms that fire on journey failure, not on a single transient error.</li>
+<li>Terraform that wires the canary, IAM role, bucket, and alarm together reproducibly.</li>
+</ol>
+<p>The payment step is modelled on a mobile-money style API. Substitute whatever rail you actually use; the structure is the same.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>An AWS account with billing alarms configured. Synthetics is inexpensive per run, but a misconfigured payload or an aggressive schedule can multiply cost quickly.</li>
+<li>Node.js 20 LTS for the canary script.</li>
+<li>Python 3.11 or later for the simulated service.</li>
+<li>Terraform 1.5 or later.</li>
+<li>AWS CLI configured with credentials that can create IAM roles, S3 buckets, Lambda-backed canaries, and CloudWatch alarms.</li>
+</ul>
+<h2 id="step-1-a-service-that-behaves-like-the-real-thing">Step 1 — a service that behaves like the real thing</h2>
+<p>Install dependencies:</p>
 <pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install -y python3.11 python3.11-venv git
 python3.11 -m venv ./venv
 source ./venv/bin/activate
 pip install --upgrade pip setuptools wheel
-pip install flask==3.0.3 gunicorn==21.2.0 boto3==1.34.23 pandas==2.2.2
+pip install flask==3.0.3 gunicorn==21.2.0 boto3==1.34.23
 </code></pre>
-<p>Create a file <code>app.py</code> with the minimal Flask service that mimics an AI pipeline endpoint. This will run behind an Application Load Balancer later:</p>
+<p>Create <code>app.py</code>:</p>
 <pre><code class="language-python">from flask import Flask, request, jsonify
-import os
 import random
 import time
 
 app = Flask(__name__)
 
-# Simulate a model inference that can randomly fail
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        body = request.json
-        time.sleep(random.uniform(0.05, 0.25))  # realistic latency under load
-        if random.random() &lt; 0.02:  # 2 % synthetic failure rate to simulate upstream flake
+        body = request.get_json(silent=True) or {}
+        # Simulate variable inference latency.
+        time.sleep(random.uniform(0.05, 0.25))
+        # Simulate an occasional upstream flake so the canary has something to detect.
+        if random.random() &lt; 0.02:
             return jsonify({&quot;error&quot;: &quot;upstream_timeout&quot;}), 503
         return jsonify({&quot;prediction&quot;: body.get('text', '')[:50]})
     except Exception as e:
@@ -314,80 +319,89 @@ def predict():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
 </code></pre>
-<p>Add a <code>requirements.txt</code>:</p>
-<pre><code class="language-text">Flask==3.0.3
-gunicorn==21.2.0
-boto3==1.34.23
-pandas==2.2.2
+<p>Note the change from the naive version: <code>request.json</code> raises on malformed input, so use <code>get_json(silent=True)</code> and default to an empty dict. A canary that sends a slightly wrong payload should get a clean 400-class response, not a stack trace.</p>
+<p>Run it:</p>
+<pre><code class="language-bash">gunicorn --bind 0.0.0.0:8000 app:app
+curl -X POST http://localhost:8000/predict \
+  -H 'Content-Type: application/json' \
+  -d '{&quot;text&quot;:&quot;hello&quot;}'
 </code></pre>
-<p>Test locally with <code>gunicorn --bind 0.0.0.0:8000 app:app</code> and hit <code>curl -X POST http://localhost:8000/predict -H 'Content-Type: application/json' -d '{"text":"hello"}'</code>. Expect a 200 with a short prediction.</p>
-<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
-<h3 id="create-the-synthetic-canary-script">Create the synthetic canary script</h3>
-<p>Create a directory <code>canary</code> and a file <code>journey.js</code> that performs the full user flow:</p>
+<p>Expect a 200 with a short prediction most of the time, and a 503 roughly 2% of the time. That 2% is a deliberate injection so you can watch the canary fail and recover.</p>
+<h2 id="step-2-write-the-journey-canary">Step 2 — write the journey canary</h2>
+<p>Create a directory <code>canary</code> and a file <code>journey.js</code>. The script uses the Synthetics runtime helpers rather than raw HTTP, so failures are recorded as step failures in the run report.</p>
 <pre><code class="language-javascript">const synthetics = require('Synthetics');
 const log = require('SyntheticsLogger');
 
-const config = {
-  schedule: {
-    rate: 5, // minutes
-  },
-  startCanaryAfterCreation: true,
-};
+const TARGET_ENDPOINT = process.env.TARGET_ENDPOINT;
+const PAYMENT_ENDPOINT = process.env.PAYMENT_ENDPOINT;
+const PAYMENT_TOKEN = process.env.PAYMENT_TOKEN;
 
-const apiCanaryBlueprint = async function () {
-  const syntheticUrl = process.env.TARGET_ENDPOINT;
-  const payload = JSON.stringify({ text: 'Generate a summary please' });
-
-  // Step 1: Call the AI endpoint (can fail)
-  const predictResponse = await synthetics.getUrl({
-    url: `${syntheticUrl}/predict`,
-    headers: { 'Content-Type': 'application/json' },
+async function post(url, headers, body) {
+  const response = await synthetics.getUrl({
+    url,
+    headers,
     method: 'POST',
-    body: payload,
-    bodyS3Location: { bucket: '', key: '' },
+    body,
   });
+  return response;
+}
+
+const journey = async function () {
+  // Step 1: inference request.
+  const predictResponse = await post(
+    `${TARGET_ENDPOINT}/predict`,
+    { 'Content-Type': 'application/json' },
+    JSON.stringify({ text: 'Generate a summary please' })
+  );
 
   if (predictResponse.statusCode !== 200) {
     throw new Error(`AI endpoint failed: ${predictResponse.statusCode}`);
   }
 
-  // Step 2: Simulate M-Pesa payment (can fail)
-  const mpesaPayload = JSON.stringify({
-    phone: '254712345678',
-    amount: 100,
-    reference: 'AI_JOB_001',
-  });
-  const paymentResponse = await synthetics.getUrl({
-    url: 'https://api.sandbox.m-pesa.com/v1/payment',
-    headers: { 'Authorization': 'Bearer fake-token', 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: mpesaPayload,
-  });
+  // Step 2: payment submission.
+  const paymentResponse = await post(
+    `${PAYMENT_ENDPOINT}/v1/payment`,
+    {
+      'Authorization': `Bearer ${PAYMENT_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    JSON.stringify({
+      phone: '254712345678',
+      amount: 100,
+      reference: 'AI_JOB_001',
+    })
+  );
 
   if (paymentResponse.statusCode !== 200) {
-    throw new Error(`M-Pesa payment failed: ${paymentResponse.statusCode}`);
+    throw new Error(`Payment step failed: ${paymentResponse.statusCode}`);
   }
 
-  // Step 3: Confirmation
-  log.info('User flow succeeded');
+  // Step 3: confirmation.
+  log.info(JSON.stringify({
+    step: 'confirmation',
+    status: 'ok',
+    target: TARGET_ENDPOINT,
+  }));
 };
 
 exports.handler = async () =&gt; {
-  return await apiCanaryBlueprint();
+  return await journey();
 };
 </code></pre>
-<h3 id="package-and-upload-the-canary">Package and upload the canary</h3>
-<p>Zip the canary:</p>
+<p>Two corrections worth noting against a common first draft:</p>
+<ul>
+<li><code>synthetics.getUrl</code> takes a request options object. Passing <code>bodyS3Location: { bucket: '', key: '' }</code> with empty strings is not meaningful and can confuse the runtime; omit it.</li>
+<li>Credentials and endpoints belong in environment variables, not inline in the script. Anything hardcoded ends up in the canary artifact and in CloudWatch Logs.</li>
+</ul>
+<p>Package it:</p>
 <pre><code class="language-bash">cd canary
-zip -r journey.zip journey.js node_modules package.json
+npm init -y
+npm install --save-dev jest@29.7.0
+zip -r journey.zip journey.js package.json
 </code></pre>
-<p>Create an S3 bucket in the same region:</p>
-<pre><code class="language-bash">BUCKET_NAME=$(aws sts get-caller-identity --query Account --output text)-ai-pipeline-canary
-aws s3 mb s3://$BUCKET_NAME
-aws s3 cp journey.zip s3://$BUCKET_NAME/journey.zip
-</code></pre>
-<h3 id="create-the-canary-with-terraform">Create the canary with Terraform</h3>
-<p>Create a file <code>main.tf</code>:</p>
+<p>The Synthetics runtime supplies its own Node modules; you only need to ship your script and any third-party packages you import.</p>
+<h2 id="step-3-provision-with-terraform">Step 3 — provision with Terraform</h2>
+<p>Create <code>main.tf</code>:</p>
 <pre><code class="language-hcl">terraform {
   required_version = &quot;&gt;= 1.5&quot;
   required_providers {
@@ -399,23 +413,25 @@ aws s3 cp journey.zip s3://$BUCKET_NAME/journey.zip
 }
 
 provider &quot;aws&quot; {
-  region = &quot;us-east-1&quot;
+  region = var.region
 }
 
-# IAM role for CloudWatch Synthetics
+data &quot;aws_caller_identity&quot; &quot;current&quot; {}
+
+resource &quot;aws_s3_bucket&quot; &quot;canary_bucket&quot; {
+  bucket        = &quot;${data.aws_caller_identity.current.account_id}-ai-pipeline-canary&quot;
+  force_destroy = true
+}
+
 resource &quot;aws_iam_role&quot; &quot;canary_role&quot; {
   name = &quot;ai-pipeline-canary-role&quot;
   assume_role_policy = jsonencode({
     Version = &quot;2012-10-17&quot;
-    Statement = [
-      {
-        Action = &quot;sts:AssumeRole&quot;
-        Effect = &quot;Allow&quot;
-        Principal = {
-          Service = &quot;lambda.amazonaws.com&quot;
-        }
-      }
-    ]
+    Statement = [{
+      Action    = &quot;sts:AssumeRole&quot;
+      Effect    = &quot;Allow&quot;
+      Principal = { Service = &quot;lambda.amazonaws.com&quot; }
+    }]
   })
 }
 
@@ -429,14 +445,16 @@ resource &quot;aws_iam_role_policy&quot; &quot;canary_secrets&quot; {
   role = aws_iam_role.canary_role.id
   policy = jsonencode({
     Version = &quot;2012-10-17&quot;
-    Statement = [
-      {
-        Effect   = &quot;Allow&quot;
-        Action   = [&quot;secretsmanager:GetSecretValue&quot;]
-        Resource = [&quot;arn:aws:secretsmanager:us-east-1:*:secret:mpesa-api-key-*&quot;]
-      }
-    ]
+    Statement = [{
+      Effect   = &quot;Allow&quot;
+      Action   = [&quot;secretsmanager:GetSecretValue&quot;]
+      Resource = [&quot;arn:aws:secretsmanager:${var.region}:${data.aws_caller_identity.current.account_id}:secret:payment-api-key-*&quot;]
+    }]
   })
+}
+
+resource &quot;aws_sns_topic&quot; &quot;oncall&quot; {
+  name = &quot;ai-pipeline-oncall&quot;
 }
 
 resource &quot;aws_synthetics_canary&quot; &quot;ai_pipeline_journey&quot; {
@@ -449,7 +467,11 @@ resource &quot;aws_synthetics_canary&quot; &quot;ai_pipeline_journey&quot; {
   start_canary         = true
 
   run_config {
-    timeout_in_seconds = 900
+    timeout_in_seconds = 120
+    environment_variables = {
+      TARGET_ENDPOINT  = var.target_endpoint
+      PAYMENT_ENDPOINT = var.payment_endpoint
+    }
   }
 
   schedule {
@@ -457,241 +479,205 @@ resource &quot;aws_synthetics_canary&quot; &quot;ai_pipeline_journey&quot; {
   }
 }
 
-resource &quot;aws_s3_bucket&quot; &quot;canary_bucket&quot; {
-  bucket = &quot;${data.aws_caller_identity.current.account_id}-ai-pipeline-canary&quot;
-  force_destroy = true
-}
-
 resource &quot;aws_cloudwatch_alarm&quot; &quot;journey_failure_alarm&quot; {
   alarm_name          = &quot;ai-pipeline-journey-failure-alarm&quot;
   comparison_operator = &quot;GreaterThanOrEqualToThreshold&quot;
-  evaluation_periods  = &quot;1&quot;
+  evaluation_periods  = 2
+  datapoints_to_alarm = 2
   metric_name         = &quot;Failed&quot;
   namespace           = &quot;AWS/CloudWatchSynthetics&quot;
-  period              = &quot;300&quot;
+  period              = 300
   statistic           = &quot;Sum&quot;
-  threshold           = &quot;1&quot;
-  alarm_description   = &quot;Triggers when the full user journey fails&quot;
-  alarm_actions       = [aws_sns_topic.pagerduty.arn]
+  threshold           = 1
+  treat_missing_data  = &quot;notBreaching&quot;
+  alarm_description   = &quot;Full user journey failed on two consecutive runs&quot;
+  alarm_actions       = [aws_sns_topic.oncall.arn]
   dimensions = {
     CanaryName = aws_synthetics_canary.ai_pipeline_journey.name
   }
 }
 
-data &quot;aws_caller_identity&quot; &quot;current&quot; {}
-
 output &quot;canary_arn&quot; {
   value = aws_synthetics_canary.ai_pipeline_journey.arn
 }
 </code></pre>
-<p>Apply the Terraform:</p>
+<p>Two deliberate choices differ from a naive setup:</p>
+<ul>
+<li><code>timeout_in_seconds</code> is set to 120 rather than 900. The AWS Lambda maximum is 900 seconds, but a canary that runs for 15 minutes on a 5-minute schedule overlaps itself and produces confusing metrics. Keep the timeout comfortably below the schedule interval.</li>
+<li>The alarm requires two consecutive failed runs before firing. A single failed run on a 2% injected failure rate is noise; two consecutive failures on independent runs is a much stronger signal.</li>
+</ul>
+<p>Apply:</p>
 <pre><code class="language-bash">terraform init
-terraform apply -auto-approve
+terraform apply
 </code></pre>
-<p>After ~5 minutes, the canary will run. Check the CloudWatch Synthetics dashboard: if the test passes, you’ll see a green dot; if the AI endpoint returns 503 or M-Pesa returns 401, the canary fails and the alarm fires.</p>
-<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Common failure modes we hit in production:</p>
+<p>Upload the zip after the bucket exists:</p>
+<pre><code class="language-bash">aws s3 cp canary/journey.zip \
+  s3://$(aws sts get-caller-identity --query Account --output text)-ai-pipeline-canary/journey.zip
+</code></pre>
+<p>The canary picks up the artifact on its next scheduled run.</p>
+<h2 id="step-4-failure-modes-and-how-to-handle-them">Step 4 — failure modes and how to handle them</h2>
 <table>
 <thead>
 <tr>
 <th>Failure</th>
 <th>Typical cause</th>
-<th>Fix we applied</th>
-<th>Cost per month</th>
+<th>Mitigation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Lambda cold starts &gt; 4 s</td>
-<td>Node runtime too slow to load Puppeteer</td>
-<td>Switched to <code>syn-nodejs-puppeteer-5.9</code> and increased timeout to 900 s</td>
-<td>$0.002 per run</td>
+<td>Canary times out at the payment step</td>
+<td>Third-party sandbox is slow or down</td>
+<td>Set a per-request timeout, retry once, and assert on the final result rather than the first attempt</td>
 </tr>
 <tr>
-<td>M-Pesa sandbox returns 401</td>
-<td>Expired token</td>
-<td>Added secret rotation Lambda that updates the secret every 12 h</td>
-<td>$0.40</td>
+<td>Canary passes but users still fail</td>
+<td>Journey omits a step users actually take</td>
+<td>Add the missing step; the canary is only as good as the sequence it models</td>
 </tr>
 <tr>
-<td>Canary artifacts &gt; 5 MB</td>
-<td>Screenshots of failed steps</td>
-<td>Disabled screenshots in config; kept only logs</td>
-<td>$0.15</td>
+<td>Alarm fires on transient blips</td>
+<td>Threshold set to a single failure</td>
+<td>Require consecutive failures, or alarm on a rolling success percentage</td>
 </tr>
 <tr>
-<td>Timeouts in Nairobi region</td>
-<td>ALB latency &gt; 2 s</td>
-<td>Added CloudFront distribution in front of ALB; canary calls CloudFront endpoint</td>
-<td>$1.80</td>
+<td>Canary cannot reach a private ALB</td>
+<td>ALB in a private subnet without a route from the canary's VPC</td>
+<td>Run the canary in a VPC configuration that has a path to the ALB, or expose the endpoint through a public entry point</td>
+</tr>
+<tr>
+<td>Artifact storage grows without bound</td>
+<td>Screenshots retained on every run</td>
+<td>Configure artifact retention; Synthetics supports a retention period on the artifact location</td>
 </tr>
 </tbody>
 </table>
-<p>Gotcha: the default CloudWatch Synthetics Node runtime includes a headless browser. That browser can hang for 30 s on a 4G-only connection if a third-party API times out.</p>
-<pre><code class="language-javascript">const paymentOptions = {
-  url: 'https://api.sandbox.m-pesa.com/v1/payment',
-  headers: { 'Authorization': `Bearer ${process.env.MPESA_TOKEN}` },
-  timeout: 10000,
-  ...
-};
+<p>A note on the runtime: the <code>syn-nodejs-puppeteer-*</code> runtimes bundle a headless browser, which is what makes them useful if you later need to drive a real UI. If your journey is pure HTTP, that browser is dead weight — it increases cold-start time and artifact size. For API-only journeys, consider a lighter runtime or accept the overhead knowingly.</p>
+<p>Per-request timeouts matter more than people expect. A third-party API that hangs does not fail fast; it holds the canary open until the Lambda timeout, which consumes the full run budget and delays the next run.</p>
+<pre><code class="language-javascript">const response = await synthetics.getUrl({
+  url: `${PAYMENT_ENDPOINT}/v1/payment`,
+  headers: {
+    'Authorization': `Bearer ${PAYMENT_TOKEN}`,
+    'Content-Type': 'application/json',
+  },
+  method: 'POST',
+  body: JSON.stringify({ phone: '254712345678', amount: 100, reference: 'AI_JOB_001' }),
+});
 </code></pre>
-<p>Another trap: the canary runs inside AWS Lambda, which in us-east-1 has egress to the public internet, but if your ALB is in a private subnet with a NAT gateway, the canary can’t reach it. We moved the ALB to public subnets and added WAF rules to block everything except CloudFront’s IP range.</p>
-<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
-<p>Add structured logging with CloudWatch Logs Insights:</p>
+<p>There is no per-request timeout parameter in the Synthetics request options. Enforce it by keeping the canary timeout low and by treating any non-2xx response as a failure. If you need a hard per-call deadline, wrap the call in a <code>Promise.race</code> against a timer and throw on timeout.</p>
+<h2 id="step-5-observability">Step 5 — observability</h2>
+<p>Emit structured logs so you can query by step:</p>
 <pre><code class="language-javascript">log.info(JSON.stringify({
   step: 'ai_prediction',
   status: predictResponse.statusCode,
-  latencyMs: predictResponse.timings.total,
   region: process.env.AWS_REGION,
 }));
 </code></pre>
-<p>Create a CloudWatch Dashboard with three widgets:
-- <code>SuccessPercent</code> metric for the canary
-- <code>Duration</code> p99 of the full journey
-- <code>Errors</code> count broken down by step (ai_prediction, mpesa_payment, confirmation)</p>
-<p>Write a unit test for the canary handler in Node 20:</p>
-<pre><code class="language-javascript">const { handler } = require('./journey');
-const synthetics = require('Synthetics');
+<p>Then in CloudWatch Logs Insights:</p>
+<pre><code>fields @timestamp, step, status
+| filter step = &quot;ai_prediction&quot;
+| stats count() by status
+</code></pre>
+<p>Build a dashboard with three widgets:</p>
+<ul>
+<li><code>SuccessPercent</code> for the canary, so you see partial degradation before the alarm fires.</li>
+<li><code>Duration</code> p99 of the full journey, to catch slow-but-passing runs.</li>
+<li><code>Failed</code> count, split by canary name if you run more than one.</li>
+</ul>
+<p>The <code>SuccessPercent</code> metric is the most useful of the three. A journey that succeeds 99% of the time is not healthy if the missing 1% clusters in a five-minute window.</p>
+<h2 id="step-6-test-the-canary-logic-locally">Step 6 — test the canary logic locally</h2>
+<p>You can unit-test the journey function without AWS by mocking the Synthetics module:</p>
+<pre><code class="language-javascript">const synthetics = require('Synthetics');
+const { handler } = require('./journey');
 
 jest.mock('Synthetics', () =&gt; ({
-  getUrl: jest.fn().mockResolvedValue({ statusCode: 200 }),
-  log: { info: jest.fn() },
+  getUrl: jest.fn(),
+}));
+
+jest.mock('SyntheticsLogger', () =&gt; ({
+  info: jest.fn(),
 }));
 
 describe('AI pipeline journey', () =&gt; {
-  it('should succeed when all steps return 200', async () =&gt; {
-    await handler();
-    expect(synthetics.getUrl).toHaveBeenCalledTimes(3);
-    expect(synthetics.log.info).toHaveBeenCalledWith(expect.stringContaining('User flow succeeded'));
+  beforeEach(() =&gt; {
+    jest.clearAllMocks();
   });
 
-  it('should throw when AI endpoint returns 503', async () =&gt; {
+  it('succeeds when both steps return 200', async () =&gt; {
+    synthetics.getUrl
+      .mockResolvedValueOnce({ statusCode: 200 })
+      .mockResolvedValueOnce({ statusCode: 200 });
+    await handler();
+    expect(synthetics.getUrl).toHaveBeenCalledTimes(2);
+  });
+
+  it('throws when the AI endpoint returns 503', async () =&gt; {
     synthetics.getUrl.mockResolvedValueOnce({ statusCode: 503 });
     await expect(handler()).rejects.toThrow(/AI endpoint failed: 503/);
   });
-});
-</code></pre>
-<p>Run the tests:</p>
-<pre><code class="language-bash">npm install --save-dev jest@29.7.0
-npx jest journey.test.js
-</code></pre>
-<p>Expect all tests to pass before you push to S3.</p>
-<h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>The table below shows the before/after impact over six weeks:</p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (baseline)</th>
-<th>After (with journey canary)</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Human pages (PagerDuty)</td>
-<td>14</td>
-<td>4</td>
-<td>–71 %</td>
-</tr>
-<tr>
-<td>Mean time to detect (MTTD)</td>
-<td>22 min</td>
-<td>2 min</td>
-<td>–91 %</td>
-</tr>
-<tr>
-<td>False positive rate</td>
-<td>42 %</td>
-<td>8 %</td>
-<td>–81 %</td>
-</tr>
-<tr>
-<td>AWS cost for Synthetics</td>
-<td>$1.80 / month</td>
-<td>$2.30 / month</td>
-<td>+$0.50</td>
-</tr>
-</tbody>
-</table>
-<p>A concrete incident that used to page at 03:17 on 2026-05-04 was actually a regional M-Pesa sandbox outage. Our old endpoint-only canary still returned 200 from the AI service, but users in Nairobi couldn’t complete checkout. The journey canary failed at the M-Pesa step at 03:17:12 and the alarm fired immediately. The on-call engineer acknowledged within 90 seconds and updated the status page; no human page was sent.</p>
-<p>Latency under load: the Flask service behind ALB has a p95 of 180 ms with 50 concurrent requests. The canary adds ~350 ms of overhead (network + retries), which is acceptable for a 5-minute cadence.</p>
-<p>Cost realism: each canary run costs ~$0.002; 8,640 runs per month = $17.28. With compression and artifact cleanup, we brought it down to $2.30 using the optimizations in Step 3.</p>
-<h2 id="common-questions-and-variations">Common questions and variations</h2>
-<p><strong>How do I test Flutterwave or Paystack instead of M-Pesa?</strong>
-Replace the M-Pesa step in <code>journey.js</code> with a call to the real Sandbox endpoint. For Flutterwave, use:</p>
-<pre><code class="language-javascript">const flutterwavePayload = JSON.stringify({
-  tx_ref: 'AI_JOB_001',
-  amount: '100',
-  currency: 'NGN',
-  redirect_url: 'https://example.com/confirm',
-  customer: { email: 'user@example.com', phone: '234812345678' },
-});
-const fwResponse = await synthetics.getUrl({
-  url: 'https://api.flutterwave.com/v3/payments',
-  headers: { Authorization: `Bearer ${process.env.FLUTTERWAVE_KEY}` },
-  method: 'POST',
-  body: flutterwavePayload,
-});
-</code></pre>
-<p>Ensure the Flutterwave sandbox key is stored in AWS Secrets Manager and referenced in Terraform as shown earlier.</p>
-<p><strong>Can I run the canary from multiple regions?</strong>
-Yes. Add another CloudWatch Synthetics canary with a different schedule and set the <code>AWS_REGION</code> environment variable to <code>eu-west-1</code> for the European leg, <code>ap-south-1</code> for India, etc. Terraform supports multiple canaries easily:</p>
-<pre><code class="language-hcl">resource &quot;aws_synthetics_canary&quot; &quot;eu_journey&quot; {
-  name                 = &quot;ai-pipeline-eu-journey&quot;
-  ...
-  run_config {
-    environment_variables = {
-      TARGET_ENDPOINT = &quot;https://eu.example.com&quot;
-      AWS_REGION      = &quot;eu-west-1&quot;
-    }
-  }
-}
-</code></pre>
-<p><strong>What if my AI service uses async queues?</strong>
-Wrap the canary around the polling endpoint instead. For example, if the AI service returns a job ID and your frontend polls <code>GET /jobs/{id}</code>, the canary should:
-1. POST /predict (returns 202)
-2. Poll /jobs/{id} every 2 s for 30 s
-3. Assert the job eventually succeeds</p>
-<p>Here’s a snippet for async:</p>
-<pre><code class="language-javascript">const jobResponse = await synthetics.getUrl({
-  url: `${syntheticUrl}/jobs/${jobId}`,
-  headers: { 'Content-Type': 'application/json' },
-  timeout: 30000,
-});
 
-if (jobResponse.response &amp;&amp; jobResponse.response.statusCode === 200) {
-  const body = JSON.parse(jobResponse.response.body);
-  if (body.status === 'completed') {
-    log.info('Async job completed');
+  it('throws when the payment step returns 401', async () =&gt; {
+    synthetics.getUrl
+      .mockResolvedValueOnce({ statusCode: 200 })
+      .mockResolvedValueOnce({ statusCode: 401 });
+    await expect(handler()).rejects.toThrow(/Payment step failed: 401/);
+  });
+});
+</code></pre>
+<p>Run:</p>
+<pre><code class="language-bash">npx jest journey.test.js
+</code></pre>
+<p>The important detail: <code>jest.mock('Synthetics', ...)</code> must match the module name you <code>require</code>. In the canary runtime the module is provided by the platform; locally you mock it. The earlier draft mocked <code>'Synthetics'</code> but required <code>'Synthetics'</code> — keep those strings identical or the mock silently does nothing and the test hits the network.</p>
+<h2 id="how-to-measure-whether-this-is-working">How to measure whether this is working</h2>
+<p>Do not trust a before/after table someone hands you. Instrument it yourself:</p>
+<ol>
+<li>Record the number of pages your on-call rotation receives per week, from your paging tool, for four weeks before and four weeks after.</li>
+<li>Record mean time to detect: the timestamp of the first failed canary run versus the timestamp of the first user-visible symptom in your support queue or error tracker.</li>
+<li>Record the false-positive rate: failed canary runs that turned out not to correspond to a real user-facing problem, divided by total failed runs.</li>
+<li>Record the Synthetics cost from the AWS Cost Explorer, filtered to the CloudWatch Synthetics service.</li>
+</ol>
+<p>Those four numbers are the only ones that matter, and you can compute all of them from data you already have.</p>
+<h2 id="common-questions">Common questions</h2>
+<p><strong>Can I use a different payment rail?</strong>
+Yes. Replace the payment step with a call to whatever sandbox endpoint you use. The structure is identical: build a payload, send it with an auth header from an environment variable or Secrets Manager, assert on the status code. Keep the credentials out of the script.</p>
+<p><strong>Can I run the canary from multiple regions?</strong>
+Yes. Define a second <code>aws_synthetics_canary</code> resource with a different name, region, and <code>TARGET_ENDPOINT</code>. Terraform handles this naturally via a provider alias or a separate module invocation. The value of multi-region canaries is distinguishing a regional outage from a global one; if only one region fails, the problem is likely regional infrastructure, not your code.</p>
+<p><strong>What if the AI service is asynchronous?</strong>
+Model the polling loop in the canary. Post the job, receive a job ID, then poll the status endpoint until it completes or a deadline passes:</p>
+<pre><code class="language-javascript">const deadline = Date.now() + 30000;
+let status = 'pending';
+
+while (status === 'pending' &amp;&amp; Date.now() &lt; deadline) {
+  const jobResponse = await synthetics.getUrl({
+    url: `${TARGET_ENDPOINT}/jobs/${jobId}`,
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const body = JSON.parse(jobResponse.body);
+  status = body.status;
+  if (status === 'pending') {
+    await new Promise((resolve) =&gt; setTimeout(resolve, 2000));
   }
 }
+
+if (status !== 'completed') {
+  throw new Error(`Job did not complete within deadline; last status: ${status}`);
+}
 </code></pre>
-<p><strong>Why not use CloudWatch Synthetics with Python?</strong>
-Python runtimes (<code>syn-python-selenium-3.11</code>) exist, but they add ~2 s to cold starts and don’t include a headless browser by default. The Node Puppeteer runtime already ships with a browser, so it’s easier to simulate a full user flow (click, type, wait) if you ever need it. For pure API flows, Python is fine, but once you add retries and timeouts for payment rails, Node is simpler.</p>
-<h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Pick one concrete action for the next 30 minutes:</p>
-<ol>
-<li>Open your CloudWatch Synthetics console</li>
-<li>Click “Create canary” → “Use a blueprint” → “API canary”</li>
-<li>Paste the <code>journey.js</code> content above</li>
-<li>Set the endpoint to your real AI service URL</li>
-<li>Add one environment variable: <code>TARGET_ENDPOINT</code></li>
-<li>Click “Create canary” and watch the first run in ~5 minutes</li>
-</ol>
-<p>If the canary fails immediately, check the “Screenshots” tab in the run details; it will show exactly which step timed out or returned 503. Fix that step first, redeploy the canary, and you’ve eliminated one class of 3am pages already.</p>
+<p>Keep the deadline well under the canary timeout so a stuck job produces a clean failure rather than a Lambda timeout.</p>
+<p><strong>Should I use a Python runtime instead?</strong>
+Python runtimes exist for Synthetics, but for API-only journeys the runtime choice matters less than the journey design. If you need to drive a browser, the Puppeteer-based Node runtime is the more direct fit. If your journey is pure HTTP, pick whichever your team can maintain and keep the timeout budget in mind.</p>
+<h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
+<p>Open the CloudWatch Synthetics console, choose <strong>Create canary</strong>, and pick the API canary blueprint. Paste the <code>journey.js</code> handler above, set <code>TARGET_ENDPOINT</code> to a real service you own, and create the canary. When the first run completes, open the run report and look at which step it reached. If it failed, you have just found the first step in your pipeline that a real user would also have failed at — and you found it before a customer did.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
-<li><a href="https://kubaik.github.io/agents-create-incidents-at-2am/">Agents create incidents at 2am</a></li>
-<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Starlink in production: what changed in our stack</a></li>
+<li><a href="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
+<li><a href="https://kubaik.github.io/show-real-work-not-ai-clones/">Show real work, not AI clones</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>
 <li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
 <li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
-<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
-<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>

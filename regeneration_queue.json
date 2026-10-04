@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "latency-spike-after-llm-feature-rollout",
-    "title": "Latency spike after LLM feature rollout",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "llm-apps-owasp-risks-you-missed",
-    "title": "LLM apps: OWASP risks you missed",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "llm-drift-before-users-complain-catch-it-early",
-    "title": "LLM drift before users complain: catch it early",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "llm-eval-drift-that-users-notice-first",
-    "title": "LLM eval drift that users notice first",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same detect contain mistake in more than one production codebase ov",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "llm-evals-skip-the-hype-track-these-4-metrics",
-    "title": "LLM evals: skip the hype, track these 4 metrics",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I learned this the hard way when our Nairobi fintech team rolled out a new loan-",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "llm-evals-the-two-metrics-that-bite-you",
     "title": "LLM evals: the two metrics that bite you",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this when we first rolled out a new “triage” LLM in our customer-supp",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "llm-output-metrics-that-actually-move-the-needle",
     "title": "LLM output metrics that actually move the needle",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this the hard way in 2026 when we shipped a new summarization service",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "llm-risks-underestimated-in-owasp-top-10",
     "title": "LLM risks underestimated in OWASP Top 10",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about hidden latency during a code review recently, and my ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
     "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three weeks tuning the reranker threshold, only to discover the real iss",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
     "title": "Mobile money agent fees: why your bot keeps failing",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this cost reliability problem while migrating a service under a hard ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "observability-agents-lied-to-us",
@@ -661,6 +631,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "latency-spike-after-llm-feature-rollout",
+    "title": "Latency spike after LLM feature rollout",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "llm-apps-owasp-risks-you-missed",
+    "title": "LLM apps: OWASP risks you missed",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "llm-drift-before-users-complain-catch-it-early",
+    "title": "LLM drift before users complain: catch it early",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "llm-eval-drift-that-users-notice-first",
+    "title": "LLM eval drift that users notice first",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same detect contain mistake in more than one production codebase ov",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "llm-evals-skip-the-hype-track-these-4-metrics",
+    "title": "LLM evals: skip the hype, track these 4 metrics",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I learned this the hard way when our Nairobi fintech team rolled out a new loan-",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",

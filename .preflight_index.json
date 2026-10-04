@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-03T10:43:45.372429",
+  "built_at": "2026-10-04T04:58:48.585389",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5445,6 +5445,11 @@
       "slug": "sbom-attestation-that-gets-used",
       "title": "SBOM + attestation that gets used",
       "summary": "Opinions on building accessible tend to change fast after watching it fail somewhere it wasn't supposed to. Here's what changes once the guessing is replaced with measurement. The workaround gets copy-pasted forward long after the original reason is forgotten. What this list actually solves An SBOM "
+    },
+    {
+      "slug": "ai-best-practices-fail-on-slow-networks",
+      "title": "AI best practices fail on slow networks",
+      "summary": "Teams often end up shipping global best twice — the second time because the first version failed quietly. The vendor docs cover the setup and go quiet on the failure modes. Here's what a colleague hitting this for the first time needs to know. The one-paragraph version (read this first) Most AI engi"
     }
   ]
 }
