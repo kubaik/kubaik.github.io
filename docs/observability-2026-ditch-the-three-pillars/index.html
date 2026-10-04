@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Observability 2026: ditch the three pillars - Kubai Kevin</title>
-        <meta name="description" content="Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever.">
+        <meta name="description" content="Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.">
         <meta name="keywords" content="Observability2026, UnifiedTelemetry, ClickhouseObservability, Opentelemetry2026, TraceStorageCost, UnifiedTelemetryModel, ObservabilityCost2026, Rag, Vectorsearch">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T00:02:57.587030">
-        <meta property="article:modified_time" content="2026-09-30T17:49:54.657783+00:00">
+        <meta property="article:modified_time" content="2026-10-04T12:29:29.255157+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Observability 2026: ditch the three pillars">
-        <meta property="og:description" content="Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever.">
+        <meta property="og:description" content="Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.">
         <meta property="og:url" content="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Observability 2026: ditch the three pillars">
-        <meta name="twitter:description" content="Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever.">
+        <meta name="twitter:description" content="Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/observability-2026-ditch-the-three-pillars.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/observability-2026-ditch-the-three-pillars/#article",
       "headline": "Observability 2026: ditch the three pillars",
-      "description": "Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever.",
+      "description": "Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.",
       "datePublished": "2026-06-10T00:02:57+00:00",
-      "dateModified": "2026-09-30T17:49:54+00:00",
-      "wordCount": 3392,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-10-04T12:29:29+00:00",
+      "wordCount": 2814,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Observability 2026: ditch the three pillars</h1>
                 
-                <p class="post-lead">Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever.</p>
+                <p class="post-lead">Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
                 
                 
                 <div class="tags">
@@ -257,21 +257,21 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3392 words
+                        14 min read
+                        &nbsp;·&nbsp; 2814 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-30
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on observability 2026 is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<h1 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h1>
-<p>In 2026, the “three pillars of observability” (logs, metrics, traces) are being replaced by a single, unified data model that treats every signal as telemetry: events, spans, profiles, and even code-level stack traces all land in the same store and get the same treatment. This change is driven by three realities you already live with: sampling costs are no longer acceptable at 10 k RPS, storage prices for high-cardinality data have fallen below the cost of the queries we run against it, and the only thing worse than “not enough data” is “too much noise that still doesn’t answer the question.” The new model isn’t new tooling; it’s a shift in what you ask for and how you store it. Start by exporting every span with its parent context, its resource labels, and the full stack trace as a single event. Anything less will break the first time you try to correlate a 200 ms spike in p99 latency with a GC pause that happened 30 s earlier.</p>
+                <p>The conventional advice on observability is incomplete. Treating logs, metrics, and traces as three separate pillars works in the simple case and breaks in a specific way under load. Here is the fuller picture, with the parts that survive scrutiny.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>The "three pillars of observability" (logs, metrics, traces) is being supplemented—and in some architectures replaced—by a single, unified data model that treats every signal as telemetry: events, spans, profiles, and stack traces all land in the same store and get the same treatment. Three realities drive this: sampling becomes a correctness problem at high request rates, columnar storage for high-cardinality data has become cheap enough to keep more of it, and the only thing worse than "not enough data" is "too much noise that still doesn't answer the question." The new model is not new tooling so much as a shift in what you ask for and how you store it. A useful starting point is exporting every span with its parent context, its resource labels, and any attached stack trace as a single event. Anything less tends to break the first time you try to correlate a 200 ms spike in p99 latency with a GC pause that happened 30 s earlier.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most teams still reach for Prometheus + Grafana + Jaeger and call it “observable.” That stack made sense when the fastest signal you cared about was a 1-second scrape, but it falls apart when your median request is 8 ms and your p99 is 120 ms. A common version of this trap shows up during a runtime migration—say, moving a checkout service from Node 18 to Go 1.21—when every trace suddenly looks empty because the OpenTelemetry SDK on the Node side is dropping a large fraction of spans by default once its buffer fills. The three-pillar model also encourages you to treat logs, metrics, and traces as separate products: “let’s ship logs to Loki, metrics to Prometheus, traces to Tempo.” That separation creates query walls you hit the moment you need to ask, “Show me all events from this user session where the database latency exceeded 500 ms but the upstream service didn’t time out.”</p>
+<p>Most teams still reach for a metrics server plus a dashboard tool plus a trace backend and call it "observable." That stack made sense when the fastest signal you cared about was a one-second scrape, but it strains when the median request is 8 ms and the p99 is 120 ms. A common version of this trap shows up during a runtime migration—say, moving a checkout service from Node to Go—when traces suddenly look empty because the OpenTelemetry SDK on one side is dropping a large fraction of spans once its buffer fills. The three-pillar model also encourages treating logs, metrics, and traces as separate products: "ship logs to the log store, metrics to the metrics store, traces to the trace store." That separation creates query walls you hit the moment you need to ask, "Show me all events from this user session where the database latency exceeded 500 ms but the upstream service didn't time out."</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of your system as a single, append-only ledger of <strong>events</strong>. Every HTTP request, every function call, every GC cycle, every cache miss, every queue message becomes an event with:</p>
 <ul>
@@ -280,9 +280,9 @@
 <li>type: request, log, metric, profile, exception</li>
 <li>payload: the actual data (body, stack traces, resource labels)</li>
 </ul>
-<p>Storing everything in the same place removes the ETL tax. Queries no longer need to fan out across three systems and reassemble the timeline. Instead you write one query that filters on time range, trace_id, and whatever labels you care about. The storage layer isn’t a time-series DB for metrics and a log DB for logs—it’s a columnar store optimized for point lookups and range scans, like ClickHouse 24.3 or Apache Druid 3.0, with a lightweight indexing layer for trace relationships.</p>
+<p>Storing everything in the same place removes the ETL tax. Queries no longer need to fan out across three systems and reassemble the timeline. Instead you write one query that filters on time range, trace_id, and whatever labels you care about. The storage layer is not a time-series DB for metrics and a log DB for logs—it is a columnar store optimized for point lookups and range scans, with a lightweight indexing layer for trace relationships. Examples of that category include ClickHouse, or a managed columnar warehouse that supports wide, sparse rows.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s instrument a simple Go service (Go 1.21, OTel SDK 1.24) to emit unified telemetry. We’ll send everything to a ClickHouse table called <code>telemetry_events</code>.</p>
+<p>Instrument a simple Go service to emit unified telemetry, and send everything to a ClickHouse table called <code>telemetry_events</code>.</p>
 <p>First, define the schema:</p>
 <pre><code class="language-sql">CREATE TABLE telemetry_events (
   event_time DateTime64(9),
@@ -298,7 +298,7 @@
 ENGINE = MergeTree
 ORDER BY (event_time, trace_id, span_id);
 </code></pre>
-<p>Next, instrument the service:</p>
+<p>Next, instrument the service. Note that the OpenTelemetry Go API does not expose a generic <code>otel.Record</code> function; to attach arbitrary payloads to a span you use span attributes, span events, or a dedicated log bridge. The example below uses span events, which is the supported mechanism:</p>
 <pre><code class="language-go">package main
 
 import (
@@ -307,6 +307,7 @@ import (
   &quot;time&quot;
 
   &quot;go.opentelemetry.io/otel&quot;
+  &quot;go.opentelemetry.io/otel/attribute&quot;
   &quot;go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp&quot;
   &quot;go.opentelemetry.io/otel/propagation&quot;
   &quot;go.opentelemetry.io/otel/sdk/resource&quot;
@@ -346,19 +347,17 @@ func handler(ctx context.Context) {
     trace.WithAttributes(semconv.HTTPMethodKey.String(&quot;POST&quot;)))
   defer span.End()
 
-  // Simulate work
   time.Sleep(50 * time.Millisecond)
 
-  // Emit a custom event with full stack trace
+  // Attach a payload as a span event with attributes.
   stack := &quot;...stack trace...&quot;
-  event := map[string]any{
-    &quot;labels&quot;: map[string]string{&quot;method&quot;: &quot;POST&quot;},
-    &quot;body&quot;:   stack,
-  }
-  _ = otel.Record(otel.RecordContext(ctx), event)
+  span.AddEvent(&quot;exception&quot;, trace.WithAttributes(
+    attribute.String(&quot;method&quot;, &quot;POST&quot;),
+    attribute.String(&quot;stack&quot;, stack),
+  ))
 }
 </code></pre>
-<p>On the query side, we can now ask a single question that would have required three tools before:</p>
+<p>On the query side, you can now ask a single question that would have required three tools before:</p>
 <pre><code class="language-sql">SELECT
   event_time,
   labels['method'] AS method,
@@ -369,20 +368,32 @@ WHERE event_time &gt; now() - INTERVAL 5 MINUTE
   AND event_type IN ('request', 'exception')
 ORDER BY event_time;
 </code></pre>
-<p>In a typical staging cluster, this query on 2.3 million events runs in <strong>42 ms</strong> on a 3-node ClickHouse 24.3 cluster (3 × c6g.2xlarge, 0.5 TB SSD). The same query split across Prometheus, Loki, and Tempo commonly costs <strong>$47 in cross-service query fees</strong> and takes <strong>2.1 seconds</strong> due to network hops and serialization overhead.</p>
+<h3 id="how-to-measure-whether-this-is-actually-faster">How to measure whether this is actually faster</h3>
+<p>Do not trust a single latency number. Instrument it. On the query side, wrap the query in your client and record wall-clock time for a fixed set of trace IDs. On the storage side, use ClickHouse's <code>system.query_log</code> table, which records <code>query_duration_ms</code>, <code>read_rows</code>, and <code>memory_usage</code> for every query:</p>
+<pre><code class="language-sql">SELECT
+  query_duration_ms,
+  read_rows,
+  formatReadableSize(memory_usage) AS mem
+FROM system.query_log
+WHERE query LIKE '%telemetry_events%'
+  AND type = 'QueryFinish'
+ORDER BY event_time DESC
+LIMIT 20;
+</code></pre>
+<p>Then compare against the same question answered across three systems. The comparison that matters is not raw latency but <em>time from question to answer</em>, including the human time spent switching tools and reconciling timestamps. Measure that by logging a start timestamp when an engineer opens an investigation and an end timestamp when they close it, and compare the distribution before and after.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>You already use a columnar store for analytics (ClickHouse), a vector database for full-text search (Meilisearch), or a time-series DB for metrics (TimescaleDB). The unified telemetry model simply extends that pattern to every kind of signal. The mental shift is from “I need a pipeline for logs, a pipeline for metrics, a pipeline for traces” to “I need a single pipeline that can route every event to the right storage engine based on its shape and retention policy.”</p>
-<p>The cost curve flips: storing 1 TB of raw spans in ClickHouse costs about <strong>$180/month</strong> on AWS m7g.4xlarge nodes, while shipping the same volume through a managed observability vendor commonly costs <strong>$1,800/month</strong> for ingestion plus <strong>$2,200/month</strong> for query compute. That $4 k difference pays for the extra DevOps time you spend tuning MergeTree settings, but it also buys you the freedom to keep every span forever instead of sampling at 1 %.</p>
+<p>You already use a columnar store for analytics, a search engine for full-text search, or a time-series DB for metrics. The unified telemetry model extends that pattern to every kind of signal. The mental shift is from "I need a pipeline for logs, a pipeline for metrics, a pipeline for traces" to "I need a single pipeline that can route every event to the right storage engine based on its shape and retention policy."</p>
+<p>The cost curve flips in favor of self-hosting once you stop sampling, but the exact break-even depends on your volume, your query patterns, and your labor cost. A worked estimate: assume 500 GB/day of raw telemetry, Zstd plus delta encoding achieving roughly 10:1 compression on typical structured events (this is an illustrative figure—measure your own ratio), giving about 50 GB/day on disk, or 1.5 TB/month. At an illustrative $0.023/GB/month for infrequent-access object storage, that is roughly $35/month for cold storage. Add compute for ingestion and query, and the variable cost is dominated by how many queries you run, not how much you store. The honest comparison is against your current managed bill for the same retention and query volume—pull the invoice and divide by events ingested.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<p>Misconception 1: “Unified telemetry means I have to rewrite all my dashboards.”
-Reality: You keep the dashboards you love—Prometheus for SLOs, Grafana for alerts—because those tools can read from the unified store via the OTLP endpoint or a simple JSON API. The change is under the hood: the Prometheus scraper now pulls metrics from the same ClickHouse telemetry_events table instead of scraping /metrics.</p>
-<p>Misconception 2: “Storing everything will kill my storage budget.”
-Reality: In 2026, storage is cheap (0.023 $/GB/month on S3 IA, 0.042 $/GB/month on gp3), and columnar compression (Zstd + Delta encoding) reduces raw telemetry by 85–90 %. A team shipping 5 GB/day of uncompressed telemetry ends up with ~600 GB/month compressed, costing <strong>$14/month</strong> on S3 IA plus <strong>$45/month</strong> for query compute.</p>
-<p>Misconception 3: “I’ll lose the ability to alert on metrics.”
-Reality: You gain the ability to alert on any field in the event. Instead of alerting on a Prometheus metric called <code>http_requests_total</code>, you alert on <code>telemetry_events</code> filtered by <code>event_type='metric' AND labels['status']='5xx' AND event_time &gt; now() - 5m</code>. Alertmanager can consume this via the OTLP alerting API.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<p>Once you’re comfortable with a single telemetry table, the next step is to add <strong>profiling telemetry</strong> and <strong>eBPF events</strong> to the same store. This is where the model truly shines.</p>
-<p>Profiling telemetry in Go 1.21 can emit pprof data as events:</p>
+<p><strong>Misconception 1: "Unified telemetry means I have to rewrite all my dashboards."</strong>
+You can keep existing dashboards because most dashboard tools read from a query API. The change is under the hood: a metrics endpoint can be backed by a view over the unified table rather than a separate scrape target. Migration is incremental—one dashboard at a time, verifying that the new data source returns the same series.</p>
+<p><strong>Misconception 2: "Storing everything will kill my storage budget."</strong>
+Compression ratios for structured telemetry are typically high, but they are not a constant. Measure yours: ingest a representative day, then compare <code>sum(data_compressed_bytes)</code> against <code>sum(data_uncompressed_bytes)</code> in <code>system.parts</code>. If the ratio is poor, the usual cause is a high-cardinality column in the sort key or a <code>String</code> column holding JSON that should be decomposed into typed columns.</p>
+<p><strong>Misconception 3: "I'll lose the ability to alert on metrics."</strong>
+You gain the ability to alert on any field in the event. Instead of alerting on a counter named <code>http_requests_total</code>, you alert on events filtered by <code>event_type='metric' AND labels['status']='5xx'</code>. Whether your alerting system can consume that depends on the system; many support a generic webhook or a query-backed rule, which is the practical integration point.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version, once the basics are solid</h2>
+<p>Once you are comfortable with a single telemetry table, the next step is to add <strong>profiling telemetry</strong> and <strong>eBPF events</strong> to the same store.</p>
+<p>Profiling telemetry in Go can emit pprof data as events. The <code>runtime.Stack</code> call below captures all goroutine stacks, which is a coarse but dependency-free starting point:</p>
 <pre><code class="language-go">ticker := time.NewTicker(30 * time.Second)
 defer ticker.Stop()
 
@@ -392,76 +403,72 @@ for range ticker.C {
   profile := buf[:n]
 
   ctx, span := otel.Tracer(&quot;&quot;).Start(context.Background(), &quot;profile&quot;)
-  _ = otel.Record(ctx, map[string]any{
-    &quot;event_type&quot;: &quot;profile&quot;,
-    &quot;body&quot;:       string(profile),
-  })
+  span.AddEvent(&quot;profile&quot;, trace.WithAttributes(
+    attribute.String(&quot;body&quot;, string(profile)),
+  ))
   span.End()
 }
 </code></pre>
-<p>eBPF events (syscalls, network flows, GC pressure) can be streamed via bpftrace into the same pipeline:</p>
+<p>eBPF events (syscalls, network flows, GC pressure) can be streamed into the same pipeline. The exact tooling varies; the pattern is a userspace collector that reads a perf ring buffer and forwards OTLP:</p>
 <pre><code class="language-sh">sudo bpftrace -e 'tracepoint:syscalls:sys_enter_* { printf(&quot;%s %d\n&quot;, probe, args-&gt;pid); }' \
-  | otelcol --config bpftrace-to-otlp.yaml
+  | your-otlp-forwarder --endpoint http://collector:4318
 </code></pre>
-<p>The combined dataset lets you correlate a 200 ms latency spike with a sudden GC pause, a syscall storm, and a burst of 5xx responses—all in one query. Teams that adopt this pattern routinely report cutting mean time to detection (MTTD) for a memory-leak incident from roughly <strong>47 minutes</strong> to around <strong>3 minutes</strong>, because the GC pressure becomes visible 12 s before the latency spike.</p>
+<p>The combined dataset lets you correlate a latency spike with a GC pause, a syscall storm, and a burst of 5xx responses in one query. The value is not a specific detection-time number—it is that the correlation is expressible at all without moving data between systems.</p>
+<h2 id="failure-modes-to-expect">Failure modes to expect</h2>
+<p><strong>The Kafka lag mirage.</strong> A payment service moves to a streaming framework with exactly-once semantics and the three-pillar view reports everything is fine: low consumer lag, no error logs, clean traces. Then a latency spike hits. The root cause is often that consumer group lag is sampled coarsely while the actual lag oscillates in short bursts. The unified model helps because you can instrument the client to emit an offset event on every partition reassignment, with lag as a label. A query joining offset events to request events reveals the pattern. Usual fixes: increase partition count and tune <code>max.poll.interval.ms</code>.</p>
+<p><strong>The file descriptor leak.</strong> A service in Kubernetes starts crashing every few hours. No error logs, no GC pressure, no latency spike. The culprit is often a dependency that opens a socket or file and never closes it; each leak consumes a descriptor until the container hits its limit. A unified store catches this if you export a gauge for open descriptors and alert on its slope, not its level. The fix is to patch the dependency and set an explicit descriptor limit.</p>
+<p><strong>The merge storm.</strong> A columnar store with many small partitions will spend CPU on background merges instead of queries. This typically appears after someone adds a high-cardinality label to the sort key or partition key. The symptom is query timeouts that correlate with merge activity, visible in <code>system.merges</code>. The fix is to reconsider the partition key—usually coarser, such as monthly rather than daily—and to avoid high-cardinality columns in the sort key.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <table>
 <thead>
 <tr>
 <th>Concept</th>
-<th>Old model (three pillars)</th>
-<th>New model (unified telemetry)</th>
+<th>Three-pillar model</th>
+<th>Unified event model</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Data shape</td>
-<td>Separate schemas for logs, metrics, traces</td>
+<td>Separate schemas per signal</td>
 <td>Single table: <code>event_time</code>, <code>trace_id</code>, <code>span_id</code>, <code>event_type</code>, <code>body</code></td>
 </tr>
 <tr>
 <td>Storage engine</td>
-<td>Prometheus (TSDB), Loki (log DB), Jaeger (trace store)</td>
-<td>ClickHouse 24.3 / Apache Druid 3.0 (columnar)</td>
+<td>Time-series DB, log DB, trace store</td>
+<td>Columnar store</td>
 </tr>
 <tr>
 <td>Sampling</td>
-<td>Default 10–60 % in OTel SDKs</td>
-<td>Configurable, often 100 % for &lt;1 k RPS, 10 % for &gt;100 k RPS</td>
+<td>Often on by default in SDKs</td>
+<td>Configurable; 100% for low volume, tail-based for high</td>
 </tr>
 <tr>
-<td>Cost per 1 TB/month</td>
-<td>$4–6 k managed ingestion + queries</td>
-<td>$180–225 (self-hosted ClickHouse on m7g.4xlarge)</td>
+<td>Cost model</td>
+<td>Per-host or per-GB ingestion plus query</td>
+<td>Storage plus compute, both measurable</td>
 </tr>
 <tr>
 <td>Query latency</td>
-<td>2–5 s cross-service</td>
-<td>40–200 ms single-table scan</td>
+<td>Cross-service fan-out</td>
+<td>Single-table scan</td>
 </tr>
 <tr>
 <td>Cardinality limit</td>
-<td>~10 k labels in Prometheus</td>
-<td>~1 M labels per event (practical limit 50 k)</td>
+<td>Low for labeled metrics</td>
+<td>High, bounded by memory and merge cost</td>
 </tr>
 </tbody>
 </table>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li><a href="https://github.com/open-telemetry/opentelemetry-collector-releases/releases/tag/v0.95.0">OpenTelemetry Collector 0.95 release notes</a> – explains the new OTLP batching and routing model.</li>
-<li><a href="https://clickhouse.com/docs/en/cloud/observability">ClickHouse 24.3 observability benchmarks</a> – 1.2 B events ingested at 450 k events/s with 99.9 th percentile latency of 180 ms.</li>
-<li><a href="https://pixielabs.ai/ebooks/ebpf-observability-2026">eBPF + OTel ebook by Pixie Labs</a> – practical examples of streaming eBPF events into ClickHouse.</li>
-<li><a href="https://grafana.com/docs/oncall/latest/integrations/otel/">Grafana OnCall 1.8 alerting over OTLP</a> – how to alert directly on unified telemetry.</li>
-</ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>How do I migrate from Prometheus + Grafana + Jaeger without losing dashboards?</strong>
-Start by adding an OTLP endpoint to your Prometheus instance using the <a href="https://github.com/open-telemetry/opentelemetry-collector/tree/main/receiver/otlpreceiver">otlp receiver</a>. Point your OTel SDKs at the collector, then configure the collector to dual-write metrics to Prometheus and traces to ClickHouse. Your Grafana dashboards continue to work because Prometheus still serves /metrics. Slowly migrate dashboards to use the unified store via the OTLP datasource plugin—this typically takes 2–3 days per dashboard.</p>
-<p><strong>What retention policy should I set for a 500 GB/day telemetry stream?</strong>
-Keep raw events for 30 days on ClickHouse with 2× replication, then roll to S3 IA with 90-day retention. The 30-day window covers 95 % of incidents; anything older can be rehydrated from S3 if needed. This costs <strong>$220/month</strong> for ClickHouse hot storage plus <strong>$80/month</strong> for S3 IA—well below the $5 k/month commonly paid for a managed observability vendor.</p>
-<p><strong>Isn’t storing full stack traces too expensive?</strong>
-Only if you do it naively. A stack trace averages 5 kB uncompressed; with Zstd level 12 it compresses to ~600 B. At 500 GB/day raw input, compressed stack traces add <strong>40 GB/day</strong>, which costs <strong>$0.92/day</strong> on S3 IA. The real cost is not storage—it’s the CPU burn during compression. In typical tests, compressing 100 k events/s on a c6g.2xlarge node uses 35 % CPU; this is commonly mitigated by offloading compression to a dedicated endpoint that returns pre-compressed blobs.</p>
-<p><strong>Can I still use PromQL or Jaeger query language with unified telemetry?</strong>
-Yes. The <a href="https://prometheus.io/docs/prometheus/latest/storage/#remote-storage">Prometheus remote read API</a> can read from ClickHouse via a simple adapter. For traces, the <a href="https://github.com/jaegertracing/jaeger-clickhouse">Jaeger storage plugin</a> now supports ClickHouse as a backend; you only need to materialize the spans table from the unified events using a lightweight view:</p>
+<p><strong>How do I migrate without losing dashboards?</strong>
+Add an OTLP endpoint to your existing pipeline, point SDKs at a collector, and configure the collector to dual-write: metrics to the existing metrics store, traces to the new store. Dashboards keep working because the old store still serves them. Migrate one dashboard at a time, verifying parity before switching.</p>
+<p><strong>What retention policy makes sense for a 500 GB/day stream?</strong>
+There is no universal answer, but a defensible starting point is: keep raw events hot for the window that covers most of your investigations (commonly 14–30 days), then tier to object storage for a longer window. Compute the cost from your own compression ratio and your provider's storage tiers rather than from a quoted figure. The decision rule is whether rehydrating from cold storage is fast enough for the incidents that actually need it—test that path before you rely on it.</p>
+<p><strong>Isn't storing full stack traces too expensive?</strong>
+Only if you store them naively. Measure the compressed size of a representative trace rather than assuming. The real cost is usually CPU during compression, which you can offload to a dedicated ingestion tier that returns pre-compressed blocks. If CPU is the bottleneck, sample stack traces rather than dropping them entirely.</p>
+<p><strong>Can I still use PromQL or a trace query language?</strong>
+Often yes. A metrics query API can be backed by an adapter over the unified table, and many trace backends support a pluggable storage layer. The practical approach is to materialize a view that exposes the shape the query language expects:</p>
 <pre><code class="language-sql">CREATE MATERIALIZED VIEW spans_view ENGINE = ReplacingMergeTree
 ORDER BY (trace_id, span_id) AS
 SELECT
@@ -474,52 +481,8 @@ SELECT
 FROM telemetry_events
 WHERE event_type = 'span'
 </code></pre>
-<h2 id="now-do-this">Now do this</h2>
-<ol>
-<li>Create a ClickHouse 24.3 table named <code>telemetry_events</code> with the schema in the worked example.</li>
-<li>Install OpenTelemetry Collector 0.95 and configure the OTLP receiver and ClickHouse exporter.</li>
-<li>Run <code>otelcol --config=config.yaml</code> and export a single Go or Node service.</li>
-<li>Run the 42 ms query above against your table.</li>
-</ol>
-<p>If the query takes longer than 200 ms on a cold cache, increase the ClickHouse <code>max_threads</code> setting to 8 and add a covering index on <code>(event_time, trace_id)</code>. You should now have a single pane of glass for every signal in your system.</p>
-<hr />
-<h2 id="advanced-edge-cases-you-will-run-into">Advanced edge cases you will run into</h2>
-<ol>
-<li>
-<p><strong>The Kafka Lag Mirage</strong>
-A common pattern: a payment service moves to Kafka Streams with exactly-once semantics, and the three-pillar model reports everything is fine. Prometheus shows low <code>kafka_consumer_lag</code>, Loki has no ERROR logs, and traces look clean. Then a sudden 800 ms p99 latency spike hits at 3 AM. The root cause is usually hiding in a dashboard that doesn’t exist: consumer group lag is sampled every 15 seconds, while the actual lag oscillates between 0 and 10,000 messages in 8-second bursts. The unified model fixes this immediately—instrument the Kafka client to emit a <code>kafka_offset_event</code> every time a partition is reassigned, with the lag as a label. A single query correlating <code>kafka_offset_event</code> with <code>request</code> events reveals the pattern within seconds. The usual fix is increasing the partition count (for example, from 6 to 18) and tuning <code>max.poll.interval.ms</code>.</p>
-</li>
-<li>
-<p><strong>The Docker Socket Leak That Crashes Nodes</strong>
-A production Node 20 service running in Kubernetes starts crashing every few hours. The three-pillar model shows nothing: no ERROR logs, no GC pressure in Prometheus, no spikes in trace latency. The culprit is often a Docker socket leak caused by a third-party package that opens <code>/var/run/docker.sock</code> but never closes it. Each leak consumes one file descriptor; Kubernetes kills the pod when it hits 1024. The unified telemetry model catches this because the OTel Node SDK 1.22 now emits a <code>resource_event</code> whenever a file descriptor count exceeds a threshold. Add a simple detector:</p>
-</li>
-</ol>
-<pre><code class="language-go">import &quot;go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc&quot;
-
-func init() {
-  // ...
-  metricExp, _ := otlpmetricgrpc.New(context.Background())
-  meterProvider := sdkmetric.NewMeterProvider(
-    sdkmetric.WithReader(sdkmetric.NewPeriodicReader(metricExp)),
-    sdkmetric.WithView(sdkmetric.NewView(
-      sdkmetric.MatchInstrumentName(&quot;process.runtime.go.file_descriptor.count&quot;),
-      sdkmetric.Transformation(sdkmetric.DropAggregationSelector()),
-    )),
-  )
-  otel.SetMeterProvider(meterProvider)
-}
-</code></pre>
-<p>The resulting <code>telemetry_events</code> with <code>event_type='metric'</code> and <code>labels['name']='process.runtime.go.file_descriptor.count'</code> reveals the leak in minutes instead of hours. The fix is to patch the third-party package and add a Kubernetes <code>max_file_descriptors</code> limit.</p>
-<ol>
-<li><strong>The ClickHouse Merge Storm During a Blue-Green Deploy</strong>
-ClickHouse 24.3 on Kubernetes with 3 c6g.4xlarge nodes is a common setup. During a blue-green deploy that swaps 15 % of traffic to the new version, the <code>telemetry_events</code> table starts experiencing 90-second query timeouts. The issue isn’t the new code—it’s the 1,200 new partitions being created overnight because a new label (<code>deployment_version</code>) with high cardinality was added. The three-pillar model wouldn’t catch this: Prometheus shows CPU at 65 %, Loki shows no errors, and traces are fine. The unified model does: the ClickHouse query log reveals thousands of <code>MergeTree</code> background merges queued up. The fix is to add a <code>PARTITION BY toYYYYMM(event_time)</code> clause and set <code>merge_tree_uniform_partitioning_key = 1</code> in the table definition. This commonly reduces the merge storm from 90 seconds to 5 seconds and cuts query timeouts by 98 %.</li>
-</ol>
-<hr />
-<h2 id="integration-with-real-tools-2026-versions-and-working-snippets">Integration with real tools (2026 versions) and working snippets</h2>
-<ol>
-<li><strong>OpenTelemetry Collector 0.95 + ClickHouse 24.3</strong>
-The collector now supports native ClickHouse exporters. Here’s a minimal <code>config.yaml</code> that routes traces, metrics, and logs to a single table while forwarding SLO metrics to Prometheus:</li>
-</ol>
+<h2 id="integration-example-collector-configuration">Integration example: collector configuration</h2>
+<p>A collector configuration that routes traces, metrics, and logs to a single table while forwarding metrics to an existing metrics endpoint. The exporter name and options depend on your collector distribution; check that the ClickHouse exporter is present before relying on it.</p>
 <pre><code class="language-yaml">receivers:
   otlp:
     protocols:
@@ -564,96 +527,17 @@ service:
       processors: [batch]
       exporters: [clickhouse]
 </code></pre>
-<p>Deploy this with:</p>
+<p>Run it with the container image for your chosen distribution:</p>
 <pre><code class="language-sh">docker run --rm -it \
   -v $(pwd)/config.yaml:/etc/otel/config.yaml \
   -p 4317:4317 \
   -p 4318:4318 \
   -p 8889:8889 \
-  otel/opentelemetry-collector-contrib:0.95.0 \
+  your-collector-image:latest \
   --config=/etc/otel/config.yaml
 </code></pre>
-<ol>
-<li><strong>Grafana Agent 0.42 + Meilisearch 1.7 for Full-Text Search</strong>
-Meilisearch 1.7 works well as a lightweight search index for trace IDs and labels. The Grafana Agent ingests OTLP, extracts trace IDs and labels, and pushes them to Meilisearch:</li>
-</ol>
-<pre><code class="language-yaml">server:
-  log_level: info
-
-integrations:
-  otelcol:
-    config:
-      receivers:
-        otlp:
-          protocols:
-            grpc:
-            http:
-      processors:
-        batch:
-      exporters:
-        meilisearch:
-          host: http://meilisearch:7700
-          api_key: ${MEILISEARCH_API_KEY}
-          index: traces
-          fields:
-            - trace_id
-            - span_id
-            - service
-            - event_type
-            - labels
-      service:
-        pipelines:
-          traces:
-            receivers: [otlp]
-            processors: [batch]
-            exporters: [meilisearch]
-</code></pre>
-<p>The resulting Meilisearch index lets you run full-text queries like:</p>
-<pre><code class="language-sql">curl -X POST 'http://meilisearch:7700/indexes/traces/search' \
-  -H 'Content-Type: application/json' \
-  -H 'X-Meili-API-Key: ${MEILISEARCH_API_KEY}' \
-  --data-raw '{
-    &quot;q&quot;: &quot;checkout&quot;,
-    &quot;filter&quot;: [&quot;event_type = 'request'&quot;, &quot;labels.method = 'POST'&quot;],
-    &quot;limit&quot;: 100
-  }'
-</code></pre>
-<ol>
-<li><strong>Pixie eBPF 0.26 + OTel Collector for GC Correlation</strong>
-Pixie Labs released a 2026 version that streams eBPF events directly into the OTel Collector. Here’s how to correlate Go GC pressure with latency spikes:</li>
-</ol>
-<pre><code class="language-go">// In the Go service
-package main
-
-import (
-  &quot;runtime&quot;
-  &quot;go.opentelemetry.io/otel&quot;
-)
-
-func init() {
-  // ...
-  go func() {
-    for {
-      var m runtime.MemStats
-      runtime.ReadMemStats(&amp;m)
-      ctx, span := otel.Tracer(&quot;&quot;).Start(context.Background(), &quot;gc_pressure&quot;)
-      _ = otel.Record(ctx, map[string]any{
-        &quot;event_type&quot;: &quot;gc_pressure&quot;,
-        &quot;gc_count&quot;:   m.NumGC,
-        &quot;gc_pause_ns&quot;: m.PauseNs[(m.NumGC-1)%256],
-        &quot;alloc_bytes&quot;: m.Alloc,
-      })
-      span.End()
-      time.Sleep(100 * time.Millisecond)
-    }
-  }()
-}
-</code></pre>
-<p>The Pixie eBPF agent streams GC events:</p>
-<pre><code class="language-sh">kubectl apply -f https://github.com/pixie-io/pixie/releases/download/v0.26.0/pixie-operator.yaml
-kubectl apply -f https://github.com/pixie-io/pixie/releases/download/v0.26.0/px-ebpf.yaml
-</code></pre>
-<p>Pixie automatically exports these as OTLP events. A single ClickHouse query now correlates GC pressure with latency:</p>
+<h2 id="a-query-that-correlates-gc-pressure-with-latency">A query that correlates GC pressure with latency</h2>
+<p>Once GC events and request events share a table, a self-join on <code>trace_id</code> expresses the correlation directly. This is the kind of question that is awkward across three systems and trivial in one:</p>
 <pre><code class="language-sql">SELECT
   te1.event_time,
   te1.labels['gc_count'] AS gc_count,
@@ -670,101 +554,33 @@ WHERE te1.event_type = 'gc_pressure'
 ORDER BY gc_to_request_ms DESC
 LIMIT 10;
 </code></pre>
-<hr />
-<h2 id="beforeafter-comparison-with-typical-numbers">Before/after comparison with typical numbers</h2>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before (Prometheus + Loki + Jaeger + Tempo 2026)</th>
-<th>After (ClickHouse 24.3 + OTel Collector 0.95)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Ingestion Rate</strong></td>
-<td>8 k RPS (sampled at 10 %)</td>
-<td>80 k RPS (100 % sampling)</td>
-</tr>
-<tr>
-<td><strong>Storage Cost (1 TB/month)</strong></td>
-<td>$4,200 managed ingestion + $2,100 query compute = <strong>$6,300</strong></td>
-<td>$180 (ClickHouse) + $225 (S3 IA) = <strong>$405</strong></td>
-</tr>
-<tr>
-<td><strong>Query Latency (95th percentile)</strong></td>
-<td>2.1 s (cross-service)</td>
-<td>180 ms (single-table scan)</td>
-</tr>
-<tr>
-<td><strong>Lines of Code (per service)</strong></td>
-<td>~250 lines (Prometheus annotations, Loki labels, Jaeger tracing)</td>
-<td>~80 lines (unified OTel + ClickHouse exporter)</td>
-</tr>
-<tr>
-<td><strong>Cardinality Limit</strong></td>
-<td>~10 k labels per metric (Prometheus)</td>
-<td>~1 M labels per event (practical limit 50 k)</td>
-</tr>
-<tr>
-<td><strong>Time to Detect (Memory Leak)</strong></td>
-<td>47 minutes (manual log grep + Prometheus scrape)</td>
-<td>3 minutes (automated GC correlation)</td>
-</tr>
-<tr>
-<td><strong>Time to Detect (Kafka Lag Burst)</strong></td>
-<td>2 hours (manual dashboard check + lag metric sampling)</td>
-<td>15 seconds (automated Kafka client instrumentation)</td>
-</tr>
-<tr>
-<td><strong>CPU Overhead (per 10 k RPS)</strong></td>
-<td>15 % (Prometheus scrape + Jaeger sampling)</td>
-<td>8 % (OTel Collector batching + ClickHouse compression)</td>
-</tr>
-<tr>
-<td><strong>Alert Noise</strong></td>
-<td>40 % false positives (metrics sampled, logs delayed)</td>
-<td>5 % false positives (full event stream, no sampling)</td>
-</tr>
-<tr>
-<td><strong>Incident Resolution Time</strong></td>
-<td>2.5 hours (logs + metrics + traces in three tools)</td>
-<td>45 minutes (single unified query)</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Typical Incident Example (memory leak in a Node service)</strong>
-A memory leak in a Node 22 service causes GC pauses to grow from 50 ms to 300 ms over 12 hours. In the old model:</p>
+<p>A caveat worth stating plainly: self-joins on a large event table are expensive. If you run this often, materialize a narrow projection containing only the fields the join needs, and keep the wide payload columns out of it.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before committing to a unified store, answer these:</p>
 <ul>
-<li>Prometheus shows CPU at 60 % but no GC metrics</li>
-<li>Loki has 10 k logs/minute with “GC pause” but no correlation</li>
-<li>Tempo traces are all empty due to 10 % sampling</li>
-<li>Mean time to detection: <strong>47 minutes</strong> (manual log grep + Grafana dashboard refresh)</li>
+<li>What is your actual ingestion volume, in events per second and bytes per day, measured rather than estimated?</li>
+<li>What compression ratio do you observe on a representative day, measured from <code>system.parts</code>?</li>
+<li>Which investigations currently require switching between tools, and how long do they take end to end?</li>
+<li>What is the retention window that covers most investigations, and what is the cost of each tier beyond it?</li>
+<li>Can your alerting system query the new store directly, or does it need an adapter?</li>
+<li>Who operates the store during an incident, and is that person on call for the same rotation as the services it observes?</li>
 </ul>
-<p>In the new model:</p>
-<ul>
-<li>The unified <code>telemetry_events</code> table has a <code>gc_pressure</code> event every 100 ms with <code>gc_pause_ns</code> as a label</li>
-<li>A single ClickHouse query:</li>
-</ul>
-<pre><code class="language-sql">SELECT
-  event_time,
-  labels['gc_pause_ns'] AS pause_ns,
-  labels['heap_used_bytes'] AS heap_used
-FROM telemetry_events
-WHERE event_type = 'gc_pressure'
-  AND event_time &gt; now() - INTERVAL 1 HOUR
-ORDER BY event_time
-</code></pre>
-<ul>
-<li>Mean time to detection: <strong>3 minutes</strong> (automated Grafana alert on <code>pause_ns &gt; 200000000</code>)</li>
-<li>Mean time to resolution: <strong>45 minutes</strong> (single query shows the leak started at 09:12, rollback at 09:57)</li>
-</ul>
-<p>The cost delta for an incident like this alone commonly justifies the migration: teams typically save several thousand dollars in managed observability fees and cut mean resolution time substantially.</p>
+<p>If the last question has no answer, the migration will fail for organizational reasons long before it fails for technical ones.</p>
+<h2 id="now-do-this">Now do this</h2>
+<p>Create the <code>telemetry_events</code> table from the worked example in a scratch ClickHouse instance, insert a few hundred synthetic rows with a script, and run the single-table query above against them. Then run the same query with <code>EXPLAIN</code> and read the plan. That thirty-minute exercise tells you more about whether this model fits your workload than any comparison table, because it uses your data shape, your cardinality, and your query patterns.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/">Agent tracing: when logs lie and metrics mislead</a></li>
-<li><a href="https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
-<li><a href="https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/">Run APIs in 50 spots: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+<li><a href="https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/">Observability for Long-Running LLM Agent Workflows</a></li>
+<li><a href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">High-Volume Log Pipelines: Shipping 50k Events Per Second</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://clickhouse.com/docs">ClickHouse documentation</a></li>
+<li><a href="https://ebpf.io/what-is-ebpf/">ebpf.io: What is eBPF?</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>

@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "observability-agents-lied-to-us",
-    "title": "Observability agents lied to us",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on traditional observability before understand",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "offline-first-money-apps-with-dynamodb-streams",
-    "title": "Offline-first money apps with DynamoDB Streams",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this offlinefirst eventual problem while migrating a service under a ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "portfolio-projects-that-hire-remote-senior-devs",
-    "title": "Portfolio projects that hire remote senior devs",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about portfolio projects during a code review recently, and",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "prevent-ownership-drift-when-velocity-explodes",
-    "title": "Prevent ownership drift when velocity explodes",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
-    "title": "Price tests that raised revenue vs tests that killed…",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this pricing experiments problem while migrating a service under a ha",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
     "title": "Pydantic 2 + Redis: stop the 3am AI pages",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "pypi-poisoned-models-hit-prod-in-2025",
     "title": "PyPI poisoned models hit prod in 2025",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rag-pipelines-4-silent-prod-killers",
     "title": "RAG pipelines: 4 silent prod killers",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "replace-managed-services-with-postgres-17",
     "title": "Replace managed services with Postgres 17",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about replaced three during a code review recently, and my ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "senior-engineer-title-inflation-in-2026",
     "title": "Senior engineer title inflation in 2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same sbom attestation mistake in more than one production codebase ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "senior-role-projects-3-real-paths",
@@ -601,6 +571,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "observability-agents-lied-to-us",
+    "title": "Observability agents lied to us",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on traditional observability before understand",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "offline-first-money-apps-with-dynamodb-streams",
+    "title": "Offline-first money apps with DynamoDB Streams",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this offlinefirst eventual problem while migrating a service under a ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "portfolio-projects-that-hire-remote-senior-devs",
+    "title": "Portfolio projects that hire remote senior devs",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): A colleague asked me about portfolio projects during a code review recently, and",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "prevent-ownership-drift-when-velocity-explodes",
+    "title": "Prevent ownership drift when velocity explodes",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
+    "title": "Price tests that raised revenue vs tests that killed…",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this pricing experiments problem while migrating a service under a ha",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "llm-evals-the-two-metrics-that-bite-you",

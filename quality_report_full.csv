@@ -1,299 +1,204 @@
 slug,score,word_count,title,created_at,issue_count,issues
-agent-tracing-when-logs-lie-and-metrics-mislead,55,1776,Agent tracing: when logs lie and metrics mislead,2026-08-28T10:18:37.508121,2,thin content (1776 words < 1800) | E-E-A-T footer missing
-negotiate-salaries-with-ai-skills-in-2026,67,2188,Negotiate salaries with AI skills in 2026,2026-06-27T22:11:29.284386,3,vague attribution: 'The data showed' | first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nThe job description still list' | no FAQ section
 7-ways-to-measure-prompt-platform-roi-in-2026,70,2861,7 ways to measure prompt platform ROI in 2026,2026-07-08T11:53:30.438407,3,"first-person incident: 'Assume, for illustration only, that the average prompt is 1,000 tokens and the a' | no markdown table | no FAQ section"
 llm-metrics-that-stop-wasting-time,70,2611,LLM metrics that stop wasting time,2026-06-14T00:02:18.806821,3,"first-person incident: 'Suppose you decide the following weights and targets:\n\n- w1 = 0.4, w2 = 0.3, w3 ' | no markdown table | no FAQ section"
-negotiate-2026-pay-when-ai-steals-40-of-your-job,70,2272,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,3,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section | E-E-A-T footer missing
 regulations-forced-better-apis-the-2026-fintech,70,2638,Regulations forced better APIs: the 2026 fintech,2026-06-20T08:41:19.621334,3,first-person incident: '## Related reading\n\n- [Mobile money agents: when M-Pesa API fails](https://kubai' | no markdown table | no FAQ section
-agentic-ai-cost-control-7-tools-one-backfire,75,2843,"Agentic AI cost control: 7 tools, one backfire",2026-09-19T11:35:45.274397,2,first-person incident: '**Strength:** You can see the exact trace that cost $0.40 and why.' | E-E-A-T footer missing
 ai-fixes-legacy-code-nobody-owns,75,3700,AI fixes legacy code nobody owns,2026-06-27T09:58:08.588128,1,"fabricated citation: ""AI's analysis"""
 ai-ops-pagerduty-vs-opsgenie-which-burns-your-team,75,2655,AI ops: PagerDuty vs Opsgenie — which burns your team,2026-06-29T20:08:01.814298,2,first-person incident: 'If the simpler platform saved 12 hours of training compared to the more complex ' | no FAQ section
-ai-proof-your-mid-level-salary,75,2831,AI-proof your mid-level salary,2026-07-01T08:09:11.906955,2,"first-person incident: 'Estimated hit rate 80%, estimated p99 after the change 300 ms, added infrastruct' | E-E-A-T footer missing"
-audit-logs-that-scale-skip-the-3am-fire-drills,75,3029,Audit logs that scale: skip the 3AM fire drills,2026-08-17T12:51:36.917045,2,first-person incident: 'What follows is the reasoning a senior engineer would pass to a colleague hittin' | E-E-A-T footer missing
-build-a-search-system-in-2026-semantic-keyword,75,2334,"Build a search system in 2026: semantic, keyword",2026-06-10T21:36:55.121317,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIt worked great on the staging' | no FAQ section
-negotiating-pay-when-ai-inflates-output,75,3154,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,2,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim' | E-E-A-T footer missing"
-spot-instances-vs-on-demand-for-ai-experiments,75,2454,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,2,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a' | E-E-A-T footer missing
+negotiate-2026-pay-when-ai-steals-40-of-your-job,75,2396,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,2,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section
 stay-relevant-when-tools-change-faster-than-you-can,75,3127,Stay relevant when tools change faster than you can,2026-06-09T18:49:05.537160,1,fabricated citation: 'The benchmark says'
-stop-trusting-agents-for-core-logic,75,2084,Stop trusting agents for core logic,2026-09-14T17:56:40.332505,2,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."" | no FAQ section"
-why-monoliths-die-slowly-in-2026,77,2545,Why monoliths die slowly in 2026,2026-06-19T02:27:59.398225,4,no fenced code block | no markdown table | no FAQ section | E-E-A-T footer missing
-ai-best-practices-fail-on-slow-networks,80,2607,AI best practices fail on slow networks,2026-10-04T04:58:45.940738,1,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."""
+agentic-ai-cost-control-7-tools-one-backfire,80,2985,"Agentic AI cost control: 7 tools, one backfire",2026-09-19T11:35:45.274397,1,first-person incident: '**Strength:** You can see the exact trace that cost $0.40 and why.'
+ai-proof-your-mid-level-salary,80,2961,AI-proof your mid-level salary,2026-07-01T08:09:11.906955,1,"first-person incident: 'Estimated hit rate 80%, estimated p99 after the change 300 ms, added infrastruct'"
 ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks: 3 skills that protect pay,2026-06-24T05:02:01.012343,1,first-person incident: 'A developer who once spent two days on a settings page can often get a working d'
+audit-logs-that-scale-skip-the-3am-fire-drills,80,3151,Audit logs that scale: skip the 3AM fire drills,2026-08-17T12:51:36.917045,1,first-person incident: 'What follows is the reasoning a senior engineer would pass to a colleague hittin'
 bootstrapped-5k-mrr-without-ads,80,2817,Reaching $5k MRR Without Paid Ads: A Product-Led Playbook,2026-06-25T20:30:14.422863,1,"first-person incident: 'If it does not improve, ask a colleague to try the flow while you watch; the fri'"
 deploy-a-solo-stack-for-20month-in-2026,80,2715,Deploy a solo stack for under $20/month,2026-06-09T15:45:09.304392,1,first-person incident: 'Route 53 hosted zones cost $0.50/month per zone; the registrar fee is separate.'
 drop-checklists-ai-code-reviews-that-scale,80,3806,Drop checklists: AI code reviews that scale,2026-06-12T02:06:55.025805,1,"first-person incident: '**Senior Reviewer Time**: Before, reviewers spent 8 hours/PR; after, they spend '"
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
+negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,1,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim'"
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
-self-service-ai-tooling-where-it-breaks-first,80,2860,Self-service AI tooling: where it breaks first,2026-09-16T09:53:25.584787,1,"first-person incident: 'A product manager can spin up a vector store in 90 seconds, but nothing in that '"
-2026-tech-salaries-where-cuts-stopped-where-raises,82,2198,"2026 tech salaries: where cuts stopped, where raises",2026-06-10T23:58:28.966727,3,no fenced code block | no markdown table | E-E-A-T footer missing
-istio-and-cilium-what-really-breaks-in-production,82,2546,Istio and Cilium: what really breaks in production,2026-06-24T09:26:52.873534,3,no fenced code block | no markdown table | E-E-A-T footer missing
+spot-instances-vs-on-demand-for-ai-experiments,80,2587,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,1,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a'
 micro-saas-niches-eaten-by-ai-in-2026,82,2266,Micro-SaaS niches eaten by AI in 2026,2026-06-29T09:34:39.935425,3,no fenced code block | no markdown table | no FAQ section
-pass-interviews-without-a-cs-degree,82,2160,Pass interviews without a CS degree,2026-06-09T10:55:19.993756,3,no fenced code block | no FAQ section | E-E-A-T footer missing
-agents-create-incidents-at-2am,85,2255,Agents create incidents at 2am,2026-08-06T08:07:50.591032,3,no markdown table | no FAQ section | E-E-A-T footer missing
-boring-aws-lambda-layers-that-dont-lock,85,2289,Boring AWS Lambda layers that don’t lock…,2026-07-31T14:15:41.572692,3,no markdown table | no FAQ section | E-E-A-T footer missing
+why-monoliths-die-slowly-in-2026,82,2669,Why monoliths die slowly in 2026,2026-06-19T02:27:59.398225,3,no fenced code block | no markdown table | no FAQ section
 built-a-multi-agent-system-without-langgraph,85,2684,Built a multi-agent system without LangGraph,2026-07-27T14:44:13.456532,1,title: past-tense action narrative
-foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality,85,2200,Foreign AI models vs sovereign fintech stacks: 2026 reality,2026-08-13T02:12:39.427333,3,no markdown table | no FAQ section | E-E-A-T footer missing
-m-pesa-failures-cost-us-40-hours,85,2266,Designing Reliable Webhook Pipelines for African Payment APIs,2026-08-01T14:05:22.082759,3,no markdown table | no FAQ section | E-E-A-T footer missing
-neon-vs-planetscale-vs-turso-which-broke-first,85,2525,Neon vs PlanetScale vs Turso: which broke first?,2026-06-10T18:51:10.449001,3,no markdown table | no FAQ section | E-E-A-T footer missing
-offline-agents-local-first-sync-patterns,85,2308,Offline Agents: Local-First Sync Patterns,2026-09-07T08:09:01.750326,3,no markdown table | no FAQ section | E-E-A-T footer missing
-platform-teams-agentic-world-struggle,85,2436,Platform Teams: Agentic World Struggle,2026-09-12T15:17:48.160046,3,no markdown table | no FAQ section | E-E-A-T footer missing
-poolers-wont-save-your-serverless-db,85,2666,Poolers won’t save your serverless DB,2026-07-19T02:59:58.647198,3,no markdown table | no FAQ section | E-E-A-T footer missing
-thundering-herd-the-hidden-scaling-trap,85,2202,Thundering Herd: The Hidden Scaling Trap,2026-09-10T08:29:58.184595,3,no markdown table | no FAQ section | E-E-A-T footer missing
-why-platform-metrics-lie,85,2310,Why platform metrics lie,2026-09-08T16:17:17.906740,3,no markdown table | no FAQ section | E-E-A-T footer missing
+2026-tech-salaries-where-cuts-stopped-where-raises,87,2321,"2026 tech salaries: where cuts stopped, where raises",2026-06-10T23:58:28.966727,2,no fenced code block | no markdown table
 african-fintech-rules-broke-our-stack,87,3178,Designing Fintech Systems for African Data-Residency Rules,2026-08-02T13:12:23.214191,2,no fenced code block | no FAQ section
 build-in-public-without-burning-out,87,2213,Build in public without burning out,2026-06-16T05:44:37.845152,2,no fenced code block | no FAQ section
-choose-no-code-only-when,87,2344,Choose no-code only when,2026-06-09T04:30:23.126966,2,no fenced code block | E-E-A-T footer missing
-3-mistakes-that-break-deployments-for-everyone,90,2436,3 mistakes that break deployments for everyone,2026-08-08T14:22:12.877501,2,no markdown table | E-E-A-T footer missing
+istio-and-cilium-what-really-breaks-in-production,87,2675,Istio and Cilium: what really breaks in production,2026-06-24T09:26:52.873534,2,no fenced code block | no markdown table
+pass-interviews-without-a-cs-degree,87,2287,Pass interviews without a CS degree,2026-06-09T10:55:19.993756,2,no fenced code block | no FAQ section
 40-ai-code-meant-60-more-alerts,90,1973,Validating AI-Generated Code Before It Reaches Production,2026-08-20T12:56:57.083713,2,no markdown table | no FAQ section
-5-ways-to-find-hidden-latency-before-production,90,2296,5 ways to find hidden latency before production,2026-06-30T22:23:14.312622,2,no FAQ section | E-E-A-T footer missing
 african-fintech-agents-the-compliance-cliff-most-miss,90,2075,African fintech agents: the compliance cliff most miss,2026-08-12T02:10:48.690344,2,no markdown table | no FAQ section
-agent-auth-the-silent-deployment-killer,90,2538,Agent auth: the silent deployment killer,2026-07-30T08:41:42.797134,2,no markdown table | E-E-A-T footer missing
-agent-auth-where-the-docs-ended-up-lying,90,2617,Agent auth: where the docs ended up lying,2026-08-24T01:29:32.768869,2,no FAQ section | E-E-A-T footer missing
-agent-compliance-in-african-fintech-the-cbn-gap,90,3106,Agent compliance in African fintech: the CBN gap,2026-09-20T09:44:53.685889,2,no markdown table | E-E-A-T footer missing
-agent-frameworks-stop-rewriting-the-same-glue-code,90,2497,Agent frameworks: stop rewriting the same glue code,2026-08-10T11:51:32.452320,2,no FAQ section | E-E-A-T footer missing
-agentic-finops-is-a-trap,90,2237,Agentic FinOps is a trap,2026-08-22T12:46:45.576522,2,no FAQ section | E-E-A-T footer missing
-ai-burnout-why-output-pressure-rose-even-as-tools-got,90,2169,AI burnout: why output pressure rose even as tools got,2026-06-09T22:05:37.303748,2,no FAQ section | E-E-A-T footer missing
+agents-create-incidents-at-2am,90,2383,Agents create incidents at 2am,2026-08-06T08:07:50.591032,2,no markdown table | no FAQ section
 ai-code-traps-copilot-vs-cursor-smackdown,90,2306,AI code traps: Copilot vs Cursor smackdown,2026-06-09T12:29:18.961756,2,no markdown table | no FAQ section
-ai-features-rot-faster-than-you-build-them,90,2772,AI features rot faster than you build them,2026-08-27T22:00:41.355509,2,no FAQ section | E-E-A-T footer missing
 ai-observability-isnt-monitoring-heres-why,90,2830,AI observability isn’t monitoring — here’s why,2026-06-25T21:25:57.740240,2,no markdown table | no FAQ section
-ai-pair-prompts-9-setups-we-tried-in-2026,90,2792,Choosing an AI Pair Programming Setup: A Practical Guide,2026-06-29T17:31:19.836001,2,no markdown table | E-E-A-T footer missing
-ai-payments-break-in-m-pesa-first,90,2757,AI payments break in M-Pesa first,2026-08-23T01:36:53.754567,2,no markdown table | E-E-A-T footer missing
-ai-revives-unloved-legacy-codebases,90,2883,AI revives unloved legacy codebases,2026-06-29T19:46:50.080007,2,no FAQ section | E-E-A-T footer missing
-ai-rollouts-live-or-die-by-flags,90,2751,AI rollouts live or die by flags,2026-06-12T14:40:14.568805,2,no FAQ section | E-E-A-T footer missing
-ai-tools-wont-help-if-everyone-writes-the-same-code,90,2577,AI tools won’t help if everyone writes the same code,2026-07-29T02:53:12.108815,2,no FAQ section | E-E-A-T footer missing
-ai-unit-costs-the-metric-both-teams-fight-over,90,2560,AI unit costs: the metric both teams fight over,2026-08-18T01:26:01.037680,2,no FAQ section | E-E-A-T footer missing
-always-on-agents-cost-more-than-you-think,90,2771,Always-on agents cost more than you think,2026-08-30T12:51:34.041921,2,no FAQ section | E-E-A-T footer missing
-apm-lied-about-our-ai-incidents,90,2222,Why APM Misses GPU-Bound LLM Incidents,2026-08-01T10:34:29.244977,2,no FAQ section | E-E-A-T footer missing
-aws-cost-levers-2026-the-3-that-cut-bills-30,90,2201,AWS Cost Levers: Savings Plans vs. Compute Optimizer,2026-06-25T15:25:05.924484,2,no FAQ section | E-E-A-T footer missing
-bank-apis-broke-under-african-2g,90,2689,Bank APIs broke under African 2G,2026-06-28T17:22:02.922745,2,no FAQ section | E-E-A-T footer missing
 big-model-api-vs-fine-tune-the-2026-math,90,3077,Big model API vs fine-tune: the 2026 math,2026-07-03T12:15:47.905920,2,no markdown table | no FAQ section
-cost-tools-fail-when-agents-scale-autonomously,90,2097,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,2,no markdown table | E-E-A-T footer missing
-cut-cold-starts-70-lambda-cost-hack,90,2337,Serverless Cold Starts: Cost Levers and How to Measure Them,2026-06-20T21:07:57.029662,2,no markdown table | E-E-A-T footer missing
-dead-letter-queues-stop-poison-messages,90,2854,Dead-letter queues: stop poison messages,2026-09-21T04:01:53.975376,2,no FAQ section | E-E-A-T footer missing
-debug-ai-agent-failures-differently,90,2558,Debug AI agent failures differently,2026-06-27T15:03:09.620372,2,no FAQ section | E-E-A-T footer missing
+boring-aws-lambda-layers-that-dont-lock,90,2422,Boring AWS Lambda layers that don’t lock…,2026-07-31T14:15:41.572692,2,no markdown table | no FAQ section
 double-the-price-double-the-revenue,90,2536,"Double the price, double the revenue",2026-06-30T10:51:15.890250,2,no markdown table | no FAQ section
-duckdb-in-production-when-it-replaces-a-warehouse,90,2588,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,2,no FAQ section | E-E-A-T footer missing
-edge-agents-vs-cloud-round-trips-in-2026,90,2102,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,2,no FAQ section | E-E-A-T footer missing
-fintech-features-break-in-ghana-the-real-fix,90,2558,Fintech features break in Ghana: the real fix,2026-07-18T13:24:23.053992,2,no FAQ section | E-E-A-T footer missing
-golden-paths-that-dont-handcuff,90,2173,Golden paths that don't handcuff,2026-09-21T08:28:08.494579,2,no FAQ section | E-E-A-T footer missing
-idempotency-keys-what-they-fix-what-they-dont,90,2658,"Idempotency keys: what they fix, what they don't",2026-09-21T09:17:49.117913,2,no FAQ section | E-E-A-T footer missing
-idp-for-ai-2026-stack-evolution,90,2741,IDP for AI: 2026 stack evolution,2026-09-02T03:37:36.606872,2,no FAQ section | E-E-A-T footer missing
-llm-agents-why-monoliths-win,90,2118,LLM agents: why monoliths win,2026-09-10T08:01:41.646366,2,no FAQ section | E-E-A-T footer missing
-llm-costs-fine-tune-vs-route-vs-bigger-model,90,2322,LLM costs: fine-tune vs route vs bigger model,2026-08-22T01:23:52.067990,2,no FAQ section | E-E-A-T footer missing
-llm-drift-before-users-complain-catch-it-early,90,2260,LLM drift before users complain: catch it early,2026-08-10T12:22:46.862454,2,no markdown table | E-E-A-T footer missing
+foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality,90,2333,Foreign AI models vs sovereign fintech stacks: 2026 reality,2026-08-13T02:12:39.427333,2,no markdown table | no FAQ section
 llm-drift-the-silent-quality-drop-metrics-miss,90,2111,LLM drift: the silent quality drop metrics miss,2026-07-04T20:16:21.808811,2,no markdown table | no FAQ section
 llm-risks-underestimated-in-owasp-top-10,90,1866,LLM risks underestimated in OWASP Top 10,2026-08-30T09:56:07.567081,2,no markdown table | no FAQ section
-local-llm-agents-vllm-vs-ollama-for-fintech,90,3056,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,2,no markdown table | E-E-A-T footer missing
+m-pesa-failures-cost-us-40-hours,90,2408,Designing Reliable Webhook Pipelines for African Payment APIs,2026-08-01T14:05:22.082759,2,no markdown table | no FAQ section
 map-legacy-code-with-ai-before-it-breaks,90,2544,Map legacy code with AI before it breaks,2026-06-23T21:25:55.506108,2,no markdown table | no FAQ section
-memory-systems-for-production-agents,90,2063,Memory Systems for Production Agents,2026-09-15T04:09:36.116554,2,no FAQ section | E-E-A-T footer missing
+mobile-money-agents-when-m-pesa-api-fails,90,2840,Mobile money agents: when M-Pesa API fails,2026-09-18T16:47:51.592278,2,no markdown table | no FAQ section
 model-router-keep-it-simple-keep-it-local,90,2795,"Model router: keep it simple, keep it local",2026-07-24T13:52:51.134298,2,no markdown table | no FAQ section
-multi-agent-handoffs-the-latency-tax-nobody-measures,90,2135,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,2,no FAQ section | E-E-A-T footer missing
 multi-agent-systems-break-first,90,2651,Multi-agent systems break first,2026-06-08T04:25:12.053864,2,no markdown table | no FAQ section
-multi-agent-systems-why-failures-hide,90,2454,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,2,no FAQ section | E-E-A-T footer missing
-negotiate-pay-in-2026-with-ai-proof-points,90,2150,Negotiate pay in 2026 with AI proof points,2026-06-25T16:15:21.594638,2,no FAQ section | E-E-A-T footer missing
+neon-vs-planetscale-vs-turso-which-broke-first,90,2653,Neon vs PlanetScale vs Turso: which broke first?,2026-06-10T18:51:10.449001,2,no markdown table | no FAQ section
 nigerias-2026-api-rules-broke-our-microservices,90,2702,Designing Fintech Backends Around Audit Deadlines,2026-07-03T08:55:38.998495,2,no markdown table | no FAQ section
-observability-agents-lied-to-us,90,2506,Observability Agents as Application Code,2026-08-11T08:54:57.972223,2,no FAQ section | E-E-A-T footer missing
 observe-llm-features-90-faster,90,2733,Observability for LLM Features: Metrics That Drive Decisions,2026-07-08T14:23:50.999349,2,no markdown table | no FAQ section
-offline-agent-workflows-for-last-mile-ops,90,2893,Offline agent workflows for last-mile ops,2026-09-21T07:32:16.420961,2,no FAQ section | E-E-A-T footer missing
-offline-first-money-apps-with-dynamodb-streams,90,2863,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,2,no FAQ section | E-E-A-T footer missing
-one-misconfigured-vector-db-killed-our-rag-pipeline,90,2116,When a vector DB misconfiguration breaks RAG silently,2026-07-29T14:18:17.130040,2,no FAQ section | E-E-A-T footer missing
-pick-one-stripe-lemon-squeezy-paddle-in-2026,90,2608,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026",2026-06-25T13:28:15.693054,2,no markdown table | E-E-A-T footer missing
-portfolio-projects-that-hire-remote-senior-devs,90,2700,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,2,no FAQ section | E-E-A-T footer missing
-prevent-ownership-drift-when-velocity-explodes,90,2830,Prevent ownership drift when velocity explodes,2026-08-29T16:28:34.651903,2,no FAQ section | E-E-A-T footer missing
-price-your-remote-job-like-a-new-york-dev,90,2539,Price your remote job like a New York dev,2026-06-08T23:30:46.115942,2,no FAQ section | E-E-A-T footer missing
-prompt-injection-what-breaks-first-in-prod,90,2850,Prompt injection: what breaks first in prod,2026-09-27T16:41:09.710334,2,no FAQ section | E-E-A-T footer missing
-pypi-poisoned-models-hit-prod-in-2025,90,2089,PyPI poisoned models hit prod in 2025,2026-08-25T01:25:20.513082,2,no FAQ section | E-E-A-T footer missing
-react-19-compiler-my-components-changed-how,90,1993,React 19 Compiler: What It Rewrites and Where It Breaks,2026-06-15T07:49:45.982179,2,no FAQ section | E-E-A-T footer missing
-rebalance-pay-when-ai-fills-half-your-role,90,2469,Rebalance pay when AI fills half your role,2026-06-15T23:55:31.138497,2,no FAQ section | E-E-A-T footer missing
-remote-salary-negotiate-without-sounding-cheap,90,2684,Remote salary: negotiate without sounding cheap,2026-06-08T22:08:41.302454,2,no FAQ section | E-E-A-T footer missing
-replace-managed-services-with-postgres-17,90,2655,Replace managed services with Postgres 17,2026-08-16T12:45:50.709187,2,no markdown table | E-E-A-T footer missing
-route-fine-tune-or-scale-pick-right,90,2542,"Route, fine-tune, or scale: pick right",2026-09-29T04:56:19.381447,2,no FAQ section | E-E-A-T footer missing
-rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026,90,1923,Rust SDK vs FastAPI for LLM ops: trust in 2026,2026-08-14T02:13:08.868429,2,no FAQ section | E-E-A-T footer missing
+offline-agents-local-first-sync-patterns,90,2436,Offline Agents: Local-First Sync Patterns,2026-09-07T08:09:01.750326,2,no markdown table | no FAQ section
+platform-teams-agentic-world-struggle,90,2566,Platform Teams: Agentic World Struggle,2026-09-12T15:17:48.160046,2,no markdown table | no FAQ section
+poolers-wont-save-your-serverless-db,90,2797,Poolers won’t save your serverless DB,2026-07-19T02:59:58.647198,2,no markdown table | no FAQ section
 self-healing-ai-agents-vs-rule-based-ops-40-fewer,90,2489,Self-healing agents vs rule-based deployment rollback,2026-06-11T21:16:42.291244,2,no markdown table | no FAQ section
-senior-engineer-title-inflation-in-2026,90,2036,Senior engineer title inflation in 2026,2026-08-13T07:35:26.331056,2,no FAQ section | E-E-A-T footer missing
-senior-role-projects-3-real-paths,90,3008,Senior role projects: 3 real paths,2026-08-05T09:46:03.050922,2,no FAQ section | E-E-A-T footer missing
-ship-a-solo-project-pipeline-under-20month,90,3027,A Solo-Project Deploy Pipeline That Stays Under $20/Month,2026-06-15T23:01:02.436611,2,no FAQ section | E-E-A-T footer missing
 ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse,90,2137,High-Volume Log Pipelines: Shipping 50k Events Per Second,2026-07-03T13:30:22.215019,2,no markdown table | no FAQ section
-soft-deletes-fail-what-breaks-first,90,2454,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,2,no markdown table | E-E-A-T footer missing
-spot-ais-hidden-cost-spike-in-your-stack,90,2604,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,2,no FAQ section | E-E-A-T footer missing
-starlink-4g-fallback-serve-pages-under-800ms,90,2462,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,2,no FAQ section | E-E-A-T footer missing
 store-data-once-serve-everywhere-cheaper,90,2397,"Store data once, serve everywhere: cheaper",2026-06-25T08:39:15.607832,2,no markdown table | no FAQ section
 tame-python-asyncs-hidden-traps,90,2163,Tame Python async’s hidden traps,2026-06-29T17:45:56.376188,2,no markdown table | no FAQ section
-tool-calling-stateless-beats-stateful-under-load,90,2133,Tool calling: stateless beats stateful under load,2026-06-19T09:01:43.310641,2,no FAQ section | E-E-A-T footer missing
-tool-calls-under-load-async-batch-vs-fire-and-forget,90,2963,Tool calls under load: async batch vs fire-and-forget,2026-06-13T10:23:27.741037,2,no markdown table | E-E-A-T footer missing
+thundering-herd-the-hidden-scaling-trap,90,2334,Thundering Herd: The Hidden Scaling Trap,2026-09-10T08:29:58.184595,2,no markdown table | no FAQ section
 unlock-python-313s-free-threaded-gil-for-web-apps,90,2761,Unlock Python 3.13's free-threaded GIL for web apps,2026-06-22T19:38:03.246787,1,AI filler (1): 'this article will'
-websockets-vs-server-sent-events-latency-over-3g,90,2663,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,2,no FAQ section | E-E-A-T footer missing
 who-owns-ai-generated-code,90,1944,Who owns AI-generated code?,2026-06-27T11:23:38.699938,2,no markdown table | no FAQ section
+why-platform-metrics-lie,90,2442,Why platform metrics lie,2026-09-08T16:17:17.906740,2,no markdown table | no FAQ section
 7-ways-to-earn-extra-in-2026-without-shipping-saas,92,3098,7 ways to earn extra in 2026 without shipping SaaS,2026-07-01T11:01:01.737741,1,no fenced code block
 9-vibe-coding-traps-that-break-production-code,92,2194,9 Vibe coding traps that break production code,2026-07-01T08:04:40.099861,1,no fenced code block
 ai-apps-break-when-you-treat-them-like-regular-software,92,2945,AI apps break when you treat them like regular software,2026-06-27T18:14:00.551986,1,no fenced code block
 ai-codebase-onboarding-2-paths-tested,92,2415,AI codebase onboarding: 2 paths tested,2026-06-24T01:35:30.792495,1,no fenced code block
 ai-features-as-tech-debt-or-golden-paths,92,2397,AI features as tech debt or golden paths,2026-07-17T02:53:25.164323,1,no fenced code block
+choose-no-code-only-when,92,2472,Choose no-code only when,2026-06-09T04:30:23.126966,1,no fenced code block
 global-state-is-the-wrong-tool-for-ai-features,92,2363,Global state is the wrong tool for AI features,2026-07-28T02:46:18.174343,1,no version-pinned tool
 graphql-vs-rest-vs-trpc-2026s-api-fight,92,2644,GraphQL vs REST vs tRPC: 2026’s API fight,2026-06-09T19:36:20.025671,1,no fenced code block
 why-i-picked-playwright-and-vitest-in-2026,92,2162,Choosing a JavaScript Test Stack: Playwright and Vitest,2026-07-03T10:25:00.905319,1,no fenced code block
 2026-ai-stack-solo-saas-cost-showdown,95,2639,2026 AI stack: solo SaaS cost showdown,2026-06-30T00:11:51.137276,1,no FAQ section
 2026-alert-triage-when-opsgenie-slept-for-you,95,3190,2026 alert triage: when Opsgenie slept for you,2026-06-20T09:25:40.987533,1,no markdown table
-3-skills-to-outrun-ai-salary-cuts,95,3012,3 skills to outrun AI salary cuts,2026-06-30T10:13:26.149608,1,E-E-A-T footer missing
-african-devs-ai-tools-that-work-now-2026,95,2226,African devs: AI tools that work now (2026),2026-06-15T18:02:33.361894,1,E-E-A-T footer missing
-agent-access-for-non-ai-engineers,95,3009,Agent access for non-AI engineers,2026-09-17T16:33:46.471776,1,E-E-A-T footer missing
-agent-architecture-the-new-model-trap,95,3208,Agent architecture: the new model trap,2026-09-27T04:24:45.945383,1,E-E-A-T footer missing
-agent-compliance-the-layer-you-build-after-failure,95,3159,Agent compliance: the layer you build after failure,2026-09-22T03:58:54.260462,1,E-E-A-T footer missing
-agent-drift-the-failure-mode-you-didnt-log,95,2856,Agent drift: the failure mode you didn't log,2026-09-18T08:41:59.958486,1,E-E-A-T footer missing
-agent-drift-why-it-hurts-ux,95,2280,Agent drift: why it hurts UX,2026-09-09T16:15:54.093815,1,E-E-A-T footer missing
-agent-drift-why-prod-breaks-without-human-checkpoints,95,2814,Agent drift: why prod breaks without human checkpoints,2026-09-01T04:14:50.129093,1,E-E-A-T footer missing
-agent-flooded-our-api-with-bad-calls-overnight,95,2780,Stopping a runaway polling agent from flooding your API,2026-08-05T13:52:49.852054,1,E-E-A-T footer missing
-agent-followed-instructions-too-literally-the-cron-job-trap,95,2364,Agent followed instructions too literally: the cron job trap,2026-08-11T08:43:33.018896,1,E-E-A-T footer missing
+3-mistakes-that-break-deployments-for-everyone,95,2570,3 mistakes that break deployments for everyone,2026-08-08T14:22:12.877501,1,no markdown table
+5-ways-to-find-hidden-latency-before-production,95,2430,5 ways to find hidden latency before production,2026-06-30T22:23:14.312622,1,no FAQ section
+agent-auth-the-silent-deployment-killer,95,2662,Agent auth: the silent deployment killer,2026-07-30T08:41:42.797134,1,no markdown table
+agent-auth-where-the-docs-ended-up-lying,95,2748,Agent auth: where the docs ended up lying,2026-08-24T01:29:32.768869,1,no FAQ section
+agent-compliance-in-african-fintech-the-cbn-gap,95,3239,Agent compliance in African fintech: the CBN gap,2026-09-20T09:44:53.685889,1,no markdown table
+agent-frameworks-stop-rewriting-the-same-glue-code,95,2629,Agent frameworks: stop rewriting the same glue code,2026-08-10T11:51:32.452320,1,no FAQ section
 agent-governance-opa-vs-kyverno-after-our-incident,95,2203,Agent Governance: OPA vs Kyverno in Kubernetes,2026-07-03T22:13:29.570767,1,no FAQ section
 agent-permissions-the-mistake-that-breaks-production,95,3405,Agent permissions: the mistake that breaks production,2026-07-30T14:11:31.108539,1,no FAQ section
-agent-platform-abstractions-a-case-study,95,2027,Agent platform abstractions: a case study,2026-09-16T09:38:05.129102,1,E-E-A-T footer missing
-agent-versioning-the-contract-you-forgot,95,2532,Agent versioning: the contract you forgot,2026-09-28T19:26:44.647523,1,E-E-A-T footer missing
+agentic-finops-is-a-trap,95,2367,Agentic FinOps is a trap,2026-08-22T12:46:45.576522,1,no FAQ section
 agents-247-vs-on-demand-42k-bill-shock,95,2483,Always-On vs On-Demand Agents: Real Cost Trade-offs,2026-07-05T05:04:40.986262,1,no FAQ section
-agents-keep-breaking-prod-3-boundary-rules-you-still-need,95,2713,Agents keep breaking prod: 3 boundary rules you still need,2026-07-17T13:47:16.525594,1,E-E-A-T footer missing
-agents-running-hours-youre-losing-context-fast,95,2258,Agents running hours? You're losing context fast,2026-09-03T11:36:32.782364,1,E-E-A-T footer missing
-ai-agent-postmortem-human-loop-vs-blind-replay,95,3098,Postmortems for AI agents: human review vs blind replay,2026-06-20T22:43:19.173545,1,E-E-A-T footer missing
 ai-agents-eat-your-budget-3-ways,95,2483,AI agents eat your budget 3 ways,2026-06-11T09:20:50.996759,1,no FAQ section
 ai-agents-killed-dev-tool-sales-cycles,95,1978,AI agents killed dev tool sales cycles,2026-07-02T07:02:50.635057,1,no markdown table
 ai-alert-triage-cut-pages-80-in-production,95,2868,Designing an AI Alert Triage Layer That Reduces Pages,2026-06-12T21:55:33.230120,1,no FAQ section
-ai-ate-the-niches-first,95,1854,AI ate the niches first,2026-06-17T19:55:02.675961,1,E-E-A-T footer missing
+ai-burnout-why-output-pressure-rose-even-as-tools-got,95,2290,AI burnout: why output pressure rose even as tools got,2026-06-09T22:05:37.303748,1,no FAQ section
 ai-code-40-how-to-keep-it-from-rotting-your-repo,95,2309,Keeping AI-Generated Code from Rotting Your Repository,2026-07-03T08:51:46.505751,1,no FAQ section
-ai-code-in-prod-postmortems-still-work,95,2129,AI code in prod? Postmortems still work,2026-07-21T14:01:05.993241,1,E-E-A-T footer missing
 ai-codebases-two-onboarding-paths-that-actually-work,95,2608,AI codebases: two onboarding paths that actually work,2026-06-15T01:50:39.202489,1,no FAQ section
-ai-cost-attribution-without-the-spreadsheet-hell,95,2928,AI cost attribution without the spreadsheet hell,2026-08-07T13:11:54.801112,1,E-E-A-T footer missing
-ai-errors-hide-in-plain-latency,95,1974,AI errors hide in plain latency,2026-08-21T16:58:29.625499,1,E-E-A-T footer missing
 ai-experimentation-guardrails-not-gates,95,2437,"AI Experimentation: Guardrails, Not Gates",2026-09-07T03:38:29.295280,1,no FAQ section
-ai-features-m-pesa-paystack-flutterwave-traps,95,2277,"AI features: M-Pesa, Paystack, Flutterwave traps",2026-09-23T16:25:18.204901,1,E-E-A-T footer missing
+ai-features-rot-faster-than-you-build-them,95,2901,AI features rot faster than you build them,2026-08-27T22:00:41.355509,1,no FAQ section
 ai-freelance-rates-2026-which-stacks-still-pay,95,2497,AI freelance rates 2026: which stacks still pay,2026-06-13T20:59:28.878269,1,no FAQ section
-ai-glue-code-3-ways-to-avoid-duct-taping-models,95,2649,AI glue code: 3 ways to avoid duct-taping models,2026-06-20T21:00:17.105335,1,E-E-A-T footer missing
-ai-in-local-currency-costs-that-surprise,95,2953,AI in local currency: costs that surprise…,2026-07-07T14:45:17.583289,1,E-E-A-T footer missing
 ai-interviews-4-questions-that-caught-80-of-weak,95,2534,AI Interviews: Four Resilience Questions That Matter,2026-06-14T08:40:11.654317,1,no FAQ section
-ai-interviews-break-systems-5-real-mistakes-in-2026,95,2712,AI interviews break systems: 5 real mistakes in 2026,2026-06-20T00:04:24.296647,1,E-E-A-T footer missing
-ai-memory-systems-context-that-survives-sessions,95,2361,AI memory systems: context that survives sessions,2026-07-02T17:15:04.501281,1,E-E-A-T footer missing
-ai-micro-saas-under-150month-the-real-infra-choices,95,2870,Designing AI Micro-SaaS Infra on a $150/Month Budget,2026-08-05T18:25:11.119543,1,E-E-A-T footer missing
 ai-native-apps-break-when-you-copy-old-rules,95,2559,AI-native apps break when you copy old rules,2026-06-23T13:39:38.568114,1,no FAQ section
 ai-observability-the-metrics-that-matter,95,2595,AI observability: the metrics that matter,2026-06-28T19:30:37.295776,1,no markdown table
+ai-pair-prompts-9-setups-we-tried-in-2026,95,2927,Choosing an AI Pair Programming Setup: A Practical Guide,2026-06-29T17:31:19.836001,1,no markdown table
+ai-payments-break-in-m-pesa-first,95,2895,AI payments break in M-Pesa first,2026-08-23T01:36:53.754567,1,no markdown table
+ai-revives-unloved-legacy-codebases,95,3002,AI revives unloved legacy codebases,2026-06-29T19:46:50.080007,1,no FAQ section
+ai-rollouts-live-or-die-by-flags,95,2881,AI rollouts live or die by flags,2026-06-12T14:40:14.568805,1,no FAQ section
 ai-sales-cycles-why-dev-tools-now-need-3-demos,95,2171,AI sales cycles: why dev tools now need 3 demos,2026-06-12T19:14:54.181782,1,no FAQ section
 ai-static-analysis-vs-legacy-sast-5x-faster-scans,95,2735,AI Static Analysis vs Rule-Based SAST: A Practical Comparison,2026-06-13T08:40:42.642924,1,no FAQ section
-ai-supply-chain-attacks-what-actually-broke,95,3017,AI Supply Chain Security: Trust Boundaries for Model Artifacts,2026-09-19T15:37:56.916667,1,E-E-A-T footer missing
-ai-tools-rewrote-my-engineering-rules,95,2581,AI Code Generation Shifts Engineering Judgment,2026-07-02T08:41:32.908522,1,E-E-A-T footer missing
+ai-tools-wont-help-if-everyone-writes-the-same-code,95,2703,AI tools won’t help if everyone writes the same code,2026-07-29T02:53:12.108815,1,no FAQ section
+ai-unit-costs-the-metric-both-teams-fight-over,95,2700,AI unit costs: the metric both teams fight over,2026-08-18T01:26:01.037680,1,no FAQ section
 ai-wrote-the-docs-humans-wrote-the-gaps,95,2682,AI wrote the docs — humans wrote the gaps,2026-07-01T00:14:17.887407,1,no FAQ section
 alerts-2026-ai-turns-false-alarms-to-silence,95,2925,Alerts 2026: AI turns false alarms to silence,2026-06-24T15:17:37.579453,1,no FAQ section
-api-abuse-2026-5-attacks-we-missed-until-costs-spiked,95,2098,Tiered API abuse defense: match cost to attacker economics,2026-06-20T16:27:45.592555,1,E-E-A-T footer missing
+always-on-agents-cost-more-than-you-think,95,2905,Always-on agents cost more than you think,2026-08-30T12:51:34.041921,1,no FAQ section
 api-abuse-patterns-rising-in-2026,95,2335,API abuse patterns rising in 2026,2026-06-24T08:43:50.518338,1,no FAQ section
 apis-must-die-in-2026,95,2549,APIs must die in 2026,2026-06-12T06:47:12.021665,1,no markdown table
-apm-is-blind-to-your-ai-agents,95,2283,APM is blind to your AI agents,2026-09-25T04:05:33.922296,1,E-E-A-T footer missing
-audit-logs-compliance-vs-performance,95,2430,Audit logs: compliance vs performance,2026-09-20T04:05:00.318029,1,E-E-A-T footer missing
-audit-logs-ship-them-fast-keep-them-forever,95,2660,"Audit logs: ship them fast, keep them forever",2026-07-06T08:45:31.208931,1,E-E-A-T footer missing
+apm-lied-about-our-ai-incidents,95,2353,Why APM Misses GPU-Bound LLM Incidents,2026-08-01T10:34:29.244977,1,no FAQ section
 aws-cloudwatch-synthetics-for-ai-pipelines,95,2527,AWS CloudWatch Synthetics for AI pipelines,2026-08-10T13:16:49.252829,1,no FAQ section
+aws-cost-levers-2026-the-3-that-cut-bills-30,95,2332,AWS Cost Levers: Savings Plans vs. Compute Optimizer,2026-06-25T15:25:05.924484,1,no FAQ section
 aws-costs-for-nairobi-saas-2026-bill-split,95,2546,AWS costs for Nairobi SaaS: 2026 bill split,2026-06-28T21:38:03.431131,1,no markdown table
-aws-local-zones-vs-localstack-ai-microservices-in,95,2696,AWS Local Zones vs LocalStack: AI microservices in,2026-06-28T12:14:45.547940,1,E-E-A-T footer missing
+bank-apis-broke-under-african-2g,95,2820,Bank APIs broke under African 2G,2026-06-28T17:22:02.922745,1,no FAQ section
+build-a-search-system-in-2026-semantic-keyword,95,2668,"Build a search system in 2026: semantic, keyword",2026-06-10T21:36:55.121317,1,no FAQ section
 build-agent-workflows-that-survive-restarts,95,2350,Build agent workflows that survive restarts,2026-07-06T07:57:25.796672,1,no FAQ section
-build-apps-that-still-work-on-500-ms-latency,95,2988,Build apps that still work on 500 ms latency,2026-06-14T07:17:21.188689,1,E-E-A-T footer missing
+build-dev-platform-for-2kmonth,95,2892,Designing a Low-Cost Internal Developer Platform,2026-06-09T09:02:58.290964,1,no FAQ section
 bundle-size-70-lighter-with-server-components,95,2676,Cutting Client Bundle Size with React Server Components,2026-06-13T19:12:48.025770,1,no markdown table
 cache-stampedes-the-patterns-that-scale-and-the-ones,95,3254,Cache stampedes: the patterns that scale and the ones…,2026-07-21T02:56:30.208859,1,no FAQ section
 cdc-pipeline-death-spiral-one-bad-llm-call-can-crash,95,2309,CDC pipeline death spiral: one bad LLM call can crash…,2026-08-02T13:29:42.126639,1,no markdown table
-chaos-engineering-without-an-sre-team,95,2571,Chaos engineering without an SRE team,2026-09-30T04:44:20.807784,1,E-E-A-T footer missing
 cicd-for-ai-code-test-secure-rollback-fast,95,2508,"CI/CD for AI code: test, secure, rollback fast",2026-06-23T22:57:31.055816,1,no FAQ section
 cicd-for-django-in-20ms-africa-networks,95,2503,CI/CD for Django in 20ms Africa networks,2026-07-03T14:11:10.074155,1,no FAQ section
-cicd-pipelines-stall-with-gpu-pods-2026-benchmarks,95,2514,CI/CD pipelines stall with GPU pods: 2026 benchmarks,2026-06-28T11:45:59.811643,1,E-E-A-T footer missing
 claude-code-after-365-days-what-actually-works,95,2687,Claude Code after 365 days: what actually works,2026-06-12T07:04:26.911283,1,no markdown table
 claude-code-review-wins-and-blind-spots,95,2810,Claude code review: wins and blind spots,2026-06-08T23:14:01.838159,1,no markdown table
 cloud-agents-burned-18k-8-tools-that-didnt-work,95,2404,Why Cloud Cost Tools Miss Agent-Driven GPU Spend,2026-07-10T14:36:13.221418,1,no markdown table
 code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,1,no FAQ section
-commit-ownership-in-ai-pair-coding,95,2730,Commit ownership in AI pair coding,2026-08-31T12:27:42.708342,1,E-E-A-T footer missing
-compare-kafka-redpanda-nats-for-event-driven-systems,95,2596,"Compare Kafka, Redpanda, NATS for event-driven systems",2026-06-14T18:22:50.210273,1,E-E-A-T footer missing
-computer-use-agents-the-permission-trap,95,2903,Computer-use agents: the permission trap,2026-09-19T12:00:05.749785,1,E-E-A-T footer missing
-context-windows-agents-that-run-for-days,95,3302,Context windows: agents that run for days,2026-09-19T08:48:07.286152,1,E-E-A-T footer missing
-cqrs-when-it-pays-off-and-when-it-breaks,95,2292,CQRS: when it pays off and when it breaks,2026-09-21T11:34:04.702917,1,E-E-A-T footer missing
-currency-switch-fails-in-ghana-one-config-file-to-rule,95,2449,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,1,E-E-A-T footer missing
+cost-tools-fail-when-agents-scale-autonomously,95,2230,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,1,no markdown table
+cut-cold-starts-70-lambda-cost-hack,95,2472,Serverless Cold Starts: Cost Levers and How to Measure Them,2026-06-20T21:07:57.029662,1,no markdown table
+dead-letter-queues-stop-poison-messages,95,2982,Dead-letter queues: stop poison messages,2026-09-21T04:01:53.975376,1,no FAQ section
+debug-ai-agent-failures-differently,95,2689,Debug AI agent failures differently,2026-06-27T15:03:09.620372,1,no FAQ section
 debug-ai-agents-failures-arent-just-bugs,95,2173,Debug AI agents: failures aren't just bugs,2026-07-01T12:23:14.341291,1,no FAQ section
 detect-lazy-agents-without-false-alarms,95,2887,Detect lazy agents without false alarms,2026-07-04T14:45:28.353414,1,no markdown table
-double-entry-ledger-concurrent-write-errors,95,2792,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,1,E-E-A-T footer missing
-ebpf-observability-in-2026-what-actually-works,95,2637,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,1,E-E-A-T footer missing
+duckdb-in-production-when-it-replaces-a-warehouse,95,2723,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,1,no FAQ section
+edge-agents-vs-cloud-round-trips-in-2026,95,2244,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,1,no FAQ section
 evaluate-agents-with-spark-vs-custom-harness,95,2436,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,1,no FAQ section
-evolve-your-monolith-without-rewriting-in-2026,95,2906,Evolve your monolith without rewriting in 2026,2026-08-19T06:58:57.859019,1,E-E-A-T footer missing
 failed-ai-wrappers-2026-what-the-survivors-did-right,95,2474,Failed AI wrappers 2026: what the survivors did right,2026-06-26T23:58:50.342123,1,no FAQ section
-feature-flags-became-ai-rollout-platforms,95,3476,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,1,E-E-A-T footer missing
+fintech-features-break-in-ghana-the-real-fix,95,2686,Fintech features break in Ghana: the real fix,2026-07-18T13:24:23.053992,1,no FAQ section
 fix-ai-agent-failures-postmortem-guide,95,2378,"Postmortems for AI agents: drift, cost, replay",2026-06-29T21:20:13.013851,1,no FAQ section
-golden-paths-become-load-bearing-walls,95,2481,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,1,E-E-A-T footer missing
+golden-paths-that-dont-handcuff,95,2301,Golden paths that don't handcuff,2026-09-21T08:28:08.494579,1,no FAQ section
 hire-for-agents-not-autocomplete,95,2690,"Hire for agents, not autocomplete",2026-08-02T11:06:20.609961,1,no FAQ section
-hybrid-cloud-routing-cost-speed-balance-for-sea,95,2659,Hybrid Cloud Routing: Cost-Speed Balance for SEA,2026-09-04T16:04:06.736348,1,no FAQ section
-internal-developer-platform-adoption-traps,95,2827,Internal developer platform: adoption traps,2026-09-23T03:57:25.268978,1,no FAQ section
-latency-trade-offs-nairobi-teams-beat-global-ai-providers,95,2717,Latency trade-offs: Nairobi teams beat global AI providers,2026-07-26T03:19:07.385553,1,E-E-A-T footer missing
-llm-eval-drift-that-users-notice-first,95,3049,LLM eval drift that users notice first,2026-08-28T21:56:56.082584,1,E-E-A-T footer missing
-llm-evals-langsmith-vs-promptfoo-in-prod,95,2874,LLM evals: LangSmith vs Promptfoo in prod,2026-10-03T04:27:57.976269,1,E-E-A-T footer missing
+hybrid-cloud-routing-cost-speed-balance-for-sea,95,2605,Hybrid Cloud Routing: Cost-Speed Balance for SEA,2026-09-04T16:04:06.736348,1,no FAQ section
+idempotency-keys-what-they-fix-what-they-dont,95,2797,"Idempotency keys: what they fix, what they don't",2026-09-21T09:17:49.117913,1,no FAQ section
+idp-for-ai-2026-stack-evolution,95,2887,IDP for AI: 2026 stack evolution,2026-09-02T03:37:36.606872,1,no FAQ section
+internal-developer-platform-adoption-traps,95,2963,Internal developer platform: adoption traps,2026-09-23T03:57:25.268978,1,no FAQ section
+llm-agents-why-monoliths-win,95,2245,LLM agents: why monoliths win,2026-09-10T08:01:41.646366,1,no FAQ section
+llm-costs-fine-tune-vs-route-vs-bigger-model,95,2466,LLM costs: fine-tune vs route vs bigger model,2026-08-22T01:23:52.067990,1,no FAQ section
+llm-drift-before-users-complain-catch-it-early,95,2395,LLM drift before users complain: catch it early,2026-08-10T12:22:46.862454,1,no markdown table
 llm-output-metrics-that-actually-move-the-needle,95,2089,LLM output metrics that actually move the needle,2026-06-26T19:13:43.403773,1,no FAQ section
-mcp-hidden-cost-traps,95,2436,MCP hidden cost traps,2026-09-12T13:48:03.599862,1,E-E-A-T footer missing
-mcp-servers-the-3-hidden-costs-nobody-quotes,95,3152,MCP servers: the 3 hidden costs nobody quotes,2026-08-05T02:46:23.521442,1,E-E-A-T footer missing
+local-llm-agents-vllm-vs-ollama-for-fintech,95,3190,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,1,no markdown table
+memory-systems-for-production-agents,95,2196,Memory Systems for Production Agents,2026-09-15T04:09:36.116554,1,no FAQ section
 merge-three-payment-apis-into-one-system,95,3048,Merge three payment APIs into one system,2026-06-10T02:38:19.531287,1,no FAQ section
 meter-dev-tool-pricing-in-2026,95,2157,Meter dev-tool pricing in 2026,2026-07-02T17:53:21.753006,1,no FAQ section
-mobile-first-ai-fails-you-didnt-plan,95,2383,Mobile-first AI fails you didn’t plan…,2026-08-26T17:38:26.304775,1,E-E-A-T footer missing
-mobile-money-agent-fees-why-your-bot-keeps-failing,95,2523,Mobile money agent fees: why your bot keeps failing,2026-08-05T14:16:59.891393,1,E-E-A-T footer missing
-most-llm-cost-dashboards-lie,95,2473,Most LLM cost dashboards lie…,2026-09-19T08:31:18.982202,1,E-E-A-T footer missing
 move-images-50-faster-in-2026-with-starlink-cdn,95,2612,Resize Images at the Edge: A CloudFront and Lambda Guide,2026-06-18T16:57:23.521775,1,no FAQ section
-multi-agent-systems-when-they-quietly-degrade,95,2283,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,1,E-E-A-T footer missing
+multi-agent-handoffs-the-latency-tax-nobody-measures,95,2265,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,1,no FAQ section
+multi-agent-systems-why-failures-hide,95,2590,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,1,no FAQ section
 ndpr-2026-broke-fintech-apis,95,2491,NDPR 2026 broke fintech APIs,2026-06-26T16:36:52.584537,1,no markdown table
-nextjs-15-vs-remix-vs-sveltekit-2026-choices,95,2518,Next.js 15 vs Remix vs SvelteKit: 2026 choices,2026-06-16T06:24:02.992809,1,E-E-A-T footer missing
-offline-first-agents-for-field-teams,95,2572,Offline-first agents for field teams,2026-07-16T02:51:18.981017,1,E-E-A-T footer missing
-only-boring-stacks-survive-ai-services,95,3006,Only boring stacks survive AI services,2026-08-31T18:58:51.693019,1,E-E-A-T footer missing
-portfolio-projects-hiring-managers-skip,95,3755,Portfolio projects hiring managers skip,2026-09-25T16:52:21.903774,1,E-E-A-T footer missing
-portfolio-that-hires-show-constraints-not-code,95,2691,"Portfolio that hires: show constraints, not code",2026-06-16T04:33:09.954287,1,E-E-A-T footer missing
+negotiate-pay-in-2026-with-ai-proof-points,95,2271,Negotiate pay in 2026 with AI proof points,2026-06-25T16:15:21.594638,1,no FAQ section
+negotiate-salaries-with-ai-skills-in-2026,95,2192,Negotiate salaries with AI skills in 2026,2026-06-27T22:11:29.284386,1,no FAQ section
+observability-agents-lied-to-us,95,2635,Observability Agents as Application Code,2026-08-11T08:54:57.972223,1,no FAQ section
+offline-agent-workflows-for-last-mile-ops,95,3017,Offline agent workflows for last-mile ops,2026-09-21T07:32:16.420961,1,no FAQ section
+offline-first-money-apps-with-dynamodb-streams,95,3000,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,1,no FAQ section
+one-misconfigured-vector-db-killed-our-rag-pipeline,95,2255,When a vector DB misconfiguration breaks RAG silently,2026-07-29T14:18:17.130040,1,no FAQ section
+pick-one-stripe-lemon-squeezy-paddle-in-2026,95,2739,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026",2026-06-25T13:28:15.693054,1,no markdown table
+portfolio-projects-that-hire-remote-senior-devs,95,2834,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,1,no FAQ section
 postgres-17-buried-redis-s3-cron,95,2153,"Postgres 17 buried Redis, S3, cron",2026-06-26T21:04:08.277256,1,no FAQ section
 postgres-17-swallowed-redis-kafka-timescale,95,2880,"Postgres 17 swallowed Redis, Kafka, Timescale",2026-07-02T17:01:10.771305,1,no markdown table
 postgres-vector-search-what-breaks-first,95,2688,Postgres vector search: what breaks first,2026-07-24T02:54:40.429968,1,no markdown table
+prevent-ownership-drift-when-velocity-explodes,95,2964,Prevent ownership drift when velocity explodes,2026-08-29T16:28:34.651903,1,no FAQ section
 price-saas-tools-in-2026-what-we-learned-pricing-a,95,2642,"Pricing SaaS tools by real cost, not seat count",2026-06-15T02:11:37.118773,1,no FAQ section
+price-your-remote-job-like-a-new-york-dev,95,2660,Price your remote job like a New York dev,2026-06-08T23:30:46.115942,1,no FAQ section
 prompt-injection-got-the-hype-poison-data-ruined-us,95,3453,Prompt Injection Is Not Your Biggest LLM Data Risk,2026-08-03T03:19:51.935437,1,no FAQ section
+prompt-injection-what-breaks-first-in-prod,95,2978,Prompt injection: what breaks first in prod,2026-09-27T16:41:09.710334,1,no FAQ section
 prompt-injections-hidden-aws-tax,95,2465,Prompt injection’s hidden AWS tax,2026-07-03T09:33:36.204639,1,no markdown table
-purpose-built-ai-is-a-trap-for-solo-founders,95,2956,Purpose-built AI is a trap for solo founders,2026-09-19T09:31:04.942846,1,E-E-A-T footer missing
-rag-in-prod-what-tutorials-wont-tell-you,95,2715,RAG in prod: what tutorials won’t tell you,2026-06-08T17:45:22.815623,1,E-E-A-T footer missing
+pypi-poisoned-models-hit-prod-in-2025,95,2215,PyPI poisoned models hit prod in 2025,2026-08-25T01:25:20.513082,1,no FAQ section
 rag-on-legacy-systems-vector-db-vs-full-text-sql,95,2765,RAG on legacy systems: vector DB vs. full-text SQL,2026-06-30T19:45:17.392843,1,no markdown table
 rag-pipelines-4-silent-prod-killers,95,2576,RAG pipelines: 4 silent prod killers,2026-06-08T23:47:39.972246,1,no FAQ section
-rag-rots-if-you-dont-refresh-indexes,95,2819,RAG rots if you don’t refresh indexes,2026-08-04T14:24:04.500365,1,E-E-A-T footer missing
-replace-env-with-these-in-2026,95,2928,Replace .env with these in 2026,2026-06-18T22:18:17.148223,1,E-E-A-T footer missing
-rogue-agent-api-calls-stop-the-bleeding,95,1974,Rogue Agent API Calls: Stop the Bleeding,2026-09-07T12:11:38.676430,1,E-E-A-T footer missing
+react-19-compiler-my-components-changed-how,95,2121,React 19 Compiler: What It Rewrites and Where It Breaks,2026-06-15T07:49:45.982179,1,no FAQ section
+rebalance-pay-when-ai-fills-half-your-role,95,2589,Rebalance pay when AI fills half your role,2026-06-15T23:55:31.138497,1,no FAQ section
+remote-salary-negotiate-without-sounding-cheap,95,2807,Remote salary: negotiate without sounding cheap,2026-06-08T22:08:41.302454,1,no FAQ section
+replace-managed-services-with-postgres-17,95,2783,Replace managed services with Postgres 17,2026-08-16T12:45:50.709187,1,no markdown table
+route-fine-tune-or-scale-pick-right,95,2668,"Route, fine-tune, or scale: pick right",2026-09-29T04:56:19.381447,1,no FAQ section
 runbooks-vs-ai-which-cuts-outages-50,95,2378,Runbooks vs AI Runbooks: A Decision Framework,2026-06-18T05:28:24.531662,1,no markdown table
-rust-rewrites-where-they-pay-off-where-they-dont,95,2208,"Rust rewrites: where they pay off, where they don't",2026-09-21T10:01:49.793555,1,E-E-A-T footer missing
-sandboxed-computer-use-agents-with-gvisor,95,2759,Sandboxed computer-use agents with gVisor,2026-09-21T18:02:36.068591,1,E-E-A-T footer missing
-sbom-attestation-that-gets-used,95,3270,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,1,E-E-A-T footer missing
-scope-agent-permissions-per-task,95,3773,Scope agent permissions per task,2026-09-19T09:21:55.925855,1,E-E-A-T footer missing
-self-service-is-broken-without-ai-ops,95,2360,Self-service is broken without AI ops,2026-08-24T12:59:05.104603,1,E-E-A-T footer missing
+rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026,95,2061,Rust SDK vs FastAPI for LLM ops: trust in 2026,2026-08-14T02:13:08.868429,1,no FAQ section
+senior-engineer-title-inflation-in-2026,95,2167,Senior engineer title inflation in 2026,2026-08-13T07:35:26.331056,1,no FAQ section
+senior-role-projects-3-real-paths,95,3151,Senior role projects: 3 real paths,2026-08-05T09:46:03.050922,1,no FAQ section
 serve-4g-as-baseline-apps-in-2026,95,2749,Serve 4G-as-baseline apps in 2026,2026-07-03T09:17:25.464667,1,no FAQ section
-settlement-vs-clearing-backend-engineers-guide,95,2801,Settlement vs clearing: backend engineer's guide,2026-09-28T04:25:56.078134,1,E-E-A-T footer missing
-ship-1mb-pages-on-4g-starlink-africa-case-study,95,2484,Ship 1MB pages on 4G: Starlink Africa case study,2026-06-12T09:06:49.300435,1,E-E-A-T footer missing
-ship-evals-before-your-agent-ships,95,3007,Ship evals before your agent ships,2026-08-31T04:32:07.615642,1,E-E-A-T footer missing
+ship-a-solo-project-pipeline-under-20month,95,3164,A Solo-Project Deploy Pipeline That Stays Under $20/Month,2026-06-15T23:01:02.436611,1,no FAQ section
 ship-to-nairobi-users-starlink-latency-guide-2026,95,2788,Ship to Nairobi users: Starlink latency guide 2026,2026-06-25T23:11:40.027660,1,no FAQ section
 signals-5-state-tricks-that-broke-my-app,95,2611,Signals: derived state without the performance tax,2026-07-03T04:50:42.390689,1,no markdown table
 skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one API for 3 African markets,2026-06-14T17:14:09.679850,1,no markdown table
-spot-evictions-the-retry-logic-that-holds-up,95,2487,Spot evictions: the retry logic that holds up,2026-08-12T12:52:38.265562,1,E-E-A-T footer missing
-stop-assuming-payment-apis-never-fail,95,2483,Stop assuming payment APIs never fail,2026-09-13T03:56:25.937261,1,E-E-A-T footer missing
+soft-deletes-fail-what-breaks-first,95,2581,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
+spot-ais-hidden-cost-spike-in-your-stack,95,2735,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,1,no FAQ section
+starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,1,no FAQ section
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
-stop-putting-llm-keys-in-env,95,2706,Stop Putting LLM Keys in .env,2026-09-17T04:06:21.695546,1,E-E-A-T footer missing
 stop-the-writes-zero-downtime-db-migrations,95,2518,Stop the writes — zero-downtime DB migrations,2026-07-02T18:33:14.783703,1,no markdown table
-supervisor-vs-swarm-vs-debate-vs-pipeline,95,3738,Supervisor vs swarm vs debate vs pipeline,2026-08-03T10:05:35.557297,1,E-E-A-T footer missing
-temporal-changed-our-agent-retries-for-good,95,2992,Durable Execution for Multi-Step Agent Workflows,2026-09-03T16:05:45.341821,1,E-E-A-T footer missing
-tool-calling-patterns-patterns-that-survive-load-vs,95,2716,Tool calling patterns: patterns that survive load vs,2026-06-27T14:22:36.645569,1,E-E-A-T footer missing
-track-ai-agent-costs-in-fractal-workflows,95,2345,Track AI agent costs in fractal workflows,2026-07-27T03:28:57.383047,1,E-E-A-T footer missing
+stop-trusting-agents-for-core-logic,95,2267,Stop trusting agents for core logic,2026-09-14T17:56:40.332505,1,no FAQ section
+tool-calling-stateless-beats-stateful-under-load,95,2269,Tool calling: stateless beats stateful under load,2026-06-19T09:01:43.310641,1,no FAQ section
+tool-calls-under-load-async-batch-vs-fire-and-forget,95,3101,Tool calls under load: async batch vs fire-and-forget,2026-06-13T10:23:27.741037,1,no markdown table
 trim-llm-bills-3-finops-moves-that-work,95,2144,Trim LLM bills: 3 FinOps moves that work,2026-07-12T09:48:02.503208,1,no FAQ section
 vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forever",2026-06-20T22:54:21.869130,1,no FAQ section
-wasm-servers-beat-containers-here,95,2280,WASM servers beat containers here,2026-08-05T13:49:01.207694,1,E-E-A-T footer missing
-webhook-delivery-that-survives-outages,95,2564,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,1,E-E-A-T footer missing
-webhooks-2026-retries-idempotency-and-the-9995,95,2119,"Webhook Delivery: Retries, Idempotency, and Durability",2026-06-19T21:43:40.060877,1,E-E-A-T footer missing
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
-which-agent-stack-survives-3g,95,2402,Which agent stack survives 3G?,2026-09-16T11:26:58.836815,1,E-E-A-T footer missing
-which-ai-wrappers-made-money-in-2026,95,1961,Which AI wrappers made money in 2026,2026-06-12T01:48:30.604884,1,E-E-A-T footer missing
-who-signs-off-on-ai-code,95,2188,Who signs off on AI code?,2026-10-02T04:45:55.762278,1,E-E-A-T footer missing
+websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
 why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Reward Keywords Over Correct Design,2026-06-14T17:09:29.558838,1,no FAQ section
-why-do-production-agents-still-need-humans,95,2275,Why do production agents still need humans?,2026-09-09T08:21:05.275755,1,E-E-A-T footer missing
-why-does-my-agent-version-break-clients,95,2374,Agent API versioning: why clients break on upgrade,2026-09-14T04:09:00.375326,1,E-E-A-T footer missing
-why-our-schema-survived-ai-scaling,95,2040,Designing a Schema That Survives Embedding Model Upgrades,2026-09-13T16:15:34.720467,1,E-E-A-T footer missing
-why-progressive-web-apps-fail-on-2g-and-how-to-fix,95,2276,Why progressive web apps fail on 2G and how to fix…,2026-07-17T13:26:20.915553,1,E-E-A-T footer missing
-why-scaling-agents-kills-plain-logs,95,2151,Why scaling agents kills plain logs,2026-09-11T03:43:37.520207,1,E-E-A-T footer missing
-why-your-multi-agent-system-degraded-slowly,95,2744,Why your multi-agent system degraded slowly,2026-08-09T12:58:50.019727,1,E-E-A-T footer missing
-why-your-routing-layer-will-collapse-at-scale,95,2361,Why your routing layer will collapse at scale,2026-09-04T03:38:05.904453,1,E-E-A-T footer missing
-world-models-wont-replace-your-backend,95,2851,World models won't replace your backend,2026-09-24T03:50:12.463556,1,E-E-A-T footer missing
-zero-trust-ai-skip-the-latency-tax,95,2735,Zero-trust AI: skip the latency tax,2026-09-15T16:35:21.581708,1,E-E-A-T footer missing
 15-agents-blew-up-our-logs-why-we-pinned-models-logs,100,2167,Structured Logs and Pinned Versions for Multi-Agent Systems,2026-07-04T10:14:14.067039,0,
 3-ai-coders-ranked-cursor-windsurf-claude-code-in,100,3251,"3 AI coders ranked: Cursor, Windsurf, Claude Code in",2026-06-12T11:36:40.871447,0,
+3-skills-to-outrun-ai-salary-cuts,100,3138,3 skills to outrun AI salary cuts,2026-06-30T10:13:26.149608,0,
 3-ways-container-builds-got-3x-faster-in-2026,100,2630,Container Build Caching: What Actually Speeds Up CI,2026-06-14T01:45:48.667847,0,
 5-ai-tools-that-let-us-ship-faster-than-sf-teams,100,2107,Choosing AI Coding Assistants for Cloud-Heavy Stacks,2026-06-23T17:36:37.395172,0,
 5-notification-systems-ranked-push-email-sms,100,2490,"5 notification systems ranked: push, email, SMS",2026-06-22T08:52:57.410443,0,
@@ -302,91 +207,186 @@ zero-trust-ai-skip-the-latency-tax,95,2735,Zero-trust AI: skip the latency tax,2
 7-patterns-for-systems-that-wont-die-when-networks,100,3573,7 patterns for systems that won’t die when networks,2026-06-14T22:21:06.945498,0,
 7-skills-senior-engineers-need-now-agents-are-live,100,2977,7 skills senior engineers need now agents are live,2026-07-05T12:23:25.302901,0,
 9-ai-wrapper-plays-that-worked-in-2026,100,2832,AI wrapper business models: what survives contact with users,2026-06-17T14:10:50.529115,0,
+african-devs-ai-tools-that-work-now-2026,100,2360,African devs: AI tools that work now (2026),2026-06-15T18:02:33.361894,0,
+agent-access-for-non-ai-engineers,100,3147,Agent access for non-AI engineers,2026-09-17T16:33:46.471776,0,
+agent-architecture-the-new-model-trap,100,3338,Agent architecture: the new model trap,2026-09-27T04:24:45.945383,0,
 agent-code-review-gap-nobody-admits,100,2542,agent code review gap nobody admits,2026-08-27T08:16:38.938012,0,
+agent-compliance-the-layer-you-build-after-failure,100,3296,Agent compliance: the layer you build after failure,2026-09-22T03:58:54.260462,0,
 agent-context-short-term-vs-long-term-memory,100,3034,Agent context: short-term vs long-term memory,2026-07-09T07:11:24.207094,0,
+agent-drift-the-failure-mode-you-didnt-log,100,2994,Agent drift: the failure mode you didn't log,2026-09-18T08:41:59.958486,0,
+agent-drift-why-it-hurts-ux,100,2414,Agent drift: why it hurts UX,2026-09-09T16:15:54.093815,0,
+agent-drift-why-prod-breaks-without-human-checkpoints,100,2949,Agent drift: why prod breaks without human checkpoints,2026-09-01T04:14:50.129093,0,
+agent-flooded-our-api-with-bad-calls-overnight,100,2926,Stopping a runaway polling agent from flooding your API,2026-08-05T13:52:49.852054,0,
+agent-followed-instructions-too-literally-the-cron-job-trap,100,2494,Agent followed instructions too literally: the cron job trap,2026-08-11T08:43:33.018896,0,
+agent-platform-abstractions-a-case-study,100,2158,Agent platform abstractions: a case study,2026-09-16T09:38:05.129102,0,
 agent-slos-measure-what-agents-actually-do,100,2591,Agent SLOs: measure what agents actually do,2026-08-11T11:04:33.328499,0,
 agent-systems-circuit-breakers-are-not-enough,100,2518,Agent Systems: Circuit Breakers Are Not Enough,2026-09-12T11:54:46.323734,0,
+agent-tracing-when-logs-lie-and-metrics-mislead,100,1909,Agent tracing: when logs lie and metrics mislead,2026-08-28T10:18:37.508121,0,
+agent-versioning-the-contract-you-forgot,100,2671,Agent versioning: the contract you forgot,2026-09-28T19:26:44.647523,0,
 agentic-workflows-how-we-kept-the-lights,100,2871,Observability for Long-Running LLM Agent Workflows,2026-07-17T13:40:10.095223,0,
-agentic-workflows-surviving-network-partitions,100,3264,Agentic workflows: surviving network partitions,2026-10-01T04:54:31.558813,0,
+agentic-workflows-surviving-network-partitions,100,3589,Agentic workflows: surviving network partitions,2026-10-01T04:54:31.558813,0,
+agents-keep-breaking-prod-3-boundary-rules-you-still-need,100,2843,Agents keep breaking prod: 3 boundary rules you still need,2026-07-17T13:47:16.525594,0,
+agents-running-hours-youre-losing-context-fast,100,2388,Agents running hours? You're losing context fast,2026-09-03T11:36:32.782364,0,
+ai-agent-postmortem-human-loop-vs-blind-replay,100,3221,Postmortems for AI agents: human review vs blind replay,2026-06-20T22:43:19.173545,0,
 ai-agent-postmortems-the-three-surprises,100,2879,AI agent postmortems: the three surprises,2026-06-24T11:53:53.748750,0,
 ai-agent-postmortems-trace-vs-logs-vs-code,100,2593,AI agent postmortems: trace vs logs vs code,2026-06-14T02:06:40.789398,0,
 ai-agents-circuit-breakers-are-not-optional,100,2616,AI agents: circuit breakers are not optional,2026-07-03T20:22:23.667451,0,
 ai-agents-vs-argo-tekton-which-pipeline-heals-itself,100,2584,"AI agents vs Argo, Tekton: which pipeline heals itself?",2026-06-27T23:59:52.275644,0,
+ai-ate-the-niches-first,100,1980,AI ate the niches first,2026-06-17T19:55:02.675961,0,
+ai-best-practices-fail-on-slow-networks,100,2670,AI best practices fail on slow networks,2026-10-04T04:58:45.940738,0,
 ai-chats-hidden-wcag-fails,100,2749,AI chat's hidden WCAG fails,2026-07-02T12:40:53.455722,0,
+ai-code-in-prod-postmortems-still-work,100,2262,AI code in prod? Postmortems still work,2026-07-21T14:01:05.993241,0,
+ai-cost-attribution-without-the-spreadsheet-hell,100,3061,AI cost attribution without the spreadsheet hell,2026-08-07T13:11:54.801112,0,
 ai-era-promotions-hinge-on-this-one-thing,100,2242,AI-era promotions hinge on this one thing,2026-08-15T12:43:35.581544,0,
+ai-errors-hide-in-plain-latency,100,2102,AI errors hide in plain latency,2026-08-21T16:58:29.625499,0,
 ai-feature-drift-why-your-model-died-at-midnight,100,2805,AI feature drift: why your model died at midnight,2026-07-07T03:43:58.506821,0,
+ai-features-m-pesa-paystack-flutterwave-traps,100,2418,"AI features: M-Pesa, Paystack, Flutterwave traps",2026-09-23T16:25:18.204901,0,
+ai-glue-code-3-ways-to-avoid-duct-taping-models,100,2777,AI glue code: 3 ways to avoid duct-taping models,2026-06-20T21:00:17.105335,0,
+ai-in-local-currency-costs-that-surprise,100,3077,AI in local currency: costs that surprise…,2026-07-07T14:45:17.583289,0,
 ai-in-slow-networks-why-models-flop-where-data-costs-rise,100,2827,AI in slow networks: why models flop where data costs rise,2026-07-05T11:34:19.789035,0,
+ai-interviews-break-systems-5-real-mistakes-in-2026,100,2842,AI interviews break systems: 5 real mistakes in 2026,2026-06-20T00:04:24.296647,0,
 ai-interviews-broke-system-design-3-patterns-that,100,2995,AI interviews broke system design: 3 patterns that,2026-06-11T18:10:36.807589,0,
 ai-interviews-now-ask-for-this,100,3152,AI interviews now ask for this,2026-06-10T07:28:02.725896,0,
 ai-made-self-service-platforms-trivial-in-2026,100,1962,AI made self-service platforms trivial in 2026,2026-07-03T23:08:55.907087,0,
+ai-memory-systems-context-that-survives-sessions,100,2491,AI memory systems: context that survives sessions,2026-07-02T17:15:04.501281,0,
+ai-micro-saas-under-150month-the-real-infra-choices,100,3001,Designing AI Micro-SaaS Infra on a $150/Month Budget,2026-08-05T18:25:11.119543,0,
 ai-model-poisoning-3-real-attacks-on-datasets,100,3064,AI model poisoning: 3 real attacks on datasets,2026-07-04T03:21:11.093312,0,
 ai-native-apps-forget-the-old-stack,100,2028,AI-native apps: forget the old stack,2026-06-12T23:10:41.835738,0,
-ai-on-slow-networks-nairobi-teams-2026-playbook,100,2669,AI on slow networks: Nairobi teams' 2026 playbook,2026-08-26T01:29:12.285987,0,
+ai-on-slow-networks-nairobi-teams-2026-playbook,100,2516,AI on slow networks: Nairobi teams' 2026 playbook,2026-08-26T01:29:12.285987,0,
 ai-ops-vs-human-ops-the-incidents-that-broke-them,100,2433,AI-First vs Human-First Incident Response,2026-06-23T01:31:13.503099,0,
 ai-reshaped-my-engineering-principles,100,2103,AI Code Generation: Failure Modes and Guardrails,2026-07-03T17:17:29.304889,0,
 ai-sales-cycles-3x-faster-40-less-talk,100,3136,Designing AI-Assisted Sales for Developer Tools,2026-07-14T13:52:51.924911,0,
 ai-scanners-overlook-real-vulns,100,2427,AI scanners overlook real vulns,2026-07-02T20:27:23.423767,0,
 ai-stole-system-design,100,2185,AI stole system design,2026-06-21T15:10:03.056592,0,
+ai-supply-chain-attacks-what-actually-broke,100,3147,AI Supply Chain Security: Trust Boundaries for Model Artifacts,2026-09-19T15:37:56.916667,0,
+ai-tools-rewrote-my-engineering-rules,100,2717,AI Code Generation Shifts Engineering Judgment,2026-07-02T08:41:32.908522,0,
 ai-ui-generation-what-it-fixed-and-what-still-breaks,100,2274,AI UI generation: what it fixed and what still breaks,2026-07-03T06:48:30.376782,0,
 ai-ui-tools-6-months-in-what-i-gained-and-lost,100,3008,AI UI Generation: Where Design Systems Break,2026-06-27T05:01:58.869327,0,
 ai-ui-tools-broke-my-react-flow-heres-why,100,2679,AI UI Generators: Production Constraints and Fixes,2026-06-23T15:45:26.142776,0,
 ai-ui-tools-promise-vs-production,100,2181,AI UI tools: promise vs. production,2026-06-30T01:37:01.441639,0,
+api-abuse-2026-5-attacks-we-missed-until-costs-spiked,100,2236,Tiered API abuse defense: match cost to attacker economics,2026-06-20T16:27:45.592555,0,
 api-attacks-rising-40-the-3-patterns-to-block-now,100,2683,"Defending APIs Against Amplification, Stuffing and Smuggling",2026-06-20T22:16:25.382208,0,
+apm-is-blind-to-your-ai-agents,100,2413,APM is blind to your AI agents,2026-09-25T04:05:33.922296,0,
 arm-in-production-graviton4-vs-ampere-in-2026,100,2845,ARM in production: Graviton4 vs Ampere in 2026,2026-06-10T08:38:47.576445,0,
+audit-logs-compliance-vs-performance,100,2560,Audit logs: compliance vs performance,2026-09-20T04:05:00.318029,0,
+audit-logs-ship-them-fast-keep-them-forever,100,2780,"Audit logs: ship them fast, keep them forever",2026-07-06T08:45:31.208931,0,
 audit-trails-immutabledb-vs-dynamodb-streams,100,3036,Audit trails: ImmutableDB vs DynamoDB Streams,2026-07-04T16:10:41.079187,0,
-build-dev-platform-for-2kmonth,100,3123,Build dev platform for $2k/month,2026-06-09T09:02:58.290964,0,
+aws-local-zones-vs-localstack-ai-microservices-in,100,2828,AWS Local Zones vs LocalStack: AI microservices in,2026-06-28T12:14:45.547940,0,
+build-apps-that-still-work-on-500-ms-latency,100,3126,Build apps that still work on 500 ms latency,2026-06-14T07:17:21.188689,0,
 buy-vs-build-ai-3-hard-rules-for-2026,100,3070,Buy vs build AI: 3 hard rules for 2026,2026-08-11T13:13:49.802757,0,
+chaos-engineering-without-an-sre-team,100,2713,Chaos engineering without an SRE team,2026-09-30T04:44:20.807784,0,
+cicd-pipelines-stall-with-gpu-pods-2026-benchmarks,100,2646,CI/CD pipelines stall with GPU pods: 2026 benchmarks,2026-06-28T11:45:59.811643,0,
 circleci-still-beats-github-actions-at-50k-builds,100,2267,When CircleCI's Concurrency Model Beats GitHub Actions,2026-06-09T04:46:48.424623,0,
 claude-code-after-a-year-daily-wins,100,2524,Claude Code after a year: daily wins,2026-06-25T03:55:14.348158,0,
+commit-ownership-in-ai-pair-coding,100,2851,Commit ownership in AI pair coding,2026-08-31T12:27:42.708342,0,
+compare-kafka-redpanda-nats-for-event-driven-systems,100,2724,"Compare Kafka, Redpanda, NATS for event-driven systems",2026-06-14T18:22:50.210273,0,
+computer-use-agents-the-permission-trap,100,3028,Computer-use agents: the permission trap,2026-09-19T12:00:05.749785,0,
+context-windows-agents-that-run-for-days,100,3443,Context windows: agents that run for days,2026-09-19T08:48:07.286152,0,
 context-windows-live-longer-than-you-think,100,2608,Context windows live longer than you think,2026-07-25T13:43:38.060125,0,
+cqrs-when-it-pays-off-and-when-it-breaks,100,2430,CQRS: when it pays off and when it breaks,2026-09-21T11:34:04.702917,0,
+currency-switch-fails-in-ghana-one-config-file-to-rule,100,2572,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,
 cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware security gates that cut CI alert noise,2026-06-12T07:15:04.340904,0,
+double-entry-ledger-concurrent-write-errors,100,2922,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 drop-ec2-bills-70-without-code,100,2634,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09T04:57:04.863722,0,
+ebpf-observability-in-2026-what-actually-works,100,2772,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,0,
 event-driven-beats-agent-driven-910-times,100,2948,Event-driven beats agent-driven 9/10 times,2026-07-30T02:38:09.602424,0,
 event-sourcing-pay-the-complexity-tax-only-here,100,2091,Event sourcing: pay the complexity tax only here,2026-06-09T09:48:26.237900,0,
-fraud-detection-rules-vs-scoring-where-they-meet,100,3251,"Fraud detection: rules vs scoring, where they meet",2026-10-04T11:01:21.830716,0,
+evolve-your-monolith-without-rewriting-in-2026,100,3035,Evolve your monolith without rewriting in 2026,2026-08-19T06:58:57.859019,0,
+feature-flags-became-ai-rollout-platforms,100,3609,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
+fraud-detection-rules-vs-scoring-where-they-meet,100,3357,"Fraud detection: rules vs scoring, where they meet",2026-10-04T11:01:21.830716,0,
+golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
 internal-platform-adoption-one-metric-kills-velocity,100,2832,Internal platform adoption: one metric kills velocity,2026-07-21T07:54:25.219668,0,
-json-modes-hidden-costs-revealed,100,2534,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
+json-modes-hidden-costs-revealed,100,2477,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2142,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
 keep-multi-model-systems-stable-6-rules-that-worked,100,3027,Stabilize multi-model agent routers: six production rules,2026-07-15T02:44:07.331590,0,
 kill-noisy-alerts-the-triage-system-that-restored-sleep,100,2456,Designing Alert Triage That Suppresses Noise Safely,2026-07-11T13:28:35.352118,0,
 kubernetes-or-nomad-the-real-experiment-cost-split,100,2125,Kubernetes or Nomad: the real experiment cost split,2026-08-03T14:47:24.911552,0,
+latency-trade-offs-nairobi-teams-beat-global-ai-providers,100,2850,Latency trade-offs: Nairobi teams beat global AI providers,2026-07-26T03:19:07.385553,0,
 least-privilege-for-agents-the-config-line-nobody-writes,100,2765,Least privilege for agents: the config line nobody writes,2026-08-10T02:02:42.470209,0,
+llm-eval-drift-that-users-notice-first,100,3176,LLM eval drift that users notice first,2026-08-28T21:56:56.082584,0,
+llm-evals-langsmith-vs-promptfoo-in-prod,100,3011,LLM evals: LangSmith vs Promptfoo in prod,2026-10-03T04:27:57.976269,0,
 llm-evals-skip-the-hype-track-these-4-metrics,100,2133,"LLM evals: skip the hype, track these 4 metrics",2026-06-22T01:49:01.376460,0,
 llmops-2026-evaluation-stack-that-replaced-rag-dashboards,100,2601,LLMOps 2026: evaluation stack that replaced RAG dashboards,2026-07-05T12:37:15.024662,0,
 log-audit-costs-without-breaking-compliance,100,2564,Log audit costs without breaking compliance,2026-06-22T19:05:41.885040,0,
 marketing-without-budget-5k-mrr-in-18-months,100,2160,Earning Developer Attention Without a Marketing Budget,2026-06-13T19:47:50.059804,0,
+mcp-hidden-cost-traps,100,2570,MCP hidden cost traps,2026-09-12T13:48:03.599862,0,
 mcp-servers-real-time-pipelines-without-agents,100,2540,MCP servers: real-time pipelines without agents,2026-07-03T15:56:03.326004,0,
+mcp-servers-the-3-hidden-costs-nobody-quotes,100,3284,MCP servers: the 3 hidden costs nobody quotes,2026-08-05T02:46:23.521442,0,
 migrations-stop-running-them-live,100,2276,Migrations? Stop running them live,2026-06-28T01:58:52.802951,0,
-mobile-money-agents-when-m-pesa-api-fails,100,2961,Mobile money agents: when M-Pesa API fails,2026-09-18T16:47:51.592278,0,
+mobile-first-ai-fails-you-didnt-plan,100,2508,Mobile-first AI fails you didn’t plan…,2026-08-26T17:38:26.304775,0,
+mobile-money-agent-fees-why-your-bot-keeps-failing,100,2647,Mobile money agent fees: why your bot keeps failing,2026-08-05T14:16:59.891393,0,
 monolith-to-services-without-a-rewrite,100,2878,Monolith to services without a rewrite,2026-06-27T20:07:07.246730,0,
+most-llm-cost-dashboards-lie,100,2611,Most LLM cost dashboards lie…,2026-09-19T08:31:18.982202,0,
+multi-agent-systems-when-they-quietly-degrade,100,2400,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,0,
+nextjs-15-vs-remix-vs-sveltekit-2026-choices,100,2652,Next.js 15 vs Remix vs SvelteKit: 2026 choices,2026-06-16T06:24:02.992809,0,
 observability-2026-ditch-the-three-pillars,100,3392,Observability 2026: ditch the three pillars,2026-06-10T00:02:57.587030,0,
+offline-first-agents-for-field-teams,100,2705,Offline-first agents for field teams,2026-07-16T02:51:18.981017,0,
 offline-first-apps-what-3g-markets-taught-us,100,3020,Designing Offline-First Apps for Unreliable Networks,2026-06-21T10:38:08.004189,0,
 one-payment-stack-for-kenya-nigeria-ghana,100,2697,"One payment stack for Kenya, Nigeria, Ghana",2026-06-20T12:04:01.031479,0,
+only-boring-stacks-survive-ai-services,100,3147,Only boring stacks survive AI services,2026-08-31T18:58:51.693019,0,
 orchestration-tax-kills-multi-agent-systems,100,2643,Orchestration tax kills multi-agent systems,2026-08-11T10:02:06.598760,0,
 personal-ai-assistants-avoid-vendor-lock-in-traps,100,3070,Personal AI assistants: avoid vendor lock-in traps,2026-06-11T09:44:01.921304,0,
 platform-engineering-roi-metrics-that-fund-teams,100,2558,Platform engineering ROI: metrics that fund teams,2026-09-19T09:13:36.427120,0,
 platform-teams-in-2026-docs-vs-production-reality,100,3593,Platform teams in 2026: Docs vs. production reality,2026-06-27T12:07:28.402718,0,
+portfolio-projects-hiring-managers-skip,100,3893,Portfolio projects hiring managers skip,2026-09-25T16:52:21.903774,0,
+portfolio-that-hires-show-constraints-not-code,100,2823,"Portfolio that hires: show constraints, not code",2026-06-16T04:33:09.954287,0,
 pr-checklists-are-dead-ai-agents-do-reviews-now,100,2442,PR checklists are dead: AI agents do reviews now,2026-06-14T16:58:47.894995,0,
 price-ai-proof-skills-in-2026,100,2706,Price AI-proof skills in 2026,2026-06-29T16:52:04.366294,0,
 price-your-remote-salary-4-step-script,100,2329,Price your remote salary: 4-step script,2026-06-08T07:28:13.717967,0,
+purpose-built-ai-is-a-trap-for-solo-founders,100,3092,Purpose-built AI is a trap for solo founders,2026-09-19T09:31:04.942846,0,
+rag-in-prod-what-tutorials-wont-tell-you,100,2854,RAG in prod: what tutorials won’t tell you,2026-06-08T17:45:22.815623,0,
 rag-is-not-enough-hybrid-search-reranking-in-2026,100,2314,RAG is not enough: hybrid search + reranking in 2026,2026-06-27T09:26:41.755095,0,
+rag-rots-if-you-dont-refresh-indexes,100,2945,RAG rots if you don’t refresh indexes,2026-08-04T14:24:04.500365,0,
 reconciling-mobile-money-edge-cases-banks-ignore,100,3427,Reconciling mobile money: edge cases banks ignore,2026-06-12T02:44:27.130558,0,
 red-teaming-agents-without-killing-velocity,100,2255,Red-teaming agents without killing velocity,2026-07-17T06:39:14.302913,0,
 remote-work-in-2026-which-tools-survived,100,2194,Remote work in 2026: which tools survived,2026-06-13T02:36:53.908082,0,
+replace-env-with-these-in-2026,100,3061,Replace .env with these in 2026,2026-06-18T22:18:17.148223,0,
+rogue-agent-api-calls-stop-the-bleeding,100,2105,Rogue Agent API Calls: Stop the Bleeding,2026-09-07T12:11:38.676430,0,
 run-apis-in-50-spots-what-breaks-first,100,2344,Run APIs in 50 spots: what breaks first,2026-06-19T21:55:04.362560,0,
+rust-rewrites-where-they-pay-off-where-they-dont,100,2341,"Rust rewrites: where they pay off, where they don't",2026-09-21T10:01:49.793555,0,
+sandboxed-computer-use-agents-with-gvisor,100,2898,Sandboxed computer-use agents with gVisor,2026-09-21T18:02:36.068591,0,
 save-12kmonth-cloud-egress-costs-in-2026,100,2606,Cutting cloud egress costs: architecture that works,2026-06-11T09:49:21.554478,0,
+sbom-attestation-that-gets-used,100,3399,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,0,
+scope-agent-permissions-per-task,100,3910,Scope agent permissions per task,2026-09-19T09:21:55.925855,0,
 self-healing-pipelines-argo-vs-crossplane-in-2026,100,2592,Self-healing pipelines: Argo vs Crossplane in 2026,2026-06-25T13:16:29.832770,0,
+self-service-ai-tooling-where-it-breaks-first,100,2986,Self-service AI tooling: where it breaks first,2026-09-16T09:53:25.584787,0,
+self-service-is-broken-without-ai-ops,100,2486,Self-service is broken without AI ops,2026-08-24T12:59:05.104603,0,
+settlement-vs-clearing-backend-engineers-guide,100,2929,Settlement vs clearing: backend engineer's guide,2026-09-28T04:25:56.078134,0,
+ship-1mb-pages-on-4g-starlink-africa-case-study,100,2617,Ship 1MB pages on 4G: Starlink Africa case study,2026-06-12T09:06:49.300435,0,
+ship-evals-before-your-agent-ships,100,3146,Ship evals before your agent ships,2026-08-31T04:32:07.615642,0,
 show-real-work-not-ai-clones,100,3679,"Show real work, not AI clones",2026-06-29T19:28:14.456697,0,
+spot-evictions-the-retry-logic-that-holds-up,100,2625,Spot evictions: the retry logic that holds up,2026-08-12T12:52:38.265562,0,
 starlink-in-production-what-changed-in-our-stack,100,2812,Designing APIs for High-Latency Satellite Links,2026-08-10T11:35:53.589097,0,
+stop-assuming-payment-apis-never-fail,100,2623,Stop assuming payment APIs never fail,2026-09-13T03:56:25.937261,0,
 stop-guessing-tech-stacks-validate-tools-in-2-hours,100,2488,Stop guessing tech stacks: validate tools in 2 hours,2026-07-12T13:28:27.249245,0,
+stop-putting-llm-keys-in-env,100,2840,Stop Putting LLM Keys in .env,2026-09-17T04:06:21.695546,0,
+supervisor-vs-swarm-vs-debate-vs-pipeline,100,3877,Supervisor vs swarm vs debate vs pipeline,2026-08-03T10:05:35.557297,0,
 survive-network-drops-agentic-workflows-that-keep-running,100,3065,Survive network drops: agentic workflows that keep running,2026-07-04T12:14:28.758125,0,
-tech-debt-when-half-your-stack-is-unfamiliar,100,3229,Tech debt: when half your stack is unfamiliar,2026-09-26T16:04:10.400734,0,
+tech-debt-when-half-your-stack-is-unfamiliar,100,2778,Tech debt: when half your stack is unfamiliar,2026-09-26T16:04:10.400734,0,
+temporal-changed-our-agent-retries-for-good,100,3139,Durable Execution for Multi-Step Agent Workflows,2026-09-03T16:05:45.341821,0,
 test-ai-code-without-testing-the-ai,100,3186,Test AI code without testing the AI,2026-07-01T18:05:47.823221,0,
-tool-calls-why-retries-stampede,100,2687,Tool calls: why retries stampede,2026-09-22T16:35:21.833379,0,
+tool-calling-patterns-patterns-that-survive-load-vs,100,2846,Tool calling patterns: patterns that survive load vs,2026-06-27T14:22:36.645569,0,
+tool-calls-why-retries-stampede,100,2499,Tool calls: why retries stampede,2026-09-22T16:35:21.833379,0,
+track-ai-agent-costs-in-fractal-workflows,100,2481,Track AI agent costs in fractal workflows,2026-07-27T03:28:57.383047,0,
 two-engineer-classes-the-ai-tool-norm-trap,100,2361,Two engineer classes: the AI tool norm trap,2026-09-07T08:58:13.844829,0,
 use-feature-flags-to-deploy-ai-models-safely,100,2946,Use feature flags to deploy AI models safely,2026-06-20T20:49:06.113698,0,
 ussd-fintech-in-2026-the-300m-user-channel-nobody,100,3325,USSD fintech in 2026: the 300M user channel nobody,2026-06-11T14:34:31.818724,0,
 vibe-coding-mvp-gem-prod-albatross,100,3059,"Vibe coding: MVP gem, prod albatross",2026-06-19T20:47:43.902749,0,
+wasm-servers-beat-containers-here,100,2421,WASM servers beat containers here,2026-08-05T13:49:01.207694,0,
+webhook-delivery-that-survives-outages,100,2698,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,0,
+webhooks-2026-retries-idempotency-and-the-9995,100,2259,"Webhook Delivery: Retries, Idempotency, and Durability",2026-06-19T21:43:40.060877,0,
 when-flags-become-experiments,100,3005,When flags become experiments,2026-06-28T21:10:57.957002,0,
-when-your-agent-goes-silent-degrade-gracefully,100,2342,When your agent goes silent: degrade gracefully,2026-09-21T11:42:38.476648,0,
+when-your-agent-goes-silent-degrade-gracefully,100,2504,When your agent goes silent: degrade gracefully,2026-09-21T11:42:38.476648,0,
+which-agent-stack-survives-3g,100,2532,Which agent stack survives 3G?,2026-09-16T11:26:58.836815,0,
+which-ai-wrappers-made-money-in-2026,100,2098,Which AI wrappers made money in 2026,2026-06-12T01:48:30.604884,0,
+who-signs-off-on-ai-code,100,2313,Who signs off on AI code?,2026-10-02T04:45:55.762278,0,
+why-do-production-agents-still-need-humans,100,2404,Why do production agents still need humans?,2026-09-09T08:21:05.275755,0,
+why-does-my-agent-version-break-clients,100,2501,Agent API versioning: why clients break on upgrade,2026-09-14T04:09:00.375326,0,
 why-does-my-model-drift-after-deploy,100,3134,Why ML Models Drift After Deployment,2026-09-11T07:51:02.506093,0,
+why-our-schema-survived-ai-scaling,100,2173,Designing a Schema That Survives Embedding Model Upgrades,2026-09-13T16:15:34.720467,0,
+why-progressive-web-apps-fail-on-2g-and-how-to-fix,100,2402,Why progressive web apps fail on 2G and how to fix…,2026-07-17T13:26:20.915553,0,
+why-scaling-agents-kills-plain-logs,100,2284,Why scaling agents kills plain logs,2026-09-11T03:43:37.520207,0,
+why-your-multi-agent-system-degraded-slowly,100,2869,Why your multi-agent system degraded slowly,2026-08-09T12:58:50.019727,0,
+why-your-routing-layer-will-collapse-at-scale,100,2499,Why your routing layer will collapse at scale,2026-09-04T03:38:05.904453,0,
+world-models-wont-replace-your-backend,100,2981,World models won't replace your backend,2026-09-24T03:50:12.463556,0,
+zero-trust-ai-skip-the-latency-tax,100,2878,Zero-trust AI: skip the latency tax,2026-09-15T16:35:21.581708,0,
