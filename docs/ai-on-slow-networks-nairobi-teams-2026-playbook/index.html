@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI on slow networks: Nairobi teams&#39; 2026 playbook - Kubai Kevin</title>
-        <meta name="description" content="AI on slow networks: Nairobi teams&amp;#x27; 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.">
+        <meta name="description" content="How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.">
         <meta name="keywords" content="Ai, NairobiTechStack, RedisCachingAi, CloudflareWorkersAi, VectorSearchCaching, CacheStampedeFix, AiFeatureLatency, EdgeAiCompute, Cloudcomputing, Redis, Vectordb, Africatech">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-26T01:29:12.285987">
-        <meta property="article:modified_time" content="2026-10-03T11:38:08.254935+00:00">
+        <meta property="article:modified_time" content="2026-10-04T12:20:50.642576+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI on slow networks: Nairobi teams&#39; 2026 playbook">
-        <meta property="og:description" content="AI on slow networks: Nairobi teams&amp;#x27; 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.">
+        <meta property="og:description" content="How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.">
         <meta property="og:url" content="https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI on slow networks: Nairobi teams&#39; 2026 playbook">
-        <meta name="twitter:description" content="AI on slow networks: Nairobi teams&amp;#x27; 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.">
+        <meta name="twitter:description" content="How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-on-slow-networks-nairobi-teams-2026-playbook.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,10 +61,10 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/#article",
       "headline": "AI on slow networks: Nairobi teams' 2026 playbook",
-      "description": "AI on slow networks: Nairobi teams' 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.",
+      "description": "How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.",
       "datePublished": "2026-08-26T01:29:12+00:00",
-      "dateModified": "2026-10-03T11:38:08+00:00",
-      "wordCount": 2669,
+      "dateModified": "2026-10-04T12:20:50+00:00",
+      "wordCount": 2516,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">AI on slow networks: Nairobi teams&#39; 2026 playbook</h1>
                 
-                <p class="post-lead">AI on slow networks: Nairobi teams&amp;#x27; 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.</p>
+                <p class="post-lead">How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
                 
                 
                 <div class="tags">
@@ -261,101 +261,104 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2669 words
+                        &nbsp;·&nbsp; 2516 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-03
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch.</p>
-<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>Teams in Nairobi routinely ship AI features that feel snappy to users even when they call APIs with 400–700 ms average latency—while global competitors relying on AWS Bedrock or Vertex AI hit 120–180 ms but still lose on perceived speed. The trick isn’t faster networks; it’s a three-layer stack: (1) pre-computed caches that serve 60–80 % of requests in under 50 ms, (2) client-side latency compensation that hides the rest, and (3) a fallback policy that only queries the cloud when the cache misses. This post shows how to build that stack using Redis 7.2 for caching, Vite 5 for instant UI updates, and Cloudflare Workers for edge-side cache warming—costing about $0.02 per 1 k requests versus $0.20 on a direct API call. The part that trips people up is the cache stampede: when a missing key triggers dozens of identical requests at once. That’s the failure mode this post actually covers.</p>
-<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most engineers start with a simple mental model: shorter latency equals better user experience. They measure their API end-to-end time with curl or Postman, see 400 ms, and immediately blame the network. The confusion compounds when they compare this to AWS Bedrock’s 150 ms average latency and conclude that Nairobi teams cannot compete on AI features at all. Two additional factors are routinely overlooked:</p>
+                <p>Users experience AI features as slow or fast based on a few measurable moments, not on the raw round-trip time of the model call. A feature that calls a model with 400–700 ms of average latency can still feel instant, and a feature that calls a model in 120–180 ms can still feel sluggish. The difference is usually architecture: what gets cached, where the request is orchestrated, and what the client renders while it waits.</p>
+<p>This article covers a three-layer approach — pre-computed caches, client-side latency compensation, and a fallback policy that only calls the cloud on a cache miss — and the failure mode that breaks it most often: the cache stampede.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>A typical low-latency AI stack has three layers. First, a cache that serves a large share of requests in tens of milliseconds. Second, client-side rendering that shows partial or progressive results so the user is not staring at a blank state. Third, a fallback policy that only reaches the model provider on a cache miss. The layer that trips teams up is the cache stampede: when a missing key triggers many identical requests at once, compute usage and latency spike together. The rest of this article is about building that stack and defending it.</p>
+<h2 id="why-shorter-latency-equals-better-ux-misleads-teams">Why "shorter latency equals better UX" misleads teams</h2>
+<p>The intuitive model — measure the API, see 400 ms, blame the network — leaves three factors out.</p>
 <ol>
-<li><strong>Perceived latency vs. actual latency</strong> — Users don’t wait for the full round trip; they wait for the first token and the final UI update. A 400 ms API can still feel instant if the client renders progressive results. 2. <strong>Cacheable vs. non-cacheable traffic</strong> — In many AI applications, 60–80 % of requests are identical or near-identical; caching turns those into 10–30 ms responses. 3. <strong>Edge topology</strong> — A request from a user in Mombasa to AWS in Ireland crosses multiple undersea cables and regional IXPs, adding 80–120 ms before the model even starts. A worker deployed on Cloudflare’s edge in Nairobi can cut that pre-processing delay to 5–10 ms.</li>
+<li><strong>Perceived latency vs. actual latency.</strong> Users wait for the first visible response and the final UI update, not for the full round trip. A 400 ms API can feel instant if the client renders progressive results.</li>
+<li><strong>Cacheable vs. non-cacheable traffic.</strong> In many AI applications a large fraction of requests are identical or near-identical. Caching turns those into single-digit-millisecond reads. The exact share depends on the product; measure it rather than assuming.</li>
+<li><strong>Edge topology.</strong> A request from one region to a model endpoint in another crosses undersea cables and regional IXPs, adding network time before the model even starts. An edge worker close to the user removes much of that pre-processing delay.</li>
 </ol>
-<p>Teams that focus only on raw latency miss these three dimensions, so they either over-provision expensive cloud APIs or give up on AI features entirely. The more interesting failure mode is when they cache everything indiscriminately and wake up to a 70 % cache-hit ratio on stale or incorrect results.</p>
-<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
-<p>Think of an AI feature as a three-stage pipeline:</p>
+<p>Teams that focus only on raw latency either over-provision expensive model capacity or abandon the feature. The more interesting failure mode is the opposite: caching indiscriminately and ending up with a high hit ratio on stale or incorrect results.</p>
+<h2 id="a-mental-model-three-stages-three-budgets">A mental model: three stages, three budgets</h2>
+<p>Think of an AI feature as a pipeline:</p>
 <ol>
-<li><strong>Input</strong> (user types a prompt or uploads a file). 2. <strong>Compute</strong> (tokenization, embedding, model inference). 3. <strong>Output</strong> (return tokens, generate UI, update state).</li>
+<li><strong>Input</strong> — the user types a prompt or uploads a file.</li>
+<li><strong>Compute</strong> — tokenization, embedding, model inference, retrieval.</li>
+<li><strong>Output</strong> — return tokens, generate UI, update state.</li>
 </ol>
 <p>Each stage has a latency budget you can shrink independently.</p>
 <ul>
-<li><strong>Input and Output</strong> are mostly UI and network; shrink them with edge deployment and client-side rendering. - <strong>Compute</strong> is where most teams focus, but it’s also the hardest to optimize without more GPUs or better models. - The <strong>hidden lever</strong> is the <em>gap</em> between compute calls: most AI features repeat the same or similar compute over and over. Cache the results of that compute, and the perceived latency collapses to the time it takes to read from cache plus a few milliseconds to validate freshness.</li>
+<li>Input and output are mostly UI and network. Shrink them with edge deployment and client-side rendering.</li>
+<li>Compute is where most teams focus, and it is the hardest to optimize without more GPUs or better models.</li>
+<li>The hidden lever is the <em>gap</em> between compute calls. Many AI features repeat the same or similar compute. Cache the result of that compute and perceived latency collapses to a cache read plus freshness validation.</li>
 </ul>
-<p>A useful analogy is a coffee shop. During peak hours, the shop pre-brews the most popular drinks and keeps them on the warmer; customers get their coffee in 20 seconds instead of 4 minutes. The barista (the model) still has to make fresh batches for rare orders, but 70 % of customers never wait for the barista at all. Nairobi teams are running the same playbook, just with Redis instead of a coffee warmer.</p>
-<h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s build a simple AI feature: an auto-complete endpoint that takes a user’s partial query, embeds it, searches a vector store, and returns the top 5 suggestions. We’ll measure latency in two scenarios: direct API call versus cached + edge.</p>
-<h3 id="scenario-a-direct-call-naive-approach">Scenario A: Direct call (naive approach)</h3>
+<p>A useful analogy is a coffee shop pre-brewing popular drinks during peak hours. Regulars get their order in seconds; the barista still makes fresh batches for rare orders. The cache is the warmer, not the barista.</p>
+<h2 id="a-worked-example-with-stated-assumptions">A worked example with stated assumptions</h2>
+<p>The numbers below are illustrative, chosen to make the arithmetic visible. Substitute your own measurements before making decisions.</p>
+<p><strong>Feature:</strong> an autocomplete endpoint that embeds a partial query, searches a vector store, and returns the top 5 suggestions.</p>
+<p><strong>Scenario A — direct call.</strong></p>
 <ul>
-<li>User in Nairobi types “How do I…”</li>
-<li>Client POSTs to <code>/autocomplete</code> hosted on AWS Lambda in <code>us-east-1</code></li>
-<li>Lambda calls AWS Bedrock <code>cohere.embed-english-v3</code> (150 ms average)</li>
-<li>Lambda calls Pinecone vector search (60 ms average)</li>
-<li>Lambda returns JSON (10 ms)</li>
-<li>Total round-trip: ~220 ms</li>
-<li>Cost: $0.00012 per request (Bedrock + Lambda GB-s)</li>
+<li>Client POSTs to a function in a distant region.</li>
+<li>Function calls a hosted embedding model: assume 150 ms.</li>
+<li>Function calls a vector search: assume 60 ms.</li>
+<li>Function returns JSON: assume 10 ms.</li>
+<li>Total round trip: 150 + 60 + 10 = <strong>220 ms</strong>.</li>
+<li>Cost: dominated by embedding plus function compute.</li>
 </ul>
-<h3 id="scenario-b-cached-edge-nairobi-playbook">Scenario B: Cached + edge (Nairobi playbook)</h3>
+<p><strong>Scenario B — cached plus edge.</strong></p>
 <ul>
-<li>User in Nairobi types “How do I…”</li>
-<li>Cloudflare Worker in <code>NBO</code> edge intercepts the request</li>
-<li>Worker checks Redis 7.2 cache in <code>af-south-1</code> (5 ms read)</li>
-<li>Cache hit (85 % of queries): Worker returns cached suggestions in 10 ms</li>
-<li>Cache miss (15 %): Worker calls Bedrock + Pinecone (same as Scenario A: 220 ms)</li>
-<li>Worker applies cache-warming: immediately fires an async request to pre-warm the cache for the next 10 similar queries</li>
-<li>Total round-trip for hit: ~15 ms</li>
-<li>Total round-trip for miss: ~220 ms + 10 ms (warming async)</li>
-<li>Cost for 1 k requests: $0.02 (Cloudflare Workers + Redis)</li>
+<li>An edge worker near the user intercepts the request.</li>
+<li>Worker checks the cache: assume 5 ms read.</li>
+<li>Cache hit (assume 85 % of queries): worker returns cached suggestions in roughly 10 ms.</li>
+<li>Cache miss (the remaining 15 %): worker runs the same 220 ms pipeline.</li>
+<li>Total round trip on hit: ~15 ms.</li>
+<li>Total round trip on miss: ~220 ms, plus whatever the warming step costs asynchronously.</li>
 </ul>
-<p>Key insight: Even though the <em>model</em> latency is unchanged, the <em>user</em> latency for 85 % of requests drops from 220 ms to 15 ms. The remaining 15 % still see high latency, but the UI can show a spinner or partial results while the cache warms.</p>
+<p>The model latency is unchanged. The <em>user</em> latency for the hit share drops by an order of magnitude. The miss share still waits, which is where client-side compensation matters.</p>
+<p>To replace these assumptions with real numbers, instrument four things: the cache read time, the cache hit ratio, the full miss-path time, and the client time-to-first-render. Log them per request and compare percentiles, not averages.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
-<p>If you’ve ever used a CDN to cache static assets, this is the same idea applied to AI compute. The only difference is that the cache key is not a URL but a normalized prompt hash and a vector-distance threshold. The cache value is the list of suggestions, not an image or HTML.</p>
-<p>If you’ve used Next.js ISR (Incremental Static Regeneration), you’ve warmed caches in the background. The Nairobi playbook is ISR for AI features.</p>
-<p>If you’ve used Redis for rate limiting or session storage, you already know how to shard, evict, and monitor Redis. The only new twist is the staleness budget: for some AI features, stale results are acceptable for up to 5 minutes, so TTLs can be longer than typical web caches.</p>
-<p>The hard part is the <em>thundering herd</em> problem: when a popular prompt misses the cache, dozens of users trigger the same compute at once. That’s the failure mode most teams hit first.</p>
+<p>If you have used a CDN to cache static assets, this is the same idea applied to AI compute. The difference is that the cache key is a normalized prompt hash plus a similarity threshold, and the value is a list of suggestions rather than an image or HTML.</p>
+<p>If you have used incremental static regeneration, you have already warmed caches in the background. This is the same pattern for AI features.</p>
+<p>If you have used Redis for rate limiting or sessions, you already know how to shard, evict, and monitor it. The new twist is the staleness budget: for some AI features, results that are a few minutes old are acceptable, so TTLs can be longer than typical web caches.</p>
+<p>The hard part is the thundering herd: when a popular prompt misses the cache, many users trigger the same compute at once. That is the failure mode most teams hit first.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
-<h3 id="misconception-1-caching-ai-results-will-give-wrong-answers">Misconception 1: “Caching AI results will give wrong answers.”</h3>
-<p>Reality: For many features—auto-complete, related articles, Q&amp;A suggestions—slightly stale results are acceptable. A cache TTL of 300 seconds (5 minutes) is common and rarely causes user-visible drift. The trick is to invalidate aggressively when the underlying data changes (e.g., new blog posts, updated docs).</p>
-<h3 id="misconception-2-the-cache-stampede-is-rare">Misconception 2: “The cache stampede is rare.”</h3>
-<p>Reality: In a product with 10 k daily active users, a single trending prompt can trigger 200–500 concurrent cache misses. Without a stampede guard, you burn 200x the normal compute and latency spikes to 2–3 seconds. A common trap is to use a naive lock per key: if 500 requests try to lock the same key, they serialize and all wait on the first one.</p>
-<h3 id="misconception-3-edge-workers-are-only-for-static-files">Misconception 3: “Edge workers are only for static files.”</h3>
-<p>Reality: Cloudflare Workers, Vercel Edge Functions, and Fly.io all allow you to run full AI pipelines at the edge. A Worker can call Bedrock in <code>us-east-1</code>, but the round-trip from Nairobi to <code>us-east-1</code> is 120 ms just for the handshake. Workers in <code>NBO</code> cut that to 5 ms, so the compute latency dominates instead of the network.</p>
-<h3 id="misconception-4-redis-is-too-slow-for-ai">Misconception 4: “Redis is too slow for AI.”</h3>
-<p>Reality: Redis 7.2 on <code>af-south-1</code> (Cape Town) averages 1.2 ms for GET and 2.1 ms for SET under 95th-percentile load. That’s an order of magnitude faster than the model inference itself. The bottleneck is usually the client or the network, not Redis.</p>
-<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
-<h3 id="multi-tier-caching-with-probabilistic-early-eviction">Multi-tier caching with probabilistic early eviction</h3>
-<p>Add a second tier: an in-memory LRU cache inside the Worker itself (using <code>cache-api</code> or <code>Map</code> with size limits). If Redis misses, check the local cache. If it’s there, return it in 0.5 ms. This shaves another 1–2 ms off the hit path and absorbs stampede spikes without hitting Redis at all.</p>
-<p>Code sketch (Cloudflare Worker, JavaScript):</p>
-<pre><code class="language-javascript">// wrangler.toml: compatibility_date = &quot;2026-03-01&quot;
+<h3 id="caching-ai-results-will-give-wrong-answers">"Caching AI results will give wrong answers."</h3>
+<p>For features like autocomplete, related articles, and Q&amp;A suggestions, slightly stale results are usually acceptable. The work is in choosing a TTL and invalidating aggressively when the underlying data changes — new documents, updated catalogs, edited content.</p>
+<h3 id="the-cache-stampede-is-rare">"The cache stampede is rare."</h3>
+<p>In any product with meaningful traffic, a single trending prompt can trigger many concurrent cache misses. Without a guard, you pay for the same compute many times over and latency spikes. A naive per-key lock is also a trap: if hundreds of requests contend for the same lock, they serialize and all wait on the first one.</p>
+<h3 id="edge-workers-are-only-for-static-files">"Edge workers are only for static files."</h3>
+<p>Edge runtimes can orchestrate full AI pipelines. A worker near the user can call a model endpoint in another region; the network handshake still costs time, but the pre-processing delay shrinks so compute latency dominates instead of network latency.</p>
+<h3 id="redis-is-too-slow-for-ai">"Redis is too slow for AI."</h3>
+<p>A cache read is typically an order of magnitude faster than model inference. The bottleneck is usually the client or the network path, not the cache itself. Measure your own GET and SET percentiles before assuming otherwise.</p>
+<h2 id="the-advanced-version">The advanced version</h2>
+<h3 id="multi-tier-caching">Multi-tier caching</h3>
+<p>Add a second tier: an in-memory LRU cache inside the worker itself. If the remote cache misses, check the local cache. If it is there, return it immediately. This shaves time off the hit path and absorbs stampede spikes without reaching the remote cache at all.</p>
+<pre><code class="language-javascript">// wrangler.toml: compatibility_date = &quot;2024-01-01&quot;
 // kv_namespaces = [
 //   { binding = &quot;AI_CACHE&quot;, id = &quot;...&quot;, preview_id = &quot;...&quot; }
 // ]
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const key = url.pathname + &quot;?&quot; + url.searchParams.toString();
     const normalized = key.toLowerCase().trim();
 
-    // Tier 1: in-worker memory cache (500 entries, TTL 30s)
-    const local = caches.default.match(normalized);
+    // Tier 1: in-worker cache (Cache API, keyed by full URL)
+    const cacheKey = new Request(`https://cache.internal/${encodeURIComponent(normalized)}`);
+    const local = await caches.default.match(cacheKey);
     if (local) return local;
 
-    // Tier 2: Redis
-    const redis = env.AI_REDIS;
-    const cached = await redis.get(normalized);
+    // Tier 2: remote cache
+    const cached = await env.AI_CACHE.get(normalized);
     if (cached) {
-      // Warm the local cache async
-      event.waitUntil(
-        caches.default.put(normalized, new Response(cached, { headers: { 'X-Cache': 'HIT' } }))
-      );
-      return new Response(cached, { headers: { 'X-Cache': 'HIT' } });
+      const response = new Response(cached, { headers: { 'X-Cache': 'HIT' } });
+      // Warm the local tier without blocking the response
+      ctx.waitUntil(caches.default.put(cacheKey, response.clone()));
+      return response;
     }
 
     // Tier 3: compute + store
@@ -363,156 +366,176 @@ export default {
     const result = await computeResult(normalized);
     const elapsed = Date.now() - start;
 
-    // Store in both tiers
     await Promise.all([
       env.AI_CACHE.put(normalized, result, { expirationTtl: 300 }), // 5 min
-      caches.default.put(normalized, new Response(result, { headers: { 'X-Cache': 'MISS' } }))
+      caches.default.put(cacheKey, new Response(result, { headers: { 'X-Cache': 'MISS' } }))
     ]);
 
-    return new Response(result, { headers: { 'X-Cache': 'MISS', 'X-Latency': elapsed } });
+    return new Response(result, {
+      headers: { 'X-Cache': 'MISS', 'X-Latency': String(elapsed) }
+    });
   }
 };
 </code></pre>
-<h3 id="adaptive-cache-warming-with-probabilistic-pre-fetch">Adaptive cache warming with probabilistic pre-fetch</h3>
-<p>Instead of warming the cache for every miss, pre-fetch only for queries that are above a popularity threshold. Use a bloom filter to avoid duplicate work. A common failure mode is warming 100 variations of the same prompt, which wastes compute and bandwidth.</p>
-<p>Pseudocode:</p>
-<pre><code class="language-python">import mmh3
-from redis import Redis
+<p>Note the two fixes over a naive sketch: the Cache API is keyed by a synthetic <code>Request</code> rather than a bare string, and the background write uses <code>ctx.waitUntil</code> instead of an undefined <code>event</code>.</p>
+<h3 id="stampede-guard-with-a-single-flight-lock">Stampede guard with a single-flight lock</h3>
+<p>The goal is to let exactly one request compute a missing key while the others wait briefly and then read the result.</p>
+<pre><code class="language-python">import asyncio
+import random
+import redis.asyncio as redis
+
+r = redis.Redis(host=&quot;cache.internal&quot;, port=6379, db=0)
+
+LOCK_TTL_MS = 5000
+MAX_WAIT_MS = 2000
+
+async def get_or_compute(key: str):
+    cached = await r.get(key)
+    if cached is not None:
+        return cached
+
+    lock_key = f&quot;lock:{key}&quot;
+    got_lock = await r.set(lock_key, &quot;1&quot;, nx=True, px=LOCK_TTL_MS)
+
+    if got_lock:
+        try:
+            result = await compute_result(key)
+            await r.set(key, result, ex=300)
+            return result
+        finally:
+            await r.delete(lock_key)
+
+    # Someone else is computing. Wait with jittered backoff, then re-check.
+    waited = 0
+    while waited &lt; MAX_WAIT_MS:
+        delay = random.uniform(0.01, 0.1)
+        await asyncio.sleep(delay)
+        waited += delay * 1000
+        cached = await r.get(key)
+        if cached is not None:
+            return cached
+
+    # Fallback: compute ourselves rather than fail the request.
+    return await compute_result(key)
+</code></pre>
+<p>Two details matter. The lock TTL must exceed the expected compute time, or a second request will start computing while the first is still running. And the waiter must have a bounded wait with a fallback, or a crashed lock owner leaves requests hanging.</p>
+<h3 id="adaptive-cache-warming">Adaptive cache warming</h3>
+<p>Warming every miss wastes compute. Warm only queries that cross a popularity threshold, and avoid warming near-duplicates of the same prompt.</p>
+<pre><code class="language-python">import asyncio
 from collections import defaultdict
 
-redis = Redis(host=&quot;redis-af-south-1&quot;, port=6379, db=0)
-bloom = defaultdict(int)  # in production use RedisBloom
-
-POPULARITY_THRESHOLD = 10  # queries seen at least 10 times in last hour
+POPULARITY_THRESHOLD = 10  # queries seen at least this many times in the window
+counts = defaultdict(int)
 
 async def handle_query(query: str):
     key = normalize(query)
-    if redis.exists(key):
-        return redis.get(key)
 
-    # Check popularity
-    fp = mmh3.hash(key) % (2**32)
-    if bloom[fp] &gt;= POPULARITY_THRESHOLD:
-        # Fire-and-forget warm
+    cached = await r.get(key)
+    if cached is not None:
+        return cached
+
+    counts[key] += 1
+    if counts[key] &gt;= POPULARITY_THRESHOLD:
+        # Fire-and-forget warm; do not block the response.
         asyncio.create_task(warm_cache(key))
 
-    # Compute
-    result = await compute_result(key)
-    redis.setex(key, 300, result)
-    return result
+    return await get_or_compute(key)
 </code></pre>
-<h3 id="cost-aware-eviction-with-size-tiered-lru">Cost-aware eviction with size-tiered LRU</h3>
-<p>Redis 7.2 introduced <code>eviction-policy allkeys-lfu</code>, which is better than LRU for AI caches because it evicts the least frequently used keys instead of the least recently used. A common trap is setting <code>maxmemory-policy allkeys-lru</code> and watching Redis evict popular keys because they were inserted long ago.</p>
-<p>In <code>redis.conf</code>:</p>
+<p>In production, replace the in-process counter with a shared structure so every instance sees the same popularity signal, and deduplicate similar prompts before warming.</p>
+<h3 id="eviction-policy">Eviction policy</h3>
+<p>For an AI cache, least-frequently-used eviction often beats least-recently-used, because a popular key inserted long ago should not be evicted ahead of a key that was touched once recently. In <code>redis.conf</code>:</p>
 <pre><code>maxmemory 4gb
 maxmemory-policy allkeys-lfu
 </code></pre>
+<p>Confirm the policy your deployment actually supports before relying on it; the available policies vary by version and distribution.</p>
 <h3 id="observability-the-three-numbers-that-matter">Observability: the three numbers that matter</h3>
 <ol>
-<li><strong>Cache hit ratio</strong> — Target &gt;= 80 % for most AI features. Below 60 % means the cache keys are too specific or the TTLs are wrong. 2. <strong>P95 latency of cache misses</strong> — Should be &lt; 250 ms. If it’s higher, the compute pipeline is the bottleneck, not the cache. 3. <strong>Stampede events per day</strong> — If &gt; 5 in a day, enable probabilistic early eviction or a lock per key with a jittered backoff.</li>
+<li><strong>Cache hit ratio.</strong> Below roughly 60 % usually means the cache keys are too specific or the TTLs are wrong. The right target depends on your feature; measure it before setting one.</li>
+<li><strong>P95 latency of cache misses.</strong> If this is much higher than your compute budget, the pipeline is the bottleneck, not the cache.</li>
+<li><strong>Stampede events per day.</strong> Count how often many requests compute the same key concurrently. If it happens regularly, add a single-flight lock or probabilistic early refresh.</li>
 </ol>
-<h2 id="quick-reference">Quick reference</h2>
+<h2 id="comparison-of-the-layers">Comparison of the layers</h2>
 <table>
 <thead>
 <tr>
 <th>Layer</th>
-<th>Tool</th>
-<th>Version</th>
-<th>Typical latency</th>
-<th>Cost per 1 k req</th>
+<th>Category</th>
+<th>Typical role</th>
 <th>When to use</th>
 <th>Pitfall</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Edge compute</td>
-<td>Cloudflare Worker</td>
-<td>2026-03-01</td>
-<td>5–10 ms</td>
-<td>$0.0005</td>
+<td>Edge worker</td>
+<td>Edge runtime</td>
+<td>Orchestration, request routing</td>
 <td>All AI features</td>
-<td>Workers CPU time is capped at 10 ms per request; long prompts will timeout</td>
+<td>CPU time limits; long prompts can time out</td>
 </tr>
 <tr>
-<td>Cache storage</td>
-<td>Redis</td>
-<td>7.2</td>
-<td>1–2 ms GET</td>
-<td>$0.015</td>
-<td>60–80 % of requests</td>
-<td>Stampede on cache miss; use probabilistic warming</td>
+<td>Remote cache</td>
+<td>Key-value store</td>
+<td>Shared result storage</td>
+<td>The cacheable share of requests</td>
+<td>Stampede on miss; needs a guard</td>
 </tr>
 <tr>
 <td>In-worker cache</td>
-<td>Cache API / Map</td>
-<td>ES2022</td>
-<td>0.5–1 ms</td>
-<td>$0</td>
-<td>High-frequency, low TTL</td>
+<td>In-memory LRU</td>
+<td>Absorb hot keys</td>
+<td>High-frequency, short TTL</td>
 <td>Memory limited; evict aggressively</td>
 </tr>
 <tr>
 <td>Vector search</td>
-<td>Pinecone</td>
-<td>2026-02</td>
-<td>60–80 ms</td>
-<td>$0.05</td>
-<td>Hybrid search features</td>
-<td>Vector index freshness; update on every doc change</td>
+<td>Retrieval service</td>
+<td>Similarity lookup</td>
+<td>Hybrid or semantic features</td>
+<td>Index freshness; update on document change</td>
 </tr>
 <tr>
 <td>Model API</td>
-<td>AWS Bedrock</td>
-<td>Cohere v3</td>
-<td>150 ms</td>
-<td>$0.02</td>
+<td>Hosted inference</td>
+<td>Embeddings, generation</td>
 <td>Rare or high-value prompts</td>
-<td>Latency spikes during cold starts; use provisioned concurrency</td>
+<td>Cold-start latency spikes</td>
 </tr>
 <tr>
-<td>Warm-up / pre-fetch</td>
-<td>Custom service</td>
-<td>Python 3.11</td>
-<td>200 ms async</td>
-<td>$0.03</td>
-<td>Popular queries</td>
-<td>Don’t warm identical prompts; use bloom filters</td>
+<td>Warmer</td>
+<td>Background job</td>
+<td>Pre-fetch popular keys</td>
+<td>Queries above a popularity threshold</td>
+<td>Duplicate warming; deduplicate first</td>
 </tr>
 </tbody>
 </table>
-<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>how to calculate cache key for ai autocomplete</strong></p>
-<p>Normalize the prompt: lowercase, trim whitespace, remove punctuation, and optionally truncate to 128 bytes. Use that string as the key. For semantic search, add a vector-distance threshold (e.g., <code>cosine_similarity &gt;= 0.85</code>) as part of the key to avoid returning results that are only vaguely similar. A common failure mode is using the raw user input as the key; this causes cache misses on trivial casing differences or extra spaces.</p>
-<p><strong>how to avoid cache stampede in redis</strong></p>
-<p>Use a lock per key with a jittered backoff. In pseudocode: try to set a key with NX and a short TTL (e.g., 5 seconds). If it succeeds, you’re the lock owner and compute the result. If it fails, sleep for a random jittered interval (10–100 ms) and retry. Do not use a global lock; it serializes all misses and kills throughput. The stampede usually shows up as a P99 latency spike to 2–3 seconds for a single popular query.</p>
-<p><strong>what ttl to pick for ai feature cache</strong></p>
-<p>Start with 300 seconds (5 minutes) for most features. If the underlying data is static (e.g., product catalog), extend to 3600 seconds. For news or social feeds, drop to 60 seconds. A common mistake is setting too long a TTL and surfacing outdated suggestions after a major product update. Monitor cache hit ratio: if it dips below 60 %, shorten the TTL.</p>
-<p><strong>do cloudflare workers support python for ai features</strong></p>
-<p>Not natively. Workers support JavaScript/TypeScript and WASM modules. To run Python models at the edge, compile to WASM (e.g., using Pyodide or PyScript) and deploy the WASM module. Real-world latency for a 7B parameter model in WASM on Workers is ~800 ms, which is slower than calling Bedrock, so the playbook still relies on caching and edge warm-up. The edge is best for orchestration, not heavy compute.</p>
-<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
-<ul>
-<li>Redis 7.2 release notes: <a href="https://redis.io/docs/release-notes/7.2">redis.io/docs/release-notes/7.2</a> — pay special attention to LFU eviction and active defragmentation. - Cloudflare Workers AI documentation: <a href="https://developers.cloudflare.com/workers-ai">developers.cloudflare.com/workers-ai</a> — covers WASM, vector search, and caching patterns. - Pinecone’s 2026 vector search benchmarks: <a href="https://www.pinecone.io/blog/2026-vector-benchmarks">pinecone.io/blog/2026-vector-benchmarks</a> — shows how to tune index freshness vs. latency. - Cohere embeddings v3 latency metrics: <a href="https://docs.cohere.com/docs/embeddings-v3">cohere.com/docs/embeddings/v3</a> — use these to size your compute budget.</li>
-</ul>
-<h2 id="the-next-step-you-can-do-in-the-next-30-minutes">The next step you can do in the next 30 minutes</h2>
-<p>Open your AI feature’s slowest endpoint in a browser’s DevTools Network tab. Find the first request that calls an LLM or vector search. Copy the URL and query parameters into a Redis key template:</p>
-<pre><code class="language-bash"># Example: normalize a prompt into a Redis key
-prompt=&quot;How do I deploy Redis on Fly.io?&quot;
-norm=$(echo &quot;$prompt&quot; | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 ]//g' | tr -s ' ')
-key=&quot;ai:autocomplete:$norm&quot;
-echo $key
-# Output: ai:autocomplete:how do i deploy redis on flyio
-</code></pre>
-<p>Then check your Redis instance for that key:</p>
-<pre><code class="language-bash">redis-cli --latency-history -h redis-af-south-1 -p 6379
+<h2 id="faq">FAQ</h2>
+<p><strong>How should I build the cache key for AI autocomplete?</strong></p>
+<p>Normalize the prompt: lowercase, trim whitespace, strip punctuation, and optionally truncate. Use that normalized string as the key. For semantic search, include a similarity threshold in the key so you do not return results that are only vaguely similar. A common failure mode is using raw user input as the key, which misses on trivial casing or spacing differences.</p>
+<p><strong>How do I avoid a cache stampede?</strong></p>
+<p>Use a single-flight lock per key with a bounded, jittered wait and a fallback. A short-TTL <code>SET NX</code> works well: the winner computes, the losers wait briefly and re-read. Do not use a global lock; it serializes all misses and kills throughput.</p>
+<p><strong>What TTL should I pick?</strong></p>
+<p>Start with 300 seconds for most features. For static data such as a product catalog, extend it. For fast-moving data such as news or social feeds, shorten it. The mistake to avoid is a long TTL that surfaces outdated results after a major content update. Watch the hit ratio and the staleness complaints together.</p>
+<p><strong>Can I run Python at the edge?</strong></p>
+<p>Not natively in most edge runtimes; JavaScript and WebAssembly are the usual targets. Python can be compiled to WebAssembly, but a large model running that way is typically slower than calling a hosted endpoint. The edge is best used for orchestration, caching, and warming, not heavy inference.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick your slowest AI endpoint and measure the cacheable share of its traffic. In your server logs or analytics, group requests by normalized prompt and count how many distinct prompts account for most of the volume. If a small set of prompts dominates, that is your cache key space and your first win.</p>
+<p>Then check the cache read path directly:</p>
+<pre><code class="language-bash">redis-cli --latency-history -h cache.internal -p 6379
 redis-cli GET &quot;ai:autocomplete:how do i deploy redis on flyio&quot;
 </code></pre>
-<p>If the key exists and the value is recent, your cache is already working. If not, set a TTL of 300 and watch the hit ratio climb over the next hour.</p>
+<p>If the key exists and is recent, the cache is already doing its job; the next step is a stampede guard. If it does not exist, add a 300-second TTL on the hot keys and watch the hit ratio over the next hour.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/">Latency trade-offs: Nairobi teams beat global AI providers</a></li>
-<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
-<li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
+<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://webassembly.org/">WebAssembly</a></li>
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>

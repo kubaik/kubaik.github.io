@@ -1,5 +1,90 @@
 {
-  "changed": [],
+  "changed": [
+    {
+      "slug": "agentic-workflows-surviving-network-partitions",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "ai-best-practices-fail-on-slow-networks",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "build-dev-platform-for-2kmonth",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "hybrid-cloud-routing-cost-speed-balance-for-sea",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "internal-developer-platform-adoption-traps",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "json-modes-hidden-costs-revealed",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "mobile-money-agents-when-m-pesa-api-fails",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "negotiate-salaries-with-ai-skills-in-2026",
+      "sentences_removed": 0,
+      "sections_added": 1,
+      "footer_migrated": false
+    },
+    {
+      "slug": "self-service-ai-tooling-where-it-breaks-first",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "stop-trusting-agents-for-core-logic",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "tech-debt-when-half-your-stack-is-unfamiliar",
+      "sentences_removed": 0,
+      "sections_added": 1,
+      "footer_migrated": false
+    },
+    {
+      "slug": "tool-calls-why-retries-stampede",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    },
+    {
+      "slug": "when-your-agent-goes-silent-degrade-gracefully",
+      "sentences_removed": 0,
+      "sections_added": 2,
+      "footer_migrated": false
+    }
+  ],
   "needs_regeneration": [
     "observability-2026-ditch-the-three-pillars"
   ],

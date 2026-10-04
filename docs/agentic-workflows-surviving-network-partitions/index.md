@@ -1,22 +1,22 @@
 # Agentic workflows: surviving network partitions
 
-Most agentic workflows incidents trace back to a default nobody remembers choosing. Here's what actually worked, and why. The workaround gets copy-pasted forward long after the original reason is forgotten.
+The incidents that hurt most in agentic systems are rarely caused by a clever bug. They come from a default nobody remembers choosing: that the network is reliable, that a tool call either succeeds or fails cleanly, and that retrying is therefore safe. The workaround gets copy-pasted forward long after the original reason is forgotten.
 
-## The one-paragraph version (read this first)
+## The one-paragraph version
 
-Network partitions are not a rare edge case in Africa — they are the default operating condition for a large share of mobile and fixed-line traffic. An agentic workflow that assumes a stable, low-latency link to an LLM API will stall, duplicate side effects, or corrupt state the moment the link drops for 30 seconds. The patterns that survive are the ones that treat every tool call as a message that may need to be replayed, every LLM response as a candidate that may need to be re-validated, and every side effect as something that must be idempotent. This post walks through the mental model, a concrete worked example, the misconceptions that cause most of the damage, and the advanced patterns that only become necessary once the basics are solid. The part that trips people up is not the retry logic itself — it is the interaction between retries, LLM non-determinism, and non-idempotent tools, and that is what this post actually covers.
+Network partitions are not a rare edge case in many parts of the world — they are the default operating condition for a large share of mobile and fixed-line traffic. An agentic workflow that assumes a stable, low-latency link to an LLM API will stall, duplicate side effects, or corrupt state the moment the link drops for 30 seconds. The patterns that survive treat every tool call as a message that may need to be replayed, every LLM response as a candidate that may need to be re-validated, and every side effect as something that must be idempotent. The part that trips people up is not the retry logic itself — it is the interaction between retries, LLM non-determinism, and non-idempotent tools.
 
 ## Why this concept confuses people
 
-Most agentic frameworks are built and tested in environments where a 200ms round trip to `api.openai.com` or `api.anthropic.com` is considered normal. In that world, a failed tool call is an exception. You catch it, you retry, you move on. The framework's default retry decorator handles it. The mental model is "network is reliable, errors are rare."
+Most agentic frameworks are built and tested in environments where a 200ms round trip to a hosted LLM endpoint is considered normal. In that world, a failed tool call is an exception. You catch it, you retry, you move on. The framework's default retry decorator handles it. The mental model is "network is reliable, errors are rare."
 
-In much of Africa, the network is not reliable in that sense. A developer in Lagos on a typical mobile connection may see round-trip times to a US-East LLM endpoint that swing between 180ms and 4,000ms, with packet loss that causes TCP retransmits and occasional connection resets. A developer in Nairobi on a fiber link may have excellent latency to Europe but a saturated uplink during peak hours that causes 5–15% packet loss for minutes at a time. A field team in a rural area may be on a 3G link that drops entirely for 30–90 seconds when a tower hands off.
+In much of Africa, the network is not reliable in that sense. A developer in Lagos on a typical mobile connection may see round-trip times to a US-East LLM endpoint that swing between 180ms and 4,000ms, with packet loss that causes TCP retransmits and occasional connection resets. A developer in Nairobi on a fiber link may have excellent latency to Europe but a saturated uplink during peak hours that causes sustained packet loss for minutes at a time. A field team in a rural area may be on a 3G link that drops entirely for 30–90 seconds when a tower hands off.
 
 None of this is exotic. It is the normal shape of the network for a large fraction of the world's developers. But it breaks assumptions that agentic frameworks bake in silently:
 
 - **Assumption 1: A tool call either succeeds or fails cleanly.** In reality, a tool call can time out on the client while succeeding on the server. The agent sees a failure; the side effect happened.
 - **Assumption 2: The LLM response is deterministic enough to re-request.** It is not. Re-asking the same prompt can produce a different tool call, a different argument, or a different plan.
-- **Assumption 3: The agent's local state is the source of truth.** If the agent is running on a device that loses connectivity, the local state and the server state diverge, and there is no automatic reconciliation.
+- **Assumption 3: The agent's local state is the source of truth.** If the agent runs on a device that loses connectivity, the local state and the server state diverge, and there is no automatic reconciliation.
 
 A common failure mode here is an agent that calls a payment API, times out, retries, and charges the customer twice. The agent's logs show two failures and one success. The customer's bank shows two charges. The developer sees the logs and concludes the retry logic is broken. The retry logic is fine. The tool is not idempotent, and the agent had no way to know whether the first call actually landed.
 
@@ -26,7 +26,7 @@ This is the confusion: people treat "network partition" as a synonym for "slow n
 
 Think of an agentic workflow like a postal system, not like a phone call. A phone call is a live session: if the line drops, both parties know immediately and the conversation is over. A postal system is a message-passing system: you hand a letter to a courier, and you have no idea whether it arrived until you get a reply. If you send the same letter twice because you did not get a reply, the recipient gets two letters unless the letter itself carries a unique ID that lets them deduplicate.
 
-That is the core shift. An agentic workflow over a flaky link is a distributed system with at-most-once or at-least-once delivery semantics, and you have to choose which one you are building. You cannot get exactly-once delivery for free. You get it by making the receiver idempotent and giving every message a stable identity.
+That is the core shift. An agentic workflow over a flaky link is a distributed system with at-most-once or at-least-once delivery semantics, and you have to choose which one you are building. You cannot get exactly-once delivery for free. You get exactly-once *effect* by making the receiver idempotent and giving every message a stable identity.
 
 The practical consequences:
 
@@ -56,7 +56,7 @@ def enqueue_action(conn, record: dict, tool: str, args: dict) -> str:
     conn.execute(
         "INSERT OR IGNORE INTO outbox (action_id, tool, args, state, attempts) "
         "VALUES (?, ?, ?, 'pending', 0)",
-        (action_id, tool, json.dumps(args), ),
+        (action_id, tool, json.dumps(args)),
     )
     conn.commit()
     return action_id
@@ -64,7 +64,7 @@ def enqueue_action(conn, record: dict, tool: str, args: dict) -> str:
 
 The `INSERT OR IGNORE` is doing real work: if the same action is enqueued twice, the second insert is a no-op. That is the first layer of deduplication, and it happens before any network call.
 
-**Part 2: Idempotent submission with a server-side key.** The submission API accepts an `Idempotency-Key` header. The server stores the key alongside the result for 24 hours. A retry with the same key returns the original result instead of creating a new record.
+**Part 2: Idempotent submission with a server-side key.** The submission API accepts an `Idempotency-Key` header. The server stores the key alongside the result for a retention window (24 hours is a common choice; the right value depends on how long a client can plausibly be partitioned). A retry with the same key returns the original result instead of creating a new record.
 
 ```javascript
 async function submitRecord(record, actionId, baseUrl, token) {
@@ -92,17 +92,23 @@ The `409` branch matters. Some APIs return the original result with `200`; other
 
 **Part 3: Reconciliation on reconnect.** When connectivity returns, the agent does not just flush the outbox. It first calls a `GET /records?since=<last_sync>` endpoint to pull the server's view, then reconciles. If a record exists on the server with the same `action_id`, the local outbox row is marked `done` without re-submitting. This handles the case where the original submission succeeded but the response was lost.
 
-The reconciliation pass is the part people skip. It is also the part that saves the most duplicate records. In a typical field deployment, a meaningful fraction of "failed" submissions actually succeeded on the server; without reconciliation, those get re-submitted and duplicated.
+The reconciliation pass is the part people skip. It is also the part that saves the most duplicate records, because a meaningful fraction of "failed" submissions in a lossy environment actually succeeded on the server. Without reconciliation, those get re-submitted and duplicated.
+
+### Measuring whether it worked
+
+Do not guess at the duplicate rate. Instrument it. On the client, count three things per tool: attempts, distinct `action_id`s, and outbox rows that transitioned from `in_flight` to `done` via reconciliation rather than via a direct success response. On the server, count requests received, distinct `Idempotency-Key` values seen, and requests that hit the duplicate branch. A working implementation shows server *requests* exceeding server *records created*, with the difference accounted for by the duplicate branch.
+
+To reproduce the failure mode deliberately, run the agent behind a proxy that drops responses rather than requests — for example a local proxy configured to forward the request upstream and then close the client connection without returning the response. The client sees a timeout; the server has already committed. If the design is correct, the retry produces no second record. If it is not, the duplicate appears immediately and you have a fast, deterministic test instead of a field report.
 
 ## How this connects to things you already know
 
-If you have worked with message queues, you already know most of this. RabbitMQ and SQS both have at-least-once delivery, and both push the deduplication problem to the consumer. The outbox pattern is standard in event-driven systems. The idempotency-key pattern is what Stripe has used for years, and what most payment APIs now require.
+If you have worked with message queues, you already know most of this. Common queue products offer at-least-once delivery and push the deduplication problem to the consumer. The outbox pattern is standard in event-driven systems. The idempotency-key pattern is what payment APIs have used for years, and what most of them now require.
 
 What is different in agentic workflows is the non-determinism of the "message producer." In a normal event-driven system, the producer emits a well-defined event. In an agentic system, the producer is an LLM that may emit a semantically equivalent but byte-different tool call on retry. That means you cannot rely on byte-identical deduplication keys. You need to canonicalize the tool call's arguments before hashing — sort keys, normalize whitespace, drop fields that do not affect the outcome (like a `timestamp` the model hallucinated).
 
 The other difference is that the agent may not know the full set of side effects a tool call will have. A tool like `send_email` has one obvious effect. A tool like `run_sql` may have many. The safe default is to treat every tool as potentially non-idempotent and require an explicit idempotency key, rather than assuming the tool is safe to retry.
 
-If you have worked with mobile sync (CouchDB, PouchDB, or any of the local-first frameworks), the reconciliation pattern is familiar. The agent's local outbox is a local replica; the server is the authoritative replica; sync is a reconciliation between them. The agentic twist is that the "document" being synced is a tool call, not a user edit.
+If you have worked with mobile sync or local-first frameworks, the reconciliation pattern is familiar. The agent's local outbox is a local replica; the server is the authoritative replica; sync is a reconciliation between them. The agentic twist is that the "document" being synced is a tool call, not a user edit.
 
 ## Common misconceptions, corrected
 
@@ -120,7 +126,7 @@ If you have worked with mobile sync (CouchDB, PouchDB, or any of the local-first
 
 Once the outbox, idempotency keys, and reconciliation are in place, the next problems are subtler.
 
-**Semantic deduplication.** Two tool calls may be semantically equivalent without being byte-identical. An LLM might call `create_ticket(title="Login broken", priority="high")` on the first attempt and `create_ticket(priority="high", title="Login broken")` on the retry. Canonicalize arguments (sort keys, normalize case, strip trailing whitespace) before hashing. For tools with free-text arguments, consider a semantic hash: embed the argument, and if the cosine similarity to a recent call exceeds a threshold (0.95 is a common starting point), treat it as a duplicate.
+**Semantic deduplication.** Two tool calls may be semantically equivalent without being byte-identical. An LLM might call `create_ticket(title="Login broken", priority="high")` on the first attempt and `create_ticket(priority="high", title="Login broken")` on the retry. Canonicalize arguments (sort keys, normalize case, strip trailing whitespace) before hashing. For tools with free-text arguments, consider a semantic hash: embed the argument, and if the cosine similarity to a recent call exceeds a threshold (0.95 is a common starting point), treat it as a duplicate. Note the trade-off: a threshold that is too low will silently drop legitimate near-identical actions, such as two tickets about the same problem filed by different users. Log every semantic-dedup suppression with both texts so the decision is auditable.
 
 **Partition-aware planning.** An agent that knows it is offline can plan differently. Instead of a plan that requires three sequential API calls, it can produce a plan that batches local work and defers network calls. This is a planning-time decision, not a retry-time one, and it requires the agent to have a model of its own connectivity. A simple version: expose a `connectivity` tool that returns `online`, `degraded`, or `offline`, and include it in the system prompt so the model can condition its plan on it.
 
@@ -129,6 +135,13 @@ Once the outbox, idempotency keys, and reconciliation are in place, the next pro
 **Backpressure and outbox growth.** An agent that is offline for hours can accumulate a large outbox. If the outbox grows unbounded, the device runs out of storage. Cap the outbox size, and when the cap is hit, either drop the oldest low-priority actions or refuse new ones. The right choice depends on the workflow; a survey app should refuse new submissions rather than drop old ones.
 
 **Observability for partitioned agents.** Standard APM tools assume a stable connection to the collector. For partitioned agents, buffer telemetry locally and ship it on reconnect, with the same idempotency discipline as business actions. A common trap is a telemetry pipeline that floods the network on reconnect and starves the business outbox. Prioritize business actions over telemetry.
+
+### Failure modes to check for explicitly
+
+- **Permanent `in_flight` rows.** If a process crashes between marking a row `in_flight` and recording the outcome, the row never resolves. Add a lease timestamp and requeue rows whose lease has expired.
+- **Key reuse across intents.** If the canonicalization drops a field that does matter, two genuinely different actions collapse into one and the second is silently discarded. Keep the canonical form minimal but never lossy.
+- **Retention shorter than the partition.** If the server forgets an idempotency key before the client reconnects, the retry creates a duplicate. Retention must exceed the worst-case partition duration you are willing to support.
+- **Reconciliation that trusts the client.** Reconciliation must read the server's state, not the client's optimistic copy, or it will confirm its own mistake.
 
 ## Quick reference
 
@@ -144,7 +157,7 @@ Once the outbox, idempotency keys, and reconciliation are in place, the next pro
 | Outbox size cap with priority | Storage exhaustion on long partitions | Devices with limited storage |
 | Local telemetry buffering | Telemetry that starves business traffic | Any agent with verbose logging |
 
-## Frequently Asked Questions
+## FAQ
 
 **Why does my agent duplicate actions when the network drops?**
 Because the agent cannot distinguish "the request never arrived" from "the request arrived but the response was lost." Both look like a failure to the client. The only reliable fix is an idempotency key that the server uses to deduplicate, plus a reconciliation pass that checks the server's actual state on reconnect. Retry logic alone cannot solve this; it can only make it worse by increasing the number of duplicate attempts.
@@ -158,21 +171,9 @@ At-least-once means every action is attempted until acknowledged, so duplicates 
 **When should I run the agent on the server vs. on the device?**
 Run it on the device when the workflow must continue during a partition (field data collection, offline-first apps). Run it on the server when the device is a thin client and can tolerate being offline (a chat UI that can queue messages). The partition does not disappear either way; it just moves. Server-side agents still call the LLM API over the same link, so they need the same idempotency discipline for their tool calls.
 
-## Further reading worth your time
+**How do I know my idempotency key is right?**
+A good key is stable across retries of the same intent, distinct across genuinely different intents, and derivable by both client and server without coordination. Test it by replaying the same action twice and asserting one effect, then by changing one semantically meaningful argument and asserting two effects. If either assertion fails, the key is either too volatile or too lossy.
 
-The outbox pattern is documented well in the microservices literature; search for "transactional outbox" and you will find implementations in most languages. Stripe's idempotency documentation is the canonical reference for the `Idempotency-Key` header and the `409 Conflict` behavior. For local-first sync, the CouchDB replication protocol and the newer local-first frameworks (Automerge, Yjs) are worth reading even if you do not use them, because they make the reconciliation model concrete. For the distributed-systems theory underneath, the original Gilbert and Lynch proof of the CAP theorem is short and worth the hour.
+## Do this in the next 30 minutes
 
-One thing to do in the next 30 minutes: open your agent's tool-call code and find every tool that writes to an external system. For each one, check whether it accepts an idempotency key. If it does not, add one — start with the payment or submission tool, since that is where duplicates cost the most. If you cannot change the tool, wrap it in a local deduplication layer keyed on `sha256(tool_name + canonical_args)` and log every call with that key. That single change will not solve partitions, but it will make the next duplicate visible instead of silent.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** October 2026
+Open your agent's tool-call code and find every tool that writes to an external system. For each one, check whether it accepts an idempotency key. If it does not, add one — start with the payment or submission tool, since that is where duplicates cost the most. If you cannot change the tool, wrap it in a local deduplication layer keyed on `sha256(tool_name + canonical_args)` and log every call with that key. That single change will not solve partitions, but it will make the next duplicate visible instead of silent.

@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Stop trusting agents for core logic - Kubai Kevin</title>
-        <meta name="description" content="Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.">
+        <meta name="description" content="Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.">
         <meta name="keywords" content="AgentOrchestration, CodeReview, Micro, ContractFirstDesign">
         <meta name="author" content="Kubai Kevin">
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-14T17:56:40.332505">
-        <meta property="article:modified_time" content="2026-09-14T17:56:40.332515">
+        <meta property="article:modified_time" content="2026-10-04T12:23:02.752606+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Stop trusting agents for core logic">
-        <meta property="og:description" content="Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.">
+        <meta property="og:description" content="Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.">
         <meta property="og:url" content="https://kubaik.github.io/stop-trusting-agents-for-core-logic/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Stop trusting agents for core logic">
-        <meta name="twitter:description" content="Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.">
+        <meta name="twitter:description" content="Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/stop-trusting-agents-for-core-logic.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
@@ -61,11 +61,11 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/stop-trusting-agents-for-core-logic/#article",
       "headline": "Stop trusting agents for core logic",
-      "description": "Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.",
+      "description": "Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.",
       "datePublished": "2026-09-14T17:56:40+00:00",
-      "dateModified": "2026-09-14T17:56:40+00:00",
-      "wordCount": 2084,
-      "timeRequired": "PT10M",
+      "dateModified": "2026-10-04T12:23:02+00:00",
+      "wordCount": 2267,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -212,7 +212,7 @@
             <header class="post-header">
                 <h1 itemprop="headline">Stop trusting agents for core logic</h1>
                 
-                <p class="post-lead">Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.</p>
+                <p class="post-lead">Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.</p>
                 
                 
                 <div class="tags">
@@ -249,60 +249,56 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 2084 words
+                        11 min read
+                        &nbsp;·&nbsp; 2267 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-14
+                        &nbsp;·&nbsp; Updated 2026-10-04
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for code review is good. What it doesn't cover is what happens six months into production. Everyone assumes someone else already checked this. Here's what I'd tell a colleague hitting this for the first time.</p>
-<p>When startups in Southeast Asia start wiring dozens of micro‑services together, the temptation is to let a fleet of lightweight agents make all the heavy lifting. The promise is simple: a single orchestrator can spin up a new workflow, push a config change, and roll back a failure without touching the underlying services. In practice, that promise collides with the reality of code reviews, architectural debt, and the need to ship to millions before Series A. Teams end up with opaque dependency graphs, reviewers who can’t see the whole picture, and a cascade of latency spikes that only surface under load.</p>
-<p>The part that trips people up is the assumption that agents can be treated as black‑box glue, and that's what this post actually covers.</p>
-<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>The prevailing narrative in many engineering blogs is that <em>agent‑orchestrated</em> architectures are a silver bullet for scaling. The argument goes like this: break the monolith into tiny agents, let a central scheduler (often built on Kubernetes or a custom event bus) coordinate them, and you get instant elasticity. Code reviews become a formality because each agent is supposedly isolated, and architectural decisions are pushed to the orchestrator’s config files.</p>
-<p>That story leaves out three critical dimensions. First, isolation is only as good as the contracts you enforce, and contracts are rarely enforced without a disciplined review process. Second, the orchestrator itself becomes a single point of failure if you do not treat it as a first‑class service with its own SLA. Third, the mental model of “agents are dumb glue” masks the fact that agents often embed business rules, caching strategies, and retry logic that belong in the core domain.</p>
-<p>Ignoring these dimensions leads to a false sense of security. Teams start to treat the orchestrator’s YAML as the only place to make decisions, while the actual code lives in dozens of repositories that rarely get reviewed together. The result is a fragile system where a change in one agent can silently break another, and the code review process becomes a series of disjointed checklists rather than a holistic architectural conversation.</p>
+                <h2 id="the-problem-with-treating-agents-as-glue">The problem with treating agents as glue</h2>
+<p>Orchestration frameworks make it easy to wire together many small services or agents and let a central scheduler coordinate them. The pitch is appealing: a single orchestrator spins up a workflow, pushes a config change, and rolls back a failure without touching the underlying services.</p>
+<p>The failure mode appears later. Teams end up with opaque dependency graphs, reviewers who cannot see the whole picture, and latency spikes that only surface under load. The root cause is usually the same assumption: that agents can be treated as black-box glue rather than as components that own business logic.</p>
+<p>This article covers what that assumption breaks, how to restructure around it, and how to measure whether the restructuring paid off.</p>
+<h2 id="the-conventional-wisdom-and-where-it-falls-short">The conventional wisdom, and where it falls short</h2>
+<p>A common narrative holds that agent-orchestrated architectures are a straightforward path to scaling. Break the monolith into small agents, let a central scheduler coordinate them, and get elasticity. Code review becomes a formality because each agent is supposedly isolated, and architectural decisions move into the orchestrator's config files.</p>
+<p>That story leaves out three things.</p>
+<p><strong>Isolation is only as good as the contracts you enforce.</strong> Without a disciplined review process, contracts drift. An agent that "just" reads a config map and writes a multiplier is still coupled to the shape of that config map, the timing of other writers, and the failure semantics of the store.</p>
+<p><strong>The orchestrator becomes a single point of failure</strong> unless it is treated as a first-class service with its own SLO, capacity plan, and on-call rotation. Many teams discover this only when the scheduler's control loop saturates.</p>
+<p><strong>Agents often embed business rules, caching strategies, and retry logic</strong> that belong in the core domain. Once that happens, the orchestrator's YAML becomes the only place where decisions are visible, while the actual behavior lives in dozens of repositories that are rarely reviewed together.</p>
+<p>A change in one agent can then silently break another, and review degenerates into a series of disjointed checklists rather than a holistic architectural conversation.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>When you adopt the textbook approach—agents for everything, YAML for wiring, and a lightweight review checklist—you quickly hit three pain points.</p>
-<ol>
-<li><strong>Hidden coupling</strong> – A typical failure mode is a missing <code>depends_on</code> entry in the orchestrator’s manifest. The orchestrator throws a generic error like <code>Failed to resolve dependency graph</code> and the pipeline aborts. Because the agents are deployed independently, the missing dependency is not caught until runtime, leading to a 120 ms latency spike on the critical path and a 0.3 % error rate that spikes to 2 % during peak traffic.</li>
-<li><strong>Review fatigue</strong> – Reviewers are forced to skim through dozens of tiny PRs that each change a single line in a YAML file. The cognitive load is high, and important architectural concerns—such as data consistency or transaction boundaries—are missed. In a 2026 internal study of a Jakarta‑based fintech, teams reported a 45 % increase in review turnaround time after moving to an agent‑first model.</li>
-<li><strong>Orchestrator overload</strong> – The orchestrator (often a Kubernetes controller built on Go 1.21) starts to handle more than just scheduling. It ends up doing health checks, circuit breaking, and even ad‑hoc data transformations. The controller’s CPU usage climbs to 85 % on a t3.large instance, and the cost of running the orchestrator rises to $0.12 per million invocations on AWS Lambda (arm64), a non‑trivial amount for a startup on a $5k/month budget.</li>
-</ol>
-<p>These symptoms show that the conventional wisdom glosses over the operational cost of treating agents as black boxes. The reality is that you end up with a tangled web of responsibilities that no single reviewer can fully grasp.</p>
-<h2 id="a-different-mental-model">A different mental model</h2>
-<p>Instead of thinking of agents as <em>glue</em>, I treat them as <em>micro‑domains</em> that own a slice of the business logic. The orchestrator becomes a <em>policy engine</em> rather than a <em>logic engine</em>. In this model, code reviews focus on domain contracts and policy correctness, not just YAML syntax.</p>
-<p>Key shifts:</p>
-<ul>
-<li><strong>Contract‑first design</strong> – Define protobuf or OpenAPI contracts in a shared repo, version them with semantic tags (e.g., <code>v1.3.2</code>). Every agent implements the contract, and reviewers verify that the implementation matches the spec.</li>
-<li><strong>Policy as code</strong> – Use a tool like Open Policy Agent (OPA) 0.58 to express orchestration rules. Policy changes go through the same PR pipeline as service code, ensuring that reviewers see the impact on the whole system.</li>
-<li><strong>Ownership boundaries</strong> – Assign a small, cross‑functional team (max 4 engineers) ownership of each micro‑domain. That team reviews not only the agent code but also the policy that wires it to other domains.</li>
-</ul>
-<p>By moving the focus from “glue” to “domain”, the review process regains its architectural depth. The orchestrator remains lightweight, handling only scheduling and policy enforcement, while the heavy lifting stays inside well‑defined services.</p>
-<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
-<p>A typical scenario in a ride‑hailing startup in Ho Chi Minh City illustrates the difference. The product team wanted to add a <em>surge pricing</em> feature without touching the core pricing service. The initial design was:</p>
-<ol>
-<li>Add a new <code>surge-agent</code> written in Python 3.11 that reads traffic data from Redis 7.2 and writes a multiplier to a shared config map.</li>
-<li>Update the orchestrator’s YAML to include the new agent with a <code>depends_on: traffic‑collector</code>.</li>
-<li>Deploy the agent via Helm chart.</li>
-</ol>
-<p>During a load test that simulated 10 k concurrent rides, the system experienced a 250 ms latency increase on the price‑lookup endpoint. The root cause was a race condition: the <code>surge-agent</code> updated the config map without acquiring a distributed lock, causing intermittent <code>ConfigMap update conflict</code> errors. The orchestrator logged <code>Error: failed to apply config</code> but continued scheduling other agents, masking the problem.</p>
-<h3 id="code-example-racefree-config-update-python">Code example – race‑free config update (Python)</h3>
+<p>Three pain points show up reliably.</p>
+<p><strong>Hidden coupling.</strong> A typical failure mode is a missing dependency entry in the orchestrator's manifest. The orchestrator throws a generic error such as <code>Failed to resolve dependency graph</code> and the pipeline aborts. Because agents deploy independently, the missing dependency is not caught until runtime. The symptom is a latency bump on the critical path and an error rate that rises under peak traffic.</p>
+<p><strong>Review fatigue.</strong> Reviewers skim dozens of small PRs that each change one line of YAML. Cognitive load is high, and architectural concerns such as data consistency or transaction boundaries get missed. The measurable signal is review turnaround time per PR and the ratio of architectural comments to syntax comments over time.</p>
+<p><strong>Orchestrator overload.</strong> The orchestrator starts handling health checks, circuit breaking, and ad-hoc data transformations. Its CPU usage climbs, and its per-invocation cost becomes non-trivial for a small team. The measurable signals are the orchestrator's CPU and memory saturation, its p99 latency, and the fraction of its code that is not scheduling or policy.</p>
+<p>None of these are inherent to orchestration. They are consequences of treating agents as black boxes.</p>
+<h2 id="a-different-mental-model-agents-as-micro-domains">A different mental model: agents as micro-domains</h2>
+<p>Treat agents as micro-domains that own a slice of business logic. Treat the orchestrator as a policy engine rather than a logic engine. Code review then focuses on domain contracts and policy correctness, not YAML syntax.</p>
+<p>Three shifts make this work.</p>
+<p><strong>Contract-first design.</strong> Define protobuf or OpenAPI contracts in a shared repository and version them with semantic tags. Every agent implements the contract, and reviewers verify that the implementation matches the spec. A contract mismatch becomes a compile-time or CI-time failure rather than a runtime surprise.</p>
+<p><strong>Policy as code.</strong> Express orchestration rules in a policy language such as Rego (Open Policy Agent) or Cedar, or in a typed configuration schema if you prefer. Policy changes go through the same PR pipeline as service code, so reviewers see the impact on the whole system.</p>
+<p><strong>Ownership boundaries.</strong> Assign a small cross-functional team ownership of each micro-domain. That team reviews the agent code and the policy that wires it to other domains. Ownership is what makes the contract real; without it, contracts decay.</p>
+<p>The orchestrator stays lightweight, handling scheduling and policy enforcement, while the heavy lifting stays inside well-defined services.</p>
+<h2 id="worked-example-a-race-free-config-update">Worked example: a race-free config update</h2>
+<p>Consider a pricing feature that must not touch the core pricing service. A team adds a surge agent that reads traffic data and writes a multiplier to a shared config store. The orchestrator's manifest gains a dependency on the traffic collector, and the agent deploys via the same chart pipeline as everything else.</p>
+<p>Under a load test, the price-lookup endpoint shows elevated latency. The root cause is a race: the surge agent updates the config without a distributed lock, producing intermittent config update conflicts. The orchestrator logs <code>Error: failed to apply config</code> but continues scheduling, which masks the problem.</p>
+<p>The fix is a distributed lock around the read-modify-write:</p>
 <pre><code class="language-python">import redis
 import json
 import uuid
-from redis.exceptions import LockError
 
 r = redis.Redis(host='redis-prod', port=6379, db=0)
 lock = r.lock('surge_config_lock', timeout=5)
 
 def update_surge(multiplier: float):
+    acquired = lock.acquire(blocking=True, blocking_timeout=5)
+    if not acquired:
+        raise TimeoutError(&quot;could not acquire surge_config_lock&quot;)
     try:
-        lock.acquire(blocking=True)
         cfg = json.loads(r.get('surge_cfg') or '{}')
         cfg['multiplier'] = multiplier
         cfg['version'] = str(uuid.uuid4())
@@ -310,8 +306,8 @@ def update_surge(multiplier: float):
     finally:
         lock.release()
 </code></pre>
-<p>This snippet shows a proper distributed lock, something a reviewer would flag if missing.</p>
-<h3 id="code-example-opa-policy-snippet-rego">Code example – OPA policy snippet (Rego)</h3>
+<p>Note the added <code>blocking_timeout</code> and the explicit failure path. A reviewer looking at only the YAML diff would never see this bug. A reviewer looking at the contract — "the config store must be updated atomically and versioned" — would flag it immediately.</p>
+<p>The corresponding policy, expressed in Rego, keeps the authorization rule next to the agent:</p>
 <pre><code class="language-rego">package orchestrator.policy
 
 allow {
@@ -320,106 +316,95 @@ allow {
     input.user.role == &quot;platform-admin&quot;
 }
 </code></pre>
-<p>Embedding the policy in the same repo as the agent forces a joint review.</p>
-<h3 id="comparison-table-conventional-vs-contractfirst">Comparison table – Conventional vs. Contract‑first</h3>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Conventional (agents as glue)</th>
-<th>Contract‑first (micro‑domains)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Review focus</td>
-<td>YAML diff, CI status</td>
-<td>Contract spec, policy logic</td>
-</tr>
-<tr>
-<td>Failure mode detection</td>
-<td>Runtime errors, logs</td>
-<td>Compile‑time contract mismatch</td>
-</tr>
-<tr>
-<td>Orchestrator CPU usage</td>
-<td>85 % on t3.large</td>
-<td>30 % on t3.medium</td>
-</tr>
-<tr>
-<td>Monthly cost (AWS Lambda)</td>
-<td>$0.12 per 1M invocations</td>
-<td>$0.04 per 1M invocations</td>
-</tr>
-<tr>
-<td>Team ownership size</td>
-<td>8‑10 engineers per agent</td>
-<td>3‑4 engineers per domain</td>
-</tr>
-</tbody>
-</table>
-<p>In the Ho Chi Minh case, after moving to a contract‑first approach, the latency spike dropped from 250 ms to 90 ms, and the error rate fell to under 0.1 %. The orchestrator’s CPU usage fell to 32 % on a t3.medium, saving roughly $150 per month on EC2 costs.</p>
-<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
-<p>I’m not saying the glue‑first model is always wrong. For very small teams (2‑3 engineers) building a proof‑of‑concept, the overhead of maintaining contracts and policy code can outweigh the benefits. When the workload is purely batch‑oriented—e.g., nightly data pipelines that run on AWS Batch—the simplicity of a YAML‑driven orchestrator can reduce time‑to‑market.</p>
-<p>In a 2026 experiment with a Manila‑based news aggregator, the team kept the orchestrator as the sole source of truth for 12 ETL agents. Because the agents never interacted at request time, the hidden coupling risk was negligible. The team reported a 20 % reduction in deployment time compared to a monolith, and the cost stayed under $30 per month.</p>
-<p>The key is scope: if the agents are truly stateless, idempotent, and do not share mutable state, the conventional approach works fine. The moment you introduce shared caches, cross‑domain transactions, or real‑time user flows, the glue model starts to crumble.</p>
-<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
-<p>A practical decision matrix helps:</p>
+<p>Embedding the policy in the same repository as the agent forces a joint review. A change to the agent that requires a broader permission cannot merge without a matching policy change, and vice versa.</p>
+<h2 id="how-to-measure-whether-this-helps">How to measure whether this helps</h2>
+<p>The claims above are structural, not numeric. To decide for your system, instrument the following and compare before and after.</p>
+<p><strong>Contract mismatch rate.</strong> Emit a counter such as <code>contract_mismatch_total</code> at every contract boundary. Alert when the rate exceeds a threshold you choose. Compare the count of mismatches caught in CI versus caught in production.</p>
+<p><strong>Review turnaround.</strong> Track time from PR open to merge, split by PR type (contract change, policy change, agent implementation, YAML wiring). The interesting number is the ratio of architectural comments to syntax comments per PR.</p>
+<p><strong>Orchestrator saturation.</strong> Record CPU, memory, and p99 latency for the orchestrator process. If the orchestrator is doing work that is not scheduling or policy evaluation, that work should move into a domain service.</p>
+<p><strong>Critical-path latency and error rate.</strong> Measure p50, p95, and p99 latency for the endpoints that cross domain boundaries, plus the error rate during peak. Compare against a baseline captured before the change.</p>
+<p><strong>Cost per million orchestration invocations.</strong> If your orchestrator runs on a serverless platform, pull the invocation count and billed duration from the provider's metrics and divide. If it runs on a VM or pod, divide the monthly cost by the number of orchestration events. Either way, the number is arithmetic from your own bill and your own counters, not a vendor benchmark.</p>
+<p>Run each measurement for at least one full traffic cycle before drawing conclusions. A latency improvement that only appears during off-peak hours is not an improvement.</p>
+<h2 id="when-the-glue-first-model-is-the-right-choice">When the glue-first model is the right choice</h2>
+<p>The glue-first model is not always wrong. It is appropriate when the following hold.</p>
+<ul>
+<li>The team is small enough that everyone can hold the whole system in their head.</li>
+<li>The workload is batch-oriented, with no request-time interaction between agents.</li>
+<li>Agents are stateless, idempotent, and do not share mutable state.</li>
+<li>There is no strict versioned contract requirement from external consumers.</li>
+</ul>
+<p>For a nightly data pipeline that runs on a managed batch service, a YAML-driven orchestrator can reduce time-to-market with little downside. The hidden-coupling risk is negligible when agents never interact at request time.</p>
+<p>The model starts to crumble the moment you introduce shared caches, cross-domain transactions, or real-time user flows. Those are the conditions under which a missing lock, a drifted schema, or an unversioned config change becomes a production incident.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these questions before choosing an approach.</p>
 <table>
 <thead>
 <tr>
 <th>Question</th>
-<th>Yes → Consider Contract‑first</th>
-<th>No → Glue‑first may suffice</th>
+<th>If yes</th>
+<th>If no</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Do agents share mutable state?</td>
-<td>✅</td>
-<td>❌</td>
+<td>Do agents share mutable state at request time?</td>
+<td>Contract-first</td>
+<td>Glue-first may suffice</td>
 </tr>
 <tr>
-<td>Are you targeting &gt;100 k RPS in production?</td>
-<td>✅</td>
-<td>❌</td>
+<td>Are there cross-domain transactions?</td>
+<td>Contract-first</td>
+<td>Glue-first may suffice</td>
 </tr>
 <tr>
-<td>Is the team &gt;5 engineers?</td>
-<td>✅</td>
-<td>❌</td>
+<td>Do external consumers depend on versioned schemas?</td>
+<td>Contract-first</td>
+<td>Glue-first may suffice</td>
 </tr>
 <tr>
-<td>Do you need strict versioned contracts?</td>
-<td>✅</td>
-<td>❌</td>
+<td>Is latency on a cross-domain path a competitive differentiator?</td>
+<td>Contract-first</td>
+<td>Glue-first may suffice</td>
 </tr>
 <tr>
-<td>Is latency a competitive differentiator?</td>
-<td>✅</td>
-<td>❌</td>
+<td>Can one engineer hold the full dependency graph in their head?</td>
+<td>Glue-first is defensible</td>
+<td>Contract-first</td>
 </tr>
 </tbody>
 </table>
-<p>If you answer <strong>yes</strong> to two or more rows, adopt the contract‑first mental model. Otherwise, a lightweight glue approach can be justified.</p>
-<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
-<p><strong>Objection 1:</strong> <em>“Contracts add bureaucracy and slow us down.”</em> – The reality is that contracts replace ad‑hoc communication. In a 2026 survey of 12 startups in Jakarta, teams that introduced OpenAPI contracts saw a 30 % reduction in back‑and‑forth Slack messages about data shape.</p>
-<p><strong>Objection 2:</strong> <em>“OPA policies are another language to learn.”</em> – OPA’s Rego is declarative and can be linted with <code>opa fmt</code>. The learning curve is comparable to writing a single line of Bash, and the payoff is a single source of truth for orchestration rules that can be unit‑tested with <code>opa test</code>.</p>
-<p><strong>Objection 3:</strong> <em>“Our budget can’t handle extra services like a contract registry.”</em> – You can host the contract repo on GitHub (free for public, $4 per user for private). The additional cost is negligible compared to the hidden cost of production incidents, which typically cost $5k–$15k per outage in the region.</p>
-<p><strong>Objection 4:</strong> <em>“We already have a CI pipeline; adding policy checks will break it.”</em> – Policy checks are just another step in the pipeline. Adding <code>opa test</code> takes ~2 seconds per PR on a GitHub Actions runner with <code>ubuntu‑latest</code>, a trivial overhead.</p>
-<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
-<p>If I were to rebuild a new SaaS product from scratch in 2026, I would:</p>
+<p>If two or more rows point to contract-first, adopt it. Otherwise, a lightweight glue approach can be justified — but write down the conditions under which you would revisit the decision, and set a reminder to check them.</p>
+<h2 id="common-objections">Common objections</h2>
+<p><strong>"Contracts add bureaucracy and slow us down."</strong> Contracts replace ad-hoc communication. The measurable version of this claim is the number of messages or tickets about data shape per week before and after introducing a contract. Track it; if it does not fall, the contract is not doing its job.</p>
+<p><strong>"Policy languages are another thing to learn."</strong> A declarative policy language is a small surface area compared to the systems it governs. It can be formatted and unit-tested with the tooling that ships with it (<code>opa fmt</code>, <code>opa test</code> for Rego). The payoff is a single source of truth for orchestration rules that can be tested in CI.</p>
+<p><strong>"We cannot afford another service."</strong> A contract repository is a git repository. If you already have a version control system and a CI runner, the marginal cost is the CI minutes spent validating contracts. Compare that to the cost of one production incident caused by a schema drift, which you can estimate from your own incident history.</p>
+<p><strong>"Adding policy checks will break our pipeline."</strong> Policy checks are another step in the pipeline. Measure the added wall-clock time on a representative PR. If it is more than a few seconds, cache the policy bundle or run the check only on paths that touch policy files.</p>
+<p><strong>"Our agents are already isolated."</strong> Isolation is a property of the contracts, not the deployment topology. Verify it by attempting to change one agent's output shape without updating its consumers and confirming that CI fails.</p>
+<h2 id="a-starting-sequence-for-a-new-system">A starting sequence for a new system</h2>
+<p>If you are building from scratch, the following order avoids most of the pain described above.</p>
 <ol>
-<li><strong>Start with a contract‑first skeleton</strong> – Generate a shared OpenAPI spec and an OPA policy repo before writing any agent code.</li>
-<li><strong>Limit agent scope to pure functions</strong> – Avoid embedding retries or caching inside agents; push those concerns to a dedicated library (e.g., <code>retry 2.0.0</code> for Python).</li>
-<li><strong>Use Terraform 1.6 for infrastructure as code</strong> – Keep the orchestrator definition in Terraform modules, version‑controlled alongside the contracts.</li>
-<li><strong>Adopt a lightweight service mesh</strong> – Istio 1.19 can enforce mTLS and provide observability without adding much latency (average 5 ms per hop).</li>
-<li><strong>Instrument every contract boundary</strong> – Export Prometheus metrics like <code>contract_mismatch_total</code> and set alerts at &gt;0.1 % mismatch rate.</li>
+<li><strong>Write the contracts first.</strong> A shared OpenAPI or protobuf repository with semantic version tags, before any agent code exists.</li>
+<li><strong>Keep agents as pure functions where possible.</strong> Push retries, caching, and circuit breaking into a shared library or into the caller, not into the agent.</li>
+<li><strong>Define orchestration rules as policy.</strong> Keep them in the same repository as the agents they govern, and run policy tests in CI.</li>
+<li><strong>Define infrastructure as code.</strong> Keep the orchestrator definition in version-controlled modules alongside the contracts, so a change to the orchestrator is reviewed with the same rigor as a change to a service.</li>
+<li><strong>Instrument every contract boundary.</strong> Export a mismatch counter and set an alert threshold. Without this, you will not know whether the contracts are holding.</li>
+<li><strong>Set an orchestrator budget.</strong> Define the maximum CPU and memory the orchestrator may consume, and treat any work beyond scheduling and policy evaluation as a candidate for extraction.</li>
 </ol>
-<p>These steps create a feedback loop where reviewers see the full impact of a change, and the orchestrator stays lean.</p>
+<p>These steps create a feedback loop in which reviewers see the full impact of a change and the orchestrator stays lean.</p>
 <h2 id="summary">Summary</h2>
-<p>The prevailing belief that agents can replace thoughtful architecture is a myth that costs latency, stability, and developer sanity. By treating agents as micro‑domains, enforcing contracts first, and moving orchestration rules into policy‑as‑code, you regain control over the system’s shape and keep the review process meaningful. The trade‑off is a modest increase in upfront scaffolding, but the payoff is measurable: latency drops by 60 % in our case study, orchestrator CPU usage halves, and monthly cloud spend on the orchestrator falls from $150 to $45.</p>
-<p><strong>Next step:</strong> clone the <code>contract‑first‑starter</code> repo, run <code>opa test ./policy</code> locally, and verify that all tests pass within the next 30 minutes.</p>
+<p>Treating agents as black-box glue hides coupling in YAML, makes review shallow, and lets the orchestrator absorb responsibilities it was never designed to hold. Treating agents as micro-domains — with contract-first design, policy as code, and clear ownership — restores architectural depth to the review process and keeps the orchestrator focused on scheduling and policy.</p>
+<p>The trade-off is a modest increase in upfront scaffolding. Whether it pays off is an empirical question, and the measurements listed above are how you answer it for your own system rather than borrowing someone else's numbers.</p>
+<p><strong>Next step:</strong> open your orchestrator's manifest, pick one agent, and write down the contract it implicitly depends on — the shape of the data it reads, the timing assumptions it makes, and the failure semantics it expects from its dependencies. If you cannot write it down in a paragraph, that is the first contract to make explicit.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+<li><a href="https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/">Agent frameworks: stop rewriting the same glue code</a></li>
+<li><a href="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">Debug AI agents: failures aren't just bugs</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
 <p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>

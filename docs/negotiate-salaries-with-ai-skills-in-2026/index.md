@@ -1,35 +1,27 @@
 # Negotiate salaries with AI skills in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+## The negotiation problem this addresses
 
-## Why I wrote this (the problem I kept hitting)
+Job descriptions and salary bands often lag behind what the role actually involves. A posting may still list "write API specs" or "debug memory leaks" even when those tasks are partly handled by tooling. When a candidate tries to negotiate on that gap, the usual response is a band from an internal compensation framework, and the conversation stalls.
 
-I spent two weeks arguing with a recruiter over a $15k raise for a role that had been quietly automated by an internal AI agent. The job description still listed "write API specs" and "debug C++ memory leaks," but our team had already replaced both with an LLM and a memory debugger that ran nightly. The recruiter kept pushing back with salary bands from 2026. I finally refused the offer, only to see the same JD posted three months later with a 10% lower budget. That’s when I started collecting data on what actually matters to employers in 2026.
+A more productive frame is to separate the tasks in a role into two groups: those that current tooling can substantially accelerate or automate, and those that depend on judgment, ownership, and coordination under constraint. The second group is where negotiation leverage tends to sit, because it is harder to substitute. This article describes a reproducible way to build that argument: a small data-collection pipeline for public job postings, a task-by-task analysis of your own role, and a script for the conversation itself.
 
-By 2026, AI can draft docs, generate tests, and even suggest fixes for memory leaks, but it can’t own a product, negotiate with stakeholders, or ship under deadline pressure. The delta between what AI automates and what humans uniquely deliver is the new negotiation lever. My mistake was treating AI as a threat instead of a signal. Once I reframed the conversation around the 20% of tasks that still require human judgment, the recruiter stopped quoting 2026 salary bands and started quoting 2026 benchmarks.
+Two caveats before starting. First, scraping job boards may violate their terms of service; check the terms for any source you use, and prefer official APIs or manual sampling where they exist. Second, the salary figures you derive are only as good as your sample. Treat them as one input, not as proof.
 
-I built a simple script that scrapes public salary data, filters for roles where AI handles routine work, and surfaces the human-skills premium. Running it on 1,200 postings in the UK, US, and India showed a consistent 18–22% premium for roles that explicitly mention "ownership," "stakeholder alignment," or "deadline-driven delivery."
+## What you will build
 
-This post is what I wish I had when I sat across from that recruiter. It gives you the numbers, the scripts, and the scripts to prove why your compensation should reflect the part AI cannot do.
+A minimal Python 3.11 command-line tool that:
 
-## Prerequisites and what you'll build
+- Collects a sample of job postings for a given title and location from sources you are permitted to query
+- Tags each posting by whether it mentions AI coding tools or assistants
+- Computes median and quartile salary figures for the tagged and untagged groups
+- Emits a markdown report you can attach to a counter-offer discussion
 
-Before you start the negotiation, you need three things: a clear picture of what AI can already automate in your role, a data-backed salary range for 2026, and a short script that proves the premium for human-only work.
+You will also produce a one-page artifact mapping each task in your job description to an automation-risk estimate and a human-judgment estimate.
 
-You will build a minimal Python 3.11 CLI that:
+The pipeline runs in a few minutes on a laptop; the negotiation artifact takes longer because it requires honest self-assessment.
 
-- Scrapes the last 100 job postings for your title and location from LinkedIn Jobs and Indeed
-- Filters out postings that list AI tools (Copilot, Cursor, Devin) in the requirements
-- Computes the median salary for the remaining postings
-- Outputs a markdown report with the 25th, 50th, and 75th percentiles for 2026
-
-You’ll also create a one-page artifact you can attach to your counter-offer: a table showing the AI automation risk for each task in your job description and the human premium for the residual tasks.
-
-The entire environment fits in a single requirements.txt file and runs in under 3 minutes on a 2020 MacBook Pro.
-
-## Step 1 — set up the environment
-
-Create a new directory and initialize a Python 3.11 virtual environment:
+## Step 1 — environment setup
 
 ```bash
 mkdir ai-comp-negotiation && cd ai-comp-negotiation
@@ -38,376 +30,286 @@ source .venv/bin/activate  # Linux/macOS
 # .venv\Scripts\activate  # Windows
 ```
 
-Install the pinned dependencies:
+Install dependencies:
 
 ```bash
-pip install requests==2.31.0 beautifulsoup4==4.12.2 pandas==2.1.3 python-dotenv==1.0.0 pypdf2==3.0.1
+pip install requests==2.31.0 beautifulsoup4==4.12.2 pandas==2.1.3 python-dotenv==1.0.0
 ```
 
-Create a .env file to store your LinkedIn session cookie and Indeed filters:
-
-```env
-LINKEDIN_SESSION_COOKIE=your_session_value_here
-INDEED_LOCATION="London, UK"
-INDEED_TITLE="Software Engineer"
-```
-
-If you don’t have a LinkedIn session cookie, open LinkedIn Jobs in Chrome, log in, press F12, go to Application > Cookies, and copy the value of li_at. Store it in .env.
-
-Install Playwright for headless scraping of Indeed (LinkedIn returns structured data via its API, but Indeed hides salaries behind JavaScript):
+If you scrape a JavaScript-heavy source, you may need a headless browser such as Playwright:
 
 ```bash
 pip install playwright==1.40.0
 playwright install
 ```
 
-Verify the environment:
+Create a `.env` file for any credentials or filters you need:
+
+```env
+SOURCE_LOCATION="London, UK"
+SOURCE_TITLE="Software Engineer"
+```
+
+Verify:
 
 ```bash
 python --version
-# Should print: Python 3.11.x
-pip list | grep -E 'requests|bs4|pandas|python-dotenv|pypdf2|playwright'
-# Should list all pinned versions
+pip list | grep -E 'requests|beautifulsoup4|pandas|python-dotenv|playwright'
 ```
 
-Gotcha: LinkedIn’s salary pages sometimes return 429 Too Many Requests if you hit the endpoint more than twice per minute. Wrap the call in a 30-second exponential backoff loop to stay under the rate limit.
+Do not commit `.env` to version control. If a source requires a session cookie, treat that cookie as a credential: it grants access to your account.
 
-## Step 2 — core implementation
+## Step 2 — collect postings
 
-Start with a minimal scraper for LinkedIn Jobs using their public API endpoint. Add a helper to filter out postings that mention AI tools:
+The example below reads postings from a local JSON file. This keeps the code runnable without depending on any specific site's markup, which changes frequently. Populate the file by exporting results from an official API, or by manually saving postings you are permitted to collect.
 
 ```python
-# scraper.py
-import requests
-import time
+# load_postings.py
 import json
+from pathlib import Path
 from typing import List, Dict
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+def load_postings(path: str = "postings.json") -> List[Dict]:
+    """Load postings from a JSON array of {title, location, salary, description}."""
+    data = json.loads(Path(path).read_text())
+    required = {"title", "location", "salary", "description"}
+    for i, row in enumerate(data):
+        missing = required - row.keys()
+        if missing:
+            raise ValueError(f"Row {i} missing keys: {missing}")
+    return data
+```
+
+A minimal `postings.json`:
+
+```json
+[
+  {
+    "title": "Backend Engineer",
+    "location": "London, UK",
+    "salary": "72000",
+    "description": "Own the payments service. Align with stakeholders on roadmap."
+  },
+  {
+    "title": "Backend Engineer",
+    "location": "London, UK",
+    "salary": "63000",
+    "description": "Use Copilot to accelerate feature delivery."
+  }
+]
+```
+
+Next, tag postings by whether they mention AI tooling:
+
+```python
+# tag.py
+from typing import List, Dict
+
+AI_KEYWORDS = {
+    "copilot", "cursor", "codeium", "tabnine",
+    "ai pair programmer", "llm", "large language model",
+    "automated code review", "ai assistant", "ai reviewer",
 }
 
-class LinkedInScraper:
-    def __init__(self, session_cookie: str):
-        self.session_cookie = session_cookie
-        self.base_url = "https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings"
-
-    def fetch_jobs(self, title: str, location: str, limit: int = 100) -> List[Dict]:
-        params = {
-            "keywords": title,
-            "location": location,
-            "count": limit,
-        }
-        headers = HEADERS.copy()
-        headers["Cookie"] = f"li_at={self.session_cookie}"
-
-        jobs = []
-        offset = 0
-        while offset < limit:
-            params["start"] = offset
-            try:
-                resp = requests.get(self.base_url, params=params, headers=headers, timeout=30)
-                resp.raise_for_status()
-                chunk = resp.text.strip().split("\n")
-                for line in chunk:
-                    if line.startswith("{'"):
-                        data = json.loads(line)
-                        if "salary" in data:
-                            jobs.append(data)
-                offset += 25
-                time.sleep(30)  # Respect rate limit
-            except requests.exceptions.RequestException as e:
-                print(f"Request failed: {e}")
-                time.sleep(60)
-                continue
-        return jobs
-
-    def filter_ai_tools(self, jobs: List[Dict]) -> List[Dict]:
-        ai_keywords = {
-            "copilot", "cursor", "devin", "ai pair programmer",
-            "llm", "large language model", "automated code review"
-        }
-        return [j for j in jobs if not any(k in j.get("description", "").lower() for k in ai_keywords)]
+def tag_ai_mention(postings: List[Dict]) -> List[Dict]:
+    for p in postings:
+        text = p["description"].lower()
+        p["mentions_ai_tool"] = any(k in text for k in AI_KEYWORDS)
+    return postings
 ```
 
-Next, write a scraper for Indeed using Playwright to render JavaScript:
+Keyword matching is crude. "LLM" inside "LLM-adjacent" and "AI" inside "said" are both false positives; word-boundary matching or a small classifier reduces this. Report the false-positive rate you observe so the reader can judge the sample.
 
-```python
-# indeed.py
-from playwright.sync_api import sync_playwright
-from typing import List, Dict
-import re
-
-def scrape_indeed(title: str, location: str, limit: int = 50) -> List[Dict]:
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-        page.goto(f"https://www.indeed.com/jobs?q={title}&l={location}")
-        listings = []
-        while len(listings) < limit:
-            page.wait_for_selector("[data-tn-component='organicJob']")
-            cards = page.query_selector_all("[data-tn-component='organicJob']")
-            for card in cards:
-                try:
-                    jd = card.inner_text()
-                    salary = re.search(r"\$\d{1,3}(?:,\d{3})+(?:\.\d{2})?", jd)
-                    if salary:
-                        listings.append({
-                            "title": title,
-                            "location": location,
-                            "salary": salary.group(),
-                            "description": jd
-                        })
-                except Exception as e:
-                    print(f"Failed to parse card: {e}")
-            next_button = page.query_selector("[aria-label='Next']")
-            if next_button:
-                next_button.click()
-                page.wait_for_load_state("networkidle")
-            else:
-                break
-        browser.close()
-    return listings[:limit]
-```
-
-Finally, compute percentiles and generate a markdown report:
+## Step 3 — compute the comparison
 
 ```python
 # report.py
 import pandas as pd
-import json
 from pathlib import Path
+from typing import Dict, List
 
-def generate_report(jobs: List[Dict], output: str = "report.md") -> None:
-    df = pd.DataFrame(jobs)
-    df["salary_num"] = df["salary"].str.replace("[$,]", "", regex=True).astype(float)
-    p25 = df["salary_num"].quantile(0.25)
-    p50 = df["salary_num"].quantile(0.50)
-    p75 = df["salary_num"].quantile(0.75)
+def summarize(postings: List[Dict]) -> Dict:
+    df = pd.DataFrame(postings)
+    df["salary_num"] = pd.to_numeric(df["salary"], errors="coerce")
+    df = df.dropna(subset=["salary_num"])
 
-    rows = []
-    for p, v in [(25, p25), (50, p50), (75, p75)]:
-        rows.append(f"| {p}th | ${v:,.0f} |")
+    ai = df[df["mentions_ai_tool"]]
+    non_ai = df[~df["mentions_ai_tool"]]
 
-    report = f"""
-### Salary percentiles (2026 USD, filtered for non-AI roles)
+    def quartiles(s: pd.Series) -> Dict[str, float]:
+        return {
+            "n": int(s.count()),
+            "p25": float(s.quantile(0.25)),
+            "p50": float(s.quantile(0.50)),
+            "p75": float(s.quantile(0.75)),
+        }
 
-| Percentile | Salary |
-|------------|--------|
-""" + "\n".join(rows)
+    return {
+        "all": quartiles(df["salary_num"]),
+        "mentions_ai_tool": quartiles(ai["salary_num"]),
+        "no_ai_mention": quartiles(non_ai["salary_num"]),
+    }
 
-    Path(output).write_text(report)
-    print(f"Report saved to {output}")
+def write_markdown(stats: Dict, path: str = "report.md") -> None:
+    lines = ["| Group | n | p25 | p50 | p75 |", "|---|---|---|---|---|"]
+    for label, s in stats.items():
+        lines.append(
+            f"| {label} | {s['n']} | {s['p25']:,.0f} | {s['p50']:,.0f} | {s['p75']:,.0f} |"
+        )
+    Path(path).write_text("\n".join(lines) + "\n")
 ```
 
-Run the pipeline:
+Run it:
 
 ```bash
 python -c "
-from scraper import LinkedInScraper
-from indeed import scrape_indeed
-from report import generate_report
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-scraper = LinkedInScraper(os.getenv('LINKEDIN_SESSION_COOKIE'))
-linkedin_jobs = scraper.fetch_jobs('Software Engineer', 'London, UK', limit=100)
-linkedin_jobs = scraper.filter_ai_tools(linkedin_jobs)
-
-indeed_jobs = scrape_indeed('Software Engineer', 'London, UK', limit=50)
-all_jobs = linkedin_jobs + indeed_jobs
-
-if all_jobs:
-    generate_report(all_jobs)
-else:
-    print('No jobs found. Adjust filters.')
+from load_postings import load_postings
+from tag import tag_ai_mention
+from report import summarize, write_markdown
+posts = tag_ai_mention(load_postings())
+stats = summarize(posts)
+write_markdown(stats)
+print(stats)
 "
 ```
 
-This script returns a report.md with the 25th, 50th, and 75th percentiles for non-AI roles. In my tests across 10 UK cities, the median salary for "Software Engineer" postings that excluded AI tools was £72,000 in 2026, compared to £63,000 for postings that listed Copilot or Devin. That 14% delta becomes your human-skills premium.
+### How to interpret the output honestly
 
-## Step 3 — handle edge cases and errors
+The difference between the two medians is a correlation in your sample, not a causal estimate of a "premium." Postings that mention AI tools may differ in seniority, company size, sector, or region. Before using the number, check:
 
-The common failure modes are:
+- **Sample size.** With fewer than ~30 postings per group, quartiles are noisy. Report n alongside every figure.
+- **Currency and period.** Mixed currencies must be converted at a stated rate and date, or dropped.
+- **Title drift.** "Backend Engineer" at one company may be "Software Engineer II" at another. Restrict to exact titles or a small, stated set.
+- **Selection bias.** Postings that list salary are not a random sample of postings.
 
-1. LinkedIn returns 429 Too Many Requests
-2. Indeed’s salary strings are malformed
-3. Location filters return no hits
-4. AI keywords are too narrow (e.g., "AI" matches false positives)
+If the two groups differ on seniority, the salary gap may reflect seniority, not AI-tool mentions. A simple check: split each group by a seniority keyword ("senior", "staff", "principal") and compare within strata.
 
-Add a retry loop with exponential backoff for 429s:
+## Step 4 — handle common failure modes
+
+**Rate limiting.** If a source returns HTTP 429, back off. A retry helper:
 
 ```python
-from tenacity import retry, stop_after_attempt, wait_exponential
+import time
+import requests
 
-@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=30, max=120))
-def fetch_with_retry(url, headers, params):
-    return requests.get(url, headers=headers, params=params, timeout=30)
+def get_with_backoff(url, headers, params, attempts=5):
+    delay = 30
+    for i in range(attempts):
+        resp = requests.get(url, headers=headers, params=params, timeout=30)
+        if resp.status_code == 429:
+            time.sleep(delay)
+            delay = min(delay * 2, 120)
+            continue
+        resp.raise_for_status()
+        return resp
+    raise RuntimeError("Exhausted retries after repeated 429 responses")
 ```
 
-Normalize Indeed salary strings:
+**Malformed salary strings.** Normalize before parsing:
 
 ```python
 import re
 
 def clean_salary(s: str) -> float:
-    s = s.replace("a year", "").replace("£", "").strip()
+    s = s.replace("a year", "").replace("per annum", "").strip()
     match = re.search(r"(\d{1,3}(?:,\d{3})+(?:\.\d{2})?)", s)
     if match:
         return float(match.group().replace(",", ""))
     return 0.0
 ```
 
-Expand AI keyword matching to catch acronyms and brand names:
+**Empty results.** If a location filter returns nothing, widen it (city to country) and re-run, but note the change in the report so the sample is not silently altered.
+
+**Keyword drift.** New tools appear constantly. Keep the keyword set in a separate file and record the version used for any report you share.
+
+## Step 5 — the negotiation artifact
+
+The data is one half. The other half is a task-level analysis of your own role. Build a table like this:
+
+| Task | Automatable today? | Human judgment required? | Evidence |
+|---|---|---|---|
+| Write API reference docs | Mostly | Low | Tooling drafts from signatures |
+| Design service boundaries | Partly | High | Trade-offs depend on org constraints |
+| Debug memory leaks | Partly | Medium | Profilers narrow the search; fix requires judgment |
+| Own incident response | No | High | Time pressure, cross-team coordination |
+| Stakeholder alignment on roadmap | No | High | Requires trust and negotiation |
+
+Fill the "Evidence" column with something concrete: a tool you have used for that task, a documented limitation, or a specific incident. Vague claims weaken the argument.
+
+Then compute two ratios from the table:
+
+- `human_heavy = (rows where Human judgment required is High) / total rows`
+- `automatable_high = (rows where Automatable today is Mostly) / total rows`
+
+These are illustrative formulas, not market indices. They give you a sentence: "N of M responsibilities in this role are judgment-heavy and not currently automatable with the tooling the team uses."
+
+## A worked negotiation example
+
+The following is illustrative, not a reported outcome.
+
+Suppose the offer is 65,000 and your sample's non-AI median for the title is 72,000 (n=40), while the AI-mention median is 63,000 (n=35). The gap is 9,000, or about 14% of the lower figure.
+
+Do not lead with the gap. Lead with the task analysis. A script:
+
+> "I want to make sure we are aligned on scope. The role as described covers X, Y, and Z. Based on my experience, X and Y are the parts where I add the most value because they depend on judgment under deadline rather than tooling. I have a sample of comparable postings for this title and location; the median for roles that do not emphasize AI assistance is around 72,000, versus 63,000 for roles that do. Given the scope here, I am targeting 72,000. Can we get there, or is there a structure — a signing component, a six-month review — that closes the gap?"
+
+Notice what the script does not do: it does not claim a causal premium, does not assert that the recruiter's band is wrong, and offers a non-base-salary path. If the recruiter cites a budget, ask which parts of the scope are negotiable. If they cite the AI tools the team uses, ask what fraction of the role those tools cover — a question the task table already answers.
+
+## Adding tests and observability
+
+A small pytest suite catches regressions when you change the keyword set or parsing:
 
 ```python
-AI_KEYWORDS = {
-    "copilot", "cursor", "devin", "codeium", "tabnine", "github next",
-    "ai pair programmer", "llm", "large language model", "automated code review",
-    "ai assistant", "autocomplete", "ai reviewer", "ai debugging"
-}
+# test_pipeline.py
+from tag import tag_ai_mention
+from report import summarize
+
+def test_tagging():
+    posts = [
+        {"title": "E", "location": "L", "salary": "100", "description": "Use Copilot daily."},
+        {"title": "E", "location": "L", "salary": "200", "description": "Own the roadmap."},
+    ]
+    tagged = tag_ai_mention(posts)
+    assert tagged[0]["mentions_ai_tool"] is True
+    assert tagged[1]["mentions_ai_tool"] is False
+
+def test_summary_counts():
+    posts = [
+        {"title": "E", "location": "L", "salary": "100", "description": "Copilot", "mentions_ai_tool": True},
+        {"title": "E", "location": "L", "salary": "200", "description": "Own", "mentions_ai_tool": False},
+    ]
+    stats = summarize(posts)
+    assert stats["mentions_ai_tool"]["n"] == 1
+    assert stats["no_ai_mention"]["n"] == 1
 ```
 
-If the scraper returns fewer than 10 jobs, widen the location filter by removing the city and keeping the country, then re-run. In 2026, the Indeed UI sometimes hides salary behind a modal; Playwright’s page.wait_for_selector("[data-tn-component='salary']") helps, but you may need to click the modal first.
-
-I was surprised to find that postings mentioning "ML" or "machine learning" still paid 9% more than those mentioning "AI," even when the role was backend-heavy. Filtering those out reduced the noise in the dataset.
-
-## Step 4 — add observability and tests
-
-Wrap the pipeline in a pytest 7.4 suite to catch regressions:
+Log every run with the source, query, timestamp, and counts, so a report you share can be reproduced:
 
 ```python
-# test_scraper.py
-import pytest
-from scraper import LinkedInScraper
-from indeed import scrape_indeed
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-@pytest.fixture
-def linkedin_jobs():
-    scraper = LinkedInScraper(os.getenv('LINKEDIN_SESSION_COOKIE'))
-    return scraper.fetch_jobs('Backend Engineer', 'Berlin, Germany', limit=20)
-
-def test_linkedin_salaries_exist(linkedin_jobs):
-    assert len(linkedin_jobs) > 0
-    assert any('salary' in j for j in linkedin_jobs)
-
-def test_ai_keywords_filter(linkedin_jobs):
-    filtered = LinkedInScraper(os.getenv('LINKEDIN_SESSION_COOKIE')).filter_ai_tools(linkedin_jobs)
-    assert len(filtered) <= len(linkedin_jobs)
-```
-
-Add logging to track scrapes:
-
-```python
-# logger.py
 import logging
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 ```
 
-Instrument the report generator to emit JSON for Grafana or Metabase:
+## Common questions
 
-```python
-# report.py
-import json
+**Why not just use a public salary aggregator?**
+Aggregators are useful for a coarse range. They generally do not let you filter by whether a posting mentions AI tooling, so you cannot reproduce the specific comparison this method relies on. Use them to sanity-check your sample, not to replace it.
 
-def generate_report(jobs: list, output: str = "report.md") -> dict:
-    ...
-    stats = {
-        "count": len(jobs),
-        "p25": p25,
-        "p50": p50,
-        "p75": p75,
-        "currency": "USD",
-        "year": 2026,
-    }
-    Path("stats.json").write_text(json.dumps(stats, indent=2))
-    return stats
-```
+**What if the employer says AI tooling is optional?**
+Then the relevant question is which tasks the tooling covers, not whether it is allowed. The task table answers that. If tooling covers little of the role, the AI-mention comparison is less relevant to your case; if it covers a lot, the scope conversation is more important than the salary comparison.
 
-Run tests and lint:
+**How do I handle equity and bonuses?**
+Convert everything to a single number with stated assumptions. For equity, state the vesting schedule, the current valuation, and a discount you apply for illiquidity and dilution. Show the arithmetic. Do not present a discounted figure as a guaranteed value.
 
-```bash
-pytest test_scraper.py --cov=scraper --cov-report=term-missing
-black scraper.py indeed.py report.py logger.py
-```
+**What about non-English postings?**
+Keyword matching is language-specific. Maintain a separate keyword set per language and note which was used. Machine translation of postings before tagging adds error; state the error rate you observe on a manual sample.
 
-In CI, add a step that posts a Slack message to #salary-alerts whenever the 75th percentile moves more than 5% week-over-week. I set this up on GitHub Actions and caught a 7% drop in Frankfurt backend salaries after a major tech layoff in Q1 2026.
+**Is a 14% gap universal?**
+No. It is a property of a specific sample at a specific time. Report your sample size, date, source, and filters. If someone challenges the number, the challenge is answerable — that is the point of building it this way.
 
-## Real results from running this
+## What to do in the next 30 minutes
 
-I ran the pipeline against 1,200 postings in the UK, US, and India for three titles: Backend Engineer, Data Engineer, and Product Engineer. The data showed:
+Open your current job description and list every responsibility as a single row. For each, write one sentence of evidence for whether it is automatable today and whether it requires human judgment. Save it as `human_tasks.md`. That file, not the scraper, is the core of the negotiation — the data pipeline only supports it.
 
-| Location | Title | Median non-AI salary (2026 USD) | AI-filtered median | Premium | Sample size |
-|----------|-------|----------------------------------|--------------------|---------|-------------|
-| London | Backend Engineer | £72,000 | £63,000 | 14% | 142 |
-| New York | Backend Engineer | $108,000 | $95,000 | 14% | 189 |
-| Bangalore | Backend Engineer | ₹2,400,000 | ₹2,000,000 | 20% | 87 |
-| Berlin | Backend Engineer | €61,000 | €53,000 | 15% | 94 |
-
-The premium is consistent across locations: roles that explicitly avoid AI tools pay 14–20% more for the same title. When you attach this table to your counter-offer, recruiters stop quoting 2026 bands and start quoting 2026 realities.
-
-I used the report to negotiate a 15% raise for a Staff Engineer role. The recruiter initially countered with a 5% increase, citing the company’s 2026 budget. I sent the report with the table above and a one-pager that broke the job description into AI-automatable tasks (docs, tests, basic debugging) and human-only tasks (ownership, stakeholder alignment, deadline pressure). After two follow-ups, they matched the 15% and added a 3% annual refresh clause.
-
-The script runs in under 3 minutes on a 2026 MacBook Pro. In CI, it takes 6 minutes including Playwright setup. Cost is negligible: LinkedIn’s API is free for guest users, Indeed’s HTML is public, and Playwright runs on GitHub’s free runners.
-
-## Common questions and variations
-
-**Why not just use Levels.fyi or LevelsGo?**
-
-Levels.fyi and LevelsGo scrape Glassdoor and LinkedIn, but they don’t filter for AI tooling in the job description. In 2026, 63% of postings include at least one AI tool, and their salary bands are contaminated by those roles. My script filters them out, giving you a cleaner 2026 baseline.
-
-**What if my company says AI tools are optional?**
-
-Even if AI tools are optional, postings that mention them have a 12% lower median salary. The signal is strong enough to use as a counter-anchor. Frame it this way: "The market for my role is pricing in AI assistance. If the company prefers I don’t use AI, the compensation should reflect that constraint."
-
-**How do I handle equity and sign-on bonuses?**
-
-Break equity into two numbers: (a) the guaranteed value at Year 1 (use a 20% discount for illiquidity) and (b) the expected value at Year 4 (use a 5% discount for dilution). Add the Year 1 guarantee to base salary for the comparison table. In 2026, public tech stocks have 25% lower volatility than in 2026, so the discount rate is safer.
-
-**What if I’m in a non-English market?**
-
-The script currently supports English postings only. For German markets, add a translation layer using DeepL API (€0.0025 per 1,000 characters in 2026) and map German AI terms (KI-Assistent, Autocode-Vervollständigung) to the keyword set. I tested this on Munich backend roles and the premium held at 16%.
-
-## Where to go from here
-
-In the next 30 minutes, open your job description and list the 10 most frequent verbs: write, debug, test, review, design, own, ship, negotiate, align, prioritize. Circle the verbs that still require human judgment under deadline and risk. Save that list into a file called `human_tasks.md` and compute the percentage of human-only tasks. If the percentage is above 25%, your negotiation leverage increases by 20% compared to roles with lower percentages.
-
-Then, open your LinkedIn profile and update the "About" section to explicitly call out the human-only tasks you own. Recruiters’ scrapers look for these keywords. I added "I own stakeholder alignment and deadline-driven delivery" and saw a 22% increase in recruiter outreach within two weeks.
-
-Finally, run the scraper:
-
-```bash
-python scraper.py --title "Backend Engineer" --location "London, UK"
-```
-
-Attach `report.md` and `human_tasks.md` to your next compensation conversation. If the recruiter pushes back, ask for the specific AI tool they expect you to use and the expected time savings. In 2026, that data point becomes your new counter-anchor.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 27, 2026
+Then, before your next compensation conversation, collect at least 30 postings for your exact title and location from a source whose terms permit it, tag them, and compute the two medians. Report n for each group. If the difference is under 5% or either group has fewer than 30 postings, do not lead with the number; lead with the task table instead.

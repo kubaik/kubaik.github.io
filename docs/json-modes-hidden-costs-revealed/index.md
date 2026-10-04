@@ -1,41 +1,36 @@
 # JSON mode's hidden costs revealed
 
-Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what teams commonly learn when they build this under real constraints.
+Most structured-output guides assume a clean environment and a patient timeline. Production gives you neither. The failure mode described below is common enough to have a name in postmortems: the pipeline that emitted valid JSON and still corrupted the accounting ledger.
 
-## The situation (what we were trying to solve)
+## The situation
 
-Picture a real-time expense categorization microservice: feed raw transaction text like "Safeway on 01/14/2026 $47.12" into an LLM and get back structured JSON with merchant, date, and amount. A service like this typically processes tens of thousands of transactions per minute during peak hours, spread across regions like Lagos and Manila.
+Consider a real-time expense categorization service. Raw transaction text such as `Safeway on 01/14/2026 $47.12` goes into an LLM, and structured fields — merchant, date, amount — come out. Services like this run at tens of thousands of transactions per minute at peak, often across multiple regions.
 
-The natural starting point is what every tutorial recommends: the LLM's built-in JSON mode. It's supposed to guarantee valid JSON output, right? So the first version is often a short Python function using `anthropic.Anthropic.messages.create()` with `response_format={"type": "json_object"}`. The first few dozen calls work perfectly. Then the errors start: malformed JSON in a meaningful percentage of responses, missing fields, and occasional array fields rendered as strings. A connection pool issue that consumes three days of debugging is usually a single misconfigured timeout — and this post is what most engineers wish they had found before that debugging session.
+The natural starting point is the provider's built-in JSON mode. It is documented to guarantee syntactically valid JSON. A first version is therefore a short function that calls the chat completion endpoint with a JSON response format. The first few dozen calls work. Then the errors appear: malformed JSON in a meaningful share of responses, missing fields, and array fields occasionally rendered as strings.
 
-The real problem isn't the LLM's JSON mode. It's the assumption that "structured outputs" means "valid JSON." What's actually needed is reliable parsing, not just syntactically correct blobs. Downstream expense systems require merchant names to be normalized ("7-Eleven" vs "Seven Eleven"), dates in ISO format, and amounts as decimals — none of which JSON mode guarantees.
+The problem is not JSON mode. The problem is the assumption that "structured output" means "usable data." What downstream systems need is reliable parsing, not syntactically correct blobs. An expense system requires merchant names normalized (`7-Eleven` vs `Seven Eleven`), dates in ISO format, and amounts as decimals. JSON mode guarantees none of that.
 
-Within a few months, teams commonly find themselves spending over 20% of their compute budget on validation and retry logic. The LLM bill alone can reach five figures monthly even when using the cheapest model available. On-call rotations end up fielding nightly alerts about misclassified expenses wreaking havoc in the accounting system. Something has to change.
+Over time, teams that stay on this path find a growing share of compute budget going to validation and retry logic, monthly model bills climbing well past what the traffic alone would justify, and on-call rotations fielding alerts about misclassified expenses. Something has to change.
 
-## What teams try first and why it doesn't work
+## Why the obvious fixes fall short
 
-**Attempt 1: Raw JSON mode with regex validation**
-A common first fix is a validation script using Python 3.11's `json` module and regex to catch malformed responses. It catches the large majority of errors but adds 80-120ms per call. The 95th percentile latency jumps from around 120ms to 200ms. The accounting team notices — they start complaining about "slow categorizations" in their dashboards. It's a wall: either accept the latency penalty or let bad data through.
+**Attempt 1: JSON mode plus regex validation.** A validation pass using the standard `json` module and regular expressions catches most malformed responses but adds tens of milliseconds per call. The accounting team notices the latency before it notices the improvement. It is a wall: accept the latency penalty or let bad data through.
 
-**Attempt 2: JSON mode with retry loop**
-Exponential backoff with 3 retries per call reduces bad data to around 2% but triples LLM API costs. At 15,000 calls/minute, that's 45,000 extra model invocations daily. A five-figure monthly bill can become a mid-five-figure bill. Finance teams tend to send strongly worded Slack messages about "unexpected cloud spend."
+**Attempt 2: JSON mode with a retry loop.** Exponential backoff with three retries per call reduces bad data substantially but multiplies model invocations. At 15,000 calls per minute, three retries means up to 45,000 extra calls per minute in the worst case. The bill scales with the failure rate, which is exactly backwards: the more the model struggles, the more you pay.
 
-**Attempt 3: Fine-tuning the base model**
-Fine-tuning a `mistralai/Mistral-7B-Instruct-v0.3` model on a couple thousand labeled examples typically costs a few thousand dollars on AWS SageMaker with 4x ml.g5.12xlarge instances for around 14 hours. The fine-tuned model reduces errors to roughly 1.2% but introduces new problems: it hallucinates merchant categories for unfamiliar stores, and the model size balloons to 14GB. The inference endpoint needs 8x g5.xlarge instances to handle load, pushing monthly costs into five figures just for the LLM layer. The worst part? The fine-tuned model still produces "7-Eleven" and "Seven Eleven" inconsistently.
+**Attempt 3: Fine-tuning the base model.** Fine-tuning on a few thousand labeled examples can reduce format errors, but it changes model behavior in ways that are hard to anticipate. A fine-tuned model may hallucinate categories for unfamiliar merchants, and the artifact is large enough that serving it requires meaningfully more GPU capacity than the base model. The worst outcome is that it still produces `7-Eleven` and `Seven Eleven` inconsistently, because consistency was never a property fine-tuning optimized for.
 
-**Attempt 4: Guardrails with Pydantic**
-Pydantic v2.6 models with strict validation look clean on paper:
+**Attempt 4: Schema validation with a typed model.** A typed model with strict validation looks clean on paper:
 
 ```python
 from pydantic import BaseModel, field_validator
-from typing import List
 import json
 
 class Transaction(BaseModel):
     merchant: str
     date: str
     amount: float
-    
+
     @field_validator('merchant')
     @classmethod
     def normalize_merchant(cls, v: str) -> str:
@@ -47,18 +42,19 @@ try:
     transaction = Transaction(**data)
 except Exception as e:
     # log error and retry
+    ...
 ```
 
-This catches 96% of errors but requires manual schema design for every new data type. Teams end up with 18 different Pydantic models across their microservices. The schema maintenance overhead becomes a full-time job for one developer. Plus, Pydantic validation adds 30-50ms per call on top of the LLM's 120ms.
+This catches most errors but requires a schema per data type, and each schema becomes a small maintenance surface. Across a fleet of microservices the schemas multiply faster than the teams that own them. Validation also adds per-call overhead on top of the model call.
 
-All these attempts fail the same way: they treat the LLM as the source of truth. They try to validate the LLM's output instead of treating it as a noisy, probabilistic source that needs correction.
+All four attempts fail the same way: they treat the LLM as the source of truth and try to validate its output, rather than treating it as a noisy, probabilistic extractor whose output needs correction.
 
 ## The approach that works
 
-Stop trying to make the LLM produce perfect structured data. Instead, design a two-stage pipeline: extraction + correction. The key insight is that LLMs are great at extracting entities from text but terrible at consistent formatting. So split the job:
+Stop trying to make the LLM produce perfect structured data. Design a two-stage pipeline: extraction plus correction. LLMs are strong at pulling entities out of messy text and weak at consistent formatting. Split the job accordingly.
 
-1. **Extraction stage:** Use the LLM to pull out raw entities (merchant, date, amount) without enforcing structure
-2. **Correction stage:** Apply strict validation, normalization, and deduplication rules to the raw entities
+1. **Extraction stage:** use the LLM to pull out raw entities (merchant, date, amount) without enforcing strict structure.
+2. **Correction stage:** apply deterministic validation, normalization, and deduplication to the raw entities.
 
 The extraction prompt becomes:
 
@@ -73,24 +69,23 @@ Transaction text: {transaction_text}
 Return ONLY the extracted values, one per line, no explanations.
 ```
 
-The correction stage uses a combination of:
-- Regex patterns for date and amount parsing
-- A merchant normalization table with 12,000 known merchant variants
-- A deduplication algorithm that groups similar merchant names
+The correction stage uses:
 
-This approach typically delivers 99.8% valid structured outputs at 95th percentile latency of 145ms. The LLM bill drops to around half of the original, and the validation overhead disappears because the correction stage handles all edge cases deterministically.
+- Regex patterns for date and amount parsing.
+- A merchant normalization table mapping known variants to canonical names.
+- A deduplication step that groups similar merchant names.
 
-The breakthrough comes when teams realize that LLMs struggle with consistency but excel at entity extraction. Once they stop fighting JSON mode and start embracing the LLM's strengths, everything falls into place.
+Why this works: the model is asked to do the one thing it is reliably good at — locating entities in messy text. Every property your downstream system actually depends on (format, canonical names, numeric types) is enforced by code that is deterministic and testable. The model's variance is confined to a single step whose failure modes you can enumerate.
 
-## Implementation details
+## Implementation
 
-A final pipeline like this typically uses the following stack in 2026:
+A representative stack:
 
-- **LLM provider:** Anthropic Claude 3.5 Sonnet via `anthropic` Python SDK v0.26
-- **Runtime:** FastAPI 0.111 with Python 3.11 on Ubuntu 24.04
-- **Message queue:** Redis 7.2 Streams for request buffering
-- **Validation library:** Python's `dataclasses` with custom validation
-- **Merchant normalization:** SQLite database with 12,000 merchant variants
+- **LLM provider:** a hosted chat-completions API with a JSON-capable model.
+- **Runtime:** FastAPI with Python 3.11 on a current LTS Linux distribution.
+- **Message queue:** Redis Streams for request buffering.
+- **Validation:** Python `dataclasses` with custom validation.
+- **Merchant normalization:** SQLite with a merchant-variant table.
 
 The extraction endpoint:
 
@@ -120,21 +115,21 @@ def extract_entities(text: str) -> RawTransaction:
 
     Return ONLY the extracted values, one per line, no explanations.
     """
-    
+
     response = client.messages.create(
         model="claude-3-5-sonnet-20241022",
         max_tokens=64,
         temperature=0.1,
         messages=[{"role": "user", "content": prompt}],
     )
-    
+
     raw_output = response.content[0].text.strip()
     return parse_raw_output(raw_output)
 
 def parse_raw_output(raw: str) -> RawTransaction:
     tx = RawTransaction()
     lines = [line.strip() for line in raw.split("\n") if line.strip()]
-    
+
     for line in lines:
         if re.match(r'\d{2}/\d{2}/\d{4}', line):
             tx.date = line
@@ -142,7 +137,7 @@ def parse_raw_output(raw: str) -> RawTransaction:
             tx.amount = line
         else:
             tx.merchant = line
-    
+
     return tx
 ```
 
@@ -159,25 +154,25 @@ class TransactionCorrector:
     def __init__(self):
         self.conn = sqlite3.connect(NORMALIZATION_DB)
         self.conn.execute("PRAGMA journal_mode=WAL")
-    
+
     def normalize_merchant(self, merchant: str) -> str:
         # Strip and normalize whitespace
         merchant = re.sub(r'\s+', ' ', merchant.strip().lower())
-        
+
         # Check against known variants
         cursor = self.conn.execute(
-            "SELECT canonical FROM merchants WHERE variant = ?", 
+            "SELECT canonical FROM merchants WHERE variant = ?",
             (merchant,)
         )
         result = cursor.fetchone()
         return result[0] if result else merchant
-    
+
     def parse_date(self, date_str: str) -> str:
         try:
             return datetime.strptime(date_str, "%m/%d/%Y").isoformat()
         except ValueError:
             return None
-    
+
     def parse_amount(self, amount_str: str) -> float:
         try:
             cleaned = re.sub(r'[^0-9.]', '', amount_str)
@@ -186,123 +181,93 @@ class TransactionCorrector:
             return None
 ```
 
-This pipeline runs with Redis Streams as the message queue. Each Redis stream consumer processes up to 100 messages/second with a pool of 8 workers. The FastAPI endpoint has a circuit breaker (using `pybreaker` 1.2) to prevent cascading failures when the LLM service degrades.
+A few notes on the code above, because the details matter more than the shape:
 
-The merchant normalization database is updated weekly via a cron job that pulls from an internal merchant catalog. `sqlite3` handles 50,000 lookups per second on a single `db.t4g.small` instance in AWS RDS. The database file is 47MB and costs around $8/month to store.
+- `parse_raw_output` assigns the first non-date, non-amount line to `merchant`. If the model emits multiple lines that are neither, the last one wins. For a single merchant per transaction that is fine; for multi-merchant receipts you need a different contract, such as one entity per line with a leading key.
+- `normalize_merchant` lowercases before lookup, so the `merchants` table must store lowercase variants. Mixing cases in the table produces silent misses.
+- `parse_date` returns `None` on failure rather than raising. The caller must decide whether a missing date is a rejection or a deferred item. Do not silently default to today's date.
 
-## Results — the numbers before and after
+The pipeline runs with Redis Streams as the message queue. Each consumer processes a bounded number of messages per second with a worker pool sized to the model's throughput. The FastAPI endpoint uses a circuit breaker to prevent cascading failures when the model provider degrades.
 
-| Metric                     | Before (JSON mode) | After (Extraction + Correction) |
-|----------------------------|--------------------|---------------------------------|
-| Valid structured outputs   | 87%                | 99.8%                           |
-| 95th percentile latency    | 200ms              | 145ms                           |
-| Monthly LLM API cost       | $18,000            | $9,200                          |
-| Error rate (accounting)    | 2.3%               | 0.2%                            |
-| Maintenance hours/week     | 12                 | 2                               |
-| Code lines for validation  | 47 (regex) + 18 models | 30 (pipeline)                |
+The merchant normalization table is updated on a schedule from an internal merchant catalog. SQLite handles concurrent reads well on a single small instance; the file is small enough to ship with the service or mount as a read-only volume.
 
-The latency improvement comes from two factors: removing the Pydantic validation overhead and reducing retry loops. The cost savings come from switching from a fine-tuned model to a base model and eliminating the validation retries.
+## Measuring the pipeline honestly
 
-Accounting teams notice immediately. They commonly report a 94% reduction in manual expense reclassification tickets within two weeks. On-call rotations go from 2-3 alerts nightly to zero sustained incidents over a 30-day period.
+The numbers below are illustrative, not measured from a production system. The point is the method: instrument these five quantities before and after the change.
 
-Most importantly, the system becomes maintainable. New data types (like subscription payments) require only a new extraction prompt and a few validation rules — no model retraining, no schema redesigns.
+| Metric | What to instrument | How to compare |
+|---|---|---|
+| Valid structured outputs | Count rows rejected by the correction stage | Ratio of accepted to total, per hour |
+| p95 latency | Histogram of end-to-end request duration | Compare extraction-only vs extraction+correction |
+| Model cost | Provider usage API, tokens in and out | Multiply by published per-token price |
+| Downstream error rate | Tickets or exceptions from the accounting system | Weekly count, normalized by transaction volume |
+| Maintenance hours | Time logged against the pipeline's repos | Per sprint, per engineer |
+
+To produce a real table, run a labeled sample of at least a few hundred transactions through both pipelines and diff the outputs. Any figure you cannot reproduce from a script is not a result; it is an anecdote.
 
 ## What to do differently
 
-**1. Start with extraction, not structure**
-Months get wasted trying to force JSON mode to do validation work. Starting by asking "What can the LLM reliably extract?" instead of "How do we validate its output?" saves five figures in compute costs and several developer-weeks.
+**1. Start with extraction, not structure.** Ask "What can the model reliably extract?" rather than "How do we validate its output?" The first question leads to a design; the second leads to an arms race.
 
-**2. Avoid fine-tuning for formatting**
-Fine-tuning changes the LLM's behavior in unpredictable ways. The base model is already good at entity extraction; the formatting just needs to be handled separately. Fine-tuning introduces new edge cases that are hard to anticipate, like inconsistent merchant name normalization.
+**2. Avoid fine-tuning for formatting.** Fine-tuning changes model behavior in unpredictable ways. The base model is already good at entity extraction; formatting belongs in code. Fine-tuning also couples you to a specific model version, which makes upgrades expensive.
 
-**3. Invest in merchant normalization early**
-Merchant normalization databases tend to grow organically. They should be built from day one using an existing merchant catalog. A well-maintained normalization table reduces LLM calls and improves consistency significantly.
+**3. Invest in merchant normalization early.** Normalization tables grow organically. Seed them from an existing merchant catalog on day one. A well-maintained table reduces both model calls and downstream inconsistency.
 
-**4. Use Redis Streams from day one**
-Starting with direct API calls and switching to Redis Streams for buffering is a common path. The buffering smooths out LLM latency spikes and makes the system more resilient. Starting with a queue prevents many early outages.
+**4. Use a queue from day one.** Direct API calls are fine for prototypes. In production, buffering smooths model latency spikes and decouples your request rate from the provider's throughput.
 
-**5. Monitor at the extraction stage, not the output stage**
-Monitoring JSON validity is a downstream concern. What matters is entity extraction accuracy — did the pipeline get merchant, date, and amount 99% of the time? That's the real signal.
+**5. Monitor at the extraction stage, not the output stage.** JSON validity is a downstream concern. The signal that matters is entity extraction accuracy: did the pipeline get merchant, date, and amount on the first pass? Track that per field, not per response.
 
-The biggest lesson: don't let the LLM do your validation work. It's expensive, inconsistent, and fragile. Use it for what it's good at — extracting entities from messy text — and handle the rest with deterministic code.
+The core lesson: do not let the LLM do your validation work. It is expensive, inconsistent, and fragile. Use it for what it is good at — extracting entities from messy text — and handle the rest with deterministic code.
 
-## The broader lesson
+## The broader pattern
 
-Structured outputs from LLMs aren't a feature — they're a workflow problem. JSON mode, guardrails, and fine-tuning are all attempts to shoehorn LLMs into a validation role they're not designed for. The real solution is to treat the LLM as an extraction engine, not a validation engine.
+Structured outputs from LLMs are a workflow problem, not a feature. JSON mode, guardrails, and fine-tuning are all attempts to push the model into a validation role it was not designed for. The alternative is to treat the model as an extraction engine.
 
-This pattern applies beyond expense categorization:
-- **Resume parsing:** Extract skills and experiences, then validate against a controlled vocabulary
-- **Medical notes:** Extract symptoms and medications, then normalize to ICD-10 codes
-- **Customer support tickets:** Extract intent and entities, then route to the right system
+The pattern generalizes:
 
-The principle is simple: **use LLMs for extraction, deterministic code for correction.** This gives you the best of both worlds — the LLM's ability to parse messy text and the code's ability to enforce strict rules.
+- **Resume parsing:** extract skills and roles, then map them to a controlled vocabulary.
+- **Clinical notes:** extract symptoms and medications, then normalize to standard codes.
+- **Support tickets:** extract intent and entities, then route deterministically.
 
-The moment you accept that LLMs will never be perfect at formatting is the moment you stop fighting them. Design your pipeline around their strengths, not their weaknesses.
+The principle is the same everywhere: **LLMs for extraction, deterministic code for correction.**
 
-## How to apply this to your situation
+## Failure modes to watch for
 
-Start by asking three questions about your LLM workflow:
+- **Model emits a plausible but wrong entity.** Extraction accuracy is a separate metric from format validity. Sample and label regularly.
+- **Normalization table drifts.** New merchants appear constantly. Schedule a review of unmatched merchant strings and promote the frequent ones into the table.
+- **Correction stage becomes a second model.** If the correction logic starts making fuzzy judgments, it will inherit the same inconsistency you removed from the extraction stage. Keep it deterministic.
+- **Silent defaults.** Returning `None` and then defaulting to a plausible value downstream hides failures. Surface them at the boundary.
+- **Queue backlog.** Buffering absorbs spikes, but a sustained backlog means the extraction stage cannot keep up. Alert on queue depth, not just on errors.
 
-1. **What entities does the LLM reliably extract?**
-   Run a 100-sample test with your current model. Check if it consistently extracts the fields you need. If it misses more than 5%, your workflow needs redesign.
+## Applying this to your workflow
 
-2. **Where does the LLM's output fail your downstream systems?**
-   List the specific validation rules your downstream system enforces. Most teams discover these rules only when data breaks. Map them out explicitly.
+Start by answering three questions about your current pipeline:
 
-3. **What deterministic correction can handle the edge cases?**
-   Identify the normalization rules, deduplication logic, and validation steps that are better handled by code. These are your correction stage.
+1. **What entities does the model reliably extract?** Run a labeled sample of at least 100 inputs through the current model. Measure per-field accuracy. If a field is missed more than occasionally, the prompt or model is wrong, not the validation.
+2. **Where does the output fail your downstream systems?** List the specific rules the consumer enforces — formats, allowed values, required fields. Write them down. Most teams discover these rules only when data breaks.
+3. **What deterministic correction handles the edge cases?** Identify the normalization, deduplication, and validation steps that belong in code.
 
-Then, implement the extraction + correction pipeline:
+Then implement:
 
-- **Extraction:** Use a minimal prompt that asks for raw entities without structure
-- **Correction:** Apply strict validation and normalization in code
-- **Queue:** Buffer requests with Redis or Kafka to handle LLM latency spikes
-- **Monitor:** Track extraction accuracy, not JSON validity
+- **Extraction:** a minimal prompt that asks for raw entities without structure.
+- **Correction:** strict validation and normalization in code.
+- **Queue:** buffer requests to absorb model latency spikes.
+- **Monitor:** track per-field extraction accuracy, not JSON validity.
 
-Don't waste time trying to make JSON mode perfect. It's not designed for your use case. Design your pipeline around the LLM's strengths instead.
-
-## Resources that helped
-
-- [Anthropic's structured output documentation](https://docs.anthropic.com/en/docs/build-with-claude/structured-output) — explains JSON mode limitations
-- [Redis Streams tutorial](https://redis.io/docs/data-types/streams-tutorial/) — essential for buffering LLM calls
-- [Pydantic's "Using dataclasses" guide](https://docs.pydantic.dev/latest/usage/dataclasses/) — shows how to combine dataclasses with validation
-- [SQLite JSON1 extension](https://www.sqlite.org/json1.html) — useful for JSON parsing in SQLite
-- [Merchant normalization patterns](https://github.com/benfred/implicit) — ideas for handling merchant name variations
-- [FastAPI circuit breaker](https://pybreaker.readthedocs.io/en/latest/) — prevents cascading failures with LLM services
-
-These resources save months of trial and error. Start with the Anthropic docs — they're the most honest about JSON mode limitations.
-
-## Frequently Asked Questions
+## FAQ
 
 **Why does JSON mode still produce malformed output?**
-JSON mode guarantees syntactically valid JSON, not semantically correct data. The LLM can still output `{"merchant": null, "date": "invalid", "amount": "$47.12"}` which is valid JSON but useless for your system. JSON mode doesn't validate field values, only JSON structure.
+JSON mode is documented to guarantee syntactically valid JSON, not semantically correct data. The model can emit `{"merchant": null, "date": "invalid", "amount": "$47.12"}` — valid JSON, useless to the consumer. JSON mode constrains structure, not field values.
 
-**How much latency does the extraction + correction pipeline add compared to direct JSON mode?**
-The extraction stage adds 120-150ms (LLM call) plus 5-10ms for correction. Direct JSON mode with validation adds 80-120ms for validation plus 120-150ms for the LLM call. The extraction + correction pipeline is actually faster because it reduces retries and removes complex validation overhead.
+**How much latency does extraction plus correction add?**
+The extraction call dominates; the correction stage is a regex pass, a dictionary lookup, and a number parse, all of which are sub-millisecond to low-millisecond operations. The apparent latency win over JSON mode with validation comes from removing retries and heavy schema validation, not from the correction stage being free. Measure end-to-end, not stage by stage.
 
-**What's the best way to handle merchant name variations like "7-Eleven" vs "Seven Eleven"?**
-Build a normalization table with known variants. Start with your existing merchant catalog, then supplement with common misspellings. Use fuzzy matching to catch new variants. Store the canonical name in the database and map all variants to it. This approach scales better than trying to train the LLM to normalize names consistently.
+**How should merchant variants like `7-Eleven` and `Seven Eleven` be handled?**
+Build a normalization table of known variants. Seed it from your existing merchant catalog, then supplement with common misspellings. Use fuzzy matching to surface new candidates for review, but keep the mapping itself exact. Storing the canonical name and mapping every variant to it scales better than trying to train the model to normalize names.
 
-**When should I fine-tune vs use extraction + correction?**
-Fine-tune only if the LLM consistently fails to extract entities you need. If the LLM extracts entities correctly but formats them inconsistently, extraction + correction is the better approach. Fine-tuning is expensive ($2,000+), slow (days of training), and fragile (breaks with model updates). Extraction + correction gives you the same quality with deterministic code.
+**When is fine-tuning the right call?**
+Fine-tune when the model consistently fails to extract entities you need, not when it extracts them and formats them inconsistently. Formatting is a code problem. Fine-tuning is expensive, slow, and fragile across model updates.
 
----
+## One action for the next 30 minutes
 
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** July 03, 2026
+Write a script that runs 100 representative inputs through your current pipeline and records, per field, whether the extracted value was correct. Print the per-field accuracy. That single number tells you whether your problem is extraction or correction — and which of the two stages to fix first.

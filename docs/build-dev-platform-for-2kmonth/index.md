@@ -1,65 +1,70 @@
-# Build dev platform for $2k/month
+# Designing a Low-Cost Internal Developer Platform
 
-Most build internal guides assume a clean environment and a patient timeline. Production gives you neither. Here's what a team learns building this under real constraints.
+Most guides to internal developer platforms assume a clean environment, a patient timeline, and a budget for managed tooling. Production gives teams none of those. This article covers the constraints that actually shape an IDP for a distributed team, the three approaches that usually fail first, one approach that tends to hold up, and — more importantly — how to measure each claim on your own infrastructure rather than trusting someone else's numbers.
 
-## The situation (what you're usually trying to solve)
+## The constraints that shape the design
 
-A startup hits 35 engineers across Lagos, Nairobi, and Accra. It's shipping a B2B fintech product that processes 12,000 M-Pesa payments every hour during peak. The monolith is a Node 20 LTS + PostgreSQL 15 cluster on AWS eu-central-1. Engineers wait 15–20 minutes for a fresh staging environment every time they push a branch. Local dev requires 32 GB RAM and 20 minutes of `docker-compose up` voodoo. There's no single source of truth for environment variables, so staging is 60 % similar to production and prod is 20 % different from staging. A staging outage that consumes three days of debugging is usually a single mis-set `REACT_APP_API_BASE_URL` pointing to prod instead of staging — this post is the guide that would have prevented it.
+A typical situation: a startup with 35 engineers spread across three cities, shipping a B2B payments product that handles heavy traffic during peak hours. The monolith runs on Node 20 LTS and a PostgreSQL 15 cluster in a single AWS region. Engineers wait 15–20 minutes for a fresh staging environment per branch. Local dev needs 32 GB RAM and 20 minutes of `docker-compose up`. Environment variables live in three places and drift constantly, so staging is only roughly similar to production.
 
-The team needs an Internal Developer Platform (IDP) that meets three constraints:
-1. Mobile-first engineers on 3G or 4G who drop to 2G at peak hours
-2. Intermittent-connection-tolerant CI/CD (GitHub Actions runners in eu-central-1 were 120 ms away for Nairobi devs)
-3. Zero budget for commercial IDP tools — runway is 18 months and G&A costs have to stay below 5 % of revenue
+A recurring failure mode is a single mis-set `REACT_APP_API_BASE_URL` pointing at prod instead of staging, which can consume days of debugging. That class of incident is what an IDP should prevent.
 
-The latency bar isn't "good enough for Chrome on fibre" — it's <300 ms round-trip for any API call from a phone on 3G with 800 ms TCP handshake time. Anything slower and engineers stop using the platform.
+The design constraints that matter most:
 
-## What teams try first and why it doesn't work
+1. **Mobile-first engineers on unreliable connections.** Engineers on 3G or 4G who drop to 2G at peak hours. A platform that assumes fibre latency will be abandoned.
+2. **Intermittent-connection-tolerant CI/CD.** If CI runners are 120 ms away from the farthest developer, every `git push` feels slow regardless of how fast the build itself is.
+3. **Near-zero budget for commercial IDP tools.** Runway is finite and G&A must stay small.
 
-### Option A: Self-hosted GitLab + Kubernetes
+A useful latency bar: under 300 ms round-trip for any API call from a phone on 3G, assuming an 800 ms TCP handshake. Slower than that and engineers stop using the platform. This number is a design target, not a measured result — measure your own.
 
-A common first attempt is GitLab Runner on Kubernetes with GitLab 16.7 on AWS EKS 1.28. The cluster costs $1,800/month before a single pipeline runs. Each pipeline pulls 20 Docker layers totalling 2 GB per job; the image cache miss rate is 45 % on first build, so every push triggers a full rebuild. The `docker build` step takes 8 minutes on a c6g.large runner (2 vCPUs, 4 GB RAM). BuildKit multi-stage caching helps, but when the base image is Node 20 LTS + Python 3.11 + Chromium for Playwright tests, the cache footprint is still 1.4 GB. Engineers in Nairobi see 1.2 second ping times to eu-central-1, so each `git push` feels like waiting for a 3G page load.
+## What teams try first and why it usually fails
 
-Latency: 450–600 ms per API call from a phone on 3G
-Cost: $1,800/month before any actual work
-Pain: Waiting 10–12 minutes for a staging environment to become healthy
+### Option A: Self-hosted GitLab plus Kubernetes
 
-### Option B: Terraform + Helm (no platform layer)
+A common first attempt is GitLab Runner on Kubernetes, with GitLab on AWS EKS. The cluster has a fixed monthly cost before a single pipeline runs. Each pipeline pulls many Docker layers totalling gigabytes per job; cache miss rates on first build are high, so every push triggers a full rebuild. The `docker build` step can take 8 minutes on a small runner. BuildKit multi-stage caching helps, but when the base image includes Node, Python, and Chromium for Playwright tests, the cache footprint remains large. Engineers far from the runner region see high ping times, so each push feels like a 3G page load.
 
-The next attempt is usually 1,200 lines of Terraform and 450 lines of Helm charts to spin up ephemeral namespaces. The plan works on a dev laptop in 3 minutes, but in CI it takes 22 minutes because GitHub Actions runners in eu-central-1 have to pull the 1.2 GB base image over a 15 Mbps link. Engineers try to run the same Helm chart locally with `k3d`, but k3d 5.6.0 on macOS requires Docker Desktop with 8 GB RAM and still hits 400 ms latency spikes when pulling images.
+- Latency: 450–600 ms per API call from a phone on 3G
+- Cost: fixed cluster spend before any work happens
+- Pain: 10–12 minutes waiting for a staging environment to become healthy
 
-The wall comes when trying to inject environment variables: 47 secrets across staging and prod. The Helm `--set-file` approach requires base64 encoding per environment, so the result is 94 command-line arguments with no way to diff them. A single accidental prod value leak is enough to cause a 3-hour outage during a payment spike.
+### Option B: Terraform plus Helm, no platform layer
 
-### Option C: Backstage with PostgreSQL backend
+The next attempt is usually a large amount of Terraform and Helm to spin up ephemeral namespaces. The plan works on a dev laptop in a few minutes, but in CI it takes far longer because runners pull a large base image over a constrained link. Engineers try to run the same Helm chart locally with `k3d`, but on macOS that requires Docker Desktop with significant RAM and still hits latency spikes when pulling images.
 
-Backstage 1.25.0 looks promising: it promises a unified developer portal. Deployed on Render with a $79/month PostgreSQL 15 instance, the first surprise is that Backstage expects every plugin to have a Node backend. Twenty plugins mean 20 separate Node services, each with its own health check and port. The Render 60-second response-time SLA for health checks gets hit quickly — 30 % of requests time out. The frontend bundle is 18 MB gzipped; on a 2G connection it takes 22 seconds to load. Engineers stop using the portal after two tries.
+The wall comes when injecting environment variables: dozens of secrets across staging and prod. The Helm `--set-file` approach requires base64 encoding per environment, so the result is a long list of command-line arguments with no way to diff them. A single accidental prod value leak is enough to cause a multi-hour outage during a payment spike.
 
-Latency: 1,200 ms page load on 2G
-Cost: $79/month for the portal alone
-Pain: No staging environment provisioning, just a catalog
+### Option C: A developer portal with a database backend
 
-## The approach that works
+A unified developer portal looks promising. Deployed on a managed host with a small managed PostgreSQL instance, the first surprise is that the portal expects every plugin to have its own Node backend. Twenty plugins mean twenty separate Node services, each with its own health check and port. Health-check timeouts pile up quickly. The frontend bundle is large; on a 2G connection it takes many seconds to load. Engineers stop using the portal after two tries.
 
-Stop trying to build a Kubernetes cluster you can't afford and instead build a lightweight IDP around three pillars:
-1. Ephemeral environments via GitHub Environments + Pulumi
-2. A connection-first developer portal that works offline-first
-3. A secrets-as-code system that keeps prod safe while letting engineers run prod-like locally
+- Latency: over a second per page load on 2G
+- Cost: the portal alone, before any environment provisioning
+- Pain: no staging environment provisioning, just a catalog
 
-The breakthrough comes from realizing most engineers don't actually need a full Kubernetes cluster — they need a process that gives them a staging URL and a Postman collection that looks like prod. Pulumi (Python 3.11) beats Terraform here because Pulumi's Python SDK lets you write 300 lines of code that generate both the infrastructure and the environment variables, instead of 1,200 lines of HCL.
+## The approach that tends to hold up
 
-Pulumi 3.89.0 runs in GitHub Actions runners; it spins up an AWS RDS Postgres 15 cluster, an AWS ElastiCache Redis 7.2 cluster, an AWS ALB, and a set of ECS Fargate 1.4 services. The entire stack is torn down when the GitHub Environment is deleted (30-minute TTL). The pipeline builds a Docker image once per SHA and pushes it to an ECR repo. The ECS task definition is parameterized by GitHub Environment variables, so each branch gets its own URL with the exact same secrets as prod.
+Skip the Kubernetes cluster you can't afford. Build a lightweight IDP around three pillars:
 
-The developer portal is a Next.js 14.2 static site hosted on Vercel's Edge Network with ISR (Incremental Static Regeneration). The portal pages are generated at build time using Pulumi outputs, so the latency from Nairobi to the portal is 180 ms, not 1.2 seconds. A Service Worker caches the portal for offline use — engineers can open the portal on the bus ride home and still see their staging URLs.
+1. Ephemeral environments via CI environments plus an infrastructure-as-code tool with a real programming language SDK
+2. A connection-first developer portal that works offline
+3. Secrets-as-code that keeps prod safe while letting engineers run prod-like locally
 
-Secrets management uses AWS Secrets Manager + a small Python 3.11 Lambda that fetches secrets at runtime and injects them into the ECS task via environment variables. The Lambda uses the AWS SDK for Python (boto3 1.34.0) and a 128 MB memory configuration; cold starts are 180 ms. Secrets rotate automatically via AWS Secrets Manager rotation every 7 days, and the Lambda caches secrets for 5 minutes to avoid cold-start latency spikes.
+The key insight: most engineers don't need a full Kubernetes cluster. They need a process that gives them a staging URL and an API collection that looks like prod. A Python-SDK infrastructure tool beats HCL here because you can express both the infrastructure and the derived environment variables in one program, rather than maintaining two artifacts that drift.
 
-Latency: 180 ms portal load, 220 ms API calls on 3G
-Cost: $412/month for the entire platform (breakdown below)
+The stack in this design:
+
+- The infrastructure program provisions a managed Postgres cluster, a managed Redis cluster, a load balancer, and a set of container services.
+- The whole stack is torn down when the CI environment is deleted, on a short TTL.
+- The pipeline builds a Docker image once per commit SHA and pushes it to a registry. The task definition is parameterized by CI environment variables, so each branch gets its own URL with the same secret shape as prod.
+- The portal is a statically generated site on an edge network, with incremental static regeneration. Pages are generated at build time from infrastructure outputs, so portal latency from a distant city is low. A Service Worker caches the portal for offline use — engineers can open it on the bus and still see their staging URLs.
+- Secrets live in a managed secrets store. A small function fetches them at runtime and injects them into the container task. Secrets rotate on a schedule, and the function caches them for a few minutes to avoid cold-start latency spikes.
+
+The next sections cover implementation details and, crucially, how to measure each of these claims.
 
 ## Implementation details
 
-### 1. Ephemeral environments with GitHub Environments + Pulumi
+### 1. Ephemeral environments with CI environments and an IaC program
 
-Create a GitHub Actions workflow `.github/workflows/ephemeral-env.yml` that runs on `push` to any branch. The job uses a matrix of GitHub Environment names derived from the branch name:
+Create a CI workflow that runs on `push` to any non-main branch. The job uses a CI environment name derived from the pull request number:
 
 ```yaml
 # .github/workflows/ephemeral-env.yml
@@ -86,18 +91,18 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 ```
 
-The Pulumi program (`infra/__main__.py`) is 300 lines:
+The infrastructure program (`infra/__main__.py`) is a few hundred lines. The skeleton below shows the shape; the container definitions are abbreviated because the exact JSON depends on your app:
 
 ```python
 # infra/__main__.py
 import pulumi
-from pulumi_aws import ec2, ecs, elbv2, rds, elasticache, lambda_
+from pulumi_aws import ec2, ecs, elbv2, rds, elasticache, iam, lambda_
 
 config = pulumi.Config()
 sha = config.require("sha")
 env_name = config.require("env_name")
 
-# 1. RDS Postgres 15, 2 vCPU, 4 GB RAM, gp3 20 GB
+# 1. Managed Postgres, small instance class, gp3 storage
 postgres = rds.Instance(
     f"postgres-{env_name}",
     allocated_storage=20,
@@ -105,11 +110,11 @@ postgres = rds.Instance(
     engine_version="15.6",
     instance_class="db.t4g.micro",
     username="admin",
-    password=pulumi.Output.from_input(config.require_secret("db_password")),
+    password=config.require_secret("db_password"),
     skip_final_snapshot=True,
 )
 
-# 2. ElastiCache Redis 7.2, cache.t4g.small
+# 2. Managed Redis, small node type
 redis = elasticache.Cluster(
     f"redis-{env_name}",
     engine="redis",
@@ -118,10 +123,10 @@ redis = elasticache.Cluster(
     parameter_group_name="default.redis7",
 )
 
-# 3. ECS Fargate 1.4 cluster + ALB
+# 3. Container cluster
 cluster = ecs.Cluster(f"cluster-{env_name}")
 
-# 4. Secrets Lambda (128 MB, 180 ms cold start)
+# 4. Secrets function (small memory footprint)
 secrets_lambda = lambda_.Function(
     f"secrets-{env_name}",
     runtime="python3.11",
@@ -133,13 +138,14 @@ secrets_lambda = lambda_.Function(
     timeout=3,
     environment={
         "variables": {
-            "SECRET_ARN": pulumi.Output.from_input(config.require("secret_arn")),
+            "SECRET_ARN": config.require("secret_arn"),
         }
     },
 )
 
 # 5. Task definition with secrets injected
-
+# execution_role_arn, task role, container definitions, and log config
+# are omitted here; they follow the standard ECS pattern.
 task_def = ecs.TaskDefinition(
     f"task-{env_name}",
     family=f"app-{env_name}",
@@ -147,15 +153,15 @@ task_def = ecs.TaskDefinition(
     requires_compatibilities=["FARGATE"],
     cpu="1024",
     memory="2048",
-    execution_role_arn=iam_role.arn,
+    execution_role_arn=execution_role.arn,
     container_definitions=pulumi.Output.all(
         postgres.endpoint,
         redis.cache_nodes[0].address,
         secrets_lambda.arn,
-    ).apply(lambda args: f'''[{{...}}]'''),
+    ).apply(lambda args: "[ /* container definitions */ ]"),
 )
 
-# 6. Service + ALB
+# 6. Service and load balancer target group
 service = ecs.Service(
     f"service-{env_name}",
     cluster=cluster.arn,
@@ -175,11 +181,11 @@ service = ecs.Service(
 pulumi.export("url", f"https://{env_name}.staging.example.com")
 ```
 
-Set a 30-minute TTL in the GitHub Environment settings so the stack is destroyed automatically. Pulumi uses the `--stack` name as the AWS tag `pulumi:stack`, so Cost Explorer shows the spend per environment.
+Set a short TTL in the CI environment settings so the stack is destroyed automatically. The IaC tool tags resources with the stack name, so Cost Explorer can show spend per environment.
 
-### 2. Developer portal: Next.js 14.2 + ISR + Service Worker
+### 2. Developer portal: static generation plus a Service Worker
 
-The portal is a static Next.js 14.2 site built with `next build` and deployed to Vercel Edge Network. The build runs in GitHub Actions and outputs a 1.8 MB gzipped bundle. ISR regenerates the portal every 5 minutes so it stays in sync with Pulumi outputs.
+The portal is a statically generated site built with `next build` and deployed to an edge network. Incremental static regeneration keeps it in sync with infrastructure outputs on a short interval.
 
 ```javascript
 // pages/index.js
@@ -202,9 +208,11 @@ function Portal({ envs }) {
     </ul>
   );
 }
+
+export default Portal;
 ```
 
-Add a Service Worker (`/sw.js`) that caches the portal for offline use:
+Add a Service Worker (`public/sw.js`) that caches the portal shell for offline use. Note that precaching hashed build assets with a wildcard is not possible — enumerate the actual files at build time or use a stale-while-revalidate strategy for the shell only:
 
 ```javascript
 // public/sw.js
@@ -214,8 +222,7 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE).then(cache => cache.addAll([
       '/',
-      '/_next/static/chunks/main-*.js',
-      '/_next/static/css/*.css'
+      '/manifest.json'
     ]))
   );
 });
@@ -227,166 +234,113 @@ self.addEventListener('fetch', (e) => {
 });
 ```
 
-Latency improvements (measured with WebPageTest from Nairobi on 3G):
-- Before: 1,200 ms page load
-- After: 180 ms page load
-- Offline: 0 ms (cached)
+### 3. Secrets-as-code with a managed secrets store and a function
 
-### 3. Secrets-as-code with AWS Secrets Manager + Lambda
-
-Write a 120-line Python 3.11 Lambda (`lambda_code/lambda_function.py`) that fetches secrets at runtime and injects them into the ECS task:
+Write a small Python Lambda that fetches secrets at runtime and returns them. The container task references the secret by ARN via the `secrets` field in the container definition, so the plaintext never appears in the task definition.
 
 ```python
 # lambda_code/lambda_function.py
 import os
 import json
 import boto3
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 secrets_client = boto3.client('secretsmanager')
 cache = {}
 
 def handler(event, context):
     secret_arn = os.environ['SECRET_ARN']
-    now = datetime.utcnow()
-    if secret_arn not in cache or (now - cache[secret_arn]['ts']) > timedelta(minutes=5):
+    now = datetime.now(timezone.utc)
+    entry = cache.get(secret_arn)
+    if entry is None or (now - entry['ts']) > timedelta(minutes=5):
         secret = secrets_client.get_secret_value(SecretId=secret_arn)
         cache[secret_arn] = {
             'value': json.loads(secret['SecretString']),
-            'ts': now
+            'ts': now,
         }
     return cache[secret_arn]['value']
 ```
 
-The Lambda is triggered by the ECS task via an environment variable injection:
+Rotate secrets on a schedule via the managed secrets store. The function's small memory footprint keeps cold starts low, but the only way to know your actual cold-start latency is to measure it — see the next section.
 
-```python
-# Pulumi snippet
-container_definitions=pulumi.Output.all(
-    ...
-).apply(lambda args: json.dumps([{
-        "name": "app",
-        "image": f"{ecr_repo.repository_url}:{sha}",
-        "secrets": [{
-            "name": "DB_PASSWORD",
-            "valueFrom": secrets_lambda.arn,
-        }],
-    }]))
-```
+## How to measure this yourself
 
-Rotate secrets via AWS Secrets Manager rotation every 7 days. The Lambda's 128 MB memory keeps cold starts under 180 ms; 95th percentile latency measures 220 ms from Nairobi on 3G.
+Every number in this design should come from your own measurements. Here is what to instrument and how.
 
-## Results — the numbers before and after
+### Staging spin-up time
 
-| Metric | Before | After | Improvement |
-|---|---|---|---|
-| Staging spin-up time | 15–20 min | 3–4 min | 80 % faster |
-| API p95 latency (Nairobi 3G) | 600 ms | 220 ms | 63 % faster |
-| Portal page load (Nairobi 3G) | 1,200 ms | 180 ms | 85 % faster |
-| Monthly infra cost | $1,800 | $412 | 77 % cheaper |
-| Secrets leak incidents | 1 major outage | 0 | 100 % reduction |
-| Engineer NPS for dev platform | -25 | +65 | +90 points |
+Instrument the CI job to record timestamps at three points: job start, `pulumi up` start, and the first successful health check on the new URL. Emit them as a CI annotation or write them to a metrics store. Compare the p50 and p95 across the last 50 runs. The metric that matters is time from `git push` to a green health check, not the duration of any single step.
 
-Build cache misses also drop: by using a single ECR image per SHA, the cache miss rate goes from 45 % to 5 %. The GitHub Actions workflow now runs in 4 minutes instead of 12, saving roughly 20 engineer-hours per week.
+### API p95 latency from a distant city
 
-Cost breakdown (2026 prices, eu-central-1):
-- GitHub Actions runners: $120/month (2,000 minutes)
-- Pulumi SaaS: $50/month (unlimited stacks)
-- AWS RDS (db.t4g.micro): $35/month
-- AWS ElastiCache (cache.t4g.small): $15/month
-- AWS ALB: $17/month
-- AWS ECS Fargate (vCPU 1024, memory 2048): $160/month
-- AWS Secrets Manager rotation Lambda: $5/month
-- Vercel Edge Network (portal): $10/month
+Use a synthetic monitoring tool that runs from a node in your farthest region, or a simple `curl` loop from a phone with a stopwatch. Measure p50 and p95 over at least 100 requests. Do not trust a single sample. To get a real 3G profile, throttle the connection: on Android, use the developer options to set network type; on iOS, use Network Link Conditioner on a tethered Mac.
 
-Total: $412/month for up to 50 concurrent ephemeral environments.
+### Portal page load
 
-## What to do differently
+Use a web performance tool that supports location and connection throttling. Record Time to First Byte, First Contentful Paint, and Largest Contentful Paint from a location near your farthest developer. Compare against the same page served without a Service Worker (use a private window or clear the cache).
 
-1. **Don't over-engineer the secrets Lambda.** Setting memory to 128 MB to keep costs low still leaves cold-start latency at 180 ms. A 256 MB configuration adds roughly 50 ms of headroom for about $2/month more — usually worth it.
+### Monthly infrastructure cost
 
-2. **Measure environment usage.** Idle environments are easy to miss; teams commonly discover 30 % of environments idle for more than 2 hours. A GitHub Action that deletes environments after 30 minutes of no traffic (using the ALB access logs) typically cuts idle spend by 25 % without hurting developer experience.
+Tag every resource with the environment name and the stack name. Use the cloud provider's cost explorer to group by tag. Compare against the sum of the line items below, which are illustrative at 2026 list prices in a European region:
 
-3. **Budget for data egress.** M-Pesa payment webhooks call back to the ephemeral environment. Each webhook triggers 8 KB of data egress at $0.09/GB. After 2,000 webhooks/day, the egress bill is $18/month — not huge, but enough to surprise. Moving the webhook handler to a dedicated AWS Lambda (arm64, 128 MB) that forwards to a Slack channel cuts egress by 90 %.
+| Line item | Illustrative monthly cost |
+|---|---|
+| CI runner minutes | $120 |
+| IaC SaaS | $50 |
+| Managed Postgres (small) | $35 |
+| Managed Redis (small) | $15 |
+| Load balancer | $17 |
+| Container service (1 vCPU, 2 GB) | $160 |
+| Secrets rotation function | $5 |
+| Edge network for portal | $10 |
+| **Total** | **$412** |
 
-4. **Plan for DNS limits.** Pulumi creates a new ALB per environment, and AWS ALB has a soft limit of 20 per region. It gets hit around 25 environments. AWS Route 53 Application Recovery Controller can reuse the same ALB with path-based routing, reducing the count by 80 %.
+These figures are illustrative. Your actual spend depends on region, instance sizes, and how many environments run concurrently. The point of the table is the shape of the cost, not the total.
 
-## The broader lesson
+### Cache miss rate
 
-The hard constraint in most African startups isn't lack of talent or budget — it's unreliable mobile connections and the tyranny of distance. A "good enough for Chrome on fibre" IDP fails on a bus in Mombasa. The winning pattern is **connection-first design**: treat every API call, portal page, and environment spin-up as a mobile-first experience with intermittent tolerance baked in.
+Instrument your CI to log whether the Docker layer cache was hit. Most CI systems expose this in the build log. Compute `misses / total_builds` over a rolling window. A single image per SHA typically reduces misses, but the only way to know by how much is to measure before and after.
 
-Three principles follow:
-1. **Static-first over dynamic.** Serve the developer portal as static HTML with ISR; cache secrets in a Service Worker; prefer static exports over SSR.
-2. **Ephemeral over persistent.** Delete environments after 30 minutes; rebuild images once per SHA; use stateless services (Lambda, Fargate) instead of persistent VMs.
-3. **Secrets-as-code over secrets-in-files.** Rotate secrets automatically; inject them at runtime; never commit them to Git.
+### Secrets leak incidents
 
-This pattern isn't specific to Africa — it's the same pattern that works for startups in Indonesia, Brazil, or Vietnam where engineers are on 3G and AWS is 120 ms away. The budget constraint forces a rediscovery of what the big platforms already know: static-first, ephemeral, secrets-as-code is the cheapest and most reliable way to ship.
+Track these as a count over time, not a percentage. A single incident is a data point; the metric that matters is whether the count is zero over the last N months.
 
-## How to apply this to your situation
+## Failure modes to plan for
 
-Start by measuring your current pain. Pick one pain metric you can improve in 30 days: staging spin-up time, API latency from your farthest office, or secrets leaks. A common starting point is staging spin-up time. Run a quick experiment: build a minimal Pulumi stack that spins up a single ECS Fargate service with a Next.js app and a RDS Postgres. The entire stack is 300 lines of Python and costs $45/month. Measure spin-up time at 3 minutes and API p95 latency at 220 ms from a phone on 3G. That's usually enough to justify scaling it to every branch.
+**The function that fetches secrets times out.** Set the function timeout to a few seconds and have the container task wait longer than that before failing. If the function times out, the task fails and the CI job marks the environment as failed. Log the timeout to your monitoring system and alert. In practice, timeouts are rare if the function caches secrets for a few minutes, but they do happen during cold starts under load.
 
-The next step is to **pick one environment variable and move it to AWS Secrets Manager + Lambda**. If you already use GitHub Actions, add a step that calls your Lambda to fetch the secret and injects it into the next job. Measure the latency and cost of the Lambda call. If it's under 250 ms and under $10/month, you've proven the pattern works. Then duplicate it for the rest of your secrets.
+**Database migrations race with app startup.** Run migrations in a sidecar container in the same task, with a retry loop that waits for the database to be ready. Give the migration container a distinct name and a `dependsOn` relationship so the app container starts only after migrations complete. Disable migrations in prod-like environments where you don't want them running automatically.
 
-Finally, build a static portal that shows the environment URLs. Use Next.js 14.2 + ISR. Host it on Vercel Edge Network. Add a Service Worker to cache it offline. You'll have a working, mobile-first IDP in under a week and a proof that your engineers can use it on the bus.
+**Staging environments can read prod secrets.** Use a policy that prevents the staging function from accessing prod secret ARNs. The staging stack should reference a different secret ARN that contains only staging values. Use the IaC tool's `protect` flag to prevent accidental deletion of secret ARNs in staging stacks.
 
-## Resources that helped
+**Load balancer limits.** Each environment creates a load balancer, and the cloud provider has a soft limit per region. You will hit it around 20–25 environments. Options: request a limit increase, or reuse a single load balancer with path-based or host-based routing. Path-based routing can reduce the count significantly but adds routing complexity.
 
-- [Pulumi Python SDK 3.89.0 docs](https://www.pulumi.com/docs/guides/python/) — the Python SDK is what lets you write 300 lines instead of 1,200.
-- [AWS ECS Fargate pricing 2026](https://aws.amazon.com/fargate/pricing/) — the vCPU/memory pricing table is the cheat sheet for budgeting.
-- [Vercel Edge Network docs](https://vercel.com/docs/edge-network/overview) — how to deploy a static site with ISR.
-- [boto3 1.34.0 Lambda best practices](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/lambda.html) — how to keep Lambda cold starts under 200 ms.
-- [GitHub Actions caching for Docker layers](https://github.com/actions/cache/blob/main/examples.md#node---docker) — how to cut Docker build time by 50 %.
-- [AWS Secrets Manager rotation tutorial](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html) — step-by-step for automatic rotation.
+**Data egress from webhooks.** Payment webhooks call back to ephemeral environments. Each webhook triggers a small amount of egress. At a few thousand webhooks per day, the egress bill is small but non-zero. Moving the webhook handler to a dedicated function that forwards to a chat channel can cut egress substantially.
 
-## Frequently Asked Questions
+**Idle environments.** Teams commonly discover that a meaningful fraction of environments are idle for hours. A scheduled job that deletes environments after a period of no traffic (using load balancer access logs) cuts idle spend without hurting developer experience. Measure your own idle rate before assuming a number.
 
-**How do you handle database migrations in ephemeral environments?**
+## A decision checklist
 
-Run migrations at startup using a sidecar container in the same ECS task. The container runs a Python 3.11 script that waits for the database to be ready (retries every 2 seconds for 30 seconds) then runs `alembic upgrade head`. Set a `migration` label in the task definition so migrations can be disabled in prod-like environments. This pattern has proven reliable with zero migration failures over months of use.
+Before committing to this design, answer these:
 
-**What happens if the Secrets Lambda times out?**
+- Can you measure staging spin-up time today? If not, that's step one.
+- Do you know your p95 API latency from your farthest developer's location? If not, measure it before optimizing anything.
+- Is your CI runner region close to your developers, or close to your infrastructure? These are different optimizations.
+- Do you have a policy that prevents staging from reading prod secrets? If not, that's a higher priority than any latency work.
+- Do you know your current monthly spend broken down by environment? If not, tagging is the prerequisite.
+- Can your team operate a managed secrets store and a small function, or would that be a new operational burden? Be honest.
 
-Set the Lambda timeout to 3 seconds and the ECS task to wait 60 seconds for the secret. If the Lambda times out, the ECS task fails and the GitHub Actions job marks the environment as failed. Log the timeout to CloudWatch and alert Slack. In practice, timeouts are rare (<0.1 % of calls) because the Lambda caches secrets for 5 minutes.
+## Next step (do this in the next 30 minutes)
 
-**How do you prevent engineers from leaking prod secrets to staging?**
+Open your terminal and measure one number: the time from `git push` to a green staging health check on your current setup. If you don't have staging, measure the time from `git push` to a green CI run.
 
-Use AWS Secrets Manager and a policy that prevents the staging Lambda from accessing prod secrets. The Pulumi stack for staging uses a different secret ARN that only contains staging values. Also use Pulumi's `protect` flag to prevent accidental deletion of the secret ARN in staging stacks.
-
-**What's the upper limit of environments you can run on $412/month?**
-
-The stack supports ~50 concurrent environments before hitting the ALB soft limit of 20 per region. If you need more, reuse the same ALB with path-based routing (as described earlier) or switch to AWS Application Auto Scaling for the ALB. At 50 environments, the total monthly spend is still under $500.
-
-## Next step for you (do this in the next 30 minutes)
-
-Open your terminal and run:
 ```bash
-curl -sSL https://get.pulumi.com | sh
-pulumi new aws-python --dir idp-demo
-cd idp-demo
-code .
+# Rough timing: record the current time, push, then poll your staging URL
+date -u +"%Y-%m-%dT%H:%M:%SZ"
+git commit --allow-empty -m "timing probe" && git push
+# Then poll the staging health endpoint until it returns 200
+while ! curl -sf https://staging.example.com/health > /dev/null; do sleep 5; done
+date -u +"%Y-%m-%dT%H:%M:%SZ"
 ```
 
-Edit `Pulumi.yaml` to set `runtime: python` and `template: aws-python`. Then create a single ECS Fargate service that deploys a static "Hello World" container (`public.ecr.aws/amazonlinux/amazonlinux:2023`). Run `pulumi up` and note the URL. Measure the latency from your phone on mobile data. If it's under 300 ms, you've proven the pattern works. If not, check your nearest AWS region and your mobile carrier's latency to that region.
-
-
----
-
-### About this article
-
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
-
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
-
-**Corrections:** If you find a factual error or outdated information,
-please contact me — corrections are applied within 48 hours.
-
-**Last reviewed:** June 09, 2026
+Write the two timestamps down. That number is your baseline. Every design decision in this article should be justified by whether it moves that number, and you now have the only measurement that matters.

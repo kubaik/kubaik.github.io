@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Oct 2026 11:06:04 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 04 Oct 2026 15:25:21 +0000</lastBuildDate>
     <item>
       <title>Fraud detection: rules vs scoring, where they meet</title>
       <link>https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/</link>
@@ -16,7 +16,7 @@
     <item>
       <title>AI best practices fail on slow networks</title>
       <link>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</link>
-      <description>Why AI best practices break on slow, metered mobile networks — round-trip budgets, streaming byte costs, and the retry mistake that doubles latency.</description>
+      <description>Why LLM best practices break on high-latency, metered mobile links, and how to design around a request budget of round trips and bytes instead.</description>
       <pubDate>Sun, 04 Oct 2026 04:58:45 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</guid>
     </item>
@@ -58,7 +58,7 @@
     <item>
       <title>Agentic workflows: surviving network partitions</title>
       <link>https://kubaik.github.io/agentic-workflows-surviving-network-partitions/</link>
-      <description>Agentic workflows break on flaky networks when retries duplicate side effects. Idempotency keys, outbox patterns, and reconciliation that actually work.</description>
+      <description>How to keep agentic workflows correct when networks drop: idempotency keys, an outbox with stable action IDs, and reconciliation on reconnect.</description>
       <pubDate>Thu, 01 Oct 2026 04:54:31 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-workflows-surviving-network-partitions/</guid>
     </item>
@@ -121,7 +121,7 @@
     <item>
       <title>Tech debt: when half your stack is unfamiliar</title>
       <link>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</link>
-      <description>Now you know that a 200 ms processing time is normal and a 2-second processing time is an anomaly.</description>
+      <description>A repeatable process for debugging, verifying and governing tools you didn&amp;#x27;t write, with baselines, contracts, environment measurement and tool cards.</description>
       <pubDate>Sat, 26 Sep 2026 16:04:10 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</guid>
     </item>

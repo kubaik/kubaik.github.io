@@ -1,18 +1,16 @@
 # Internal developer platform: adoption traps
 
-The engineers who build a most internal pipeline rarely stick around long enough to document why it works the way it does. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts.
-
 ## The problem this solves
 
-Most internal developer platform (IDP) projects are declared a success at the technical milestone and a failure six months later. The control plane works. Backstage 1.28 renders a catalog. The golden path template scaffolds a service with a Dockerfile, a Helm chart, and a GitHub Actions workflow. Then the adoption curve flattens at 12% of engineering teams and never moves again.
+Most internal developer platform (IDP) projects are declared a success at the technical milestone and a failure six months later. The control plane works. The catalog renders. The golden path template scaffolds a service with a Dockerfile, a Helm chart, and a GitHub Actions workflow. Then the adoption curve flattens and never moves again.
 
 The temptation is to blame the tooling. In practice, the tooling is usually fine. The failure happens at the layer between the platform and the humans who are supposed to use it — the adoption layer. That layer has its own failure modes: friction that looks trivial on a demo but compounds in daily use, incentives that reward the wrong behavior, and a feedback loop between platform team and product teams that is either too slow or too noisy to be useful.
 
-The part that trips people up is that the adoption layer is not a technical problem you can close with a pull request. It is a product problem, and it needs product instrumentation. This post walks through how to build that instrumentation into an IDP using Backstage 1.28, the Backstage catalog API, and a small adoption metrics service. The goal is to make adoption measurable, then fixable.
+The adoption layer is not a technical problem you can close with a pull request. It is a product problem, and it needs product instrumentation. This article walks through how to build that instrumentation into an IDP using the Backstage catalog API and a small adoption metrics service. The goal is to make adoption measurable, then fixable.
 
 ## Prerequisites and what you'll build
 
-You need a working Backstage instance (1.28 or later), Node 20 LTS, and a Postgres 16 database for the metrics store. If you are running a smaller setup, SQLite is fine for development but not for anything with more than a few hundred daily events. You also need a way to identify users — most setups already have this via GitHub OAuth or an SSO provider, and the `userEntityRef` in Backstage is the natural key.
+You need a working Backstage instance (1.28 or later), Node 20 LTS, and a Postgres 16 database for the metrics store. For a smaller setup, SQLite is fine for development but not for anything with more than a few hundred daily events. You also need a way to identify users — most setups already have this via GitHub OAuth or an SSO provider, and the `userEntityRef` in Backstage is the natural key.
 
 What you'll build is a small service that does three things:
 
@@ -20,9 +18,9 @@ What you'll build is a small service that does three things:
 2. Computes a per-team adoption score that reflects actual usage, not just catalog registration.
 3. Exposes that score in a Grafana dashboard and a weekly Slack digest to platform stakeholders.
 
-The reason to build this rather than buy it is that adoption metrics are deeply tied to your org's definition of a service, your team topology, and your deployment conventions. Off-the-shelf platform analytics tools tend to measure what is easy (page views, catalog entities) rather than what matters (time-to-first-deploy, repeat usage, escape rate).
+Building rather than buying is usually the right call here because adoption metrics are deeply tied to your org's definition of a service, your team topology, and your deployment conventions. Off-the-shelf platform analytics tools tend to measure what is easy (page views, catalog entities) rather than what matters (time-to-first-deploy, repeat usage, escape rate).
 
-You will also need a way to deploy the metrics service. A single container on a $12/month DigitalOcean droplet is enough for a 200-engineer org if you batch writes. At larger scale (Series B and up, or any org with more than 500 engineers), put it on ECS Fargate with an RDS instance — the operational overhead of self-managed Postgres is not worth the savings.
+You will also need a way to deploy the metrics service. A single container on a small VPS is enough for a few hundred engineers if you batch writes. At larger scale, put it on a managed container service with a managed Postgres instance — the operational overhead of self-managed Postgres is rarely worth the savings.
 
 ## Step 1 — set up the environment
 
@@ -33,7 +31,7 @@ Before writing any code, decide what an adoption event is. This is the step most
 - A documentation page view that is followed by a template execution within 10 minutes.
 - A platform API call from a service account owned by a team.
 
-Set up the database schema first. The following migration creates two tables: `adoption_events` and `team_scores`. The `team_scores` table is a materialized view refreshed every 15 minutes; do not compute scores on the fly, because the query will scan millions of rows once you have been running for a year.
+Set up the database schema first. The following migration creates two tables: `adoption_events` and `team_scores`. The `team_scores` table is refreshed on a schedule; do not compute scores on the fly, because the query will scan millions of rows once you have been running for a year.
 
 ```sql
 CREATE TABLE adoption_events (
@@ -151,7 +149,7 @@ async function recordEvent(event: AdoptionEvent) {
 }
 ```
 
-Another edge case is the team that registers a service in the catalog but never deploys through the platform. This is the "catalog-only" team, and it is the single most misleading signal in IDP analytics. A catalog entity is cheap to create and easy to automate; it says nothing about whether the platform is actually being used. Filter these out of your headline adoption number, or at least report them separately. If 40% of your catalog entities are catalog-only, your real adoption is much lower than the catalog count suggests.
+Another edge case is the team that registers a service in the catalog but never deploys through the platform. This is the "catalog-only" team, and it is the single most misleading signal in IDP analytics. A catalog entity is cheap to create and easy to automate; it says nothing about whether the platform is actually being used. Filter these out of your headline adoption number, or at least report them separately. If a large share of your catalog entities are catalog-only, your real adoption is much lower than the catalog count suggests.
 
 The third edge case is timezone. If your org spans Europe and the US, `occurred_at` must be stored as `TIMESTAMPTZ` and all reporting windows must be computed in UTC. A team in Berlin that deploys at 09:00 local time will show up as 07:00 UTC, and if your weekly digest runs at 08:00 UTC, that team's Monday morning activity lands in the previous week's bucket. This is a small bug that produces loud complaints.
 
@@ -183,7 +181,7 @@ app.get('/metrics', async (_req, res) => {
 });
 ```
 
-For tests, the highest-value test is an end-to-end one: post an event, refresh scores, assert the team's score changed. Use Vitest 2.1 with a test Postgres container via Testcontainers. Unit tests on the scoring formula are useful but they will not catch the schema drift that happens when someone adds a column and forgets to update the insert statement.
+For tests, the highest-value test is an end-to-end one: post an event, refresh scores, assert the team's score changed. Use Vitest with a test Postgres container via Testcontainers. Unit tests on the scoring formula are useful but they will not catch the schema drift that happens when someone adds a column and forgets to update the insert statement.
 
 | Concern | Catalog count | Adoption event count | Time-to-first-deploy |
 | --- | --- | --- | --- |
@@ -193,45 +191,46 @@ For tests, the highest-value test is an end-to-end one: post an event, refresh s
 | Stakeholder legibility | High | Medium | High |
 | Recommended as headline metric | No | Yes | Yes, as secondary |
 
-A 200-engineer org running this setup typically sees ingestion volume in the low thousands of events per day, which a single Postgres 16 instance on a $25/month managed plan handles without tuning. The refresh query above runs in under 200ms on a table with 5 million rows if the `idx_events_team_time` index is present. Without that index, the same query scans the full table and takes 4–8 seconds, which is long enough to block the refresh endpoint and cause the scheduler to pile up.
+## How to measure performance of this service
 
-## Real results from running this
+Rather than trusting any published figure, instrument the three numbers that determine whether this design holds up in your environment. All three can be measured in an afternoon.
 
-The reason this instrumentation changes outcomes is not that it produces a prettier dashboard. It changes the conversation. Platform teams that instrument adoption stop arguing about whether the platform is working and start arguing about which specific friction point to fix next. That is a much better argument to have.
+**Ingestion latency.** Wrap the request handler in a timer and emit a histogram. The metric that matters is the 99th percentile of `POST /events`, because a slow tail is what makes the platform feel slow. Compare it against the same percentile of your Backstage API as a baseline.
 
-The typical pattern in the first month: adoption looks flat overall, but the per-team breakdown shows a small number of teams driving most of the usage. In a 40-team org, it is common to see 6–8 teams generating 70% of events. The remaining teams are not hostile to the platform; they are stuck. Common causes are a template that does not match their language or framework, a CI/CD integration that requires a secret they do not have permission to create, or a documentation gap around a non-default deployment target.
+**Refresh duration.** Time the `POST /refresh` query with `EXPLAIN (ANALYZE, BUFFERS)` on a production-sized copy of the table. Look for sequential scans on `adoption_events`; if you see one, the `idx_events_team_time` index is missing or not being used. A refresh that runs longer than your scheduler interval will queue up and eventually overlap with itself.
 
-A concrete example: a team using Go 1.22 with an internal gRPC framework tries the default Node.js scaffolder template, finds it does not fit, and falls back to their existing Jenkins pipeline. They are not on the platform, and nothing about the catalog count reveals this. The adoption event data does, because their team_ref has zero events in 30 days while their catalog entity exists. That is the signal to act on.
+**Table growth.** Run `SELECT pg_total_relation_size('adoption_events')` weekly and divide by the number of events to get bytes per event. Multiply by your projected daily event rate to decide when you need partitioning or a retention policy. Events older than your longest reporting window (30 days in the schema above) can be archived or dropped.
 
-The fix in that case is usually not technical. It is a 45-minute conversation with the team to understand what their golden path actually looks like, followed by a template that matches it. The platform team's job is to ship that template, not to convince the team to change their stack.
+A worked example of the sizing arithmetic, with stated assumptions: suppose a 200-engineer org generates 3,000 adoption events per day, and each row plus its indexes costs roughly 400 bytes. That is 3,000 × 400 = 1.2 MB/day, or about 438 MB/year. A single managed Postgres instance handles that comfortably. At 30,000 events per day the same arithmetic gives 12 MB/day and about 4.4 GB/year, which is still small but makes the 30-day scan large enough that the index becomes mandatory rather than optional.
+
+## Failure-mode analysis
+
+Four failure modes account for most of the ways this instrumentation goes wrong. Each has a detectable symptom and a specific fix.
+
+**Silent ingestion failure.** The frontend posts events, the endpoint returns 202, but the insert fails asynchronously and is only logged. Symptom: the dashboard looks plausible but flat, and the Prometheus counter for ingested events does not match the row count in the table. Fix: alert on the gap between `idp_adoption_events_total` and a periodic `SELECT count(*)` over the last hour.
+
+**Score inflation by a single team.** One team automates a loop that fires events continuously. Symptom: one team pins at the cap and the distribution collapses. Fix: the cap in the scoring query, plus a per-team rate limit on ingestion. Report the raw event count alongside the score so the inflation is visible.
+
+**Attribution drift.** Historical events stay attached to a `team_ref` that no longer matches the org chart. Symptom: scores shift after a reorg and nobody can explain why. Fix: decide the policy explicitly — attribute to the team at the time of the event, or maintain a mapping table — and write it down next to the query.
+
+**Dashboard without an owner.** The dashboard exists, nobody looks at it, and adoption stalls anyway. Symptom: the weekly digest is sent but no ticket is ever filed from it. Fix: pair every metric with a named owner and a threshold that triggers an action, not just a chart.
 
 ## Common questions and variations
 
-How do I measure IDP adoption without a metrics service?
+**How do I measure IDP adoption without a metrics service?**
 You can start with Backstage's built-in catalog and scaffolder logs, but you will quickly hit the catalog-only problem. A lightweight alternative is to parse your CI/CD provider's audit log (GitHub Actions, GitLab CI, or Jenkins) and count deploys per team per week. This is less precise but requires no new service. The tradeoff is that you cannot attribute deploys to a specific template execution, so you lose the ability to A/B test template changes.
 
-Why does my adoption score drop every time someone changes teams?
+**Why does my adoption score drop every time someone changes teams?**
 Because your `user_ref` is not stable across org changes. Backstage entity refs are derived from the identity provider, and when a user moves teams, their group membership changes but their user ref usually does not. The problem is usually the `team_ref` on historical events — those events belong to the old team. Decide whether you want to attribute historical events to the team at the time of the event (simpler, but scores shift when people move) or to the current team (requires a mapping table, but scores are stable). Most orgs want the former and should document it.
 
-What is a good adoption rate for an internal developer platform?
-There is no universal benchmark, and any vendor claiming one is selling something. What matters is the trend and the distribution. A healthy platform shows a rising trend in active teams and a shrinking long tail of teams with zero events. If 80% of teams have at least one event in 30 days, you are in a reasonable place. If the top 10% of teams generate more than 60% of events, you have a concentration problem that will make the platform look fragile when those teams change priorities.
+**What is a good adoption rate for an internal developer platform?**
+There is no universal benchmark, and any vendor claiming one is selling something. What matters is the trend and the distribution. A healthy platform shows a rising trend in active teams and a shrinking long tail of teams with zero events. A reasonable target is that most teams have at least one event in the trailing 30 days. If a small number of teams generate the majority of events, you have a concentration problem that will make the platform look fragile when those teams change priorities.
 
-Should the platform team own the adoption metrics service?
+**Should the platform team own the adoption metrics service?**
 Yes, at least initially. The service is small and the platform team has the context to interpret the data. Once it stabilizes, it can move to a shared observability team if you have one. Do not put it in the hands of a central data team that does not understand the platform's domain — they will build the wrong metrics and the platform team will stop trusting the numbers.
 
 ## Where to go from here
 
-The next step is to instrument one event type and watch it for a week. Pick the scaffolder task completion event, wire it to a single Postgres table, and run the refresh query on a schedule. Do not build the dashboard yet. After seven days, query the table for the number of distinct `team_ref` values with at least one event, and compare it to the number of teams in your Backstage catalog. That gap is your adoption problem, quantified. Open `src/server.ts` in your metrics service, add the `/events` endpoint from Step 2, and deploy it behind the same ingress as your Backstage instance. Then check the gap on Monday morning.
+Instrument one event type and watch it for a week. Pick the scaffolder task completion event, wire it to a single Postgres table, and run the refresh query on a schedule. Do not build the dashboard yet. After seven days, query the table for the number of distinct `team_ref` values with at least one event, and compare it to the number of teams in your Backstage catalog. That gap is your adoption problem, quantified.
 
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
+The specific action for the next 30 minutes: open `src/server.ts` in your metrics service, add the `/events` endpoint from Step 2, and deploy it behind the same ingress as your Backstage instance. Then, on Monday morning, run the distinct-`team_ref` query against the catalog count and write the two numbers on a single line at the top of your platform team's notes.

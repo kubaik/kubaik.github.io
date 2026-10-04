@@ -1,12 +1,72 @@
 {
   "improved": [
     {
-      "slug": "build-a-search-system-in-2026-semantic-keyword",
+      "slug": "negotiate-salaries-with-ai-skills-in-2026",
       "attempts": 1,
       "retitled": false
     },
     {
-      "slug": "fraud-detection-rules-vs-scoring-where-they-meet",
+      "slug": "agentic-workflows-surviving-network-partitions",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "ai-best-practices-fail-on-slow-networks",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
+      "attempts": 2,
+      "retitled": false
+    },
+    {
+      "slug": "build-dev-platform-for-2kmonth",
+      "attempts": 2,
+      "retitled": true
+    },
+    {
+      "slug": "hybrid-cloud-routing-cost-speed-balance-for-sea",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "internal-developer-platform-adoption-traps",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "json-modes-hidden-costs-revealed",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "mobile-money-agents-when-m-pesa-api-fails",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "self-service-ai-tooling-where-it-breaks-first",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "stop-trusting-agents-for-core-logic",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "tech-debt-when-half-your-stack-is-unfamiliar",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "tool-calls-why-retries-stampede",
+      "attempts": 1,
+      "retitled": false
+    },
+    {
+      "slug": "when-your-agent-goes-silent-degrade-gracefully",
       "attempts": 1,
       "retitled": false
     }
@@ -15,20 +75,12 @@
     {
       "slug": "observability-2026-ditch-the-three-pillars",
       "errors": [
-        "too short: 1585 words (need >= 1880)",
-        "dropped too many code examples"
-      ]
-    },
-    {
-      "slug": "negotiate-salaries-with-ai-skills-in-2026",
-      "errors": [
         "dropped too many code examples"
       ]
     },
     {
       "slug": "drop-checklists-ai-code-reviews-that-scale",
       "errors": [
-        "too short: 1679 words (need >= 2000)",
         "dropped too many code examples"
       ]
     }

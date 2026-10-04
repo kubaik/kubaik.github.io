@@ -1,18 +1,18 @@
 # Mobile money agents: when M-Pesa API fails
 
-hidden failure is easy to demo and hard to keep honest at scale. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke.
+Mobile money integrations have a property that makes them hard to test honestly: the happy path works in staging, and the failure path only appears in production, under load, with real money. A payment can return `HTTP 200` with a `pending` status, the user's wallet gets debited, and the agent never delivers. This article covers why that happens and what to build so it stops happening.
 
 ## The error and why it's confusing
 
 You've built an agent that accepts payments in local mobile money — M-Pesa, MTN MoMo, Airtel Money, or one of the dozens of other rails. The integration works in staging. In production, a subset of users pay successfully but never get their agent credits. Or worse: the agent credits them twice. The logs show a timeout, then a success, then a callback that arrives 45 seconds later. The user's phone shows "Payment received" but your database says "pending."
 
-The confusing part is that the error isn't an error at all. The mobile money provider's API returns `HTTP 200 OK` with a body that says `{"status": "pending", "transactionId": "..."}`. Your code treats that as success. Then the final status comes asynchronously — sometimes as a webhook, sometimes as a polling response, sometimes never. The user's payment provider has already debited their wallet. Your agent has not delivered. The user is now in a WhatsApp group asking why they were charged twice.
+The confusing part is that the error isn't an error at all. The mobile money provider's API returns `HTTP 200 OK` with a body that says `{"status": "pending", "transactionId": "..."}`. Your code treats that as success. Then the final status comes asynchronously — sometimes as a webhook, sometimes as a polling response, sometimes never. The user's payment provider has already debited their wallet. Your agent has not delivered.
 
-This is not a bug in your code. It's a fundamental mismatch between the synchronous request-response model most developers build for and the store-and-forward, eventually-consistent reality of mobile money rails. The mobile money network is not a credit card processor. It's a distributed system with intermittent connectivity, human agents who float cash, and settlement windows measured in hours, not milliseconds. The part that trips people up is treating a `pending` response as a terminal state, and that's what this post actually covers.
+This is not a bug in your code. It's a fundamental mismatch between the synchronous request-response model most developers build for and the store-and-forward, eventually-consistent reality of mobile money rails. The mobile money network is not a credit card processor. It's a distributed system with intermittent connectivity, human agents who float cash, and settlement windows measured in hours, not milliseconds. The part that trips people up is treating a `pending` response as a terminal state.
 
 ## What's actually causing it (the real reason, not the surface symptom)
 
-The surface symptom is a timeout or a `pending` status. The real reason is that [mobile money APIs](/mobile-money-agent-fees-why-your-bot-keeps-failing/) are designed for **asynchronous settlement**. When a user initiates a payment, the request goes through several hops:
+The surface symptom is a timeout or a `pending` status. The real reason is that mobile money APIs are designed for **asynchronous settlement**. When a user initiates a payment, the request goes through several hops:
 
 1. Your server → mobile money aggregator API (e.g., Safaricom Daraja, Flutterwave, Paystack)
 2. Aggregator → mobile network operator (MNO) core
@@ -20,13 +20,13 @@ The surface symptom is a timeout or a `pending` status. The real reason is that 
 4. User enters PIN → MNO validates → debits wallet
 5. MNO sends confirmation back up the chain
 
-Steps 3–5 can take anywhere from 5 seconds to 2 minutes. The MNO's API gateway will often return a `pending` or `accepted` response immediately after step 1, then deliver the final result via a callback URL or a separate polling endpoint. If your server doesn't handle that callback correctly — or if the callback never arrives because the MNO's retry logic gives up after 3 attempts over 30 seconds — you're left with an orphaned transaction.
+Steps 3–5 can take anywhere from 5 seconds to 2 minutes. The MNO's API gateway will often return a `pending` or `accepted` response immediately after step 1, then deliver the final result via a callback URL or a separate polling endpoint. If your server doesn't handle that callback correctly — or if the callback never arrives because the MNO's retry logic gives up after a fixed number of attempts — you're left with an orphaned transaction.
 
 A common failure mode: the callback URL is behind an HTTPS endpoint that uses a self-signed certificate or an expired Let's Encrypt cert. The MNO's callback dispatcher fails TLS verification and silently drops the payload. No error reaches your logs. The user's money is gone. Your agent is idle.
 
-Another typical case: you're using a serverless function (AWS Lambda, Cloudflare Workers) with a 10-second timeout. The MNO's callback arrives 15 seconds after the initial request. Lambda has already terminated. The callback hits a cold start and times out again. You see `Task timed out after 10.00 seconds` in CloudWatch, but the transaction remains unresolved.
+Another typical case: you're using a serverless function (AWS Lambda, Cloudflare Workers) with a short timeout. The MNO's callback arrives after the function has already terminated. The callback hits a cold start and times out again. You see `Task timed out after 10.00 seconds` in CloudWatch, but the transaction remains unresolved.
 
-The third common cause is idempotency. Mobile money networks are notorious for sending duplicate callbacks. If your handler isn't idempotent, you'll credit the user twice for one payment. Then you'll try to reverse the second credit, which triggers a refund flow that takes 3–5 business days. The user sees a debit, a credit, and another debit. They lose trust.
+The third common cause is idempotency. Mobile money networks are notorious for sending duplicate callbacks. If your handler isn't idempotent, you'll credit the user twice for one payment. Then you'll try to reverse the second credit, which triggers a refund flow that takes days. The user sees a debit, a credit, and another debit. They lose trust.
 
 ## Fix 1 — the most common cause
 
@@ -36,7 +36,7 @@ The third common cause is idempotency. Mobile money networks are notorious for s
 
 **Fix:** Implement a two-phase transaction model. Phase 1: accept the payment request, store it as `pending` with the provider's transaction ID. Phase 2: poll the provider's status endpoint every 5 seconds for up to 2 minutes, and also expose a webhook endpoint. Whichever resolves first wins; the other becomes a no-op.
 
-Here's a Python example using `httpx` 0.27 and FastAPI 0.115:
+Here's a Python example using `httpx` and FastAPI:
 
 ```python
 import asyncio
@@ -99,17 +99,17 @@ async def webhook(request: Request):
     return {"status": "ok"}
 ```
 
-This costs roughly 24 HTTP requests per transaction. At typical provider rates (e.g., $0.002 per status check), that's $0.048 per payment. For a $5 payment, that's ~1% overhead. Acceptable for reliability. If you're processing thousands of payments per hour, batch your polling or use a job queue like Celery 5.4 with Redis 7.2 as the broker.
+This costs up to 24 HTTP requests per transaction. The exact per-request price depends on the provider's status-endpoint pricing, which is usually zero or negligible; check the provider's rate card before assuming a cost. If you're processing thousands of payments per hour, batch your polling or move it to a job queue rather than a per-request background task.
 
 ## Fix 2 — the less obvious cause
 
 **Symptom pattern:** Callbacks arrive but are duplicates. Your database shows two credits for one payment. Users report double charges. Your refund process is manual and slow.
 
-**Cause:** Mobile money networks retry callbacks aggressively. If your endpoint returns a non-2xx status or takes longer than 5 seconds to respond, the provider will retry up to 3 times. If your handler isn't idempotent, each retry creates a new credit.
+**Cause:** Mobile money networks retry callbacks aggressively. If your endpoint returns a non-2xx status or takes longer than the provider's timeout to respond, the provider will retry. If your handler isn't idempotent, each retry creates a new credit.
 
 **Fix:** Make every callback handler idempotent using a unique constraint on the provider's transaction ID. Use a database-level unique index and an `INSERT ... ON CONFLICT DO NOTHING` pattern. Also, respond to callbacks as fast as possible — acknowledge first, process later.
 
-Here's a Node.js 20 LTS example using Express 4.19 and PostgreSQL 16:
+Here's a Node.js example using Express and PostgreSQL:
 
 ```javascript
 const express = require('express');
@@ -161,36 +161,31 @@ app.post('/webhook/mobile-money', async (req, res) => {
 });
 ```
 
-This pattern handles up to 3 retries without double-crediting. The unique constraint on `tx_id` is the key. Without it, you're relying on application logic that can race under load.
+The unique constraint on `tx_id` is the key. Without it, you're relying on application logic that can race under load. Note that acknowledging before processing means a crash between the `200` and the database write leaves the transaction unresolved — which is why the polling fallback from Fix 1 still matters.
 
 ## Fix 3 — the environment-specific cause
 
 **Symptom pattern:** Works in staging, fails in production. Callbacks never arrive. Your provider dashboard shows "callback failed" or "delivery error." You're running behind a load balancer, API gateway, or CDN.
 
-**Cause:** Mobile money providers often have strict requirements for callback URLs: HTTPS with a valid certificate, no redirects, no authentication headers, and a response within 5 seconds. If you're terminating TLS at an AWS Application Load Balancer (ALB) and your backend expects HTTP, the provider's callback dispatcher might be hitting an HTTP endpoint that redirects to HTTPS. Or your AWS WAF is blocking the provider's IP range.
+**Cause:** Mobile money providers often have strict requirements for callback URLs: HTTPS with a valid certificate, no redirects, no authentication headers, and a response within the provider's timeout window. If you're terminating TLS at an AWS Application Load Balancer (ALB) and your backend expects HTTP, the provider's callback dispatcher might be hitting an HTTP endpoint that redirects to HTTPS. Or your AWS WAF is blocking the provider's IP range.
 
-**Fix:** Verify your callback endpoint is publicly reachable and returns 200 within 5 seconds. Use `curl` from an external network to test. Check that your ALB listener rules don't redirect. If you're using Cloudflare, ensure the provider's IPs are allowlisted in your firewall rules. Also, disable any request body parsing middleware that might reject the provider's content type.
+**Fix:** Verify your callback endpoint is publicly reachable and returns 200 within the provider's timeout. Use `curl` from an external network to test. Check that your ALB listener rules don't redirect. If you're using Cloudflare, ensure the provider's IPs are allowlisted in your firewall rules. Also, disable any request body parsing middleware that might reject the provider's content type.
 
-A common trap: you're using AWS Lambda behind API Gateway with a custom domain. API Gateway's default timeout is 29 seconds, but Lambda's is 3 seconds by default. If your handler takes 4 seconds, Lambda times out and API Gateway returns 502. The provider sees a failure and retries. You see `Execution failed due to configuration error: Malformed Lambda proxy response` in CloudWatch. Fix: increase Lambda timeout to 10 seconds and ensure your handler returns a valid response object.
+A common trap: you're using AWS Lambda behind API Gateway with a custom domain. API Gateway's default integration timeout is 29 seconds, but Lambda's default timeout is 3 seconds. If your handler takes 4 seconds, Lambda times out and API Gateway returns 502. The provider sees a failure and retries. You see `Execution failed due to configuration error: Malformed Lambda proxy response` in CloudWatch. Fix: increase the Lambda timeout and ensure your handler returns a valid response object.
 
-| Provider | Callback timeout | Retry policy | IP allowlist required? |
-|----------|------------------|--------------|------------------------|
-| Safaricom Daraja | 5 seconds | 3 retries over 30s | Yes (provided in docs) |
-| MTN MoMo | 10 seconds | 5 retries over 60s | No, but recommended |
-| Airtel Money | 5 seconds | 3 retries over 45s | Yes |
-| Flutterwave | 10 seconds | 4 retries over 120s | No |
+Callback timeout and retry behavior varies by provider and can change without notice. Rather than hardcoding assumptions, read the current values from each provider's developer documentation and record them in a config file your code reads at startup. A comparison table of specific timeouts and retry counts is only useful if it's regenerated from those docs; treat any static table as stale.
 
 ## How to verify the fix worked
 
 You need three checks: callback delivery, idempotency, and end-to-end latency.
 
-1. **Callback delivery:** Set up a simple logging endpoint that records every incoming request with headers and body. Trigger a test payment from a sandbox phone number. Confirm the callback arrives within 10 seconds. If it doesn't, check your provider's dashboard for delivery errors.
+1. **Callback delivery:** Set up a logging endpoint that records every incoming request with headers and body. Trigger a test payment from a sandbox phone number. Confirm the callback arrives within the provider's documented window. If it doesn't, check your provider's dashboard for delivery errors.
 
 2. **Idempotency:** Send the same callback payload twice manually using `curl`. Confirm your database only has one credit. Check that the second request returns 200 but doesn't modify state.
 
-3. **End-to-end latency:** Measure the time from payment initiation to user credit. For mobile money, typical p50 is 8–15 seconds, p95 is 45–90 seconds. If your p95 is over 2 minutes, you're likely missing callbacks and relying solely on polling. Add more polling workers or investigate callback delivery.
+3. **End-to-end latency:** Measure the time from payment initiation to user credit. Instrument two timestamps — payment initiated and transaction finalized — and compute the delta per transaction. Report p50 and p95. If p95 exceeds your provider's documented maximum settlement time by a wide margin, you're likely missing callbacks and relying solely on polling. Add more polling workers or investigate callback delivery.
 
-A simple verification script using `curl` and `jq`:
+A simple verification script using `curl` and `psql`:
 
 ```bash
 # Simulate duplicate callback
@@ -212,11 +207,11 @@ Prevention is about designing for the failure modes you now know exist. Three pr
 
 **1. Always assume callbacks will fail.** Poll as a fallback. Set a maximum polling duration (e.g., 2 minutes) and a maximum number of attempts (e.g., 24). After that, move the transaction to a `needs_review` state and alert your team. Never leave a transaction in `pending` indefinitely.
 
-**2. Use a dead-letter queue for unresolved transactions.** If a transaction times out, push it to an SQS queue or a database table for manual reconciliation. Your support team can then check the provider's dashboard and manually credit or refund. This costs human time but prevents user churn.
+**2. Use a dead-letter queue for unresolved transactions.** If a transaction times out, push it to a queue or a database table for manual reconciliation. Your support team can then check the provider's dashboard and manually credit or refund. This costs human time but prevents user churn.
 
-**3. Monitor callback success rate as a first-class metric.** Track the percentage of callbacks that arrive within 30 seconds. A healthy rate is above 95%. If it drops below 90%, investigate immediately — it usually means your endpoint is misconfigured or the provider is having an outage. Set up a CloudWatch alarm or a Prometheus alert on this metric.
+**3. Monitor callback success rate as a first-class metric.** Track the percentage of callbacks that arrive within the provider's window. Establish a baseline from your own traffic, then alert when the rate drops meaningfully below it — a sudden drop usually means your endpoint is misconfigured or the provider is having an outage.
 
-Also, consider using a payment aggregator that handles these edge cases for you. Services like Flutterwave, Paystack, and Chipper Cash abstract away some of the provider-specific quirks. They cost 1–3% per transaction but can save you weeks of engineering time. For a small team, that tradeoff is often worth it.
+Also, consider using a payment aggregator that handles these edge cases for you. Aggregators abstract away some of the provider-specific quirks. They charge a per-transaction fee, typically a percentage, but can save weeks of engineering time. For a small team, that tradeoff is often worth it.
 
 ## Related errors you might hit next
 
@@ -228,9 +223,9 @@ Once you fix the callback issue, you'll likely encounter these related problems:
 
 - **"Transaction reversed"** — the provider reverses a payment after settlement, often due to fraud checks or user complaints. Your agent has already delivered the service. Fix: implement a reversal handling flow that can claw back credits or suspend the user's account.
 
-- **"Callback signature verification failed"** — you're validating the provider's signature but using the wrong secret or algorithm. Fix: check the provider's docs for the exact HMAC algorithm (usually SHA-256) and ensure you're using the raw request body, not the parsed JSON.
+- **"Callback signature verification failed"** — you're validating the provider's signature but using the wrong secret or algorithm. Fix: check the provider's docs for the exact HMAC algorithm and ensure you're using the raw request body, not the parsed JSON.
 
-- **"Rate limit exceeded"** — you're polling too aggressively. Most providers limit status checks to 10 per minute per transaction. Fix: back off exponentially. Start with 5-second intervals, then 10, 20, 40.
+- **"Rate limit exceeded"** — you're polling too aggressively. Providers typically limit status checks per transaction per minute. Fix: back off exponentially. Start with 5-second intervals, then 10, 20, 40.
 
 ## When none of these work: escalation path
 
@@ -238,43 +233,23 @@ If you've implemented polling, idempotent callbacks, and verified your endpoint 
 
 1. **Check the provider's status page.** Safaricom, MTN, and Airtel all have public status dashboards. If there's an outage, wait it out and communicate with your users.
 
-2. **Open a support ticket with the provider.** Include the transaction ID, timestamp, and the exact error from your logs. Providers usually respond within 24–48 hours for developer accounts. For enterprise accounts, you may have a dedicated Slack channel.
+2. **Open a support ticket with the provider.** Include the transaction ID, timestamp, and the exact error from your logs. Response times vary by account tier.
 
 3. **Test with a different provider.** If you're using a single aggregator, try a direct integration with the MNO. Sometimes the aggregator's own infrastructure is the bottleneck.
 
 4. **Implement a fallback payment method.** Allow users to pay via bank transfer, card, or cash agent. This reduces dependency on a single rail and gives users an alternative when mobile money fails.
 
-5. **Consider a hybrid approach.** Use mobile money for small transactions (< $10) and cards for larger ones. Cards have lower failure rates for high-value payments, though they come with higher fees and chargeback risk.
+5. **Consider a hybrid approach.** Use mobile money for small transactions and cards for larger ones. Cards have different failure characteristics for high-value payments, though they come with higher fees and chargeback risk.
+
+## Decision checklist before you ship
+
+- [ ] Initial API response is stored as `pending`, never as final.
+- [ ] A polling loop with a bounded attempt count runs for every initiated transaction.
+- [ ] The webhook handler is idempotent via a database unique constraint on the provider transaction ID.
+- [ ] The webhook acknowledges before processing, and the polling fallback covers the gap if processing crashes.
+- [ ] The callback URL is HTTPS, has a valid certificate, does not redirect, and responds within the provider's timeout.
+- [ ] Lambda/function timeouts exceed the provider's callback timeout.
+- [ ] A `needs_review` state and dead-letter path exist for transactions that never resolve.
+- [ ] Callback arrival rate and end-to-end latency are instrumented and alerted on.
 
 **Your next step:** Open your production database and run a query to count transactions stuck in `pending` for more than 10 minutes. If that number is greater than zero, you have orphaned payments. Pick one of those transaction IDs and trace it through your logs and the provider's dashboard. That single investigation will tell you whether your problem is callback delivery, idempotency, or provider outage — and that determines which fix to apply first.
-
-## Frequently Asked Questions
-
-**Why does my mobile money integration work in sandbox but fail in production?**
-
-Sandbox environments often simulate instant success and don't enforce callback timeouts or IP allowlists. Production providers have stricter requirements: HTTPS with valid certificates, no redirects, and response times under 5 seconds. Your sandbox callback URL might be HTTP, which works in testing but fails in production. Always test with a staging environment that mirrors production network conditions.
-
-**How do I handle duplicate callbacks from M-Pesa?**
-
-Use a unique constraint on the provider's transaction ID in your database. When a callback arrives, attempt an `INSERT ... ON CONFLICT DO NOTHING`. If the insert affects zero rows, it's a duplicate — acknowledge it with a 200 response but don't process it again. This is the only reliable way to handle duplicates, because application-level checks can race under concurrent load.
-
-**What's the typical latency for mobile money payments?**
-
-For successful payments, p50 latency is 8–15 seconds, p95 is 45–90 seconds. Failures can take longer because the provider retries callbacks multiple times. If your p95 exceeds 2 minutes, you're likely missing callbacks and relying solely on polling. Monitor both callback arrival time and total resolution time to catch this early.
-
-**Should I use a payment aggregator or integrate directly with MNOs?**
-
-Aggregators like Flutterwave and Paystack cost 1–3% per transaction but handle provider-specific quirks, retries, and reconciliation. Direct integration with Safaricom Daraja or MTN MoMo avoids those fees but requires you to build and maintain the reliability logic yourself. For teams with fewer than 5 engineers, aggregators are usually worth the cost. For high-volume merchants, direct integration can save significant fees.
-
-
----
-
-### About this article
-
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.
-
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.
-
-**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
-
-**Last generated:** September 2026
