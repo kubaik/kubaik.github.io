@@ -176,7 +176,6 @@ docs/deploy-a-solo-stack-for-20month-in-2026/index.md
 docs/detect-lazy-agents-without-false-alarms/index.md
 docs/double-entry-ledger-concurrent-write-errors/index.md
 docs/double-the-price-double-the-revenue/index.md
-docs/drop-checklists-ai-code-reviews-that-scale/index.md
 docs/drop-ec2-bills-70-without-code/index.md
 docs/duckdb-in-production-when-it-replaces-a-warehouse/index.md
 docs/ebpf-observability-in-2026-what-actually-works/index.md

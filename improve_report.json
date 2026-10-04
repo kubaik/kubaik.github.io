@@ -1,11 +1,4 @@
 {
   "improved": [],
-  "failed": [
-    {
-      "slug": "drop-checklists-ai-code-reviews-that-scale",
-      "errors": [
-        "dropped too many code examples"
-      ]
-    }
-  ]
+  "failed": []
 }

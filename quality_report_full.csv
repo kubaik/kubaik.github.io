@@ -12,7 +12,6 @@ ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks:
 audit-logs-that-scale-skip-the-3am-fire-drills,80,3151,Audit logs that scale: skip the 3AM fire drills,2026-08-17T12:51:36.917045,1,first-person incident: 'What follows is the reasoning a senior engineer would pass to a colleague hittin'
 bootstrapped-5k-mrr-without-ads,80,2817,Reaching $5k MRR Without Paid Ads: A Product-Led Playbook,2026-06-25T20:30:14.422863,1,"first-person incident: 'If it does not improve, ask a colleague to try the flow while you watch; the fri'"
 deploy-a-solo-stack-for-20month-in-2026,80,2715,Deploy a solo stack for under $20/month,2026-06-09T15:45:09.304392,1,first-person incident: 'Route 53 hosted zones cost $0.50/month per zone; the registrar fee is separate.'
-drop-checklists-ai-code-reviews-that-scale,80,3806,Drop checklists: AI code reviews that scale,2026-06-12T02:06:55.025805,1,"first-person incident: '**Senior Reviewer Time**: Before, reviewers spent 8 hours/PR; after, they spend '"
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
 negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,1,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim'"
@@ -319,7 +318,7 @@ monolith-to-services-without-a-rewrite,100,2878,Monolith to services without a r
 most-llm-cost-dashboards-lie,100,2611,Most LLM cost dashboards lie…,2026-09-19T08:31:18.982202,0,
 multi-agent-systems-when-they-quietly-degrade,100,2400,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,0,
 nextjs-15-vs-remix-vs-sveltekit-2026-choices,100,2652,Next.js 15 vs Remix vs SvelteKit: 2026 choices,2026-06-16T06:24:02.992809,0,
-observability-2026-ditch-the-three-pillars,100,3392,Observability 2026: ditch the three pillars,2026-06-10T00:02:57.587030,0,
+observability-2026-ditch-the-three-pillars,100,2814,Observability 2026: ditch the three pillars,2026-06-10T00:02:57.587030,0,
 offline-first-agents-for-field-teams,100,2705,Offline-first agents for field teams,2026-07-16T02:51:18.981017,0,
 offline-first-apps-what-3g-markets-taught-us,100,3020,Designing Offline-First Apps for Unreliable Networks,2026-06-21T10:38:08.004189,0,
 one-payment-stack-for-kenya-nigeria-ghana,100,2697,"One payment stack for Kenya, Nigeria, Ghana",2026-06-20T12:04:01.031479,0,
