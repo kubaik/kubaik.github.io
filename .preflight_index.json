@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-04T11:01:24.301349",
+  "built_at": "2026-10-05T04:47:08.507547",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5455,6 +5455,11 @@
       "slug": "fraud-detection-rules-vs-scoring-where-they-meet",
       "title": "Fraud detection: rules vs scoring, where they meet",
       "summary": "There's a one-line change buried in most fraud detection setups that nobody flags until it's expensive. Here's what holds up in practice, and why. It's the kind of problem that's easy to reproduce and hard to explain. The one-paragraph version (read this first) Fraud detection systems almost always "
+    },
+    {
+      "slug": "cross-border-fintech-why-your-kyc-fails-in-dakar",
+      "title": "Cross-border fintech: why your KYC fails in Dakar",
+      "summary": "The writing postmortems section of a postmortem is easy to skim past, right up until it's the section that matters. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. The error and why it's confusing You built a clean "
     }
   ]
 }

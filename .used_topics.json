@@ -86,5 +86,9 @@
   "Building accessible AI chat interfaces that don't fail WCAG audits",
   "SBOM + attestation that actually gets used instead of sitting in a bucket",
   "Why global AI best practices often fail in markets with high mobile data costs and latency",
-  "Fraud detection systems architecture: rules engines, scoring, and where they intersect"
+  "Fraud detection systems architecture: rules engines, scoring, and where they intersect",
+  "The on-call rotation structures that don't burn out a small engineering team",
+  "Writing postmortems that account for agent-made decisions, not just human error",
+  "The skills that became table stakes for senior engineers once agents were in production",
+  "Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without country-specific forks"
 ]

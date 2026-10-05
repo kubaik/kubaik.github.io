@@ -1,0 +1,202 @@
+# Cross-border fintech: why your KYC fails in Dakar
+
+## Why the same onboarding flow breaks in a new country
+
+A clean onboarding flow built for one market — ID upload, selfie, phone verification — often works fine until the feature flag is flipped for a second market. Then the same code path starts rejecting valid documents, phone verification times out for a subset of users, and date-of-birth fields reject inputs that look correct in test fixtures.
+
+The error messages make this worse because they arrive from three layers at once. Application logs report something like `ValidationError: document_type not supported`. The provider dashboard reports `400 Bad Request`. The user sees "We couldn't verify your identity, please try again." None of these indicate which country rule fired, which document class was rejected, or whether the failure originated in application code or provider policy.
+
+A common trap is treating cross-border fintech as a translation problem. It is not. It is a **data shape problem** wearing a translation costume. The moment a codebase is forked per country, every future feature ships N times, every bug is fixed N times, and every compliance change becomes an N-way merge. The goal is one code path that adapts to country rules as data, not as branches.
+
+## The three root causes behind country-specific KYC failures
+
+The surface symptom is "validation fails in country X." The underlying cause is usually one of three things.
+
+**1. Country rules encoded into the schema instead of a policy layer.** An `id_number` field declared as `VARCHAR(10)` because one country's national ID is that length will not hold another country's national identification number, a third country's card format, or a fourth country's identifier entirely. Field length is a policy, not a fact about identity.
+
+**2. Phone numbers treated as E.164 strings validatable by regex.** They are E.164 strings, but carrier and reachability semantics differ by market. A number that passes E.164 validation in one city may be a dormant line. A number that passes in another may belong to a carrier the SMS provider does not route to.
+
+**3. Document types treated as a closed enum.** They are not. Each country has its own set, and the set changes. A passport is close to universal. A voter's card, a driver's license, and a residence permit are not.
+
+The deeper issue is representing a **jurisdiction-dependent decision** as a **static schema**. The fix is to move the decision into runtime, driven by a policy object keyed by country, and to make the schema wide enough to hold any country's data without per-country migrations.
+
+## Fix 1 — replace per-country forks with a policy layer
+
+The most common cause of "it works in one market, breaks in another" is a code branch like this:
+
+```python
+# Don't do this.
+def validate_id(country, id_number):
+    if country == "KE":
+        return len(id_number) == 10 and id_number.isdigit()
+    elif country == "NG":
+        return len(id_number) == 11 and id_number.isdigit()
+    elif country == "GH":
+        return len(id_number) == 10 and id_number.startswith("GHA")
+    elif country == "SN":
+        return len(id_number) == 13
+    else:
+        raise ValueError("unsupported country")
+```
+
+This is four products pretending to be one. Every new country adds a branch. Every rule change edits a branch. Testing is combinatorial.
+
+Replace it with a policy object loaded from configuration:
+
+```python
+# policies.py
+from dataclasses import dataclass
+from typing import Callable
+
+@dataclass(frozen=True)
+class IdPolicy:
+    name: str
+    validate: Callable[[str], bool]
+
+ID_POLICIES = {
+    "KE": IdPolicy("national_id", lambda s: len(s) == 10 and s.isdigit()),
+    "NG": IdPolicy("nin", lambda s: len(s) == 11 and s.isdigit()),
+    "GH": IdPolicy("ghana_card", lambda s: len(s) == 10 and s.startswith("GHA")),
+    "SN": IdPolicy("cni", lambda s: len(s) == 13),
+}
+
+def validate_id(country: str, id_number: str) -> bool:
+    policy = ID_POLICIES.get(country)
+    if policy is None:
+        raise ValueError(f"no ID policy for {country}")
+    return policy.validate(id_number)
+```
+
+The behavior is identical. The difference is that adding a country becomes a data change, not a code change. The policy can move to a database row, a config file, or a feature flag service. Application code stops knowing what a Ghana Card is.
+
+**Symptom pattern that points here:** the failure is deterministic and country-specific. The same input succeeds in one country and fails in another. Logs show a validation error, not a provider error.
+
+## Fix 2 — stop validating phone numbers with regex alone
+
+The less obvious cause is phone verification. Teams write a regex like `^\+?[1-9]\d{1,14}$` (the E.164 shape), call it validation, and ship. It passes for almost every input. Then SMS delivery fails for a subset of users and the failure is silent — the code thinks the number is valid, the provider thinks it is unreachable, and the user is stuck.
+
+The real problem is that **E.164 validation is not reachability validation**. A number can be syntactically perfect and still be a landline, a dormant prepaid line, or a number the provider cannot route to in that country.
+
+Do not write carrier logic by hand. Use the SMS provider's lookup API if it exposes one, and treat the result as a policy input:
+
+```python
+# Pseudocode shape — provider SDKs differ.
+def can_receive_sms(phone_e164: str, country: str) -> bool:
+    lookup = sms_provider.lookup(phone_e164)
+    if lookup.status != "valid":
+        return False
+    # Country-specific routing rules live in policy, not in code.
+    routing = ROUTING_POLICIES[country]
+    return lookup.carrier in routing.supported_carriers
+```
+
+The important part is not the specific provider call. It is that **reachability is a separate check from format**, and that routing rules are data. When a carrier changes in one market, the update is a row, not a function.
+
+**Symptom pattern that points here:** format validation passes, but delivery fails or times out. The failure rate is not uniform across countries. Users report "I never got the code" rather than "the app rejected my number."
+
+## Fix 3 — make date, name, and address fields country-aware
+
+The environment-specific cause hides longest: **locale-dependent parsing and formatting**. A date that parses as `DD/MM/YYYY` in one context parses as `MM/DD/YYYY` in another. A name field that assumes `first last` breaks for names with a single token, multiple family names, or non-Latin scripts. An address field that assumes a postal code breaks where postal codes are not used for the address being collected.
+
+This is a **representation problem**, not a translation problem. Store the canonical form and render the local form:
+
+- **Dates:** store ISO 8601 (`YYYY-MM-DD`) in the database and API. Parse user input according to the country's convention, but never store the local string. If a user enters `31/12/1990`, convert to `1990-12-31` before persistence.
+- **Names:** store a single `full_name` string plus optional `given_name` and `family_name` fields. Do not require both. Do not enforce a character set. Do not enforce a length beyond a generous maximum.
+- **Addresses:** store structured fields only if a specific integration requires them. Otherwise store a free-form `address_line` plus `country` and let the downstream system parse. Postal code is optional in many jurisdictions; do not make it globally required.
+
+**Symptom pattern that points here:** the failure is input-dependent, not country-dependent. Some users in every country succeed; some fail. The failing inputs look correct to a human. Logs show a parse error, a length violation, or a null constraint.
+
+## How to verify the fix actually works
+
+"It works in the test environment" is not verification for cross-border fintech, because a test environment typically does not reproduce the provider's country rules. Run these checks for each supported country:
+
+1. **Policy coverage test.** For every country in the supported list, assert that a policy object exists for ID, phone routing, and address requirements. A missing policy should fail loudly at startup, not silently at request time.
+
+```python
+SUPPORTED_COUNTRIES = ["KE", "NG", "GH", "SN"]
+
+def assert_policies_present():
+    for c in SUPPORTED_COUNTRIES:
+        assert c in ID_POLICIES, f"missing ID policy for {c}"
+        assert c in ROUTING_POLICIES, f"missing routing policy for {c}"
+```
+
+2. **Golden-path fixture test.** For each country, maintain one known-valid input set (a real-format ID, a reachable test number, a valid date) and assert the full onboarding flow passes. This catches regressions when a provider changes a rule.
+
+3. **Failure-mode test.** For each country, maintain one known-invalid input per failure class (bad format, unreachable number, unsupported document type) and assert the error is specific, not generic. A generic "verification failed" is a bug.
+
+4. **Provider sandbox test.** If the provider offers a sandbox that simulates country rules, run the golden path against it before every release. If it does not, add a contract test that records the provider's response shape and alerts when it changes.
+
+### Instrumenting verification so you can measure it
+
+Verification without measurement is guesswork. To know whether the policy layer is actually working, instrument the following per country:
+
+- Count of validation attempts by failure class, tagged with the country code and the policy name that fired.
+- Count of format-pass but reachability-fail events, tagged with the carrier returned by the lookup API.
+- p50 and p95 latency of the provider lookup call, split by country.
+- Count of "generic error shown to user" events, which should trend toward zero as error specificity improves.
+
+Compare these counts week over week, and alert on any country whose failure rate deviates from its own trailing baseline. A country-specific spike is the earliest signal that a provider rule changed.
+
+## A worked example: adding a fifth country
+
+Suppose the supported list is `["KE", "NG", "GH", "SN"]` and the task is to add Côte d'Ivoire (`CI`). Walk through the policy layer:
+
+1. **ID policy.** Determine the identifier format used for the onboarding flow. Add an entry to `ID_POLICIES` with the validation function. If the format is not yet known, add the entry with a `validate` that raises `NotImplementedError` and a flag marking it as pending compliance review — this prevents silent acceptance.
+2. **Routing policy.** Determine which carriers the SMS provider routes to in Côte d'Ivoire. Add a `ROUTING_POLICIES["CI"]` entry with the supported carrier list.
+3. **Address requirements.** Determine whether a postal code is required for the address being collected. If not, mark it optional in the address policy.
+4. **Supported list.** Append `"CI"` to `SUPPORTED_COUNTRIES`.
+5. **Fixtures.** Add a golden-path fixture and at least three failure-mode fixtures. Run the coverage test to confirm no policy is missing.
+
+The critical property: steps 1–3 are data edits reviewed by compliance, not engineering work. If any of them requires touching business logic, the abstraction is incomplete and the fork has already started.
+
+## How to prevent this from happening again
+
+The prevention is architectural, not procedural. Three rules:
+
+- **No country literals in business logic.** If `"NG"` appears in a function that is not a policy lookup, it is a bug waiting to happen. Enforce this with a lint rule or a code review checklist.
+- **Policy is data, not code.** Store country policies in a table, a config file, or a feature flag service. The application reads them at runtime, so a compliance change is a data update, not a deploy.
+- **One schema, wide enough for all countries.** Do not add a column per country. Add a nullable column that any country can use, or store country-specific data in a JSON field with a documented shape. Migrations are expensive; nullable columns are cheap.
+
+A useful mental model: the application should not know what a country *is*. It should know how to look up a policy by country code and apply it. The moment code contains an `if country == ...` branch, a fork has started.
+
+## Related errors and what they usually mean
+
+- **`document_type not supported`** — usually the provider's enum and the application's enum have drifted. Check the provider's current supported document list for the country before assuming the code is wrong.
+- **`phone_number_invalid` with a valid-looking number** — usually a reachability failure disguised as a format failure. Separate the two checks.
+- **`date_of_birth_invalid` for a correct date** — usually a locale parsing mismatch. Log the raw input and the parsed value side by side.
+- **`name_too_long` or `name_invalid_characters`** — usually a length or character-set assumption that does not hold for the country. Widen the field; do not truncate.
+- **`address_postal_code_required`** — usually a global requirement that should be country-conditional. Make it optional and validate per policy.
+
+## When none of these work: escalation path
+
+If rules have been moved into policy, format has been separated from reachability, and locale handling is country-aware, and the failure persists, the problem is likely outside the application. Escalate in this order:
+
+1. **Check the provider's status page and changelog.** Country rules change without notice. A rule that worked last week may have been tightened.
+2. **Reproduce with a raw provider call.** Bypass the application and call the provider's API directly with the failing input. If it fails there too, the issue is provider-side.
+3. **Open a provider ticket with the raw request and response.** Include the country code, the exact input, and the timestamp. Vague tickets get vague answers.
+4. **If the provider is the bottleneck, abstract it.** Put provider calls behind an interface so a provider can be swapped per country without touching business logic. This is the same policy pattern applied one layer down.
+
+The point of the escalation path is to stop debugging application code when the failure is upstream. Teams commonly burn days on this because the error message does not distinguish "your input is wrong" from "our rule changed."
+
+## Frequently Asked Questions
+
+**How do I support a new country without forking the codebase?**
+
+Add a policy entry for ID validation, phone routing, and address requirements, then add the country code to the supported list. If any of those three requires a code change, the abstraction is incomplete. The goal is that adding a country is a data change reviewed by compliance, not an engineering project.
+
+**Why does my phone validation pass but SMS delivery fail?**
+
+Format validation and reachability are different checks. A number can be syntactically valid and still be unreachable because it is a landline, dormant, or on a carrier the provider does not route to. Use the provider's lookup API and treat the result as a policy input, not a regex result.
+
+**What is the right way to store names across countries?**
+
+Store a single `full_name` string plus optional `given_name` and `family_name`. Do not require both parts. Do not enforce a character set or a strict length. Names with one token, multiple family names, and non-Latin scripts are all valid. The schema should not decide which names are real.
+
+**When should I use a country-specific provider instead of a global one?**
+
+When the global provider's coverage or rules in that country cause failures that cannot be worked around. Put the provider behind an interface so it can be routed per country. The decision is operational, not architectural — the interface is the same either way.
+
+## The one thing to do in the next 30 minutes
+
+Open the onboarding validation code and search for the string of any supported country code (for example, `"NG"` or `"KE"`). Every match that is not a policy lookup is a fork waiting to happen. Pick the first one, move its rule into a policy object, and write a test that asserts the policy exists for every supported country. That single change turns the next country launch from a code change into a data change.

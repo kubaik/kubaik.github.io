@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "temporal-changed-our-agent-retries-for-good",
-    "title": "Temporal changed our agent retries for good",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "thundering-herd-the-hidden-scaling-trap",
-    "title": "Thundering Herd: The Hidden Scaling Trap",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I changed my mind about durable execution after watching it fail somewhere it wa",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
-    "title": "WASM ML models: keep dev speed at the edge",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "wasm-servers-beat-containers-here",
-    "title": "WASM servers beat containers here",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same webassembly server mistake in more than one production codebas",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
-    "title": "Webhooks done right: retries that don’t explode in 2026",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "why-scaling-agents-kills-plain-logs",
     "title": "Why scaling agents kills plain logs",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "year-one-claude-codes-slow-burn-wins",
     "title": "Year one: Claude Code’s slow-burn wins",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "why-token-economics-break-alwayson-fleets",
     "title": "Why token economics break always‑on fleets",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "stop-trusting-agents-for-core-logic",
     "title": "Stop trusting agents for core logic",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "always-on-agents-the-token-bill-nobody-models",
     "title": "Always-on agents: the token bill nobody models",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "47-ai-code-debt-in-2026",
@@ -511,6 +481,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "temporal-changed-our-agent-retries-for-good",
+    "title": "Temporal changed our agent retries for good",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "thundering-herd-the-hidden-scaling-trap",
+    "title": "Thundering Herd: The Hidden Scaling Trap",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I changed my mind about durable execution after watching it fail somewhere it wa",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
+    "title": "WASM ML models: keep dev speed at the edge",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "wasm-servers-beat-containers-here",
+    "title": "WASM servers beat containers here",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same webassembly server mistake in more than one production codebas",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
+    "title": "Webhooks done right: retries that don’t explode in 2026",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "senior-role-projects-3-real-paths",

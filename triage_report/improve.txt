@@ -166,6 +166,7 @@ docs/context-windows-agents-that-run-for-days/index.md
 docs/context-windows-live-longer-than-you-think/index.md
 docs/cost-tools-fail-when-agents-scale-autonomously/index.md
 docs/cqrs-when-it-pays-off-and-when-it-breaks/index.md
+docs/cross-border-fintech-why-your-kyc-fails-in-dakar/index.md
 docs/currency-switch-fails-in-ghana-one-config-file-to-rule/index.md
 docs/cut-cold-starts-70-lambda-cost-hack/index.md
 docs/cut-false-positives-85-with-this-ci-security-trick/index.md

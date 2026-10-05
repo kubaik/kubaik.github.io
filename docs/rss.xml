@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Oct 2026 16:40:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 04:47:50 +0000</lastBuildDate>
+    <item>
+      <title>Cross-border fintech: why your KYC fails in Dakar</title>
+      <link>https://kubaik.github.io/cross-border-fintech-why-your-kyc-fails-in-dakar/</link>
+      <description>Why KYC validation breaks across borders, and how to replace per-country code forks with a policy layer, reachability checks, and locale-safe schemas.</description>
+      <pubDate>Mon, 05 Oct 2026 04:47:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/cross-border-fintech-why-your-kyc-fails-in-dakar/</guid>
+    </item>
     <item>
       <title>Fraud detection: rules vs scoring, where they meet</title>
       <link>https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/</link>
@@ -138,13 +145,6 @@
       <description>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</description>
       <pubDate>Fri, 25 Sep 2026 04:05:33 +0000</pubDate>
       <guid>https://kubaik.github.io/apm-is-blind-to-your-ai-agents/</guid>
-    </item>
-    <item>
-      <title>Multi-agent systems: when they quietly degrade</title>
-      <link>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</link>
-      <description>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</description>
-      <pubDate>Thu, 24 Sep 2026 16:46:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/</guid>
     </item>
   </channel>
 </rss>
