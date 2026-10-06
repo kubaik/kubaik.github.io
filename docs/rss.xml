@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Oct 2026 05:34:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 18:08:08 +0000</lastBuildDate>
+    <item>
+      <title>Debugging techniques that outlast any framework</title>
+      <link>https://kubaik.github.io/debugging-techniques-that-outlast-any-framework/</link>
+      <description>Framework-agnostic debugging methods: narrow hypotheses about state, time, concurrency, boundaries and data shape, with a worked race-condition example.</description>
+      <pubDate>Tue, 06 Oct 2026 18:07:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugging-techniques-that-outlast-any-framework/</guid>
+    </item>
     <item>
       <title>SLOs for agentic features: beyond latency</title>
       <link>https://kubaik.github.io/slos-for-agentic-features-beyond-latency/</link>
@@ -138,13 +145,6 @@
       <description>A repeatable process for debugging, verifying and governing tools you didn&amp;#x27;t write, with baselines, contracts, environment measurement and tool cards.</description>
       <pubDate>Sat, 26 Sep 2026 16:04:10 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</guid>
-    </item>
-    <item>
-      <title>Portfolio projects hiring managers skip</title>
-      <link>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</link>
-      <description>Portfolio projects often fail screening for legibility, not code quality. Here is how to restructure a repo so a reviewer understands it fast.</description>
-      <pubDate>Fri, 25 Sep 2026 16:52:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</guid>
     </item>
   </channel>
 </rss>

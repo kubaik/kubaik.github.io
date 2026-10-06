@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-06T05:33:25.222898",
+  "built_at": "2026-10-06T18:07:21.129021",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5465,6 +5465,11 @@
       "slug": "slos-for-agentic-features-beyond-latency",
       "title": "SLOs for agentic features: beyond latency",
       "summary": "The first time building postmortems fails in production, it rarely fails in the way any postmortem template expects. It's a one-line fix once you know where to look, and expensive until then. Here's what holds up in practice, and why. The problem this solves Agentic features break in ways that tradi"
+    },
+    {
+      "slug": "debugging-techniques-that-outlast-any-framework",
+      "title": "Debugging techniques that outlast any framework",
+      "summary": "After enough code that touches debugging techniques gets reviewed, the same failure pattern keeps showing up. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. Every few years the stack turns over. The language chan"
     }
   ]
 }

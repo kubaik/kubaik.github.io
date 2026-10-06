@@ -196,69 +196,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",
-    "title": "African devs: Arc vs Andela vs Toptal in 2026",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The 2026 Freelance Pulse survey found'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "agent-followed-instructions-too-literally-the-cron-job-trap",
-    "title": "Agent followed instructions too literally: the cron job trap",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the process exit code.\n\nHistorically'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
-    "title": "Agents keep breaking prod: 3 boundary rules you still need",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to its own logs'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-agents-need-circuit-breakers-in-2026",
-    "title": "AI agents need circuit breakers in 2026",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'report from a Lagos-based health tech team'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-code-traps-copilot-vs-cursor-smackdown",
-    "title": "AI code traps: Copilot vs Cursor smackdown",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'According to the'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
     "title": "AI micro-SaaS under $150/month: the real infra choices",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'report from the BigQuery table. At'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ops-vs-dumb-alerts-the-incident-that-broke-us",
     "title": "AI ops vs dumb alerts: the incident that broke us",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The 2026 PagerDuty SRE survey shows'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-portfolios-ruin-yours-fix-your-signal",
     "title": "AI portfolios ruin yours? Fix your signal",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 LinkedIn Engineering survey found'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-skills-that-pay-data-vs-prompt-skills-in-2026",
     "title": "AI skills that pay: data vs prompt skills in 2026",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: '2026 Stack Overflow Developer Survey shows'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
     "title": "AI wrote 40% of our code — here’s what broke our on-call",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'survey from the start'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "code-ai-wont-rewrite",
@@ -451,6 +421,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",
+    "title": "African devs: Arc vs Andela vs Toptal in 2026",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The 2026 Freelance Pulse survey found'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "agent-followed-instructions-too-literally-the-cron-job-trap",
+    "title": "Agent followed instructions too literally: the cron job trap",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the process exit code.\n\nHistorically'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
+    "title": "Agents keep breaking prod: 3 boundary rules you still need",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to its own logs'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-agents-need-circuit-breakers-in-2026",
+    "title": "AI agents need circuit breakers in 2026",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'report from a Lagos-based health tech team'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-code-traps-copilot-vs-cursor-smackdown",
+    "title": "AI code traps: Copilot vs Cursor smackdown",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'According to the'",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "why-scaling-agents-kills-plain-logs",

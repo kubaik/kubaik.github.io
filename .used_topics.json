@@ -93,5 +93,6 @@
   "Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without country-specific forks",
   "Building postmortems that actually improve things when half the code is AI-generated",
   "The code review habits that separate senior engineers from everyone else",
-  "Building SLOs for agentic features that don't just measure latency and error rate"
+  "Building SLOs for agentic features that don't just measure latency and error rate",
+  "Debugging techniques that outlast whatever framework or language is trendy"
 ]
