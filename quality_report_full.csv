@@ -119,7 +119,7 @@ claude-code-review-wins-and-blind-spots,95,2810,Claude code review: wins and bli
 cloud-agents-burned-18k-8-tools-that-didnt-work,95,2404,Why Cloud Cost Tools Miss Agent-Driven GPU Spend,2026-07-10T14:36:13.221418,1,no markdown table
 code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,1,no FAQ section
 cost-tools-fail-when-agents-scale-autonomously,95,2230,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,1,no markdown table
-cross-border-fintech-why-your-kyc-fails-in-dakar,95,2414,Cross-border fintech: why your KYC fails in Dakar,2026-10-05T04:47:06.453151,1,no markdown table
+cross-border-fintech-why-your-kyc-fails-in-dakar,95,2653,Cross-border fintech: why your KYC fails in Dakar,2026-10-05T04:47:06.453151,1,no markdown table
 cut-cold-starts-70-lambda-cost-hack,95,2472,Serverless Cold Starts: Cost Levers and How to Measure Them,2026-06-20T21:07:57.029662,1,no markdown table
 dead-letter-queues-stop-poison-messages,95,2982,Dead-letter queues: stop poison messages,2026-09-21T04:01:53.975376,1,no FAQ section
 debug-ai-agent-failures-differently,95,2689,Debug AI agent failures differently,2026-06-27T15:03:09.620372,1,no FAQ section
@@ -183,6 +183,7 @@ ship-a-solo-project-pipeline-under-20month,95,3164,A Solo-Project Deploy Pipelin
 ship-to-nairobi-users-starlink-latency-guide-2026,95,2788,Ship to Nairobi users: Starlink latency guide 2026,2026-06-25T23:11:40.027660,1,no FAQ section
 signals-5-state-tricks-that-broke-my-app,95,2611,Signals: derived state without the performance tax,2026-07-03T04:50:42.390689,1,no markdown table
 skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one API for 3 African markets,2026-06-14T17:14:09.679850,1,no markdown table
+slos-for-agentic-features-beyond-latency,95,2207,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2581,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
 spot-ais-hidden-cost-spike-in-your-stack,95,2735,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,1,no FAQ section
 starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,1,no FAQ section

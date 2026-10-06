@@ -1,0 +1,705 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SLOs for agentic features: beyond latency - Kubai Kevin</title>
+        <meta name="description" content="Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.">
+        <meta name="keywords" content="AgenticAiSlos, OpentelemetryAgents, AgentSuccessRate, Agent, Ai, Agenticai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-06T05:33:22.705373">
+        <meta property="article:modified_time" content="2026-10-06T05:34:08.339512+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="SLOs for agentic features: beyond latency">
+        <meta property="og:description" content="Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.">
+        <meta property="og:url" content="https://kubaik.github.io/slos-for-agentic-features-beyond-latency/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/slos-for-agentic-features-beyond-latency.png">
+        <meta property="og:image:alt" content="SLOs for agentic features: beyond latency">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="SLOs for agentic features: beyond latency">
+        <meta name="twitter:description" content="Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/slos-for-agentic-features-beyond-latency.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/slos-for-agentic-features-beyond-latency/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/slos-for-agentic-features-beyond-latency/#article",
+      "headline": "SLOs for agentic features: beyond latency",
+      "description": "Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.",
+      "datePublished": "2026-10-06T05:33:22+00:00",
+      "dateModified": "2026-10-06T05:34:08+00:00",
+      "wordCount": 2936,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/slos-for-agentic-features-beyond-latency/"
+      },
+      "keywords": "AgenticAiSlos, OpentelemetryAgents, AgentSuccessRate, Agent, Ai, Agenticai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "SLOs for agentic features: beyond latency",
+          "item": "https://kubaik.github.io/slos-for-agentic-features-beyond-latency/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>SLOs for agentic features: beyond latency</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">SLOs for agentic features: beyond latency</h1>
+                
+                <p class="post-lead">Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgenticAiSlos</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">OpentelemetryAgents</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentSuccessRate</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/agenticai/"
+                       style="text-decoration:none;">Agenticai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2936 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-06
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Agentic features fail in ways that traditional SLOs never catch. A tool-calling agent can return HTTP 200 in 300ms, log zero errors, and still be completely wrong: it picked the wrong tool, hallucinated a parameter, or looped three times before giving up. Error-rate and latency dashboards stay green while users quietly lose trust.</p>
+<p>This is a step-by-step guide to defining, implementing, and alerting on SLOs that measure whether the agent did its job, using OpenTelemetry and Prometheus. By the end you'll have a working SLI pipeline that tracks task success, tool-call validity, and loop termination — the three signals that matter most for agents.</p>
+<h2 id="the-problem-this-solves">The problem this solves</h2>
+<p>Classic request/response SLOs assume a binary mapping between "the call returned" and "the work was done." Agents break that assumption in three specific ways.</p>
+<p><strong>Semantic failure with a clean status code.</strong> The model returns a well-formed response that answers the wrong question, calls a tool that exists but is inappropriate, or produces a plausible-looking parameter set that the downstream API rejects silently.</p>
+<p><strong>Partial recovery.</strong> A tool call fails, the agent retries with corrected arguments, and the task succeeds. From the outside this is a success; from a per-call error-rate perspective it is a failure. Any SLI that counts the intermediate error as a failure will be permanently noisy.</p>
+<p><strong>Non-termination.</strong> The agent hits a max-iteration cap or a wall-clock timeout and returns an empty or truncated answer. This looks like a latency or timeout event, but the underlying cause is usually a prompt or tool-design problem, and it needs its own signal.</p>
+<p>The rest of this article builds an SLI pipeline that distinguishes these cases. The approach is framework-agnostic: it depends on structured spans, not on any particular agent library.</p>
+<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
+<p>You need:</p>
+<ul>
+<li>An agent loop (any framework — LangChain, LlamaIndex, or hand-rolled) that can emit structured spans.</li>
+<li>An OpenTelemetry SDK for your language. Examples below use Python; the span and metric semantics are the same in Go, Java, or JavaScript.</li>
+<li>A Prometheus-compatible metrics backend (Prometheus itself, Grafana Cloud, or VictoriaMetrics).</li>
+<li>Working familiarity with SLI (indicator), SLO (objective), and error budget.</li>
+</ul>
+<p>What you'll build:</p>
+<ol>
+<li>Three custom SLIs: <strong>task success rate</strong>, <strong>tool-call validity rate</strong>, and <strong>loop termination rate</strong>.</li>
+<li>A span-instrumentation layer that produces the attributes those SLIs consume.</li>
+<li>Recording and alerting rules that fire on error-budget burn, not on raw error counts.</li>
+<li>A test harness that validates the SLI logic against synthetic traces.</li>
+</ol>
+<p>Every step below maps to a metric queryable in Grafana within an hour of wiring it up.</p>
+<h2 id="step-1-define-what-success-means-for-your-agent">Step 1 — Define what "success" means for your agent</h2>
+<p>Before writing any code, define a binary outcome per agent invocation. This is the hardest part, and it's where most teams stall.</p>
+<p>For a customer-support agent, success might be: the ticket was resolved without escalation AND the user didn't re-open it within 24 hours. For a code-generation agent: the patch compiles AND passes the existing test suite. For a research agent: the final answer cites at least one source from an allowed domain list.</p>
+<p>Write this as a function. It doesn't have to be perfect — it has to be consistent. Two common traps are defining success too broadly ("user seemed happy") or too narrowly ("exact string match on expected output"). Both produce SLIs that either never fire or fire constantly.</p>
+<p>Here's a workable definition for a tool-using agent:</p>
+<pre><code class="language-python"># sli_definitions.py
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass
+class AgentOutcome:
+    task_id: str
+    success: bool
+    tool_calls_valid: bool
+    terminated_cleanly: bool
+    error: str | None = None
+
+
+def evaluate_outcome(trace: dict[str, Any]) -&gt; AgentOutcome:
+    &quot;&quot;&quot;
+    Given a completed agent trace, return a binary outcome.
+    This is the single source of truth for all SLIs.
+    &quot;&quot;&quot;
+    spans = trace[&quot;spans&quot;]
+
+    # Success: the agent produced a final answer AND every tool error
+    # was followed by a retry that the agent recovered from.
+    final_answer = trace.get(&quot;final_answer&quot;)
+    tool_error_indices = [
+        i for i, span in enumerate(spans)
+        if span[&quot;name&quot;].startswith(&quot;tool.&quot;) and span.get(&quot;error&quot;)
+    ]
+    recovered = all(
+        any(s[&quot;name&quot;] == &quot;llm.retry&quot; for s in spans[i + 1:])
+        for i in tool_error_indices
+    )
+    success = bool(final_answer) and (not tool_error_indices or recovered)
+
+    # Tool-call validity: every tool call had a schema-valid argument set.
+    tool_calls = [s for s in spans if s[&quot;name&quot;].startswith(&quot;tool.&quot;)]
+    tool_calls_valid = all(
+        s.get(&quot;attributes&quot;, {}).get(&quot;args_valid&quot;, False)
+        for s in tool_calls
+    )
+
+    # Termination: the agent stopped because it decided to, not because
+    # it hit a max-iteration cap or a timeout.
+    terminated_cleanly = trace.get(&quot;termination_reason&quot;) == &quot;agent_finished&quot;
+
+    return AgentOutcome(
+        task_id=trace[&quot;task_id&quot;],
+        success=success,
+        tool_calls_valid=tool_calls_valid,
+        terminated_cleanly=terminated_cleanly,
+        error=trace.get(&quot;error&quot;),
+    )
+</code></pre>
+<p>This function is the contract. Every SLI below derives from it. If the definition of success changes, it changes here, and the rest of the pipeline follows.</p>
+<p>One design note: <code>tool_calls_valid</code> uses <code>all(...)</code>, so a single invalid argument set marks the whole trace invalid. That is deliberate for a validity SLI — you want to know the rate at which the agent produces schema-correct calls at all. If you'd rather track per-call validity, emit a counter per tool span instead and aggregate at query time.</p>
+<h2 id="step-2-instrument-the-agent-loop-with-opentelemetry">Step 2 — Instrument the agent loop with OpenTelemetry</h2>
+<p>SLIs cannot be computed from unstructured logs alone — they need spans with the attributes <code>evaluate_outcome</code> reads. OpenTelemetry is the right substrate because it is vendor-neutral and has SDKs for the languages agents are typically written in.</p>
+<p>The key structural decision: emit one root span per agent invocation, one child span per LLM call, and one child span per tool call. That tree is what makes recovery and termination computable.</p>
+<pre><code class="language-python"># agent_instrumentation.py
+from opentelemetry import trace
+from opentelemetry.trace import Status, StatusCode
+
+
+tracer = trace.get_tracer(&quot;agent.runtime&quot;)
+
+
+def run_agent(task_id: str, user_input: str, tools: dict) -&gt; str:
+    with tracer.start_as_current_span(&quot;agent.invoke&quot;) as root:
+        root.set_attribute(&quot;task.id&quot;, task_id)
+        root.set_attribute(&quot;agent.tool_count&quot;, len(tools))
+
+        messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}]
+        max_iterations = 10
+        termination_reason = &quot;max_iterations&quot;
+
+        for iteration in range(max_iterations):
+            with tracer.start_as_current_span(&quot;llm.call&quot;) as llm_span:
+                llm_span.set_attribute(&quot;llm.iteration&quot;, iteration)
+                response = call_llm(messages)
+                llm_span.set_attribute(&quot;llm.stop_reason&quot;, response.stop_reason)
+
+            if response.stop_reason == &quot;end_turn&quot;:
+                termination_reason = &quot;agent_finished&quot;
+                root.set_attribute(&quot;termination_reason&quot;, termination_reason)
+                root.set_attribute(&quot;final_answer&quot;, response.content)
+                return response.content
+
+            if response.tool_call:
+                tool_name = response.tool_call.name
+                with tracer.start_as_current_span(f&quot;tool.{tool_name}&quot;) as tool_span:
+                    try:
+                        args = validate_args(tool_name, response.tool_call.arguments)
+                        tool_span.set_attribute(&quot;args_valid&quot;, True)
+                        result = tools[tool_name](**args)
+                        tool_span.set_status(Status(StatusCode.OK))
+                    except Exception as exc:
+                        tool_span.set_attribute(&quot;args_valid&quot;, False)
+                        tool_span.record_exception(exc)
+                        tool_span.set_status(Status(StatusCode.ERROR))
+                        result = f&quot;Error: {exc}&quot;
+                messages.append({&quot;role&quot;: &quot;tool&quot;, &quot;content&quot;: result})
+
+        root.set_attribute(&quot;termination_reason&quot;, termination_reason)
+        root.set_status(Status(StatusCode.ERROR, &quot;max_iterations&quot;))
+        return &quot;&quot;
+</code></pre>
+<p>Two details matter. First, <code>args_valid</code> is set on the tool span itself, which makes the tool-call-validity SLI computable without re-parsing logs. Second, <code>termination_reason</code> is set on the root span, which distinguishes "agent finished" from "agent gave up."</p>
+<p>A common trap: teams instrument only the LLM call and forget tool spans. They can then measure latency and token usage but not whether the agent used tools correctly. If you use a framework that auto-instruments LLM calls, check whether it also emits tool spans — many do not, and you'll need to add them manually.</p>
+<p>A second trap is cardinality. Never put <code>task.id</code>, user input, or free-text tool arguments on a span attribute that becomes a metric label. Attributes like <code>task.id</code> are fine on spans (they're useful for trace lookup) but must be dropped or aggregated before metrics are derived from them, or the metric backend will explode. The counters in Step 3 use a fixed <code>agent.name</code> label for exactly this reason.</p>
+<h2 id="step-3-convert-spans-to-slis">Step 3 — Convert spans to SLIs</h2>
+<p>Raw spans are not metrics. They must be aggregated into counters Prometheus can scrape. The OpenTelemetry Collector's <code>spanmetrics</code> connector handles standard dimensions (latency, error status) but knows nothing about <code>args_valid</code> or <code>termination_reason</code>. Two options exist:</p>
+<ol>
+<li>Use the Collector's <code>transform</code> processor to rewrite span attributes into metric labels, then feed <code>spanmetrics</code>.</li>
+<li>Emit metrics directly from the application alongside the spans.</li>
+</ol>
+<p>For agentic SLIs, option 2 is usually simpler, because the outcome logic already lives in application code. Here's the pattern:</p>
+<pre><code class="language-python"># sli_metrics.py
+from opentelemetry import metrics
+
+meter = metrics.get_meter(&quot;agent.sli&quot;)
+
+task_success = meter.create_counter(
+    &quot;agent.task.success.total&quot;,
+    description=&quot;Count of agent tasks that succeeded&quot;,
+)
+task_failure = meter.create_counter(
+    &quot;agent.task.failure.total&quot;,
+    description=&quot;Count of agent tasks that failed&quot;,
+)
+tool_valid = meter.create_counter(
+    &quot;agent.tool.call.valid.total&quot;,
+    description=&quot;Tool calls with schema-valid arguments&quot;,
+)
+tool_invalid = meter.create_counter(
+    &quot;agent.tool.call.invalid.total&quot;,
+    description=&quot;Tool calls with schema-invalid arguments&quot;,
+)
+terminated_clean = meter.create_counter(
+    &quot;agent.termination.clean.total&quot;,
+    description=&quot;Agent runs that terminated by decision&quot;,
+)
+terminated_forced = meter.create_counter(
+    &quot;agent.termination.forced.total&quot;,
+    description=&quot;Agent runs that hit max iterations or timeout&quot;,
+)
+
+
+def record_outcome(outcome):
+    attrs = {&quot;agent.name&quot;: &quot;support_agent&quot;}
+    if outcome.success:
+        task_success.add(1, attrs)
+    else:
+        task_failure.add(1, attrs)
+    if outcome.tool_calls_valid:
+        tool_valid.add(1, attrs)
+    else:
+        tool_invalid.add(1, attrs)
+    if outcome.terminated_cleanly:
+        terminated_clean.add(1, attrs)
+    else:
+        terminated_forced.add(1, attrs)
+</code></pre>
+<p>Call <code>record_outcome</code> once per agent invocation, after the root span closes. The counters are cheap; aggregation happens at scrape time in Prometheus.</p>
+<h2 id="step-4-define-slos-and-error-budgets">Step 4 — Define SLOs and error budgets</h2>
+<p>Now there are time series. An SLO is a ratio over a rolling window. For a 30-day window at 99% success:</p>
+<pre><code class="language-promql"># SLI: task success rate over 30 days
+sum(rate(agent_task_success_total[30d]))
+/
+sum(rate(agent_task_success_total[30d]) + rate(agent_task_failure_total[30d]))
+</code></pre>
+<pre><code class="language-promql"># Error budget remaining (as a fraction of allowed failures)
+1 - (
+  (1 - (
+    sum(rate(agent_task_success_total[30d]))
+    /
+    sum(rate(agent_task_success_total[30d]) + rate(agent_task_failure_total[30d]))
+  )) / 0.01
+)
+</code></pre>
+<p>For tool-call validity, the SLO should generally be tighter: invalid arguments are a schema or prompt bug, not a user-facing failure, and they're more actionable. For loop termination, the target depends on the max-iteration setting; if the cap is 10 and the agent routinely needs 12, that's a design problem, not a runtime problem.</p>
+<table>
+<thead>
+<tr>
+<th>SLI</th>
+<th>Illustrative SLO</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task success</td>
+<td>99%</td>
+<td>User-facing; failures are visible</td>
+</tr>
+<tr>
+<td>Tool-call validity</td>
+<td>99.9%</td>
+<td>Schema/prompt bug; should be near-zero failure</td>
+</tr>
+<tr>
+<td>Clean termination</td>
+<td>95%</td>
+<td>Some forced terminations are acceptable on hard tasks</td>
+</tr>
+</tbody>
+</table>
+<p>The targets above are illustrative starting points, not documented defaults — calibrate them against your own baseline. The important property is that each SLI has a target and a window, and that the error budget is computed from the same window.</p>
+<h3 id="choosing-a-window-and-a-target">Choosing a window and a target</h3>
+<p>Two decisions determine whether an SLO is useful or decorative.</p>
+<p><strong>Window length.</strong> A 30-day rolling window is the common default because it smooths daily traffic variation and makes the error budget meaningful. A 7-day window reacts faster but produces noisier burn-rate alerts. A 1-day window is usually too short for a low-traffic agent: with 500 invocations a day, a single failure moves the success rate by 0.2%, so a 99.9% target would be violated by two failures.</p>
+<p><strong>Target from baseline, not aspiration.</strong> Measure the current success rate for two weeks before setting the target. If the agent is at 97% and the product needs 99%, the SLO should be 99% and the gap is a roadmap item — not a number pulled from a template. Setting 99.9% on a system that has never exceeded 98% produces a permanently red dashboard that everyone learns to ignore.</p>
+<h2 id="step-5-alert-on-burn-rate-not-on-raw-failures">Step 5 — Alert on burn rate, not on raw failures</h2>
+<p>A single failed agent run is not an incident. A sustained burn of the error budget is. The standard pattern is multi-window burn-rate alerting, which fires when the budget is consumed faster than the SLO allows.</p>
+<pre><code class="language-yaml"># prometheus_rules.yml
+groups:
+  - name: agent_slo
+    rules:
+      - record: agent:task_success_rate:30d
+        expr: |
+          sum(rate(agent_task_success_total[30d]))
+          /
+          sum(rate(agent_task_success_total[30d]) + rate(agent_task_failure_total[30d]))
+
+      - alert: AgentTaskSuccessBudgetBurnFast
+        expr: |
+          (1 - agent:task_success_rate:30d) &gt; (14.4 * 0.01)
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: &quot;Agent task success budget burning 14.4x faster than allowed&quot;
+
+      - alert: AgentTaskSuccessBudgetBurnSlow
+        expr: |
+          (1 - agent:task_success_rate:30d) &gt; (6 * 0.01)
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: &quot;Agent task success budget burning 6x faster than allowed&quot;
+</code></pre>
+<p>The 14.4 and 6 multipliers come from the standard burn-rate math described in the Google SRE workbook. The arithmetic, for a 30-day window and a 1% error budget:</p>
+<ul>
+<li>A 14.4x burn sustained for 1 hour consumes <code>14.4 × (1 hour / 720 hours) = 2%</code> of the 30-day budget.</li>
+<li>A 6x burn sustained for 6 hours consumes <code>6 × (6 / 720) = 5%</code> of the budget.</li>
+</ul>
+<p>Those two thresholds give a fast page and a slow ticket. The exact numbers depend on your window and tolerance; the point is to alert on the rate of budget consumption, not on individual failures.</p>
+<h2 id="how-to-verify-the-pipeline-works">How to verify the pipeline works</h2>
+<p>Waiting for a real incident to learn whether the SLOs are wired correctly is not a plan. Build a synthetic trace generator that produces known-good and known-bad outcomes, then assert that the derived metrics move as expected.</p>
+<pre><code class="language-python"># test_sli_pipeline.py
+from sli_definitions import evaluate_outcome
+
+
+def test_success_path():
+    trace = {
+        &quot;task_id&quot;: &quot;t1&quot;,
+        &quot;final_answer&quot;: &quot;done&quot;,
+        &quot;termination_reason&quot;: &quot;agent_finished&quot;,
+        &quot;spans&quot;: [
+            {&quot;name&quot;: &quot;llm.call&quot;, &quot;attributes&quot;: {}},
+            {&quot;name&quot;: &quot;tool.search&quot;, &quot;attributes&quot;: {&quot;args_valid&quot;: True}},
+        ],
+    }
+    outcome = evaluate_outcome(trace)
+    assert outcome.success is True
+    assert outcome.terminated_cleanly is True
+    assert outcome.tool_calls_valid is True
+
+
+def test_invalid_tool_args():
+    trace = {
+        &quot;task_id&quot;: &quot;t2&quot;,
+        &quot;final_answer&quot;: &quot;done&quot;,
+        &quot;termination_reason&quot;: &quot;agent_finished&quot;,
+        &quot;spans&quot;: [
+            {&quot;name&quot;: &quot;tool.search&quot;, &quot;attributes&quot;: {&quot;args_valid&quot;: False}},
+        ],
+    }
+    outcome = evaluate_outcome(trace)
+    assert outcome.tool_calls_valid is False
+    assert outcome.success is True  # agent recovered
+
+
+def test_forced_termination():
+    trace = {
+        &quot;task_id&quot;: &quot;t3&quot;,
+        &quot;final_answer&quot;: &quot;&quot;,
+        &quot;termination_reason&quot;: &quot;max_iterations&quot;,
+        &quot;spans&quot;: [],
+    }
+    outcome = evaluate_outcome(trace)
+    assert outcome.terminated_cleanly is False
+    assert outcome.success is False
+</code></pre>
+<p>Run these in CI. If someone changes the outcome logic and breaks the SLI contract, the tests fail before the change ships.</p>
+<p>To verify the metrics layer rather than the outcome logic, exercise the pipeline end to end: emit a batch of synthetic traces through the real instrumentation, then query the counters directly and compare against the expected counts. In Prometheus, <code>sum(agent_task_success_total)</code> after a known batch should equal the number of synthetic successes. This catches the failure mode where the outcome function is correct but <code>record_outcome</code> is never called on the early-return path.</p>
+<h2 id="failure-modes-to-watch-for">Failure modes to watch for</h2>
+<p><strong>The SLI that never fires.</strong> If the success definition is too lenient (for example, "the agent returned any string"), the SLI sits at 100% and the SLO is meaningless. Symptom: no error-budget consumption for weeks while users complain. Fix: tighten the definition until the baseline rate drops below 100%.</p>
+<p><strong>The SLI that always fires.</strong> If success requires an exact string match on expected output, non-deterministic agents will fail constantly and the alert will be muted within a day. Fix: use a rubric or evaluator, and sample.</p>
+<p><strong>Cardinality explosion.</strong> Adding <code>task.id</code> or raw arguments as a metric label will multiply time series until the backend falls over. Fix: fixed labels on counters; keep high-cardinality data on spans only.</p>
+<p><strong>Evaluator drift.</strong> If success is judged by an LLM evaluator with a fixed prompt, and the model behind that evaluator is upgraded, the measured success rate can shift without any change to the agent. Fix: pin the evaluator model version and re-baseline deliberately, treating evaluator changes as SLO changes.</p>
+<p><strong>Retries polluting success.</strong> If a task succeeds on the third attempt, it is still a success. Count retries as a separate SLI (retry rate) for efficiency visibility, but don't let them pollute the success metric.</p>
+<h2 id="common-questions">Common questions</h2>
+<p><strong>How do I handle agents that legitimately take multiple attempts?</strong></p>
+<p>Define success at the task level, not the attempt level. A task that succeeds on the third retry is a success. Track retry rate separately if you want efficiency visibility.</p>
+<p><strong>What about non-deterministic outputs where "correct" is subjective?</strong></p>
+<p>Use a rubric-based evaluator and record its verdict as a span attribute such as <code>eval.passed</code>. The SLI becomes the rate of <code>eval.passed</code>. This adds cost, so sample: evaluate a fixed percentage of runs and extrapolate, or evaluate everything for a calibration week and then sample.</p>
+<p><strong>Should I use spanmetrics or custom counters?</strong></p>
+<p>Custom counters when the outcome depends on multiple spans, which is the usual case for agents. Spanmetrics is fine for per-span latency and error rate, but it cannot express "this tool call was valid AND the agent recovered from the error." That is a cross-span judgment and belongs in application code.</p>
+<p><strong>How does this work with managed observability platforms?</strong></p>
+<p>OpenTelemetry is the portability layer. If you emit OTLP, you can point at any backend that speaks it. The SLI math is the same; only the query language changes. The risk is vendor-specific features creeping into alerting rules — keep the recording rules in PromQL where possible so a backend migration doesn't require rewriting alerts.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>Pick one agent feature and write its <code>evaluate_outcome</code> function today. Don't try to cover every agent in the system at once. Choose the one with the most user-visible failures, define success in a single function, and instrument it with the three counters above. Then open <code>prometheus_rules.yml</code> and add the burn-rate alert. That's a 30-minute change that will tell you more about your agent's real reliability than any latency dashboard.</p>
+<hr />
+<p><strong>Do this in the next 30 minutes:</strong> open your agent's code, write a single <code>evaluate_outcome(trace) -&gt; AgentOutcome</code> function that returns <code>success</code>, <code>tool_calls_valid</code>, and <code>terminated_cleanly</code> as booleans, and commit it with the three unit tests from the verification section above. No instrumentation needed yet — the function is the contract, and everything else follows from it.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/">Agent SLOs: measure what agents actually do</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
+                        <h3>Agentic AI cost control: 7 tools, one backfire</h3>
+                        <p>How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agentic-finops-is-a-trap/">
+                        <h3>Agentic FinOps is a trap</h3>
+                        <p>Standard FinOps tracks per-call cost and latency. Agents with retries, growing state and human hand-offs leak cost that never shows on the dashboard.</p>
+                        <span class="related-meta">12 min read · 22 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/track-ai-agent-costs-in-fractal-workflows/">
+                        <h3>Track AI agent costs in fractal workflows</h3>
+                        <p>Standard FinOps dashboards miss sub-agent, idle, and retry costs. A dependency-graph cost model shows where agent spend actually lands.</p>
+                        <span class="related-meta">12 min read · 27 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

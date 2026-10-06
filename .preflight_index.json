@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-05T04:47:08.507547",
+  "built_at": "2026-10-06T05:33:25.222898",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5460,6 +5460,11 @@
       "slug": "cross-border-fintech-why-your-kyc-fails-in-dakar",
       "title": "Cross-border fintech: why your KYC fails in Dakar",
       "summary": "The writing postmortems section of a postmortem is easy to skim past, right up until it's the section that matters. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. The error and why it's confusing You built a clean "
+    },
+    {
+      "slug": "slos-for-agentic-features-beyond-latency",
+      "title": "SLOs for agentic features: beyond latency",
+      "summary": "The first time building postmortems fails in production, it rarely fails in the way any postmortem template expects. It's a one-line fix once you know where to look, and expensive until then. Here's what holds up in practice, and why. The problem this solves Agentic features break in ways that tradi"
     }
   ]
 }

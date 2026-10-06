@@ -1,4 +1,4 @@
-❌ Internal link audit: 390 broken link(s) found across 391 posts checked.
+❌ Internal link audit: 391 broken link(s) found across 392 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -170,6 +170,7 @@ Source Post                              Anchor Text                    Missing 
   /context-windows-live-longer-than-you-think AI content policy              /ai-content-policy/
   /cost-tools-fail-when-agents-scale-autonomously AI content policy              /ai-content-policy/
   /cqrs-when-it-pays-off-and-when-it-breaks AI content policy              /ai-content-policy/
+  /cross-border-fintech-why-your-kyc-fails-in-dakar AI content policy              /ai-content-policy/
   /currency-switch-fails-in-ghana-one-config-file-to-rule AI content policy              /ai-content-policy/
   /cut-cold-starts-70-lambda-cost-hack    AI content policy              /ai-content-policy/
   /cut-false-positives-85-with-this-ci-security-trick AI content policy              /ai-content-policy/

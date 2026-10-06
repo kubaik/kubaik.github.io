@@ -189,41 +189,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "why-scaling-agents-kills-plain-logs",
-    "title": "Why scaling agents kills plain logs",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "year-one-claude-codes-slow-burn-wins",
-    "title": "Year one: Claude Code’s slow-burn wins",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "why-token-economics-break-alwayson-fleets",
-    "title": "Why token economics break always‑on fleets",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "stop-trusting-agents-for-core-logic",
-    "title": "Stop trusting agents for core logic",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "always-on-agents-the-token-bill-nobody-models",
-    "title": "Always-on agents: the token bill nobody models",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "47-ai-code-debt-in-2026",
     "title": "47% AI code debt in 2026",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a 2026 GitClear survey that tracked'",
@@ -234,31 +199,36 @@
     "slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",
     "title": "African devs: Arc vs Andela vs Toptal in 2026",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The 2026 Freelance Pulse survey found'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "agent-followed-instructions-too-literally-the-cron-job-trap",
     "title": "Agent followed instructions too literally: the cron job trap",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the process exit code.\n\nHistorically'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
     "title": "Agents keep breaking prod: 3 boundary rules you still need",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to its own logs'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-need-circuit-breakers-in-2026",
     "title": "AI agents need circuit breakers in 2026",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'report from a Lagos-based health tech team'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-code-traps-copilot-vs-cursor-smackdown",
     "title": "AI code traps: Copilot vs Cursor smackdown",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'According to the'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
@@ -481,6 +451,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "why-scaling-agents-kills-plain-logs",
+    "title": "Why scaling agents kills plain logs",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "year-one-claude-codes-slow-burn-wins",
+    "title": "Year one: Claude Code’s slow-burn wins",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "why-token-economics-break-alwayson-fleets",
+    "title": "Why token economics break always‑on fleets",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "stop-trusting-agents-for-core-logic",
+    "title": "Stop trusting agents for core logic",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "always-on-agents-the-token-bill-nobody-models",
+    "title": "Always-on agents: the token bill nobody models",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "temporal-changed-our-agent-retries-for-good",

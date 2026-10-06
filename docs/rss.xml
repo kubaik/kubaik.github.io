@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Oct 2026 04:47:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Oct 2026 05:34:22 +0000</lastBuildDate>
+    <item>
+      <title>SLOs for agentic features: beyond latency</title>
+      <link>https://kubaik.github.io/slos-for-agentic-features-beyond-latency/</link>
+      <description>Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.</description>
+      <pubDate>Tue, 06 Oct 2026 05:33:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/slos-for-agentic-features-beyond-latency/</guid>
+    </item>
     <item>
       <title>Cross-border fintech: why your KYC fails in Dakar</title>
       <link>https://kubaik.github.io/cross-border-fintech-why-your-kyc-fails-in-dakar/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio projects often fail screening for legibility, not code quality. Here is how to restructure a repo so a reviewer understands it fast.</description>
       <pubDate>Fri, 25 Sep 2026 16:52:21 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-projects-hiring-managers-skip/</guid>
-    </item>
-    <item>
-      <title>APM is blind to your AI agents</title>
-      <link>https://kubaik.github.io/apm-is-blind-to-your-ai-agents/</link>
-      <description>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</description>
-      <pubDate>Fri, 25 Sep 2026 04:05:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/apm-is-blind-to-your-ai-agents/</guid>
     </item>
   </channel>
 </rss>
