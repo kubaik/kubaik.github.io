@@ -1,4 +1,4 @@
-❌ Internal link audit: 393 broken link(s) found across 394 posts checked.
+❌ Internal link audit: 394 broken link(s) found across 395 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -179,6 +179,7 @@ Source Post                              Anchor Text                    Missing 
   /debug-ai-agents-failures-arent-just-bugs AI content policy              /ai-content-policy/
   /debugging-techniques-that-outlast-any-framework AI content policy              /ai-content-policy/
   /deploy-a-solo-stack-for-20month-in-2026 AI content policy              /ai-content-policy/
+  /deployment-platforms-senior-vs-new-hire AI content policy              /ai-content-policy/
   /detect-lazy-agents-without-false-alarms AI content policy              /ai-content-policy/
   /double-entry-ledger-concurrent-write-errors AI content policy              /ai-content-policy/
   /double-the-price-double-the-revenue    AI content policy              /ai-content-policy/

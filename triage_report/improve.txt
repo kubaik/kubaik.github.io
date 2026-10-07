@@ -164,6 +164,7 @@ docs/compare-kafka-redpanda-nats-for-event-driven-systems/index.md
 docs/computer-use-agents-the-permission-trap/index.md
 docs/context-windows-agents-that-run-for-days/index.md
 docs/context-windows-live-longer-than-you-think/index.md
+docs/core-web-vitals-what-actually-moves-the-needle/index.md
 docs/cost-tools-fail-when-agents-scale-autonomously/index.md
 docs/cqrs-when-it-pays-off-and-when-it-breaks/index.md
 docs/cross-border-fintech-why-your-kyc-fails-in-dakar/index.md

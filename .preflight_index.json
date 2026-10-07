@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-07T05:01:43.058030",
+  "built_at": "2026-10-07T18:41:01.062860",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5475,6 +5475,11 @@
       "slug": "deployment-platforms-senior-vs-new-hire",
       "title": "Deployment platforms: senior vs new hire",
       "summary": "There's a gap between how agentspecific tracing is taught and how it actually behaves under load. Here's what holds up in practice, and why. The tutorials all show the happy path. A deployment platform has two users with conflicting needs: the senior engineer who wants to bypass it, and the new hire"
+    },
+    {
+      "slug": "core-web-vitals-what-actually-moves-the-needle",
+      "title": "Core Web Vitals: what actually moves the needle",
+      "summary": "The default configuration is fine right up until it isn't. The first time core web fails in production, it rarely fails in the way any postmortem template expects. This covers the fix, the cost of not knowing sooner, and what to monitor. The gap between the docs and the field data The official Core "
     }
   ]
 }

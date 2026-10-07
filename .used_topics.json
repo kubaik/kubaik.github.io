@@ -96,5 +96,6 @@
   "Building SLOs for agentic features that don't just measure latency and error rate",
   "Debugging techniques that outlast whatever framework or language is trendy",
   "Agent-specific tracing patterns that actually help during incidents",
-  "Building a deployment platform that works for both senior engineers and new hires"
+  "Building a deployment platform that works for both senior engineers and new hires",
+  "Core Web Vitals in 2026: what actually moves the needle versus what's cargo cult"
 ]

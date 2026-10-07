@@ -118,6 +118,7 @@ claude-code-after-365-days-what-actually-works,95,2687,Claude Code after 365 day
 claude-code-review-wins-and-blind-spots,95,2810,Claude code review: wins and blind spots,2026-06-08T23:14:01.838159,1,no markdown table
 cloud-agents-burned-18k-8-tools-that-didnt-work,95,2404,Why Cloud Cost Tools Miss Agent-Driven GPU Spend,2026-07-10T14:36:13.221418,1,no markdown table
 code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,1,no FAQ section
+core-web-vitals-what-actually-moves-the-needle,95,2730,Core Web Vitals: what actually moves the needle,2026-10-07T18:40:58.470278,1,no FAQ section
 cost-tools-fail-when-agents-scale-autonomously,95,2230,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,1,no markdown table
 cross-border-fintech-why-your-kyc-fails-in-dakar,95,2653,Cross-border fintech: why your KYC fails in Dakar,2026-10-05T04:47:06.453151,1,no markdown table
 cut-cold-starts-70-lambda-cost-hack,95,2472,Serverless Cold Starts: Cost Levers and How to Measure Them,2026-06-20T21:07:57.029662,1,no markdown table
@@ -288,7 +289,7 @@ cqrs-when-it-pays-off-and-when-it-breaks,100,2430,CQRS: when it pays off and whe
 currency-switch-fails-in-ghana-one-config-file-to-rule,100,2572,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,
 cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware security gates that cut CI alert noise,2026-06-12T07:15:04.340904,0,
 debugging-techniques-that-outlast-any-framework,100,2286,Debugging techniques that outlast any framework,2026-10-06T18:07:18.600534,0,
-deployment-platforms-senior-vs-new-hire,100,2901,Deployment platforms: senior vs new hire,2026-10-07T05:01:41.493415,0,
+deployment-platforms-senior-vs-new-hire,100,3382,Deployment platforms: senior vs new hire,2026-10-07T05:01:41.493415,0,
 double-entry-ledger-concurrent-write-errors,100,2922,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 drop-ec2-bills-70-without-code,100,2634,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09T04:57:04.863722,0,
 ebpf-observability-in-2026-what-actually-works,100,2772,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,0,

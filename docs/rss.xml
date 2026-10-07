@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Oct 2026 05:02:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 18:41:53 +0000</lastBuildDate>
+    <item>
+      <title>Core Web Vitals: what actually moves the needle</title>
+      <link>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</link>
+      <description>A decision framework for Core Web Vitals: read field distributions, find fixed costs that hit the slow tail, and verify changes with segmented RUM.</description>
+      <pubDate>Wed, 07 Oct 2026 18:40:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</guid>
+    </item>
     <item>
       <title>Deployment platforms: senior vs new hire</title>
       <link>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</link>
@@ -138,13 +145,6 @@
       <description>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</description>
       <pubDate>Sun, 27 Sep 2026 16:41:09 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</guid>
-    </item>
-    <item>
-      <title>Agent architecture: the new model trap</title>
-      <link>https://kubaik.github.io/agent-architecture-the-new-model-trap/</link>
-      <description>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</description>
-      <pubDate>Sun, 27 Sep 2026 04:24:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-architecture-the-new-model-trap/</guid>
     </item>
   </channel>
 </rss>
