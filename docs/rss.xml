@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Oct 2026 18:08:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 05:02:20 +0000</lastBuildDate>
+    <item>
+      <title>Deployment platforms: senior vs new hire</title>
+      <link>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</link>
+      <description>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</description>
+      <pubDate>Wed, 07 Oct 2026 05:01:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</guid>
+    </item>
     <item>
       <title>Debugging techniques that outlast any framework</title>
       <link>https://kubaik.github.io/debugging-techniques-that-outlast-any-framework/</link>
@@ -138,13 +145,6 @@
       <description>Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</description>
       <pubDate>Sun, 27 Sep 2026 04:24:45 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-architecture-the-new-model-trap/</guid>
-    </item>
-    <item>
-      <title>Tech debt: when half your stack is unfamiliar</title>
-      <link>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</link>
-      <description>A repeatable process for debugging, verifying and governing tools you didn&amp;#x27;t write, with baselines, contracts, environment measurement and tool cards.</description>
-      <pubDate>Sat, 26 Sep 2026 16:04:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/</guid>
     </item>
   </channel>
 </rss>

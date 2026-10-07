@@ -94,5 +94,7 @@
   "Building postmortems that actually improve things when half the code is AI-generated",
   "The code review habits that separate senior engineers from everyone else",
   "Building SLOs for agentic features that don't just measure latency and error rate",
-  "Debugging techniques that outlast whatever framework or language is trendy"
+  "Debugging techniques that outlast whatever framework or language is trendy",
+  "Agent-specific tracing patterns that actually help during incidents",
+  "Building a deployment platform that works for both senior engineers and new hires"
 ]

@@ -196,69 +196,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
-    "title": "AI micro-SaaS under $150/month: the real infra choices",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'report from the BigQuery table. At'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-ops-vs-dumb-alerts-the-incident-that-broke-us",
-    "title": "AI ops vs dumb alerts: the incident that broke us",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The 2026 PagerDuty SRE survey shows'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-portfolios-ruin-yours-fix-your-signal",
-    "title": "AI portfolios ruin yours? Fix your signal",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 LinkedIn Engineering survey found'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-skills-that-pay-data-vs-prompt-skills-in-2026",
-    "title": "AI skills that pay: data vs prompt skills in 2026",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: '2026 Stack Overflow Developer Survey shows'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
-    "title": "AI wrote 40% of our code — here’s what broke our on-call",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'survey from the start'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "code-ai-wont-rewrite",
     "title": "Code AI won’t rewrite",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'due to DST. The report showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "detect-lazy-agents-without-false-alarms",
     "title": "Detect lazy agents without false alarms",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 internal benchmark showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "engineering-interviews-what-ai-wants-now",
     "title": "Engineering interviews: what AI wants now",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The same survey showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "land-a-45k-remote-job-africas-2026-map",
     "title": "Land a $45k remote job? Africa’s 2026 map",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'survey from SalaryExpert'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "local-llms-on-macbook-pro-the-4-models-that-run",
     "title": "Local LLMs on MacBook Pro: the 4 models that run",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to our tests.'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "multi-agent-frameworks-in-2026-langgraph-wins",
@@ -421,6 +391,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
+    "title": "AI micro-SaaS under $150/month: the real infra choices",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'report from the BigQuery table. At'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-ops-vs-dumb-alerts-the-incident-that-broke-us",
+    "title": "AI ops vs dumb alerts: the incident that broke us",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'The 2026 PagerDuty SRE survey shows'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-portfolios-ruin-yours-fix-your-signal",
+    "title": "AI portfolios ruin yours? Fix your signal",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 LinkedIn Engineering survey found'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-skills-that-pay-data-vs-prompt-skills-in-2026",
+    "title": "AI skills that pay: data vs prompt skills in 2026",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: '2026 Stack Overflow Developer Survey shows'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
+    "title": "AI wrote 40% of our code — here’s what broke our on-call",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'survey from the start'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",

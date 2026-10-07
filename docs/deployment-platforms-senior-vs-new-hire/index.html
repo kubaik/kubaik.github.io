@@ -1,0 +1,541 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Deployment platforms: senior vs new hire - Kubai Kevin</title>
+        <meta name="description" content="How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.">
+        <meta name="keywords" content="DeploymentPlatform, DeveloperOnboarding, Gitops, PlatformEngineering, Internal, Deployment, Softwareengineering, Coding">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-07T05:01:41.493415">
+        <meta property="article:modified_time" content="2026-10-07T05:02:11.761118+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Deployment platforms: senior vs new hire">
+        <meta property="og:description" content="How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.">
+        <meta property="og:url" content="https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/deployment-platforms-senior-vs-new-hire.png">
+        <meta property="og:image:alt" content="Deployment platforms: senior vs new hire">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Deployment platforms: senior vs new hire">
+        <meta name="twitter:description" content="How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/deployment-platforms-senior-vs-new-hire.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/#article",
+      "headline": "Deployment platforms: senior vs new hire",
+      "description": "How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.",
+      "datePublished": "2026-10-07T05:01:41+00:00",
+      "dateModified": "2026-10-07T05:02:11+00:00",
+      "wordCount": 3382,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/"
+      },
+      "keywords": "DeploymentPlatform, DeveloperOnboarding, Gitops, PlatformEngineering, Internal, Deployment, Softwareengineering, Coding"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Deployment platforms: senior vs new hire",
+          "item": "https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Deployment platforms: senior vs new hire</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Deployment platforms: senior vs new hire</h1>
+                
+                <p class="post-lead">How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/deploymentplatform/"
+                       style="text-decoration:none;">DeploymentPlatform</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DeveloperOnboarding</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Gitops</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/platformengineering/"
+                       style="text-decoration:none;">PlatformEngineering</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/internal/"
+                       style="text-decoration:none;">Internal</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3382 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-07
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A deployment platform serves two users with conflicting needs. A senior engineer wants to bypass it when it is wrong. A new hire needs it to be right by default. A platform that serves only one of them fails in a predictable way: the senior engineer routes around it with a direct <code>kubectl apply</code>, and the new hire's mental model of how deployments work becomes wrong. Or the platform locks everything down so tightly that adding a migration job takes days of platform-team negotiation, and the new hire never learns what is actually happening.</p>
+<p>Teams commonly solve this badly by picking a tool that optimises for one persona and telling the other to cope. This article is about the patterns that let both coexist, and how to evaluate them.</p>
+<h2 id="what-the-problem-actually-is">What the problem actually is</h2>
+<p>The core tension is <strong>escape hatches versus guardrails</strong>. Senior engineers need to break glass when the platform is wrong. New hires need the platform to be right by default. Optimise only for escape hatches and you get snowflake deployments nobody can reproduce. Optimise only for guardrails and you get a platform team that becomes a ticket queue.</p>
+<p>The deployment platform itself is rarely the problem. The problem is the <strong>interface</strong> between the platform and the people using it. That interface is usually a CLI, a config file, or a Git repository layout. Evaluate tools by how well their interface handles both personas.</p>
+<h2 id="evaluation-criteria">Evaluation criteria</h2>
+<p>Score each option on five things:</p>
+<ol>
+<li><strong>Escape hatch cost</strong> — how many steps to do something the platform did not anticipate? A good platform makes the escape hatch explicit and logged, not hidden.</li>
+<li><strong>New-hire time-to-first-deploy</strong> — can someone with zero context ship a change on day one without reading a long runbook?</li>
+<li><strong>Blast radius control</strong> — if a new hire runs the wrong command, what breaks? The platform should make the dangerous path harder than the safe path.</li>
+<li><strong>Observability of intent</strong> — can you look at a deployment and tell <em>why</em> it happened, not just <em>what</em> changed? Git history is the usual answer, but only if the platform reads from Git.</li>
+<li><strong>Local reproducibility</strong> — can a new hire run the same deployment locally without cloud credentials? This is where most platforms quietly fail.</li>
+</ol>
+<h2 id="options-compared">Options compared</h2>
+<h3 id="1-kubernetes-with-a-thin-internal-cli">1. Kubernetes with a thin internal CLI</h3>
+<p><strong>What it does:</strong> You run a real Kubernetes cluster. You write a small CLI (often a wrapper around <code>kubectl</code>) that enforces naming conventions, injects environment variables, and defaults to safe rollout strategies. Senior engineers can still run <code>kubectl</code> directly; the CLI is a convenience, not a cage.</p>
+<p><strong>Strength:</strong> The escape hatch is free. <code>kubectl</code> is always there. A senior engineer who needs to debug a stuck pod can do so without asking permission. The CLI handles the common case (deploy a service, run a migration, tail logs) and gets out of the way otherwise.</p>
+<p><strong>Weakness:</strong> You are now maintaining a CLI. That CLI is a product with users, and if it drifts from the cluster's actual state, new hires get confusing errors. Also, <code>kubectl</code> access means a new hire can accidentally delete a production namespace if RBAC is not tight. You need to invest in RBAC and admission controllers, which is real work.</p>
+<p><strong>Best for:</strong> Teams with at least one person who has run Kubernetes in production and can own the cluster's upgrade path. If nobody on the team has done that, this option will consume more time than it saves.</p>
+<p>A minimal wrapper that shows the pattern:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+# deploy.sh — thin wrapper around kubectl
+set -euo pipefail
+
+SERVICE=&quot;$1&quot;
+ENV=&quot;${2:-staging}&quot;
+
+# Guardrail: refuse to deploy to prod without an explicit flag
+if [[ &quot;$ENV&quot; == &quot;prod&quot; &amp;&amp; &quot;${ALLOW_PROD:-}&quot; != &quot;yes&quot; ]]; then
+  echo &quot;Refusing prod deploy. Set ALLOW_PROD=yes to proceed.&quot; &gt;&amp;2
+  exit 1
+fi
+
+# Convention: manifests live in deploy/&lt;service&gt;/&lt;env&gt;.yaml
+MANIFEST=&quot;deploy/${SERVICE}/${ENV}.yaml&quot;
+if [[ ! -f &quot;$MANIFEST&quot; ]]; then
+  echo &quot;No manifest at $MANIFEST&quot; &gt;&amp;2
+  exit 1
+fi
+
+kubectl apply -f &quot;$MANIFEST&quot;
+kubectl rollout status &quot;deployment/${SERVICE}&quot; -n &quot;${ENV}&quot; --timeout=120s
+</code></pre>
+<p>This is boring, and boring is the point. The guardrail (prod requires a flag) is visible in the script. A new hire reading it learns the convention. A senior engineer can bypass it by running <code>kubectl</code> directly, which is logged by the API server.</p>
+<h3 id="2-gitops-with-a-reconciliation-loop">2. GitOps with a reconciliation loop</h3>
+<p><strong>What it does:</strong> A controller (Argo CD and Flux are the two widely documented options) watches a Git repository and reconciles the cluster to match. Deployments happen by merging a pull request. There is no <code>deploy</code> command.</p>
+<p><strong>Strength:</strong> Intent is fully observable. Every change has a commit, an author, and a review. A new hire can look at the Git history and understand what changed and why. Senior engineers get a clean rollback story: revert the commit, the controller reconciles.</p>
+<p><strong>Weakness:</strong> The reconciliation loop introduces a delay between merge and effect, which frustrates senior engineers debugging an incident. Worse, if the controller is down, merges pile up silently. And the escape hatch — manually editing a resource — gets reverted by the controller, which is correct but surprising the first time. New hires often do not realise their manual fix will disappear.</p>
+<p><strong>Best for:</strong> Teams where auditability matters more than deploy latency, and where at least one person understands the controller's sync policies. If you have compliance requirements, this is the strongest default.</p>
+<h3 id="3-a-managed-paas-with-a-buildpack-model">3. A managed PaaS with a buildpack model</h3>
+<p><strong>What it does:</strong> You push code, the platform detects the language, builds it, and runs it. Heroku popularised this model; Render, Railway, and Fly.io offer variations. There is no cluster to manage.</p>
+<p><strong>Strength:</strong> New-hire time-to-first-deploy is measured in minutes. There is no YAML to learn. The platform handles TLS, scaling, and health checks. For a small team, this removes an entire category of work.</p>
+<p><strong>Weakness:</strong> The escape hatch is expensive. If you need a custom binary, a sidecar, or a specific kernel parameter, you are either paying for a higher tier or moving off the platform. Senior engineers hit this ceiling quickly, and the migration off a PaaS is a project, not a task. Also, local reproducibility is imperfect: the buildpack that runs in production may not match your local environment.</p>
+<p><strong>Best for:</strong> Teams of roughly one to five engineers with a standard web application and no unusual infrastructure needs. Pre-product-market-fit, this is the right default. Do not over-engineer before you have users.</p>
+<h3 id="4-serverless-with-infrastructure-as-code">4. Serverless with infrastructure-as-code</h3>
+<p><strong>What it does:</strong> You define functions and their triggers in a config file (AWS SAM, Serverless Framework, or Terraform), and a deploy command pushes them. There is no server to patch.</p>
+<p><strong>Strength:</strong> The scaling model is automatic, and the cost model is pay-per-invocation, which is friendly to early-stage products. New hires can deploy a function without understanding networking. The config file is the documentation.</p>
+<p><strong>Weakness:</strong> Local reproducibility is the hardest of any option here. Emulators exist (for example, <code>sam local</code> for AWS Lambda), but they diverge from production in ways that matter: IAM permissions, cold starts, and timeout behaviour. Debugging the differences between local and deployed is a common source of multi-hour sessions. Also, the escape hatch is limited: you cannot SSH into a function.</p>
+<p><strong>Best for:</strong> Event-driven workloads and teams comfortable with a single cloud provider's ecosystem. If your application is a long-running process with heavy state, this is the wrong shape.</p>
+<h3 id="5-nomad-or-a-similar-scheduler-with-a-job-spec">5. Nomad or a similar scheduler with a job spec</h3>
+<p><strong>What it does:</strong> You write a job spec (HCL for Nomad), and the scheduler places it. It is simpler than Kubernetes for non-container workloads and supports both containers and raw executables.</p>
+<p><strong>Strength:</strong> The job spec is readable by a new hire in an afternoon. Nomad's operational surface is smaller than Kubernetes, which means fewer things to break. Senior engineers appreciate that it runs non-containerised binaries, which is useful for legacy components.</p>
+<p><strong>Weakness:</strong> The ecosystem is smaller. Fewer managed offerings, fewer Stack Overflow answers, fewer people who have run it. If you hit a bug, you are more likely to be on your own. The escape hatch exists (you can run a job in dev mode), but the community around it is thinner.</p>
+<p><strong>Best for:</strong> Teams with a mix of containerised and non-containerised workloads, and at least one person willing to own the scheduler. Not a good first choice if nobody has operated it before.</p>
+<h3 id="6-a-cicd-pipeline-that-treats-deployment-as-a-pipeline-stage">6. A CI/CD pipeline that treats deployment as a pipeline stage</h3>
+<p><strong>What it does:</strong> GitHub Actions, GitLab CI, or Jenkins runs a pipeline that builds, tests, and deploys. The deployment is one stage among many.</p>
+<p><strong>Strength:</strong> The pipeline is the documentation. A new hire reads the YAML and sees exactly what happens. Senior engineers can add a manual approval gate for production, which is a clean escape hatch: the pipeline pauses, a human clicks, the deploy continues.</p>
+<p><strong>Weakness:</strong> Pipelines rot. A pipeline that worked six months ago may fail because a base image was updated or a credential expired. New hires often cannot debug pipeline failures because the error messages are opaque. Also, the pipeline is not a platform: it does not enforce runtime conventions, only build-time ones.</p>
+<p><strong>Best for:</strong> Teams that already have CI and want to avoid introducing a separate deployment tool. This is the lowest-friction starting point, but it is not a substitute for a runtime platform.</p>
+<h3 id="7-a-platform-built-on-a-service-catalog">7. A platform built on a service catalog</h3>
+<p><strong>What it does:</strong> You define services in a catalog (Backstage is the widely documented open-source option), and the catalog drives scaffolding, documentation, and deployment links. New services are created from templates.</p>
+<p><strong>Strength:</strong> New-hire onboarding is the explicit design goal. A new hire opens the catalog, sees every service, its owner, its runbook, and its deploy button. Senior engineers get a single place to find things, which reduces the "who owns this?" problem.</p>
+<p><strong>Weakness:</strong> The catalog is a layer on top of your actual platform, not a platform itself. It does not deploy anything; it links to whatever does. If the underlying platform is inconsistent, the catalog exposes that inconsistency rather than hiding it. Also, maintaining a catalog is ongoing work, and it is easy to let it drift.</p>
+<p><strong>Best for:</strong> Organisations with enough services that discoverability is a real problem. For a team of five, this is overkill.</p>
+<h2 id="the-strongest-default-and-why">The strongest default, and why</h2>
+<p>For most small teams, the strongest default is <strong>a managed PaaS with a documented escape hatch to raw infrastructure</strong>. That sounds like a compromise, but it is a deliberate sequencing decision.</p>
+<p>The reasoning: a new hire's first week should be about learning the product, not the platform. A managed PaaS gets them to a deployed change on day one. The escape hatch matters for the senior engineer, but it should be <strong>explicit and rare</strong>, not the default path. If the senior engineer is bypassing the platform weekly, the platform is wrong and should be fixed, not worked around.</p>
+<p>This is the opposite of the advice that teams often hear, which is to build a platform early because you will need it later. That advice assumes you know what you need later. You usually do not. A managed PaaS buys you time to learn what your actual deployment patterns are. Once you know, you can migrate to something more custom with evidence.</p>
+<p>The exception is if you have a hard compliance requirement or an unusual workload (GPU scheduling, persistent state, custom networking). In that case, start with Kubernetes and a thin CLI, and accept the operational cost.</p>
+<h2 id="why-the-default-is-a-managed-paas-a-worked-example">Why the default is a managed PaaS: a worked example</h2>
+<p>Suppose a five-person team adopts Kubernetes with a thin CLI on day one. The reasoning is that they will need it eventually, so they might as well start there.</p>
+<ul>
+<li>Building the CLI, RBAC policies, and admission controllers: an estimate of two to four engineer-weeks. This is illustrative, not measured; the actual figure depends on the team's existing Kubernetes experience.</li>
+<li>Ongoing maintenance: cluster upgrades, controller updates, and RBAC reviews. A reasonable planning assumption is a fraction of one engineer's time each month, which is a recurring cost.</li>
+<li>Time for a new hire to ship their first change: dependent on how well the CLI documents itself, but plausibly a day or more of reading and pairing.</li>
+</ul>
+<p>Now suppose the same team starts on a managed PaaS and migrates later, once they know their deployment patterns.</p>
+<ul>
+<li>Time to first deploy for a new hire: a push and a build, measured in minutes.</li>
+<li>Cost of migrating off the PaaS later: a project, not a task. It involves rewriting deployment config, re-establishing secrets, and re-testing the pipeline.</li>
+<li>The information gained: which services need custom networking, which need persistent state, and which are fine on a standard buildpack. That information is what makes the later platform decision correct rather than speculative.</li>
+</ul>
+<p>The comparison is not "PaaS is faster" in the abstract. It is that the PaaS defers a large, speculative build until you have evidence about what you actually need. If the team's workload turns out to be standard, they may never need the custom platform. If it turns out to be unusual, they now know exactly which parts need custom handling.</p>
+<p>The failure mode of this sequencing is a team that stays on the PaaS past the point where it fits, because migrating is unpleasant. The signal to watch for is the senior engineer spending more time working around the platform than using it. When that becomes the norm, the migration is overdue.</p>
+<h2 id="how-to-measure-whether-your-platform-is-working">How to measure whether your platform is working</h2>
+<p>Do not rely on impressions. Instrument three things:</p>
+<ol>
+<li><strong>Time-to-first-deploy for a new hire.</strong> Record the timestamp when a new engineer starts and the timestamp of their first merged production change. Track this per hire, not as an average, because the distribution is what matters.</li>
+<li><strong>Escape-hatch frequency.</strong> Count direct <code>kubectl</code> applies, manual console changes, and any other change that bypasses the platform. Kubernetes audit logs and cloud provider audit trails are the source. A rising count means the platform is missing a capability.</li>
+<li><strong>Failed deploys and their cause.</strong> Classify each failure as platform-related (the tooling was wrong or confusing) or change-related (the code was wrong). Platform-related failures are the ones the platform team should fix.</li>
+</ol>
+<p>To compare options before committing, run a time-boxed spike: have one engineer deploy the same trivial service through two candidate platforms and record the steps, the commands, and the points where they had to consult documentation. This is cheap and produces evidence rather than opinion.</p>
+<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
+<p><strong>Docker Compose for local development.</strong> Not a deployment platform, but it is one of the best tools for local reproducibility. If your deployment platform cannot be approximated locally with Compose, new hires will struggle. Worth the investment.</p>
+<p><strong>Terraform or OpenTofu for infrastructure.</strong> These define the platform itself, not the deployments. They are how you make the platform reproducible. The weakness is state management: a corrupted state file is a bad day. The strength is that the entire platform is reviewable in a pull request.</p>
+<p><strong>A shared Makefile.</strong> Unglamorous, but a <code>Makefile</code> with targets like <code>make deploy-staging</code> and <code>make logs</code> is often the most legible interface for a new hire. It has no magic, and it is easy to read. Senior engineers can ignore it and run the underlying commands.</p>
+<h2 id="options-that-look-appealing-but-fail-in-practice">Options that look appealing but fail in practice</h2>
+<p><strong>A fully custom internal platform built before you have users.</strong> This is a classic failure mode. A team spends months building a deployment platform, then discovers the product needs to change shape. The platform is now a liability. Build the platform when the pain of not having it exceeds the cost of building it.</p>
+<p><strong>A platform with no escape hatch.</strong> If the only way to deploy is through a UI, senior engineers will find a back door, and that back door will be undocumented. An explicit escape hatch is better than a hidden one.</p>
+<p><strong>A platform that requires a ticket to deploy.</strong> This optimises for control and destroys velocity. It also teaches new hires that deployment is someone else's job, which is the opposite of what you want.</p>
+<p><strong>A platform with no local story.</strong> If a new hire cannot run the deployment locally, they cannot debug it. They will become dependent on the senior engineer, which defeats the purpose.</p>
+<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended option</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–5 engineers, standard web app</td>
+<td>Managed PaaS</td>
+<td>Fastest onboarding, lowest operational cost</td>
+</tr>
+<tr>
+<td>Compliance or audit requirements</td>
+<td>GitOps</td>
+<td>Every change is a reviewed commit</td>
+</tr>
+<tr>
+<td>Unusual workloads (GPU, stateful)</td>
+<td>Kubernetes + thin CLI</td>
+<td>Escape hatch is built in</td>
+</tr>
+<tr>
+<td>Event-driven, single cloud</td>
+<td>Serverless + IaC</td>
+<td>Scaling and cost model fit</td>
+</tr>
+<tr>
+<td>Mixed container and legacy binaries</td>
+<td>Nomad</td>
+<td>Runs both without extra layers</td>
+</tr>
+<tr>
+<td>Already have CI, no platform</td>
+<td>CI/CD pipeline stages</td>
+<td>Lowest friction to start</td>
+</tr>
+<tr>
+<td>Many services, discoverability problem</td>
+<td>Service catalog</td>
+<td>Onboarding is the design goal</td>
+</tr>
+</tbody>
+</table>
+<p>The decision is rarely permanent. The important thing is to pick something that gets a new hire deploying on day one and gives a senior engineer a documented way out. If both of those are true, you can migrate later without drama.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I stop senior engineers from bypassing the deployment platform?</strong></p>
+<p>You do not stop them; you make bypassing it visible and rare. The practical approach is to log direct changes (Kubernetes audit logs, cloud provider audit trails) and review them regularly. If bypasses are frequent, the platform is missing something, and the fix is to add that capability, not to tighten access. Treat bypasses as product feedback.</p>
+<p><strong>What is the fastest way to onboard a new hire to deployments?</strong></p>
+<p>Have them deploy a trivial change (a log line, a version bump) on their first day, using the same path everyone else uses. Do not give them a special onboarding environment, because that teaches a workflow they will never use again. Pair them with someone for the first production deploy, then let them do the second one alone.</p>
+<p><strong>Should I build an internal deployment platform or use an existing tool?</strong></p>
+<p>Use an existing tool until you have a specific, documented reason not to. Internal platforms are expensive to build and maintain, and the maintenance cost is ongoing. The exception is when your deployment needs are genuinely unusual (custom hardware, strict data residency, a workload no managed tool supports). Even then, start with the closest existing tool and extend it.</p>
+<p><strong>Why does local reproducibility matter for deployments?</strong></p>
+<p>Because debugging is the main activity of a new hire, and you cannot debug what you cannot run. If the deployment only works in production, every bug becomes a production investigation. Tools like Docker Compose, <code>sam local</code>, and <code>kind</code> (Kubernetes in Docker) exist to close this gap. They are imperfect, but imperfect local reproducibility is better than none.</p>
+<h2 id="final-recommendation">Final recommendation</h2>
+<p>Start with a managed PaaS and a <code>Makefile</code> that wraps its CLI. Write down the escape hatch — the exact commands a senior engineer would run to bypass the platform — in the repository's README. Then, in the next 30 minutes, open your current deployment documentation and check one thing: can a new hire deploy a change without asking anyone a question? If the answer is no, that is the gap to close first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/">3 mistakes that break deployments for everyone</a></li>
+<li><a href="https://kubaik.github.io/golden-paths-that-dont-handcuff/">Golden paths that don't handcuff</a></li>
+<li><a href="https://kubaik.github.io/self-service-is-broken-without-ai-ops/">Self-service is broken without AI ops</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://argo-cd.readthedocs.io/">Argo CD documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/internal-developer-platform-adoption-traps/">
+                        <h3>Internal developer platform: adoption traps</h3>
+                        <p>Why internal developer platforms stall at low adoption, and how to instrument real usage with a small metrics service instead of catalog counts.</p>
+                        <span class="related-meta">15 min read · 23 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/golden-paths-that-dont-handcuff/">
+                        <h3>Golden paths that don&#39;t handcuff</h3>
+                        <p>How to build internal scaffolds and CLIs that stay reversible: pinned versions, a compatibility contract, drift detection, and a tested eject path.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/platform-teams-in-2026-docs-vs-production-reality/">
+                        <h3>Platform teams in 2026: Docs vs. production reality</h3>
+                        <p>Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.</p>
+                        <span class="related-meta">18 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

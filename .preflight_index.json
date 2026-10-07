@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-06T18:07:21.129021",
+  "built_at": "2026-10-07T05:01:43.058030",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5470,6 +5470,11 @@
       "slug": "debugging-techniques-that-outlast-any-framework",
       "title": "Debugging techniques that outlast any framework",
       "summary": "After enough code that touches debugging techniques gets reviewed, the same failure pattern keeps showing up. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. Every few years the stack turns over. The language chan"
+    },
+    {
+      "slug": "deployment-platforms-senior-vs-new-hire",
+      "title": "Deployment platforms: senior vs new hire",
+      "summary": "There's a gap between how agentspecific tracing is taught and how it actually behaves under load. Here's what holds up in practice, and why. The tutorials all show the happy path. A deployment platform has two users with conflicting needs: the senior engineer who wants to bypass it, and the new hire"
     }
   ]
 }
