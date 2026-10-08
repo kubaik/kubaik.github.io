@@ -1,4 +1,4 @@
-❌ Internal link audit: 395 broken link(s) found across 396 posts checked.
+❌ Internal link audit: 396 broken link(s) found across 396 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -292,6 +292,7 @@ Source Post                              Anchor Text                    Missing 
   /price-saas-tools-in-2026-what-we-learned-pricing-a AI content policy              /ai-content-policy/
   /price-your-remote-job-like-a-new-york-dev AI content policy              /ai-content-policy/
   /price-your-remote-salary-4-step-script AI content policy              /ai-content-policy/
+  /promotions-in-the-ai-era-the-mechanism AI content policy              /ai-content-policy/
   /prompt-injection-got-the-hype-poison-data-ruined-us AI content policy              /ai-content-policy/
   /prompt-injection-what-breaks-first-in-prod AI content policy              /ai-content-policy/
   /prompt-injections-hidden-aws-tax       AI content policy              /ai-content-policy/

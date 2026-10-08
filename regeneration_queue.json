@@ -196,69 +196,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "price-ai-proof-skills-in-2026",
-    "title": "Price AI-proof skills in 2026",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to a'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "price-saas-dev-tools-in-2026-without-guessing",
-    "title": "Price SaaS dev tools in 2026 without guessing",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'the report from S3'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
-    "title": "Reconciling mobile money: edge cases banks ignore",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'that our first reconciliation report showed'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "runbooks-vs-ai-which-cuts-outages-50",
-    "title": "Runbooks vs AI: which cuts outages 50%",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 's annual survey showed'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "sell-dev-tools-in-the-ai-sales-cycle",
-    "title": "Sell dev tools in the AI sales cycle",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'If the report shows'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "skip-the-zero-trust-hype-for-5-person-teams",
     "title": "Skip the zero-trust hype for 5-person teams",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'used simpler controls. The study tracked'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "spot-evictions-the-retry-logic-that-holds-up",
     "title": "Spot evictions: the retry logic that holds up",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 AWS incident report found'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
     "title": "Tool calls at scale: sync vs async patterns that live",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 Datadog report shows'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "track-ai-agent-costs-in-fractal-workflows",
     "title": "Track AI agent costs in fractal workflows",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'anyone noticed. The cost report showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "trim-aws-iam-policies-in-one-afternoon",
     "title": "Trim AWS IAM policies in one afternoon",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a survey of 23 developers'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "typescript-53-changed-how-we-model-domains",
@@ -331,6 +301,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "price-ai-proof-skills-in-2026",
+    "title": "Price AI-proof skills in 2026",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to a'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "price-saas-dev-tools-in-2026-without-guessing",
+    "title": "Price SaaS dev tools in 2026 without guessing",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'the report from S3'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
+    "title": "Reconciling mobile money: edge cases banks ignore",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'that our first reconciliation report showed'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "runbooks-vs-ai-which-cuts-outages-50",
+    "title": "Runbooks vs AI: which cuts outages 50%",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 's annual survey showed'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "sell-dev-tools-in-the-ai-sales-cycle",
+    "title": "Sell dev tools in the AI sales cycle",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'If the report shows'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "multi-agent-frameworks-in-2026-langgraph-wins",

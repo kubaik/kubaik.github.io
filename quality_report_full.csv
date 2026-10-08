@@ -164,7 +164,7 @@ postgres-vector-search-what-breaks-first,95,2688,Postgres vector search: what br
 prevent-ownership-drift-when-velocity-explodes,95,2964,Prevent ownership drift when velocity explodes,2026-08-29T16:28:34.651903,1,no FAQ section
 price-saas-tools-in-2026-what-we-learned-pricing-a,95,2642,"Pricing SaaS tools by real cost, not seat count",2026-06-15T02:11:37.118773,1,no FAQ section
 price-your-remote-job-like-a-new-york-dev,95,2660,Price your remote job like a New York dev,2026-06-08T23:30:46.115942,1,no FAQ section
-promotions-in-the-ai-era-the-mechanism,95,3060,Promotions in the AI era: the mechanism,2026-10-08T05:13:19.585125,1,no markdown table
+promotions-in-the-ai-era-the-mechanism,95,3397,Promotions in the AI era: the mechanism,2026-10-08T05:13:19.585125,1,no markdown table
 prompt-injection-got-the-hype-poison-data-ruined-us,95,3453,Prompt Injection Is Not Your Biggest LLM Data Risk,2026-08-03T03:19:51.935437,1,no FAQ section
 prompt-injection-what-breaks-first-in-prod,95,2978,Prompt injection: what breaks first in prod,2026-09-27T16:41:09.710334,1,no FAQ section
 prompt-injections-hidden-aws-tax,95,2465,Prompt injection’s hidden AWS tax,2026-07-03T09:33:36.204639,1,no markdown table

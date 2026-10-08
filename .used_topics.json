@@ -98,5 +98,10 @@
   "Agent-specific tracing patterns that actually help during incidents",
   "Building a deployment platform that works for both senior engineers and new hires",
   "Core Web Vitals in 2026: what actually moves the needle versus what's cargo cult",
-  "Why some engineers are getting promoted faster in the AI era while others are being managed out"
+  "Why some engineers are getting promoted faster in the AI era while others are being managed out",
+  "The CAP theorem tradeoffs teams actually hit once they run multi-region databases",
+  "What traditional observability misses when agents enter production",
+  "Building systems that can absorb new AI capabilities without major rewrites every 6 months",
+  "Why agent identity and authentication is harder than traditional service auth",
+  "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios"
 ]
