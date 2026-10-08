@@ -196,69 +196,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "multi-agent-frameworks-in-2026-langgraph-wins",
-    "title": "Multi-agent frameworks in 2026: LangGraph wins",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 GSMA report found'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "negotiate-after-ai-boosts-your-output",
-    "title": "Negotiate after AI boosts your output",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a 2026 Radford survey show'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "platform-teams-in-2026-why-your-devs-hate-your-golden-path",
-    "title": "Platform teams in 2026: why your devs hate your golden path",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 Datadog report found'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "portfolio-that-hires-6-projects-i-actually-used-to",
-    "title": "Portfolio that hires: 6 projects I actually used to",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'low-bandwidth networks. The same survey found'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "postgres-17-buried-redis-s3-cron",
-    "title": "Postgres 17 buried Redis, S3, cron",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 hiring trend survey showed'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "price-ai-proof-skills-in-2026",
     "title": "Price AI-proof skills in 2026",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to a'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "price-saas-dev-tools-in-2026-without-guessing",
     "title": "Price SaaS dev tools in 2026 without guessing",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'the report from S3'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
     "title": "Reconciling mobile money: edge cases banks ignore",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'that our first reconciliation report showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "runbooks-vs-ai-which-cuts-outages-50",
     "title": "Runbooks vs AI: which cuts outages 50%",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 's annual survey showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "sell-dev-tools-in-the-ai-sales-cycle",
     "title": "Sell dev tools in the AI sales cycle",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'If the report shows'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "skip-the-zero-trust-hype-for-5-person-teams",
@@ -361,6 +331,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "multi-agent-frameworks-in-2026-langgraph-wins",
+    "title": "Multi-agent frameworks in 2026: LangGraph wins",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 GSMA report found'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "negotiate-after-ai-boosts-your-output",
+    "title": "Negotiate after AI boosts your output",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a 2026 Radford survey show'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "platform-teams-in-2026-why-your-devs-hate-your-golden-path",
+    "title": "Platform teams in 2026: why your devs hate your golden path",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 Datadog report found'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "portfolio-that-hires-6-projects-i-actually-used-to",
+    "title": "Portfolio that hires: 6 projects I actually used to",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'low-bandwidth networks. The same survey found'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "postgres-17-buried-redis-s3-cron",
+    "title": "Postgres 17 buried Redis, S3, cron",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 hiring trend survey showed'",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "code-ai-wont-rewrite",

@@ -1,0 +1,481 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Promotions in the AI era: the mechanism - Kubai Kevin</title>
+        <meta name="description" content="Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.">
+        <meta name="keywords" content="EngineeringPromotion, SeniorEngineer, AiCodingAssistants, Architecture, Engineering, Ai, Coding, Careeradvice">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-08T05:13:19.585125">
+        <meta property="article:modified_time" content="2026-10-08T05:14:03.369348+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Promotions in the AI era: the mechanism">
+        <meta property="og:description" content="Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.">
+        <meta property="og:url" content="https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/promotions-in-the-ai-era-the-mechanism.png">
+        <meta property="og:image:alt" content="Promotions in the AI era: the mechanism">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Promotions in the AI era: the mechanism">
+        <meta name="twitter:description" content="Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/promotions-in-the-ai-era-the-mechanism.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/#article",
+      "headline": "Promotions in the AI era: the mechanism",
+      "description": "Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.",
+      "datePublished": "2026-10-08T05:13:19+00:00",
+      "dateModified": "2026-10-08T05:14:03+00:00",
+      "wordCount": 3397,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/"
+      },
+      "keywords": "EngineeringPromotion, SeniorEngineer, AiCodingAssistants, Architecture, Engineering, Ai, Coding, Careeradvice"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Promotions in the AI era: the mechanism",
+          "item": "https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Promotions in the AI era: the mechanism</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Promotions in the AI era: the mechanism</h1>
+                
+                <p class="post-lead">Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">EngineeringPromotion</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SeniorEngineer</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiCodingAssistants</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Architecture</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/engineering/"
+                       style="text-decoration:none;">Engineering</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3397 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-08
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Code generation is cheap now. Judgment is not. That asymmetry has quietly broken the signals engineering ladders have used for years to decide who gets promoted, and most teams have not adjusted their evidence-gathering to match.</p>
+<p>This is a mechanism writeup, not a motivational one. It covers why the old signals decayed, which adaptation patterns tend to fail, what a workable operating pattern looks like, and how to tell whether it is working.</p>
+<h2 id="the-pattern-behind-the-promotions">The pattern behind the promotions</h2>
+<p>Engineering promotions have always been a proxy for something else: evidence that a person can be trusted with larger ambiguity. The AI era did not change that. It changed where the ambiguity lives.</p>
+<p>Before code assistants became normal, a large share of senior-level signal came from <em>production of artifacts</em>: the service, the migration, the runbook. Throughput was legible. A staff engineer could look at a year of commits and see scope.</p>
+<p>Now the artifact layer is cheap. A junior engineer with a good model can produce a service skeleton, a test file, and a Dockerfile in an afternoon. That does not make them senior. It makes the <em>artifact</em> weak as a promotion signal. What replaced it is judgment about the non-artifact parts: what the artifact should not do, what it will cost, what happens when it fails at 3am, and who has to be told.</p>
+<p>The engineers who advance faster in this environment are not the fastest prompt operators. They are the ones whose work creates <em>reviewable decisions</em> — decisions a manager can point at in a calibration meeting and say "this person owned this tradeoff." Engineers who stall are usually the ones whose output looks like a lot of code and very little ownership.</p>
+<h2 id="why-the-old-promotion-signals-decayed">Why the old promotion signals decayed</h2>
+<p>Engineering ladders historically rewarded three things: scope of code owned, complexity of systems touched, and cross-team influence. Code volume was never officially a criterion, but it leaked in everywhere — in perf review templates, in "impact" narratives, in the sheer visibility of someone who ships a lot.</p>
+<p>When generation gets fast, three things break at once.</p>
+<p><strong>First, the diff stops being evidence of understanding.</strong> A 400-line PR generated from a clear prompt and a 400-line PR written by hand look identical in the review UI. Reviewers cannot tell, and more importantly, the <em>author</em> cannot always tell whether they understand the code or just recognize it. This is a well-documented failure mode: a developer accepts a suggestion, it passes tests, and six weeks later nobody on the team can explain why a particular retry loop exists. The code is correct until it isn't, and the person who "wrote" it has no model of it.</p>
+<p><strong>Second, the bottleneck moves.</strong> When generation is cheap, the constraint becomes review capacity, deployment safety, and the cost of being wrong. A typical failure mode: throughput goes up, incident rate goes up shortly after, and the on-call rotation becomes the real limit on how fast the org can move. The person who understands this and acts on it — by adding guardrails, by deliberately slowing the risky path — looks less productive in a commit graph and more valuable in a postmortem.</p>
+<p><strong>Third, the definition of "hard" shifts.</strong> Writing a distributed lock is now a prompt. Deciding whether you need a distributed lock, versus an idempotency key, versus accepting the duplicate, is not. The second kind of decision is where seniority lives, and it was always where seniority lived — it just used to be hidden behind the volume of the first kind.</p>
+<p>A useful way to see it: the ladder did not change, the <em>visible surface</em> of the ladder changed. Engineers who kept optimizing for the old visible surface — lines, tickets, PR count — are now optimizing for a metric that no longer correlates with the thing being measured.</p>
+<h2 id="the-approaches-that-commonly-fail">The approaches that commonly fail</h2>
+<p>Three patterns recur when teams try to adapt, and all three tend to hurt the people who adopt them most enthusiastically.</p>
+<h3 id="treating-ai-output-as-a-throughput-multiplier">Treating AI output as a throughput multiplier</h3>
+<p>The most common failure is measuring the wrong thing. If a team starts tracking "PRs per engineer" or "features per sprint" after adopting assistants, the number goes up and the meaning goes down. Engineers who internalize this metric start shipping more surface area with less review, less testing, and less documentation. For a quarter it looks like a promotion case. Then a production incident traces back to a generated migration that dropped a column with no backfill, or a generated retry policy that turned a transient dependency blip into a thundering herd.</p>
+<p>The mechanism is straightforward: generation optimizes for <em>plausible</em>, and production punishes <em>plausible but wrong</em>. The gap between those two is exactly the gap senior engineers are paid to close. A throughput metric rewards closing it less.</p>
+<h3 id="becoming-the-person-who-just-uses-the-tool-well">Becoming the person who "just uses the tool well"</h3>
+<p>A subtler trap: engineers who become known primarily as effective tool users — fast prompters, good at getting the model to produce working code — can plateau. Tool fluency is real and useful, but it is a <em>skill</em>, not a <em>scope</em>. Ladders promote scope. If the entire visible contribution is "I can make the assistant produce the thing," that contribution is competing with everyone else who can also do it, and the skill commoditizes fast.</p>
+<p>The engineers who avoid this trap use the tool to buy time, then spend that time on the parts of the problem that don't fit in a prompt: negotiating an interface with another team, writing the design doc that prevents a bad decision, instrumenting the system so the next incident is diagnosable in five minutes instead of five hours.</p>
+<h3 id="assuming-the-ladder-will-be-rewritten-for-you">Assuming the ladder will be rewritten for you</h3>
+<p>Some engineers wait for their org to publish new criteria — "AI-assisted development" competencies, updated impact rubrics. Ladders move slowly, and the people running calibration meetings are usually evaluating against the same dimensions they always used: scope, judgment, influence, and results. What changed is the <em>evidence</em> they can see. Producing evidence in the old shape (volume) feeds them a signal that no longer differentiates. Producing evidence in the new shape (decisions, tradeoffs, prevented failures) feeds them the signal they were always looking for.</p>
+<h2 id="the-approach-that-works-decision-artifacts">The approach that works: decision artifacts</h2>
+<p>The pattern that correlates with faster advancement in this environment is producing what can be called <em>decision artifacts</em> — durable, reviewable records of a judgment call, with the reasoning and the rejected alternatives visible.</p>
+<p>A decision artifact is not a design doc in the ceremonial sense. It can be a short RFC, a well-written PR description, an ADR (architecture decision record), a postmortem action item, or a comment thread that gets linked in a review. What matters is that it contains four things:</p>
+<ol>
+<li><strong>The decision</strong> — one sentence, unambiguous.</li>
+<li><strong>The alternatives considered</strong> — including the one you rejected and why.</li>
+<li><strong>The failure mode you are accepting</strong> — what breaks if you're wrong, and how you'll know.</li>
+<li><strong>The cost</strong> — in money, latency, operational burden, or team time.</li>
+</ol>
+<p>ADRs have been around for a long time and are well-documented. What changed is that in a world where the <em>code</em> is cheap, the artifact is the only durable evidence of seniority. A generated service with no decision artifact is a liability with a nice README. A generated service with a decision artifact is a promotion case.</p>
+<h3 id="a-worked-example">A worked example</h3>
+<p>Suppose a team needs to add a caching layer to a service that reads a product catalog. The junior-shaped output is: pick Redis, write the wrapper, ship it. The senior-shaped output is a short note with reasoning attached.</p>
+<p>Here is the reasoning, shown step by step:</p>
+<ol>
+<li><strong>Enumerate the candidates.</strong> In-process cache (a map with a TTL), a managed cache service, or a self-hosted Redis cluster. Three options, not one.</li>
+<li><strong>Estimate the latency win.</strong> Suppose the catalog query takes 40 ms at p50 and the service handles 2,000 requests per second, and 90% of reads hit the same 5,000 keys. An in-process cache would remove most of that 40 ms for hot keys. A network cache would remove most of it too, but adds roughly 1 ms of network round trip. The latency difference between the two is small relative to the 40 ms being saved.</li>
+<li><strong>Weigh the operational cost.</strong> An in-process cache means N instances each hold their own copy. Invalidation requires either a pub/sub channel or a TTL short enough that staleness is tolerable. With 12 instances and a 60-second TTL, a catalog update is visible everywhere within 60 seconds at worst. If the product team needs sub-second propagation, that constraint kills the in-process option.</li>
+<li><strong>Weigh the failure mode.</strong> A network cache adds a dependency on the hot path. If it goes down, either the service falls back to the database (a thundering herd against a database sized for 10% of traffic) or it fails. That is the failure mode being accepted, and it needs a mitigation: a circuit breaker plus a request-coalescing layer so concurrent misses on the same key result in one database query, not 2,000.</li>
+<li><strong>Write down the decision and the tripwire.</strong> "We chose in-process caching with a 60-second TTL because propagation latency under one minute is acceptable and it avoids a new hot-path dependency. If the product team needs faster propagation, we revisit. We will know we were wrong if catalog-staleness complaints exceed a handful per week, or if the database load from cold starts after deploys spikes above baseline."</li>
+</ol>
+<p>Same code in the end. Different evidence. One version gets discussed in calibration; the other gets skimmed in review.</p>
+<p>Crucially, the decision artifact is <em>cheap to produce</em> when the reasoning already exists — and the reasoning should exist, because that is the job. The engineers who advance are the ones who write it down instead of keeping it in their head.</p>
+<h3 id="how-to-measure-whether-it-is-working">How to measure whether it is working</h3>
+<p>The claim that decision artifacts help is testable at the team level, without any vendor benchmark. Instrument these:</p>
+<ul>
+<li><strong>Review latency by PR type.</strong> Compare time-to-first-substantive-comment for PRs with a decision-style description versus those without. If reviewers engage differently, the difference shows up here.</li>
+<li><strong>Comment depth.</strong> Count comments that question the approach rather than the syntax. A shift from "nit: rename this" to "why not an idempotency key?" is the signal.</li>
+<li><strong>Rework rate.</strong> Track the fraction of merged changes that get reverted or substantially rewritten within 30 days. Decision artifacts should reduce this, because the alternatives were considered before merge rather than after.</li>
+<li><strong>Incident attribution.</strong> In postmortems, tag whether the root cause was a decision that was never written down. A falling count over two quarters is weak but real evidence.</li>
+</ul>
+<p>Run these for a quarter before drawing conclusions. The sample sizes are small and the confounders are many; treat the numbers as directional, not decisive.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>A workable pattern, in order of how much it costs to adopt:</p>
+<p><strong>Start with PR descriptions.</strong> The single highest-leverage change is writing PR descriptions that state the decision and the rejected alternative. Not a summary of the diff — the diff is right there. A description that says "we chose to do X instead of Y because Z, and if this is wrong the symptom will be W" turns a code review into a judgment review. Reviewers engage differently. Managers who read PRs (and they do, especially before calibration) see something they can cite.</p>
+<p><strong>Add ADRs for anything cross-team.</strong> An architecture decision record is a numbered file in a <code>docs/adr/</code> directory, with context, decision, status, and consequences. They are cheap to write and they accumulate. A year of ADRs is a portfolio. Most engineers never produce one because nobody asked; the ones who do become the people whose names are attached to how the system works.</p>
+<p><strong>Instrument the decision.</strong> A decision artifact that says "we'll know we were wrong if p99 exceeds X" is only credible if the metric exists. Adding a single dashboard panel or alert that ties back to a decision is a small amount of work and it converts a claim into a commitment. When the metric fires and you respond, that is an incident writeup — another artifact.</p>
+<p><strong>Keep a running log.</strong> Not a brag doc in the LinkedIn sense — a plain file with dated entries: decision, context, outcome. This is the raw material for a promotion packet, and it prevents the common failure where an engineer did senior work all year and cannot remember any of it in review season.</p>
+<p>A minimal ADR template, since the format matters less than the discipline:</p>
+<pre><code class="language-markdown"># ADR-014: Use idempotency keys for payment retries
+
+## Status
+Accepted (2026-03-11)
+
+## Context
+Retries on the payment path can double-charge when the upstream
+acknowledges but the response is lost. Current retry logic is
+unconditional.
+
+## Decision
+Require a client-supplied idempotency key on all mutating payment
+calls. Server stores key -&gt; result for 24h.
+
+## Alternatives considered
+- At-most-once delivery (rejected: drops legitimate retries)
+- Client-side dedup (rejected: cannot be enforced server-side)
+
+## Consequences
+- Adds a storage dependency on the hot path
+- Key collision handling must be defined (see ADR-015)
+- If wrong, symptom is elevated 409s on retry; alert on rate &gt; 1%
+</code></pre>
+<p>That is roughly ten minutes of writing. It is also the kind of thing that gets quoted in a promotion discussion.</p>
+<h2 id="what-outcomes-to-expect-and-their-limits">What outcomes to expect, and their limits</h2>
+<p>It would be dishonest to claim this pattern reliably produces a promotion in a fixed timeframe. It does not, and the variance is mostly organizational. What it does reliably is change what a manager <em>can say about you</em> in a calibration meeting. That is the actual bottleneck for most engineers — not that they haven't done senior work, but that the senior work isn't legible.</p>
+<p>A few honest limits:</p>
+<ul>
+<li><strong>It doesn't fix a bad manager or a frozen ladder.</strong> If your org has no headcount or is in a hiring freeze, no artifact changes that. The artifacts still help at the next org.</li>
+<li><strong>It doesn't substitute for results.</strong> A decision artifact about a decision that didn't work is still useful if you wrote down how you'd know and then responded — but a string of decisions that all failed is a different conversation.</li>
+<li><strong>It can read as performative if overdone.</strong> One ADR per significant decision is signal. An ADR for every variable rename is noise, and it will be read as noise.</li>
+<li><strong>It competes for time with shipping.</strong> The tradeoff is real. The argument here is that the time is better spent on artifacts than on additional generated surface area, not that artifacts are free.</li>
+</ul>
+<p>A reasonable expectation, framed as a range rather than a promise: engineers who adopt this pattern consistently tend to find that review conversations change within a quarter, and that promotion discussions become easier to have because there is something concrete to discuss. Whether that translates into a promotion depends on the org.</p>
+<h2 id="what-to-watch-out-for">What to watch out for</h2>
+<p><strong>Artifact theater.</strong> The failure mode of this pattern is producing decision documents that don't reflect real decisions — post-hoc rationalizations of what was already built. Reviewers can tell. The artifact has to precede or accompany the decision, not follow it.</p>
+<p><strong>Using AI to write the artifacts.</strong> There's a temptation to generate the ADR the same way you generate the code. The result is usually fluent and empty: it lists alternatives nobody considered and consequences nobody checked. The value of the artifact is that it encodes <em>your</em> judgment. If the judgment isn't yours, the artifact doesn't help you and may actively hurt you when someone asks a follow-up question in review.</p>
+<p><strong>Confusing visibility with influence.</strong> Writing things down makes you visible. It does not automatically make you influential. Influence comes from the decisions being good and from other people adopting them. The artifact is the medium, not the message.</p>
+<p><strong>Neglecting the unglamorous work.</strong> On-call, incident response, and dependency upgrades are still where a lot of trust is built, and they are exactly the areas where generated code tends to create latent problems. An engineer who is visibly good at cleaning up after fast shipping is more promotable than one who is only visibly good at fast shipping.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The AI era didn't change what senior engineering is. It removed the camouflage. When code production was expensive, the volume of code was a rough proxy for the amount of judgment that had gone into it. Now that production is cheap, the proxy is gone, and the judgment has to be visible on its own.</p>
+<p>This is uncomfortable for engineers who built their identity around output, and it is an advantage for engineers who were always doing the judgment work but didn't know how to make it legible. The promotion mechanism was never really about code. It was about being trusted with ambiguity. AI made ambiguity the only thing left to demonstrate.</p>
+<p>Engineers who stall are, in most cases, not stalling because they used AI. They are stalling because their visible contribution is now something the org can get from a tool plus a junior engineer, and they haven't moved up the stack to the part the tool can't do. That's a harsh framing, but it matches what tends to happen in calibration rooms.</p>
+<p>The engineers who advance faster are the ones who noticed that the artifact layer got cheap and moved their effort to the decision layer, where it's still expensive.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Does using AI coding assistants hurt your chances of promotion?</strong>
+No, and framing it that way misses the mechanism. The assistants are not the variable; the visibility of your judgment is. Engineers who use assistants to free up time for decision work advance faster. Engineers who use them to increase output volume without increasing judgment tend to plateau, because output volume stopped being a differentiator.</p>
+<p><strong>How do you demonstrate senior impact when AI writes most of the code?</strong>
+By owning the decisions around the code: what to build, what not to build, what failure modes are acceptable, what the cost is, and how you'll know if you were wrong. These are the things a model cannot be accountable for, and they are exactly what promotion committees evaluate. Write them down in a form a manager can cite.</p>
+<p><strong>What is an architecture decision record and why does it matter for promotions?</strong>
+An ADR is a short, numbered document recording a significant technical decision, its context, the alternatives considered, and the consequences. The format is well-established and lightweight. It matters for promotions because it converts your reasoning into durable, reviewable evidence that survives long after the code has been rewritten.</p>
+<p><strong>When should you not write a decision artifact?</strong>
+When the decision is trivial and reversible — a formatting choice, a variable name, a dependency patch version. Artifacts are signal when they mark real tradeoffs. Writing one for every small change dilutes the signal and reads as performative, which is worse than not writing them at all.</p>
+<h2 id="do-this-next">Do this next</h2>
+<p>Pick one decision you made in the last two weeks — a library choice, a schema change, a retry policy, anything with a real tradeoff — and write it up as a short ADR in a file called <code>docs/adr/0001-&lt;slug&gt;.md</code> in your repo. Include the alternatives you rejected and the failure mode you're accepting. Commit it. If you don't have a repo handy, write it in a notes file and paste it into your next PR description. The pattern only works as a habit, and habits start with a single instance.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/commit-ownership-in-ai-pair-coding/">Commit ownership in AI pair coding</a></li>
+<li><a href="https://kubaik.github.io/portfolio-projects-that-hire-remote-senior-devs/">Portfolio projects that hire remote senior devs</a></li>
+<li><a href="https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/">AI-era promotions hinge on this one thing</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/negotiating-pay-when-ai-inflates-output/">
+                        <h3>Negotiating pay when AI inflates output</h3>
+                        <p>AI speeds up code generation, not accountability. How to frame a raise around verification and risk ownership instead of ticket velocity.</p>
+                        <span class="related-meta">16 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-era-promotions-hinge-on-this-one-thing/">
+                        <h3>AI-era promotions hinge on this one thing</h3>
+                        <p>AI features fail through cache eviction, schema drift and missing rollback paths. A practical guide to validation gates, fallback caches and metrics.</p>
+                        <span class="related-meta">11 min read · 15 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-tools-wont-help-if-everyone-writes-the-same-code/">
+                        <h3>AI tools won’t help if everyone writes the same code</h3>
+                        <p>AI coding assistants amplify existing team imbalances. Here is how to measure per-author incident rates and rebalance review load without policing.</p>
+                        <span class="related-meta">14 min read · 29 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

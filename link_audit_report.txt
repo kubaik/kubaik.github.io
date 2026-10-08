@@ -1,4 +1,4 @@
-❌ Internal link audit: 394 broken link(s) found across 395 posts checked.
+❌ Internal link audit: 395 broken link(s) found across 396 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -168,6 +168,7 @@ Source Post                              Anchor Text                    Missing 
   /computer-use-agents-the-permission-trap AI content policy              /ai-content-policy/
   /context-windows-agents-that-run-for-days AI content policy              /ai-content-policy/
   /context-windows-live-longer-than-you-think AI content policy              /ai-content-policy/
+  /core-web-vitals-what-actually-moves-the-needle AI content policy              /ai-content-policy/
   /cost-tools-fail-when-agents-scale-autonomously AI content policy              /ai-content-policy/
   /cqrs-when-it-pays-off-and-when-it-breaks AI content policy              /ai-content-policy/
   /cross-border-fintech-why-your-kyc-fails-in-dakar AI content policy              /ai-content-policy/

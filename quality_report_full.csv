@@ -118,7 +118,7 @@ claude-code-after-365-days-what-actually-works,95,2687,Claude Code after 365 day
 claude-code-review-wins-and-blind-spots,95,2810,Claude code review: wins and blind spots,2026-06-08T23:14:01.838159,1,no markdown table
 cloud-agents-burned-18k-8-tools-that-didnt-work,95,2404,Why Cloud Cost Tools Miss Agent-Driven GPU Spend,2026-07-10T14:36:13.221418,1,no markdown table
 code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,1,no FAQ section
-core-web-vitals-what-actually-moves-the-needle,95,2730,Core Web Vitals: what actually moves the needle,2026-10-07T18:40:58.470278,1,no FAQ section
+core-web-vitals-what-actually-moves-the-needle,95,3127,Core Web Vitals: what actually moves the needle,2026-10-07T18:40:58.470278,1,no FAQ section
 cost-tools-fail-when-agents-scale-autonomously,95,2230,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,1,no markdown table
 cross-border-fintech-why-your-kyc-fails-in-dakar,95,2653,Cross-border fintech: why your KYC fails in Dakar,2026-10-05T04:47:06.453151,1,no markdown table
 cut-cold-starts-70-lambda-cost-hack,95,2472,Serverless Cold Starts: Cost Levers and How to Measure Them,2026-06-20T21:07:57.029662,1,no markdown table
@@ -164,6 +164,7 @@ postgres-vector-search-what-breaks-first,95,2688,Postgres vector search: what br
 prevent-ownership-drift-when-velocity-explodes,95,2964,Prevent ownership drift when velocity explodes,2026-08-29T16:28:34.651903,1,no FAQ section
 price-saas-tools-in-2026-what-we-learned-pricing-a,95,2642,"Pricing SaaS tools by real cost, not seat count",2026-06-15T02:11:37.118773,1,no FAQ section
 price-your-remote-job-like-a-new-york-dev,95,2660,Price your remote job like a New York dev,2026-06-08T23:30:46.115942,1,no FAQ section
+promotions-in-the-ai-era-the-mechanism,95,3060,Promotions in the AI era: the mechanism,2026-10-08T05:13:19.585125,1,no markdown table
 prompt-injection-got-the-hype-poison-data-ruined-us,95,3453,Prompt Injection Is Not Your Biggest LLM Data Risk,2026-08-03T03:19:51.935437,1,no FAQ section
 prompt-injection-what-breaks-first-in-prod,95,2978,Prompt injection: what breaks first in prod,2026-09-27T16:41:09.710334,1,no FAQ section
 prompt-injections-hidden-aws-tax,95,2465,Prompt injection’s hidden AWS tax,2026-07-03T09:33:36.204639,1,no markdown table

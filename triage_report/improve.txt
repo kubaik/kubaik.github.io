@@ -288,6 +288,7 @@ docs/price-ai-proof-skills-in-2026/index.md
 docs/price-saas-tools-in-2026-what-we-learned-pricing-a/index.md
 docs/price-your-remote-job-like-a-new-york-dev/index.md
 docs/price-your-remote-salary-4-step-script/index.md
+docs/promotions-in-the-ai-era-the-mechanism/index.md
 docs/prompt-injection-got-the-hype-poison-data-ruined-us/index.md
 docs/prompt-injection-what-breaks-first-in-prod/index.md
 docs/prompt-injections-hidden-aws-tax/index.md

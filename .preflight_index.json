@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-07T18:41:01.062860",
+  "built_at": "2026-10-08T05:13:22.183386",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5480,6 +5480,11 @@
       "slug": "core-web-vitals-what-actually-moves-the-needle",
       "title": "Core Web Vitals: what actually moves the needle",
       "summary": "The default configuration is fine right up until it isn't. The first time core web fails in production, it rarely fails in the way any postmortem template expects. This covers the fix, the cost of not knowing sooner, and what to monitor. The gap between the docs and the field data The official Core "
+    },
+    {
+      "slug": "promotions-in-the-ai-era-the-mechanism",
+      "title": "Promotions in the AI era: the mechanism",
+      "summary": "Teams often end up shipping some engineers twice — the second time because the first version failed quietly. It's the kind of thing that works for months, then all at once doesn't. This is the writeup that includes the part that usually goes wrong. The pattern behind the promotions Engineering promo"
     }
   ]
 }

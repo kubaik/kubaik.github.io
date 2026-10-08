@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Oct 2026 18:41:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 05:14:17 +0000</lastBuildDate>
+    <item>
+      <title>Promotions in the AI era: the mechanism</title>
+      <link>https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/</link>
+      <description>Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.</description>
+      <pubDate>Thu, 08 Oct 2026 05:13:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/</guid>
+    </item>
     <item>
       <title>Core Web Vitals: what actually moves the needle</title>
       <link>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</link>
@@ -138,13 +145,6 @@
       <description>Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</description>
       <pubDate>Mon, 28 Sep 2026 04:25:56 +0000</pubDate>
       <guid>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</guid>
-    </item>
-    <item>
-      <title>Prompt injection: what breaks first in prod</title>
-      <link>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</link>
-      <description>Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</description>
-      <pubDate>Sun, 27 Sep 2026 16:41:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/</guid>
     </item>
   </channel>
 </rss>
