@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-08T05:13:22.183386",
+  "built_at": "2026-10-09T05:17:00.205379",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5485,6 +5485,11 @@
       "slug": "promotions-in-the-ai-era-the-mechanism",
       "title": "Promotions in the AI era: the mechanism",
       "summary": "Teams often end up shipping some engineers twice — the second time because the first version failed quietly. It's the kind of thing that works for months, then all at once doesn't. This is the writeup that includes the part that usually goes wrong. The pattern behind the promotions Engineering promo"
+    },
+    {
+      "slug": "self-service-ai-tooling-the-permission-trap",
+      "title": "Self-service AI tooling: the permission trap",
+      "summary": "The failure is quiet — no errors, just wrong answers. The redteaming internal question that matters isn't in the FAQ, it's in the incident log. This walks through the fix and the reasoning, not just the patch. The error and why it's confusing You gave product teams a self-service AI tooling layer. T"
     }
   ]
 }

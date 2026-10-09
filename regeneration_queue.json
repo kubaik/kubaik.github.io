@@ -196,57 +196,25 @@
     "status": "needs_review"
   },
   {
-    "slug": "skip-the-zero-trust-hype-for-5-person-teams",
-    "title": "Skip the zero-trust hype for 5-person teams",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'used simpler controls. The study tracked'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "spot-evictions-the-retry-logic-that-holds-up",
-    "title": "Spot evictions: the retry logic that holds up",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 AWS incident report found'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
-    "title": "Tool calls at scale: sync vs async patterns that live",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 Datadog report shows'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "track-ai-agent-costs-in-fractal-workflows",
-    "title": "Track AI agent costs in fractal workflows",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'anyone noticed. The cost report showed'",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "trim-aws-iam-policies-in-one-afternoon",
-    "title": "Trim AWS IAM policies in one afternoon",
-    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a survey of 23 developers'",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "typescript-53-changed-how-we-model-domains",
     "title": "TypeScript 5.3 changed how we model domains",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: '2026 internal survey showed'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ussd-fintech-in-2026-the-300m-user-channel-nobody",
     "title": "USSD fintech in 2026: the 300M user channel nobody",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "wireguard-vs-tailscale-for-5month-zero-trust",
     "title": "WireGuard vs Tailscale for $5/month zero trust",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to a Red Hat'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "purpose-built-ai-vs-general-platforms",
@@ -301,6 +269,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "skip-the-zero-trust-hype-for-5-person-teams",
+    "title": "Skip the zero-trust hype for 5-person teams",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'used simpler controls. The study tracked'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "spot-evictions-the-retry-logic-that-holds-up",
+    "title": "Spot evictions: the retry logic that holds up",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 AWS incident report found'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
+    "title": "Tool calls at scale: sync vs async patterns that live",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'A 2026 Datadog report shows'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "track-ai-agent-costs-in-fractal-workflows",
+    "title": "Track AI agent costs in fractal workflows",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'anyone noticed. The cost report showed'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "trim-aws-iam-policies-in-one-afternoon",
+    "title": "Trim AWS IAM policies in one afternoon",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a survey of 23 developers'",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "price-ai-proof-skills-in-2026",

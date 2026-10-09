@@ -321,6 +321,7 @@ docs/sbom-attestation-that-gets-used/index.md
 docs/scope-agent-permissions-per-task/index.md
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/index.md
 docs/self-healing-pipelines-argo-vs-crossplane-in-2026/index.md
+docs/self-service-ai-tooling-the-permission-trap/index.md
 docs/self-service-ai-tooling-where-it-breaks-first/index.md
 docs/self-service-is-broken-without-ai-ops/index.md
 docs/senior-engineer-title-inflation-in-2026/index.md

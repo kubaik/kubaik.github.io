@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 08 Oct 2026 18:40:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 05:17:52 +0000</lastBuildDate>
+    <item>
+      <title>Self-service AI tooling: the permission trap</title>
+      <link>https://kubaik.github.io/self-service-ai-tooling-the-permission-trap/</link>
+      <description>Design self-service LLM layers so identity, context and budget controls prevent quiet permission failures instead of only working on the happy path.</description>
+      <pubDate>Fri, 09 Oct 2026 05:16:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-service-ai-tooling-the-permission-trap/</guid>
+    </item>
     <item>
       <title>Promotions in the AI era: the mechanism</title>
       <link>https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/</link>
@@ -138,13 +145,6 @@
       <description>Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.</description>
       <pubDate>Mon, 28 Sep 2026 19:26:44 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-versioning-the-contract-you-forgot/</guid>
-    </item>
-    <item>
-      <title>Settlement vs clearing: backend engineer&apos;s guide</title>
-      <link>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</link>
-      <description>Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</description>
-      <pubDate>Mon, 28 Sep 2026 04:25:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/settlement-vs-clearing-backend-engineers-guide/</guid>
     </item>
   </channel>
 </rss>

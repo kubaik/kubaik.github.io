@@ -103,5 +103,9 @@
   "What traditional observability misses when agents enter production",
   "Building systems that can absorb new AI capabilities without major rewrites every 6 months",
   "Why agent identity and authentication is harder than traditional service auth",
-  "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios"
+  "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios",
+  "Red-teaming internal agents without slowing down development velocity",
+  "Building unit economics for AI features that product and finance teams can both understand",
+  "What actually breaks when you migrate a public API from REST to GraphQL",
+  "Self-service AI tooling layers that let product teams experiment safely"
 ]

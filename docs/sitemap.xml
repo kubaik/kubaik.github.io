@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-10-08</lastmod><changefreq>daily</changefreq><priority>1.0</priority><image:image><image:loc>https://kubaik.github.io/static/og-default.png</image:loc></image:image></url>
-  <url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-10-08</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-10-08</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-10-08</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-10-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://kubaik.github.io/dmca/</loc><lastmod>2026-10-08</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://kubaik.github.io/ai-content-policy/</loc><lastmod>2026-10-08</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-10-09</lastmod><changefreq>daily</changefreq><priority>1.0</priority><image:image><image:loc>https://kubaik.github.io/static/og-default.png</image:loc></image:image></url>
+  <url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-10-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-10-09</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-10-09</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-10-09</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-10-09</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kubaik.github.io/dmca/</loc><lastmod>2026-10-09</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/ai-content-policy/</loc><lastmod>2026-10-09</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/self-service-ai-tooling-the-permission-trap/</loc><lastmod>2026-10-09</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/</loc><lastmod>2026-10-08</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/promotions-in-the-ai-era-the-mechanism.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</loc><lastmod>2026-10-07</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/core-web-vitals-what-actually-moves-the-needle.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</loc><lastmod>2026-10-07</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/deployment-platforms-senior-vs-new-hire.png</image:loc></image:image></url>
@@ -354,6 +355,7 @@
   <url><loc>https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/self-healing-ai-agents-vs-rule-based-ops-40-fewer.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/negotiate-2026-pay-when-ai-steals-40-of-your-job/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/negotiate-2026-pay-when-ai-steals-40-of-your-job.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/ai-interviews-broke-system-design-3-patterns-that.png</image:loc></image:image></url>
+  <url><loc>https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/</loc><lastmod>2026-10-09</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/ussd-fintech-in-2026-the-300m-user-channel-nobody.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/save-12kmonth-cloud-egress-costs-in-2026.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/personal-ai-assistants-avoid-vendor-lock-in-traps.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubaik.github.io/static/og/ai-agents-eat-your-budget-3-ways.png</image:loc></image:image></url>
