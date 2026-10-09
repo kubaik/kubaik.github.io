@@ -107,5 +107,6 @@
   "Red-teaming internal agents without slowing down development velocity",
   "Building unit economics for AI features that product and finance teams can both understand",
   "What actually breaks when you migrate a public API from REST to GraphQL",
-  "Self-service AI tooling layers that let product teams experiment safely"
+  "Self-service AI tooling layers that let product teams experiment safely",
+  "Supply chain security for a normal backend stack, not just AI models"
 ]

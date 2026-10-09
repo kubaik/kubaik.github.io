@@ -354,7 +354,7 @@ save-12kmonth-cloud-egress-costs-in-2026,100,2606,Cutting cloud egress costs: ar
 sbom-attestation-that-gets-used,100,3399,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,0,
 scope-agent-permissions-per-task,100,3910,Scope agent permissions per task,2026-09-19T09:21:55.925855,0,
 self-healing-pipelines-argo-vs-crossplane-in-2026,100,2592,Self-healing pipelines: Argo vs Crossplane in 2026,2026-06-25T13:16:29.832770,0,
-self-service-ai-tooling-the-permission-trap,100,2263,Self-service AI tooling: the permission trap,2026-10-09T05:16:57.522175,0,
+self-service-ai-tooling-the-permission-trap,100,2735,Self-service AI tooling: the permission trap,2026-10-09T05:16:57.522175,0,
 self-service-ai-tooling-where-it-breaks-first,100,2986,Self-service AI tooling: where it breaks first,2026-09-16T09:53:25.584787,0,
 self-service-is-broken-without-ai-ops,100,2486,Self-service is broken without AI ops,2026-08-24T12:59:05.104603,0,
 settlement-vs-clearing-backend-engineers-guide,100,2929,Settlement vs clearing: backend engineer's guide,2026-09-28T04:25:56.078134,0,

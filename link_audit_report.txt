@@ -1,4 +1,4 @@
-❌ Internal link audit: 396 broken link(s) found across 397 posts checked.
+❌ Internal link audit: 397 broken link(s) found across 397 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -325,6 +325,7 @@ Source Post                              Anchor Text                    Missing 
   /scope-agent-permissions-per-task       AI content policy              /ai-content-policy/
   /self-healing-ai-agents-vs-rule-based-ops-40-fewer AI content policy              /ai-content-policy/
   /self-healing-pipelines-argo-vs-crossplane-in-2026 AI content policy              /ai-content-policy/
+  /self-service-ai-tooling-the-permission-trap AI content policy              /ai-content-policy/
   /self-service-ai-tooling-where-it-breaks-first AI content policy              /ai-content-policy/
   /self-service-is-broken-without-ai-ops  AI content policy              /ai-content-policy/
   /senior-engineer-title-inflation-in-2026 AI content policy              /ai-content-policy/
