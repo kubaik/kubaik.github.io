@@ -11,6 +11,7 @@ docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/index.md
 docs/5-notification-systems-ranked-push-email-sms/index.md
 docs/5-ways-to-find-hidden-latency-before-production/index.md
 docs/50-locations-50-headaches-edge-native-backends-in/index.md
+docs/7-bundling-decisions-that-still-matter/index.md
 docs/7-code-review-traps-when-ai-writes-half-your-code/index.md
 docs/7-patterns-for-systems-that-wont-die-when-networks/index.md
 docs/7-skills-senior-engineers-need-now-agents-are-live/index.md

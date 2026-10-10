@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-09T05:17:00.205379",
+  "built_at": "2026-10-10T05:00:57.825017",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5490,6 +5490,11 @@
       "slug": "self-service-ai-tooling-the-permission-trap",
       "title": "Self-service AI tooling: the permission trap",
       "summary": "The failure is quiet — no errors, just wrong answers. The redteaming internal question that matters isn't in the FAQ, it's in the incident log. This walks through the fix and the reasoning, not just the patch. The error and why it's confusing You gave product teams a self-service AI tooling layer. T"
+    },
+    {
+      "slug": "7-bundling-decisions-that-still-matter",
+      "title": "7 bundling decisions that still matter",
+      "summary": "The official documentation for lowlatency agent is good. What it doesn't cover is what happens six months into production. Here's the root cause, not just the symptom. It only shows up under the exact conditions nobody tests for. What this list actually solves Modern frameworks ship with a build too"
     }
   ]
 }

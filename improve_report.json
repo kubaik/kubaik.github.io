@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "7-bundling-decisions-that-still-matter",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
   "failed": []
 }

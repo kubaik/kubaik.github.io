@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Oct 2026 18:10:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 05:01:48 +0000</lastBuildDate>
+    <item>
+      <title>7 bundling decisions that still matter</title>
+      <link>https://kubaik.github.io/7-bundling-decisions-that-still-matter/</link>
+      <description>A practical review of seven bundling and code-splitting choices, their failure modes, and how to measure whether they help your app.</description>
+      <pubDate>Sat, 10 Oct 2026 05:00:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-bundling-decisions-that-still-matter/</guid>
+    </item>
     <item>
       <title>Self-service AI tooling: the permission trap</title>
       <link>https://kubaik.github.io/self-service-ai-tooling-the-permission-trap/</link>
@@ -138,13 +145,6 @@
       <description>A practical framework for choosing between model routing, fine-tuning, and simply paying for a larger model, with code, cost math, and evaluation harnesses.</description>
       <pubDate>Tue, 29 Sep 2026 04:56:19 +0000</pubDate>
       <guid>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</guid>
-    </item>
-    <item>
-      <title>Agent versioning: the contract you forgot</title>
-      <link>https://kubaik.github.io/agent-versioning-the-contract-you-forgot/</link>
-      <description>Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.</description>
-      <pubDate>Mon, 28 Sep 2026 19:26:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-versioning-the-contract-you-forgot/</guid>
     </item>
   </channel>
 </rss>
