@@ -110,5 +110,9 @@
   "Self-service AI tooling layers that let product teams experiment safely",
   "Supply chain security for a normal backend stack, not just AI models",
   "Low-latency agent features for users on intermittent 3G/4G connections in East Africa",
-  "Bundling and code-splitting decisions that still matter with modern frameworks"
+  "Bundling and code-splitting decisions that still matter with modern frameworks",
+  "Building change data capture that doesn't fall over when your LLM pipeline goes wild",
+  "Security model for MCP servers in regulated environments (fintech case study)",
+  "The developer experience gaps that still exist when building and debugging multi-agent systems",
+  "How Internal Developer Platforms are evolving to support AI feature development"
 ]

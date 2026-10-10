@@ -1,4 +1,4 @@
-❌ Internal link audit: 397 broken link(s) found across 398 posts checked.
+❌ Internal link audit: 398 broken link(s) found across 399 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -15,6 +15,7 @@ Source Post                              Anchor Text                    Missing 
   /5-notification-systems-ranked-push-email-sms AI content policy              /ai-content-policy/
   /5-ways-to-find-hidden-latency-before-production AI content policy              /ai-content-policy/
   /50-locations-50-headaches-edge-native-backends-in AI content policy              /ai-content-policy/
+  /7-bundling-decisions-that-still-matter AI content policy              /ai-content-policy/
   /7-code-review-traps-when-ai-writes-half-your-code AI content policy              /ai-content-policy/
   /7-patterns-for-systems-that-wont-die-when-networks AI content policy              /ai-content-policy/
   /7-skills-senior-engineers-need-now-agents-are-live AI content policy              /ai-content-policy/

@@ -1,0 +1,498 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>7 IDP shifts for AI feature delivery - Kubai Kevin</title>
+        <meta name="description" content="Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.">
+        <meta name="keywords" content="Idp, PlatformEngineering, Prompt, ModelPinningCatalog, Ai, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-10T17:09:37.781557">
+        <meta property="article:modified_time" content="2026-10-10T17:10:06.750219+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="7 IDP shifts for AI feature delivery">
+        <meta property="og:description" content="Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.">
+        <meta property="og:url" content="https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/7-idp-shifts-for-ai-feature-delivery.png">
+        <meta property="og:image:alt" content="7 IDP shifts for AI feature delivery">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="7 IDP shifts for AI feature delivery">
+        <meta name="twitter:description" content="Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/7-idp-shifts-for-ai-feature-delivery.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/#article",
+      "headline": "7 IDP shifts for AI feature delivery",
+      "description": "Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.",
+      "datePublished": "2026-10-10T17:09:37+00:00",
+      "dateModified": "2026-10-10T17:10:06+00:00",
+      "wordCount": 2993,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/"
+      },
+      "keywords": "Idp, PlatformEngineering, Prompt, ModelPinningCatalog, Ai, Softwareengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "7 IDP shifts for AI feature delivery",
+          "item": "https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>7 IDP shifts for AI feature delivery</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">7 IDP shifts for AI feature delivery</h1>
+                
+                <p class="post-lead">Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Idp</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/platformengineering/"
+                       style="text-decoration:none;">PlatformEngineering</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/prompt/"
+                       style="text-decoration:none;">Prompt</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Modelpinningcatalog</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2993 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-10
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="what-this-list-actually-solves">What this list actually solves</h2>
+<p>Internal developer platforms (IDPs) were built to make human engineers faster: create a service, get a pipeline, ship to staging, deploy to production. The unit of work was a container and a deploy. That model assumes the artifact is deterministic — the same input produces the same output, and a passing test suite means the same thing on Tuesday as it did on Monday.</p>
+<p>AI features break that assumption. A prompt change is a code change with no compile step. A model swap is a dependency upgrade that can silently alter every response. A retrieval pipeline can pass every unit test and still return nonsense because the embedding index drifted. And the cost model is no longer "one container, one price" — it is tokens, retries, and context windows that scale with user behavior.</p>
+<p>This article is about the specific shifts IDPs need to absorb so AI features can be developed, tested, and shipped without every team inventing its own glue. It is not a product ranking. It is a set of design decisions, each with a concrete strength, a concrete weakness, and a clear "best for" case.</p>
+<p>The real problem: most IDPs still treat an AI feature as just another microservice, so the platform gives you no way to version a prompt, no way to pin a model, and no way to see what a change actually did to output quality before it hit users.</p>
+<h2 id="evaluation-criteria">Evaluation criteria</h2>
+<p>Before comparing shifts, be explicit about what "good" means for an AI-aware IDP. Five criteria matter, and they should be weighted differently depending on the team.</p>
+<ol>
+<li><strong>Artifact versioning.</strong> Can the platform version a prompt, a model identifier, and a retrieval configuration as first-class artifacts — not as strings buried in application code?</li>
+<li><strong>Evaluation integration.</strong> Does the CI pipeline have a place to run offline evals and block a merge when quality regresses, the same way it blocks on a failing unit test?</li>
+<li><strong>Cost visibility per feature.</strong> Can a team attribute token spend to a feature, an environment, and a customer tier — or does it all land in one cloud bill line item?</li>
+<li><strong>Rollback granularity.</strong> When a prompt change makes responses worse, can you revert the prompt without reverting the whole service?</li>
+<li><strong>Developer ergonomics.</strong> How much of this does a product engineer get for free versus having to wire up themselves?</li>
+</ol>
+<p>A platform that scores well on 1 and 4 but ignores 2 will let teams ship fast and regress silently. A platform that nails 2 but ignores 3 will produce beautiful eval reports and a bill nobody can explain.</p>
+<h2 id="the-seven-shifts-reviewed">The seven shifts, reviewed</h2>
+<h3 id="1-prompts-as-versioned-artifacts-not-string-literals">1. Prompts as versioned artifacts, not string literals</h3>
+<p><strong>What it does:</strong> Moves prompt text out of application source and into a registry the platform manages — with versions, diffs, and an owner.</p>
+<p><strong>Strength:</strong> A prompt change becomes reviewable. You can see a diff, tie it to an eval run, and revert it independently of the service binary. This is the single highest-leverage shift because it makes every other shift possible.</p>
+<p><strong>Weakness:</strong> It adds a runtime dependency. If the prompt registry is down, your service needs a fallback. A common pattern is to cache the last-known-good prompt locally and treat registry unavailability as a degraded mode, not an outage.</p>
+<p><strong>Best for:</strong> Any team where more than one person edits prompts, or where prompts change more often than the service around them.</p>
+<p>A minimal pattern looks like this — the application asks the platform for a named, versioned prompt rather than embedding text:</p>
+<pre><code class="language-python"># Illustrative: the platform client resolves a prompt by name and version.
+# The fallback is the last-known-good prompt cached on disk.
+from platform_sdk import PromptRegistry
+
+registry = PromptRegistry(base_url=&quot;https://idp.internal&quot;)
+
+prompt = registry.get(
+    name=&quot;support-reply&quot;,
+    version=&quot;2026-03-01&quot;,   # pin explicitly; do not use &quot;latest&quot; in prod
+    fallback_path=&quot;/etc/prompts/support-reply.txt&quot;,
+)
+
+response = model.generate(prompt.render(ticket=user_ticket))
+</code></pre>
+<p>Pinning the version is the part teams skip. Using <code>latest</code> in production reintroduces exactly the nondeterminism you were trying to remove. A useful convention is to make the version string immutable and to require a new version identifier for every content change, so that "which prompt produced this response?" always has an answer.</p>
+<h3 id="2-model-pinning-and-a-model-catalog">2. Model pinning and a model catalog</h3>
+<p><strong>What it does:</strong> The platform maintains a catalog of approved model identifiers, with metadata about context limits, cost per token, and deprecation dates. Services reference a catalog entry, not a raw model string.</p>
+<p><strong>Strength:</strong> When a provider deprecates a model, the platform can tell you which services are affected instead of you discovering it from a 404 at 3 a.m. It also gives you one place to enforce data-residency rules — which model endpoints are allowed for which regions.</p>
+<p><strong>Weakness:</strong> Catalogs go stale. A catalog that is updated quarterly is worse than no catalog, because teams stop trusting it and hardcode model strings again. The catalog needs an owner and a review cadence.</p>
+<p><strong>Best for:</strong> Organizations with more than a handful of services, or any organization with data-residency constraints that map to specific model endpoints.</p>
+<h3 id="3-evaluation-as-a-pipeline-stage">3. Evaluation as a pipeline stage</h3>
+<p><strong>What it does:</strong> Adds an offline evaluation step to CI — run a fixed set of inputs against the candidate prompt or model, score the outputs, and compare against a baseline.</p>
+<p><strong>Strength:</strong> This is the only mechanism that catches silent quality regressions before users do. Unit tests cannot catch them because the output is not deterministic; you need a scoring function and a threshold.</p>
+<p><strong>Weakness:</strong> Evals are expensive and slow, and a bad eval suite gives false confidence. The failure mode is a suite of twenty easy examples that always pass, which trains the team to ignore the eval stage. Treat the eval set as a product artifact with its own review process.</p>
+<p><strong>Best for:</strong> Teams shipping user-facing AI features where a quality regression is visible to customers.</p>
+<p>One practical constraint: eval runs consume tokens, so they cost money on every pull request. A common compromise is to run a small smoke eval on every PR and the full suite on merge to main. To size this for your own setup, instrument the eval runner to emit total input and output tokens per run, then multiply by your provider's published per-token rates. A smoke suite of 20 examples averaging 1,500 tokens each is 30,000 tokens per PR — a number worth knowing before you put the full suite on every push.</p>
+<h3 id="4-retrieval-configuration-as-platform-managed-state">4. Retrieval configuration as platform-managed state</h3>
+<p><strong>What it does:</strong> Treats the embedding model, chunking strategy, and index configuration as versioned platform state rather than application constants.</p>
+<p><strong>Strength:</strong> When you change the embedding model, you must re-index. If the platform tracks the index version alongside the embedding version, it can refuse to serve a query that mixes mismatched versions — which is a real and confusing failure mode otherwise.</p>
+<p><strong>Weakness:</strong> Re-indexing is operationally heavy and the platform now owns a data pipeline it may not have been designed for. A frequent discovery is that the IDP's storage layer was sized for config, not for vector indexes.</p>
+<p><strong>Best for:</strong> Teams running retrieval-augmented generation where the corpus changes regularly.</p>
+<h3 id="5-per-feature-cost-attribution">5. Per-feature cost attribution</h3>
+<p><strong>What it does:</strong> Tags every model call with a feature identifier and an environment, so token spend can be aggregated by feature rather than by cloud account.</p>
+<p><strong>Strength:</strong> It turns "our AI bill went up" into "the summarization feature's cost per active user doubled after the prompt change." That is an actionable statement.</p>
+<p><strong>Weakness:</strong> Tagging is easy to get wrong. A missing tag on one code path silently undercounts a feature, and teams then optimize the wrong thing. The platform should reject untagged calls in staging so the gap is caught before production.</p>
+<p><strong>Best for:</strong> Any team where AI spend is large enough that someone asks about it monthly.</p>
+<h3 id="6-prompt-and-response-logging-with-redaction">6. Prompt and response logging with redaction</h3>
+<p><strong>What it does:</strong> Captures inputs and outputs for debugging and eval-set construction, with a redaction layer for personally identifiable information.</p>
+<p><strong>Strength:</strong> Real traffic is the best source of eval examples. A platform that makes it easy to promote a production trace into the eval set closes the loop between what users do and what CI tests.</p>
+<p><strong>Weakness:</strong> This is the shift most likely to create a compliance problem. Logging prompts means logging whatever users typed into them. The redaction layer has to be default-on, and the retention policy has to be explicit. A platform that makes logging easy but redaction optional is a liability.</p>
+<p><strong>Best for:</strong> Teams that need to build eval sets from real usage — which is most teams eventually.</p>
+<h3 id="7-gradual-rollout-for-non-deterministic-changes">7. Gradual rollout for non-deterministic changes</h3>
+<p><strong>What it does:</strong> Extends the platform's existing canary or percentage-rollout machinery to prompt and model changes, not just binary deploys.</p>
+<p><strong>Strength:</strong> A prompt change that affects 5% of traffic is a much smaller blast radius than one that affects everyone. This reuses infrastructure most IDPs already have.</p>
+<p><strong>Weakness:</strong> The metrics you canary on are different. CPU and error rate do not capture "the answers got worse." You need an online quality signal — a thumbs-up/down rate, a task-completion rate, or a human review sample — and many platforms do not have one wired up.</p>
+<p><strong>Best for:</strong> Teams that already do canary deploys and want to extend the pattern to AI changes.</p>
+<h2 id="the-strongest-default-and-why">The strongest default, and why</h2>
+<p>If a platform team can only do one thing this quarter, it should be shift 1: prompts as versioned artifacts. That is not because it is the most technically interesting — shift 3, evaluation, is harder and arguably more valuable long-term. It is because versioning is the precondition for everything else. You cannot canary a prompt change (shift 7) if prompts are not versioned. You cannot attribute a cost change to a prompt revision (shift 5) if there is no revision identifier. You cannot build a meaningful eval baseline (shift 3) if you cannot say which prompt produced the baseline.</p>
+<p>There is a second reason: versioning prompts is cheap relative to the other shifts. It does not require a new data pipeline, a vector store, or an online quality metric. It requires a registry and a convention. The returns on that investment compound as the other shifts land.</p>
+<p>The strongest default, then, is: version prompts first, pin model versions second, then add evaluation as a pipeline stage. Cost attribution and gradual rollout come after, because they depend on the identifiers the first two shifts create.</p>
+<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
+<p>A few adjacent practices come up in platform discussions and are worth knowing, even if they are not core shifts.</p>
+<p><strong>Environment parity for model access.</strong> Staging should use the same model endpoints as production, or a documented equivalent. A common failure mode is staging pointing at a cheaper, older model, which means eval results in staging do not predict production behavior.</p>
+<p><strong>A shared eval harness.</strong> Rather than each team writing its own scoring code, the platform can provide a harness that teams plug their examples and scorers into. The strength is consistency; the weakness is that a one-size-fits-all harness often does not fit the team with an unusual modality, so it needs an escape hatch.</p>
+<p><strong>Deprecation calendars.</strong> A platform that publishes upcoming model deprecations alongside its own upgrade deadlines gives teams a single calendar to plan against. This is unglamorous and genuinely useful.</p>
+<h2 id="options-that-look-appealing-but-fail-in-practice">Options that look appealing but fail in practice</h2>
+<h3 id="a-single-ai-gateway-that-does-everything">A single "AI gateway" that does everything</h3>
+<p>An all-in-one gateway that handles routing, caching, logging, evals, and cost tracking sounds efficient. In practice, the failure mode is that the gateway becomes a critical path component owned by a platform team that does not understand each product team's quality bar. When the gateway's default eval threshold blocks a merge, the product team cannot override it without a platform ticket. The result is either a bottleneck or a gateway that everyone bypasses.</p>
+<p>A better shape is a gateway that handles the mechanical concerns — routing, retries, cost tagging — and leaves quality decisions to the teams, with the platform providing the harness rather than the verdict.</p>
+<h3 id="letting-each-team-build-its-own-prompt-tooling">Letting each team build its own prompt tooling</h3>
+<p>This is the opposite failure. It works fine for one team and becomes unmanageable at five. Prompts end up in five formats, cost tags use five naming schemes, and there is no way to answer "which services use the deprecated model." The platform does not need to own everything, but it needs to own the identifiers.</p>
+<h3 id="treating-evals-as-a-one-time-launch-gate">Treating evals as a one-time launch gate</h3>
+<p>Teams sometimes build an eval suite for launch and then stop maintaining it. The suite passes forever because it tests the same twenty examples, and it stops catching anything. An eval suite that is not refreshed from real traffic decays into a rubber stamp. This is why shift 6 — logging with redaction — matters: it is the source of new eval examples.</p>
+<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Start with</th>
+<th>Defer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One team, one AI feature, pre-launch</td>
+<td>Prompt versioning (1) + model pinning (2)</td>
+<td>Cost attribution (5), gradual rollout (7)</td>
+</tr>
+<tr>
+<td>Multiple teams sharing a platform</td>
+<td>Prompt versioning (1) + eval as pipeline stage (3)</td>
+<td>Retrieval config (4) unless RAG is common</td>
+</tr>
+<tr>
+<td>Regulated environment, data residency</td>
+<td>Model catalog (2) with residency rules + redacted logging (6)</td>
+<td>Gradual rollout (7) until logging is compliant</td>
+</tr>
+<tr>
+<td>Heavy RAG usage across teams</td>
+<td>Retrieval config (4) + prompt versioning (1)</td>
+<td>Cost attribution (5) can follow</td>
+</tr>
+<tr>
+<td>AI spend is a monthly executive question</td>
+<td>Cost attribution (5) + prompt versioning (1)</td>
+<td>Gradual rollout (7)</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern: versioning and pinning are near-universal starting points because they are cheap and they unblock the rest. The specialized shifts — retrieval config, cost attribution, gradual rollout — depend on whether your specific pain is corpus churn, spend visibility, or blast radius.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What is an internal developer platform?</strong></p>
+<p>An internal developer platform is the set of tools and services a company builds or assembles so its product engineers can ship without managing infrastructure directly. It typically includes service templates, CI/CD pipelines, environment provisioning, and observability. The key distinction from a general cloud provider is that an IDP encodes a specific company's conventions, so a new service gets the company's logging, secrets handling, and deploy process by default rather than by configuration.</p>
+<p><strong>How is AI feature development different from normal microservice development?</strong></p>
+<p>The main difference is non-determinism. A microservice's behavior is defined by its code; an AI feature's behavior is defined by its code, its prompt, its model version, and its retrieval data. That means a change in any of those four can alter behavior without a code change, which breaks the assumption that a passing test suite and a green deploy mean the feature still works. Platforms have to add versioning and evaluation to cover the parts that are not in the code.</p>
+<p><strong>Do I need a vector database to build AI features?</strong></p>
+<p>Only if you are doing retrieval over a corpus that is too large to fit in a prompt. For many features — classification, extraction, summarization of a single document — you do not need retrieval at all. Teams sometimes add a vector store early because it seems like the standard architecture, then discover the corpus is small enough to pass directly. Start without retrieval, and add it when you can point to the specific queries that fail because the needed context does not fit.</p>
+<p><strong>Why do my AI feature's costs keep changing without a code deploy?</strong></p>
+<p>Because token usage is driven by input and output length, and those are driven by user behavior and prompt content, not by your deploy schedule. A prompt change that adds a few examples to the system message increases input tokens on every call. A model version change can alter output length. Without per-feature cost tagging, these changes are invisible until the monthly bill arrives, which is why cost attribution is a platform concern rather than an application one.</p>
+<p><strong>How do I measure whether an eval stage is actually catching regressions?</strong></p>
+<p>Track the rate at which eval runs fail on merge requests over time, and separately track how many of those failures correspond to a change a reviewer agrees was a regression. A suite where the fail rate trends to zero is either measuring a stable feature or has stopped being sensitive. Periodically seed a known-bad prompt — one you deliberately degrade — and confirm the suite rejects it. That is a cheap control experiment and the only reliable way to know the gate still works.</p>
+<h2 id="final-recommendation">Final recommendation</h2>
+<p>Start with prompt versioning, because it is the cheapest shift and the one the others depend on. If you want a concrete first step: open your platform's service template and find where the AI feature's prompt text lives. If it is a string literal in application code, that is your gap. Create a single file — say <code>prompts/support-reply/2026-03-01.txt</code> — and change one service to read from it at startup, with the string literal as a fallback. That is a thirty-minute change that makes the next six shifts possible.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/">Feature flags became AI rollout platforms</a></li>
+<li><a href="https://kubaik.github.io/idp-for-ai-2026-stack-evolution/">IDP for AI: 2026 stack evolution</a></li>
+<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/self-service-is-broken-without-ai-ops/">
+                        <h3>Self-service is broken without AI ops</h3>
+                        <p>Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
+                        <span class="related-meta">12 min read · 24 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/deployment-platforms-senior-vs-new-hire/">
+                        <h3>Deployment platforms: senior vs new hire</h3>
+                        <p>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</p>
+                        <span class="related-meta">17 min read · 7 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/internal-developer-platform-adoption-traps/">
+                        <h3>Internal developer platform: adoption traps</h3>
+                        <p>Why internal developer platforms stall at low adoption, and how to instrument real usage with a small metrics service instead of catalog counts.</p>
+                        <span class="related-meta">15 min read · 23 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Oct 2026 05:01:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 17:10:14 +0000</lastBuildDate>
+    <item>
+      <title>7 IDP shifts for AI feature delivery</title>
+      <link>https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/</link>
+      <description>Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</description>
+      <pubDate>Sat, 10 Oct 2026 17:09:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/</guid>
+    </item>
     <item>
       <title>7 bundling decisions that still matter</title>
       <link>https://kubaik.github.io/7-bundling-decisions-that-still-matter/</link>
@@ -138,13 +145,6 @@
       <description>Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</description>
       <pubDate>Tue, 29 Sep 2026 17:53:25 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/</guid>
-    </item>
-    <item>
-      <title>Route, fine-tune, or scale: pick right</title>
-      <link>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</link>
-      <description>A practical framework for choosing between model routing, fine-tuning, and simply paying for a larger model, with code, cost math, and evaluation harnesses.</description>
-      <pubDate>Tue, 29 Sep 2026 04:56:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/route-fine-tune-or-scale-pick-right/</guid>
     </item>
   </channel>
 </rss>

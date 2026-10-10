@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-10T05:00:57.825017",
+  "built_at": "2026-10-10T17:09:39.520874",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5495,6 +5495,11 @@
       "slug": "7-bundling-decisions-that-still-matter",
       "title": "7 bundling decisions that still matter",
       "summary": "The official documentation for lowlatency agent is good. What it doesn't cover is what happens six months into production. Here's the root cause, not just the symptom. It only shows up under the exact conditions nobody tests for. What this list actually solves Modern frameworks ship with a build too"
+    },
+    {
+      "slug": "7-idp-shifts-for-ai-feature-delivery",
+      "title": "7 IDP shifts for AI feature delivery",
+      "summary": "The answers online were either wrong or skipped the part that mattered. The engineers who build a building change pipeline rarely stick around long enough to document why it works the way it does. This covers the fix, the cost of not knowing sooner, and what to monitor. What this list actually solve"
     }
   ]
 }

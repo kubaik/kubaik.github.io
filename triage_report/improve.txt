@@ -13,6 +13,7 @@ docs/5-ways-to-find-hidden-latency-before-production/index.md
 docs/50-locations-50-headaches-edge-native-backends-in/index.md
 docs/7-bundling-decisions-that-still-matter/index.md
 docs/7-code-review-traps-when-ai-writes-half-your-code/index.md
+docs/7-idp-shifts-for-ai-feature-delivery/index.md
 docs/7-patterns-for-systems-that-wont-die-when-networks/index.md
 docs/7-skills-senior-engineers-need-now-agents-are-live/index.md
 docs/7-ways-to-earn-extra-in-2026-without-shipping-saas/index.md
