@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-10T17:09:39.520874",
+  "built_at": "2026-10-11T04:47:52.409951",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5500,6 +5500,11 @@
       "slug": "7-idp-shifts-for-ai-feature-delivery",
       "title": "7 IDP shifts for AI feature delivery",
       "summary": "The answers online were either wrong or skipped the part that mattered. The engineers who build a building change pipeline rarely stick around long enough to document why it works the way it does. This covers the fix, the cost of not knowing sooner, and what to monitor. What this list actually solve"
+    },
+    {
+      "slug": "senior-engineer-the-bar-moved-nobody-updated-the-rubric",
+      "title": "Senior engineer: the bar moved, nobody updated the rubric",
+      "summary": "changed senior tends to expose the difference between working and being trustworthy. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Hiring rubrics are lagging indicators. They get written after a role stabilises, t"
     }
   ]
 }

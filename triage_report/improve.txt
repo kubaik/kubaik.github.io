@@ -326,6 +326,7 @@ docs/self-healing-pipelines-argo-vs-crossplane-in-2026/index.md
 docs/self-service-ai-tooling-the-permission-trap/index.md
 docs/self-service-ai-tooling-where-it-breaks-first/index.md
 docs/self-service-is-broken-without-ai-ops/index.md
+docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/index.md
 docs/senior-engineer-title-inflation-in-2026/index.md
 docs/senior-role-projects-3-real-paths/index.md
 docs/serve-4g-as-baseline-apps-in-2026/index.md
