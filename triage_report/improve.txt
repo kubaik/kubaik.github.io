@@ -302,6 +302,7 @@ docs/rag-is-not-enough-hybrid-search-reranking-in-2026/index.md
 docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/index.md
 docs/rag-pipelines-4-silent-prod-killers/index.md
 docs/rag-rots-if-you-dont-refresh-indexes/index.md
+docs/rate-limiters-burst-vs-abuse-two-designs/index.md
 docs/react-19-compiler-my-components-changed-how/index.md
 docs/rebalance-pay-when-ai-fills-half-your-role/index.md
 docs/reconciling-mobile-money-edge-cases-banks-ignore/index.md

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-11T04:47:52.409951",
+  "built_at": "2026-10-11T17:33:16.683855",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5505,6 +5505,11 @@
       "slug": "senior-engineer-the-bar-moved-nobody-updated-the-rubric",
       "title": "Senior engineer: the bar moved, nobody updated the rubric",
       "summary": "changed senior tends to expose the difference between working and being trustworthy. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Hiring rubrics are lagging indicators. They get written after a role stabilises, t"
+    },
+    {
+      "slug": "rate-limiters-burst-vs-abuse-two-designs",
+      "title": "Rate limiters: burst vs abuse, two designs",
+      "summary": "The default configuration is fine right up until it isn't. code review was never the hard part. Knowing when it was about to fail was. Here's the version that skips the happy-path tutorial. The problem with one bucket Most rate limiter designs collapse two very different things into one number: a us"
     }
   ]
 }

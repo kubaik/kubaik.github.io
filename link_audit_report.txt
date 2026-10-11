@@ -1,4 +1,4 @@
-❌ Internal link audit: 399 broken link(s) found across 400 posts checked.
+❌ Internal link audit: 400 broken link(s) found across 401 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -330,6 +330,7 @@ Source Post                              Anchor Text                    Missing 
   /self-service-ai-tooling-the-permission-trap AI content policy              /ai-content-policy/
   /self-service-ai-tooling-where-it-breaks-first AI content policy              /ai-content-policy/
   /self-service-is-broken-without-ai-ops  AI content policy              /ai-content-policy/
+  /senior-engineer-the-bar-moved-nobody-updated-the-rubric AI content policy              /ai-content-policy/
   /senior-engineer-title-inflation-in-2026 AI content policy              /ai-content-policy/
   /senior-role-projects-3-real-paths      AI content policy              /ai-content-policy/
   /serve-4g-as-baseline-apps-in-2026      AI content policy              /ai-content-policy/

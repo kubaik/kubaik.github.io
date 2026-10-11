@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Oct 2026 04:48:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Oct 2026 17:34:10 +0000</lastBuildDate>
+    <item>
+      <title>Rate limiters: burst vs abuse, two designs</title>
+      <link>https://kubaik.github.io/rate-limiters-burst-vs-abuse-two-designs/</link>
+      <description>Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.</description>
+      <pubDate>Sun, 11 Oct 2026 17:33:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/rate-limiters-burst-vs-abuse-two-designs/</guid>
+    </item>
     <item>
       <title>Senior engineer: the bar moved, nobody updated the rubric</title>
       <link>https://kubaik.github.io/senior-engineer-the-bar-moved-nobody-updated-the-rubric/</link>
@@ -138,13 +145,6 @@
       <description>When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</description>
       <pubDate>Wed, 30 Sep 2026 17:49:35 +0000</pubDate>
       <guid>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</guid>
-    </item>
-    <item>
-      <title>Chaos engineering without an SRE team</title>
-      <link>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</link>
-      <description>How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.</description>
-      <pubDate>Wed, 30 Sep 2026 04:44:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/chaos-engineering-without-an-sre-team/</guid>
     </item>
   </channel>
 </rss>

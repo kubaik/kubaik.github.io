@@ -115,5 +115,8 @@
   "Security model for MCP servers in regulated environments (fintech case study)",
   "The developer experience gaps that still exist when building and debugging multi-agent systems",
   "How Internal Developer Platforms are evolving to support AI feature development",
-  "How AI changed what 'senior engineer' actually means in 2026 hiring rubrics"
+  "How AI changed what 'senior engineer' actually means in 2026 hiring rubrics",
+  "Context engineering for long-running agents: the patterns that actually reduce hallucinations",
+  "Code review and architecture decisions when large parts of a system are agent-orchestrated",
+  "Designing rate limiters that treat legitimate bursts differently from abuse"
 ]
