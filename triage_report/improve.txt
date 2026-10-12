@@ -25,6 +25,7 @@ docs/african-fintech-agents-the-compliance-cliff-most-miss/index.md
 docs/african-fintech-rules-broke-our-stack/index.md
 docs/agent-access-for-non-ai-engineers/index.md
 docs/agent-architecture-the-new-model-trap/index.md
+docs/agent-audit-trails-event-log-vs-state-snapshots/index.md
 docs/agent-auth-the-silent-deployment-killer/index.md
 docs/agent-auth-where-the-docs-ended-up-lying/index.md
 docs/agent-code-review-gap-nobody-admits/index.md

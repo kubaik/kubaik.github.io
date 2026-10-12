@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-11T17:33:16.683855",
+  "built_at": "2026-10-12T05:04:38.575840",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5510,6 +5510,11 @@
       "slug": "rate-limiters-burst-vs-abuse-two-designs",
       "title": "Rate limiters: burst vs abuse, two designs",
       "summary": "The default configuration is fine right up until it isn't. code review was never the hard part. Knowing when it was about to fail was. Here's the version that skips the happy-path tutorial. The problem with one bucket Most rate limiter designs collapse two very different things into one number: a us"
+    },
+    {
+      "slug": "agent-audit-trails-event-log-vs-state-snapshots",
+      "title": "Agent audit trails: event log vs state snapshots",
+      "summary": "Nobody mentions the failure mode until it's already cost someone a bad night. The using optimize advice that circulates internally rarely matches what's in the public docs. This works through the problem properly, from cause to fix. Compliance teams want to know what an agent decided and why. Engine"
     }
   ]
 }

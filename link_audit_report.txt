@@ -1,4 +1,4 @@
-❌ Internal link audit: 400 broken link(s) found across 401 posts checked.
+❌ Internal link audit: 401 broken link(s) found across 402 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -306,6 +306,7 @@ Source Post                              Anchor Text                    Missing 
   /rag-on-legacy-systems-vector-db-vs-full-text-sql AI content policy              /ai-content-policy/
   /rag-pipelines-4-silent-prod-killers    AI content policy              /ai-content-policy/
   /rag-rots-if-you-dont-refresh-indexes   AI content policy              /ai-content-policy/
+  /rate-limiters-burst-vs-abuse-two-designs AI content policy              /ai-content-policy/
   /react-19-compiler-my-components-changed-how AI content policy              /ai-content-policy/
   /rebalance-pay-when-ai-fills-half-your-role AI content policy              /ai-content-policy/
   /reconciling-mobile-money-edge-cases-banks-ignore AI content policy              /ai-content-policy/

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Oct 2026 17:34:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Oct 2026 05:05:31 +0000</lastBuildDate>
+    <item>
+      <title>Agent audit trails: event log vs state snapshots</title>
+      <link>https://kubaik.github.io/agent-audit-trails-event-log-vs-state-snapshots/</link>
+      <description>Event sourcing and state snapshots solve different audit problems for AI agents. Compare causal reconstruction, debugging fidelity, cost, and replay limits.</description>
+      <pubDate>Mon, 12 Oct 2026 05:04:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-audit-trails-event-log-vs-state-snapshots/</guid>
+    </item>
     <item>
       <title>Rate limiters: burst vs abuse, two designs</title>
       <link>https://kubaik.github.io/rate-limiters-burst-vs-abuse-two-designs/</link>
@@ -138,13 +145,6 @@
       <description>How to keep agentic workflows correct when networks drop: idempotency keys, an outbox with stable action IDs, and reconciliation on reconnect.</description>
       <pubDate>Thu, 01 Oct 2026 04:54:31 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-workflows-surviving-network-partitions/</guid>
-    </item>
-    <item>
-      <title>DuckDB in production: when it replaces a warehouse</title>
-      <link>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</link>
-      <description>When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</description>
-      <pubDate>Wed, 30 Sep 2026 17:49:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/duckdb-in-production-when-it-replaces-a-warehouse/</guid>
     </item>
   </channel>
 </rss>

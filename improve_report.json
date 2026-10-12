@@ -1,7 +1,7 @@
 {
   "improved": [
     {
-      "slug": "rate-limiters-burst-vs-abuse-two-designs",
+      "slug": "agent-audit-trails-event-log-vs-state-snapshots",
       "attempts": 1,
       "retitled": false
     }
