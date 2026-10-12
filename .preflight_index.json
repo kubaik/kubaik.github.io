@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-12T05:04:38.575840",
+  "built_at": "2026-10-12T21:04:55.673196",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5515,6 +5515,11 @@
       "slug": "agent-audit-trails-event-log-vs-state-snapshots",
       "title": "Agent audit trails: event log vs state snapshots",
       "summary": "Nobody mentions the failure mode until it's already cost someone a bad night. The using optimize advice that circulates internally rarely matches what's in the public docs. This works through the problem properly, from cause to fix. Compliance teams want to know what an agent decided and why. Engine"
+    },
+    {
+      "slug": "retire-api-versions-before-they-pile-up",
+      "title": "Retire API versions before they pile up",
+      "summary": "Opinions on api versioning tend to change fast after watching it fail somewhere it wasn't supposed to. This post covers what comes after the happy path. The vendor docs cover the setup and go quiet on the failure modes. Unpopular opinion: most API versioning is just procrastination Teams tend to tre"
     }
   ]
 }

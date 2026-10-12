@@ -26,7 +26,7 @@ african-fintech-agents-the-compliance-cliff-most-miss,docs/african-fintech-agent
 african-fintech-rules-broke-our-stack,docs/african-fintech-rules-broke-our-stack/index.md,IMPROVE,,,Designing Fintech Systems for African Data-Residency Rules,2026-08-02,0,0,0.0,3178,0,0.0,0,3,6,0,False,False,13,False
 agent-access-for-non-ai-engineers,docs/agent-access-for-non-ai-engineers/index.md,IMPROVE,,,Agent access for non-AI engineers,2026-09-17,2,0,0.012,3005,0,0.0,0,4,6,0,False,True,14,False
 agent-architecture-the-new-model-trap,docs/agent-architecture-the-new-model-trap/index.md,IMPROVE,,,Agent architecture: the new model trap,2026-09-27,1,0,0.006,3092,0,0.0,0,1,6,0,False,True,13,False
-agent-audit-trails-event-log-vs-state-snapshots,docs/agent-audit-trails-event-log-vs-state-snapshots/index.md,IMPROVE,,add_sources,Agent audit trails: event log vs state snapshots,2026-10-12,1,0,0.006,2479,0,0.0,0,0,2,0,False,True,12,False
+agent-audit-trails-event-log-vs-state-snapshots,docs/agent-audit-trails-event-log-vs-state-snapshots/index.md,IMPROVE,,add_sources,Agent audit trails: event log vs state snapshots,2026-10-12,1,0,0.006,2561,0,0.0,0,0,6,0,False,True,14,False
 agent-auth-the-silent-deployment-killer,docs/agent-auth-the-silent-deployment-killer/index.md,IMPROVE,,add_sources,Agent auth: the silent deployment killer,2026-07-30,0,0,0.0,2130,0,0.0,0,0,6,0,False,False,17,False
 agent-auth-where-the-docs-ended-up-lying,docs/agent-auth-where-the-docs-ended-up-lying/index.md,IMPROVE,,,Agent auth: where the docs ended up lying,2026-08-24,0,0,0.0,2344,0,0.0,0,2,6,0,False,False,22,False
 agent-code-review-gap-nobody-admits,docs/agent-code-review-gap-nobody-admits/index.md,IMPROVE,,,agent code review gap nobody admits,2026-08-27,0,0,0.0,2429,0,0.0,0,2,6,0,False,False,24,False
@@ -314,6 +314,7 @@ remote-salary-negotiate-without-sounding-cheap,docs/remote-salary-negotiate-with
 remote-work-in-2026-which-tools-survived,docs/remote-work-in-2026-which-tools-survived/index.md,IMPROVE,,,Remote work in 2026: which tools survived,2026-06-13,1,0,0.009,1793,0,0.0,0,2,3,0,False,False,21,False
 replace-env-with-these-in-2026,docs/replace-env-with-these-in-2026/index.md,IMPROVE,,,Replace .env with these in 2026,2026-06-18,0,0,0.0,2855,0,0.0,0,2,6,0,False,False,26,False
 replace-managed-services-with-postgres-17,docs/replace-managed-services-with-postgres-17/index.md,IMPROVE,,,Replace managed services with Postgres 17,2026-08-16,0,0,0.0,2706,0,0.0,0,2,6,0,False,True,14,False
+retire-api-versions-before-they-pile-up,docs/retire-api-versions-before-they-pile-up/index.md,IMPROVE,,add_sources,Retire API versions before they pile up,2026-10-12,2,0,0.016,1901,0,0.0,0,0,2,0,False,True,12,False
 rogue-agent-api-calls-stop-the-bleeding,docs/rogue-agent-api-calls-stop-the-bleeding/index.md,IMPROVE,,,Rogue Agent API Calls: Stop the Bleeding,2026-09-07,0,0,0.0,1844,0,0.0,0,1,6,0,False,False,13,False
 route-fine-tune-or-scale-pick-right,docs/route-fine-tune-or-scale-pick-right/index.md,IMPROVE,,add_sources,"Route, fine-tune, or scale: pick right",2026-09-29,0,0,0.0,2284,0,0.0,0,0,6,0,False,False,16,False
 run-apis-in-50-spots-what-breaks-first,docs/run-apis-in-50-spots-what-breaks-first/index.md,IMPROVE,,,Run APIs in 50 spots: what breaks first,2026-06-19,1,0,0.008,2097,0,0.0,0,1,6,0,False,False,15,False

@@ -1,0 +1,579 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Retire API versions before they pile up - Kubai Kevin</title>
+        <meta name="description" content="Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.">
+        <meta name="keywords" content="ApiVersioning, Deprecation, Apis, Rest, Apidesign">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-12T21:04:53.973131">
+        <meta property="article:modified_time" content="2026-10-12T21:05:25.079463+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Retire API versions before they pile up">
+        <meta property="og:description" content="Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.">
+        <meta property="og:url" content="https://kubaik.github.io/retire-api-versions-before-they-pile-up/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/retire-api-versions-before-they-pile-up.png">
+        <meta property="og:image:alt" content="Retire API versions before they pile up">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Retire API versions before they pile up">
+        <meta name="twitter:description" content="Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/retire-api-versions-before-they-pile-up.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/retire-api-versions-before-they-pile-up/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/retire-api-versions-before-they-pile-up/#article",
+      "headline": "Retire API versions before they pile up",
+      "description": "Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.",
+      "datePublished": "2026-10-12T21:04:53+00:00",
+      "dateModified": "2026-10-12T21:05:25+00:00",
+      "wordCount": 2467,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/retire-api-versions-before-they-pile-up/"
+      },
+      "keywords": "ApiVersioning, Deprecation, Apis, Rest, Apidesign"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Retire API versions before they pile up",
+          "item": "https://kubaik.github.io/retire-api-versions-before-they-pile-up/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Retire API versions before they pile up</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Retire API versions before they pile up</h1>
+                
+                <p class="post-lead">Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/apiversioning/"
+                       style="text-decoration:none;">ApiVersioning</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Deprecation</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Rest</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Apidesign</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2467 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-12
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Version numbers are often treated as an insurance policy: ship <code>/v1/</code>, later ship <code>/v2/</code> for a breaking change, and let <code>/v1/</code> "stay around for compatibility." A year later the surface area includes <code>/v1/</code>, <code>/v2/</code>, and a half-finished <code>/v3/</code> that only two internal services call. The graveyard is rarely caused by versioning itself. It is caused by versioning without a deletion plan. A version with no scheduled death is not a compatibility strategy; it is a backlog item that never gets picked up.</p>
+<p>This article covers versioning strategies that include an exit. It is not a general REST design guide. The focus is on the mechanics that make old versions cheap to retire, and the specific points where teams accidentally make retirement impossible.</p>
+<p>By the end there is a working FastAPI example showing a version negotiation pattern, a deprecation header scheme, and a migration checklist that can be run against an existing API in an afternoon.</p>
+<h2 id="the-three-versioning-strategies-and-which-one-survives">The three versioning strategies, and which one survives</h2>
+<p>Three mainstream approaches exist. They are not equivalent in how much they cost later.</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Where the version lives</th>
+<th>Cost to add a version</th>
+<th>Cost to remove a version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URI versioning</td>
+<td><code>/v1/resource</code></td>
+<td>Low</td>
+<td>High — every client URL changes</td>
+</tr>
+<tr>
+<td>Header versioning</td>
+<td><code>Accept: application/vnd.api+json;version=1</code></td>
+<td>Medium</td>
+<td>Medium — clients must send a new header</td>
+</tr>
+<tr>
+<td>Date-based versioning</td>
+<td><code>Stripe-Version: 2024-06-20</code></td>
+<td>High</td>
+<td>Low — behavior can be pinned per request</td>
+</tr>
+</tbody>
+</table>
+<p>URI versioning is the default choice because it is visible and cacheable. The trap is that it makes the version part of the address rather than part of the contract. Retiring <code>/v1/</code> means convincing every consumer to change a URL, which requires coordinating with clients the team may not control. That is where graveyards come from.</p>
+<p>Header versioning keeps the URL stable, so routing by header at the gateway does not require touching client URLs. The cost is that clients which do not set the header need a default, and that default becomes its own implicit version that must be supported.</p>
+<p>Date-based versioning is the most expensive to implement and the easiest to retire. Each request declares the API behavior it expects, so old behavior can stay alive for old dates while new clients get new behavior on the same URL. The implementation cost is real: every response shape change needs to be conditional on the request's declared date.</p>
+<p>If a team is starting fresh and controls all clients, URI versioning plus a strict deprecation policy is fine. If there are external clients that cannot be forced to upgrade, date-based versioning is the only one that lets the API move forward without a negotiation.</p>
+<h2 id="step-1-set-up-the-environment">Step 1 — Set up the environment</h2>
+<p>Python 3.10+ and FastAPI are required. The example uses only standard library and FastAPI dependencies.</p>
+<pre><code class="language-bash">python -m venv .venv
+source .venv/bin/activate
+pip install &quot;fastapi[standard]&quot;
+</code></pre>
+<p>Create a file <code>main.py</code>. The pattern below uses a single application with a version resolver that reads from either the URL path or a header, so migration can happen incrementally.</p>
+<h2 id="step-2-core-implementation-version-resolution-as-a-dependency">Step 2 — Core implementation: version resolution as a dependency</h2>
+<p>A common mistake is scattering version checks through route handlers. If <code>if version == 1:</code> appears in a handler, the version logic is now coupled to business logic and cannot be removed without touching every endpoint.</p>
+<p>Instead, resolve the version once, in a dependency, and pass it to handlers as a value. Handlers decide behavior based on the value, not on parsing.</p>
+<pre><code class="language-python">from fastapi import FastAPI, Header, HTTPException, Depends, Request
+from typing import Annotated
+
+app = FastAPI()
+
+SUPPORTED_VERSIONS = {&quot;1&quot;, &quot;2&quot;}
+DEFAULT_VERSION = &quot;2&quot;
+DEPRECATED_VERSIONS = {&quot;1&quot;}
+
+async def resolve_version(
+    request: Request,
+    x_api_version: Annotated[str | None, Header()] = None,
+) -&gt; str:
+    # Prefer explicit header, fall back to path segment, then default.
+    explicit = x_api_version
+    if explicit is None:
+        path_parts = request.url.path.strip(&quot;/&quot;).split(&quot;/&quot;)
+        if path_parts and path_parts[0].startswith(&quot;v&quot;) and path_parts[0][1:].isdigit():
+            explicit = path_parts[0][1:]
+    version = explicit or DEFAULT_VERSION
+    if version not in SUPPORTED_VERSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail=f&quot;Unsupported API version: {version}&quot;,
+        )
+    return version
+
+Version = Annotated[str, Depends(resolve_version)]
+</code></pre>
+<p>Two things to notice. First, the resolver is the single place that knows how to extract a version. Second, unsupported versions fail loudly at the edge, not deep inside a handler.</p>
+<p>Now a handler that behaves differently by version:</p>
+<pre><code class="language-python">@app.get(&quot;/v{version}/users/{user_id}&quot;)
+async def get_user(version: Version, user_id: int):
+    user = {&quot;id&quot;: user_id, &quot;name&quot;: &quot;Ada&quot;, &quot;email&quot;: &quot;ada@example.com&quot;}
+    if version == &quot;1&quot;:
+        # v1 returned a flat `email` field. v2 nests it under contact.
+        return user
+    return {
+        &quot;id&quot;: user[&quot;id&quot;],
+        &quot;name&quot;: user[&quot;name&quot;],
+        &quot;contact&quot;: {&quot;email&quot;: user[&quot;email&quot;]},
+    }
+</code></pre>
+<p>The handler's version branch is small and local. The version string came from the dependency, so removing v1 later means deleting one branch and one entry in <code>SUPPORTED_VERSIONS</code>.</p>
+<h2 id="step-3-make-deprecation-visible-and-machine-readable">Step 3 — Make deprecation visible and machine-readable</h2>
+<p>A version that is intended to be removed must announce itself. The HTTP <code>Deprecation</code> header is defined in RFC 9745 (published 2025) and is the correct signal. Pair it with <code>Sunset</code> (RFC 8594) to give a date, and <code>Link</code> with <code>rel="deprecation"</code> to point at migration docs.</p>
+<p>Add a middleware that stamps every response for a deprecated version:</p>
+<pre><code class="language-python">from datetime import datetime, timezone
+from fastapi import Request
+from starlette.middleware.base import BaseHTTPMiddleware
+
+SUNSET_DATES = {
+    &quot;1&quot;: &quot;2026-06-01T00:00:00Z&quot;,
+}
+
+class DeprecationMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        version = getattr(request.state, &quot;api_version&quot;, None)
+        if version in SUNSET_DATES:
+            response.headers[&quot;Deprecation&quot;] = &quot;true&quot;
+            response.headers[&quot;Sunset&quot;] = SUNSET_DATES[version]
+            response.headers[&quot;Link&quot;] = (
+                '&lt;https://docs.example.com/migrate-v1&gt;; rel=&quot;deprecation&quot;'
+            )
+        return response
+</code></pre>
+<p>To populate <code>request.state.api_version</code>, set it inside the resolver:</p>
+<pre><code class="language-python">async def resolve_version(request: Request, x_api_version: Annotated[str | None, Header()] = None) -&gt; str:
+    # ... same resolution logic ...
+    request.state.api_version = version
+    return version
+</code></pre>
+<p>Every v1 response now carries a machine-readable warning. Clients that log headers will see it. API gateways can be configured to alert on it. This is the difference between "there is a plan to remove v1" and "v1 is being removed on a known date."</p>
+<h3 id="the-gotcha-caching-proxies-strip-unknown-headers">The gotcha: caching proxies strip unknown headers</h3>
+<p>A common trap: teams add <code>Deprecation</code> and <code>Sunset</code>, verify locally with curl, and assume clients see them. In practice, shared caches and CDNs may not forward response headers they do not recognize, and some HTTP client libraries expose only a fixed set. If the header alone is relied on to warn consumers, some fraction of them will never see it.</p>
+<p>Mitigation: also include the deprecation notice in the response body for deprecated versions, and log the version on the server side so it is possible to identify which clients still call v1. The header is the standard, but the log is what tells the team who to contact.</p>
+<h2 id="step-4-track-usage-before-announcing-a-sunset">Step 4 — Track usage before announcing a sunset</h2>
+<p>A version cannot be sunset if it cannot be measured. Before publishing a sunset date, it must be possible to know which clients call which version. The minimum viable tracking is a counter keyed by (version, client identifier, endpoint).</p>
+<p>In FastAPI, this is a middleware or a logging hook:</p>
+<pre><code class="language-python">import logging
+
+logger = logging.getLogger(&quot;api.version&quot;)
+
+@app.middleware(&quot;http&quot;)
+async def log_version_usage(request: Request, call_next):
+    response = await call_next(request)
+    version = getattr(request.state, &quot;api_version&quot;, &quot;unknown&quot;)
+    client = request.headers.get(&quot;x-client-id&quot;, &quot;anonymous&quot;)
+    logger.info(
+        &quot;version_call&quot;,
+        extra={&quot;version&quot;: version, &quot;client&quot;: client, &quot;path&quot;: request.url.path},
+    )
+    return response
+</code></pre>
+<p>What matters is not the logging library. It is whether the system can answer "which clients called v1 in the last 30 days" before anything is announced. If it cannot, the sunset date is a guess, and guesses cause outages.</p>
+<p>A reasonable policy: do not announce a sunset until v1 traffic is below a threshold that can be enumerated by hand. If the remaining callers fit on one screen, they can be contacted. If they do not, the version is not ready to retire.</p>
+<h2 id="step-5-build-the-migration-path-not-just-the-deprecation-notice">Step 5 — Build the migration path, not just the deprecation notice</h2>
+<p>Deprecation notices tell clients something is ending. They do not tell clients what to do. The migration path is the part that actually retires versions.</p>
+<p>Three things make a migration path work:</p>
+<ol>
+<li>
+<p><strong>A compatibility shim.</strong> If v1 and v2 differ only in response shape, offer a query parameter or header that returns v1 shape from the v2 endpoint. This lets clients upgrade their URL without changing their parsing code, then change parsing separately. Two smaller changes are easier to schedule than one big one.</p>
+</li>
+<li>
+<p><strong>A changelog keyed to behavior, not to version numbers.</strong> "v2 changed the <code>email</code> field to <code>contact.email</code>" is useful. "v2 released" is not.</p>
+</li>
+<li>
+<p><strong>A test fixture for each supported version.</strong> If the old version's contract test cannot be run against the current code, the version is not actually supported — it is just hoped for. Contract tests per version are the cheapest insurance against accidental breakage during refactors.</p>
+</li>
+</ol>
+<p>Here is a minimal per-version contract test using FastAPI's test client:</p>
+<pre><code class="language-python">from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
+
+def test_v1_shape():
+    r = client.get(&quot;/v1/users/1&quot;)
+    assert r.status_code == 200
+    body = r.json()
+    assert &quot;email&quot; in body
+    assert &quot;contact&quot; not in body
+    assert r.headers.get(&quot;Deprecation&quot;) == &quot;true&quot;
+
+def test_v2_shape():
+    r = client.get(&quot;/v2/users/1&quot;)
+    assert r.status_code == 200
+    body = r.json()
+    assert &quot;contact&quot; in body
+    assert &quot;Deprecation&quot; not in r.headers
+</code></pre>
+<p>These tests are boring and that is the point. When someone refactors the user serializer, the v1 test fails, and the question "did we mean to break v1?" gets asked before deploy instead of after.</p>
+<h2 id="step-6-decide-when-to-actually-delete">Step 6 — Decide when to actually delete</h2>
+<p>The hardest part of versioning is not adding versions, it is removing them. A workable rule:</p>
+<ul>
+<li>A version can be deleted when its traffic is zero for a full billing cycle, <em>or</em> when every remaining caller has been contacted and has confirmed migration.</li>
+<li>The sunset date must be at least one full release cycle away from the announcement. For external APIs, that is typically measured in months, not weeks. The exact number depends on the clients' release cadence, which should be asked about directly.</li>
+<li>Deletion means the route returns <code>410 Gone</code>, not <code>404</code>. <code>404</code> implies the resource might exist elsewhere; <code>410</code> says it is intentionally gone. This matters for client error handling and for search engines.</li>
+</ul>
+<pre><code class="language-python">@app.get(&quot;/v1/{rest:path}&quot;)
+async def v1_gone(rest: str):
+    raise HTTPException(
+        status_code=410,
+        detail=&quot;API v1 was retired on 2026-06-01. See https://docs.example.com/migrate-v1&quot;,
+    )
+</code></pre>
+<p>Keep the <code>410</code> handler in place for at least one cycle after deletion. It costs almost nothing and it turns "my integration broke mysteriously" into "my integration broke with a clear message."</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How long should a deprecated API version be kept?</strong>
+Long enough that every known client can migrate on their own release schedule. For internal clients that is often weeks; for external clients it can be quarters. The right way to decide is to ask the clients, not to pick a number. If they cannot be asked, the version probably cannot be safely retired.</p>
+<p><strong>URI versioning or header versioning?</strong>
+URI versioning if clients are controlled and visible, cacheable URLs are wanted. Header versioning if URLs need to stay stable across versions. Date-based versioning if there are external clients that cannot be coordinated with. The cost of URI versioning is that retirement requires every client to change a URL, which is the main driver of version graveyards.</p>
+<p><strong>What is the difference between the Deprecation and Sunset headers?</strong>
+<code>Deprecation</code> (RFC 9745) signals that a version is deprecated. <code>Sunset</code> (RFC 8594) gives a date after which it will stop working. Use both — deprecation without a date is a warning nobody can act on, and a date without deprecation is a surprise.</p>
+<p><strong>Can v1 just run forever?</strong>
+It can, but the cost compounds. Every supported version is a version that must be tested, monitored, and patched. The graveyard is not a storage problem, it is a maintenance problem. The point of a sunset policy is to bound that cost, not to avoid it entirely.</p>
+<h2 id="how-to-measure-readiness-for-a-sunset">How to measure readiness for a sunset</h2>
+<p>Before announcing anything, instrument the following and keep the results in a place the whole team can see:</p>
+<ol>
+<li><strong>Per-version request counts, broken down by client identifier.</strong> The <code>x-client-id</code> header in the logging middleware above is a starting point; if clients do not send one, fall back to API keys, OAuth client IDs, or source IP ranges, and document the limitation.</li>
+<li><strong>Per-version error rates.</strong> A version with low traffic but a high error rate may already be effectively dead, or may be failing silently for a small set of clients.</li>
+<li><strong>The date each version was introduced and the last date each client called it.</strong> If the last-call date cannot be filled in, that is the version that will be hard to retire.</li>
+<li><strong>The set of contract tests that currently pass for each version.</strong> A version with no passing contract tests is not supported in any meaningful sense.</li>
+</ol>
+<p>A worked example, with illustrative numbers: suppose v1 receives 10,000 requests per day, spread across 40 client identifiers. That is not yet tractable to contact by hand. After a deprecation header and a migration guide are published, suppose v1 drops to 200 requests per day across 3 client identifiers. That is tractable. The sunset date can now be set, the 3 clients contacted, and the <code>410</code> handler deployed once their traffic reaches zero. The arithmetic is simple; the hard part is having the data to do it.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>Versioning strategy is a decision about deletion, not about addition. The teams that avoid graveyards decide <em>before</em> shipping v1 what would have to be true to remove it, and then measure that condition continuously.</p>
+<p>Next 30 minutes: open the API's route definitions and count how many versions are live. For each one, write down the date it was introduced and the last date a client is known to have called it. If the second column cannot be filled in, that is the version that will be hard to retire — and the logging middleware in Step 4 is the first thing to add.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/why-does-my-agent-version-break-clients/">Agent API versioning: why clients break on upgrade</a></li>
+<li><a href="https://kubaik.github.io/agent-versioning-the-contract-you-forgot/">Agent versioning: the contract you forgot</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/">M-Pesa Daraja 2.0: your 2026 migration checklist</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-versioning-the-contract-you-forgot/">
+                        <h3>Agent versioning: the contract you forgot</h3>
+                        <p>Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.</p>
+                        <span class="related-meta">13 min read · 28 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rate-limiters-burst-vs-abuse-two-designs/">
+                        <h3>Rate limiters: burst vs abuse, two designs</h3>
+                        <p>Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.</p>
+                        <span class="related-meta">15 min read · 11 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
+                        <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
+                        <p>How idempotency keys work, where they fail, and the failure modes they don&amp;#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

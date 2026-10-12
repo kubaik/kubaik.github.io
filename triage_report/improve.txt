@@ -313,6 +313,7 @@ docs/remote-salary-negotiate-without-sounding-cheap/index.md
 docs/remote-work-in-2026-which-tools-survived/index.md
 docs/replace-env-with-these-in-2026/index.md
 docs/replace-managed-services-with-postgres-17/index.md
+docs/retire-api-versions-before-they-pile-up/index.md
 docs/rogue-agent-api-calls-stop-the-bleeding/index.md
 docs/route-fine-tune-or-scale-pick-right/index.md
 docs/run-apis-in-50-spots-what-breaks-first/index.md

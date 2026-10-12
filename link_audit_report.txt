@@ -1,4 +1,4 @@
-❌ Internal link audit: 401 broken link(s) found across 402 posts checked.
+❌ Internal link audit: 402 broken link(s) found across 403 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -29,6 +29,7 @@ Source Post                              Anchor Text                    Missing 
   /african-fintech-rules-broke-our-stack  AI content policy              /ai-content-policy/
   /agent-access-for-non-ai-engineers      AI content policy              /ai-content-policy/
   /agent-architecture-the-new-model-trap  AI content policy              /ai-content-policy/
+  /agent-audit-trails-event-log-vs-state-snapshots AI content policy              /ai-content-policy/
   /agent-auth-the-silent-deployment-killer AI content policy              /ai-content-policy/
   /agent-auth-where-the-docs-ended-up-lying AI content policy              /ai-content-policy/
   /agent-code-review-gap-nobody-admits    AI content policy              /ai-content-policy/

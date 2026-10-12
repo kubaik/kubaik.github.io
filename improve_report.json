@@ -1,7 +1,7 @@
 {
   "improved": [
     {
-      "slug": "agent-audit-trails-event-log-vs-state-snapshots",
+      "slug": "retire-api-versions-before-they-pile-up",
       "attempts": 1,
       "retitled": false
     }
