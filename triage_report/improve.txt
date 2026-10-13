@@ -181,6 +181,7 @@ docs/debugging-techniques-that-outlast-any-framework/index.md
 docs/deploy-a-solo-stack-for-20month-in-2026/index.md
 docs/deployment-platforms-senior-vs-new-hire/index.md
 docs/detect-lazy-agents-without-false-alarms/index.md
+docs/detecting-silent-agent-failures/index.md
 docs/double-entry-ledger-concurrent-write-errors/index.md
 docs/double-the-price-double-the-revenue/index.md
 docs/drop-ec2-bills-70-without-code/index.md

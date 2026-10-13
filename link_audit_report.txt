@@ -1,4 +1,4 @@
-❌ Internal link audit: 402 broken link(s) found across 403 posts checked.
+❌ Internal link audit: 403 broken link(s) found across 404 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -317,6 +317,7 @@ Source Post                              Anchor Text                    Missing 
   /remote-work-in-2026-which-tools-survived AI content policy              /ai-content-policy/
   /replace-env-with-these-in-2026         AI content policy              /ai-content-policy/
   /replace-managed-services-with-postgres-17 AI content policy              /ai-content-policy/
+  /retire-api-versions-before-they-pile-up AI content policy              /ai-content-policy/
   /rogue-agent-api-calls-stop-the-bleeding AI content policy              /ai-content-policy/
   /route-fine-tune-or-scale-pick-right    AI content policy              /ai-content-policy/
   /run-apis-in-50-spots-what-breaks-first AI content policy              /ai-content-policy/

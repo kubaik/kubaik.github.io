@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Oct 2026 21:05:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2026 06:04:56 +0000</lastBuildDate>
+    <item>
+      <title>Detecting silent agent failures</title>
+      <link>https://kubaik.github.io/detecting-silent-agent-failures/</link>
+      <description>A layered quality gate that catches well-formed but wrong agent output: schema checks, PII scans, citation grounding, and a model judge, plus how to measure each.</description>
+      <pubDate>Tue, 13 Oct 2026 06:03:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/detecting-silent-agent-failures/</guid>
+    </item>
     <item>
       <title>Retire API versions before they pile up</title>
       <link>https://kubaik.github.io/retire-api-versions-before-they-pile-up/</link>
@@ -138,13 +145,6 @@
       <description>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</description>
       <pubDate>Fri, 02 Oct 2026 04:45:55 +0000</pubDate>
       <guid>https://kubaik.github.io/who-signs-off-on-ai-code/</guid>
-    </item>
-    <item>
-      <title>Double-entry ledger: concurrent write errors</title>
-      <link>https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/</link>
-      <description>Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.</description>
-      <pubDate>Thu, 01 Oct 2026 18:15:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/</guid>
     </item>
   </channel>
 </rss>

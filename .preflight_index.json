@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-12T21:04:55.673196",
+  "built_at": "2026-10-13T06:03:58.090375",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5520,6 +5520,11 @@
       "slug": "retire-api-versions-before-they-pile-up",
       "title": "Retire API versions before they pile up",
       "summary": "Opinions on api versioning tend to change fast after watching it fail somewhere it wasn't supposed to. This post covers what comes after the happy path. The vendor docs cover the setup and go quiet on the failure modes. Unpopular opinion: most API versioning is just procrastination Teams tend to tre"
+    },
+    {
+      "slug": "detecting-silent-agent-failures",
+      "title": "Detecting silent agent failures",
+      "summary": "detecting agent has a habit of breaking in ways the monitoring wasn't watching for. This works through the problem properly, from cause to fix. Everyone assumes someone else already checked this. An agent that returns a 200 OK with a plausible-looking answer is the hardest failure mode to catch. The"
     }
   ]
 }

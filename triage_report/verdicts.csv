@@ -182,6 +182,7 @@ debugging-techniques-that-outlast-any-framework,docs/debugging-techniques-that-o
 deploy-a-solo-stack-for-20month-in-2026,docs/deploy-a-solo-stack-for-20month-in-2026/index.md,IMPROVE,,,Deploy a solo stack for under $20/month,2026-06-09,0,0,0.0,2266,0,0.0,0,2,6,0,False,False,15,False
 deployment-platforms-senior-vs-new-hire,docs/deployment-platforms-senior-vs-new-hire/index.md,IMPROVE,,,Deployment platforms: senior vs new hire,2026-10-07,0,0,0.0,3298,0,0.0,0,5,6,0,False,True,21,False
 detect-lazy-agents-without-false-alarms,docs/detect-lazy-agents-without-false-alarms/index.md,IMPROVE,,add_sources,Detect lazy agents without false alarms,2026-07-04,0,0,0.0,2844,0,0.0,0,0,6,0,False,False,19,False
+detecting-silent-agent-failures,docs/detecting-silent-agent-failures/index.md,IMPROVE,,add_sources,Detecting silent agent failures,2026-10-13,0,0,0.0,2195,0,0.0,0,0,2,0,False,True,11,False
 double-entry-ledger-concurrent-write-errors,docs/double-entry-ledger-concurrent-write-errors/index.md,IMPROVE,,,Double-entry ledger: concurrent write errors,2026-10-01,0,0,0.0,2638,0,0.0,0,2,6,0,False,False,16,False
 double-the-price-double-the-revenue,docs/double-the-price-double-the-revenue/index.md,IMPROVE,,,"Double the price, double the revenue",2026-06-30,0,0,0.0,2181,0,0.0,0,1,6,0,False,False,12,False
 drop-ec2-bills-70-without-code,docs/drop-ec2-bills-70-without-code/index.md,IMPROVE,,,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09,0,0,0.0,2144,0,0.0,0,3,6,0,False,False,22,False
@@ -314,7 +315,7 @@ remote-salary-negotiate-without-sounding-cheap,docs/remote-salary-negotiate-with
 remote-work-in-2026-which-tools-survived,docs/remote-work-in-2026-which-tools-survived/index.md,IMPROVE,,,Remote work in 2026: which tools survived,2026-06-13,1,0,0.009,1793,0,0.0,0,2,3,0,False,False,21,False
 replace-env-with-these-in-2026,docs/replace-env-with-these-in-2026/index.md,IMPROVE,,,Replace .env with these in 2026,2026-06-18,0,0,0.0,2855,0,0.0,0,2,6,0,False,False,26,False
 replace-managed-services-with-postgres-17,docs/replace-managed-services-with-postgres-17/index.md,IMPROVE,,,Replace managed services with Postgres 17,2026-08-16,0,0,0.0,2706,0,0.0,0,2,6,0,False,True,14,False
-retire-api-versions-before-they-pile-up,docs/retire-api-versions-before-they-pile-up/index.md,IMPROVE,,add_sources,Retire API versions before they pile up,2026-10-12,2,0,0.016,1901,0,0.0,0,0,2,0,False,True,12,False
+retire-api-versions-before-they-pile-up,docs/retire-api-versions-before-they-pile-up/index.md,IMPROVE,,,Retire API versions before they pile up,2026-10-12,1,0,0.008,2118,0,0.0,0,2,6,0,False,True,14,False
 rogue-agent-api-calls-stop-the-bleeding,docs/rogue-agent-api-calls-stop-the-bleeding/index.md,IMPROVE,,,Rogue Agent API Calls: Stop the Bleeding,2026-09-07,0,0,0.0,1844,0,0.0,0,1,6,0,False,False,13,False
 route-fine-tune-or-scale-pick-right,docs/route-fine-tune-or-scale-pick-right/index.md,IMPROVE,,add_sources,"Route, fine-tune, or scale: pick right",2026-09-29,0,0,0.0,2284,0,0.0,0,0,6,0,False,False,16,False
 run-apis-in-50-spots-what-breaks-first,docs/run-apis-in-50-spots-what-breaks-first/index.md,IMPROVE,,,Run APIs in 50 spots: what breaks first,2026-06-19,1,0,0.008,2097,0,0.0,0,1,6,0,False,False,15,False
