@@ -122,5 +122,12 @@
   "Using AI to optimize AI spend: agentic cost management, and where it can backfire",
   "Building audit trails for agent decisions that satisfy both compliance and debugging needs",
   "API versioning strategies that don't turn into a graveyard of v1 endpoints",
-  "Detecting when an agent is 'working' but producing low-quality or harmful output"
+  "Detecting when an agent is 'working' but producing low-quality or harmful output",
+  "How the 'AI Engineer' role has evolved through 2026",
+  "Detecting and containing agent drift before it degrades the user experience",
+  "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that survive real data change",
+  "Why most AI wrapper businesses died in 2026 and what the survivors have in common",
+  "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers",
+  "Cost attribution for AI features that product managers actually understand",
+  "Monolith to microservices: the signals that mean it's actually time to split"
 ]
