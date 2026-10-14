@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Oct 2026 19:08:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 04:09:57 +0000</lastBuildDate>
+    <item>
+      <title>Agent reliability: 7 metrics users trust</title>
+      <link>https://kubaik.github.io/agent-reliability-7-metrics-users-trust/</link>
+      <description>Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.</description>
+      <pubDate>Wed, 14 Oct 2026 04:08:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-reliability-7-metrics-users-trust/</guid>
+    </item>
     <item>
       <title>Detecting silent agent failures</title>
       <link>https://kubaik.github.io/detecting-silent-agent-failures/</link>
@@ -138,13 +145,6 @@
       <description>How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.</description>
       <pubDate>Fri, 02 Oct 2026 17:40:12 +0000</pubDate>
       <guid>https://kubaik.github.io/webhook-delivery-that-survives-outages/</guid>
-    </item>
-    <item>
-      <title>Who signs off on AI code?</title>
-      <link>https://kubaik.github.io/who-signs-off-on-ai-code/</link>
-      <description>AI coding assistants produce diffs fast, but accountability still needs a named human. Here is a review workflow with hooks, policy checks, and failure modes.</description>
-      <pubDate>Fri, 02 Oct 2026 04:45:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/who-signs-off-on-ai-code/</guid>
     </item>
   </channel>
 </rss>

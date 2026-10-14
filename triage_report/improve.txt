@@ -41,6 +41,7 @@ docs/agent-frameworks-stop-rewriting-the-same-glue-code/index.md
 docs/agent-governance-opa-vs-kyverno-after-our-incident/index.md
 docs/agent-permissions-the-mistake-that-breaks-production/index.md
 docs/agent-platform-abstractions-a-case-study/index.md
+docs/agent-reliability-7-metrics-users-trust/index.md
 docs/agent-slos-measure-what-agents-actually-do/index.md
 docs/agent-systems-circuit-breakers-are-not-enough/index.md
 docs/agent-tracing-when-logs-lie-and-metrics-mislead/index.md

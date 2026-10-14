@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-13T06:03:58.090375",
+  "built_at": "2026-10-14T04:09:02.443858",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5525,6 +5525,11 @@
       "slug": "detecting-silent-agent-failures",
       "title": "Detecting silent agent failures",
       "summary": "detecting agent has a habit of breaking in ways the monitoring wasn't watching for. This works through the problem properly, from cause to fix. Everyone assumes someone else already checked this. An agent that returns a 200 OK with a plausible-looking answer is the hardest failure mode to catch. The"
+    },
+    {
+      "slug": "agent-reliability-7-metrics-users-trust",
+      "title": "Agent reliability: 7 metrics users trust",
+      "summary": "The measuring agent section of a postmortem is easy to skim past, right up until it's the section that matters. The workaround gets copy-pasted forward long after the original reason is forgotten. This covers the fix, the cost of not knowing sooner, and what to monitor. The problem with \"reliability"
     }
   ]
 }

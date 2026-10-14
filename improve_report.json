@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "agent-reliability-7-metrics-users-trust",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
   "failed": []
 }

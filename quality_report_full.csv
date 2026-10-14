@@ -225,6 +225,7 @@ agent-drift-why-prod-breaks-without-human-checkpoints,100,2949,Agent drift: why 
 agent-flooded-our-api-with-bad-calls-overnight,100,2926,Stopping a runaway polling agent from flooding your API,2026-08-05T13:52:49.852054,0,
 agent-followed-instructions-too-literally-the-cron-job-trap,100,2494,Agent followed instructions too literally: the cron job trap,2026-08-11T08:43:33.018896,0,
 agent-platform-abstractions-a-case-study,100,2158,Agent platform abstractions: a case study,2026-09-16T09:38:05.129102,0,
+agent-reliability-7-metrics-users-trust,100,3063,Agent reliability: 7 metrics users trust,2026-10-14T04:08:59.754027,0,
 agent-slos-measure-what-agents-actually-do,100,2591,Agent SLOs: measure what agents actually do,2026-08-11T11:04:33.328499,0,
 agent-systems-circuit-breakers-are-not-enough,100,2518,Agent Systems: Circuit Breakers Are Not Enough,2026-09-12T11:54:46.323734,0,
 agent-tracing-when-logs-lie-and-metrics-mislead,100,1909,Agent tracing: when logs lie and metrics mislead,2026-08-28T10:18:37.508121,0,
