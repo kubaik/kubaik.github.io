@@ -133,5 +133,6 @@
   "How AI changed the sales cycle for developer tools \u2014 and what still works",
   "Prompt and tool injection attacks documented in production, and how teams block them",
   "The Terraform patterns that keep infrastructure changes reviewable at scale",
-  "Measuring 'agent reliability' in a way that correlates with user trust"
+  "Measuring 'agent reliability' in a way that correlates with user trust",
+  "Why flaky tests are a reliability problem, not a testing inconvenience"
 ]

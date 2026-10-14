@@ -1,4 +1,4 @@
-❌ Internal link audit: 404 broken link(s) found across 405 posts checked.
+❌ Internal link audit: 405 broken link(s) found across 406 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -45,6 +45,7 @@ Source Post                              Anchor Text                    Missing 
   /agent-governance-opa-vs-kyverno-after-our-incident AI content policy              /ai-content-policy/
   /agent-permissions-the-mistake-that-breaks-production AI content policy              /ai-content-policy/
   /agent-platform-abstractions-a-case-study AI content policy              /ai-content-policy/
+  /agent-reliability-7-metrics-users-trust AI content policy              /ai-content-policy/
   /agent-slos-measure-what-agents-actually-do AI content policy              /ai-content-policy/
   /agent-systems-circuit-breakers-are-not-enough AI content policy              /ai-content-policy/
   /agent-tracing-when-logs-lie-and-metrics-mislead AI content policy              /ai-content-policy/

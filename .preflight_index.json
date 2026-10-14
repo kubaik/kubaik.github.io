@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-14T04:09:02.443858",
+  "built_at": "2026-10-14T16:49:06.127184",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5530,6 +5530,11 @@
       "slug": "agent-reliability-7-metrics-users-trust",
       "title": "Agent reliability: 7 metrics users trust",
       "summary": "The measuring agent section of a postmortem is easy to skim past, right up until it's the section that matters. The workaround gets copy-pasted forward long after the original reason is forgotten. This covers the fix, the cost of not knowing sooner, and what to monitor. The problem with \"reliability"
+    },
+    {
+      "slug": "flaky-tests-reliability-bug-not-test-noise",
+      "title": "Flaky tests: reliability bug, not test noise",
+      "summary": "The flaky tests advice that circulates internally rarely matches what's in the public docs. This is the writeup that includes the part that usually goes wrong. The edge cases only show up once real users hit the system. The one-paragraph version (read this first) A flaky test is a test that passes a"
     }
   ]
 }

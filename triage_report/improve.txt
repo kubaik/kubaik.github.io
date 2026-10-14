@@ -197,6 +197,7 @@ docs/failed-ai-wrappers-2026-what-the-survivors-did-right/index.md
 docs/feature-flags-became-ai-rollout-platforms/index.md
 docs/fintech-features-break-in-ghana-the-real-fix/index.md
 docs/fix-ai-agent-failures-postmortem-guide/index.md
+docs/flaky-tests-reliability-bug-not-test-noise/index.md
 docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/index.md
 docs/found-niche-in-2026-saas-that-ai-cant-copy/index.md
 docs/fraud-detection-rules-vs-scoring-where-they-meet/index.md

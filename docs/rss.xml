@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Oct 2026 04:09:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 16:50:00 +0000</lastBuildDate>
+    <item>
+      <title>Flaky tests: reliability bug, not test noise</title>
+      <link>https://kubaik.github.io/flaky-tests-reliability-bug-not-test-noise/</link>
+      <description>Flaky tests usually point to real non-determinism in production code. Learn to classify the four families, triage by blast radius, and fix the source.</description>
+      <pubDate>Wed, 14 Oct 2026 16:49:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/flaky-tests-reliability-bug-not-test-noise/</guid>
+    </item>
     <item>
       <title>Agent reliability: 7 metrics users trust</title>
       <link>https://kubaik.github.io/agent-reliability-7-metrics-users-trust/</link>
@@ -138,13 +145,6 @@
       <description>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</description>
       <pubDate>Sat, 03 Oct 2026 04:27:57 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</guid>
-    </item>
-    <item>
-      <title>Webhook delivery that survives outages</title>
-      <link>https://kubaik.github.io/webhook-delivery-that-survives-outages/</link>
-      <description>How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.</description>
-      <pubDate>Fri, 02 Oct 2026 17:40:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/webhook-delivery-that-survives-outages/</guid>
     </item>
   </channel>
 </rss>
