@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-15T03:52:40.309727",
+  "built_at": "2026-10-15T16:35:24.387368",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5540,6 +5540,11 @@
       "slug": "token-attribution-why-it-misleads-teams",
       "title": "Token attribution: why it misleads teams",
       "summary": "It's a one-line fix once you know where to look, and expensive until then. token attribution is easy to demo and hard to keep honest at scale. This is the version of the write-up that includes the part that broke. The conventional wisdom (and why it's incomplete) Many product and finance groups have"
+    },
+    {
+      "slug": "zig-vs-rust-vs-go-compile-errors-compared",
+      "title": "Zig vs Rust vs Go: compile errors compared",
+      "summary": "zig rust problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. The failure is quiet — no errors, just wrong answers. Here's what changes once the guessing is replaced with measurement. Compile errors in systems languages are not just annoyances; they en"
     }
   ]
 }

@@ -135,5 +135,6 @@
   "The Terraform patterns that keep infrastructure changes reviewable at scale",
   "Measuring 'agent reliability' in a way that correlates with user trust",
   "Why flaky tests are a reliability problem, not a testing inconvenience",
-  "Token attribution models that make AI spend visible to product and finance teams"
+  "Token attribution models that make AI spend visible to product and finance teams",
+  "Zig, Rust, and Go for systems programming: a practical 2026 comparison"
 ]

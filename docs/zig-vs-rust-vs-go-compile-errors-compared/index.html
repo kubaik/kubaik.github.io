@@ -1,0 +1,504 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Zig vs Rust vs Go: compile errors compared - Kubai Kevin</title>
+        <meta name="description" content="How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.">
+        <meta name="keywords" content="Zig, Rust, Go, Systems, Compile, RustBorrowChecker, ZigComptime, Programming, Rustlang, Golang">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-15T16:35:21.697987">
+        <meta property="article:modified_time" content="2026-10-15T16:36:05.109062+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Zig vs Rust vs Go: compile errors compared">
+        <meta property="og:description" content="How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.">
+        <meta property="og:url" content="https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/zig-vs-rust-vs-go-compile-errors-compared.png">
+        <meta property="og:image:alt" content="Zig vs Rust vs Go: compile errors compared">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Zig vs Rust vs Go: compile errors compared">
+        <meta name="twitter:description" content="How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/zig-vs-rust-vs-go-compile-errors-compared.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/#article",
+      "headline": "Zig vs Rust vs Go: compile errors compared",
+      "description": "How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.",
+      "datePublished": "2026-10-15T16:35:21+00:00",
+      "dateModified": "2026-10-15T16:36:05+00:00",
+      "wordCount": 2606,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/"
+      },
+      "keywords": "Zig, Rust, Go, Systems, Compile, RustBorrowChecker, ZigComptime, Programming"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Zig vs Rust vs Go: compile errors compared",
+          "item": "https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Zig vs Rust vs Go: compile errors compared</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Zig vs Rust vs Go: compile errors compared</h1>
+                
+                <p class="post-lead">How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Zig</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/rust/"
+                       style="text-decoration:none;">Rust</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Go</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Systems</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Compile</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/programming/"
+                       style="text-decoration:none;">Programming</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2606 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-15
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Compile errors in systems languages are not just annoyances; they encode a language's philosophy about memory, concurrency, and correctness. For a backend service, a CLI tool, or a network daemon, the errors you stare at daily are a practical signal of how much the language will fight you, and where.</p>
+<p>This article compares Go, Rust, and Zig through their most common compile-time and runtime failure modes. It explains what each error means, how to fix it, and when that fix is a sign you picked the wrong tool. The goal is not to crown a winner but to map project constraints to the error profile you can live with.</p>
+<h2 id="the-same-task-in-three-languages">The same task in three languages</h2>
+<p>A useful starting point is a function that reads a file into a buffer and returns it. In Go:</p>
+<pre><code class="language-go">func readFile(path string) ([]byte, error) {
+    data, err := os.ReadFile(path)
+    if err != nil {
+        return nil, err
+    }
+    return data, nil
+}
+</code></pre>
+<p>This compiles. The error handling is explicit but verbose. The same in Rust:</p>
+<pre><code class="language-rust">use std::fs;
+
+fn read_file(path: &amp;str) -&gt; Result&lt;Vec&lt;u8&gt;, std::io::Error&gt; {
+    fs::read(path)
+}
+</code></pre>
+<p>Also compiles. The <code>?</code> operator could shorten it further. Now Zig:</p>
+<pre><code class="language-zig">const std = @import(&quot;std&quot;);
+
+fn readFile(path: []const u8) ![]u8 {
+    const file = try std.fs.cwd().openFile(path, .{});
+    defer file.close();
+    return try file.readToEndAlloc(std.heap.page_allocator, 1 &lt;&lt; 20);
+}
+</code></pre>
+<p>This compiles too, but only if the author understands <code>defer</code>, allocator choice, and the <code>!</code> error union. The confusion begins when errors stop being about syntax and start being about the language's core model.</p>
+<p>For Go, the most common confusing error is <code>declared and not used</code>. It appears when a variable is declared and never read. Go treats unused local variables as a compile error, not a warning. That is deliberate: it prevents dead code and forces cleanup. It also means that during refactoring, output like this is routine:</p>
+<pre><code>./main.go:10:6: x declared and not used
+</code></pre>
+<p>The fix is trivial — use <code>_ = x</code> or remove the declaration — but the error feels punitive to developers used to languages that warn instead.</p>
+<p>For Rust, confusion often starts with the borrow checker:</p>
+<pre><code>error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immutable
+</code></pre>
+<p>This is not a syntax error; it is a semantic error about aliasing and mutation. The compiler is reporting that the code violates Rust's ownership rules. The fix requires restructuring data flow, not adding a semicolon.</p>
+<p>For Zig, confusion is often about compile-time evaluation and the <code>comptime</code> keyword, or about error unions. A typical error:</p>
+<pre><code>error: expected type 'u32', found 'comptime_int'
+</code></pre>
+<p>This happens when an integer literal is passed to a function expecting a specific integer type. Zig's comptime integer literals are arbitrary precision, but they must coerce to the expected type. The fix is to annotate: <code>const x: u32 = 42;</code>.</p>
+<p>The underlying confusion is the same in all three cases: the error is not about what was typed, but about the language's invariants. Go enforces simplicity and explicitness; Rust enforces memory safety without a garbage collector; Zig enforces manual memory management with compile-time checks. Each error is a boundary of that invariant.</p>
+<h2 id="what-is-actually-causing-it">What is actually causing it</h2>
+<p>When Go reports <code>x declared and not used</code>, the real cause is not that <code>x</code> was forgotten — it is that the Go compiler is designed to reject code that might indicate a mistake. Unused variables and imports are compile errors to keep code clean and to avoid the drift that leads to bugs. This is a philosophical choice: Go prioritizes readability and maintainability over flexibility. The error is a feature, not a bug.</p>
+<p>In Rust, <code>cannot borrow as mutable</code> is not a limitation but a consequence of the borrow checker's goal: guaranteeing memory safety and data-race freedom at compile time. The error means the code has a potential data race or use-after-free. The compiler is preventing code that would be undefined behavior in C or C++. The fix is to redesign data ownership — often by using <code>RefCell</code>, <code>Mutex</code>, or by splitting data into disjoint borrows.</p>
+<p>In Zig, <code>expected type 'u32', found 'comptime_int'</code> reveals that Zig's type system is stricter than C's about integer widths. Zig does not implicitly convert between integer types, even when the value fits. This prevents a class of bugs where a value silently truncates. The error is a nudge to be explicit about integer sizes, which matters in systems programming where memory layout and overflow behavior are critical.</p>
+<p>The surface symptom in each case is an error message. The real cause is that the language is enforcing a contract the developer may not have internalized yet. The fix is not just to silence the error but to understand which contract is being violated and whether the developer agrees with it.</p>
+<h2 id="fix-1-fighting-the-languages-core-invariant">Fix 1 — fighting the language's core invariant</h2>
+<p>The most common cause of these errors is writing code in the style of another language. A Go developer new to Rust might try to share mutable state across threads with <code>Rc&lt;RefCell&lt;T&gt;&gt;</code> and hit <code>Rc</code> is not <code>Send</code>. A Rust developer new to Go might lean heavily on generics and find the syntax clunky. A C developer new to Zig might expect implicit integer conversions and hit <code>comptime_int</code> errors.</p>
+<p>The fix is to adopt the language's idioms. For Go, that means explicit error returns and fewer unnecessary abstractions. For Rust, it means designing data flow around ownership and borrowing, often using <code>Arc&lt;Mutex&lt;T&gt;&gt;</code> for shared mutable state across threads. For Zig, it means being explicit about types and using <code>@intCast</code> or <code>@as</code> when a conversion is needed.</p>
+<p>A concrete Rust example: modifying a vector while iterating over it does not compile.</p>
+<pre><code class="language-rust">let mut v = vec![1, 2, 3];
+for x in &amp;v {
+    v.push(*x); // error: cannot borrow `v` as mutable because it is also borrowed as immutable
+}
+</code></pre>
+<p>The fix is to collect the new elements first:</p>
+<pre><code class="language-rust">let mut v = vec![1, 2, 3];
+let new_elements: Vec&lt;_&gt; = v.iter().map(|x| *x).collect();
+v.extend(new_elements);
+</code></pre>
+<p>Or use indices:</p>
+<pre><code class="language-rust">let mut v = vec![1, 2, 3];
+for i in 0..v.len() {
+    let x = v[i];
+    v.push(x);
+}
+</code></pre>
+<p>This is not a workaround; it is the correct way to express the algorithm in Rust's ownership model. The index version also grows the vector while iterating, so <code>v.len()</code> is re-evaluated each iteration — a detail worth noticing, because it changes the loop's behavior compared with the <code>collect</code> version.</p>
+<h2 id="fix-2-toolchain-and-build-system-mismatches">Fix 2 — toolchain and build system mismatches</h2>
+<p>The second most common cause is a mismatch between the toolchain and the environment. In Go, a typical error is:</p>
+<pre><code>go: cannot find module providing package github.com/foo/bar
+</code></pre>
+<p>This usually means the module cache or <code>GOPATH</code> is misconfigured, or the machine is offline. The fix is to run <code>go mod tidy</code> and check <code>GOFLAGS</code>. In Rust:</p>
+<pre><code>error: failed to run custom build command for `some-crate v0.1.0`
+</code></pre>
+<p>This often means a system dependency is missing, such as <code>libssl-dev</code> on Debian-based systems. The fix is to install the missing library or enable a vendored feature. In Zig:</p>
+<pre><code>error: unable to open file: zig-cache/...
+</code></pre>
+<p>This can happen if the cache directory is corrupted or on a read-only filesystem. The fix is to clear the cache and rebuild.</p>
+<p>These errors are less about language design and more about environment. They are often the first hurdle when setting up a project on a new machine or in CI.</p>
+<h2 id="fix-3-cross-compilation-and-target-platforms">Fix 3 — cross-compilation and target platforms</h2>
+<p>Systems programming often involves cross-compilation. Go makes this relatively easy with <code>GOOS</code> and <code>GOARCH</code> environment variables, but a common error is:</p>
+<pre><code>build constraints exclude all Go files in ...
+</code></pre>
+<p>This means the files in the directory are not compatible with the target OS/arch. The fix is to add build tags or correct <code>//go:build</code> directives.</p>
+<p>Rust uses target triples. A common error is:</p>
+<pre><code>error: linking with `cc` failed: exit status: 1
+</code></pre>
+<p>This often means a cross-compilation toolchain is missing, such as <code>gcc-aarch64-linux-gnu</code>. The fix is to install the toolchain and set the linker in <code>.cargo/config.toml</code>.</p>
+<p>Zig is designed for cross-compilation and bundles its own C compiler, but this can still appear:</p>
+<pre><code>error: unable to find dynamic linker for target
+</code></pre>
+<p>This means the target triple is not fully supported or the linker is missing. The fix is to use a supported target or provide the linker path.</p>
+<p>Cross-compilation errors are particularly painful because they often surface only in CI or when deploying to a different architecture. The fix is to codify the build environment — a container image, a Nix flake, or a CI matrix that tests all target platforms.</p>
+<h2 id="how-to-verify-a-fix-worked">How to verify a fix worked</h2>
+<p>After applying a fix, reproduce the original error and confirm it is gone. For Go, run <code>go build ./...</code>. For Rust, run <code>cargo check</code> (faster than <code>cargo build</code>) and then <code>cargo test</code>. For Zig, run <code>zig build</code> or <code>zig build test</code>.</p>
+<p>Compilation success is not enough. Run the test suite, preferably with sanitizers. In Rust, <code>cargo test</code> with <code>RUSTFLAGS="-Z sanitizer=address"</code> on nightly can catch memory issues. In Go, <code>go test -race</code> enables the race detector. In Zig, <code>std.testing.allocator</code> detects leaks in tests.</p>
+<p>For cross-compilation, verify by running the binary on the target platform or in an emulator. If that is not possible, at least check the binary format with <code>file</code> and confirm it matches the target architecture.</p>
+<h2 id="how-to-measure-your-own-error-profile">How to measure your own error profile</h2>
+<p>Claims about which language produces "better" errors are only useful when tied to a project. Here is how to measure it on a real codebase rather than trusting a blog post.</p>
+<ol>
+<li>Pick a representative task, such as adding an endpoint or a CLI subcommand.</li>
+<li>Record the toolchain versions: <code>go version</code>, <code>rustc --version</code>, <code>zig version</code>.</li>
+<li>Count compile invocations with <code>go build ./... 2&gt;&amp;1 | wc -l</code>, <code>cargo check --message-format=short 2&gt;&amp;1 | wc -l</code>, and <code>zig build 2&gt;&amp;1 | wc -l</code>.</li>
+<li>Time a clean build and an incremental build with <code>time</code>.</li>
+<li>Classify each error by category: type/ownership, unused symbol, dependency/toolchain, or build constraint.</li>
+<li>Repeat on the same task in each language with the same developer.</li>
+</ol>
+<p>The output is a per-project profile, not a universal ranking. A team whose work is mostly I/O-bound network services will see a very different profile from one writing a memory allocator.</p>
+<h2 id="prevention">Prevention</h2>
+<p>Prevention starts with understanding the language's invariants and encoding them in the workflow. For Go, enable <code>go vet</code> and <code>staticcheck</code> in the editor and CI. For Rust, use <code>clippy</code> and <code>rustfmt</code>. For Zig, use <code>zig fmt</code> and consider <code>zig ast-check</code>.</p>
+<p>Write tests that exercise the boundaries: integer overflow, null pointers, concurrent access, and cross-platform behavior. In Go, table-driven tests with <code>t.Parallel()</code> can surface race conditions. In Rust, property-based testing explores edge cases that hand-written tests miss. In Zig, <code>comptime</code> tests can verify compile-time invariants.</p>
+<p>Document the build environment. A <code>Dockerfile</code> or <code>flake.nix</code> that pins toolchain versions and system dependencies saves hours of debugging when a new team member joins or when CI breaks.</p>
+<h2 id="related-errors-you-may-hit-next">Related errors you may hit next</h2>
+<p>Once the immediate error is resolved, these related issues tend to appear:</p>
+<ul>
+<li><strong>Go:</strong> <code>panic: runtime error: index out of range</code> — often caused by off-by-one errors in slice indexing. Fix with bounds checks or <code>for i, v := range slice</code>.</li>
+<li><strong>Go:</strong> <code>fatal error: all goroutines are asleep - deadlock!</code> — indicates a deadlock in channel operations. Use <code>go vet</code> or the race detector.</li>
+<li><strong>Rust:</strong> <code>error[E0382]: use of moved value</code> — the value is used after being moved. Fix by cloning or using references.</li>
+<li><strong>Rust:</strong> <code>error[E0277]: the trait bound</code>T: Send<code>is not satisfied</code> — a non-<code>Send</code> type is being sent across threads. Wrap in <code>Arc&lt;Mutex&lt;T&gt;&gt;</code> or use <code>std::sync::mpsc</code>.</li>
+<li><strong>Zig:</strong> <code>error: integer overflow</code> — Zig checks integer overflow in safe modes. Use <code>@addWithOverflow</code> or <code>+%</code> for wrapping arithmetic.</li>
+<li><strong>Zig:</strong> <code>error: unreachable code</code> — the compiler detected code that can never execute. Remove it or adjust the logic.</li>
+</ul>
+<p>These errors are not random; they are consequences of the same invariants. Recognizing them quickly is a sign the language is being internalized.</p>
+<h2 id="when-the-fixes-do-not-work">When the fixes do not work</h2>
+<p>If the fixes above do not resolve the error, isolate the problem. Create a minimal reproducible example in a new project. For Go, use <code>go mod init</code> and copy the failing code. For Rust, use <code>cargo new</code> and add dependencies one at a time. For Zig, use <code>zig init-exe</code> and strip the code down.</p>
+<p>If the minimal example still fails, search for the exact error message in the language's issue tracker or forum. When asking for help, include the full error message, the toolchain version (<code>go version</code>, <code>rustc --version</code>, <code>zig version</code>), the target platform, and the minimal example. This gets a faster response.</p>
+<p>If the error is due to a bug in the language or a library, consider filing an issue. If it is a limitation, a workaround or a different tool may be needed. That is not failure; it is engineering.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why does Go complain about unused variables but not unused functions?</strong>
+Unused local variables and imports are compile errors to prevent dead code and accidental shadowing. Unused functions are allowed because they might be part of an exported API or used via reflection. The design prioritizes local clarity over global completeness.</p>
+<p><strong>How do I fix <code>cannot borrow as mutable</code> in Rust when I need to modify a collection while iterating?</strong>
+A collection cannot be mutated while an immutable borrow is live. Collect the changes into a temporary vector and apply them after the loop, or use indices to access elements. Alternatively, use <code>RefCell</code> for interior mutability in single-threaded code, or <code>Mutex</code> for multi-threaded code.</p>
+<p><strong>What does <code>comptime_int</code> mean in Zig and how do I resolve the error?</strong>
+<code>comptime_int</code> is an arbitrary-precision integer known at compile time. When passed to a function expecting a fixed-width integer such as <code>u32</code>, Zig requires an explicit cast. Use <code>@as(u32, 42)</code> or annotate the variable: <code>const x: u32 = 42;</code>.</p>
+<p><strong>When should I choose Zig over Rust or Go for a new project?</strong>
+Choose Zig when precise control over memory layout matters, hidden allocations are unacceptable, and manual memory management is comfortable. Zig excels at cross-compilation and C interoperability. Rust is better when memory safety without a garbage collector and a mature ecosystem are priorities. Go is best for rapid development of networked services where simplicity and fast compile times matter more than zero-cost abstractions.</p>
+<h2 id="closing-action">Closing action</h2>
+<p>Open your project's <code>go.mod</code>, <code>Cargo.toml</code>, or <code>build.zig</code> and check the toolchain version. Run <code>go version</code>, <code>rustc --version</code>, or <code>zig version</code> and compare it to the version CI uses. A mismatch there is a common cause of "works on my machine" build failures, and it takes 30 seconds to rule out.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/">Rust rewrites: where they pay off, where they don't</a></li>
+<li><a href="https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
+<li><a href="https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/">Tech debt: when half your stack is unfamiliar</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
+                        <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
+                        <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/sbom-attestation-that-gets-used/">
+                        <h3>SBOM + attestation that gets used</h3>
+                        <p>How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</p>
+                        <span class="related-meta">17 min read · 3 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
+                        <h3>Rust SDK vs FastAPI for LLM ops: trust in 2026</h3>
+                        <p>How to compare a compiled Rust inference service against a Python async API for LLM serving: cold starts, cache stampedes, memory, and how to measure each.</p>
+                        <span class="related-meta">10 min read · 14 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

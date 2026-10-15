@@ -368,7 +368,6 @@ tech-debt-when-half-your-stack-is-unfamiliar,docs/tech-debt-when-half-your-stack
 temporal-changed-our-agent-retries-for-good,docs/temporal-changed-our-agent-retries-for-good/index.md,IMPROVE,,,Durable Execution for Multi-Step Agent Workflows,2026-09-03,0,0,0.0,2291,0,0.0,0,5,6,0,False,False,20,False
 test-ai-code-without-testing-the-ai,docs/test-ai-code-without-testing-the-ai/index.md,IMPROVE,,,Test AI code without testing the AI,2026-07-01,0,0,0.0,2666,0,0.0,0,2,6,0,False,False,19,False
 thundering-herd-the-hidden-scaling-trap,docs/thundering-herd-the-hidden-scaling-trap/index.md,IMPROVE,,,Thundering Herd: The Hidden Scaling Trap,2026-09-10,0,0,0.0,2098,0,0.0,0,2,6,0,False,False,15,False
-token-attribution-why-it-misleads-teams,docs/token-attribution-why-it-misleads-teams/index.md,IMPROVE,,add_sources,Token attribution: why it misleads teams,2026-10-15,3,1,0.03,3495,0,0.0,0,0,2,0,False,False,20,False
 tool-calling-patterns-patterns-that-survive-load-vs,docs/tool-calling-patterns-patterns-that-survive-load-vs/index.md,IMPROVE,,,Tool calling patterns: patterns that survive load vs,2026-06-27,0,0,0.0,2684,0,0.0,0,1,6,0,False,False,12,False
 tool-calling-stateless-beats-stateful-under-load,docs/tool-calling-stateless-beats-stateful-under-load/index.md,IMPROVE,,,Tool calling: stateless beats stateful under load,2026-06-19,0,0,0.0,2108,0,0.0,0,2,6,0,False,False,15,False
 tool-calls-under-load-async-batch-vs-fire-and-forget,docs/tool-calls-under-load-async-batch-vs-fire-and-forget/index.md,IMPROVE,,,Tool calls under load: async batch vs fire-and-forget,2026-06-13,0,0,0.0,2749,0,0.0,0,3,6,0,False,False,22,False
@@ -406,3 +405,4 @@ why-your-multi-agent-system-degraded-slowly,docs/why-your-multi-agent-system-deg
 why-your-routing-layer-will-collapse-at-scale,docs/why-your-routing-layer-will-collapse-at-scale/index.md,IMPROVE,,,Why your routing layer will collapse at scale,2026-09-04,0,0,0.0,2088,0,0.0,0,3,6,0,False,False,17,False
 world-models-wont-replace-your-backend,docs/world-models-wont-replace-your-backend/index.md,IMPROVE,,,World models won't replace your backend,2026-09-24,1,0,0.006,2798,0,0.0,0,2,6,0,False,True,13,False
 zero-trust-ai-skip-the-latency-tax,docs/zero-trust-ai-skip-the-latency-tax/index.md,IMPROVE,,,Zero-trust AI: skip the latency tax,2026-09-15,0,0,0.0,2712,0,0.0,0,3,6,0,False,True,17,False
+zig-vs-rust-vs-go-compile-errors-compared,docs/zig-vs-rust-vs-go-compile-errors-compared/index.md,IMPROVE,,add_sources,Zig vs Rust vs Go: compile errors compared,2026-10-15,1,0,0.006,2359,0,0.0,0,0,2,0,False,True,12,False
