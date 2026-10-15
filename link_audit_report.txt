@@ -1,4 +1,4 @@
-❌ Internal link audit: 405 broken link(s) found across 406 posts checked.
+❌ Internal link audit: 406 broken link(s) found across 407 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -201,6 +201,7 @@ Source Post                              Anchor Text                    Missing 
   /feature-flags-became-ai-rollout-platforms AI content policy              /ai-content-policy/
   /fintech-features-break-in-ghana-the-real-fix AI content policy              /ai-content-policy/
   /fix-ai-agent-failures-postmortem-guide AI content policy              /ai-content-policy/
+  /flaky-tests-reliability-bug-not-test-noise AI content policy              /ai-content-policy/
   /foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality AI content policy              /ai-content-policy/
   /found-niche-in-2026-saas-that-ai-cant-copy AI content policy              /ai-content-policy/
   /fraud-detection-rules-vs-scoring-where-they-meet AI content policy              /ai-content-policy/

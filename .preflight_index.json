@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-14T16:49:06.127184",
+  "built_at": "2026-10-15T03:52:40.309727",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5535,6 +5535,11 @@
       "slug": "flaky-tests-reliability-bug-not-test-noise",
       "title": "Flaky tests: reliability bug, not test noise",
       "summary": "The flaky tests advice that circulates internally rarely matches what's in the public docs. This is the writeup that includes the part that usually goes wrong. The edge cases only show up once real users hit the system. The one-paragraph version (read this first) A flaky test is a test that passes a"
+    },
+    {
+      "slug": "token-attribution-why-it-misleads-teams",
+      "title": "Token attribution: why it misleads teams",
+      "summary": "It's a one-line fix once you know where to look, and expensive until then. token attribution is easy to demo and hard to keep honest at scale. This is the version of the write-up that includes the part that broke. The conventional wisdom (and why it's incomplete) Many product and finance groups have"
     }
   ]
 }

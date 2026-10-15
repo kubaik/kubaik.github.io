@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Oct 2026 16:50:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Oct 2026 03:55:04 +0000</lastBuildDate>
+    <item>
+      <title>Token attribution: why it misleads teams</title>
+      <link>https://kubaik.github.io/token-attribution-why-it-misleads-teams/</link>
+      <description>A practical guide to replacing token‑only dashboards with real monetary cost attribution, including tagging, FX handling, and integration steps.</description>
+      <pubDate>Thu, 15 Oct 2026 03:52:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/token-attribution-why-it-misleads-teams/</guid>
+    </item>
     <item>
       <title>Flaky tests: reliability bug, not test noise</title>
       <link>https://kubaik.github.io/flaky-tests-reliability-bug-not-test-noise/</link>
@@ -138,13 +145,6 @@
       <description>How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</description>
       <pubDate>Sat, 03 Oct 2026 10:43:42 +0000</pubDate>
       <guid>https://kubaik.github.io/sbom-attestation-that-gets-used/</guid>
-    </item>
-    <item>
-      <title>LLM evals: LangSmith vs Promptfoo in prod</title>
-      <link>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</link>
-      <description>How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</description>
-      <pubDate>Sat, 03 Oct 2026 04:27:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/</guid>
     </item>
   </channel>
 </rss>

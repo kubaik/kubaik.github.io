@@ -192,6 +192,7 @@ starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
 stop-the-writes-zero-downtime-db-migrations,95,2518,Stop the writes — zero-downtime DB migrations,2026-07-02T18:33:14.783703,1,no markdown table
 stop-trusting-agents-for-core-logic,95,2267,Stop trusting agents for core logic,2026-09-14T17:56:40.332505,1,no FAQ section
+token-attribution-why-it-misleads-teams,95,3905,Token attribution: why it misleads teams,2026-10-15T03:52:37.573545,1,no FAQ section
 tool-calling-stateless-beats-stateful-under-load,95,2269,Tool calling: stateless beats stateful under load,2026-06-19T09:01:43.310641,1,no FAQ section
 tool-calls-under-load-async-batch-vs-fire-and-forget,95,3101,Tool calls under load: async batch vs fire-and-forget,2026-06-13T10:23:27.741037,1,no markdown table
 trim-llm-bills-3-finops-moves-that-work,95,2144,Trim LLM bills: 3 FinOps moves that work,2026-07-12T09:48:02.503208,1,no FAQ section
@@ -303,7 +304,7 @@ event-driven-beats-agent-driven-910-times,100,2948,Event-driven beats agent-driv
 event-sourcing-pay-the-complexity-tax-only-here,100,2091,Event sourcing: pay the complexity tax only here,2026-06-09T09:48:26.237900,0,
 evolve-your-monolith-without-rewriting-in-2026,100,3035,Evolve your monolith without rewriting in 2026,2026-08-19T06:58:57.859019,0,
 feature-flags-became-ai-rollout-platforms,100,3609,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
-flaky-tests-reliability-bug-not-test-noise,100,2939,"Flaky tests: reliability bug, not test noise",2026-10-14T16:49:03.461978,0,
+flaky-tests-reliability-bug-not-test-noise,100,3189,"Flaky tests: reliability bug, not test noise",2026-10-14T16:49:03.461978,0,
 fraud-detection-rules-vs-scoring-where-they-meet,100,3357,"Fraud detection: rules vs scoring, where they meet",2026-10-04T11:01:21.830716,0,
 golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
 internal-platform-adoption-one-metric-kills-velocity,100,2832,Internal platform adoption: one metric kills velocity,2026-07-21T07:54:25.219668,0,

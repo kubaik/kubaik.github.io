@@ -367,6 +367,7 @@ docs/tech-debt-when-half-your-stack-is-unfamiliar/index.md
 docs/temporal-changed-our-agent-retries-for-good/index.md
 docs/test-ai-code-without-testing-the-ai/index.md
 docs/thundering-herd-the-hidden-scaling-trap/index.md
+docs/token-attribution-why-it-misleads-teams/index.md
 docs/tool-calling-patterns-patterns-that-survive-load-vs/index.md
 docs/tool-calling-stateless-beats-stateful-under-load/index.md
 docs/tool-calls-under-load-async-batch-vs-fire-and-forget/index.md
