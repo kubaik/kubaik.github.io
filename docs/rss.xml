@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Oct 2026 03:46:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Oct 2026 16:21:22 +0000</lastBuildDate>
+    <item>
+      <title>Silent model drift: catch it before prod</title>
+      <link>https://kubaik.github.io/silent-model-drift-catch-it-before-prod/</link>
+      <description>How to catch silent LLM behavior drift: version pinning, behavioral checks, canary routing, and production sampling, with runnable Python examples.</description>
+      <pubDate>Fri, 16 Oct 2026 16:20:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/silent-model-drift-catch-it-before-prod/</guid>
+    </item>
     <item>
       <title>Prompts are code: how to measure their value</title>
       <link>https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/</link>
@@ -138,13 +145,6 @@
       <description>How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.</description>
       <pubDate>Sun, 04 Oct 2026 11:01:21 +0000</pubDate>
       <guid>https://kubaik.github.io/fraud-detection-rules-vs-scoring-where-they-meet/</guid>
-    </item>
-    <item>
-      <title>AI best practices fail on slow networks</title>
-      <link>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</link>
-      <description>Why LLM best practices break on high-latency, metered mobile links, and how to design around a request budget of round trips and bytes instead.</description>
-      <pubDate>Sun, 04 Oct 2026 04:58:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</guid>
     </item>
   </channel>
 </rss>

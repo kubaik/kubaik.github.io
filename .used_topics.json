@@ -137,5 +137,6 @@
   "Why flaky tests are a reliability problem, not a testing inconvenience",
   "Token attribution models that make AI spend visible to product and finance teams",
   "Zig, Rust, and Go for systems programming: a practical 2026 comparison",
-  "Measuring platform value when a growing share of 'code' is prompts and agent graphs"
+  "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
+  "The evaluation gap that let a subtle model behavior change slip into production"
 ]

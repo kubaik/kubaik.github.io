@@ -1,4 +1,4 @@
-❌ Internal link audit: 407 broken link(s) found across 408 posts checked.
+❌ Internal link audit: 408 broken link(s) found across 409 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -302,6 +302,7 @@ Source Post                              Anchor Text                    Missing 
   /prompt-injection-got-the-hype-poison-data-ruined-us AI content policy              /ai-content-policy/
   /prompt-injection-what-breaks-first-in-prod AI content policy              /ai-content-policy/
   /prompt-injections-hidden-aws-tax       AI content policy              /ai-content-policy/
+  /prompts-are-code-how-to-measure-their-value AI content policy              /ai-content-policy/
   /purpose-built-ai-is-a-trap-for-solo-founders AI content policy              /ai-content-policy/
   /purpose-built-beats-general-ai-tools   AI content policy              /ai-content-policy/
   /pypi-poisoned-models-hit-prod-in-2025  AI content policy              /ai-content-policy/

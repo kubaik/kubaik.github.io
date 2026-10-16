@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-16T03:45:44.958395",
+  "built_at": "2026-10-16T16:20:22.583347",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5550,6 +5550,11 @@
       "slug": "prompts-are-code-how-to-measure-their-value",
       "title": "Prompts are code: how to measure their value",
       "summary": "The answers online were either wrong or skipped the part that mattered. Most measuring platform incidents trace back to a default nobody remembers choosing. Here's the version that skips the happy-path tutorial. The problem, in general terms When a growing share of your product's behaviour lives in "
+    },
+    {
+      "slug": "silent-model-drift-catch-it-before-prod",
+      "title": "Silent model drift: catch it before prod",
+      "summary": "Opinions on evaluation gap tend to change fast after watching it fail somewhere it wasn't supposed to. It's a one-line fix once you know where to look, and expensive until then. This covers the fix, the cost of not knowing sooner, and what to monitor. The error and why it's confusing You deploy a ne"
     }
   ]
 }
