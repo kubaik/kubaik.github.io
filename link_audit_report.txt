@@ -1,4 +1,4 @@
-❌ Internal link audit: 406 broken link(s) found across 407 posts checked.
+❌ Internal link audit: 407 broken link(s) found across 408 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -408,6 +408,7 @@ Source Post                              Anchor Text                    Missing 
   /why-your-routing-layer-will-collapse-at-scale AI content policy              /ai-content-policy/
   /world-models-wont-replace-your-backend AI content policy              /ai-content-policy/
   /zero-trust-ai-skip-the-latency-tax     AI content policy              /ai-content-policy/
+  /zig-vs-rust-vs-go-compile-errors-compared AI content policy              /ai-content-policy/
 
 Resolution options:
   1. Re-publish the missing posts.

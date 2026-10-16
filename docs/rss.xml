@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Oct 2026 16:36:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 16 Oct 2026 03:46:44 +0000</lastBuildDate>
+    <item>
+      <title>Prompts are code: how to measure their value</title>
+      <link>https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/</link>
+      <description>Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.</description>
+      <pubDate>Fri, 16 Oct 2026 03:45:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/</guid>
+    </item>
     <item>
       <title>Zig vs Rust vs Go: compile errors compared</title>
       <link>https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/</link>
@@ -138,13 +145,6 @@
       <description>Why LLM best practices break on high-latency, metered mobile links, and how to design around a request budget of round trips and bytes instead.</description>
       <pubDate>Sun, 04 Oct 2026 04:58:45 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-best-practices-fail-on-slow-networks/</guid>
-    </item>
-    <item>
-      <title>SBOM + attestation that gets used</title>
-      <link>https://kubaik.github.io/sbom-attestation-that-gets-used/</link>
-      <description>How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</description>
-      <pubDate>Sat, 03 Oct 2026 10:43:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/sbom-attestation-that-gets-used/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-15T16:35:24.387368",
+  "built_at": "2026-10-16T03:45:44.958395",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5545,6 +5545,11 @@
       "slug": "zig-vs-rust-vs-go-compile-errors-compared",
       "title": "Zig vs Rust vs Go: compile errors compared",
       "summary": "zig rust problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. The failure is quiet — no errors, just wrong answers. Here's what changes once the guessing is replaced with measurement. Compile errors in systems languages are not just annoyances; they en"
+    },
+    {
+      "slug": "prompts-are-code-how-to-measure-their-value",
+      "title": "Prompts are code: how to measure their value",
+      "summary": "The answers online were either wrong or skipped the part that mattered. Most measuring platform incidents trace back to a default nobody remembers choosing. Here's the version that skips the happy-path tutorial. The problem, in general terms When a growing share of your product's behaviour lives in "
     }
   ]
 }
