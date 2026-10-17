@@ -275,6 +275,7 @@ offline-first-money-apps-with-dynamodb-streams,docs/offline-first-money-apps-wit
 one-misconfigured-vector-db-killed-our-rag-pipeline,docs/one-misconfigured-vector-db-killed-our-rag-pipeline/index.md,IMPROVE,,,When a vector DB misconfiguration breaks RAG silently,2026-07-29,0,0,0.0,1851,0,0.0,0,4,6,0,False,False,12,False
 one-payment-stack-for-kenya-nigeria-ghana,docs/one-payment-stack-for-kenya-nigeria-ghana/index.md,IMPROVE,,,"One payment stack for Kenya, Nigeria, Ghana",2026-06-20,1,0,0.006,2493,0,0.0,0,2,6,0,False,False,15,False
 only-boring-stacks-survive-ai-services,docs/only-boring-stacks-survive-ai-services/index.md,IMPROVE,,,Only boring stacks survive AI services,2026-08-31,0,0,0.0,2934,0,0.0,0,5,6,0,False,False,17,False
+open-banking-apis-the-integration-traps,docs/open-banking-apis-the-integration-traps/index.md,IMPROVE,,add_sources,Open banking APIs: the integration traps,2026-10-17,0,0,0.0,2701,0,0.0,0,0,3,0,False,True,11,False
 orchestration-tax-kills-multi-agent-systems,docs/orchestration-tax-kills-multi-agent-systems/index.md,IMPROVE,,,Orchestration tax kills multi-agent systems,2026-08-11,0,0,0.0,2330,0,0.0,0,2,6,0,False,False,16,False
 pass-interviews-without-a-cs-degree,docs/pass-interviews-without-a-cs-degree/index.md,IMPROVE,,,Pass interviews without a CS degree,2026-06-09,0,0,0.0,2287,0,0.0,0,2,6,0,False,False,15,False
 personal-ai-assistants-avoid-vendor-lock-in-traps,docs/personal-ai-assistants-avoid-vendor-lock-in-traps/index.md,IMPROVE,,,Personal AI assistants: avoid vendor lock-in traps,2026-06-11,1,0,0.006,2641,0,0.0,0,3,6,0,False,False,22,False
@@ -398,7 +399,7 @@ why-do-production-agents-still-need-humans,docs/why-do-production-agents-still-n
 why-does-my-agent-version-break-clients,docs/why-does-my-agent-version-break-clients/index.md,IMPROVE,,,Agent API versioning: why clients break on upgrade,2026-09-14,0,0,0.0,2334,0,0.0,0,1,6,0,False,False,13,False
 why-does-my-model-drift-after-deploy,docs/why-does-my-model-drift-after-deploy/index.md,IMPROVE,,,Why ML Models Drift After Deployment,2026-09-11,2,0,0.012,2787,0,0.0,0,3,6,0,False,True,16,False
 why-i-picked-playwright-and-vitest-in-2026,docs/why-i-picked-playwright-and-vitest-in-2026/index.md,IMPROVE,,,Choosing a JavaScript Test Stack: Playwright and Vitest,2026-07-03,0,0,0.0,2162,0,0.0,0,1,6,0,False,False,17,False
-why-leader-election-fails-on-cloud-networks,docs/why-leader-election-fails-on-cloud-networks/index.md,IMPROVE,,add_sources,Why leader election fails on cloud networks,2026-10-17,1,0,0.006,2694,0,0.0,0,0,2,0,False,True,20,True
+why-leader-election-fails-on-cloud-networks,docs/why-leader-election-fails-on-cloud-networks/index.md,IMPROVE,,,Why leader election fails on cloud networks,2026-10-17,0,0,0.0,2499,0,0.0,0,2,6,0,False,True,21,False
 why-monoliths-die-slowly-in-2026,docs/why-monoliths-die-slowly-in-2026/index.md,IMPROVE,,,Why monoliths die slowly in 2026,2026-06-19,1,0,0.007,2669,0,0.0,0,1,6,0,False,False,13,False
 why-our-schema-survived-ai-scaling,docs/why-our-schema-survived-ai-scaling/index.md,IMPROVE,,,Designing a Schema That Survives Embedding Model Upgrades,2026-09-13,0,0,0.0,1982,0,0.0,0,2,6,0,False,True,14,False
 why-platform-metrics-lie,docs/why-platform-metrics-lie/index.md,IMPROVE,,,Why platform metrics lie,2026-09-08,0,0,0.0,2309,0,0.0,0,1,6,0,False,False,18,False

@@ -1,4 +1,4 @@
-❌ Internal link audit: 409 broken link(s) found across 410 posts checked.
+❌ Internal link audit: 410 broken link(s) found across 411 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -401,6 +401,7 @@ Source Post                              Anchor Text                    Missing 
   /why-does-my-agent-version-break-clients AI content policy              /ai-content-policy/
   /why-does-my-model-drift-after-deploy   AI content policy              /ai-content-policy/
   /why-i-picked-playwright-and-vitest-in-2026 AI content policy              /ai-content-policy/
+  /why-leader-election-fails-on-cloud-networks AI content policy              /ai-content-policy/
   /why-monoliths-die-slowly-in-2026       AI content policy              /ai-content-policy/
   /why-our-schema-survived-ai-scaling     AI content policy              /ai-content-policy/
   /why-platform-metrics-lie               AI content policy              /ai-content-policy/

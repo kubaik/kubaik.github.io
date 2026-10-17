@@ -143,5 +143,8 @@
   "The cost and reliability tradeoffs of running AI features for users paying in local currency",
   "The MCP server security mistake that could have exposed internal tools",
   "Feature flag systems that don't turn into unmanageable spaghetti after a year",
-  "Why leader election still breaks in subtle ways on modern cloud networks"
+  "Why leader election still breaks in subtle ways on modern cloud networks",
+  "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
+  "What happens when an agent follows instructions too literally: documented failure patterns",
+  "Open banking APIs across markets: the integration differences nobody warns you about"
 ]

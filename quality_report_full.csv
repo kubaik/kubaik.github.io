@@ -201,7 +201,6 @@ vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forev
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
 websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
 why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Reward Keywords Over Correct Design,2026-06-14T17:09:29.558838,1,no FAQ section
-why-leader-election-fails-on-cloud-networks,95,2857,Why leader election fails on cloud networks,2026-10-17T03:37:16.451764,1,no markdown table
 15-agents-blew-up-our-logs-why-we-pinned-models-logs,100,2167,Structured Logs and Pinned Versions for Multi-Agent Systems,2026-07-04T10:14:14.067039,0,
 3-ai-coders-ranked-cursor-windsurf-claude-code-in,100,3251,"3 AI coders ranked: Cursor, Windsurf, Claude Code in",2026-06-12T11:36:40.871447,0,
 3-skills-to-outrun-ai-salary-cuts,100,3138,3 skills to outrun AI salary cuts,2026-06-30T10:13:26.149608,0,
@@ -338,6 +337,7 @@ offline-first-agents-for-field-teams,100,2705,Offline-first agents for field tea
 offline-first-apps-what-3g-markets-taught-us,100,3020,Designing Offline-First Apps for Unreliable Networks,2026-06-21T10:38:08.004189,0,
 one-payment-stack-for-kenya-nigeria-ghana,100,2697,"One payment stack for Kenya, Nigeria, Ghana",2026-06-20T12:04:01.031479,0,
 only-boring-stacks-survive-ai-services,100,3147,Only boring stacks survive AI services,2026-08-31T18:58:51.693019,0,
+open-banking-apis-the-integration-traps,100,2913,Open banking APIs: the integration traps,2026-10-17T15:15:31.559941,0,
 orchestration-tax-kills-multi-agent-systems,100,2643,Orchestration tax kills multi-agent systems,2026-08-11T10:02:06.598760,0,
 personal-ai-assistants-avoid-vendor-lock-in-traps,100,3070,Personal AI assistants: avoid vendor lock-in traps,2026-06-11T09:44:01.921304,0,
 platform-engineering-roi-metrics-that-fund-teams,100,2558,Platform engineering ROI: metrics that fund teams,2026-09-19T09:13:36.427120,0,
@@ -401,6 +401,7 @@ who-signs-off-on-ai-code,100,2313,Who signs off on AI code?,2026-10-02T04:45:55.
 why-do-production-agents-still-need-humans,100,2404,Why do production agents still need humans?,2026-09-09T08:21:05.275755,0,
 why-does-my-agent-version-break-clients,100,2501,Agent API versioning: why clients break on upgrade,2026-09-14T04:09:00.375326,0,
 why-does-my-model-drift-after-deploy,100,3134,Why ML Models Drift After Deployment,2026-09-11T07:51:02.506093,0,
+why-leader-election-fails-on-cloud-networks,100,2653,Why leader election fails on cloud networks,2026-10-17T03:37:16.451764,0,
 why-our-schema-survived-ai-scaling,100,2173,Designing a Schema That Survives Embedding Model Upgrades,2026-09-13T16:15:34.720467,0,
 why-progressive-web-apps-fail-on-2g-and-how-to-fix,100,2402,Why progressive web apps fail on 2G and how to fix…,2026-07-17T13:26:20.915553,0,
 why-scaling-agents-kills-plain-logs,100,2284,Why scaling agents kills plain logs,2026-09-11T03:43:37.520207,0,

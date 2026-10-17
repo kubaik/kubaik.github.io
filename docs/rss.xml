@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Oct 2026 03:38:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Oct 2026 15:16:45 +0000</lastBuildDate>
+    <item>
+      <title>Open banking APIs: the integration traps</title>
+      <link>https://kubaik.github.io/open-banking-apis-the-integration-traps/</link>
+      <description>Open banking integration failures come from semantic gaps between markets. Here is how consent, idempotency and errors differ, and how to test.</description>
+      <pubDate>Sat, 17 Oct 2026 15:15:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/open-banking-apis-the-integration-traps/</guid>
+    </item>
     <item>
       <title>Why leader election fails on cloud networks</title>
       <link>https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/</link>
@@ -138,13 +145,6 @@
       <description>Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.</description>
       <pubDate>Tue, 06 Oct 2026 05:33:22 +0000</pubDate>
       <guid>https://kubaik.github.io/slos-for-agentic-features-beyond-latency/</guid>
-    </item>
-    <item>
-      <title>Cross-border fintech: why your KYC fails in Dakar</title>
-      <link>https://kubaik.github.io/cross-border-fintech-why-your-kyc-fails-in-dakar/</link>
-      <description>Why KYC validation breaks across borders, and how to replace per-country code forks with a policy layer, reachability checks, and locale-safe schemas.</description>
-      <pubDate>Mon, 05 Oct 2026 04:47:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/cross-border-fintech-why-your-kyc-fails-in-dakar/</guid>
     </item>
   </channel>
 </rss>

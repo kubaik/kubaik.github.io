@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-17T03:37:19.179051",
+  "built_at": "2026-10-17T15:15:34.263498",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5560,6 +5560,11 @@
       "slug": "why-leader-election-fails-on-cloud-networks",
       "title": "Why leader election fails on cloud networks",
       "summary": "The vendor docs cover the setup and go quiet on the failure modes. Inherited offlinefirst eventual setups tend to come with no explanation, just a working system and a long reverse-engineering session. Here's the fuller picture, with the tradeoffs left in. Leader election looks simple on paper: a se"
+    },
+    {
+      "slug": "open-banking-apis-the-integration-traps",
+      "title": "Open banking APIs: the integration traps",
+      "summary": "It works in the simple case and breaks in a specific way under load. Most nairobi teams writeups assume the reader has already made the mistake they're warning about. Here's the root cause, not just the symptom. Most teams treat open banking integration as a REST API problem: read the spec, wire up "
     }
   ]
 }
