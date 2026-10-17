@@ -397,6 +397,7 @@ docs/why-do-production-agents-still-need-humans/index.md
 docs/why-does-my-agent-version-break-clients/index.md
 docs/why-does-my-model-drift-after-deploy/index.md
 docs/why-i-picked-playwright-and-vitest-in-2026/index.md
+docs/why-leader-election-fails-on-cloud-networks/index.md
 docs/why-monoliths-die-slowly-in-2026/index.md
 docs/why-our-schema-survived-ai-scaling/index.md
 docs/why-platform-metrics-lie/index.md

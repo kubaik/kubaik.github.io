@@ -1,0 +1,513 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Why leader election fails on cloud networks - Kubai Kevin</title>
+        <meta name="description" content="Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.">
+        <meta name="keywords" content="LeaderElection, DistributedSystems, CloudNetworkFailures, FencingTokens, Cloudcomputing">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-17T03:37:16.451764">
+        <meta property="article:modified_time" content="2026-10-17T03:37:57.735931+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Why leader election fails on cloud networks">
+        <meta property="og:description" content="Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.">
+        <meta property="og:url" content="https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/why-leader-election-fails-on-cloud-networks.png">
+        <meta property="og:image:alt" content="Why leader election fails on cloud networks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Why leader election fails on cloud networks">
+        <meta name="twitter:description" content="Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-leader-election-fails-on-cloud-networks.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/#article",
+      "headline": "Why leader election fails on cloud networks",
+      "description": "Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.",
+      "datePublished": "2026-10-17T03:37:16+00:00",
+      "dateModified": "2026-10-17T03:37:57+00:00",
+      "wordCount": 2653,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/"
+      },
+      "keywords": "LeaderElection, DistributedSystems, CloudNetworkFailures, FencingTokens, Cloudcomputing"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Why leader election fails on cloud networks",
+          "item": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does my leader keep changing every few minutes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Frequent leader changes usually indicate that the lease is expiring prematurely. Common causes include network latency spikes causing missed heartbeats, GC pauses on the leader, or clock skew causing the leader to think its lease is still valid while followers disagree. Check the coordination service logs for lease expiration events and correlate with network and GC metrics. Increasing the lease TTL can help, but first fix the underlying cause."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use a database as a lock service for leader election?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Using a relational database with a table and row-level locking is possible but risky. Databases are not designed for high-frequency lease renewals, and they may not provide linearizable reads under all isolation levels. For example, PostgreSQL's default isolation level (Read Committed) does not prevent phantom reads, and you need to use SELECT ... FOR UPDATE carefully. If the database is partitioned, you may end up with two leaders. It's better to use a dedicated coordination service."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I test leader election under network partitions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use a tool like tc (traffic control) on Linux to introduce network delays and packet loss, or use a chaos engineering tool like Chaos Mesh to simulate partitions. Run your cluster with three or five nodes and introduce a partition between the leader and the followers. Verify that a new leader is elected and that the old leader stops acting as leader within the lease TTL. Also test clock skew by adjusting the system clock on one node (in a test environment) and observing the behavior."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a fencing token and why do I need it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A fencing token is a monotonically increasing number that is included with every write request. When a new leader is elected, it increments the token. Downstream systems (like databases or storage services) reject any write with a token lower than the highest seen. This prevents an old leader that is still running (e.g., due to a long GC pause) from making writes after a new leader has taken over. Without fencing tokens, you can have split brain even with a lease-based election."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Why leader election fails on cloud networks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Why leader election fails on cloud networks</h1>
+                
+                <p class="post-lead">Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LeaderElection</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DistributedSystems</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">CloudNetworkFailures</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FencingTokens</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">Cloudcomputing</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2653 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-17
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Leader election looks simple on paper: a set of nodes agrees on one leader, and if the leader dies, another takes over. On cloud networks the failure modes are subtle and often invisible until they produce a split brain, a stalled cluster, or a leader that is repeatedly elected and deposed in a tight loop. The vendor documentation usually covers setup and goes quiet on failure behavior, so the tradeoffs have to be reconstructed from the algorithms themselves.</p>
+<p>This article walks through why those failures happen, the approaches that commonly break, and a practical pattern for making leader election more resilient. It closes with the metrics worth watching and the configuration knobs to check first.</p>
+<h2 id="the-problem-in-general-terms">The problem, in general terms</h2>
+<p>Leader election is a consensus problem. Algorithms such as Raft and Paxos are designed to tolerate crash failures and network partitions, but they rely on assumptions about the network that cloud environments violate in ways that are easy to miss. The core assumption is that message delivery is either timely or not delivered at all — there is no notion of a message that arrives very late. In cloud networks, packets can be delayed by hundreds of milliseconds or seconds due to congestion, retries, or virtual network behavior, and they can also be reordered or duplicated. These delays can cause a follower to conclude the leader is dead when it is merely slow, triggering an election that should not happen.</p>
+<p>A second assumption is that clocks are roughly synchronized. Cloud providers offer time synchronization services, but clock drift still occurs, and algorithms that use timeouts to detect failures are sensitive to it. If a node's clock jumps forward, it may time out a healthy leader prematurely. If it jumps backward, it may wait too long to detect a real failure.</p>
+<p>A third assumption is that the network is homogeneous and stable. Cloud networks are not: they span multiple availability zones with varying latency, they have noisy neighbors, and they can experience transient packet loss during live migrations or host maintenance. A timeout value that works in one part of the network may be too aggressive or too lax in another.</p>
+<h2 id="the-approaches-that-commonly-fail-and-why">The approaches that commonly fail, and why</h2>
+<h3 id="naive-heartbeat-with-a-fixed-timeout">Naive heartbeat with a fixed timeout</h3>
+<p>The simplest approach is for each node to send heartbeats to the others and declare the leader dead if no heartbeat arrives within a fixed timeout. This fails when the timeout is too short: a temporary network hiccup or a garbage collection pause on the leader causes followers to start an election. If multiple followers time out simultaneously, they may split the vote, producing no leader or frequent leader churn. If the timeout is too long, failover takes too long and the system is unavailable for that duration. Finding a fixed timeout that works across all conditions is close to impossible on a cloud network.</p>
+<h3 id="using-a-single-external-lock-service">Using a single external lock service</h3>
+<p>Many teams use a distributed lock service such as etcd, Consul, or ZooKeeper to hold the leader lock. These systems implement consensus internally, but using them as a lock service introduces a new dependency: the lock service itself must be highly available. If it becomes unreachable due to a network partition, the application cannot determine whether the leader is still alive. Lease-based implementations renew a TTL, but if the application cannot renew because of network trouble, it may lose leadership even though it is healthy. Worse, if the lock service is partitioned and a lease expires and is re-acquired without proper fencing, two applications can both believe they hold the lock.</p>
+<h3 id="relying-on-cloud-provider-instance-metadata">Relying on cloud provider instance metadata</h3>
+<p>Some designs use cloud provider APIs, such as instance status checks, to determine whether a node is healthy. These APIs are eventually consistent and can lag behind reality. A node might be marked unhealthy while it is still running and serving traffic, causing unnecessary failover. Conversely, a node might be marked healthy after it has actually failed, delaying failover.</p>
+<h3 id="ignoring-clock-skew">Ignoring clock skew</h3>
+<p>Algorithms that use wall-clock time for lease expiration are vulnerable to clock skew. Even with NTP, clocks can drift by milliseconds to seconds. If a leader's clock is slow, it may believe its lease is still valid while followers with faster clocks believe it has expired. That is a direct path to two leaders acting simultaneously.</p>
+<h2 id="the-approach-that-works-in-practice">The approach that works in practice</h2>
+<p>The most robust approach is to use a consensus protocol such as Raft, which is designed to handle these issues, but to configure it carefully and add safeguards. Raft uses a randomized election timeout to reduce split votes and a term number to ensure only one leader is elected per term. Raft alone does not eliminate unnecessary elections caused by network delay; it makes them less likely to cause inconsistency.</p>
+<p>A practical pattern combines Raft with a lease-based mechanism that is resilient to clock skew. Instead of relying on wall-clock time, use a monotonic clock for timeouts and lease durations. Monotonic clocks are unaffected by NTP adjustments and only move forward. In Go, <code>time.Now()</code> carries a monotonic reading that <code>Sub</code> and <code>Before</code> use, so comparisons are immune to wall-clock jumps. In Java, <code>System.nanoTime()</code> provides a monotonic clock. This ensures that a node's timeout calculations are not skewed by clock adjustments.</p>
+<p>Another key practice is a quorum-based approach, where a leader must maintain contact with a majority of nodes to remain leader. That is what Raft does. A lightweight alternative is a gossip protocol with an adaptive failure detector; the SWIM protocol, as implemented in memberlist, uses indirect probing and suspicion to reduce false positives. SWIM is a membership protocol, not a consensus protocol, so it does not provide strong consistency for leader election. It can detect failures, but a consensus layer is still needed to agree on the leader.</p>
+<p>For many applications the practical approach is a managed or self-hosted coordination service that handles these complexities — etcd, Consul, or ZooKeeper — combined with an application designed to tolerate the loss of that service. That means a fallback: if the coordination service is unreachable, the current leader continues to act as leader for a bounded period (a lease), and followers do not attempt to elect a new leader until that lease expires. This is lease-based leader election with a grace period. The lease duration should be longer than the maximum expected partition duration, but short enough to ensure timely failover. A common starting point is 10–30 seconds, chosen against your recovery time objective rather than copied from a default.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>A minimal lease-based leader election with etcd works like this: each candidate tries to create a lease and then a key attached to that lease. The first to succeed becomes leader. The leader must periodically renew the lease. If it fails to renew, the lease expires and the key is deleted, allowing another candidate to take over. To avoid split brain due to network partitions, the leader should also confirm it can still reach a quorum of etcd nodes before performing critical actions. Because etcd itself uses Raft, a successful lease renewal implies contact with a quorum. The remaining risk is that the leader is partitioned from the etcd cluster but still believes it is leader because its local lease state has not expired. Mitigations: use a short lease TTL and renew frequently, and verify leadership with a linearizable read of the leader key. A serializable read (<code>clientv3.WithSerializable()</code>) may be served by a stale follower and is not sufficient; omitting that option requests a linearizable read, which requires quorum.</p>
+<p>Here is a simplified example in Go:</p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;context&quot;
+    &quot;log&quot;
+    &quot;time&quot;
+
+    clientv3 &quot;go.etcd.io/etcd/client/v3&quot;
+    &quot;go.etcd.io/etcd/client/v3/concurrency&quot;
+)
+
+func main() {
+    cli, err := clientv3.New(clientv3.Config{
+        Endpoints:   []string{&quot;localhost:2379&quot;},
+        DialTimeout: 5 * time.Second,
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer cli.Close()
+
+    session, err := concurrency.NewSession(cli, concurrency.WithTTL(10))
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer session.Close()
+
+    election := concurrency.NewElection(session, &quot;/myapp/leader&quot;)
+    ctx := context.Background()
+
+    // Campaign blocks until this candidate becomes leader or ctx is canceled.
+    if err := election.Campaign(ctx, &quot;candidate1&quot;); err != nil {
+        log.Fatal(err)
+    }
+
+    log.Println(&quot;became leader&quot;)
+
+    // Do leader work here. Periodically verify leadership with a
+    // linearizable read of the leader key.
+    ticker := time.NewTicker(2 * time.Second)
+    defer ticker.Stop()
+    for {
+        select {
+        case &lt;-ticker.C:
+            resp, err := cli.Get(ctx, &quot;/myapp/leader&quot;)
+            if err != nil {
+                log.Println(&quot;lost leadership:&quot;, err)
+                return
+            }
+            if len(resp.Kvs) == 0 || string(resp.Kvs[0].Value) != &quot;candidate1&quot; {
+                log.Println(&quot;lost leadership: another candidate is leader&quot;)
+                return
+            }
+        case &lt;-session.Done():
+            log.Println(&quot;session expired, lost leadership&quot;)
+            return
+        }
+    }
+}
+</code></pre>
+<p>The <code>session</code> has a TTL of 10 seconds and sends keepalives automatically. If the session expires, <code>session.Done()</code> is closed and the leader must stop acting as leader. The periodic linearizable read of the leader key is the safeguard against split brain: it catches the case where the leader cannot reach etcd but its local session has not yet timed out.</p>
+<p>Note that the value stored under the election key is not necessarily the raw candidate name; the concurrency package stores its own encoded value. In production, compare against the value returned by <code>election.Leader(ctx)</code> or use the package's own leadership checks rather than hard-coding a string comparison. The example above shows the shape of the check; verify the exact encoding against the client library version in use.</p>
+<h2 id="what-outcomes-to-expect-and-their-limits">What outcomes to expect, and their limits</h2>
+<p>With a properly configured lease-based election, failover occurs within the lease TTL plus the time for a new leader to campaign. With a 10-second TTL, that is roughly 10–15 seconds, and during that window the system may be unavailable for writes. If an application requires sub-second failover, a different approach is needed, such as primary-backup replication with synchronous replication and a hot standby, which carries its own tradeoffs.</p>
+<p>The lease-based approach also depends on the coordination service being available. If the etcd cluster loses quorum, no new leader can be elected, and the existing leader loses its lease after the TTL. Quorum loss in the coordination service therefore becomes a complete outage of leader election. Some teams layer a local leader election within a partition on top of a global election across partitions with reconciliation; this is complex and rarely needed.</p>
+<p>The limit is fundamental: strong consistency and high availability cannot both hold during a network partition. A choice is required. Most systems choose consistency (CP) for leader election, accepting that the minority partition cannot elect a leader. That is the correct choice for most applications.</p>
+<h2 id="what-to-watch-out-for">What to watch out for</h2>
+<ul>
+<li><strong>Clock skew</strong>: Use monotonic clocks for timeouts. Ensure NTP is configured and monitored. In Kubernetes, node clocks are usually synchronized; on VMs, check <code>chronyd</code> or <code>systemd-timesyncd</code>.</li>
+<li><strong>Network latency variability</strong>: Set timeouts from observed p99 latency, not the average. etcd's internal election timeout is randomized between 1000 and 2000 ms by default; tuning etcd's internals is rarely necessary, so tune the application's lease TTL instead.</li>
+<li><strong>GC pauses</strong>: A long GC pause on the leader can cause missed keepalives. Choose a lease TTL longer than the maximum GC pause. For JVM applications, monitor GC pauses and size the TTL accordingly. Go pauses are usually sub-millisecond but should still be considered.</li>
+<li><strong>Fencing tokens</strong>: Even with a lease, there is a window where an old leader may still be acting while a new leader has been elected. Use fencing tokens — a monotonically increasing number — so downstream systems reject requests from an old leader. For example, include the token in database writes and have the database reject any write with a token lower than the highest seen.</li>
+<li><strong>Monitoring</strong>: Track leader changes, election duration, and lease renewal failures. Alert on frequent leader changes, for example more than one per hour, as it indicates instability.</li>
+</ul>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Leader election is a distributed consensus problem, and consensus is hard. Cloud networks introduce variability that breaks simplistic assumptions. The key principle is to design for failure: assume partitions will happen, clocks will skew, and messages will be delayed. Use proven algorithms such as Raft and battle-tested implementations such as etcd or Consul rather than writing your own. Even then, understand the failure modes and add safeguards such as fencing tokens and monotonic clocks. In distributed systems the network is not reliable, and any algorithm that assumes otherwise will eventually fail in subtle ways.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Audit the current leader election mechanism. If it uses a fixed heartbeat timeout, replace it with a lease-based approach backed by a coordination service. If etcd or Consul is already in use, check that the lease TTL suits the network conditions and that leadership is verified with linearizable reads. Add fencing tokens to writes to prevent split brain. Monitor leader changes; frequent changes point to network latency or GC pauses.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="why-does-the-leader-keep-changing-every-few-minutes">Why does the leader keep changing every few minutes?</h3>
+<p>Frequent leader changes usually mean the lease is expiring prematurely. Common causes are latency spikes causing missed keepalives, GC pauses on the leader, or clock skew. Check the coordination service logs for lease expiration events and correlate them with network and GC metrics. Increasing the lease TTL can help, but fix the underlying cause first.</p>
+<h3 id="can-a-relational-database-serve-as-the-lock-service-for-leader-election">Can a relational database serve as the lock service for leader election?</h3>
+<p>It is possible but risky. Databases are not designed for high-frequency lease renewals, and they may not provide linearizable reads under all isolation levels. For example, PostgreSQL's default Read Committed isolation does not prevent phantom reads, and <code>SELECT ... FOR UPDATE</code> must be used carefully. If the database is partitioned, two leaders can result. A dedicated coordination service is a better fit.</p>
+<h3 id="how-do-you-test-leader-election-under-network-partitions">How do you test leader election under network partitions?</h3>
+<p>Use <code>tc</code> (traffic control) on Linux to introduce delays and packet loss, or a chaos engineering tool to simulate partitions. Run a cluster of three or five nodes and partition the leader from the followers. Verify that a new leader is elected and that the old leader stops acting as leader within the lease TTL. Also test clock skew by adjusting the system clock on one node in a test environment and observing the behavior.</p>
+<h3 id="what-is-a-fencing-token-and-why-is-it-needed">What is a fencing token and why is it needed?</h3>
+<p>A fencing token is a monotonically increasing number included with every write request. When a new leader is elected, it increments the token. Downstream systems reject any write with a token lower than the highest seen. This prevents an old leader that is still running, for example after a long GC pause, from writing after a new leader has taken over. Without fencing tokens, split brain is possible even with lease-based election.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the leader election configuration for one service — the etcd lease TTL, the Consul session TTL, or the application's own lease setting — and record the current value alongside the maximum GC pause and p99 network latency you can observe for that service. If the TTL is shorter than the sum of those two figures, raise it to at least that sum and note the new failover window it implies.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/">7 patterns for systems that won’t die when networks</a></li>
+<li><a href="https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
+<li><a href="https://kubaik.github.io/webhook-delivery-that-survives-outages/">Webhook delivery that survives outages</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
+                        <h3>Cost tools fail when agents scale autonomously</h3>
+                        <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
+                        <span class="related-meta">11 min read · 9 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/hybrid-cloud-routing-cost-speed-balance-for-sea/">
+                        <h3>Hybrid Cloud Routing: Cost-Speed Balance for SEA</h3>
+                        <p>How SEA teams route latency-sensitive traffic locally and bursty workloads to the cloud, with Nginx fallback config, failure modes, and cost checks.</p>
+                        <span class="related-meta">13 min read · 4 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-your-routing-layer-will-collapse-at-scale/">
+                        <h3>Why your routing layer will collapse at scale</h3>
+                        <p>How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+                        <span class="related-meta">12 min read · 4 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

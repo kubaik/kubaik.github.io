@@ -138,5 +138,10 @@
   "Token attribution models that make AI spend visible to product and finance teams",
   "Zig, Rust, and Go for systems programming: a practical 2026 comparison",
   "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
-  "The evaluation gap that let a subtle model behavior change slip into production"
+  "The evaluation gap that let a subtle model behavior change slip into production",
+  "Offline-first + eventual consistency patterns that actually work for mobile money apps",
+  "The cost and reliability tradeoffs of running AI features for users paying in local currency",
+  "The MCP server security mistake that could have exposed internal tools",
+  "Feature flag systems that don't turn into unmanageable spaghetti after a year",
+  "Why leader election still breaks in subtle ways on modern cloud networks"
 ]

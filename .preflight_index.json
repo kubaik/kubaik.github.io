@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-16T16:20:22.583347",
+  "built_at": "2026-10-17T03:37:19.179051",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5555,6 +5555,11 @@
       "slug": "silent-model-drift-catch-it-before-prod",
       "title": "Silent model drift: catch it before prod",
       "summary": "Opinions on evaluation gap tend to change fast after watching it fail somewhere it wasn't supposed to. It's a one-line fix once you know where to look, and expensive until then. This covers the fix, the cost of not knowing sooner, and what to monitor. The error and why it's confusing You deploy a ne"
+    },
+    {
+      "slug": "why-leader-election-fails-on-cloud-networks",
+      "title": "Why leader election fails on cloud networks",
+      "summary": "The vendor docs cover the setup and go quiet on the failure modes. Inherited offlinefirst eventual setups tend to come with no explanation, just a working system and a long reverse-engineering session. Here's the fuller picture, with the tradeoffs left in. Leader election looks simple on paper: a se"
     }
   ]
 }

@@ -1,4 +1,4 @@
-❌ Internal link audit: 408 broken link(s) found across 409 posts checked.
+❌ Internal link audit: 409 broken link(s) found across 410 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -349,6 +349,7 @@ Source Post                              Anchor Text                    Missing 
   /ship-to-nairobi-users-starlink-latency-guide-2026 AI content policy              /ai-content-policy/
   /show-real-work-not-ai-clones           AI content policy              /ai-content-policy/
   /signals-5-state-tricks-that-broke-my-app AI content policy              /ai-content-policy/
+  /silent-model-drift-catch-it-before-prod AI content policy              /ai-content-policy/
   /skip-m-pesa-build-one-api-for-3-african-markets AI content policy              /ai-content-policy/
   /slos-for-agentic-features-beyond-latency AI content policy              /ai-content-policy/
   /soft-deletes-fail-what-breaks-first    AI content policy              /ai-content-policy/

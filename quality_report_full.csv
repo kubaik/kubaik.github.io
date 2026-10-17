@@ -185,7 +185,7 @@ serve-4g-as-baseline-apps-in-2026,95,2749,Serve 4G-as-baseline apps in 2026,2026
 ship-a-solo-project-pipeline-under-20month,95,3164,A Solo-Project Deploy Pipeline That Stays Under $20/Month,2026-06-15T23:01:02.436611,1,no FAQ section
 ship-to-nairobi-users-starlink-latency-guide-2026,95,2788,Ship to Nairobi users: Starlink latency guide 2026,2026-06-25T23:11:40.027660,1,no FAQ section
 signals-5-state-tricks-that-broke-my-app,95,2611,Signals: derived state without the performance tax,2026-07-03T04:50:42.390689,1,no markdown table
-silent-model-drift-catch-it-before-prod,95,2667,Silent model drift: catch it before prod,2026-10-16T16:20:19.864864,1,no markdown table
+silent-model-drift-catch-it-before-prod,95,2542,Silent model drift: catch it before prod,2026-10-16T16:20:19.864864,1,no markdown table
 skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one API for 3 African markets,2026-06-14T17:14:09.679850,1,no markdown table
 slos-for-agentic-features-beyond-latency,95,2936,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2581,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
@@ -201,6 +201,7 @@ vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forev
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
 websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
 why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Reward Keywords Over Correct Design,2026-06-14T17:09:29.558838,1,no FAQ section
+why-leader-election-fails-on-cloud-networks,95,2857,Why leader election fails on cloud networks,2026-10-17T03:37:16.451764,1,no markdown table
 15-agents-blew-up-our-logs-why-we-pinned-models-logs,100,2167,Structured Logs and Pinned Versions for Multi-Agent Systems,2026-07-04T10:14:14.067039,0,
 3-ai-coders-ranked-cursor-windsurf-claude-code-in,100,3251,"3 AI coders ranked: Cursor, Windsurf, Claude Code in",2026-06-12T11:36:40.871447,0,
 3-skills-to-outrun-ai-salary-cuts,100,3138,3 skills to outrun AI salary cuts,2026-06-30T10:13:26.149608,0,
