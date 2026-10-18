@@ -282,5 +282,37 @@
   "progressive-web-apps-what-browser-apis-finally-fixed": {
     "deleted_at": "2026-09-21T14:38:51.238087",
     "reason": "missing post.json (no source of truth)"
+  },
+  "build-dev-platform-for-2kmonth": {
+    "deleted_at": "2026-10-18T16:58:12.290674",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "claude-code-after-365-days-what-actually-works": {
+    "deleted_at": "2026-10-18T16:58:12.291241",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "claude-code-review-wins-and-blind-spots": {
+    "deleted_at": "2026-10-18T16:58:12.291850",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "internal-developer-platform-adoption-traps": {
+    "deleted_at": "2026-10-18T16:58:12.292637",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-costs-fine-tune-vs-route-vs-bigger-model": {
+    "deleted_at": "2026-10-18T16:58:12.293291",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-drift-before-users-complain-catch-it-early": {
+    "deleted_at": "2026-10-18T16:58:12.293836",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "route-fine-tune-or-scale-pick-right": {
+    "deleted_at": "2026-10-18T16:58:12.294527",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "silent-model-drift-catch-it-before-prod": {
+    "deleted_at": "2026-10-18T16:58:12.294850",
+    "reason": "missing post.json (no source of truth)"
   }
 }
