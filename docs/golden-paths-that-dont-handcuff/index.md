@@ -280,3 +280,28 @@ That is the eject command's job, and it should be cheap and boring. If leaving i
 ## Where to go from here
 
 The highest-leverage thing you can do in the next 30 minutes is open the root of your current project and check whether it contains a marker file recording which version of your scaffold it was created from. If it does not, create one now — a plain `.scaffold-version` file containing a semver string is enough to start. Then add a `grep -r "scaffold-name"` check to CI on your ejected output. That single check is what keeps the path from becoming handcuffs.
+
+## Related reading
+
+- [Golden paths become load-bearing walls](https://kubaik.github.io/golden-paths-become-load-bearing-walls/)
+- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [A Solo-Project Deploy Pipeline That Stays Under $20/Month](https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/)
+
+## Official documentation
+
+- [PostgreSQL documentation](https://www.postgresql.org/docs/)
+- [Docker documentation](https://docs.docker.com/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** September 2026
+
+<!-- enhanced:v1 -->

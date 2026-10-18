@@ -1,14 +1,24 @@
-import json
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
 
 
 class BlogPost:
-    def __init__(self, title, content, slug, tags, meta_description, featured_image,
-                 created_at, updated_at, seo_keywords, affiliate_links=None,
-                 monetization_data=None, twitter_hashtags=None):
+    def __init__(
+        self,
+        title,
+        content,
+        slug,
+        tags,
+        meta_description,
+        featured_image,
+        created_at,
+        updated_at,
+        seo_keywords,
+        affiliate_links=None,
+        monetization_data=None,
+        twitter_hashtags=None,
+    ):
         self.title = title
         self.content = content
         self.slug = slug
@@ -20,97 +30,100 @@ class BlogPost:
         self.seo_keywords = seo_keywords or []
         self.affiliate_links = affiliate_links or []
         self.monetization_data = monetization_data or {}
-
-        # Social media hashtags — always stored as a space-separated "#Tag" string
         self.twitter_hashtags = twitter_hashtags or ""
 
     def to_dict(self):
         return {
-            'title': self.title,
-            'content': self.content,
-            'slug': self.slug,
-            'tags': self.tags,
-            'meta_description': self.meta_description,
-            'featured_image': self.featured_image,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
-            'seo_keywords': self.seo_keywords,
-            'affiliate_links': self.affiliate_links,
-            'monetization_data': self.monetization_data,
-            'twitter_hashtags': self.twitter_hashtags,
+            k: getattr(self, k)
+            for k in (
+                "title",
+                "content",
+                "slug",
+                "tags",
+                "meta_description",
+                "featured_image",
+                "created_at",
+                "updated_at",
+                "seo_keywords",
+                "affiliate_links",
+                "monetization_data",
+                "twitter_hashtags",
+            )
         }
 
     @classmethod
     def from_dict(cls, data):
         return cls(
-            title=data.get('title', ''),
-            content=data.get('content', ''),
-            slug=data.get('slug', ''),
-            tags=data.get('tags', []),
-            meta_description=data.get('meta_description', ''),
-            featured_image=data.get('featured_image', ''),
-            created_at=data.get('created_at', ''),
-            updated_at=data.get('updated_at', ''),
-            seo_keywords=data.get('seo_keywords', []),
-            affiliate_links=data.get('affiliate_links', []),
-            monetization_data=data.get('monetization_data', {}),
-            twitter_hashtags=data.get('twitter_hashtags', ''),
+            title=data.get("title", ""),
+            content=data.get("content", ""),
+            slug=data.get("slug", ""),
+            tags=data.get("tags", []),
+            meta_description=data.get("meta_description", ""),
+            featured_image=data.get("featured_image", ""),
+            created_at=data.get("created_at", ""),
+            updated_at=data.get("updated_at", ""),
+            seo_keywords=data.get("seo_keywords", []),
+            affiliate_links=data.get("affiliate_links", []),
+            monetization_data=data.get("monetization_data", {}),
+            twitter_hashtags=data.get("twitter_hashtags", ""),
         )
 
     @classmethod
-    def from_markdown_file(cls, md_file_path: Path, slug: str = None) -> 'BlogPost':
-        """Create a BlogPost from a markdown file when post.json is missing."""
-        with open(md_file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
+    def from_markdown_file(cls, md_file_path: Path, slug: str = None) -> "BlogPost":
+        """Recover a post from markdown.
 
-        lines = content.split('\n')
-        title = "Untitled Post"
-        content_without_title = content
-
-        if lines and lines[0].startswith('# '):
+        FIX 1: created_at/updated_at were datetime.now(). That (a) made every
+        recovered post count toward VelocityController.today_count(), (b)
+        reset the corpus's apparent domain age, and (c) stamped old content
+        as freshly updated — a fake-freshness signal. Use the file's mtime.
+        FIX 2: meta description is now plain text (markdown/code/images
+        stripped) and never taken from a code fence.
+        """
+        path = Path(md_file_path)
+        content = path.read_text(encoding="utf-8")
+        lines = content.split("\n")
+        title, body = "Untitled Post", content
+        if lines and lines[0].startswith("# "):
             title = lines[0][2:].strip()
-            content_without_title = '\n'.join(lines[1:]).strip()
-
-        if not slug:
-            slug = cls._create_slug_static(title)
-
-        current_time = datetime.now().isoformat()
-
-        # FIX: this used to hardcode meta_description=f"Blog post about {title}"
-        # on every recovered post. Identical templated text across many pages
-        # is a duplicate-metadata pattern AdSense/Search treat as a low-value
-        # signal — worse the more posts hit this fallback. Derive something
-        # extractive from the actual first paragraph instead.
-        first_paragraph = next(
-            (p.strip()
-             for p in content_without_title.split('\n\n') if p.strip()), ""
-        )
-        meta_description = (first_paragraph[:157].rsplit(' ', 1)[0] + '...') \
-            if len(first_paragraph) > 160 else first_paragraph
-        if not meta_description:
-            # last-resort only, not the default path
-            meta_description = f"Blog post about {title}"
+            body = "\n".join(lines[1:]).strip()
+        slug = slug or cls._create_slug_static(title)
+        ts = datetime.fromtimestamp(path.stat().st_mtime).isoformat()
 
         return cls(
             title=title,
-            content=content_without_title,
+            content=body,
             slug=slug,
-            tags=['recovered', 'blog'],
-            meta_description=meta_description,
+            tags=["recovered", "blog"],
+            meta_description=cls._meta_from_body(body, title),
             featured_image=f"/static/images/{slug}.jpg",
-            created_at=current_time,
-            updated_at=current_time,
+            created_at=ts,
+            updated_at=ts,
             seo_keywords=[],
-            affiliate_links=[],
-            monetization_data={"ad_slots": 3, "affiliate_count": 0,
-                               "review_status": "recovered_from_markdown"},
-            twitter_hashtags="",
+            monetization_data={
+                "ad_slots": 3,
+                "affiliate_count": 0,
+                "review_status": "recovered_from_markdown",
+                "needs_quality_review": True,
+            },
         )
 
     @staticmethod
+    def _meta_from_body(body: str, title: str) -> str:
+        text = re.sub(r"```.*?```", "", body, flags=re.S)
+        for para in text.split("\n\n"):
+            p = para.strip()
+            if not p or p.startswith(("#", ">", "|", "!", "<", "-", "*", "1.")):
+                continue
+            p = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", p)
+            p = re.sub(r"[*_`]", "", p)
+            p = re.sub(r"\s+", " ", p).strip()
+            if len(p) < 50:
+                continue
+            return p if len(p) <= 160 else p[:157].rsplit(" ", 1)[0] + "..."
+        return f"Blog post about {title}"
+
+    @staticmethod
     def _create_slug_static(title: str) -> str:
-        slug = title.lower()
-        slug = re.sub(r'[^\w\s-]', '', slug)
-        slug = re.sub(r'[\s_-]+', '-', slug)
-        slug = slug.strip('-')
+        slug = re.sub(r"[^\w\s-]", "", title.lower())
+        slug = re.sub(r"[\s_-]+", "-", slug).strip("-")
         return slug[:50]

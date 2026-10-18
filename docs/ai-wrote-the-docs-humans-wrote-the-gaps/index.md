@@ -395,3 +395,28 @@ Add a `deprecation_date` to the limits file, and add a CI check that fails if an
 
 Open your repository, create `docs/edge-cases.md`, and write the first three constraints you know are true but that are not in your generated documentation. Pick ones that are testable: a status code, a rate limit, a time window. Then add a single CI step that asserts one of them against a running instance of the service. The goal is not completeness — it is to make the first gap visible and enforced, so the next endpoint you add has a place to record the things a model will never guess.
 ===END===
+
+## Related reading
+
+- [Claude Code after 365 days: what actually works](https://kubaik.github.io/claude-code-after-a-year-daily-wins/)
+- [7 code review traps when AI writes half your code](https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/)
+- [Who owns AI-generated code?](https://kubaik.github.io/who-owns-ai-generated-code/)
+
+## Official documentation
+
+- [FastAPI documentation](https://fastapi.tiangolo.com/)
+- [gRPC documentation](https://grpc.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->

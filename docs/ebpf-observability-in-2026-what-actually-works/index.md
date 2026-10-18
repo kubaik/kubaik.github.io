@@ -482,3 +482,29 @@ sudo bpftrace -e 'kprobe:tcp_retransmit_skb { @start[tid] = nsecs; } kretprobe:t
 ```
 
 Run it for 60 seconds under your normal workload, then compare the histogram against the same histogram collected with the kprobe disabled. If the difference in the p99 bucket is larger than your error budget, do not deploy the kprobe in production. If it is smaller, you have a measured baseline to justify the deployment.
+
+## Related reading
+
+- [Kernel and EBS Tuning That Cuts EC2 CPU Overhead](https://kubaik.github.io/drop-ec2-bills-70-without-code/)
+- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [Remote salary: negotiate without sounding cheap](https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/)
+
+## Official documentation
+
+- [Kubernetes documentation](https://kubernetes.io/docs/home/)
+- [Prometheus documentation](https://prometheus.io/docs/)
+- [ebpf.io: What is eBPF?](https://ebpf.io/what-is-ebpf/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** August 2026
+
+<!-- enhanced:v1 -->

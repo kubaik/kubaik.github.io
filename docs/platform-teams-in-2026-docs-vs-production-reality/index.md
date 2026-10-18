@@ -471,3 +471,28 @@ kubectl get ns -o json | \
 ```
 
 The output is your starting backlog. The storage class tells you whether new volumes are silently inheriting a legacy default. The unlabeled-limits list tells you which workloads can become noisy neighbors. The quota list tells you which namespaces can consume unbounded cluster resources. Fix the storage class default first — it is a one-line change with the widest blast radius.
+
+## Related reading
+
+- [Stop guessing tech stacks: validate tools in 2 hours](https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/)
+- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [AI wrote the docs — humans wrote the gaps](https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/)
+
+## Official documentation
+
+- [Kubernetes documentation](https://kubernetes.io/docs/home/)
+- [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

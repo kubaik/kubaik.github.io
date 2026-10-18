@@ -154,3 +154,28 @@ In those cases, measure latency and cost, sample outputs manually, and defer the
 ## What to do in the next 30 minutes
 
 Open the table or log store where LLM responses are recorded. If token counts are not stored per request, add two columns — `prompt_tokens` and `completion_tokens` — and populate them from the API response for new requests. Then run a query over the last 24 hours that sums those columns and multiplies by the per-token price for the model in use. Compare the result to the expected daily budget. If the figure is higher than expected, the prompt size is the first thing to inspect, because prompt tokens are paid on every call and are the easiest cost to reduce.
+
+## Related reading
+
+- [LLM evals: skip the hype, track these 4 metrics](https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/)
+- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+- [LLM metrics that stop wasting time](https://kubaik.github.io/llm-metrics-that-stop-wasting-time/)
+
+## Official documentation
+
+- [OpenTelemetry documentation](https://opentelemetry.io/docs/)
+- [Pydantic documentation](https://docs.pydantic.dev/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

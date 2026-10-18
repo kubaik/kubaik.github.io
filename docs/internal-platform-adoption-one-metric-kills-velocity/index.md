@@ -418,3 +418,30 @@ curl -s -o /dev/null -w '%{time_total}\n' http://localhost:7007/api/latency/defa
 ```
 
 If the endpoint returns `null`, the annotation is missing or the watch is not running. If the round trip exceeds roughly 200 ms, the problem is in your serving path, not in Kubernetes. That single number — the response time of the endpoint that answers "how long will this take?" — is the one to track first.
+
+## Related reading
+
+- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [Designing AI-Assisted Sales for Developer Tools](https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/)
+- [LLM metrics that stop wasting time](https://kubaik.github.io/llm-metrics-that-stop-wasting-time/)
+
+## Official documentation
+
+- [Redis documentation](https://redis.io/docs/)
+- [Kubernetes documentation](https://kubernetes.io/docs/home/)
+- [Prometheus documentation](https://prometheus.io/docs/)
+- [Backstage documentation](https://backstage.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->

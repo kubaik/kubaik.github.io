@@ -1,4 +1,4 @@
-# AI codebase onboarding: 2 paths tested
+# AI codebase onboarding: 2 paths compared
 
 ## The problem this comparison addresses
 
@@ -172,3 +172,27 @@ Yes, and this is often the practical answer. Use guided generation for the first
 ## One action for the next 30 minutes
 
 Pick the largest generated file in your repository. Run `git log --format='%ae' -- <path> | sort | uniq -c | sort -rn` on it to see who touched it most, then open one of those commits and read the diff alongside the current file. If you cannot explain why the code looks the way it does, that gap is exactly what a new hire will hit on day one — write it down as the first entry in an onboarding note.
+
+## Related reading
+
+- [AI codebases: two onboarding paths that actually work](https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/)
+- [Keeping AI-Generated Code from Rotting Your Repository](https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/)
+- [Choosing a JavaScript Test Stack: Playwright and Vitest](https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/)
+
+## Official documentation
+
+- [Go documentation](https://go.dev/doc/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

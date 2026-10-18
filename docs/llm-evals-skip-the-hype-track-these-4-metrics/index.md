@@ -255,3 +255,27 @@ python -m pytest tests/test_validators.py -v
 ```
 
 If any validator fails, fix it before merging. That single step catches a large share of downstream incidents before they reach users.
+
+## Related reading
+
+- [LLM output metrics that actually move the needle](https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/)
+- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+- [LLM metrics that stop wasting time](https://kubaik.github.io/llm-metrics-that-stop-wasting-time/)
+
+## Official documentation
+
+- [Prometheus documentation](https://prometheus.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

@@ -228,3 +228,27 @@ The fourth number should be zero. If it is not, the classifier or the breaker ex
 ## One thing to do in the next 30 minutes
 
 Open your largest Prometheus rule file, add a recording rule that computes the ratio of the current value to a 30-day average for one high-volume metric, and attach a `severity` label based on that ratio. Validate it with `promtool check rules rules/*.yml`, deploy to staging, and watch the new label appear in your alerting UI. You will immediately see which existing alerts would have been classified as spikes — and you will have the beginning of the data needed to justify suppressing them.
+
+## Related reading
+
+- [2026 alert triage: when Opsgenie slept for you](https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/)
+- [Designing an AI Alert Triage Layer That Reduces Pages](https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/)
+- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+
+## Official documentation
+
+- [Prometheus documentation](https://prometheus.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->

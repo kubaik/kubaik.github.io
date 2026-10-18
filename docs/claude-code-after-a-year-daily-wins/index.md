@@ -421,3 +421,27 @@ Not automatically. The gate proves the tests pass; it does not prove the change 
 ## Do this next
 
 Pick one real Dependabot alert in a repository you own, set the `alert` object at the bottom of `patcher.py` to match it, and run the script once. Watch which step fails first — the diff apply, the container start, or the test command. That single run tells you more about your repository's readiness for agentic patching than any amount of reading, and it takes about thirty minutes including the container pull.
+
+## Related reading
+
+- [Claude Code after 365 days: what actually works](https://kubaik.github.io/claude-code-after-a-year-daily-wins/)
+- [PR checklists are dead: AI agents do reviews now](https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/)
+- [agent code review gap nobody admits](https://kubaik.github.io/agent-code-review-gap-nobody-admits/)
+
+## Official documentation
+
+- [Docker documentation](https://docs.docker.com/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

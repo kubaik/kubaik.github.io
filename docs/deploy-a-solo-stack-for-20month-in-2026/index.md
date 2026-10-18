@@ -1,4 +1,4 @@
-# Deploy a solo stack for under $20/month
+# Solo developer deployment: cost-conscious managed services
 
 Most deployment tutorials stop at the happy path. What follows is the less glamorous part: a pipeline that keeps running when you are the only person on call, built from boring, well-documented services with published prices.
 
@@ -375,3 +375,29 @@ No. Any CI system that can build a container and call the AWS CLI will work. The
 ## Do this in the next 30 minutes
 
 Open the AWS Billing console, create a budget with an alert threshold you would be comfortable losing, and confirm the alert email address is one you actually read. Then check whether your current database instance has automated backups enabled and a retention window longer than one day. Those two settings prevent the majority of expensive solo-project incidents, and neither takes more than a few minutes to verify.
+
+## Related reading
+
+- [AWS costs for Nairobi SaaS: 2026 bill split](https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/)
+- [7 ways to earn extra in 2026 without shipping SaaS](https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/)
+- [ARM in production: Graviton4 vs Ampere in 2026](https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/)
+
+## Official documentation
+
+- [PostgreSQL documentation](https://www.postgresql.org/docs/)
+- [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->
+

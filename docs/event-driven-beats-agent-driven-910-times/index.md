@@ -1,4 +1,4 @@
-# Event-driven beats agent-driven 9/10 times
+# Event-driven systems avoid agent-driven contention
 
 ## The problem in one sentence
 
@@ -326,3 +326,32 @@ grep -rEn 'cron|setInterval|schedule\.|retry_table|poll_queue' \
 ```
 
 For each match, ask the single question that separates the two patterns: *does this code decide what to do next based on state it maintains itself?* If the answer is yes, you have found an agent. Pick the highest-traffic one and convert it to an event source mapping with a redrive policy before your next deploy.
+
+## Related reading
+
+- [Always-On vs On-Demand Agents: Real Cost Trade-offs](https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/)
+- [Agent SLOs: measure what agents actually do](https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/)
+- [Built a multi-agent system without LangGraph](https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/)
+
+## Official documentation
+
+- [PostgreSQL documentation](https://www.postgresql.org/docs/)
+- [Redis documentation](https://redis.io/docs/)
+- [Kubernetes documentation](https://kubernetes.io/docs/home/)
+- [Apache Kafka documentation](https://kafka.apache.org/documentation/)
+- [Argo CD documentation](https://argo-cd.readthedocs.io/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->
+

@@ -127,3 +127,27 @@ These can help with governance, analytics, and caching at scale, but they add a 
 
 Open the file that defines your API's contract — an OpenAPI document, a GraphQL schema, or the router definition in your TypeScript server — and count two things: the number of distinct operations, and the number of consumers you do not control. If the second number is zero and the first is under twenty, write down the three dimensions from the table above that matter most to your team, assign weights, and score the three styles. The argument about weights will tell you more about which style fits than any general recommendation can.
 </output>
+
+## Related reading
+
+- [Agent access for non-AI engineers](https://kubaik.github.io/agent-access-for-non-ai-engineers/)
+- [RAG on legacy systems: vector DB vs. full-text SQL](https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/)
+- [Route, fine-tune, or scale: pick right](https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/)
+
+## Official documentation
+
+- [Stripe: idempotent requests](https://docs.stripe.com/api/idempotent_requests)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

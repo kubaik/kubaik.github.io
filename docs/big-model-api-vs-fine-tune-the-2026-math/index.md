@@ -328,3 +328,23 @@ req, tok_in, tok_out, lat/req, fail}' requests.csv
 ```
 
 Substitute your own column layout. The output gives you the numerator for the cost model. Divide your total monthly spend by the number of successful requests to get the effective cost, then compare that against the fine-tuned path using the checklist above. That single number will tell you whether the rest of this article applies to you.
+
+## Related reading
+
+- [Model router: keep it simple, keep it local](https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/)
+- [Route, fine-tune, or scale: pick right](https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/)
+- [LLM costs: fine-tune vs route vs bigger model](https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->

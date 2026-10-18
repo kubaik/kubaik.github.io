@@ -189,3 +189,23 @@ They are a rough proxy, and they fail entirely if your assistant does not record
 ## Next 30 minutes
 
 Open your repository and add a hypothesis section to the pull request template, then write the hypothesis for the next feature you were about to generate code for. If you cannot write a sentence that names a metric, a segment, and a time window, do not start the feature — schedule a fifteen-minute user conversation instead.
+
+## Related reading
+
+- [AI-proof your mid-level salary](https://kubaik.github.io/ai-proof-your-mid-level-salary/)
+- [3 skills to outrun AI salary cuts](https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/)
+- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

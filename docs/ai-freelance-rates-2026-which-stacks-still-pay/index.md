@@ -279,3 +279,28 @@ If any answer is "we will check later", that is the item most likely to become t
 ## What to do in the next 30 minutes
 
 Pick one event-driven endpoint in a current project and write a test that sends the same event payload twice, then assert that the number of side effects after the second delivery equals the number after the first. If the test fails, the fix is a unique constraint on the event ID and an `ON CONFLICT DO NOTHING` insert — and you have just found, in half an hour, a class of bug that otherwise surfaces as duplicate charges.
+
+## Related reading
+
+- [7 code review traps when AI writes half your code](https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/)
+- [Claude Code after 365 days: what actually works](https://kubaik.github.io/claude-code-after-a-year-daily-wins/)
+- [AI Code Generation: Failure Modes and Guardrails](https://kubaik.github.io/ai-reshaped-my-engineering-principles/)
+
+## Official documentation
+
+- [PostgreSQL documentation](https://www.postgresql.org/docs/)
+- [Stripe: idempotent requests](https://docs.stripe.com/api/idempotent_requests)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

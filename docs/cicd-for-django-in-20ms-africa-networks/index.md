@@ -332,3 +332,28 @@ A worked sizing example makes the arithmetic concrete. Suppose a base image is 5
 ## A 30-minute action
 
 Open your CI workflow and find every network operation that has no timeout: `docker pull`, `docker push`, `pip install`, `curl` in a health check. Add an explicit bound to each — `--max-time` for curl, `--timeout` for pip, and a retry loop with a fixed sleep for pushes. Then run one build and record the wall-clock time and the bytes transferred from `/proc/net/dev`. Those two numbers are the baseline against which every later change is judged.
+
+## Related reading
+
+- [Build dev platform for $2k/month](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [Designing APIs for High-Latency Satellite Links](https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/)
+- [ARM in production: Graviton4 vs Ampere in 2026](https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/)
+
+## Official documentation
+
+- [Docker documentation](https://docs.docker.com/)
+- [Prometheus documentation](https://prometheus.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->

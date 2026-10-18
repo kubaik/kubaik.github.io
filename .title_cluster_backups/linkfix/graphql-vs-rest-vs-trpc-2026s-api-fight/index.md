@@ -1,0 +1,129 @@
+# GraphQL vs REST vs tRPC: 2026’s API fight
+
+The same API design mistake shows up in a lot of production codebases: a team picks an API style because it is fashionable, then discovers eighteen months later that the style fights the workload. The mistake is hard to spot early because all three mainstream options — GraphQL, REST, and tRPC — work fine on a demo. They diverge under caching pressure, schema churn, and on-call debugging.
+
+This article compares the three on the dimensions that actually decide the outcome, describes the failure mode each one is prone to, and gives a scoring framework you can apply to a real service in about half an hour.
+
+## What each option actually is
+
+Before comparing, it helps to be precise about the mechanism, because most arguments about API style are really arguments about different mechanisms.
+
+**GraphQL** exposes a single endpoint that accepts a query document. The server publishes a typed schema written in the Schema Definition Language (SDL); clients send queries naming exactly the fields they want; the server executes those queries against resolvers, which are functions that fetch each field. The execution model is a tree walk: the engine resolves a root field, then resolves the fields selected under it, and so on. That tree walk is the source of both GraphQL's flexibility and its characteristic performance problems, because a naive resolver per field produces one database round trip per field — the N+1 problem.
+
+**REST** exposes a set of resources addressed by URL, manipulated with HTTP verbs, and described by status codes. There is no query language and no server-side execution planner. A response shape is fixed by the endpoint. Contracts are usually documented with a schema description format such as OpenAPI, which tooling can use to generate clients, validate requests, and diff versions.
+
+**tRPC** is a TypeScript library that lets a client call server procedures with full type inference and no code generation step. You define procedures on the server, export a type, and the client imports that type. The transport is HTTP under the hood, but the contract is the TypeScript type system rather than a schema document. This only works when both sides are TypeScript and share a build, which is why it is almost exclusively a monorepo tool.
+
+## GraphQL: where it earns its keep
+
+GraphQL's genuine advantage is decoupling client iteration from server deploys. When a client wants a slightly different shape — three fields instead of five, or a nested object the previous screen did not need — it changes its query. No server change, no new endpoint, no version negotiation.
+
+That matters most when the consumers of an API are numerous and independent. A public API with unknown clients, or an organisation where several product teams each own a frontend against a shared backend, benefits from that decoupling. The second genuine advantage is aggregation: a single GraphQL layer can fan out to several backend services and return one coherent response, which removes a class of client-side orchestration code.
+
+The costs are equally real.
+
+**N+1 resolution.** Because resolvers are per-field, a query for a list of 50 orders with a customer field on each order will call the customer resolver 50 times unless you batch. The standard remedy is a batching loader that collects keys within a tick and issues one query. This is not optional at scale; it is the difference between 2 database queries and 51.
+
+**Query cost is attacker-controlled.** In REST, the server decides how much work a request represents. In GraphQL, the client does. A deeply nested query, or one that requests a large list at every level, can be far more expensive than any endpoint the team intended to expose. Mitigations include depth limits, complexity scoring, and persisted queries (where the client sends a hash of a previously registered query rather than arbitrary text). All of these are things you must build or configure; none are free.
+
+**Caching is harder.** HTTP caching works on URLs. GraphQL requests are typically POSTs to one URL, so intermediary caches cannot help. You can recover some of this with persisted queries and GET semantics, and with normalised client-side caches, but the simple CDN story that REST enjoys does not transfer.
+
+**Failure mode to watch for:** a schema that grows nullable fields over time. A field that changes from required to optional is not flagged as a breaking change by most schema diffing tools, because old queries still parse. But clients that assumed the field was present start handling nulls, and the bug surfaces as a rendering error rather than a type error. The defence is a schema change policy that treats nullability changes as breaking, enforced in continuous integration.
+
+## REST: where it earns its keep
+
+REST's advantage is that every layer of the stack already understands it. HTTP caches, CDNs, load balancers, proxies, and observability tools all have first-class support for methods, status codes, and cache headers. You do not have to teach your infrastructure anything.
+
+Concretely, a GET endpoint with a correct `Cache-Control` and `ETag` can be served from a CDN edge without touching your origin. That is the single largest cost lever available to most read-heavy APIs, and it is essentially free to adopt.
+
+REST is also the easiest style to debug with nothing but a terminal. A `curl` command reproduces a production request exactly, including headers, which means a bug report can contain a complete reproduction rather than a description.
+
+The costs:
+
+**Over-fetching and under-fetching.** A mobile screen that needs three fields from a 40-field resource pays for all 40. The usual fixes are sparse fieldsets (a query parameter listing fields), purpose-built endpoints, or a backend-for-frontend layer. Each adds surface area.
+
+**Versioning.** Because the response shape is fixed, changing it means either breaking clients or running parallel versions. Parallel versions are expensive to maintain and easy to forget to retire.
+
+**Chatty clients.** A screen composed of five resources needs five round trips unless you add a composite endpoint. On a high-latency mobile connection, that is five times the latency floor.
+
+**Failure mode to watch for:** endpoint proliferation. A REST API that has grown one endpoint per screen is a REST API that has quietly reimplemented GraphQL badly, with none of the tooling. If your resource list has entries like `/orders-summary-for-dashboard`, that is the signal.
+
+## tRPC: where it earns its keep
+
+tRPC's advantage is that the contract is checked by the compiler. If a server procedure changes its input or output type, every call site fails to build. There is no schema document to drift, no generated client to regenerate, and no window in which client and server disagree.
+
+For a TypeScript monorepo where the same team owns both sides and deploys them together, this removes an entire category of integration bug: the ones caused by a stale generated client or a hand-written fetch wrapper that was not updated.
+
+The costs follow directly from the design:
+
+**It only works in TypeScript.** A non-TypeScript consumer — a mobile app in another language, a partner integration, a data pipeline — cannot use the typed client. You would need to expose a separate REST or GraphQL surface for those consumers, at which point you are maintaining two APIs.
+
+**The contract is not a document.** A TypeScript type is not a published specification. External consumers, documentation generators, and contract testing tools expect a schema format. tRPC does not give you one.
+
+**Ecosystem maturity.** The library is younger than the HTTP conventions REST relies on, and error messages from type inference failures can be difficult to read, especially with deeply nested generic types. Budget time for that.
+
+**Failure mode to watch for:** coupling that makes independent deployment impossible. Once the client imports server types directly, the two are one deployable unit in practice. If your organisation later needs to ship the client on a different cadence — a mobile app review cycle, for instance — the type coupling becomes a release blocker rather than a safety net.
+
+## Comparing the dimensions that matter
+
+Rather than assert numbers, here is what to measure for each dimension and why it differs.
+
+**Latency.** Measure p50 and p95 for a representative composite operation — for example, "fetch a user, their last five orders, and the product for each order." Instrument at the edge (load balancer or API gateway) so you capture the full path, and run the comparison against the same database and the same region. The mechanism that drives the difference is round trips: a REST implementation needs one request per resource unless you add a composite endpoint, a GraphQL implementation needs one request but potentially many resolver-level database calls unless batching is in place, and a tRPC implementation needs one request with whatever batching the procedure itself performs. The comparison is only meaningful if the batching is equivalent across the three.
+
+**Payload size.** Measure response bytes for the same logical operation. GraphQL will generally be smaller because the client selects fields, unless the query is written to request everything. tRPC's payload depends entirely on what the procedure returns and whether you enable a binary serialiser; it is not inherently smaller. REST's payload is fixed by the endpoint.
+
+**Cold start.** Relevant only on serverless platforms. The mechanism to watch is initialisation cost: a GraphQL server typically builds a schema and wires resolvers at startup, which is more work than registering route handlers. Measure it by invoking a cold function repeatedly with a gap between invocations and reading the reported init duration.
+
+**Cache hit rate.** This is the dimension where the three diverge most sharply and where measurement is easiest. Instrument your CDN or reverse proxy and record the fraction of requests served without reaching the origin. REST with correct cache headers will show a high hit rate on idempotent reads; GraphQL over POST will show approximately zero unless you adopt persisted queries; tRPC over POST behaves like GraphQL. If your workload is read-heavy and the data is not user-specific, this single number often outweighs every latency difference above.
+
+**Debugging time.** Harder to instrument, but you can approximate it: record the time from a production alert to a confirmed root cause for the last ten incidents on the service. REST incidents tend to resolve quickly because a single request can be replayed. GraphQL incidents take longer when the cause is in the execution plan, because the query that arrives is not the set of database operations that ran. tRPC incidents sit in between: compile-time errors never reach production, but runtime type errors from unvalidated input still do.
+
+## A worked scoring example
+
+The table below is illustrative. The weights are the interesting part; the scores are placeholders you should replace with your own measurements.
+
+| Dimension (weight) | GraphQL | REST | tRPC |
+|---|---|---|---|
+| Client autonomy (3) | 5 | 2 | 3 |
+| Type safety (3) | 3 | 2 | 5 |
+| Cacheability (4) | 1 | 5 | 1 |
+| Debuggability (2) | 3 | 5 | 4 |
+| External consumers (3) | 5 | 5 | 1 |
+| Operational simplicity (2) | 2 | 5 | 4 |
+
+Weighted totals: GraphQL = (5×3) + (3×3) + (1×4) + (3×2) + (5×3) + (2×2) = 15 + 9 + 4 + 6 + 15 + 4 = 53. REST = (2×3) + (2×3) + (5×4) + (5×2) + (5×3) + (5×2) = 6 + 6 + 20 + 10 + 15 + 10 = 67. tRPC = (3×3) + (5×3) + (1×4) + (4×2) + (1×3) + (4×2) = 9 + 15 + 4 + 8 + 3 + 8 = 47.
+
+REST wins this particular weighting, but the result is entirely a function of the weights. Raise cacheability to 1 and external consumers to 1 — a workload that is all writes and has no third-party consumers — and the totals shift. The exercise is worth doing because it forces the team to argue about weights, which is the real decision.
+
+## Decision checklist
+
+Work through these in order. The first question that gets a clear "yes" usually settles it.
+
+1. **Are there non-TypeScript consumers, or consumers you do not control?** If yes, tRPC is out. Choose between GraphQL and REST.
+2. **Is the workload dominated by cacheable reads of resources with stable shapes?** If yes, REST. The CDN story alone is usually decisive.
+3. **Do multiple independent client teams need to change their data requirements without coordinating with the backend team?** If yes, GraphQL.
+4. **Does a single screen need to aggregate data from three or more backend services?** If yes, GraphQL is a reasonable aggregation layer, though a backend-for-frontend in REST is a legitimate alternative.
+5. **Is the client and server the same TypeScript codebase, deployed together, with no external consumers?** If yes, tRPC gives the best day-to-day developer experience.
+6. **Is the API a thin wrapper over one or two database tables?** If yes, choose the simplest option and stop deliberating. REST with a documented schema is almost always sufficient.
+
+## Frequently asked questions
+
+**Can you run more than one style at once?**
+Yes, and many organisations do: a public REST surface for external consumers, tRPC internally within the monorepo, and a GraphQL aggregation layer over several services. The cost is that every style carries its own operational and tooling burden, so the justification should be a concrete consumer requirement rather than a preference.
+
+**Is GraphQL slower than REST?**
+Not inherently. A single GraphQL request can replace several REST round trips, which is a win on high-latency links. The performance risk is in the execution: unbatched resolvers and unbounded query complexity. Measure resolver-level database call counts, not just end-to-end latency.
+
+**Does tRPC replace REST?**
+No. It replaces the typed client layer in a TypeScript monorepo. You still need an HTTP surface for anything outside that boundary, and that surface is usually REST.
+
+**How do you prevent breaking changes in a GraphQL schema?**
+Treat nullability changes, field removals, and argument changes as breaking; run a schema diff in continuous integration that fails the build on those categories; and require a deprecation period before removal. The tooling exists, but the policy is what prevents incidents.
+
+**What about a managed gateway or a schema registry product?**
+These can help with governance, analytics, and caching at scale, but they add a subscription and a new failure domain. Adopt one when you have a specific problem it solves — for example, persisted query enforcement — not as a default.
+
+## The one thing to do in the next 30 minutes
+
+Open the file that defines your API's contract — an OpenAPI document, a GraphQL schema, or the router definition in your TypeScript server — and count two things: the number of distinct operations, and the number of consumers you do not control. If the second number is zero and the first is under twenty, write down the three dimensions from the table above that matter most to your team, assign weights, and score the three styles. The argument about weights will tell you more about which style fits than any general recommendation can.
+</output>

@@ -156,3 +156,27 @@ Measure the cost of a single production incident in the agent's area: engineerin
 ## One thing to do in the next 30 minutes
 
 Open the repository for an agent you maintain and create a single test file that sends one malformed input to the agent's entry point and asserts that it fails closed rather than posting an unsafe result. Run it locally. If it passes, commit it and add it to the existing CI job. If it fails, you have found a real bug and a reason to build the rest of the suite.
+
+## Related reading
+
+- [Claude Code after 365 days: what actually works](https://kubaik.github.io/claude-code-after-a-year-daily-wins/)
+- [agent code review gap nobody admits](https://kubaik.github.io/agent-code-review-gap-nobody-admits/)
+- [Choosing a JavaScript Test Stack: Playwright and Vitest](https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/)
+
+## Official documentation
+
+- [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** July 2026
+
+<!-- enhanced:v1 -->

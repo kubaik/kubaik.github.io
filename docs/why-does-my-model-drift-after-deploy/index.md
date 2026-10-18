@@ -314,3 +314,29 @@ Shadow testing runs the new model on live traffic but discards its predictions, 
 Define guardrails that combine statistical drift with business impact. If both thresholds are breached for two consecutive monitoring windows, trigger an automated rollback via your deployment tool. A statistical trigger alone should page a human, not revert traffic.
 
 Take the next 30 minutes to open your CI repository, add a `test_shadow_latency` function modeled on the sketch above, and run it against a small batch of recorded production requests. If it fails, you have just uncovered an evaluation gap before it reaches production.
+
+## Related reading
+
+- [LLM eval drift that users notice first](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+- [LLM output metrics that actually move the needle](https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/)
+
+## Official documentation
+
+- [Docker documentation](https://docs.docker.com/)
+- [Prometheus documentation](https://prometheus.io/docs/)
+- [Temporal documentation](https://docs.temporal.io/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** September 2026
+
+<!-- enhanced:v1 -->

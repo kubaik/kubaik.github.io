@@ -73,6 +73,8 @@ except ImportError:
         is_truncated as _title_is_truncated,
         MAX_DISPLAY_TITLE as _VALIDATOR_MAX_DISPLAY_TITLE,
     )
+from pre_save_gate import pre_save_gate, check_before_save
+
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -3707,6 +3709,21 @@ class BlogSystem:
                     f"Last error: {e}"
                 )
 
+            _gate = check_before_save(title, content, self.output_dir)
+            if _gate:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: {_gate}."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    continue
+                raise InsufficientContentError(
+                    f"Title/topic gate failed on all attempts: {_gate}. No post saved."
+                )
+
             _title_narrative = _reject_if_narrative_title(title)
             if _title_narrative:
                 print(f"\n  ⚠️  {_title_narrative}")
@@ -4986,6 +5003,8 @@ Return ONLY the JSON object.""",
                 "last line of defense against AdSense Helpful Content flags."
             )
 
+        pre_save_gate(post, self.output_dir)
+
         is_dup, dup_slug, dup_title, dup_score = self.content_duplicate_gate.check(
             title=post.title,
             content=post.content,
@@ -5043,9 +5062,10 @@ Return ONLY the JSON object.""",
 
         _final_check = validate_title(post.title, post_data["full_title"])
         if not _final_check["valid"]:
-            print(f"  ⚠️  Title failed validation at save time: {post.title}")
-            for _err in _final_check["errors"]:
-                print(f"      ❌ {_err}")
+            errors = "; ".join(_final_check["errors"])
+            raise ValueError(
+                f"Title failed validation at save time: {post.title}. {errors}"
+            )
 
         if hasattr(post, "twitter_hashtags") and post.twitter_hashtags:
             post_data["twitter_hashtags"] = post.twitter_hashtags

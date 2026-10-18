@@ -1,4 +1,4 @@
-# USSD fintech in 2026: the 300M user channel nobody
+# Designing USSD fintech flows that survive live networks
 
 USSD tutorials tend to stop at the happy path: a menu, a PIN, a confirmation. Production is what happens when the carrier edge times out, the handset drops mid-session, and the user presses the wrong key on a 2G connection. This guide covers the parts that decide whether a USSD flow survives contact with a live network.
 
@@ -507,3 +507,29 @@ Acquire an inexpensive feature phone and a prepaid SIM from the target network. 
 ## What to do in the next 30 minutes
 
 Clone or create the project skeleton, write `src/ussd.ts` with the four-state machine above, and write the character-budget test. Run it. If every screen passes at or under 160 characters and every transition has a test, you have the part of the system that is hardest to fix later. Everything else — the CDK stack, the DynamoDB table, the alarm — is configuration you can add once the flow itself is correct.
+
+## Related reading
+
+- [Mobile money agent fees: why your bot keeps failing](https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/)
+- [Agent auth: where the docs ended up lying](https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/)
+- [5 notification systems ranked: push, email, SMS](https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/)
+
+## Official documentation
+
+- [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/)
+- [Stripe: idempotent requests](https://docs.stripe.com/api/idempotent_requests)
+- [The Rust Programming Language](https://doc.rust-lang.org/book/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

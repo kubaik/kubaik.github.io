@@ -158,3 +158,27 @@ Two measurement traps are worth calling out. First, MTTD and MTTR are easy to ga
 ## Do this in the next 30 minutes
 
 Pick the resource type involved in your most recent rollback and write down the single invariant it violated — for example, "this role must not have write access outside its own bucket prefix." Then find the cheapest deterministic check that would have caught it: a policy linter rule, a schema constraint, or a one-line script in your CI pipeline. Add that check to a single repository as a non-blocking warning, and log how often it fires over the next week. That log is your first real data point on whether guardrails will pay for themselves in your environment.
+
+## Related reading
+
+- [Scope agent permissions per task](https://kubaik.github.io/scope-agent-permissions-per-task/)
+- [Self-service AI tooling: where it breaks first](https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/)
+- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+
+## Official documentation
+
+- [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** August 2026
+
+<!-- enhanced:v1 -->

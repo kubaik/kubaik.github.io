@@ -186,3 +186,27 @@ It depends almost entirely on whether usage-based cost data is already available
 ## The one action to take now
 
 Open the dashboard your platform team shows to stakeholders and pick the single metric that most often prompts the question "but what about region X?" Write down, in one sentence, the constraint that metric fails to capture. That sentence is the specification for the first component of your composite metric — and it takes less than thirty minutes to produce.
+
+## Related reading
+
+- [AWS costs for Nairobi SaaS: 2026 bill split](https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/)
+- [AI unit costs: the metric both teams fight over](https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/)
+- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+
+## Official documentation
+
+- [Prometheus documentation](https://prometheus.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** September 2026
+
+<!-- enhanced:v1 -->

@@ -1,4 +1,4 @@
-# Remote work in 2026: which tools survived
+# Remote work in 2026: which tools still hold up
 
 Most remote-work tooling assumes a developer on fiber in a major hub. When a team spans high-latency regions, metered connections, and grids that drop for hours, that assumption becomes the failure mode. A chat client that hangs on a 250 ms socket timeout, a CI runner that re-downloads a 1 GB image on every job, a deploy step with no retry — each is individually small and collectively fatal to throughput.
 
@@ -317,3 +317,22 @@ A notification that fires only on success, so a failed build produces no signal 
 
 Run the latency loop from the first section ten times against your primary Git host and write down the median. If it exceeds 300 ms, open an issue in your repo titled "CI latency baseline" with the number and a link to the ten raw samples. That single recorded measurement turns every later tooling argument into a comparison against evidence.
 ===END===
+
+## Official documentation
+
+- [Docker documentation](https://docs.docker.com/)
+- [Prometheus documentation](https://prometheus.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** June 2026
+
+<!-- enhanced:v1 -->

@@ -151,3 +151,28 @@ There is no universal benchmark. The DORA research program publishes distributio
 
 Write a single Python script that queries your CI system for the last 100 workflow runs and calculates the median time from commit to deploy. Run it now. You will have a baseline before the end of the day. That baseline is the first step toward a credible ROI story — and it is the number you can defend in the next budget review.
 ===END===
+
+## Related reading
+
+- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [Internal platform adoption: one metric kills velocity](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
+- [Platform Teams: Agentic World Struggle](https://kubaik.github.io/platform-teams-agentic-world-struggle/)
+
+## Official documentation
+
+- [PostgreSQL documentation](https://www.postgresql.org/docs/)
+- [OpenTelemetry documentation](https://opentelemetry.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** September 2026
+
+<!-- enhanced:v1 -->

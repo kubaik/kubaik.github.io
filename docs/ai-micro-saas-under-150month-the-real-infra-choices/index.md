@@ -1,4 +1,4 @@
-# Designing AI Micro-SaaS Infra on a $150/Month Budget
+# Cost-Effective AI Infrastructure for Micro-SaaS
 
 Most cost-planning guides for AI products assume a clean environment, patient timelines, and traffic that behaves. The design holds in the simple case and breaks in specific ways once the cache is cold, the upstream API rate-limits, or a single customer's workload grows ten-fold overnight. The notes below describe the tradeoffs that actually matter when the monthly infra ceiling is $150.
 
@@ -240,3 +240,27 @@ Meter tokens per request in the handler, write usage records keyed by customer I
 ## One thing to do in the next 30 minutes
 
 Open the cost dashboard for the current infrastructure (cloud billing console, edge analytics, or warehouse query history). Filter to the last seven days and list the top five line items. For each, write down whether it scales to zero and whether a cache or batch could eliminate it. Pick the single largest line item that does not scale to zero, and add one instrumentation counter — `cache_hit`, `cache_miss`, or `model_call` — to the code path that touches it. You cannot optimize a cost you are not measuring.
+
+## Related reading
+
+- [AI features rot faster than you build them](https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/)
+- [AI unit costs: the metric both teams fight over](https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/)
+- [Self-service AI tooling: where it breaks first](https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/)
+
+## Official documentation
+
+- [Redis documentation](https://redis.io/docs/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/), software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/).
+
+**Last generated:** August 2026
+
+<!-- enhanced:v1 -->

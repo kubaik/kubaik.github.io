@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "llm-costs-fine-tune-vs-route-vs-bigger-model",
+    "title": "LLM costs: fine-tune vs route vs bigger model",
+    "keeper": "big-model-api-vs-fine-tune-the-2026-math",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "route-fine-tune-or-scale-pick-right",
+    "title": "Route, fine-tune, or scale: pick right",
+    "keeper": "big-model-api-vs-fine-tune-the-2026-math",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "claude-code-after-365-days-what-actually-works",
+    "title": "Claude Code after 365 days: what actually works",
+    "keeper": "claude-code-after-a-year-daily-wins",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "claude-code-review-wins-and-blind-spots",
+    "title": "Claude code review: wins and blind spots",
+    "keeper": "claude-code-after-a-year-daily-wins",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "internal-developer-platform-adoption-traps",
+    "title": "Internal developer platform: adoption traps",
+    "keeper": "internal-platform-adoption-one-metric-kills-velocity",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "build-dev-platform-for-2kmonth",
+    "title": "Designing a Low-Cost Internal Developer Platform",
+    "keeper": "internal-platform-adoption-one-metric-kills-velocity",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "llm-drift-before-users-complain-catch-it-early",
+    "title": "LLM drift before users complain: catch it early",
+    "keeper": "llm-eval-drift-that-users-notice-first",
+    "date": "2026-10-18"
+  },
+  {
+    "slug": "silent-model-drift-catch-it-before-prod",
+    "title": "Silent model drift: catch it before prod",
+    "keeper": "llm-eval-drift-that-users-notice-first",
+    "date": "2026-10-18"
+  }
+]
