@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-17T15:15:34.263498",
+  "built_at": "2026-10-18T03:42:29.527855",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5565,6 +5565,11 @@
       "slug": "open-banking-apis-the-integration-traps",
       "title": "Open banking APIs: the integration traps",
       "summary": "It works in the simple case and breaks in a specific way under load. Most nairobi teams writeups assume the reader has already made the mistake they're warning about. Here's the root cause, not just the symptom. Most teams treat open banking integration as a REST API problem: read the spec, wire up "
+    },
+    {
+      "slug": "read-replicas-the-bug-factory-you-built",
+      "title": "Read replicas: the bug factory you built",
+      "summary": "read replicas has a habit of breaking in ways the monitoring wasn't watching for. The gap between the demo and the incident report is where this actually lives. Here's the fuller picture, with the tradeoffs left in. Read replicas feel like free capacity. You add one, point your read traffic at it, a"
     }
   ]
 }

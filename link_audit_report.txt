@@ -1,4 +1,4 @@
-❌ Internal link audit: 410 broken link(s) found across 411 posts checked.
+❌ Internal link audit: 411 broken link(s) found across 412 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -278,6 +278,7 @@ Source Post                              Anchor Text                    Missing 
   /one-misconfigured-vector-db-killed-our-rag-pipeline AI content policy              /ai-content-policy/
   /one-payment-stack-for-kenya-nigeria-ghana AI content policy              /ai-content-policy/
   /only-boring-stacks-survive-ai-services AI content policy              /ai-content-policy/
+  /open-banking-apis-the-integration-traps AI content policy              /ai-content-policy/
   /orchestration-tax-kills-multi-agent-systems AI content policy              /ai-content-policy/
   /pass-interviews-without-a-cs-degree    AI content policy              /ai-content-policy/
   /personal-ai-assistants-avoid-vendor-lock-in-traps AI content policy              /ai-content-policy/

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Database Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;When a vector DB misconfiguration breaks RAG silently,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
+  <meta name="description" content="Articles on Database covering database design, optimization, and data management, including &quot;Read replicas: the bug factory you built,&quot; &quot;Memory Systems for Production Agents,&quot; and &quot;When a vector DB misconfiguration breaks RAG silently&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubaik.github.io/tag/database/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Database Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;When a vector DB misconfiguration breaks RAG silently,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
+  <meta property="og:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Read replicas: the bug factory you built,&quot; &quot;Memory Systems for Production Agents,&quot; and &quot;When a vector DB misconfiguration breaks RAG silently&quot;.">
   <meta property="og:url" content="https://kubaik.github.io/tag/database/">
   <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Database Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Memory Systems for Production Agents,&quot; &quot;When a vector DB misconfiguration breaks RAG silently,&quot; and &quot;Postgres vector search: what breaks first&quot;.">
+  <meta name="twitter:description" content="Articles on Database covering database design, optimization, and data management, including &quot;Read replicas: the bug factory you built,&quot; &quot;Memory Systems for Production Agents,&quot; and &quot;When a vector DB misconfiguration breaks RAG silently&quot;.">
   <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Database Articles","url":"https://kubaik.github.io/tag/database/",
-    "description":"Articles on Database covering database design, optimization, and data management, including \"Memory Systems for Production Agents,\" \"When a vector DB misconfiguration breaks RAG silently,\" and \"Postgres vector search: what breaks first\"."}
+    "description":"Articles on Database covering database design, optimization, and data management, including \"Read replicas: the bug factory you built,\" \"Memory Systems for Production Agents,\" and \"When a vector DB misconfiguration breaks RAG silently\"."}
   </script>
 </head>
 <body>
@@ -44,9 +44,14 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Database</span>
     </nav>
-    <h2>11 articles tagged <em>Database</em></h2>
+    <h2>12 articles tagged <em>Database</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/read-replicas-the-bug-factory-you-built/">
+        <h3>Read replicas: the bug factory you built</h3>
+        <p class="post-excerpt">Read replicas lag by design. Learn how to classify reads, route freshness-critical queries to the primary, and measure your exposure to stale reads.</p>
+        <p class="post-reading-time">15 min read · 18 October 2026</p>
+      </a>
       <a class="post-card" href="/memory-systems-for-production-agents/">
         <h3>Memory Systems for Production Agents</h3>
         <p class="post-excerpt">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>

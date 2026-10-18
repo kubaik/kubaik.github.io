@@ -146,5 +146,6 @@
   "Why leader election still breaks in subtle ways on modern cloud networks",
   "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
   "What happens when an agent follows instructions too literally: documented failure patterns",
-  "Open banking APIs across markets: the integration differences nobody warns you about"
+  "Open banking APIs across markets: the integration differences nobody warns you about",
+  "Why read replicas quietly cause more bugs than they fix"
 ]
