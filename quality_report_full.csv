@@ -11,7 +11,7 @@ ai-proof-your-mid-level-salary,80,2961,AI-proof your mid-level salary,2026-07-01
 ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks: 3 skills that protect pay,2026-06-24T05:02:01.012343,1,first-person incident: 'A developer who once spent two days on a settings page can often get a working d'
 audit-logs-that-scale-skip-the-3am-fire-drills,80,3151,Audit logs that scale: skip the 3AM fire drills,2026-08-17T12:51:36.917045,1,first-person incident: 'What follows is the reasoning a senior engineer would pass to a colleague hittin'
 bootstrapped-5k-mrr-without-ads,80,2817,Reaching $5k MRR Without Paid Ads: A Product-Led Playbook,2026-06-25T20:30:14.422863,1,"first-person incident: 'If it does not improve, ask a colleague to try the flow while you watch; the fri'"
-deploy-a-solo-stack-for-20month-in-2026,80,2715,Deploy a solo stack for under $20/month,2026-06-09T15:45:09.304392,1,first-person incident: 'Route 53 hosted zones cost $0.50/month per zone; the registrar fee is separate.'
+deploy-a-solo-stack-for-20month-in-2026,80,2715,Solo developer deployment: cost-conscious managed services,2026-06-09T15:45:09.304392,1,first-person incident: 'Route 53 hosted zones cost $0.50/month per zone; the registrar fee is separate.'
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
 negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,1,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim'"
@@ -58,7 +58,7 @@ why-platform-metrics-lie,90,2442,Why platform metrics lie,2026-09-08T16:17:17.90
 7-ways-to-earn-extra-in-2026-without-shipping-saas,92,3098,7 ways to earn extra in 2026 without shipping SaaS,2026-07-01T11:01:01.737741,1,no fenced code block
 9-vibe-coding-traps-that-break-production-code,92,2194,9 Vibe coding traps that break production code,2026-07-01T08:04:40.099861,1,no fenced code block
 ai-apps-break-when-you-treat-them-like-regular-software,92,2945,AI apps break when you treat them like regular software,2026-06-27T18:14:00.551986,1,no fenced code block
-ai-codebase-onboarding-2-paths-tested,92,2415,AI codebase onboarding: 2 paths tested,2026-06-24T01:35:30.792495,1,no fenced code block
+ai-codebase-onboarding-2-paths-tested,92,2415,AI codebase onboarding: 2 paths compared,2026-06-24T01:35:30.792495,1,no fenced code block
 ai-features-as-tech-debt-or-golden-paths,92,2397,AI features as tech debt or golden paths,2026-07-17T02:53:25.164323,1,no fenced code block
 choose-no-code-only-when,92,2472,Choose no-code only when,2026-06-09T04:30:23.126966,1,no fenced code block
 global-state-is-the-wrong-tool-for-ai-features,92,2363,Global state is the wrong tool for AI features,2026-07-28T02:46:18.174343,1,no version-pinned tool
@@ -108,14 +108,11 @@ aws-costs-for-nairobi-saas-2026-bill-split,95,2546,AWS costs for Nairobi SaaS: 2
 bank-apis-broke-under-african-2g,95,2820,Bank APIs broke under African 2G,2026-06-28T17:22:02.922745,1,no FAQ section
 build-a-search-system-in-2026-semantic-keyword,95,2668,"Build a search system in 2026: semantic, keyword",2026-06-10T21:36:55.121317,1,no FAQ section
 build-agent-workflows-that-survive-restarts,95,2350,Build agent workflows that survive restarts,2026-07-06T07:57:25.796672,1,no FAQ section
-build-dev-platform-for-2kmonth,95,2892,Designing a Low-Cost Internal Developer Platform,2026-06-09T09:02:58.290964,1,no FAQ section
 bundle-size-70-lighter-with-server-components,95,2676,Cutting Client Bundle Size with React Server Components,2026-06-13T19:12:48.025770,1,no markdown table
 cache-stampedes-the-patterns-that-scale-and-the-ones,95,3254,Cache stampedes: the patterns that scale and the ones…,2026-07-21T02:56:30.208859,1,no FAQ section
 cdc-pipeline-death-spiral-one-bad-llm-call-can-crash,95,2309,CDC pipeline death spiral: one bad LLM call can crash…,2026-08-02T13:29:42.126639,1,no markdown table
 cicd-for-ai-code-test-secure-rollback-fast,95,2508,"CI/CD for AI code: test, secure, rollback fast",2026-06-23T22:57:31.055816,1,no FAQ section
 cicd-for-django-in-20ms-africa-networks,95,2503,CI/CD for Django in 20ms Africa networks,2026-07-03T14:11:10.074155,1,no FAQ section
-claude-code-after-365-days-what-actually-works,95,2687,Claude Code after 365 days: what actually works,2026-06-12T07:04:26.911283,1,no markdown table
-claude-code-review-wins-and-blind-spots,95,2810,Claude code review: wins and blind spots,2026-06-08T23:14:01.838159,1,no markdown table
 cloud-agents-burned-18k-8-tools-that-didnt-work,95,2404,Why Cloud Cost Tools Miss Agent-Driven GPU Spend,2026-07-10T14:36:13.221418,1,no markdown table
 code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,1,no FAQ section
 core-web-vitals-what-actually-moves-the-needle,95,3127,Core Web Vitals: what actually moves the needle,2026-10-07T18:40:58.470278,1,no FAQ section
@@ -137,10 +134,7 @@ hire-for-agents-not-autocomplete,95,2690,"Hire for agents, not autocomplete",202
 hybrid-cloud-routing-cost-speed-balance-for-sea,95,2605,Hybrid Cloud Routing: Cost-Speed Balance for SEA,2026-09-04T16:04:06.736348,1,no FAQ section
 idempotency-keys-what-they-fix-what-they-dont,95,2797,"Idempotency keys: what they fix, what they don't",2026-09-21T09:17:49.117913,1,no FAQ section
 idp-for-ai-2026-stack-evolution,95,2887,IDP for AI: 2026 stack evolution,2026-09-02T03:37:36.606872,1,no FAQ section
-internal-developer-platform-adoption-traps,95,2963,Internal developer platform: adoption traps,2026-09-23T03:57:25.268978,1,no FAQ section
 llm-agents-why-monoliths-win,95,2245,LLM agents: why monoliths win,2026-09-10T08:01:41.646366,1,no FAQ section
-llm-costs-fine-tune-vs-route-vs-bigger-model,95,2466,LLM costs: fine-tune vs route vs bigger model,2026-08-22T01:23:52.067990,1,no FAQ section
-llm-drift-before-users-complain-catch-it-early,95,2395,LLM drift before users complain: catch it early,2026-08-10T12:22:46.862454,1,no markdown table
 llm-output-metrics-that-actually-move-the-needle,95,2089,LLM output metrics that actually move the needle,2026-06-26T19:13:43.403773,1,no FAQ section
 local-llm-agents-vllm-vs-ollama-for-fintech,95,3190,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,1,no markdown table
 memory-systems-for-production-agents,95,2196,Memory Systems for Production Agents,2026-09-15T04:09:36.116554,1,no FAQ section
@@ -173,11 +167,10 @@ pypi-poisoned-models-hit-prod-in-2025,95,2215,PyPI poisoned models hit prod in 2
 rag-on-legacy-systems-vector-db-vs-full-text-sql,95,2765,RAG on legacy systems: vector DB vs. full-text SQL,2026-06-30T19:45:17.392843,1,no markdown table
 rag-pipelines-4-silent-prod-killers,95,2576,RAG pipelines: 4 silent prod killers,2026-06-08T23:47:39.972246,1,no FAQ section
 react-19-compiler-my-components-changed-how,95,2121,React 19 Compiler: What It Rewrites and Where It Breaks,2026-06-15T07:49:45.982179,1,no FAQ section
-read-replicas-the-bug-factory-you-built,95,2648,Read replicas: the bug factory you built,2026-10-18T03:42:26.873015,1,no markdown table
+read-replicas-the-bug-factory-you-built,95,3035,Read replicas: the bug factory you built,2026-10-18T03:42:26.873015,1,no markdown table
 rebalance-pay-when-ai-fills-half-your-role,95,2589,Rebalance pay when AI fills half your role,2026-06-15T23:55:31.138497,1,no FAQ section
 remote-salary-negotiate-without-sounding-cheap,95,2807,Remote salary: negotiate without sounding cheap,2026-06-08T22:08:41.302454,1,no FAQ section
 replace-managed-services-with-postgres-17,95,2783,Replace managed services with Postgres 17,2026-08-16T12:45:50.709187,1,no markdown table
-route-fine-tune-or-scale-pick-right,95,2668,"Route, fine-tune, or scale: pick right",2026-09-29T04:56:19.381447,1,no FAQ section
 runbooks-vs-ai-which-cuts-outages-50,95,2378,Runbooks vs AI Runbooks: A Decision Framework,2026-06-18T05:28:24.531662,1,no markdown table
 rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026,95,2061,Rust SDK vs FastAPI for LLM ops: trust in 2026,2026-08-14T02:13:08.868429,1,no FAQ section
 senior-engineer-title-inflation-in-2026,95,2167,Senior engineer title inflation in 2026,2026-08-13T07:35:26.331056,1,no FAQ section
@@ -186,7 +179,6 @@ serve-4g-as-baseline-apps-in-2026,95,2749,Serve 4G-as-baseline apps in 2026,2026
 ship-a-solo-project-pipeline-under-20month,95,3164,A Solo-Project Deploy Pipeline That Stays Under $20/Month,2026-06-15T23:01:02.436611,1,no FAQ section
 ship-to-nairobi-users-starlink-latency-guide-2026,95,2788,Ship to Nairobi users: Starlink latency guide 2026,2026-06-25T23:11:40.027660,1,no FAQ section
 signals-5-state-tricks-that-broke-my-app,95,2611,Signals: derived state without the performance tax,2026-07-03T04:50:42.390689,1,no markdown table
-silent-model-drift-catch-it-before-prod,95,2542,Silent model drift: catch it before prod,2026-10-16T16:20:19.864864,1,no markdown table
 skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one API for 3 African markets,2026-06-14T17:14:09.679850,1,no markdown table
 slos-for-agentic-features-beyond-latency,95,2936,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2581,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
@@ -259,7 +251,7 @@ ai-interviews-broke-system-design-3-patterns-that,100,2995,AI interviews broke s
 ai-interviews-now-ask-for-this,100,3152,AI interviews now ask for this,2026-06-10T07:28:02.725896,0,
 ai-made-self-service-platforms-trivial-in-2026,100,1962,AI made self-service platforms trivial in 2026,2026-07-03T23:08:55.907087,0,
 ai-memory-systems-context-that-survives-sessions,100,2491,AI memory systems: context that survives sessions,2026-07-02T17:15:04.501281,0,
-ai-micro-saas-under-150month-the-real-infra-choices,100,3001,Designing AI Micro-SaaS Infra on a $150/Month Budget,2026-08-05T18:25:11.119543,0,
+ai-micro-saas-under-150month-the-real-infra-choices,100,3001,Cost-Effective AI Infrastructure for Micro-SaaS,2026-08-05T18:25:11.119543,0,
 ai-model-poisoning-3-real-attacks-on-datasets,100,3064,AI model poisoning: 3 real attacks on datasets,2026-07-04T03:21:11.093312,0,
 ai-native-apps-forget-the-old-stack,100,2028,AI-native apps: forget the old stack,2026-06-12T23:10:41.835738,0,
 ai-on-slow-networks-nairobi-teams-2026-playbook,100,2516,AI on slow networks: Nairobi teams' 2026 playbook,2026-08-26T01:29:12.285987,0,
@@ -293,6 +285,7 @@ compare-kafka-redpanda-nats-for-event-driven-systems,100,2724,"Compare Kafka, Re
 computer-use-agents-the-permission-trap,100,3028,Computer-use agents: the permission trap,2026-09-19T12:00:05.749785,0,
 context-windows-agents-that-run-for-days,100,3443,Context windows: agents that run for days,2026-09-19T08:48:07.286152,0,
 context-windows-live-longer-than-you-think,100,2608,Context windows live longer than you think,2026-07-25T13:43:38.060125,0,
+contract-testing-is-not-optional,100,3181,Contract testing is not optional,2026-10-18T13:52:46.472859,0,
 cqrs-when-it-pays-off-and-when-it-breaks,100,2430,CQRS: when it pays off and when it breaks,2026-09-21T11:34:04.702917,0,
 currency-switch-fails-in-ghana-one-config-file-to-rule,100,2572,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,
 cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware security gates that cut CI alert noise,2026-06-12T07:15:04.340904,0,
@@ -302,7 +295,7 @@ detecting-silent-agent-failures,100,3026,Detecting silent agent failures,2026-10
 double-entry-ledger-concurrent-write-errors,100,2922,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 drop-ec2-bills-70-without-code,100,2634,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09T04:57:04.863722,0,
 ebpf-observability-in-2026-what-actually-works,100,2772,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,0,
-event-driven-beats-agent-driven-910-times,100,2948,Event-driven beats agent-driven 9/10 times,2026-07-30T02:38:09.602424,0,
+event-driven-beats-agent-driven-910-times,100,2948,Event-driven systems avoid agent-driven contention,2026-07-30T02:38:09.602424,0,
 event-sourcing-pay-the-complexity-tax-only-here,100,2091,Event sourcing: pay the complexity tax only here,2026-06-09T09:48:26.237900,0,
 evolve-your-monolith-without-rewriting-in-2026,100,3035,Evolve your monolith without rewriting in 2026,2026-08-19T06:58:57.859019,0,
 feature-flags-became-ai-rollout-platforms,100,3609,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
@@ -355,7 +348,7 @@ rag-rots-if-you-dont-refresh-indexes,100,2945,RAG rots if you don’t refresh in
 rate-limiters-burst-vs-abuse-two-designs,100,3063,"Rate limiters: burst vs abuse, two designs",2026-10-11T17:33:14.037221,0,
 reconciling-mobile-money-edge-cases-banks-ignore,100,3427,Reconciling mobile money: edge cases banks ignore,2026-06-12T02:44:27.130558,0,
 red-teaming-agents-without-killing-velocity,100,2255,Red-teaming agents without killing velocity,2026-07-17T06:39:14.302913,0,
-remote-work-in-2026-which-tools-survived,100,2194,Remote work in 2026: which tools survived,2026-06-13T02:36:53.908082,0,
+remote-work-in-2026-which-tools-survived,100,2194,Remote work in 2026: which tools still hold up,2026-06-13T02:36:53.908082,0,
 replace-env-with-these-in-2026,100,3061,Replace .env with these in 2026,2026-06-18T22:18:17.148223,0,
 retire-api-versions-before-they-pile-up,100,2467,Retire API versions before they pile up,2026-10-12T21:04:53.973131,0,
 rogue-agent-api-calls-stop-the-bleeding,100,2105,Rogue Agent API Calls: Stop the Bleeding,2026-09-07T12:11:38.676430,0,
@@ -389,7 +382,7 @@ tool-calls-why-retries-stampede,100,2499,Tool calls: why retries stampede,2026-0
 track-ai-agent-costs-in-fractal-workflows,100,2481,Track AI agent costs in fractal workflows,2026-07-27T03:28:57.383047,0,
 two-engineer-classes-the-ai-tool-norm-trap,100,2361,Two engineer classes: the AI tool norm trap,2026-09-07T08:58:13.844829,0,
 use-feature-flags-to-deploy-ai-models-safely,100,2946,Use feature flags to deploy AI models safely,2026-06-20T20:49:06.113698,0,
-ussd-fintech-in-2026-the-300m-user-channel-nobody,100,3325,USSD fintech in 2026: the 300M user channel nobody,2026-06-11T14:34:31.818724,0,
+ussd-fintech-in-2026-the-300m-user-channel-nobody,100,3325,Designing USSD fintech flows that survive live networks,2026-06-11T14:34:31.818724,0,
 vibe-coding-mvp-gem-prod-albatross,100,3059,"Vibe coding: MVP gem, prod albatross",2026-06-19T20:47:43.902749,0,
 wasm-servers-beat-containers-here,100,2421,WASM servers beat containers here,2026-08-05T13:49:01.207694,0,
 webhook-delivery-that-survives-outages,100,2698,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,0,

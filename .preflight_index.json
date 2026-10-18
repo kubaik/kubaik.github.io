@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-18T03:42:29.527855",
+  "built_at": "2026-10-18T13:52:49.208925",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5570,6 +5570,11 @@
       "slug": "read-replicas-the-bug-factory-you-built",
       "title": "Read replicas: the bug factory you built",
       "summary": "read replicas has a habit of breaking in ways the monitoring wasn't watching for. The gap between the demo and the incident report is where this actually lives. Here's the fuller picture, with the tradeoffs left in. Read replicas feel like free capacity. You add one, point your read traffic at it, a"
+    },
+    {
+      "slug": "contract-testing-is-not-optional",
+      "title": "Contract testing is not optional",
+      "summary": "The conventional advice on outbox pattern is incomplete in one specific, costly way. The workaround gets copy-pasted forward long after the original reason is forgotten. Here's what holds up in practice, and why. Most integration breakage I see in service meshes doesn't come from network partitions "
     }
   ]
 }

@@ -145,7 +145,6 @@ docs/boring-aws-lambda-layers-that-dont-lock/index.md
 docs/build-a-search-system-in-2026-semantic-keyword/index.md
 docs/build-agent-workflows-that-survive-restarts/index.md
 docs/build-apps-that-still-work-on-500-ms-latency/index.md
-docs/build-dev-platform-for-2kmonth/index.md
 docs/build-in-public-without-burning-out/index.md
 docs/built-a-multi-agent-system-without-langgraph/index.md
 docs/bundle-size-70-lighter-with-server-components/index.md
@@ -158,9 +157,7 @@ docs/cicd-for-ai-code-test-secure-rollback-fast/index.md
 docs/cicd-for-django-in-20ms-africa-networks/index.md
 docs/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/index.md
 docs/circleci-still-beats-github-actions-at-50k-builds/index.md
-docs/claude-code-after-365-days-what-actually-works/index.md
 docs/claude-code-after-a-year-daily-wins/index.md
-docs/claude-code-review-wins-and-blind-spots/index.md
 docs/cloud-agents-burned-18k-8-tools-that-didnt-work/index.md
 docs/code-ai-wont-rewrite/index.md
 docs/commit-ownership-in-ai-pair-coding/index.md
@@ -168,6 +165,7 @@ docs/compare-kafka-redpanda-nats-for-event-driven-systems/index.md
 docs/computer-use-agents-the-permission-trap/index.md
 docs/context-windows-agents-that-run-for-days/index.md
 docs/context-windows-live-longer-than-you-think/index.md
+docs/contract-testing-is-not-optional/index.md
 docs/core-web-vitals-what-actually-moves-the-needle/index.md
 docs/cost-tools-fail-when-agents-scale-autonomously/index.md
 docs/cqrs-when-it-pays-off-and-when-it-breaks/index.md
@@ -209,7 +207,6 @@ docs/hire-for-agents-not-autocomplete/index.md
 docs/hybrid-cloud-routing-cost-speed-balance-for-sea/index.md
 docs/idempotency-keys-what-they-fix-what-they-dont/index.md
 docs/idp-for-ai-2026-stack-evolution/index.md
-docs/internal-developer-platform-adoption-traps/index.md
 docs/internal-platform-adoption-one-metric-kills-velocity/index.md
 docs/istio-and-cilium-what-really-breaks-in-production/index.md
 docs/json-modes-hidden-costs-revealed/index.md
@@ -220,8 +217,6 @@ docs/kubernetes-or-nomad-the-real-experiment-cost-split/index.md
 docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/index.md
 docs/least-privilege-for-agents-the-config-line-nobody-writes/index.md
 docs/llm-agents-why-monoliths-win/index.md
-docs/llm-costs-fine-tune-vs-route-vs-bigger-model/index.md
-docs/llm-drift-before-users-complain-catch-it-early/index.md
 docs/llm-drift-the-silent-quality-drop-metrics-miss/index.md
 docs/llm-eval-drift-that-users-notice-first/index.md
 docs/llm-evals-langsmith-vs-promptfoo-in-prod/index.md
@@ -321,7 +316,6 @@ docs/replace-env-with-these-in-2026/index.md
 docs/replace-managed-services-with-postgres-17/index.md
 docs/retire-api-versions-before-they-pile-up/index.md
 docs/rogue-agent-api-calls-stop-the-bleeding/index.md
-docs/route-fine-tune-or-scale-pick-right/index.md
 docs/run-apis-in-50-spots-what-breaks-first/index.md
 docs/runbooks-vs-ai-which-cuts-outages-50/index.md
 docs/rust-rewrites-where-they-pay-off-where-they-dont/index.md
@@ -347,7 +341,6 @@ docs/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/index.md
 docs/ship-to-nairobi-users-starlink-latency-guide-2026/index.md
 docs/show-real-work-not-ai-clones/index.md
 docs/signals-5-state-tricks-that-broke-my-app/index.md
-docs/silent-model-drift-catch-it-before-prod/index.md
 docs/skip-m-pesa-build-one-api-for-3-african-markets/index.md
 docs/slos-for-agentic-features-beyond-latency/index.md
 docs/soft-deletes-fail-what-breaks-first/index.md
