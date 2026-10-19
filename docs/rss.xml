@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Oct 2026 03:53:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 18:33:25 +0000</lastBuildDate>
+    <item>
+      <title>Staging won&apos;t catch prod bugs. Make…</title>
+      <link>https://kubaik.github.io/staging-wont-catch-prod-bugs-make/</link>
+      <description>Why full parity between staging and production misses state-dependent bugs, and how to build cheap fault injection that catches them before deploy.</description>
+      <pubDate>Mon, 19 Oct 2026 18:32:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/staging-wont-catch-prod-bugs-make/</guid>
+    </item>
     <item>
       <title>PCI DSS architecture: 12 requirements that matter</title>
       <link>https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/</link>
@@ -138,13 +145,6 @@
       <description>A decision framework for Core Web Vitals: read field distributions, find fixed costs that hit the slow tail, and verify changes with segmented RUM.</description>
       <pubDate>Wed, 07 Oct 2026 18:40:58 +0000</pubDate>
       <guid>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</guid>
-    </item>
-    <item>
-      <title>Deployment platforms: senior vs new hire</title>
-      <link>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</link>
-      <description>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</description>
-      <pubDate>Wed, 07 Oct 2026 05:01:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</guid>
     </item>
   </channel>
 </rss>

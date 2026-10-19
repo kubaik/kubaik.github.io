@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-19T03:52:52.388777",
+  "built_at": "2026-10-19T18:32:40.444613",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5580,6 +5580,11 @@
       "slug": "pci-dss-architecture-12-requirements-that-matter",
       "title": "PCI DSS architecture: 12 requirements that matter",
       "summary": "It's the kind of problem that's easy to reproduce and hard to explain. versioning evolving is the kind of decision that looks reversible until it isn't. Here's the root cause, not just the symptom. PCI DSS is often treated as a compliance checkbox: scan the network, fill out the SAQ, get the certifi"
+    },
+    {
+      "slug": "staging-wont-catch-prod-bugs-make",
+      "title": "Staging won't catch prod bugs. Make…",
+      "summary": "The conventional advice on building staging is incomplete in one specific, costly way. The failure is quiet — no errors, just wrong answers. This is the writeup that includes the part that usually goes wrong. The conventional wisdom (and why it's incomplete) The standard advice for catching producti"
     }
   ]
 }

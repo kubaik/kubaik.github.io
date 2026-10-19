@@ -150,7 +150,7 @@ observability-agents-lied-to-us,95,2635,Observability Agents as Application Code
 offline-agent-workflows-for-last-mile-ops,95,3017,Offline agent workflows for last-mile ops,2026-09-21T07:32:16.420961,1,no FAQ section
 offline-first-money-apps-with-dynamodb-streams,95,3000,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,1,no FAQ section
 one-misconfigured-vector-db-killed-our-rag-pipeline,95,2255,When a vector DB misconfiguration breaks RAG silently,2026-07-29T14:18:17.130040,1,no FAQ section
-pci-dss-architecture-12-requirements-that-matter,95,2405,PCI DSS architecture: 12 requirements that matter,2026-10-19T03:52:49.796652,1,no markdown table
+pci-dss-architecture-12-requirements-that-matter,95,2730,PCI DSS architecture: 12 requirements that matter,2026-10-19T03:52:49.796652,1,no markdown table
 pick-one-stripe-lemon-squeezy-paddle-in-2026,95,2739,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026",2026-06-25T13:28:15.693054,1,no markdown table
 portfolio-projects-that-hire-remote-senior-devs,95,2834,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,1,no FAQ section
 postgres-17-buried-redis-s3-cron,95,2153,"Postgres 17 buried Redis, S3, cron",2026-06-26T21:04:08.277256,1,no FAQ section
@@ -184,6 +184,7 @@ skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one A
 slos-for-agentic-features-beyond-latency,95,2936,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2581,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
 spot-ais-hidden-cost-spike-in-your-stack,95,2735,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,1,no FAQ section
+staging-wont-catch-prod-bugs-make,95,2363,Staging won't catch prod bugs. Make…,2026-10-19T18:32:38.061474,1,no FAQ section
 starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,1,no FAQ section
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
 stop-the-writes-zero-downtime-db-migrations,95,2518,Stop the writes — zero-downtime DB migrations,2026-07-02T18:33:14.783703,1,no markdown table

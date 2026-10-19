@@ -348,6 +348,7 @@ docs/soft-deletes-fail-what-breaks-first/index.md
 docs/spot-ais-hidden-cost-spike-in-your-stack/index.md
 docs/spot-evictions-the-retry-logic-that-holds-up/index.md
 docs/spot-instances-vs-on-demand-for-ai-experiments/index.md
+docs/staging-wont-catch-prod-bugs-make/index.md
 docs/starlink-4g-fallback-serve-pages-under-800ms/index.md
 docs/starlink-in-production-what-changed-in-our-stack/index.md
 docs/stay-relevant-when-tools-change-faster-than-you-can/index.md
