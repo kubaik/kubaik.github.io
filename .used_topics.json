@@ -149,5 +149,8 @@
   "Open banking APIs across markets: the integration differences nobody warns you about",
   "Why read replicas quietly cause more bugs than they fix",
   "The outbox pattern explained: solving dual writes without distributed transactions",
-  "Contract testing between services: the discipline that prevents integration breakage"
+  "Contract testing between services: the discipline that prevents integration breakage",
+  "Versioning and evolving agent capabilities without breaking existing integrations",
+  "AI observability beyond token counts: what actually predicts user-visible degradation",
+  "The PCI DSS requirements that actually shape how payment systems get architected"
 ]

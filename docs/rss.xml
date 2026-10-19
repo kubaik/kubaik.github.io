@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Oct 2026 15:36:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 03:53:45 +0000</lastBuildDate>
+    <item>
+      <title>PCI DSS architecture: 12 requirements that matter</title>
+      <link>https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/</link>
+      <description>Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</description>
+      <pubDate>Mon, 19 Oct 2026 03:52:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/</guid>
+    </item>
     <item>
       <title>Contract testing is not optional</title>
       <link>https://kubaik.github.io/contract-testing-is-not-optional/</link>
@@ -138,13 +145,6 @@
       <description>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</description>
       <pubDate>Wed, 07 Oct 2026 05:01:41 +0000</pubDate>
       <guid>https://kubaik.github.io/deployment-platforms-senior-vs-new-hire/</guid>
-    </item>
-    <item>
-      <title>Debugging techniques that outlast any framework</title>
-      <link>https://kubaik.github.io/debugging-techniques-that-outlast-any-framework/</link>
-      <description>Framework-agnostic debugging methods: narrow hypotheses about state, time, concurrency, boundaries and data shape, with a worked race-condition example.</description>
-      <pubDate>Tue, 06 Oct 2026 18:07:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/debugging-techniques-that-outlast-any-framework/</guid>
     </item>
   </channel>
 </rss>

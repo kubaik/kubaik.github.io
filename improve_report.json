@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "pci-dss-architecture-12-requirements-that-matter",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
   "failed": []
 }

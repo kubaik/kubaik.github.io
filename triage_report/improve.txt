@@ -272,6 +272,7 @@ docs/only-boring-stacks-survive-ai-services/index.md
 docs/open-banking-apis-the-integration-traps/index.md
 docs/orchestration-tax-kills-multi-agent-systems/index.md
 docs/pass-interviews-without-a-cs-degree/index.md
+docs/pci-dss-architecture-12-requirements-that-matter/index.md
 docs/personal-ai-assistants-avoid-vendor-lock-in-traps/index.md
 docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/index.md
 docs/platform-engineering-roi-metrics-that-fund-teams/index.md

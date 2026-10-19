@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-18T13:52:49.208925",
+  "built_at": "2026-10-19T03:52:52.388777",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5575,6 +5575,11 @@
       "slug": "contract-testing-is-not-optional",
       "title": "Contract testing is not optional",
       "summary": "The conventional advice on outbox pattern is incomplete in one specific, costly way. The workaround gets copy-pasted forward long after the original reason is forgotten. Here's what holds up in practice, and why. Most integration breakage I see in service meshes doesn't come from network partitions "
+    },
+    {
+      "slug": "pci-dss-architecture-12-requirements-that-matter",
+      "title": "PCI DSS architecture: 12 requirements that matter",
+      "summary": "It's the kind of problem that's easy to reproduce and hard to explain. versioning evolving is the kind of decision that looks reversible until it isn't. Here's the root cause, not just the symptom. PCI DSS is often treated as a compliance checkbox: scan the network, fill out the SAQ, get the certifi"
     }
   ]
 }

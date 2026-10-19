@@ -150,6 +150,7 @@ observability-agents-lied-to-us,95,2635,Observability Agents as Application Code
 offline-agent-workflows-for-last-mile-ops,95,3017,Offline agent workflows for last-mile ops,2026-09-21T07:32:16.420961,1,no FAQ section
 offline-first-money-apps-with-dynamodb-streams,95,3000,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,1,no FAQ section
 one-misconfigured-vector-db-killed-our-rag-pipeline,95,2255,When a vector DB misconfiguration breaks RAG silently,2026-07-29T14:18:17.130040,1,no FAQ section
+pci-dss-architecture-12-requirements-that-matter,95,2405,PCI DSS architecture: 12 requirements that matter,2026-10-19T03:52:49.796652,1,no markdown table
 pick-one-stripe-lemon-squeezy-paddle-in-2026,95,2739,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026",2026-06-25T13:28:15.693054,1,no markdown table
 portfolio-projects-that-hire-remote-senior-devs,95,2834,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,1,no FAQ section
 postgres-17-buried-redis-s3-cron,95,2153,"Postgres 17 buried Redis, S3, cron",2026-06-26T21:04:08.277256,1,no FAQ section
