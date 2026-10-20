@@ -235,6 +235,7 @@ marketing-without-budget-5k-mrr-in-18-months,docs/marketing-without-budget-5k-mr
 mcp-hidden-cost-traps,docs/mcp-hidden-cost-traps/index.md,IMPROVE,,,MCP hidden cost traps,2026-09-12,0,0,0.0,2369,0,0.0,0,3,6,0,False,False,16,False
 mcp-servers-real-time-pipelines-without-agents,docs/mcp-servers-real-time-pipelines-without-agents/index.md,IMPROVE,,,MCP servers: real-time pipelines without agents,2026-07-03,0,0,0.0,2523,0,0.0,0,1,6,0,False,True,19,False
 mcp-servers-the-3-hidden-costs-nobody-quotes,docs/mcp-servers-the-3-hidden-costs-nobody-quotes/index.md,IMPROVE,,,MCP servers: the 3 hidden costs nobody quotes,2026-08-05,0,1,0.01,2871,0,0.0,0,2,6,0,False,False,23,False
+mcp-vs-a2a-pick-the-wrong-layer,docs/mcp-vs-a2a-pick-the-wrong-layer/index.md,IMPROVE,,add_sources,MCP vs A2A: pick the wrong layer,2026-10-20,1,1,0.02,2446,0,0.0,0,0,2,0,False,True,20,True
 memory-systems-for-production-agents,docs/memory-systems-for-production-agents/index.md,IMPROVE,,,Memory Systems for Production Agents,2026-09-15,0,0,0.0,1968,0,0.0,0,3,6,0,False,False,14,False
 merge-three-payment-apis-into-one-system,docs/merge-three-payment-apis-into-one-system/index.md,IMPROVE,,,Merge three payment APIs into one system,2026-06-10,0,0,0.0,2670,0,0.0,0,3,6,0,False,False,20,False
 meter-dev-tool-pricing-in-2026,docs/meter-dev-tool-pricing-in-2026/index.md,IMPROVE,,,Meter dev-tool pricing in 2026,2026-07-02,0,0,0.0,1790,0,0.0,0,3,6,0,False,False,12,False
@@ -297,7 +298,7 @@ prompt-injection-got-the-hype-poison-data-ruined-us,docs/prompt-injection-got-th
 prompt-injection-what-breaks-first-in-prod,docs/prompt-injection-what-breaks-first-in-prod/index.md,IMPROVE,,,Prompt injection: what breaks first in prod,2026-09-27,0,0,0.0,2537,0,0.0,0,2,6,0,False,False,13,False
 prompt-injections-hidden-aws-tax,docs/prompt-injections-hidden-aws-tax/index.md,IMPROVE,,,Prompt injection’s hidden AWS tax,2026-07-03,0,0,0.0,2175,0,0.0,0,1,6,0,False,False,16,False
 prompts-are-code-how-to-measure-their-value,docs/prompts-are-code-how-to-measure-their-value/index.md,IMPROVE,,add_sources,Prompts are code: how to measure their value,2026-10-16,0,0,0.0,3671,0,0.0,0,0,6,0,False,True,19,False
-property-based-testing-vs-example-tests-the-bug-gap,docs/property-based-testing-vs-example-tests-the-bug-gap/index.md,IMPROVE,,add_sources,Property-based testing vs example tests: the bug gap,2026-10-20,0,0,0.0,2747,0,0.0,0,0,2,0,False,True,12,False
+property-based-testing-vs-example-tests-the-bug-gap,docs/property-based-testing-vs-example-tests-the-bug-gap/index.md,IMPROVE,,,Property-based testing vs example tests: the bug gap,2026-10-20,0,0,0.0,3595,0,0.0,0,1,6,0,False,True,17,False
 purpose-built-ai-is-a-trap-for-solo-founders,docs/purpose-built-ai-is-a-trap-for-solo-founders/index.md,IMPROVE,,,Purpose-built AI is a trap for solo founders,2026-09-19,0,0,0.0,2789,0,0.0,0,5,6,0,False,False,15,False
 purpose-built-beats-general-ai-tools,docs/purpose-built-beats-general-ai-tools/index.md,IMPROVE,,,Purpose-built beats general AI tools,2026-07-19,1,0,0.005,2922,0,0.0,0,1,6,0,False,False,15,False
 pypi-poisoned-models-hit-prod-in-2025,docs/pypi-poisoned-models-hit-prod-in-2025/index.md,IMPROVE,,add_sources,PyPI poisoned models hit prod in 2025,2026-08-25,0,0,0.0,1993,0,0.0,0,0,6,0,False,False,10,False

@@ -234,6 +234,7 @@ docs/marketing-without-budget-5k-mrr-in-18-months/index.md
 docs/mcp-hidden-cost-traps/index.md
 docs/mcp-servers-real-time-pipelines-without-agents/index.md
 docs/mcp-servers-the-3-hidden-costs-nobody-quotes/index.md
+docs/mcp-vs-a2a-pick-the-wrong-layer/index.md
 docs/memory-systems-for-production-agents/index.md
 docs/merge-three-payment-apis-into-one-system/index.md
 docs/meter-dev-tool-pricing-in-2026/index.md

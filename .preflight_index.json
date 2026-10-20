@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-20T04:03:33.083544",
+  "built_at": "2026-10-20T16:35:37.146015",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5590,6 +5590,11 @@
       "slug": "property-based-testing-vs-example-tests-the-bug-gap",
       "title": "Property-based testing vs example tests: the bug gap",
       "summary": "It's easy to spend longer than expected on propertybased testing before the actual failure mode becomes clear. This walks through the fix and the reasoning, not just the patch. The answers online were either wrong or skipped the part that mattered. Example-based tests are the default in financial co"
+    },
+    {
+      "slug": "mcp-vs-a2a-pick-the-wrong-layer",
+      "title": "MCP vs A2A: pick the wrong layer",
+      "summary": "eventdriven agentdriven was never the hard part. Knowing when it was about to fail was. This is the writeup that includes the part that usually goes wrong. The gap between the demo and the incident report is where this actually lives. Two protocols are now in every architecture diagram: Model Contex"
     }
   ]
 }

@@ -154,5 +154,8 @@
   "AI observability beyond token counts: what actually predicts user-visible degradation",
   "The PCI DSS requirements that actually shape how payment systems get architected",
   "Building a staging environment that actually catches production-only bugs",
-  "Property-based testing for financial systems: catching the bugs example tests miss"
+  "Property-based testing for financial systems: catching the bugs example tests miss",
+  "Event-driven vs agent-driven architectures: when each wins in 2026",
+  "Negotiating a remote engineering offer when the recruiter won't share a band",
+  "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems"
 ]
