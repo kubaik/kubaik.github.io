@@ -1,0 +1,527 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Property-based testing vs example tests: the bug gap - Kubai Kevin</title>
+        <meta name="description" content="How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.">
+        <meta name="keywords" content="PropertyBasedTesting, ExampleTests, Financial, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-20T04:03:30.469740">
+        <meta property="article:modified_time" content="2026-10-20T04:04:15.660192+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Property-based testing vs example tests: the bug gap">
+        <meta property="og:description" content="How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.">
+        <meta property="og:url" content="https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/property-based-testing-vs-example-tests-the-bug-gap.png">
+        <meta property="og:image:alt" content="Property-based testing vs example tests: the bug gap">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Property-based testing vs example tests: the bug gap">
+        <meta name="twitter:description" content="How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/property-based-testing-vs-example-tests-the-bug-gap.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/#article",
+      "headline": "Property-based testing vs example tests: the bug gap",
+      "description": "How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.",
+      "datePublished": "2026-10-20T04:03:30+00:00",
+      "dateModified": "2026-10-20T04:04:15+00:00",
+      "wordCount": 3694,
+      "timeRequired": "PT18M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/"
+      },
+      "keywords": "PropertyBasedTesting, ExampleTests, Financial, Softwareengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Property-based testing vs example tests: the bug gap",
+          "item": "https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Property-based testing vs example tests: the bug gap</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Property-based testing vs example tests: the bug gap</h1>
+                
+                <p class="post-lead">How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PropertyBasedTesting</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ExampleTests</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Financial</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        18 min read
+                        &nbsp;·&nbsp; 3694 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-20
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Example-based tests are the default in financial codebases: a developer writes a test for a known scenario, it passes, the code ships. Property-based testing flips the model — instead of asserting on specific inputs, you assert on invariants that must hold for all valid inputs, and a generator produces many cases looking for a counterexample. The comparison matters because financial systems fail in the gaps between examples: rounding drift, sign errors on negative amounts, boundary conditions in currency conversion, and state that becomes invalid after a sequence of operations. This article compares the two approaches on what they actually catch, how they behave under real constraints, and where each belongs. It ends with a concrete step you can take in the next 30 minutes.</p>
+<h2 id="why-this-comparison-matters">Why this comparison matters</h2>
+<p>Financial code has a property that makes example tests structurally weak: the valid input space is enormous and the failure modes are often arithmetic. A payment amount is not a single value; it is any decimal in a range, with currency-specific precision, sign, and rounding rules. An account balance is not a number; it is the result of a ledger that must satisfy conservation — debits equal credits, no money is created or destroyed by a transfer. Example tests sample this space. Property-based tests quantify over it, within the limits of the generator.</p>
+<p>The second reason is operational. Financial systems are increasingly expected to demonstrate correctness beyond happy paths, and incidents often trace to edge cases that no one wrote a test for. Property-based testing does not replace example tests — it catches a different class of bug. The question is not which is better in the abstract, but which failure modes each one actually finds, and what it costs to run both.</p>
+<h2 id="option-a-example-based-tests-how-they-work-and-where-they-shine">Option A — example-based tests: how they work and where they shine</h2>
+<p>An example test is a concrete assertion: given input X, expect output Y. In a financial context that might be: transferring 100.00 USD from account A to B leaves A with balance minus 100.00 and B with balance plus 100.00. The test is readable, fast, and serves as documentation. It is also the only kind of test that can assert on a specific business rule like "a transfer above the daily limit is rejected with code LIMIT_EXCEEDED."</p>
+<p>Example tests shine in three places. First, regression: once a bug is found, an example test pins the exact input that broke, so it cannot silently return. Second, specification: business rules are often stated as examples, and encoding them directly reduces translation error. Third, debugging: when an example test fails, the input is right there in the test, so reproduction is trivial.</p>
+<p>The weakness is coverage of the input space. A typical example suite for a transfer function might test positive amounts, zero, and one negative case. It will not test the interaction of rounding with a currency that has zero decimal places, or a sequence of transfers that leaves the ledger in a state where the sum of balances no longer equals the sum of transactions. Those are the bugs that reach production because no one thought to write the example.</p>
+<p>A subtler weakness is what a passing example suite implies. Ten green tests look like evidence of correctness, but they are evidence about ten inputs. When the suite is used as a release gate, the gate measures the author's imagination, not the code's behavior over its input domain.</p>
+<h2 id="option-b-property-based-testing-how-it-works-and-where-it-shines">Option B — property-based testing: how it works and where it shines</h2>
+<p>Property-based testing starts from invariants. For a ledger, the central invariant is conservation: for any sequence of valid transfers, the sum of all account balances plus the sum of fees must equal the initial total. A property-based framework generates random sequences of transfers — random amounts, random source and destination accounts, random currencies within a configured set — and checks the invariant after each step. When it fails, it shrinks the sequence to the smallest reproduction, which is often a two- or three-step sequence that a human can read.</p>
+<p>The approach shines where the correctness condition is a mathematical or structural property rather than a specific output. Examples in financial systems include:</p>
+<ul>
+<li>Rounding: for any amount and any supported currency, converting to minor units and back must be idempotent within the currency's precision.</li>
+<li>Sign symmetry: a debit of X followed by a credit of X must restore the original balance exactly, for all X in the valid range.</li>
+<li>Order independence: applying a set of independent fees in any order must produce the same final balance.</li>
+<li>Idempotency: replaying the same idempotency key must not change state, for any request body that is otherwise valid.</li>
+<li>Monotonicity: increasing a transfer amount must never decrease the total fees charged, given a fixed fee schedule.</li>
+</ul>
+<p>Where property-based testing is weaker: it cannot easily assert on specific error codes or human-readable messages, because the generator does not know which inputs should trigger which business rule. It also requires a generator that produces valid inputs — a generator that produces invalid inputs will fail on preconditions rather than on the property, which wastes cycles and can hide real bugs. And it is not a replacement for example tests that encode explicit regulatory rules.</p>
+<h2 id="head-to-head-what-each-approach-catches">Head-to-head: what each approach catches</h2>
+<p>The most useful comparison is by failure mode. The table below is a qualitative comparison based on documented behavior of the two techniques, not a benchmark.</p>
+<table>
+<thead>
+<tr>
+<th>Failure mode</th>
+<th>Example tests</th>
+<th>Property-based tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Specific regression (known input)</td>
+<td>Strong: pins the exact case</td>
+<td>Weak unless the generator happens to produce it</td>
+</tr>
+<tr>
+<td>Rounding and precision drift</td>
+<td>Weak: only tested values</td>
+<td>Strong: quantifies over amounts and currencies</td>
+</tr>
+<tr>
+<td>Sign and boundary errors</td>
+<td>Moderate: depends on cases written</td>
+<td>Strong: generators include negatives and boundaries</td>
+</tr>
+<tr>
+<td>State corruption after sequences</td>
+<td>Weak: sequences rarely enumerated</td>
+<td>Strong: generates sequences and shrinks failures</td>
+</tr>
+<tr>
+<td>Business rule with specific code</td>
+<td>Strong: asserts exact code</td>
+<td>Weak: property usually checks state, not messages</td>
+</tr>
+<tr>
+<td>Idempotency and replay</td>
+<td>Moderate: one or two cases</td>
+<td>Strong: generates arbitrary valid bodies</td>
+</tr>
+<tr>
+<td>Performance and latency</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern is clear: example tests are better at pinning known behavior; property-based tests are better at discovering unknown interactions. A financial system needs both, but the ratio matters. If the suite is all examples, the unknown interactions are untested. If the suite is all properties, the specific business rules are underspecified.</p>
+<h2 id="head-to-head-developer-experience-and-workflow">Head-to-head: developer experience and workflow</h2>
+<p>Example tests are easy to write and read. A new engineer can open a test file and understand what is being asserted in seconds. Property-based tests have a steeper learning curve: the engineer must identify the invariant, write a generator that produces valid inputs, and interpret shrunk failures. The first property in a codebase often takes longer to write than ten example tests.</p>
+<p>That cost is front-loaded. Once the generator and the invariant are in place, adding a new property is cheap, and the generator can be reused across the suite. The harder ongoing cost is maintenance: when the domain model changes, the generator must change with it, and a generator that silently produces invalid inputs will cause properties to pass vacuously. A common failure mode is a generator that produces only positive amounts because the random function was never configured to include negatives; the property then passes while the sign bug remains.</p>
+<p>Debugging differs too. An example test failure gives you the input directly. A property-based failure gives you a counterexample, which the framework shrinks — but the shrunk case can still be abstract, and reproducing it requires running the same seed. Most frameworks print the seed and the shrunk input, so reproduction is possible, but it is an extra step compared to an example test.</p>
+<p>In CI, property-based tests are slower because they run many cases. The number of cases is configurable; a common default in property-based frameworks is 100 cases per property, which is a documented default in several libraries. Teams often run a lower count on every commit and a higher count nightly. That is a workflow decision, not a property of the technique.</p>
+<h3 id="measuring-the-cost-and-the-yield">Measuring the cost and the yield</h3>
+<p>Neither technique's cost is worth guessing at. Two measurements settle the question for a given codebase.</p>
+<p><strong>Runtime.</strong> Instrument the test runner to record per-test wall time and compare the total suite time with properties enabled and disabled, on the same machine and the same commit. For property tests, record the case count alongside the time so the per-case cost is visible. A property whose per-case cost is high usually points at an expensive generator or a slow model, not at the technique.</p>
+<p><strong>Yield.</strong> Track, per test file, how many defects each technique has found since it was introduced. A simple way is to tag commits that fix a bug with the test that would have caught it. Over a quarter, the count of bugs first caught by property tests versus example tests is the only honest evidence of which technique is paying for itself in that codebase.</p>
+<h2 id="head-to-head-cost-model">Head-to-head: cost model</h2>
+<p>The cost of example tests is roughly linear in the number of cases: each test is a small, fast unit. The cost of property-based tests is dominated by the number of generated cases and the complexity of the generator. For a financial ledger, a generator that produces valid transfer sequences must also produce valid account states, which can require a model of the domain. That model is code that must be maintained.</p>
+<p>The trade-off is best expressed as a coverage-per-effort curve. Example tests give high coverage of known scenarios quickly, then flatten. Property-based tests have a higher fixed cost to set up the generator and invariant, then a lower marginal cost per additional property. The crossover depends on how many properties the domain has. A ledger with conservation, rounding, idempotency, and order independence has enough properties to justify the setup. A single currency conversion function with one rounding rule may not.</p>
+<p>There is also a runtime cost. Generating and checking many cases takes longer than running a handful of examples. For a suite that must run in seconds on every commit, property-based tests are often scoped to a smaller case count in the fast path and a larger count in a nightly job. That is a configuration choice, not an inherent limitation.</p>
+<p>A worked cost comparison makes the shape concrete. Suppose an example suite has 40 tests averaging 5 ms each: 200 ms total. A property suite has 6 properties at the default 100 cases, each case costing 2 ms including generation: 6 × 100 × 2 ms = 1,200 ms. (These figures are illustrative, not measured.) The property suite costs six times the runtime and covers an input space the example suite cannot enumerate. Reducing the per-commit case count to 25 brings the property suite to 6 × 25 × 2 ms = 300 ms, close to the example suite, with the full count reserved for nightly runs.</p>
+<h2 id="a-worked-example-conservation-in-a-ledger">A worked example: conservation in a ledger</h2>
+<p>The following Python example uses Hypothesis, a well-documented property-based testing library. It is self-contained and runnable. The property is conservation: for any sequence of transfers, the sum of balances equals the initial total.</p>
+<pre><code class="language-python">from hypothesis import given, strategies as st
+
+class Ledger:
+    def __init__(self, accounts):
+        self.balances = {a: 0 for a in accounts}
+
+    def transfer(self, src, dst, amount):
+        if amount &lt; 0:
+            raise ValueError(&quot;negative amount&quot;)
+        if self.balances[src] &lt; amount:
+            raise ValueError(&quot;insufficient funds&quot;)
+        self.balances[src] -= amount
+        self.balances[dst] += amount
+
+    def total(self):
+        return sum(self.balances.values())
+
+accounts = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+
+@given(st.lists(
+    st.tuples(
+        st.sampled_from(accounts),
+        st.sampled_from(accounts),
+        st.integers(min_value=0, max_value=1000),
+    ),
+    min_size=1, max_size=20,
+))
+def test_conservation(transfers):
+    ledger = Ledger(accounts)
+    ledger.balances[&quot;a&quot;] = 10_000
+    initial = ledger.total()
+    for src, dst, amount in transfers:
+        if src == dst:
+            continue
+        try:
+            ledger.transfer(src, dst, amount)
+        except ValueError:
+            pass
+    assert ledger.total() == initial
+</code></pre>
+<p>This property will fail if the transfer function ever creates or destroys money. The generator produces sequences of up to 20 transfers, including zero amounts and same-account transfers, which the test skips. A typical bug it catches: a fee that is subtracted from the source but not added anywhere, breaking conservation. An example test would only catch that if someone wrote a case with a fee.</p>
+<p>The example also shows a common pitfall: the test catches <code>ValueError</code> and continues, which means the property only checks conservation over successful transfers. That is intentional here, but it also means a bug that causes an invalid transfer to succeed would not be caught by this property alone. A second property should assert that invalid transfers raise.</p>
+<h3 id="reading-a-shrinking-failure">Reading a shrinking failure</h3>
+<p>Suppose the property fails. The framework reports a counterexample — after shrinking, something like <code>[(a, b, 0), (b, a, 0)]</code> — plus the seed that produced it. The reasoning to follow is:</p>
+<ol>
+<li><strong>Reproduce first.</strong> Re-run with the printed seed to confirm the failure is deterministic. If it does not reproduce, the generator is reading mutable state or the code under test is nondeterministic, and that is itself a finding.</li>
+<li><strong>Read the shrunk input as a hypothesis.</strong> A minimal counterexample usually names the mechanism. A sequence of zero-amount transfers that breaks conservation points at fee handling on zero amounts, not at arithmetic in general.</li>
+<li><strong>Confirm with an example test.</strong> Write the shrunk case as a plain example test. It becomes the permanent regression guard, runs in milliseconds, and documents the bug in a form any reviewer can read.</li>
+<li><strong>Check the generator's blind spots.</strong> If the counterexample was surprising, ask whether the generator could have produced it sooner — for instance, whether small amounts and same-account pairs are represented with realistic frequency.</li>
+</ol>
+<p>Step 3 is the bridge between the two techniques: every property failure should leave behind an example test. The property keeps exploring; the example keeps the specific bug dead.</p>
+<h2 id="a-decision-framework">A decision framework</h2>
+<p>Use this checklist to decide where each approach belongs. It is not a binary choice; most financial systems should have both.</p>
+<ol>
+<li>If the rule is stated as a specific example in a regulation or product spec, write an example test. It pins the exact behavior and is easy to audit.</li>
+<li>If the rule is a mathematical invariant (conservation, idempotency, rounding, order independence), write a property test. It will explore cases you did not think of.</li>
+<li>If the domain has sequences of operations (transfers, settlements, reversals), write a property test over sequences. State corruption is the most common class of bug that example tests miss.</li>
+<li>If the input space is large and continuous (amounts, rates, timestamps), write a property test with a generator that includes boundaries and negatives.</li>
+<li>If the code is a thin wrapper over an external API, example tests with mocked responses are usually sufficient; property tests add little because the behavior is defined by the external system.</li>
+<li>If the code is a pure function with a small input domain, example tests may be enough; property tests are cheap but the marginal value is lower.</li>
+</ol>
+<p>A practical default: every financial domain module should have at least one property test for its central invariant, plus example tests for each business rule. That combination catches both known and unknown failures.</p>
+<h2 id="failure-modes-to-watch-for">Failure modes to watch for</h2>
+<p>Both techniques have characteristic ways of going wrong. Knowing them in advance saves a quarter of wasted effort.</p>
+<p><strong>Vacuous properties.</strong> A property that passes because the generator never produces inputs that exercise the code. The symptom is a property that passes in milliseconds with no apparent work, or one that passes even when the implementation is deliberately broken. The check: introduce a deliberate bug and confirm the property fails. If it does not, the generator is the problem.</p>
+<p><strong>Precondition-heavy generators.</strong> A property guarded by many <code>assume</code>-style filters that discard most generated cases. The suite runs slowly and the effective case count is far below the configured one. The fix is to build the generator so that valid inputs are the default, with filters used sparingly.</p>
+<p><strong>Over-specified properties.</strong> A property that restates the implementation rather than an invariant — for example, asserting that a function returns exactly the value the implementation computes, step by step. Such a property fails on every legitimate refactor and catches nothing. An invariant should be checkable without reading the implementation.</p>
+<p><strong>Example suites that stop growing.</strong> Once a bug is fixed and pinned, the example test stays green forever and the suite stops being extended. The symptom is a suite whose newest tests are years old while the module has changed substantially. A periodic review that asks "what input would break this module now?" restores the habit.</p>
+<p><strong>Model drift.</strong> A stateful property test that maintains a simplified model of the domain, where the model and the real implementation diverge. The property then checks the model against itself. Keep the model minimal — conservation, not a reimplementation of the ledger — so drift is visible.</p>
+<h2 id="recommendation-and-caveats">Recommendation and caveats</h2>
+<p>For financial systems, the recommendation is conditional. Use property-based testing as the primary technique for invariants and sequence behavior: ledger conservation, idempotency of payment endpoints, rounding and currency conversion, and state machines for transfers and reversals. Use example-based testing as the primary technique for specific business rules, error codes, and regulatory requirements, and as regression tests for every bug found in production. The two are complementary, and the failure mode of choosing only one is predictable: example-only suites miss interaction bugs; property-only suites miss explicit rule coverage.</p>
+<p>The caveats are real. Property-based testing requires a generator that produces valid inputs, and a generator that is too permissive will cause properties to fail on preconditions rather than on real bugs. It also requires discipline to keep the number of cases manageable in CI. And it does not remove the need for example tests; it changes what they are for. Teams that adopt property-based testing without maintaining their example suite often find that specific business rules become underspecified.</p>
+<p>A second caveat is tooling maturity. Property-based testing libraries exist for many languages, but the quality of shrinking and the ease of writing generators vary. In some ecosystems, the generator combinators are expressive; in others, writing a generator for a nested domain object is tedious. That cost should be weighed against the bug classes the property would catch.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What is property-based testing in simple terms?</strong>
+Property-based testing is a technique where you assert on general properties that must hold for all valid inputs, and the testing framework generates many inputs to try to find a counterexample. Instead of writing one test per input, you write one property and let the framework explore the input space. When it finds a failure, it shrinks the input to a minimal reproduction.</p>
+<p><strong>Can property-based testing replace example-based tests?</strong>
+No. Property-based tests are good at finding unknown interactions and invariants, but they cannot easily assert on specific error codes or business rules that are defined by examples. Example tests also serve as regression tests for known bugs. Most financial systems need both: properties for invariants, examples for rules and regressions.</p>
+<p><strong>How many test cases should a property-based test run?</strong>
+The number of cases is configurable, and common defaults in property-based frameworks are around 100 cases per property. Teams often run a lower count on every commit and a higher count nightly. The right number depends on the cost of generation and the risk of the domain; there is no universal answer, but starting with the framework default and increasing it for critical invariants is a reasonable approach.</p>
+<p><strong>Does property-based testing work for stateful systems like ledgers?</strong>
+Yes, and that is where it is most valuable. Stateful property-based testing generates sequences of operations and checks invariants after each step. For a ledger, the invariant is conservation: the sum of balances must equal the initial total. This catches bugs that example tests miss because they rarely enumerate sequences long enough to expose state corruption.</p>
+<p><strong>What if a property test fails only intermittently?</strong>
+Intermittent failures usually mean one of three things: the generator depends on mutable global state, the code under test is nondeterministic (time, ordering, concurrency), or a shrinking step is being skipped so the reported counterexample is not minimal. Record the seed on every run so any failure can be replayed exactly, and treat non-reproducible failures as defects in the test harness before dismissing them as flakiness.</p>
+<h2 id="final-verdict">Final verdict</h2>
+<p>The comparison is not close in one direction: for invariants and sequence behavior, property-based testing finds bugs that example tests structurally cannot, because it quantifies over inputs rather than sampling them. For specific business rules and regressions, example tests remain the right tool. The verdict is to use both, with a clear division of labor, and to treat the absence of any property test in a financial domain module as a gap worth closing.</p>
+<p>The one step to take in the next 30 minutes: open the module that handles transfers or ledger updates, and write a single property test for conservation — that the sum of balances is unchanged after any sequence of valid transfers. Use the framework for your language, start with the default number of cases, and run it. If it passes, you have a baseline; if it fails, you have found a bug that example tests missed.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/test-ai-code-without-testing-the-ai/">Test AI code without testing the AI</a></li>
+<li><a href="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
+<li><a href="https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/7-idp-shifts-for-ai-feature-delivery/">
+                        <h3>7 IDP shifts for AI feature delivery</h3>
+                        <p>Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</p>
+                        <span class="related-meta">15 min read · 10 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/deployment-platforms-senior-vs-new-hire/">
+                        <h3>Deployment platforms: senior vs new hire</h3>
+                        <p>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</p>
+                        <span class="related-meta">17 min read · 7 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/debugging-techniques-that-outlast-any-framework/">
+                        <h3>Debugging techniques that outlast any framework</h3>
+                        <p>Framework-agnostic debugging methods: narrow hypotheses about state, time, concurrency, boundaries and data shape, with a worked race-condition example.</p>
+                        <span class="related-meta">11 min read · 6 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

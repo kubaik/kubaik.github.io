@@ -296,6 +296,7 @@ docs/prompt-injection-got-the-hype-poison-data-ruined-us/index.md
 docs/prompt-injection-what-breaks-first-in-prod/index.md
 docs/prompt-injections-hidden-aws-tax/index.md
 docs/prompts-are-code-how-to-measure-their-value/index.md
+docs/property-based-testing-vs-example-tests-the-bug-gap/index.md
 docs/purpose-built-ai-is-a-trap-for-solo-founders/index.md
 docs/purpose-built-beats-general-ai-tools/index.md
 docs/pypi-poisoned-models-hit-prod-in-2025/index.md

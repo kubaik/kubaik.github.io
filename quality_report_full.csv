@@ -184,7 +184,7 @@ skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one A
 slos-for-agentic-features-beyond-latency,95,2936,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2581,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
 spot-ais-hidden-cost-spike-in-your-stack,95,2735,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,1,no FAQ section
-staging-wont-catch-prod-bugs-make,95,2363,Staging won't catch prod bugs. Make…,2026-10-19T18:32:38.061474,1,no FAQ section
+staging-wont-catch-prod-bugs-make,95,2619,Staging won't catch prod bugs. Make…,2026-10-19T18:32:38.061474,1,no FAQ section
 starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,1,no FAQ section
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
 stop-the-writes-zero-downtime-db-migrations,95,2518,Stop the writes — zero-downtime DB migrations,2026-07-02T18:33:14.783703,1,no markdown table
@@ -343,6 +343,7 @@ portfolio-that-hires-show-constraints-not-code,100,2823,"Portfolio that hires: s
 pr-checklists-are-dead-ai-agents-do-reviews-now,100,2442,PR checklists are dead: AI agents do reviews now,2026-06-14T16:58:47.894995,0,
 price-ai-proof-skills-in-2026,100,2706,Price AI-proof skills in 2026,2026-06-29T16:52:04.366294,0,
 price-your-remote-salary-4-step-script,100,2329,Price your remote salary: 4-step script,2026-06-08T07:28:13.717967,0,
+property-based-testing-vs-example-tests-the-bug-gap,100,2846,Property-based testing vs example tests: the bug gap,2026-10-20T04:03:30.469740,0,
 purpose-built-ai-is-a-trap-for-solo-founders,100,3092,Purpose-built AI is a trap for solo founders,2026-09-19T09:31:04.942846,0,
 rag-in-prod-what-tutorials-wont-tell-you,100,2854,RAG in prod: what tutorials won’t tell you,2026-06-08T17:45:22.815623,0,
 rag-is-not-enough-hybrid-search-reranking-in-2026,100,2314,RAG is not enough: hybrid search + reranking in 2026,2026-06-27T09:26:41.755095,0,

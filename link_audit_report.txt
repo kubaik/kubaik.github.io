@@ -1,4 +1,4 @@
-❌ Internal link audit: 406 broken link(s) found across 407 posts checked.
+❌ Internal link audit: 407 broken link(s) found across 408 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -352,6 +352,7 @@ Source Post                              Anchor Text                    Missing 
   /spot-ais-hidden-cost-spike-in-your-stack AI content policy              /ai-content-policy/
   /spot-evictions-the-retry-logic-that-holds-up AI content policy              /ai-content-policy/
   /spot-instances-vs-on-demand-for-ai-experiments AI content policy              /ai-content-policy/
+  /staging-wont-catch-prod-bugs-make      AI content policy              /ai-content-policy/
   /starlink-4g-fallback-serve-pages-under-800ms AI content policy              /ai-content-policy/
   /starlink-in-production-what-changed-in-our-stack AI content policy              /ai-content-policy/
   /stay-relevant-when-tools-change-faster-than-you-can AI content policy              /ai-content-policy/

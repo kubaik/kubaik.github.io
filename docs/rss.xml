@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Oct 2026 18:33:25 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Oct 2026 04:04:29 +0000</lastBuildDate>
+    <item>
+      <title>Property-based testing vs example tests: the bug gap</title>
+      <link>https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/</link>
+      <description>How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.</description>
+      <pubDate>Tue, 20 Oct 2026 04:03:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/</guid>
+    </item>
     <item>
       <title>Staging won&apos;t catch prod bugs. Make…</title>
       <link>https://kubaik.github.io/staging-wont-catch-prod-bugs-make/</link>
@@ -138,13 +145,6 @@
       <description>Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.</description>
       <pubDate>Thu, 08 Oct 2026 05:13:19 +0000</pubDate>
       <guid>https://kubaik.github.io/promotions-in-the-ai-era-the-mechanism/</guid>
-    </item>
-    <item>
-      <title>Core Web Vitals: what actually moves the needle</title>
-      <link>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</link>
-      <description>A decision framework for Core Web Vitals: read field distributions, find fixed costs that hit the slow tail, and verify changes with segmented RUM.</description>
-      <pubDate>Wed, 07 Oct 2026 18:40:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/</guid>
     </item>
   </channel>
 </rss>

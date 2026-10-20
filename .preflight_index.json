@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-19T18:32:40.444613",
+  "built_at": "2026-10-20T04:03:33.083544",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5585,6 +5585,11 @@
       "slug": "staging-wont-catch-prod-bugs-make",
       "title": "Staging won't catch prod bugs. Make…",
       "summary": "The conventional advice on building staging is incomplete in one specific, costly way. The failure is quiet — no errors, just wrong answers. This is the writeup that includes the part that usually goes wrong. The conventional wisdom (and why it's incomplete) The standard advice for catching producti"
+    },
+    {
+      "slug": "property-based-testing-vs-example-tests-the-bug-gap",
+      "title": "Property-based testing vs example tests: the bug gap",
+      "summary": "It's easy to spend longer than expected on propertybased testing before the actual failure mode becomes clear. This walks through the fix and the reasoning, not just the patch. The answers online were either wrong or skipped the part that mattered. Example-based tests are the default in financial co"
     }
   ]
 }
