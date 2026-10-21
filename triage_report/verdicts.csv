@@ -182,7 +182,7 @@ deploy-a-solo-stack-for-20month-in-2026,docs/deploy-a-solo-stack-for-20month-in-
 deployment-platforms-senior-vs-new-hire,docs/deployment-platforms-senior-vs-new-hire/index.md,IMPROVE,,,Deployment platforms: senior vs new hire,2026-10-07,0,0,0.0,3298,0,0.0,0,5,6,0,False,True,21,False
 detect-lazy-agents-without-false-alarms,docs/detect-lazy-agents-without-false-alarms/index.md,IMPROVE,,add_sources,Detect lazy agents without false alarms,2026-07-04,0,0,0.0,2844,0,0.0,0,0,6,0,False,False,19,False
 detecting-silent-agent-failures,docs/detecting-silent-agent-failures/index.md,IMPROVE,,,Detecting silent agent failures,2026-10-13,0,0,0.0,2643,0,0.0,0,2,6,0,False,True,15,False
-docs-that-survive-the-bus-factor-fix,docs/docs-that-survive-the-bus-factor-fix/index.md,IMPROVE,,add_sources,Docs that survive: the bus factor fix,2026-10-21,2,0,0.014,2583,0,0.0,0,0,2,0,False,True,14,True
+docs-that-survive-the-bus-factor-fix,docs/docs-that-survive-the-bus-factor-fix/index.md,IMPROVE,,,Docs that survive: the bus factor fix,2026-10-21,2,0,0.012,2935,0,0.0,0,2,6,0,False,True,17,False
 double-entry-ledger-concurrent-write-errors,docs/double-entry-ledger-concurrent-write-errors/index.md,IMPROVE,,,Double-entry ledger: concurrent write errors,2026-10-01,0,0,0.0,2638,0,0.0,0,2,6,0,False,False,16,False
 double-the-price-double-the-revenue,docs/double-the-price-double-the-revenue/index.md,IMPROVE,,,"Double the price, double the revenue",2026-06-30,0,0,0.0,2181,0,0.0,0,1,6,0,False,False,12,False
 drop-ec2-bills-70-without-code,docs/drop-ec2-bills-70-without-code/index.md,IMPROVE,,,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09,0,0,0.0,2144,0,0.0,0,3,6,0,False,False,22,False
@@ -315,6 +315,7 @@ rebalance-pay-when-ai-fills-half-your-role,docs/rebalance-pay-when-ai-fills-half
 reconciling-mobile-money-edge-cases-banks-ignore,docs/reconciling-mobile-money-edge-cases-banks-ignore/index.md,IMPROVE,,add_sources,Reconciling mobile money: edge cases banks ignore,2026-06-12,0,0,0.0,3265,0,0.0,0,0,6,0,False,False,19,False
 red-teaming-agents-without-killing-velocity,docs/red-teaming-agents-without-killing-velocity/index.md,IMPROVE,,,Red-teaming agents without killing velocity,2026-07-17,1,0,0.008,2132,0,0.0,0,1,6,0,False,True,19,False
 regulations-forced-better-apis-the-2026-fintech,docs/regulations-forced-better-apis-the-2026-fintech/index.md,IMPROVE,,,Regulations forced better APIs: the 2026 fintech,2026-06-20,0,0,0.0,2462,0,0.0,0,3,6,0,False,False,14,False
+remote-premium-rates-skills-ai-cant-copy,docs/remote-premium-rates-skills-ai-cant-copy/index.md,IMPROVE,,add_sources,Remote premium rates: skills AI can't copy,2026-10-21,1,0,0.006,2972,0,0.0,0,0,2,0,False,True,35,False
 remote-salary-negotiate-without-sounding-cheap,docs/remote-salary-negotiate-without-sounding-cheap/index.md,IMPROVE,,add_sources,Remote salary: negotiate without sounding cheap,2026-06-08,1,0,0.007,2324,0,0.0,0,0,6,0,False,False,14,False
 remote-work-in-2026-which-tools-survived,docs/remote-work-in-2026-which-tools-survived/index.md,IMPROVE,,,Remote work in 2026: which tools still hold up,2026-06-13,1,0,0.009,1793,0,0.0,0,2,3,0,False,False,21,False
 replace-env-with-these-in-2026,docs/replace-env-with-these-in-2026/index.md,IMPROVE,,,Replace .env with these in 2026,2026-06-18,0,0,0.0,2855,0,0.0,0,2,6,0,False,False,26,False

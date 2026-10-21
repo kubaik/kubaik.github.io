@@ -314,6 +314,7 @@ docs/rebalance-pay-when-ai-fills-half-your-role/index.md
 docs/reconciling-mobile-money-edge-cases-banks-ignore/index.md
 docs/red-teaming-agents-without-killing-velocity/index.md
 docs/regulations-forced-better-apis-the-2026-fintech/index.md
+docs/remote-premium-rates-skills-ai-cant-copy/index.md
 docs/remote-salary-negotiate-without-sounding-cheap/index.md
 docs/remote-work-in-2026-which-tools-survived/index.md
 docs/replace-env-with-these-in-2026/index.md

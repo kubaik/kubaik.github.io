@@ -16,6 +16,7 @@ found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS tha
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
 negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,1,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim'"
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
+remote-premium-rates-skills-ai-cant-copy,80,3361,Remote premium rates: skills AI can't copy,2026-10-21T08:45:29.894292,1,first-person incident: 'A practical way to verify is to do a dry run with a colleague.'
 spot-instances-vs-on-demand-for-ai-experiments,80,2587,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,1,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a'
 micro-saas-niches-eaten-by-ai-in-2026,82,2266,Micro-SaaS niches eaten by AI in 2026,2026-06-29T09:34:39.935425,3,no fenced code block | no markdown table | no FAQ section
 why-monoliths-die-slowly-in-2026,82,2669,Why monoliths die slowly in 2026,2026-06-19T02:27:59.398225,3,no fenced code block | no markdown table | no FAQ section
@@ -294,7 +295,7 @@ cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware securi
 debugging-techniques-that-outlast-any-framework,100,2286,Debugging techniques that outlast any framework,2026-10-06T18:07:18.600534,0,
 deployment-platforms-senior-vs-new-hire,100,3382,Deployment platforms: senior vs new hire,2026-10-07T05:01:41.493415,0,
 detecting-silent-agent-failures,100,3026,Detecting silent agent failures,2026-10-13T06:03:55.281045,0,
-docs-that-survive-the-bus-factor-fix,100,2747,Docs that survive: the bus factor fix,2026-10-21T03:54:11.003570,0,
+docs-that-survive-the-bus-factor-fix,100,3099,Docs that survive: the bus factor fix,2026-10-21T03:54:11.003570,0,
 double-entry-ledger-concurrent-write-errors,100,2922,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 drop-ec2-bills-70-without-code,100,2634,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09T04:57:04.863722,0,
 ebpf-observability-in-2026-what-actually-works,100,2772,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,0,

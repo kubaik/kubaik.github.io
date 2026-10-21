@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-21T03:54:13.585994",
+  "built_at": "2026-10-21T08:45:31.788175",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5600,6 +5600,11 @@
       "slug": "docs-that-survive-the-bus-factor-fix",
       "title": "Docs that survive: the bus factor fix",
       "summary": "Most write-ups stop exactly where the interesting part starts. The metric everyone watches for changed selfservice usually isn't the one that would have caught the problem early. This is the writeup that includes the part that usually goes wrong. Most engineering teams treat documentation as a write"
+    },
+    {
+      "slug": "remote-premium-rates-skills-ai-cant-copy",
+      "title": "Remote premium rates: skills AI can't copy",
+      "summary": "It's the kind of thing that works for months, then all at once doesn't. Somewhere between the designing systems tutorial and the incident channel, a step goes missing. This works through the problem properly, from cause to fix. Remote work has always had a hidden tax: the further you are from the cl"
     }
   ]
 }
