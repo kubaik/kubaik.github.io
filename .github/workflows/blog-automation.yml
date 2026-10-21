@@ -1,540 +1,545 @@
 name: AI Blog Automation
 
 on:
-  schedule:
-    - cron: "0 */12 * * *"
-  workflow_dispatch:
-    inputs:
-      force_cleanup:
-        description: "Force cleanup of posts"
-        required: false
-        default: false
-        type: boolean
-      improve_limit:
-        description: "Posts LLM-rewritten this run (0 = all remaining; mind provider rate limits)"
-        required: false
-        default: "5"
-      triage_max_deletions:
-        description: "Max DELETE-verdict posts removed this run (run once with 100 for the initial cleanup)"
-        required: false
-        default: "10"
-      regenerate_og_only:
-        description: "Only regenerate OG images (skip content generation)"
-        required: false
-        default: false
-        type: boolean
+    schedule:
+        - cron: "0 */12 * * *"
+    workflow_dispatch:
+        inputs:
+            force_cleanup:
+                description: "Force cleanup of posts"
+                required: false
+                default: false
+                type: boolean
+            improve_limit:
+                description: "Posts LLM-rewritten this run (0 = all remaining; mind provider rate limits)"
+                required: false
+                default: "5"
+            triage_max_deletions:
+                description: "Max DELETE-verdict posts removed this run (run once with 100 for the initial cleanup)"
+                required: false
+                default: "10"
+            regenerate_og_only:
+                description: "Only regenerate OG images (skip content generation)"
+                required: false
+                default: false
+                type: boolean
 
-  push:
-    branches: [main]
+    push:
+        branches: [main]
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+    contents: write
+    pages: write
+    id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    group: "pages"
+    cancel-in-progress: false
 
 jobs:
-  generate-and-deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    generate-and-deploy:
+        runs-on: ubuntu-latest
+        timeout-minutes: 25
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: "pip"
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+                  cache: "pip"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          # quality_gate.py imports utils/content_quality_scanner.py, which
-          # imports dedup_similarity.py's TF-IDF/cosine implementation. These
-          # aren't guaranteed to be in requirements.txt (they were previously
-          # only pip-installed ad-hoc inside workflow_dispatch.yml), so make
-          # sure they're present here too rather than assuming.
-          pip install --quiet scikit-learn numpy
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
+                  # quality_gate.py imports utils/content_quality_scanner.py, which
+                  # imports dedup_similarity.py's TF-IDF/cosine implementation. These
+                  # aren't guaranteed to be in requirements.txt (they were previously
+                  # only pip-installed ad-hoc inside workflow_dispatch.yml), so make
+                  # sure they're present here too rather than assuming.
+                  pip install --quiet scikit-learn numpy
 
-      - name: Pull latest changes
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git fetch origin main
-          git reset --hard origin/main
+            - name: Pull latest changes
+              run: |
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git fetch origin main
+                  git reset --hard origin/main
 
-      - name: Verify secrets
-        run: |
-          for VAR in GROQ_API_KEY GEMINI_API_KEY OPENROUTER_API_KEY \
-                     CEREBRAS_API_KEY MISTRAL_API_KEY NVIDIA_API_KEY \
-                     TWITTER_API_KEY TWITTER_API_SECRET \
-                     TWITTER_ACCESS_TOKEN TWITTER_ACCESS_TOKEN_SECRET \
-                     TWITTER_BEARER_TOKEN BLOGGITHUB_TOKEN HF_TOKEN ZAI_API_KEY LLM7_API_KEY DEEPSEEK_API_KEY ENABLE_TWITTER_POSTING; do
-            if [ -z "${!VAR}" ]; then
-              echo "WARNING: $VAR is not set"
-            else
-              echo "OK: $VAR is set"
-            fi
-          done
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
-          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-          BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
-          LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
+            - name: Verify secrets
+              run: |
+                  for VAR in GROQ_API_KEY GEMINI_API_KEY OPENROUTER_API_KEY \
+                             CEREBRAS_API_KEY MISTRAL_API_KEY NVIDIA_API_KEY \
+                             TWITTER_API_KEY TWITTER_API_SECRET \
+                             TWITTER_ACCESS_TOKEN TWITTER_ACCESS_TOKEN_SECRET \
+                             TWITTER_BEARER_TOKEN BLOGGITHUB_TOKEN HF_TOKEN ZAI_API_KEY LLM7_API_KEY DEEPSEEK_API_KEY ENABLE_TWITTER_POSTING; do
+                    if [ -z "${!VAR}" ]; then
+                      echo "WARNING: $VAR is not set"
+                    else
+                      echo "OK: $VAR is set"
+                    fi
+                  done
+              env:
+                  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+                  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+                  OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+                  CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+                  MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+                  NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+                  TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+                  TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+                  TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+                  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+                  TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+                  BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
+                  HF_TOKEN: ${{ secrets.HF_TOKEN }}
+                  ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
+                  LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
+                  DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+                  ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
 
-      - name: Resolve Twitter posting flag
-        id: twitter_flag
-        run: |
-          EVENT="${{ github.event_name }}"
-          SECRET_FLAG="${{ secrets.ENABLE_TWITTER_POSTING }}"
+            - name: Resolve Twitter posting flag
+              id: twitter_flag
+              run: |
+                  EVENT="${{ github.event_name }}"
+                  SECRET_FLAG="${{ secrets.ENABLE_TWITTER_POSTING }}"
 
-          if [ "$EVENT" = "schedule" ]; then
-            echo "Trigger: scheduled cron — Twitter posting FORCED ON"
-            echo "effective_flag=true" >> $GITHUB_OUTPUT
-          elif [ "$EVENT" = "push" ]; then
-            echo "Trigger: push — Twitter posting FORCED OFF"
-            echo "effective_flag=false" >> $GITHUB_OUTPUT
-          else
-            NORMALISED=$(echo "$SECRET_FLAG" | tr '[:upper:]' '[:lower:]' | xargs)
-            if [ "$NORMALISED" = "true" ]; then
-              echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=true → posting ON"
-              echo "effective_flag=true" >> $GITHUB_OUTPUT
-            else
-              echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=${SECRET_FLAG:-<not set>} → posting OFF"
-              echo "effective_flag=false" >> $GITHUB_OUTPUT
-            fi
-          fi
+                  if [ "$EVENT" = "schedule" ]; then
+                    echo "Trigger: scheduled cron — Twitter posting FORCED ON"
+                    echo "effective_flag=true" >> $GITHUB_OUTPUT
+                  elif [ "$EVENT" = "push" ]; then
+                    echo "Trigger: push — Twitter posting FORCED OFF"
+                    echo "effective_flag=false" >> $GITHUB_OUTPUT
+                  else
+                    NORMALISED=$(echo "$SECRET_FLAG" | tr '[:upper:]' '[:lower:]' | xargs)
+                    if [ "$NORMALISED" = "true" ]; then
+                      echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=true → posting ON"
+                      echo "effective_flag=true" >> $GITHUB_OUTPUT
+                    else
+                      echo "Trigger: $EVENT — ENABLE_TWITTER_POSTING=${SECRET_FLAG:-<not set>} → posting OFF"
+                      echo "effective_flag=false" >> $GITHUB_OUTPUT
+                    fi
+                  fi
 
-      - name: Initialize config if needed
-        run: |
-          [ -f "config.yaml" ] && echo "Config exists" || python blog_system.py init
+            - name: Initialize config if needed
+              run: |
+                  [ -f "config.yaml" ] && echo "Config exists" || python blog_system.py init
 
-      - name: Conditional cleanup
-        if: >
-          github.event.inputs.force_cleanup == 'true' ||
-          (github.event_name == 'schedule' &&
-           startsWith(github.event.schedule, '0 0 '))
-        run: python blog_system.py cleanup
+            - name: Conditional cleanup
+              if: >
+                  github.event.inputs.force_cleanup == 'true' ||
+                  (github.event_name == 'schedule' &&
+                   startsWith(github.event.schedule, '0 0 '))
+              run: python blog_system.py cleanup
 
-      - name: Restore trending hashtag cache
-        run: |
-          git fetch origin main
-          git checkout origin/main -- .trending_hashtag_cache.json 2>/dev/null || true
+            - name: Restore trending hashtag cache
+              run: |
+                  git fetch origin main
+                  git checkout origin/main -- .trending_hashtag_cache.json 2>/dev/null || true
 
-      - name: Generate new blog content
-        if: github.event.inputs.regenerate_og_only != 'true'
-        timeout-minutes: 12
-        continue-on-error: true
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
-          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-          BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
-          LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
-          ENTITY_VERIFY_ONLINE: "1"
-        run: |
-          python blog_system.py auto || {
-            echo "WARNING: Content generation failed — rebuilding existing content"
-            python blog_system.py build
-          }
+            - name: Generate new blog content
+              if: github.event.inputs.regenerate_og_only != 'true'
+              timeout-minutes: 12
+              continue-on-error: true
+              env:
+                  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+                  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+                  OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+                  CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+                  MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+                  NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+                  TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+                  TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+                  TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+                  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+                  TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+                  BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
+                  HF_TOKEN: ${{ secrets.HF_TOKEN }}
+                  ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
+                  LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
+                  DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+                  ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
+                  ENTITY_VERIFY_ONLINE: "1"
+              run: |
+                  python blog_system.py auto || {
+                    echo "WARNING: Content generation failed — rebuilding existing content"
+                    python blog_system.py build
+                  }
 
-      - name: Build site if OG-only mode
-        if: github.event.inputs.regenerate_og_only == 'true'
-        run: |
-          python blog_system.py build
+            - name: Build site if OG-only mode
+              if: github.event.inputs.regenerate_og_only == 'true'
+              run: |
+                  python blog_system.py build
 
-      - name: Verify generated content
-        run: |
-          post_count=$(find docs -name "post.json" 2>/dev/null | wc -l)
-          echo "Total posts: $post_count"
-          [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
+            - name: Verify generated content
+              run: |
+                  post_count=$(find docs -name "post.json" 2>/dev/null | wc -l)
+                  echo "Total posts: $post_count"
+                  [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
 
-      # Full-corpus quality gate: scores every post in docs/ (not a sample)
-      # using utils/content_quality_scanner.py's real scoring functions,
-      # writes a complete CSV, and queues anything under threshold into
-      # regeneration_queue.json for the existing automated regen pipeline.
-      # Report-only — never fails the job, never blocks deploy, never
-      # deletes. Deletion stays with content_quality_scanner.py's own
-      # prune/dedupe modes (--confirm required) and the report-only
-      # watchdog steps in workflow_dispatch.yml.
-      - name: 📊 Full-corpus content quality gate
-        run: |
-          python scripts/quality_gate.py \
-            --docs-dir ./docs \
-            --min-score 50 \
-            --csv ./quality_report_full.csv \
-            --queue ./regeneration_queue.json
+            # Full-corpus quality gate: scores every post in docs/ (not a sample)
+            # using utils/content_quality_scanner.py's real scoring functions,
+            # writes a complete CSV, and queues anything under threshold into
+            # regeneration_queue.json for the existing automated regen pipeline.
+            # Report-only — never fails the job, never blocks deploy, never
+            # deletes. Deletion stays with content_quality_scanner.py's own
+            # prune/dedupe modes (--confirm required) and the report-only
+            # watchdog steps in workflow_dispatch.yml.
+            - name: 📊 Full-corpus content quality gate
+              run: |
+                  python scripts/quality_gate.py \
+                    --docs-dir ./docs \
+                    --min-score 50 \
+                    --csv ./quality_report_full.csv \
+                    --queue ./regeneration_queue.json
 
-      # Re-scores every ALREADY-PUBLISHED post against the current
-      # fabrication gates in blog_system.py (_reject_if_fabricated_citation,
-      # _flag_fabricated_anecdotes) and appends hits to the same
-      # regeneration_queue.json quality_gate.py writes to. Read-only against
-      # docs/ — only ever appends to the queue file. The "🧹 Process
-      # fabrication regeneration queue" step further down is what actually
-      # acts on what this step finds.
-      - name: 🔎 Retroactive fabrication audit
-        run: |
-          python scripts/retroactive_fabrication_audit.py \
-            --docs-dir ./docs \
-            --queue ./regeneration_queue.json
+            # Re-scores every ALREADY-PUBLISHED post against the current
+            # fabrication gates in blog_system.py (_reject_if_fabricated_citation,
+            # _flag_fabricated_anecdotes) and appends hits to the same
+            # regeneration_queue.json quality_gate.py writes to. Read-only against
+            # docs/ — only ever appends to the queue file. The "🧹 Process
+            # fabrication regeneration queue" step further down is what actually
+            # acts on what this step finds.
+            - name: 🔎 Retroactive fabrication audit
+              run: |
+                  python scripts/retroactive_fabrication_audit.py \
+                    --docs-dir ./docs \
+                    --queue ./regeneration_queue.json
 
-      # FIX (found in review, 2026-09-15): process_regeneration_queue.py's
-      # --max-posts cap processes entries in file order, which is just
-      # retroactive_fabrication_audit.py's append/insertion order — not
-      # severity. Confirmed on a live dry run: the 5 entries it picked were
-      # arbitrary while posts with 40-58 flagged fabricated sentences sat
-      # untouched in the 438-deferred tail. At 5 posts/run this means the
-      # worst offenders (the ones doing the most E-E-A-T damage) could go
-      # unprocessed indefinitely while lighter cases get cleared first.
-      #
-      # This step re-sorts regeneration_queue.json in place — unresolved
-      # entries ordered worst-first by the flagged-sentence count already
-      # embedded in each entry's `reason` string, resolved entries pushed
-      # to the back. It does not touch post content or entry status, so it
-      # carries none of process_regeneration_queue.py's own write risk —
-      # it only changes which 5 that script picks next.
-      - name: 🔢 Prioritize fabrication queue by severity
-        run: |
-          python scripts/prioritize_regeneration_queue.py \
-            --queue ./regeneration_queue.json \
-            --confirm
+            # FIX (found in review, 2026-09-15): process_regeneration_queue.py's
+            # --max-posts cap processes entries in file order, which is just
+            # retroactive_fabrication_audit.py's append/insertion order — not
+            # severity. Confirmed on a live dry run: the 5 entries it picked were
+            # arbitrary while posts with 40-58 flagged fabricated sentences sat
+            # untouched in the 438-deferred tail. At 5 posts/run this means the
+            # worst offenders (the ones doing the most E-E-A-T damage) could go
+            # unprocessed indefinitely while lighter cases get cleared first.
+            #
+            # This step re-sorts regeneration_queue.json in place — unresolved
+            # entries ordered worst-first by the flagged-sentence count already
+            # embedded in each entry's `reason` string, resolved entries pushed
+            # to the back. It does not touch post content or entry status, so it
+            # carries none of process_regeneration_queue.py's own write risk —
+            # it only changes which 5 that script picks next.
+            - name: 🔢 Prioritize fabrication queue by severity
+              run: |
+                  python scripts/prioritize_regeneration_queue.py \
+                    --queue ./regeneration_queue.json \
+                    --confirm
 
-      # Read-only — crawls every published post's internal Markdown links
-      # and reports any pointing at a slug with no post.json (broken by a
-      # deletion, a failed generation, or an auto-retired duplicate).
-      # Nothing gets deleted or blocked here; this only surfaces the report
-      # in the run log so it doesn't rely on someone remembering to run
-      # `python blog_system.py audit-links` by hand.
-      - name: 🔗 Full-corpus internal link audit
-        run: |
-          python -c "
-          from pathlib import Path
-          from adsense_fixes.link_validator import audit_all_internal_links
-          report = audit_all_internal_links(Path('./docs'))
-          print(report)
-          with open('link_audit_report.txt', 'w') as f:
-              f.write(report)
-          "
+            # Read-only — crawls every published post's internal Markdown links
+            # and reports any pointing at a slug with no post.json (broken by a
+            # deletion, a failed generation, or an auto-retired duplicate).
+            # Nothing gets deleted or blocked here; this only surfaces the report
+            # in the run log so it doesn't rely on someone remembering to run
+            # `python blog_system.py audit-links` by hand.
+            - name: 🔗 Full-corpus internal link audit
+              run: |
+                  python -c "
+                  from pathlib import Path
+                  from adsense_fixes.link_validator import audit_all_internal_links
+                  report = audit_all_internal_links(Path('./docs'))
+                  print(report)
+                  with open('link_audit_report.txt', 'w') as f:
+                      f.write(report)
+                  "
 
-      # Bounded, backup-then-delete cleanup of the duplicate-topic clusters
-      # adsense_fixes/topic_dedup.py's find_clusters() reports. Only acts on
-      # pairs scoring >= --min-score (the highest-confidence half of the
-      # corpus), capped at --max-deletions per run so a bad match can't take
-      # out more than 2 posts before a human notices. Every retired post is
-      # backed up to .duplicate_backups/ first and replaced with a noindex
-      # meta-refresh redirect stub pointing at the keeper post, so inbound
-      # links don't 404 and the retired URL drops out of the next sitemap
-      # build automatically (generate_sitemap.py already skips noindex /
-      # meta-refresh pages).
-      - name: 🧹 Auto-retire confirmed duplicate posts (bounded)
-        run: |
-          python scripts/auto_retire_duplicates.py \
-            --docs-dir ./docs \
-            --max-deletions 2 \
-            --min-score 0.50 \
-            --backup-dir ./.duplicate_backups \
-            --base-url "https://kubaik.github.io" \
-            --confirm
+            # Bounded, backup-then-delete cleanup of the duplicate-topic clusters
+            # adsense_fixes/topic_dedup.py's find_clusters() reports. Only acts on
+            # pairs scoring >= --min-score (the highest-confidence half of the
+            # corpus), capped at --max-deletions per run so a bad match can't take
+            # out more than 2 posts before a human notices. Every retired post is
+            # backed up to .duplicate_backups/ first and replaced with a noindex
+            # meta-refresh redirect stub pointing at the keeper post, so inbound
+            # links don't 404 and the retired URL drops out of the next sitemap
+            # build automatically (generate_sitemap.py already skips noindex /
+            # meta-refresh pages).
+            - name: 🧹 Auto-retire confirmed duplicate posts (bounded)
+              run: |
+                  python scripts/auto_retire_duplicates.py \
+                    --docs-dir ./docs \
+                    --max-deletions 2 \
+                    --min-score 0.50 \
+                    --backup-dir ./.duplicate_backups \
+                    --base-url "https://kubaik.github.io" \
+                    --confirm
 
-      # Bounded consumer for the fabrication entries retroactive_fabrication_audit.py
-      # just queued (now ordered worst-first by the prioritization step above).
-      # Removes only the offending sentence(s) — verified against the real
-      # blog_system.py gate functions, not reimplemented — and leaves the
-      # rest of the post intact. Anything it can't fully clear (or any
-      # quality_gate-sourced entry, which is out of scope here) is left in
-      # regeneration_queue.json for manual review. Backs up each edited
-      # post.json to .fabrication_backups/ before writing.
-      - name: 🧹 Process fabrication regeneration queue (bounded)
-        run: |
-          python scripts/process_regeneration_queue.py \
-            --docs-dir ./docs \
-            --queue ./regeneration_queue.json \
-            --max-posts 5 \
-            --backup-dir ./.fabrication_backups \
-            --confirm
+            # Bounded consumer for the fabrication entries retroactive_fabrication_audit.py
+            # just queued (now ordered worst-first by the prioritization step above).
+            # Removes only the offending sentence(s) — verified against the real
+            # blog_system.py gate functions, not reimplemented — and leaves the
+            # rest of the post intact. Anything it can't fully clear (or any
+            # quality_gate-sourced entry, which is out of scope here) is left in
+            # regeneration_queue.json for manual review. Backs up each edited
+            # post.json to .fabrication_backups/ before writing.
+            - name: 🧹 Process fabrication regeneration queue (bounded)
+              run: |
+                  python scripts/process_regeneration_queue.py \
+                    --docs-dir ./docs \
+                    --queue ./regeneration_queue.json \
+                    --max-posts 5 \
+                    --backup-dir ./.fabrication_backups \
+                    --confirm
 
-      # FIX (2026-09-16): citation_audit_report.json (33 posts / 46 flagged
-      # sentences — fabricated-sounding stats attributed to real orgs like
-      # OWASP, Datadog, LinearB) had no automated consumer. It's produced by
-      # adsense_credibility_cleanup.py's `scan` mode, which deliberately
-      # defers to a human `review` mode by design for a one-off pass — good
-      # for that, but nothing closed the loop automatically run over run,
-      # unlike the anecdote queue above. This step is a direct mirror of
-      # "🧹 Process fabrication regeneration queue": same bounded/backup/
-      # confirm safety model, reusing the exact same strip_fabricated_content()
-      # and blog_system.py gate functions (no separate fabrication logic to
-      # drift out of sync). A post it can't fully clean is left alone and
-      # marked needs_review in citation_audit_report.json for a human to run
-      # `python adsense_credibility_cleanup.py review` on specifically,
-      # rather than being forced or silently skipped.
-      - name: 🧹 Process citation regeneration queue (bounded)
-        run: |
-          python scripts/process_citation_queue.py \
-            --docs-dir ./docs \
-            --queue ./citation_audit_report.json \
-            --max-posts 5 \
-            --backup-dir ./.citation_backups \
-            --confirm
+            # FIX (2026-09-16): citation_audit_report.json (33 posts / 46 flagged
+            # sentences — fabricated-sounding stats attributed to real orgs like
+            # OWASP, Datadog, LinearB) had no automated consumer. It's produced by
+            # adsense_credibility_cleanup.py's `scan` mode, which deliberately
+            # defers to a human `review` mode by design for a one-off pass — good
+            # for that, but nothing closed the loop automatically run over run,
+            # unlike the anecdote queue above. This step is a direct mirror of
+            # "🧹 Process fabrication regeneration queue": same bounded/backup/
+            # confirm safety model, reusing the exact same strip_fabricated_content()
+            # and blog_system.py gate functions (no separate fabrication logic to
+            # drift out of sync). A post it can't fully clean is left alone and
+            # marked needs_review in citation_audit_report.json for a human to run
+            # `python adsense_credibility_cleanup.py review` on specifically,
+            # rather than being forced or silently skipped.
+            - name: 🧹 Process citation regeneration queue (bounded)
+              run: |
+                  python scripts/process_citation_queue.py \
+                    --docs-dir ./docs \
+                    --queue ./citation_audit_report.json \
+                    --max-posts 5 \
+                    --backup-dir ./.citation_backups \
+                    --confirm
 
-      # The four bounded steps above can change what's on disk in docs/:
-      # auto_retire_duplicates.py writes its own redirect-stub HTML directly,
-      # process_regeneration_queue.py and process_citation_queue.py only edit
-      # post.json's `content` field, and the prioritization step touches only
-      # the fabrication queue file — but the already-built index.html for any
-      # edited post is now stale. Rebuild so sitemap/OG/schema generation
-      # below reflect the current state rather than what was built before
-      # this job's cleanup steps ran.
-      #
-      # NOTE (option B, 2026-09-16): this step is now the SOLE producer of
-      # docs/sitemap.xml for the run. The previous dedicated "🗺️ Generate
-      # sitemap.xml" step was removed — it duplicated
-      # StaticSiteGenerator._generate_sitemap() (which runs inside
-      # `blog_system.py build` above) with a second, independent writer to
-      # the same file. Two writers on one artifact was a drift risk: they
-      # had different noindex-exclusion logic at various points in this
-      # repo's history, and whichever ran last silently won. That
-      # duplication is gone now — sitemap_url_count is derived from the
-      # file SSG just wrote.
-      # ── Corpus quality cleanup (bounded per run, resumable, everything backed up) ──────────
-      # 1. triage.py        report-only verdicts (DELETE / IMPROVE) from deterministic gates
-      # 2. delete_posts.py  deletes DELETE posts AND writes blocked_topics.json so they can never regenerate
-      # 3. improve_posts.py LLM rewrite of IMPROVE posts, validated; failures leave the original untouched
-      # 4. post_enhancer    related-reading + official-docs links + honest AI-disclosure footer (run by 3)
-      # Enable with workflow_dispatch inputs; both default to a small safe batch.
-      - name: 🧮 Review all posts (report only)
-        run: python triage.py --docs ./docs --out ./triage_report
+            # The four bounded steps above can change what's on disk in docs/:
+            # auto_retire_duplicates.py writes its own redirect-stub HTML directly,
+            # process_regeneration_queue.py and process_citation_queue.py only edit
+            # post.json's `content` field, and the prioritization step touches only
+            # the fabrication queue file — but the already-built index.html for any
+            # edited post is now stale. Rebuild so sitemap/OG/schema generation
+            # below reflect the current state rather than what was built before
+            # this job's cleanup steps ran.
+            #
+            # NOTE (option B, 2026-09-16): this step is now the SOLE producer of
+            # docs/sitemap.xml for the run. The previous dedicated "🗺️ Generate
+            # sitemap.xml" step was removed — it duplicated
+            # StaticSiteGenerator._generate_sitemap() (which runs inside
+            # `blog_system.py build` above) with a second, independent writer to
+            # the same file. Two writers on one artifact was a drift risk: they
+            # had different noindex-exclusion logic at various points in this
+            # repo's history, and whichever ran last silently won. That
+            # duplication is gone now — sitemap_url_count is derived from the
+            # file SSG just wrote.
+            # ── Corpus quality cleanup (bounded per run, resumable, everything backed up) ──────────
+            # 1. triage.py        report-only verdicts (DELETE / IMPROVE) from deterministic gates
+            # 2. delete_posts.py  deletes DELETE posts AND writes blocked_topics.json so they can never regenerate
+            # 3. improve_posts.py LLM rewrite of IMPROVE posts, validated; failures leave the original untouched
+            # 4. post_enhancer    related-reading + official-docs links + honest AI-disclosure footer (run by 3)
+            # Enable with workflow_dispatch inputs; both default to a small safe batch.
+            - name: 🧮 Review all posts (report only)
+              run: python triage.py --docs ./docs --out ./triage_report
 
-      - name: 🗑️ Delete flagged posts + block their topics (scans docs/)
-        run: |
-          python delete_posts.py --docs ./docs \
-            --max "${{ github.event.inputs.triage_max_deletions || '10' }}" \
-            --backup-dir ./.triage_backups --confirm
+            - name: 🗑️ Delete flagged posts + block their topics (scans docs/)
+              run: |
+                  python delete_posts.py --docs ./docs \
+                    --max "${{ github.event.inputs.triage_max_deletions || '10' }}" \
+                    --backup-dir ./.triage_backups --confirm
 
-      - name: ✨ LLM-improve flagged posts (scans docs/)
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
-          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
-          LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          ENTITY_VERIFY_ONLINE: "1"
-        run: |
-          python improve_posts.py --docs ./docs \
-            --limit "${{ github.event.inputs.improve_limit || '5' }}" --verify-online --confirm || \
-            echo "WARNING: improve_posts.py failed — continuing with the build"
+            - name: ✨ LLM-improve flagged posts (scans docs/)
+              env:
+                  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+                  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+                  OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+                  CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+                  MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+                  NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+                  HF_TOKEN: ${{ secrets.HF_TOKEN }}
+                  ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
+                  LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
+                  DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+                  ENTITY_VERIFY_ONLINE: "1"
+              run: |
+                  python improve_posts.py --docs ./docs \
+                    --limit "${{ github.event.inputs.improve_limit || '5' }}" --verify-online --confirm || \
+                    echo "WARNING: improve_posts.py failed — continuing with the build"
 
-      - name: 🔗 Apply code-driven post improvements (scans docs/)
-        run: python post_enhancer.py --docs ./docs --backup ./.quality_review_backups --verify-links --confirm
+            - name: 🔗 Apply code-driven post improvements (scans docs/)
+              run: python post_enhancer.py --docs ./docs --backup ./.quality_review_backups --verify-links --confirm
 
-      - name: 🔁 Rebuild site after automated fixes
-        run: |
-          python blog_system.py build
+            - name: 🔁 Rebuild site after automated fixes
+              run: |
+                  python blog_system.py build
 
-          if [ -f ./docs/sitemap.xml ]; then
-            url_count=$(grep -o "<loc>" ./docs/sitemap.xml | wc -l | tr -d ' ')
-            echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
-            echo "✅ sitemap.xml regenerated by SSG with ${url_count} URLs"
-          else
-            echo "⚠️ WARNING: sitemap.xml missing after rebuild"
-            echo "sitemap_url_count=0" >> $GITHUB_ENV
-          fi
+                  if [ -f ./docs/sitemap.xml ]; then
+                    url_count=$(grep -o "<loc>" ./docs/sitemap.xml | wc -l | tr -d ' ')
+                    echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
+                    echo "✅ sitemap.xml regenerated by SSG with ${url_count} URLs"
+                  else
+                    echo "⚠️ WARNING: sitemap.xml missing after rebuild"
+                    echo "sitemap_url_count=0" >> $GITHUB_ENV
+                  fi
 
-      # FIX (2026-09-16): read-only regression guard for the self-canonical /
-      # missing-noindex bug the 2026-09-15 audit found on merge-redirect
-      # stubs (2 of 13 confirmed still live in sitemap.xml at the time).
-      # static_site_generator.py's generate_site() now computes
-      # _noindex_slugs (merge stubs ∪ regeneration_queue.json-quarantined
-      # posts) and both _generate_post_pages() and _generate_sitemap() key
-      # off the same set — this step is what would have caught that bug
-      # before it shipped, and now runs every 12h as a standing check that
-      # it stays fixed. Never fails the job; if it ever reports a problem,
-      # the summary step below still surfaces it in the run log for someone
-      # to look at, same posture as the link-audit step.
-      #
-      # This step also now validates the SSG-produced sitemap.xml, since
-      # the workflow no longer has a sitemap writer of its own. The
-      # validator is read-only: it parses docs/sitemap.xml, cross-checks
-      # each listed slug against docs/<slug>/post.json, and flags any
-      # noindexed post that leaked in. Exit code is always 0 unless
-      # --strict is passed, so a validation warning still lets the deploy
-      # proceed — the run log is the surface.
-      - name: 🔒 Noindex + sitemap compliance audit
-        run: |
-          python -c "
-          from pathlib import Path
-          from adsense_fixes.canonical_guard import audit_noindex_compliance
-          report = audit_noindex_compliance(Path('./docs'))
-          print(report)
-          with open('noindex_audit_report.txt', 'w') as f:
-              f.write(report)
-          "
-          echo ""
-          echo "--- sitemap validation ---"
-          python scripts/generate_sitemap.py \
-            --output-dir ./docs \
-            --base-url "https://kubaik.github.io" \
-            --validate-only
+            # FIX (2026-09-16): read-only regression guard for the self-canonical /
+            # missing-noindex bug the 2026-09-15 audit found on merge-redirect
+            # stubs (2 of 13 confirmed still live in sitemap.xml at the time).
+            # static_site_generator.py's generate_site() now computes
+            # _noindex_slugs (merge stubs ∪ regeneration_queue.json-quarantined
+            # posts) and both _generate_post_pages() and _generate_sitemap() key
+            # off the same set — this step is what would have caught that bug
+            # before it shipped, and now runs every 12h as a standing check that
+            # it stays fixed. Never fails the job; if it ever reports a problem,
+            # the summary step below still surfaces it in the run log for someone
+            # to look at, same posture as the link-audit step.
+            #
+            # This step also now validates the SSG-produced sitemap.xml, since
+            # the workflow no longer has a sitemap writer of its own. The
+            # validator is read-only: it parses docs/sitemap.xml, cross-checks
+            # each listed slug against docs/<slug>/post.json, and flags any
+            # noindexed post that leaked in. Exit code is always 0 unless
+            # --strict is passed, so a validation warning still lets the deploy
+            # proceed — the run log is the surface.
+            - name: 🔒 Noindex + sitemap compliance audit
+              run: |
+                  python -c "
+                  from pathlib import Path
+                  from adsense_fixes.canonical_guard import audit_noindex_compliance
+                  report = audit_noindex_compliance(Path('./docs'))
+                  print(report)
+                  with open('noindex_audit_report.txt', 'w') as f:
+                      f.write(report)
+                  "
+                  echo ""
+                  echo "--- sitemap validation ---"
+                  python scripts/generate_sitemap.py \
+                    --output-dir ./docs \
+                    --base-url "https://kubaik.github.io" \
+                    --validate-only
 
-      - name: 📸 Generate per-article OG images
-        continue-on-error: true
-        run: |
-          echo "Generating per-article OG images (1200×630 PNG)..."
-          python scripts/generate_og_images.py \
-            --posts-dir ./docs \
-            --output-dir ./docs/static/og \
-            --base-url "https://kubaik.github.io" \
-            --patch-html
+            - name: 🧭 Indexing hygiene gate (sitemap/404/redirect/noindex)
+              run: |
+                  # Fails the deploy if the build would create GSC 404s, redirects or noindex-in-sitemap.
+                  python utilsIndexing/check_indexing_hygiene.py --docs ./docs --base https://kubaik.github.io
 
-          og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
-          echo "og_image_count=${og_count}" >> $GITHUB_ENV
-          echo "Generated $og_count OG images"
+            - name: 📸 Generate per-article OG images
+              continue-on-error: true
+              run: |
+                  echo "Generating per-article OG images (1200×630 PNG)..."
+                  python scripts/generate_og_images.py \
+                    --posts-dir ./docs \
+                    --output-dir ./docs/static/og \
+                    --base-url "https://kubaik.github.io" \
+                    --patch-html
 
-      - name: Commit and push with retry
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          # FIX (found in review, 2026 — reverted after live failure): an
-          # earlier version of this step force-added .publish_velocity.json
-          # here to fix VelocityController's daily cap resetting every run.
-          # That failed in production: .publish_velocity.json is DELIBERATELY
-          # gitignored under "Runtime caches — rebuilt automatically from
-          # docs/, never commit these", so `git add . .publish_velocity.json`
-          # exits 1 (git refuses to add an ignored path without -f), which
-          # took the whole job down at the commit step — see the run that
-          # failed with "The following paths are ignored by one of your
-          # .gitignore files: .publish_velocity.json".
-          #
-          # The real fix went into velocity_controller.py instead: it no
-          # longer persists a counter file at all. today_count() and domain
-          # age are now derived live from docs/*/post.json created_at
-          # fields, matching the exact convention that .gitignore comment
-          # describes for every other runtime cache in this repo. Nothing
-          # needs to be added here for velocity tracking to work.
-          #
-          # .duplicate_backups/, .fabrication_backups/, and
-          # .citation_backups/ ARE named explicitly below, for the opposite
-          # reason: they are NOT gitignored, and they're the only copy of
-          # anything scripts/auto_retire_duplicates.py,
-          # scripts/process_regeneration_queue.py, and
-          # scripts/process_citation_queue.py touched this run — a backup
-          # that isn't persisted across checkouts isn't a backup.
-          # git add exits 128 on a pathspec that doesn't exist yet (first run, nothing deleted)
-          mkdir -p .duplicate_backups .fabrication_backups .citation_backups .triage_backups .quality_review_backups
-          git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/ .triage_backups/ .quality_review_backups/
-          if git diff --staged --quiet; then
-            echo "Nothing to commit"
-          else
-            post_count=$(find docs -name "post.json" | wc -l)
-            og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
-            git commit -m "Auto-blog $(date '+%Y-%m-%d %H:%M') — ${post_count} posts + ${og_count} OG images + sitemap"
-            git push origin main || {
-              echo "Push failed — pulling and retrying once..."
-              git fetch origin main
-              git rebase origin/main
-              git push origin main
-            }
-          fi
+                  og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
+                  echo "og_image_count=${og_count}" >> $GITHUB_ENV
+                  echo "Generated $og_count OG images"
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
+            - name: Commit and push with retry
+              run: |
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  # FIX (found in review, 2026 — reverted after live failure): an
+                  # earlier version of this step force-added .publish_velocity.json
+                  # here to fix VelocityController's daily cap resetting every run.
+                  # That failed in production: .publish_velocity.json is DELIBERATELY
+                  # gitignored under "Runtime caches — rebuilt automatically from
+                  # docs/, never commit these", so `git add . .publish_velocity.json`
+                  # exits 1 (git refuses to add an ignored path without -f), which
+                  # took the whole job down at the commit step — see the run that
+                  # failed with "The following paths are ignored by one of your
+                  # .gitignore files: .publish_velocity.json".
+                  #
+                  # The real fix went into velocity_controller.py instead: it no
+                  # longer persists a counter file at all. today_count() and domain
+                  # age are now derived live from docs/*/post.json created_at
+                  # fields, matching the exact convention that .gitignore comment
+                  # describes for every other runtime cache in this repo. Nothing
+                  # needs to be added here for velocity tracking to work.
+                  #
+                  # .duplicate_backups/, .fabrication_backups/, and
+                  # .citation_backups/ ARE named explicitly below, for the opposite
+                  # reason: they are NOT gitignored, and they're the only copy of
+                  # anything scripts/auto_retire_duplicates.py,
+                  # scripts/process_regeneration_queue.py, and
+                  # scripts/process_citation_queue.py touched this run — a backup
+                  # that isn't persisted across checkouts isn't a backup.
+                  # git add exits 128 on a pathspec that doesn't exist yet (first run, nothing deleted)
+                  mkdir -p .duplicate_backups .fabrication_backups .citation_backups .triage_backups .quality_review_backups
+                  git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/ .triage_backups/ .quality_review_backups/
+                  if git diff --staged --quiet; then
+                    echo "Nothing to commit"
+                  else
+                    post_count=$(find docs -name "post.json" | wc -l)
+                    og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
+                    git commit -m "Auto-blog $(date '+%Y-%m-%d %H:%M') — ${post_count} posts + ${og_count} OG images + sitemap"
+                    git push origin main || {
+                      echo "Push failed — pulling and retrying once..."
+                      git fetch origin main
+                      git rebase origin/main
+                      git push origin main
+                    }
+                  fi
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./docs
+            - name: Setup GitHub Pages
+              uses: actions/configure-pages@v5
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        continue-on-error: true
+            - name: Upload Pages artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: ./docs
 
-      - name: Deployment Status
-        if: always()
-        run: |
-          if [ "${{ steps.deployment.outcome }}" == "success" ]; then
-            echo "✅ Deployment successful"
-          else
-            echo "⚠️ Deployment step had issues (may be transient)"
-            echo "Check the Environments tab or re-run the workflow"
-          fi
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
+              continue-on-error: true
 
-      - name: Summary
-        run: |
-          post_count=$(find docs -name "post.json" | wc -l)
-          og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
-          {
-            echo "## 🚀 Deployment Complete"
-            echo ""
-            echo "| Metric | Value |"
-            echo "|--------|-------|"
-            echo "| **URL** | ${{ steps.deployment.outputs.page_url }} |"
-            echo "| **Posts** | $post_count |"
-            echo "| **Sitemap URLs** | ${{ env.sitemap_url_count }} |"
-            echo "| **OG Images** | $og_count |"
-            echo "| **Trigger** | ${{ github.event_name }} |"
-            echo "| **Twitter** | ${{ steps.twitter_flag.outputs.effective_flag }} |"
-            echo "| **Run** | #${{ github.run_number }} — $(date -u '+%Y-%m-%d %H:%M UTC') |"
-            echo ""
-            echo "### 🗺️ Sitemap Status"
-            if [ "${{ env.sitemap_url_count }}" -gt 0 ]; then
-              echo "✅ sitemap.xml is live at ${{ steps.deployment.outputs.page_url }}sitemap.xml"
-              echo "✅ Generated by StaticSiteGenerator._generate_sitemap() during \`blog_system.py build\`"
-              echo "✅ Noindexed posts (merge stubs, fabrication-quarantined) excluded"
-            else
-              echo "⚠️ sitemap.xml was not generated — check the rebuild step logs"
-            fi
-            echo ""
-            echo "### 📸 OG Image Status"
-            if [ "$og_count" -gt 0 ]; then
-              echo "✅ Generated $og_count per-article OG images (1200×630 PNG)"
-              echo "✅ HTML files patched with correct og:image URLs"
-              echo "✅ Social media previews will show custom images"
-            else
-              echo "⚠️ No OG images generated (check logs)"
-            fi
-          } >> $GITHUB_STEP_SUMMARY
+            - name: Deployment Status
+              if: always()
+              run: |
+                  if [ "${{ steps.deployment.outcome }}" == "success" ]; then
+                    echo "✅ Deployment successful"
+                  else
+                    echo "⚠️ Deployment step had issues (may be transient)"
+                    echo "Check the Environments tab or re-run the workflow"
+                  fi
+
+            - name: Summary
+              run: |
+                  post_count=$(find docs -name "post.json" | wc -l)
+                  og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
+                  {
+                    echo "## 🚀 Deployment Complete"
+                    echo ""
+                    echo "| Metric | Value |"
+                    echo "|--------|-------|"
+                    echo "| **URL** | ${{ steps.deployment.outputs.page_url }} |"
+                    echo "| **Posts** | $post_count |"
+                    echo "| **Sitemap URLs** | ${{ env.sitemap_url_count }} |"
+                    echo "| **OG Images** | $og_count |"
+                    echo "| **Trigger** | ${{ github.event_name }} |"
+                    echo "| **Twitter** | ${{ steps.twitter_flag.outputs.effective_flag }} |"
+                    echo "| **Run** | #${{ github.run_number }} — $(date -u '+%Y-%m-%d %H:%M UTC') |"
+                    echo ""
+                    echo "### 🗺️ Sitemap Status"
+                    if [ "${{ env.sitemap_url_count }}" -gt 0 ]; then
+                      echo "✅ sitemap.xml is live at ${{ steps.deployment.outputs.page_url }}sitemap.xml"
+                      echo "✅ Generated by StaticSiteGenerator._generate_sitemap() during \`blog_system.py build\`"
+                      echo "✅ Noindexed posts (merge stubs, fabrication-quarantined) excluded"
+                    else
+                      echo "⚠️ sitemap.xml was not generated — check the rebuild step logs"
+                    fi
+                    echo ""
+                    echo "### 📸 OG Image Status"
+                    if [ "$og_count" -gt 0 ]; then
+                      echo "✅ Generated $og_count per-article OG images (1200×630 PNG)"
+                      echo "✅ HTML files patched with correct og:image URLs"
+                      echo "✅ Social media previews will show custom images"
+                    else
+                      echo "⚠️ No OG images generated (check logs)"
+                    fi
+                  } >> $GITHUB_STEP_SUMMARY

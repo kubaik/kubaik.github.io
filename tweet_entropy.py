@@ -15,6 +15,7 @@ Four systems in one file:
 
 from __future__ import annotations
 
+from utilsIndexing.url_utils import public_post_url
 import hashlib
 import json
 import random
@@ -110,15 +111,13 @@ class DynamicMetricPool:
     _BUCKETS = ["_FINANCIAL", "_TIME", "_STRUCTURAL", "_PAIN_PHRASES"]
 
     def _seed_idx(self, seed: str, pool: List[str], bucket_offset: int = 0) -> int:
-        h = int(hashlib.md5(
-            f"{seed}:{bucket_offset}".encode()).hexdigest(), 16)
+        h = int(hashlib.md5(f"{seed}:{bucket_offset}".encode()).hexdigest(), 16)
         return h % len(pool)
 
     def draw(self, seed: str) -> str:
         """Return a concrete metric phrase (financial, time, or structural)."""
         bucket_name = self._BUCKETS[
-            int(hashlib.md5(seed.encode()).hexdigest(), 16) % (
-                len(self._BUCKETS) - 1)
+            int(hashlib.md5(seed.encode()).hexdigest(), 16) % (len(self._BUCKETS) - 1)
         ]
         pool: List[str] = getattr(self, bucket_name)
         return pool[self._seed_idx(seed, pool)]
@@ -134,7 +133,9 @@ class DynamicMetricPool:
 
     def draw_pain(self, seed: str) -> str:
         """Return a compound friction phrase."""
-        return self._PAIN_PHRASES[self._seed_idx(seed, self._PAIN_PHRASES, bucket_offset=3)]
+        return self._PAIN_PHRASES[
+            self._seed_idx(seed, self._PAIN_PHRASES, bucket_offset=3)
+        ]
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -156,34 +157,34 @@ class DynamicMetricPool:
 # Map every template index to a broad "family" label.
 # Templates that share a family are never used consecutively.
 TEMPLATE_FAMILIES = {
-    0:  "admission",        # honest admission / teams get it wrong
-    1:  "number_lead",      # specific result / number
-    2:  "paradox",          # less X = more Y
-    3:  "contrarian",       # everyone says… but
-    4:  "before_after",     # before / after
-    5:  "observation",      # teams that nail X do one thing
-    6:  "analyzed",         # dozens reviewed / same 3 mistakes
-    7:  "dev_prod_gap",     # works in dev, breaks in prod
-    8:  "confession",       # most teams ship broken X
-    9:  "opinion",          # unpopular take
-    10: "tool_discovery",   # pattern that replaces 200 lines
-    11: "seniority",        # senior devs approach X differently
-    12: "cost",             # cut overhead by doing less
-    13: "docs_gap",         # docs are good; prod isn't covered
+    0: "admission",  # honest admission / teams get it wrong
+    1: "number_lead",  # specific result / number
+    2: "paradox",  # less X = more Y
+    3: "contrarian",  # everyone says… but
+    4: "before_after",  # before / after
+    5: "observation",  # teams that nail X do one thing
+    6: "analyzed",  # dozens reviewed / same 3 mistakes
+    7: "dev_prod_gap",  # works in dev, breaks in prod
+    8: "confession",  # most teams ship broken X
+    9: "opinion",  # unpopular take
+    10: "tool_discovery",  # pattern that replaces 200 lines
+    11: "seniority",  # senior devs approach X differently
+    12: "cost",  # cut overhead by doing less
+    13: "docs_gap",  # docs are good; prod isn't covered
     14: "result_timeline",  # latency issue / single config line
-    15: "open_question",    # how long did X take your team
+    15: "open_question",  # how long did X take your team
 }
 
 # Families that must never follow each other (adjacency ban list).
 # Format: {family: [banned_next_families]}
 _ADJACENCY_BANS: dict = {
-    "admission":    ["confession", "observation"],
-    "confession":   ["admission", "observation"],
-    "observation":  ["admission", "confession"],
-    "number_lead":  ["result_timeline"],
+    "admission": ["confession", "observation"],
+    "confession": ["admission", "observation"],
+    "observation": ["admission", "confession"],
+    "number_lead": ["result_timeline"],
     "result_timeline": ["number_lead"],
-    "contrarian":   ["opinion"],
-    "opinion":      ["contrarian"],
+    "contrarian": ["opinion"],
+    "opinion": ["contrarian"],
     "before_after": ["dev_prod_gap"],
     "dev_prod_gap": ["before_after"],
 }
@@ -218,12 +219,13 @@ class HookAlternationEngine:
 
         # Build a candidate list that avoids banned families
         candidates = [
-            idx for idx in range(n_templates)
+            idx
+            for idx in range(n_templates)
             if TEMPLATE_FAMILIES.get(idx, "") not in banned_families
         ]
 
         if not candidates:
-            candidates = list(range(n_templates))   # full fallback
+            candidates = list(range(n_templates))  # full fallback
 
         # Deterministic within candidates so the same slug always maps to the
         # same "allowed" template (idempotent regeneration).
@@ -356,6 +358,7 @@ STYLE REQUIREMENTS:
 #   raw = render_variant_template(VARIANT_TEMPLATES[idx], post.slug, **format_vars)
 # ──────────────────────────────────────────────────────────────────────────────
 
+
 class VariantTemplate:
     """
     A tweet template that holds multiple alternative phrasings for each
@@ -404,16 +407,16 @@ class VariantTemplate:
 
     def render(self, seed: str, **kwargs) -> str:
         def _pick(lst: List[str], offset: int) -> str:
-            h = int(hashlib.md5(
-                f"{seed}:{self.family}:{offset}".encode()).hexdigest(), 16)
+            h = int(
+                hashlib.md5(f"{seed}:{self.family}:{offset}".encode()).hexdigest(), 16
+            )
             return lst[h % len(lst)]
 
         opener = _pick(self.openers, 0)
-        body = _pick(self.bodies,   1)
-        closer = _pick(self.closers,  2)
+        body = _pick(self.bodies, 1)
+        closer = _pick(self.closers, 2)
 
-        raw = "\n\n".join(part for part in [
-                          opener, body, closer] if part.strip())
+        raw = "\n\n".join(part for part in [opener, body, closer] if part.strip())
         try:
             return raw.format(**kwargs)
         except KeyError as e:
@@ -441,7 +444,6 @@ class VariantTemplate:
 # ── The 16 variant templates (indexed to match TEMPLATE_FAMILIES) ─────────────
 
 VARIANT_TEMPLATES: List[VariantTemplate] = [
-
     # 0 — ADMISSION
     VariantTemplate(
         family="admission",
@@ -457,7 +459,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "Here's what the docs don't cover:\n\n{teaser}",
         ],
     ),
-
     # 1 — NUMBER LEAD
     VariantTemplate(
         family="number_lead",
@@ -473,7 +474,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "Not a refactor. Not a rewrite. One lever.\n\n{teaser}",
         ],
     ),
-
     # 2 — PARADOX
     VariantTemplate(
         family="paradox",
@@ -489,7 +489,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "Why this works in practice:\n\n{teaser}",
         ],
     ),
-
     # 3 — CONTRARIAN
     VariantTemplate(
         family="contrarian",
@@ -505,7 +504,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "What the typical guide skips:\n\n{teaser}",
         ],
     ),
-
     # 4 — BEFORE / AFTER
     VariantTemplate(
         family="before_after",
@@ -520,7 +518,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "The diff that made the difference:\n\n{teaser}",
         ],
     ),
-
     # 5 — OBSERVATION
     VariantTemplate(
         family="observation",
@@ -536,7 +533,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "What separates them:\n\n{teaser}",
         ],
     ),
-
     # 6 — ANALYZED
     VariantTemplate(
         family="analyzed",
@@ -552,7 +548,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "What the repeat offenders have in common:\n\n{teaser}",
         ],
     ),
-
     # 7 — DEV / PROD GAP
     VariantTemplate(
         family="dev_prod_gap",
@@ -568,7 +563,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "The specific conditions that expose it:\n\n{teaser}",
         ],
     ),
-
     # 8 — CONFESSION
     VariantTemplate(
         family="confession",
@@ -584,7 +578,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "What the postmortem always shows:\n\n{teaser}",
         ],
     ),
-
     # 9 — OPINION
     VariantTemplate(
         family="opinion",
@@ -600,7 +593,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "What changes when you reframe it:\n\n{teaser}",
         ],
     ),
-
     # 10 — TOOL DISCOVERY
     VariantTemplate(
         family="tool_discovery",
@@ -616,7 +608,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "How it works in practice:\n\n{teaser}",
         ],
     ),
-
     # 11 — SENIORITY
     VariantTemplate(
         family="seniority",
@@ -632,7 +623,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "What changes after it clicks:\n\n{teaser}",
         ],
     ),
-
     # 12 — COST
     # Uses {fin} (financial metric) and {time} (time/effort metric) — both
     # provided by build_single_tweet_v2 via DynamicMetricPool.draw_financial/draw_time.
@@ -650,7 +640,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "Where the spend was actually going:\n\n{teaser}",
         ],
     ),
-
     # 13 — DOCS GAP
     VariantTemplate(
         family="docs_gap",
@@ -666,7 +655,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "The gap:\n\n{teaser}",
         ],
     ),
-
     # 14 — RESULT / TIMELINE
     # Uses {fin} for financial cost and {time} for time-based metrics.
     VariantTemplate(
@@ -683,7 +671,6 @@ VARIANT_TEMPLATES: List[VariantTemplate] = [
             "The fix and how to prevent it:\n\n{teaser}",
         ],
     ),
-
     # 15 — OPEN QUESTION
     VariantTemplate(
         family="open_question",
@@ -749,6 +736,7 @@ def render_variant_template(
 # _build_single_tweet() with it.  It uses all four systems above.
 # ──────────────────────────────────────────────────────────────────────────────
 
+
 def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
     """
     Entropy-aware replacement for visibility_automator._build_single_tweet().
@@ -775,6 +763,7 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
         idx = engine.next_template_idx(post.slug, len(VARIANT_TEMPLATES))
     else:
         from visibility_automator import _STYLE_MAP
+
         idx = _STYLE_MAP.get(hook_style, 0)
 
     template = VARIANT_TEMPLATES[idx]
@@ -783,7 +772,7 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
     raw_desc = getattr(post, "meta_description", "") or ""
     teaser = _extract_teaser(raw_desc, max_chars=120)
 
-    post_url = f"{base_url}/{post.slug}"
+    post_url = public_post_url(post.slug, base_url)
     reading_time = getattr(post, "reading_time_minutes", None)
     url_line = f"{post_url}  ({reading_time} min read)" if reading_time else post_url
 
@@ -917,8 +906,7 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
             # unusually long slug/url). Trim the topic phrase itself — a
             # truncated headline is fine, a dead link is not.
             overflow = len(minimal_skeleton) - 280
-            trimmed_topic = _trim_to_budget(
-                topic, max(10, len(topic) - overflow))
+            trimmed_topic = _trim_to_budget(topic, max(10, len(topic) - overflow))
             tweet = render_variant_template(
                 template,
                 seed=post.slug,
@@ -984,7 +972,7 @@ if __name__ == "__main__":
             slug,
             topic="Database Indexing",
             teaser="The index that PostgreSQL won't use without a specific cast.",
-            url=f"https://kubaik.github.io/{slug}",
+            url=public_post_url(slug),
             tags="#Postgres #BackendDev",
             bait="\n\nWhat was your worst index miss in prod?",
             metric=metric,

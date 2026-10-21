@@ -37,6 +37,7 @@ Usage:
     python scripts/generate_sitemap.py --output-dir ./docs --validate-only
     python scripts/generate_sitemap.py --output-dir ./docs --strict --validate-only
 """
+
 from __future__ import annotations
 
 import argparse
@@ -54,12 +55,15 @@ if str(_ROOT) not in sys.path:
 try:
     from adsense_fixes.canonical_guard import is_merge_stub
 except Exception:  # pragma: no cover
+
     def is_merge_stub(_post) -> bool:
         return False
+
 
 try:
     from adsense_fixes.queue_noindex_guard import get_quarantined_slugs
 except Exception:  # pragma: no cover
+
     def get_quarantined_slugs(_path) -> set:
         return set()
 
@@ -73,7 +77,6 @@ _REQUIRED_STATIC_PATHS = {
     "/contact/",
     "/privacy-policy/",
     "/terms-of-service/",
-    "/tag/",
     "/dmca/",
     "/ai-content-policy/",
 }
@@ -145,7 +148,7 @@ def _url_to_slug(loc: str, base_url: str) -> str | None:
     prefix = base_url.rstrip("/") + "/"
     if not loc.startswith(prefix):
         return None
-    path = loc[len(prefix):].rstrip("/")
+    path = loc[len(prefix) :].rstrip("/")
     if not path or "/" in path:
         return None
     return path
@@ -232,7 +235,8 @@ def main() -> int:
         )
     )
     parser.add_argument(
-        "--output-dir", "--docs-dir",
+        "--output-dir",
+        "--docs-dir",
         dest="output_dir",
         default="./docs",
         help="Directory containing sitemap.xml (default: ./docs)",

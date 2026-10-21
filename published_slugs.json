@@ -1,0 +1,1232 @@
+{
+  "15-agents-blew-up-our-logs-why-we-pinned-models-logs": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "2026-ai-stack-solo-saas-cost-showdown": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "2026-alert-triage-when-opsgenie-slept-for-you": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "2026-tech-salaries-where-cuts-stopped-where-raises": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "3-ai-coders-ranked-cursor-windsurf-claude-code-in": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "3-mistakes-that-break-deployments-for-everyone": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "3-skills-to-outrun-ai-salary-cuts": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "3-ways-container-builds-got-3x-faster-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "40-ai-code-meant-60-more-alerts": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "5-ai-tools-that-let-us-ship-faster-than-sf-teams": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "5-notification-systems-ranked-push-email-sms": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "5-ways-to-find-hidden-latency-before-production": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "50-locations-50-headaches-edge-native-backends-in": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-bundling-decisions-that-still-matter": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-code-review-traps-when-ai-writes-half-your-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-idp-shifts-for-ai-feature-delivery": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-patterns-for-systems-that-wont-die-when-networks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-skills-senior-engineers-need-now-agents-are-live": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-ways-to-earn-extra-in-2026-without-shipping-saas": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "7-ways-to-measure-prompt-platform-roi-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "9-ai-wrapper-plays-that-worked-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "9-vibe-coding-traps-that-break-production-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "african-devs-ai-tools-that-work-now-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "african-fintech-agents-the-compliance-cliff-most-miss": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "african-fintech-rules-broke-our-stack": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-access-for-non-ai-engineers": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-architecture-the-new-model-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-audit-trails-event-log-vs-state-snapshots": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-auth-the-silent-deployment-killer": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-auth-where-the-docs-ended-up-lying": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-code-review-gap-nobody-admits": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-compliance-in-african-fintech-the-cbn-gap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-compliance-the-layer-you-build-after-failure": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-context-short-term-vs-long-term-memory": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-drift-the-failure-mode-you-didnt-log": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-drift-why-it-hurts-ux": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-drift-why-prod-breaks-without-human-checkpoints": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-flooded-our-api-with-bad-calls-overnight": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-followed-instructions-too-literally-the-cron-job-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-frameworks-stop-rewriting-the-same-glue-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-governance-opa-vs-kyverno-after-our-incident": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-permissions-the-mistake-that-breaks-production": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-platform-abstractions-a-case-study": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-reliability-7-metrics-users-trust": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-slos-measure-what-agents-actually-do": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-systems-circuit-breakers-are-not-enough": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-tracing-when-logs-lie-and-metrics-mislead": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agent-versioning-the-contract-you-forgot": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agentic-ai-cost-control-7-tools-one-backfire": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agentic-finops-is-a-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agentic-workflows-how-we-kept-the-lights": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agentic-workflows-surviving-network-partitions": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agents-247-vs-on-demand-42k-bill-shock": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agents-create-incidents-at-2am": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agents-keep-breaking-prod-3-boundary-rules-you-still-need": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "agents-running-hours-youre-losing-context-fast": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agent-postmortem-human-loop-vs-blind-replay": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agent-postmortems-the-three-surprises": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agent-postmortems-trace-vs-logs-vs-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agents-circuit-breakers-are-not-optional": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agents-eat-your-budget-3-ways": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agents-killed-dev-tool-sales-cycles": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-agents-vs-argo-tekton-which-pipeline-heals-itself": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-alert-triage-cut-pages-80-in-production": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-apps-break-when-you-treat-them-like-regular-software": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ate-the-niches-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-best-practices-fail-on-slow-networks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-burnout-why-output-pressure-rose-even-as-tools-got": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-chats-hidden-wcag-fails": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-code-40-how-to-keep-it-from-rotting-your-repo": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-code-in-prod-postmortems-still-work": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-code-traps-copilot-vs-cursor-smackdown": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-codebase-onboarding-2-paths-tested": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-codebases-two-onboarding-paths-that-actually-work": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-cost-attribution-without-the-spreadsheet-hell": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-era-promotions-hinge-on-this-one-thing": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-errors-hide-in-plain-latency": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-experimentation-guardrails-not-gates": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-feature-drift-why-your-model-died-at-midnight": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-features-as-tech-debt-or-golden-paths": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-features-m-pesa-paystack-flutterwave-traps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-features-rot-faster-than-you-build-them": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-fixes-legacy-code-nobody-owns": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-freelance-rates-2026-which-stacks-still-pay": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-glue-code-3-ways-to-avoid-duct-taping-models": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-in-local-currency-costs-that-surprise": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-interviews-4-questions-that-caught-80-of-weak": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-interviews-break-systems-5-real-mistakes-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-interviews-broke-system-design-3-patterns-that": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-interviews-now-ask-for-this": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-made-self-service-platforms-trivial-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-memory-systems-context-that-survives-sessions": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-micro-saas-under-150month-the-real-infra-choices": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-model-poisoning-3-real-attacks-on-datasets": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-native-apps-break-when-you-copy-old-rules": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-native-apps-forget-the-old-stack": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-observability-isnt-monitoring-heres-why": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-observability-the-metrics-that-matter": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-on-slow-networks-nairobi-teams-2026-playbook": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ops-vs-human-ops-the-incidents-that-broke-them": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-pair-prompts-9-setups-we-tried-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-payments-break-in-m-pesa-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-proof-your-mid-level-salary": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-reshaped-my-engineering-principles": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-revives-unloved-legacy-codebases": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-rollouts-live-or-die-by-flags": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-sales-cycles-3x-faster-40-less-talk": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-sales-cycles-why-dev-tools-now-need-3-demos": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-scanners-overlook-real-vulns": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-static-analysis-vs-legacy-sast-5x-faster-scans": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-steals-junior-tasks-3-skills-that-protect-pay": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-stole-system-design": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-supply-chain-attacks-what-actually-broke": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-tools-rewrote-my-engineering-rules": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-tools-wont-help-if-everyone-writes-the-same-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ui-generation-what-it-fixed-and-what-still-breaks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ui-tools-6-months-in-what-i-gained-and-lost": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ui-tools-broke-my-react-flow-heres-why": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-ui-tools-promise-vs-production": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-unit-costs-the-metric-both-teams-fight-over": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ai-wrote-the-docs-humans-wrote-the-gaps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "alerts-2026-ai-turns-false-alarms-to-silence": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "always-on-agents-cost-more-than-you-think": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "api-abuse-2026-5-attacks-we-missed-until-costs-spiked": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "api-abuse-patterns-rising-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "api-attacks-rising-40-the-3-patterns-to-block-now": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "apis-must-die-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "apm-is-blind-to-your-ai-agents": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "apm-lied-about-our-ai-incidents": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "arm-in-production-graviton4-vs-ampere-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "audit-logs-compliance-vs-performance": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "audit-logs-ship-them-fast-keep-them-forever": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "audit-logs-that-scale-skip-the-3am-fire-drills": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "audit-trails-immutabledb-vs-dynamodb-streams": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "aws-cloudwatch-synthetics-for-ai-pipelines": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "aws-cost-levers-2026-the-3-that-cut-bills-30": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "aws-costs-for-nairobi-saas-2026-bill-split": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "aws-local-zones-vs-localstack-ai-microservices-in": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "bank-apis-broke-under-african-2g": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "big-model-api-vs-fine-tune-the-2026-math": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "bootstrapped-5k-mrr-without-ads": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "boring-aws-lambda-layers-that-dont-lock": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "build-a-search-system-in-2026-semantic-keyword": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "build-agent-workflows-that-survive-restarts": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "build-apps-that-still-work-on-500-ms-latency": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "build-in-public-without-burning-out": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "built-a-multi-agent-system-without-langgraph": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "bundle-size-70-lighter-with-server-components": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "buy-vs-build-ai-3-hard-rules-for-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cache-stampedes-the-patterns-that-scale-and-the-ones": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "chaos-engineering-without-an-sre-team": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "choose-no-code-only-when": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cicd-for-ai-code-test-secure-rollback-fast": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cicd-for-django-in-20ms-africa-networks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "circleci-still-beats-github-actions-at-50k-builds": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "claude-code-after-a-year-daily-wins": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cloud-agents-burned-18k-8-tools-that-didnt-work": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "code-ai-wont-rewrite": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "commit-ownership-in-ai-pair-coding": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "compare-kafka-redpanda-nats-for-event-driven-systems": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "computer-use-agents-the-permission-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "context-windows-agents-that-run-for-days": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "context-windows-live-longer-than-you-think": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "contract-testing-is-not-optional": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "core-web-vitals-what-actually-moves-the-needle": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cost-tools-fail-when-agents-scale-autonomously": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cqrs-when-it-pays-off-and-when-it-breaks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cross-border-fintech-why-your-kyc-fails-in-dakar": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "currency-switch-fails-in-ghana-one-config-file-to-rule": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cut-cold-starts-70-lambda-cost-hack": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "cut-false-positives-85-with-this-ci-security-trick": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "dead-letter-queues-stop-poison-messages": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "debug-ai-agent-failures-differently": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "debug-ai-agents-failures-arent-just-bugs": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "debugging-techniques-that-outlast-any-framework": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "deploy-a-solo-stack-for-20month-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "deployment-platforms-senior-vs-new-hire": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "detect-lazy-agents-without-false-alarms": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "detecting-silent-agent-failures": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "docs-that-survive-the-bus-factor-fix": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "double-entry-ledger-concurrent-write-errors": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "double-the-price-double-the-revenue": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "drop-ec2-bills-70-without-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "duckdb-in-production-when-it-replaces-a-warehouse": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ebpf-observability-in-2026-what-actually-works": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "edge-agents-vs-cloud-round-trips-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "evaluate-agents-with-spark-vs-custom-harness": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "event-driven-beats-agent-driven-910-times": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "event-sourcing-pay-the-complexity-tax-only-here": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "evolve-your-monolith-without-rewriting-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "failed-ai-wrappers-2026-what-the-survivors-did-right": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "feature-flags-became-ai-rollout-platforms": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "fintech-features-break-in-ghana-the-real-fix": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "fix-ai-agent-failures-postmortem-guide": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "flaky-tests-reliability-bug-not-test-noise": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "found-niche-in-2026-saas-that-ai-cant-copy": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "fraud-detection-rules-vs-scoring-where-they-meet": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "global-state-is-the-wrong-tool-for-ai-features": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "golden-paths-become-load-bearing-walls": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "golden-paths-that-dont-handcuff": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "graphql-vs-rest-vs-trpc-2026s-api-fight": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "hire-for-agents-not-autocomplete": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "hybrid-cloud-routing-cost-speed-balance-for-sea": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "idempotency-keys-what-they-fix-what-they-dont": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "idp-for-ai-2026-stack-evolution": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "internal-platform-adoption-one-metric-kills-velocity": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "istio-and-cilium-what-really-breaks-in-production": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "json-modes-hidden-costs-revealed": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "json-modes-silent-failures-exposed": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "keep-multi-model-systems-stable-6-rules-that-worked": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "kill-noisy-alerts-the-triage-system-that-restored-sleep": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "kubernetes-or-nomad-the-real-experiment-cost-split": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "latency-trade-offs-nairobi-teams-beat-global-ai-providers": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "least-privilege-for-agents-the-config-line-nobody-writes": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-agents-why-monoliths-win": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-drift-the-silent-quality-drop-metrics-miss": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-eval-drift-that-users-notice-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-evals-langsmith-vs-promptfoo-in-prod": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-evals-skip-the-hype-track-these-4-metrics": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-metrics-that-stop-wasting-time": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-output-metrics-that-actually-move-the-needle": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llm-risks-underestimated-in-owasp-top-10": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "llmops-2026-evaluation-stack-that-replaced-rag-dashboards": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "local-llm-agents-vllm-vs-ollama-for-fintech": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "log-audit-costs-without-breaking-compliance": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "m-pesa-daraja-20-your-2026-migration-checklist": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "m-pesa-failures-cost-us-40-hours": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "map-legacy-code-with-ai-before-it-breaks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "marketing-without-budget-5k-mrr-in-18-months": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mcp-hidden-cost-traps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mcp-servers-real-time-pipelines-without-agents": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mcp-servers-the-3-hidden-costs-nobody-quotes": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mcp-vs-a2a-pick-the-wrong-layer": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "memory-systems-for-production-agents": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "merge-three-payment-apis-into-one-system": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "meter-dev-tool-pricing-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "micro-saas-niches-eaten-by-ai-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "migrations-stop-running-them-live": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mobile-first-ai-fails-you-didnt-plan": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mobile-money-agent-fees-why-your-bot-keeps-failing": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "mobile-money-agents-when-m-pesa-api-fails": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "model-router-keep-it-simple-keep-it-local": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "monolith-to-services-without-a-rewrite": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "most-llm-cost-dashboards-lie": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "move-images-50-faster-in-2026-with-starlink-cdn": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "multi-agent-handoffs-the-latency-tax-nobody-measures": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "multi-agent-systems-break-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "multi-agent-systems-when-they-quietly-degrade": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "multi-agent-systems-why-failures-hide": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ndpr-2026-broke-fintech-apis": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "negotiate-2026-pay-when-ai-steals-40-of-your-job": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "negotiate-pay-in-2026-with-ai-proof-points": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "negotiate-salaries-with-ai-skills-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "negotiating-pay-when-ai-inflates-output": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "neon-vs-planetscale-vs-turso-which-broke-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "nextjs-15-vs-remix-vs-sveltekit-2026-choices": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "nigerias-2026-api-rules-broke-our-microservices": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "observability-2026-ditch-the-three-pillars": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "observability-agents-lied-to-us": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "observe-llm-features-90-faster": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "offline-agent-workflows-for-last-mile-ops": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "offline-agents-local-first-sync-patterns": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "offline-first-agents-for-field-teams": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "offline-first-apps-what-3g-markets-taught-us": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "offline-first-money-apps-with-dynamodb-streams": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "one-misconfigured-vector-db-killed-our-rag-pipeline": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "one-payment-stack-for-kenya-nigeria-ghana": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "only-boring-stacks-survive-ai-services": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "open-banking-apis-the-integration-traps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "orchestration-tax-kills-multi-agent-systems": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "pass-interviews-without-a-cs-degree": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "pci-dss-architecture-12-requirements-that-matter": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "personal-ai-assistants-avoid-vendor-lock-in-traps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "pick-one-stripe-lemon-squeezy-paddle-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "platform-engineering-roi-metrics-that-fund-teams": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "platform-teams-agentic-world-struggle": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "platform-teams-in-2026-docs-vs-production-reality": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "poolers-wont-save-your-serverless-db": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "portfolio-projects-hiring-managers-skip": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "portfolio-projects-that-hire-remote-senior-devs": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "portfolio-that-hires-show-constraints-not-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "postgres-17-buried-redis-s3-cron": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "postgres-17-swallowed-redis-kafka-timescale": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "postgres-vector-search-what-breaks-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "pr-checklists-are-dead-ai-agents-do-reviews-now": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "prevent-ownership-drift-when-velocity-explodes": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "price-ai-proof-skills-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "price-saas-tools-in-2026-what-we-learned-pricing-a": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "price-your-remote-job-like-a-new-york-dev": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "price-your-remote-salary-4-step-script": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "promotions-in-the-ai-era-the-mechanism": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "prompt-injection-got-the-hype-poison-data-ruined-us": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "prompt-injection-what-breaks-first-in-prod": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "prompt-injections-hidden-aws-tax": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "prompts-are-code-how-to-measure-their-value": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "property-based-testing-vs-example-tests-the-bug-gap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "purpose-built-ai-is-a-trap-for-solo-founders": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "purpose-built-beats-general-ai-tools": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "pypi-poisoned-models-hit-prod-in-2025": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rag-in-prod-what-tutorials-wont-tell-you": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rag-is-not-enough-hybrid-search-reranking-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rag-on-legacy-systems-vector-db-vs-full-text-sql": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rag-pipelines-4-silent-prod-killers": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rag-rots-if-you-dont-refresh-indexes": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rate-limiters-burst-vs-abuse-two-designs": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "react-19-compiler-my-components-changed-how": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "read-replicas-the-bug-factory-you-built": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rebalance-pay-when-ai-fills-half-your-role": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "reconciling-mobile-money-edge-cases-banks-ignore": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "red-teaming-agents-without-killing-velocity": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "regulations-forced-better-apis-the-2026-fintech": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "remote-salary-negotiate-without-sounding-cheap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "remote-work-in-2026-which-tools-survived": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "replace-env-with-these-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "replace-managed-services-with-postgres-17": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "retire-api-versions-before-they-pile-up": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rogue-agent-api-calls-stop-the-bleeding": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "run-apis-in-50-spots-what-breaks-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "runbooks-vs-ai-which-cuts-outages-50": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rust-rewrites-where-they-pay-off-where-they-dont": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "sandboxed-computer-use-agents-with-gvisor": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "save-12kmonth-cloud-egress-costs-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "sbom-attestation-that-gets-used": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "scope-agent-permissions-per-task": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "self-healing-pipelines-argo-vs-crossplane-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "self-service-ai-tooling-the-permission-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "self-service-ai-tooling-where-it-breaks-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "self-service-is-broken-without-ai-ops": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "senior-engineer-the-bar-moved-nobody-updated-the-rubric": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "senior-engineer-title-inflation-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "senior-role-projects-3-real-paths": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "serve-4g-as-baseline-apps-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "settlement-vs-clearing-backend-engineers-guide": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ship-1mb-pages-on-4g-starlink-africa-case-study": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ship-a-solo-project-pipeline-under-20month": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ship-evals-before-your-agent-ships": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ship-to-nairobi-users-starlink-latency-guide-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "show-real-work-not-ai-clones": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "signals-5-state-tricks-that-broke-my-app": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "skip-m-pesa-build-one-api-for-3-african-markets": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "slos-for-agentic-features-beyond-latency": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "soft-deletes-fail-what-breaks-first": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "spot-ais-hidden-cost-spike-in-your-stack": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "spot-evictions-the-retry-logic-that-holds-up": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "spot-instances-vs-on-demand-for-ai-experiments": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "staging-wont-catch-prod-bugs-make": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "starlink-4g-fallback-serve-pages-under-800ms": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "starlink-in-production-what-changed-in-our-stack": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stay-relevant-when-tools-change-faster-than-you-can": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stop-assuming-payment-apis-never-fail": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stop-false-positives-in-ci-scanning-now": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stop-guessing-tech-stacks-validate-tools-in-2-hours": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stop-putting-llm-keys-in-env": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stop-the-writes-zero-downtime-db-migrations": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "stop-trusting-agents-for-core-logic": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "store-data-once-serve-everywhere-cheaper": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "supervisor-vs-swarm-vs-debate-vs-pipeline": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "survive-network-drops-agentic-workflows-that-keep-running": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "tame-python-asyncs-hidden-traps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "tech-debt-when-half-your-stack-is-unfamiliar": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "temporal-changed-our-agent-retries-for-good": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "test-ai-code-without-testing-the-ai": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "thundering-herd-the-hidden-scaling-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "tool-calling-patterns-patterns-that-survive-load-vs": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "tool-calling-stateless-beats-stateful-under-load": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "tool-calls-under-load-async-batch-vs-fire-and-forget": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "tool-calls-why-retries-stampede": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "track-ai-agent-costs-in-fractal-workflows": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "trim-llm-bills-3-finops-moves-that-work": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "two-engineer-classes-the-ai-tool-norm-trap": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "unlock-python-313s-free-threaded-gil-for-web-apps": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "use-feature-flags-to-deploy-ai-models-safely": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "ussd-fintech-in-2026-the-300m-user-channel-nobody": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "vibe-code-works-great-fails-forever": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "vibe-coding-mvp-gem-prod-albatross": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "wasm-servers-beat-containers-here": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "webhook-delivery-that-survives-outages": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "webhooks-2026-retries-idempotency-and-the-9995": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "webhooks-done-right-retries-that-dont-explode-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "websockets-vs-server-sent-events-latency-over-3g": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "when-flags-become-experiments": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "when-your-agent-goes-silent-degrade-gracefully": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "which-agent-stack-survives-3g": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "which-ai-wrappers-made-money-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "who-owns-ai-generated-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "who-signs-off-on-ai-code": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-ai-interviewers-failed-68-of-us-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-do-production-agents-still-need-humans": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-does-my-agent-version-break-clients": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-does-my-model-drift-after-deploy": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-i-picked-playwright-and-vitest-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-leader-election-fails-on-cloud-networks": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-monoliths-die-slowly-in-2026": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-our-schema-survived-ai-scaling": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-platform-metrics-lie": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-progressive-web-apps-fail-on-2g-and-how-to-fix": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-scaling-agents-kills-plain-logs": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-your-multi-agent-system-degraded-slowly": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "why-your-routing-layer-will-collapse-at-scale": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "world-models-wont-replace-your-backend": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "zero-trust-ai-skip-the-latency-tax": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  },
+  "zig-vs-rust-vs-go-compile-errors-compared": {
+    "first_seen": "2026-10-21T08:41:23.461513+00:00"
+  }
+}

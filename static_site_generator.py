@@ -402,6 +402,14 @@ class StaticSiteGenerator:
         self._generate_privacy_consent_banner()
         self._generate_security_headers()
         self._generate_404_page()
+        try:
+            from utilsIndexing.retire_registry import sync_ledger_and_tombstones
+
+            sync_ledger_and_tombstones(
+                [p.slug for p in posts], Path("./docs"), self.blog_system.config
+            )
+        except Exception as e:  # never break the build over hygiene bookkeeping
+            print(f"  ⚠️  retire_registry skipped: {e}")
         self._generate_ads_txt()
         self._generate_pwa_files()
         self._generate_tag_pages(posts)
@@ -1876,7 +1884,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             f"<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>",
             f"<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>",
             f"<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>",
-            f"<url><loc>{base_url}/tag/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>",
             f"<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>",
             f"<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>",
         ]
