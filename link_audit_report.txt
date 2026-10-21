@@ -1,4 +1,4 @@
-❌ Internal link audit: 410 broken link(s) found across 411 posts checked.
+❌ Internal link audit: 411 broken link(s) found across 411 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -318,6 +318,7 @@ Source Post                              Anchor Text                    Missing 
   /reconciling-mobile-money-edge-cases-banks-ignore AI content policy              /ai-content-policy/
   /red-teaming-agents-without-killing-velocity AI content policy              /ai-content-policy/
   /regulations-forced-better-apis-the-2026-fintech AI content policy              /ai-content-policy/
+  /remote-premium-rates-skills-ai-cant-copy AI content policy              /ai-content-policy/
   /remote-salary-negotiate-without-sounding-cheap AI content policy              /ai-content-policy/
   /remote-work-in-2026-which-tools-survived AI content policy              /ai-content-policy/
   /replace-env-with-these-in-2026         AI content policy              /ai-content-policy/
