@@ -182,6 +182,7 @@ deploy-a-solo-stack-for-20month-in-2026,docs/deploy-a-solo-stack-for-20month-in-
 deployment-platforms-senior-vs-new-hire,docs/deployment-platforms-senior-vs-new-hire/index.md,IMPROVE,,,Deployment platforms: senior vs new hire,2026-10-07,0,0,0.0,3298,0,0.0,0,5,6,0,False,True,21,False
 detect-lazy-agents-without-false-alarms,docs/detect-lazy-agents-without-false-alarms/index.md,IMPROVE,,add_sources,Detect lazy agents without false alarms,2026-07-04,0,0,0.0,2844,0,0.0,0,0,6,0,False,False,19,False
 detecting-silent-agent-failures,docs/detecting-silent-agent-failures/index.md,IMPROVE,,,Detecting silent agent failures,2026-10-13,0,0,0.0,2643,0,0.0,0,2,6,0,False,True,15,False
+docs-that-survive-the-bus-factor-fix,docs/docs-that-survive-the-bus-factor-fix/index.md,IMPROVE,,add_sources,Docs that survive: the bus factor fix,2026-10-21,2,0,0.014,2583,0,0.0,0,0,2,0,False,True,14,True
 double-entry-ledger-concurrent-write-errors,docs/double-entry-ledger-concurrent-write-errors/index.md,IMPROVE,,,Double-entry ledger: concurrent write errors,2026-10-01,0,0,0.0,2638,0,0.0,0,2,6,0,False,False,16,False
 double-the-price-double-the-revenue,docs/double-the-price-double-the-revenue/index.md,IMPROVE,,,"Double the price, double the revenue",2026-06-30,0,0,0.0,2181,0,0.0,0,1,6,0,False,False,12,False
 drop-ec2-bills-70-without-code,docs/drop-ec2-bills-70-without-code/index.md,IMPROVE,,,Kernel and EBS Tuning That Cuts EC2 CPU Overhead,2026-06-09,0,0,0.0,2144,0,0.0,0,3,6,0,False,False,22,False
@@ -235,7 +236,7 @@ marketing-without-budget-5k-mrr-in-18-months,docs/marketing-without-budget-5k-mr
 mcp-hidden-cost-traps,docs/mcp-hidden-cost-traps/index.md,IMPROVE,,,MCP hidden cost traps,2026-09-12,0,0,0.0,2369,0,0.0,0,3,6,0,False,False,16,False
 mcp-servers-real-time-pipelines-without-agents,docs/mcp-servers-real-time-pipelines-without-agents/index.md,IMPROVE,,,MCP servers: real-time pipelines without agents,2026-07-03,0,0,0.0,2523,0,0.0,0,1,6,0,False,True,19,False
 mcp-servers-the-3-hidden-costs-nobody-quotes,docs/mcp-servers-the-3-hidden-costs-nobody-quotes/index.md,IMPROVE,,,MCP servers: the 3 hidden costs nobody quotes,2026-08-05,0,1,0.01,2871,0,0.0,0,2,6,0,False,False,23,False
-mcp-vs-a2a-pick-the-wrong-layer,docs/mcp-vs-a2a-pick-the-wrong-layer/index.md,IMPROVE,,add_sources,MCP vs A2A: pick the wrong layer,2026-10-20,1,1,0.02,2446,0,0.0,0,0,2,0,False,True,20,True
+mcp-vs-a2a-pick-the-wrong-layer,docs/mcp-vs-a2a-pick-the-wrong-layer/index.md,IMPROVE,,,MCP vs A2A: pick the wrong layer,2026-10-20,1,0,0.006,2987,0,0.0,0,1,6,0,False,True,23,False
 memory-systems-for-production-agents,docs/memory-systems-for-production-agents/index.md,IMPROVE,,,Memory Systems for Production Agents,2026-09-15,0,0,0.0,1968,0,0.0,0,3,6,0,False,False,14,False
 merge-three-payment-apis-into-one-system,docs/merge-three-payment-apis-into-one-system/index.md,IMPROVE,,,Merge three payment APIs into one system,2026-06-10,0,0,0.0,2670,0,0.0,0,3,6,0,False,False,20,False
 meter-dev-tool-pricing-in-2026,docs/meter-dev-tool-pricing-in-2026/index.md,IMPROVE,,,Meter dev-tool pricing in 2026,2026-07-02,0,0,0.0,1790,0,0.0,0,3,6,0,False,False,12,False

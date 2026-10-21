@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-20T16:35:37.146015",
+  "built_at": "2026-10-21T03:54:13.585994",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5595,6 +5595,11 @@
       "slug": "mcp-vs-a2a-pick-the-wrong-layer",
       "title": "MCP vs A2A: pick the wrong layer",
       "summary": "eventdriven agentdriven was never the hard part. Knowing when it was about to fail was. This is the writeup that includes the part that usually goes wrong. The gap between the demo and the incident report is where this actually lives. Two protocols are now in every architecture diagram: Model Contex"
+    },
+    {
+      "slug": "docs-that-survive-the-bus-factor-fix",
+      "title": "Docs that survive: the bus factor fix",
+      "summary": "Most write-ups stop exactly where the interesting part starts. The metric everyone watches for changed selfservice usually isn't the one that would have caught the problem early. This is the writeup that includes the part that usually goes wrong. Most engineering teams treat documentation as a write"
     }
   ]
 }

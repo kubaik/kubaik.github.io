@@ -1,0 +1,509 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Docs that survive: the bus factor fix - Kubai Kevin</title>
+        <meta name="description" content="How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.">
+        <meta name="keywords" content="Documentation, BusFactor, Runbook, Survivable, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-21T03:54:11.003570">
+        <meta property="article:modified_time" content="2026-10-21T03:54:52.200008+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Docs that survive: the bus factor fix">
+        <meta property="og:description" content="How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.">
+        <meta property="og:url" content="https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/docs-that-survive-the-bus-factor-fix.png">
+        <meta property="og:image:alt" content="Docs that survive: the bus factor fix">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Docs that survive: the bus factor fix">
+        <meta name="twitter:description" content="How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/docs-that-survive-the-bus-factor-fix.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/#article",
+      "headline": "Docs that survive: the bus factor fix",
+      "description": "How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.",
+      "datePublished": "2026-10-21T03:54:11+00:00",
+      "dateModified": "2026-10-21T03:54:52+00:00",
+      "wordCount": 3099,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/"
+      },
+      "keywords": "Documentation, BusFactor, Runbook, Survivable, Softwareengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs that survive: the bus factor fix",
+          "item": "https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Docs that survive: the bus factor fix</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Docs that survive: the bus factor fix</h1>
+                
+                <p class="post-lead">How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/documentation/"
+                       style="text-decoration:none;">Documentation</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">BusFactor</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Runbook</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Survivable</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3099 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-21
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most engineering teams treat documentation as a write-only artifact: someone writes a runbook, a design doc, a README, and then everyone moves on. The document rots quietly until the person who wrote it leaves. Then the team discovers that the "documentation" was never really documentation — it was a personal memory aid, full of implicit context that only its author could decode. The real problem isn't that docs go stale; it's that they were never designed to be read by anyone who wasn't already in the author's head.</p>
+<p>This is an explainer about writing documentation that survives the departure of its author. Not documentation that is merely present, but documentation that lets a new engineer — or a teammate three time zones away — act without asking the author a question. The goal is to reduce the bus factor of written knowledge: the number of people who must be hit by a bus before a piece of knowledge is lost forever.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>Documentation survives its author when it is written for a reader who has no access to the author's context. That means every doc must state its purpose, its audience, its assumptions, and the steps or decisions it encodes, in a form that can be verified without asking a human. It must live in a place the team already looks (usually the repo, next to the code), it must be versioned with the code, and it must be tested — either by a new team member following it or by automated checks. The rest of this article is about how to do that without turning documentation into a second job.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Two mental models collide. The first is the <strong>personal notebook</strong> model: documentation is a place to jot down what you did so you don't forget. The second is the <strong>product manual</strong> model: documentation is an artifact produced for a reader who is not you. Most teams say they want the second but reward the first, because the first is fast and the second is slow. A personal notebook can be written in five minutes; a product manual takes an hour. When deadlines press, the notebook wins.</p>
+<p>The confusion deepens because the two models look identical on the surface. Both produce a markdown file with a title and some bullet points. The difference is in what is left unsaid. A personal notebook assumes the reader knows why the document exists, what problem it solves, which environment it applies to, and what "done" looks like. A product manual states all of that explicitly. When the author leaves, the notebook becomes a cryptic artifact; the manual remains usable.</p>
+<p>There is also a cultural confusion: many engineers believe that good code is self-documenting, so documentation is only for the parts that code cannot express. That is half true. Code can express <em>what</em> it does; it rarely expresses <em>why</em> a particular trade-off was chosen, what alternatives were rejected, or what operational assumptions the code depends on. Those are exactly the things a new reader needs and exactly the things that vanish when the author leaves.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of documentation as a <strong>contract with a future reader</strong>. The contract says: if you follow these steps, in this environment, with these assumptions, you will get this result. A contract is only valid if both parties can verify it. The author verifies it by writing it; the reader verifies it by executing it. If the reader cannot execute it without asking the author a question, the contract is incomplete.</p>
+<p>A useful analogy is a recipe. A recipe that says "cook until done" is not a recipe; it's a note to self. A recipe that says "bake at 180°C for 25 minutes, until a skewer inserted in the center comes out clean" is a recipe, because a reader who has never cooked that dish can verify the result. The difference is not length; it's the presence of verifiable checkpoints. Documentation that survives its author is full of verifiable checkpoints: commands to run, outputs to expect, error messages to recognize, and decisions with stated reasons.</p>
+<p>The contract model also tells you what to leave out. A contract does not need to explain the history of the legal system; it needs to state the terms. Similarly, a runbook does not need to explain what Kubernetes is; it needs to state which cluster, which namespace, which command, and what a successful result looks like. Context that the reader can get elsewhere should be linked, not inlined. Context that only the author knows must be written down.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Consider a runbook for rotating a database credential. A personal-notebook version might look like this:</p>
+<pre><code class="language-markdown"># Rotate DB password
+
+1. Update the secret in Vault.
+2. Restart the app.
+3. Check it works.
+</code></pre>
+<p>This is unusable by anyone who wasn't there. Which Vault path? Which app? What does "check it works" mean — which endpoint, which log line, which dashboard? What happens if the restart fails halfway through? What is the rollback? A reader who has never done this will have to ask the author at least four questions.</p>
+<p>A survivable version looks like this:</p>
+<pre><code class="language-markdown"># Rotate the primary database password
+
+**Audience:** on-call engineer with production access.
+**Applies to:** the `orders-api` service in the `prod-eu` cluster.
+**Prerequisites:** `vault` CLI logged in to the prod instance; `kubectl` context set to `prod-eu`.
+
+## Steps
+
+1. Generate a new password and write it to Vault:
+   ```bash
+   NEW_PW=$(openssl rand -base64 32)
+   vault kv put secret/orders-api/db password=&quot;$NEW_PW&quot;
+   ```
+   Expected: `====== Secret Path ======` output with version incremented.
+
+2. Trigger a rolling restart so pods pick up the new secret:
+   ```bash
+   kubectl -n orders rollout restart deployment/orders-api
+   kubectl -n orders rollout status deployment/orders-api --timeout=5m
+   ```
+   Expected: `deployment &quot;orders-api&quot; successfully rolled out`.
+
+3. Verify the app can reach the database:
+   ```bash
+   curl -fsS https://orders.prod.example.com/healthz | jq .db
+   ```
+   Expected: `&quot;ok&quot;`. If you see `&quot;error&quot;`, check the pod logs for `password authentication failed` and roll back by re-running step 1 with the previous secret version.
+
+## Rollback
+
+If step 2 fails, the old password is still valid until the pods restart. Re-run step 1 with the previous secret version from Vault's version history, then restart again.
+</code></pre>
+<p>Notice what changed. The survivable version states audience, scope, and prerequisites. It gives exact commands with expected outputs. It defines what "check it works" means in terms of an HTTP endpoint and a JSON field. It includes a rollback path. None of that is optional if the doc is to survive its author.</p>
+<p>The same principle applies to design docs. A design doc that says "we chose Kafka because it's better" is a note to self. A design doc that says "we chose Kafka over SQS because we need replayable ordered logs for the audit service; the cost is operational complexity, which we accept because the audit service is the only consumer" is a contract with a future reader, who can now evaluate whether the decision still holds.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you have ever written an incident postmortem, you already know the shape of survivable documentation. A good postmortem states the timeline, the impact, the root cause, and the action items, with enough detail that someone who wasn't in the incident can understand what happened. It does not say "the database was slow"; it says "p99 latency on <code>orders-api</code> rose from a baseline of 200ms to 4s at 14:02 UTC, correlating with connection pool exhaustion on the primary." The same specificity that makes a postmortem useful makes a runbook useful.</p>
+<p>Similarly, if you have ever onboarded a new engineer, you know the questions they ask. Those questions are a map of what your documentation is missing. The first week of onboarding is the most honest documentation review you will ever get, because the new engineer has no context to fill in the gaps. If you can capture those questions and turn them into doc updates, you are doing exactly the work this article describes.</p>
+<p>On the security side, documentation that survives its author is also documentation that survives an audit. A runbook that names the exact IAM role, the exact secret path, and the exact command to rotate a credential is both easier to follow and easier to review for least privilege. Docs that say "use the admin key" are a security incident waiting to happen, because the next reader will use whatever key they can find. Writing down the specific, scoped credential is a security control as much as a usability one.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>Misconception: documentation should be comprehensive.</strong> In practice, comprehensive documentation is usually unread. The goal is not to document everything; it is to document the things a reader cannot infer. A README that explains how to run the tests and where the service is deployed is more valuable than a 40-page architecture document that nobody updates. Write the minimum that lets a reader act, and link to the rest.</p>
+<p><strong>Misconception: the code is the documentation.</strong> Code tells you what happens; it does not tell you why, or what assumptions it depends on, or what to do when it fails at 3 a.m. The code is necessary but not sufficient. A short "why" comment or a linked design doc is often the difference between a five-minute fix and a two-hour investigation.</p>
+<p><strong>Misconception: documentation lives in a wiki.</strong> Wikis are where documentation often goes to die, because they are disconnected from the code and from the review process. Documentation that lives in the repo, next to the code it describes, gets updated when the code changes, because the same pull request can touch both. Documentation in a separate wiki drifts immediately.</p>
+<p><strong>Misconception: writing docs takes too long.</strong> The expensive part is not writing; it is the repeated questions and the slow onboarding that result from not writing. A runbook that takes an hour to write can save that hour many times over. The trick is to write docs incrementally, as part of the work, rather than as a separate project.</p>
+<p><strong>Misconception: only senior engineers can write good docs.</strong> The best docs are often written by the person who just learned the thing, because they still remember what was confusing. A new hire who writes down the steps they followed to get the service running locally has produced a more useful doc than a senior engineer who has forgotten what it was like not to know.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once you have the basic contract model, you can start treating documentation as code. That means versioning it, reviewing it, and testing it.</p>
+<p><strong>Version it with the code.</strong> Keep runbooks and design docs in the same repository as the service they describe. When a pull request changes a deployment manifest, it should also update the runbook that references it. Reviewers should treat a stale doc as a bug.</p>
+<p><strong>Test the commands.</strong> Any command in a runbook should be runnable in a staging environment. Some teams add a small script that extracts fenced code blocks from markdown and runs the safe ones in CI. This catches the most common failure mode: a command that worked six months ago but now references a renamed resource.</p>
+<p><strong>Use a doc linter.</strong> Tools such as <code>markdownlint</code> catch formatting issues, and link checkers (for example, <code>lychee</code> or <code>markdown-link-check</code>) catch references to dashboards, wikis, and internal pages that have moved. A doc with a dead link is a doc that has already started to rot.</p>
+<p><strong>Write decision records.</strong> For architectural decisions, a short Architecture Decision Record (ADR) is more durable than a long design doc, because it captures the context, the decision, and the consequences in a format that is easy to review and easy to supersede. The format is simple: title, status, context, decision, consequences. The value is that a future reader can see not just what was decided but why, and can tell whether the reasons still hold.</p>
+<p><strong>Make docs part of the definition of done.</strong> A feature is not done until the runbook, the README, or the design doc is updated. This is a cultural change more than a technical one, but it is the single highest-leverage change available. If docs are optional, they will be skipped; if they are part of the review checklist, they will be written.</p>
+<p><strong>Measure doc freshness.</strong> A useful proxy: for each doc file, compare the timestamp of its last commit to the timestamp of the last commit touching the code it describes. A doc that has not been touched in a year while the code has changed weekly is probably stale. This is not a perfect metric, but it is a useful signal for where to look. To compute it, run <code>git log -1 --format=%cs -- &lt;doc-path&gt;</code> and <code>git log -1 --format=%cs -- &lt;code-path&gt;</code> and compare the two dates; a large gap, with the code date newer, flags the doc for review.</p>
+<h2 id="a-failure-mode-analysis">A failure-mode analysis</h2>
+<p>It helps to name the specific ways survivable docs fail, because each has a different fix.</p>
+<p><strong>The silent rename.</strong> A resource is renamed — a deployment, a Vault path, a dashboard — and the doc still references the old name. The reader follows the doc, gets a "not found" error, and has no way to know whether the doc is wrong or the environment is. <em>Fix:</em> test commands in staging and treat a failing command as a broken doc, not a reader error.</p>
+<p><strong>The missing precondition.</strong> The doc assumes a CLI is already authenticated, a context is already set, or a feature flag is already enabled. The reader runs the command and gets a permission error that looks like an outage. <em>Fix:</em> state prerequisites explicitly, as the worked example does.</p>
+<p><strong>The unstated success criterion.</strong> "Check it works" is not a check. The reader cannot distinguish success from partial failure. <em>Fix:</em> name the endpoint, the field, the log line, or the dashboard panel that confirms success.</p>
+<p><strong>The orphaned decision.</strong> A design doc explains a choice but not the alternatives or the conditions under which the choice should be revisited. A future reader either preserves a decision that no longer makes sense or reverses it without understanding what it protected. <em>Fix:</em> record context, decision, and consequences, and state what would justify revisiting it.</p>
+<p><strong>The review gap.</strong> Docs live outside the repo, so code review never sees them. They drift until someone notices. <em>Fix:</em> co-locate docs with code and make doc changes part of the same pull request.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before calling a doc finished, check each item. A "no" is a gap a future reader will hit.</p>
+<ul>
+<li>Does it name its audience and the access level that audience needs?</li>
+<li>Does it name the exact environment, cluster, namespace, or account it applies to?</li>
+<li>Does it list prerequisites, including authentication state?</li>
+<li>Does every command appear verbatim, with the expected output next to it?</li>
+<li>Does it define success in terms of something observable, not "it works"?</li>
+<li>Does it include a rollback or recovery path for the risky steps?</li>
+<li>Does it live in the repo next to the code it describes?</li>
+<li>Is it reviewed in the same pull request as the change it accompanies?</li>
+<li>For a decision doc: are the alternatives and the conditions for revisiting stated?</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I convince a team to write documentation?</strong> Start with the docs that save the most time: onboarding, runbooks for common alerts, and the README. Make the cost of missing docs visible by tracking how often someone asks a question that a doc could answer. Make doc updates part of code review, not a separate task. The goal is to make the right thing the easy thing.</p>
+<p><strong>What is the minimum viable documentation for a service?</strong> A README that states what the service does, how to run it locally, how to run its tests, and where it is deployed. A runbook for the top three alerts. A link to the design doc or ADR for the major decisions. That is enough to survive most author departures.</p>
+<p><strong>How do I keep documentation from going stale?</strong> Keep it in the repo, review it with the code, and test the commands. The most effective single practice is to require a doc update in any pull request that changes a documented behavior. Staleness is a process problem, not a writing problem.</p>
+<p><strong>Should I use a wiki or a repo?</strong> Repo, for anything that describes code or operations. Wikis are fine for team-level information that does not change with the code, but they are a poor home for runbooks and design docs because they are disconnected from the review process.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Personal notebook</th>
+<th>Survivable doc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audience</td>
+<td>Implicit (me)</td>
+<td>Explicit (on-call engineer, new hire)</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Implicit</td>
+<td>Explicit (service, cluster, environment)</td>
+</tr>
+<tr>
+<td>Steps</td>
+<td>Vague ("restart the app")</td>
+<td>Exact commands with expected output</td>
+</tr>
+<tr>
+<td>Failure handling</td>
+<td>Missing</td>
+<td>Rollback steps and error messages</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Personal notes, wiki</td>
+<td>Repo, next to code</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>None</td>
+<td>Part of code review</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>None</td>
+<td>Commands run in CI or staging</td>
+</tr>
+</tbody>
+</table>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Open the README of the service you own and read it as if you were a new hire on your first day. Find the first sentence that assumes knowledge the reader does not have — a missing prerequisite, an unexplained command, a vague success criterion — and rewrite that sentence to be verifiable. Commit the change. That single edit is the smallest unit of documentation that survives its author.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/commit-ownership-in-ai-pair-coding/">Commit ownership in AI pair coding</a></li>
+<li><a href="https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/">3 mistakes that break deployments for everyone</a></li>
+<li><a href="https://kubaik.github.io/core-web-vitals-what-actually-moves-the-needle/">Core Web Vitals: what actually moves the needle</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/property-based-testing-vs-example-tests-the-bug-gap/">
+                        <h3>Property-based testing vs example tests: the bug gap</h3>
+                        <p>How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.</p>
+                        <span class="related-meta">18 min read · 20 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-idp-shifts-for-ai-feature-delivery/">
+                        <h3>7 IDP shifts for AI feature delivery</h3>
+                        <p>Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</p>
+                        <span class="related-meta">15 min read · 10 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/deployment-platforms-senior-vs-new-hire/">
+                        <h3>Deployment platforms: senior vs new hire</h3>
+                        <p>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</p>
+                        <span class="related-meta">17 min read · 7 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

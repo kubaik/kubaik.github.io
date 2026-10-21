@@ -1,4 +1,4 @@
-❌ Internal link audit: 408 broken link(s) found across 409 posts checked.
+❌ Internal link audit: 409 broken link(s) found across 410 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -238,6 +238,7 @@ Source Post                              Anchor Text                    Missing 
   /mcp-hidden-cost-traps                  AI content policy              /ai-content-policy/
   /mcp-servers-real-time-pipelines-without-agents AI content policy              /ai-content-policy/
   /mcp-servers-the-3-hidden-costs-nobody-quotes AI content policy              /ai-content-policy/
+  /mcp-vs-a2a-pick-the-wrong-layer        AI content policy              /ai-content-policy/
   /memory-systems-for-production-agents   AI content policy              /ai-content-policy/
   /merge-three-payment-apis-into-one-system AI content policy              /ai-content-policy/
   /meter-dev-tool-pricing-in-2026         AI content policy              /ai-content-policy/

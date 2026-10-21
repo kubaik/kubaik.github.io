@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-10-20</lastmod><changefreq>daily</changefreq><priority>1.0</priority><image:image><image:loc>https://kubaik.github.io/static/og-default.png</image:loc></image:image></url>
-  <url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-10-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-10-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-10-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://kubaik.github.io/dmca/</loc><lastmod>2026-10-20</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://kubaik.github.io/ai-content-policy/</loc><lastmod>2026-10-20</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://kubaik.github.io/mcp-vs-a2a-pick-the-wrong-layer/</loc><lastmod>2026-10-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-10-21</lastmod><changefreq>daily</changefreq><priority>1.0</priority><image:image><image:loc>https://kubaik.github.io/static/og-default.png</image:loc></image:image></url>
+  <url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-10-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-10-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-10-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-10-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-10-21</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kubaik.github.io/dmca/</loc><lastmod>2026-10-21</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/ai-content-policy/</loc><lastmod>2026-10-21</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</loc><lastmod>2026-10-21</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://kubaik.github.io/mcp-vs-a2a-pick-the-wrong-layer/</loc><lastmod>2026-10-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/mcp-vs-a2a-pick-the-wrong-layer.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/</loc><lastmod>2026-10-20</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/property-based-testing-vs-example-tests-the-bug-gap.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/staging-wont-catch-prod-bugs-make/</loc><lastmod>2026-10-19</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/staging-wont-catch-prod-bugs-make.png</image:loc></image:image></url>
   <url><loc>https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/</loc><lastmod>2026-10-19</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubaik.github.io/static/og/pci-dss-architecture-12-requirements-that-matter.png</image:loc></image:image></url>

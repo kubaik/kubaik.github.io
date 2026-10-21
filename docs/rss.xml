@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Oct 2026 16:36:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 03:55:06 +0000</lastBuildDate>
+    <item>
+      <title>Docs that survive: the bus factor fix</title>
+      <link>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</link>
+      <description>How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</description>
+      <pubDate>Wed, 21 Oct 2026 03:54:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</guid>
+    </item>
     <item>
       <title>MCP vs A2A: pick the wrong layer</title>
       <link>https://kubaik.github.io/mcp-vs-a2a-pick-the-wrong-layer/</link>
@@ -138,13 +145,6 @@
       <description>A practical review of seven bundling and code-splitting choices, their failure modes, and how to measure whether they help your app.</description>
       <pubDate>Sat, 10 Oct 2026 05:00:55 +0000</pubDate>
       <guid>https://kubaik.github.io/7-bundling-decisions-that-still-matter/</guid>
-    </item>
-    <item>
-      <title>Self-service AI tooling: the permission trap</title>
-      <link>https://kubaik.github.io/self-service-ai-tooling-the-permission-trap/</link>
-      <description>Design self-service LLM layers so identity, context and budget controls prevent quiet permission failures instead of only working on the happy path.</description>
-      <pubDate>Fri, 09 Oct 2026 05:16:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-service-ai-tooling-the-permission-trap/</guid>
     </item>
   </channel>
 </rss>
