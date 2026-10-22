@@ -1,4 +1,4 @@
-❌ Internal link audit: 411 broken link(s) found across 412 posts checked.
+❌ Internal link audit: 412 broken link(s) found across 413 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -384,6 +384,7 @@ Source Post                              Anchor Text                    Missing 
   /unlock-python-313s-free-threaded-gil-for-web-apps AI content policy              /ai-content-policy/
   /use-feature-flags-to-deploy-ai-models-safely AI content policy              /ai-content-policy/
   /ussd-fintech-in-2026-the-300m-user-channel-nobody AI content policy              /ai-content-policy/
+  /velocity-up-ownership-down-team-scaling-trap AI content policy              /ai-content-policy/
   /vibe-code-works-great-fails-forever    AI content policy              /ai-content-policy/
   /vibe-coding-mvp-gem-prod-albatross     AI content policy              /ai-content-policy/
   /wasm-servers-beat-containers-here      AI content policy              /ai-content-policy/

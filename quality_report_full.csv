@@ -193,6 +193,7 @@ stop-trusting-agents-for-core-logic,95,2267,Stop trusting agents for core logic,
 tool-calling-stateless-beats-stateful-under-load,95,2269,Tool calling: stateless beats stateful under load,2026-06-19T09:01:43.310641,1,no FAQ section
 tool-calls-under-load-async-batch-vs-fire-and-forget,95,3101,Tool calls under load: async batch vs fire-and-forget,2026-06-13T10:23:27.741037,1,no markdown table
 trim-llm-bills-3-finops-moves-that-work,95,2144,Trim LLM bills: 3 FinOps moves that work,2026-07-12T09:48:02.503208,1,no FAQ section
+velocity-up-ownership-down-team-scaling-trap,95,2829,"Velocity Up, Ownership Down: Team Scaling Trap",2026-10-22T03:52:45.243228,1,no FAQ section
 vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forever",2026-06-20T22:54:21.869130,1,no FAQ section
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
 websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
@@ -331,6 +332,7 @@ monolith-to-services-without-a-rewrite,100,2878,Monolith to services without a r
 most-llm-cost-dashboards-lie,100,2611,Most LLM cost dashboards lie…,2026-09-19T08:31:18.982202,0,
 multi-agent-systems-when-they-quietly-degrade,100,2400,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,0,
 nextjs-15-vs-remix-vs-sveltekit-2026-choices,100,2652,Next.js 15 vs Remix vs SvelteKit: 2026 choices,2026-06-16T06:24:02.992809,0,
+oauth-21-migration-what-breaks-in-existing-integrations,100,3125,OAuth 2.1 migration: what breaks in existing integrations,2026-10-22T16:52:53.402403,0,
 observability-2026-ditch-the-three-pillars,100,2814,Observability 2026: ditch the three pillars,2026-06-10T00:02:57.587030,0,
 offline-first-agents-for-field-teams,100,2705,Offline-first agents for field teams,2026-07-16T02:51:18.981017,0,
 offline-first-apps-what-3g-markets-taught-us,100,3020,Designing Offline-First Apps for Unreliable Networks,2026-06-21T10:38:08.004189,0,
@@ -389,7 +391,6 @@ track-ai-agent-costs-in-fractal-workflows,100,2481,Track AI agent costs in fract
 two-engineer-classes-the-ai-tool-norm-trap,100,2361,Two engineer classes: the AI tool norm trap,2026-09-07T08:58:13.844829,0,
 use-feature-flags-to-deploy-ai-models-safely,100,2946,Use feature flags to deploy AI models safely,2026-06-20T20:49:06.113698,0,
 ussd-fintech-in-2026-the-300m-user-channel-nobody,100,3325,Designing USSD fintech flows that survive live networks,2026-06-11T14:34:31.818724,0,
-velocity-up-ownership-down-team-scaling-trap,100,3220,"Velocity Up, Ownership Down: Team Scaling Trap",2026-10-22T03:52:45.243228,0,
 vibe-coding-mvp-gem-prod-albatross,100,3059,"Vibe coding: MVP gem, prod albatross",2026-06-19T20:47:43.902749,0,
 wasm-servers-beat-containers-here,100,2421,WASM servers beat containers here,2026-08-05T13:49:01.207694,0,
 webhook-delivery-that-survives-outages,100,2698,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,0,

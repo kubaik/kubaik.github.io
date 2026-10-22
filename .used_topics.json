@@ -164,5 +164,8 @@
   "Writing engineering documentation that survives the person who wrote it leaving",
   "Designing systems that can gracefully degrade when an upstream agent or model is slow or wrong",
   "The skills that still command premium remote rates when AI can do the obvious parts",
-  "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier"
+  "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
+  "The platform abstractions that make agent development faster for engineering teams",
+  "MCP in production: the hidden operational costs and security gotchas nobody talks about",
+  "OAuth 2.1 migration notes: what breaks in existing integrations"
 ]

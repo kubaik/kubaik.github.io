@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-22T03:52:47.918688",
+  "built_at": "2026-10-22T16:52:55.258169",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5610,6 +5610,11 @@
       "slug": "velocity-up-ownership-down-team-scaling-trap",
       "title": "Velocity Up, Ownership Down: Team Scaling Trap",
       "summary": "The official documentation for leadership challenges is good. What it doesn't cover is what happens six months into production. Here's the fuller picture, with the tradeoffs left in. The dashboards look healthy right up until the incident starts. When output velocity jumps, ownership often blurs. Th"
+    },
+    {
+      "slug": "oauth-21-migration-what-breaks-in-existing-integrations",
+      "title": "OAuth 2.1 migration: what breaks in existing integrations",
+      "summary": "After enough code that touches platform abstractions gets reviewed, the same failure pattern keeps showing up. Everyone assumes someone else already checked this. Here's the fuller picture, with the tradeoffs left in. OAuth 2.1 is not a new grant type or a new endpoint. It is the IETF's consolidatio"
     }
   ]
 }

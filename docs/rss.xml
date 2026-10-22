@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Oct 2026 03:53:45 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 16:53:39 +0000</lastBuildDate>
+    <item>
+      <title>OAuth 2.1 migration: what breaks in existing integrations</title>
+      <link>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</link>
+      <description>OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration.</description>
+      <pubDate>Thu, 22 Oct 2026 16:52:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</guid>
+    </item>
     <item>
       <title>Velocity Up, Ownership Down: Team Scaling Trap</title>
       <link>https://kubaik.github.io/velocity-up-ownership-down-team-scaling-trap/</link>
@@ -138,13 +145,6 @@
       <description>Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.</description>
       <pubDate>Sun, 11 Oct 2026 17:33:14 +0000</pubDate>
       <guid>https://kubaik.github.io/rate-limiters-burst-vs-abuse-two-designs/</guid>
-    </item>
-    <item>
-      <title>Senior engineer: the bar moved, nobody updated the rubric</title>
-      <link>https://kubaik.github.io/senior-engineer-the-bar-moved-nobody-updated-the-rubric/</link>
-      <description>Seniority signals shifted from code production to specification, review and judgement. How to rewrite interview rubrics to measure the work that now exists.</description>
-      <pubDate>Sun, 11 Oct 2026 04:47:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-engineer-the-bar-moved-nobody-updated-the-rubric/</guid>
     </item>
   </channel>
 </rss>
