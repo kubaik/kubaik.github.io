@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Oct 2026 16:52:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 03:53:45 +0000</lastBuildDate>
+    <item>
+      <title>Velocity Up, Ownership Down: Team Scaling Trap</title>
+      <link>https://kubaik.github.io/velocity-up-ownership-down-team-scaling-trap/</link>
+      <description>A practical framework for finding ownership blur, assigning accountable owners, and enforcing it with CODEOWNERS, CI checks, and incident tooling.</description>
+      <pubDate>Thu, 22 Oct 2026 03:52:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/velocity-up-ownership-down-team-scaling-trap/</guid>
+    </item>
     <item>
       <title>Remote premium rates: skills AI can&apos;t copy</title>
       <link>https://kubaik.github.io/remote-premium-rates-skills-ai-cant-copy/</link>
@@ -138,13 +145,6 @@
       <description>Seniority signals shifted from code production to specification, review and judgement. How to rewrite interview rubrics to measure the work that now exists.</description>
       <pubDate>Sun, 11 Oct 2026 04:47:50 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-engineer-the-bar-moved-nobody-updated-the-rubric/</guid>
-    </item>
-    <item>
-      <title>7 IDP shifts for AI feature delivery</title>
-      <link>https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/</link>
-      <description>Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</description>
-      <pubDate>Sat, 10 Oct 2026 17:09:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-idp-shifts-for-ai-feature-delivery/</guid>
     </item>
   </channel>
 </rss>

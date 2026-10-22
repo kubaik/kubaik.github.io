@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-21T08:45:31.788175",
+  "built_at": "2026-10-22T03:52:47.918688",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5605,6 +5605,11 @@
       "slug": "remote-premium-rates-skills-ai-cant-copy",
       "title": "Remote premium rates: skills AI can't copy",
       "summary": "It's the kind of thing that works for months, then all at once doesn't. Somewhere between the designing systems tutorial and the incident channel, a step goes missing. This works through the problem properly, from cause to fix. Remote work has always had a hidden tax: the further you are from the cl"
+    },
+    {
+      "slug": "velocity-up-ownership-down-team-scaling-trap",
+      "title": "Velocity Up, Ownership Down: Team Scaling Trap",
+      "summary": "The official documentation for leadership challenges is good. What it doesn't cover is what happens six months into production. Here's the fuller picture, with the tradeoffs left in. The dashboards look healthy right up until the incident starts. When output velocity jumps, ownership often blurs. Th"
     }
   ]
 }

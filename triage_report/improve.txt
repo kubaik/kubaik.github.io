@@ -380,6 +380,7 @@ docs/two-engineer-classes-the-ai-tool-norm-trap/index.md
 docs/unlock-python-313s-free-threaded-gil-for-web-apps/index.md
 docs/use-feature-flags-to-deploy-ai-models-safely/index.md
 docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/index.md
+docs/velocity-up-ownership-down-team-scaling-trap/index.md
 docs/vibe-code-works-great-fails-forever/index.md
 docs/vibe-coding-mvp-gem-prod-albatross/index.md
 docs/wasm-servers-beat-containers-here/index.md
