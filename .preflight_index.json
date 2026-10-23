@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-23T03:59:38.868357",
+  "built_at": "2026-10-23T16:44:41.979880",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5620,6 +5620,11 @@
       "slug": "agent-code-review-7-traps-that-slip-through",
       "title": "Agent code review: 7 traps that slip through",
       "summary": "Most frontend performance guides assume a clean environment and a patient timeline. The default configuration is fine right up until it isn't. This is the version of the write-up that includes the part that broke. Agent-generated code arrives with a confidence that human code rarely has. It compiles"
+    },
+    {
+      "slug": "agentic-systems-architecture-principles-that-hold",
+      "title": "Agentic systems: architecture principles that hold",
+      "summary": "building evaluation has a reputation for being boring, which is exactly why nobody budgets time for it. Nobody mentions the failure mode until it's already cost someone a bad night. This post covers what comes after the happy path. Agentic and multi-model systems break the tidy assumptions that micr"
     }
   ]
 }

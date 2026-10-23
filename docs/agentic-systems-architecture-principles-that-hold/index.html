@@ -1,0 +1,650 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agentic systems: architecture principles that hold - Kubai Kevin</title>
+        <meta name="description" content="How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.">
+        <meta name="keywords" content="AgenticArchitecture, MultiModelSystems, IdempotencyKey, TokenBudgetControl, Llm, Generativeai, Agenticai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-23T16:44:39.189493">
+        <meta property="article:modified_time" content="2026-10-23T16:45:25.441003+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agentic systems: architecture principles that hold">
+        <meta property="og:description" content="How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.">
+        <meta property="og:url" content="https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agentic-systems-architecture-principles-that-hold.png">
+        <meta property="og:image:alt" content="Agentic systems: architecture principles that hold">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agentic systems: architecture principles that hold">
+        <meta name="twitter:description" content="How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agentic-systems-architecture-principles-that-hold.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/#article",
+      "headline": "Agentic systems: architecture principles that hold",
+      "description": "How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.",
+      "datePublished": "2026-10-23T16:44:39+00:00",
+      "dateModified": "2026-10-23T16:45:25+00:00",
+      "wordCount": 2979,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/"
+      },
+      "keywords": "AgenticArchitecture, MultiModelSystems, IdempotencyKey, TokenBudgetControl, Llm, Generativeai, Agenticai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agentic systems: architecture principles that hold",
+          "item": "https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agentic systems: architecture principles that hold</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agentic systems: architecture principles that hold</h1>
+                
+                <p class="post-lead">How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgenticArchitecture</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MultiModelSystems</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/idempotencykey/"
+                       style="text-decoration:none;">IdempotencyKey</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TokenBudgetControl</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2979 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-23
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Evaluation and reliability work has a reputation for being boring, which is exactly why it rarely gets budgeted. The failure mode surfaces later, usually at the worst possible time. This article covers what happens after the happy path: the orchestration concerns that decide whether an agentic system stays operable as it grows.</p>
+<p>Agentic and multi-model systems break the tidy assumptions that microservices and serverless architectures were built on. A single user request can fan out into dozens of model calls, each with its own latency tail, token budget, and failure mode. The principles that survive are the ones that treat nondeterminism as a first-class constraint rather than an exception.</p>
+<p>This walkthrough covers the architecture patterns that hold up when a single model call becomes a graph of agents, tools, and fallback models. You will build a small orchestrator in Python that enforces timeouts, budgets, and idempotency — the three levers that keep agentic systems from becoming unobservable money sinks. The result is a runnable pattern that can be dropped into an existing service.</p>
+<h2 id="the-problem-this-solves">The problem this solves</h2>
+<p>A typical multi-model system starts as a chain: prompt → model → tool → model → response. Each hop adds latency variance and a new failure surface. When a downstream model times out, a naive retry re-runs every prior step, including side-effecting tool calls. When a model returns a malformed tool call, the orchestrator either crashes or silently drops the step. When traffic spikes, the system burns through token budgets before anyone notices.</p>
+<p>The core problem is that agentic systems lack a built-in notion of a transaction boundary. One has to be imposed — a unit of work with a deadline, a cost ceiling, and a stable identity — before more agents are added.</p>
+<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
+<p>You need Python 3.11+ and familiarity with <code>asyncio</code>. No specific model provider is required; the code uses a <code>call_model</code>-style interface that can be backed with any HTTP client. You will build:</p>
+<ul>
+<li>A <code>Step</code> abstraction with timeout and retry policy.</li>
+<li>A <code>RunContext</code> that carries a deadline and token budget through nested calls.</li>
+<li>An idempotency key derived from the request, not the attempt.</li>
+<li>Structured logging that records every model call with its outcome and token usage.</li>
+</ul>
+<p>The pattern is provider-agnostic and works whether the system calls one model or routes across several.</p>
+<h2 id="step-1-define-the-unit-of-work-before-writing-any-agent-code">Step 1 — Define the unit of work before writing any agent code</h2>
+<p>The common sequence is to start with the agent loop and bolt on reliability later. Reverse that. Define a <code>RunContext</code> that every model and tool call receives. The context carries three invariants:</p>
+<ol>
+<li><strong>Deadline</strong> — an absolute monotonic timestamp. Every step checks remaining time before starting.</li>
+<li><strong>Budget</strong> — a token ceiling for the entire run, decremented by each call.</li>
+<li><strong>Idempotency key</strong> — a stable string derived from the original request payload, not from the attempt number.</li>
+</ol>
+<pre><code class="language-python">import time
+import hashlib
+import json
+from dataclasses import dataclass
+
+class BudgetExceeded(Exception):
+    def __init__(self, used: int, budget: int):
+        super().__init__(f&quot;token budget exceeded: {used} &gt; {budget}&quot;)
+        self.used = used
+        self.budget = budget
+
+@dataclass
+class RunContext:
+    deadline: float          # time.monotonic() value
+    token_budget: int
+    idempotency_key: str
+    tokens_used: int = 0
+
+    @classmethod
+    def from_request(cls, payload: dict, timeout_s: float = 30.0, budget: int = 20_000):
+        key = hashlib.sha256(
+            json.dumps(payload, sort_keys=True).encode()
+        ).hexdigest()[:32]
+        return cls(
+            deadline=time.monotonic() + timeout_s,
+            token_budget=budget,
+            idempotency_key=key,
+        )
+
+    def remaining(self) -&gt; float:
+        return self.deadline - time.monotonic()
+
+    def charge(self, tokens: int) -&gt; None:
+        self.tokens_used += tokens
+        if self.tokens_used &gt; self.token_budget:
+            raise BudgetExceeded(self.tokens_used, self.token_budget)
+</code></pre>
+<p>Why this matters: without a deadline, a single slow model call can hold a worker for minutes. Without a budget, a retry loop can multiply cost silently. Without a stable idempotency key, a step that has already caused a side effect cannot be retried safely.</p>
+<p><strong>Gotcha:</strong> deriving the idempotency key from the attempt number is a common trap. If the key changes on retry, downstream services treat the retry as a new request and duplicate the side effect. Derive it from the input payload and the step name, and pass it unchanged through every retry.</p>
+<h2 id="step-2-wrap-every-model-and-tool-call-in-a-guarded-step">Step 2 — Wrap every model and tool call in a guarded step</h2>
+<p>A step is the only place where external calls happen. It enforces the context invariants and records a structured outcome. Keep the step generic; the model-specific logic lives in the callable passed in.</p>
+<pre><code class="language-python">import asyncio
+import logging
+from typing import Any, Awaitable, Callable
+
+log = logging.getLogger(&quot;agent&quot;)
+
+class StepFailed(Exception):
+    def __init__(self, step: str, reason: str):
+        super().__init__(f&quot;{step}: {reason}&quot;)
+        self.step = step
+        self.reason = reason
+
+async def guarded_step(
+    name: str,
+    ctx: RunContext,
+    fn: Callable[[RunContext], Awaitable[tuple[Any, int]]],
+    max_attempts: int = 3,
+) -&gt; Any:
+    for attempt in range(1, max_attempts + 1):
+        remaining = ctx.remaining()
+        if remaining &lt;= 0:
+            raise StepFailed(name, &quot;deadline exceeded before attempt&quot;)
+        try:
+            result, tokens = await asyncio.wait_for(fn(ctx), timeout=remaining)
+            ctx.charge(tokens)
+            log.info(&quot;step_ok&quot;, extra={
+                &quot;step&quot;: name, &quot;attempt&quot;: attempt,
+                &quot;tokens&quot;: tokens, &quot;key&quot;: ctx.idempotency_key,
+            })
+            return result
+        except asyncio.TimeoutError:
+            log.warning(&quot;step_timeout&quot;, extra={
+                &quot;step&quot;: name, &quot;attempt&quot;: attempt, &quot;remaining&quot;: remaining,
+            })
+            if attempt == max_attempts:
+                raise StepFailed(name, &quot;timeout after retries&quot;)
+        except BudgetExceeded:
+            raise
+        except Exception as exc:
+            log.warning(&quot;step_error&quot;, extra={
+                &quot;step&quot;: name, &quot;attempt&quot;: attempt, &quot;error&quot;: repr(exc),
+            })
+            if attempt == max_attempts:
+                raise StepFailed(name, f&quot;failed after retries: {exc!r}&quot;)
+            await asyncio.sleep(min(2 ** attempt * 0.1, 1.0))
+    raise StepFailed(name, &quot;unreachable&quot;)
+</code></pre>
+<p>The <code>asyncio.wait_for</code> call is the enforcement point for the deadline. Passing <code>remaining</code> rather than a fixed timeout means the step cannot outlive the run. The budget check happens after the call returns because token usage is only known then; if the call would exceed the budget, the charge raises and the run aborts before the next step.</p>
+<p><strong>Gotcha:</strong> wrapping a synchronous SDK in <code>asyncio.wait_for</code> does not cancel it. The coroutine returns, but the underlying thread or socket may keep running. Use an async-native client, or run the sync call in a thread pool with <code>asyncio.to_thread</code> and accept that cancellation is cooperative.</p>
+<p><strong>A note on retry safety:</strong> the retry loop above retries any exception, including ones raised by non-idempotent tools. If a tool cannot deduplicate, mark it as non-retryable and let the run fail so the caller can decide. Retrying a charge that may have succeeded is worse than failing loudly.</p>
+<h2 id="step-3-make-tool-calls-idempotent-and-observable">Step 3 — Make tool calls idempotent and observable</h2>
+<p>Tool calls are where agentic systems cause real-world side effects: writing rows, sending messages, charging cards. The orchestrator cannot guarantee exactly-once execution across a network boundary, so the tool itself must be idempotent. Pass the run's idempotency key and the step name to the tool, and require the tool to deduplicate on that pair.</p>
+<pre><code class="language-python">async def charge_card(ctx: RunContext, amount_cents: int, customer: str):
+    # The downstream API must accept an idempotency key header.
+    # This example assumes a generic HTTP client `post`.
+    key = f&quot;{ctx.idempotency_key}:charge_card:{customer}&quot;
+    resp = await post(
+        &quot;/charges&quot;,
+        json={&quot;amount&quot;: amount_cents, &quot;customer&quot;: customer},
+        headers={&quot;Idempotency-Key&quot;: key},
+        timeout=ctx.remaining(),
+    )
+    return resp.json(), 0  # tool calls do not consume model tokens
+</code></pre>
+<p>Two rules make this reliable:</p>
+<ul>
+<li>The key must be stable across retries of the same logical step. Concatenating the run key with the step name and the target resource gives you that.</li>
+<li>The tool must return the original result on a duplicate key, not an error. Most payment APIs and many internal services support this; if yours does not, add a dedupe table keyed on the idempotency string.</li>
+</ul>
+<p>For observability, log every step with the run key, step name, attempt, outcome, and token count. A structured log line per step is enough to reconstruct a run. Avoid logging full prompts by default; log a hash and the token count instead.</p>
+<h2 id="step-4-route-across-models-without-branching-the-whole-graph">Step 4 — Route across models without branching the whole graph</h2>
+<p>Multi-model systems usually start with a single provider and add a fallback later. The mistake is to branch the agent graph per provider. Instead, keep one graph and make the model call a parameterized step. The router decides which model to call based on the remaining budget, the step's required capability, and the provider's current health.</p>
+<pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass
+class ModelSpec:
+    name: str
+    cost_per_1k_tokens: float  # illustrative
+    max_context: int
+
+ROUTES = {
+    &quot;cheap&quot;: ModelSpec(&quot;small-model&quot;, 0.0005, 32_000),
+    &quot;strong&quot;: ModelSpec(&quot;large-model&quot;, 0.0100, 200_000),
+}
+
+async def call_model(ctx: RunContext, tier: str, prompt: str):
+    spec = ROUTES[tier]
+    if ctx.token_budget - ctx.tokens_used &lt; 2_000:
+        tier = &quot;cheap&quot;
+        spec = ROUTES[tier]
+    # provider-specific HTTP call omitted; return (text, tokens_used)
+    text, tokens = await provider_call(spec.name, prompt, timeout=ctx.remaining())
+    return text, tokens
+</code></pre>
+<p>The router is a function, not a fork in the graph. That keeps the step names stable, which keeps the idempotency keys stable, which keeps retries safe. When a third provider is added, a <code>ModelSpec</code> and a routing rule are added; the graph does not change.</p>
+<p><strong>Gotcha:</strong> routing on remaining budget alone causes tier flapping under load — a run starts on the strong model, drops to cheap mid-way, and produces inconsistent output. Route once at the start of the run based on the request class, and only downgrade on explicit budget pressure with a logged reason.</p>
+<h2 id="step-5-bound-fan-out-and-concurrency">Step 5 — Bound fan-out and concurrency</h2>
+<p>Agents that spawn sub-agents or parallel tool calls can multiply load unpredictably. A single request that fans out to twenty parallel model calls will saturate a provider's rate limit and trigger retries across the whole graph. Bound fan-out at the orchestrator: a semaphore per run and a global concurrency limit per provider.</p>
+<pre><code class="language-python">class ProviderLimiter:
+    def __init__(self, max_concurrent: int):
+        self._sem = asyncio.Semaphore(max_concurrent)
+
+    async def run(self, coro):
+        async with self._sem:
+            return await coro
+
+limiter = ProviderLimiter(max_concurrent=8)
+
+async def parallel_steps(ctx: RunContext, steps):
+    tasks = [limiter.run(guarded_step(name, ctx, fn)) for name, fn in steps]
+    return await asyncio.gather(*tasks, return_exceptions=True)
+</code></pre>
+<p><code>return_exceptions=True</code> is deliberate: one failed sub-step should not cancel its siblings. Collect the exceptions and decide at the graph level whether the run can continue. A common pattern is to require at least one successful step per group and to degrade gracefully otherwise.</p>
+<p><strong>Gotcha:</strong> <code>asyncio.gather</code> with <code>return_exceptions=True</code> swallows <code>CancelledError</code> in some Python versions, which can leave tasks running after the parent is cancelled. Check the Python version's behavior and prefer <code>asyncio.TaskGroup</code> (3.11+) when you want structured cancellation. If you use <code>TaskGroup</code>, a failure in one task cancels the others — the opposite of the fan-out semantics above. Pick one deliberately.</p>
+<h2 id="step-6-add-a-verification-harness-before-you-add-agents">Step 6 — Add a verification harness before you add agents</h2>
+<p>Nondeterministic model output cannot be unit-tested directly, but the orchestration around it can. The harness replaces <code>call_model</code> with a scripted fake that returns fixed outputs, raises timeouts, and exceeds budgets on demand. That lets you assert the properties that matter: the run respects its deadline, the budget is never exceeded, and a retried step reuses the same idempotency key.</p>
+<pre><code class="language-python">import pytest
+
+@pytest.mark.asyncio
+async def test_deadline_enforced():
+    ctx = RunContext.from_request({&quot;q&quot;: &quot;hi&quot;}, timeout_s=0.05)
+
+    async def slow(ctx):
+        await asyncio.sleep(0.2)
+        return &quot;late&quot;, 10
+
+    with pytest.raises(StepFailed) as exc:
+        await guarded_step(&quot;slow&quot;, ctx, slow, max_attempts=1)
+    assert &quot;timeout&quot; in exc.value.reason
+
+@pytest.mark.asyncio
+async def test_budget_aborts_run():
+    ctx = RunContext.from_request({&quot;q&quot;: &quot;hi&quot;}, budget=100)
+
+    async def expensive(ctx):
+        return &quot;ok&quot;, 500
+
+    with pytest.raises(BudgetExceeded):
+        await guarded_step(&quot;expensive&quot;, ctx, expensive)
+</code></pre>
+<p>These two tests catch the most common regressions: a step that ignores the deadline and a call that silently overspends. Add a third that asserts the idempotency key is identical across retries — that is the property that protects side effects.</p>
+<pre><code class="language-python">@pytest.mark.asyncio
+async def test_key_stable_across_retries():
+    ctx = RunContext.from_request({&quot;q&quot;: &quot;hi&quot;})
+    seen = []
+
+    async def flaky(ctx):
+        seen.append(ctx.idempotency_key)
+        if len(seen) == 1:
+            raise RuntimeError(&quot;transient&quot;)
+        return &quot;ok&quot;, 5
+
+    await guarded_step(&quot;flaky&quot;, ctx, flaky, max_attempts=2)
+    assert len(seen) == 2
+    assert seen[0] == seen[1]
+</code></pre>
+<h2 id="how-to-verify-it-works">How to verify it works</h2>
+<p>Run the harness with a deliberately slow fake and a budget smaller than one call. The run should fail fast with <code>StepFailed</code> or <code>BudgetExceeded</code>, not hang. Then run it with a fake that fails once and succeeds on retry; the log should show two attempts with the same <code>key</code> field. If the key differs between attempts, the key derivation is wrong — fix it before wiring in a real provider.</p>
+<p>To measure the system in staging rather than in tests, instrument three things: the wall-clock duration of each run (compare against the deadline), the token count per run (compare against the budget), and the number of attempts per step (a rising retry rate is an early signal of provider degradation). Emit these as structured log fields or metrics, then plot the distribution rather than the mean. The tail — p95 and p99 run duration — is where the deadline is actually doing work.</p>
+<h2 id="where-the-principles-hold-and-where-they-do-not">Where the principles hold and where they do not</h2>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Holds for</th>
+<th>Breaks when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deadline per run</td>
+<td>Any multi-step graph</td>
+<td>A step legitimately needs more time than the user's SLA allows — split the run</td>
+</tr>
+<tr>
+<td>Token budget</td>
+<td>Cost control across providers</td>
+<td>Output length is unbounded and unknown until the call returns — cap <code>max_tokens</code></td>
+</tr>
+<tr>
+<td>Stable idempotency key</td>
+<td>Retried side effects</td>
+<td>The tool cannot deduplicate — add a dedupe table or make the tool read-only</td>
+</tr>
+<tr>
+<td>Bounded fan-out</td>
+<td>Parallel tool calls</td>
+<td>A sub-agent must run for minutes — move it to a queue, not a request</td>
+</tr>
+<tr>
+<td>Single graph, routed models</td>
+<td>Multi-provider fallback</td>
+<td>Providers have incompatible tool-call schemas — normalize at the step boundary</td>
+</tr>
+</tbody>
+</table>
+<p>The principles are not new. They are the same ones that made microservices survivable: timeouts, idempotency, bounded concurrency, and structured logs. What changed is that the failure modes are now probabilistic, so the enforcement has to be explicit in code rather than assumed from the transport.</p>
+<h2 id="a-worked-failure-analysis">A worked failure analysis</h2>
+<p>Consider a three-step run — retrieve, summarize, charge — with a 30-second deadline and a 20,000-token budget. The retrieve step takes 2 seconds. The summarize step calls the strong model and uses 8,000 tokens in 6 seconds. The charge step calls the payment API, which times out at 20 seconds.</p>
+<p>Without the patterns above, the orchestrator retries the whole chain. The retrieve and summarize steps re-run, consuming another 8,000 tokens and 6 seconds, and the charge is attempted a second time with a fresh key — a duplicate charge. Total elapsed time exceeds the deadline and the budget is nearly exhausted by one retried step.</p>
+<p>With the patterns above, the charge step is wrapped in <code>guarded_step</code> with the run's key. The first attempt times out after the remaining deadline (roughly 22 seconds), the retry reuses the same key, and the payment API returns the original result instead of charging again. If the retry also times out, the run fails with <code>StepFailed</code> and the caller receives a clear error rather than a silent duplicate. The budget is charged once for the summarize step, not twice.</p>
+<p>The difference is not the model or the provider. It is whether the orchestrator has a transaction boundary.</p>
+<h2 id="decision-checklist-before-adding-another-agent">Decision checklist before adding another agent</h2>
+<ul>
+<li>Does every external call go through a guarded step? If not, add the wrapper first.</li>
+<li>Is the idempotency key derived from the request payload, not the attempt? Confirm with the retry test above.</li>
+<li>Is the deadline absolute and shared across nested calls, or is each call given its own fixed timeout? The latter lets chains exceed the SLA.</li>
+<li>Is fan-out bounded per run and per provider? Check the semaphore values against the provider's documented rate limits.</li>
+<li>Does the graph branch per provider, or is the model a parameterized step? Branching multiplies the step names and breaks key stability.</li>
+<li>Are token counts and run durations logged as structured fields? Without them, budget regressions are invisible until the bill arrives.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do you set a timeout for an LLM call?</strong>
+Set it from the remaining run deadline, not as a fixed constant. Pass <code>ctx.remaining()</code> to the HTTP client or <code>asyncio.wait_for</code>. A fixed timeout per call lets a chain of slow calls exceed the overall SLA even though each call individually succeeded.</p>
+<p><strong>Should retries re-run the whole agent graph or just the failed step?</strong>
+Just the failed step, and only if the step is idempotent. Re-running the graph duplicates every prior side effect. If a step is not idempotent, make it so or fail the run and let the caller retry with a new idempotency key.</p>
+<p><strong>How do you stop an agent from looping forever?</strong>
+Bound the number of steps per run and the total token budget. A loop that keeps calling tools will eventually hit the budget and raise. Log the step count so you can see loops forming before they exhaust the budget.</p>
+<p><strong>Does routing across models break tool calling?</strong>
+It can, because providers differ in how they represent tool calls. Normalize tool-call schemas at the step boundary so the graph sees one shape. Test the normalization with a fake for each provider before routing live traffic.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>The next 30 minutes: open your orchestrator's main entry point and add a <code>RunContext.from_request</code> call at the top, then pass it to your first model call. Do not refactor the whole graph — just make the deadline and budget visible in one place. Once that compiles and the existing tests pass, you have the seam you need to add idempotency keys and bounded fan-out without rewriting the agent logic.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://kubaik.github.io/platform-teams-agentic-world-struggle/">Platform Teams: Agentic World Struggle</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agentic-workflows-surviving-network-partitions/">
+                        <h3>Agentic workflows: surviving network partitions</h3>
+                        <p>How to keep agentic workflows correct when networks drop: idempotency keys, an outbox with stable action IDs, and reconciliation on reconnect.</p>
+                        <span class="related-meta">18 min read · 1 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
+                        <h3>Stabilize multi-model agent routers: six production rules</h3>
+                        <p>Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.</p>
+                        <span class="related-meta">15 min read · 15 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/detecting-silent-agent-failures/">
+                        <h3>Detecting silent agent failures</h3>
+                        <p>A layered quality gate that catches well-formed but wrong agent output: schema checks, PII scans, citation grounding, and a model judge, plus how to measure each.</p>
+                        <span class="related-meta">15 min read · 13 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

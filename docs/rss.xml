@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Oct 2026 04:00:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Oct 2026 16:45:40 +0000</lastBuildDate>
+    <item>
+      <title>Agentic systems: architecture principles that hold</title>
+      <link>https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/</link>
+      <description>How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</description>
+      <pubDate>Fri, 23 Oct 2026 16:44:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/</guid>
+    </item>
     <item>
       <title>Agent code review: 7 traps that slip through</title>
       <link>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</link>
@@ -138,13 +145,6 @@
       <description>Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.</description>
       <pubDate>Mon, 12 Oct 2026 21:04:53 +0000</pubDate>
       <guid>https://kubaik.github.io/retire-api-versions-before-they-pile-up/</guid>
-    </item>
-    <item>
-      <title>Agent audit trails: event log vs state snapshots</title>
-      <link>https://kubaik.github.io/agent-audit-trails-event-log-vs-state-snapshots/</link>
-      <description>Event sourcing and state snapshots solve different audit problems for AI agents. Compare causal reconstruction, debugging fidelity, cost, and replay limits.</description>
-      <pubDate>Mon, 12 Oct 2026 05:04:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-audit-trails-event-log-vs-state-snapshots/</guid>
     </item>
   </channel>
 </rss>

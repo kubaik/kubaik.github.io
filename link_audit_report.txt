@@ -1,4 +1,4 @@
-❌ Internal link audit: 413 broken link(s) found across 414 posts checked.
+❌ Internal link audit: 414 broken link(s) found across 415 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -32,6 +32,7 @@ Source Post                              Anchor Text                    Missing 
   /agent-audit-trails-event-log-vs-state-snapshots AI content policy              /ai-content-policy/
   /agent-auth-the-silent-deployment-killer AI content policy              /ai-content-policy/
   /agent-auth-where-the-docs-ended-up-lying AI content policy              /ai-content-policy/
+  /agent-code-review-7-traps-that-slip-through AI content policy              /ai-content-policy/
   /agent-code-review-gap-nobody-admits    AI content policy              /ai-content-policy/
   /agent-compliance-in-african-fintech-the-cbn-gap AI content policy              /ai-content-policy/
   /agent-compliance-the-layer-you-build-after-failure AI content policy              /ai-content-policy/

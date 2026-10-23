@@ -49,6 +49,7 @@ docs/agent-tracing-when-logs-lie-and-metrics-mislead/index.md
 docs/agent-versioning-the-contract-you-forgot/index.md
 docs/agentic-ai-cost-control-7-tools-one-backfire/index.md
 docs/agentic-finops-is-a-trap/index.md
+docs/agentic-systems-architecture-principles-that-hold/index.md
 docs/agentic-workflows-how-we-kept-the-lights/index.md
 docs/agentic-workflows-surviving-network-partitions/index.md
 docs/agents-247-vs-on-demand-42k-bill-shock/index.md
