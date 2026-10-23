@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Oct 2026 16:53:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 23 Oct 2026 04:00:37 +0000</lastBuildDate>
+    <item>
+      <title>Agent code review: 7 traps that slip through</title>
+      <link>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</link>
+      <description>Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</description>
+      <pubDate>Fri, 23 Oct 2026 03:59:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</guid>
+    </item>
     <item>
       <title>OAuth 2.1 migration: what breaks in existing integrations</title>
       <link>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</link>
@@ -138,13 +145,6 @@
       <description>Event sourcing and state snapshots solve different audit problems for AI agents. Compare causal reconstruction, debugging fidelity, cost, and replay limits.</description>
       <pubDate>Mon, 12 Oct 2026 05:04:35 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-audit-trails-event-log-vs-state-snapshots/</guid>
-    </item>
-    <item>
-      <title>Rate limiters: burst vs abuse, two designs</title>
-      <link>https://kubaik.github.io/rate-limiters-burst-vs-abuse-two-designs/</link>
-      <description>Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.</description>
-      <pubDate>Sun, 11 Oct 2026 17:33:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/rate-limiters-burst-vs-abuse-two-designs/</guid>
     </item>
   </channel>
 </rss>

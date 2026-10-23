@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-22T16:52:55.258169",
+  "built_at": "2026-10-23T03:59:38.868357",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5615,6 +5615,11 @@
       "slug": "oauth-21-migration-what-breaks-in-existing-integrations",
       "title": "OAuth 2.1 migration: what breaks in existing integrations",
       "summary": "After enough code that touches platform abstractions gets reviewed, the same failure pattern keeps showing up. Everyone assumes someone else already checked this. Here's the fuller picture, with the tradeoffs left in. OAuth 2.1 is not a new grant type or a new endpoint. It is the IETF's consolidatio"
+    },
+    {
+      "slug": "agent-code-review-7-traps-that-slip-through",
+      "title": "Agent code review: 7 traps that slip through",
+      "summary": "Most frontend performance guides assume a clean environment and a patient timeline. The default configuration is fine right up until it isn't. This is the version of the write-up that includes the part that broke. Agent-generated code arrives with a confidence that human code rarely has. It compiles"
     }
   ]
 }

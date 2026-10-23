@@ -28,6 +28,7 @@ docs/agent-architecture-the-new-model-trap/index.md
 docs/agent-audit-trails-event-log-vs-state-snapshots/index.md
 docs/agent-auth-the-silent-deployment-killer/index.md
 docs/agent-auth-where-the-docs-ended-up-lying/index.md
+docs/agent-code-review-7-traps-that-slip-through/index.md
 docs/agent-code-review-gap-nobody-admits/index.md
 docs/agent-compliance-in-african-fintech-the-cbn-gap/index.md
 docs/agent-compliance-the-layer-you-build-after-failure/index.md

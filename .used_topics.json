@@ -167,5 +167,11 @@
   "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
   "The platform abstractions that make agent development faster for engineering teams",
   "MCP in production: the hidden operational costs and security gotchas nobody talks about",
-  "OAuth 2.1 migration notes: what breaks in existing integrations"
+  "OAuth 2.1 migration notes: what breaks in existing integrations",
+  "Building healthy team norms around AI tool usage without creating two classes of engineers",
+  "Why some teams are moving hot paths from Python to Go, and what they give up",
+  "The frontend performance budget that still matters when most traffic is from Africa",
+  "The database and state management patterns that survived heavy agent usage",
+  "Technical interview loops that actually predict on-the-job performance",
+  "Testing and reviewing agent-generated code and workflows at team scale"
 ]
