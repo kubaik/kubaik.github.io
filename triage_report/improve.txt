@@ -212,6 +212,7 @@ docs/hybrid-cloud-routing-cost-speed-balance-for-sea/index.md
 docs/idempotency-keys-what-they-fix-what-they-dont/index.md
 docs/idp-for-ai-2026-stack-evolution/index.md
 docs/internal-platform-adoption-one-metric-kills-velocity/index.md
+docs/iso-20022-where-payment-rails-actually-break/index.md
 docs/istio-and-cilium-what-really-breaks-in-production/index.md
 docs/json-modes-hidden-costs-revealed/index.md
 docs/json-modes-silent-failures-exposed/index.md

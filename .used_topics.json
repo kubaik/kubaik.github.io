@@ -178,5 +178,6 @@
   "The architecture principles that survived the shift to agentic and multi-model systems",
   "The portfolio projects that actually get African engineers hired into senior remote roles in 2026",
   "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
-  "HTTP/3 and QUIC in production: what changed for backend teams and what didn't"
+  "HTTP/3 and QUIC in production: what changed for backend teams and what didn't",
+  "ISO 20022 messaging in practice: what it changes for teams building payment rails"
 ]

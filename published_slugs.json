@@ -641,6 +641,9 @@
   "internal-platform-adoption-one-metric-kills-velocity": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "iso-20022-where-payment-rails-actually-break": {
+    "first_seen": "2026-10-24T15:38:04.252218+00:00"
+  },
   "istio-and-cilium-what-really-breaks-in-production": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

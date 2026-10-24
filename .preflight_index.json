@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-24T03:52:22.331388",
+  "built_at": "2026-10-24T15:37:57.267772",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5630,6 +5630,11 @@
       "slug": "http3-changes-less-than-the-demos-imply",
       "title": "HTTP/3 changes less than the demos imply",
       "summary": "The obvious answer to a portfolio projects question in code review is usually the incomplete one. Here's what a colleague hitting this for the first time needs to know. The answers online were either wrong or skipped the part that mattered. HTTP/3 runs over QUIC, which runs over UDP. That one senten"
+    },
+    {
+      "slug": "iso-20022-where-payment-rails-actually-break",
+      "title": "ISO 20022: where payment rails actually break",
+      "summary": "The failure is quiet — no errors, just wrong answers. There's a one-line change buried in most iso 20022 setups that nobody flags until it's expensive. Here's the version that skips the happy-path tutorial. The problem, in general terms ISO 20022 is not a new SWIFT message format. It is a syntax and"
     }
   ]
 }
