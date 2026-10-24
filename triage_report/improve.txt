@@ -207,6 +207,7 @@ docs/golden-paths-become-load-bearing-walls/index.md
 docs/golden-paths-that-dont-handcuff/index.md
 docs/graphql-vs-rest-vs-trpc-2026s-api-fight/index.md
 docs/hire-for-agents-not-autocomplete/index.md
+docs/http3-changes-less-than-the-demos-imply/index.md
 docs/hybrid-cloud-routing-cost-speed-balance-for-sea/index.md
 docs/idempotency-keys-what-they-fix-what-they-dont/index.md
 docs/idp-for-ai-2026-stack-evolution/index.md

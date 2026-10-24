@@ -13,6 +13,7 @@ audit-logs-that-scale-skip-the-3am-fire-drills,80,3151,Audit logs that scale: sk
 bootstrapped-5k-mrr-without-ads,80,2817,Reaching $5k MRR Without Paid Ads: A Product-Led Playbook,2026-06-25T20:30:14.422863,1,"first-person incident: 'If it does not improve, ask a colleague to try the flow while you watch; the fri'"
 deploy-a-solo-stack-for-20month-in-2026,80,2715,Solo developer deployment: cost-conscious managed services,2026-06-09T15:45:09.304392,1,first-person incident: 'Route 53 hosted zones cost $0.50/month per zone; the registrar fee is separate.'
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
+http3-changes-less-than-the-demos-imply,80,2554,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,1,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."""
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
 negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,1,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim'"
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
@@ -230,7 +231,7 @@ agent-slos-measure-what-agents-actually-do,100,2591,Agent SLOs: measure what age
 agent-systems-circuit-breakers-are-not-enough,100,2518,Agent Systems: Circuit Breakers Are Not Enough,2026-09-12T11:54:46.323734,0,
 agent-tracing-when-logs-lie-and-metrics-mislead,100,1909,Agent tracing: when logs lie and metrics mislead,2026-08-28T10:18:37.508121,0,
 agent-versioning-the-contract-you-forgot,100,2671,Agent versioning: the contract you forgot,2026-09-28T19:26:44.647523,0,
-agentic-systems-architecture-principles-that-hold,100,2422,Agentic systems: architecture principles that hold,2026-10-23T16:44:39.189493,0,
+agentic-systems-architecture-principles-that-hold,100,2979,Agentic systems: architecture principles that hold,2026-10-23T16:44:39.189493,0,
 agentic-workflows-how-we-kept-the-lights,100,2871,Observability for Long-Running LLM Agent Workflows,2026-07-17T13:40:10.095223,0,
 agentic-workflows-surviving-network-partitions,100,3589,Agentic workflows: surviving network partitions,2026-10-01T04:54:31.558813,0,
 agents-keep-breaking-prod-3-boundary-rules-you-still-need,100,2843,Agents keep breaking prod: 3 boundary rules you still need,2026-07-17T13:47:16.525594,0,

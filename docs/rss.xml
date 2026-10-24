@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Oct 2026 16:45:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 24 Oct 2026 03:53:15 +0000</lastBuildDate>
+    <item>
+      <title>HTTP/3 changes less than the demos imply</title>
+      <link>https://kubaik.github.io/http3-changes-less-than-the-demos-imply/</link>
+      <description>HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.</description>
+      <pubDate>Sat, 24 Oct 2026 03:52:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/http3-changes-less-than-the-demos-imply/</guid>
+    </item>
     <item>
       <title>Agentic systems: architecture principles that hold</title>
       <link>https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/</link>
@@ -138,13 +145,6 @@
       <description>A layered quality gate that catches well-formed but wrong agent output: schema checks, PII scans, citation grounding, and a model judge, plus how to measure each.</description>
       <pubDate>Tue, 13 Oct 2026 06:03:55 +0000</pubDate>
       <guid>https://kubaik.github.io/detecting-silent-agent-failures/</guid>
-    </item>
-    <item>
-      <title>Retire API versions before they pile up</title>
-      <link>https://kubaik.github.io/retire-api-versions-before-they-pile-up/</link>
-      <description>Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.</description>
-      <pubDate>Mon, 12 Oct 2026 21:04:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/retire-api-versions-before-they-pile-up/</guid>
     </item>
   </channel>
 </rss>

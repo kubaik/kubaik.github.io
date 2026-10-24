@@ -1,4 +1,4 @@
-❌ Internal link audit: 414 broken link(s) found across 415 posts checked.
+❌ Internal link audit: 415 broken link(s) found across 416 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -53,6 +53,7 @@ Source Post                              Anchor Text                    Missing 
   /agent-versioning-the-contract-you-forgot AI content policy              /ai-content-policy/
   /agentic-ai-cost-control-7-tools-one-backfire AI content policy              /ai-content-policy/
   /agentic-finops-is-a-trap               AI content policy              /ai-content-policy/
+  /agentic-systems-architecture-principles-that-hold AI content policy              /ai-content-policy/
   /agentic-workflows-how-we-kept-the-lights AI content policy              /ai-content-policy/
   /agentic-workflows-surviving-network-partitions AI content policy              /ai-content-policy/
   /agents-247-vs-on-demand-42k-bill-shock AI content policy              /ai-content-policy/

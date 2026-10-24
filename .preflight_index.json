@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-23T16:44:41.979880",
+  "built_at": "2026-10-24T03:52:22.331388",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5625,6 +5625,11 @@
       "slug": "agentic-systems-architecture-principles-that-hold",
       "title": "Agentic systems: architecture principles that hold",
       "summary": "building evaluation has a reputation for being boring, which is exactly why nobody budgets time for it. Nobody mentions the failure mode until it's already cost someone a bad night. This post covers what comes after the happy path. Agentic and multi-model systems break the tidy assumptions that micr"
+    },
+    {
+      "slug": "http3-changes-less-than-the-demos-imply",
+      "title": "HTTP/3 changes less than the demos imply",
+      "summary": "The obvious answer to a portfolio projects question in code review is usually the incomplete one. Here's what a colleague hitting this for the first time needs to know. The answers online were either wrong or skipped the part that mattered. HTTP/3 runs over QUIC, which runs over UDP. That one senten"
     }
   ]
 }

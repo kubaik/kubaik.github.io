@@ -1,0 +1,490 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HTTP/3 changes less than the demos imply - Kubai Kevin</title>
+        <meta name="description" content="HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.">
+        <meta name="keywords" content="Http, Quic, HttpProduction, QuicBackendImpact, HttpFallbackHttp, Backend, Softwareengineering, Http3, Http3production">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-24T03:52:19.685380">
+        <meta property="article:modified_time" content="2026-10-24T03:53:01.608003+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="HTTP/3 changes less than the demos imply">
+        <meta property="og:description" content="HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.">
+        <meta property="og:url" content="https://kubaik.github.io/http3-changes-less-than-the-demos-imply/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/http3-changes-less-than-the-demos-imply.png">
+        <meta property="og:image:alt" content="HTTP/3 changes less than the demos imply">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="HTTP/3 changes less than the demos imply">
+        <meta name="twitter:description" content="HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/http3-changes-less-than-the-demos-imply.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/http3-changes-less-than-the-demos-imply/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/http3-changes-less-than-the-demos-imply/#article",
+      "headline": "HTTP/3 changes less than the demos imply",
+      "description": "HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.",
+      "datePublished": "2026-10-24T03:52:19+00:00",
+      "dateModified": "2026-10-24T03:53:01+00:00",
+      "wordCount": 2575,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/http3-changes-less-than-the-demos-imply/"
+      },
+      "keywords": "Http, Quic, HttpProduction, QuicBackendImpact, HttpFallbackHttp, Backend, Softwareengineering, Http3"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "HTTP/3 changes less than the demos imply",
+          "item": "https://kubaik.github.io/http3-changes-less-than-the-demos-imply/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>HTTP/3 changes less than the demos imply</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">HTTP/3 changes less than the demos imply</h1>
+                
+                <p class="post-lead">HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Http</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Quic</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">HttpProduction</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">QuicBackendImpact</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">HttpFallbackHttp</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/backend/"
+                       style="text-decoration:none;">Backend</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2575 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-24
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>HTTP/3 runs over QUIC, which runs over UDP. That single sentence explains why migration tickets stay open for months: the protocol is real, browser support is real, and CDN edges have terminated it for years, yet most origins have no reason to care.</p>
+<p>The useful question is not "should we adopt HTTP/3" but "what is the gap between what the edge terminates and what the origin actually sees?" A common failure mode: a team enables HTTP/3 at the load balancer or CDN, watches the graph go green, and finds the application behaving exactly as before — same head-of-line blocking on the backend connection pool, same retry storms, same 502s when one slow request pins a worker. The transport changed; the failure modes did not.</p>
+<p>This article covers where HTTP/3 and QUIC genuinely change backend behavior, where they are purely an edge concern, and how to reason about the boundary without a dedicated network team.</p>
+<h2 id="the-mechanism-briefly-and-precisely">The mechanism, briefly and precisely</h2>
+<p>QUIC is a transport protocol built on UDP. It folds together what TCP, TLS 1.3, and part of HTTP/2 stream multiplexing used to do in separate layers. The parts that matter for backend work:</p>
+<ul>
+<li><strong>Streams are independent at the transport layer.</strong> A lost packet on one stream does not block delivery on another, because QUIC tracks loss per stream rather than per connection. TCP has no concept of streams, so a lost segment stalls everything behind it at the kernel level — the head-of-line blocking HTTP/2 could not fix because it sat above TCP.</li>
+<li><strong>Connection establishment is shorter.</strong> A first connection combines the transport handshake and the TLS 1.3 handshake, so it typically needs one round trip before application data. Repeat connections can use 0-RTT resumption. A TCP plus TLS 1.3 handshake needs more round trips before the first byte of application data.</li>
+<li><strong>Connection migration is built in.</strong> A QUIC connection is identified by a connection ID, not by the four-tuple of source IP, source port, destination IP, and destination port. A client switching from Wi-Fi to cellular can keep the connection alive. TCP cannot do this without help from a higher layer.</li>
+<li><strong>Encryption is mandatory, not optional.</strong> There is no cleartext QUIC in the deployed web. Header protection means middleboxes cannot inspect or rewrite transport headers the way they can with TCP.</li>
+</ul>
+<p>That last point is the one that quietly breaks things. More on it below.</p>
+<h2 id="what-actually-changes-at-the-origin">What actually changes at the origin</h2>
+<p>In the architecture <code>client -&gt; CDN/edge -&gt; origin</code>, if the edge speaks HTTP/3 to clients while speaking HTTP/1.1 or HTTP/2 to the origin, then <strong>nothing at the origin changes</strong>. The edge terminates QUIC, reassembles streams, and forwards ordinary HTTP requests over a TCP connection. The application neither knows nor cares.</p>
+<p>This is the common case, and it is why many "we enabled HTTP/3" announcements are, from the backend's perspective, a no-op. The user-perceived latency improvement comes from the client-to-edge leg, where round-trip savings are largest for high-latency, lossy mobile networks. The origin-to-edge leg is usually short and well provisioned.</p>
+<p>HTTP/3 reaches the origin only when it is explicitly configured there: a load balancer or reverse proxy that terminates QUIC and forwards to the app, or, more rarely, an application server that speaks QUIC directly. When that happens, the differences are concrete:</p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>HTTP/2 over TCP</th>
+<th>HTTP/3 over QUIC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loss handling</td>
+<td>One lost segment stalls the connection</td>
+<td>Loss isolated to the affected stream</td>
+</tr>
+<tr>
+<td>Connection identity</td>
+<td>Four-tuple; breaks on NAT rebind or IP change</td>
+<td>Connection ID; survives migration</td>
+</tr>
+<tr>
+<td>Handshake</td>
+<td>TCP plus TLS, multiple round trips</td>
+<td>Combined, 1-RTT, 0-RTT on resume</td>
+</tr>
+<tr>
+<td>Middlebox visibility</td>
+<td>Full transport header visibility</td>
+<td>Headers encrypted; limited inspection</td>
+</tr>
+<tr>
+<td>CPU profile</td>
+<td>Kernel TCP stack, often offloaded</td>
+<td>Userspace crypto per packet, higher CPU</td>
+</tr>
+<tr>
+<td>Operational tooling</td>
+<td>Mature: <code>ss</code>, <code>tcpdump</code>, conntrack</td>
+<td>Newer; <code>qlog</code>, different capture workflow</td>
+</tr>
+</tbody>
+</table>
+<p>The CPU row is not a footnote. QUIC moves encryption and congestion control into userspace. On a busy edge, that is more CPU per byte than kernel TCP with hardware offload. Teams terminating QUIC on general-purpose VMs commonly see the CPU cost before any latency benefit.</p>
+<h2 id="where-the-demos-mislead">Where the demos mislead</h2>
+<p>The typical HTTP/3 demo shows a page load on a simulated lossy mobile connection, with HTTP/3 winning on time to first byte and full load time. That result is real and well documented. It is also not the workload most backend teams optimize.</p>
+<p>Three patterns where the demo does not transfer:</p>
+<p><strong>1. Server-to-server traffic on a stable network.</strong> Two services in the same region, on a low-loss path, gain little from QUIC's loss isolation. Handshake savings matter for cold connections; a pooled, long-lived connection amortizes the handshake to nothing. The CPU cost of userspace crypto is paid on every byte.</p>
+<p><strong>2. Workloads dominated by a single large response.</strong> Stream independence helps when many streams compete and one stalls. If a request is one big body on one stream, a lost packet stalls that stream regardless of transport. QUIC does not make a single stream faster than a single TCP connection on the same path.</p>
+<p><strong>3. Anything behind a middlebox that drops UDP.</strong> This failure mode produces the most confused incident reports. Corporate firewalls, some VPNs, and older network equipment block or rate-limit UDP/443. The client usually falls back to HTTP/2, but fallback is not guaranteed to be fast, and if HTTP/2 was disabled at the edge because "we're on HTTP/3 now," those users are broken outright.</p>
+<p>The third point is the one to internalize: <strong>HTTP/3 is additive, never a replacement at the edge.</strong> Keep HTTP/2 and HTTP/1.1 listeners. The <code>Alt-Svc</code> header is how a server advertises HTTP/3 availability so clients can attempt it and fall back cleanly.</p>
+<h2 id="a-decision-framework">A decision framework</h2>
+<p>Work through these in order and stop at the first "no."</p>
+<ol>
+<li><strong>Is the client population primarily browsers or mobile apps on variable networks?</strong> If yes, HTTP/3 at the edge is worth enabling. If traffic is service-to-service inside one cloud region, skip to step 5.</li>
+<li><strong>Does the edge (CDN, load balancer) support HTTP/3 termination with automatic fallback?</strong> If it does, enable it there and stop. Do not push QUIC to the origin without a measured reason.</li>
+<li><strong>Is there observability that distinguishes HTTP/3 from HTTP/2 sessions?</strong> If not, fix that first. Enabling a transport you cannot see is how a fallback bug becomes undiagnosable.</li>
+<li><strong>Is there a measured client-side latency problem on lossy networks that HTTP/2 has not solved?</strong> If yes, enabling at the edge is the cheap experiment. Measure time to first byte and connection error rate by protocol version, not in aggregate.</li>
+<li><strong>For origin-side QUIC: are both ends under your control, and is the path lossy or mobile?</strong> If not, the cost/benefit rarely clears. Origin-side QUIC is a specialist move for specific topologies, not a default.</li>
+</ol>
+<p>For most small-team backends serving clients on variable mobile networks, the answer lands at step 2: turn it on at the CDN, keep HTTP/2 at the origin, and spend the saved effort on what actually breaks — connection pooling, timeouts, and retry behavior.</p>
+<h2 id="implementation-details-that-bite">Implementation details that bite</h2>
+<h3 id="alt-svc-and-fallback">Alt-Svc and fallback</h3>
+<p>The server advertises HTTP/3 with a response header like:</p>
+<pre><code class="language-http">Alt-Svc: h3=&quot;:443&quot;; ma=86400
+</code></pre>
+<p><code>ma</code> is the max-age in seconds the client may remember the advertisement. If the header is served and the UDP listener then breaks, clients keep trying HTTP/3 for up to <code>ma</code> seconds before falling back. A short <code>ma</code> during rollout is a cheap safety valve.</p>
+<h3 id="health-checks-must-not-assume-udp">Health checks must not assume UDP</h3>
+<p>Most load balancer health checks are TCP or HTTP over TCP. If a QUIC listener is added, the health check still passes while UDP/443 is silently blocked upstream. A separate check is needed — or at minimum an alert on the ratio of HTTP/3 to HTTP/2 sessions dropping to zero. A QUIC listener that accepts nothing looks healthy to a TCP check.</p>
+<h3 id="timeouts-and-retries">Timeouts and retries</h3>
+<p>QUIC has its own idle timeout and its own loss detection. If the application layer also has aggressive timeouts, double-timeout behavior can result: the transport retransmits while the app has already given up, or the app retries a request the transport was still delivering. Keep application-level timeouts longer than the transport's, and make retries idempotent. This is not new advice, but HTTP/3 makes transport timing less visible because it is not in the kernel.</p>
+<h3 id="observability">Observability</h3>
+<p>QUIC exposes <code>qlog</code>, a structured JSON event log for connection-level events. It is the packet-capture equivalent at the protocol layer, and it is the tool to reach for when a connection behaves strangely. On the server side, make sure access logs record the negotiated protocol version per request — many default log formats do not, which makes it impossible to answer "did this user get HTTP/3 or fall back?" after the fact.</p>
+<h3 id="the-middlebox-problem-in-reverse">The middlebox problem in reverse</h3>
+<p>Because QUIC encrypts transport headers, some enterprise networks treat it as unknown traffic and block it. If a meaningful share of users sits behind such networks, the HTTP/3 adoption rate will plateau, and the HTTP/2 fallback path must be as fast as it was before. Do not let the fallback path rot.</p>
+<h2 id="what-outcomes-to-expect-and-their-limits">What outcomes to expect, and their limits</h2>
+<p>Published results vary by network conditions, and a figure measured on a simulated lossy link does not transfer to a well-provisioned datacenter path. What can be said with confidence:</p>
+<ul>
+<li>The largest gains are on high-latency, lossy, mobile client networks, and they come mostly from fewer round trips at connection setup and per-stream loss isolation.</li>
+<li>On stable, low-loss paths, the gain is small and may be negative once userspace crypto CPU is accounted for.</li>
+<li>The benefit is front-loaded: the first connection and the first few hundred milliseconds benefit most. Long-lived connections amortize the handshake savings away.</li>
+</ul>
+<p>Illustrative arithmetic, not a measurement: assume a client on a network with 100 ms round-trip time. A TCP plus TLS 1.3 first connection needs roughly three round trips before application data (TCP handshake plus TLS handshake). QUIC's combined handshake is roughly one. That is a difference of about 200 ms on the first byte, before any loss. On a 10 ms datacenter path the same arithmetic gives about 20 ms — real, but rarely the thing that determines whether a page feels fast. The point is the shape of the curve, not the specific milliseconds.</p>
+<h3 id="how-to-measure-it-for-your-own-traffic">How to measure it for your own traffic</h3>
+<ul>
+<li><strong>Instrument the negotiated version.</strong> Log the protocol version (for example, the <code>:protocol</code> pseudo-header or the negotiated ALPN on the server) on every request. Then break down p50 and p95 time to first byte and error rate by version. An aggregate latency graph hides the split entirely.</li>
+<li><strong>Capture connection setup.</strong> Server-side, record the time between accepting a connection and the first request byte, tagged by version. This isolates the handshake saving from everything else.</li>
+<li><strong>Count fallbacks.</strong> Alert on the ratio of HTTP/3 to HTTP/2 sessions. A sudden drop is the signature of blocked UDP or a broken <code>Alt-Svc</code> advertisement.</li>
+<li><strong>Watch CPU per request at the terminator.</strong> Compare CPU seconds per thousand requests before and after enabling QUIC on the same hardware and traffic mix. This is where userspace crypto shows up.</li>
+<li><strong>Test the blocked-UDP path deliberately.</strong> From a network that drops UDP/443, load the site and confirm fallback is fast and correct. Do this before rollout, not after.</li>
+</ul>
+<h2 id="what-to-watch-out-for">What to watch out for</h2>
+<ul>
+<li><strong>Disabling HTTP/2 "because we have HTTP/3."</strong> Never. Fallback is mandatory.</li>
+<li><strong>Assuming the origin benefits.</strong> If the edge terminates QUIC, the origin's connection pool behavior is unchanged. Head-of-line blocking problems at the origin are still there.</li>
+<li><strong>Health checks that pass while UDP is blocked.</strong> Add a protocol-aware check or an alert on session ratio.</li>
+<li><strong>Logging without protocol version.</strong> You cannot debug what you cannot see.</li>
+<li><strong>CPU surprises at the edge.</strong> Userspace crypto costs more per byte than kernel TCP with offload. Size accordingly.</li>
+<li><strong>Treating 0-RTT as free.</strong> 0-RTT resumption has replay considerations; do not use it for non-idempotent requests without understanding the tradeoff.</li>
+</ul>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Transport upgrades change the shape of latency, not the shape of the application. The failure modes that hurt backend teams — unbounded connection pools, retries without idempotency, timeouts that fight each other, health checks that test the wrong thing — live above the transport and survive every protocol migration. HTTP/3 is worth enabling where it is cheap and observable, and it is not worth restructuring an origin for without a measured reason. Treat it as one more edge setting with a fallback path, not as a platform migration.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Does HTTP/3 improve origin-to-origin service calls?</strong>
+Rarely enough to justify the change. On a stable, low-loss path inside a cloud region, handshake savings are amortized by connection pooling and userspace crypto cost is paid on every byte. QUIC's advantages are largest on lossy, high-latency, mobile client networks. For service mesh traffic on a healthy network, the benefit is marginal.</p>
+<p><strong>What happens if a client's network blocks UDP/443?</strong>
+The client should fall back to HTTP/2 over TCP, which is why keeping the HTTP/2 listener is mandatory. Fallback is usually fast but not guaranteed to be instant, and it depends on the client honoring the <code>Alt-Svc</code> advertisement and its max-age. If HTTP/2 was disabled, those users are broken outright, not degraded.</p>
+<p><strong>Does application code need to change to support HTTP/3?</strong>
+If the edge terminates QUIC and forwards HTTP/1.1 or HTTP/2 to the origin, no. If QUIC is terminated at your own load balancer or reverse proxy, the application still typically sees ordinary HTTP requests; the changes are in proxy configuration, health checks, logging, and timeout tuning. Application-level code changes are rare.</p>
+<p><strong>Is HTTP/3 more expensive to run at the edge?</strong>
+Generally yes, per byte, because encryption and congestion control move into userspace rather than the kernel TCP stack with hardware offload. The cost is real but manageable at typical edge volumes; it becomes a sizing problem on high-throughput termination points. Measure CPU per request before and after enabling it.</p>
+<h2 id="do-this-next">Do this next</h2>
+<p>In the next 30 minutes: open your edge or load balancer configuration and check two things. First, whether HTTP/3 is enabled with HTTP/2 still available as fallback — if HTTP/2 is disabled, re-enable it now. Second, whether access logs record the negotiated protocol version per request. If they do not, add that field to the log format before changing anything else. An HTTP/3 rollout cannot be evaluated without measurement, and the fallback path is the part that breaks silently.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/poolers-wont-save-your-serverless-db/">Poolers won’t save your serverless DB</a></li>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+<li><a href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">Build apps that still work on 500 ms latency</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/settlement-vs-clearing-backend-engineers-guide/">
+                        <h3>Settlement vs clearing: backend engineer&#39;s guide</h3>
+                        <p>Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</p>
+                        <span class="related-meta">15 min read · 28 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
+                        <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
+                        <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/when-flags-become-experiments/">
+                        <h3>When flags become experiments</h3>
+                        <p>How to run feature flags and A/B tests on a $5 VPS with no data warehouse, using offline-tolerant self-hosted tooling and SMS replies as conversions.</p>
+                        <span class="related-meta">15 min read · 28 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
