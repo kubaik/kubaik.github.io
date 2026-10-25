@@ -15,7 +15,6 @@ deploy-a-solo-stack-for-20month-in-2026,80,2715,Solo developer deployment: cost-
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
 negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates output,2026-09-19T03:48:59.928958,1,"first-person incident: '**Framing B (strong):** ""The reconciliation endpoint I shipped last quarter elim'"
-network-tokens-what-changes-for-payment-engineers,80,2609,Network tokens: what changes for payment engineers,2026-10-25T13:40:40.554142,1,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."""
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
 remote-premium-rates-skills-ai-cant-copy,80,3739,Remote premium rates: skills AI can't copy,2026-10-21T08:45:29.894292,1,first-person incident: 'A practical way to verify is a dry run with a colleague.'
 spot-instances-vs-on-demand-for-ai-experiments,80,2587,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,1,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a'
@@ -70,6 +69,7 @@ why-i-picked-playwright-and-vitest-in-2026,92,2162,Choosing a JavaScript Test St
 2026-alert-triage-when-opsgenie-slept-for-you,95,3190,2026 alert triage: when Opsgenie slept for you,2026-06-20T09:25:40.987533,1,no markdown table
 3-mistakes-that-break-deployments-for-everyone,95,2570,3 mistakes that break deployments for everyone,2026-08-08T14:22:12.877501,1,no markdown table
 5-ways-to-find-hidden-latency-before-production,95,2430,5 ways to find hidden latency before production,2026-06-30T22:23:14.312622,1,no FAQ section
+7-guardrails-for-safer-llm-apps,95,2942,7 guardrails for safer LLM apps,2026-10-25T15:48:20.553985,1,no markdown table
 agent-auth-the-silent-deployment-killer,95,2662,Agent auth: the silent deployment killer,2026-07-30T08:41:42.797134,1,no markdown table
 agent-auth-where-the-docs-ended-up-lying,95,2748,Agent auth: where the docs ended up lying,2026-08-24T01:29:32.768869,1,no FAQ section
 agent-compliance-in-african-fintech-the-cbn-gap,95,3239,Agent compliance in African fintech: the CBN gap,2026-09-20T09:44:53.685889,1,no markdown table

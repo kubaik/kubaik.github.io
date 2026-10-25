@@ -13,6 +13,7 @@ docs/5-ways-to-find-hidden-latency-before-production/index.md
 docs/50-locations-50-headaches-edge-native-backends-in/index.md
 docs/7-bundling-decisions-that-still-matter/index.md
 docs/7-code-review-traps-when-ai-writes-half-your-code/index.md
+docs/7-guardrails-for-safer-llm-apps/index.md
 docs/7-idp-shifts-for-ai-feature-delivery/index.md
 docs/7-patterns-for-systems-that-wont-die-when-networks/index.md
 docs/7-skills-senior-engineers-need-now-agents-are-live/index.md
@@ -262,7 +263,6 @@ docs/negotiate-pay-in-2026-with-ai-proof-points/index.md
 docs/negotiate-salaries-with-ai-skills-in-2026/index.md
 docs/negotiating-pay-when-ai-inflates-output/index.md
 docs/neon-vs-planetscale-vs-turso-which-broke-first/index.md
-docs/network-tokens-what-changes-for-payment-engineers/index.md
 docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/index.md
 docs/nigerias-2026-api-rules-broke-our-microservices/index.md
 docs/oauth-21-migration-what-breaks-in-existing-integrations/index.md

@@ -184,5 +184,6 @@
   "Kafka versus Redpanda versus NATS JetStream for event streaming",
   "Postgres partitioning strategies for time-series workloads in transactional systems",
   "WebAssembly on the server: runtimes, use cases, and current limitations",
-  "Card tokenization and network tokens: what changes for payment engineers"
+  "Card tokenization and network tokens: what changes for payment engineers",
+  "Guardrails for LLM applications: input filters, output validators, and policy layers"
 ]
