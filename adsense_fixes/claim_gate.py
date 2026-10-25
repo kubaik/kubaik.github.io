@@ -24,6 +24,7 @@ bypass the auto-mode loop.
     if result.blocked:
         raise ClaimGateError("; ".join(result.reasons))
 """
+
 from __future__ import annotations
 
 import re
@@ -50,6 +51,14 @@ _FAKE_AUTHORITY_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Broader named-stat pattern: any "study/report by/from Org ... N%" without a URL nearby.
+# Catches iHub, Makerere, OWASP, DORA, McKinsey, etc. that the old list missed.
+_NAMED_STAT_RE = re.compile(
+    r"(?i)(?:according to|a (?:20\d{2} )?(?:study|paper|report|survey|research|analysis)\s+(?:by|from))\s+"
+    r"[A-Z][\w&.\'\-]*(?:\s+[A-Z][\w&.\'\-]*){0,6}"
+    r"[^.]*?\d{1,3}\s?%"
+)
+
 # Named org + precise statistic in the same short window, no URL required
 # to trip — the point is the model invents both the org and the number.
 _NAMED_ORG_STAT_RE = re.compile(
@@ -58,7 +67,8 @@ _NAMED_ORG_STAT_RE = re.compile(
     r"Stanford|MIT|Linux Foundation|Upwork|ProfitWell|LinearB|"
     r"Trail of Bits|Cloudflare|Stripe|HashiCorp|"
     r"Kenya Software Engineering Association|African Tech Policy Forum|"
-    r"Nairobi Tech Research Group|DevIQ Labs|Dev Interrupted"
+    r"Nairobi Tech Research Group|DevIQ Labs|Dev Interrupted|"
+    r"iHub Research|Makerere University|Andela"
     r")\b"
     r".{0,120}?"
     r"\b(\d{1,3}\s*%|\d+(?:\.\d+)?\s*x)\b",
@@ -126,6 +136,8 @@ def _line_is_flagged(text: str) -> bool:
         return True
     if _FAKE_AUTHORITY_RE.search(probe):
         return True
+    if _NAMED_STAT_RE.search(probe):
+        return True
     if _FILLER_LINE_RE.search(probe):
         return True
     return False
@@ -185,6 +197,16 @@ def check_claims(content: str, title: str = "") -> ClaimGateResult:
         )
         result.hits.append("fake_authority")
 
+    # New broader check: any named study/report + % without a nearby URL
+    for m in _NAMED_STAT_RE.finditer(blob):
+        start = max(0, m.start() - 250)
+        end = min(len(blob), m.end() + 250)
+        window = blob[start:end]
+        if not re.search(r"https?://", window):
+            result.reasons.append(f"unsourced_named_citation: '{m.group(0)[:120]}'")
+            result.hits.append("named_stat_no_url")
+            break  # one hit is enough to block
+
     org_stat = _NAMED_ORG_STAT_RE.search(blob)
     if org_stat:
         result.reasons.append(
@@ -202,9 +224,7 @@ def check_claims(content: str, title: str = "") -> ClaimGateResult:
         result.hits.append("first_person_incident")
 
     if title and _HEADLINE_PCT_RE.search(title):
-        result.reasons.append(
-            "Headline contains an unsourced performance percentage."
-        )
+        result.reasons.append("Headline contains an unsourced performance percentage.")
         result.hits.append("headline_pct")
 
     result.blocked = bool(result.reasons)

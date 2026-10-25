@@ -316,6 +316,15 @@ jobs:
                     --backup-dir ./.citation_backups \
                     --confirm
 
+            # Force-strip every remaining unsourced named citation (iHub / Makerere /
+            # OWASP / DORA / McKinsey style) so no residual fabricated statistic
+            # ships. Runs after the bounded processors and before the final rebuild.
+            - name: 🧹 Force-strip all unsourced named citations
+              run: |
+                  python adsense_credibility_cleanup.py scan
+                  python adsense_credibility_cleanup.py delete-flagged --apply
+                  python blog_system.py build
+
             # The four bounded steps above can change what's on disk in docs/:
             # auto_retire_duplicates.py writes its own redirect-stub HTML directly,
             # process_regeneration_queue.py and process_citation_queue.py only edit
