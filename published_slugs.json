@@ -1187,6 +1187,9 @@
   "when-flags-become-experiments": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "when-velocity-is-hard-to-measure-evaluating-engineering": {
+    "first_seen": "2026-10-25T03:50:17.209355+00:00"
+  },
   "when-your-agent-goes-silent-degrade-gracefully": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

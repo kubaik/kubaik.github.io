@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Oct 2026 15:38:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Oct 2026 03:51:05 +0000</lastBuildDate>
+    <item>
+      <title>When velocity is hard to measure: evaluating engineering…</title>
+      <link>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</link>
+      <description>Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</description>
+      <pubDate>Sun, 25 Oct 2026 03:50:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</guid>
+    </item>
     <item>
       <title>ISO 20022: where payment rails actually break</title>
       <link>https://kubaik.github.io/iso-20022-where-payment-rails-actually-break/</link>
@@ -138,13 +145,6 @@
       <description>Flaky tests usually point to real non-determinism in production code. Learn to classify the four families, triage by blast radius, and fix the source.</description>
       <pubDate>Wed, 14 Oct 2026 16:49:03 +0000</pubDate>
       <guid>https://kubaik.github.io/flaky-tests-reliability-bug-not-test-noise/</guid>
-    </item>
-    <item>
-      <title>Agent reliability: 7 metrics users trust</title>
-      <link>https://kubaik.github.io/agent-reliability-7-metrics-users-trust/</link>
-      <description>Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.</description>
-      <pubDate>Wed, 14 Oct 2026 04:08:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-reliability-7-metrics-users-trust/</guid>
     </item>
   </channel>
 </rss>

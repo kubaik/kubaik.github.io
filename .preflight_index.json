@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-24T15:37:57.267772",
+  "built_at": "2026-10-25T03:50:10.389831",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5635,6 +5635,11 @@
       "slug": "iso-20022-where-payment-rails-actually-break",
       "title": "ISO 20022: where payment rails actually break",
       "summary": "The failure is quiet — no errors, just wrong answers. There's a one-line change buried in most iso 20022 setups that nobody flags until it's expensive. Here's the version that skips the happy-path tutorial. The problem, in general terms ISO 20022 is not a new SWIFT message format. It is a syntax and"
+    },
+    {
+      "slug": "when-velocity-is-hard-to-measure-evaluating-engineering",
+      "title": "When velocity is hard to measure: evaluating engineering…",
+      "summary": "The conventional advice on engineering managers is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. The answers online were either wrong or skipped the part that mattered. The symptom: “I can’t tell if my team is actually delivering” Every engineering ma"
     }
   ]
 }

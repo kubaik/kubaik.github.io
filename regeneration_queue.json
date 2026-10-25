@@ -250,6 +250,13 @@
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
   },
   {
+    "slug": "iso-20022-where-payment-rails-actually-break",
+    "title": "ISO 20022: where payment rails actually break",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the SCOR'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
     "slug": "typescript-53-changed-how-we-model-domains",
     "title": "TypeScript 5.3 changed how we model domains",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: '2026 internal survey showed'",

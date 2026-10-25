@@ -1,4 +1,4 @@
-❌ Internal link audit: 416 broken link(s) found across 417 posts checked.
+❌ Internal link audit: 417 broken link(s) found across 418 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -216,6 +216,7 @@ Source Post                              Anchor Text                    Missing 
   /idempotency-keys-what-they-fix-what-they-dont AI content policy              /ai-content-policy/
   /idp-for-ai-2026-stack-evolution        AI content policy              /ai-content-policy/
   /internal-platform-adoption-one-metric-kills-velocity AI content policy              /ai-content-policy/
+  /iso-20022-where-payment-rails-actually-break AI content policy              /ai-content-policy/
   /istio-and-cilium-what-really-breaks-in-production AI content policy              /ai-content-policy/
   /json-modes-hidden-costs-revealed       AI content policy              /ai-content-policy/
   /json-modes-silent-failures-exposed     AI content policy              /ai-content-policy/

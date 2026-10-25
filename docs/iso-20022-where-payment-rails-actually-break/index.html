@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-10-24T15:37:54.618596">
-        <meta property="article:modified_time" content="2026-10-24T15:38:41.573020+00:00">
+        <meta property="article:modified_time" content="2026-10-25T03:50:24.852914+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="ISO 20022: where payment rails actually break">
@@ -63,8 +63,8 @@
       "headline": "ISO 20022: where payment rails actually break",
       "description": "ISO 20022 migrations fail in mapping policy, code-list governance and character rules, not XML parsing. A layered design and checklist for payment rails.",
       "datePublished": "2026-10-24T15:37:54+00:00",
-      "dateModified": "2026-10-24T15:38:41+00:00",
-      "wordCount": 3406,
+      "dateModified": "2026-10-25T03:50:24+00:00",
+      "wordCount": 3389,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -99,7 +99,13 @@
         "@type": "WebPage",
         "@id": "https://kubaik.github.io/iso-20022-where-payment-rails-actually-break/"
       },
-      "keywords": "Iso, PaymentRails, IsoMigration, PacsMessageMapping, IsoValidationRules, Mt103ToIso, Iso20022, Iso20022migration"
+      "keywords": "Iso, PaymentRails, IsoMigration, PacsMessageMapping, IsoValidationRules, Mt103ToIso, Iso20022, Iso20022migration",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/iso-20022-where-payment-rails-actually-break.png",
+        "width": 1200,
+        "height": 630
+      }
     },
     {
       "@type": "BreadcrumbList",
@@ -251,9 +257,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3406 words
+                        &nbsp;·&nbsp; 3389 words
                         
-                        &nbsp;·&nbsp; Updated 2026-10-24
+                        &nbsp;·&nbsp; Updated 2026-10-25
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -310,7 +316,7 @@ def to_remittance_info(p: InternalPayment) -&gt; dict:
 <p>That function is deliberately boring. The point is that the two policy decisions — prefer structured when possible, truncate at the documented limit — are visible in one place and can be reviewed by someone who understands the reconciliation requirements, not just the XML schema. The truncation is also a decision that should be logged, because silent truncation of a reference is a reconciliation defect waiting to happen.</p>
 <h2 id="a-worked-mapping-decision-with-the-reasoning-shown">A worked mapping decision, with the reasoning shown</h2>
 <p>Consider a payment where the internal record has <code>reference = "INV-2024-0042 / PO 8831"</code> and <code>invoice_number = None</code>. The function above emits <code>Unstructured</code> with the whole string, because there is no invoice number to build a structured reference from. That is the correct outcome only if the counterparty can reconcile against free text. If the counterparty requires structured references, the payment will be accepted and then sit unmatched.</p>
-<p>Now consider the same record with <code>invoice_number = "PO-8831-2024-000123456789"</code>, which is 26 characters — under the 35-character limit for <code>Ref</code>. The function emits <code>Structured</code> with <code>SCOR</code> as the type code. But <code>SCOR</code> is a specific creditor-reference scheme; using it for a purchase-order number that is not a SCOR reference is a semantic error that no schema validator will catch. The receiving party may parse the reference according to the SCOR rules and fail to match it.</p>
+<p>Now consider the same record with <code>invoice_number = "PO-8831-2024-000123456789"</code>, which is 26 characters — under the 35-character limit for <code>Ref</code>. The function emits <code>Structured</code> with <code>SCOR</code> as the type code. But <code>SCOR</code> is a specific creditor-reference scheme; using it for a purchase-order number that is not a SCOR reference is a semantic error that no schema validator will catch.</p>
 <p>The reasoning to apply is: the choice of <code>Cd</code> in <code>CdOrPrtry</code> is itself a policy decision, and it must be driven by what the reference actually is, not by what field it happens to live in. A purchase-order number is not a SCOR reference. A more honest mapping either uses a type code that matches the reference's real scheme, or falls back to <code>Unstructured</code> and flags the record for manual review. The code change is small; the decision requires someone who knows the commercial context.</p>
 <p>The same shape appears with <code>ChrgBr</code>. A message type may permit <code>DEBT</code>, <code>CRED</code>, <code>SHAR</code>, <code>SLEV</code> and <code>NONE</code>, but the commercial agreement with a given counterparty usually permits exactly one. Encoding the agreement as a per-counterparty configuration value — validated against the scheme's allowed set for that message type — keeps the decision visible. Encoding it as a default in the serialiser hides it.</p>
 <h2 id="implementation-details">Implementation details</h2>

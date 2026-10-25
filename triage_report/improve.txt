@@ -394,6 +394,7 @@ docs/webhooks-2026-retries-idempotency-and-the-9995/index.md
 docs/webhooks-done-right-retries-that-dont-explode-in-2026/index.md
 docs/websockets-vs-server-sent-events-latency-over-3g/index.md
 docs/when-flags-become-experiments/index.md
+docs/when-velocity-is-hard-to-measure-evaluating-engineering/index.md
 docs/when-your-agent-goes-silent-degrade-gracefully/index.md
 docs/which-agent-stack-survives-3g/index.md
 docs/which-ai-wrappers-made-money-in-2026/index.md
