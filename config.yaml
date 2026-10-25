@@ -1,244 +1,309 @@
 ads_min_words: 1200
 adsense_ads_enabled: false
 adsense_loader_page_types:
-  - home
-  - article
+    - home
+    - article
 adsense_slots: {}
 amazon_affiliate_tag: aiblogcontent-20
 base_path: ""
 base_url: https://kubaik.github.io
 content_topics:
-  - Why most production AI agents still need circuit breakers and human escalation paths
-    in 2026
-  - "Agentic workflows that survive network partitions: the patterns that actually work
-    in Africa"
-  - Why structured output + validation layers beat JSON mode for anything that touches
-    money
-  - Building reliable multi-agent systems without the orchestration tax most frameworks
-    impose
-  - When to fine-tune, when to route, and when to just use a bigger model — 2026 decision
-    framework
-  - "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that
-    survive real data change"
-  - "AI observability beyond token counts: what actually predicts user-visible degradation"
-  - Golden paths that don't become golden handcuffs — keeping the paved road evolvable
-  - How AI changed what 'self-service' means for platform teams in 2026
-  - Why most internal developer platforms fail at the adoption layer, not the technical
-    one
-  - Building a deployment platform that works for both senior engineers and new hires
-  - Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads
-  - "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026"
-  - Cost attribution for AI features that product managers actually understand
-  - The audit logging architecture that satisfies both compliance and performance teams
-  - Connection poolers in the age of serverless and AI agents — what still makes sense
-  - Building change data capture that doesn't fall over when your LLM pipeline goes
-    wild
-  - "Least-privilege for AI agents: the permission model that doesn't make developers
-    revolt"
-  - SBOM + attestation that actually gets used instead of sitting in a bucket
-  - Zero-trust networking for AI services without the latency tax
-  - Building postmortems that actually improve things when half the code is AI-generated
-  - The frontend performance budget that still matters when most traffic is from Africa
-  - Building accessible AI chat interfaces that don't fail WCAG audits
-  - Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without
-    country-specific forks
-  - How Nairobi-based teams are competing on AI features despite higher inference latency
-    to major providers
-  - Offline-first + eventual consistency patterns that actually work for mobile money
-    apps
-  - The cost and reliability tradeoffs of running AI features for users paying in local
-    currency
-  - How AI changed what 'senior engineer' actually means in 2026 hiring rubrics
-  - The skills that still command premium remote rates when AI can do the obvious parts
-  - Building a personal brand as an engineer in a world where everyone has AI-assisted
-    portfolios
-  - The compensation negotiation playbook that works when the market knows AI increased
-    your output
-  - Why some engineers are getting promoted faster in the AI era while others are being
-    managed out
-  - How to lead technical decisions when half your team is using tools you don't fully
-    understand yet
-  - The portfolio projects that actually get African engineers hired into senior remote
-    roles in 2026
-  - Why most AI wrapper businesses died in 2026 and what the survivors have in common
-  - Building in public as a solo developer without burning out on content performance
-  - How AI changed the sales cycle for developer tools — and what still works
-  - When to build vs when to buy the AI components of your SaaS in 2026
-  - "eBPF in 2026: the observability and security use cases that finally justified the
-    complexity"
-  - How feature flags evolved into full AI rollout and experimentation platforms
-  - Building systems that can absorb new AI capabilities without major rewrites every
-    6 months
-  - The architecture principles that survived the shift to agentic and multi-model systems
-  - "MCP in production: the hidden operational costs and security gotchas nobody talks
-    about"
-  - Multi-agent orchestration patterns that survive production (supervisor, swarm, debate,
-    pipeline)
-  - "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems"
-  - "Context engineering for long-running agents: the patterns that actually reduce
-    hallucinations"
-  - Why most production agents still need strong human-in-the-loop boundaries in 2026
-  - "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows"
-  - The token economics problem nobody solved yet for always-on agent teams
-  - Building evaluation harnesses for multi-agent systems that developers actually trust
-  - Security model for MCP servers in regulated environments (fintech case study)
-  - "On-device and edge agents in 2026: when they finally beat cloud round-trips for
-    African users"
-  - "World models and physical AI: what they mean for backend engineers in 2026"
-  - Building durable agent workflows that survive restarts, model changes, and network
-    blips
-  - "Evaluation-driven development for agents: the loop that replaced vibe testing"
-  - The tool-use patterns that scaled and the ones that created thundering herd problems
-  - Context window management strategies for agents that run for hours or days
-  - Productionizing 'computer use' style agents without giving them dangerous permissions
-  - Why most platform teams are still building for 2024 developer workflows in an agentic
-    world
-  - Building golden paths for AI features that don't become maintenance nightmares
-  - The real cost of always-on vs on-demand agents in a Nairobi-based SaaS
-  - FinOps patterns that work when your biggest variable cost is now LLM tokens, not
-    EC2
-  - Building unit economics for AI features that product and finance teams can both
-    understand
-  - Building SLOs for agentic features that don't just measure latency and error rate
-  - Building audit trails for agent decisions that satisfy both compliance and debugging
-    needs
-  - Data residency and sovereign AI constraints for African fintech using global models
-  - The cost and reliability tradeoffs of running agents for users who pay in local
-    mobile money
-  - Building AI features that work across M-Pesa, Paystack, and Flutterwave failure
-    modes
-  - Why global AI best practices often fail in markets with high mobile data costs and
-    latency
-  - How Nairobi teams are using local + cloud model routing to stay competitive on cost
-    and speed
-  - Offline-capable agent workflows for field agents and last-mile operations in Africa
-  - The regulatory and compliance realities of deploying autonomous agents in African
-    fintech in 2026
-  - The developer experience gaps that still exist when building and debugging multi-agent
-    systems
-  - Building internal tools that help non-AI engineers work safely with agents
-  - The skills that became table stakes for senior engineers once agents were in production
-  - Building healthy team norms around AI tool usage without creating two classes of
-    engineers
-  - The leadership challenges of managing teams where output velocity increased dramatically
-    but ownership became blurrier
-  - How African engineering teams are adapting hiring and onboarding for the agentic
-    era
-  - "Event-driven vs agent-driven architectures: when each wins in 2026"
-  - The database and state management patterns that survived heavy agent usage
-  - Designing systems that can gracefully degrade when an upstream agent or model is
-    slow or wrong
-  - The MCP server security mistake that could have exposed internal tools
-  - The evaluation gap that let a subtle model behavior change slip into production
-  - Why MCP became the dominant agent-tool protocol, and what it changed in agent design
-  - Common failure modes of multi-agent systems at scale, and why they're hard to catch
-    early
-  - "Building a multi-agent research system without LangGraph: a framework comparison"
-  - "LLMOps in 2026: the evaluation and monitoring stack replacing old RAG dashboards"
-  - How the Claude 4 / GPT-5 model generation changed agent architecture decisions
-  - "Memory systems for production agents: approaches compared, and where each leaks
-    context"
-  - Detecting and containing agent drift before it degrades the user experience
-  - The governance layer agent systems need after a compliance-relevant failure
-  - Running local LLM agents for sensitive fintech workflows without sending data abroad
-  - "Purpose-built AI platforms vs general platforms: a 2026 decision framework"
-  - "Using AI to optimize AI spend: agentic cost management, and where it can backfire"
-  - Versioning and rolling back production agents without breaking downstream systems
-  - The hidden latency tax of multi-agent handoffs, and where it can be reduced
-  - Measuring 'agent reliability' in a way that correlates with user trust
-  - "Circuit breakers and bulkheads for agent systems: designing for cascade failure"
-  - How Internal Developer Platforms are evolving to support AI feature development
-  - The platform abstractions that make agent development faster for engineering teams
-  - Measuring platform value when a growing share of 'code' is prompts and agent graphs
-  - Self-service AI tooling layers that let product teams experiment safely
-  - Token attribution models that make AI spend visible to product and finance teams
-  - Why traditional cloud cost tools struggle once agents make autonomous scaling decisions
-  - What traditional observability misses when agents enter production
-  - Agent-specific tracing patterns that actually help during incidents
-  - Writing postmortems that account for agent-made decisions, not just human error
-  - Detecting when an agent is 'working' but producing low-quality or harmful output
-  - On-call process changes teams make once agents can create incidents unattended
-  - Prompt and tool injection attacks documented in production, and how teams block
-    them
-  - Why agent identity and authentication is harder than traditional service auth
-  - Red-teaming internal agents without slowing down development velocity
-  - Low-latency agent features for users on intermittent 3G/4G connections in East Africa
-  - How Cursor, Claude Code, and Windsurf are changing daily engineering workflows
-  - Testing and reviewing agent-generated code and workflows at team scale
-  - How the 'AI Engineer' role has evolved through 2026
-  - Code review and architecture decisions when large parts of a system are agent-orchestrated
-  - Leadership challenges when output velocity rises faster than ownership clarity
-  - How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent
-    workflows
-  - Versioning and evolving agent capabilities without breaking existing integrations
-  - "What happens when an agent follows instructions too literally: documented failure
-    patterns"
-  - Why multi-agent research systems quietly degrade over time, and how to catch it
-  - Why leader election still breaks in subtle ways on modern cloud networks
-  - "ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale"
-  - The CAP theorem tradeoffs teams actually hit once they run multi-region databases
-  - Building a double-entry ledger that stays consistent under concurrent writes
-  - "Idempotency keys done right: the payment API bugs they prevent and the ones they
-    don't"
-  - Why read replicas quietly cause more bugs than they fix
-  - "DuckDB in production: where an embedded analytics engine replaces a whole data
-    warehouse"
-  - The reconciliation engine patterns that keep ledgers and payment providers in sync
-  - "gRPC vs REST vs GraphQL for internal services: a decision framework past the hype"
-  - API versioning strategies that don't turn into a graveyard of v1 endpoints
-  - Designing rate limiters that treat legitimate bursts differently from abuse
-  - What actually breaks when you migrate a public API from REST to GraphQL
-  - "HTTP/3 and QUIC in production: what changed for backend teams and what didn't"
-  - Webhook delivery systems that survive downstream outages without losing events
-  - "Passkeys and WebAuthn adoption: the rollout mistakes that locked users out"
-  - "OAuth 2.1 migration notes: what breaks in existing integrations"
-  - Supply chain security for a normal backend stack, not just AI models
-  - Secrets rotation at scale without breaking services mid-deploy
-  - The PCI DSS requirements that actually shape how payment systems get architected
-  - "Rust for backend services: where the rewrite paid off and where it didn't"
-  - Why some teams are moving hot paths from Python to Go, and what they give up
-  - "Zig, Rust, and Go for systems programming: a practical 2026 comparison"
-  - Debugging techniques that outlast whatever framework or language is trendy
-  - The Terraform patterns that keep infrastructure changes reviewable at scale
-  - "Property-based testing for financial systems: catching the bugs example tests miss"
-  - "Contract testing between services: the discipline that prevents integration breakage"
-  - Chaos engineering practices that fit a team without a dedicated SRE function
-  - Why flaky tests are a reliability problem, not a testing inconvenience
-  - Building a staging environment that actually catches production-only bugs
-  - "ISO 20022 messaging in practice: what it changes for teams building payment rails"
-  - "Open banking APIs across markets: the integration differences nobody warns you
-    about"
-  - "Fraud detection systems architecture: rules engines, scoring, and where they intersect"
-  - Settlement and clearing systems explained for backend engineers who've never touched
-    them
-  - Currency conversion edge cases that quietly corrupt financial reports
-  - Technical interview loops that actually predict on-the-job performance
-  - Writing engineering documentation that survives the person who wrote it leaving
-  - The code review habits that separate senior engineers from everyone else
-  - Negotiating a remote engineering offer when the recruiter won't share a band
-  - What actually gets a portfolio project noticed by hiring managers in 2026
-  - "Monolith to microservices: the signals that mean it's actually time to split"
-  - "CQRS in practice: the projects where it earned its complexity and the ones where
-    it didn't"
-  - Feature flag systems that don't turn into unmanageable spaghetti after a year
-  - Designing background job queues that handle poison messages gracefully
-  - "The outbox pattern explained: solving dual writes without distributed transactions"
-  - "Core Web Vitals in 2026: what actually moves the needle versus what's cargo cult"
-  - Bundling and code-splitting decisions that still matter with modern frameworks
-  - The on-call rotation structures that don't burn out a small engineering team
-  - How engineering managers should evaluate output when velocity is hard to measure
+    - Why most production AI agents still need circuit breakers and human escalation paths
+      in 2026
+    - "Agentic workflows that survive network partitions: the patterns that actually work
+      in Africa"
+    - Why structured output + validation layers beat JSON mode for anything that touches
+      money
+    - Building reliable multi-agent systems without the orchestration tax most frameworks
+      impose
+    - When to fine-tune, when to route, and when to just use a bigger model — 2026 decision
+      framework
+    - "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that
+      survive real data change"
+    - "AI observability beyond token counts: what actually predicts user-visible degradation"
+    - Golden paths that don't become golden handcuffs — keeping the paved road evolvable
+    - How AI changed what 'self-service' means for platform teams in 2026
+    - Why most internal developer platforms fail at the adoption layer, not the technical
+      one
+    - Building a deployment platform that works for both senior engineers and new hires
+    - Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads
+    - "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026"
+    - Cost attribution for AI features that product managers actually understand
+    - The audit logging architecture that satisfies both compliance and performance teams
+    - Connection poolers in the age of serverless and AI agents — what still makes sense
+    - Building change data capture that doesn't fall over when your LLM pipeline goes
+      wild
+    - "Least-privilege for AI agents: the permission model that doesn't make developers
+      revolt"
+    - SBOM + attestation that actually gets used instead of sitting in a bucket
+    - Zero-trust networking for AI services without the latency tax
+    - Building postmortems that actually improve things when half the code is AI-generated
+    - The frontend performance budget that still matters when most traffic is from Africa
+    - Building accessible AI chat interfaces that don't fail WCAG audits
+    - Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without
+      country-specific forks
+    - How Nairobi-based teams are competing on AI features despite higher inference latency
+      to major providers
+    - Offline-first + eventual consistency patterns that actually work for mobile money
+      apps
+    - The cost and reliability tradeoffs of running AI features for users paying in local
+      currency
+    - How AI changed what 'senior engineer' actually means in 2026 hiring rubrics
+    - The skills that still command premium remote rates when AI can do the obvious parts
+    - Building a personal brand as an engineer in a world where everyone has AI-assisted
+      portfolios
+    - The compensation negotiation playbook that works when the market knows AI increased
+      your output
+    - Why some engineers are getting promoted faster in the AI era while others are being
+      managed out
+    - How to lead technical decisions when half your team is using tools you don't fully
+      understand yet
+    - The portfolio projects that actually get African engineers hired into senior remote
+      roles in 2026
+    - Why most AI wrapper businesses died in 2026 and what the survivors have in common
+    - Building in public as a solo developer without burning out on content performance
+    - How AI changed the sales cycle for developer tools — and what still works
+    - When to build vs when to buy the AI components of your SaaS in 2026
+    - "eBPF in 2026: the observability and security use cases that finally justified the
+      complexity"
+    - How feature flags evolved into full AI rollout and experimentation platforms
+    - Building systems that can absorb new AI capabilities without major rewrites every
+      6 months
+    - The architecture principles that survived the shift to agentic and multi-model systems
+    - "MCP in production: the hidden operational costs and security gotchas nobody talks
+      about"
+    - Multi-agent orchestration patterns that survive production (supervisor, swarm, debate,
+      pipeline)
+    - "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems"
+    - "Context engineering for long-running agents: the patterns that actually reduce
+      hallucinations"
+    - Why most production agents still need strong human-in-the-loop boundaries in 2026
+    - "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows"
+    - The token economics problem nobody solved yet for always-on agent teams
+    - Building evaluation harnesses for multi-agent systems that developers actually trust
+    - Security model for MCP servers in regulated environments (fintech case study)
+    - "On-device and edge agents in 2026: when they finally beat cloud round-trips for
+      African users"
+    - "World models and physical AI: what they mean for backend engineers in 2026"
+    - Building durable agent workflows that survive restarts, model changes, and network
+      blips
+    - "Evaluation-driven development for agents: the loop that replaced vibe testing"
+    - The tool-use patterns that scaled and the ones that created thundering herd problems
+    - Context window management strategies for agents that run for hours or days
+    - Productionizing 'computer use' style agents without giving them dangerous permissions
+    - Why most platform teams are still building for 2024 developer workflows in an agentic
+      world
+    - Building golden paths for AI features that don't become maintenance nightmares
+    - The real cost of always-on vs on-demand agents in a Nairobi-based SaaS
+    - FinOps patterns that work when your biggest variable cost is now LLM tokens, not
+      EC2
+    - Building unit economics for AI features that product and finance teams can both
+      understand
+    - Building SLOs for agentic features that don't just measure latency and error rate
+    - Building audit trails for agent decisions that satisfy both compliance and debugging
+      needs
+    - Data residency and sovereign AI constraints for African fintech using global models
+    - The cost and reliability tradeoffs of running agents for users who pay in local
+      mobile money
+    - Building AI features that work across M-Pesa, Paystack, and Flutterwave failure
+      modes
+    - Why global AI best practices often fail in markets with high mobile data costs and
+      latency
+    - How Nairobi teams are using local + cloud model routing to stay competitive on cost
+      and speed
+    - Offline-capable agent workflows for field agents and last-mile operations in Africa
+    - The regulatory and compliance realities of deploying autonomous agents in African
+      fintech in 2026
+    - The developer experience gaps that still exist when building and debugging multi-agent
+      systems
+    - Building internal tools that help non-AI engineers work safely with agents
+    - The skills that became table stakes for senior engineers once agents were in production
+    - Building healthy team norms around AI tool usage without creating two classes of
+      engineers
+    - The leadership challenges of managing teams where output velocity increased dramatically
+      but ownership became blurrier
+    - How African engineering teams are adapting hiring and onboarding for the agentic
+      era
+    - "Event-driven vs agent-driven architectures: when each wins in 2026"
+    - The database and state management patterns that survived heavy agent usage
+    - Designing systems that can gracefully degrade when an upstream agent or model is
+      slow or wrong
+    - The MCP server security mistake that could have exposed internal tools
+    - The evaluation gap that let a subtle model behavior change slip into production
+    - Why MCP became the dominant agent-tool protocol, and what it changed in agent design
+    - Common failure modes of multi-agent systems at scale, and why they're hard to catch
+      early
+    - "Building a multi-agent research system without LangGraph: a framework comparison"
+    - "LLMOps in 2026: the evaluation and monitoring stack replacing old RAG dashboards"
+    - How the Claude 4 / GPT-5 model generation changed agent architecture decisions
+    - "Memory systems for production agents: approaches compared, and where each leaks
+      context"
+    - Detecting and containing agent drift before it degrades the user experience
+    - The governance layer agent systems need after a compliance-relevant failure
+    - Running local LLM agents for sensitive fintech workflows without sending data abroad
+    - "Purpose-built AI platforms vs general platforms: a 2026 decision framework"
+    - "Using AI to optimize AI spend: agentic cost management, and where it can backfire"
+    - Versioning and rolling back production agents without breaking downstream systems
+    - The hidden latency tax of multi-agent handoffs, and where it can be reduced
+    - Measuring 'agent reliability' in a way that correlates with user trust
+    - "Circuit breakers and bulkheads for agent systems: designing for cascade failure"
+    - How Internal Developer Platforms are evolving to support AI feature development
+    - The platform abstractions that make agent development faster for engineering teams
+    - Measuring platform value when a growing share of 'code' is prompts and agent graphs
+    - Self-service AI tooling layers that let product teams experiment safely
+    - Token attribution models that make AI spend visible to product and finance teams
+    - Why traditional cloud cost tools struggle once agents make autonomous scaling decisions
+    - What traditional observability misses when agents enter production
+    - Agent-specific tracing patterns that actually help during incidents
+    - Writing postmortems that account for agent-made decisions, not just human error
+    - Detecting when an agent is 'working' but producing low-quality or harmful output
+    - On-call process changes teams make once agents can create incidents unattended
+    - Prompt and tool injection attacks documented in production, and how teams block
+      them
+    - Why agent identity and authentication is harder than traditional service auth
+    - Red-teaming internal agents without slowing down development velocity
+    - Low-latency agent features for users on intermittent 3G/4G connections in East Africa
+    - How Cursor, Claude Code, and Windsurf are changing daily engineering workflows
+    - Testing and reviewing agent-generated code and workflows at team scale
+    - How the 'AI Engineer' role has evolved through 2026
+    - Code review and architecture decisions when large parts of a system are agent-orchestrated
+    - Leadership challenges when output velocity rises faster than ownership clarity
+    - How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent
+      workflows
+    - Versioning and evolving agent capabilities without breaking existing integrations
+    - "What happens when an agent follows instructions too literally: documented failure
+      patterns"
+    - Why multi-agent research systems quietly degrade over time, and how to catch it
+    - Why leader election still breaks in subtle ways on modern cloud networks
+    - "ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale"
+    - The CAP theorem tradeoffs teams actually hit once they run multi-region databases
+    - Building a double-entry ledger that stays consistent under concurrent writes
+    - "Idempotency keys done right: the payment API bugs they prevent and the ones they
+      don't"
+    - Why read replicas quietly cause more bugs than they fix
+    - "DuckDB in production: where an embedded analytics engine replaces a whole data
+      warehouse"
+    - The reconciliation engine patterns that keep ledgers and payment providers in sync
+    - "gRPC vs REST vs GraphQL for internal services: a decision framework past the hype"
+    - API versioning strategies that don't turn into a graveyard of v1 endpoints
+    - Designing rate limiters that treat legitimate bursts differently from abuse
+    - What actually breaks when you migrate a public API from REST to GraphQL
+    - "HTTP/3 and QUIC in production: what changed for backend teams and what didn't"
+    - Webhook delivery systems that survive downstream outages without losing events
+    - "Passkeys and WebAuthn adoption: the rollout mistakes that locked users out"
+    - "OAuth 2.1 migration notes: what breaks in existing integrations"
+    - Supply chain security for a normal backend stack, not just AI models
+    - Secrets rotation at scale without breaking services mid-deploy
+    - The PCI DSS requirements that actually shape how payment systems get architected
+    - "Rust for backend services: where the rewrite paid off and where it didn't"
+    - Why some teams are moving hot paths from Python to Go, and what they give up
+    - "Zig, Rust, and Go for systems programming: a practical 2026 comparison"
+    - Debugging techniques that outlast whatever framework or language is trendy
+    - The Terraform patterns that keep infrastructure changes reviewable at scale
+    - "Property-based testing for financial systems: catching the bugs example tests miss"
+    - "Contract testing between services: the discipline that prevents integration breakage"
+    - Chaos engineering practices that fit a team without a dedicated SRE function
+    - Why flaky tests are a reliability problem, not a testing inconvenience
+    - Building a staging environment that actually catches production-only bugs
+    - "ISO 20022 messaging in practice: what it changes for teams building payment rails"
+    - "Open banking APIs across markets: the integration differences nobody warns you
+      about"
+    - "Fraud detection systems architecture: rules engines, scoring, and where they intersect"
+    - Settlement and clearing systems explained for backend engineers who've never touched
+      them
+    - Currency conversion edge cases that quietly corrupt financial reports
+    - Technical interview loops that actually predict on-the-job performance
+    - Writing engineering documentation that survives the person who wrote it leaving
+    - The code review habits that separate senior engineers from everyone else
+    - Negotiating a remote engineering offer when the recruiter won't share a band
+    - What actually gets a portfolio project noticed by hiring managers in 2026
+    - "Monolith to microservices: the signals that mean it's actually time to split"
+    - "CQRS in practice: the projects where it earned its complexity and the ones where
+      it didn't"
+    - Feature flag systems that don't turn into unmanageable spaghetti after a year
+    - Designing background job queues that handle poison messages gracefully
+    - "The outbox pattern explained: solving dual writes without distributed transactions"
+    - "Core Web Vitals in 2026: what actually moves the needle versus what's cargo cult"
+    - Bundling and code-splitting decisions that still matter with modern frameworks
+    - The on-call rotation structures that don't burn out a small engineering team
+    - How engineering managers should evaluate output when velocity is hard to measure
+    - "Kubernetes Gateway API versus Ingress: what changes for platform teams"
+    - "Postgres partitioning strategies for time-series workloads in transactional systems"
+    - "Designing multi-tenant SaaS data isolation: schemas, row-level security, and separate databases"
+    - "Redis versus Valkey versus Dragonfly: choosing an in-memory store"
+    - "Kafka versus Redpanda versus NATS JetStream for event streaming"
+    - "Understanding database isolation levels and the anomalies each one allows"
+    - "Distributed locks with Redis and etcd: when they are safe"
+    - "Saga pattern implementation choices: orchestration versus choreography for payment flows"
+    - "Designing pagination for large datasets: offset, cursor, and keyset approaches"
+    - "Time handling in distributed systems: clocks, timezones, and monotonic ordering"
+    - "Zero-downtime database schema migrations: expand and contract explained"
+    - "OpenTelemetry collector pipelines: sampling, batching, and routing explained"
+    - "Structured logging practices that make large log volumes searchable and affordable"
+    - "Service meshes in 2026: Istio ambient mode versus Linkerd versus no mesh"
+    - "WebAssembly on the server: runtimes, use cases, and current limitations"
+    - "Platform engineering team topologies: how to staff and scope an internal platform group"
+    - "Progressive delivery with canary releases and automated rollback analysis"
+    - "GitOps with Argo CD versus Flux: operational differences that matter"
+    - "Kubernetes autoscaling compared: HPA, KEDA, and Karpenter for varied workloads"
+    - "Container image hardening: distroless, minimal base images, and vulnerability scanning"
+    - "Policy as code with Open Policy Agent and Kyverno for cluster governance"
+    - "Infrastructure drift detection and remediation in Terraform and OpenTofu estates"
+    - "Serverless cold starts explained: runtimes, provisioned concurrency, and architecture workarounds"
+    - "Designing multi-region active-active architectures on AWS, Azure, and Google Cloud"
+    - "Backup and disaster recovery testing for databases: restore drills that mean something"
+    - "Vector databases compared: pgvector, Qdrant, Weaviate, and Milvus"
+    - "Hybrid search for retrieval systems: combining BM25 with dense embeddings"
+    - "Reranking models in retrieval pipelines: when the extra latency pays off"
+    - "Prompt caching and semantic caching for LLM applications: how each works"
+    - "Guardrails for LLM applications: input filters, output validators, and policy layers"
+    - "Fine-tuning versus retrieval versus long context: matching technique to problem"
+    - "Small language models for backend tasks: classification, extraction, and routing"
+    - "LLM gateways and proxies: routing, fallbacks, and rate limit handling"
+    - "Evaluating LLM outputs with model-graded rubrics: strengths and failure modes"
+    - "Streaming responses from LLM APIs: server-sent events, backpressure, and error handling"
+    - "Embedding model selection and versioning for long-lived search indexes"
+    - "Threat modeling for backend systems with STRIDE and attack trees"
+    - "JWT pitfalls in session management: revocation, rotation, and storage choices"
+    - "Mutual TLS and workload identity with SPIFFE for internal services"
+    - "Web application firewalls and bot management: what they stop and what they miss"
+    - "Software composition analysis and dependency pinning strategies for backend teams"
+    - "Key management with HSMs and cloud KMS: envelope encryption in practice"
+    - "Rate limiting and abuse prevention for public mobile money APIs"
+    - "Handling USSD and SMS fallback flows in fintech applications"
+    - "KYC and identity verification integrations: architecture and data handling concerns"
+    - "Designing a wallet system: balances, holds, and transaction state machines"
+    - "Card tokenization and network tokens: what changes for payment engineers"
+    - "Instant payment rails across Africa: PAPSS, mobile money interoperability, and integration design"
+    - "Event sourcing in financial systems: audit benefits and operational costs"
+    - "Database connection management in Python async services with SQLAlchemy and asyncpg"
+    - "FastAPI versus Django versus Flask for backend APIs in 2026"
+    - "Python packaging and dependency management with uv, Poetry, and pip-tools"
+    - "Go concurrency patterns for backend services: worker pools, pipelines, and context cancellation"
+    - "TypeScript on the backend: Node, Bun, and Deno runtime tradeoffs"
+    - "Java virtual threads in production: what changes for blocking network services"
+    - "Memory profiling and leak hunting in long-running backend services"
+    - "Load testing methodology with k6 and Locust: realistic traffic models"
+    - "Capacity planning for backend systems using queueing theory basics"
+    - "Technical debt prioritization frameworks engineering managers can defend to stakeholders"
+    - "Architecture decision records: formats, workflows, and keeping them current"
+    - "Writing a staff engineer promotion packet: evidence, scope, and narrative"
+    - "Freelance versus full-time remote engineering careers: tradeoffs for African developers"
+    - "Mentoring junior engineers effectively when AI assistants answer their questions first"
+    - "Open source contribution as a career strategy: choosing projects and building credibility"
+    - "Engineering interview preparation for system design rounds: a structured approach"
+    - "Reducing meeting load on engineering teams: async communication practices that work"
 duplicate_similarity_threshold: 0.4
 google_adsense_id: ca-pub-4477679588953789
 google_adsense_verification: ca-pub-4477679588953789
 google_analytics_id: G-DST4PJYK6V
 google_search_console_key: GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI
 hook_style: auto
-site_description:
-  Practical backend engineering, AI tooling, and developer career
-  advice by Kubai Kevin — a software developer with 10+ years building production
-  systems in fintech and AI.
+site_description: Practical backend engineering, AI tooling, and developer career
+    advice by Kubai Kevin — a software developer with 10+ years building production
+    systems in fintech and AI.
 site_name: Kubai Kevin
 social_accounts:
-  facebook: your-facebook-page
-  linkedin: https://www.linkedin.com/in/kevin-kubai-22b61b37/
-  twitter: https://twitter.com/KubaiKevin
+    facebook: your-facebook-page
+    linkedin: https://www.linkedin.com/in/kevin-kubai-22b61b37/
+    twitter: https://twitter.com/KubaiKevin
