@@ -1,4 +1,4 @@
-❌ Internal link audit: 417 broken link(s) found across 418 posts checked.
+❌ Internal link audit: 418 broken link(s) found across 418 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -398,6 +398,7 @@ Source Post                              Anchor Text                    Missing 
   /webhooks-done-right-retries-that-dont-explode-in-2026 AI content policy              /ai-content-policy/
   /websockets-vs-server-sent-events-latency-over-3g AI content policy              /ai-content-policy/
   /when-flags-become-experiments          AI content policy              /ai-content-policy/
+  /when-velocity-is-hard-to-measure-evaluating-engineering AI content policy              /ai-content-policy/
   /when-your-agent-goes-silent-degrade-gracefully AI content policy              /ai-content-policy/
   /which-agent-stack-survives-3g          AI content policy              /ai-content-policy/
   /which-ai-wrappers-made-money-in-2026   AI content policy              /ai-content-policy/

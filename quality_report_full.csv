@@ -1,6 +1,5 @@
 slug,score,word_count,title,created_at,issue_count,issues
 7-ways-to-measure-prompt-platform-roi-in-2026,70,2861,7 ways to measure prompt platform ROI in 2026,2026-07-08T11:53:30.438407,3,"first-person incident: 'Assume, for illustration only, that the average prompt is 1,000 tokens and the a' | no markdown table | no FAQ section"
-iso-20022-where-payment-rails-actually-break,70,3406,ISO 20022: where payment rails actually break,2026-10-24T15:37:54.618596,2,fabricated citation: 'according to the SCOR' | no markdown table
 llm-metrics-that-stop-wasting-time,70,2611,LLM metrics that stop wasting time,2026-06-14T00:02:18.806821,3,"first-person incident: 'Suppose you decide the following weights and targets:\n\n- w1 = 0.4, w2 = 0.3, w3 ' | no markdown table | no FAQ section"
 regulations-forced-better-apis-the-2026-fintech,70,2638,Regulations forced better APIs: the 2026 fintech,2026-06-20T08:41:19.621334,3,first-person incident: '## Related reading\n\n- [Mobile money agents: when M-Pesa API fails](https://kubai' | no markdown table | no FAQ section
 ai-fixes-legacy-code-nobody-owns,75,3700,AI fixes legacy code nobody owns,2026-06-27T09:58:08.588128,1,"fabricated citation: ""AI's analysis"""
@@ -136,6 +135,7 @@ hire-for-agents-not-autocomplete,95,2690,"Hire for agents, not autocomplete",202
 hybrid-cloud-routing-cost-speed-balance-for-sea,95,2605,Hybrid Cloud Routing: Cost-Speed Balance for SEA,2026-09-04T16:04:06.736348,1,no FAQ section
 idempotency-keys-what-they-fix-what-they-dont,95,2797,"Idempotency keys: what they fix, what they don't",2026-09-21T09:17:49.117913,1,no FAQ section
 idp-for-ai-2026-stack-evolution,95,2887,IDP for AI: 2026 stack evolution,2026-09-02T03:37:36.606872,1,no FAQ section
+iso-20022-where-payment-rails-actually-break,95,3389,ISO 20022: where payment rails actually break,2026-10-24T15:37:54.618596,1,no markdown table
 llm-agents-why-monoliths-win,95,2245,LLM agents: why monoliths win,2026-09-10T08:01:41.646366,1,no FAQ section
 llm-output-metrics-that-actually-move-the-needle,95,2089,LLM output metrics that actually move the needle,2026-06-26T19:13:43.403773,1,no FAQ section
 local-llm-agents-vllm-vs-ollama-for-fintech,95,3190,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,1,no markdown table
@@ -400,7 +400,7 @@ wasm-servers-beat-containers-here,100,2421,WASM servers beat containers here,202
 webhook-delivery-that-survives-outages,100,2698,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,0,
 webhooks-2026-retries-idempotency-and-the-9995,100,2259,"Webhook Delivery: Retries, Idempotency, and Durability",2026-06-19T21:43:40.060877,0,
 when-flags-become-experiments,100,3005,When flags become experiments,2026-06-28T21:10:57.957002,0,
-when-velocity-is-hard-to-measure-evaluating-engineering,100,2724,When velocity is hard to measure: evaluating engineering…,2026-10-25T03:50:07.713142,0,
+when-velocity-is-hard-to-measure-evaluating-engineering,100,2741,When velocity is hard to measure: evaluating engineering…,2026-10-25T03:50:07.713142,0,
 when-your-agent-goes-silent-degrade-gracefully,100,2504,When your agent goes silent: degrade gracefully,2026-09-21T11:42:38.476648,0,
 which-agent-stack-survives-3g,100,2532,Which agent stack survives 3G?,2026-09-16T11:26:58.836815,0,
 which-ai-wrappers-made-money-in-2026,100,2098,Which AI wrappers made money in 2026,2026-06-12T01:48:30.604884,0,
