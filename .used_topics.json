@@ -180,5 +180,9 @@
   "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
   "HTTP/3 and QUIC in production: what changed for backend teams and what didn't",
   "ISO 20022 messaging in practice: what it changes for teams building payment rails",
-  "How engineering managers should evaluate output when velocity is hard to measure"
+  "How engineering managers should evaluate output when velocity is hard to measure",
+  "Kafka versus Redpanda versus NATS JetStream for event streaming",
+  "Postgres partitioning strategies for time-series workloads in transactional systems",
+  "WebAssembly on the server: runtimes, use cases, and current limitations",
+  "Card tokenization and network tokens: what changes for payment engineers"
 ]

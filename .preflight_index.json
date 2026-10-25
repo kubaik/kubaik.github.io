@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-25T03:50:10.389831",
+  "built_at": "2026-10-25T13:40:43.281711",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5640,6 +5640,11 @@
       "slug": "when-velocity-is-hard-to-measure-evaluating-engineering",
       "title": "When velocity is hard to measure: evaluating engineering…",
       "summary": "The conventional advice on engineering managers is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. The answers online were either wrong or skipped the part that mattered. The symptom: “I can’t tell if my team is actually delivering” Every engineering ma"
+    },
+    {
+      "slug": "network-tokens-what-changes-for-payment-engineers",
+      "title": "Network tokens: what changes for payment engineers",
+      "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. kafka versus has a reputation for being boring, which is exactly why nobody budgets time for it. Here's what a colleague hitting this for the first time needs to know. Card tokenization has been sold to engineers as"
     }
   ]
 }

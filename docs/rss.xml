@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Oct 2026 16:35:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Oct 2026 13:42:43 +0000</lastBuildDate>
+    <item>
+      <title>Network tokens: what changes for payment engineers</title>
+      <link>https://kubaik.github.io/network-tokens-what-changes-for-payment-engineers/</link>
+      <description>Network tokens change routing, retries, declines and reconciliation, not just storage. A practical guide to modelling and charging them safely.</description>
+      <pubDate>Sun, 25 Oct 2026 13:40:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/network-tokens-what-changes-for-payment-engineers/</guid>
+    </item>
     <item>
       <title>When velocity is hard to measure: evaluating engineering…</title>
       <link>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</link>
@@ -138,13 +145,6 @@
       <description>How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.</description>
       <pubDate>Thu, 15 Oct 2026 16:35:21 +0000</pubDate>
       <guid>https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/</guid>
-    </item>
-    <item>
-      <title>Flaky tests: reliability bug, not test noise</title>
-      <link>https://kubaik.github.io/flaky-tests-reliability-bug-not-test-noise/</link>
-      <description>Flaky tests usually point to real non-determinism in production code. Learn to classify the four families, triage by blast radius, and fix the source.</description>
-      <pubDate>Wed, 14 Oct 2026 16:49:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/flaky-tests-reliability-bug-not-test-noise/</guid>
     </item>
   </channel>
 </rss>
