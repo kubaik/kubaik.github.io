@@ -1,13 +1,10 @@
 2026-tech-salaries-where-cuts-stopped-where-raises
 7-code-review-traps-when-ai-writes-half-your-code
 7-idp-shifts-for-ai-feature-delivery
-african-fintech-agents-the-compliance-cliff-most-miss
 ai-ate-the-niches-first
-ai-code-40-how-to-keep-it-from-rotting-your-repo
 ai-reshaped-my-engineering-principles
 ai-static-analysis-vs-legacy-sast-5x-faster-scans
 ai-tools-wont-help-if-everyone-writes-the-same-code
-audit-logs-ship-them-fast-keep-them-forever
 buy-vs-build-ai-3-hard-rules-for-2026
 code-ai-wont-rewrite
 commit-ownership-in-ai-pair-coding
@@ -19,7 +16,6 @@ found-niche-in-2026-saas-that-ai-cant-copy
 golden-paths-become-load-bearing-walls
 llm-metrics-that-stop-wasting-time
 marketing-without-budget-5k-mrr-in-18-months
-micro-saas-niches-eaten-by-ai-in-2026
 negotiate-2026-pay-when-ai-steals-40-of-your-job
 negotiate-pay-in-2026-with-ai-proof-points
 negotiate-salaries-with-ai-skills-in-2026
@@ -31,7 +27,6 @@ pypi-poisoned-models-hit-prod-in-2025
 rag-rots-if-you-dont-refresh-indexes
 rebalance-pay-when-ai-fills-half-your-role
 remote-salary-negotiate-without-sounding-cheap
-self-service-ai-tooling-the-permission-trap
 stay-relevant-when-tools-change-faster-than-you-can
 stop-false-positives-in-ci-scanning-now
 trim-llm-bills-3-finops-moves-that-work
