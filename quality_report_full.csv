@@ -124,7 +124,7 @@ dead-letter-queues-stop-poison-messages,95,2982,Dead-letter queues: stop poison 
 debug-ai-agent-failures-differently,95,2689,Debug AI agent failures differently,2026-06-27T15:03:09.620372,1,no FAQ section
 debug-ai-agents-failures-arent-just-bugs,95,2173,Debug AI agents: failures aren't just bugs,2026-07-01T12:23:14.341291,1,no FAQ section
 detect-lazy-agents-without-false-alarms,95,2887,Detect lazy agents without false alarms,2026-07-04T14:45:28.353414,1,no markdown table
-drift-detection-the-plan-that-lies,95,2669,Drift detection: the plan that lies,2026-10-26T03:53:26.000422,1,no FAQ section
+drift-detection-the-plan-that-lies,95,3215,Drift detection: the plan that lies,2026-10-26T03:53:26.000422,1,no FAQ section
 duckdb-in-production-when-it-replaces-a-warehouse,95,2723,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,1,no FAQ section
 edge-agents-vs-cloud-round-trips-in-2026,95,2244,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,1,no FAQ section
 evaluate-agents-with-spark-vs-custom-harness,95,2436,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,1,no FAQ section
@@ -312,6 +312,7 @@ feature-flags-became-ai-rollout-platforms,100,3609,Feature flags became AI rollo
 flaky-tests-reliability-bug-not-test-noise,100,3189,"Flaky tests: reliability bug, not test noise",2026-10-14T16:49:03.461978,0,
 fraud-detection-rules-vs-scoring-where-they-meet,100,3357,"Fraud detection: rules vs scoring, where they meet",2026-10-04T11:01:21.830716,0,
 golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
+hpa-vs-keda-vs-karpenter-autoscaling-traps,100,2921,HPA vs KEDA vs Karpenter: autoscaling traps,2026-10-26T08:01:33.191005,0,
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,
 internal-platform-adoption-one-metric-kills-velocity,100,2832,Internal platform adoption: one metric kills velocity,2026-07-21T07:54:25.219668,0,
 json-modes-hidden-costs-revealed,100,2477,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,

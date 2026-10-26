@@ -1,4 +1,4 @@
-❌ Internal link audit: 419 broken link(s) found across 420 posts checked.
+❌ Internal link audit: 420 broken link(s) found across 421 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -191,6 +191,7 @@ Source Post                              Anchor Text                    Missing 
   /docs-that-survive-the-bus-factor-fix   AI content policy              /ai-content-policy/
   /double-entry-ledger-concurrent-write-errors AI content policy              /ai-content-policy/
   /double-the-price-double-the-revenue    AI content policy              /ai-content-policy/
+  /drift-detection-the-plan-that-lies     AI content policy              /ai-content-policy/
   /drop-ec2-bills-70-without-code         AI content policy              /ai-content-policy/
   /duckdb-in-production-when-it-replaces-a-warehouse AI content policy              /ai-content-policy/
   /ebpf-observability-in-2026-what-actually-works AI content policy              /ai-content-policy/

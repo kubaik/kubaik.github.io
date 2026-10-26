@@ -632,6 +632,9 @@
   "hire-for-agents-not-autocomplete": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "hpa-vs-keda-vs-karpenter-autoscaling-traps": {
+    "first_seen": "2026-10-26T08:01:42.800088+00:00"
+  },
   "http3-changes-less-than-the-demos-imply": {
     "first_seen": "2026-10-24T03:52:29.105002+00:00"
   },

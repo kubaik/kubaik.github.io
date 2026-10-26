@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Oct 2026 03:55:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 08:03:40 +0000</lastBuildDate>
+    <item>
+      <title>HPA vs KEDA vs Karpenter: autoscaling traps</title>
+      <link>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</link>
+      <description>How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</description>
+      <pubDate>Mon, 26 Oct 2026 08:01:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</guid>
+    </item>
     <item>
       <title>Drift detection: the plan that lies</title>
       <link>https://kubaik.github.io/drift-detection-the-plan-that-lies/</link>
@@ -138,13 +145,6 @@
       <description>Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.</description>
       <pubDate>Sat, 17 Oct 2026 03:37:16 +0000</pubDate>
       <guid>https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/</guid>
-    </item>
-    <item>
-      <title>Prompts are code: how to measure their value</title>
-      <link>https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/</link>
-      <description>Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.</description>
-      <pubDate>Fri, 16 Oct 2026 03:45:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/</guid>
     </item>
   </channel>
 </rss>

@@ -186,5 +186,6 @@
   "WebAssembly on the server: runtimes, use cases, and current limitations",
   "Card tokenization and network tokens: what changes for payment engineers",
   "Guardrails for LLM applications: input filters, output validators, and policy layers",
-  "Infrastructure drift detection and remediation in Terraform and OpenTofu estates"
+  "Infrastructure drift detection and remediation in Terraform and OpenTofu estates",
+  "Kubernetes autoscaling compared: HPA, KEDA, and Karpenter for varied workloads"
 ]

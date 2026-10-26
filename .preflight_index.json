@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-26T03:53:28.142909",
+  "built_at": "2026-10-26T08:01:35.836008",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5655,6 +5655,11 @@
       "slug": "drift-detection-the-plan-that-lies",
       "title": "Drift detection: the plan that lies",
       "summary": "Most infrastructure drift writeups assume the reader has already made the mistake they're warning about. Here's the fuller picture, with the tradeoffs left in. Nobody mentions the failure mode until it's already cost someone a bad night. The gap between what the docs say and what production needs Te"
+    },
+    {
+      "slug": "hpa-vs-keda-vs-karpenter-autoscaling-traps",
+      "title": "HPA vs KEDA vs Karpenter: autoscaling traps",
+      "summary": "The tutorials all show the happy path. The kubernetes autoscaling advice that circulates internally rarely matches what's in the public docs. This works through the problem properly, from cause to fix. The problem this solves You have a Kubernetes cluster. Some workloads are steady HTTP APIs. Some a"
     }
   ]
 }
