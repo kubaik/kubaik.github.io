@@ -8,6 +8,7 @@ docs/5-ways-to-find-hidden-latency-before-production/
 docs/7-skills-senior-engineers-need-now-agents-are-live/
 docs/7-ways-to-measure-prompt-platform-roi-in-2026/
 docs/african-devs-ai-tools-that-work-now-2026/
+docs/african-fintech-agents-the-compliance-cliff-most-miss/
 docs/agent-access-for-non-ai-engineers/
 docs/agent-architecture-the-new-model-trap/
 docs/agent-audit-trails-event-log-vs-state-snapshots/
@@ -47,6 +48,7 @@ docs/ai-apps-break-when-you-treat-them-like-regular-software/
 docs/ai-best-practices-fail-on-slow-networks/
 docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/
 docs/ai-chats-hidden-wcag-fails/
+docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/
 docs/ai-code-in-prod-postmortems-still-work/
 docs/ai-code-traps-copilot-vs-cursor-smackdown/
 docs/ai-codebase-onboarding-2-paths-tested/
@@ -100,6 +102,7 @@ docs/api-attacks-rising-40-the-3-patterns-to-block-now/
 docs/apm-is-blind-to-your-ai-agents/
 docs/apm-lied-about-our-ai-incidents/
 docs/audit-logs-compliance-vs-performance/
+docs/audit-logs-ship-them-fast-keep-them-forever/
 docs/audit-logs-that-scale-skip-the-3am-fire-drills/
 docs/audit-trails-immutabledb-vs-dynamodb-streams/
 docs/aws-cloudwatch-synthetics-for-ai-pipelines/
@@ -185,6 +188,7 @@ docs/mcp-vs-a2a-pick-the-wrong-layer/
 docs/memory-systems-for-production-agents/
 docs/merge-three-payment-apis-into-one-system/
 docs/meter-dev-tool-pricing-in-2026/
+docs/micro-saas-niches-eaten-by-ai-in-2026/
 docs/migrations-stop-running-them-live/
 docs/mobile-first-ai-fails-you-didnt-plan/
 docs/mobile-money-agent-fees-why-your-bot-keeps-failing/
@@ -257,6 +261,7 @@ docs/save-12kmonth-cloud-egress-costs-in-2026/
 docs/scope-agent-permissions-per-task/
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/
 docs/self-healing-pipelines-argo-vs-crossplane-in-2026/
+docs/self-service-ai-tooling-the-permission-trap/
 docs/self-service-ai-tooling-where-it-breaks-first/
 docs/self-service-is-broken-without-ai-ops/
 docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/

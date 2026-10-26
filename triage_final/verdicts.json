@@ -371,15 +371,11 @@
   "words": 2203
  },
  "micro-saas-niches-eaten-by-ai-in-2026": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "Micro-SaaS niches eaten by AI in 2026",
-  "words": 2266
+  "words": 2279
  },
  "rate-limiters-burst-vs-abuse-two-designs": {
   "verdict": "KEEP",
@@ -791,15 +787,11 @@
   "words": 2353
  },
  "african-fintech-agents-the-compliance-cliff-most-miss": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "African fintech agents: the compliance cliff most miss",
-  "words": 2075
+  "words": 2088
  },
  "zig-vs-rust-vs-go-compile-errors-compared": {
   "verdict": "KEEP",
@@ -897,15 +889,11 @@
   "words": 2360
  },
  "ai-code-40-how-to-keep-it-from-rotting-your-repo": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "Keeping AI-Generated Code from Rotting Your Repository",
-  "words": 2309
+  "words": 2322
  },
  "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team": {
   "verdict": "KEEP",
@@ -1248,15 +1236,11 @@
   "words": 2173
  },
  "audit-logs-ship-them-fast-keep-them-forever": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "Audit logs: ship them fast, keep them forever",
-  "words": 2780
+  "words": 2793
  },
  "why-do-production-agents-still-need-humans": {
   "verdict": "KEEP",
@@ -1717,15 +1701,11 @@
   "words": 2121
  },
  "self-service-ai-tooling-the-permission-trap": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "Self-service AI tooling: the permission trap",
-  "words": 2735
+  "words": 2748
  },
  "negotiate-salaries-with-ai-skills-in-2026": {
   "verdict": "IMPROVE",

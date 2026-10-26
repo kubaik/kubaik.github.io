@@ -16,14 +16,14 @@ negotiating-pay-when-ai-inflates-output,80,3276,Negotiating pay when AI inflates
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
 remote-premium-rates-skills-ai-cant-copy,80,3739,Remote premium rates: skills AI can't copy,2026-10-21T08:45:29.894292,1,first-person incident: 'A practical way to verify is a dry run with a colleague.'
 spot-instances-vs-on-demand-for-ai-experiments,80,2587,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,1,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a'
-micro-saas-niches-eaten-by-ai-in-2026,82,2266,Micro-SaaS niches eaten by AI in 2026,2026-06-29T09:34:39.935425,3,no fenced code block | no markdown table | no FAQ section
+micro-saas-niches-eaten-by-ai-in-2026,82,2279,Micro-SaaS niches eaten by AI in 2026,2026-06-29T09:34:39.935425,3,no fenced code block | no markdown table | no FAQ section
 why-monoliths-die-slowly-in-2026,82,2669,Why monoliths die slowly in 2026,2026-06-19T02:27:59.398225,3,no fenced code block | no markdown table | no FAQ section
 built-a-multi-agent-system-without-langgraph,85,2684,Built a multi-agent system without LangGraph,2026-07-27T14:44:13.456532,1,title: past-tense action narrative
 2026-tech-salaries-where-cuts-stopped-where-raises,87,2321,"2026 tech salaries: where cuts stopped, where raises",2026-06-10T23:58:28.966727,2,no fenced code block | no markdown table
 build-in-public-without-burning-out,87,2223,Build in public without burning out,2026-06-16T05:44:37.845152,2,no fenced code block | no FAQ section
 istio-and-cilium-what-really-breaks-in-production,87,2675,Istio and Cilium: what really breaks in production,2026-06-24T09:26:52.873534,2,no fenced code block | no markdown table
 40-ai-code-meant-60-more-alerts,90,1973,Validating AI-Generated Code Before It Reaches Production,2026-08-20T12:56:57.083713,2,no markdown table | no FAQ section
-african-fintech-agents-the-compliance-cliff-most-miss,90,2075,African fintech agents: the compliance cliff most miss,2026-08-12T02:10:48.690344,2,no markdown table | no FAQ section
+african-fintech-agents-the-compliance-cliff-most-miss,90,2088,African fintech agents: the compliance cliff most miss,2026-08-12T02:10:48.690344,2,no markdown table | no FAQ section
 agents-create-incidents-at-2am,90,2383,Agents create incidents at 2am,2026-08-06T08:07:50.591032,2,no markdown table | no FAQ section
 ai-code-traps-copilot-vs-cursor-smackdown,90,2312,AI code traps: Copilot vs Cursor smackdown,2026-06-09T12:29:18.961756,2,no markdown table | no FAQ section
 ai-observability-isnt-monitoring-heres-why,90,2830,AI observability isn’t monitoring — here’s why,2026-06-25T21:25:57.740240,2,no markdown table | no FAQ section
@@ -74,7 +74,7 @@ ai-agents-eat-your-budget-3-ways,95,2483,AI agents eat your budget 3 ways,2026-0
 ai-agents-killed-dev-tool-sales-cycles,95,1984,AI agents killed dev tool sales cycles,2026-07-02T07:02:50.635057,1,no markdown table
 ai-alert-triage-cut-pages-80-in-production,95,2868,Designing an AI Alert Triage Layer That Reduces Pages,2026-06-12T21:55:33.230120,1,no FAQ section
 ai-burnout-why-output-pressure-rose-even-as-tools-got,95,2302,AI burnout: why output pressure rose even as tools got,2026-06-09T22:05:37.303748,1,no FAQ section
-ai-code-40-how-to-keep-it-from-rotting-your-repo,95,2309,Keeping AI-Generated Code from Rotting Your Repository,2026-07-03T08:51:46.505751,1,no FAQ section
+ai-code-40-how-to-keep-it-from-rotting-your-repo,95,2322,Keeping AI-Generated Code from Rotting Your Repository,2026-07-03T08:51:46.505751,1,no FAQ section
 ai-codebases-two-onboarding-paths-that-actually-work,95,2608,AI codebases: two onboarding paths that actually work,2026-06-15T01:50:39.202489,1,no FAQ section
 ai-experimentation-guardrails-not-gates,95,2437,"AI Experimentation: Guardrails, Not Gates",2026-09-07T03:38:29.295280,1,no FAQ section
 ai-features-rot-faster-than-you-build-them,95,2901,AI features rot faster than you build them,2026-08-27T22:00:41.355509,1,no FAQ section
@@ -261,7 +261,7 @@ api-abuse-2026-5-attacks-we-missed-until-costs-spiked,100,2236,Tiered API abuse 
 api-attacks-rising-40-the-3-patterns-to-block-now,100,2683,"Defending APIs Against Amplification, Stuffing and Smuggling",2026-06-20T22:16:25.382208,0,
 apm-is-blind-to-your-ai-agents,100,2413,APM is blind to your AI agents,2026-09-25T04:05:33.922296,0,
 audit-logs-compliance-vs-performance,100,2560,Audit logs: compliance vs performance,2026-09-20T04:05:00.318029,0,
-audit-logs-ship-them-fast-keep-them-forever,100,2780,"Audit logs: ship them fast, keep them forever",2026-07-06T08:45:31.208931,0,
+audit-logs-ship-them-fast-keep-them-forever,100,2793,"Audit logs: ship them fast, keep them forever",2026-07-06T08:45:31.208931,0,
 audit-trails-immutabledb-vs-dynamodb-streams,100,3036,Audit trails: ImmutableDB vs DynamoDB Streams,2026-07-04T16:10:41.079187,0,
 aws-local-zones-vs-localstack-ai-microservices-in,100,2828,AWS Local Zones vs LocalStack: AI microservices in,2026-06-28T12:14:45.547940,0,
 buy-vs-build-ai-3-hard-rules-for-2026,100,3070,Buy vs build AI: 3 hard rules for 2026,2026-08-11T13:13:49.802757,0,
@@ -350,7 +350,7 @@ save-12kmonth-cloud-egress-costs-in-2026,100,2616,Cutting cloud egress costs: ar
 sbom-attestation-that-gets-used,100,3399,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,0,
 scope-agent-permissions-per-task,100,3910,Scope agent permissions per task,2026-09-19T09:21:55.925855,0,
 self-healing-pipelines-argo-vs-crossplane-in-2026,100,2592,Self-healing pipelines: Argo vs Crossplane in 2026,2026-06-25T13:16:29.832770,0,
-self-service-ai-tooling-the-permission-trap,100,2735,Self-service AI tooling: the permission trap,2026-10-09T05:16:57.522175,0,
+self-service-ai-tooling-the-permission-trap,100,2748,Self-service AI tooling: the permission trap,2026-10-09T05:16:57.522175,0,
 self-service-ai-tooling-where-it-breaks-first,100,2986,Self-service AI tooling: where it breaks first,2026-09-16T09:53:25.584787,0,
 self-service-is-broken-without-ai-ops,100,2486,Self-service is broken without AI ops,2026-08-24T12:59:05.104603,0,
 senior-engineer-the-bar-moved-nobody-updated-the-rubric,100,2572,"Senior engineer: the bar moved, nobody updated the rubric",2026-10-11T04:47:50.584346,0,
