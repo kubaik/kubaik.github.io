@@ -2,28 +2,20 @@ docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/index.md
 docs/2026-ai-stack-solo-saas-cost-showdown/index.md
 docs/2026-alert-triage-when-opsgenie-slept-for-you/index.md
 docs/2026-tech-salaries-where-cuts-stopped-where-raises/index.md
-docs/3-ai-coders-ranked-cursor-windsurf-claude-code-in/index.md
-docs/3-mistakes-that-break-deployments-for-everyone/index.md
-docs/3-skills-to-outrun-ai-salary-cuts/index.md
 docs/3-ways-container-builds-got-3x-faster-in-2026/index.md
 docs/40-ai-code-meant-60-more-alerts/index.md
 docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/index.md
-docs/5-notification-systems-ranked-push-email-sms/index.md
 docs/5-ways-to-find-hidden-latency-before-production/index.md
-docs/50-locations-50-headaches-edge-native-backends-in/index.md
 docs/7-bundling-decisions-that-still-matter/index.md
 docs/7-code-review-traps-when-ai-writes-half-your-code/index.md
 docs/7-guardrails-for-safer-llm-apps/index.md
 docs/7-idp-shifts-for-ai-feature-delivery/index.md
 docs/7-patterns-for-systems-that-wont-die-when-networks/index.md
 docs/7-skills-senior-engineers-need-now-agents-are-live/index.md
-docs/7-ways-to-earn-extra-in-2026-without-shipping-saas/index.md
 docs/7-ways-to-measure-prompt-platform-roi-in-2026/index.md
-docs/9-ai-wrapper-plays-that-worked-in-2026/index.md
 docs/9-vibe-coding-traps-that-break-production-code/index.md
 docs/african-devs-ai-tools-that-work-now-2026/index.md
 docs/african-fintech-agents-the-compliance-cliff-most-miss/index.md
-docs/african-fintech-rules-broke-our-stack/index.md
 docs/agent-access-for-non-ai-engineers/index.md
 docs/agent-architecture-the-new-model-trap/index.md
 docs/agent-audit-trails-event-log-vs-state-snapshots/index.md
@@ -116,10 +108,8 @@ docs/ai-static-analysis-vs-legacy-sast-5x-faster-scans/index.md
 docs/ai-steals-junior-tasks-3-skills-that-protect-pay/index.md
 docs/ai-stole-system-design/index.md
 docs/ai-supply-chain-attacks-what-actually-broke/index.md
-docs/ai-tools-rewrote-my-engineering-rules/index.md
 docs/ai-tools-wont-help-if-everyone-writes-the-same-code/index.md
 docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/index.md
-docs/ai-ui-tools-6-months-in-what-i-gained-and-lost/index.md
 docs/ai-ui-tools-broke-my-react-flow-heres-why/index.md
 docs/ai-ui-tools-promise-vs-production/index.md
 docs/ai-unit-costs-the-metric-both-teams-fight-over/index.md
@@ -129,10 +119,8 @@ docs/always-on-agents-cost-more-than-you-think/index.md
 docs/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/index.md
 docs/api-abuse-patterns-rising-in-2026/index.md
 docs/api-attacks-rising-40-the-3-patterns-to-block-now/index.md
-docs/apis-must-die-in-2026/index.md
 docs/apm-is-blind-to-your-ai-agents/index.md
 docs/apm-lied-about-our-ai-incidents/index.md
-docs/arm-in-production-graviton4-vs-ampere-in-2026/index.md
 docs/audit-logs-compliance-vs-performance/index.md
 docs/audit-logs-ship-them-fast-keep-them-forever/index.md
 docs/audit-logs-that-scale-skip-the-3am-fire-drills/index.md
@@ -143,11 +131,9 @@ docs/aws-costs-for-nairobi-saas-2026-bill-split/index.md
 docs/aws-local-zones-vs-localstack-ai-microservices-in/index.md
 docs/bank-apis-broke-under-african-2g/index.md
 docs/big-model-api-vs-fine-tune-the-2026-math/index.md
-docs/bootstrapped-5k-mrr-without-ads/index.md
 docs/boring-aws-lambda-layers-that-dont-lock/index.md
 docs/build-a-search-system-in-2026-semantic-keyword/index.md
 docs/build-agent-workflows-that-survive-restarts/index.md
-docs/build-apps-that-still-work-on-500-ms-latency/index.md
 docs/build-in-public-without-burning-out/index.md
 docs/built-a-multi-agent-system-without-langgraph/index.md
 docs/bundle-size-70-lighter-with-server-components/index.md
@@ -180,7 +166,6 @@ docs/dead-letter-queues-stop-poison-messages/index.md
 docs/debug-ai-agent-failures-differently/index.md
 docs/debug-ai-agents-failures-arent-just-bugs/index.md
 docs/debugging-techniques-that-outlast-any-framework/index.md
-docs/deploy-a-solo-stack-for-20month-in-2026/index.md
 docs/deployment-platforms-senior-vs-new-hire/index.md
 docs/detect-lazy-agents-without-false-alarms/index.md
 docs/detecting-silent-agent-failures/index.md
@@ -188,7 +173,6 @@ docs/docs-that-survive-the-bus-factor-fix/index.md
 docs/double-entry-ledger-concurrent-write-errors/index.md
 docs/double-the-price-double-the-revenue/index.md
 docs/drift-detection-the-plan-that-lies/index.md
-docs/drop-ec2-bills-70-without-code/index.md
 docs/duckdb-in-production-when-it-replaces-a-warehouse/index.md
 docs/ebpf-observability-in-2026-what-actually-works/index.md
 docs/edge-agents-vs-cloud-round-trips-in-2026/index.md
@@ -196,7 +180,6 @@ docs/evaluate-agents-with-spark-vs-custom-harness/index.md
 docs/event-driven-beats-agent-driven-910-times/index.md
 docs/event-sourcing-pay-the-complexity-tax-only-here/index.md
 docs/evolve-your-monolith-without-rewriting-in-2026/index.md
-docs/failed-ai-wrappers-2026-what-the-survivors-did-right/index.md
 docs/feature-flags-became-ai-rollout-platforms/index.md
 docs/fintech-features-break-in-ghana-the-real-fix/index.md
 docs/fix-ai-agent-failures-postmortem-guide/index.md
@@ -214,7 +197,6 @@ docs/http3-changes-less-than-the-demos-imply/index.md
 docs/hybrid-cloud-routing-cost-speed-balance-for-sea/index.md
 docs/idempotency-keys-what-they-fix-what-they-dont/index.md
 docs/idp-for-ai-2026-stack-evolution/index.md
-docs/internal-platform-adoption-one-metric-kills-velocity/index.md
 docs/iso-20022-where-payment-rails-actually-break/index.md
 docs/istio-and-cilium-what-really-breaks-in-production/index.md
 docs/json-modes-hidden-costs-revealed/index.md
@@ -240,7 +222,6 @@ docs/m-pesa-failures-cost-us-40-hours/index.md
 docs/map-legacy-code-with-ai-before-it-breaks/index.md
 docs/marketing-without-budget-5k-mrr-in-18-months/index.md
 docs/mcp-hidden-cost-traps/index.md
-docs/mcp-servers-real-time-pipelines-without-agents/index.md
 docs/mcp-servers-the-3-hidden-costs-nobody-quotes/index.md
 docs/mcp-vs-a2a-pick-the-wrong-layer/index.md
 docs/memory-systems-for-production-agents/index.md
@@ -281,7 +262,6 @@ docs/one-payment-stack-for-kenya-nigeria-ghana/index.md
 docs/only-boring-stacks-survive-ai-services/index.md
 docs/open-banking-apis-the-integration-traps/index.md
 docs/orchestration-tax-kills-multi-agent-systems/index.md
-docs/pass-interviews-without-a-cs-degree/index.md
 docs/pci-dss-architecture-12-requirements-that-matter/index.md
 docs/personal-ai-assistants-avoid-vendor-lock-in-traps/index.md
 docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/index.md
@@ -300,7 +280,6 @@ docs/prevent-ownership-drift-when-velocity-explodes/index.md
 docs/price-ai-proof-skills-in-2026/index.md
 docs/price-saas-tools-in-2026-what-we-learned-pricing-a/index.md
 docs/price-your-remote-job-like-a-new-york-dev/index.md
-docs/price-your-remote-salary-4-step-script/index.md
 docs/promotions-in-the-ai-era-the-mechanism/index.md
 docs/prompt-injection-got-the-hype-poison-data-ruined-us/index.md
 docs/prompt-injection-what-breaks-first-in-prod/index.md
@@ -351,9 +330,7 @@ docs/ship-1mb-pages-on-4g-starlink-africa-case-study/index.md
 docs/ship-a-solo-project-pipeline-under-20month/index.md
 docs/ship-evals-before-your-agent-ships/index.md
 docs/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/index.md
-docs/ship-to-nairobi-users-starlink-latency-guide-2026/index.md
 docs/show-real-work-not-ai-clones/index.md
-docs/signals-5-state-tricks-that-broke-my-app/index.md
 docs/skip-m-pesa-build-one-api-for-3-african-markets/index.md
 docs/slos-for-agentic-features-beyond-latency/index.md
 docs/soft-deletes-fail-what-breaks-first/index.md
@@ -407,7 +384,6 @@ docs/why-ai-interviewers-failed-68-of-us-in-2026/index.md
 docs/why-do-production-agents-still-need-humans/index.md
 docs/why-does-my-agent-version-break-clients/index.md
 docs/why-does-my-model-drift-after-deploy/index.md
-docs/why-i-picked-playwright-and-vitest-in-2026/index.md
 docs/why-leader-election-fails-on-cloud-networks/index.md
 docs/why-monoliths-die-slowly-in-2026/index.md
 docs/why-our-schema-survived-ai-scaling/index.md
