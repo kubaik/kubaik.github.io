@@ -314,5 +314,105 @@
   "silent-model-drift-catch-it-before-prod": {
     "deleted_at": "2026-10-18T16:58:12.294850",
     "reason": "missing post.json (no source of truth)"
+  },
+  "3-ai-coders-ranked-cursor-windsurf-claude-code-in": {
+    "deleted_at": "2026-10-26T12:22:33.735741",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-mistakes-that-break-deployments-for-everyone": {
+    "deleted_at": "2026-10-26T12:22:33.736092",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-skills-to-outrun-ai-salary-cuts": {
+    "deleted_at": "2026-10-26T12:22:33.736273",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "5-notification-systems-ranked-push-email-sms": {
+    "deleted_at": "2026-10-26T12:22:33.736587",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "50-locations-50-headaches-edge-native-backends-in": {
+    "deleted_at": "2026-10-26T12:22:33.736973",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "7-ways-to-earn-extra-in-2026-without-shipping-saas": {
+    "deleted_at": "2026-10-26T12:22:33.737266",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "9-ai-wrapper-plays-that-worked-in-2026": {
+    "deleted_at": "2026-10-26T12:22:33.737496",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "african-fintech-rules-broke-our-stack": {
+    "deleted_at": "2026-10-26T12:22:33.737837",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-tools-rewrote-my-engineering-rules": {
+    "deleted_at": "2026-10-26T12:22:33.738108",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ui-tools-6-months-in-what-i-gained-and-lost": {
+    "deleted_at": "2026-10-26T12:22:33.738303",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "apis-must-die-in-2026": {
+    "deleted_at": "2026-10-26T12:22:33.738495",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "arm-in-production-graviton4-vs-ampere-in-2026": {
+    "deleted_at": "2026-10-26T12:22:33.738775",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "bootstrapped-5k-mrr-without-ads": {
+    "deleted_at": "2026-10-26T12:22:33.738938",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "build-apps-that-still-work-on-500-ms-latency": {
+    "deleted_at": "2026-10-26T12:22:33.739103",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "deploy-a-solo-stack-for-20month-in-2026": {
+    "deleted_at": "2026-10-26T12:22:33.739273",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "drop-ec2-bills-70-without-code": {
+    "deleted_at": "2026-10-26T12:22:33.739441",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "failed-ai-wrappers-2026-what-the-survivors-did-right": {
+    "deleted_at": "2026-10-26T12:22:33.739713",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "internal-platform-adoption-one-metric-kills-velocity": {
+    "deleted_at": "2026-10-26T12:22:33.740035",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "mcp-servers-real-time-pipelines-without-agents": {
+    "deleted_at": "2026-10-26T12:22:33.740388",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "network-tokens-what-changes-for-payment-engineers": {
+    "deleted_at": "2026-10-26T12:22:33.740692",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "pass-interviews-without-a-cs-degree": {
+    "deleted_at": "2026-10-26T12:22:33.741012",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "price-your-remote-salary-4-step-script": {
+    "deleted_at": "2026-10-26T12:22:33.741369",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ship-to-nairobi-users-starlink-latency-guide-2026": {
+    "deleted_at": "2026-10-26T12:22:33.741644",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "signals-5-state-tricks-that-broke-my-app": {
+    "deleted_at": "2026-10-26T12:22:33.741863",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "why-i-picked-playwright-and-vitest-in-2026": {
+    "deleted_at": "2026-10-26T12:22:33.742091",
+    "reason": "missing post.json (no source of truth)"
   }
 }
