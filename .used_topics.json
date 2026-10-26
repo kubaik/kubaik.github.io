@@ -185,5 +185,6 @@
   "Postgres partitioning strategies for time-series workloads in transactional systems",
   "WebAssembly on the server: runtimes, use cases, and current limitations",
   "Card tokenization and network tokens: what changes for payment engineers",
-  "Guardrails for LLM applications: input filters, output validators, and policy layers"
+  "Guardrails for LLM applications: input filters, output validators, and policy layers",
+  "Infrastructure drift detection and remediation in Terraform and OpenTofu estates"
 ]

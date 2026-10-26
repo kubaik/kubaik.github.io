@@ -187,6 +187,7 @@ docs/detecting-silent-agent-failures/index.md
 docs/docs-that-survive-the-bus-factor-fix/index.md
 docs/double-entry-ledger-concurrent-write-errors/index.md
 docs/double-the-price-double-the-revenue/index.md
+docs/drift-detection-the-plan-that-lies/index.md
 docs/drop-ec2-bills-70-without-code/index.md
 docs/duckdb-in-production-when-it-replaces-a-warehouse/index.md
 docs/ebpf-observability-in-2026-what-actually-works/index.md

@@ -1,4 +1,4 @@
-❌ Internal link audit: 418 broken link(s) found across 419 posts checked.
+❌ Internal link audit: 419 broken link(s) found across 420 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -17,6 +17,7 @@ Source Post                              Anchor Text                    Missing 
   /50-locations-50-headaches-edge-native-backends-in AI content policy              /ai-content-policy/
   /7-bundling-decisions-that-still-matter AI content policy              /ai-content-policy/
   /7-code-review-traps-when-ai-writes-half-your-code AI content policy              /ai-content-policy/
+  /7-guardrails-for-safer-llm-apps        AI content policy              /ai-content-policy/
   /7-idp-shifts-for-ai-feature-delivery   AI content policy              /ai-content-policy/
   /7-patterns-for-systems-that-wont-die-when-networks AI content policy              /ai-content-policy/
   /7-skills-senior-engineers-need-now-agents-are-live AI content policy              /ai-content-policy/

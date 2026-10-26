@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Oct 2026 15:50:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 03:55:05 +0000</lastBuildDate>
+    <item>
+      <title>Drift detection: the plan that lies</title>
+      <link>https://kubaik.github.io/drift-detection-the-plan-that-lies/</link>
+      <description>Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</description>
+      <pubDate>Mon, 26 Oct 2026 03:53:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/drift-detection-the-plan-that-lies/</guid>
+    </item>
     <item>
       <title>7 guardrails for safer LLM apps</title>
       <link>https://kubaik.github.io/7-guardrails-for-safer-llm-apps/</link>
@@ -138,13 +145,6 @@
       <description>Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.</description>
       <pubDate>Fri, 16 Oct 2026 03:45:42 +0000</pubDate>
       <guid>https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/</guid>
-    </item>
-    <item>
-      <title>Zig vs Rust vs Go: compile errors compared</title>
-      <link>https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/</link>
-      <description>How Go, Rust, and Zig encode memory, concurrency, and correctness in compile errors, what each failure mode means, and how to fix it.</description>
-      <pubDate>Thu, 15 Oct 2026 16:35:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/zig-vs-rust-vs-go-compile-errors-compared/</guid>
     </item>
   </channel>
 </rss>

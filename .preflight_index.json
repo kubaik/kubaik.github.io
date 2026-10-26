@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-25T15:48:23.243018",
+  "built_at": "2026-10-26T03:53:28.142909",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5650,6 +5650,11 @@
       "slug": "7-guardrails-for-safer-llm-apps",
       "title": "7 guardrails for safer LLM apps",
       "summary": "There's a gap between how guardrails llm is taught and how it actually behaves under load. This is the version of the write-up that includes the part that broke. It's the kind of problem that's easy to reproduce and hard to explain. What this list actually solves LLM applications fail in ways that t"
+    },
+    {
+      "slug": "drift-detection-the-plan-that-lies",
+      "title": "Drift detection: the plan that lies",
+      "summary": "Most infrastructure drift writeups assume the reader has already made the mistake they're warning about. Here's the fuller picture, with the tradeoffs left in. Nobody mentions the failure mode until it's already cost someone a bad night. The gap between what the docs say and what production needs Te"
     }
   ]
 }

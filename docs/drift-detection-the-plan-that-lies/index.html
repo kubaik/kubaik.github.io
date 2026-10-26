@@ -1,0 +1,495 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Drift detection: the plan that lies - Kubai Kevin</title>
+        <meta name="description" content="Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.">
+        <meta name="keywords" content="TerraformDrift, InfrastructureDrift, Opentofu, Terraform, TerraformStateDrift, Iac">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-26T03:53:26.000422">
+        <meta property="article:modified_time" content="2026-10-26T03:54:54.162653+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Drift detection: the plan that lies">
+        <meta property="og:description" content="Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.">
+        <meta property="og:url" content="https://kubaik.github.io/drift-detection-the-plan-that-lies/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/drift-detection-the-plan-that-lies.png">
+        <meta property="og:image:alt" content="Drift detection: the plan that lies">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Drift detection: the plan that lies">
+        <meta name="twitter:description" content="Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/drift-detection-the-plan-that-lies.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/drift-detection-the-plan-that-lies/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/drift-detection-the-plan-that-lies/#article",
+      "headline": "Drift detection: the plan that lies",
+      "description": "Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.",
+      "datePublished": "2026-10-26T03:53:26+00:00",
+      "dateModified": "2026-10-26T03:54:54+00:00",
+      "wordCount": 3215,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/drift-detection-the-plan-that-lies/"
+      },
+      "keywords": "TerraformDrift, InfrastructureDrift, Opentofu, Terraform, TerraformStateDrift, Iac",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/drift-detection-the-plan-that-lies.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Drift detection: the plan that lies",
+          "item": "https://kubaik.github.io/drift-detection-the-plan-that-lies/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Drift detection: the plan that lies</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Drift detection: the plan that lies</h1>
+                
+                <p class="post-lead">Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TerraformDrift</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">InfrastructureDrift</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Opentofu</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/terraform/"
+                       style="text-decoration:none;">Terraform</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/iac/"
+                       style="text-decoration:none;">Iac</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Terraformstatedrift</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3215 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-26
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Terraform's <code>plan</code> is often treated as the source of truth for infrastructure state. The documentation describes it as a way to preview changes, and in a clean environment it does exactly that. But in any estate that has been running for more than a few weeks, <code>plan</code> becomes a negotiation between three unreliable narrators: the state file, the provider's read logic, and the actual cloud API. Drift detection is the discipline of finding out which one is lying before an <code>apply</code> does something irreversible.</p>
+<p>The problem this article addresses: teams assume <code>terraform plan</code> will surface drift, but a plan only shows drift for attributes the provider actually reads back and compares. Everything else — tags applied by a policy engine, security group rules added by an incident responder, IAM roles modified by a break-glass script — stays invisible until the next apply silently reverts it, or worse, fails halfway through because a resource was deleted out-of-band. What follows covers how to build drift detection that catches the invisible cases, how to remediate without causing an outage, and how to recognize when remediation is the wrong move.</p>
+<h2 id="how-drift-detection-actually-works-under-the-hood">How drift detection actually works under the hood</h2>
+<p>Terraform and OpenTofu share the same core model: a state file maps resource addresses to real infrastructure IDs, and each provider implements a <code>Read</code> function that fetches the current attributes of a resource. During <code>plan</code>, the core calls <code>Read</code> for every resource in state, compares the result to the configuration, and produces a diff. Drift is any difference between the refreshed state and the configuration that was not caused by a change in the configuration itself.</p>
+<p>Three properties of that model matter for detection design:</p>
+<ol>
+<li>
+<p><strong>Drift is provider-defined.</strong> A provider only reports drift for attributes it chooses to read. The AWS provider, for example, reads back most resource attributes, but computed fields and fields with <code>computed: true</code> in the schema are not compared against configuration. If a tag is added outside Terraform, whether it shows up in <code>plan</code> depends on whether that provider version includes tags in its read path and whether the configuration manages them.</p>
+</li>
+<li>
+<p><strong>Refresh can be skipped or stale.</strong> <code>terraform plan -refresh=false</code> uses the cached state without calling the provider. That is faster, but it cannot detect drift. Conversely, <code>-refresh-only</code> performs the refresh and shows the drift as a diff without proposing configuration changes — this is the closest thing to a pure drift report that the core offers.</p>
+</li>
+<li>
+<p><strong>The state file is a cache, not a ledger.</strong> If a resource is deleted outside Terraform, the next refresh removes it from state and the plan proposes to recreate it. That is drift, but it is also a data-loss event if the resource held state (a database, a bucket with objects). Detection and remediation have to be separated for exactly this reason.</p>
+</li>
+</ol>
+<p>OpenTofu inherits this model from the Terraform codebase it forked from. The provider protocol is compatible, so a drift detection strategy built around <code>plan -refresh-only</code> and provider read behavior works on both. The operational differences are in the surrounding tooling — state encryption, registry, and the pace of provider releases — not in the drift semantics.</p>
+<p>One more mechanical detail worth internalizing: the refresh step mutates the state file's stored attribute values before the diff is computed. That means a refresh-only plan is not a read-only operation with respect to state. If the refresh discovers that a resource no longer exists, the refreshed state records its absence, and whether that absence is persisted depends on how the plan is applied or discarded. Treat the state file as something the detection pipeline writes to, not just reads from, and give the pipeline its own state access controls.</p>
+<h2 id="a-detection-architecture-that-separates-observe-from-act">A detection architecture that separates observe from act</h2>
+<p>A common failure mode is a scheduled <code>terraform apply</code> that is supposed to "fix drift." That conflates detection with remediation and gives the pipeline permission to make changes nobody reviewed. A better architecture has three stages:</p>
+<ul>
+<li><strong>Observe:</strong> run <code>plan -refresh-only -detailed-exitcode</code> on a schedule, capture the output, and alert on non-zero exit codes. This never changes infrastructure.</li>
+<li><strong>Classify:</strong> parse the plan output and decide whether each drift is benign (a tag added by a cost tool), dangerous (a security group rule opened to 0.0.0.0/0), or ambiguous (a resource deleted out-of-band).</li>
+<li><strong>Remediate:</strong> only for classified-benign drift, run a targeted <code>apply</code> with the exact resource addresses. Everything else goes to a human queue.</li>
+</ul>
+<p><code>-detailed-exitcode</code> is the key primitive: it returns 0 for no changes, 1 for an error, and 2 for a non-empty diff. That makes it usable as a CI gate without parsing human-readable output.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+# Run from a directory with an initialized backend.
+set +e
+terraform plan -refresh-only -detailed-exitcode -out=drift.tfplan &gt; plan.log 2&gt;&amp;1
+status=$?
+set -e
+
+case &quot;$status&quot; in
+  0) echo &quot;No drift detected&quot; ;;
+  1) echo &quot;Plan failed — check credentials and backend&quot;; cat plan.log; exit 1 ;;
+  2) echo &quot;Drift detected&quot;; terraform show -json drift.tfplan &gt; drift.json ;;
+  *) echo &quot;Unexpected exit code: $status&quot;; exit 1 ;;
+esac
+</code></pre>
+<p>The JSON output is the important artifact. It contains <code>resource_changes</code> with an <code>actions</code> array (<code>["no-op"]</code>, <code>["update"]</code>, <code>["delete"]</code>, <code>["create"]</code>, <code>["read"]</code>). Filtering for <code>update</code> where the <code>before</code> and <code>after</code> differ outside of known-noise attributes is how signal gets separated from the constant churn of computed timestamps and provider-generated IDs.</p>
+<p>Note that <code>-refresh-only</code> with <code>-out</code> still writes a plan file. That plan, if applied, would commit the refreshed values to state. The observe stage should discard it after extracting JSON — never hand it to an apply step. If the pipeline archives plan files for audit, archive them in a location the remediation job cannot read.</p>
+<h2 id="classifying-drift-without-drowning-in-noise">Classifying drift without drowning in noise</h2>
+<p>A raw <code>plan -refresh-only</code> on a mature estate produces a lot of diffs that are not actionable. The AWS provider, for example, may report changes to attributes like <code>tags_all</code> when a default tag is applied by an organizational policy, or to fields that are computed from the API and change between reads. Without a classification layer, the alert channel becomes noise and people stop reading it.</p>
+<p>A workable classification framework has four buckets:</p>
+<table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>Signal</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cosmetic</td>
+<td>Tags, descriptions, non-security metadata</td>
+<td>Auto-remediate with targeted apply, log to audit</td>
+</tr>
+<tr>
+<td>Security-relevant</td>
+<td>IAM policies, security group rules, public access blocks, encryption settings</td>
+<td>Page on-call, never auto-remediate</td>
+</tr>
+<tr>
+<td>Structural</td>
+<td>Resource deleted out-of-band, replaced with different ID</td>
+<td>Human review, check for data loss before recreate</td>
+</tr>
+<tr>
+<td>Provider noise</td>
+<td>Computed attributes, timestamps, provider-generated IDs</td>
+<td>Suppress via ignore_changes or post-processing filter</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>ignore_changes</code> lifecycle argument is the documented mechanism for telling Terraform not to compare specific attributes. It is appropriate for attributes that are intentionally managed outside Terraform — for example, a tag applied by a cloud governance tool. It is not appropriate as a blanket fix for noise, because it also hides real drift on those attributes.</p>
+<pre><code class="language-hcl">resource &quot;aws_s3_bucket&quot; &quot;logs&quot; {
+  bucket = &quot;example-logs-bucket&quot;
+
+  lifecycle {
+    # Managed by the central tagging policy, not by this module.
+    ignore_changes = [tags[&quot;CostCenter&quot;]]
+  }
+}
+</code></pre>
+<p>A subtler trap: <code>ignore_changes</code> accepts attribute paths, and for nested blocks the path syntax matters. Getting it wrong silently does nothing, which is worse than not having it — the drift keeps appearing and the team assumes the mechanism is broken. The way to verify a suppression actually took effect is to run a refresh-only plan after adding it and confirm the specific attribute no longer appears in <code>resource_changes</code> for that address. If the diff persists, the path is wrong.</p>
+<p>Classification itself can live in a few places. A small script that reads <code>drift.json</code> and matches on resource type plus attribute path is the lowest-dependency option. Policy-as-code engines evaluate the same JSON against declarative rules, which is easier to review and version. Whatever the mechanism, the rules should be stored in the same repository as the infrastructure code so that a change to what counts as "benign" goes through review.</p>
+<h2 id="remediation-patterns-and-when-each-is-safe">Remediation patterns and when each is safe</h2>
+<p>There are three remediation patterns, and they have very different risk profiles.</p>
+<p><strong>Targeted apply.</strong> <code>terraform apply -target=aws_s3_bucket.logs</code> applies only the resources matching the address. This is the safest automated remediation because the blast radius is explicit. The caveat, documented by HashiCorp, is that <code>-target</code> is intended for exceptional situations, not routine use — it can leave the rest of the state inconsistent with configuration. For drift remediation of a single cosmetic resource, that trade-off is usually acceptable, but it should be logged and reviewed.</p>
+<p><strong>Full apply from a clean plan.</strong> Running <code>terraform apply</code> on a saved plan file that was generated after a refresh. This is the normal path, but it remediates <em>all</em> drift at once, including the security-relevant changes that were supposed to wait for a human. It is only safe when the classification step has confirmed the plan contains nothing but benign drift.</p>
+<p><strong>Config-as-truth reconciliation.</strong> Instead of applying Terraform to match the drifted reality, update the configuration to match reality (if the out-of-band change was legitimate) and then apply. This is often the right answer for emergency changes that were made during an incident and should be kept. It requires a human, which is the point.</p>
+<p>The counterintuitive part is that automated remediation is most valuable for the <em>least</em> important drift. Cosmetic tag drift is high-volume, low-risk, and tedious to fix manually — perfect for automation. Security drift is low-volume, high-risk, and exactly the kind of change that should interrupt someone. Teams that automate both end up with an auto-apply pipeline that can silently revert a security fix applied during an incident, which is a much worse outcome than a noisy alert.</p>
+<p>A worked example makes the trade-off concrete. Suppose a scan reports three drifted resources: a bucket missing a <code>CostCenter</code> tag, a security group with an added ingress rule on port 22 from a troubleshooting session, and a queue whose retention setting was changed by hand. Under the framework above, the tag is cosmetic and can be targeted-applied automatically. The security group rule is security-relevant and pages a human, who decides whether the rule was a legitimate temporary exception (update config) or a mistake (revert). The queue change is ambiguous: it is not security-relevant, but it may have been made deliberately to handle a backlog, so auto-reverting it could cause message loss. The classification rule that separates the queue from the tag is not "is it metadata" but "would reverting this destroy data or state." Encoding that question as a resource-type allowlist for auto-remediation is a small amount of work that prevents most of the painful incidents.</p>
+<h2 id="measuring-drift-what-to-track-and-what-to-ignore">Measuring drift: what to track and what to ignore</h2>
+<p>The metrics that matter for a drift program are not the number of drifted resources — that number is noisy and depends on provider version. The useful metrics are:</p>
+<ul>
+<li><strong>Time-to-detect:</strong> the interval between an out-of-band change and the first alert. This is bounded by scan frequency. A daily scan means up to 24 hours of undetected drift.</li>
+<li><strong>Time-to-remediate by bucket:</strong> cosmetic drift should close within one scan cycle; security drift should close within the incident SLA. If security drift is closing faster than cosmetic drift, the automation is probably misconfigured.</li>
+<li><strong>False positive rate:</strong> the proportion of alerts that a human marks as provider noise. If a large share of alerts are dismissed as noise, the classification layer needs work before the program will be trusted.</li>
+<li><strong>Recurrence:</strong> the same resource address drifting repeatedly is a signal that something outside Terraform owns it and the configuration should be changed to reflect that ownership, not repeatedly reverted.</li>
+</ul>
+<p>These are relative metrics; there is no published benchmark for what a "good" drift rate is, because it depends entirely on how much of the estate is under management and how many controllers touch it. Track the trend, not the absolute number.</p>
+<p>To measure them, instrument the pipeline at three points. Record a timestamp when the scan starts and when the alert fires — the difference is time-to-detect, and it will be dominated by scan interval, so compare it against the interval rather than treating it as an independent number. Record the classification bucket and the timestamp of the closing event (auto-remediation applied, or human resolved) to compute time-to-remediate per bucket. For false positives, add a one-field disposition to the alert — "noise," "real," "accepted" — and count the ratio over a rolling window. All three can be derived from the JSON artifact plus a small sidecar record; no external telemetry system is required.</p>
+<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
+<p><strong>The refresh that deletes state.</strong> If a resource is deleted out-of-band and the provider's read returns not-found, the refresh removes it from state. A subsequent apply recreates it — possibly with a new ID, new ARN, and broken references. For stateful resources (databases, buckets, KMS keys), this is a data-loss path. Detection pipelines should flag <code>delete</code> actions in a refresh-only plan as critical, not routine.</p>
+<p><strong>The provider upgrade that changes read behavior.</strong> A provider version bump can start reading attributes it previously ignored, producing a wave of "drift" that is actually a change in the detection tool. Pin provider versions and treat upgrades as a change that requires a baseline scan before and after. The comparison is straightforward: run the scan on the pinned version, upgrade, run it again, and diff the two <code>drift.json</code> artifacts. Any resource address that appears only in the second run is a candidate for a read-behavior change rather than real drift.</p>
+<p><strong>The state lock that blocks detection.</strong> If a long-running apply holds the state lock, scheduled drift scans fail with a lock error. If the pipeline treats any non-zero exit as drift, you get false alerts. Distinguish exit code 1 (error) from exit code 2 (diff) — the <code>-detailed-exitcode</code> script above does this, but many homegrown wrappers do not.</p>
+<p><strong>The module that manages the same resource twice.</strong> Two workspaces or two modules managing overlapping resources will each see the other's changes as drift and fight. This is not a detection problem; it is an ownership problem that detection will surface loudly and repeatedly until someone fixes the boundary.</p>
+<p><strong>The compliance trap.</strong> Where personal data is in scope, drift on resources that store or process it is not cosmetic. A security group rule that opens a database to the internet, or an S3 bucket policy that removes a public access block, is a potential personal data breach. Detection pipelines for these resources should feed into the incident response process, not the auto-remediation queue. The audit trail of who changed what and when is itself a requirement under accountability principles — which means the drift log needs to be retained and tamper-evident, not just printed to CI output.</p>
+<h2 id="tools-and-approaches-worth-considering">Tools and approaches worth considering</h2>
+<p>There is no single tool that solves drift detection end-to-end, but several categories are well-established:</p>
+<ul>
+<li><strong>Native plan-based detection:</strong> <code>terraform plan -refresh-only -detailed-exitcode</code> plus JSON parsing. This is the lowest-dependency option and works identically on OpenTofu.</li>
+<li><strong>Policy-as-code engines:</strong> engines such as OPA/Conftest can evaluate the plan JSON against rules — for example, "no security group may allow 0.0.0.0/0 on port 22" — which turns drift classification into a policy problem rather than a custom script.</li>
+<li><strong>Cloud-native config recorders:</strong> AWS Config, Azure Policy, and GCP's asset inventory can detect out-of-band changes independently of Terraform state. They are useful as a second opinion because they do not depend on the state file being accurate.</li>
+<li><strong>Commercial drift platforms:</strong> several vendors offer continuous drift detection with dashboards. They are worth evaluating if the estate is large enough that building the classification layer in-house is a full-time job, but the underlying mechanism is still refresh-and-compare, so the same failure modes apply.</li>
+</ul>
+<p>A minimal, dependency-free approach that many teams find sufficient: a scheduled CI job that runs the script above, uploads <code>drift.json</code> as an artifact, and posts a summary to the team channel with the resource addresses grouped by bucket. No vendor required, and the audit trail is the CI job history.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>Drift detection is not free, and there are estates where the cost outweighs the benefit.</p>
+<p>If the infrastructure is entirely ephemeral — created and destroyed by the same pipeline that owns it, with no manual changes permitted — drift is a bug in the pipeline, not an operational condition. Fix the pipeline instead of building a detector.</p>
+<p>If the estate is small enough that a single engineer can hold the whole thing in their head and changes are infrequent, a weekly manual <code>plan</code> review may be cheaper than automation. The break-even point is roughly when the number of resources or the number of people touching the estate exceeds what one person can track, but that is a judgment call, not a number that can be given in advance.</p>
+<p>And if the organization has no process for acting on drift alerts, detection will produce a backlog that nobody owns. The tooling is the easy part; the remediation queue and the on-call rotation are the hard part. Build the process before the pipeline.</p>
+<h2 id="common-production-pitfalls-and-what-they-cost">Common production pitfalls and what they cost</h2>
+<ul>
+<li><strong>Auto-apply on any drift.</strong> Cost: silent reversion of incident fixes, occasionally an outage. Mitigation: classify before remediating.</li>
+<li><strong>Scanning too infrequently.</strong> Cost: a security group opened on Friday is not detected until Monday. Mitigation: scan at least daily for security-relevant resources, more often if the threat model warrants it.</li>
+<li><strong>Ignoring provider noise.</strong> Cost: alert fatigue, then ignored alerts, then a real drift that nobody sees. Mitigation: suppress known-noise attributes explicitly and review the suppression list quarterly.</li>
+<li><strong>No audit retention.</strong> Cost: inability to answer "who changed this and when" during a compliance review. Mitigation: retain drift plan artifacts for the period the regulator requires.</li>
+<li><strong>Treating OpenTofu and Terraform as interchangeable in CI.</strong> Cost: subtle differences in provider resolution and state encryption cause failures that look like drift. Mitigation: run detection with the same binary and version that applies changes.</li>
+</ul>
+<h2 id="what-to-do-next">What to do next</h2>
+<p>The single most useful action in the next 30 minutes: open a terminal in a directory with an initialized Terraform or OpenTofu backend, and run <code>terraform plan -refresh-only -detailed-exitcode</code>. Note the exit code. If it is 2, save the JSON with <code>terraform show -json</code> and read through <code>resource_changes</code> — that gives a real drift report for the workspace and a baseline for everything that follows.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+<li><a href="https://kubaik.github.io/read-replicas-the-bug-factory-you-built/">Read replicas: the bug factory you built</a></li>
+<li><a href="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">Self-healing pipelines: Argo vs Crossplane in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-made-self-service-platforms-trivial-in-2026/">
+                        <h3>AI made self-service platforms trivial in 2026</h3>
+                        <p>AI can draft Terraform and Kubernetes manifests, but correctness still needs policy checks, schema validation, and runtime verification before merge.</p>
+                        <span class="related-meta">10 min read · 3 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

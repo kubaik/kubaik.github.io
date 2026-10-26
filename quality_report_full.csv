@@ -69,7 +69,6 @@ why-i-picked-playwright-and-vitest-in-2026,92,2162,Choosing a JavaScript Test St
 2026-alert-triage-when-opsgenie-slept-for-you,95,3190,2026 alert triage: when Opsgenie slept for you,2026-06-20T09:25:40.987533,1,no markdown table
 3-mistakes-that-break-deployments-for-everyone,95,2570,3 mistakes that break deployments for everyone,2026-08-08T14:22:12.877501,1,no markdown table
 5-ways-to-find-hidden-latency-before-production,95,2430,5 ways to find hidden latency before production,2026-06-30T22:23:14.312622,1,no FAQ section
-7-guardrails-for-safer-llm-apps,95,2942,7 guardrails for safer LLM apps,2026-10-25T15:48:20.553985,1,no markdown table
 agent-auth-the-silent-deployment-killer,95,2662,Agent auth: the silent deployment killer,2026-07-30T08:41:42.797134,1,no markdown table
 agent-auth-where-the-docs-ended-up-lying,95,2748,Agent auth: where the docs ended up lying,2026-08-24T01:29:32.768869,1,no FAQ section
 agent-compliance-in-african-fintech-the-cbn-gap,95,3239,Agent compliance in African fintech: the CBN gap,2026-09-20T09:44:53.685889,1,no markdown table
@@ -125,6 +124,7 @@ dead-letter-queues-stop-poison-messages,95,2982,Dead-letter queues: stop poison 
 debug-ai-agent-failures-differently,95,2689,Debug AI agent failures differently,2026-06-27T15:03:09.620372,1,no FAQ section
 debug-ai-agents-failures-arent-just-bugs,95,2173,Debug AI agents: failures aren't just bugs,2026-07-01T12:23:14.341291,1,no FAQ section
 detect-lazy-agents-without-false-alarms,95,2887,Detect lazy agents without false alarms,2026-07-04T14:45:28.353414,1,no markdown table
+drift-detection-the-plan-that-lies,95,2669,Drift detection: the plan that lies,2026-10-26T03:53:26.000422,1,no FAQ section
 duckdb-in-production-when-it-replaces-a-warehouse,95,2723,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,1,no FAQ section
 edge-agents-vs-cloud-round-trips-in-2026,95,2244,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,1,no FAQ section
 evaluate-agents-with-spark-vs-custom-harness,95,2436,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,1,no FAQ section
@@ -209,6 +209,7 @@ why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Rew
 50-locations-50-headaches-edge-native-backends-in,100,2319,"50 locations, 50 headaches: edge-native backends in",2026-06-22T07:49:49.144918,0,
 7-bundling-decisions-that-still-matter,100,2857,7 bundling decisions that still matter,2026-10-10T05:00:55.208475,0,
 7-code-review-traps-when-ai-writes-half-your-code,100,2304,7 code review traps when AI writes half your code,2026-06-11T05:25:07.580197,0,
+7-guardrails-for-safer-llm-apps,100,3658,7 guardrails for safer LLM apps,2026-10-25T15:48:20.553985,0,
 7-idp-shifts-for-ai-feature-delivery,100,2993,7 IDP shifts for AI feature delivery,2026-10-10T17:09:37.781557,0,
 7-patterns-for-systems-that-wont-die-when-networks,100,3573,7 patterns for systems that won’t die when networks,2026-06-14T22:21:06.945498,0,
 7-skills-senior-engineers-need-now-agents-are-live,100,2977,7 skills senior engineers need now agents are live,2026-07-05T12:23:25.302901,0,
