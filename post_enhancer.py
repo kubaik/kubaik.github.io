@@ -294,7 +294,9 @@ def main():
                         f"- [{keep[x]['title']}]({a.base_url}/{x}/)" for x in rel
                     )
                 )
-        if "add_sources" in fixes and "official documentation" not in c.lower():
+        if "add_sources" in fixes and not re.search(
+            r"^## Official documentation\s*$", c, re.M | re.I
+        ):
             body = triage.STRIP.sub(" ", c)
             links = []
             for rx, (label, url) in DOCS.items():

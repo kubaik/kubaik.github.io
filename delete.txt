@@ -1,0 +1,24 @@
+docs/3-ai-coders-ranked-cursor-windsurf-claude-code-in/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources
+docs/3-mistakes-that-break-deployments-for-everyone/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/3-skills-to-outrun-ai-salary-cuts/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/5-notification-systems-ranked-push-email-sms/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/50-locations-50-headaches-edge-native-backends-in/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/7-ways-to-earn-extra-in-2026-without-shipping-saas/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources
+docs/9-ai-wrapper-plays-that-worked-in-2026/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources
+docs/african-fintech-rules-broke-our-stack/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/ai-tools-rewrote-my-engineering-rules/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/ai-ui-tools-6-months-in-what-i-gained-and-lost/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/apis-must-die-in-2026/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/arm-in-production-graviton4-vs-ampere-in-2026/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/bootstrapped-5k-mrr-without-ads/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources
+docs/build-apps-that-still-work-on-500-ms-latency/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/deploy-a-solo-stack-for-20month-in-2026/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/drop-ec2-bills-70-without-code/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/failed-ai-wrappers-2026-what-the-survivors-did-right/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/internal-platform-adoption-one-metric-kills-velocity/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/mcp-servers-real-time-pipelines-without-agents/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/pass-interviews-without-a-cs-degree/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/price-your-remote-salary-4-step-script/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources
+docs/ship-to-nairobi-users-starlink-latency-guide-2026/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)
+docs/signals-5-state-tricks-that-broke-my-app/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources
+docs/why-i-picked-playwright-and-vitest-in-2026/index.html	quarantined_unverifiable_claims (noindexed, regeneration unresolved)

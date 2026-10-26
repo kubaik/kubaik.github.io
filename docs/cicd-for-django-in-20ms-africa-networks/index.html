@@ -503,9 +503,9 @@ def test_health_endpoint_live():
 <p>Open your CI workflow and find every network operation that has no timeout: <code>docker pull</code>, <code>docker push</code>, <code>pip install</code>, <code>curl</code> in a health check. Add an explicit bound to each — <code>--max-time</code> for curl, <code>--timeout</code> for pip, and a retry loop with a fixed sleep for pushes. Then run one build and record the wall-clock time and the bytes transferred from <code>/proc/net/dev</code>. Those two numbers are the baseline against which every later change is judged.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/">Build dev platform for $2k/month</a></li>
+<li>Build dev platform for $2k/month</li>
 <li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
-<li><a href="https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/">ARM in production: Graviton4 vs Ampere in 2026</a></li>
+<li>ARM in production: Graviton4 vs Ampere in 2026</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

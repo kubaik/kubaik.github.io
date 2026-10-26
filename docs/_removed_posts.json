@@ -773,5 +773,125 @@
     "removed_at": "2026-10-04T12:59:36.733146+00:00",
     "reason": "manually forced",
     "source": "delete_posts.py"
+  },
+  "3-ai-coders-ranked-cursor-windsurf-claude-code-in": {
+    "removed_at": "2026-10-26T08:52:49.377163+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "3-mistakes-that-break-deployments-for-everyone": {
+    "removed_at": "2026-10-26T08:52:49.394390+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "3-skills-to-outrun-ai-salary-cuts": {
+    "removed_at": "2026-10-26T08:52:49.402139+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "5-notification-systems-ranked-push-email-sms": {
+    "removed_at": "2026-10-26T08:52:49.408578+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "50-locations-50-headaches-edge-native-backends-in": {
+    "removed_at": "2026-10-26T08:52:49.424662+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "7-ways-to-earn-extra-in-2026-without-shipping-saas": {
+    "removed_at": "2026-10-26T08:52:49.439379+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "9-ai-wrapper-plays-that-worked-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.447002+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "african-fintech-rules-broke-our-stack": {
+    "removed_at": "2026-10-26T08:52:49.453925+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "ai-tools-rewrote-my-engineering-rules": {
+    "removed_at": "2026-10-26T08:52:49.460543+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "ai-ui-tools-6-months-in-what-i-gained-and-lost": {
+    "removed_at": "2026-10-26T08:52:49.467755+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "apis-must-die-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.476128+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "arm-in-production-graviton4-vs-ampere-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.484488+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "bootstrapped-5k-mrr-without-ads": {
+    "removed_at": "2026-10-26T08:52:49.490381+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "build-apps-that-still-work-on-500-ms-latency": {
+    "removed_at": "2026-10-26T08:52:49.496194+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "deploy-a-solo-stack-for-20month-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.502089+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "drop-ec2-bills-70-without-code": {
+    "removed_at": "2026-10-26T08:52:49.507806+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "failed-ai-wrappers-2026-what-the-survivors-did-right": {
+    "removed_at": "2026-10-26T08:52:49.513158+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "internal-platform-adoption-one-metric-kills-velocity": {
+    "removed_at": "2026-10-26T08:52:49.518307+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "mcp-servers-real-time-pipelines-without-agents": {
+    "removed_at": "2026-10-26T08:52:49.523559+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "pass-interviews-without-a-cs-degree": {
+    "removed_at": "2026-10-26T08:52:49.529123+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "price-your-remote-salary-4-step-script": {
+    "removed_at": "2026-10-26T08:52:49.535164+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "ship-to-nairobi-users-starlink-latency-guide-2026": {
+    "removed_at": "2026-10-26T08:52:49.540527+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "signals-5-state-tricks-that-broke-my-app": {
+    "removed_at": "2026-10-26T08:52:49.546015+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "why-i-picked-playwright-and-vitest-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.551462+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
   }
 }

@@ -35,6 +35,7 @@ from utils import dedup_similarity
 from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
 
 from velocity_controller import VelocityController
+import generation_guards as gg
 import entity_gate
 import quality_gate
 from adsense_fixes.link_validator import validate_post_links
@@ -3956,6 +3957,24 @@ class BlogSystem:
                     f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
+            skeleton_problem = gg.skeleton_clone_problem(content, self.output_dir)
+            if skeleton_problem:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"{skeleton_problem}."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed to generate a distinct section structure after "
+                    f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
+                )
+
             try:
                 gate_is_dup, gate_slug, gate_title, gate_score = (
                     self.content_duplicate_gate.check(
@@ -4284,7 +4303,7 @@ class BlogSystem:
         hook_example = _pick_tweet_hook_example(topic, recent_styles=recent_hook_styles)
 
         resolved_headings = [h.replace("{topic}", topic) for h in headings]
-        heading_block = "\n".join(resolved_headings)
+        heading_block = gg.section_role_block(format_name, topic)
 
         keyword_text = (
             f"\nKeywords to incorporate naturally: {', '.join(keywords)}"
@@ -4403,8 +4422,8 @@ Respond with ONLY a JSON object in this exact shape:
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}}}
 
-SUGGESTED OUTLINE (adapt wording, merge, reorder or drop sections so the structure
-fits THIS topic — a rigid identical skeleton across posts reads as mass-produced):
+SECTION ROLES (write your own topic-specific heading for each; an identical
+skeleton across posts is rejected as mass-produced):
 {heading_block}
 
 Hard requirements for "content":
@@ -5004,6 +5023,21 @@ Return ONLY the JSON object.""",
             )
 
         pre_save_gate(post, self.output_dir)
+
+        # Primary sources: code-driven, verified, no LLM (generation_guards.ensure_sources).
+        try:
+            post.content, _n_src = gg.ensure_sources(
+                post.content,
+                verify=os.getenv("SOURCE_VERIFY_ONLINE", "1") == "1",
+            )
+        except Exception as _src_err:  # never block a save on the enrichment step
+            print(f"  ⚠️  ensure_sources skipped: {_src_err}")
+            _n_src = 0
+        if not _n_src and not re.search(
+            r"\]\((https?://(?!kubaik\.github\.io)[^)\s]+)\)", post.content
+        ):
+            post.monetization_data = dict(post.monetization_data or {})
+            post.monetization_data["needs_source_review"] = True
 
         is_dup, dup_slug, dup_title, dup_score = self.content_duplicate_gate.check(
             title=post.title,

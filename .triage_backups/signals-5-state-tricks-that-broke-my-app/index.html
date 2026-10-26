@@ -1,0 +1,476 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signals: derived state without the performance tax - Kubai Kevin</title>
+        <meta name="description" content="How signal-based state libraries work, how to benchmark them honestly, and the failure modes that bite in production.">
+        <meta name="keywords" content="Signals, PreactSignals, StateManagement2026, VanillaSignals, StateUpdateLatency, SignalsPerformance, Reactjs, Performance">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-03T04:50:42.390689">
+        <meta property="article:modified_time" content="2026-10-03T10:44:30.964272+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Signals: derived state without the performance tax">
+        <meta property="og:description" content="How signal-based state libraries work, how to benchmark them honestly, and the failure modes that bite in production.">
+        <meta property="og:url" content="https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/signals-5-state-tricks-that-broke-my-app.png">
+        <meta property="og:image:alt" content="Signals: derived state without the performance tax">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Signals: derived state without the performance tax">
+        <meta name="twitter:description" content="How signal-based state libraries work, how to benchmark them honestly, and the failure modes that bite in production.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/signals-5-state-tricks-that-broke-my-app.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/">
+        <meta name="robots" content="noindex, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/#article",
+      "headline": "Signals: derived state without the performance tax",
+      "description": "How signal-based state libraries work, how to benchmark them honestly, and the failure modes that bite in production.",
+      "datePublished": "2026-07-03T04:50:42+00:00",
+      "dateModified": "2026-10-03T10:44:30+00:00",
+      "wordCount": 2611,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/"
+      },
+      "keywords": "Signals, PreactSignals, StateManagement2026, VanillaSignals, StateUpdateLatency, SignalsPerformance, Reactjs, Performance",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/signals-5-state-tricks-that-broke-my-app.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Signals: derived state without the performance tax",
+          "item": "https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Signals: derived state without the performance tax</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Signals: derived state without the performance tax</h1>
+                
+                <p class="post-lead">How signal-based state libraries work, how to benchmark them honestly, and the failure modes that bite in production.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Signals</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PreactSignals</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">StateManagement2026</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">VanillaSignals</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/reactjs/"
+                       style="text-decoration:none;">Reactjs</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2611 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-signals-are-meant-to-solve">The problem Signals are meant to solve</h2>
+<p>Most state bugs in component apps are not "where does the data live" bugs. They are "when does the derived value recompute" bugs. A store holds a source value, a selector derives something from it, and a component reads that derived value. The moment two stores depend on the same source, or one derived value feeds another, the cost of keeping everything consistent climbs faster than the number of stores.</p>
+<p>The failure mode is predictable. A selector memoizes on the wrong dependency list, so it recomputes on every render. Or it memoizes correctly but a parent re-renders and recreates the selector, invalidating the cache. Or the derived value is correct but stale because an effect that was supposed to invalidate it never ran. None of these are framework bugs; they are consequences of manual dependency tracking.</p>
+<p>Signals move the dependency tracking from the developer to the runtime. A signal is an observable value with a getter. Reading it inside a computation registers a dependency; writing it marks dependents dirty and schedules them. Because the graph is built at read time, you do not maintain a dependency array by hand, and a derived value that nobody reads costs nothing to keep defined.</p>
+<p>That last property is the one that changes architecture. In a selector-based store, every derived value is a function you must remember to call and memoize. In a signal graph, a computed value with no active subscribers is simply not evaluated.</p>
+<h2 id="what-fast-enough-actually-means">What "fast enough" actually means</h2>
+<p>Before choosing a library, define the budget. The useful frames of reference:</p>
+<ul>
+<li><strong>Frame budget.</strong> A 60 Hz display gives roughly 16.7 ms per frame. A state update that triggers layout and paint must fit inside that, alongside everything else the frame is doing. A budget of 8 ms for the update itself is a reasonable target; it leaves headroom.</li>
+<li><strong>Interaction budget.</strong> For a keystroke or tap, the perceived threshold for "instant" is around 100 ms. Anything above that reads as lag even if no frame is dropped.</li>
+<li><strong>Allocation budget.</strong> A derived value that allocates a new object on every recomputation puts pressure on the garbage collector. On memory-constrained devices this shows up as periodic stutter rather than steady slowness, which makes it easy to misdiagnose.</li>
+</ul>
+<p>These are starting points, not laws. The point is to write the budget down before benchmarking, because otherwise every result looks acceptable.</p>
+<h2 id="how-to-measure-a-signal-library-honestly">How to measure a signal library honestly</h2>
+<p>The measurements that matter are cheap to take and easy to fake. Here is a procedure that produces numbers you can defend.</p>
+<p><strong>Update latency.</strong> Instrument the write, not the render. Wrap the signal write in <code>performance.mark</code> / <code>performance.measure</code> and read the measure in the same task, before the browser has a chance to paint. If you want to include render cost, use the Performance panel and look at the scripting and rendering time for the frame that contains the update. Throttle the CPU to simulate a slower device — the Performance panel's CPU throttling multiplies all main-thread work, which is a reasonable approximation of a mid-tier phone. Record the median and the 95th percentile; the median tells you the typical case, the 95th tells you whether users will occasionally see a stall.</p>
+<p><strong>Memory.</strong> Take a heap snapshot before the workload, run a fixed number of updates (1000 is a common choice because it is large enough to expose leaks and small enough to run in a loop), force garbage collection, and take a second snapshot. Compare retained size, not allocated size. Allocated size includes garbage that has not been collected yet and will mislead you. In Chrome DevTools the "Collect garbage" button in the Memory panel does this; in Firefox Profiler, take a snapshot after a forced GC.</p>
+<p><strong>Recomputation count.</strong> This is the measurement most people skip and the one that explains the others. If a derived value recomputes 1000 times when its inputs changed once, latency and memory will both look bad and you will blame the library. Count evaluations by incrementing a counter inside the computed function. A correct signal graph should evaluate each computed value at most once per batch of writes.</p>
+<p><strong>Bundle cost.</strong> Measure the minified and gzipped size of the code you actually import, not the package as published. Tree-shaking removes different amounts depending on which entry point you use. A quick check is to build a minimal app that imports only the signal primitives and inspect the output bundle.</p>
+<p>A useful sanity check: if a library's update latency is faster than the time it takes to call a function, you are probably measuring the wrong thing. Signals are fast, but they are not free.</p>
+<h2 id="the-landscape-by-category">The landscape, by category</h2>
+<p>Rather than ranking specific versions, which go stale, it helps to understand the categories and what each one trades away.</p>
+<h3 id="standalone-signal-primitives">Standalone signal primitives</h3>
+<p>These are small packages that implement signals and computeds with no framework dependency. They work in browsers, in server runtimes, and in workers. The trade-off is that you get the primitive and nothing else: no devtools integration, no persistence, no time-travel debugging. If you need those, you build them or add another dependency.</p>
+<p>The API surface is intentionally tiny — typically a <code>signal</code> factory, a <code>computed</code> factory, and an <code>effect</code> or <code>batch</code> function. That smallness is the feature. There is very little to learn and very little to go wrong.</p>
+<p><strong>When to choose this:</strong> you want reactivity in a non-UI context (a server, a worker, a CLI), or you want to add signals to an existing framework incrementally without adopting a new component model.</p>
+<p><strong>What to watch:</strong> the TypeScript types are often permissive. It is frequently possible to write to a signal's <code>.value</code> from a context where that write is a bug. Some libraries expose a read-only accessor type to prevent this; check whether yours does.</p>
+<h3 id="framework-integrated-signals">Framework-integrated signals</h3>
+<p>Several frameworks now ship signals as a first-class primitive. The advantage is that the framework's rendering layer understands the graph, so a signal read inside a template or component body registers a fine-grained subscription. Only the DOM nodes that depend on the changed signal update.</p>
+<p>The trade-off is coupling. The signal implementation is usually tuned to the framework's scheduler, and using it outside that framework loses the automatic tracking. In some cases the reactivity only works inside the framework's compiler output, so hand-written code behaves differently from compiled code.</p>
+<p><strong>When to choose this:</strong> you are already in that framework and want fine-grained updates without a rewrite.</p>
+<p><strong>What to watch:</strong> framework integration often pulls in the framework's other dependencies. Check what the signal package imports before assuming it is lightweight.</p>
+<h3 id="reactive-effect-systems-with-scoping">Reactive-effect systems with scoping</h3>
+<p>Some reactivity systems group effects into scopes that can be stopped as a unit. This matters in single-page apps where components mount and unmount frequently: without explicit teardown, effects created inside a component keep running after the component is gone, holding references to its state.</p>
+<p>The scoping API is the safety mechanism. The failure mode is forgetting to call it. A common pattern is to create effects inside a loop or inside a callback that runs per-item; each iteration creates a scope that must be stopped when the item is removed. If it is not, the graph grows without bound.</p>
+<p><strong>When to choose this:</strong> you have many short-lived reactive regions and want a single teardown call per region.</p>
+<p><strong>What to watch:</strong> measure retained heap after repeated mount/unmount cycles. A leak shows up as a retained size that grows linearly with the number of cycles.</p>
+<h3 id="observable-to-signal-bridges">Observable-to-signal bridges</h3>
+<p>If an existing codebase is built on streams or observables, a bridge that converts an observable into a signal lets you adopt signals incrementally rather than rewriting the data layer. The conversion is not free: each observable subscription introduces a scheduling hop, and the bridge code itself adds to the bundle.</p>
+<p><strong>When to choose this:</strong> you have a large existing stream-based data layer and want new UI code to use signals.</p>
+<p><strong>What to watch:</strong> the hop adds latency per update. Measure it rather than assuming it is negligible; for high-frequency streams it can dominate the cost.</p>
+<h2 id="a-worked-example-replacing-a-selector-store">A worked example: replacing a selector store</h2>
+<p>The following is a minimal illustration of the pattern, not a benchmark. It shows what changes when dependency tracking moves from the developer to the runtime.</p>
+<p>Before, with a selector-based store, the derived value is a function with a hand-maintained dependency list:</p>
+<pre><code class="language-javascript">import { createStore, createSelector } from 'redux';
+
+const store = createStore(reducer);
+const selectExpensiveData = createSelector(
+  [selectA, selectB, selectC],
+  (a, b, c) =&gt; expensiveComputation(a, b, c)
+);
+</code></pre>
+<p>The dependency list <code>[selectA, selectB, selectC]</code> is a promise that <code>expensiveComputation</code> reads nothing else. If it later reads <code>selectD</code>, the memoization silently returns stale values. Nothing in the type system catches this.</p>
+<p>After, with signals, the dependency list does not exist:</p>
+<pre><code class="language-javascript">import { signal, computed, effect, batch } from '@preact/signals-core';
+
+const a = signal(0);
+const b = signal(0);
+const c = signal(0);
+
+const expensiveData = computed(() =&gt; expensiveComputation(a.value, b.value, c.value));
+
+// Subscribe to changes; the effect re-runs when any dependency changes.
+const dispose = effect(() =&gt; {
+  console.log('Derived value changed:', expensiveData.value);
+});
+</code></pre>
+<p>The computed reads <code>a</code>, <code>b</code>, and <code>c</code> through their getters, so the runtime records exactly those dependencies. If <code>expensiveComputation</code> later reads a fourth signal, the graph updates automatically. There is no list to keep in sync.</p>
+<p>Two details worth noting. First, <code>batch</code> groups multiple writes so dependents evaluate once rather than once per write:</p>
+<pre><code class="language-javascript">batch(() =&gt; {
+  a.value = 1;
+  b.value = 2;
+  c.value = 3;
+});
+</code></pre>
+<p>Without the batch, <code>expensiveData</code> would evaluate after each assignment. With it, it evaluates once. This is the mechanism that makes the recomputation count meaningful.</p>
+<p>Second, <code>effect</code> returns a dispose function. Calling it unsubscribes the effect and releases its references. Omitting this call is the most common source of leaks in signal graphs.</p>
+<h2 id="failure-modes-worth-designing-around">Failure modes worth designing around</h2>
+<p><strong>Circular dependencies.</strong> If computed A reads B and B reads A, the graph has no valid evaluation order. Well-behaved implementations detect the cycle and throw rather than looping. The fix is architectural: introduce a source signal that both computeds read, and make one of them write to a separate signal that the other reads, so the cycle becomes a path. This usually costs a few lines and removes the possibility of an infinite update loop.</p>
+<p><strong>Retained graphs.</strong> A signal holds strong references to its subscribers, and a computed holds references to its dependencies. A disconnected component that never disposes its effects keeps its entire graph alive. In a long-running server process, this shows up as heap growth that tracks the number of connections rather than the number of active ones. Instrument by counting live graphs and comparing to the number of active clients; if the two diverge, something is not being torn down.</p>
+<p><strong>Async interleaving.</strong> When two writes arrive close together and a computed derives from both, the intermediate state may be observed by an effect that runs between them. Batching the writes prevents this. If the writes come from separate async sources, batching at the point of arrival is not enough; the writes must be funneled through a single synchronous step. This is a scheduling problem, not a signals problem, but signals make it visible because the derived value updates eagerly.</p>
+<p><strong>Unbounded derived chains.</strong> A computed that reads another computed that reads another, each allocating a new object, produces allocation proportional to the chain depth on every update. Flatten where possible, and prefer returning primitives from hot computeds.</p>
+<h2 id="integration-notes">Integration notes</h2>
+<p>Signals are not tied to the DOM. The same primitive works in a server runtime, a worker, or a desktop app's frontend, provided the environment supports the JavaScript features the library relies on. The main portability concern is weak references: some runtimes do not expose <code>WeakRef</code>, and libraries that use it for cleanup need a polyfill. Check the target runtime's supported features before assuming a browser-tested library will work unchanged.</p>
+<p>In desktop shells that bridge a native backend to a web frontend, the inter-process channel adds latency that dwarfs any signal overhead. Signals are still useful there for organizing frontend state, but they do not make cross-process updates fast. Measure the channel separately.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting a signal library, answer these:</p>
+<ol>
+<li><strong>Does the runtime support the primitives the library needs?</strong> Check for <code>WeakRef</code> and any proposed APIs.</li>
+<li><strong>Is the dependency tracking automatic in the code you will actually write?</strong> If it only works inside a compiler, hand-written code will behave differently.</li>
+<li><strong>What is the teardown story?</strong> Every effect needs a dispose path. Confirm the API provides one and that your code calls it.</li>
+<li><strong>What does the import cost after tree-shaking?</strong> Build a minimal app and inspect the bundle.</li>
+<li><strong>Can you count recomputations?</strong> If not, you cannot diagnose a performance regression.</li>
+<li><strong>Does the library detect cycles?</strong> A silent infinite loop is worse than a thrown error.</li>
+<li><strong>How does it behave under batched writes?</strong> Confirm that dependents evaluate once per batch.</li>
+<li><strong>What is the migration path if you change your mind?</strong> Standalone primitives are easier to remove than framework-integrated ones.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Do signals replace a state management library?</strong>
+They replace the derived-state layer. You still need somewhere to hold source state, and you still need a strategy for persistence, undo, and devtools. Signals make the derived layer automatic; they do not make the rest disappear.</p>
+<p><strong>Are signals faster than selectors?</strong>
+Not inherently. They are faster when the alternative recomputes more than necessary, which is common but not universal. Measure recomputation counts in both approaches before assuming a win.</p>
+<p><strong>Can signals and a selector store coexist?</strong>
+Yes. A common pattern is to keep the store as the source of truth and expose signals derived from it, so new UI code gets fine-grained updates without rewriting the store.</p>
+<p><strong>Why does my computed run more often than expected?</strong>
+Usually because a write is not batched, or because the computed reads a value that changes on every render (a new object identity, for example). Count evaluations and log the inputs.</p>
+<p><strong>Do signals work in server-side rendering?</strong>
+The primitives work, but the subscription model is designed for long-lived consumers. For SSR you typically evaluate the graph once per request and serialize the result. Check whether the library provides a helper for this or whether you need to manage scope per request.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one derived value in your app that recomputes more often than you think it should. Add a counter inside it, log the count to the console, and interact with the UI for a minute. If the count is much higher than the number of times the underlying data actually changed, you have found a candidate for a signal graph — and you now have a before-number to compare against after the change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/">AI wrapper business models: what survives contact with users</a></li>
+<li><a href="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">React 19 compiler: my components changed how</a></li>
+<li><a href="https://kubaik.github.io/test-ai-code-without-testing-the-ai/">Test AI code without testing the AI</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> July 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/react-19-compiler-my-components-changed-how/">
+                        <h3>React 19 Compiler: What It Rewrites and Where It Breaks</h3>
+                        <p>How the React 19 compiler rewrites components, where it silently changes behavior, how to verify its output, and when manual memoization is the safer choice.</p>
+                        <span class="related-meta">11 min read · 15 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/bundle-size-70-lighter-with-server-components/">
+                        <h3>Cutting Client Bundle Size with React Server Components</h3>
+                        <p>How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.</p>
+                        <span class="related-meta">13 min read · 13 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/when-velocity-is-hard-to-measure-evaluating-engineering/">
+                        <h3>When velocity is hard to measure: evaluating engineering…</h3>
+                        <p>Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</p>
+                        <span class="related-meta">14 min read · 25 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

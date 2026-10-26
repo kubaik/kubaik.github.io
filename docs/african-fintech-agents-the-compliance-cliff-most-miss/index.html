@@ -453,7 +453,7 @@ def lambda_handler(event, context):
 <p>Open your agent's event schema and check two things: whether it includes a <code>region</code> field emitted at write time, and whether it includes <code>rule_version</code>. If either is missing, add it to the schema registry and to the agent's emission code before the next deployment. These two fields are the minimum required to make an audit record both residency-attributable and explainable, and adding them later means backfilling records you may not have.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/african-fintech-rules-broke-our-stack/">Designing Fintech Systems for African Data-Residency Rules</a></li>
+<li>Designing Fintech Systems for African Data-Residency Rules</li>
 <li><a href="https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/">Agent compliance in African fintech: the CBN gap</a></li>
 <li><a href="https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/">Agent compliance: the layer you build after failure</a></li>
 </ul>

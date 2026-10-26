@@ -1,10 +1,4 @@
 {
-  "improved": [
-    {
-      "slug": "hpa-vs-keda-vs-karpenter-autoscaling-traps",
-      "attempts": 1,
-      "retitled": false
-    }
-  ],
+  "improved": [],
   "failed": []
 }

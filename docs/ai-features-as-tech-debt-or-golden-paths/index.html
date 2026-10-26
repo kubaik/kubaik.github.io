@@ -408,7 +408,7 @@
 <p>Open your AI wrapper's request path and find the cache write. Check whether two concurrent requests for the same missing key can both trigger a model call. If they can, add single-flight: a short-lived lock (<code>SET ... NX PX</code>) around the fetch-and-write, with concurrent requests either waiting briefly or returning your fallback response. Then add one counter for deduplicated calls and confirm, under a concurrent replay of the same prompt against a cold cache, that the model is called once.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/">Failed AI wrappers 2026: what the survivors did right</a></li>
+<li>Failed AI wrappers 2026: what the survivors did right</li>
 <li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
 <li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
 </ul>

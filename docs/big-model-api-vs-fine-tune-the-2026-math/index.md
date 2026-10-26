@@ -335,6 +335,10 @@ Substitute your own column layout. The output gives you the numerator for the co
 - [Route, fine-tune, or scale: pick right](https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/)
 - [LLM costs: fine-tune vs route vs bigger model](https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/)
 
+## Official documentation
+
+- [Prometheus documentation](https://prometheus.io/docs/)
+
 ---
 
 ### About this article

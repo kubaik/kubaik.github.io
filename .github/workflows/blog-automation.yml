@@ -359,6 +359,32 @@ jobs:
                     --max "${{ github.event.inputs.triage_max_deletions || '10' }}" \
                     --backup-dir ./.triage_backups --confirm
 
+            # Final triage: covers what triage.py does not (quarantined-and-unresolved
+            # posts, template-skeleton clones, posts with no primary sources).
+            # Report-only; writes ./triage_final/{delete.txt,improve.csv,keep.txt,verdicts.json}.
+            - name: 🧮 Final triage (report only)
+              run: python scripts/final_triage.py --docs ./docs --queue ./regeneration_queue.json --out ./triage_final
+
+            # Bounded, backed-up removal of quarantined posts (same safety model and
+            # blocklist as the step above; delete_posts.py --list reads delete.txt).
+            - name: 🗑️ Delete quarantined posts + block their topics (bounded)
+              run: |
+                  if [ -s ./triage_final/delete.txt ]; then
+                    python delete_posts.py --docs ./docs --list ./triage_final/delete.txt \
+                      --max "${{ github.event.inputs.triage_max_deletions || '10' }}" \
+                      --backup-dir ./.triage_backups --confirm
+                  else
+                    echo "No quarantined posts to delete"
+                  fi
+
+            # Code-driven primary-source linking for posts that cite nothing external
+            # (the "no_primary_sources" IMPROVE list from final_triage.py). No LLM, so no
+            # invented URLs: links come only from post_enhancer.DOCS + a standards map
+            # (OWASP/NIST/W3C/Google SRE), each URL verified live. Posts with no safe match
+            # are left untouched. Backs up to .sources_backups/ first.
+            - name: 📚 Add verified primary-source links (code-driven)
+              run: python add_sources.py --docs ./docs --verify-links --backup-dir ./.sources_backups --confirm
+
             - name: ✨ LLM-improve flagged posts (scans docs/)
               env:
                   GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
@@ -392,6 +418,12 @@ jobs:
                     echo "⚠️ WARNING: sitemap.xml missing after rebuild"
                     echo "sitemap_url_count=0" >> $GITHUB_ENV
                   fi
+
+            # Ads scope gate: strips the adsbygoogle loader / account meta / ad units from
+            # noindex, redirect, utility (tag, author, legal, 404) and thin pages. Must run
+            # after the LAST `blog_system.py build` so a rebuild cannot re-add them.
+            - name: 🛡️ Ads scope gate (no ads on noindex / utility / thin pages)
+              run: python adsense_fixes/ads_scope_gate.py --docs ./docs --min-words 1200
 
             # FIX (2026-09-16): read-only regression guard for the self-canonical /
             # missing-noindex bug the 2026-09-15 audit found on merge-redirect
@@ -478,8 +510,8 @@ jobs:
                   # scripts/process_citation_queue.py touched this run — a backup
                   # that isn't persisted across checkouts isn't a backup.
                   # git add exits 128 on a pathspec that doesn't exist yet (first run, nothing deleted)
-                  mkdir -p .duplicate_backups .fabrication_backups .citation_backups .triage_backups .quality_review_backups
-                  git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/ .triage_backups/ .quality_review_backups/
+                  mkdir -p .duplicate_backups .fabrication_backups .citation_backups .triage_backups .quality_review_backups .sources_backups
+                  git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/ .triage_backups/ .quality_review_backups/ .sources_backups/
                   if git diff --staged --quiet; then
                     echo "Nothing to commit"
                   else

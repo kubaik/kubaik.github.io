@@ -218,8 +218,7 @@
                 <div class="tags">
                     
                     
-                    <a class="tag" href="/tag/edgenativebackend/"
-                       style="text-decoration:none;">EdgeNativeBackend</a>
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">EdgeNativeBackend</span>
                     
                     
                     
@@ -463,7 +462,7 @@ function mergeLWW&lt;T&gt;(a: VersionedValue&lt;T&gt;, b: VersionedValue&lt;T&gt
 <p>Pick one endpoint you are considering moving to the edge. Add three timers to it: time before the first outbound call, round-trip time to the origin, and time from write-acknowledged to read-visible. Run it from a single non-local vantage point and record the three numbers. Those three numbers will tell you which of the failure modes above you will hit first — and whether the edge is the right move at all.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/">50 locations, 50 headaches: edge-native backends in</a></li>
+<li>50 locations, 50 headaches: edge-native backends in</li>
 <li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
 <li><a href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">Store data once, serve everywhere: cheaper</a></li>
 </ul>
@@ -504,12 +503,6 @@ function mergeLWW&lt;T&gt;(a: VersionedValue&lt;T&gt;, b: VersionedValue&lt;T&gt
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/50-locations-50-headaches-edge-native-backends-in/">
-                        <h3>50 locations, 50 headaches: edge-native backends in</h3>
-                        <p>How to design edge-native backends: bounded staleness, write fan-out cost, leader-based writes, and how to measure P99 latency per POP.</p>
-                        <span class="related-meta">12 min read · 22 June 2026</span>
-                    </a>
-                    
                     <a class="related-card" href="/http3-changes-less-than-the-demos-imply/">
                         <h3>HTTP/3 changes less than the demos imply</h3>
                         <p>HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.</p>
@@ -520,6 +513,12 @@ function mergeLWW&lt;T&gt;(a: VersionedValue&lt;T&gt;, b: VersionedValue&lt;T&gt
                         <h3>Settlement vs clearing: backend engineer&#39;s guide</h3>
                         <p>Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</p>
                         <span class="related-meta">15 min read · 28 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
+                        <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
+                        <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
                     </a>
                     
                 </div>

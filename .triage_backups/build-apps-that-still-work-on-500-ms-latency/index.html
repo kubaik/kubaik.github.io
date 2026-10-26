@@ -1,0 +1,722 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Build apps that still work on 500 ms latency - Kubai Kevin</title>
+        <meta name="description" content="How to keep a web dashboard usable when round-trip latency is 400–500 ms: TLS choice, edge caching, preload, circuit breakers, and how to measure each.">
+        <meta name="keywords" content="EcdsaCertificates2026, Redis7.2Caching, StarlinkLatency, TtiOptimization, Next.js14.2Performance, CloudflareR2Pricing, TlsHandshakeTime, ReactDashboard4g, Reactjs, Cloudcomputing, Redis, Nextjs">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-14T07:17:21.188689">
+        <meta property="article:modified_time" content="2026-10-04T10:25:56.118464+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Build apps that still work on 500 ms latency">
+        <meta property="og:description" content="How to keep a web dashboard usable when round-trip latency is 400–500 ms: TLS choice, edge caching, preload, circuit breakers, and how to measure each.">
+        <meta property="og:url" content="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/build-apps-that-still-work-on-500-ms-latency.png">
+        <meta property="og:image:alt" content="Build apps that still work on 500 ms latency">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Build apps that still work on 500 ms latency">
+        <meta name="twitter:description" content="How to keep a web dashboard usable when round-trip latency is 400–500 ms: TLS choice, edge caching, preload, circuit breakers, and how to measure each.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/build-apps-that-still-work-on-500-ms-latency.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/">
+        <meta name="robots" content="noindex, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/#article",
+      "headline": "Build apps that still work on 500 ms latency",
+      "description": "How to keep a web dashboard usable when round-trip latency is 400–500 ms: TLS choice, edge caching, preload, circuit breakers, and how to measure each.",
+      "datePublished": "2026-06-14T07:17:21+00:00",
+      "dateModified": "2026-10-04T10:25:56+00:00",
+      "wordCount": 3126,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/"
+      },
+      "keywords": "EcdsaCertificates2026, Redis7.2Caching, StarlinkLatency, TtiOptimization, Next.js14.2Performance, CloudflareR2Pricing, TlsHandshakeTime, ReactDashboard4g",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/build-apps-that-still-work-on-500-ms-latency.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Build apps that still work on 500 ms latency",
+          "item": "https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Build apps that still work on 500 ms latency</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Build apps that still work on 500 ms latency</h1>
+                
+                <p class="post-lead">How to keep a web dashboard usable when round-trip latency is 400–500 ms: TLS choice, edge caching, preload, circuit breakers, and how to measure each.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">EcdsaCertificates2026</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/redis7.2caching/"
+                       style="text-decoration:none;">Redis7.2Caching</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">StarlinkLatency</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TtiOptimization</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Next.js14.2Performance</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/reactjs/"
+                       style="text-decoration:none;">Reactjs</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3126 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-happy-path-tutorials-vs-high-latency-reality">The problem: happy-path tutorials vs. high-latency reality</h2>
+<p>Most framework tutorials assume a 20–80 ms round trip. When the same code is deployed for users on high-latency links — satellite backhaul, congested mobile networks, or long-haul routes to a distant origin — the failure mode is consistent: pages that render a spinner and never finish, timeouts that appear random, and error rates that spike whenever the link quality dips.</p>
+<p>The underlying reasons are mechanical, not mysterious. On a 500 ms RTT link, every round trip costs half a second. A TLS handshake is several round trips. A cache miss that triggers an origin fetch is another. An uncached asset is another. Add them up and a page that felt instant on a 30 ms link becomes unusable.</p>
+<p>This article covers the specific techniques that keep a dashboard responsive under a 400–500 ms RTT budget, why each one works, and how to measure whether it's working in your environment.</p>
+<h2 id="why-latency-dominates-bandwidth-on-slow-links">Why latency dominates bandwidth on slow links</h2>
+<p>Bandwidth determines how long a payload takes to transfer once the connection exists. Latency determines how long it takes to establish the connection and negotiate each request. On a link with 500 ms RTT and 1.6 Mbps throughput:</p>
+<ul>
+<li>A full TLS 1.2 handshake with an RSA certificate typically requires two round trips before application data flows — roughly 1 second of wall-clock time on a 500 ms RTT link.</li>
+<li>TLS 1.3 reduces this to one round trip for the initial handshake, and zero round trips on resumption.</li>
+<li>A 1.2 MB image at 1.6 Mbps takes about 6 seconds to transfer, but a 50 KB image takes about 250 ms.</li>
+</ul>
+<p>The practical implication: shaving bytes off a large asset helps, but shaving round trips off the connection setup helps more, because round trips are multiplied by the RTT and bytes are divided by the bandwidth. On a 500 ms link, a single saved round trip is worth roughly 500 ms; a saved megabyte is worth roughly 5 seconds at 1.6 Mbps — but only if the megabyte was actually going to be transferred.</p>
+<p>This is why certificate algorithm choice, HTTP version, connection reuse, and preloading matter disproportionately on high-latency links.</p>
+<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
+<p>The examples below use a Next.js App Router dashboard, a Redis-compatible cache, an S3-compatible object store for static assets, and a CDN. None of these are mandatory — the techniques transfer to any stack. The specific tools are chosen because they have documented behavior that makes the reasoning concrete.</p>
+<p>You'll need:</p>
+<ul>
+<li>Node.js 20 LTS or later</li>
+<li>Docker (for the local Redis instance)</li>
+<li>A CDN account with configurable TLS (Cloudflare, Fastly, or similar)</li>
+<li>An S3-compatible object store for static assets</li>
+<li>Lighthouse 11 or later, and Playwright for synthetic testing</li>
+</ul>
+<p>The dashboard itself is intentionally small: a server component that reads a cached page payload, a client component that renders it, and a layout that preloads the critical chunk and the LCP image.</p>
+<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
+<ol>
+<li>Create the project and install dependencies:</li>
+</ol>
+<pre><code class="language-bash">npx create-next-app@latest latency-dashboard --typescript --app
+cd latency-dashboard
+npm install redis opossum
+</code></pre>
+<ol>
+<li>Create <code>.env.local</code> with your cache and asset host configuration:</li>
+</ol>
+<pre><code class="language-env">REDIS_URL=&quot;redis://localhost:6379/0&quot;
+ASSET_HOST=&quot;https://assets.yourdomain.com&quot;
+</code></pre>
+<ol>
+<li>Start a local Redis instance:</li>
+</ol>
+<pre><code class="language-bash">docker run -d --name redis7 \
+  -p 6379:6379 \
+  redis:7.2
+</code></pre>
+<p>Redis 7.2 is a reasonable baseline because it supports the commands used below (<code>GET</code>, <code>SET</code> with <code>EX</code>, and <code>SET</code> with <code>NX</code> for lock-free stampede protection). If you only need string caching, the vanilla image is sufficient; managed Redis-compatible services work the same way.</p>
+<ol>
+<li>Start the dev server:</li>
+</ol>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>Verify the app responds before adding any of the latency work, so you have a clean baseline to compare against.</p>
+<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
+<p>The implementation has three layers: a cache that absorbs origin round trips, a layout that preloads critical resources, and a TLS configuration that minimizes handshake round trips.</p>
+<h3 id="layer-1-edge-cache-with-a-redis-compatible-store">Layer 1: edge cache with a Redis-compatible store</h3>
+<p>Create <code>lib/cache.ts</code>:</p>
+<pre><code class="language-typescript">import { createClient } from 'redis';
+
+const client = createClient({
+  url: process.env.REDIS_URL,
+  socket: {
+    reconnectStrategy: (retries) =&gt; Math.min(retries * 100, 5000),
+  },
+});
+
+client.on('error', (err) =&gt; console.error('redis error', err));
+
+let connected = false;
+export async function getClient() {
+  if (!connected) {
+    await client.connect();
+    connected = true;
+  }
+  return client;
+}
+
+export async function getCachedPage(path: string) {
+  const redis = await getClient();
+  const hit = await redis.get(path);
+  return hit ? JSON.parse(hit) : null;
+}
+
+export async function setCachedPage(path: string, data: unknown, ttlSeconds = 300) {
+  const redis = await getClient();
+  await redis.set(path, JSON.stringify(data), { EX: ttlSeconds });
+}
+</code></pre>
+<p>A common bug in this pattern is calling <code>client.connect()</code> at module load time. On serverless platforms that reuse module instances across invocations, that can throw "already connected" on the second call. Tracking connection state explicitly avoids it.</p>
+<h3 id="layer-2-preload-critical-assets">Layer 2: preload critical assets</h3>
+<p>In <code>app/layout.tsx</code>, preload the main client chunk and the LCP image so the browser can start fetching them while it parses HTML:</p>
+<pre><code class="language-tsx">import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;head&gt;
+        &lt;link
+          rel=&quot;preload&quot;
+          as=&quot;image&quot;
+          href={`${process.env.ASSET_HOST}/hero.webp`}
+          fetchPriority=&quot;high&quot;
+        /&gt;
+      &lt;/head&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</code></pre>
+<p>The <code>fetchPriority="high"</code> attribute is a hint, not a guarantee; it works in Chromium-based browsers and is ignored elsewhere. The measurable effect is that the LCP image request starts earlier in the HTML parse, which on a 500 ms RTT link can save one round trip — roughly 500 ms.</p>
+<h3 id="layer-3-tls-configuration">Layer 3: TLS configuration</h3>
+<p>TLS handshake cost is dominated by two things: the protocol version and the certificate algorithm. Two changes matter:</p>
+<ol>
+<li><strong>Enable TLS 1.3.</strong> It reduces the handshake to one round trip (or zero on resumption) instead of two. Most CDNs and modern web servers enable it by default; verify with:</li>
+</ol>
+<pre><code class="language-bash">openssl s_client -connect yourdomain.com:443 -tls1_3 &lt;/dev/null 2&gt;/dev/null | grep &quot;Protocol&quot;
+</code></pre>
+<p>If the output shows <code>TLSv1.3</code>, it's enabled. If it shows <code>TLSv1.2</code>, check your server or CDN configuration.</p>
+<ol>
+<li><strong>Use an ECDSA certificate where supported.</strong> An ECDSA P-256 certificate produces smaller signatures than RSA, which reduces the bytes transferred during the handshake. The handshake round-trip count is the same, but the per-round-trip payload is smaller, which matters on constrained links.</li>
+</ol>
+<p>To check what algorithm your current certificate uses:</p>
+<pre><code class="language-bash">echo | openssl s_client -connect yourdomain.com:443 2&gt;/dev/null \
+  | openssl x509 -noout -text \
+  | grep -E &quot;Public Key Algorithm|Signature Algorithm&quot;
+</code></pre>
+<p>If the output says <code>rsaEncryption</code> and <code>sha256WithRSAEncryption</code>, you're serving an RSA certificate. Whether to switch depends on your client mix — see the failure-mode section below.</p>
+<h3 id="layer-4-static-assets-on-a-cdn-with-a-nearby-pop">Layer 4: static assets on a CDN with a nearby POP</h3>
+<p>Serve the LCP image and other static assets from a CDN POP that is geographically close to your users. The measurement that matters is not "is it on a CDN" but "what is the RTT from the user to the POP serving the asset."</p>
+<p>To measure this from a test location, use <code>curl</code>'s timing breakdown:</p>
+<pre><code class="language-bash">curl -w &quot;dns: %{time_namelookup}\nconnect: %{time_connect}\ntls: %{time_appconnect}\nttfb: %{time_starttransfer}\ntotal: %{time_total}\n&quot; \
+  -o /dev/null -s https://assets.yourdomain.com/hero.webp
+</code></pre>
+<p>The <code>time_connect</code> value approximates the TCP RTT to the POP. If it's above ~100 ms, the user is not hitting a nearby POP and you should check your CDN's routing configuration.</p>
+<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
+<h3 id="cache-stampede-on-cold-start">Cache stampede on cold start</h3>
+<p>When the cache restarts, every concurrent request to the same path misses and hits the origin. On a 500 ms RTT link, 100 concurrent misses means 100 origin round trips, which can saturate the origin and cascade into timeouts.</p>
+<p>The fix is a lock: the first request to miss acquires a short-lived lock, fetches from origin, and populates the cache; concurrent requests either wait briefly or serve stale data.</p>
+<pre><code class="language-typescript">import { getClient, setCachedPage } from './cache';
+
+export async function getCachedPageWithLock(path: string, fetchFromOrigin: () =&gt; Promise&lt;unknown&gt;) {
+  const redis = await getClient();
+
+  const hit = await redis.get(path);
+  if (hit) return JSON.parse(hit);
+
+  const lockKey = `lock:${path}`;
+  const acquired = await redis.set(lockKey, '1', { NX: true, EX: 10 });
+
+  if (!acquired) {
+    // Another request is already fetching. Wait briefly, then read the cache.
+    await new Promise((r) =&gt; setTimeout(r, 100));
+    const retry = await redis.get(path);
+    if (retry) return JSON.parse(retry);
+    // Fall through and fetch ourselves rather than fail.
+  }
+
+  const data = await fetchFromOrigin();
+  await setCachedPage(path, data, 300);
+  await redis.del(lockKey);
+  return data;
+}
+</code></pre>
+<p>The <code>NX</code> flag makes the <code>SET</code> atomic: only one caller gets the lock. The <code>EX</code> expiry ensures a crashed holder doesn't deadlock the path.</p>
+<h3 id="circuit-breaker-for-flapping-links">Circuit breaker for flapping links</h3>
+<p>On links that intermittently spike from 400 ms to over 1 second RTT, a request that would normally succeed can exceed the client's timeout. A circuit breaker stops sending requests to a failing dependency for a cooldown period, which prevents a slow dependency from consuming the entire request budget.</p>
+<pre><code class="language-typescript">import CircuitBreaker from 'opossum';
+
+const breaker = new CircuitBreaker(
+  async (path: string) =&gt; {
+    const res = await fetch(`https://api.yourdomain.com/page/${path}`, {
+      signal: AbortSignal.timeout(1200),
+    });
+    if (!res.ok) throw new Error(`status ${res.status}`);
+    return res.json();
+  },
+  {
+    timeout: 1200,
+    errorThresholdPercentage: 50,
+    resetTimeout: 30000,
+  }
+);
+
+breaker.fallback(() =&gt; ({ stale: true, data: null }));
+
+export async function fetchPage(path: string) {
+  return breaker.fire(path);
+}
+</code></pre>
+<p>The key parameter is <code>timeout: 1200</code>. It must be shorter than the overall request budget, so a single slow dependency doesn't consume the entire budget and cause the page to fail. The fallback returns a stale-data marker, which the UI can render as a degraded state rather than an error.</p>
+<h3 id="legacy-client-tls-fallback">Legacy client TLS fallback</h3>
+<p>Some older clients cannot validate ECDSA certificate chains. If you switch to ECDSA and see an increase in handshake failures, you have two options: serve an RSA certificate on a separate port for those clients, or terminate TLS at a CDN that negotiates the algorithm based on the client's capabilities.</p>
+<p>If you control the server, a dual-certificate configuration looks like this:</p>
+<pre><code class="language-nginx">server {
+  listen 443 ssl;
+  http2 on;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_certificate     /etc/ssl/fullchain-ecc.pem;
+  ssl_certificate_key /etc/ssl/privkey-ecc.pem;
+  # Additional RSA chain for clients that cannot negotiate ECDSA
+  ssl_certificate     /etc/ssl/fullchain-rsa.pem;
+  ssl_certificate_key /etc/ssl/privkey-rsa.pem;
+}
+</code></pre>
+<p>The server presents both chains and the client picks. This is preferable to a separate port because it requires no client-side logic.</p>
+<h3 id="timeout-budgets">Timeout budgets</h3>
+<p>Every layer that can wait needs an explicit timeout, and the timeouts must nest correctly. A typical budget for a 500 ms RTT link:</p>
+<ul>
+<li>Total request budget: 5 seconds</li>
+<li>Origin fetch timeout: 2 seconds</li>
+<li>Cache read timeout: 200 ms</li>
+<li>Circuit breaker timeout: 1.2 seconds (must be less than origin fetch timeout)</li>
+</ul>
+<p>If a cache read can hang for 5 seconds, it will consume the entire request budget and the origin fetch will never run. Set cache timeouts aggressively low — a cache that takes more than 200 ms to respond is not providing value on a 500 ms RTT link anyway.</p>
+<h2 id="step-4-observability-and-tests">Step 4 — observability and tests</h2>
+<h3 id="lighthouse-ci">Lighthouse CI</h3>
+<p>Lighthouse's simulated throttling (default: 150 ms RTT, 1.6 Mbps) gives a reproducible baseline, but it does not simulate 500 ms RTT. To approximate a high-latency link, configure the throttling explicitly:</p>
+<pre><code class="language-yaml">- uses: treosh/lighthouse-ci-action@v11
+  with:
+    urls: |
+      https://staging.yourdomain.com/dashboard
+    uploadArtifacts: true
+    temporaryPublicStorage: true
+    configPath: ./lighthouserc.json
+</code></pre>
+<p>With <code>lighthouserc.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;ci&quot;: {
+    &quot;collect&quot;: {
+      &quot;settings&quot;: {
+        &quot;throttling&quot;: {
+          &quot;rttMs&quot;: 500,
+          &quot;throughputKbps&quot;: 1600,
+          &quot;cpuSlowdownMultiplier&quot;: 4
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>The <code>rttMs: 500</code> setting is the important one. Lighthouse's default throttling is optimistic for high-latency targets.</p>
+<h3 id="real-device-synthetic-testing">Real-device synthetic testing</h3>
+<p>Lighthouse simulates latency in software. To measure the real thing, run a Playwright test from a CI runner in a region with high RTT to your origin:</p>
+<pre><code class="language-typescript">import { test, expect } from '@playwright/test';
+
+test('dashboard loads under 500 ms RTT', async ({ page }) =&gt; {
+  const client = await page.context().newCDPSession(page);
+  await client.send('Network.emulateNetworkConditions', {
+    offline: false,
+    downloadThroughput: (1600 * 1024) / 8,
+    uploadThroughput: (750 * 1024) / 8,
+    latency: 500,
+  });
+
+  const start = Date.now();
+  await page.goto('https://staging.yourdomain.com/dashboard');
+  await page.waitForSelector('[data-testid=&quot;dashboard-ready&quot;]');
+  const duration = Date.now() - start;
+
+  console.log(`time to dashboard-ready: ${duration} ms`);
+  expect(duration).toBeLessThan(5000);
+});
+</code></pre>
+<p>The <code>data-testid</code> selector should be on an element that only renders after the dashboard data is available, not on a loading spinner. Otherwise the test measures the wrong thing.</p>
+<h3 id="alerting-on-tls-handshake-time">Alerting on TLS handshake time</h3>
+<p>Most CDNs expose TLS handshake duration as a metric. A reasonable alert threshold is p95 handshake duration above 200 ms — on a healthy TLS 1.3 connection with a nearby POP, handshakes should be well under that. If the metric rises, the likely causes are:</p>
+<ul>
+<li>A certificate change that broke session resumption</li>
+<li>A CDN POP change that increased RTT</li>
+<li>A protocol downgrade (TLS 1.3 to 1.2)</li>
+</ul>
+<p>Each of these is diagnosable from the metric trend, which is why alerting on it is worth the setup cost.</p>
+<h2 id="failure-modes-and-how-to-detect-them">Failure modes and how to detect them</h2>
+<h3 id="failure-mode-certificate-chain-served-out-of-order">Failure mode: certificate chain served out of order</h3>
+<p>If the server sends the leaf certificate before the intermediate, some clients fail to build a valid chain and fall back or fail outright. This is invisible in browsers that cache the intermediate from a previous connection, but visible on first visits.</p>
+<p>Detection: run a chain validation from a clean client:</p>
+<pre><code class="language-bash">openssl s_client -connect yourdomain.com:443 -showcerts &lt;/dev/null 2&gt;/dev/null \
+  | openssl verify -CAfile /etc/ssl/certs/ca-certificates.crt
+</code></pre>
+<p>If the output is not <code>OK</code>, the chain is mis-ordered or incomplete.</p>
+<h3 id="failure-mode-cache-key-collision-across-tenants">Failure mode: cache key collision across tenants</h3>
+<p>If the cache key is derived only from the URL path and not from the tenant or user, one user's cached page can be served to another. This is a correctness bug, not a performance bug, but it often appears after a caching change and is blamed on the cache being "stale."</p>
+<p>Detection: include the tenant ID in the cache key and assert in tests that two different tenants get different payloads.</p>
+<h3 id="failure-mode-preload-hint-on-the-wrong-resource">Failure mode: preload hint on the wrong resource</h3>
+<p><code>&lt;link rel="preload"&gt;</code> on a resource that isn't used on the page consumes bandwidth without benefit, and on a 500 ms RTT link that bandwidth is precious. A preload for an image that turns out to be below the fold delays the LCP image.</p>
+<p>Detection: check Lighthouse's "Preload key requests" and "Avoid chaining critical requests" audits. If a preloaded resource doesn't appear in the LCP critical path, remove the preload.</p>
+<h3 id="failure-mode-circuit-breaker-fallback-masks-real-errors">Failure mode: circuit breaker fallback masks real errors</h3>
+<p>A fallback that returns <code>{ stale: true, data: null }</code> can hide an origin outage from the UI, which then renders an empty dashboard. Users see a working page with no data and don't report it.</p>
+<p>Detection: emit a metric every time the fallback fires, and alert if the fallback rate exceeds a small threshold (for example, 1% of requests over 5 minutes).</p>
+<h2 id="when-this-approach-helps-and-when-it-doesnt">When this approach helps and when it doesn't</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Does this help?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400–500 ms RTT to origin, read-heavy dashboard</td>
+<td>Yes, significantly</td>
+<td>Round-trip savings dominate</td>
+</tr>
+<tr>
+<td>20–50 ms RTT, read-heavy dashboard</td>
+<td>Marginally</td>
+<td>Round trips are already cheap</td>
+</tr>
+<tr>
+<td>Write-heavy workload</td>
+<td>No</td>
+<td>Cache doesn't help; focus on write path</td>
+</tr>
+<tr>
+<td>Small payloads (&lt; 100 KB) on fast links</td>
+<td>No</td>
+<td>Bandwidth isn't the bottleneck</td>
+</tr>
+<tr>
+<td>Large payloads (&gt; 1 MB) on slow links</td>
+<td>Yes, but optimize payload size first</td>
+<td>Bandwidth and round trips both matter</td>
+</tr>
+<tr>
+<td>Users behind a flapping link</td>
+<td>Yes, with circuit breaker</td>
+<td>Prevents one slow dependency from failing the page</td>
+</tr>
+</tbody>
+</table>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does TLS handshake time matter more than bandwidth on high-latency links?</strong></p>
+<p>A TLS handshake requires round trips before any application data moves. On a 500 ms RTT link, each round trip costs half a second. TLS 1.3 reduces the handshake to one round trip (or zero on resumption), while TLS 1.2 with RSA requires two. That difference is 500 ms of wall-clock time on every new connection, regardless of how much bandwidth is available. Bandwidth only helps once the connection is established.</p>
+<p><strong>Should I use ECDSA or RSA certificates?</strong></p>
+<p>ECDSA P-256 is smaller and faster to verify than RSA 2048, and it's supported by all current browsers and TLS stacks. The exception is very old clients (Android 4.x, IE 11) that cannot validate ECDSA chains. If your traffic includes those clients, serve both certificate types and let the server negotiate. The measurement to run before switching is the handshake failure rate by client version, which most CDNs expose.</p>
+<p><strong>Is Redis the right edge cache, or should I use a KV store?</strong></p>
+<p>Redis is appropriate when you need sub-10 ms p99 reads, structured data types, or atomic operations like the <code>SET NX</code> lock shown above. A KV store with eventual consistency is simpler for small immutable values but doesn't support the atomic operations needed for stampede protection. If your payloads are large and read-heavy, Redis is usually the better fit; for small immutable values, either works.</p>
+<p><strong>How do I test high-latency performance without being in the region?</strong></p>
+<p>Use Lighthouse's <code>throttling.rttMs</code> setting for a quick simulated baseline, then add a Playwright test using CDP's <code>Network.emulateNetworkConditions</code> with <code>latency: 500</code>. Run the Playwright test from a CI runner in a region with high RTT to your origin, so the emulated latency is added on top of real network latency. This catches both code regressions and routing regressions.</p>
+<h2 id="one-action-to-take-in-the-next-30-minutes">One action to take in the next 30 minutes</h2>
+<p>Run this command against your production origin and read the output:</p>
+<pre><code class="language-bash">curl -w &quot;dns: %{time_namelookup}\nconnect: %{time_connect}\ntls: %{time_appconnect}\nttfb: %{time_starttransfer}\ntotal: %{time_total}\n&quot; \
+  -o /dev/null -s https://yourdomain.com
+</code></pre>
+<p>If <code>time_appconnect</code> minus <code>time_connect</code> is above 200 ms, your TLS handshake is costing more than one round trip on a typical connection and is the first thing to investigate. Check whether TLS 1.3 is enabled and whether session resumption is working before changing anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/">Ship to Nairobi users: Starlink latency guide 2026</a></li>
+<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
+<li><a href="https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/">Starlink 4G fallback: serve pages under 800ms</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://web.dev/articles/vitals">web.dev: Web Vitals</a></li>
+<li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> June 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/why-your-routing-layer-will-collapse-at-scale/">
+                        <h3>Why your routing layer will collapse at scale</h3>
+                        <p>How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+                        <span class="related-meta">12 min read · 4 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+                        <h3>AI on slow networks: Nairobi teams&#39; 2026 playbook</h3>
+                        <p>How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/edge-agents-vs-cloud-round-trips-in-2026/">
+                        <h3>Edge agents vs cloud round-trips in 2026</h3>
+                        <p>A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.</p>
+                        <span class="related-meta">11 min read · 23 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
