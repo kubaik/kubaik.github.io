@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "context-engineering-the-real-fix-for-agent-hallucinations",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
   "failed": []
 }

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-26T08:01:35.836008",
+  "built_at": "2026-10-27T04:15:51.554770",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5660,6 +5660,11 @@
       "slug": "hpa-vs-keda-vs-karpenter-autoscaling-traps",
       "title": "HPA vs KEDA vs Karpenter: autoscaling traps",
       "summary": "The tutorials all show the happy path. The kubernetes autoscaling advice that circulates internally rarely matches what's in the public docs. This works through the problem properly, from cause to fix. The problem this solves You have a Kubernetes cluster. Some workloads are steady HTTP APIs. Some a"
+    },
+    {
+      "slug": "context-engineering-the-real-fix-for-agent-hallucinations",
+      "title": "Context engineering: the real fix for agent hallucinations",
+      "summary": "context engineering is easy to demo and hard to keep honest at scale. The workaround gets copy-pasted forward long after the original reason is forgotten. Here's the root cause, not just the symptom. Most teams treat hallucinations as a model problem. They upgrade the model, tweak the temperature, a"
     }
   ]
 }

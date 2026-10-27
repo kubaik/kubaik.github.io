@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Oct 2026 18:29:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Oct 2026 04:17:31 +0000</lastBuildDate>
+    <item>
+      <title>Context engineering: the real fix for agent hallucinations</title>
+      <link>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</link>
+      <description>Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context.</description>
+      <pubDate>Tue, 27 Oct 2026 04:15:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</guid>
+    </item>
     <item>
       <title>HPA vs KEDA vs Karpenter: autoscaling traps</title>
       <link>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</link>
@@ -138,13 +145,6 @@
       <description>Open banking integration failures come from semantic gaps between markets. Here is how consent, idempotency and errors differ, and how to test.</description>
       <pubDate>Sat, 17 Oct 2026 15:15:31 +0000</pubDate>
       <guid>https://kubaik.github.io/open-banking-apis-the-integration-traps/</guid>
-    </item>
-    <item>
-      <title>Why leader election fails on cloud networks</title>
-      <link>https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/</link>
-      <description>Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.</description>
-      <pubDate>Sat, 17 Oct 2026 03:37:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/</guid>
     </item>
   </channel>
 </rss>

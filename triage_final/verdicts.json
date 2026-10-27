@@ -807,6 +807,17 @@
   "title": "Chaos engineering without an SRE team",
   "words": 2713
  },
+ "context-engineering-the-real-fix-for-agent-hallucinations": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Context engineering: the real fix for agent hallucinations",
+  "words": 2592
+ },
  "soft-deletes-fail-what-breaks-first": {
   "verdict": "KEEP",
   "reasons": [],

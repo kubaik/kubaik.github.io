@@ -8,6 +8,7 @@ ai-tools-wont-help-if-everyone-writes-the-same-code
 buy-vs-build-ai-3-hard-rules-for-2026
 code-ai-wont-rewrite
 commit-ownership-in-ai-pair-coding
+context-engineering-the-real-fix-for-agent-hallucinations
 cross-border-fintech-why-your-kyc-fails-in-dakar
 cut-false-positives-85-with-this-ci-security-trick
 detect-lazy-agents-without-false-alarms

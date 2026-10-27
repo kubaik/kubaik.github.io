@@ -24,6 +24,7 @@ docs/buy-vs-build-ai-3-hard-rules-for-2026/,add_sources|restructure_outline,temp
 docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/,restructure_outline,template_clone_ending x9,2309,CDC pipeline death spiral: one bad LLM call can crash…
 docs/code-ai-wont-rewrite/,add_sources,no_primary_sources,2339,Code AI won’t rewrite
 docs/commit-ownership-in-ai-pair-coding/,add_sources|restructure_outline,template_clone_ending x9; no_primary_sources,2851,Commit ownership in AI pair coding
+docs/context-engineering-the-real-fix-for-agent-hallucinations/,add_sources,no_primary_sources,2592,Context engineering: the real fix for agent hallucinations
 docs/cross-border-fintech-why-your-kyc-fails-in-dakar/,add_sources,no_primary_sources,2653,Cross-border fintech: why your KYC fails in Dakar
 docs/cut-cold-starts-70-lambda-cost-hack/,restructure_outline,template_clone_ending x12,2472,Serverless Cold Starts: Cost Levers and How to Measure Them
 docs/cut-false-positives-85-with-this-ci-security-trick/,add_sources,no_primary_sources,2302,Context-aware security gates that cut CI alert noise
