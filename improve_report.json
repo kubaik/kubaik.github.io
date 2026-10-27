@@ -1,7 +1,7 @@
 {
   "improved": [
     {
-      "slug": "context-engineering-the-real-fix-for-agent-hallucinations",
+      "slug": "jwt-sessions-revocation-rotation-storage",
       "attempts": 1,
       "retitled": false
     }

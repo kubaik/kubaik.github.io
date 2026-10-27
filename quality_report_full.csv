@@ -108,7 +108,7 @@ cicd-for-ai-code-test-secure-rollback-fast,95,2508,"CI/CD for AI code: test, sec
 cicd-for-django-in-20ms-africa-networks,95,2503,CI/CD for Django in 20ms Africa networks,2026-07-03T14:11:10.074155,1,no FAQ section
 cloud-agents-burned-18k-8-tools-that-didnt-work,95,2404,Why Cloud Cost Tools Miss Agent-Driven GPU Spend,2026-07-10T14:36:13.221418,1,no markdown table
 code-ai-wont-rewrite,95,2339,Code AI won’t rewrite,2026-06-18T17:53:30.210099,1,no FAQ section
-context-engineering-the-real-fix-for-agent-hallucinations,95,2592,Context engineering: the real fix for agent hallucinations,2026-10-27T04:15:49.305547,1,no markdown table
+context-engineering-the-real-fix-for-agent-hallucinations,95,3109,Context engineering: the real fix for agent hallucinations,2026-10-27T04:15:49.305547,1,no markdown table
 core-web-vitals-what-actually-moves-the-needle,95,3127,Core Web Vitals: what actually moves the needle,2026-10-07T18:40:58.470278,1,no FAQ section
 cost-tools-fail-when-agents-scale-autonomously,95,2230,Cost tools fail when agents scale autonomously,2026-09-09T12:51:51.860483,1,no markdown table
 cross-border-fintech-why-your-kyc-fails-in-dakar,95,2653,Cross-border fintech: why your KYC fails in Dakar,2026-10-05T04:47:06.453151,1,no markdown table
@@ -296,6 +296,7 @@ hpa-vs-keda-vs-karpenter-autoscaling-traps,100,3432,HPA vs KEDA vs Karpenter: au
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,
 json-modes-hidden-costs-revealed,100,2477,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2148,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
+jwt-sessions-revocation-rotation-storage,100,2350,"JWT sessions: revocation, rotation, storage",2026-10-27T17:43:39.631250,0,
 keep-multi-model-systems-stable-6-rules-that-worked,100,3027,Stabilize multi-model agent routers: six production rules,2026-07-15T02:44:07.331590,0,
 kill-noisy-alerts-the-triage-system-that-restored-sleep,100,2456,Designing Alert Triage That Suppresses Noise Safely,2026-07-11T13:28:35.352118,0,
 kubernetes-or-nomad-the-real-experiment-cost-split,100,2125,Kubernetes or Nomad: the real experiment cost split,2026-08-03T14:47:24.911552,0,

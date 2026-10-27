@@ -816,7 +816,7 @@
    "add_sources"
   ],
   "title": "Context engineering: the real fix for agent hallucinations",
-  "words": 2592
+  "words": 3109
  },
  "soft-deletes-fail-what-breaks-first": {
   "verdict": "KEEP",
@@ -2994,6 +2994,13 @@
   "fixes": [],
   "title": "Meter dev-tool pricing in 2026",
   "words": 2157
+ },
+ "jwt-sessions-revocation-rotation-storage": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "JWT sessions: revocation, rotation, storage",
+  "words": 2350
  },
  "ai-glue-code-3-ways-to-avoid-duct-taping-models": {
   "verdict": "KEEP",

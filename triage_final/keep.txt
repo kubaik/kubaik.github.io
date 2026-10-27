@@ -165,6 +165,7 @@ docs/iso-20022-where-payment-rails-actually-break/
 docs/istio-and-cilium-what-really-breaks-in-production/
 docs/json-modes-hidden-costs-revealed/
 docs/json-modes-silent-failures-exposed/
+docs/jwt-sessions-revocation-rotation-storage/
 docs/keep-multi-model-systems-stable-6-rules-that-worked/
 docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/
 docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/

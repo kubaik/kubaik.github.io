@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-27T04:15:51.554770",
+  "built_at": "2026-10-27T17:43:43.368454",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5665,6 +5665,11 @@
       "slug": "context-engineering-the-real-fix-for-agent-hallucinations",
       "title": "Context engineering: the real fix for agent hallucinations",
       "summary": "context engineering is easy to demo and hard to keep honest at scale. The workaround gets copy-pasted forward long after the original reason is forgotten. Here's the root cause, not just the symptom. Most teams treat hallucinations as a model problem. They upgrade the model, tweak the temperature, a"
+    },
+    {
+      "slug": "jwt-sessions-revocation-rotation-storage",
+      "title": "JWT sessions: revocation, rotation, storage",
+      "summary": "jwt pitfalls was never the hard part. Knowing when it was about to fail was. This walks through the fix and the reasoning, not just the patch. The tutorials all show the happy path. JWTs are stateless, but sessions are not. The moment a user clicks \"log out\" or an admin revokes access, the stateless"
     }
   ]
 }

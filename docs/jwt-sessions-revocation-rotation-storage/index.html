@@ -1,0 +1,590 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JWT sessions: revocation, rotation, storage - Kubai Kevin</title>
+        <meta name="description" content="Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.">
+        <meta name="keywords" content="Jwt, SessionManagement, TokenRevocation, RefreshTokenRotation, JwtStorage, JwtPitfalls, Rag, Vectorsearch">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-27T17:43:39.631250">
+        <meta property="article:modified_time" content="2026-10-27T17:45:21.738378+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="JWT sessions: revocation, rotation, storage">
+        <meta property="og:description" content="Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.">
+        <meta property="og:url" content="https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/jwt-sessions-revocation-rotation-storage.png">
+        <meta property="og:image:alt" content="JWT sessions: revocation, rotation, storage">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="JWT sessions: revocation, rotation, storage">
+        <meta name="twitter:description" content="Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/jwt-sessions-revocation-rotation-storage.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/#article",
+      "headline": "JWT sessions: revocation, rotation, storage",
+      "description": "Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.",
+      "datePublished": "2026-10-27T17:43:39+00:00",
+      "dateModified": "2026-10-27T17:45:21+00:00",
+      "wordCount": 2769,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/"
+      },
+      "keywords": "Jwt, SessionManagement, TokenRevocation, RefreshTokenRotation, JwtStorage, JwtPitfalls, Rag, Vectorsearch",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/jwt-sessions-revocation-rotation-storage.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "JWT sessions: revocation, rotation, storage",
+          "item": "https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I revoke a JWT immediately?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You cannot revoke a JWT in a purely stateless system. To achieve immediate revocation, you must introduce state: either a blocklist of revoked jti values checked on every request, or a session store that tracks valid tokens. The practical approach is to use short-lived access tokens (e.g., 5–15 minutes) and revoke the refresh token, accepting a small window of validity for the access token. For immediate revocation, combine a blocklist with a short TTL."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I store JWT in localStorage or cookies?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on your threat model. localStorage is vulnerable to XSS but immune to CSRF. HttpOnly cookies are immune to XSS token theft but require CSRF protection. For most SPAs, storing the access token in memory and the refresh token in an HttpOnly, Secure, SameSite cookie is a balanced approach. Avoid localStorage for long-lived tokens if you have any third-party scripts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if a refresh token is stolen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With rotation and reuse detection, a stolen refresh token can be used once. When the legitimate client attempts to use the old token, the server detects reuse and revokes the entire token family, forcing re-authentication. This limits the attacker's window. Without rotation, a stolen refresh token grants persistent access until expiry."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should I rotate signing keys?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no universal answer. A common practice is to rotate signing keys periodically (e.g., every 90 days) and maintain an overlap period where both old and new keys are published in the JWKS endpoint. The overlap should be at least as long as the maximum access token lifetime to avoid invalidating active tokens. Automate the rotation and ensure your verifiers refresh their key cache regularly."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>JWT sessions: revocation, rotation, storage</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">JWT sessions: revocation, rotation, storage</h1>
+                
+                <p class="post-lead">Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Jwt</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SessionManagement</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TokenRevocation</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">RefreshTokenRotation</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">JwtStorage</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/rag/"
+                       style="text-decoration:none;">Rag</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2769 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-27
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>JWTs are stateless; sessions are not. The moment a user logs out or an administrator revokes access, the stateless promise collides with the requirement to invalidate something already issued. The gap between documented JWT behaviour and production session management is where teams get burned. This article closes that gap without pretending JWTs are something they are not.</p>
+<h2 id="the-stateless-claim-why-jwt-revocation-feels-like-a-hack">The stateless claim: why JWT revocation feels like a hack</h2>
+<p>The JWT specification (RFC 7519) defines a token format, not a session protocol. It says nothing about revocation, rotation, or storage. That is by design: JWTs are meant to be self-contained and verifiable without a database lookup. The moment a token must be invalidated before its expiry, state re-enters the system. Blocklists, short expiries, and refresh token rotation are all attempts to reconcile that tension.</p>
+<p>The underlying problem is that JWTs are often treated as a drop-in replacement for server-side sessions without an evaluation of the trade-offs. A server-side session is a pointer to state stored on the server. A JWT is the state itself, signed. Revoking a server-side session is a delete. Revoking a JWT is a distributed systems problem: every verifier must learn that the token is no longer valid, or the token's validity window must be short enough that the residual risk is acceptable.</p>
+<h2 id="why-a-blocklist-is-not-a-revocation-strategy">Why a blocklist is not a revocation strategy</h2>
+<p>A blocklist (or denylist) is the most intuitive revocation mechanism: store the <code>jti</code> (JWT ID) of revoked tokens in a fast data store and check it on every request. Its pitfalls are numerous:</p>
+<ul>
+<li><strong>Unbounded growth</strong>: unless entries expire at the token's <code>exp</code>, the blocklist grows forever. Entries need a TTL equal to the token's remaining lifetime.</li>
+<li><strong>Latency</strong>: every request now requires a lookup, eroding the stateless advantage. If the store is unavailable, the system either fails open (a security hole) or fails closed (an availability hole).</li>
+<li><strong>Race conditions</strong>: a token can be used between the time it is revoked and the time the blocklist entry propagates to all verifiers.</li>
+<li><strong>Scope creep</strong>: the result is a session store with extra steps.</li>
+</ul>
+<p>A blocklist is acceptable for low-volume, high-security operations, such as revoking a single administrator token after a suspected compromise. It is not a session management strategy.</p>
+<h2 id="refresh-token-rotation-the-mechanism-that-scales">Refresh token rotation: the mechanism that scales</h2>
+<p>The practical answer for most applications is to keep access tokens short-lived (minutes) and use refresh tokens with rotation and reuse detection. This is the pattern described in OAuth 2.0 and OpenID Connect, and it is well-documented in the OAuth 2.0 Security Best Current Practice (RFC 9700, which superseded the earlier draft).</p>
+<p>The mechanism:</p>
+<ol>
+<li>The client authenticates and receives an access token (for example, 15 minutes) and a refresh token (for example, 7 days).</li>
+<li>When the access token expires, the client sends the refresh token to the token endpoint.</li>
+<li>The server validates the refresh token, issues a new access token and a new refresh token, and invalidates the old refresh token.</li>
+<li>If an old refresh token is used again (reuse detection), the server revokes the entire token family — all refresh tokens descended from the original grant — and forces re-authentication.</li>
+</ol>
+<p>This provides revocation: logging out a user means revoking their refresh token family. The access token remains valid until it expires, but that window is short. For immediate revocation, a blocklist for access tokens is still required, but the blast radius is small.</p>
+<h3 id="implementation-sketch">Implementation sketch</h3>
+<p>A minimal refresh token rotation implementation in Node.js against a SQL database (Postgres syntax) might look like this. The schema stores a hash of the refresh token, not the token itself, to limit damage from a database leak.</p>
+<pre><code class="language-sql">CREATE TABLE refresh_tokens (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  token_hash TEXT NOT NULL,
+  family_id UUID NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  revoked BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_refresh_tokens_hash ON refresh_tokens (token_hash);
+CREATE INDEX idx_refresh_tokens_family ON refresh_tokens (family_id);
+</code></pre>
+<pre><code class="language-javascript">const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
+
+async function issueRefreshToken(db, userId, familyId = null) {
+  const token = crypto.randomBytes(32).toString('hex');
+  const hash = crypto.createHash('sha256').update(token).digest('hex');
+  const id = uuidv4();
+  const fam = familyId || uuidv4();
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  await db.query(
+    'INSERT INTO refresh_tokens (id, user_id, token_hash, family_id, expires_at) VALUES ($1, $2, $3, $4, $5)',
+    [id, userId, hash, fam, expiresAt]
+  );
+  return { token, familyId: fam };
+}
+
+async function rotateRefreshToken(db, oldToken) {
+  const hash = crypto.createHash('sha256').update(oldToken).digest('hex');
+  const res = await db.query(
+    'SELECT id, user_id, family_id, expires_at, revoked FROM refresh_tokens WHERE token_hash = $1',
+    [hash]
+  );
+  if (res.rowCount === 0) throw new Error('Invalid refresh token');
+  const row = res.rows[0];
+  if (row.revoked) {
+    // Reuse detected: revoke entire family
+    await db.query('UPDATE refresh_tokens SET revoked = TRUE WHERE family_id = $1', [row.family_id]);
+    throw new Error('Refresh token reuse detected');
+  }
+  if (new Date(row.expires_at) &lt; new Date()) throw new Error('Refresh token expired');
+  // Revoke old token
+  await db.query('UPDATE refresh_tokens SET revoked = TRUE WHERE id = $1', [row.id]);
+  // Issue new token in same family
+  return issueRefreshToken(db, row.user_id, row.family_id);
+}
+</code></pre>
+<p>This is a simplified example. Production code needs transaction isolation around the select-then-update sequence, rate limiting on the token endpoint, and a job that deletes expired rows. But it demonstrates the core idea: rotation plus reuse detection yields a revocation mechanism that does not require checking every access token against a blocklist.</p>
+<h3 id="worked-example-computing-the-revocation-window">Worked example: computing the revocation window</h3>
+<p>Suppose access tokens live 15 minutes and refresh tokens live 7 days. A user logs out at 10:00:00, and the server revokes the refresh token family at 10:00:01. Any access token issued at 09:59:00 remains valid until 10:14:00 — a residual window of just under 14 minutes. If the same deployment adds a blocklist checked on every request, the window collapses to the blocklist write latency, but every request now pays a lookup.</p>
+<p>The arithmetic is simple and worth doing explicitly for a given product: residual exposure equals (token issue time + access token lifetime) minus (revocation time). Shortening the access token lifetime from 15 minutes to 5 minutes cuts the worst-case residual window by two-thirds, at the cost of three times as many refresh calls per active session. That trade-off, not a rule of thumb, is the decision to make.</p>
+<h2 id="storage-where-the-token-lives-determines-the-threat-model">Storage: where the token lives determines the threat model</h2>
+<p>The storage choice is not about convenience; it is about which attacks the design defends against. The three common options:</p>
+<table>
+<thead>
+<tr>
+<th>Storage location</th>
+<th>XSS risk</th>
+<th>CSRF risk</th>
+<th>Persistence</th>
+<th>Typical use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>localStorage</code></td>
+<td>High (any JS can read)</td>
+<td>None (not sent automatically)</td>
+<td>Yes</td>
+<td>Single-page apps with strict CSP</td>
+</tr>
+<tr>
+<td><code>sessionStorage</code></td>
+<td>High</td>
+<td>None</td>
+<td>Tab lifetime</td>
+<td>Short-lived sessions</td>
+</tr>
+<tr>
+<td><code>HttpOnly</code> cookie</td>
+<td>Low (not accessible to JS)</td>
+<td>High (sent automatically)</td>
+<td>Configurable</td>
+<td>Server-rendered apps, or SPAs with CSRF protection</td>
+</tr>
+</tbody>
+</table>
+<p>No option is universally best. The decision hinges on the threat model:</p>
+<ul>
+<li>With a strong Content Security Policy (CSP) and no third-party scripts, <code>localStorage</code> can be acceptable. XSS remains a risk: a single injected script can exfiltrate the token.</li>
+<li><code>HttpOnly</code> cookies prevent token theft via XSS but require CSRF protection (for example, <code>SameSite=Strict</code>, or anti-CSRF tokens). They also require careful CORS configuration if the API is on a different origin.</li>
+<li>In-memory storage (a JavaScript variable) is the most resistant to persistence-based attacks, but the token is lost on page refresh and must be re-fetched using a refresh token stored in an <code>HttpOnly</code> cookie.</li>
+</ul>
+<p>A common pattern for SPAs is to store the access token in memory and the refresh token in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Strict</code> cookie. The refresh endpoint is the only one that accepts the cookie, and it returns a new access token in the response body. This limits the attack surface: XSS cannot read the refresh token, and CSRF is mitigated by <code>SameSite</code> and by the fact that the refresh endpoint requires a POST with a custom header, which cannot be sent cross-origin without a CORS preflight.</p>
+<h3 id="cookie-flags-that-matter">Cookie flags that matter</h3>
+<ul>
+<li><code>HttpOnly</code>: prevents JavaScript access.</li>
+<li><code>Secure</code>: only sent over HTTPS.</li>
+<li><code>SameSite=Strict</code> or <code>Lax</code>: mitigates CSRF. <code>Strict</code> is safer but breaks some cross-site navigation flows; <code>Lax</code> is a reasonable default.</li>
+<li><code>Path=/refresh</code>: limits the cookie to the refresh endpoint, reducing exposure.</li>
+<li><code>Max-Age</code> or <code>Expires</code>: align with refresh token lifetime.</li>
+</ul>
+<h2 id="measuring-what-actually-matters">Measuring what actually matters</h2>
+<p>Two metrics are worth tracking:</p>
+<ol>
+<li><strong>Access token lifetime</strong>: the window during which a revoked user can still access resources. Shorter is safer but increases refresh traffic.</li>
+<li><strong>Revocation propagation delay</strong>: the time between a revocation event (logout, admin action) and the moment the token is rejected by all verifiers. With a blocklist, this is the blocklist write latency plus cache TTL. With short-lived tokens only, it is the remaining token lifetime.</li>
+</ol>
+<p>To measure the first, log token issuance and revocation timestamps and compare them to actual request authentication times. To measure the second, emit a structured log line at revocation time and another when a verifier first rejects the affected token, then compute the delta in your log aggregation tool. A histogram of "time since revocation" for rejected requests shows whether the strategy has a long tail. This is instrumentation, not a benchmark: the numbers depend entirely on the deployment, so they must be collected per system rather than borrowed.</p>
+<h2 id="failure-modes-what-breaks-in-production">Failure modes: what breaks in production</h2>
+<p>Even with rotation and careful storage, several failure modes recur:</p>
+<ul>
+<li><strong>Clock skew</strong>: <code>exp</code> and <code>nbf</code> claims are validated against the server's clock. If servers are not time-synchronized (for example, via NTP), tokens may be rejected prematurely or accepted after expiry. Allow a small leeway — commonly 30 seconds — in the JWT library configuration.</li>
+<li><strong>Key rotation without overlap</strong>: when signing keys are rotated, tokens signed with the previous key become invalid immediately unless verifiers hold both keys. Use a key ID (<code>kid</code>) header and publish a JWKS endpoint that includes both keys during the overlap period.</li>
+<li><strong>Refresh token race conditions</strong>: if a client makes two concurrent requests with the same refresh token, one succeeds and the other triggers reuse detection, revoking the family. This happens with multiple tabs or aggressive retries. Mitigate by serializing refresh requests on the client, or by allowing a short grace period for the old token after rotation, at the cost of weaker reuse detection.</li>
+<li><strong>Storage leakage via logging</strong>: tokens in URLs, logs, or error messages. Never log full tokens; log a hash or the <code>jti</code>.</li>
+<li><strong>Improper CORS</strong>: with cookies, <code>Access-Control-Allow-Origin</code> must not be <code>*</code> when <code>Access-Control-Allow-Credentials</code> is true. This is a common misconfiguration.</li>
+</ul>
+<h3 id="failure-mode-analysis-the-multi-tab-logout">Failure-mode analysis: the multi-tab logout</h3>
+<p>Consider a user with three tabs open. Tab A logs out, revoking the refresh token family. Tabs B and C still hold a valid access token and will continue to work until it expires. When they attempt a refresh, they receive an error and the client should redirect to login. If the client treats refresh failure as a transient error and retries, it will hammer the token endpoint with a revoked token. The correct client behaviour is to distinguish "refresh token invalid or revoked" (terminal, log out) from "network error" (retryable), and to broadcast logout across tabs using a <code>BroadcastChannel</code> or <code>storage</code> event. This is a client-side design decision that the server cannot enforce.</p>
+<h2 id="when-jwts-are-the-wrong-choice">When JWTs are the wrong choice</h2>
+<p>JWTs are not a universal replacement for sessions. They are a poor fit when:</p>
+<ul>
+<li>Immediate, global revocation with no tolerance for a validity window is required. A server-side session store (for example, Redis) with a session ID in a cookie is simpler and more predictable.</li>
+<li>The application is a traditional server-rendered monolith with a single backend. The stateless benefit is minimal, and the complexity of rotation and storage is not justified.</li>
+<li>The user base is small and traffic is low. The overhead of a session store is negligible, and the operational simplicity of server-side sessions wins.</li>
+</ul>
+<p>A recurring architectural mistake is adopting JWTs because they are perceived as modern, without evaluating revocation requirements. If a product has an admin panel that must revoke access instantly, or handles sensitive data, a server-side session with a short idle timeout may be the better default.</p>
+<p>The counterintuitive part is that the more revocation matters, the less suitable JWTs become. Their strength is stateless verification; their weakness is stateful invalidation. Choose based on which property is needed more.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before committing to a JWT session design, answer these questions in writing:</p>
+<ul>
+<li>What is the maximum acceptable window during which a revoked user retains access? This sets the access token lifetime ceiling.</li>
+<li>Is instant revocation required for any role or action? If yes, a blocklist or server-side session is mandatory for that path.</li>
+<li>Where does the refresh token live, and can JavaScript read it? If yes, an XSS finding becomes a full account takeover.</li>
+<li>Is the refresh endpoint protected against CSRF, and is CORS configured without wildcards alongside credentials?</li>
+<li>Does the client distinguish terminal refresh failures from transient ones, and does it coordinate logout across tabs?</li>
+<li>Is there a key rotation plan with an overlap period at least as long as the maximum access token lifetime?</li>
+<li>Are tokens excluded from logs, URLs, and error messages?</li>
+</ul>
+<p>If any answer is "don't know", that gap is the priority, not the token format.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="how-do-i-revoke-a-jwt-immediately">How do I revoke a JWT immediately?</h3>
+<p>A JWT cannot be revoked in a purely stateless system. Immediate revocation requires state: either a blocklist of revoked <code>jti</code> values checked on every request, or a session store that tracks valid tokens. The practical approach is short-lived access tokens (for example, 5–15 minutes) plus refresh token revocation, accepting a small window of validity for the access token. For immediate revocation, combine a blocklist with a short TTL.</p>
+<h3 id="should-a-jwt-be-stored-in-localstorage-or-cookies">Should a JWT be stored in localStorage or cookies?</h3>
+<p>It depends on the threat model. <code>localStorage</code> is vulnerable to XSS but immune to CSRF. <code>HttpOnly</code> cookies are immune to XSS token theft but require CSRF protection. For most SPAs, storing the access token in memory and the refresh token in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite</code> cookie is a balanced approach. Avoid <code>localStorage</code> for long-lived tokens when third-party scripts are present.</p>
+<h3 id="what-happens-if-a-refresh-token-is-stolen">What happens if a refresh token is stolen?</h3>
+<p>With rotation and reuse detection, a stolen refresh token can be used once. When the legitimate client presents the old token, the server detects reuse and revokes the entire token family, forcing re-authentication. This limits the attacker's window. Without rotation, a stolen refresh token grants persistent access until expiry.</p>
+<h3 id="how-often-should-signing-keys-be-rotated">How often should signing keys be rotated?</h3>
+<p>There is no universal answer. A common practice is periodic rotation (for example, every 90 days) with an overlap period during which both old and new keys are published in the JWKS endpoint. The overlap should be at least as long as the maximum access token lifetime so active tokens are not invalidated. Automate the rotation and ensure verifiers refresh their key cache regularly.</p>
+<h2 id="the-next-30-minutes-audit-your-token-lifetimes">The next 30 minutes: audit your token lifetimes</h2>
+<p>Open the authentication configuration (for example, <code>auth.js</code>, <code>config/passport.js</code>, or the identity provider's settings) and find the access token expiry. If it exceeds the maximum revocation window identified in the checklist above, shorten it and note the resulting increase in refresh traffic. Then check the refresh logic: does it invalidate the old token on use and detect reuse? If not, that is the next change. Finally, verify that the refresh token is stored in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite</code> cookie and that the CORS policy does not combine <code>*</code> with credentials. These three checks close the most common JWT session gaps.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-auth-the-silent-deployment-killer/">Agent auth: the silent deployment killer</a></li>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://kubaik.github.io/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/apm-is-blind-to-your-ai-agents/">
+                        <h3>APM is blind to your AI agents</h3>
+                        <p>Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+                        <span class="related-meta">12 min read · 25 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-rots-if-you-dont-refresh-indexes/">
+                        <h3>RAG rots if you don’t refresh indexes</h3>
+                        <p>RAG indexes rot when source documents change. Learn change detection, chunk versioning, and incremental refresh patterns, with code and a cost model.</p>
+                        <span class="related-meta">15 min read · 4 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/one-misconfigured-vector-db-killed-our-rag-pipeline/">
+                        <h3>When a vector DB misconfiguration breaks RAG silently</h3>
+                        <p>Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.</p>
+                        <span class="related-meta">11 min read · 29 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

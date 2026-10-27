@@ -1,4 +1,4 @@
-❌ Internal link audit: 397 broken link(s) found across 398 posts checked.
+❌ Internal link audit: 398 broken link(s) found across 399 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -156,6 +156,7 @@ Source Post                              Anchor Text                    Missing 
   /commit-ownership-in-ai-pair-coding     AI content policy              /ai-content-policy/
   /compare-kafka-redpanda-nats-for-event-driven-systems AI content policy              /ai-content-policy/
   /computer-use-agents-the-permission-trap AI content policy              /ai-content-policy/
+  /context-engineering-the-real-fix-for-agent-hallucinations AI content policy              /ai-content-policy/
   /context-windows-agents-that-run-for-days AI content policy              /ai-content-policy/
   /context-windows-live-longer-than-you-think AI content policy              /ai-content-policy/
   /contract-testing-is-not-optional       AI content policy              /ai-content-policy/

@@ -202,6 +202,7 @@ docs/iso-20022-where-payment-rails-actually-break/index.md
 docs/istio-and-cilium-what-really-breaks-in-production/index.md
 docs/json-modes-hidden-costs-revealed/index.md
 docs/json-modes-silent-failures-exposed/index.md
+docs/jwt-sessions-revocation-rotation-storage/index.md
 docs/keep-multi-model-systems-stable-6-rules-that-worked/index.md
 docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/index.md
 docs/kubernetes-or-nomad-the-real-experiment-cost-split/index.md
