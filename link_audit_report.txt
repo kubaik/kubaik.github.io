@@ -1,4 +1,4 @@
-❌ Internal link audit: 399 broken link(s) found across 400 posts checked.
+❌ Internal link audit: 400 broken link(s) found across 401 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -242,6 +242,7 @@ Source Post                              Anchor Text                    Missing 
   /monolith-to-services-without-a-rewrite AI content policy              /ai-content-policy/
   /most-llm-cost-dashboards-lie           AI content policy              /ai-content-policy/
   /move-images-50-faster-in-2026-with-starlink-cdn AI content policy              /ai-content-policy/
+  /multi-agent-dx-langgraph-vs-crewai-gaps AI content policy              /ai-content-policy/
   /multi-agent-handoffs-the-latency-tax-nobody-measures AI content policy              /ai-content-policy/
   /multi-agent-systems-break-first        AI content policy              /ai-content-policy/
   /multi-agent-systems-when-they-quietly-degrade AI content policy              /ai-content-policy/

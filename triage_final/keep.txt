@@ -134,6 +134,7 @@ docs/core-web-vitals-what-actually-moves-the-needle/
 docs/cost-tools-fail-when-agents-scale-autonomously/
 docs/cqrs-when-it-pays-off-and-when-it-breaks/
 docs/currency-switch-fails-in-ghana-one-config-file-to-rule/
+docs/database-restore-drills-that-mean-something/
 docs/dead-letter-queues-stop-poison-messages/
 docs/debug-ai-agent-failures-differently/
 docs/debug-ai-agents-failures-arent-just-bugs/

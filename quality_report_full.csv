@@ -136,7 +136,7 @@ memory-systems-for-production-agents,95,2196,Memory Systems for Production Agent
 merge-three-payment-apis-into-one-system,95,3048,Merge three payment APIs into one system,2026-06-10T02:38:19.531287,1,no FAQ section
 meter-dev-tool-pricing-in-2026,95,2157,Meter dev-tool pricing in 2026,2026-07-02T17:53:21.753006,1,no FAQ section
 move-images-50-faster-in-2026-with-starlink-cdn,95,2612,Resize Images at the Edge: A CloudFront and Lambda Guide,2026-06-18T16:57:23.521775,1,no FAQ section
-multi-agent-dx-langgraph-vs-crewai-gaps,95,3069,Multi-agent DX: LangGraph vs CrewAI gaps,2026-10-28T04:45:55.701506,1,no FAQ section
+multi-agent-dx-langgraph-vs-crewai-gaps,95,3300,Multi-agent DX: LangGraph vs CrewAI gaps,2026-10-28T04:45:55.701506,1,no FAQ section
 multi-agent-handoffs-the-latency-tax-nobody-measures,95,2265,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,1,no FAQ section
 multi-agent-systems-why-failures-hide,95,2590,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,1,no FAQ section
 ndpr-2026-broke-fintech-apis,95,2491,NDPR 2026 broke fintech APIs,2026-06-26T16:36:52.584537,1,no markdown table
@@ -280,6 +280,7 @@ contract-testing-is-not-optional,100,3072,Contract testing is not optional,2026-
 cqrs-when-it-pays-off-and-when-it-breaks,100,2430,CQRS: when it pays off and when it breaks,2026-09-21T11:34:04.702917,0,
 currency-switch-fails-in-ghana-one-config-file-to-rule,100,2579,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,
 cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware security gates that cut CI alert noise,2026-06-12T07:15:04.340904,0,
+database-restore-drills-that-mean-something,100,2779,Database restore drills that mean something,2026-10-28T18:06:31.553898,0,
 debugging-techniques-that-outlast-any-framework,100,2295,Debugging techniques that outlast any framework,2026-10-06T18:07:18.600534,0,
 deployment-platforms-senior-vs-new-hire,100,3382,Deployment platforms: senior vs new hire,2026-10-07T05:01:41.493415,0,
 detecting-silent-agent-failures,100,3026,Detecting silent agent failures,2026-10-13T06:03:55.281045,0,

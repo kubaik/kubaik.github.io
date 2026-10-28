@@ -193,5 +193,8 @@
   "Policy as code with Open Policy Agent and Kyverno for cluster governance",
   "TypeScript on the backend: Node, Bun, and Deno runtime tradeoffs",
   "Streaming responses from LLM APIs: server-sent events, backpressure, and error handling",
-  "The developer experience gaps that remain in building and debugging multi-agent systems"
+  "The developer experience gaps that remain in building and debugging multi-agent systems",
+  "Evaluating LLM outputs with model-graded rubrics: strengths and failure modes",
+  "Vector databases compared: pgvector, Qdrant, Weaviate, and Milvus",
+  "Backup and disaster recovery testing for databases: restore drills that mean something"
 ]

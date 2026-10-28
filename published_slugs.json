@@ -536,6 +536,9 @@
   "cut-false-positives-85-with-this-ci-security-trick": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "database-restore-drills-that-mean-something": {
+    "first_seen": "2026-10-28T18:06:37.857609+00:00"
+  },
   "dead-letter-queues-stop-poison-messages": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

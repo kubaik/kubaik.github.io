@@ -295,7 +295,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Multi-agent DX: LangGraph vs CrewAI gaps",
-  "words": 3069
+  "words": 3300
  },
  "test-ai-code-without-testing-the-ai": {
   "verdict": "KEEP",
@@ -2828,6 +2828,13 @@
   ],
   "title": "LLM metrics that stop wasting time",
   "words": 2611
+ },
+ "database-restore-drills-that-mean-something": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Database restore drills that mean something",
+  "words": 2779
  },
  "deployment-platforms-senior-vs-new-hire": {
   "verdict": "IMPROVE",

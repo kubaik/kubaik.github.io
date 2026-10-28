@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-28T04:45:58.658912",
+  "built_at": "2026-10-28T18:06:34.148531",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5675,6 +5675,11 @@
       "slug": "multi-agent-dx-langgraph-vs-crewai-gaps",
       "title": "Multi-agent DX: LangGraph vs CrewAI gaps",
       "summary": "The first time streaming responses fails in production, it rarely fails in the way any postmortem template expects. Everyone assumes someone else already checked this. Here's the fuller picture, with the tradeoffs left in. Multi-agent systems are having their Kubernetes moment: everyone agrees they'"
+    },
+    {
+      "slug": "database-restore-drills-that-mean-something",
+      "title": "Database restore drills that mean something",
+      "summary": "It's easy to spend longer than expected on evaluating llm before the actual failure mode becomes clear. Here's what changes once the guessing is replaced with measurement. The gap between the demo and the incident report is where this actually lives. The backup you never tested is a rumour Every tea"
     }
   ]
 }
