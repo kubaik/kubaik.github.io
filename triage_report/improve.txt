@@ -238,6 +238,7 @@ docs/model-router-keep-it-simple-keep-it-local/index.md
 docs/monolith-to-services-without-a-rewrite/index.md
 docs/most-llm-cost-dashboards-lie/index.md
 docs/move-images-50-faster-in-2026-with-starlink-cdn/index.md
+docs/multi-agent-dx-langgraph-vs-crewai-gaps/index.md
 docs/multi-agent-handoffs-the-latency-tax-nobody-measures/index.md
 docs/multi-agent-systems-break-first/index.md
 docs/multi-agent-systems-when-they-quietly-degrade/index.md

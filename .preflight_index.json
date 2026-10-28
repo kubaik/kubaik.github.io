@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-27T17:43:43.368454",
+  "built_at": "2026-10-28T04:45:58.658912",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5670,6 +5670,11 @@
       "slug": "jwt-sessions-revocation-rotation-storage",
       "title": "JWT sessions: revocation, rotation, storage",
       "summary": "jwt pitfalls was never the hard part. Knowing when it was about to fail was. This walks through the fix and the reasoning, not just the patch. The tutorials all show the happy path. JWTs are stateless, but sessions are not. The moment a user clicks \"log out\" or an admin revokes access, the stateless"
+    },
+    {
+      "slug": "multi-agent-dx-langgraph-vs-crewai-gaps",
+      "title": "Multi-agent DX: LangGraph vs CrewAI gaps",
+      "summary": "The first time streaming responses fails in production, it rarely fails in the way any postmortem template expects. Everyone assumes someone else already checked this. Here's the fuller picture, with the tradeoffs left in. Multi-agent systems are having their Kubernetes moment: everyone agrees they'"
     }
   ]
 }

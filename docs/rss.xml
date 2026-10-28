@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Oct 2026 17:45:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 04:47:32 +0000</lastBuildDate>
+    <item>
+      <title>Multi-agent DX: LangGraph vs CrewAI gaps</title>
+      <link>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</link>
+      <description>Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</description>
+      <pubDate>Wed, 28 Oct 2026 04:45:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</guid>
+    </item>
     <item>
       <title>JWT sessions: revocation, rotation, storage</title>
       <link>https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/</link>
@@ -138,13 +145,6 @@
       <description>Why end-to-end tests and API versioning miss integration breaks, how consumer-driven contracts close the gap, when they fit, and a 30-minute first step.</description>
       <pubDate>Sun, 18 Oct 2026 13:52:46 +0000</pubDate>
       <guid>https://kubaik.github.io/contract-testing-is-not-optional/</guid>
-    </item>
-    <item>
-      <title>Read replicas: the bug factory you built</title>
-      <link>https://kubaik.github.io/read-replicas-the-bug-factory-you-built/</link>
-      <description>Read replicas lag by design. Learn how to classify reads, route freshness-critical queries to the primary, and measure your exposure to stale reads.</description>
-      <pubDate>Sun, 18 Oct 2026 03:42:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/read-replicas-the-bug-factory-you-built/</guid>
     </item>
   </channel>
 </rss>

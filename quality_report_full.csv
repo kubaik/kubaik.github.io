@@ -136,6 +136,7 @@ memory-systems-for-production-agents,95,2196,Memory Systems for Production Agent
 merge-three-payment-apis-into-one-system,95,3048,Merge three payment APIs into one system,2026-06-10T02:38:19.531287,1,no FAQ section
 meter-dev-tool-pricing-in-2026,95,2157,Meter dev-tool pricing in 2026,2026-07-02T17:53:21.753006,1,no FAQ section
 move-images-50-faster-in-2026-with-starlink-cdn,95,2612,Resize Images at the Edge: A CloudFront and Lambda Guide,2026-06-18T16:57:23.521775,1,no FAQ section
+multi-agent-dx-langgraph-vs-crewai-gaps,95,3069,Multi-agent DX: LangGraph vs CrewAI gaps,2026-10-28T04:45:55.701506,1,no FAQ section
 multi-agent-handoffs-the-latency-tax-nobody-measures,95,2265,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,1,no FAQ section
 multi-agent-systems-why-failures-hide,95,2590,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,1,no FAQ section
 ndpr-2026-broke-fintech-apis,95,2491,NDPR 2026 broke fintech APIs,2026-06-26T16:36:52.584537,1,no markdown table
@@ -296,7 +297,7 @@ hpa-vs-keda-vs-karpenter-autoscaling-traps,100,3432,HPA vs KEDA vs Karpenter: au
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,
 json-modes-hidden-costs-revealed,100,2477,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2148,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
-jwt-sessions-revocation-rotation-storage,100,2350,"JWT sessions: revocation, rotation, storage",2026-10-27T17:43:39.631250,0,
+jwt-sessions-revocation-rotation-storage,100,2769,"JWT sessions: revocation, rotation, storage",2026-10-27T17:43:39.631250,0,
 keep-multi-model-systems-stable-6-rules-that-worked,100,3027,Stabilize multi-model agent routers: six production rules,2026-07-15T02:44:07.331590,0,
 kill-noisy-alerts-the-triage-system-that-restored-sleep,100,2456,Designing Alert Triage That Suppresses Noise Safely,2026-07-11T13:28:35.352118,0,
 kubernetes-or-nomad-the-real-experiment-cost-split,100,2125,Kubernetes or Nomad: the real experiment cost split,2026-08-03T14:47:24.911552,0,
