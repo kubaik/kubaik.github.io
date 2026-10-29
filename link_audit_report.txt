@@ -1,4 +1,4 @@
-❌ Internal link audit: 402 broken link(s) found across 403 posts checked.
+❌ Internal link audit: 403 broken link(s) found across 403 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -257,6 +257,7 @@ Source Post                              Anchor Text                    Missing 
   /neon-vs-planetscale-vs-turso-which-broke-first AI content policy              /ai-content-policy/
   /nextjs-15-vs-remix-vs-sveltekit-2026-choices AI content policy              /ai-content-policy/
   /nigerias-2026-api-rules-broke-our-microservices AI content policy              /ai-content-policy/
+  /nodejs-memory-leak-find-it-in-10-min   AI content policy              /ai-content-policy/
   /oauth-21-migration-what-breaks-in-existing-integrations AI content policy              /ai-content-policy/
   /observability-2026-ditch-the-three-pillars AI content policy              /ai-content-policy/
   /observability-agents-lied-to-us        AI content policy              /ai-content-policy/

@@ -209,7 +209,6 @@ docs/ndpr-2026-broke-fintech-apis/
 docs/neon-vs-planetscale-vs-turso-which-broke-first/
 docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/
 docs/nigerias-2026-api-rules-broke-our-microservices/
-docs/nodejs-memory-leak-find-it-in-10-min/
 docs/oauth-21-migration-what-breaks-in-existing-integrations/
 docs/observability-2026-ditch-the-three-pillars/
 docs/observability-agents-lied-to-us/

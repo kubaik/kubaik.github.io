@@ -250,6 +250,36 @@
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
   },
   {
+    "slug": "agent-tracing-when-logs-lie-and-metrics-mislead",
+    "reason": "below_target_length: 1909",
+    "priority": "normal"
+  },
+  {
+    "slug": "why-our-schema-survived-ai-scaling",
+    "reason": "below_target_length: 2173",
+    "priority": "normal"
+  },
+  {
+    "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
+    "reason": "below_target_length: 2167",
+    "priority": "normal"
+  },
+  {
+    "slug": "agent-platform-abstractions-a-case-study",
+    "reason": "below_target_length: 2158",
+    "priority": "normal"
+  },
+  {
+    "slug": "rogue-agent-api-calls-stop-the-bleeding",
+    "reason": "below_target_length: 2105",
+    "priority": "normal"
+  },
+  {
+    "slug": "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026",
+    "reason": "below_target_length: 2061",
+    "priority": "normal"
+  },
+  {
     "slug": "iso-20022-where-payment-rails-actually-break",
     "title": "ISO 20022: where payment rails actually break",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the SCOR'",
@@ -3265,35 +3295,5 @@
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I first noticed the trend after I posted my own remote switch.; I dug into their hiring funnels and found every hire had one thing in common: a ",
     "action": "regenerate",
     "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "agent-tracing-when-logs-lie-and-metrics-mislead",
-    "reason": "below_target_length: 1909",
-    "priority": "normal"
-  },
-  {
-    "slug": "why-our-schema-survived-ai-scaling",
-    "reason": "below_target_length: 2173",
-    "priority": "normal"
-  },
-  {
-    "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
-    "reason": "below_target_length: 2167",
-    "priority": "normal"
-  },
-  {
-    "slug": "agent-platform-abstractions-a-case-study",
-    "reason": "below_target_length: 2158",
-    "priority": "normal"
-  },
-  {
-    "slug": "rogue-agent-api-calls-stop-the-bleeding",
-    "reason": "below_target_length: 2105",
-    "priority": "normal"
-  },
-  {
-    "slug": "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026",
-    "reason": "below_target_length: 2061",
-    "priority": "normal"
   }
 ]
