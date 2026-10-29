@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-29T04:59:30.260939",
+  "built_at": "2026-10-29T12:50:46.067793",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5685,6 +5685,11 @@
       "slug": "ai-answers-first-judgment-later",
       "title": "AI answers first, judgment later",
       "summary": "Most mentoring junior guides assume a clean environment and a patient timeline. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. The stance: AI-first answers are fine, AI-first judgment is not The contrarian take: "
+    },
+    {
+      "slug": "nodejs-memory-leak-find-it-in-10-min",
+      "title": "Node.js memory leak: find it in 10 min",
+      "summary": "The gap between the demo and the incident report is where this actually lives. After enough code that touches finops patterns gets reviewed, the same failure pattern keeps showing up. Here's what changes once the guessing is replaced with measurement. The symptom that never shows up in staging You d"
     }
   ]
 }

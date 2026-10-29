@@ -253,6 +253,7 @@ docs/negotiating-pay-when-ai-inflates-output/index.md
 docs/neon-vs-planetscale-vs-turso-which-broke-first/index.md
 docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/index.md
 docs/nigerias-2026-api-rules-broke-our-microservices/index.md
+docs/nodejs-memory-leak-find-it-in-10-min/index.md
 docs/oauth-21-migration-what-breaks-in-existing-integrations/index.md
 docs/observability-2026-ditch-the-three-pillars/index.md
 docs/observability-agents-lied-to-us/index.md

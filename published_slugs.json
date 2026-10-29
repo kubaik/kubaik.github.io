@@ -824,6 +824,9 @@
   "nigerias-2026-api-rules-broke-our-microservices": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "nodejs-memory-leak-find-it-in-10-min": {
+    "first_seen": "2026-10-29T12:50:52.237820+00:00"
+  },
   "oauth-21-migration-what-breaks-in-existing-integrations": {
     "first_seen": "2026-10-22T16:53:00.252053+00:00"
   },

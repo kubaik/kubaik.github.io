@@ -201,5 +201,7 @@
   "Go concurrency patterns for backend services: worker pools, pipelines, and context cancellation",
   "Reranking models in retrieval pipelines: when the extra latency pays off",
   "Writing a staff engineer promotion packet: evidence, scope, and narrative",
-  "Mentoring junior engineers effectively when AI assistants answer their questions first"
+  "Mentoring junior engineers effectively when AI assistants answer their questions first",
+  "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
+  "Memory profiling and leak hunting in long-running backend services"
 ]

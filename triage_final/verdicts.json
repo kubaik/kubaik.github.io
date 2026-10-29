@@ -1325,6 +1325,13 @@
   "title": "7 IDP shifts for AI feature delivery",
   "words": 2993
  },
+ "nodejs-memory-leak-find-it-in-10-min": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Node.js memory leak: find it in 10 min",
+  "words": 2520
+ },
  "zero-trust-ai-skip-the-latency-tax": {
   "verdict": "IMPROVE",
   "reasons": [
@@ -3011,7 +3018,7 @@
   "reasons": [],
   "fixes": [],
   "title": "AI answers first, judgment later",
-  "words": 2592
+  "words": 2751
  },
  "portfolio-projects-that-hire-remote-senior-devs": {
   "verdict": "KEEP",

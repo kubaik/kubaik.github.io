@@ -1,4 +1,4 @@
-❌ Internal link audit: 401 broken link(s) found across 402 posts checked.
+❌ Internal link audit: 402 broken link(s) found across 403 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -61,6 +61,7 @@ Source Post                              Anchor Text                    Missing 
   /ai-agents-killed-dev-tool-sales-cycles AI content policy              /ai-content-policy/
   /ai-agents-vs-argo-tekton-which-pipeline-heals-itself AI content policy              /ai-content-policy/
   /ai-alert-triage-cut-pages-80-in-production AI content policy              /ai-content-policy/
+  /ai-answers-first-judgment-later        AI content policy              /ai-content-policy/
   /ai-apps-break-when-you-treat-them-like-regular-software AI content policy              /ai-content-policy/
   /ai-ate-the-niches-first                AI content policy              /ai-content-policy/
   /ai-best-practices-fail-on-slow-networks AI content policy              /ai-content-policy/
