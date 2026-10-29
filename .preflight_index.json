@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-28T18:06:34.148531",
+  "built_at": "2026-10-29T04:59:30.260939",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5680,6 +5680,11 @@
       "slug": "database-restore-drills-that-mean-something",
       "title": "Database restore drills that mean something",
       "summary": "It's easy to spend longer than expected on evaluating llm before the actual failure mode becomes clear. Here's what changes once the guessing is replaced with measurement. The gap between the demo and the incident report is where this actually lives. The backup you never tested is a rumour Every tea"
+    },
+    {
+      "slug": "ai-answers-first-judgment-later",
+      "title": "AI answers first, judgment later",
+      "summary": "Most mentoring junior guides assume a clean environment and a patient timeline. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. The stance: AI-first answers are fine, AI-first judgment is not The contrarian take: "
     }
   ]
 }

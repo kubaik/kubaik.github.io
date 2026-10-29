@@ -196,5 +196,10 @@
   "The developer experience gaps that remain in building and debugging multi-agent systems",
   "Evaluating LLM outputs with model-graded rubrics: strengths and failure modes",
   "Vector databases compared: pgvector, Qdrant, Weaviate, and Milvus",
-  "Backup and disaster recovery testing for databases: restore drills that mean something"
+  "Backup and disaster recovery testing for databases: restore drills that mean something",
+  "Embedding model selection and versioning for long-lived search indexes",
+  "Go concurrency patterns for backend services: worker pools, pipelines, and context cancellation",
+  "Reranking models in retrieval pipelines: when the extra latency pays off",
+  "Writing a staff engineer promotion packet: evidence, scope, and narrative",
+  "Mentoring junior engineers effectively when AI assistants answer their questions first"
 ]

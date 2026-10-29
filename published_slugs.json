@@ -200,6 +200,9 @@
   "ai-alert-triage-cut-pages-80-in-production": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "ai-answers-first-judgment-later": {
+    "first_seen": "2026-10-29T04:59:36.098505+00:00"
+  },
   "ai-apps-break-when-you-treat-them-like-regular-software": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

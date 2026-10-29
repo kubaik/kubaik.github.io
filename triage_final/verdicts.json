@@ -2834,7 +2834,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Database restore drills that mean something",
-  "words": 2779
+  "words": 3089
  },
  "deployment-platforms-senior-vs-new-hire": {
   "verdict": "IMPROVE",
@@ -3005,6 +3005,13 @@
   "fixes": [],
   "title": "WebSockets vs Server-Sent Events: latency over 3G",
   "words": 2793
+ },
+ "ai-answers-first-judgment-later": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "AI answers first, judgment later",
+  "words": 2592
  },
  "portfolio-projects-that-hire-remote-senior-devs": {
   "verdict": "KEEP",

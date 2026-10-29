@@ -1,4 +1,4 @@
-❌ Internal link audit: 400 broken link(s) found across 401 posts checked.
+❌ Internal link audit: 401 broken link(s) found across 402 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -167,6 +167,7 @@ Source Post                              Anchor Text                    Missing 
   /currency-switch-fails-in-ghana-one-config-file-to-rule AI content policy              /ai-content-policy/
   /cut-cold-starts-70-lambda-cost-hack    AI content policy              /ai-content-policy/
   /cut-false-positives-85-with-this-ci-security-trick AI content policy              /ai-content-policy/
+  /database-restore-drills-that-mean-something AI content policy              /ai-content-policy/
   /dead-letter-queues-stop-poison-messages AI content policy              /ai-content-policy/
   /debug-ai-agent-failures-differently    AI content policy              /ai-content-policy/
   /debug-ai-agents-failures-arent-just-bugs AI content policy              /ai-content-policy/

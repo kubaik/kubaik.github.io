@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Oct 2026 18:07:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 05:01:13 +0000</lastBuildDate>
+    <item>
+      <title>AI answers first, judgment later</title>
+      <link>https://kubaik.github.io/ai-answers-first-judgment-later/</link>
+      <description>AI assistants give juniors fast, confident answers without your system&amp;#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment.</description>
+      <pubDate>Thu, 29 Oct 2026 04:59:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-answers-first-judgment-later/</guid>
+    </item>
     <item>
       <title>Database restore drills that mean something</title>
       <link>https://kubaik.github.io/database-restore-drills-that-mean-something/</link>
@@ -138,13 +145,6 @@
       <description>Why full parity between staging and production misses state-dependent bugs, and how to build cheap fault injection that catches them before deploy.</description>
       <pubDate>Mon, 19 Oct 2026 18:32:38 +0000</pubDate>
       <guid>https://kubaik.github.io/staging-wont-catch-prod-bugs-make/</guid>
-    </item>
-    <item>
-      <title>PCI DSS architecture: 12 requirements that matter</title>
-      <link>https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/</link>
-      <description>Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</description>
-      <pubDate>Mon, 19 Oct 2026 03:52:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/</guid>
     </item>
   </channel>
 </rss>
