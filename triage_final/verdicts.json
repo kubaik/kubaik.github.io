@@ -1326,15 +1326,11 @@
   "words": 2993
  },
  "nodejs-memory-leak-find-it-in-10-min": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "Node.js memory leak: find it in 10 min",
-  "words": 2850
+  "words": 2860
  },
  "zero-trust-ai-skip-the-latency-tax": {
   "verdict": "IMPROVE",
