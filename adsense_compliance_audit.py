@@ -1,19 +1,21 @@
+#!/usr/bin/env python3
 """
-adsense_compliance_audit.py  (v2)
+adsense_compliance_audit.py  (v3 — stricter corpus-level + per-post gates)
 
 Classifies every live post as DELETE / IMPROVE / KEEP and writes reviewable
 removal scripts. Nothing is deleted unless --delete is passed.
 
-Fixes vs. v1:
-  * near-duplicate: v1 flagged BOTH members of a pair (each found the other),
-    and safe_to_delete() always passed -> both copies were deleted. Now
-    duplicates are clustered; the best copy survives, only the rest go.
-  * template boilerplate shared by most pages no longer inflates similarity
-    (shingles present in >5% of posts are ignored).
-  * O(n^2) Jaccard replaced by an inverted index (scales to thousands).
-  * mass-delete guard: refuses to delete >40% of the corpus without --force.
-  * --delete-improve removed (deleting salvageable posts is never a side
-    effect of an audit); IMPROVE posts are queued for regeneration.
+Changes vs. v2:
+  * Tombstone / removed-post HTML directories are now explicitly detected and
+    classified DELETE (they were previously thin-content false positives).
+  * Jaccard threshold lowered to 0.28 and boilerplate DF to 0.04 for tighter
+    near-duplicate clustering on formulaic AI output.
+  * MIN_WORDS_DELETE raised to 1800; MIN_WORDS_FLAG to 2200.
+  * Named-source pattern expanded (OWASP, Datadog, LinearB, iHub, Makerere).
+  * Missing E-E-A-T footer ("About this article" / AI content policy link)
+    now forces IMPROVE.
+  * Mass-delete guard lowered to 25% of corpus.
+  * IMPROVE entries written to regeneration_queue.json with priority.
 """
 
 import argparse
@@ -43,22 +45,27 @@ EXCLUDE_DIRS = {
     "ai-content-policy",
 }
 
-MIN_WORDS_DELETE = 1200
-MIN_WORDS_FLAG = 1800
+MIN_WORDS_DELETE = 1800
+MIN_WORDS_FLAG = 2200
 NGRAM = 8
-DUP_JACCARD = 0.35
-BOILERPLATE_DF = 0.05  # ignore shingles that appear in >5% of posts
-MAX_DELETE_FRACTION = 0.40
+DUP_JACCARD = 0.28
+BOILERPLATE_DF = 0.04
+MAX_DELETE_FRACTION = 0.25
 
 NAMED_SOURCE = re.compile(
     r"\b(according to (a |an )?(20\d\d )?"
-    r"(stack overflow|gartner|forrester|mckinsey|gitlab|github|jetbrains|idc|deloitte)|"
-    r"(20\d\d )?(stack overflow|gartner|forrester|mckinsey|idc) (survey|report|study))\b",
+    r"(stack overflow|gartner|forrester|mckinsey|gitlab|github|jetbrains|idc|deloitte|"
+    r"owasp|datadog|linearb|ihub|makerere)|"
+    r"(20\d\d )?(stack overflow|gartner|forrester|mckinsey|idc|owasp) (survey|report|study))\b",
     re.I,
 )
 GENERIC_META = [
     re.compile(p)
-    for p in (r"^Blog post about .+$", r"^Learn about .+ in this post\.?$")
+    for p in (
+        r"^Blog post about .+$",
+        r"^Learn about .+ in this post\.?$",
+        r"^Practical guide to .+$",
+    )
 ]
 TECH_TAGS = {
     "python",
@@ -70,6 +77,9 @@ TECH_TAGS = {
     "api",
     "backend",
     "devops",
+    "llm",
+    "agent",
+    "rag",
 }
 STRIP_TAGS = ["nav", "header", "footer", "script", "style", "form", "aside"]
 STRIP_CLS = re.compile(
@@ -82,6 +92,7 @@ BOILERPLATE_MARKERS = [
     "How this article was made",
     "How this article was produced",
     "corrections are applied within 48 hours",
+    "individually reviewed or edited line by line",
 ]
 
 
@@ -98,7 +109,7 @@ def named_source_hit(text: str) -> Optional[str]:
     m = NAMED_SOURCE.search(text)
     if not m:
         return None
-    window = text[max(0, m.start() - 200) : m.end() + 200]
+    window = text[max(0, m.start() - 250) : m.end() + 250]
     return None if re.search(r"https?://", window) else m.group(0)
 
 
@@ -144,7 +155,15 @@ def load_post(d: Path) -> Optional[dict]:
         if re.search(r'http-equiv=["\']refresh', html, re.I) and re.search(
             r"noindex", html, re.I
         ):
-            return None  # retired redirect stub, not a live post
+            return None
+        if "Post removed" in html or "This post has been removed" in html:
+            return {
+                "content": "",
+                "meta": "",
+                "tags": [],
+                "has_code": False,
+                "source": "tombstone",
+            }
         soup = BeautifulSoup(html, "html.parser")
         mt = soup.find("meta", attrs={"name": "description"})
         return {
@@ -170,7 +189,7 @@ def load_posts() -> Dict[str, dict]:
 def duplicate_clusters(posts: Dict[str, dict]) -> Dict[str, str]:
     """Return {slug_to_delete: canonical_slug}. Best copy (most words, then
     alphabetical) survives; others in its cluster are marked."""
-    sh = {s: shingle_set(p["content"]) for s, p in posts.items()}
+    sh = {s: shingle_set(p["content"]) for s, p in posts.items() if p["content"]}
     df: Dict[int, int] = defaultdict(int)
     for s in sh.values():
         for h in s:
@@ -224,8 +243,8 @@ def build_report(min_words: int):
     report = {"delete": [], "improve": [], "keep": []}
     for slug, d in posts.items():
         c, wc, reasons, verdict = d["content"], words(d["content"]), [], "keep"
-        if wc == 0:
-            reasons.append("no_meaningful_content")
+        if wc == 0 or d["source"] == "tombstone":
+            reasons.append("tombstone_or_no_meaningful_content")
             verdict = "delete"
         elif wc < min_words:
             reasons.append(f"thin_content: {wc} < {min_words}")
@@ -241,13 +260,16 @@ def build_report(min_words: int):
             if wc < MIN_WORDS_FLAG:
                 reasons.append(f"below_target_length: {wc}")
                 verdict = "improve"
-            if len(d["meta"] or "") < 50 or any(
+            if len(d["meta"] or "") < 60 or any(
                 p.match(d["meta"] or "") for p in GENERIC_META
             ):
                 reasons.append("generic_or_missing_meta_description")
                 verdict = "improve"
             if TECH_TAGS & set(d["tags"]) and not d["has_code"]:
                 reasons.append("no_code_in_technical_post")
+                verdict = "improve"
+            if "### About this article" not in c and "AI content policy" not in c:
+                reasons.append("missing_eeat_footer")
                 verdict = "improve"
         report[verdict].append(
             {
@@ -279,7 +301,7 @@ def main():
     )
     ap.add_argument("--min-words", type=int, default=MIN_WORDS_DELETE)
     ap.add_argument(
-        "--force", action="store_true", help="allow deleting >40%% of corpus"
+        "--force", action="store_true", help="allow deleting >25%% of corpus"
     )
     a = ap.parse_args()
 
@@ -310,7 +332,15 @@ def main():
     queue = json.loads(q.read_text()) if q.exists() else []
     seen = {e["slug"] for e in queue}
     new = [
-        {"slug": e["slug"], "reason": "; ".join(e["reasons"]), "priority": "normal"}
+        {
+            "slug": e["slug"],
+            "reason": "; ".join(e["reasons"]),
+            "priority": (
+                "high"
+                if any(x in "; ".join(e["reasons"]) for x in ("thin", "tombstone"))
+                else "normal"
+            ),
+        }
         for e in report["improve"]
         if e["slug"] not in seen
     ]

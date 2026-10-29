@@ -43,6 +43,7 @@ from adsense_fixes.similarity_guard import SimilarityGuard
 from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
+from adsense_fixes.topic_diversity_gate import is_too_similar
 from adsense_fixes.content_freshness import (
     inject_freshness_footer,
     get_publishing_schedule_status,
@@ -5921,6 +5922,18 @@ if __name__ == "__main__":
                             print(f"  ⚠️  Canonical: {issue}")
                     except Exception as e:
                         print(f"  ⚠️  Canonical validation failed (non-fatal): {e}")
+
+                    # Topic diversity gate — reject titles too similar to recent corpus
+                    try:
+                        too_close, match, score = is_too_similar(blog_post.title)
+                        if too_close:
+                            raise DuplicateContentError(
+                                f"Topic diversity gate: too similar to '{match}' (score={score:.2f})"
+                            )
+                    except Exception as e:
+                        if isinstance(e, DuplicateContentError):
+                            raise
+                        print(f"  ⚠️  Topic diversity check failed (non-fatal): {e}")
 
                     try:
                         blog_system.save_post(blog_post)
