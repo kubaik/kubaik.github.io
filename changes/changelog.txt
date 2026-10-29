@@ -1,65 +1,37 @@
 AdSense Compliance Audit — Changelog
 =====================================
-Date: 2026-10-29
-Scope: Production pipeline hardening for Google AdSense / Helpful Content / E-E-A-T
+Date: 2026-10-29 (update)
+Scope: Stop tombstone recreation after delete
 
-Files changed
--------------
-1. adsense_compliance_audit.py          → v3 (full rewrite)
-2. adsense_fixes/topic_diversity_gate.py → new module
-3. blog_system.py                       → diversity gate wired into auto generation loop
-4. .github/workflows/blog-automation.yml → stricter audit step added
+Root cause
+----------
+`utilsIndexing/retire_registry.py` (invoked from StaticSiteGenerator.generate_site
+on every `blog_system.py build`) maintains:
+  - published_slugs.json  (every slug that has ever been live)
+  - retired_slugs.json    (slugs no longer live)
 
-Summary of changes
-------------------
+On the next build it detects “in ledger but no post.json” and rewrites a
+noindex tombstone index.html for any slug still inside the tombstone_days
+window (default 180). That is why the 24 deleted directories reappear
+after deployment.
 
-adsense_compliance_audit.py (v3)
-- Explicit tombstone detection (HTML dirs with "Post removed" → DELETE).
-- Stricter near-duplicate: DUP_JACCARD 0.35→0.28, BOILERPLATE_DF 0.05→0.04.
-- Length gates raised: MIN_WORDS_DELETE 1200→1800, MIN_WORDS_FLAG 1800→2200.
-- Named-source regex expanded (OWASP, Datadog, LinearB, iHub, Makerere).
-- Missing E-E-A-T footer now forces IMPROVE.
-- Mass-delete safety lowered 40%→25% (requires --force).
-- IMPROVE entries written to regeneration_queue.json with priority.
+Fix
+---
+adsense_compliance_audit.py (v3.1)
+- When --delete is used, after `git rm` the script now also removes every
+  deleted slug from both published_slugs.json and retired_slugs.json.
+- The updated ledger files must be committed together with the deletions.
+- Next build will no longer recreate the tombstones.
 
-adsense_fixes/topic_diversity_gate.py (new)
-- is_too_similar(new_title, window=40, threshold=0.42) compares against the
-  40 most recently modified published titles (token Jaccard).
-- Fully automated; no manual step.
-
-blog_system.py
-- Added import:
-    from adsense_fixes.topic_diversity_gate import is_too_similar
-- Injected check immediately before blog_system.save_post() inside the
-  auto-mode duplicate-retry loop:
-    too_close, match, score = is_too_similar(blog_post.title)
-    if too_close:
-        raise DuplicateContentError(...)
-- On hit, the existing DuplicateContentError path discards the draft and
-  retries with a new topic (up to MAX_DUPLICATE_REGENERATION_ATTEMPTS).
-- All other gates, velocity control, fabrication checks, and generation
-  logic remain unchanged.
-
-.github/workflows/blog-automation.yml
-- Added step before the final rebuild:
-    - name: 🧮 Stricter AdSense compliance audit (v3)
-      run: python adsense_compliance_audit.py --improve || echo "WARNING: ..."
-- Queues any remaining IMPROVE posts into regeneration_queue.json so the
-  existing improve_posts.py / process_regeneration_queue.py steps can act.
-
-Integration / deployment
-------------------------
-1. Replace the four files in the repo (or copy from the artifacts).
-2. Ensure adsense_fixes/ is on PYTHONPATH (already is via the workflow).
-3. Run once locally to purge tombstones:
-     python adsense_compliance_audit.py
-     python adsense_compliance_audit.py --delete --force
-4. Commit and push; the next scheduled or workflow_dispatch run will use
-   the stricter gates.
-
-Expected outcome
+Files to replace
 ----------------
-- Tombstone orphans removed.
-- Future posts rejected when topically too close to recent content.
-- Tighter per-post checks reduce Low-Value Content / policy rejection risk.
-- Pipeline remains fully automated.
+- adsense_compliance_audit.py  (updated below)
+- (optional) the four files from the previous delivery if not already applied
+
+Usage
+-----
+python adsense_compliance_audit.py --delete --force
+# then commit the deleted docs/ dirs AND the two updated JSON ledgers
+git add docs/ published_slugs.json retired_slugs.json
+git commit -m "Permanently remove tombstoned low-quality posts"
+git push
