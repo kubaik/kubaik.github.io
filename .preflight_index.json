@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-30T04:57:15.788808",
+  "built_at": "2026-10-30T09:37:14.935291",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5695,6 +5695,11 @@
       "slug": "opentelemetry-collector-pipelines-sampling-batching",
       "title": "OpenTelemetry collector pipelines: sampling, batching…",
       "summary": "opentelemetry collector looks simple until it has to survive real traffic. Here's the version that skips the happy-path tutorial. The edge cases only show up once real users hit the system. The scenario: a collector that works until it doesn't A team runs a few services on Kubernetes. They deploy th"
+    },
+    {
+      "slug": "kyc-integrations-the-data-you-shouldnt-store",
+      "title": "KYC integrations: the data you shouldn't store",
+      "summary": "There's a one-line change buried in most kyc identity setups that nobody flags until it's expensive. The dashboards look healthy right up until the incident starts. This is the version of the write-up that includes the part that broke. Most teams integrating KYC treat it like any other third-party A"
     }
   ]
 }

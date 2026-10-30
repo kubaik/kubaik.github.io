@@ -1310,7 +1310,7 @@
   "reasons": [],
   "fixes": [],
   "title": "OpenTelemetry collector pipelines: sampling, batching\u2026",
-  "words": 2453
+  "words": 2669
  },
  "observe-llm-features-90-faster": {
   "verdict": "KEEP",
@@ -1649,6 +1649,13 @@
   "fixes": [],
   "title": "AI in slow networks: why models flop where data costs rise",
   "words": 2827
+ },
+ "kyc-integrations-the-data-you-shouldnt-store": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "KYC integrations: the data you shouldn't store",
+  "words": 2673
  },
  "cloud-agents-burned-18k-8-tools-that-didnt-work": {
   "verdict": "KEEP",

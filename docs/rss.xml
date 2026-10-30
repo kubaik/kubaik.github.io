@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Oct 2026 04:59:16 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 09:39:14 +0000</lastBuildDate>
+    <item>
+      <title>KYC integrations: the data you shouldn&apos;t store</title>
+      <link>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</link>
+      <description>Design a KYC integration that persists only the decision and a vendor reference, with the raw identity evidence kept by the vendor under contract.</description>
+      <pubDate>Fri, 30 Oct 2026 09:37:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</guid>
+    </item>
     <item>
       <title>OpenTelemetry collector pipelines: sampling, batching…</title>
       <link>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</link>
@@ -138,13 +145,6 @@
       <description>How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</description>
       <pubDate>Wed, 21 Oct 2026 03:54:11 +0000</pubDate>
       <guid>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</guid>
-    </item>
-    <item>
-      <title>MCP vs A2A: pick the wrong layer</title>
-      <link>https://kubaik.github.io/mcp-vs-a2a-pick-the-wrong-layer/</link>
-      <description>MCP connects models to tools; A2A connects agents to agents. How to tell which layer a boundary belongs to, and what breaks when you mix them.</description>
-      <pubDate>Tue, 20 Oct 2026 16:35:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-vs-a2a-pick-the-wrong-layer/</guid>
     </item>
   </channel>
 </rss>

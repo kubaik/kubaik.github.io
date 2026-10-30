@@ -170,6 +170,7 @@ docs/json-modes-silent-failures-exposed/
 docs/jwt-sessions-revocation-rotation-storage/
 docs/keep-multi-model-systems-stable-6-rules-that-worked/
 docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/
+docs/kyc-integrations-the-data-you-shouldnt-store/
 docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/
 docs/least-privilege-for-agents-the-config-line-nobody-writes/
 docs/llm-agents-why-monoliths-win/

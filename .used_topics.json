@@ -204,5 +204,6 @@
   "Mentoring junior engineers effectively when AI assistants answer their questions first",
   "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
   "Memory profiling and leak hunting in long-running backend services",
-  "OpenTelemetry collector pipelines: sampling, batching, and routing explained"
+  "OpenTelemetry collector pipelines: sampling, batching, and routing explained",
+  "KYC and identity verification integrations: architecture and data handling concerns"
 ]

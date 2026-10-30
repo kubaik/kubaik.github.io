@@ -208,6 +208,7 @@ docs/jwt-sessions-revocation-rotation-storage/index.md
 docs/keep-multi-model-systems-stable-6-rules-that-worked/index.md
 docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/index.md
 docs/kubernetes-or-nomad-the-real-experiment-cost-split/index.md
+docs/kyc-integrations-the-data-you-shouldnt-store/index.md
 docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/index.md
 docs/least-privilege-for-agents-the-config-line-nobody-writes/index.md
 docs/llm-agents-why-monoliths-win/index.md

@@ -129,6 +129,7 @@ hybrid-cloud-routing-cost-speed-balance-for-sea,95,2605,Hybrid Cloud Routing: Co
 idempotency-keys-what-they-fix-what-they-dont,95,2797,"Idempotency keys: what they fix, what they don't",2026-09-21T09:17:49.117913,1,no FAQ section
 idp-for-ai-2026-stack-evolution,95,2887,IDP for AI: 2026 stack evolution,2026-09-02T03:37:36.606872,1,no FAQ section
 iso-20022-where-payment-rails-actually-break,95,3399,ISO 20022: where payment rails actually break,2026-10-24T15:37:54.618596,1,no markdown table
+kyc-integrations-the-data-you-shouldnt-store,95,2673,KYC integrations: the data you shouldn't store,2026-10-30T09:37:11.782350,1,no FAQ section
 llm-agents-why-monoliths-win,95,2245,LLM agents: why monoliths win,2026-09-10T08:01:41.646366,1,no FAQ section
 llm-output-metrics-that-actually-move-the-needle,95,2089,LLM output metrics that actually move the needle,2026-06-26T19:13:43.403773,1,no FAQ section
 local-llm-agents-vllm-vs-ollama-for-fintech,95,3190,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,1,no markdown table
@@ -146,7 +147,7 @@ observability-agents-lied-to-us,95,2635,Observability Agents as Application Code
 offline-agent-workflows-for-last-mile-ops,95,3017,Offline agent workflows for last-mile ops,2026-09-21T07:32:16.420961,1,no FAQ section
 offline-first-money-apps-with-dynamodb-streams,95,3000,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,1,no FAQ section
 one-misconfigured-vector-db-killed-our-rag-pipeline,95,2255,When a vector DB misconfiguration breaks RAG silently,2026-07-29T14:18:17.130040,1,no FAQ section
-opentelemetry-collector-pipelines-sampling-batching,95,2453,"OpenTelemetry collector pipelines: sampling, batching…",2026-10-30T04:57:12.725295,1,no markdown table
+opentelemetry-collector-pipelines-sampling-batching,95,2669,"OpenTelemetry collector pipelines: sampling, batching…",2026-10-30T04:57:12.725295,1,no markdown table
 pci-dss-architecture-12-requirements-that-matter,95,2730,PCI DSS architecture: 12 requirements that matter,2026-10-19T03:52:49.796652,1,no markdown table
 pick-one-stripe-lemon-squeezy-paddle-in-2026,95,2739,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026",2026-06-25T13:28:15.693054,1,no markdown table
 portfolio-projects-that-hire-remote-senior-devs,95,2834,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,1,no FAQ section

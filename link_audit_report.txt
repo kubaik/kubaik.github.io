@@ -1,4 +1,4 @@
-❌ Internal link audit: 403 broken link(s) found across 404 posts checked.
+❌ Internal link audit: 404 broken link(s) found across 405 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -271,6 +271,7 @@ Source Post                              Anchor Text                    Missing 
   /one-payment-stack-for-kenya-nigeria-ghana AI content policy              /ai-content-policy/
   /only-boring-stacks-survive-ai-services AI content policy              /ai-content-policy/
   /open-banking-apis-the-integration-traps AI content policy              /ai-content-policy/
+  /opentelemetry-collector-pipelines-sampling-batching AI content policy              /ai-content-policy/
   /orchestration-tax-kills-multi-agent-systems AI content policy              /ai-content-policy/
   /pci-dss-architecture-12-requirements-that-matter AI content policy              /ai-content-policy/
   /personal-ai-assistants-avoid-vendor-lock-in-traps AI content policy              /ai-content-policy/
