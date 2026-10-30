@@ -438,7 +438,7 @@ A good key is stable across retries of the same intent, distinct across genuinel
 <p>Open your agent's tool-call code and find every tool that writes to an external system. For each one, check whether it accepts an idempotency key. If it does not, add one — start with the payment or submission tool, since that is where duplicates cost the most. If you cannot change the tool, wrap it in a local deduplication layer keyed on <code>sha256(tool_name + canonical_args)</code> and log every call with that key. That single change will not solve partitions, but it will make the next duplicate visible instead of silent.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/">Survive network drops: agentic workflows that keep running</a></li>
+<li>Survive network drops: agentic workflows that keep running</li>
 <li><a href="https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/">Latency trade-offs: Nairobi teams beat global AI providers</a></li>
 <li>APIs must die in 2026</li>
 </ul>
@@ -472,22 +472,22 @@ A good key is stable across retries of the same intent, distinct across genuinel
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/agentic-systems-architecture-principles-that-hold/">
-                        <h3>Agentic systems: architecture principles that hold</h3>
-                        <p>How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</p>
-                        <span class="related-meta">15 min read · 23 October 2026</span>
-                    </a>
-                    
                     <a class="related-card" href="/webhook-delivery-that-survives-outages/">
                         <h3>Webhook delivery that survives outages</h3>
                         <p>How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.</p>
                         <span class="related-meta">13 min read · 2 October 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/7-patterns-for-systems-that-wont-die-when-networks/">
-                        <h3>7 patterns for systems that won’t die when networks</h3>
-                        <p>Concrete patterns for building services that tolerate network partitions: retries, idempotency, outbox, sagas, and how to measure each trade-off.</p>
-                        <span class="related-meta">18 min read · 14 June 2026</span>
+                    <a class="related-card" href="/agentic-systems-architecture-principles-that-hold/">
+                        <h3>Agentic systems: architecture principles that hold</h3>
+                        <p>How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</p>
+                        <span class="related-meta">15 min read · 23 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-access-for-non-ai-engineers/">
+                        <h3>Agent access for non-AI engineers</h3>
+                        <p>A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+                        <span class="related-meta">16 min read · 17 September 2026</span>
                     </a>
                     
                 </div>

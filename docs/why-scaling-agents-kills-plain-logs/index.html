@@ -411,7 +411,7 @@ function verifyAndLoad(modelName) {
 <p>Pick one running agent and add a single structured log line at model load time that includes <code>model</code>, <code>path</code>, and <code>sha256</code>. Restart the agent, confirm the line appears in your log sink with the expected fields, and record the per-entry serialization cost with <code>time.process_time()</code> around a loop of 10,000 calls. That single measurement tells you whether the rest of this article applies to your fleet.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/">Structured Logs and Pinned Versions for Multi-Agent Systems</a></li>
+<li>Structured Logs and Pinned Versions for Multi-Agent Systems</li>
 <li><a href="https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/">Observability for Long-Running LLM Agent Workflows</a></li>
 <li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
 </ul>

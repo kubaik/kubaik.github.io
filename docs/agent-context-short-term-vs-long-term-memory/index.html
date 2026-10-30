@@ -535,7 +535,7 @@ They are useful when you need continuous aggregates over high-volume event strea
 <p>If that number is non-zero, the store has already been discarding live contexts. Then grep your agent code for the side-effecting calls — payment, email, record creation — and check whether each one is guarded by a durable record written <em>before</em> the call. Any unguarded call is a duplicate-action bug waiting for a restart. Write the guard, or move the record to a log, before you tune anything else.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/">Agents running hours? You're losing context fast</a></li>
+<li>Agents running hours? You're losing context fast</li>
 <li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
 <li><a href="https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/">Event sourcing: pay the complexity tax only here</a></li>
 </ul>

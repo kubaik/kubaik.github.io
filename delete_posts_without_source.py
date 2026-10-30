@@ -3,54 +3,42 @@
 delete_posts_without_source.py
 
 Finds published posts under docs/ that have no post.json (the pipeline's
-source of truth — see blog_system.py's own error: "A post without a source
-of truth cannot be regenerated, fact-checked, or corrected — this must not
-ship.") and deletes them.
+source of truth) and deletes them, safely.
 
 By default this runs in DRY RUN mode and only prints what it would do.
 Pass --execute to actually delete.
 
 Usage:
-    python3 delete_posts_without_source.py                # dry run (safe)
-    python3 delete_posts_without_source.py --execute       # actually delete
-    python3 delete_posts_without_source.py --docs-dir ./docs --execute
+    python3 delete_posts_without_source.py                       # dry run
+    python3 delete_posts_without_source.py --keep-markdown       # dry run, spare recoverable posts
     python3 delete_posts_without_source.py --keep-markdown --execute
-        # if a post has index.md but no post.json, don't delete it —
-        # just report it, since blog_system.py's `cleanup_posts()` command
-        # can recover those automatically instead of losing them.
+    python3 delete_posts_without_source.py --execute --block     # also block topic regeneration
 
-Behavior:
-    - Walks each subdirectory of docs/, skipping known non-post site
-      directories (static, about, author, contact, dmca, privacy-policy,
-      terms-of-service, ai-content-policy, tag, page) — those are generated
-      directly by static_site_generator.py and never have a post.json by
-      design, so they are not "missing a source" in any meaningful sense.
-    - A post dir is "missing source" if post.json does not exist in it.
-    - With --keep-markdown (recommended), a dir that has index.md but no
-      post.json is left alone and just reported, since running
-      `python3 blog_system.py cleanup` can regenerate post.json from that
-      markdown without losing the post. Only dirs with NEITHER post.json
-      NOR index.md are treated as truly unrecoverable.
-    - Without --keep-markdown, ANY dir missing post.json is deleted,
-      matching the literal ask ("delete posts without post.json").
-    - Writes a JSON log of everything removed to docs/_deleted_no_source.json
-      so the removal is auditable later.
+For each post deleted (with --execute) the script:
+  1. backs up docs/<slug>/ to <backup-dir>/<slug>/   (default .triage_backups)
+  2. removes docs/<slug>/ and docs/static/og/<slug>*.png
+  3. repairs links in remaining posts that pointed at it
+     ([text](/slug/) -> text), in their post.json "content"
+  4. logs it to docs/_deleted_no_source.json
+  5. with --block, adds it to the topic blocklist via quality_gate
+     so blog_system.py won't regenerate the topic
+
+Directories with index.md but no post.json are recoverable through
+`python3 blog_system.py cleanup`; --keep-markdown leaves them alone.
+
+Afterwards run: python3 blog_system.py build
 """
 
 import argparse
 import json
+import re
 import shutil
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
-# Directories static_site_generator.py writes directly (about/, contact/,
-# dmca/, etc. — see _generate_static_pages(), _generate_author_page(),
-# _generate_dmca_page(), _generate_ai_content_policy_page(), and the
-# paginated /page/N/ archive and /tag/<slug>/ archive pages). These are
-# real site pages, NOT blog posts, and were never written with a
-# post.json in the first place — they must never be treated as
-# "missing their source of truth."
+# Directories static_site_generator.py writes directly. These are real site
+# pages, not blog posts, and never have a post.json.
 NON_POST_DIR_NAMES = {
     "static",
     "about",
@@ -64,6 +52,11 @@ NON_POST_DIR_NAMES = {
     "page",
 }
 
+# Same link shape delete_posts.py repairs: [text](/slug/) or full-URL form.
+LINK_RX = re.compile(
+    r"\[([^\]]+)\]\((?:https?://kubaik\.github\.io)?/([a-z0-9][a-z0-9-]*)/?\)"
+)
+
 
 def find_posts_without_source(docs_dir: Path, keep_markdown: bool) -> dict:
     """Returns {"delete": [...], "recoverable": [...]} slugs."""
@@ -74,15 +67,17 @@ def find_posts_without_source(docs_dir: Path, keep_markdown: bool) -> dict:
         return result
 
     for post_dir in sorted(docs_dir.iterdir()):
-        if not post_dir.is_dir() or post_dir.name in NON_POST_DIR_NAMES:
+        if (
+            not post_dir.is_dir()
+            or post_dir.name in NON_POST_DIR_NAMES
+            or post_dir.name.startswith((".", "_"))
+        ):
             continue
 
-        post_json = post_dir / "post.json"
-        if post_json.exists():
-            continue  # has a source of truth — leave it alone
+        if (post_dir / "post.json").exists():
+            continue  # has a source of truth
 
-        markdown_path = post_dir / "index.md"
-        if keep_markdown and markdown_path.exists():
+        if keep_markdown and (post_dir / "index.md").exists():
             result["recoverable"].append(post_dir.name)
             continue
 
@@ -91,28 +86,104 @@ def find_posts_without_source(docs_dir: Path, keep_markdown: bool) -> dict:
     return result
 
 
+def read_title(post_dir: Path, slug: str) -> str:
+    """Best-effort title for the blocklist: index.md heading, else the slug."""
+    md = post_dir / "index.md"
+    if md.exists():
+        try:
+            for line in md.read_text("utf-8").splitlines():
+                if line.startswith("# "):
+                    return line[2:].strip()
+        except OSError:
+            pass
+    return slug.replace("-", " ")
+
+
+def repair_links(docs_dir: Path, dead: set, execute: bool) -> int:
+    """Replace links to deleted slugs with their plain text in remaining posts."""
+    fixed = 0
+    for pj in docs_dir.glob("*/post.json"):
+        if pj.parent.name in dead:
+            continue
+        try:
+            data = json.loads(pj.read_text("utf-8"))
+        except ValueError:
+            continue
+
+        count = 0
+
+        def sub(m):
+            nonlocal count
+            if m.group(2) in dead:
+                count += 1
+                return m.group(1)
+            return m.group(0)
+
+        new_content = LINK_RX.sub(sub, data.get("content", ""))
+        if count:
+            fixed += count
+            if execute:
+                data["content"] = new_content
+                pj.write_text(json.dumps(data, indent=2, ensure_ascii=False), "utf-8")
+    return fixed
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Delete published posts that have no post.json source of truth."
     )
     parser.add_argument(
-        "--docs-dir", default="./docs",
+        "--docs-dir",
+        default="./docs",
         help="Path to the docs/ output directory (default: ./docs)",
     )
     parser.add_argument(
-        "--execute", action="store_true",
-        help="Actually delete. Without this flag, only a dry-run report is printed.",
+        "--execute",
+        action="store_true",
+        help="Actually delete. Without this, only a dry-run report is printed.",
     )
     parser.add_argument(
-        "--keep-markdown", action="store_true",
-        help="Don't delete posts that still have index.md — those can be "
-             "recovered instead via 'python3 blog_system.py cleanup'.",
+        "--keep-markdown",
+        action="store_true",
+        help="Don't delete posts that still have index.md; recover them via "
+        "'python3 blog_system.py cleanup' instead.",
+    )
+    parser.add_argument(
+        "--backup-dir",
+        default=".triage_backups",
+        help="Where to copy each post before deleting (default: .triage_backups)",
+    )
+    parser.add_argument(
+        "--no-backup",
+        action="store_true",
+        help="Skip the backup copy (not recommended).",
+    )
+    parser.add_argument(
+        "--block",
+        action="store_true",
+        help="Add deleted topics to the blocklist (needs quality_gate.py) "
+        "so blog_system.py won't regenerate them.",
+    )
+    parser.add_argument(
+        "--blocklist",
+        default=None,
+        help="Blocklist path (default: quality_gate.BLOCKLIST_PATH)",
     )
     args = parser.parse_args()
 
+    quality_gate = None
+    if args.block:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        try:
+            import quality_gate  # type: ignore
+        except ImportError:
+            print(
+                "--block requires quality_gate.py next to this script; not found. Aborting."
+            )
+            sys.exit(2)
+
     docs_dir = Path(args.docs_dir)
     found = find_posts_without_source(docs_dir, args.keep_markdown)
-
     to_delete = found["delete"]
     recoverable = found["recoverable"]
 
@@ -123,51 +194,95 @@ def main():
     if recoverable:
         print(f"\nRecoverable (has index.md, --keep-markdown set): {len(recoverable)}")
         for slug in recoverable:
-            print(f"  ~ {slug}  (run 'python3 blog_system.py cleanup' to restore post.json)")
+            print(f"  ~ {slug}")
+        print("  -> run 'python3 blog_system.py cleanup' to restore their post.json")
 
     if not to_delete:
         print("\nNothing to delete.")
-        if recoverable:
-            print(
-                "\nAll affected posts are recoverable — none will be deleted "
-                "because --keep-markdown was set."
-            )
         sys.exit(0)
 
     print(f"\nTo be deleted: {len(to_delete)}")
     for slug in to_delete:
-        print(f"  ✗ {slug}")
+        print(f"  x {slug}")
+
+    dead = set(to_delete)
+    link_count = repair_links(docs_dir, dead, execute=False)
+    og_count = (
+        sum(len(list((docs_dir / "static" / "og").glob(f"{s}*"))) for s in to_delete)
+        if (docs_dir / "static" / "og").exists()
+        else 0
+    )
+    print(f"\nLinks in remaining posts that would be repaired: {link_count}")
+    print(f"OG images that would be removed: {og_count}")
 
     if not args.execute:
         print("\n" + "=" * 70)
-        print(f"DRY RUN — nothing was deleted. Re-run with --execute to remove "
-              f"{len(to_delete)} post(s).")
+        print(
+            f"DRY RUN: nothing was deleted. Re-run with --execute to remove "
+            f"{len(to_delete)} post(s)."
+        )
+        if not args.no_backup:
+            print(f"Each will be backed up to {args.backup_dir}/<slug>/ first.")
         print("=" * 70)
         sys.exit(0)
 
     log_path = docs_dir / "_deleted_no_source.json"
     removed_log = json.loads(log_path.read_text()) if log_path.exists() else {}
+    now = datetime.now(timezone.utc).isoformat()
 
-    deleted_count = 0
+    deleted = []
+    block_entries = []
     for slug in to_delete:
         post_dir = docs_dir / slug
+        title = read_title(post_dir, slug)
         try:
+            if not args.no_backup:
+                shutil.copytree(
+                    post_dir, Path(args.backup_dir) / slug, dirs_exist_ok=True
+                )
             shutil.rmtree(post_dir)
-            removed_log[slug] = {
-                "deleted_at": datetime.now().isoformat(),
-                "reason": "missing post.json (no source of truth)",
-            }
-            deleted_count += 1
-            print(f"Deleted: {slug}")
+            for og in (docs_dir / "static" / "og").glob(f"{slug}*"):
+                og.unlink(missing_ok=True)
         except OSError as e:
             print(f"Failed to delete {slug}: {e}")
+            continue
 
-    log_path.write_text(json.dumps(removed_log, indent=2))
+        removed_log[slug] = {
+            "deleted_at": now,
+            "reason": "missing post.json (no source of truth)",
+            "source": "delete_posts_without_source.py",
+        }
+        block_entries.append(
+            {
+                "slug": slug,
+                "title": title,
+                "reason": "missing post.json (no source of truth)",
+                "deleted_at": now,
+            }
+        )
+        deleted.append(slug)
+        print(f"Deleted: {slug}")
+
+    # Only repair links to posts that were actually removed.
+    fixed = repair_links(docs_dir, set(deleted), execute=True)
+
+    log_path.write_text(json.dumps(removed_log, indent=2, ensure_ascii=False))
+
+    if args.block and block_entries:
+        blocklist = (
+            Path(args.blocklist)
+            if args.blocklist
+            else Path(quality_gate.BLOCKLIST_PATH)
+        )
+        added = quality_gate.add_to_blocklist(block_entries, blocklist)
+        print(f"blocklist: +{added} entries -> {blocklist}")
 
     print("\n" + "=" * 70)
-    print(f"Deleted {deleted_count}/{len(to_delete)} post(s). Log: {log_path}")
-    print("Run 'python3 blog_system.py build' to regenerate the site "
-          "(sitemap, index pages, etc.) so it no longer references them.")
+    print(f"Deleted {len(deleted)}/{len(to_delete)} post(s). Log: {log_path}")
+    if not args.no_backup:
+        print(f"Backups: {args.backup_dir}/")
+    print(f"Links repaired in remaining posts: {fixed}")
+    print("Next: python3 blog_system.py build  (regenerates sitemap, RSS, index pages)")
     print("=" * 70)
 
 
