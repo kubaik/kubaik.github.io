@@ -7,9 +7,7 @@
     "LambdaCostSpike",
     "Idempotency",
     "Exponential",
-    "Apis",
-    "Awscostanomaly",
-    "Agentretryloop"
+    "Apis"
   ],
   "meta_description": "Diagnose and fix runaway agent API calls: bounded retries, capped backoff, idempotency keys, and volume alerts that catch spikes before the bill does.",
   "featured_image": "/static/images/agent-flooded-our-api-with-bad-calls-overnight.jpg",

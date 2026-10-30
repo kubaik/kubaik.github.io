@@ -4,8 +4,7 @@
   "slug": "platform-teams-in-2026-docs-vs-production-reality",
   "tags": [
     "Softwareengineering",
-    "Coding",
-    "Platformengineering"
+    "Coding"
   ],
   "meta_description": "Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.",
   "featured_image": "/static/images/platform-teams-in-2026-docs-vs-production-reality.jpg",

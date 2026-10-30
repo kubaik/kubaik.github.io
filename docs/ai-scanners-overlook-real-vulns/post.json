@@ -5,12 +5,9 @@
   "tags": [
     "AiSecurityScanners",
     "Vulnerability",
-    "Codeql2.14",
     "Afl++4.08",
     "Ai",
-    "Cybersecurity",
-    "Codeql214",
-    "Afl408"
+    "Cybersecurity"
   ],
   "meta_description": "AI scanners catch pattern-level flaws but miss logic bugs. Learn a layered approach using deterministic rules, fuzzing, and runtime monitoring.",
   "featured_image": "/static/images/ai-scanners-overlook-real-vulns.jpg",

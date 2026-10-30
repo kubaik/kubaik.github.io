@@ -8,9 +8,7 @@
     "IdempotentWebhooks",
     "Step",
     "RedisIdempotency7.2",
-    "Redis",
-    "Redisidempotency72",
-    "Sqsvisibilitytimeout"
+    "Redis"
   ],
   "meta_description": "A practical guide to webhook delivery: idempotency, retry budgets, silent rate limits, poison-message triage, and what to instrument before you scale.",
   "featured_image": "/static/images/webhooks-done-right-retries-that-dont-explode-in-2026.jpg",

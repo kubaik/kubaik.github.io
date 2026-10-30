@@ -1,0 +1,2500 @@
+{
+  "15-agents-blew-up-our-logs-why-we-pinned-models-logs": {
+    "path": "docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (56% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2066
+  },
+  "2026-ai-stack-solo-saas-cost-showdown": {
+    "path": "docs/2026-ai-stack-solo-saas-cost-showdown/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2538
+  },
+  "2026-alert-triage-when-opsgenie-slept-for-you": {
+    "path": "docs/2026-alert-triage-when-opsgenie-slept-for-you/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3095
+  },
+  "2026-tech-salaries-where-cuts-stopped-where-raises": {
+    "path": "docs/2026-tech-salaries-where-cuts-stopped-where-raises/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2226
+  },
+  "3-ways-container-builds-got-3x-faster-in-2026": {
+    "path": "docs/3-ways-container-builds-got-3x-faster-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2535
+  },
+  "40-ai-code-meant-60-more-alerts": {
+    "path": "docs/40-ai-code-meant-60-more-alerts/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1878
+  },
+  "5-ai-tools-that-let-us-ship-faster-than-sf-teams": {
+    "path": "docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2012
+  },
+  "5-ways-to-find-hidden-latency-before-production": {
+    "path": "docs/5-ways-to-find-hidden-latency-before-production/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2327
+  },
+  "7-bundling-decisions-that-still-matter": {
+    "path": "docs/7-bundling-decisions-that-still-matter/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2762
+  },
+  "7-code-review-traps-when-ai-writes-half-your-code": {
+    "path": "docs/7-code-review-traps-when-ai-writes-half-your-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2209
+  },
+  "7-guardrails-for-safer-llm-apps": {
+    "path": "docs/7-guardrails-for-safer-llm-apps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3563
+  },
+  "7-idp-shifts-for-ai-feature-delivery": {
+    "path": "docs/7-idp-shifts-for-ai-feature-delivery/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2898
+  },
+  "7-patterns-for-systems-that-wont-die-when-networks": {
+    "path": "docs/7-patterns-for-systems-that-wont-die-when-networks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3478
+  },
+  "7-skills-senior-engineers-need-now-agents-are-live": {
+    "path": "docs/7-skills-senior-engineers-need-now-agents-are-live/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2869
+  },
+  "7-ways-to-measure-prompt-platform-roi-in-2026": {
+    "path": "docs/7-ways-to-measure-prompt-platform-roi-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2766
+  },
+  "9-vibe-coding-traps-that-break-production-code": {
+    "path": "docs/9-vibe-coding-traps-that-break-production-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2110
+  },
+  "african-devs-ai-tools-that-work-now-2026": {
+    "path": "docs/african-devs-ai-tools-that-work-now-2026/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "1 first-person claim(s) to neutralise"
+    ],
+    "words": 2258
+  },
+  "african-fintech-agents-the-compliance-cliff-most-miss": {
+    "path": "docs/african-fintech-agents-the-compliance-cliff-most-miss/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1980
+  },
+  "agent-access-for-non-ai-engineers": {
+    "path": "docs/agent-access-for-non-ai-engineers/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (50% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3052
+  },
+  "agent-architecture-the-new-model-trap": {
+    "path": "docs/agent-architecture-the-new-model-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3236
+  },
+  "agent-audit-trails-event-log-vs-state-snapshots": {
+    "path": "docs/agent-audit-trails-event-log-vs-state-snapshots/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2562
+  },
+  "agent-auth-the-silent-deployment-killer": {
+    "path": "docs/agent-auth-the-silent-deployment-killer/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2567
+  },
+  "agent-auth-where-the-docs-ended-up-lying": {
+    "path": "docs/agent-auth-where-the-docs-ended-up-lying/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2653
+  },
+  "agent-code-review-7-traps-that-slip-through": {
+    "path": "docs/agent-code-review-7-traps-that-slip-through/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3371
+  },
+  "agent-code-review-gap-nobody-admits": {
+    "path": "docs/agent-code-review-gap-nobody-admits/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2438
+  },
+  "agent-compliance-in-african-fintech-the-cbn-gap": {
+    "path": "docs/agent-compliance-in-african-fintech-the-cbn-gap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3135
+  },
+  "agent-compliance-the-layer-you-build-after-failure": {
+    "path": "docs/agent-compliance-the-layer-you-build-after-failure/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3186
+  },
+  "agent-context-short-term-vs-long-term-memory": {
+    "path": "docs/agent-context-short-term-vs-long-term-memory/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2939
+  },
+  "agent-drift-the-failure-mode-you-didnt-log": {
+    "path": "docs/agent-drift-the-failure-mode-you-didnt-log/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2899
+  },
+  "agent-drift-why-it-hurts-ux": {
+    "path": "docs/agent-drift-why-it-hurts-ux/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2319
+  },
+  "agent-drift-why-prod-breaks-without-human-checkpoints": {
+    "path": "docs/agent-drift-why-prod-breaks-without-human-checkpoints/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2854
+  },
+  "agent-flooded-our-api-with-bad-calls-overnight": {
+    "path": "docs/agent-flooded-our-api-with-bad-calls-overnight/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2831
+  },
+  "agent-followed-instructions-too-literally-the-cron-job-trap": {
+    "path": "docs/agent-followed-instructions-too-literally-the-cron-job-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2399
+  },
+  "agent-frameworks-stop-rewriting-the-same-glue-code": {
+    "path": "docs/agent-frameworks-stop-rewriting-the-same-glue-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2534
+  },
+  "agent-governance-opa-vs-kyverno-after-our-incident": {
+    "path": "docs/agent-governance-opa-vs-kyverno-after-our-incident/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2108
+  },
+  "agent-permissions-the-mistake-that-breaks-production": {
+    "path": "docs/agent-permissions-the-mistake-that-breaks-production/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3310
+  },
+  "agent-platform-abstractions-a-case-study": {
+    "path": "docs/agent-platform-abstractions-a-case-study/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2063
+  },
+  "agent-reliability-7-metrics-users-trust": {
+    "path": "docs/agent-reliability-7-metrics-users-trust/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3037
+  },
+  "agent-slos-measure-what-agents-actually-do": {
+    "path": "docs/agent-slos-measure-what-agents-actually-do/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2496
+  },
+  "agent-systems-circuit-breakers-are-not-enough": {
+    "path": "docs/agent-systems-circuit-breakers-are-not-enough/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2433
+  },
+  "agent-tracing-when-logs-lie-and-metrics-mislead": {
+    "path": "docs/agent-tracing-when-logs-lie-and-metrics-mislead/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1814
+  },
+  "agent-versioning-the-contract-you-forgot": {
+    "path": "docs/agent-versioning-the-contract-you-forgot/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (60% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2559
+  },
+  "agentic-ai-cost-control-7-tools-one-backfire": {
+    "path": "docs/agentic-ai-cost-control-7-tools-one-backfire/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2890
+  },
+  "agentic-finops-is-a-trap": {
+    "path": "docs/agentic-finops-is-a-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2272
+  },
+  "agentic-systems-architecture-principles-that-hold": {
+    "path": "docs/agentic-systems-architecture-principles-that-hold/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2884
+  },
+  "agentic-workflows-how-we-kept-the-lights": {
+    "path": "docs/agentic-workflows-how-we-kept-the-lights/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2776
+  },
+  "agentic-workflows-surviving-network-partitions": {
+    "path": "docs/agentic-workflows-surviving-network-partitions/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (78% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3494
+  },
+  "agents-247-vs-on-demand-42k-bill-shock": {
+    "path": "docs/agents-247-vs-on-demand-42k-bill-shock/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2388
+  },
+  "agents-create-incidents-at-2am": {
+    "path": "docs/agents-create-incidents-at-2am/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2288
+  },
+  "agents-keep-breaking-prod-3-boundary-rules-you-still-need": {
+    "path": "docs/agents-keep-breaking-prod-3-boundary-rules-you-still-need/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2748
+  },
+  "agents-running-hours-youre-losing-context-fast": {
+    "path": "docs/agents-running-hours-youre-losing-context-fast/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (50% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2293
+  },
+  "ai-agent-postmortem-human-loop-vs-blind-replay": {
+    "path": "docs/ai-agent-postmortem-human-loop-vs-blind-replay/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3147
+  },
+  "ai-agent-postmortems-the-three-surprises": {
+    "path": "docs/ai-agent-postmortems-the-three-surprises/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2800
+  },
+  "ai-agent-postmortems-trace-vs-logs-vs-code": {
+    "path": "docs/ai-agent-postmortems-trace-vs-logs-vs-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2498
+  },
+  "ai-agents-circuit-breakers-are-not-optional": {
+    "path": "docs/ai-agents-circuit-breakers-are-not-optional/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2521
+  },
+  "ai-agents-eat-your-budget-3-ways": {
+    "path": "docs/ai-agents-eat-your-budget-3-ways/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2388
+  },
+  "ai-agents-killed-dev-tool-sales-cycles": {
+    "path": "docs/ai-agents-killed-dev-tool-sales-cycles/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1883
+  },
+  "ai-agents-vs-argo-tekton-which-pipeline-heals-itself": {
+    "path": "docs/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2489
+  },
+  "ai-alert-triage-cut-pages-80-in-production": {
+    "path": "docs/ai-alert-triage-cut-pages-80-in-production/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2773
+  },
+  "ai-answers-first-judgment-later": {
+    "path": "docs/ai-answers-first-judgment-later/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2656
+  },
+  "ai-apps-break-when-you-treat-them-like-regular-software": {
+    "path": "docs/ai-apps-break-when-you-treat-them-like-regular-software/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2844
+  },
+  "ai-ate-the-niches-first": {
+    "path": "docs/ai-ate-the-niches-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1885
+  },
+  "ai-best-practices-fail-on-slow-networks": {
+    "path": "docs/ai-best-practices-fail-on-slow-networks/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (55% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2575
+  },
+  "ai-burnout-why-output-pressure-rose-even-as-tools-got": {
+    "path": "docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2207
+  },
+  "ai-chats-hidden-wcag-fails": {
+    "path": "docs/ai-chats-hidden-wcag-fails/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2668
+  },
+  "ai-code-40-how-to-keep-it-from-rotting-your-repo": {
+    "path": "docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2227
+  },
+  "ai-code-in-prod-postmortems-still-work": {
+    "path": "docs/ai-code-in-prod-postmortems-still-work/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2167
+  },
+  "ai-code-traps-copilot-vs-cursor-smackdown": {
+    "path": "docs/ai-code-traps-copilot-vs-cursor-smackdown/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2211
+  },
+  "ai-codebase-onboarding-2-paths-tested": {
+    "path": "docs/ai-codebase-onboarding-2-paths-tested/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2314
+  },
+  "ai-codebases-two-onboarding-paths-that-actually-work": {
+    "path": "docs/ai-codebases-two-onboarding-paths-that-actually-work/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2507
+  },
+  "ai-cost-attribution-without-the-spreadsheet-hell": {
+    "path": "docs/ai-cost-attribution-without-the-spreadsheet-hell/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2955
+  },
+  "ai-era-promotions-hinge-on-this-one-thing": {
+    "path": "docs/ai-era-promotions-hinge-on-this-one-thing/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2147
+  },
+  "ai-errors-hide-in-plain-latency": {
+    "path": "docs/ai-errors-hide-in-plain-latency/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2001
+  },
+  "ai-experimentation-guardrails-not-gates": {
+    "path": "docs/ai-experimentation-guardrails-not-gates/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2334
+  },
+  "ai-feature-drift-why-your-model-died-at-midnight": {
+    "path": "docs/ai-feature-drift-why-your-model-died-at-midnight/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2710
+  },
+  "ai-features-as-tech-debt-or-golden-paths": {
+    "path": "docs/ai-features-as-tech-debt-or-golden-paths/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2302
+  },
+  "ai-features-m-pesa-paystack-flutterwave-traps": {
+    "path": "docs/ai-features-m-pesa-paystack-flutterwave-traps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2323
+  },
+  "ai-features-rot-faster-than-you-build-them": {
+    "path": "docs/ai-features-rot-faster-than-you-build-them/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2806
+  },
+  "ai-fixes-legacy-code-nobody-owns": {
+    "path": "docs/ai-fixes-legacy-code-nobody-owns/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3627
+  },
+  "ai-freelance-rates-2026-which-stacks-still-pay": {
+    "path": "docs/ai-freelance-rates-2026-which-stacks-still-pay/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2402
+  },
+  "ai-glue-code-3-ways-to-avoid-duct-taping-models": {
+    "path": "docs/ai-glue-code-3-ways-to-avoid-duct-taping-models/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2682
+  },
+  "ai-in-local-currency-costs-that-surprise": {
+    "path": "docs/ai-in-local-currency-costs-that-surprise/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2992
+  },
+  "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
+    "path": "docs/ai-in-slow-networks-why-models-flop-where-data-costs-rise/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (50% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2732
+  },
+  "ai-interviews-4-questions-that-caught-80-of-weak": {
+    "path": "docs/ai-interviews-4-questions-that-caught-80-of-weak/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2455
+  },
+  "ai-interviews-break-systems-5-real-mistakes-in-2026": {
+    "path": "docs/ai-interviews-break-systems-5-real-mistakes-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2747
+  },
+  "ai-interviews-broke-system-design-3-patterns-that": {
+    "path": "docs/ai-interviews-broke-system-design-3-patterns-that/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2900
+  },
+  "ai-interviews-now-ask-for-this": {
+    "path": "docs/ai-interviews-now-ask-for-this/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3057
+  },
+  "ai-made-self-service-platforms-trivial-in-2026": {
+    "path": "docs/ai-made-self-service-platforms-trivial-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1867
+  },
+  "ai-memory-systems-context-that-survives-sessions": {
+    "path": "docs/ai-memory-systems-context-that-survives-sessions/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2396
+  },
+  "ai-micro-saas-under-150month-the-real-infra-choices": {
+    "path": "docs/ai-micro-saas-under-150month-the-real-infra-choices/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (80% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2906
+  },
+  "ai-model-poisoning-3-real-attacks-on-datasets": {
+    "path": "docs/ai-model-poisoning-3-real-attacks-on-datasets/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2969
+  },
+  "ai-native-apps-break-when-you-copy-old-rules": {
+    "path": "docs/ai-native-apps-break-when-you-copy-old-rules/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2464
+  },
+  "ai-native-apps-forget-the-old-stack": {
+    "path": "docs/ai-native-apps-forget-the-old-stack/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1933
+  },
+  "ai-observability-isnt-monitoring-heres-why": {
+    "path": "docs/ai-observability-isnt-monitoring-heres-why/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2735
+  },
+  "ai-observability-the-metrics-that-matter": {
+    "path": "docs/ai-observability-the-metrics-that-matter/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2494
+  },
+  "ai-on-slow-networks-nairobi-teams-2026-playbook": {
+    "path": "docs/ai-on-slow-networks-nairobi-teams-2026-playbook/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2421
+  },
+  "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team": {
+    "path": "docs/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2560
+  },
+  "ai-ops-vs-human-ops-the-incidents-that-broke-them": {
+    "path": "docs/ai-ops-vs-human-ops-the-incidents-that-broke-them/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2363
+  },
+  "ai-pair-prompts-9-setups-we-tried-in-2026": {
+    "path": "docs/ai-pair-prompts-9-setups-we-tried-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2832
+  },
+  "ai-payments-break-in-m-pesa-first": {
+    "path": "docs/ai-payments-break-in-m-pesa-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2800
+  },
+  "ai-proof-your-mid-level-salary": {
+    "path": "docs/ai-proof-your-mid-level-salary/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2866
+  },
+  "ai-reshaped-my-engineering-principles": {
+    "path": "docs/ai-reshaped-my-engineering-principles/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2008
+  },
+  "ai-revives-unloved-legacy-codebases": {
+    "path": "docs/ai-revives-unloved-legacy-codebases/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2907
+  },
+  "ai-rollouts-live-or-die-by-flags": {
+    "path": "docs/ai-rollouts-live-or-die-by-flags/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2786
+  },
+  "ai-sales-cycles-3x-faster-40-less-talk": {
+    "path": "docs/ai-sales-cycles-3x-faster-40-less-talk/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3029
+  },
+  "ai-sales-cycles-why-dev-tools-now-need-3-demos": {
+    "path": "docs/ai-sales-cycles-why-dev-tools-now-need-3-demos/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2076
+  },
+  "ai-scanners-overlook-real-vulns": {
+    "path": "docs/ai-scanners-overlook-real-vulns/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2342
+  },
+  "ai-static-analysis-vs-legacy-sast-5x-faster-scans": {
+    "path": "docs/ai-static-analysis-vs-legacy-sast-5x-faster-scans/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2640
+  },
+  "ai-steals-junior-tasks-3-skills-that-protect-pay": {
+    "path": "docs/ai-steals-junior-tasks-3-skills-that-protect-pay/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2543
+  },
+  "ai-stole-system-design": {
+    "path": "docs/ai-stole-system-design/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2090
+  },
+  "ai-supply-chain-attacks-what-actually-broke": {
+    "path": "docs/ai-supply-chain-attacks-what-actually-broke/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3044
+  },
+  "ai-tools-wont-help-if-everyone-writes-the-same-code": {
+    "path": "docs/ai-tools-wont-help-if-everyone-writes-the-same-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2608
+  },
+  "ai-ui-generation-what-it-fixed-and-what-still-breaks": {
+    "path": "docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2179
+  },
+  "ai-ui-tools-broke-my-react-flow-heres-why": {
+    "path": "docs/ai-ui-tools-broke-my-react-flow-heres-why/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2584
+  },
+  "ai-ui-tools-promise-vs-production": {
+    "path": "docs/ai-ui-tools-promise-vs-production/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2086
+  },
+  "ai-unit-costs-the-metric-both-teams-fight-over": {
+    "path": "docs/ai-unit-costs-the-metric-both-teams-fight-over/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2605
+  },
+  "ai-wrote-the-docs-humans-wrote-the-gaps": {
+    "path": "docs/ai-wrote-the-docs-humans-wrote-the-gaps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2587
+  },
+  "alerts-2026-ai-turns-false-alarms-to-silence": {
+    "path": "docs/alerts-2026-ai-turns-false-alarms-to-silence/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2830
+  },
+  "always-on-agents-cost-more-than-you-think": {
+    "path": "docs/always-on-agents-cost-more-than-you-think/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2810
+  },
+  "api-abuse-2026-5-attacks-we-missed-until-costs-spiked": {
+    "path": "docs/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2141
+  },
+  "api-abuse-patterns-rising-in-2026": {
+    "path": "docs/api-abuse-patterns-rising-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2253
+  },
+  "api-attacks-rising-40-the-3-patterns-to-block-now": {
+    "path": "docs/api-attacks-rising-40-the-3-patterns-to-block-now/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2588
+  },
+  "apm-is-blind-to-your-ai-agents": {
+    "path": "docs/apm-is-blind-to-your-ai-agents/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2318
+  },
+  "apm-lied-about-our-ai-incidents": {
+    "path": "docs/apm-lied-about-our-ai-incidents/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2258
+  },
+  "audit-logs-compliance-vs-performance": {
+    "path": "docs/audit-logs-compliance-vs-performance/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2458
+  },
+  "audit-logs-ship-them-fast-keep-them-forever": {
+    "path": "docs/audit-logs-ship-them-fast-keep-them-forever/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2698
+  },
+  "audit-logs-that-scale-skip-the-3am-fire-drills": {
+    "path": "docs/audit-logs-that-scale-skip-the-3am-fire-drills/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3056
+  },
+  "audit-trails-immutabledb-vs-dynamodb-streams": {
+    "path": "docs/audit-trails-immutabledb-vs-dynamodb-streams/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2941
+  },
+  "aws-cloudwatch-synthetics-for-ai-pipelines": {
+    "path": "docs/aws-cloudwatch-synthetics-for-ai-pipelines/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2432
+  },
+  "aws-cost-levers-2026-the-3-that-cut-bills-30": {
+    "path": "docs/aws-cost-levers-2026-the-3-that-cut-bills-30/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2237
+  },
+  "aws-costs-for-nairobi-saas-2026-bill-split": {
+    "path": "docs/aws-costs-for-nairobi-saas-2026-bill-split/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2451
+  },
+  "aws-local-zones-vs-localstack-ai-microservices-in": {
+    "path": "docs/aws-local-zones-vs-localstack-ai-microservices-in/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2724
+  },
+  "bank-apis-broke-under-african-2g": {
+    "path": "docs/bank-apis-broke-under-african-2g/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2718
+  },
+  "big-model-api-vs-fine-tune-the-2026-math": {
+    "path": "docs/big-model-api-vs-fine-tune-the-2026-math/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2982
+  },
+  "boring-aws-lambda-layers-that-dont-lock": {
+    "path": "docs/boring-aws-lambda-layers-that-dont-lock/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2327
+  },
+  "build-a-search-system-in-2026-semantic-keyword": {
+    "path": "docs/build-a-search-system-in-2026-semantic-keyword/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2573
+  },
+  "build-agent-workflows-that-survive-restarts": {
+    "path": "docs/build-agent-workflows-that-survive-restarts/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2255
+  },
+  "build-in-public-without-burning-out": {
+    "path": "docs/build-in-public-without-burning-out/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2118
+  },
+  "built-a-multi-agent-system-without-langgraph": {
+    "path": "docs/built-a-multi-agent-system-without-langgraph/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2589
+  },
+  "bundle-size-70-lighter-with-server-components": {
+    "path": "docs/bundle-size-70-lighter-with-server-components/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2581
+  },
+  "buy-vs-build-ai-3-hard-rules-for-2026": {
+    "path": "docs/buy-vs-build-ai-3-hard-rules-for-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2975
+  },
+  "cache-stampedes-the-patterns-that-scale-and-the-ones": {
+    "path": "docs/cache-stampedes-the-patterns-that-scale-and-the-ones/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3159
+  },
+  "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash": {
+    "path": "docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2208
+  },
+  "chaos-engineering-without-an-sre-team": {
+    "path": "docs/chaos-engineering-without-an-sre-team/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2618
+  },
+  "choose-no-code-only-when": {
+    "path": "docs/choose-no-code-only-when/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (50% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2371
+  },
+  "cicd-for-ai-code-test-secure-rollback-fast": {
+    "path": "docs/cicd-for-ai-code-test-secure-rollback-fast/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2413
+  },
+  "cicd-for-django-in-20ms-africa-networks": {
+    "path": "docs/cicd-for-django-in-20ms-africa-networks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2408
+  },
+  "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks": {
+    "path": "docs/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2551
+  },
+  "circleci-still-beats-github-actions-at-50k-builds": {
+    "path": "docs/circleci-still-beats-github-actions-at-50k-builds/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2172
+  },
+  "claude-code-after-a-year-daily-wins": {
+    "path": "docs/claude-code-after-a-year-daily-wins/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2429
+  },
+  "cloud-agents-burned-18k-8-tools-that-didnt-work": {
+    "path": "docs/cloud-agents-burned-18k-8-tools-that-didnt-work/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2309
+  },
+  "code-ai-wont-rewrite": {
+    "path": "docs/code-ai-wont-rewrite/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2244
+  },
+  "commit-ownership-in-ai-pair-coding": {
+    "path": "docs/commit-ownership-in-ai-pair-coding/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2756
+  },
+  "compare-kafka-redpanda-nats-for-event-driven-systems": {
+    "path": "docs/compare-kafka-redpanda-nats-for-event-driven-systems/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2629
+  },
+  "computer-use-agents-the-permission-trap": {
+    "path": "docs/computer-use-agents-the-permission-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2926
+  },
+  "context-engineering-the-real-fix-for-agent-hallucinations": {
+    "path": "docs/context-engineering-the-real-fix-for-agent-hallucinations/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3014
+  },
+  "context-windows-agents-that-run-for-days": {
+    "path": "docs/context-windows-agents-that-run-for-days/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (60% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3348
+  },
+  "context-windows-live-longer-than-you-think": {
+    "path": "docs/context-windows-live-longer-than-you-think/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2513
+  },
+  "contract-testing-is-not-optional": {
+    "path": "docs/contract-testing-is-not-optional/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2977
+  },
+  "core-web-vitals-what-actually-moves-the-needle": {
+    "path": "docs/core-web-vitals-what-actually-moves-the-needle/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3032
+  },
+  "cost-tools-fail-when-agents-scale-autonomously": {
+    "path": "docs/cost-tools-fail-when-agents-scale-autonomously/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2135
+  },
+  "cqrs-when-it-pays-off-and-when-it-breaks": {
+    "path": "docs/cqrs-when-it-pays-off-and-when-it-breaks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2335
+  },
+  "cross-border-fintech-why-your-kyc-fails-in-dakar": {
+    "path": "docs/cross-border-fintech-why-your-kyc-fails-in-dakar/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2558
+  },
+  "currency-switch-fails-in-ghana-one-config-file-to-rule": {
+    "path": "docs/currency-switch-fails-in-ghana-one-config-file-to-rule/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2484
+  },
+  "cut-cold-starts-70-lambda-cost-hack": {
+    "path": "docs/cut-cold-starts-70-lambda-cost-hack/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2366
+  },
+  "cut-false-positives-85-with-this-ci-security-trick": {
+    "path": "docs/cut-false-positives-85-with-this-ci-security-trick/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2207
+  },
+  "database-restore-drills-that-mean-something": {
+    "path": "docs/database-restore-drills-that-mean-something/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2994
+  },
+  "dead-letter-queues-stop-poison-messages": {
+    "path": "docs/dead-letter-queues-stop-poison-messages/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2887
+  },
+  "debug-ai-agent-failures-differently": {
+    "path": "docs/debug-ai-agent-failures-differently/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2594
+  },
+  "debug-ai-agents-failures-arent-just-bugs": {
+    "path": "docs/debug-ai-agents-failures-arent-just-bugs/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2072
+  },
+  "debugging-techniques-that-outlast-any-framework": {
+    "path": "docs/debugging-techniques-that-outlast-any-framework/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (50% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2191
+  },
+  "deployment-platforms-senior-vs-new-hire": {
+    "path": "docs/deployment-platforms-senior-vs-new-hire/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3287
+  },
+  "detect-lazy-agents-without-false-alarms": {
+    "path": "docs/detect-lazy-agents-without-false-alarms/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2792
+  },
+  "detecting-silent-agent-failures": {
+    "path": "docs/detecting-silent-agent-failures/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2931
+  },
+  "docs-that-survive-the-bus-factor-fix": {
+    "path": "docs/docs-that-survive-the-bus-factor-fix/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (73% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2994
+  },
+  "double-entry-ledger-concurrent-write-errors": {
+    "path": "docs/double-entry-ledger-concurrent-write-errors/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2827
+  },
+  "double-the-price-double-the-revenue": {
+    "path": "docs/double-the-price-double-the-revenue/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2441
+  },
+  "drift-detection-the-plan-that-lies": {
+    "path": "docs/drift-detection-the-plan-that-lies/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3120
+  },
+  "duckdb-in-production-when-it-replaces-a-warehouse": {
+    "path": "docs/duckdb-in-production-when-it-replaces-a-warehouse/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2628
+  },
+  "ebpf-observability-in-2026-what-actually-works": {
+    "path": "docs/ebpf-observability-in-2026-what-actually-works/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener"
+    ],
+    "words": 2677
+  },
+  "edge-agents-vs-cloud-round-trips-in-2026": {
+    "path": "docs/edge-agents-vs-cloud-round-trips-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2149
+  },
+  "evaluate-agents-with-spark-vs-custom-harness": {
+    "path": "docs/evaluate-agents-with-spark-vs-custom-harness/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2335
+  },
+  "event-driven-beats-agent-driven-910-times": {
+    "path": "docs/event-driven-beats-agent-driven-910-times/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2853
+  },
+  "event-sourcing-pay-the-complexity-tax-only-here": {
+    "path": "docs/event-sourcing-pay-the-complexity-tax-only-here/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1996
+  },
+  "evolve-your-monolith-without-rewriting-in-2026": {
+    "path": "docs/evolve-your-monolith-without-rewriting-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2940
+  },
+  "feature-flags-became-ai-rollout-platforms": {
+    "path": "docs/feature-flags-became-ai-rollout-platforms/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3505
+  },
+  "fintech-features-break-in-ghana-the-real-fix": {
+    "path": "docs/fintech-features-break-in-ghana-the-real-fix/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2591
+  },
+  "fix-ai-agent-failures-postmortem-guide": {
+    "path": "docs/fix-ai-agent-failures-postmortem-guide/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2295
+  },
+  "flaky-tests-reliability-bug-not-test-noise": {
+    "path": "docs/flaky-tests-reliability-bug-not-test-noise/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (67% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3094
+  },
+  "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality": {
+    "path": "docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2238
+  },
+  "found-niche-in-2026-saas-that-ai-cant-copy": {
+    "path": "docs/found-niche-in-2026-saas-that-ai-cant-copy/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2160
+  },
+  "fraud-detection-rules-vs-scoring-where-they-meet": {
+    "path": "docs/fraud-detection-rules-vs-scoring-where-they-meet/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3272
+  },
+  "global-state-is-the-wrong-tool-for-ai-features": {
+    "path": "docs/global-state-is-the-wrong-tool-for-ai-features/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2262
+  },
+  "golden-paths-become-load-bearing-walls": {
+    "path": "docs/golden-paths-become-load-bearing-walls/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2506
+  },
+  "golden-paths-that-dont-handcuff": {
+    "path": "docs/golden-paths-that-dont-handcuff/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2206
+  },
+  "graphql-vs-rest-vs-trpc-2026s-api-fight": {
+    "path": "docs/graphql-vs-rest-vs-trpc-2026s-api-fight/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2549
+  },
+  "hire-for-agents-not-autocomplete": {
+    "path": "docs/hire-for-agents-not-autocomplete/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2595
+  },
+  "hpa-vs-keda-vs-karpenter-autoscaling-traps": {
+    "path": "docs/hpa-vs-keda-vs-karpenter-autoscaling-traps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3337
+  },
+  "http3-changes-less-than-the-demos-imply": {
+    "path": "docs/http3-changes-less-than-the-demos-imply/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2480
+  },
+  "hybrid-cloud-routing-cost-speed-balance-for-sea": {
+    "path": "docs/hybrid-cloud-routing-cost-speed-balance-for-sea/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (80% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2510
+  },
+  "idempotency-keys-what-they-fix-what-they-dont": {
+    "path": "docs/idempotency-keys-what-they-fix-what-they-dont/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2702
+  },
+  "idp-for-ai-2026-stack-evolution": {
+    "path": "docs/idp-for-ai-2026-stack-evolution/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2792
+  },
+  "iso-20022-where-payment-rails-actually-break": {
+    "path": "docs/iso-20022-where-payment-rails-actually-break/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener"
+    ],
+    "words": 3294
+  },
+  "istio-and-cilium-what-really-breaks-in-production": {
+    "path": "docs/istio-and-cilium-what-really-breaks-in-production/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2580
+  },
+  "json-modes-hidden-costs-revealed": {
+    "path": "docs/json-modes-hidden-costs-revealed/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2373
+  },
+  "json-modes-silent-failures-exposed": {
+    "path": "docs/json-modes-silent-failures-exposed/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2053
+  },
+  "jwt-sessions-revocation-rotation-storage": {
+    "path": "docs/jwt-sessions-revocation-rotation-storage/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2661
+  },
+  "keep-multi-model-systems-stable-6-rules-that-worked": {
+    "path": "docs/keep-multi-model-systems-stable-6-rules-that-worked/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2932
+  },
+  "kill-noisy-alerts-the-triage-system-that-restored-sleep": {
+    "path": "docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2355
+  },
+  "kubernetes-or-nomad-the-real-experiment-cost-split": {
+    "path": "docs/kubernetes-or-nomad-the-real-experiment-cost-split/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2030
+  },
+  "kyc-integrations-the-data-you-shouldnt-store": {
+    "path": "docs/kyc-integrations-the-data-you-shouldnt-store/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3110
+  },
+  "latency-trade-offs-nairobi-teams-beat-global-ai-providers": {
+    "path": "docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2749
+  },
+  "least-privilege-for-agents-the-config-line-nobody-writes": {
+    "path": "docs/least-privilege-for-agents-the-config-line-nobody-writes/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2670
+  },
+  "llm-agents-why-monoliths-win": {
+    "path": "docs/llm-agents-why-monoliths-win/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2144
+  },
+  "llm-drift-the-silent-quality-drop-metrics-miss": {
+    "path": "docs/llm-drift-the-silent-quality-drop-metrics-miss/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2026
+  },
+  "llm-eval-drift-that-users-notice-first": {
+    "path": "docs/llm-eval-drift-that-users-notice-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3081
+  },
+  "llm-evals-langsmith-vs-promptfoo-in-prod": {
+    "path": "docs/llm-evals-langsmith-vs-promptfoo-in-prod/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener"
+    ],
+    "words": 2916
+  },
+  "llm-evals-skip-the-hype-track-these-4-metrics": {
+    "path": "docs/llm-evals-skip-the-hype-track-these-4-metrics/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2032
+  },
+  "llm-metrics-that-stop-wasting-time": {
+    "path": "docs/llm-metrics-that-stop-wasting-time/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2516
+  },
+  "llm-output-metrics-that-actually-move-the-needle": {
+    "path": "docs/llm-output-metrics-that-actually-move-the-needle/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1994
+  },
+  "llm-risks-underestimated-in-owasp-top-10": {
+    "path": "docs/llm-risks-underestimated-in-owasp-top-10/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1771
+  },
+  "llmops-2026-evaluation-stack-that-replaced-rag-dashboards": {
+    "path": "docs/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2506
+  },
+  "local-llm-agents-vllm-vs-ollama-for-fintech": {
+    "path": "docs/local-llm-agents-vllm-vs-ollama-for-fintech/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3095
+  },
+  "log-audit-costs-without-breaking-compliance": {
+    "path": "docs/log-audit-costs-without-breaking-compliance/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2469
+  },
+  "m-pesa-daraja-20-your-2026-migration-checklist": {
+    "path": "docs/m-pesa-daraja-20-your-2026-migration-checklist/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2805
+  },
+  "m-pesa-failures-cost-us-40-hours": {
+    "path": "docs/m-pesa-failures-cost-us-40-hours/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2313
+  },
+  "map-legacy-code-with-ai-before-it-breaks": {
+    "path": "docs/map-legacy-code-with-ai-before-it-breaks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2449
+  },
+  "marketing-without-budget-5k-mrr-in-18-months": {
+    "path": "docs/marketing-without-budget-5k-mrr-in-18-months/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2065
+  },
+  "mcp-hidden-cost-traps": {
+    "path": "docs/mcp-hidden-cost-traps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2475
+  },
+  "mcp-servers-the-3-hidden-costs-nobody-quotes": {
+    "path": "docs/mcp-servers-the-3-hidden-costs-nobody-quotes/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3189
+  },
+  "mcp-vs-a2a-pick-the-wrong-layer": {
+    "path": "docs/mcp-vs-a2a-pick-the-wrong-layer/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3051
+  },
+  "memory-systems-for-production-agents": {
+    "path": "docs/memory-systems-for-production-agents/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2101
+  },
+  "merge-three-payment-apis-into-one-system": {
+    "path": "docs/merge-three-payment-apis-into-one-system/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2953
+  },
+  "meter-dev-tool-pricing-in-2026": {
+    "path": "docs/meter-dev-tool-pricing-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2062
+  },
+  "micro-saas-niches-eaten-by-ai-in-2026": {
+    "path": "docs/micro-saas-niches-eaten-by-ai-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2171
+  },
+  "migrations-stop-running-them-live": {
+    "path": "docs/migrations-stop-running-them-live/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2181
+  },
+  "mobile-first-ai-fails-you-didnt-plan": {
+    "path": "docs/mobile-first-ai-fails-you-didnt-plan/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2407
+  },
+  "mobile-money-agent-fees-why-your-bot-keeps-failing": {
+    "path": "docs/mobile-money-agent-fees-why-your-bot-keeps-failing/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2559
+  },
+  "mobile-money-agents-when-m-pesa-api-fails": {
+    "path": "docs/mobile-money-agents-when-m-pesa-api-fails/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2745
+  },
+  "model-router-keep-it-simple-keep-it-local": {
+    "path": "docs/model-router-keep-it-simple-keep-it-local/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2700
+  },
+  "monolith-to-services-without-a-rewrite": {
+    "path": "docs/monolith-to-services-without-a-rewrite/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2783
+  },
+  "most-llm-cost-dashboards-lie": {
+    "path": "docs/most-llm-cost-dashboards-lie/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2516
+  },
+  "move-images-50-faster-in-2026-with-starlink-cdn": {
+    "path": "docs/move-images-50-faster-in-2026-with-starlink-cdn/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2517
+  },
+  "multi-agent-dx-langgraph-vs-crewai-gaps": {
+    "path": "docs/multi-agent-dx-langgraph-vs-crewai-gaps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3205
+  },
+  "multi-agent-handoffs-the-latency-tax-nobody-measures": {
+    "path": "docs/multi-agent-handoffs-the-latency-tax-nobody-measures/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2164
+  },
+  "multi-agent-systems-break-first": {
+    "path": "docs/multi-agent-systems-break-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2549
+  },
+  "multi-agent-systems-when-they-quietly-degrade": {
+    "path": "docs/multi-agent-systems-when-they-quietly-degrade/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2315
+  },
+  "multi-agent-systems-why-failures-hide": {
+    "path": "docs/multi-agent-systems-why-failures-hide/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2495
+  },
+  "ndpr-2026-broke-fintech-apis": {
+    "path": "docs/ndpr-2026-broke-fintech-apis/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2383
+  },
+  "negotiate-2026-pay-when-ai-steals-40-of-your-job": {
+    "path": "docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2301
+  },
+  "negotiate-pay-in-2026-with-ai-proof-points": {
+    "path": "docs/negotiate-pay-in-2026-with-ai-proof-points/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2176
+  },
+  "negotiate-salaries-with-ai-skills-in-2026": {
+    "path": "docs/negotiate-salaries-with-ai-skills-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2097
+  },
+  "negotiating-pay-when-ai-inflates-output": {
+    "path": "docs/negotiating-pay-when-ai-inflates-output/post.json",
+    "verdict": "DELETE",
+    "reasons": [
+      "8 unverifiable first-person experience claims in unreviewed LLM text",
+      "templated structure (80% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3181
+  },
+  "neon-vs-planetscale-vs-turso-which-broke-first": {
+    "path": "docs/neon-vs-planetscale-vs-turso-which-broke-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2552
+  },
+  "nextjs-15-vs-remix-vs-sveltekit-2026-choices": {
+    "path": "docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2557
+  },
+  "nigerias-2026-api-rules-broke-our-microservices": {
+    "path": "docs/nigerias-2026-api-rules-broke-our-microservices/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2597
+  },
+  "nodejs-memory-leak-find-it-in-10-min": {
+    "path": "docs/nodejs-memory-leak-find-it-in-10-min/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2755
+  },
+  "oauth-21-migration-what-breaks-in-existing-integrations": {
+    "path": "docs/oauth-21-migration-what-breaks-in-existing-integrations/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3465
+  },
+  "observability-2026-ditch-the-three-pillars": {
+    "path": "docs/observability-2026-ditch-the-three-pillars/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener",
+      "templated structure (54% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2719
+  },
+  "observability-agents-lied-to-us": {
+    "path": "docs/observability-agents-lied-to-us/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2534
+  },
+  "observe-llm-features-90-faster": {
+    "path": "docs/observe-llm-features-90-faster/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2638
+  },
+  "offline-agent-workflows-for-last-mile-ops": {
+    "path": "docs/offline-agent-workflows-for-last-mile-ops/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2922
+  },
+  "offline-agents-local-first-sync-patterns": {
+    "path": "docs/offline-agents-local-first-sync-patterns/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2341
+  },
+  "offline-first-agents-for-field-teams": {
+    "path": "docs/offline-first-agents-for-field-teams/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2610
+  },
+  "offline-first-apps-what-3g-markets-taught-us": {
+    "path": "docs/offline-first-apps-what-3g-markets-taught-us/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2925
+  },
+  "offline-first-money-apps-with-dynamodb-streams": {
+    "path": "docs/offline-first-money-apps-with-dynamodb-streams/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2905
+  },
+  "one-misconfigured-vector-db-killed-our-rag-pipeline": {
+    "path": "docs/one-misconfigured-vector-db-killed-our-rag-pipeline/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2160
+  },
+  "one-payment-stack-for-kenya-nigeria-ghana": {
+    "path": "docs/one-payment-stack-for-kenya-nigeria-ghana/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2602
+  },
+  "only-boring-stacks-survive-ai-services": {
+    "path": "docs/only-boring-stacks-survive-ai-services/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3052
+  },
+  "open-banking-apis-the-integration-traps": {
+    "path": "docs/open-banking-apis-the-integration-traps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2988
+  },
+  "opentelemetry-collector-pipelines-sampling-batching": {
+    "path": "docs/opentelemetry-collector-pipelines-sampling-batching/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2574
+  },
+  "orchestration-tax-kills-multi-agent-systems": {
+    "path": "docs/orchestration-tax-kills-multi-agent-systems/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2548
+  },
+  "pci-dss-architecture-12-requirements-that-matter": {
+    "path": "docs/pci-dss-architecture-12-requirements-that-matter/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2629
+  },
+  "personal-ai-assistants-avoid-vendor-lock-in-traps": {
+    "path": "docs/personal-ai-assistants-avoid-vendor-lock-in-traps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2975
+  },
+  "pick-one-stripe-lemon-squeezy-paddle-in-2026": {
+    "path": "docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2638
+  },
+  "platform-engineering-roi-metrics-that-fund-teams": {
+    "path": "docs/platform-engineering-roi-metrics-that-fund-teams/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2454
+  },
+  "platform-teams-agentic-world-struggle": {
+    "path": "docs/platform-teams-agentic-world-struggle/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2471
+  },
+  "platform-teams-in-2026-docs-vs-production-reality": {
+    "path": "docs/platform-teams-in-2026-docs-vs-production-reality/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3498
+  },
+  "poolers-wont-save-your-serverless-db": {
+    "path": "docs/poolers-wont-save-your-serverless-db/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2696
+  },
+  "portfolio-projects-hiring-managers-skip": {
+    "path": "docs/portfolio-projects-hiring-managers-skip/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener"
+    ],
+    "words": 3798
+  },
+  "portfolio-projects-that-hire-remote-senior-devs": {
+    "path": "docs/portfolio-projects-that-hire-remote-senior-devs/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2739
+  },
+  "portfolio-that-hires-show-constraints-not-code": {
+    "path": "docs/portfolio-that-hires-show-constraints-not-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2728
+  },
+  "postgres-17-buried-redis-s3-cron": {
+    "path": "docs/postgres-17-buried-redis-s3-cron/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2058
+  },
+  "postgres-17-swallowed-redis-kafka-timescale": {
+    "path": "docs/postgres-17-swallowed-redis-kafka-timescale/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2785
+  },
+  "postgres-vector-search-what-breaks-first": {
+    "path": "docs/postgres-vector-search-what-breaks-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2593
+  },
+  "pr-checklists-are-dead-ai-agents-do-reviews-now": {
+    "path": "docs/pr-checklists-are-dead-ai-agents-do-reviews-now/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2347
+  },
+  "prevent-ownership-drift-when-velocity-explodes": {
+    "path": "docs/prevent-ownership-drift-when-velocity-explodes/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2869
+  },
+  "price-ai-proof-skills-in-2026": {
+    "path": "docs/price-ai-proof-skills-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2611
+  },
+  "price-saas-tools-in-2026-what-we-learned-pricing-a": {
+    "path": "docs/price-saas-tools-in-2026-what-we-learned-pricing-a/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2547
+  },
+  "price-your-remote-job-like-a-new-york-dev": {
+    "path": "docs/price-your-remote-job-like-a-new-york-dev/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2565
+  },
+  "promotions-in-the-ai-era-the-mechanism": {
+    "path": "docs/promotions-in-the-ai-era-the-mechanism/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3296
+  },
+  "prompt-injection-got-the-hype-poison-data-ruined-us": {
+    "path": "docs/prompt-injection-got-the-hype-poison-data-ruined-us/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3358
+  },
+  "prompt-injection-what-breaks-first-in-prod": {
+    "path": "docs/prompt-injection-what-breaks-first-in-prod/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2883
+  },
+  "prompt-injections-hidden-aws-tax": {
+    "path": "docs/prompt-injections-hidden-aws-tax/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2364
+  },
+  "prompts-are-code-how-to-measure-their-value": {
+    "path": "docs/prompts-are-code-how-to-measure-their-value/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3699
+  },
+  "property-based-testing-vs-example-tests-the-bug-gap": {
+    "path": "docs/property-based-testing-vs-example-tests-the-bug-gap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3592
+  },
+  "purpose-built-ai-is-a-trap-for-solo-founders": {
+    "path": "docs/purpose-built-ai-is-a-trap-for-solo-founders/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2997
+  },
+  "purpose-built-beats-general-ai-tools": {
+    "path": "docs/purpose-built-beats-general-ai-tools/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3015
+  },
+  "pypi-poisoned-models-hit-prod-in-2025": {
+    "path": "docs/pypi-poisoned-models-hit-prod-in-2025/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2120
+  },
+  "rag-in-prod-what-tutorials-wont-tell-you": {
+    "path": "docs/rag-in-prod-what-tutorials-wont-tell-you/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2759
+  },
+  "rag-is-not-enough-hybrid-search-reranking-in-2026": {
+    "path": "docs/rag-is-not-enough-hybrid-search-reranking-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2219
+  },
+  "rag-on-legacy-systems-vector-db-vs-full-text-sql": {
+    "path": "docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2670
+  },
+  "rag-pipelines-4-silent-prod-killers": {
+    "path": "docs/rag-pipelines-4-silent-prod-killers/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2481
+  },
+  "rag-rots-if-you-dont-refresh-indexes": {
+    "path": "docs/rag-rots-if-you-dont-refresh-indexes/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2850
+  },
+  "rate-limiters-burst-vs-abuse-two-designs": {
+    "path": "docs/rate-limiters-burst-vs-abuse-two-designs/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2968
+  },
+  "react-19-compiler-my-components-changed-how": {
+    "path": "docs/react-19-compiler-my-components-changed-how/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2026
+  },
+  "read-replicas-the-bug-factory-you-built": {
+    "path": "docs/read-replicas-the-bug-factory-you-built/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2940
+  },
+  "rebalance-pay-when-ai-fills-half-your-role": {
+    "path": "docs/rebalance-pay-when-ai-fills-half-your-role/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2494
+  },
+  "reconciling-mobile-money-edge-cases-banks-ignore": {
+    "path": "docs/reconciling-mobile-money-edge-cases-banks-ignore/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3349
+  },
+  "red-teaming-agents-without-killing-velocity": {
+    "path": "docs/red-teaming-agents-without-killing-velocity/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (56% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2154
+  },
+  "regulations-forced-better-apis-the-2026-fintech": {
+    "path": "docs/regulations-forced-better-apis-the-2026-fintech/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2543
+  },
+  "remote-premium-rates-skills-ai-cant-copy": {
+    "path": "docs/remote-premium-rates-skills-ai-cant-copy/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3638
+  },
+  "remote-salary-negotiate-without-sounding-cheap": {
+    "path": "docs/remote-salary-negotiate-without-sounding-cheap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2712
+  },
+  "remote-work-in-2026-which-tools-survived": {
+    "path": "docs/remote-work-in-2026-which-tools-survived/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2099
+  },
+  "replace-env-with-these-in-2026": {
+    "path": "docs/replace-env-with-these-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2966
+  },
+  "replace-managed-services-with-postgres-17": {
+    "path": "docs/replace-managed-services-with-postgres-17/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2678
+  },
+  "retire-api-versions-before-they-pile-up": {
+    "path": "docs/retire-api-versions-before-they-pile-up/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2372
+  },
+  "rogue-agent-api-calls-stop-the-bleeding": {
+    "path": "docs/rogue-agent-api-calls-stop-the-bleeding/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2003
+  },
+  "run-apis-in-50-spots-what-breaks-first": {
+    "path": "docs/run-apis-in-50-spots-what-breaks-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2249
+  },
+  "runbooks-vs-ai-which-cuts-outages-50": {
+    "path": "docs/runbooks-vs-ai-which-cuts-outages-50/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2267
+  },
+  "rust-rewrites-where-they-pay-off-where-they-dont": {
+    "path": "docs/rust-rewrites-where-they-pay-off-where-they-dont/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2246
+  },
+  "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026": {
+    "path": "docs/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1966
+  },
+  "sandboxed-computer-use-agents-with-gvisor": {
+    "path": "docs/sandboxed-computer-use-agents-with-gvisor/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2803
+  },
+  "save-12kmonth-cloud-egress-costs-in-2026": {
+    "path": "docs/save-12kmonth-cloud-egress-costs-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2511
+  },
+  "sbom-attestation-that-gets-used": {
+    "path": "docs/sbom-attestation-that-gets-used/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3304
+  },
+  "scope-agent-permissions-per-task": {
+    "path": "docs/scope-agent-permissions-per-task/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (64% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3815
+  },
+  "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
+    "path": "docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2384
+  },
+  "self-healing-pipelines-argo-vs-crossplane-in-2026": {
+    "path": "docs/self-healing-pipelines-argo-vs-crossplane-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2497
+  },
+  "self-service-ai-tooling-the-permission-trap": {
+    "path": "docs/self-service-ai-tooling-the-permission-trap/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener"
+    ],
+    "words": 2653
+  },
+  "self-service-ai-tooling-where-it-breaks-first": {
+    "path": "docs/self-service-ai-tooling-where-it-breaks-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2891
+  },
+  "self-service-is-broken-without-ai-ops": {
+    "path": "docs/self-service-is-broken-without-ai-ops/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2391
+  },
+  "senior-engineer-the-bar-moved-nobody-updated-the-rubric": {
+    "path": "docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2471
+  },
+  "senior-engineer-title-inflation-in-2026": {
+    "path": "docs/senior-engineer-title-inflation-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2072
+  },
+  "senior-role-projects-3-real-paths": {
+    "path": "docs/senior-role-projects-3-real-paths/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3056
+  },
+  "serve-4g-as-baseline-apps-in-2026": {
+    "path": "docs/serve-4g-as-baseline-apps-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2677
+  },
+  "settlement-vs-clearing-backend-engineers-guide": {
+    "path": "docs/settlement-vs-clearing-backend-engineers-guide/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (67% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2834
+  },
+  "ship-1mb-pages-on-4g-starlink-africa-case-study": {
+    "path": "docs/ship-1mb-pages-on-4g-starlink-africa-case-study/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2522
+  },
+  "ship-a-solo-project-pipeline-under-20month": {
+    "path": "docs/ship-a-solo-project-pipeline-under-20month/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3069
+  },
+  "ship-evals-before-your-agent-ships": {
+    "path": "docs/ship-evals-before-your-agent-ships/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3051
+  },
+  "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse": {
+    "path": "docs/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2055
+  },
+  "show-real-work-not-ai-clones": {
+    "path": "docs/show-real-work-not-ai-clones/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "1 first-person claim(s) to neutralise"
+    ],
+    "words": 3584
+  },
+  "skip-m-pesa-build-one-api-for-3-african-markets": {
+    "path": "docs/skip-m-pesa-build-one-api-for-3-african-markets/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2806
+  },
+  "slos-for-agentic-features-beyond-latency": {
+    "path": "docs/slos-for-agentic-features-beyond-latency/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2841
+  },
+  "soft-deletes-fail-what-breaks-first": {
+    "path": "docs/soft-deletes-fail-what-breaks-first/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2480
+  },
+  "spot-ais-hidden-cost-spike-in-your-stack": {
+    "path": "docs/spot-ais-hidden-cost-spike-in-your-stack/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2640
+  },
+  "spot-evictions-the-retry-logic-that-holds-up": {
+    "path": "docs/spot-evictions-the-retry-logic-that-holds-up/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2530
+  },
+  "spot-instances-vs-on-demand-for-ai-experiments": {
+    "path": "docs/spot-instances-vs-on-demand-for-ai-experiments/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2492
+  },
+  "staging-wont-catch-prod-bugs-make": {
+    "path": "docs/staging-wont-catch-prod-bugs-make/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "LLM filler opener"
+    ],
+    "words": 2518
+  },
+  "starlink-4g-fallback-serve-pages-under-800ms": {
+    "path": "docs/starlink-4g-fallback-serve-pages-under-800ms/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2502
+  },
+  "starlink-in-production-what-changed-in-our-stack": {
+    "path": "docs/starlink-in-production-what-changed-in-our-stack/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2717
+  },
+  "stay-relevant-when-tools-change-faster-than-you-can": {
+    "path": "docs/stay-relevant-when-tools-change-faster-than-you-can/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3032
+  },
+  "stop-assuming-payment-apis-never-fail": {
+    "path": "docs/stop-assuming-payment-apis-never-fail/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2528
+  },
+  "stop-false-positives-in-ci-scanning-now": {
+    "path": "docs/stop-false-positives-in-ci-scanning-now/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2713
+  },
+  "stop-guessing-tech-stacks-validate-tools-in-2-hours": {
+    "path": "docs/stop-guessing-tech-stacks-validate-tools-in-2-hours/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2414
+  },
+  "stop-putting-llm-keys-in-env": {
+    "path": "docs/stop-putting-llm-keys-in-env/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2745
+  },
+  "stop-the-writes-zero-downtime-db-migrations": {
+    "path": "docs/stop-the-writes-zero-downtime-db-migrations/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2423
+  },
+  "stop-trusting-agents-for-core-logic": {
+    "path": "docs/stop-trusting-agents-for-core-logic/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2165
+  },
+  "store-data-once-serve-everywhere-cheaper": {
+    "path": "docs/store-data-once-serve-everywhere-cheaper/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2302
+  },
+  "supervisor-vs-swarm-vs-debate-vs-pipeline": {
+    "path": "docs/supervisor-vs-swarm-vs-debate-vs-pipeline/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3782
+  },
+  "survive-network-drops-agentic-workflows-that-keep-running": {
+    "path": "docs/survive-network-drops-agentic-workflows-that-keep-running/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (60% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2970
+  },
+  "tame-python-asyncs-hidden-traps": {
+    "path": "docs/tame-python-asyncs-hidden-traps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2068
+  },
+  "tech-debt-when-half-your-stack-is-unfamiliar": {
+    "path": "docs/tech-debt-when-half-your-stack-is-unfamiliar/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2705
+  },
+  "temporal-changed-our-agent-retries-for-good": {
+    "path": "docs/temporal-changed-our-agent-retries-for-good/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3044
+  },
+  "test-ai-code-without-testing-the-ai": {
+    "path": "docs/test-ai-code-without-testing-the-ai/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3079
+  },
+  "thundering-herd-the-hidden-scaling-trap": {
+    "path": "docs/thundering-herd-the-hidden-scaling-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2239
+  },
+  "tool-calling-patterns-patterns-that-survive-load-vs": {
+    "path": "docs/tool-calling-patterns-patterns-that-survive-load-vs/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2751
+  },
+  "tool-calling-stateless-beats-stateful-under-load": {
+    "path": "docs/tool-calling-stateless-beats-stateful-under-load/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2174
+  },
+  "tool-calls-under-load-async-batch-vs-fire-and-forget": {
+    "path": "docs/tool-calls-under-load-async-batch-vs-fire-and-forget/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3006
+  },
+  "tool-calls-why-retries-stampede": {
+    "path": "docs/tool-calls-why-retries-stampede/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2404
+  },
+  "track-ai-agent-costs-in-fractal-workflows": {
+    "path": "docs/track-ai-agent-costs-in-fractal-workflows/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2386
+  },
+  "trim-llm-bills-3-finops-moves-that-work": {
+    "path": "docs/trim-llm-bills-3-finops-moves-that-work/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2049
+  },
+  "two-engineer-classes-the-ai-tool-norm-trap": {
+    "path": "docs/two-engineer-classes-the-ai-tool-norm-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2266
+  },
+  "unlock-python-313s-free-threaded-gil-for-web-apps": {
+    "path": "docs/unlock-python-313s-free-threaded-gil-for-web-apps/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2666
+  },
+  "use-feature-flags-to-deploy-ai-models-safely": {
+    "path": "docs/use-feature-flags-to-deploy-ai-models-safely/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2851
+  },
+  "ussd-fintech-in-2026-the-300m-user-channel-nobody": {
+    "path": "docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 3230
+  },
+  "velocity-up-ownership-down-team-scaling-trap": {
+    "path": "docs/velocity-up-ownership-down-team-scaling-trap/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2725
+  },
+  "vibe-code-works-great-fails-forever": {
+    "path": "docs/vibe-code-works-great-fails-forever/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2561
+  },
+  "vibe-coding-mvp-gem-prod-albatross": {
+    "path": "docs/vibe-coding-mvp-gem-prod-albatross/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2958
+  },
+  "wasm-servers-beat-containers-here": {
+    "path": "docs/wasm-servers-beat-containers-here/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2326
+  },
+  "webhook-delivery-that-survives-outages": {
+    "path": "docs/webhook-delivery-that-survives-outages/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2603
+  },
+  "webhooks-2026-retries-idempotency-and-the-9995": {
+    "path": "docs/webhooks-2026-retries-idempotency-and-the-9995/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2164
+  },
+  "webhooks-done-right-retries-that-dont-explode-in-2026": {
+    "path": "docs/webhooks-done-right-retries-that-dont-explode-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1987
+  },
+  "websockets-vs-server-sent-events-latency-over-3g": {
+    "path": "docs/websockets-vs-server-sent-events-latency-over-3g/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2698
+  },
+  "when-flags-become-experiments": {
+    "path": "docs/when-flags-become-experiments/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2922
+  },
+  "when-velocity-is-hard-to-measure-evaluating-engineering": {
+    "path": "docs/when-velocity-is-hard-to-measure-evaluating-engineering/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "1 first-person claim(s) to neutralise"
+    ],
+    "words": 2646
+  },
+  "when-your-agent-goes-silent-degrade-gracefully": {
+    "path": "docs/when-your-agent-goes-silent-degrade-gracefully/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (67% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2409
+  },
+  "which-agent-stack-survives-3g": {
+    "path": "docs/which-agent-stack-survives-3g/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2437
+  },
+  "which-ai-wrappers-made-money-in-2026": {
+    "path": "docs/which-ai-wrappers-made-money-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1994
+  },
+  "who-owns-ai-generated-code": {
+    "path": "docs/who-owns-ai-generated-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 1849
+  },
+  "who-signs-off-on-ai-code": {
+    "path": "docs/who-signs-off-on-ai-code/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2212
+  },
+  "why-ai-interviewers-failed-68-of-us-in-2026": {
+    "path": "docs/why-ai-interviewers-failed-68-of-us-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2350
+  },
+  "why-do-production-agents-still-need-humans": {
+    "path": "docs/why-do-production-agents-still-need-humans/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2301
+  },
+  "why-does-my-agent-version-break-clients": {
+    "path": "docs/why-does-my-agent-version-break-clients/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2400
+  },
+  "why-does-my-model-drift-after-deploy": {
+    "path": "docs/why-does-my-model-drift-after-deploy/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (67% corpus-wide boilerplate H2s)"
+    ],
+    "words": 3039
+  },
+  "why-leader-election-fails-on-cloud-networks": {
+    "path": "docs/why-leader-election-fails-on-cloud-networks/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2549
+  },
+  "why-monoliths-die-slowly-in-2026": {
+    "path": "docs/why-monoliths-die-slowly-in-2026/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2568
+  },
+  "why-our-schema-survived-ai-scaling": {
+    "path": "docs/why-our-schema-survived-ai-scaling/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2078
+  },
+  "why-platform-metrics-lie": {
+    "path": "docs/why-platform-metrics-lie/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2341
+  },
+  "why-progressive-web-apps-fail-on-2g-and-how-to-fix": {
+    "path": "docs/why-progressive-web-apps-fail-on-2g-and-how-to-fix/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2307
+  },
+  "why-scaling-agents-kills-plain-logs": {
+    "path": "docs/why-scaling-agents-kills-plain-logs/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2180
+  },
+  "why-your-multi-agent-system-degraded-slowly": {
+    "path": "docs/why-your-multi-agent-system-degraded-slowly/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (80% corpus-wide boilerplate H2s)"
+    ],
+    "words": 2774
+  },
+  "why-your-routing-layer-will-collapse-at-scale": {
+    "path": "docs/why-your-routing-layer-will-collapse-at-scale/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2404
+  },
+  "world-models-wont-replace-your-backend": {
+    "path": "docs/world-models-wont-replace-your-backend/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2886
+  },
+  "zero-trust-ai-skip-the-latency-tax": {
+    "path": "docs/zero-trust-ai-skip-the-latency-tax/post.json",
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2783
+  },
+  "zig-vs-rust-vs-go-compile-errors-compared": {
+    "path": "docs/zig-vs-rust-vs-go-compile-errors-compared/post.json",
+    "verdict": "IMPROVE",
+    "reasons": [
+      "1 first-person claim(s) to neutralise"
+    ],
+    "words": 2511
+  }
+}

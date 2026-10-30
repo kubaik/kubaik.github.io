@@ -9,9 +9,7 @@
     "QuicBackendImpact",
     "HttpFallbackHttp",
     "Backend",
-    "Softwareengineering",
-    "Http3",
-    "Http3production"
+    "Softwareengineering"
   ],
   "meta_description": "HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.",
   "featured_image": "/static/images/http3-changes-less-than-the-demos-imply.jpg",

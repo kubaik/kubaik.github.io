@@ -6,9 +6,7 @@
     "AiRateLimit",
     "Error",
     "AiBudgetEnforcement",
-    "Ai",
-    "429error",
-    "Modelversionpinning"
+    "Ai"
   ],
   "meta_description": "Self-service AI platforms fail on shared keys, missing cost ceilings and model drift. How to spot each pattern, instrument it, and fix it at the gateway.",
   "featured_image": "/static/images/self-service-ai-tooling-where-it-breaks-first.jpg",

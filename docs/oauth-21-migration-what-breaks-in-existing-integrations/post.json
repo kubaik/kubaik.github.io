@@ -7,8 +7,7 @@
     "Pkce",
     "OauthMigration",
     "ImplicitGrantRemoval",
-    "RedirectUriMatching",
-    "Oauth21"
+    "RedirectUriMatching"
   ],
   "meta_description": "OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration.",
   "featured_image": "/static/images/oauth-21-migration-what-breaks-in-existing-integrations.jpg",

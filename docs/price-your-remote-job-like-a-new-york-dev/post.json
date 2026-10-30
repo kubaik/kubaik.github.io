@@ -6,8 +6,7 @@
     "RemoteSalaryNegotiation",
     "FreelanceRateCalculator",
     "Python",
-    "Python3",
-    "Freelancing"
+    "Python3"
   ],
   "meta_description": "A worked method for turning a target take-home figure into a defensible hourly rate for US clients, including FX handling, tax and VAT lines, and quote logging.",
   "featured_image": "/static/images/price-your-remote-job-like-a-new-york-dev.jpg",

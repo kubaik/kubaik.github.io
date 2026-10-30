@@ -6,8 +6,7 @@
     "ApiVersioning",
     "Deprecation",
     "Apis",
-    "Rest",
-    "Apidesign"
+    "Rest"
   ],
   "meta_description": "Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.",
   "featured_image": "/static/images/retire-api-versions-before-they-pile-up.jpg",

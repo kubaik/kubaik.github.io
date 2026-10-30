@@ -7,8 +7,7 @@
     "PlatformEngineering",
     "Prompt",
     "Ai",
-    "Softwareengineering",
-    "Modelpinningcatalog"
+    "Softwareengineering"
   ],
   "meta_description": "Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.",
   "featured_image": "/static/images/7-idp-shifts-for-ai-feature-delivery.jpg",

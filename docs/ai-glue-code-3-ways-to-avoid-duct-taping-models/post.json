@@ -6,8 +6,7 @@
     "PredibaseLora2.0",
     "Adapter",
     "Ai",
-    "Python",
-    "Predibaselora20"
+    "Python"
   ],
   "meta_description": "Low-code AI platforms hide prompt drift, adapter decay and cold starts. Detect each with logged queries, a golden set and pre-warming, wired into CI.",
   "featured_image": "/static/images/ai-glue-code-3-ways-to-avoid-duct-taping-models.jpg",

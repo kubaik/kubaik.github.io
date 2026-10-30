@@ -4,9 +4,7 @@
   "slug": "postgres-17-swallowed-redis-kafka-timescale",
   "tags": [
     "PostgresVsRedis",
-    "Postgres17Features",
     "Kafka",
-    "Timescaledb",
     "PgmqVsKafka",
     "Database",
     "Postgresql",

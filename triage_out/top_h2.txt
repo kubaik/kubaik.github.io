@@ -1,0 +1,40 @@
+87	21%	decision checklist
+84	21%	a decision checklist
+84	21%	do this in the next  minutes
+54	13%	what to do in the next  minutes
+29	7%	action for the next  minutes
+28	7%	the oneparagraph version
+27	7%	common misconceptions corrected
+27	7%	common questions
+26	6%	quick reference
+26	6%	summary
+26	6%	when this approach is the wrong choice
+26	6%	common objections
+24	6%	a worked example
+22	5%	why this concept confuses people
+22	5%	your next  minutes
+21	5%	failure modes to design against
+21	5%	step   set up the environment
+20	5%	how this connects to things you already know
+20	5%	where to go from here
+19	5%	failure modes to plan for
+19	5%	failure modes to watch for
+19	5%	step   core implementation
+18	4%	the mental model that makes it click
+17	4%	one thing to do in the next  minutes
+16	4%	prerequisites and what youll build
+15	4%	take action in the next  minutes
+15	4%	next step
+15	4%	common misconceptions
+15	4%	the broader lesson
+14	3%	step   handle edge cases and errors
+13	3%	prerequisites and what you will build
+13	3%	a concrete worked example
+13	3%	a different mental model
+12	3%	one action for the next  minutes
+12	3%	the conventional wisdom and why its incomplete
+12	3%	step   add observability and tests
+11	3%	how to measure whether this is working
+11	3%	what to do next
+11	3%	implementation details
+11	3%	common questions and variations

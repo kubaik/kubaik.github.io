@@ -5,10 +5,8 @@
   "tags": [
     "4g",
     "Performance",
-    "Androiddev",
     "Redis",
-    "Nextjs",
-    "Brotlilevel4"
+    "Nextjs"
   ],
   "meta_description": "How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.",
   "featured_image": "/static/images/starlink-4g-fallback-serve-pages-under-800ms.jpg",

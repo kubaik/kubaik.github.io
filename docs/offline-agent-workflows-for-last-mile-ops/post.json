@@ -5,8 +5,7 @@
   "tags": [
     "OfflineFirst",
     "FieldAgents",
-    "IndexeddbSync",
-    "Idempotentscanupload"
+    "IndexeddbSync"
   ],
   "meta_description": "How to build an offline-first field agent client: IndexedDB schema, UUIDv7 identity, background sync, idempotent batch upload, and clock-drift handling.",
   "featured_image": "/static/images/offline-agent-workflows-for-last-mile-ops.jpg",

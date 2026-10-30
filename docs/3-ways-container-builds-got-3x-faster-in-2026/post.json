@@ -7,9 +7,7 @@
     "Depot.devCache",
     "Performance",
     "Docker",
-    "Containers",
-    "Buildkit16",
-    "Depotdevcache"
+    "Containers"
   ],
   "meta_description": "How container build caching works, why cache keys invalidate, and how to measure hit rate and cost before choosing a cache backend.",
   "featured_image": "/static/images/3-ways-container-builds-got-3x-faster-in-2026.jpg",

@@ -7,8 +7,7 @@
     "AgentTracing",
     "Opentelemetry",
     "JaegerAsyncGaps",
-    "CeleryTracing",
-    "Sqstracing"
+    "CeleryTracing"
   ],
   "meta_description": "Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.",
   "featured_image": "/static/images/agent-tracing-when-logs-lie-and-metrics-mislead.jpg",

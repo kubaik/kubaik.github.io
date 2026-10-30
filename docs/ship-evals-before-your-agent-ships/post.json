@@ -7,9 +7,7 @@
     "Evaluation",
     "LangsmithEval",
     "GoldenDatasetAgents",
-    "Agent",
-    "Promptdrift2026",
-    "Langgrapheval"
+    "Agent"
   ],
   "meta_description": "Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.",
   "featured_image": "/static/images/ship-evals-before-your-agent-ships.jpg",

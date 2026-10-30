@@ -6,8 +6,7 @@
     "RateLimiting",
     "TokenBucket",
     "Apis",
-    "Redis",
-    "Redisratelimiting"
+    "Redis"
   ],
   "meta_description": "Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.",
   "featured_image": "/static/images/rate-limiters-burst-vs-abuse-two-designs.jpg",

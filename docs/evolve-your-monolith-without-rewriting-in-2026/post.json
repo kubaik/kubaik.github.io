@@ -7,9 +7,7 @@
     "RedisCachingSetup",
     "SqlalchemyAsync",
     "P99",
-    "Redis",
-    "Sqlalchemy20async",
-    "Fastapi01113example"
+    "Redis"
   ],
   "meta_description": "A three-layer FastAPI layout (API, domain, infra) that keeps a monolith evolvable: worked code, failure modes, cache stampede fixes, and how to measure.",
   "featured_image": "/static/images/evolve-your-monolith-without-rewriting-in-2026.jpg",

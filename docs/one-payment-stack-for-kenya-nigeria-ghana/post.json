@@ -5,9 +5,7 @@
   "tags": [
     "Payment",
     "Systemdesign",
-    "Flutter",
-    "Paymentsystemdesign",
-    "Africanfintechstack"
+    "Flutter"
   ],
   "meta_description": "How to unify M-Pesa, Flutterwave, Paystack and mobile money behind one payment abstraction, with fallback logic, reconciliation and compliance.",
   "featured_image": "/static/images/one-payment-stack-for-kenya-nigeria-ghana.jpg",

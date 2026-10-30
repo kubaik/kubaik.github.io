@@ -9,8 +9,7 @@
     "AndroidMlInference",
     "Ai",
     "Cloudcomputing",
-    "Redis",
-    "Onnxruntime116"
+    "Redis"
   ],
   "meta_description": "A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.",
   "featured_image": "/static/images/edge-agents-vs-cloud-round-trips-in-2026.jpg",

@@ -226,10 +226,6 @@
                     
                     
                     
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Qdrant</span>
-                    
-                    
-                    
                     <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Pgvector</span>
                     
                     
@@ -241,6 +237,11 @@
                     
                     <a class="tag" href="/tag/postgresql/"
                        style="text-decoration:none;">Postgresql</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/vectordb/"
+                       style="text-decoration:none;">Vectordb</a>
                     
                     
                 </div>
@@ -460,13 +461,6 @@ ORDER BY n_dead_tup DESC;
 <li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
 <li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> July 2026</p>
-<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -493,22 +487,22 @@ ORDER BY n_dead_tup DESC;
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/database-restore-drills-that-mean-something/">
-                        <h3>Database restore drills that mean something</h3>
-                        <p>A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.</p>
-                        <span class="related-meta">15 min read · 28 October 2026</span>
+                    <a class="related-card" href="/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
+                        <h3>RAG on legacy systems: vector DB vs. full-text SQL</h3>
+                        <p>Compare vector databases and in-database vector search for adding RAG to legacy systems, with latency, cost, and operational trade-offs.</p>
+                        <span class="related-meta">14 min read · 30 June 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/why-our-schema-survived-ai-scaling/">
-                        <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
-                        <p>Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
-                        <span class="related-meta">11 min read · 13 September 2026</span>
+                    <a class="related-card" href="/rag-in-prod-what-tutorials-wont-tell-you/">
+                        <h3>RAG in prod: what tutorials won’t tell you</h3>
+                        <p>Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.</p>
+                        <span class="related-meta">14 min read · 8 June 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/stop-the-writes-zero-downtime-db-migrations/">
-                        <h3>Stop the writes — zero-downtime DB migrations</h3>
-                        <p>Zero-downtime migrations fail when writes keep flowing during the copy. A drain-copy-flip state machine, with instrumentation and a decision checklist.</p>
-                        <span class="related-meta">13 min read · 2 July 2026</span>
+                    <a class="related-card" href="/one-misconfigured-vector-db-killed-our-rag-pipeline/">
+                        <h3>One misconfigured vector DB killed our RAG pipeline</h3>
+                        <p>Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.</p>
+                        <span class="related-meta">11 min read · 29 July 2026</span>
                     </a>
                     
                 </div>

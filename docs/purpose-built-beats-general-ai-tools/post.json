@@ -7,9 +7,7 @@
     "QdrantVsPinecone",
     "Ai",
     "Cybersecurity",
-    "Indiehacker",
-    "Aiplatform2026",
-    "Ollama0127deployment"
+    "Indiehacker"
   ],
   "meta_description": "When a general AI platform beats a purpose-built stack, how to choose, and how to measure latency, cost and fallback behaviour yourself.",
   "featured_image": "/static/images/purpose-built-beats-general-ai-tools.jpg",

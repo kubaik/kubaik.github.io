@@ -4,12 +4,10 @@
   "slug": "show-real-work-not-ai-clones",
   "tags": [
     "Engineering",
-    "Build",
     "AiPortfolioFilter",
     "NetworkLatencyResume",
     "Ai",
-    "Mobiledev",
-    "Gethired"
+    "Mobiledev"
   ],
   "meta_description": "A hiring-focused guide to portfolio projects that demonstrate retry logic, circuit breakers, latency percentiles and honest post-mortems for unreliable networks.",
   "featured_image": "/static/images/show-real-work-not-ai-clones.jpg",

@@ -7,8 +7,7 @@
     "Rabbitmq",
     "Postgresql",
     "Database",
-    "Golang",
-    "Debezium2026"
+    "Golang"
   ],
   "meta_description": "Zero-downtime migrations fail when writes keep flowing during the copy. A drain-copy-flip state machine, with instrumentation and a decision checklist.",
   "featured_image": "/static/images/stop-the-writes-zero-downtime-db-migrations.jpg",

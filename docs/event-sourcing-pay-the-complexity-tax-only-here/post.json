@@ -5,9 +5,7 @@
   "tags": [
     "EventSourcing",
     "EventSourcing2026",
-    "EventSourcingCost",
-    "Eventsourcingschema",
-    "Eventsourcingexamples"
+    "EventSourcingCost"
   ],
   "meta_description": "When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.",
   "featured_image": "/static/images/event-sourcing-pay-the-complexity-tax-only-here.jpg",

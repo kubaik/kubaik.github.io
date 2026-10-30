@@ -8,8 +8,7 @@
     "GithubActionsTips",
     "Devops",
     "Docker",
-    "Containers",
-    "Flyiocost"
+    "Containers"
   ],
   "meta_description": "Build a test-and-deploy pipeline with GitHub Actions and a container host, then measure cost, cold start, and rollback time yourself.",
   "featured_image": "/static/images/ship-a-solo-project-pipeline-under-20month.jpg",

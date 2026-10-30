@@ -6,8 +6,7 @@
     "Lambda@edge",
     "StarlinkCdnAfrica",
     "Cloudcomputing",
-    "Performance",
-    "Webpfallback2026"
+    "Performance"
   ],
   "meta_description": "Build an on-the-fly image resizing pipeline with CloudFront, Lambda@Edge, S3 and Terraform, including streaming, format negotiation and observability.",
   "featured_image": "/static/images/move-images-50-faster-in-2026-with-starlink-cdn.jpg",

@@ -7,8 +7,7 @@
     "OpaVsKyverno",
     "Policy",
     "Kubernetes",
-    "K8s",
-    "Agentcompliance"
+    "K8s"
   ],
   "meta_description": "Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.",
   "featured_image": "/static/images/agent-governance-opa-vs-kyverno-after-our-incident.jpg",

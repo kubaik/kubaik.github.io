@@ -6,8 +6,7 @@
     "AiGeneratedCode",
     "DjangoWithAi",
     "Ai",
-    "Generativeai",
-    "Cachestampede"
+    "Generativeai"
   ],
   "meta_description": "AI-written code often fails quietly under load. Here is how to validate it at build time, guard it at runtime, and keep on-call triage fast.",
   "featured_image": "/static/images/40-ai-code-meant-60-more-alerts.jpg",

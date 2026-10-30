@@ -1,37 +1,110 @@
-AdSense Compliance Audit — Changelog
-=====================================
-Date: 2026-10-29 (update)
-Scope: Stop tombstone recreation after delete
+CHANGELOG
+=========
+Date: 2026-10-30
+Scope: blog_post.py, static_site_generator.py, scripts/corpus_triage.py (new),
+       apply_pipeline_fixes.py (new)
 
-Root cause
-----------
-`utilsIndexing/retire_registry.py` (invoked from StaticSiteGenerator.generate_site
-on every `blog_system.py build`) maintains:
-  - published_slugs.json  (every slug that has ever been live)
-  - retired_slugs.json    (slugs no longer live)
+Status: syntax-checked; patcher tested on a copy of static_site_generator.py
+(applied cleanly, second run was a no-op). corpus_triage.py smoke-tested on
+two synthetic posts. NOT yet tested on the real docs/ corpus or a full site
+build. Run a build and review the output before pushing.
 
-On the next build it detects “in ledger but no post.json” and rewrites a
-noindex tombstone index.html for any slug still inside the tombstone_days
-window (default 180). That is why the 24 deleted directories reappear
-after deployment.
+Deploy order
+------------
+1. Replace blog_post.py with the new version.
+2. Replace static_site_generator.py with the new version
+   (or run: python apply_pipeline_fixes.py static_site_generator.py).
+3. Add scripts/corpus_triage.py.
+4. Run: python blog_system.py build
+5. Run: python scripts/corpus_triage.py --docs docs --out triage_out
+6. Review triage_out/delete.txt and improve.txt before acting on them.
+7. Do not request an AdSense re-review until these changes are live.
 
-Fix
----
-adsense_compliance_audit.py (v3.1)
-- When --delete is used, after `git rm` the script now also removes every
-  deleted slug from both published_slugs.json and retired_slugs.json.
-- The updated ledger files must be committed together with the deletions.
-- Next build will no longer recreate the tombstones.
 
-Files to replace
-----------------
-- adsense_compliance_audit.py  (updated below)
-- (optional) the four files from the previous delivery if not already applied
+blog_post.py
+------------
+[FIX] Added full_title field. Previously blog_system.py wrote full_title to
+      post.json, but BlogPost did not store or round-trip it, so every build
+      reloaded posts with only the truncated display title.
+      Result: titles such as "Staging won't catch prod bugs. Make…" appeared
+      in <title>, og:title, H1 and JSON-LD.
+[NEW] display_title property (full_title, falling back to title).
+[FIX] from_markdown_file(): timestamps now come from the file's first git
+      commit, falling back to mtime. In CI every checkout stamps all files
+      with the checkout time, so recovered posts looked published today
+      (inflating VelocityController.today_count() and faking freshness).
+[FIX] from_markdown_file(): no longer adds the junk tags "recovered" and
+      "blog" (these generated thin tag pages).
+[FIX] from_markdown_file(): ad_slots 3 -> 0 for recovered posts until reviewed.
+[FIX] _create_slug_static(): cuts on a word boundary at 60 characters
+      (was a mid-word cut at 50).
 
-Usage
------
-python adsense_compliance_audit.py --delete --force
-# then commit the deleted docs/ dirs AND the two updated JSON ledgers
-git add docs/ published_slugs.json retired_slugs.json
-git commit -m "Permanently remove tombstoned low-quality posts"
-git push
+
+static_site_generator.py  (39 changed lines vs. the uploaded file)
+-------------------------------------------------------------------
+[FIX] Post pages render full_title in <title>, og:title, twitter:title, H1,
+      breadcrumb and data-title attributes.
+[FIX] Article JSON-LD "headline" uses full_title (capped at 110 characters);
+      BreadcrumbList item name uses full_title.
+[FIX] _find_related_posts(): replaced tag-overlap ranking with TF-IDF cosine
+      similarity plus a small tag boost.
+      - _build_tfidf_corpus() already existed but was never called.
+      - Minimum similarity floor of 0.06; returns fewer than 3 (or none)
+        instead of padding with unrelated recent posts.
+      - Corpus vectors are cached per build; related-card titles use
+        full_title.
+[FIX] The stored "### About this article" markdown footer is stripped at
+      render time. Previously it rendered together with the template's
+      "How this article was made" block, giving two overlapping disclosures
+      per post. The stored footer is left in post.json, so existing audit
+      checks that look for it still work.
+[FIX] Homepage <title> and og:title: was site_name + full site_description
+      (~150 characters, author name twice). Now site_name + site_tagline.
+      Set site_tagline in config.yaml; default is "Backend engineering, AI
+      tooling and developer careers".
+[MISC] Added "import re" if not already present.
+
+
+scripts/corpus_triage.py  (new)
+-------------------------------
+Code-driven DELETE / IMPROVE / KEEP verdict per docs/*/post.json.
+Outputs: verdicts.json, delete.txt, improve.txt, summary.txt.
+Detectors (each based on a defect seen on the live site):
+  - truncated title with no recoverable full_title
+  - irrelevant "Official documentation" link (label/host not discussed in body)
+  - tags that do not appear in the body
+  - LLM filler openers
+  - templated structure (share of H2 headings reused across >= 8% of posts)
+  - first-person experience claims in posts not marked human_reviewed
+  - thin posts (< 1000 words DELETE, < 1500 IMPROVE)
+Flags:
+  --fix                   removes irrelevant doc links and junk tags (backups
+                          written to .triage_backups)
+  --max-delete-fraction   abort with exit code 3 if DELETE share exceeds this
+                          (default 0.25)
+Limitations: thresholds are untuned heuristics; review delete.txt before
+deleting anything. Near-duplicate detection is left to the existing
+adsense_compliance_audit.py.
+
+
+apply_pipeline_fixes.py  (new)
+------------------------------
+Idempotent patcher that applies the static_site_generator.py changes above to
+your own copy. Fails with an assertion if the expected text is not found
+exactly once; writes a .bak backup before changing the file.
+
+
+Not changed (recommended, not implemented)
+------------------------------------------
+- velocity_controller.py: logic is correct; left as is. Its docstring cites
+  an "AdSense Site Readiness Guide section 7" quote I could not verify.
+- Homepage and about text that says articles are "written by" the author and
+  topics come from "real production work", which conflicts with the
+  unreviewed-LLM disclosure. Source template was not located.
+- blog-automation.yml: the 12-hour schedule runs deletion, retirement and
+  LLM rewrites against existing posts on every cycle. Recommended: move
+  destructive cleanup and rewrites to manual dispatch.
+- Repeated post outline across the corpus (scaled-content risk). Needs
+  prompt-level variation and real first-hand detail, not a formatting fix.
+- Consider a custom domain; AdSense handling of github.io subdomains was not
+  verified.

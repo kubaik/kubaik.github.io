@@ -5,9 +5,7 @@
   "tags": [
     "Zero",
     "Database",
-    "Postgresql",
-    "Flywaypitfalls",
-    "Skeemavsatlas"
+    "Postgresql"
   ],
   "meta_description": "Why live schema migrations cause outages, and how versioning the schema as a deployable artifact with expand/contract steps reduces that risk.",
   "featured_image": "/static/images/migrations-stop-running-them-live.jpg",

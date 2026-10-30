@@ -8,8 +8,7 @@
     "Cloudformation",
     "LambdaGoldenPath",
     "Cloudcomputing",
-    "Serverless",
-    "Lambdabestpractices"
+    "Serverless"
   ],
   "meta_description": "How to version, publish and reference Lambda layers so runtime upgrades, region moves and architecture changes don't break dependent functions.",
   "featured_image": "/static/images/boring-aws-lambda-layers-that-dont-lock.jpg",

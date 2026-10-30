@@ -6,8 +6,7 @@
     "ComputerUseAgents",
     "AgentSandboxing",
     "GvisorSandbox",
-    "Prompt",
-    "Egressallowlistagent"
+    "Prompt"
   ],
   "meta_description": "How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.",
   "featured_image": "/static/images/sandboxed-computer-use-agents-with-gvisor.jpg",

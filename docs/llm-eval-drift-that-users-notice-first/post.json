@@ -8,8 +8,7 @@
     "TokenBudgetDrift",
     "Cache",
     "Llm",
-    "Generativeai",
-    "Llmobservability"
+    "Generativeai"
   ],
   "meta_description": "Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.",
   "featured_image": "/static/images/llm-eval-drift-that-users-notice-first.jpg",

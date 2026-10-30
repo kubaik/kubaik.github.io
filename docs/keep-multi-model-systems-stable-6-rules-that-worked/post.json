@@ -4,7 +4,6 @@
   "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
   "tags": [
     "Multi",
-    "AgenticSystems",
     "IdempotencyKeys",
     "Redis7.2Eviction",
     "LambdaConcurrency",

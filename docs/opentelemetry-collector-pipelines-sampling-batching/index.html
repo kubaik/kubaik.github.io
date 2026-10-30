@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>OpenTelemetry collector pipelines: sampling, batching… - Kubai Kevin</title>
+        <title>OpenTelemetry collector pipelines: sampling, batching, routing - Kubai Kevin</title>
         <meta name="description" content="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.">
         <meta name="keywords" content="Opentelemetry, Collector, Tail">
         <meta name="author" content="Kubai Kevin">
@@ -13,17 +13,17 @@
         <meta property="article:modified_time" content="2026-10-30T04:58:58.656927+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
-        <meta property="og:title" content="OpenTelemetry collector pipelines: sampling, batching…">
+        <meta property="og:title" content="OpenTelemetry collector pipelines: sampling, batching, routing">
         <meta property="og:description" content="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.">
         <meta property="og:url" content="https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
         <meta property="og:image" content="https://kubaik.github.io/static/og/opentelemetry-collector-pipelines-sampling-batching.png">
-        <meta property="og:image:alt" content="OpenTelemetry collector pipelines: sampling, batching…">
+        <meta property="og:image:alt" content="OpenTelemetry collector pipelines: sampling, batching, routing">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="OpenTelemetry collector pipelines: sampling, batching…">
+        <meta name="twitter:title" content="OpenTelemetry collector pipelines: sampling, batching, routing">
         <meta name="twitter:description" content="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.">
         <meta name="twitter:image" content="https://kubaik.github.io/static/og/opentelemetry-collector-pipelines-sampling-batching.png">
         <meta name="twitter:site" content="@KubaiKevin">
@@ -60,7 +60,7 @@
     {
       "@type": "Article",
       "@id": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/#article",
-      "headline": "OpenTelemetry collector pipelines: sampling, batching…",
+      "headline": "OpenTelemetry collector pipelines: sampling, batching, routing",
       "description": "How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.",
       "datePublished": "2026-10-30T04:57:12+00:00",
       "dateModified": "2026-10-30T04:58:58+00:00",
@@ -119,7 +119,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "OpenTelemetry collector pipelines: sampling, batching…",
+          "name": "OpenTelemetry collector pipelines: sampling, batching, routing",
           "item": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/"
         }
       ]
@@ -247,11 +247,11 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span>›</span>
-            <span>OpenTelemetry collector pipelines: sampling, batching…</span>
+            <span>OpenTelemetry collector pipelines: sampling, batching, routing</span>
         </nav>
         <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
-                <h1 itemprop="headline">OpenTelemetry collector pipelines: sampling, batching…</h1>
+                <h1 itemprop="headline">OpenTelemetry collector pipelines: sampling, batching, routing</h1>
                 
                 <p class="post-lead">How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</p>
                 
@@ -439,13 +439,6 @@ service:
 <li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
 <li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> October 2026</p>
-<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -472,22 +465,22 @@ service:
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/agent-tracing-when-logs-lie-and-metrics-mislead/">
-                        <h3>Agent tracing: when logs lie and metrics mislead</h3>
-                        <p>Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.</p>
-                        <span class="related-meta">10 min read · 28 August 2026</span>
-                    </a>
-                    
                     <a class="related-card" href="/observability-agents-lied-to-us/">
-                        <h3>Observability Agents as Application Code</h3>
+                        <h3>Observability agents lied to us</h3>
                         <p>Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
                         <span class="related-meta">13 min read · 11 August 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
-                        <h3>AI cost attribution without the spreadsheet hell</h3>
-                        <p>How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
-                        <span class="related-meta">15 min read · 7 August 2026</span>
+                    <a class="related-card" href="/observability-2026-ditch-the-three-pillars/">
+                        <h3>Observability 2026: ditch the three pillars</h3>
+                        <p>Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
+                        <span class="related-meta">14 min read · 10 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
+                        <h3>7 ways to measure prompt platform ROI in 2026</h3>
+                        <p>How to attribute token cost, latency and developer time to prompt and agent platforms, with instrumentation recipes, failure modes and a decision checklist.</p>
+                        <span class="related-meta">14 min read · 8 July 2026</span>
                     </a>
                     
                 </div>

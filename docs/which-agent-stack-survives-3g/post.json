@@ -4,7 +4,6 @@
   "slug": "which-agent-stack-survives-3g",
   "tags": [
     "LowLatencyAgents",
-    "Intermittent3g4g",
     "EastAfricaDevelopers",
     "EdgeAgentDeployment",
     "ReconnectionStorm",

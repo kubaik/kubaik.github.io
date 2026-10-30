@@ -8,8 +8,7 @@
     "FieldAgentsAfrica",
     "Sqlite",
     "AwsAppsync",
-    "Reactjs",
-    "Reactnative072"
+    "Reactjs"
   ],
   "meta_description": "Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.",
   "featured_image": "/static/images/offline-first-agents-for-field-teams.jpg",

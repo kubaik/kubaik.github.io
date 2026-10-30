@@ -382,8 +382,11 @@ jobs:
             # invented URLs: links come only from post_enhancer.DOCS + a standards map
             # (OWASP/NIST/W3C/Google SRE), each URL verified live. Posts with no safe match
             # are left untouched. Backs up to .sources_backups/ first.
-            - name: 📚 Add verified primary-source links (code-driven)
-              run: python add_sources.py --docs ./docs --verify-links --backup-dir ./.sources_backups --confirm
+            # DISABLED 2026-10-30: appends 'Official documentation' links chosen by keyword map;
+            # triage found 99+ irrelevant ones (e.g. Redis docs on a staging article). Re-enable only
+            # once links are added when the topic actually appears in the post body.
+            # - name: 📚 Add verified primary-source links (code-driven)
+            #   run: python add_sources.py --docs ./docs --verify-links --backup-dir ./.sources_backups --confirm
 
             - name: ✨ LLM-improve flagged posts (scans docs/)
               env:
@@ -403,8 +406,11 @@ jobs:
                     --limit "${{ github.event.inputs.improve_limit || '5' }}" --verify-online --confirm || \
                     echo "WARNING: improve_posts.py failed — continuing with the build"
 
-            - name: 🔗 Apply code-driven post improvements (scans docs/)
-              run: python post_enhancer.py --docs ./docs --backup ./.quality_review_backups --verify-links --confirm
+            # DISABLED 2026-10-30: appends 'Official documentation' links chosen by keyword map;
+            # triage found 99+ irrelevant ones (e.g. Redis docs on a staging article). Re-enable only
+            # once links are added when the topic actually appears in the post body.
+            # - name: 🔗 Apply code-driven post improvements (scans docs/)
+            #   run: python post_enhancer.py --docs ./docs --backup ./.quality_review_backups --verify-links --confirm
 
             - name: 🧮 Stricter AdSense compliance audit (v3)
               run: |

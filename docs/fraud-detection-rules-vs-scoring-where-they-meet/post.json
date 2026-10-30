@@ -6,8 +6,7 @@
     "FraudDetection",
     "RulesEngine",
     "Fraud",
-    "RiskScoringModel",
-    "Machinelearning"
+    "RiskScoringModel"
   ],
   "meta_description": "How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.",
   "featured_image": "/static/images/fraud-detection-rules-vs-scoring-where-they-meet.jpg",

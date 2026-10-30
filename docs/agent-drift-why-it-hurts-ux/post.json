@@ -4,7 +4,6 @@
   "slug": "agent-drift-why-it-hurts-ux",
   "tags": [
     "AgentDrift",
-    "Ux",
     "DetectAgentDrift",
     "ContainAgentDrift"
   ],

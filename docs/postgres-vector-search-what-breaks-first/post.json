@@ -5,7 +5,6 @@
   "tags": [
     "PgvectorVsQdrant",
     "VectorSearchLatency",
-    "Qdrant",
     "Pgvector",
     "Database",
     "Postgresql",

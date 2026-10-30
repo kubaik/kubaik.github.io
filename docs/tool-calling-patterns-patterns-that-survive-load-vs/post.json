@@ -5,9 +5,7 @@
   "tags": [
     "ToolCallingPatterns",
     "BackoffCurve",
-    "ToolCallSafety",
-    "Retrybudget",
-    "Grpcretrypolicy"
+    "ToolCallSafety"
   ],
   "meta_description": "A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.",
   "featured_image": "/static/images/tool-calling-patterns-patterns-that-survive-load-vs.jpg",

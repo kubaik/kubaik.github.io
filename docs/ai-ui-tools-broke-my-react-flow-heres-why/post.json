@@ -8,8 +8,7 @@
     "Ai",
     "ReactV0",
     "TailwindUiBlocks",
-    "Reactjs",
-    "Tailwindcss"
+    "Reactjs"
   ],
   "meta_description": "AI UI generators produce plausible markup, not production components. Learn the failure modes, a worked refactor, and a checklist for shipping them safely.",
   "featured_image": "/static/images/ai-ui-tools-broke-my-react-flow-heres-why.jpg",

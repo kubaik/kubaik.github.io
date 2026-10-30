@@ -7,8 +7,7 @@
     "Langgraph",
     "Ai",
     "Cloudcomputing",
-    "Agenticai",
-    "Retrystormcost"
+    "Agenticai"
   ],
   "meta_description": "Standard FinOps dashboards miss sub-agent, idle, and retry costs. A dependency-graph cost model shows where agent spend actually lands.",
   "featured_image": "/static/images/track-ai-agent-costs-in-fractal-workflows.jpg",

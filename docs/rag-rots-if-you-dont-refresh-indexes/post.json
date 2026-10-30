@@ -7,8 +7,7 @@
     "Rag",
     "Incremental",
     "Dataengineering",
-    "Vectorsearch",
-    "Weaviate124rag"
+    "Vectorsearch"
   ],
   "meta_description": "RAG indexes rot when source documents change. Learn change detection, chunk versioning, and incremental refresh patterns, with code and a cost model.",
   "featured_image": "/static/images/rag-rots-if-you-dont-refresh-indexes.jpg",

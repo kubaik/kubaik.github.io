@@ -7,9 +7,7 @@
     "3gLatencyPortfolio",
     "Fly.io$12Hosting",
     "Softwareengineering",
-    "Coding",
-    "Flyio12hosting",
-    "Postmortemportfolio"
+    "Coding"
   ],
   "meta_description": "A portfolio that proves engineering judgement: latency budgets, load tests, failure-mode notes and honest trade-offs recruiters can verify.",
   "featured_image": "/static/images/portfolio-that-hires-show-constraints-not-code.jpg",

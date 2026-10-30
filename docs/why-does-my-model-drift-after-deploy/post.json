@@ -5,7 +5,6 @@
   "tags": [
     "ModelDrift",
     "MlEvaluation",
-    "Machinelearning",
     "Performance"
   ],
   "meta_description": "Offline validation rarely matches production traffic. Learn the evaluation gap, how to measure drift, and concrete checks to add before your next deploy.",

@@ -6,9 +6,7 @@
     "TerraformDrift",
     "InfrastructureDrift",
     "Opentofu",
-    "Terraform",
-    "Iac",
-    "Terraformstatedrift"
+    "Terraform"
   ],
   "meta_description": "Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.",
   "featured_image": "/static/images/drift-detection-the-plan-that-lies.jpg",

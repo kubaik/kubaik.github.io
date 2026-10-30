@@ -4,12 +4,9 @@
   "slug": "ai-made-self-service-platforms-trivial-in-2026",
   "tags": [
     "Llm",
-    "Platform",
     "Ai",
     "Devops",
-    "Terraform",
-    "Iac",
-    "Argocdairollback"
+    "Terraform"
   ],
   "meta_description": "AI can draft Terraform and Kubernetes manifests, but correctness still needs policy checks, schema validation, and runtime verification before merge.",
   "featured_image": "/static/images/ai-made-self-service-platforms-trivial-in-2026.jpg",

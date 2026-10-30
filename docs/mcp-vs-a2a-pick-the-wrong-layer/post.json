@@ -5,8 +5,7 @@
   "tags": [
     "Mcp",
     "A2a",
-    "ModelContextProtocol",
-    "Agenttasklifecycle"
+    "ModelContextProtocol"
   ],
   "meta_description": "MCP connects models to tools; A2A connects agents to agents. How to tell which layer a boundary belongs to, and what breaks when you mix them.",
   "featured_image": "/static/images/mcp-vs-a2a-pick-the-wrong-layer.jpg",

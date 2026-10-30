@@ -7,8 +7,7 @@
     "AgentAbstractions",
     "TypedToolContracts",
     "Durable",
-    "Softwareengineering",
-    "Agenttracestore"
+    "Softwareengineering"
   ],
   "meta_description": "Why agent failures are platform failures: typed tool contracts, durable execution, and structured traces that make runs replayable and retries safe.",
   "featured_image": "/static/images/agent-platform-abstractions-a-case-study.jpg",

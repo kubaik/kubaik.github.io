@@ -10,8 +10,7 @@
     "RagObservability",
     "Database",
     "Rag",
-    "Vectorsearch",
-    "Weaviate124error"
+    "Vectorsearch"
   ],
   "meta_description": "Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.",
   "featured_image": "/static/images/one-misconfigured-vector-db-killed-our-rag-pipeline.jpg",

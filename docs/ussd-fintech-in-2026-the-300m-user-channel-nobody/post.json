@@ -7,8 +7,7 @@
     "UssdGateway2026",
     "Node.jsUssdTutorial",
     "UssdLatencyOptimization",
-    "Mobiledev",
-    "Nodejsussdtutorial"
+    "Mobiledev"
   ],
   "meta_description": "A practical guide to building reliable USSD fintech flows on AWS: state machines, 160-character screens, carrier SLAs, idempotency, and latency instrumentation.",
   "featured_image": "/static/images/ussd-fintech-in-2026-the-300m-user-channel-nobody.jpg",

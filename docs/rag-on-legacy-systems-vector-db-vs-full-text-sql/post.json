@@ -4,7 +4,6 @@
   "slug": "rag-on-legacy-systems-vector-db-vs-full-text-sql",
   "tags": [
     "RagImplementation",
-    "Enterprise",
     "Pgvector0.7",
     "Weaviate1.22Cost",
     "Ai",

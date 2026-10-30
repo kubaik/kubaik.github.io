@@ -6,9 +6,7 @@
     "LlmEvaluationMetrics",
     "Pydantic",
     "Llm",
-    "Generativeai",
-    "Llmlatencyp95",
-    "Llmretentiondelta"
+    "Generativeai"
   ],
   "meta_description": "A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.",
   "featured_image": "/static/images/llm-output-metrics-that-actually-move-the-needle.jpg",

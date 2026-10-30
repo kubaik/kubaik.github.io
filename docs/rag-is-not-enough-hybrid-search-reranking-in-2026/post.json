@@ -8,8 +8,7 @@
     "Bm25",
     "Generativeai",
     "Rag",
-    "Vectorsearch",
-    "Elasticsearch812bm25"
+    "Vectorsearch"
   ],
   "meta_description": "Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.",
   "featured_image": "/static/images/rag-is-not-enough-hybrid-search-reranking-in-2026.jpg",

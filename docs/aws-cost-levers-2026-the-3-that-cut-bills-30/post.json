@@ -6,8 +6,7 @@
     "AwsCostOptimization",
     "AwsSavingsPlans",
     "ComputeOptimizer2026",
-    "ReduceAwsBill",
-    "Awscostlevers"
+    "ReduceAwsBill"
   ],
   "meta_description": "A practical comparison of AWS Savings Plans, Compute Optimizer and Cost Anomaly Detection, with a decision framework and a 30-minute first step.",
   "featured_image": "/static/images/aws-cost-levers-2026-the-3-that-cut-bills-30.jpg",

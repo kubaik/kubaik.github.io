@@ -4,8 +4,7 @@
   "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
   "tags": [
     "Apis",
-    "Performance",
-    "Toolcalloptimization"
+    "Performance"
   ],
   "meta_description": "Compare async batch and fire-and-forget tool-calling patterns: when each fits, how to instrument latency and queue depth, and how to pick a batch size.",
   "featured_image": "/static/images/tool-calls-under-load-async-batch-vs-fire-and-forget.jpg",

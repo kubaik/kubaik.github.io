@@ -5,9 +5,7 @@
   "tags": [
     "AsyncCommunicationMatrix",
     "MatrixSynapse1.116.0",
-    "Github",
-    "Remotework",
-    "Matrixsynapse11160"
+    "Github"
   ],
   "meta_description": "Design a remote engineering stack for high-latency, metered, outage-prone networks: self-hosted runners, async chat, retries, and observability.",
   "featured_image": "/static/images/remote-work-in-2026-which-tools-survived.jpg",

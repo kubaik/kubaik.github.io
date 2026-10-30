@@ -9,8 +9,7 @@
     "Next.jsPerformance",
     "Reactjs",
     "Performance",
-    "Nextjs",
-    "Nextjsbundlesize"
+    "Nextjs"
   ],
   "meta_description": "How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.",
   "featured_image": "/static/images/bundle-size-70-lighter-with-server-components.jpg",

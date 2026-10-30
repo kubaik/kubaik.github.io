@@ -230,14 +230,6 @@
                     <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ToolCallSafety</span>
                     
                     
-                    
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Retrybudget</span>
-                    
-                    
-                    
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Grpcretrypolicy</span>
-                    
-                    
                 </div>
                 
             </header>
@@ -515,13 +507,6 @@ func callWithSafety(orderID string) ([]byte, error) {
 <ul>
 <li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
 </ul>
-<hr />
-<h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
-<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
-<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
-<p><strong>Last generated:</strong> June 2026</p>
-<!-- enhanced:v1 -->
                 
                 
             </div>
@@ -548,10 +533,22 @@ func callWithSafety(orderID string) ([]byte, error) {
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/tool-calling-stateless-beats-stateful-under-load/">
-                        <h3>Tool calling: stateless beats stateful under load</h3>
-                        <p>How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.</p>
-                        <span class="related-meta">11 min read · 19 June 2026</span>
+                    <a class="related-card" href="/agent-systems-circuit-breakers-are-not-enough/">
+                        <h3>Agent Systems: Circuit Breakers Are Not Enough</h3>
+                        <p>Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.</p>
+                        <span class="related-meta">13 min read · 12 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tool-calls-why-retries-stampede/">
+                        <h3>Tool calls: why retries stampede</h3>
+                        <p>Why per-client backoff fails under fan-out tool use, and how shared token buckets, single-flight and one-layer retries fix it.</p>
+                        <span class="related-meta">12 min read · 22 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+                        <h3>AI agents: circuit breakers are not optional</h3>
+                        <p>AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
                     </a>
                     
                 </div>

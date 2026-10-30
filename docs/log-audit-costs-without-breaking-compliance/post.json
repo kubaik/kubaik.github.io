@@ -6,7 +6,6 @@
     "AuditLogDatabase",
     "PostgresqlAuditLogs",
     "ClickhouseForLogs",
-    "Timescaledb",
     "Database",
     "Performance",
     "Postgresql",

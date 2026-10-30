@@ -6,8 +6,7 @@
     "Cqrs",
     "EventualConsistency",
     "ReadReplica",
-    "Dataengineering",
-    "Cqrsprojectionlag"
+    "Dataengineering"
   ],
   "meta_description": "CQRS trades strong consistency for independent read and write scaling. Learn the failure modes, how to measure projection lag, and when a read replica is enough.",
   "featured_image": "/static/images/cqrs-when-it-pays-off-and-when-it-breaks.jpg",

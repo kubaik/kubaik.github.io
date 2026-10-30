@@ -6,9 +6,7 @@
     "ServiceMesh2026",
     "IstioVsCilium",
     "MeshOverhead",
-    "ServiceMeshCost",
-    "Istio1.21",
-    "Istio121"
+    "ServiceMeshCost"
   ],
   "meta_description": "Service meshes amplify latent platform failures. Here is what breaks in Istio and Cilium, how to measure it, and when to defer adoption.",
   "featured_image": "/static/images/istio-and-cilium-what-really-breaks-in-production.jpg",

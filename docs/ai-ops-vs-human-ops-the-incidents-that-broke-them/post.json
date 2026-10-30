@@ -5,11 +5,7 @@
   "tags": [
     "AiIncidentResponse",
     "PagerdutyAiCopilot",
-    "Rootly",
-    "Oncall",
-    "Ai",
-    "Mttrreductionai",
-    "Aiopsroi"
+    "Ai"
   ],
   "meta_description": "Compare AI-first autonomous incident response with human-first ops plus AI triage: architecture, failure modes, cost modeling, and a decision checklist.",
   "featured_image": "/static/images/ai-ops-vs-human-ops-the-incidents-that-broke-them.jpg",

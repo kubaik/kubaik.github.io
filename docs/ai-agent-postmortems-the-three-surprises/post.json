@@ -7,8 +7,7 @@
     "Semantic",
     "LlmIncidentResponse",
     "Ai",
-    "Llm",
-    "Semanticmatchrate"
+    "Llm"
   ],
   "meta_description": "How to run postmortems for AI agents that fail semantically, not just technically: structured semantic logging, live shadowing, and a decision checklist.",
   "featured_image": "/static/images/ai-agent-postmortems-the-three-surprises.jpg",

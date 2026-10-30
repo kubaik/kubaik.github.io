@@ -6,8 +6,7 @@
     "AiFeatureMaintenance",
     "AiFeatureOutages",
     "Ai",
-    "Redis",
-    "Fastapi0109ai"
+    "Redis"
   ],
   "meta_description": "Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.",
   "featured_image": "/static/images/ai-features-rot-faster-than-you-build-them.jpg",

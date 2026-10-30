@@ -5,8 +5,7 @@
   "tags": [
     "Connection",
     "Apis",
-    "Redis",
-    "Mikrotikrb4011dscp"
+    "Redis"
   ],
   "meta_description": "How to keep an API reliable over high-latency satellite links: circuit breakers, retry budgets, failover gateways, and the metrics that show what broke.",
   "featured_image": "/static/images/starlink-in-production-what-changed-in-our-stack.jpg",

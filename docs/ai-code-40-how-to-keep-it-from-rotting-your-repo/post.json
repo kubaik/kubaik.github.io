@@ -5,10 +5,8 @@
   "tags": [
     "AiCodeReview",
     "Ruff0.5.4",
-    "CodegovernPricing",
     "Ai",
-    "Python",
-    "Ruff054"
+    "Python"
   ],
   "meta_description": "How to detect and contain AI-generated code debt with linters, review gates, and measurement instead of expensive governance platforms.",
   "featured_image": "/static/images/ai-code-40-how-to-keep-it-from-rotting-your-repo.jpg",

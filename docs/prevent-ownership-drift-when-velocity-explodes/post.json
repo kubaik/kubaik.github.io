@@ -8,9 +8,7 @@
     "NodeGateway",
     "RedisCache",
     "StampedeProtection",
-    "Redis",
-    "Node20gateway",
-    "Redis72cache"
+    "Redis"
   ],
   "meta_description": "How to keep clear ownership of caches, SLOs and services when teams ship faster: deployment boundaries, error budgets, stampede locks and useful telemetry.",
   "featured_image": "/static/images/prevent-ownership-drift-when-velocity-explodes.jpg",

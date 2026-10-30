@@ -7,9 +7,7 @@
     "SemgrepLegacyCode",
     "Localai2.5",
     "Ai",
-    "Github",
-    "Localai25",
-    "Aistaticanalysis"
+    "Github"
   ],
   "meta_description": "How to use static analysis, a local LLM, and a structured prompt to map, test, and safely refactor legacy code without inventing risk.",
   "featured_image": "/static/images/code-ai-wont-rewrite.jpg",

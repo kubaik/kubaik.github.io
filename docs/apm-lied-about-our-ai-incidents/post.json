@@ -7,7 +7,6 @@
     "ApmLimitations",
     "GpuTelemetry",
     "VllmMonitoring",
-    "NvidiaDcgm",
     "Ai",
     "Llm"
   ],

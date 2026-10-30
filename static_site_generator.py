@@ -959,7 +959,7 @@ Sitemap: {base_url}/sitemap.xml
             {
                 "@type": "Article",
                 "@id": f"{base_url}/{post.slug}/#article",
-                "headline": post.title,
+                "headline": (getattr(post, "full_title", None) or post.title)[:110],
                 "description": post.meta_description or "",
                 "datePublished": published,
                 "dateModified": modified,
@@ -1041,7 +1041,7 @@ Sitemap: {base_url}/sitemap.xml
                     {
                         "@type": "ListItem",
                         "position": 2,
-                        "name": post.title,
+                        "name": getattr(post, "full_title", None) or post.title,
                         "item": f"{base_url}/{post.slug}/",
                     },
                 ],
@@ -1368,11 +1368,19 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             post_dir = Path("./docs") / post.slug
             post_dir.mkdir(exist_ok=True)
             markdown_converter = md.Markdown(extensions=["extra", "fenced_code", "toc"])
-            content_html = markdown_converter.convert(post.content)
+            content_html = markdown_converter.convert(
+                re.sub(
+                    r"\n---\s*\n+### About this article.*\Z",
+                    "",
+                    post.content,
+                    flags=re.S,
+                )
+            )
 
             related = self._find_related_posts(post, posts, max_count=3)
 
             post_dict = post.to_dict()
+            post_dict["title"] = getattr(post, "full_title", None) or post.title
             post_dict["content_html"] = content_html
             post_dict["display_date"] = self._format_display_date(post.created_at)
             post_dict["updated_date"] = self._format_display_date(post.updated_at)
@@ -1524,21 +1532,33 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     def _find_related_posts(
         self, current: BlogPost, all_posts: List[BlogPost], max_count: int = 3
     ) -> List[Dict]:
-        current_tags = set(t.lower() for t in current.tags)
+        """Content-similarity related posts (TF-IDF cosine, tag overlap as a
+        tie-breaking boost). Returns FEWER than max_count (even zero) rather
+        than padding with unrelated recent posts: an irrelevant internal link
+        is a worse signal than none."""
+        MIN_SIM = 0.06
+        key = (id(all_posts), len(all_posts))
+        if getattr(self, "_tfidf_key", None) != key:
+            self._tfidf_vectors = _build_tfidf_corpus(all_posts)
+            self._tfidf_key = key
+        vecs = self._tfidf_vectors
+        cur_vec = vecs.get(current.slug, {})
+        cur_tags = {t.lower() for t in current.tags}
         scored = []
         for p in all_posts:
             if p.slug == current.slug:
                 continue
-            overlap = len(current_tags & set(t.lower() for t in p.tags))
-            if overlap > 0:
-                scored.append((overlap, p))
-        scored.sort(key=lambda x: x[0], reverse=True)
+            sim = _cosine_similarity(cur_vec, vecs.get(p.slug, {}))
+            sim += 0.02 * len(cur_tags & {t.lower() for t in p.tags})
+            if sim >= MIN_SIM:
+                scored.append((sim, p.slug, p))
+        scored.sort(key=lambda x: (-x[0], x[1]))
         result = []
-        for _, p in scored[:max_count]:
+        for _, _, p in scored[:max_count]:
             excerpt = _safe_excerpt(p.meta_description, p.content, p.title, max_len=120)
             result.append(
                 {
-                    "title": p.title,
+                    "title": getattr(p, "full_title", None) or p.title,
                     "slug": p.slug,
                     "meta_description": excerpt,
                     "reading_time": self._reading_time_minutes(p.content),
@@ -2274,12 +2294,12 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site_name }} — {{ site_description }}</title>
+    <title>{{ site_name }} — {{ site_tagline|default('Backend engineering, AI tooling and developer careers') }}</title>
     <meta name="description" content="{{ site_description }}">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ site_name }} — {{ site_description }}">
+    <meta property="og:title" content="{{ site_name }} — {{ site_tagline|default('Backend engineering, AI tooling and developer careers') }}">
     <meta property="og:description" content="{{ site_description }}">
     <meta property="og:url" content="{{ base_url }}/">
     <meta property="og:image" content="{{ base_url }}/static/og-default.png">
