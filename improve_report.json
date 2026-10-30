@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "opentelemetry-collector-pipelines-sampling-batching",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
   "failed": []
 }

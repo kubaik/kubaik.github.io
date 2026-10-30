@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Oct 2026 18:15:14 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 04:59:16 +0000</lastBuildDate>
+    <item>
+      <title>OpenTelemetry collector pipelines: sampling, batching…</title>
+      <link>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</link>
+      <description>How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</description>
+      <pubDate>Fri, 30 Oct 2026 04:57:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</guid>
+    </item>
     <item>
       <title>Node.js memory leak: find it in 10 min</title>
       <link>https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/</link>
@@ -138,13 +145,6 @@
       <description>MCP connects models to tools; A2A connects agents to agents. How to tell which layer a boundary belongs to, and what breaks when you mix them.</description>
       <pubDate>Tue, 20 Oct 2026 16:35:34 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-vs-a2a-pick-the-wrong-layer/</guid>
-    </item>
-    <item>
-      <title>Property-based testing vs example tests: the bug gap</title>
-      <link>https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/</link>
-      <description>How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.</description>
-      <pubDate>Tue, 20 Oct 2026 04:03:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/property-based-testing-vs-example-tests-the-bug-gap/</guid>
     </item>
   </channel>
 </rss>

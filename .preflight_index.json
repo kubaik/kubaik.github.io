@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-29T12:50:46.067793",
+  "built_at": "2026-10-30T04:57:15.788808",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5690,6 +5690,11 @@
       "slug": "nodejs-memory-leak-find-it-in-10-min",
       "title": "Node.js memory leak: find it in 10 min",
       "summary": "The gap between the demo and the incident report is where this actually lives. After enough code that touches finops patterns gets reviewed, the same failure pattern keeps showing up. Here's what changes once the guessing is replaced with measurement. The symptom that never shows up in staging You d"
+    },
+    {
+      "slug": "opentelemetry-collector-pipelines-sampling-batching",
+      "title": "OpenTelemetry collector pipelines: sampling, batching…",
+      "summary": "opentelemetry collector looks simple until it has to survive real traffic. Here's the version that skips the happy-path tutorial. The edge cases only show up once real users hit the system. The scenario: a collector that works until it doesn't A team runs a few services on Kubernetes. They deploy th"
     }
   ]
 }

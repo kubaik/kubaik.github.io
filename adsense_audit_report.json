@@ -1642,6 +1642,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "opentelemetry-collector-pipelines-sampling-batching",
+      "source": "post.json",
+      "word_count": 2669,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "observe-llm-features-90-faster",
       "source": "post.json",
       "word_count": 2733,

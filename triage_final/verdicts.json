@@ -1305,6 +1305,13 @@
   "title": "Remote premium rates: skills AI can't copy",
   "words": 3739
  },
+ "opentelemetry-collector-pipelines-sampling-batching": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "OpenTelemetry collector pipelines: sampling, batching\u2026",
+  "words": 2453
+ },
  "observe-llm-features-90-faster": {
   "verdict": "KEEP",
   "reasons": [],

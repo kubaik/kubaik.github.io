@@ -1,0 +1,531 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OpenTelemetry collector pipelines: sampling, batching… - Kubai Kevin</title>
+        <meta name="description" content="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.">
+        <meta name="keywords" content="Opentelemetry, Collector, Tail">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-30T04:57:12.725295">
+        <meta property="article:modified_time" content="2026-10-30T04:58:58.656927+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="OpenTelemetry collector pipelines: sampling, batching…">
+        <meta property="og:description" content="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.">
+        <meta property="og:url" content="https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/opentelemetry-collector-pipelines-sampling-batching.png">
+        <meta property="og:image:alt" content="OpenTelemetry collector pipelines: sampling, batching…">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="OpenTelemetry collector pipelines: sampling, batching…">
+        <meta name="twitter:description" content="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/opentelemetry-collector-pipelines-sampling-batching.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/#article",
+      "headline": "OpenTelemetry collector pipelines: sampling, batching…",
+      "description": "How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.",
+      "datePublished": "2026-10-30T04:57:12+00:00",
+      "dateModified": "2026-10-30T04:58:58+00:00",
+      "wordCount": 2669,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/"
+      },
+      "keywords": "Opentelemetry, Collector, Tail",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/opentelemetry-collector-pipelines-sampling-batching.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "OpenTelemetry collector pipelines: sampling, batching…",
+          "item": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does my OpenTelemetry collector drop spans under load?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common cause is backpressure from a slow exporter or an expensive processor. When the pipeline cannot keep up, the receiver's queue fills and it starts refusing data. Check otelcolreceiverrefusedspans and otelcolexportersendfailedspans to confirm. Adding a memorylimiter processor at the start of the pipeline and reducing batch size can help."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I use probabilistic or tail-based sampling in the collector?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Probabilistic sampling is cheap and stateless, but it drops errors and slow traces at the same rate as everything else. Tail-based sampling keeps traces based on policies, but it requires buffering spans and a two-tier collector setup to ensure all spans for a trace reach the same instance. Use probabilistic sampling for high-volume, low-value data and tail sampling for the traces you need for debugging."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I route different telemetry to different backends?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the routing connector or the filter processor to split data based on attributes. Define separate pipelines for each destination and attach the routing connector as an exporter in the source pipeline and as a receiver in the destination pipelines. Be aware that each destination pipeline has its own resource cost, and a slow backend can back up the shared source pipeline unless you isolate it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a safe batch size for the OpenTelemetry collector?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no universal safe size. Calculate the memory cost: batch size times average item size times number of in-flight batches. For spans averaging 1 KB, a batch size of 2,000 uses about 2 MB per batch. Keep the total batching memory under 10% of the collector's memory limit. Also set sendbatchmaxsize to prevent oversized batches."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>OpenTelemetry collector pipelines: sampling, batching…</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">OpenTelemetry collector pipelines: sampling, batching…</h1>
+                
+                <p class="post-lead">How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/opentelemetry/"
+                       style="text-decoration:none;">Opentelemetry</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Collector</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Tail</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2669 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-30
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The OpenTelemetry Collector looks simple at the diagram level: receivers take data in, processors modify it, exporters send it out. That mental model holds until real traffic arrives. Then the interesting behavior appears — data drops, memory climbs, and dashboards go flat with no obvious cause.</p>
+<p>The collector is not a black box. It is a set of pipelines, each with a memory footprint, a CPU cost, and a failure mode. When sampling, batching, and routing are combined in one pipeline without understanding how they interact, the result is a config that passes validation and behaves badly under load. This article covers the mechanics of those three concerns and how to design a pipeline that degrades predictably instead of failing silently.</p>
+<h2 id="the-scenario-a-collector-that-works-until-it-doesnt">The scenario: a collector that works until it doesn't</h2>
+<p>A common pattern: a few services on Kubernetes, the collector deployed as a DaemonSet, SDKs pointed at the local agent. For a while everything is fine. Then traffic grows, someone adds a high-cardinality attribute to a span, and the collector starts dropping data. Restarting the collector restores service for a day, then the same thing recurs. The team blames the backend; the backend team blames the collector; nobody reads the pipeline config.</p>
+<p>That pattern is a backpressure problem, not a mystery. The rest of this article explains why it happens and what to change.</p>
+<h2 id="the-mechanism-pipelines-are-queues-with-processors-in-the-middle">The mechanism: pipelines are queues with processors in the middle</h2>
+<p>A pipeline is defined under <code>service.pipelines</code>. Each entry has a name, a list of receivers, a list of processors, and a list of exporters. The collector fans out from each receiver into the pipeline and fans in from the processors to each exporter. Data moves through the pipeline as batches of telemetry items — spans, metric data points, or log records.</p>
+<p>The detail that matters operationally: processors run synchronously in the pipeline's goroutine. If a processor blocks, the pipeline blocks. If the pipeline blocks, the receiver's queue fills. When the queue is full, the receiver drops data. Those drops are counted in the collector's own metrics — <code>otelcol_receiver_refused_spans</code>, <code>otelcol_receiver_refused_metric_points</code>, <code>otelcol_receiver_refused_log_records</code> — but those metrics are only visible if something is scraping the collector itself.</p>
+<p>So the first failure mode is invisible backpressure. A slow exporter or an expensive processor causes drops at the receiver, and the only external symptom is missing data. The collector is behaving correctly; it is simply out of capacity somewhere downstream, and nothing upstream is told about it except through the drop counters.</p>
+<h3 id="batching-the-memory-multiplier">Batching: the memory multiplier</h3>
+<p>The <code>batch</code> processor groups items into batches before handing them to exporters. Its main knobs are <code>send_batch_size</code> (target number of items per batch), <code>timeout</code> (maximum wait before flushing a partial batch), and <code>send_batch_max_size</code> (a hard cap on batch size even when <code>send_batch_size</code> is larger).</p>
+<p>Batching reduces the number of export requests, which matters for backends that bill per request or enforce rate limits. It also holds data in memory. A large <code>send_batch_size</code> combined with a slow exporter means the processor accumulates large batches and may hold several in flight. Spans carrying attributes are not small; a batch of thousands of spans can be tens of megabytes. Multiply by pipelines per collector and collector replicas, and the memory budget disappears.</p>
+<p>A typical failure mode is setting a large batch size to reduce cost, then seeing the collector OOM during a traffic spike. The batch processor has no independent queue limit of its own; it relies on the exporter to apply backpressure. If the exporter has its own internal queue — many do — the batch processor can keep feeding it until memory runs out.</p>
+<h3 id="sampling-probabilistic-vs-tail-based">Sampling: probabilistic vs. tail-based</h3>
+<p>The collector supports sampling at two distinct points.</p>
+<p>Probabilistic sampling (the <code>probabilisticsampler</code> processor) keeps a fraction of spans based on a hash of the trace ID. It is cheap, stateless, and consistent across replicas: the same trace ID hashes the same way everywhere, so a trace is either kept or dropped as a whole rather than split. Its weakness is blindness — it drops the traces that matter (errors, slow requests) at the same rate as the ones that don't.</p>
+<p>Tail-based sampling (the <code>tail_sampling</code> processor) buffers spans until a trace is complete, then decides based on policies such as latency, error status, or attribute values. It solves the blindness problem but introduces two costs:</p>
+<ul>
+<li><strong>Memory.</strong> Spans are held until the decision is made. The processor has a <code>decision_wait</code> setting (default 30 seconds) and a <code>num_traces</code> setting controlling how many traces it tracks. Throughput times decision window gives a lower bound on tracked traces; tracked traces times spans per trace times span size gives the memory floor.</li>
+<li><strong>Topology.</strong> All spans for a trace must arrive at the same collector instance. In a DaemonSet deployment, spans from one trace can land on different pods, so tail sampling requires a two-tier setup: local agents forward by trace ID to a second layer that owns the sampling decision.</li>
+</ul>
+<h3 id="routing-connectors-and-the-fan-out-problem">Routing: connectors and the fan-out problem</h3>
+<p>There are two broad ways to route data: filtering or routing processors that drop or tag items, and connectors, which are pipelines that act as both exporter and receiver. A routing connector sends data to different downstream pipelines based on attribute conditions.</p>
+<p>A common pattern sends everything into one pipeline, then splits by service name or environment. The problem is that each downstream pipeline has its own processors and exporters, each with its own memory and CPU cost. Routing to three backends triples the export work. If one backend is slow, it can back up the shared source pipeline unless the slow path is isolated.</p>
+<p>The collector does not isolate pipelines automatically. A slow exporter in one pipeline can cause the receiver to drop data for all pipelines that share that receiver. The practical fixes are separate receivers per destination, a <code>memory_limiter</code> at the head of each pipeline to shed load before it reaches expensive processors, and — where the collector build supports it — exporter-side queues with explicit sizing so a slow backend absorbs the delay instead of propagating it upstream.</p>
+<h2 id="the-fix-a-pipeline-that-degrades-gracefully">The fix: a pipeline that degrades gracefully</h2>
+<p>The goal is a pipeline that keeps the data you need under load and sheds the rest predictably. Four rules cover most of it:</p>
+<ol>
+<li>Put a <code>memory_limiter</code> processor first in every pipeline.</li>
+<li>Batch with a conservative size and a timeout matched to backend latency.</li>
+<li>Sample early and cheaply where possible; use tail sampling only where the cost is justified.</li>
+<li>Isolate routing so a slow backend cannot take down the whole collector.</li>
+</ol>
+<h3 id="a-worked-example">A worked example</h3>
+<p>Assume a service produces 20,000 spans per second at peak, and each span averages 1 KB in memory including attributes. The collector runs as a DaemonSet with 10 pods, so each pod handles 2,000 spans/s.</p>
+<p>With <code>send_batch_size: 10000</code> and <code>timeout: 10s</code>, each pod could hold up to 10,000 spans per batch, which is about 10 MB per batch. With multiple batches in flight, batching alone can exceed 100 MB per pod. Add a tail-sampling buffer and the figure reaches the hundreds of megabytes — fine under a 1 GB limit, but with little headroom for a spike.</p>
+<p>A more conservative config: <code>send_batch_size: 2000</code>, <code>send_batch_max_size: 3000</code>, <code>timeout: 5s</code>. That caps each batch at roughly 3 MB; with two batches in flight, batching memory stays under about 10 MB per pod. The trade-off is more export requests: at 2,000 spans/s and 2,000 spans per batch, that is one request per second per pod, which most backends handle comfortably.</p>
+<p>Now add a two-tier sampling design. The DaemonSet agent samples probabilistically at 50%, halving volume cheaply, and forwards to a gateway collector that applies tail sampling: keep 100% of error traces and 10% of the rest. The gateway sees 10,000 spans/s. With <code>decision_wait: 10s</code> and an assumed 10 spans per trace, the gateway tracks roughly 10,000 traces at any moment (10,000 spans/s × 10 s ÷ 10 spans per trace). At 1 KB per span and 10 spans per trace, that is about 10 KB per tracked trace, or roughly 100 MB of buffered spans. A gateway with a 1 GB limit has room for that plus overhead — but the margin should be verified, not assumed.</p>
+<p>The arithmetic is illustrative, not a benchmark. The point is that every knob has a memory cost that can be estimated before deployment. Substitute your own span size and spans-per-trace figures; both are measurable from existing trace data.</p>
+<h3 id="code-a-minimal-collector-config-with-memory-limiter-and-batching">Code: a minimal collector config with memory limiter and batching</h3>
+<pre><code class="language-yaml">receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 400
+    spike_limit_mib: 100
+  batch:
+    send_batch_size: 2000
+    send_batch_max_size: 3000
+    timeout: 5s
+
+exporters:
+  otlp:
+    endpoint: backend.example.com:4317
+    tls:
+      insecure: false
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [otlp]
+</code></pre>
+<p>The <code>memory_limiter</code> checks the collector's memory usage every <code>check_interval</code>. When usage approaches <code>limit_mib</code>, it begins refusing data; <code>spike_limit_mib</code> defines the headroom above the soft limit before refusal becomes aggressive. Placing it first ensures expensive processors never see data that would push memory past the limit. This is the single most effective protection against OOM kills, because it converts an uncontrolled crash into a controlled, observable drop.</p>
+<h3 id="routing-with-connectors">Routing with connectors</h3>
+<p>Suppose errors should go to one backend for alerting and everything else to a cheaper storage backend. A routing connector expresses that:</p>
+<pre><code class="language-yaml">connectors:
+  routing:
+    default_pipelines: [traces/cheap]
+    table:
+      - context: span
+        condition: attributes[&quot;error&quot;] == true
+        pipelines: [traces/errors]
+
+service:
+  pipelines:
+    traces/in:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [routing]
+    traces/errors:
+      receivers: [routing]
+      processors: [batch]
+      exporters: [otlp/errors]
+    traces/cheap:
+      receivers: [routing]
+      processors: [batch]
+      exporters: [otlp/cheap]
+</code></pre>
+<p>Spans with an <code>error</code> attribute go to the errors pipeline; everything else goes to the cheap pipeline. The <code>batch</code> processor appears in each downstream pipeline deliberately — batching after routing avoids sending large batches toward the wrong backend.</p>
+<p>Note the isolation gap: the <code>memory_limiter</code> sits only in the input pipeline. The downstream pipelines inherit backpressure but have no limiter of their own. If the errors backend is slow, it backs up the routing connector and eventually the input pipeline. Full isolation requires separate receivers per destination or explicit exporter queue sizing, and that cost should be weighed against how much the two backends actually differ in reliability.</p>
+<h2 id="what-to-monitor-afterwards">What to monitor afterwards</h2>
+<p>The collector exposes its own metrics on a Prometheus endpoint (port 8888 by default). The metrics that matter most:</p>
+<ul>
+<li><code>otelcol_receiver_refused_spans</code> and the metric/log equivalents. Any non-zero value means data is being dropped at the receiver. This is the canary for backpressure.</li>
+<li><code>otelcol_processor_batch_batch_send_size</code>. The distribution of batch sizes. If it sits at the maximum constantly, the timeout may be too long or the batch size too small for the traffic.</li>
+<li><code>otelcol_exporter_send_failed_spans</code>. Failed exports. A sudden rise means the backend is rejecting data or the network is failing.</li>
+<li><code>otelcol_processor_memory_limiter_refused_spans</code>. Data refused by the memory limiter. Expected under load; a sustained high rate means the limit is too low or the pipeline too expensive.</li>
+</ul>
+<p>Alert on <code>rate(otelcol_receiver_refused_spans[5m]) &gt; 0</code> persisting for more than a few minutes. That gives time to react before data loss becomes significant. Also watch the collector's process memory against its limit: sustained proximity to the limit means either raise the limit or reduce pipeline cost, and the choice should be deliberate rather than a reaction to the next OOM.</p>
+<h2 id="how-to-measure-this-yourself">How to measure this yourself</h2>
+<p>None of the numbers above should be taken on faith. Each is measurable:</p>
+<ul>
+<li><strong>Span size.</strong> Sample real spans from your backend and measure serialized size, or compute it from attribute counts and value lengths. A rough figure is enough for planning.</li>
+<li><strong>Spans per trace.</strong> Query your trace store for the distribution of span counts per trace. The mean matters less than the tail, since tail sampling buffers by trace.</li>
+<li><strong>Pipeline throughput.</strong> Run <code>telemetrygen</code> (part of the OpenTelemetry project) against a staging collector at your peak rate and watch <code>otelcol_receiver_refused_spans</code> and process memory. Raise load until refusals begin; that point is your measured ceiling.</li>
+<li><strong>Batch behavior.</strong> Compare <code>otelcol_processor_batch_batch_send_size</code> distributions before and after changing <code>timeout</code> or <code>send_batch_size</code>. The difference tells you whether batches are being cut by size or by time.</li>
+</ul>
+<p>A load test that reproduces peak traffic on a staging collector will surface backpressure and memory problems before production does, and it costs far less than an incident.</p>
+<h2 id="the-broader-lesson-pipelines-are-capacity-planning">The broader lesson: pipelines are capacity planning</h2>
+<p>A collector config is not just a wiring diagram; it is a capacity plan. Every processor adds latency and memory. Every exporter adds a network dependency. The collector scales with the resources given to it and the efficiency of the config, not automatically.</p>
+<p>Teams often treat the collector as infrastructure that "just works" and only examine it when data goes missing. A better approach treats the pipeline as code: version it, review it, and load-test it against a synthetic workload matching peak traffic. The design principle is graceful degradation rather than peak capacity. Assume that at some point the backend will be slow or the traffic will spike. The pipeline should shed load in a controlled way — memory limiter, sampling, queue limits — rather than crash or silently drop everything.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="why-does-the-collector-drop-spans-under-load">Why does the collector drop spans under load?</h3>
+<p>The usual cause is backpressure from a slow exporter or an expensive processor. When the pipeline cannot keep up, the receiver's queue fills and it refuses data. Confirm with <code>otelcol_receiver_refused_spans</code> and <code>otelcol_exporter_send_failed_spans</code>. A <code>memory_limiter</code> at the head of the pipeline and a smaller batch size are the first adjustments.</p>
+<h3 id="should-probabilistic-or-tail-based-sampling-be-used-in-the-collector">Should probabilistic or tail-based sampling be used in the collector?</h3>
+<p>Probabilistic sampling is cheap and stateless but drops errors and slow traces at the same rate as everything else. Tail-based sampling keeps traces by policy but requires buffering and a two-tier setup so all spans for a trace reach the same instance. A common pattern is probabilistic sampling at the agent tier for volume reduction and tail sampling at a gateway tier for the traces that matter for debugging.</p>
+<h3 id="how-is-telemetry-routed-to-different-backends">How is telemetry routed to different backends?</h3>
+<p>Use a routing connector or a filter processor to split data by attribute, with separate pipelines per destination. The routing connector acts as an exporter in the source pipeline and a receiver in each destination pipeline. Each destination pipeline carries its own resource cost, and a slow backend can back up the shared source pipeline unless the paths are isolated.</p>
+<h3 id="what-is-a-safe-batch-size">What is a safe batch size?</h3>
+<p>There is no universal value. Compute the memory cost: batch size times average item size times in-flight batches. For spans averaging 1 KB, a batch of 2,000 uses about 2 MB. Keeping total batching memory to a small fraction of the collector's memory limit, and setting <code>send_batch_max_size</code> to bound the worst case, is more reliable than copying a number from another deployment.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open the collector config and add a <code>memory_limiter</code> processor as the first processor in every pipeline. Set <code>limit_mib</code> to roughly 80% of the container's memory limit and <code>spike_limit_mib</code> to around 10%. Then scrape the collector's metrics endpoint and record <code>otelcol_receiver_refused_spans</code> and <code>otelcol_processor_memory_limiter_refused_spans</code> before and after the change. That single edit will not solve every pipeline problem, but it converts silent data loss into a visible, measurable signal.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
+<li><a href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">High-Volume Log Pipelines: Shipping 50k Events Per Second</a></li>
+<li><a href="https://kubaik.github.io/agent-drift-why-it-hurts-ux/">Agent drift: why it hurts UX</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a>, software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This article was drafted by an automated LLM pipeline and passed automated checks (length, uniqueness, citation and claim filters). It has not been individually reviewed or edited line by line by a human before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify against official documentation before relying on them in production. See the <a href="/ai-content-policy/">AI content policy</a>.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>.</p>
+<p><strong>Last generated:</strong> October 2026</p>
+<!-- enhanced:v1 -->
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-tracing-when-logs-lie-and-metrics-mislead/">
+                        <h3>Agent tracing: when logs lie and metrics mislead</h3>
+                        <p>Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.</p>
+                        <span class="related-meta">10 min read · 28 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/observability-agents-lied-to-us/">
+                        <h3>Observability Agents as Application Code</h3>
+                        <p>Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
+                        <h3>AI cost attribution without the spreadsheet hell</h3>
+                        <p>How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
+                        <span class="related-meta">15 min read · 7 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

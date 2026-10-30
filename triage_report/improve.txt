@@ -267,6 +267,7 @@ docs/one-misconfigured-vector-db-killed-our-rag-pipeline/index.md
 docs/one-payment-stack-for-kenya-nigeria-ghana/index.md
 docs/only-boring-stacks-survive-ai-services/index.md
 docs/open-banking-apis-the-integration-traps/index.md
+docs/opentelemetry-collector-pipelines-sampling-batching/index.md
 docs/orchestration-tax-kills-multi-agent-systems/index.md
 docs/pci-dss-architecture-12-requirements-that-matter/index.md
 docs/personal-ai-assistants-avoid-vendor-lock-in-traps/index.md

@@ -866,6 +866,9 @@
   "open-banking-apis-the-integration-traps": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "opentelemetry-collector-pipelines-sampling-batching": {
+    "first_seen": "2026-10-30T04:57:22.351009+00:00"
+  },
   "orchestration-tax-kills-multi-agent-systems": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

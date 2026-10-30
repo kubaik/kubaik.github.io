@@ -221,6 +221,7 @@ docs/offline-first-money-apps-with-dynamodb-streams/
 docs/one-misconfigured-vector-db-killed-our-rag-pipeline/
 docs/only-boring-stacks-survive-ai-services/
 docs/open-banking-apis-the-integration-traps/
+docs/opentelemetry-collector-pipelines-sampling-batching/
 docs/orchestration-tax-kills-multi-agent-systems/
 docs/pci-dss-architecture-12-requirements-that-matter/
 docs/personal-ai-assistants-avoid-vendor-lock-in-traps/
