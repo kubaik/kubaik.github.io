@@ -290,15 +290,6 @@
       "duplicate_of": null
     },
     {
-      "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
-      "source": "post.json",
-      "word_count": 2161,
-      "reasons": [
-        "below_target_length: 2161"
-      ],
-      "duplicate_of": null
-    },
-    {
       "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
       "source": "post.json",
       "word_count": 2075,
@@ -488,13 +479,6 @@
       "slug": "mobile-first-ai-fails-you-didnt-plan",
       "source": "post.json",
       "word_count": 2502,
-      "reasons": [],
-      "duplicate_of": null
-    },
-    {
-      "slug": "negotiating-pay-when-ai-inflates-output",
-      "source": "post.json",
-      "word_count": 3276,
       "reasons": [],
       "duplicate_of": null
     },
@@ -800,13 +784,6 @@
       "duplicate_of": null
     },
     {
-      "slug": "agents-running-hours-youre-losing-context-fast",
-      "source": "post.json",
-      "word_count": 2388,
-      "reasons": [],
-      "duplicate_of": null
-    },
-    {
       "slug": "spot-instances-vs-on-demand-for-ai-experiments",
       "source": "post.json",
       "word_count": 2587,
@@ -880,13 +857,6 @@
       "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
       "source": "post.json",
       "word_count": 2679,
-      "reasons": [],
-      "duplicate_of": null
-    },
-    {
-      "slug": "survive-network-drops-agentic-workflows-that-keep-running",
-      "source": "post.json",
-      "word_count": 3065,
       "reasons": [],
       "duplicate_of": null
     },
@@ -1167,13 +1137,6 @@
       "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
       "source": "post.json",
       "word_count": 3254,
-      "reasons": [],
-      "duplicate_of": null
-    },
-    {
-      "slug": "purpose-built-ai-is-a-trap-for-solo-founders",
-      "source": "post.json",
-      "word_count": 3092,
       "reasons": [],
       "duplicate_of": null
     },
@@ -1517,13 +1480,6 @@
       "slug": "m-pesa-daraja-20-your-2026-migration-checklist",
       "source": "post.json",
       "word_count": 2900,
-      "reasons": [],
-      "duplicate_of": null
-    },
-    {
-      "slug": "ai-best-practices-fail-on-slow-networks",
-      "source": "post.json",
-      "word_count": 2670,
       "reasons": [],
       "duplicate_of": null
     },
@@ -2950,6 +2906,15 @@
       "duplicate_of": null
     },
     {
+      "slug": "negotiating-pay-when-ai-inflates-output",
+      "source": "tombstone",
+      "word_count": 0,
+      "reasons": [
+        "tombstone (pipeline-managed, noindex)"
+      ],
+      "duplicate_of": null
+    },
+    {
       "slug": "50-locations-50-headaches-edge-native-backends-in",
       "source": "tombstone",
       "word_count": 0,
@@ -2977,7 +2942,25 @@
       "duplicate_of": null
     },
     {
+      "slug": "agents-running-hours-youre-losing-context-fast",
+      "source": "tombstone",
+      "word_count": 0,
+      "reasons": [
+        "tombstone (pipeline-managed, noindex)"
+      ],
+      "duplicate_of": null
+    },
+    {
       "slug": "price-your-remote-salary-4-step-script",
+      "source": "tombstone",
+      "word_count": 0,
+      "reasons": [
+        "tombstone (pipeline-managed, noindex)"
+      ],
+      "duplicate_of": null
+    },
+    {
+      "slug": "survive-network-drops-agentic-workflows-that-keep-running",
       "source": "tombstone",
       "word_count": 0,
       "reasons": [
@@ -2996,6 +2979,15 @@
     },
     {
       "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
+      "source": "tombstone",
+      "word_count": 0,
+      "reasons": [
+        "tombstone (pipeline-managed, noindex)"
+      ],
+      "duplicate_of": null
+    },
+    {
+      "slug": "purpose-built-ai-is-a-trap-for-solo-founders",
       "source": "tombstone",
       "word_count": 0,
       "reasons": [
@@ -3041,6 +3033,15 @@
     },
     {
       "slug": "3-mistakes-that-break-deployments-for-everyone",
+      "source": "tombstone",
+      "word_count": 0,
+      "reasons": [
+        "tombstone (pipeline-managed, noindex)"
+      ],
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-best-practices-fail-on-slow-networks",
       "source": "tombstone",
       "word_count": 0,
       "reasons": [
@@ -3131,6 +3132,15 @@
     },
     {
       "slug": "build-apps-that-still-work-on-500-ms-latency",
+      "source": "tombstone",
+      "word_count": 0,
+      "reasons": [
+        "tombstone (pipeline-managed, noindex)"
+      ],
+      "duplicate_of": null
+    },
+    {
+      "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
       "source": "tombstone",
       "word_count": 0,
       "reasons": [

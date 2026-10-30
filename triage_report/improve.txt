@@ -1,4 +1,3 @@
-docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/index.md
 docs/2026-ai-stack-solo-saas-cost-showdown/index.md
 docs/2026-alert-triage-when-opsgenie-slept-for-you/index.md
 docs/2026-tech-salaries-where-cuts-stopped-where-raises/index.md
@@ -48,7 +47,6 @@ docs/agentic-workflows-surviving-network-partitions/index.md
 docs/agents-247-vs-on-demand-42k-bill-shock/index.md
 docs/agents-create-incidents-at-2am/index.md
 docs/agents-keep-breaking-prod-3-boundary-rules-you-still-need/index.md
-docs/agents-running-hours-youre-losing-context-fast/index.md
 docs/ai-agent-postmortem-human-loop-vs-blind-replay/index.md
 docs/ai-agent-postmortems-the-three-surprises/index.md
 docs/ai-agent-postmortems-trace-vs-logs-vs-code/index.md
@@ -60,7 +58,6 @@ docs/ai-alert-triage-cut-pages-80-in-production/index.md
 docs/ai-answers-first-judgment-later/index.md
 docs/ai-apps-break-when-you-treat-them-like-regular-software/index.md
 docs/ai-ate-the-niches-first/index.md
-docs/ai-best-practices-fail-on-slow-networks/index.md
 docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/index.md
 docs/ai-chats-hidden-wcag-fails/index.md
 docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/index.md
@@ -250,7 +247,6 @@ docs/ndpr-2026-broke-fintech-apis/index.md
 docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/index.md
 docs/negotiate-pay-in-2026-with-ai-proof-points/index.md
 docs/negotiate-salaries-with-ai-skills-in-2026/index.md
-docs/negotiating-pay-when-ai-inflates-output/index.md
 docs/neon-vs-planetscale-vs-turso-which-broke-first/index.md
 docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/index.md
 docs/nigerias-2026-api-rules-broke-our-microservices/index.md
@@ -294,7 +290,6 @@ docs/prompt-injection-what-breaks-first-in-prod/index.md
 docs/prompt-injections-hidden-aws-tax/index.md
 docs/prompts-are-code-how-to-measure-their-value/index.md
 docs/property-based-testing-vs-example-tests-the-bug-gap/index.md
-docs/purpose-built-ai-is-a-trap-for-solo-founders/index.md
 docs/purpose-built-beats-general-ai-tools/index.md
 docs/pypi-poisoned-models-hit-prod-in-2025/index.md
 docs/rag-in-prod-what-tutorials-wont-tell-you/index.md
@@ -357,7 +352,6 @@ docs/stop-the-writes-zero-downtime-db-migrations/index.md
 docs/stop-trusting-agents-for-core-logic/index.md
 docs/store-data-once-serve-everywhere-cheaper/index.md
 docs/supervisor-vs-swarm-vs-debate-vs-pipeline/index.md
-docs/survive-network-drops-agentic-workflows-that-keep-running/index.md
 docs/tame-python-asyncs-hidden-traps/index.md
 docs/tech-debt-when-half-your-stack-is-unfamiliar/index.md
 docs/temporal-changed-our-agent-retries-for-good/index.md

@@ -1,8 +1,7 @@
-❌ Internal link audit: 405 broken link(s) found across 405 posts checked.
+❌ Internal link audit: 399 broken link(s) found across 399 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
-  /15-agents-blew-up-our-logs-why-we-pinned-models-logs AI content policy              /ai-content-policy/
   /2026-ai-stack-solo-saas-cost-showdown  AI content policy              /ai-content-policy/
   /2026-alert-triage-when-opsgenie-slept-for-you AI content policy              /ai-content-policy/
   /2026-tech-salaries-where-cuts-stopped-where-raises AI content policy              /ai-content-policy/
@@ -52,7 +51,6 @@ Source Post                              Anchor Text                    Missing 
   /agents-247-vs-on-demand-42k-bill-shock AI content policy              /ai-content-policy/
   /agents-create-incidents-at-2am         AI content policy              /ai-content-policy/
   /agents-keep-breaking-prod-3-boundary-rules-you-still-need AI content policy              /ai-content-policy/
-  /agents-running-hours-youre-losing-context-fast AI content policy              /ai-content-policy/
   /ai-agent-postmortem-human-loop-vs-blind-replay AI content policy              /ai-content-policy/
   /ai-agent-postmortems-the-three-surprises AI content policy              /ai-content-policy/
   /ai-agent-postmortems-trace-vs-logs-vs-code AI content policy              /ai-content-policy/
@@ -64,7 +62,6 @@ Source Post                              Anchor Text                    Missing 
   /ai-answers-first-judgment-later        AI content policy              /ai-content-policy/
   /ai-apps-break-when-you-treat-them-like-regular-software AI content policy              /ai-content-policy/
   /ai-ate-the-niches-first                AI content policy              /ai-content-policy/
-  /ai-best-practices-fail-on-slow-networks AI content policy              /ai-content-policy/
   /ai-burnout-why-output-pressure-rose-even-as-tools-got AI content policy              /ai-content-policy/
   /ai-chats-hidden-wcag-fails             AI content policy              /ai-content-policy/
   /ai-code-40-how-to-keep-it-from-rotting-your-repo AI content policy              /ai-content-policy/
@@ -254,7 +251,6 @@ Source Post                              Anchor Text                    Missing 
   /negotiate-2026-pay-when-ai-steals-40-of-your-job AI content policy              /ai-content-policy/
   /negotiate-pay-in-2026-with-ai-proof-points AI content policy              /ai-content-policy/
   /negotiate-salaries-with-ai-skills-in-2026 AI content policy              /ai-content-policy/
-  /negotiating-pay-when-ai-inflates-output AI content policy              /ai-content-policy/
   /neon-vs-planetscale-vs-turso-which-broke-first AI content policy              /ai-content-policy/
   /nextjs-15-vs-remix-vs-sveltekit-2026-choices AI content policy              /ai-content-policy/
   /nigerias-2026-api-rules-broke-our-microservices AI content policy              /ai-content-policy/
@@ -298,7 +294,6 @@ Source Post                              Anchor Text                    Missing 
   /prompt-injections-hidden-aws-tax       AI content policy              /ai-content-policy/
   /prompts-are-code-how-to-measure-their-value AI content policy              /ai-content-policy/
   /property-based-testing-vs-example-tests-the-bug-gap AI content policy              /ai-content-policy/
-  /purpose-built-ai-is-a-trap-for-solo-founders AI content policy              /ai-content-policy/
   /purpose-built-beats-general-ai-tools   AI content policy              /ai-content-policy/
   /pypi-poisoned-models-hit-prod-in-2025  AI content policy              /ai-content-policy/
   /rag-in-prod-what-tutorials-wont-tell-you AI content policy              /ai-content-policy/
@@ -361,7 +356,6 @@ Source Post                              Anchor Text                    Missing 
   /stop-trusting-agents-for-core-logic    AI content policy              /ai-content-policy/
   /store-data-once-serve-everywhere-cheaper AI content policy              /ai-content-policy/
   /supervisor-vs-swarm-vs-debate-vs-pipeline AI content policy              /ai-content-policy/
-  /survive-network-drops-agentic-workflows-that-keep-running AI content policy              /ai-content-policy/
   /tame-python-asyncs-hidden-traps        AI content policy              /ai-content-policy/
   /tech-debt-when-half-your-stack-is-unfamiliar AI content policy              /ai-content-policy/
   /temporal-changed-our-agent-retries-for-good AI content policy              /ai-content-policy/

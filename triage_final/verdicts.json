@@ -179,17 +179,6 @@
   "title": "Mobile-first AI fails you didn\u2019t plan\u2026",
   "words": 2502
  },
- "negotiating-pay-when-ai-inflates-output": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
-  "title": "Negotiating pay when AI inflates output",
-  "words": 3276
- },
  "why-progressive-web-apps-fail-on-2g-and-how-to-fix": {
   "verdict": "KEEP",
   "reasons": [],
@@ -608,13 +597,6 @@
   "title": "Postgres vector search: what breaks first",
   "words": 2688
  },
- "agents-running-hours-youre-losing-context-fast": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
-  "title": "Agents running hours? You're losing context fast",
-  "words": 2388
- },
  "spot-instances-vs-on-demand-for-ai-experiments": {
   "verdict": "KEEP",
   "reasons": [],
@@ -725,13 +707,6 @@
   ],
   "title": "Earning Developer Attention Without a Marketing Budget",
   "words": 2160
- },
- "survive-network-drops-agentic-workflows-that-keep-running": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
-  "title": "Survive network drops: agentic workflows that keep running",
-  "words": 3065
  },
  "agent-auth-the-silent-deployment-killer": {
   "verdict": "IMPROVE",
@@ -1135,13 +1110,6 @@
   "fixes": [],
   "title": "Cache stampedes: the patterns that scale and the ones\u2026",
   "words": 3254
- },
- "purpose-built-ai-is-a-trap-for-solo-founders": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
-  "title": "Purpose-built AI is a trap for solo founders",
-  "words": 3092
  },
  "computer-use-agents-the-permission-trap": {
   "verdict": "IMPROVE",
@@ -1609,13 +1577,6 @@
   "fixes": [],
   "title": "JSON mode\u2019s silent failures exposed",
   "words": 2148
- },
- "ai-best-practices-fail-on-slow-networks": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
-  "title": "AI best practices fail on slow networks",
-  "words": 2670
  },
  "ai-memory-systems-context-that-survives-sessions": {
   "verdict": "KEEP",
@@ -2882,17 +2843,6 @@
   "fixes": [],
   "title": "AI-native apps break when you copy old rules",
   "words": 2559
- },
- "15-agents-blew-up-our-logs-why-we-pinned-models-logs": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
-  "title": "Structured Logs and Pinned Versions for Multi-Agent Systems",
-  "words": 2161
  },
  "ai-pair-prompts-9-setups-we-tried-in-2026": {
   "verdict": "KEEP",

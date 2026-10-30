@@ -22,7 +22,6 @@ docs/agentic-workflows-surviving-network-partitions/
 docs/agents-247-vs-on-demand-42k-bill-shock/
 docs/agents-create-incidents-at-2am/
 docs/agents-keep-breaking-prod-3-boundary-rules-you-still-need/
-docs/agents-running-hours-youre-losing-context-fast/
 docs/ai-agent-postmortem-human-loop-vs-blind-replay/
 docs/ai-agent-postmortems-the-three-surprises/
 docs/ai-agent-postmortems-trace-vs-logs-vs-code/
@@ -30,7 +29,6 @@ docs/ai-agents-eat-your-budget-3-ways/
 docs/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/
 docs/ai-alert-triage-cut-pages-80-in-production/
 docs/ai-answers-first-judgment-later/
-docs/ai-best-practices-fail-on-slow-networks/
 docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/
 docs/ai-chats-hidden-wcag-fails/
 docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/
@@ -171,7 +169,6 @@ docs/prevent-ownership-drift-when-velocity-explodes/
 docs/price-saas-tools-in-2026-what-we-learned-pricing-a/
 docs/prompt-injection-got-the-hype-poison-data-ruined-us/
 docs/prompt-injection-what-breaks-first-in-prod/
-docs/purpose-built-ai-is-a-trap-for-solo-founders/
 docs/purpose-built-beats-general-ai-tools/
 docs/rag-in-prod-what-tutorials-wont-tell-you/
 docs/rag-is-not-enough-hybrid-search-reranking-in-2026/
@@ -212,7 +209,6 @@ docs/stop-assuming-payment-apis-never-fail/
 docs/stop-putting-llm-keys-in-env/
 docs/stop-the-writes-zero-downtime-db-migrations/
 docs/supervisor-vs-swarm-vs-debate-vs-pipeline/
-docs/survive-network-drops-agentic-workflows-that-keep-running/
 docs/tech-debt-when-half-your-stack-is-unfamiliar/
 docs/temporal-changed-our-agent-retries-for-good/
 docs/thundering-herd-the-hidden-scaling-trap/

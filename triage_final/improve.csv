@@ -1,5 +1,4 @@
 path,fixes,reasons,words,title
-docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/,add_sources,no_primary_sources,2161,Structured Logs and Pinned Versions for Multi-Agent Systems
 docs/2026-ai-stack-solo-saas-cost-showdown/,add_sources,no_primary_sources,2633,2026 AI stack: solo SaaS cost showdown
 docs/2026-tech-salaries-where-cuts-stopped-where-raises/,add_sources,no_primary_sources,2321,"2026 tech salaries: where cuts stopped, where raises"
 docs/5-ways-to-find-hidden-latency-before-production/,add_sources,no_primary_sources,2422,5 ways to find hidden latency before production
@@ -99,7 +98,6 @@ docs/ndpr-2026-broke-fintech-apis/,add_sources,no_primary_sources,2478,NDPR 2026
 docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/,add_sources,no_primary_sources,2396,Turn AI coding telemetry into a salary negotiation case
 docs/negotiate-pay-in-2026-with-ai-proof-points/,add_sources,no_primary_sources,2271,Negotiate pay in 2026 with AI proof points
 docs/negotiate-salaries-with-ai-skills-in-2026/,add_sources,no_primary_sources,2192,Negotiate salaries with AI skills in 2026
-docs/negotiating-pay-when-ai-inflates-output/,add_sources,no_primary_sources,3276,Negotiating pay when AI inflates output
 docs/neon-vs-planetscale-vs-turso-which-broke-first/,add_sources,no_primary_sources,2647,Neon vs PlanetScale vs Turso: which broke first?
 docs/nigerias-2026-api-rules-broke-our-microservices/,add_sources,no_primary_sources,2692,Designing Fintech Backends Around Audit Deadlines
 docs/nodejs-memory-leak-find-it-in-10-min/,add_sources,no_primary_sources,2850,Node.js memory leak: find it in 10 min
