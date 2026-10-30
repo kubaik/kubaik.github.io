@@ -1,11 +1,6 @@
-15-agents-blew-up-our-logs-why-we-pinned-models-logs
 african-devs-ai-tools-that-work-now-2026
-agent-access-for-non-ai-engineers
 agent-versioning-the-contract-you-forgot
 agentic-workflows-surviving-network-partitions
-agents-running-hours-youre-losing-context-fast
-ai-best-practices-fail-on-slow-networks
-ai-in-slow-networks-why-models-flop-where-data-costs-rise
 ai-micro-saas-under-150month-the-real-infra-choices
 choose-no-code-only-when
 context-windows-agents-that-run-for-days
@@ -17,6 +12,7 @@ hybrid-cloud-routing-cost-speed-balance-for-sea
 iso-20022-where-payment-rails-actually-break
 llm-evals-langsmith-vs-promptfoo-in-prod
 observability-2026-ditch-the-three-pillars
+offline-first-money-apps-with-dynamodb-streams
 portfolio-projects-hiring-managers-skip
 red-teaming-agents-without-killing-velocity
 scope-agent-permissions-per-task
@@ -24,7 +20,7 @@ self-service-ai-tooling-the-permission-trap
 settlement-vs-clearing-backend-engineers-guide
 show-real-work-not-ai-clones
 staging-wont-catch-prod-bugs-make
-survive-network-drops-agentic-workflows-that-keep-running
+stop-assuming-payment-apis-never-fail
 when-velocity-is-hard-to-measure-evaluating-engineering
 when-your-agent-goes-silent-degrade-gracefully
 why-does-my-model-drift-after-deploy

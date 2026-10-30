@@ -2425,9 +2425,9 @@ def _build_templates() -> dict:
         </div>
 
         <div class="editorial-policy-note">
-            Articles are written by <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
-            with 10+ years of production experience in fintech and AI. Topics are selected from real
-            production work; drafts are produced by an automated LLM pipeline that is gated by
+            Articles are drafted by an automated LLM pipeline under the editorial direction of <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
+            with 10+ years of production experience in fintech and AI. Topics are drawn from a curated
+            list of recurring backend, AI and career themes; the pipeline is gated by
             hard quality controls (minimum length, duplicate detection, boilerplate rejection).
             Individual line-by-line human review is not performed on every post before publication —
             the author maintains the quality gates and corrects articles when readers report issues.

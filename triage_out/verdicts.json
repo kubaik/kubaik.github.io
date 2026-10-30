@@ -1,12 +1,4 @@
 {
-  "15-agents-blew-up-our-logs-why-we-pinned-models-logs": {
-    "path": "docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/post.json",
-    "verdict": "IMPROVE",
-    "reasons": [
-      "templated structure (56% corpus-wide boilerplate H2s)"
-    ],
-    "words": 2066
-  },
   "2026-ai-stack-solo-saas-cost-showdown": {
     "path": "docs/2026-ai-stack-solo-saas-cost-showdown/post.json",
     "verdict": "KEEP",
@@ -113,10 +105,8 @@
   },
   "agent-access-for-non-ai-engineers": {
     "path": "docs/agent-access-for-non-ai-engineers/post.json",
-    "verdict": "IMPROVE",
-    "reasons": [
-      "templated structure (50% corpus-wide boilerplate H2s)"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3052
   },
   "agent-architecture-the-new-model-trap": {
@@ -255,7 +245,7 @@
     "path": "docs/agent-versioning-the-contract-you-forgot/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (60% corpus-wide boilerplate H2s)"
+      "templated structure (50% corpus-wide boilerplate H2s)"
     ],
     "words": 2559
   },
@@ -287,7 +277,7 @@
     "path": "docs/agentic-workflows-surviving-network-partitions/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (78% corpus-wide boilerplate H2s)"
+      "templated structure (67% corpus-wide boilerplate H2s)"
     ],
     "words": 3494
   },
@@ -308,14 +298,6 @@
     "verdict": "KEEP",
     "reasons": [],
     "words": 2748
-  },
-  "agents-running-hours-youre-losing-context-fast": {
-    "path": "docs/agents-running-hours-youre-losing-context-fast/post.json",
-    "verdict": "IMPROVE",
-    "reasons": [
-      "templated structure (50% corpus-wide boilerplate H2s)"
-    ],
-    "words": 2293
   },
   "ai-agent-postmortem-human-loop-vs-blind-replay": {
     "path": "docs/ai-agent-postmortem-human-loop-vs-blind-replay/post.json",
@@ -382,14 +364,6 @@
     "verdict": "KEEP",
     "reasons": [],
     "words": 1885
-  },
-  "ai-best-practices-fail-on-slow-networks": {
-    "path": "docs/ai-best-practices-fail-on-slow-networks/post.json",
-    "verdict": "IMPROVE",
-    "reasons": [
-      "templated structure (55% corpus-wide boilerplate H2s)"
-    ],
-    "words": 2575
   },
   "ai-burnout-why-output-pressure-rose-even-as-tools-got": {
     "path": "docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/post.json",
@@ -507,10 +481,8 @@
   },
   "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
     "path": "docs/ai-in-slow-networks-why-models-flop-where-data-costs-rise/post.json",
-    "verdict": "IMPROVE",
-    "reasons": [
-      "templated structure (50% corpus-wide boilerplate H2s)"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2732
   },
   "ai-interviews-4-questions-that-caught-80-of-weak": {
@@ -553,7 +525,7 @@
     "path": "docs/ai-micro-saas-under-150month-the-real-infra-choices/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (80% corpus-wide boilerplate H2s)"
+      "templated structure (70% corpus-wide boilerplate H2s)"
     ],
     "words": 2906
   },
@@ -959,7 +931,7 @@
     "path": "docs/context-windows-agents-that-run-for-days/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (60% corpus-wide boilerplate H2s)"
+      "templated structure (50% corpus-wide boilerplate H2s)"
     ],
     "words": 3348
   },
@@ -1071,7 +1043,7 @@
     "path": "docs/docs-that-survive-the-bus-factor-fix/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (73% corpus-wide boilerplate H2s)"
+      "templated structure (64% corpus-wide boilerplate H2s)"
     ],
     "words": 2994
   },
@@ -1159,7 +1131,7 @@
     "path": "docs/flaky-tests-reliability-bug-not-test-noise/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (67% corpus-wide boilerplate H2s)"
+      "templated structure (56% corpus-wide boilerplate H2s)"
     ],
     "words": 3094
   },
@@ -1227,7 +1199,7 @@
     "path": "docs/hybrid-cloud-routing-cost-speed-balance-for-sea/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (80% corpus-wide boilerplate H2s)"
+      "templated structure (70% corpus-wide boilerplate H2s)"
     ],
     "words": 2510
   },
@@ -1547,15 +1519,6 @@
     "reasons": [],
     "words": 2097
   },
-  "negotiating-pay-when-ai-inflates-output": {
-    "path": "docs/negotiating-pay-when-ai-inflates-output/post.json",
-    "verdict": "DELETE",
-    "reasons": [
-      "8 unverifiable first-person experience claims in unreviewed LLM text",
-      "templated structure (80% corpus-wide boilerplate H2s)"
-    ],
-    "words": 3181
-  },
   "neon-vs-planetscale-vs-turso-which-broke-first": {
     "path": "docs/neon-vs-planetscale-vs-turso-which-broke-first/post.json",
     "verdict": "KEEP",
@@ -1590,8 +1553,7 @@
     "path": "docs/observability-2026-ditch-the-three-pillars/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "LLM filler opener",
-      "templated structure (54% corpus-wide boilerplate H2s)"
+      "LLM filler opener"
     ],
     "words": 2719
   },
@@ -1633,8 +1595,10 @@
   },
   "offline-first-money-apps-with-dynamodb-streams": {
     "path": "docs/offline-first-money-apps-with-dynamodb-streams/post.json",
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (56% corpus-wide boilerplate H2s)"
+    ],
     "words": 2905
   },
   "one-misconfigured-vector-db-killed-our-rag-pipeline": {
@@ -1819,12 +1783,6 @@
     "reasons": [],
     "words": 3592
   },
-  "purpose-built-ai-is-a-trap-for-solo-founders": {
-    "path": "docs/purpose-built-ai-is-a-trap-for-solo-founders/post.json",
-    "verdict": "KEEP",
-    "reasons": [],
-    "words": 2997
-  },
   "purpose-built-beats-general-ai-tools": {
     "path": "docs/purpose-built-beats-general-ai-tools/post.json",
     "verdict": "KEEP",
@@ -1999,7 +1957,7 @@
     "path": "docs/scope-agent-permissions-per-task/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (64% corpus-wide boilerplate H2s)"
+      "templated structure (55% corpus-wide boilerplate H2s)"
     ],
     "words": 3815
   },
@@ -2063,7 +2021,7 @@
     "path": "docs/settlement-vs-clearing-backend-engineers-guide/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (67% corpus-wide boilerplate H2s)"
+      "templated structure (56% corpus-wide boilerplate H2s)"
     ],
     "words": 2834
   },
@@ -2163,8 +2121,10 @@
   },
   "stop-assuming-payment-apis-never-fail": {
     "path": "docs/stop-assuming-payment-apis-never-fail/post.json",
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "templated structure (50% corpus-wide boilerplate H2s)"
+    ],
     "words": 2528
   },
   "stop-false-positives-in-ci-scanning-now": {
@@ -2208,14 +2168,6 @@
     "verdict": "KEEP",
     "reasons": [],
     "words": 3782
-  },
-  "survive-network-drops-agentic-workflows-that-keep-running": {
-    "path": "docs/survive-network-drops-agentic-workflows-that-keep-running/post.json",
-    "verdict": "IMPROVE",
-    "reasons": [
-      "templated structure (60% corpus-wide boilerplate H2s)"
-    ],
-    "words": 2970
   },
   "tame-python-asyncs-hidden-traps": {
     "path": "docs/tame-python-asyncs-hidden-traps/post.json",
@@ -2373,7 +2325,7 @@
     "path": "docs/when-your-agent-goes-silent-degrade-gracefully/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (67% corpus-wide boilerplate H2s)"
+      "templated structure (56% corpus-wide boilerplate H2s)"
     ],
     "words": 2409
   },
@@ -2423,7 +2375,7 @@
     "path": "docs/why-does-my-model-drift-after-deploy/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (67% corpus-wide boilerplate H2s)"
+      "templated structure (58% corpus-wide boilerplate H2s)"
     ],
     "words": 3039
   },
@@ -2467,7 +2419,7 @@
     "path": "docs/why-your-multi-agent-system-degraded-slowly/post.json",
     "verdict": "IMPROVE",
     "reasons": [
-      "templated structure (80% corpus-wide boilerplate H2s)"
+      "templated structure (70% corpus-wide boilerplate H2s)"
     ],
     "words": 2774
   },
