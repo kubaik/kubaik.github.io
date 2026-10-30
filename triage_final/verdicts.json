@@ -32,11 +32,15 @@
   "words": 2483
  },
  "ai-agents-killed-dev-tool-sales-cycles": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI agents killed dev tool sales cycles",
-  "words": 1984
+  "words": 1978
  },
  "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team": {
   "verdict": "KEEP",
@@ -75,11 +79,15 @@
   "words": 2271
  },
  "global-state-is-the-wrong-tool-for-ai-features": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Global state is the wrong tool for AI features",
-  "words": 2363
+  "words": 2357
  },
  "kubernetes-or-nomad-the-real-experiment-cost-split": {
   "verdict": "IMPROVE",
@@ -132,11 +140,15 @@
   "words": 2857
  },
  "african-devs-ai-tools-that-work-now-2026": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "African devs: AI tools that work now (2026)",
-  "words": 2360
+  "words": 2353
  },
  "prompt-injection-got-the-hype-poison-data-ruined-us": {
   "verdict": "KEEP",
@@ -146,18 +158,26 @@
   "words": 3453
  },
  "ai-observability-the-metrics-that-matter": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI observability: the metrics that matter",
-  "words": 2595
+  "words": 2589
  },
  "mobile-first-ai-fails-you-didnt-plan": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Mobile-first AI fails you didn\u2019t plan\u2026",
-  "words": 2508
+  "words": 2502
  },
  "negotiating-pay-when-ai-inflates-output": {
   "verdict": "IMPROVE",
@@ -192,11 +212,15 @@
   "words": 3001
  },
  "ai-model-poisoning-3-real-attacks-on-datasets": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI model poisoning: 3 real attacks on datasets",
-  "words": 3074
+  "words": 3064
  },
  "fraud-detection-rules-vs-scoring-where-they-meet": {
   "verdict": "KEEP",
@@ -231,11 +255,15 @@
   "words": 2570
  },
  "ai-cost-attribution-without-the-spreadsheet-hell": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI cost attribution without the spreadsheet hell",
-  "words": 3061
+  "words": 3050
  },
  "agent-flooded-our-api-with-bad-calls-overnight": {
   "verdict": "KEEP",
@@ -298,11 +326,15 @@
   "words": 3300
  },
  "test-ai-code-without-testing-the-ai": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Test AI code without testing the AI",
-  "words": 3186
+  "words": 3174
  },
  "senior-role-projects-3-real-paths": {
   "verdict": "KEEP",
@@ -312,11 +344,15 @@
   "words": 3151
  },
  "llm-evals-skip-the-hype-track-these-4-metrics": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "LLM evals: skip the hype, track these 4 metrics",
-  "words": 2133
+  "words": 2127
  },
  "self-service-ai-tooling-the-permission-trap": {
   "verdict": "KEEP",
@@ -333,11 +369,15 @@
   "words": 2797
  },
  "platform-engineering-roi-metrics-that-fund-teams": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Platform engineering ROI: metrics that fund teams",
-  "words": 2558
+  "words": 2549
  },
  "aws-costs-for-nairobi-saas-2026-bill-split": {
   "verdict": "KEEP",
@@ -356,13 +396,15 @@
  "ai-sales-cycles-3x-faster-40-less-talk": {
   "verdict": "IMPROVE",
   "reasons": [
-   "template_clone_ending x9"
+   "template_clone_ending x9",
+   "no_primary_sources"
   ],
   "fixes": [
+   "add_sources",
    "restructure_outline"
   ],
   "title": "Designing AI-Assisted Sales for Developer Tools",
-  "words": 3136
+  "words": 3124
  },
  "supervisor-vs-swarm-vs-debate-vs-pipeline": {
   "verdict": "KEEP",
@@ -372,11 +414,15 @@
   "words": 3877
  },
  "why-leader-election-fails-on-cloud-networks": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Why leader election fails on cloud networks",
-  "words": 2653
+  "words": 2644
  },
  "offline-first-money-apps-with-dynamodb-streams": {
   "verdict": "KEEP",
@@ -426,11 +472,15 @@
   "words": 2397
  },
  "senior-engineer-the-bar-moved-nobody-updated-the-rubric": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Senior engineer: the bar moved, nobody updated the rubric",
-  "words": 2572
+  "words": 2566
  },
  "zig-vs-rust-vs-go-compile-errors-compared": {
   "verdict": "KEEP",
@@ -440,11 +490,15 @@
   "words": 2606
  },
  "pick-one-stripe-lemon-squeezy-paddle-in-2026": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
-  "words": 2739
+  "words": 2733
  },
  "purpose-built-beats-general-ai-tools": {
   "verdict": "KEEP",
@@ -461,11 +515,15 @@
   "words": 3027
  },
  "2026-ai-stack-solo-saas-cost-showdown": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "2026 AI stack: solo SaaS cost showdown",
-  "words": 2639
+  "words": 2633
  },
  "agent-code-review-7-traps-that-slip-through": {
   "verdict": "IMPROVE",
@@ -508,11 +566,15 @@
   "words": 2259
  },
  "bank-apis-broke-under-african-2g": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Bank APIs broke under African 2G",
-  "words": 2820
+  "words": 2813
  },
  "ai-stole-system-design": {
   "verdict": "KEEP",
@@ -579,11 +641,15 @@
   "words": 2724
  },
  "jwt-sessions-revocation-rotation-storage": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "JWT sessions: revocation, rotation, storage",
-  "words": 2769
+  "words": 2756
  },
  "core-web-vitals-what-actually-moves-the-needle": {
   "verdict": "KEEP",
@@ -607,11 +673,15 @@
   "words": 2929
  },
  "promotions-in-the-ai-era-the-mechanism": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Promotions in the AI era: the mechanism",
-  "words": 3397
+  "words": 3391
  },
  "40-ai-code-meant-60-more-alerts": {
   "verdict": "KEEP",
@@ -628,11 +698,15 @@
   "words": 3036
  },
  "agent-compliance-in-african-fintech-the-cbn-gap": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent compliance in African fintech: the CBN gap",
-  "words": 3239
+  "words": 3230
  },
  "ai-ui-tools-broke-my-react-flow-heres-why": {
   "verdict": "KEEP",
@@ -660,11 +734,15 @@
   "words": 3065
  },
  "agent-auth-the-silent-deployment-killer": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent auth: the silent deployment killer",
-  "words": 2672
+  "words": 2662
  },
  "spot-ais-hidden-cost-spike-in-your-stack": {
   "verdict": "KEEP",
@@ -710,11 +788,15 @@
   "words": 2605
  },
  "latency-trade-offs-nairobi-teams-beat-global-ai-providers": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Latency trade-offs: Nairobi teams beat global AI providers",
-  "words": 2850
+  "words": 2844
  },
  "one-misconfigured-vector-db-killed-our-rag-pipeline": {
   "verdict": "KEEP",
@@ -749,11 +831,15 @@
   "words": 2807
  },
  "ai-errors-hide-in-plain-latency": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI errors hide in plain latency",
-  "words": 2102
+  "words": 2096
  },
  "platform-teams-in-2026-docs-vs-production-reality": {
   "verdict": "KEEP",
@@ -763,11 +849,15 @@
   "words": 3593
  },
  "circleci-still-beats-github-actions-at-50k-builds": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "When CircleCI's Concurrency Model Beats GitHub Actions",
-  "words": 2277
+  "words": 2267
  },
  "slos-for-agentic-features-beyond-latency": {
   "verdict": "KEEP",
@@ -791,11 +881,15 @@
   "words": 2985
  },
  "pr-checklists-are-dead-ai-agents-do-reviews-now": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "PR checklists are dead: AI agents do reviews now",
-  "words": 2448
+  "words": 2442
  },
  "stop-guessing-tech-stacks-validate-tools-in-2-hours": {
   "verdict": "IMPROVE",
@@ -840,11 +934,15 @@
   "words": 2706
  },
  "ai-revives-unloved-legacy-codebases": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI revives unloved legacy codebases",
-  "words": 3012
+  "words": 3002
  },
  "code-ai-wont-rewrite": {
   "verdict": "IMPROVE",
@@ -858,18 +956,26 @@
   "words": 2339
  },
  "neon-vs-planetscale-vs-turso-which-broke-first": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Neon vs PlanetScale vs Turso: which broke first?",
-  "words": 2653
+  "words": 2647
  },
  "agent-permissions-the-mistake-that-breaks-production": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent permissions: the mistake that breaks production",
-  "words": 3415
+  "words": 3405
  },
  "most-llm-cost-dashboards-lie": {
   "verdict": "KEEP",
@@ -904,11 +1010,15 @@
   "words": 2686
  },
  "build-in-public-without-burning-out": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Build in public without burning out",
-  "words": 2223
+  "words": 2213
  },
  "drift-detection-the-plan-that-lies": {
   "verdict": "KEEP",
@@ -918,18 +1028,26 @@
   "words": 3215
  },
  "which-ai-wrappers-made-money-in-2026": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Which AI wrappers made money in 2026",
-  "words": 2098
+  "words": 2089
  },
  "poolers-wont-save-your-serverless-db": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Poolers won\u2019t save your serverless DB",
-  "words": 2797
+  "words": 2791
  },
  "rebalance-pay-when-ai-fills-half-your-role": {
   "verdict": "IMPROVE",
@@ -943,25 +1061,37 @@
   "words": 2589
  },
  "tame-python-asyncs-hidden-traps": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Tame Python async\u2019s hidden traps",
-  "words": 2173
+  "words": 2163
  },
  "kill-noisy-alerts-the-triage-system-that-restored-sleep": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Designing Alert Triage That Suppresses Noise Safely",
-  "words": 2456
+  "words": 2450
  },
  "why-monoliths-die-slowly-in-2026": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Why monoliths die slowly in 2026",
-  "words": 2669
+  "words": 2663
  },
  "ai-scanners-overlook-real-vulns": {
   "verdict": "KEEP",
@@ -978,11 +1108,15 @@
   "words": 2597
  },
  "velocity-up-ownership-down-team-scaling-trap": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Velocity Up, Ownership Down: Team Scaling Trap",
-  "words": 2829
+  "words": 2820
  },
  "one-payment-stack-for-kenya-nigeria-ghana": {
   "verdict": "IMPROVE",
@@ -1010,18 +1144,26 @@
   "words": 3092
  },
  "computer-use-agents-the-permission-trap": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Computer-use agents: the permission trap",
-  "words": 3028
+  "words": 3021
  },
  "why-do-production-agents-still-need-humans": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Why do production agents still need humans?",
-  "words": 2404
+  "words": 2396
  },
  "ai-era-promotions-hinge-on-this-one-thing": {
   "verdict": "KEEP",
@@ -1031,11 +1173,15 @@
   "words": 2242
  },
  "choose-no-code-only-when": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Choose no-code only when",
-  "words": 2472
+  "words": 2466
  },
  "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks": {
   "verdict": "KEEP",
@@ -1073,11 +1219,15 @@
   "words": 2414
  },
  "replace-managed-services-with-postgres-17": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Replace managed services with Postgres 17",
-  "words": 2783
+  "words": 2773
  },
  "offline-first-agents-for-field-teams": {
   "verdict": "KEEP",
@@ -1147,11 +1297,15 @@
   "words": 2536
  },
  "evaluate-agents-with-spark-vs-custom-harness": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Evaluate agents with Spark vs custom harness",
-  "words": 2436
+  "words": 2430
  },
  "stop-the-writes-zero-downtime-db-migrations": {
   "verdict": "KEEP",
@@ -1203,11 +1357,15 @@
   "words": 2652
  },
  "docs-that-survive-the-bus-factor-fix": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Docs that survive: the bus factor fix",
-  "words": 3099
+  "words": 3089
  },
  "ai-features-rot-faster-than-you-build-them": {
   "verdict": "KEEP",
@@ -1217,11 +1375,15 @@
   "words": 2901
  },
  "ai-supply-chain-attacks-what-actually-broke": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI Supply Chain Security: Trust Boundaries for Model Artifacts",
-  "words": 3147
+  "words": 3139
  },
  "agent-tracing-when-logs-lie-and-metrics-mislead": {
   "verdict": "KEEP",
@@ -1283,13 +1445,15 @@
  "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash": {
   "verdict": "IMPROVE",
   "reasons": [
-   "template_clone_ending x9"
+   "template_clone_ending x9",
+   "no_primary_sources"
   ],
   "fixes": [
+   "add_sources",
    "restructure_outline"
   ],
   "title": "CDC pipeline death spiral: one bad LLM call can crash\u2026",
-  "words": 2309
+  "words": 2303
  },
  "llm-output-metrics-that-actually-move-the-needle": {
   "verdict": "KEEP",
@@ -1299,11 +1463,15 @@
   "words": 2089
  },
  "remote-premium-rates-skills-ai-cant-copy": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Remote premium rates: skills AI can't copy",
-  "words": 3739
+  "words": 3733
  },
  "opentelemetry-collector-pipelines-sampling-batching": {
   "verdict": "KEEP",
@@ -1333,11 +1501,15 @@
   "words": 2993
  },
  "nodejs-memory-leak-find-it-in-10-min": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Node.js memory leak: find it in 10 min",
-  "words": 2860
+  "words": 2850
  },
  "zero-trust-ai-skip-the-latency-tax": {
   "verdict": "IMPROVE",
@@ -1485,18 +1657,26 @@
   "words": 2304
  },
  "llm-agents-why-monoliths-win": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "LLM agents: why monoliths win",
-  "words": 2245
+  "words": 2239
  },
  "aws-local-zones-vs-localstack-ai-microservices-in": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AWS Local Zones vs LocalStack: AI microservices in",
-  "words": 2828
+  "words": 2819
  },
  "agent-systems-circuit-breakers-are-not-enough": {
   "verdict": "KEEP",
@@ -1515,13 +1695,15 @@
  "agent-reliability-7-metrics-users-trust": {
   "verdict": "IMPROVE",
   "reasons": [
-   "template_clone_ending x8"
+   "template_clone_ending x8",
+   "no_primary_sources"
   ],
   "fixes": [
+   "add_sources",
    "restructure_outline"
   ],
   "title": "Agent reliability: 7 metrics users trust",
-  "words": 3142
+  "words": 3132
  },
  "when-your-agent-goes-silent-degrade-gracefully": {
   "verdict": "KEEP",
@@ -1531,11 +1713,15 @@
   "words": 2504
  },
  "ai-codebases-two-onboarding-paths-that-actually-work": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI codebases: two onboarding paths that actually work",
-  "words": 2608
+  "words": 2602
  },
  "agentic-workflows-surviving-network-partitions": {
   "verdict": "KEEP",
@@ -1545,11 +1731,15 @@
   "words": 3589
  },
  "pci-dss-architecture-12-requirements-that-matter": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "PCI DSS architecture: 12 requirements that matter",
-  "words": 2730
+  "words": 2724
  },
  "map-legacy-code-with-ai-before-it-breaks": {
   "verdict": "KEEP",
@@ -1559,11 +1749,15 @@
   "words": 2544
  },
  "why-platform-metrics-lie": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Why platform metrics lie",
-  "words": 2442
+  "words": 2436
  },
  "ship-1mb-pages-on-4g-starlink-africa-case-study": {
   "verdict": "IMPROVE",
@@ -1623,11 +1817,15 @@
   "words": 2964
  },
  "why-scaling-agents-kills-plain-logs": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Why scaling agents kills plain logs",
-  "words": 2284
+  "words": 2275
  },
  "regulations-forced-better-apis-the-2026-fintech": {
   "verdict": "KEEP",
@@ -1637,11 +1835,15 @@
   "words": 2638
  },
  "agent-compliance-the-layer-you-build-after-failure": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent compliance: the layer you build after failure",
-  "words": 3296
+  "words": 3281
  },
  "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
   "verdict": "KEEP",
@@ -1655,7 +1857,7 @@
   "reasons": [],
   "fixes": [],
   "title": "KYC integrations: the data you shouldn't store",
-  "words": 2673
+  "words": 3205
  },
  "cloud-agents-burned-18k-8-tools-that-didnt-work": {
   "verdict": "KEEP",
@@ -1665,11 +1867,15 @@
   "words": 2404
  },
  "feature-flags-became-ai-rollout-platforms": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Feature flags became AI rollout platforms",
-  "words": 3609
+  "words": 3600
  },
  "trim-llm-bills-3-finops-moves-that-work": {
   "verdict": "IMPROVE",
@@ -1726,11 +1932,15 @@
   "words": 2735
  },
  "flaky-tests-reliability-bug-not-test-noise": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Flaky tests: reliability bug, not test noise",
-  "words": 3199
+  "words": 3189
  },
  "agents-247-vs-on-demand-42k-bill-shock": {
   "verdict": "KEEP",
@@ -1786,18 +1996,26 @@
   "words": 3061
  },
  "micro-saas-niches-eaten-by-ai-in-2026": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Micro-SaaS niches eaten by AI in 2026",
-  "words": 2279
+  "words": 2266
  },
  "ndpr-2026-broke-fintech-apis": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "NDPR 2026 broke fintech APIs",
-  "words": 2491
+  "words": 2478
  },
  "stop-false-positives-in-ci-scanning-now": {
   "verdict": "IMPROVE",
@@ -1878,11 +2096,15 @@
   "words": 2230
  },
  "ai-codebase-onboarding-2-paths-tested": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI codebase onboarding: 2 paths compared",
-  "words": 2415
+  "words": 2409
  },
  "senior-engineer-title-inflation-in-2026": {
   "verdict": "KEEP",
@@ -1892,11 +2114,15 @@
   "words": 2167
  },
  "stop-trusting-agents-for-core-logic": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Stop trusting agents for core logic",
-  "words": 2267
+  "words": 2260
  },
  "llm-drift-the-silent-quality-drop-metrics-miss": {
   "verdict": "KEEP",
@@ -1920,11 +2146,15 @@
   "words": 2868
  },
  "ai-steals-junior-tasks-3-skills-that-protect-pay": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI steals junior tasks: 3 skills that protect pay",
-  "words": 2648
+  "words": 2638
  },
  "ai-ui-tools-promise-vs-production": {
   "verdict": "KEEP",
@@ -1934,29 +2164,39 @@
   "words": 2181
  },
  "why-does-my-agent-version-break-clients": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent API versioning: why clients break on upgrade",
-  "words": 2501
+  "words": 2495
  },
  "vibe-coding-mvp-gem-prod-albatross": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Vibe coding: MVP gem, prod albatross",
-  "words": 3059
+  "words": 3053
  },
  "cut-cold-starts-70-lambda-cost-hack": {
   "verdict": "IMPROVE",
   "reasons": [
-   "template_clone_ending x12"
+   "template_clone_ending x12",
+   "no_primary_sources"
   ],
   "fixes": [
+   "add_sources",
    "restructure_outline"
   ],
   "title": "Serverless Cold Starts: Cost Levers and How to Measure Them",
-  "words": 2472
+  "words": 2461
  },
  "webhook-delivery-that-survives-outages": {
   "verdict": "KEEP",
@@ -1984,11 +2224,15 @@
   "words": 2532
  },
  "agent-architecture-the-new-model-trap": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent architecture: the new model trap",
-  "words": 3338
+  "words": 3331
  },
  "cqrs-when-it-pays-off-and-when-it-breaks": {
   "verdict": "KEEP",
@@ -2036,18 +2280,26 @@
   "words": 2508
  },
  "runbooks-vs-ai-which-cuts-outages-50": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Runbooks vs AI Runbooks: A Decision Framework",
-  "words": 2378
+  "words": 2362
  },
  "7-skills-senior-engineers-need-now-agents-are-live": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "7 skills senior engineers need now agents are live",
-  "words": 2977
+  "words": 2964
  },
  "two-engineer-classes-the-ai-tool-norm-trap": {
   "verdict": "IMPROVE",
@@ -2157,11 +2409,15 @@
   "words": 2793
  },
  "soft-deletes-fail-what-breaks-first": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Soft deletes fail: what breaks first",
-  "words": 2581
+  "words": 2575
  },
  "dead-letter-queues-stop-poison-messages": {
   "verdict": "KEEP",
@@ -2171,11 +2427,15 @@
   "words": 2982
  },
  "multi-agent-systems-break-first": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Multi-agent systems break first",
-  "words": 2651
+  "words": 2644
  },
  "ai-rollouts-live-or-die-by-flags": {
   "verdict": "KEEP",
@@ -2185,11 +2445,15 @@
   "words": 2881
  },
  "iso-20022-where-payment-rails-actually-break": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "ISO 20022: where payment rails actually break",
-  "words": 3399
+  "words": 3389
  },
  "2026-tech-salaries-where-cuts-stopped-where-raises": {
   "verdict": "IMPROVE",
@@ -2235,18 +2499,26 @@
   "words": 3573
  },
  "property-based-testing-vs-example-tests-the-bug-gap": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Property-based testing vs example tests: the bug gap",
-  "words": 3694
+  "words": 3687
  },
  "big-model-api-vs-fine-tune-the-2026-math": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Big model API vs fine-tune: the 2026 math",
-  "words": 3083
+  "words": 3077
  },
  "m-pesa-failures-cost-us-40-hours": {
   "verdict": "KEEP",
@@ -2263,32 +2535,48 @@
   "words": 2805
  },
  "agent-code-review-gap-nobody-admits": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "agent code review gap nobody admits",
-  "words": 2542
+  "words": 2533
  },
  "ai-apps-break-when-you-treat-them-like-regular-software": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI apps break when you treat them like regular software",
-  "words": 2945
+  "words": 2939
  },
  "ai-code-traps-copilot-vs-cursor-smackdown": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI code traps: Copilot vs Cursor smackdown",
-  "words": 2312
+  "words": 2306
  },
  "staging-wont-catch-prod-bugs-make": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Staging won't catch prod bugs. Make\u2026",
-  "words": 2619
+  "words": 2613
  },
  "meter-dev-tool-pricing-in-2026": {
   "verdict": "KEEP",
@@ -2330,18 +2618,26 @@
   "words": 2467
  },
  "red-teaming-agents-without-killing-velocity": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Red-teaming agents without killing velocity",
-  "words": 2255
+  "words": 2249
  },
  "who-signs-off-on-ai-code": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Who signs off on AI code?",
-  "words": 2313
+  "words": 2307
  },
  "portfolio-projects-hiring-managers-skip": {
   "verdict": "KEEP",
@@ -2391,11 +2687,15 @@
   "words": 2887
  },
  "prompts-are-code-how-to-measure-their-value": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Prompts are code: how to measure their value",
-  "words": 3800
+  "words": 3794
  },
  "scope-agent-permissions-per-task": {
   "verdict": "KEEP",
@@ -2416,11 +2716,15 @@
   "words": 2690
  },
  "prompt-injections-hidden-aws-tax": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Prompt injection\u2019s hidden AWS tax",
-  "words": 2465
+  "words": 2459
  },
  "apm-lied-about-our-ai-incidents": {
   "verdict": "KEEP",
@@ -2437,18 +2741,26 @@
   "words": 2236
  },
  "agent-versioning-the-contract-you-forgot": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent versioning: the contract you forgot",
-  "words": 2671
+  "words": 2654
  },
  "debug-ai-agents-failures-arent-just-bugs": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Debug AI agents: failures aren't just bugs",
-  "words": 2173
+  "words": 2167
  },
  "7-ways-to-measure-prompt-platform-roi-in-2026": {
   "verdict": "KEEP",
@@ -2458,11 +2770,15 @@
   "words": 2861
  },
  "json-modes-hidden-costs-revealed": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "JSON mode's hidden costs revealed",
-  "words": 2477
+  "words": 2468
  },
  "ai-on-slow-networks-nairobi-teams-2026-playbook": {
   "verdict": "KEEP",
@@ -2521,11 +2837,15 @@
   "words": 2341
  },
  "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Self-healing agents vs rule-based deployment rollback",
-  "words": 2489
+  "words": 2479
  },
  "cross-border-fintech-why-your-kyc-fails-in-dakar": {
   "verdict": "IMPROVE",
@@ -2564,11 +2884,15 @@
   "words": 2559
  },
  "15-agents-blew-up-our-logs-why-we-pinned-models-logs": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Structured Logs and Pinned Versions for Multi-Agent Systems",
-  "words": 2167
+  "words": 2161
  },
  "ai-pair-prompts-9-setups-we-tried-in-2026": {
   "verdict": "KEEP",
@@ -2592,11 +2916,15 @@
   "words": 2994
  },
  "debugging-techniques-that-outlast-any-framework": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Debugging techniques that outlast any framework",
-  "words": 2295
+  "words": 2286
  },
  "orchestration-tax-kills-multi-agent-systems": {
   "verdict": "KEEP",
@@ -2606,11 +2934,15 @@
   "words": 2643
  },
  "african-fintech-agents-the-compliance-cliff-most-miss": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "African fintech agents: the compliance cliff most miss",
-  "words": 2088
+  "words": 2075
  },
  "mobile-money-agents-when-m-pesa-api-fails": {
   "verdict": "KEEP",
@@ -2683,11 +3015,15 @@
   "words": 2269
  },
  "rogue-agent-api-calls-stop-the-bleeding": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Rogue Agent API Calls: Stop the Bleeding",
-  "words": 2105
+  "words": 2098
  },
  "tech-debt-when-half-your-stack-is-unfamiliar": {
   "verdict": "KEEP",
@@ -2704,25 +3040,37 @@
   "words": 2314
  },
  "ai-experimentation-guardrails-not-gates": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "AI Experimentation: Guardrails, Not Gates",
-  "words": 2437
+  "words": 2429
  },
  "observability-agents-lied-to-us": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Observability Agents as Application Code",
-  "words": 2635
+  "words": 2629
  },
  "model-router-keep-it-simple-keep-it-local": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Model router: keep it simple, keep it local",
-  "words": 2805
+  "words": 2795
  },
  "ai-fixes-legacy-code-nobody-owns": {
   "verdict": "KEEP",
@@ -2732,11 +3080,15 @@
   "words": 3722
  },
  "open-banking-apis-the-integration-traps": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Open banking APIs: the integration traps",
-  "words": 3094
+  "words": 3083
  },
  "ai-ui-generation-what-it-fixed-and-what-still-breaks": {
   "verdict": "KEEP",
@@ -2753,11 +3105,15 @@
   "words": 2348
  },
  "multi-agent-handoffs-the-latency-tax-nobody-measures": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Multi-agent handoffs: the latency tax nobody measures",
-  "words": 2265
+  "words": 2259
  },
  "cut-false-positives-85-with-this-ci-security-trick": {
   "verdict": "IMPROVE",
@@ -2771,18 +3127,26 @@
   "words": 2302
  },
  "audit-logs-compliance-vs-performance": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Audit logs: compliance vs performance",
-  "words": 2560
+  "words": 2553
  },
  "agent-audit-trails-event-log-vs-state-snapshots": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Agent audit trails: event log vs state snapshots",
-  "words": 2669
+  "words": 2657
  },
  "why-does-my-model-drift-after-deploy": {
   "verdict": "KEEP",
@@ -2813,11 +3177,15 @@
   "words": 3087
  },
  "when-velocity-is-hard-to-measure-evaluating-engineering": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "When velocity is hard to measure: evaluating engineering\u2026",
-  "words": 2751
+  "words": 2741
  },
  "golden-paths-that-dont-handcuff": {
   "verdict": "KEEP",
@@ -2908,11 +3276,15 @@
   "words": 2668
  },
  "nigerias-2026-api-rules-broke-our-microservices": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Designing Fintech Backends Around Audit Deadlines",
-  "words": 2702
+  "words": 2692
  },
  "wasm-servers-beat-containers-here": {
   "verdict": "KEEP",
@@ -2979,11 +3351,15 @@
   "words": 2869
  },
  "5-ways-to-find-hidden-latency-before-production": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "5 ways to find hidden latency before production",
-  "words": 2430
+  "words": 2422
  },
  "react-19-compiler-my-components-changed-how": {
   "verdict": "KEEP",
@@ -3000,11 +3376,15 @@
   "words": 2503
  },
  "audit-logs-that-scale-skip-the-3am-fire-drills": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Audit logs that scale: skip the 3AM fire drills",
-  "words": 3170
+  "words": 3151
  },
  "contract-testing-is-not-optional": {
   "verdict": "KEEP",
@@ -3014,11 +3394,15 @@
   "words": 3072
  },
  "save-12kmonth-cloud-egress-costs-in-2026": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Cutting cloud egress costs: architecture that works",
-  "words": 2616
+  "words": 2606
  },
  "websockets-vs-server-sent-events-latency-over-3g": {
   "verdict": "KEEP",
@@ -3095,11 +3479,15 @@
   "words": 2262
  },
  "llmops-2026-evaluation-stack-that-replaced-rag-dashboards": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
-  "words": 2611
+  "words": 2601
  },
  "run-apis-in-50-spots-what-breaks-first": {
   "verdict": "KEEP",

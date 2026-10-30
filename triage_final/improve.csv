@@ -1,71 +1,166 @@
 path,fixes,reasons,words,title
+docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/,add_sources,no_primary_sources,2161,Structured Logs and Pinned Versions for Multi-Agent Systems
+docs/2026-ai-stack-solo-saas-cost-showdown/,add_sources,no_primary_sources,2633,2026 AI stack: solo SaaS cost showdown
 docs/2026-tech-salaries-where-cuts-stopped-where-raises/,add_sources,no_primary_sources,2321,"2026 tech salaries: where cuts stopped, where raises"
+docs/5-ways-to-find-hidden-latency-before-production/,add_sources,no_primary_sources,2422,5 ways to find hidden latency before production
 docs/7-bundling-decisions-that-still-matter/,restructure_outline,template_clone_ending x8,2857,7 bundling decisions that still matter
 docs/7-code-review-traps-when-ai-writes-half-your-code/,add_sources,no_primary_sources,2304,7 code review traps when AI writes half your code
 docs/7-guardrails-for-safer-llm-apps/,restructure_outline,template_clone_ending x8,3658,7 guardrails for safer LLM apps
 docs/7-idp-shifts-for-ai-feature-delivery/,add_sources|restructure_outline,template_clone_ending x8; no_primary_sources,2993,7 IDP shifts for AI feature delivery
 docs/7-patterns-for-systems-that-wont-die-when-networks/,restructure_outline,template_clone_ending x9,3573,7 patterns for systems that won’t die when networks
+docs/7-skills-senior-engineers-need-now-agents-are-live/,add_sources,no_primary_sources,2964,7 skills senior engineers need now agents are live
 docs/9-vibe-coding-traps-that-break-production-code/,restructure_outline,template_clone_ending x8,2205,9 Vibe coding traps that break production code
+docs/african-devs-ai-tools-that-work-now-2026/,add_sources,no_primary_sources,2353,African devs: AI tools that work now (2026)
+docs/african-fintech-agents-the-compliance-cliff-most-miss/,add_sources,no_primary_sources,2075,African fintech agents: the compliance cliff most miss
+docs/agent-architecture-the-new-model-trap/,add_sources,no_primary_sources,3331,Agent architecture: the new model trap
+docs/agent-audit-trails-event-log-vs-state-snapshots/,add_sources,no_primary_sources,2657,Agent audit trails: event log vs state snapshots
+docs/agent-auth-the-silent-deployment-killer/,add_sources,no_primary_sources,2662,Agent auth: the silent deployment killer
 docs/agent-code-review-7-traps-that-slip-through/,restructure_outline,template_clone_ending x8,3466,Agent code review: 7 traps that slip through
+docs/agent-code-review-gap-nobody-admits/,add_sources,no_primary_sources,2533,agent code review gap nobody admits
+docs/agent-compliance-in-african-fintech-the-cbn-gap/,add_sources,no_primary_sources,3230,Agent compliance in African fintech: the CBN gap
+docs/agent-compliance-the-layer-you-build-after-failure/,add_sources,no_primary_sources,3281,Agent compliance: the layer you build after failure
 docs/agent-drift-why-prod-breaks-without-human-checkpoints/,restructure_outline,template_clone_ending x12,2949,Agent drift: why prod breaks without human checkpoints
-docs/agent-reliability-7-metrics-users-trust/,restructure_outline,template_clone_ending x8,3142,Agent reliability: 7 metrics users trust
+docs/agent-permissions-the-mistake-that-breaks-production/,add_sources,no_primary_sources,3405,Agent permissions: the mistake that breaks production
+docs/agent-reliability-7-metrics-users-trust/,add_sources|restructure_outline,template_clone_ending x8; no_primary_sources,3132,Agent reliability: 7 metrics users trust
 docs/agent-slos-measure-what-agents-actually-do/,restructure_outline,template_clone_ending x9,2591,Agent SLOs: measure what agents actually do
+docs/agent-versioning-the-contract-you-forgot/,add_sources,no_primary_sources,2654,Agent versioning: the contract you forgot
 docs/agentic-workflows-how-we-kept-the-lights/,restructure_outline,template_clone_ending x9,2871,Observability for Long-Running LLM Agent Workflows
 docs/ai-agents-circuit-breakers-are-not-optional/,restructure_outline,template_clone_ending x9,2616,AI agents: circuit breakers are not optional
+docs/ai-agents-killed-dev-tool-sales-cycles/,add_sources,no_primary_sources,1978,AI agents killed dev tool sales cycles
+docs/ai-apps-break-when-you-treat-them-like-regular-software/,add_sources,no_primary_sources,2939,AI apps break when you treat them like regular software
 docs/ai-ate-the-niches-first/,add_sources,no_primary_sources,1980,AI ate the niches first
+docs/ai-code-traps-copilot-vs-cursor-smackdown/,add_sources,no_primary_sources,2306,AI code traps: Copilot vs Cursor smackdown
+docs/ai-codebase-onboarding-2-paths-tested/,add_sources,no_primary_sources,2409,AI codebase onboarding: 2 paths compared
+docs/ai-codebases-two-onboarding-paths-that-actually-work/,add_sources,no_primary_sources,2602,AI codebases: two onboarding paths that actually work
+docs/ai-cost-attribution-without-the-spreadsheet-hell/,add_sources,no_primary_sources,3050,AI cost attribution without the spreadsheet hell
+docs/ai-errors-hide-in-plain-latency/,add_sources,no_primary_sources,2096,AI errors hide in plain latency
+docs/ai-experimentation-guardrails-not-gates/,add_sources,no_primary_sources,2429,"AI Experimentation: Guardrails, Not Gates"
+docs/ai-model-poisoning-3-real-attacks-on-datasets/,add_sources,no_primary_sources,3064,AI model poisoning: 3 real attacks on datasets
 docs/ai-native-apps-forget-the-old-stack/,restructure_outline,template_clone_ending x9,2028,AI-native apps: forget the old stack
+docs/ai-observability-the-metrics-that-matter/,add_sources,no_primary_sources,2589,AI observability: the metrics that matter
 docs/ai-ops-vs-human-ops-the-incidents-that-broke-them/,restructure_outline,template_clone_ending x12,2458,AI-First vs Human-First Incident Response
 docs/ai-reshaped-my-engineering-principles/,add_sources,no_primary_sources,2103,AI Code Generation: Failure Modes and Guardrails
-docs/ai-sales-cycles-3x-faster-40-less-talk/,restructure_outline,template_clone_ending x9,3136,Designing AI-Assisted Sales for Developer Tools
+docs/ai-revives-unloved-legacy-codebases/,add_sources,no_primary_sources,3002,AI revives unloved legacy codebases
+docs/ai-sales-cycles-3x-faster-40-less-talk/,add_sources|restructure_outline,template_clone_ending x9; no_primary_sources,3124,Designing AI-Assisted Sales for Developer Tools
 docs/ai-static-analysis-vs-legacy-sast-5x-faster-scans/,add_sources,no_primary_sources,2735,AI Static Analysis vs Rule-Based SAST: A Practical Comparison
+docs/ai-steals-junior-tasks-3-skills-that-protect-pay/,add_sources,no_primary_sources,2638,AI steals junior tasks: 3 skills that protect pay
+docs/ai-supply-chain-attacks-what-actually-broke/,add_sources,no_primary_sources,3139,AI Supply Chain Security: Trust Boundaries for Model Artifacts
 docs/ai-tools-wont-help-if-everyone-writes-the-same-code/,add_sources,no_primary_sources,2703,AI tools won’t help if everyone writes the same code
+docs/audit-logs-compliance-vs-performance/,add_sources,no_primary_sources,2553,Audit logs: compliance vs performance
+docs/audit-logs-that-scale-skip-the-3am-fire-drills/,add_sources,no_primary_sources,3151,Audit logs that scale: skip the 3AM fire drills
+docs/aws-local-zones-vs-localstack-ai-microservices-in/,add_sources,no_primary_sources,2819,AWS Local Zones vs LocalStack: AI microservices in
+docs/bank-apis-broke-under-african-2g/,add_sources,no_primary_sources,2813,Bank APIs broke under African 2G
+docs/big-model-api-vs-fine-tune-the-2026-math/,add_sources,no_primary_sources,3077,Big model API vs fine-tune: the 2026 math
 docs/boring-aws-lambda-layers-that-dont-lock/,restructure_outline,template_clone_ending x12,2422,Boring AWS Lambda layers that don’t lock…
+docs/build-in-public-without-burning-out/,add_sources,no_primary_sources,2213,Build in public without burning out
 docs/buy-vs-build-ai-3-hard-rules-for-2026/,add_sources|restructure_outline,template_clone_ending x9; no_primary_sources,3070,Buy vs build AI: 3 hard rules for 2026
-docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/,restructure_outline,template_clone_ending x9,2309,CDC pipeline death spiral: one bad LLM call can crash…
+docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/,add_sources|restructure_outline,template_clone_ending x9; no_primary_sources,2303,CDC pipeline death spiral: one bad LLM call can crash…
+docs/choose-no-code-only-when/,add_sources,no_primary_sources,2466,Choose no-code only when
+docs/circleci-still-beats-github-actions-at-50k-builds/,add_sources,no_primary_sources,2267,When CircleCI's Concurrency Model Beats GitHub Actions
 docs/code-ai-wont-rewrite/,add_sources,no_primary_sources,2339,Code AI won’t rewrite
 docs/commit-ownership-in-ai-pair-coding/,add_sources|restructure_outline,template_clone_ending x9; no_primary_sources,2851,Commit ownership in AI pair coding
+docs/computer-use-agents-the-permission-trap/,add_sources,no_primary_sources,3021,Computer-use agents: the permission trap
 docs/context-engineering-the-real-fix-for-agent-hallucinations/,add_sources,no_primary_sources,3109,Context engineering: the real fix for agent hallucinations
 docs/cross-border-fintech-why-your-kyc-fails-in-dakar/,add_sources,no_primary_sources,2653,Cross-border fintech: why your KYC fails in Dakar
-docs/cut-cold-starts-70-lambda-cost-hack/,restructure_outline,template_clone_ending x12,2472,Serverless Cold Starts: Cost Levers and How to Measure Them
+docs/cut-cold-starts-70-lambda-cost-hack/,add_sources|restructure_outline,template_clone_ending x12; no_primary_sources,2461,Serverless Cold Starts: Cost Levers and How to Measure Them
 docs/cut-false-positives-85-with-this-ci-security-trick/,add_sources,no_primary_sources,2302,Context-aware security gates that cut CI alert noise
+docs/debug-ai-agents-failures-arent-just-bugs/,add_sources,no_primary_sources,2167,Debug AI agents: failures aren't just bugs
+docs/debugging-techniques-that-outlast-any-framework/,add_sources,no_primary_sources,2286,Debugging techniques that outlast any framework
 docs/deployment-platforms-senior-vs-new-hire/,restructure_outline,template_clone_ending x8,3382,Deployment platforms: senior vs new hire
 docs/detect-lazy-agents-without-false-alarms/,add_sources,no_primary_sources,2887,Detect lazy agents without false alarms
+docs/docs-that-survive-the-bus-factor-fix/,add_sources,no_primary_sources,3089,Docs that survive: the bus factor fix
+docs/evaluate-agents-with-spark-vs-custom-harness/,add_sources,no_primary_sources,2430,Evaluate agents with Spark vs custom harness
+docs/feature-flags-became-ai-rollout-platforms/,add_sources,no_primary_sources,3600,Feature flags became AI rollout platforms
 docs/fintech-features-break-in-ghana-the-real-fix/,add_sources,no_primary_sources,2686,Fintech features break in Ghana: the real fix
 docs/fix-ai-agent-failures-postmortem-guide/,restructure_outline,template_clone_ending x12,2390,"Postmortems for AI agents: drift, cost, replay"
+docs/flaky-tests-reliability-bug-not-test-noise/,add_sources,no_primary_sources,3189,"Flaky tests: reliability bug, not test noise"
 docs/found-niche-in-2026-saas-that-ai-cant-copy/,add_sources,no_primary_sources,2255,Found niche in 2026: SaaS that AI can’t copy
+docs/global-state-is-the-wrong-tool-for-ai-features/,add_sources,no_primary_sources,2357,Global state is the wrong tool for AI features
 docs/golden-paths-become-load-bearing-walls/,add_sources,no_primary_sources,2601,Golden paths become load-bearing walls
 docs/hire-for-agents-not-autocomplete/,restructure_outline,template_clone_ending x9,2690,"Hire for agents, not autocomplete"
 docs/hybrid-cloud-routing-cost-speed-balance-for-sea/,restructure_outline,template_clone_ending x12,2605,Hybrid Cloud Routing: Cost-Speed Balance for SEA
+docs/iso-20022-where-payment-rails-actually-break/,add_sources,no_primary_sources,3389,ISO 20022: where payment rails actually break
+docs/json-modes-hidden-costs-revealed/,add_sources,no_primary_sources,2468,JSON mode's hidden costs revealed
+docs/jwt-sessions-revocation-rotation-storage/,add_sources,no_primary_sources,2756,"JWT sessions: revocation, rotation, storage"
+docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/,add_sources,no_primary_sources,2450,Designing Alert Triage That Suppresses Noise Safely
 docs/kubernetes-or-nomad-the-real-experiment-cost-split/,restructure_outline,template_clone_ending x9,2125,Kubernetes or Nomad: the real experiment cost split
+docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/,add_sources,no_primary_sources,2844,Latency trade-offs: Nairobi teams beat global AI providers
+docs/llm-agents-why-monoliths-win/,add_sources,no_primary_sources,2239,LLM agents: why monoliths win
+docs/llm-evals-skip-the-hype-track-these-4-metrics/,add_sources,no_primary_sources,2127,"LLM evals: skip the hype, track these 4 metrics"
 docs/llm-metrics-that-stop-wasting-time/,add_sources|restructure_outline,template_clone_ending x9; no_primary_sources,2611,LLM metrics that stop wasting time
+docs/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/,add_sources,no_primary_sources,2601,LLMOps 2026: evaluation stack that replaced RAG dashboards
 docs/marketing-without-budget-5k-mrr-in-18-months/,add_sources,no_primary_sources,2160,Earning Developer Attention Without a Marketing Budget
+docs/micro-saas-niches-eaten-by-ai-in-2026/,add_sources,no_primary_sources,2266,Micro-SaaS niches eaten by AI in 2026
+docs/mobile-first-ai-fails-you-didnt-plan/,add_sources,no_primary_sources,2502,Mobile-first AI fails you didn’t plan…
+docs/model-router-keep-it-simple-keep-it-local/,add_sources,no_primary_sources,2795,"Model router: keep it simple, keep it local"
+docs/multi-agent-handoffs-the-latency-tax-nobody-measures/,add_sources,no_primary_sources,2259,Multi-agent handoffs: the latency tax nobody measures
+docs/multi-agent-systems-break-first/,add_sources,no_primary_sources,2644,Multi-agent systems break first
+docs/ndpr-2026-broke-fintech-apis/,add_sources,no_primary_sources,2478,NDPR 2026 broke fintech APIs
 docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/,add_sources,no_primary_sources,2396,Turn AI coding telemetry into a salary negotiation case
 docs/negotiate-pay-in-2026-with-ai-proof-points/,add_sources,no_primary_sources,2271,Negotiate pay in 2026 with AI proof points
 docs/negotiate-salaries-with-ai-skills-in-2026/,add_sources,no_primary_sources,2192,Negotiate salaries with AI skills in 2026
 docs/negotiating-pay-when-ai-inflates-output/,add_sources,no_primary_sources,3276,Negotiating pay when AI inflates output
+docs/neon-vs-planetscale-vs-turso-which-broke-first/,add_sources,no_primary_sources,2647,Neon vs PlanetScale vs Turso: which broke first?
+docs/nigerias-2026-api-rules-broke-our-microservices/,add_sources,no_primary_sources,2692,Designing Fintech Backends Around Audit Deadlines
+docs/nodejs-memory-leak-find-it-in-10-min/,add_sources,no_primary_sources,2850,Node.js memory leak: find it in 10 min
+docs/observability-agents-lied-to-us/,add_sources,no_primary_sources,2629,Observability Agents as Application Code
 docs/offline-first-apps-what-3g-markets-taught-us/,add_sources,no_primary_sources,3020,Designing Offline-First Apps for Unreliable Networks
 docs/one-payment-stack-for-kenya-nigeria-ghana/,restructure_outline,template_clone_ending x12,2697,"One payment stack for Kenya, Nigeria, Ghana"
+docs/open-banking-apis-the-integration-traps/,add_sources,no_primary_sources,3083,Open banking APIs: the integration traps
+docs/pci-dss-architecture-12-requirements-that-matter/,add_sources,no_primary_sources,2724,PCI DSS architecture: 12 requirements that matter
+docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/,add_sources,no_primary_sources,2733,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026"
+docs/platform-engineering-roi-metrics-that-fund-teams/,add_sources,no_primary_sources,2549,Platform engineering ROI: metrics that fund teams
 docs/platform-teams-agentic-world-struggle/,restructure_outline,template_clone_ending x9,2566,Platform Teams: Agentic World Struggle
+docs/poolers-wont-save-your-serverless-db/,add_sources,no_primary_sources,2791,Poolers won’t save your serverless DB
 docs/portfolio-that-hires-show-constraints-not-code/,restructure_outline,template_clone_ending x9,2823,"Portfolio that hires: show constraints, not code"
 docs/postgres-17-swallowed-redis-kafka-timescale/,restructure_outline,template_clone_ending x9,2880,"Postgres 17 swallowed Redis, Kafka, Timescale"
 docs/postgres-vector-search-what-breaks-first/,restructure_outline,template_clone_ending x12,2688,Postgres vector search: what breaks first
+docs/pr-checklists-are-dead-ai-agents-do-reviews-now/,add_sources,no_primary_sources,2442,PR checklists are dead: AI agents do reviews now
 docs/price-ai-proof-skills-in-2026/,add_sources,no_primary_sources,2706,Price AI-proof skills in 2026
 docs/price-your-remote-job-like-a-new-york-dev/,add_sources,no_primary_sources,2660,Price your remote job like a New York dev
+docs/promotions-in-the-ai-era-the-mechanism/,add_sources,no_primary_sources,3391,Promotions in the AI era: the mechanism
+docs/prompt-injections-hidden-aws-tax/,add_sources,no_primary_sources,2459,Prompt injection’s hidden AWS tax
+docs/prompts-are-code-how-to-measure-their-value/,add_sources,no_primary_sources,3794,Prompts are code: how to measure their value
+docs/property-based-testing-vs-example-tests-the-bug-gap/,add_sources,no_primary_sources,3687,Property-based testing vs example tests: the bug gap
 docs/pypi-poisoned-models-hit-prod-in-2025/,add_sources,no_primary_sources,2215,PyPI poisoned models hit prod in 2025
 docs/rag-rots-if-you-dont-refresh-indexes/,add_sources,no_primary_sources,2945,RAG rots if you don’t refresh indexes
 docs/rebalance-pay-when-ai-fills-half-your-role/,add_sources,no_primary_sources,2589,Rebalance pay when AI fills half your role
+docs/red-teaming-agents-without-killing-velocity/,add_sources,no_primary_sources,2249,Red-teaming agents without killing velocity
+docs/remote-premium-rates-skills-ai-cant-copy/,add_sources,no_primary_sources,3733,Remote premium rates: skills AI can't copy
 docs/remote-salary-negotiate-without-sounding-cheap/,add_sources,no_primary_sources,2807,Remote salary: negotiate without sounding cheap
 docs/replace-env-with-these-in-2026/,restructure_outline,template_clone_ending x9,3061,Replace .env with these in 2026
+docs/replace-managed-services-with-postgres-17/,add_sources,no_primary_sources,2773,Replace managed services with Postgres 17
+docs/rogue-agent-api-calls-stop-the-bleeding/,add_sources,no_primary_sources,2098,Rogue Agent API Calls: Stop the Bleeding
+docs/runbooks-vs-ai-which-cuts-outages-50/,add_sources,no_primary_sources,2362,Runbooks vs AI Runbooks: A Decision Framework
+docs/save-12kmonth-cloud-egress-costs-in-2026/,add_sources,no_primary_sources,2606,Cutting cloud egress costs: architecture that works
 docs/sbom-attestation-that-gets-used/,restructure_outline,template_clone_ending x8,3399,SBOM + attestation that gets used
+docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/,add_sources,no_primary_sources,2479,Self-healing agents vs rule-based deployment rollback
+docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/,add_sources,no_primary_sources,2566,"Senior engineer: the bar moved, nobody updated the rubric"
 docs/ship-1mb-pages-on-4g-starlink-africa-case-study/,restructure_outline,template_clone_ending x12,2617,Ship 1MB pages on 4G: Starlink Africa case study
+docs/soft-deletes-fail-what-breaks-first/,add_sources,no_primary_sources,2575,Soft deletes fail: what breaks first
+docs/staging-wont-catch-prod-bugs-make/,add_sources,no_primary_sources,2613,Staging won't catch prod bugs. Make…
 docs/stay-relevant-when-tools-change-faster-than-you-can/,add_sources,no_primary_sources,3127,Stay relevant when tools change faster than you can
 docs/stop-false-positives-in-ci-scanning-now/,add_sources,no_primary_sources,2808,Stop false positives in CI scanning now
 docs/stop-guessing-tech-stacks-validate-tools-in-2-hours/,restructure_outline,template_clone_ending x12,2509,Stop guessing tech stacks: validate tools in 2 hours
+docs/stop-trusting-agents-for-core-logic/,add_sources,no_primary_sources,2260,Stop trusting agents for core logic
 docs/store-data-once-serve-everywhere-cheaper/,restructure_outline,template_clone_ending x9,2397,"Store data once, serve everywhere: cheaper"
+docs/tame-python-asyncs-hidden-traps/,add_sources,no_primary_sources,2163,Tame Python async’s hidden traps
+docs/test-ai-code-without-testing-the-ai/,add_sources,no_primary_sources,3174,Test AI code without testing the AI
 docs/trim-llm-bills-3-finops-moves-that-work/,add_sources,no_primary_sources,2144,Trim LLM bills: 3 FinOps moves that work
 docs/two-engineer-classes-the-ai-tool-norm-trap/,add_sources,no_primary_sources,2361,Two engineer classes: the AI tool norm trap
+docs/velocity-up-ownership-down-team-scaling-trap/,add_sources,no_primary_sources,2820,"Velocity Up, Ownership Down: Team Scaling Trap"
+docs/vibe-coding-mvp-gem-prod-albatross/,add_sources,no_primary_sources,3053,"Vibe coding: MVP gem, prod albatross"
 docs/webhooks-2026-retries-idempotency-and-the-9995/,restructure_outline,template_clone_ending x12,2259,"Webhook Delivery: Retries, Idempotency, and Durability"
+docs/when-velocity-is-hard-to-measure-evaluating-engineering/,add_sources,no_primary_sources,2741,When velocity is hard to measure: evaluating engineering…
 docs/which-agent-stack-survives-3g/,restructure_outline,template_clone_ending x12,2532,Which agent stack survives 3G?
+docs/which-ai-wrappers-made-money-in-2026/,add_sources,no_primary_sources,2089,Which AI wrappers made money in 2026
 docs/who-owns-ai-generated-code/,add_sources,no_primary_sources,1944,Who owns AI-generated code?
+docs/who-signs-off-on-ai-code/,add_sources,no_primary_sources,2307,Who signs off on AI code?
 docs/why-ai-interviewers-failed-68-of-us-in-2026/,add_sources,no_primary_sources,2445,Why AI Interview Graders Reward Keywords Over Correct Design
+docs/why-do-production-agents-still-need-humans/,add_sources,no_primary_sources,2396,Why do production agents still need humans?
+docs/why-does-my-agent-version-break-clients/,add_sources,no_primary_sources,2495,Agent API versioning: why clients break on upgrade
+docs/why-leader-election-fails-on-cloud-networks/,add_sources,no_primary_sources,2644,Why leader election fails on cloud networks
+docs/why-monoliths-die-slowly-in-2026/,add_sources,no_primary_sources,2663,Why monoliths die slowly in 2026
+docs/why-platform-metrics-lie/,add_sources,no_primary_sources,2436,Why platform metrics lie
+docs/why-scaling-agents-kills-plain-logs/,add_sources,no_primary_sources,2275,Why scaling agents kills plain logs
 docs/zero-trust-ai-skip-the-latency-tax/,restructure_outline,template_clone_ending x9,2878,Zero-trust AI: skip the latency tax

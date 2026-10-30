@@ -1,4 +1,4 @@
-❌ Internal link audit: 404 broken link(s) found across 405 posts checked.
+❌ Internal link audit: 405 broken link(s) found across 405 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -212,6 +212,7 @@ Source Post                              Anchor Text                    Missing 
   /keep-multi-model-systems-stable-6-rules-that-worked AI content policy              /ai-content-policy/
   /kill-noisy-alerts-the-triage-system-that-restored-sleep AI content policy              /ai-content-policy/
   /kubernetes-or-nomad-the-real-experiment-cost-split AI content policy              /ai-content-policy/
+  /kyc-integrations-the-data-you-shouldnt-store AI content policy              /ai-content-policy/
   /latency-trade-offs-nairobi-teams-beat-global-ai-providers AI content policy              /ai-content-policy/
   /least-privilege-for-agents-the-config-line-nobody-writes AI content policy              /ai-content-policy/
   /llm-agents-why-monoliths-win           AI content policy              /ai-content-policy/
