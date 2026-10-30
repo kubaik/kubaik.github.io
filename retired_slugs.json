@@ -1,4 +1,8 @@
 {
+  "15-agents-blew-up-our-logs-why-we-pinned-models-logs": {
+    "retired_at": "2026-10-30T12:24:31.521891+00:00",
+    "source": "ledger_diff"
+  },
   "3-ai-coders-ranked-cursor-windsurf-claude-code-in": {
     "retired_at": "2026-10-26T09:14:08.122341+00:00",
     "source": "ledger_diff"
@@ -29,6 +33,14 @@
   },
   "african-fintech-rules-broke-our-stack": {
     "retired_at": "2026-10-26T09:14:08.122341+00:00",
+    "source": "ledger_diff"
+  },
+  "agents-running-hours-youre-losing-context-fast": {
+    "retired_at": "2026-10-30T12:24:31.521891+00:00",
+    "source": "ledger_diff"
+  },
+  "ai-best-practices-fail-on-slow-networks": {
+    "retired_at": "2026-10-30T12:24:31.521891+00:00",
     "source": "ledger_diff"
   },
   "ai-tools-rewrote-my-engineering-rules": {
@@ -75,6 +87,10 @@
     "retired_at": "2026-10-26T09:14:08.122341+00:00",
     "source": "ledger_diff"
   },
+  "negotiating-pay-when-ai-inflates-output": {
+    "retired_at": "2026-10-30T12:24:31.521891+00:00",
+    "source": "ledger_diff"
+  },
   "network-tokens-what-changes-for-payment-engineers": {
     "retired_at": "2026-10-25T15:48:30.387744+00:00",
     "source": "ledger_diff"
@@ -87,12 +103,20 @@
     "retired_at": "2026-10-26T09:14:08.122341+00:00",
     "source": "ledger_diff"
   },
+  "purpose-built-ai-is-a-trap-for-solo-founders": {
+    "retired_at": "2026-10-30T12:24:31.521891+00:00",
+    "source": "ledger_diff"
+  },
   "ship-to-nairobi-users-starlink-latency-guide-2026": {
     "retired_at": "2026-10-26T09:14:08.122341+00:00",
     "source": "ledger_diff"
   },
   "signals-5-state-tricks-that-broke-my-app": {
     "retired_at": "2026-10-26T09:14:08.122341+00:00",
+    "source": "ledger_diff"
+  },
+  "survive-network-drops-agentic-workflows-that-keep-running": {
+    "retired_at": "2026-10-30T12:24:31.521891+00:00",
     "source": "ledger_diff"
   },
   "why-i-picked-playwright-and-vitest-in-2026": {

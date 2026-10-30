@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Kubai Kevin</title>
+    <link>https://kubaik.github.io</link>
+    <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Oct 2026 12:19:19 +0000</lastBuildDate>
+    <item>
+      <title>KYC integrations: the data you shouldn&apos;t store</title>
+      <link>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</link>
+      <description>Design a KYC integration that persists only the decision and a vendor reference, with the raw identity evidence kept by the vendor under contract.</description>
+      <pubDate>Fri, 30 Oct 2026 09:37:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</guid>
+    </item>
+    <item>
+      <title>OpenTelemetry collector pipelines: sampling, batching…</title>
+      <link>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</link>
+      <description>How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</description>
+      <pubDate>Fri, 30 Oct 2026 04:57:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</guid>
+    </item>
+    <item>
+      <title>Node.js memory leak: find it in 10 min</title>
+      <link>https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/</link>
+      <description>Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</description>
+      <pubDate>Thu, 29 Oct 2026 12:50:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/</guid>
+    </item>
+    <item>
+      <title>AI answers first, judgment later</title>
+      <link>https://kubaik.github.io/ai-answers-first-judgment-later/</link>
+      <description>AI assistants give juniors fast, confident answers without your system&amp;#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment.</description>
+      <pubDate>Thu, 29 Oct 2026 04:59:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-answers-first-judgment-later/</guid>
+    </item>
+    <item>
+      <title>Database restore drills that mean something</title>
+      <link>https://kubaik.github.io/database-restore-drills-that-mean-something/</link>
+      <description>A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.</description>
+      <pubDate>Wed, 28 Oct 2026 18:06:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/database-restore-drills-that-mean-something/</guid>
+    </item>
+    <item>
+      <title>Multi-agent DX: LangGraph vs CrewAI gaps</title>
+      <link>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</link>
+      <description>Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</description>
+      <pubDate>Wed, 28 Oct 2026 04:45:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</guid>
+    </item>
+    <item>
+      <title>JWT sessions: revocation, rotation, storage</title>
+      <link>https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/</link>
+      <description>Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</description>
+      <pubDate>Tue, 27 Oct 2026 17:43:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/</guid>
+    </item>
+    <item>
+      <title>Context engineering: the real fix for agent hallucinations</title>
+      <link>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</link>
+      <description>Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context.</description>
+      <pubDate>Tue, 27 Oct 2026 04:15:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</guid>
+    </item>
+    <item>
+      <title>HPA vs KEDA vs Karpenter: autoscaling traps</title>
+      <link>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</link>
+      <description>How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</description>
+      <pubDate>Mon, 26 Oct 2026 08:01:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</guid>
+    </item>
+    <item>
+      <title>Drift detection: the plan that lies</title>
+      <link>https://kubaik.github.io/drift-detection-the-plan-that-lies/</link>
+      <description>Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</description>
+      <pubDate>Mon, 26 Oct 2026 03:53:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/drift-detection-the-plan-that-lies/</guid>
+    </item>
+    <item>
+      <title>7 guardrails for safer LLM apps</title>
+      <link>https://kubaik.github.io/7-guardrails-for-safer-llm-apps/</link>
+      <description>A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first.</description>
+      <pubDate>Sun, 25 Oct 2026 15:48:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-guardrails-for-safer-llm-apps/</guid>
+    </item>
+    <item>
+      <title>When velocity is hard to measure: evaluating engineering…</title>
+      <link>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</link>
+      <description>Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</description>
+      <pubDate>Sun, 25 Oct 2026 03:50:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</guid>
+    </item>
+    <item>
+      <title>ISO 20022: where payment rails actually break</title>
+      <link>https://kubaik.github.io/iso-20022-where-payment-rails-actually-break/</link>
+      <description>ISO 20022 migrations fail in mapping policy, code-list governance and character rules, not XML parsing. A layered design and checklist for payment rails.</description>
+      <pubDate>Sat, 24 Oct 2026 15:37:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/iso-20022-where-payment-rails-actually-break/</guid>
+    </item>
+    <item>
+      <title>HTTP/3 changes less than the demos imply</title>
+      <link>https://kubaik.github.io/http3-changes-less-than-the-demos-imply/</link>
+      <description>HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.</description>
+      <pubDate>Sat, 24 Oct 2026 03:52:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/http3-changes-less-than-the-demos-imply/</guid>
+    </item>
+    <item>
+      <title>Agentic systems: architecture principles that hold</title>
+      <link>https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/</link>
+      <description>How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</description>
+      <pubDate>Fri, 23 Oct 2026 16:44:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/</guid>
+    </item>
+    <item>
+      <title>Agent code review: 7 traps that slip through</title>
+      <link>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</link>
+      <description>Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</description>
+      <pubDate>Fri, 23 Oct 2026 03:59:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</guid>
+    </item>
+    <item>
+      <title>OAuth 2.1 migration: what breaks in existing integrations</title>
+      <link>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</link>
+      <description>OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration.</description>
+      <pubDate>Thu, 22 Oct 2026 16:52:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</guid>
+    </item>
+    <item>
+      <title>Velocity Up, Ownership Down: Team Scaling Trap</title>
+      <link>https://kubaik.github.io/velocity-up-ownership-down-team-scaling-trap/</link>
+      <description>A practical framework for finding ownership blur, assigning accountable owners, and enforcing it with CODEOWNERS, CI checks, and incident tooling.</description>
+      <pubDate>Thu, 22 Oct 2026 03:52:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/velocity-up-ownership-down-team-scaling-trap/</guid>
+    </item>
+    <item>
+      <title>Remote premium rates: skills AI can&apos;t copy</title>
+      <link>https://kubaik.github.io/remote-premium-rates-skills-ai-cant-copy/</link>
+      <description>Four drills for remote engineers: latency budgets, evidence-based diagnosis, decision records and handoff artifacts that outlast the work.</description>
+      <pubDate>Wed, 21 Oct 2026 08:45:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-premium-rates-skills-ai-cant-copy/</guid>
+    </item>
+    <item>
+      <title>Docs that survive: the bus factor fix</title>
+      <link>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</link>
+      <description>How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</description>
+      <pubDate>Wed, 21 Oct 2026 03:54:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</guid>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redis Articles — Kubai Kevin</title>
+  <meta name="description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Rate limiters: burst vs abuse, two designs,&quot; &quot;Dead-letter queues: stop poison messages,&quot; and &quot;Memory Systems for Production Agents&quot;.">
+  <meta name="robots" content="index, follow">
+  <meta name="base-path" content="">
+  <link rel="canonical" href="https://kubaik.github.io/tag/redis/">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+  <script src="/static/consent.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Redis Articles — Kubai Kevin">
+  <meta property="og:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Rate limiters: burst vs abuse, two designs,&quot; &quot;Dead-letter queues: stop poison messages,&quot; and &quot;Memory Systems for Production Agents&quot;.">
+  <meta property="og:url" content="https://kubaik.github.io/tag/redis/">
+  <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Redis Articles — Kubai Kevin">
+  <meta name="twitter:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Rate limiters: burst vs abuse, two designs,&quot; &quot;Dead-letter queues: stop poison messages,&quot; and &quot;Memory Systems for Production Agents&quot;.">
+  <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
+  <meta name="twitter:site" content="@KubaiKevin">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage",
+    "name":"Redis Articles","url":"https://kubaik.github.io/tag/redis/",
+    "description":"Articles on Redis covering practical, hands-on approaches to redis for software developers, including \"Rate limiters: burst vs abuse, two designs,\" \"Dead-letter queues: stop poison messages,\" and \"Memory Systems for Production Agents\"."}
+  </script>
+</head>
+<body>
+  <header><div class="container">
+    <h1><a href="/">Kubai Kevin</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div></header>
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">Redis</span>
+    </nav>
+    <h2>56 articles tagged <em>Redis</em></h2>
+    <div class="post-grid">
+
+      <a class="post-card" href="/rate-limiters-burst-vs-abuse-two-designs/">
+        <h3>Rate limiters: burst vs abuse, two designs</h3>
+        <p class="post-excerpt">Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.</p>
+        <p class="post-reading-time">15 min read · 11 October 2026</p>
+      </a>
+      <a class="post-card" href="/dead-letter-queues-stop-poison-messages/">
+        <h3>Dead-letter queues: stop poison messages</h3>
+        <p class="post-excerpt">Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
+        <p class="post-reading-time">15 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/memory-systems-for-production-agents/">
+        <h3>Memory Systems for Production Agents</h3>
+        <p class="post-excerpt">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+        <p class="post-reading-time">11 min read · 15 September 2026</p>
+      </a>
+      <a class="post-card" href="/stop-assuming-payment-apis-never-fail/">
+        <h3>Stop assuming payment APIs never fail</h3>
+        <p class="post-excerpt">How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&#x27;t break checkout.</p>
+        <p class="post-reading-time">13 min read · 13 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-your-routing-layer-will-collapse-at-scale/">
+        <h3>Why your routing layer will collapse at scale</h3>
+        <p class="post-excerpt">How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+        <p class="post-reading-time">12 min read · 4 September 2026</p>
+      </a>
+      <a class="post-card" href="/idp-for-ai-2026-stack-evolution/">
+        <h3>IDP for AI: 2026 stack evolution</h3>
+        <p class="post-excerpt">How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.</p>
+        <p class="post-reading-time">14 min read · 2 September 2026</p>
+      </a>
+      <a class="post-card" href="/prevent-ownership-drift-when-velocity-explodes/">
+        <h3>Prevent ownership drift when velocity explodes</h3>
+        <p class="post-excerpt">How to keep clear ownership of caches, SLOs and services when teams ship faster: deployment boundaries, error budgets, stampede locks and useful telemetry.</p>
+        <p class="post-reading-time">15 min read · 29 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-features-rot-faster-than-you-build-them/">
+        <h3>AI features rot faster than you build them</h3>
+        <p class="post-excerpt">Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.</p>
+        <p class="post-reading-time">15 min read · 27 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+        <h3>AI on slow networks: Nairobi teams' 2026 playbook</h3>
+        <p class="post-excerpt">How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+        <p class="post-reading-time">13 min read · 26 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-errors-hide-in-plain-latency/">
+        <h3>AI errors hide in plain latency</h3>
+        <p class="post-excerpt">Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
+        <p class="post-reading-time">10 min read · 21 August 2026</p>
+      </a>
+      <a class="post-card" href="/evolve-your-monolith-without-rewriting-in-2026/">
+        <h3>Evolve your monolith without rewriting in 2026</h3>
+        <p class="post-excerpt">A three-layer FastAPI layout (API, domain, infra) that keeps a monolith evolvable: worked code, failure modes, cache stampede fixes, and how to measure.</p>
+        <p class="post-reading-time">15 min read · 19 August 2026</p>
+      </a>
+      <a class="post-card" href="/replace-managed-services-with-postgres-17/">
+        <h3>Replace managed services with Postgres 17</h3>
+        <p class="post-excerpt">How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.</p>
+        <p class="post-reading-time">14 min read · 16 August 2026</p>
+      </a>
+      <a class="post-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
+        <h3>Rust SDK vs FastAPI for LLM ops: trust in 2026</h3>
+        <p class="post-excerpt">How to compare a compiled Rust inference service against a Python async API for LLM serving: cold starts, cache stampedes, memory, and how to measure each.</p>
+        <p class="post-reading-time">10 min read · 14 August 2026</p>
+      </a>
+      <a class="post-card" href="/senior-engineer-title-inflation-in-2026/">
+        <h3>Senior engineer title inflation in 2026</h3>
+        <p class="post-excerpt">How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+        <p class="post-reading-time">11 min read · 13 August 2026</p>
+      </a>
+      <a class="post-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
+        <h3>Spot evictions: the retry logic that holds up</h3>
+        <p class="post-excerpt">Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+        <p class="post-reading-time">13 min read · 12 August 2026</p>
+      </a>
+      <a class="post-card" href="/orchestration-tax-kills-multi-agent-systems/">
+        <h3>Orchestration tax kills multi-agent systems</h3>
+        <p class="post-excerpt">Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/starlink-in-production-what-changed-in-our-stack/">
+        <h3>Designing APIs for High-Latency Satellite Links</h3>
+        <p class="post-excerpt">How to keep an API reliable over high-latency satellite links: circuit breakers, retry budgets, failover gateways, and the metrics that show what broke.</p>
+        <p class="post-reading-time">14 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
+        <h3>Cost-Effective AI Infrastructure for Micro-SaaS</h3>
+        <p class="post-excerpt">How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
+        <p class="post-reading-time">15 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/senior-role-projects-3-real-paths/">
+        <h3>Senior role projects: 3 real paths</h3>
+        <p class="post-excerpt">Build three portfolio projects that demonstrate tenant isolation, retry-storm handling, and event sourcing, with concrete ways to measure each claim.</p>
+        <p class="post-reading-time">16 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/event-driven-beats-agent-driven-910-times/">
+        <h3>Event-driven systems avoid agent-driven contention</h3>
+        <p class="post-excerpt">How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.</p>
+        <p class="post-reading-time">15 min read · 30 July 2026</p>
+      </a>
+      <a class="post-card" href="/built-a-multi-agent-system-without-langgraph/">
+        <h3>Built a multi-agent system without LangGraph</h3>
+        <p class="post-excerpt">Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.</p>
+        <p class="post-reading-time">13 min read · 27 July 2026</p>
+      </a>
+      <a class="post-card" href="/context-windows-live-longer-than-you-think/">
+        <h3>Context windows live longer than you think</h3>
+        <p class="post-excerpt">Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.</p>
+        <p class="post-reading-time">13 min read · 25 July 2026</p>
+      </a>
+      <a class="post-card" href="/edge-agents-vs-cloud-round-trips-in-2026/">
+        <h3>Edge agents vs cloud round-trips in 2026</h3>
+        <p class="post-excerpt">A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.</p>
+        <p class="post-reading-time">11 min read · 23 July 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-workflows-how-we-kept-the-lights/">
+        <h3>Observability for Long-Running LLM Agent Workflows</h3>
+        <p class="post-excerpt">Design an observability stack for agentic LLM workloads: millisecond event timestamps, queue-depth metrics, and bounded buffering that survives outages.</p>
+        <p class="post-reading-time">14 min read · 17 July 2026</p>
+      </a>
+      <a class="post-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
+        <h3>Stabilize multi-model agent routers: six production rules</h3>
+        <p class="post-excerpt">Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.</p>
+        <p class="post-reading-time">15 min read · 15 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-context-short-term-vs-long-term-memory/">
+        <h3>Agent context: short-term vs long-term memory</h3>
+        <p class="post-excerpt">Compare Redis-style short-term agent context with Postgres event logs: latency, durability, auditability, cost, and how to measure each.</p>
+        <p class="post-reading-time">15 min read · 9 July 2026</p>
+      </a>
+      <a class="post-card" href="/observe-llm-features-90-faster/">
+        <h3>Observability for LLM Features: Metrics That Drive Decisions</h3>
+        <p class="post-excerpt">Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.</p>
+        <p class="post-reading-time">14 min read · 8 July 2026</p>
+      </a>
+      <a class="post-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
+        <h3>7 ways to measure prompt platform ROI in 2026</h3>
+        <p class="post-excerpt">How to attribute token cost, latency and developer time to prompt and agent platforms, with instrumentation recipes, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">14 min read · 8 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-feature-drift-why-your-model-died-at-midnight/">
+        <h3>AI feature drift: why your model died at midnight</h3>
+        <p class="post-excerpt">Diagnose nightly AI model drift and FeatureStoreKeyNotFound errors: tokenizer drift, memory fragmentation, and cold-start timeouts, with fixes.</p>
+        <p class="post-reading-time">14 min read · 7 July 2026</p>
+      </a>
+      <a class="post-card" href="/build-agent-workflows-that-survive-restarts/">
+        <h3>Build agent workflows that survive restarts</h3>
+        <p class="post-excerpt">How to build agent task pipelines that resume after crashes, schema drift and model changes, using Redis streams, idempotent steps and replay.</p>
+        <p class="post-reading-time">12 min read · 6 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">
+        <h3>AI in slow networks: why models flop where data costs rise</h3>
+        <p class="post-excerpt">How to cut payload size, round-trips and cost for AI features on 2G/3G networks, with a worked ASR example, failure modes and a measurement checklist.</p>
+        <p class="post-reading-time">14 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+        <h3>AI agents: circuit breakers are not optional</h3>
+        <p class="post-excerpt">AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
+        <p class="post-reading-time">13 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/serve-4g-as-baseline-apps-in-2026/">
+        <h3>Serve 4G-as-baseline apps in 2026</h3>
+        <p class="post-excerpt">Design APIs for 300 ms RTT, packet loss and data caps: payload budgets, stale-while-revalidate caching, adaptive fetch and honest measurement.</p>
+        <p class="post-reading-time">14 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-memory-systems-context-that-survives-sessions/">
+        <h3>AI memory systems: context that survives sessions</h3>
+        <p class="post-excerpt">Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.</p>
+        <p class="post-reading-time">12 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/postgres-17-swallowed-redis-kafka-timescale/">
+        <h3>Postgres 17 swallowed Redis, Kafka, Timescale</h3>
+        <p class="post-excerpt">How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.</p>
+        <p class="post-reading-time">14 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-killed-dev-tool-sales-cycles/">
+        <h3>AI agents killed dev tool sales cycles</h3>
+        <p class="post-excerpt">How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.</p>
+        <p class="post-reading-time">10 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/9-vibe-coding-traps-that-break-production-code/">
+        <h3>9 Vibe coding traps that break production code</h3>
+        <p class="post-excerpt">Nine patterns that make AI-assisted prototypes fail under load, with the instrumentation to catch each one before it reaches production.</p>
+        <p class="post-reading-time">11 min read · 1 July 2026</p>
+      </a>
+      <a class="post-card" href="/bank-apis-broke-under-african-2g/">
+        <h3>Bank APIs broke under African 2G</h3>
+        <p class="post-excerpt">Why aggressive caching and remote idempotency stores fail on flaky 2G/3G links, and how to instrument, measure, and redesign balance endpoints for it.</p>
+        <p class="post-reading-time">14 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/monolith-to-services-without-a-rewrite/">
+        <h3>Monolith to services without a rewrite</h3>
+        <p class="post-excerpt">Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.</p>
+        <p class="post-reading-time">14 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/starlink-4g-fallback-serve-pages-under-800ms/">
+        <h3>Starlink 4G fallback: serve pages under 800ms</h3>
+        <p class="post-excerpt">How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.</p>
+        <p class="post-reading-time">13 min read · 26 June 2026</p>
+      </a>
+      <a class="post-card" href="/postgres-17-buried-redis-s3-cron/">
+        <h3>Postgres 17 buried Redis, S3, cron</h3>
+        <p class="post-excerpt">How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 26 June 2026</p>
+      </a>
+      <a class="post-card" href="/webhooks-done-right-retries-that-dont-explode-in-2026/">
+        <h3>Webhooks done right: retries that don’t explode in 2026</h3>
+        <p class="post-excerpt">A practical guide to webhook delivery: idempotency, retry budgets, silent rate limits, poison-message triage, and what to instrument before you scale.</p>
+        <p class="post-reading-time">10 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/store-data-once-serve-everywhere-cheaper/">
+        <h3>Store data once, serve everywhere: cheaper</h3>
+        <p class="post-excerpt">How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.</p>
+        <p class="post-reading-time">12 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-abuse-patterns-rising-in-2026/">
+        <h3>API abuse patterns rising in 2026</h3>
+        <p class="post-excerpt">A layered architecture for stopping credential stuffing and scraping: client integrity tokens, cohort-based rate limiting, and behavioral scoring at the CDN edge.</p>
+        <p class="post-reading-time">12 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/json-modes-silent-failures-exposed/">
+        <h3>JSON mode’s silent failures exposed</h3>
+        <p class="post-excerpt">JSON mode enforces grammar, not your contract. Here is how to build a schema-validated envelope pipeline with deterministic repair and quarantine.</p>
+        <p class="post-reading-time">11 min read · 21 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-stole-system-design/">
+        <h3>AI stole system design</h3>
+        <p class="post-excerpt">AI can generate a polished system design in seconds. Here is how to redesign interviews around live debugging so you test real understanding.</p>
+        <p class="post-reading-time">11 min read · 21 June 2026</p>
+      </a>
+      <a class="post-card" href="/vibe-code-works-great-fails-forever/">
+        <h3>Vibe code: works great, fails forever</h3>
+        <p class="post-excerpt">Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-attacks-rising-40-the-3-patterns-to-block-now/">
+        <h3>Defending APIs Against Amplification, Stuffing and Smuggling</h3>
+        <p class="post-excerpt">How cache-stampede amplification, credential stuffing and HTTP/2 request smuggling work, plus edge admission, idempotency keys and circuit breakers that blunt them.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/">
+        <h3>Tiered API abuse defense: match cost to attacker economics</h3>
+        <p class="post-excerpt">Five API abuse patterns that inflate cloud bills, why edge-only blocking fails, and how to build tiered defenses with measurable cost-per-request targets.</p>
+        <p class="post-reading-time">11 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/regulations-forced-better-apis-the-2026-fintech/">
+        <h3>Regulations forced better APIs: the 2026 fintech</h3>
+        <p class="post-excerpt">Why payment APIs need durable state machines, explicit retry policies, and status endpoints that survive restarts — and when the old synchronous playbook still works.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/webhooks-2026-retries-idempotency-and-the-9995/">
+        <h3>Webhook Delivery: Retries, Idempotency, and Durability</h3>
+        <p class="post-excerpt">Design reliable webhook ingestion with durable buffering, idempotency keys, bounded retries, and circuit breakers, plus how to measure each guarantee.</p>
+        <p class="post-reading-time">11 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/tool-calling-stateless-beats-stateful-under-load/">
+        <h3>Tool calling: stateless beats stateful under load</h3>
+        <p class="post-excerpt">How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.</p>
+        <p class="post-reading-time">11 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/why-monoliths-die-slowly-in-2026/">
+        <h3>Why monoliths die slowly in 2026</h3>
+        <p class="post-excerpt">Monolith decomposition usually fails on data locality, not routing. A step-by-step order for extracting data first, routing traffic later, with checks.</p>
+        <p class="post-reading-time">13 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-interviews-4-questions-that-caught-80-of-weak/">
+        <h3>AI Interviews: Four Resilience Questions That Matter</h3>
+        <p class="post-excerpt">AI screening interviews grade production resilience, not algorithm puzzles. Learn the four fault-injection questions and how to measure candidate fixes.</p>
+        <p class="post-reading-time">13 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-native-apps-forget-the-old-stack/">
+        <h3>AI-native apps: forget the old stack</h3>
+        <p class="post-excerpt">LLM-backed services are token-bound, stateful and failure-prone. Learn the failure modes, how to measure them, and patterns that contain them.</p>
+        <p class="post-reading-time">10 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/rag-in-prod-what-tutorials-wont-tell-you/">
+        <h3>RAG in prod: what tutorials won’t tell you</h3>
+        <p class="post-excerpt">Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.</p>
+        <p class="post-reading-time">14 min read · 8 June 2026</p>
+      </a>
+    </div>
+  </main>
+  <footer><div class="container">
+    <p>&copy; 2026 Kubai Kevin</p>
+  </div></footer>
+</body>
+</html>

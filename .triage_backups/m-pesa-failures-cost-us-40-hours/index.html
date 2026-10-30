@@ -1,0 +1,629 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>M-Pesa failures cost us 40 hours - Kubai Kevin</title>
+        <meta name="description" content="How to build idempotent, resilient webhook pipelines for M-Pesa, Paystack and Flutterwave APIs, including retries, deduplication and failure modes.">
+        <meta name="keywords" content="Ai, Flutter">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-01T14:05:22.082759">
+        <meta property="article:modified_time" content="2026-10-04T10:16:03.118501+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="M-Pesa failures cost us 40 hours">
+        <meta property="og:description" content="How to build idempotent, resilient webhook pipelines for M-Pesa, Paystack and Flutterwave APIs, including retries, deduplication and failure modes.">
+        <meta property="og:url" content="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/m-pesa-failures-cost-us-40-hours.png">
+        <meta property="og:image:alt" content="M-Pesa failures cost us 40 hours">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="M-Pesa failures cost us 40 hours">
+        <meta name="twitter:description" content="How to build idempotent, resilient webhook pipelines for M-Pesa, Paystack and Flutterwave APIs, including retries, deduplication and failure modes.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/m-pesa-failures-cost-us-40-hours.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/#article",
+      "headline": "M-Pesa failures cost us 40 hours",
+      "description": "How to build idempotent, resilient webhook pipelines for M-Pesa, Paystack and Flutterwave APIs, including retries, deduplication and failure modes.",
+      "datePublished": "2026-08-01T14:05:22+00:00",
+      "dateModified": "2026-10-04T10:16:03+00:00",
+      "wordCount": 2408,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/"
+      },
+      "keywords": "Ai, Flutter",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/m-pesa-failures-cost-us-40-hours.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "M-Pesa failures cost us 40 hours",
+          "item": "https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>M-Pesa failures cost us 40 hours</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">M-Pesa failures cost us 40 hours</h1>
+                
+                <p class="post-lead">How to build idempotent, resilient webhook pipelines for M-Pesa, Paystack and Flutterwave APIs, including retries, deduplication and failure modes.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/flutter/"
+                       style="text-decoration:none;">Flutter</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2408 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-provider-documentation-is-not-a-reliability-contract">Why provider documentation is not a reliability contract</h2>
+<p>Payment provider documentation describes what an API returns under normal conditions. It rarely describes what happens when a webhook arrives twice, when a retry window closes, or when a signature timestamp drifts. Teams integrating M-Pesa, Paystack or Flutterwave commonly discover these behaviours only after real traffic arrives.</p>
+<p>A typical failure mode looks like this: an application acknowledges a webhook within the provider's timeout, but the handler does more work than the timeout allows. If the fraud check, database write and downstream notification together take longer than the provider's patience, the provider treats the delivery as failed and retries. The retry may arrive while the first attempt is still running, producing duplicate writes unless the handler is idempotent.</p>
+<p>The practical conclusion is to treat provider callbacks as an unreliable message queue rather than as fire-and-forget HTTP requests. Once callbacks may arrive late, out of order, duplicated or never, the architecture changes. The provider is no longer the source of truth for delivery; the application's own durable log is.</p>
+<h2 id="a-reference-architecture-for-payment-webhooks">A reference architecture for payment webhooks</h2>
+<p>The pattern below decouples ingestion from processing. It has four layers:</p>
+<ol>
+<li><strong>Ingress service.</strong> A lightweight HTTP service that accepts webhooks from all providers. It validates signatures, records the raw payload with a unique event ID, and appends a message to a durable log. It does not run inference or perform long database work.</li>
+<li><strong>Durable log.</strong> A message queue or stream with consumer groups. Each provider gets its own stream key, for example <code>m_pesa_c2b</code>, <code>paystack_webhook</code>, <code>flutterwave_event</code>. Ordering within a stream is preserved; consumer groups allow multiple workers to share the load without losing messages.</li>
+<li><strong>Processing workers.</strong> Services that pull messages, run fraud scoring or other business logic, and update payment state. The critical property is idempotency: the same message may be delivered more than once, and processing it repeatedly must not create duplicate effects.</li>
+<li><strong>Reconciliation scheduler.</strong> A periodic job that finds events older than a threshold and requeues them. This catches messages lost during a broker restart or a worker crash.</li>
+</ol>
+<p>The trade-off is added latency between webhook receipt and final state. For payment flows where a delay of a few minutes is acceptable, this is usually the right trade. For flows that require synchronous confirmation, it is not.</p>
+<h2 id="ingress-service">Ingress service</h2>
+<p>The ingress service should do the minimum possible work before acknowledging the provider. Signature validation, payload parsing and enqueueing are the only responsibilities.</p>
+<pre><code class="language-python"># main.py
+from fastapi import FastAPI, Request, HTTPException
+import redis.asyncio as redis
+import json
+import hashlib
+import hmac
+from datetime import datetime, timezone
+
+app = FastAPI()
+
+redis_client = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0, decode_responses=True)
+
+PROVIDER_SECRETS = {
+    &quot;m_pesa&quot;: &quot;your_m_pesa_passkey&quot;,
+    &quot;paystack&quot;: &quot;your_paystack_secret&quot;,
+    &quot;flutterwave&quot;: &quot;your_flutterwave_secret&quot;,
+}
+
+@app.post(&quot;/webhook/{provider}&quot;)
+async def receive_webhook(provider: str, request: Request):
+    if provider not in PROVIDER_SECRETS:
+        raise HTTPException(status_code=400, detail=&quot;Unknown provider&quot;)
+
+    body = await request.body()
+    signature = request.headers.get(&quot;X-{}-Signature&quot;.format(provider.title()))
+
+    expected = hmac.new(
+        PROVIDER_SECRETS[provider].encode(),
+        body,
+        hashlib.sha256
+    ).hexdigest()
+
+    if not signature or not hmac.compare_digest(expected, signature):
+        raise HTTPException(status_code=401, detail=&quot;Invalid signature&quot;)
+
+    try:
+        payload = await request.json()
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail=&quot;Invalid JSON&quot;)
+
+    event_id = f&quot;{provider}:{payload.get('id', datetime.now(timezone.utc).isoformat())}&quot;
+    stream_key = f&quot;{provider}_webhooks&quot;
+
+    message = {
+        &quot;event_id&quot;: event_id,
+        &quot;provider&quot;: provider,
+        &quot;payload&quot;: payload,
+        &quot;received_at&quot;: datetime.now(timezone.utc).isoformat(),
+    }
+
+    await redis_client.xadd(
+        stream_key,
+        {&quot;data&quot;: json.dumps(message)},
+        maxlen=10000,
+        approximate=True
+    )
+
+    return {&quot;status&quot;: &quot;enqueued&quot;, &quot;event_id&quot;: event_id}
+</code></pre>
+<p>Design notes:</p>
+<ul>
+<li>A single generic route handles all providers. Provider-specific parsing belongs in the worker, not in the request path.</li>
+<li><code>hmac.compare_digest</code> avoids timing side channels when comparing signatures.</li>
+<li><code>XADD</code> with <code>maxlen</code> caps stream memory. The exact memory footprint depends on payload size and the trim policy; measure it rather than assuming a figure.</li>
+<li>The event ID is prefixed with the provider name to avoid collisions between providers.</li>
+<li>The handler returns as soon as the message is enqueued. No inference, no external calls.</li>
+</ul>
+<h2 id="worker-service">Worker service</h2>
+<p>The worker pulls from the stream, runs the fraud model, and writes to Postgres. Two properties matter: idempotency and failure isolation.</p>
+<pre><code class="language-python"># worker.py
+import asyncio
+import json
+import logging
+from datetime import datetime, timezone
+import redis.asyncio as redis
+import psycopg
+from psycopg_pool import AsyncConnectionPool
+from pybreaker import CircuitBreaker
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+
+MODEL = joblib.load(&quot;/app/fraud_model.joblib&quot;)
+BREAKER = CircuitBreaker(fail_max=5, reset_timeout=30)
+
+pg_pool = AsyncConnectionPool(
+    conninfo=&quot;postgresql://user:pass@localhost:5432/payments&quot;,
+    min_size=2,
+    max_size=10,
+    max_waiting=10,
+    timeout=5,
+)
+
+redis_client = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0, decode_responses=True)
+
+def predict_fraud(payload: dict) -&gt; float:
+    features = [
+        float(payload.get(&quot;amount&quot;, 0)),
+        float(payload.get(&quot;customer_age&quot;, 30)),
+        1 if payload.get(&quot;is_first_transaction&quot;, False) else 0,
+        float(payload.get(&quot;hour_of_day&quot;, 12)),
+    ]
+    return float(MODEL.predict_proba([features])[0][1])
+
+async def process_stream(provider: str, consumer_name: str):
+    while True:
+        try:
+            messages = await redis_client.xreadgroup(
+                f&quot;{provider}_consumers&quot;,
+                consumer_name,
+                {f&quot;{provider}_webhooks&quot;: &quot;&gt;&quot;},
+                count=10,
+                block=5000,
+            )
+
+            if not messages:
+                continue
+
+            for stream, message_id, data in messages[0][1]:
+                payload = json.loads(data[&quot;data&quot;])
+                event_id = payload[&quot;event_id&quot;]
+
+                try:
+                    with BREAKER:
+                        risk_score = await asyncio.to_thread(
+                            predict_fraud, payload[&quot;payload&quot;]
+                        )
+
+                    async with pg_pool.connection() as conn:
+                        async with conn.cursor() as cur:
+                            await cur.execute(
+                                &quot;&quot;&quot;
+                                INSERT INTO payment_events
+                                (event_id, provider, payload, risk_score, processed_at)
+                                VALUES (%s, %s, %s, %s, %s)
+                                ON CONFLICT (event_id) DO NOTHING
+                                &quot;&quot;&quot;,
+                                (
+                                    event_id,
+                                    provider,
+                                    json.dumps(payload[&quot;payload&quot;]),
+                                    risk_score,
+                                    datetime.now(timezone.utc),
+                                ),
+                            )
+
+                    await redis_client.xack(
+                        f&quot;{provider}_webhooks&quot;,
+                        f&quot;{provider}_consumers&quot;,
+                        message_id,
+                    )
+
+                except Exception as e:
+                    logging.error(f&quot;Failed to process {event_id}: {e}&quot;)
+
+        except Exception as e:
+            logging.error(f&quot;Stream consumer {consumer_name} crashed: {e}&quot;)
+            await asyncio.sleep(5)
+
+async def main():
+    consumers = [
+        asyncio.create_task(process_stream(&quot;m_pesa&quot;, &quot;mpesa_worker_1&quot;)),
+        asyncio.create_task(process_stream(&quot;paystack&quot;, &quot;paystack_worker_1&quot;)),
+        asyncio.create_task(process_stream(&quot;flutterwave&quot;, &quot;flutterwave_worker_1&quot;)),
+    ]
+    await asyncio.gather(*consumers)
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(main())
+</code></pre>
+<p>Design notes:</p>
+<ul>
+<li><code>XREADGROUP</code> with <code>&gt;</code> delivers new, never-delivered messages to the consumer group.</li>
+<li><code>XACK</code> is called only after the database write succeeds. If the worker crashes before acknowledging, the message remains pending and can be claimed by another consumer.</li>
+<li>The <code>ON CONFLICT (event_id) DO NOTHING</code> clause makes the database write idempotent. A duplicate delivery produces no duplicate row.</li>
+<li>The circuit breaker stops traffic to the model service after repeated failures. It does not solve the underlying problem; it prevents a slow or failing dependency from consuming all worker capacity.</li>
+<li>Model inference runs in a thread so the event loop is not blocked. For CPU-bound models, a separate process pool is usually a better choice.</li>
+<li>The <code>except Exception</code> block logs and continues. The message stays pending, which is the intended retry mechanism. A production system should also track delivery attempts and move poison messages to a dead-letter stream after a bounded number of retries.</li>
+</ul>
+<h2 id="reconciliation-scheduler">Reconciliation scheduler</h2>
+<p>A periodic job scans recent stream entries and moves anything older than the threshold to a dead-letter stream for reprocessing.</p>
+<pre><code class="language-python"># scheduler.py
+import asyncio
+import json
+from datetime import datetime, timedelta, timezone
+import redis.asyncio as redis
+
+redis_client = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0, decode_responses=True)
+
+async def find_late_events():
+    cutoff = datetime.now(timezone.utc) - timedelta(minutes=10)
+
+    for provider in [&quot;m_pesa&quot;, &quot;paystack&quot;, &quot;flutterwave&quot;]:
+        stream_key = f&quot;{provider}_webhooks&quot;
+        messages = await redis_client.xrevrange(stream_key, count=100)
+
+        for message_id, data in messages:
+            payload = json.loads(data[&quot;data&quot;])
+            received_at = datetime.fromisoformat(payload[&quot;received_at&quot;])
+
+            if received_at &lt; cutoff:
+                await redis_client.xadd(
+                    f&quot;{provider}_dlq&quot;,
+                    {&quot;data&quot;: data[&quot;data&quot;]},
+                    maxlen=5000,
+                    approximate=True
+                )
+                await redis_client.xack(
+                    stream_key, f&quot;{provider}_consumers&quot;, message_id
+                )
+                print(f&quot;Requeued late event {message_id} from {provider}&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(find_late_events())
+</code></pre>
+<p>This is deliberately crude. It scans only the last 100 entries per stream, so it will miss older pending messages in a large backlog. A more robust version uses <code>XPENDING</code> to inspect the pending entries list directly, and a bounded retry counter per message.</p>
+<h2 id="measuring-the-pipeline-instead-of-asserting-numbers">Measuring the pipeline instead of asserting numbers</h2>
+<p>Latency and requeue rates are properties of a specific deployment, provider behaviour and traffic shape. They should be measured, not copied from an article.</p>
+<p>To measure webhook latency, record two timestamps per event: the provider's own event timestamp from the payload, and the ingress receipt time. The difference is the delivery latency. Store both in the event row and compute percentiles with a query over a rolling window.</p>
+<p>To measure worker latency, record the ingress receipt time and the time the database write commits. The difference is the processing latency. Persisting both timestamps makes the distribution queryable without adding a metrics dependency.</p>
+<p>To measure requeue rate, count messages moved to the dead-letter stream per provider per day, divided by total events for that provider.</p>
+<p>To measure reconciliation rate, compare the set of provider-side transaction IDs for a period against the set of <code>event_id</code> values in the payment table. The gap is the reconciliation failure set.</p>
+<p>A useful load test is to replay a captured day of webhook payloads at a controlled rate against a staging deployment and watch the pending entries list on each stream. If pending entries grow without bound, workers are the bottleneck. If they stay flat but worker latency rises, the database or model service is the bottleneck.</p>
+<h2 id="failure-modes-and-how-to-handle-them">Failure modes and how to handle them</h2>
+<h3 id="duplicate-deliveries">Duplicate deliveries</h3>
+<p>Providers may retry a delivery even after a successful response, for example if the acknowledgement was lost in transit. Idempotency at the database layer is the only reliable defence. A unique constraint on <code>event_id</code> with <code>ON CONFLICT DO NOTHING</code> is sufficient for simple cases. For side effects outside the database, such as sending an SMS, use an outbox table that is written in the same transaction as the payment update, and a separate process that drains the outbox exactly once.</p>
+<h3 id="out-of-order-arrivals">Out-of-order arrivals</h3>
+<p>A payment may be captured before it is authorised, or a refund may arrive before the original charge. Processing order matters for state transitions. One approach is to store the provider's event timestamp and reject transitions that move state backwards. Another is to buffer events per transaction ID for a short window and apply them in timestamp order.</p>
+<h3 id="signature-validation-failures">Signature validation failures</h3>
+<p>Signature schemes that include a timestamp will reject requests when the server clock drifts. Ensure NTP is running and monitor clock offset. For providers that use a separate webhook secret from the API secret, keep the two in distinct configuration keys to avoid accidental reuse.</p>
+<h3 id="provider-retry-windows">Provider retry windows</h3>
+<p>Providers retry on their own schedule, which is usually documented but not always honoured exactly. Do not rely on the provider's retry to recover from a sustained outage. If the worker pool is down for longer than the provider's retry window, the events are lost from the provider's perspective. The reconciliation scheduler and a periodic pull of provider transaction history are the safety net.</p>
+<h3 id="database-connection-exhaustion">Database connection exhaustion</h3>
+<p>A connection pool with a fixed maximum will reject new connections once saturated. Monitor pool wait time and queue depth. When the pool is exhausted, the correct response is usually to slow down the consumer, not to increase the pool size indefinitely. Increasing the pool shifts the bottleneck to the database server.</p>
+<h3 id="model-service-latency-and-cold-starts">Model service latency and cold starts</h3>
+<p>If the fraud model runs as a separate service, its cold start and tail latency become part of the webhook processing path. Options include keeping a warm replica, using a provisioned concurrency mechanism if the platform offers one, or batching predictions. Each has a cost. The right choice depends on the acceptable p99 for the payment flow.</p>
+<h3 id="redis-memory-growth">Redis memory growth</h3>
+<p>Streams accumulate entries until trimmed. <code>MAXLEN</code> with <code>approximate=True</code> is cheap but not exact; memory can grow above the nominal cap. Monitor <code>used_memory</code> and the stream length. If the broker restarts with AOF persistence, recovery time scales with the size of the append-only file.</p>
+<h3 id="model-drift">Model drift</h3>
+<p>A fraud model trained on historical data will drift as user behaviour changes. Track the distribution of risk scores over time and the rate of manual overrides. A rising override rate is an early signal that retraining is needed. The retraining pipeline should be separate from the serving path.</p>
+<h2 id="when-this-architecture-is-the-wrong-choice">When this architecture is the wrong choice</h2>
+<p>The queue-based pattern is not universal. It is a poor fit when:</p>
+<ul>
+<li><strong>Sub-second synchronous confirmation is required.</strong> The queue adds latency between receipt and final state. If the user must see a confirmed result in the same request, process synchronously and use the queue only for post-processing.</li>
+<li><strong>The provider offers a pull-based reconciliation API.</strong> If the provider exposes a transaction history endpoint, a periodic pull may be simpler and more reliable than relying on webhooks. Webhooks become an optimisation, not the source of truth.</li>
+<li><strong>Regulatory rules require immediate settlement.</strong> Some instant payment schemes mandate synchronous confirmation. In that case the webhook is a notification, not the mechanism of record.</li>
+<li><strong>The event volume is very low.</strong> For a few hundred events per day, a single-process handler with a database unique constraint may be sufficient. Adding a broker increases operational surface for little benefit.</li>
+<li><strong>The team cannot operate a broker.</strong> A managed queue or a database-backed job table may be a better fit than self-hosted Redis or Kafka if there is no operational capacity to run it.</li>
+</ul>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting this pattern, answer these questions:</p>
+<ol>
+<li>What is the maximum acceptable delay between webhook receipt and final payment state?</li>
+<li>Does the provider expose a transaction history endpoint that can be polled for reconciliation?</li>
+<li>What is the provider's documented retry schedule, and what happens after the final retry?</li>
+<li>Can every downstream side effect be made idempotent, or is an outbox required?</li>
+<li>What is the p99 latency of the slowest step in the processing path, and does it fit within the provider's acknowledgement timeout?</li>
+<li>How will duplicate and out-of-order events be detected in production, not just in tests?</li>
+<li>What is the plan when the broker itself is unavailable?</li>
+<li>Who is paged when the dead-letter stream grows?</li>
+</ol>
+<h2 id="next-30-minutes">Next 30 minutes</h2>
+<p>Open the webhook handler for one payment provider and add two columns to the event table: <code>provider_event_timestamp</code> and <code>ingress_received_at</code>. Deploy the change and start recording both values. Within a day, query the p99 of <code>ingress_received_at - provider_event_timestamp</code> per provider. That single number tells you whether the current architecture is absorbing provider latency or merely hiding it until the next traffic spike.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
+<li><a href="https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://developer.flutterwave.com/docs">Flutterwave documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-payments-break-in-m-pesa-first/">
+                        <h3>AI payments break in M-Pesa first</h3>
+                        <p>Payment webhooks arrive duplicated and out of order. Here is how to normalize provider events, dedupe them, and reconcile an AI feature store safely.</p>
+                        <span class="related-meta">14 min read · 23 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-features-m-pesa-paystack-flutterwave-traps/">
+                        <h3>AI features: M-Pesa, Paystack, Flutterwave traps</h3>
+                        <p>Payment webhooks from M-Pesa, Paystack and Flutterwave disagree on timing, idempotency and error semantics. Here is how to normalize them before an AI feature reads them.</p>
+                        <span class="related-meta">12 min read · 23 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
+                        <h3>Stop assuming payment APIs never fail</h3>
+                        <p>How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
+                        <span class="related-meta">13 min read · 13 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

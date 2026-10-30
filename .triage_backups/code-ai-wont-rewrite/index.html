@@ -1,0 +1,508 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code AI won’t rewrite - Kubai Kevin</title>
+        <meta name="description" content="How to use static analysis, a local LLM, and a structured prompt to map, test, and safely refactor legacy code without inventing risk.">
+        <meta name="keywords" content="Legacy, SemgrepLegacyCode, Localai2.5, AiStaticAnalysis, Github, Ai, Localai25">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-18T17:53:30.210099">
+        <meta property="article:modified_time" content="2026-10-07T05:01:50.728443+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Code AI won’t rewrite">
+        <meta property="og:description" content="How to use static analysis, a local LLM, and a structured prompt to map, test, and safely refactor legacy code without inventing risk.">
+        <meta property="og:url" content="https://kubaik.github.io/code-ai-wont-rewrite/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/code-ai-wont-rewrite.png">
+        <meta property="og:image:alt" content="Code AI won’t rewrite">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Code AI won’t rewrite">
+        <meta name="twitter:description" content="How to use static analysis, a local LLM, and a structured prompt to map, test, and safely refactor legacy code without inventing risk.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/code-ai-wont-rewrite.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/code-ai-wont-rewrite/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/code-ai-wont-rewrite/#article",
+      "headline": "Code AI won’t rewrite",
+      "description": "How to use static analysis, a local LLM, and a structured prompt to map, test, and safely refactor legacy code without inventing risk.",
+      "datePublished": "2026-06-18T17:53:30+00:00",
+      "dateModified": "2026-10-07T05:01:50+00:00",
+      "wordCount": 2339,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/code-ai-wont-rewrite/"
+      },
+      "keywords": "Legacy, SemgrepLegacyCode, Localai2.5, AiStaticAnalysis, Github, Ai, Localai25",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/code-ai-wont-rewrite.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Code AI won’t rewrite",
+          "item": "https://kubaik.github.io/code-ai-wont-rewrite/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Code AI won’t rewrite</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Code AI won’t rewrite</h1>
+                
+                <p class="post-lead">How to use static analysis, a local LLM, and a structured prompt to map, test, and safely refactor legacy code without inventing risk.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/legacy/"
+                       style="text-decoration:none;">Legacy</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SemgrepLegacyCode</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Localai2.5</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/github/"
+                       style="text-decoration:none;">Github</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2339 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-07
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-legacy-code-resists-ordinary-maintenance">Why legacy code resists ordinary maintenance</h2>
+<p>Legacy codebases are not simply old. They are codebases that have outlived the people who understood them. The business still depends on them, but nobody remembers why <code>retryFailedTransactions()</code> retries exactly three times, or why a cron job runs at <code>0 3 * * *</code> in a timezone where nobody is awake to watch it.</p>
+<p>The documentation is usually missing, wrong, or written for a different stack. Pull requests sit for weeks because reviewers treat the legacy system as a black box. A common failure mode is a team rewriting an entire module only to discover that the new version broke something subtle — a nightly batch job that depended on a side effect in the old code, for example.</p>
+<p>Worse, the failure is often silent. A connection pool can drain because threads are stuck waiting on a timeout that never fires, while the logs stay quiet and the metrics dashboard shows nothing. The symptom only becomes visible when you dump the pool state with a tool like VisualVM and see hundreds of threads holding connections. The lesson generalizes: legacy code does not just break, it hides.</p>
+<p>Most teams respond with more meetings, more documentation, and more code review. Meetings do not run the batch job at 3 AM. Documentation does not catch a typo in an endpoint name that has survived since 2018. Code review cannot stop the next engineer from pasting a decade-old snippet into a critical path.</p>
+<p>AI changes the economics here — not because it is smart, but because it is fast and repeatable. It will not replace the engineer, but it can shorten the time it takes to understand unfamiliar code.</p>
+<h2 id="what-ai-assisted-legacy-work-actually-looks-like">What AI-assisted legacy work actually looks like</h2>
+<p>The key is not to ask AI to maintain the code. It is to ask it to help you <em>understand</em> it.</p>
+<p>A workable loop has four stages:</p>
+<ol>
+<li><strong>Static analysis pass.</strong> Run a linter or pattern matcher across the whole codebase to find candidate problems. Semgrep is one common choice; it accepts a custom ruleset and emits JSON. Typical legacy antipatterns worth flagging include <code>SimpleDateFormat</code>, <code>eval()</code>, and SQL built by string concatenation.</li>
+<li><strong>Context assembly.</strong> For each finding, collect the surrounding function, its callers, and any relevant deployment facts (timezone, container runtime, database engine).</li>
+<li><strong>Model query.</strong> Ask a model to explain the function, list the top risks of changing it, and propose a safer refactor with the tests that would be needed.</li>
+<li><strong>Human review.</strong> You pick the finding with the highest impact and lowest change risk, then write the test first.</li>
+</ol>
+<p>A prompt that works well for step 3 looks like this:</p>
+<pre><code>You are a senior engineer reviewing legacy code.
+
+Context: This is a monolith written in Java 8 and Python 2.7. It runs batch jobs
+nightly and serves an API used in Colombia and Mexico. The team is remote,
+timezone-diverse, and no one remembers why the code looks like this.
+
+Task:
+- Explain what this function does.
+- List the top 3 risks if we change it.
+- Suggest a safer refactor and the tests we need to add.
+- Return JSON only. No markdown.
+</code></pre>
+<p>The context block matters more than the task block. A model that does not know the code runs in containers will not flag a dependency on a file lock in <code>/tmp</code>. A model that does know will flag it immediately. That is not intelligence; it is breadth, and you supply the breadth.</p>
+<p>To feed findings into that prompt, a shell pipeline is enough:</p>
+<pre><code class="language-bash">semgrep --config=./legacy-rules.yaml --json \
+  | jq -r '.results[] | &quot;\(.path):\(.start.line)-\(.end.line)&quot;' \
+  &gt; findings.txt
+</code></pre>
+<p>From there, a small script reads each finding, extracts the function body, and calls a local model. Running the model locally avoids shipping proprietary source code to a third party — a hard requirement in many regulated environments.</p>
+<h2 id="worked-example-a-timezone-bug-that-no-profiler-shows">Worked example: a timezone bug that no profiler shows</h2>
+<p>Consider a Java service that stores transaction timestamps as <code>java.util.Date</code> and runs a nightly report. Suppose the application runs in a region at UTC-5 and the database stores UTC. The report query groups by date:</p>
+<pre><code class="language-java">public void generateDailyReport() {
+    Date start = new Date(); // uses the JVM default time zone
+    ...
+}
+</code></pre>
+<p>And the SQL contains something like <code>GROUP BY DATE(start)</code>.</p>
+<p>Now reason through what happens at a daylight-saving transition, assuming the region observes DST and the transition shifts local time by one hour:</p>
+<ul>
+<li>Before the transition, local 02:00 maps to UTC 07:00.</li>
+<li>After the transition, local 02:00 maps to UTC 06:00.</li>
+<li>A job scheduled at local 02:00 therefore produces a UTC timestamp one hour earlier on the transition day.</li>
+<li>If the report groups by the database server's local date rather than UTC, one hour of transactions falls into the wrong bucket.</li>
+</ul>
+<p>The arithmetic is simple: one hour of transactions is misclassified, and no exception is thrown. This is the class of bug that <code>jstack</code>, <code>jvisualvm</code>, and similar tools will never surface, because nothing is stuck and nothing is slow. The tooling is looking at the wrong layer.</p>
+<p>A model given the full class and this prompt:</p>
+<blockquote>
+<p>Analyze this Java class for timezone-sensitive operations. Return a list of methods that may produce inconsistent results during daylight-saving transitions.</p>
+</blockquote>
+<p>will typically flag the <code>new Date()</code> call and the date-grouping SQL. Candidate fixes include:</p>
+<ul>
+<li>Set the JVM default timezone explicitly at startup, e.g. <code>TimeZone.setDefault(TimeZone.getTimeZone("UTC"))</code>.</li>
+<li>Use <code>java.time.ZonedDateTime</code> or <code>Instant</code> in new code instead of <code>java.util.Date</code>.</li>
+<li>Backfill or reinterpret historical timestamps consistently, and make the database session timezone explicit.</li>
+</ul>
+<p>Each of these has a cost. Setting the default timezone changes behavior for every other component that relied on the implicit local zone, so it must be verified against the whole application, not just the report. That verification is the actual work; the model's contribution is pointing at the right line.</p>
+<h2 id="failure-mode-analysis-where-this-approach-breaks">Failure-mode analysis: where this approach breaks</h2>
+<p>AI-assisted legacy work fails in predictable ways. Knowing them in advance saves time.</p>
+<ul>
+<li><strong>Hallucinated APIs.</strong> A model may suggest a method that does not exist in the version of the library you use. Always check the suggestion against the actual dependency version before applying it.</li>
+<li><strong>Confident wrong fixes.</strong> A model can propose a refactor that changes behavior in a way it did not notice. This is why the test comes before the change, not after.</li>
+<li><strong>Stale context.</strong> If you feed the model a function without its callers, it will optimize the function in isolation. The bug may be in the caller's assumption, not the function.</li>
+<li><strong>Encoding and locale traps.</strong> String handling in legacy code often depends on platform defaults. A model reading the source will not see the deployment's locale. You have to state it.</li>
+<li><strong>Silent scope creep.</strong> A "safe refactor" can quietly change exception handling, ordering, or side effects. Diff the behavior, not just the text.</li>
+</ul>
+<p>The mitigation for all of these is the same: write the test that captures current behavior first, then change the code, then run the test. If you cannot write that test, you do not yet understand the code well enough to change it.</p>
+<h2 id="a-worked-floating-point-example">A worked floating-point example</h2>
+<p>Monetary arithmetic in floating point is a classic legacy hazard. Suppose a bonus function is written as:</p>
+<pre><code class="language-python">def calculate_bonus(base):
+    return base * 1.15  # 15% bonus
+</code></pre>
+<p>And suppose the base salary arrives as a string from a legacy import, then gets converted to <code>float</code>. The conversion is where precision is lost.</p>
+<p>Work through the arithmetic with a stated assumption. Take a base of <code>1000000.00</code>. Multiply by <code>1.15</code>:</p>
+<ul>
+<li>Exact decimal result: <code>1150000.00</code>.</li>
+<li>In binary floating point, <code>1.15</code> is not exactly representable, so the product may land at something like <code>1150000.0000000001</code> depending on the platform.</li>
+</ul>
+<p>Now scale it. If each of 5,000 employees is off by roughly <code>0.0000000001</code> in the stored value, the individual error is negligible. But if the error is larger — say the string conversion itself introduces a cent-level drift — the aggregate can cross a reporting threshold. The point is not the specific magnitude; it is that the error is invisible in the source and only appears in aggregate.</p>
+<p>The fix is to use exact decimal arithmetic:</p>
+<pre><code class="language-python">from decimal import Decimal
+
+def calculate_bonus(base: Decimal) -&gt; Decimal:
+    return (base * Decimal(&quot;1.15&quot;)).quantize(Decimal(&quot;0.01&quot;))
+</code></pre>
+<p>And a test that pins the behavior:</p>
+<pre><code class="language-python">def test_bonus_calculation():
+    assert calculate_bonus(Decimal(&quot;1000000.00&quot;)) == Decimal(&quot;1150000.00&quot;)
+</code></pre>
+<p>A model can flag the <code>float</code> usage, but it cannot tell you the magnitude of the error without knowing the data distribution. That is your job, and it is a good reason to instrument the actual pipeline rather than trust a suggested number.</p>
+<h2 id="a-worked-sql-injection-example">A worked SQL injection example</h2>
+<p>Consider a query built by string concatenation:</p>
+<pre><code class="language-java">public User findByEmail(String email) {
+    String hql = &quot;from User u where u.email = '&quot; + email + &quot;'&quot;;
+    return session.createQuery(hql).list().get(0);
+}
+</code></pre>
+<p>A "sanitizer" that escapes quotes looks safe:</p>
+<pre><code class="language-java">String safeEmail = email.replace(&quot;'&quot;, &quot;''&quot;);
+</code></pre>
+<p>But escaping by doubling quotes is not sufficient across all database engines. An input containing a backslash followed by a quote can defeat naive escaping, because the backslash may itself be treated as an escape character depending on the engine's string-literal rules. The result is a query that matches more rows than intended — effectively an injection.</p>
+<p>The fix is to stop building queries from strings:</p>
+<pre><code class="language-java">public User findByEmail(String email) {
+    return session
+        .createQuery(&quot;from User u where u.email = :email&quot;, User.class)
+        .setParameter(&quot;email&quot;, email)
+        .uniqueResult();
+}
+</code></pre>
+<p>And a test that proves the fix:</p>
+<pre><code class="language-java">@Test
+public void testEmailSanitization() {
+    String malicious = &quot;admin@company.com\\'&quot;;
+    User u = userDao.findByEmail(malicious);
+    assertNull(u);
+}
+</code></pre>
+<p>Note the parameterized query also changes behavior for the empty-result case: <code>uniqueResult()</code> returns <code>null</code> instead of throwing on an empty list. That is a behavior change you should confirm is acceptable before merging.</p>
+<h2 id="instrumenting-the-improvement">Instrumenting the improvement</h2>
+<p>Claims about how much AI assistance helps are easy to make and hard to verify. If you want to know whether your own process is improving, measure it directly rather than trusting a table.</p>
+<p>What to instrument:</p>
+<ul>
+<li><strong>Change lead time.</strong> Time from first commit on a branch to merge. Most version-control hosts expose this per pull request.</li>
+<li><strong>Change failure rate.</strong> Fraction of merges that require a follow-up fix within a stated window.</li>
+<li><strong>Mean time to repair.</strong> Time from alert to resolution, taken from your incident tracker.</li>
+<li><strong>Test coverage on touched files.</strong> Coverage on the specific files you changed, not the whole repository.</li>
+</ul>
+<p>What to compare: the same metrics over a baseline period before you introduced the new workflow, and the same period after. Keep the measurement window identical in length and similar in workload, or the comparison is meaningless.</p>
+<p>What to watch for: an improvement in lead time that comes with a rise in change failure rate is not an improvement. The two metrics must move together.</p>
+<h2 id="a-decision-checklist-before-you-touch-a-legacy-module">A decision checklist before you touch a legacy module</h2>
+<p>Use this before starting any change:</p>
+<ul>
+<li>Can you write a test that captures the current behavior? If not, stop and build one.</li>
+<li>Do you know every caller of the function you are changing? Trace them, not just the definition.</li>
+<li>Does the function depend on environment state — timezone, locale, filesystem, environment variables, container lifecycle? List each one.</li>
+<li>Is there a scheduled job, batch process, or external integration that depends on a side effect? Check the cron table and the message queues.</li>
+<li>Does the change alter error handling, ordering, or null behavior? Confirm each change is intentional.</li>
+<li>Is the refactor reversible? Can you deploy the old version if the new one fails?</li>
+<li>Have you confirmed every API the model suggested actually exists in your dependency versions?</li>
+</ul>
+<p>If you cannot answer all of these, the change is not ready.</p>
+<h2 id="what-ai-does-and-does-not-do-here">What AI does and does not do here</h2>
+<p>AI does not understand your business rules, your data distribution, or your deployment topology. It does not know that a cron job runs in a container with an ephemeral filesystem unless you tell it. It does not know that a report is audited, or that a rounding error crosses a legal threshold.</p>
+<p>What it does is read code faster than you can, hold more of it in context than you can, and produce a first draft of an explanation, a test, or a refactor. That draft is a starting point, not a conclusion. The engineer's job shifts from writing every line to verifying every claim.</p>
+<p>The teams that get value from this approach are the ones that treat the model as a fast, fallible research assistant and keep the test-first discipline intact. The teams that get burned are the ones that accept the output without checking it against the actual system.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one function in your legacy codebase that you are afraid to change. Run a static analysis pass over just that file, extract the function and its direct callers, and ask a model to list the top three risks of changing it. Then, before you touch anything, write a single test that captures the function's current behavior — including the case you suspect is buggy. If the test passes, you have a safety net. If it fails, you have found the bug.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li>Legacy codebases? Let AI own the boring parts</li>
+<li><a href="https://kubaik.github.io/ai-revives-unloved-legacy-codebases/">AI revives unloved legacy codebases</a></li>
+<li><a href="https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/">AI fixes legacy code nobody owns</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-fixes-legacy-code-nobody-owns/">
+                        <h3>AI fixes legacy code nobody owns</h3>
+                        <p>How to combine static analysis, runtime traces, and LLM contextualization to make unowned legacy systems legible, with code and failure modes.</p>
+                        <span class="related-meta">19 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-revives-unloved-legacy-codebases/">
+                        <h3>AI revives unloved legacy codebases</h3>
+                        <p>A practical stack for maintaining legacy code: static analysis, generated characterization tests, and LLM documentation, with failure modes and a 30-minute first step.</p>
+                        <span class="related-meta">15 min read · 29 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/map-legacy-code-with-ai-before-it-breaks/">
+                        <h3>Map legacy code with AI before it breaks</h3>
+                        <p>A practical workflow for using AI, static analysis, and OpenTelemetry to map legacy systems, find silent failures, and validate fixes.</p>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

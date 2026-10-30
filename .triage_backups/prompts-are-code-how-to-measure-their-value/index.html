@@ -1,0 +1,526 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prompts are code: how to measure their value - Kubai Kevin</title>
+        <meta name="description" content="Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.">
+        <meta name="keywords" content="PromptMetrics, AgentGraphs, PromptVersioning, LlmObservability, MeasuringPromptValue, Ai, Llm">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-16T03:45:42.297442">
+        <meta property="article:modified_time" content="2026-10-16T03:46:30.811719+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Prompts are code: how to measure their value">
+        <meta property="og:description" content="Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.">
+        <meta property="og:url" content="https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/prompts-are-code-how-to-measure-their-value.png">
+        <meta property="og:image:alt" content="Prompts are code: how to measure their value">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Prompts are code: how to measure their value">
+        <meta name="twitter:description" content="Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/prompts-are-code-how-to-measure-their-value.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/#article",
+      "headline": "Prompts are code: how to measure their value",
+      "description": "Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.",
+      "datePublished": "2026-10-16T03:45:42+00:00",
+      "dateModified": "2026-10-16T03:46:30+00:00",
+      "wordCount": 3794,
+      "timeRequired": "PT19M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/"
+      },
+      "keywords": "PromptMetrics, AgentGraphs, PromptVersioning, LlmObservability, MeasuringPromptValue, Ai, Llm",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/prompts-are-code-how-to-measure-their-value.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Prompts are code: how to measure their value",
+          "item": "https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubaik.github.io/prompts-are-code-how-to-measure-their-value/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I measure prompt quality without a golden dataset?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You do not need a golden dataset to start. You need a consistent outcome label. The simplest version is a human review queue: every hundredth trace gets read by you or a teammate, and you record whether the outcome was good. This gives you a noisy but unbiased signal. A golden dataset is useful later, when you want to run automated evals in CI, but it is not the first step. The first step is deciding what \"good\" means and writing it down."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a prompt version and a graph version?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A prompt version is the text of a single prompt. A graph version is the structure of the agent — which nodes exist, how they are connected, and what each node does. They are separate because they change for different reasons. You change a prompt to fix a wording problem. You change a graph to fix a decomposition problem. Logging both lets you tell which kind of change caused an outcome shift, which is the whole point."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why not just use an LLM to grade every output?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can, and many teams do. The problem is that the grader is itself a model with its own failure modes, and it can drift as the model behind it is updated. If you use an LLM grader, pin the grader version the same way you pin the prompt version, and periodically spot-check its labels against human review. Treat it as a noisy sensor, not as ground truth."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I stop measuring and just ship?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When the cost of measurement exceeds the cost of being wrong. For a pre-product founder, that is almost immediately. For a product with paying users and a support burden, measurement pays for itself quickly. The signal to start is when you find yourself unable to answer \"did that change help?\" from memory. That is the point where a log line is cheaper than a guess."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Prompts are code: how to measure their value</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Prompts are code: how to measure their value</h1>
+                
+                <p class="post-lead">Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PromptMetrics</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentGraphs</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/promptversioning/"
+                       style="text-decoration:none;">PromptVersioning</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llmobservability/"
+                       style="text-decoration:none;">LlmObservability</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MeasuringPromptValue</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        19 min read
+                        &nbsp;·&nbsp; 3794 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-16
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most guidance on measuring prompt quality either skips the hard part or measures the wrong thing. The failure mode is rarely a missing dashboard; it is a metric that looked reasonable and answered a question nobody needed answered. This article covers how to instrument prompts and agent graphs so that a change can be classified as an improvement or a regression, without building a second product to do it.</p>
+<h2 id="the-problem-in-general-terms">The problem, in general terms</h2>
+<p>When a growing share of a product's behaviour lives in prompts, tool schemas, and agent graphs rather than in functions and classes, standard engineering metrics stop telling you much. Lines of code, cyclomatic complexity, and test coverage do not map cleanly onto a system where the logic is a paragraph of English and the control flow is a graph of model calls. A reviewer can see the diff, but cannot easily answer the question that matters: did this change make the product better, or just different?</p>
+<p>The temptation is to reach for metrics that already exist. Count tokens. Count prompt versions. Count agent steps. These are easy to instrument and almost useless on their own, because they measure activity rather than value. A prompt that takes twice as many tokens but resolves a support ticket on the first turn is not worse than a terse prompt that loops the user through three clarifications. An agent graph with twelve nodes is not better than one with four — it is just harder to debug at 2am.</p>
+<p>The underlying difficulty is that prompts and agent graphs have no natural unit of correctness. A function either returns the right value or it does not. A prompt returns a distribution of outputs, and "right" depends on context the model cannot see. Any measurement system therefore has to start by deciding what counts as a good outcome, then work backwards to the prompt. The rest of this article is about building that loop without turning it into a second full-time job.</p>
+<h2 id="the-approaches-that-commonly-fail-and-why">The approaches that commonly fail, and why</h2>
+<p>The first failure mode is measuring the model instead of the product. Teams commonly set up an eval harness that scores outputs against a golden dataset, watch the score go up, and ship. The score is real, but it is a proxy for a proxy. If the golden dataset was written by the same person who wrote the prompt, it encodes the same blind spots. A prompt can score well on a self-authored eval and still fail the first real user who phrases the request in a way the author never imagined.</p>
+<p>The second failure mode is measuring cost in isolation. Token spend is easy to attribute and easy to report, so it becomes the default metric. A prompt that costs half as much per call looks like a win until it starts triggering retries, or producing outputs that need human cleanup. Cost per call is a real number, but it is only meaningful next to a completion rate. Optimising cost without holding completion constant is how teams end up with a cheaper system that costs more to operate.</p>
+<p>The third failure mode is treating the agent graph as architecture rather than as a hypothesis. A graph with a planner node, a retrieval node, a critic node, and a synthesis node feels rigorous. It is also four places for the model to hallucinate, four prompts to maintain, and four chances for a timeout to cascade. The graph is a hypothesis about how the task decomposes. If the hypothesis cannot be stated in one sentence, the graph is probably compensating for a prompt that is doing too much or too little.</p>
+<p>The fourth failure mode is versioning prompts without versioning the inputs they depend on. A prompt that says "summarise the document" behaves differently when the retrieval layer starts returning three chunks instead of one. The prompt did not change, but its behaviour did. Teams that only track prompt versions miss this class of regression entirely.</p>
+<p>A fifth failure mode is less discussed: measuring at the wrong boundary. If instrumentation is added inside the agent graph — per node, per retry, per tool call — the resulting metrics describe the internals of a system that the user never sees. A retry loop that eventually succeeds looks like a failure at the node level and a success at the user level. Both are true, but only one of them is the number that should drive a shipping decision.</p>
+<h2 id="the-approach-that-works-in-practice">The approach that works in practice</h2>
+<p>The approach that holds up is to define a small number of outcome metrics tied to user-visible behaviour, instrument them at the boundaries of the system, and treat prompts and graphs as implementation details behind those boundaries. This is not novel — it is normal product instrumentation applied to a new kind of component.</p>
+<p>Start by naming the outcomes. For a support agent, that might be: resolved without human handoff, resolved within one turn, and user did not rephrase. For a code assistant, it might be: suggestion accepted, suggestion accepted without edit, and suggestion led to a passing test. For a research agent, it might be: answer cited a source that exists, answer matched the user's question, and answer was delivered within a latency budget. Three to five outcomes is usually enough. More than that and nobody looks at the dashboard.</p>
+<p>Then instrument the boundaries. The boundary is wherever code hands control to the model and gets something back. That is the only place that needs logging, because it is the only place where both the input and the outcome are observable. Everything inside the agent graph — the planner, the critic, the retry loop — is an implementation detail. Logging at the boundary allows outcomes to be attributed to the prompt version and the graph version that produced them without instrumenting every node.</p>
+<p>Finally, make the prompt and graph versions part of the log record. Not in a comment, not in a git tag, but as a field in the structured log line that also carries the outcome. This is the single change that makes the whole system work, because it lets the question "did the prompt change help?" be answered with a query instead of a memory.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>A minimal pattern in Python follows. It assumes some function that calls a model and returns a result, and some way to record whether the result was good. The point is not the specific library — it is the shape of the record.</p>
+<pre><code class="language-python">import json
+import time
+import uuid
+from dataclasses import dataclass, asdict
+
+@dataclass
+class BoundaryRecord:
+    trace_id: str
+    prompt_id: str
+    graph_id: str
+    outcome: str          # &quot;resolved&quot;, &quot;handoff&quot;, &quot;rephrased&quot;
+    latency_ms: int
+    input_tokens: int
+    output_tokens: int
+    model: str
+
+def call_with_trace(prompt_id, graph_id, model, messages, outcome_fn):
+    trace_id = str(uuid.uuid4())
+    start = time.monotonic()
+
+    # This is the boundary. Everything inside is opaque to the metric.
+    result = model.invoke(messages)
+
+    latency_ms = int((time.monotonic() - start) * 1000)
+    outcome = outcome_fn(result)  # returns a string label
+
+    record = BoundaryRecord(
+        trace_id=trace_id,
+        prompt_id=prompt_id,
+        graph_id=graph_id,
+        outcome=outcome,
+        latency_ms=latency_ms,
+        input_tokens=result.usage.input_tokens,
+        output_tokens=result.usage.output_tokens,
+        model=model.name,
+    )
+    log_line = json.dumps(asdict(record))
+    # Write to whatever sink you already have: stdout, a file, a table.
+    print(log_line)
+    return result
+</code></pre>
+<p>The <code>outcome_fn</code> is the interesting part. It decides what counts as a good result. In practice it is often a small classifier, a regex, or a human review queue. It does not have to be perfect. It has to be consistent, so that changes in the outcome rate reflect changes in the system rather than changes in the judge.</p>
+<p>Once these records exist, the queries that matter are simple. For each <code>prompt_id</code>, what is the outcome distribution? For each <code>graph_id</code>, what is the latency distribution? When <code>prompt_id</code> changed from A to B, did the outcome distribution shift? These are the same queries that would be run on any A/B test, because that is what this is.</p>
+<p>The second implementation detail is a prompt registry. A service is not required. A directory of files with a naming convention is enough.</p>
+<pre><code>prompts/
+  support_classify/
+    v1.txt
+    v2.txt
+    current -&gt; v2.txt
+  support_reply/
+    v1.txt
+    current -&gt; v1.txt
+</code></pre>
+<p>The <code>current</code> symlink is what the application reads. To change a prompt, add a new version and repoint the symlink. The <code>prompt_id</code> in the log record is the directory name plus the version, so a record can always be mapped back to the exact text that produced it. This is boring, and boring is the point. A prompt registry that requires a deploy to change is a prompt registry nobody uses.</p>
+<p>The third detail is a graph registry, the same idea applied to the agent graph. A graph is a set of nodes and edges, and the version is a hash of the graph definition. If a framework serialises graphs, hash the serialised form. If the graph is hand-rolled, hash the node names and edges. The hash goes in the log record as <code>graph_id</code>. When the graph changes, the hash changes, and outcomes can be compared across hashes.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a support agent that classifies incoming tickets into one of six categories and then drafts a reply. Suppose the team notices that handoff rate — the share of tickets escalated to a human — has crept up. The instrumentation described above makes it possible to localise the cause.</p>
+<p>The relevant log records carry <code>prompt_id</code> and <code>graph_id</code>. A first query groups by <code>prompt_id</code> and shows the outcome distribution. Suppose <code>support_classify/v2</code> is producing handoffs at twice the rate of <code>support_classify/v1</code>. That is a strong signal, but it is not yet a conclusion, because the graph may also have changed between the two periods.</p>
+<p>A second query groups by <code>graph_id</code> and shows that the graph hash is unchanged. Now the prompt is the only variable that moved. The next step is to read the v1 and v2 texts side by side and look for a wording difference that could plausibly affect classification. A common culprit is a change from an explicit list of categories to a fuzzier instruction like "use your judgement." The model, given latitude, hedges toward the handoff category when it is uncertain, and handoff rate rises.</p>
+<p>To confirm, the team can revert the symlink to v1, wait for the outcome distribution to move back, and then reapply v2 with the explicit list restored. This is a two-week experiment in a low-volume system, and it is only possible because the <code>prompt_id</code> field was present in the logs before the change was made. Without it, the same investigation would have been a memory exercise across several people.</p>
+<p>The arithmetic here is worth stating explicitly. If the agent handles 400 tickets per week and the handoff rate moves from 8% to 16%, that is an increase of 32 handoffs per week, or roughly 4.6 additional human handoffs per day. At 10 minutes per handoff, that is 46 minutes of human time per day, or about 3.8 hours per week. These figures are illustrative — substitute the actual ticket volume and handling time for the system in question. The point is that a small percentage shift in an outcome metric translates into a concrete operational cost, which is what makes it worth tracking.</p>
+<h2 id="what-outcomes-to-expect-and-their-limits">What outcomes to expect, and their limits</h2>
+<p>With this instrumentation in place, a typical deployment of a small support agent will start to show patterns within a few hundred traces. The most common pattern is that a small number of prompt versions account for most of the variance in outcomes. This is useful because it tells you where to spend your time. The second most common pattern is that latency and outcome are correlated in one direction: faster responses tend to have higher completion rates, up to a point. This is a real effect, but it is easy to over-read. A fast wrong answer is still wrong.</p>
+<p>The limits are worth stating plainly. First, outcome labels are noisy. If the <code>outcome_fn</code> is a human reviewer, there is a labelling bottleneck. If it is a classifier, there is a classifier that can drift. Either way, the signal is weaker than a unit test. Treat outcome rates as trends, not as pass/fail gates.</p>
+<p>Second, the instrumentation only covers the boundary that was chosen. If a failure happens inside the agent graph — a retry loop that eventually succeeds but costs three times as much — the boundary record will show a success. A separate cost metric is needed if that matters, and it usually does. The boundary record should carry token counts for this reason.</p>
+<p>Third, prompt and graph versions are not independent. Changing the graph changes the effective prompt, because the same prompt text behaves differently when it is called by a planner versus a critic. This means an outcome shift cannot be cleanly attributed to one or the other. The practical answer is to change one thing at a time when possible, and to accept that when it is not, the measurement describes the system, not the component.</p>
+<h2 id="how-to-measure-this-on-your-own-system">How to measure this on your own system</h2>
+<p>The instrumentation described here is only useful if it produces numbers a team can act on. A few concrete measurement recipes:</p>
+<p>To measure the effect of a prompt change, compare the outcome distribution for the old <code>prompt_id</code> against the new one over a matched time window. If the graph hash is unchanged, the comparison is close to an A/B test. If the graph hash changed too, the comparison is confounded and should be treated as descriptive only.</p>
+<p>To measure the cost impact of a prompt change, sum <code>input_tokens</code> and <code>output_tokens</code> per <code>prompt_id</code> and divide by the number of traces. Report this alongside the completion rate, never on its own. The useful derived number is tokens per resolved outcome, not tokens per call.</p>
+<p>To measure latency regression, compute the p50 and p95 of <code>latency_ms</code> per <code>graph_id</code>. A graph change that improves outcomes but doubles p95 latency is a trade-off, not a win, and the trade-off should be visible in the dashboard rather than discovered by users.</p>
+<p>To measure outcome-label drift, periodically sample traces and have a human label them independently. Compare the human labels against the <code>outcome_fn</code> output. A rising disagreement rate means the outcome signal is decaying and needs to be re-grounded.</p>
+<p>None of these require a platform. A log sink, a query tool, and a weekly review are sufficient.</p>
+<h2 id="what-to-watch-out-for">What to watch out for</h2>
+<p>The first trap is building the measurement system before there is a product worth measuring. A small team with ten users does not need a prompt registry. They need to read the ten conversations and fix the obvious problems. The instrumentation described here pays off when volume is high enough that reading every trace is impractical, which is usually somewhere in the hundreds to low thousands of interactions per week. Before that, manual review is faster and more accurate.</p>
+<p>The second trap is letting the outcome metric become the goal. If the metric is "resolved without handoff", the system will learn to avoid handoff even when handoff is correct. This is the same dynamic as any other metric, and the same defence applies: keep a second metric that measures the thing you are afraid of losing. For a support agent, that might be "user did not reopen the ticket within seven days". For a code assistant, "suggestion accepted without edit" paired with "suggestion led to a passing test".</p>
+<p>The third trap is versioning prompts in a way that makes rollback hard. If the prompt registry is a directory of files, rollback is repointing a symlink. If the prompt registry is a database table edited through an admin UI, rollback is a migration. Prefer the file-based approach until there is a reason not to. The reason not to is usually that non-engineers need to edit prompts, and that is a real reason — but it is a reason to add a UI on top of the files, not to replace them.</p>
+<p>The fourth trap is assuming that a better model will fix a bad prompt. It sometimes will, but the improvement is not predictable, and it does not change the fact that there is no way to tell whether the new model helped. The instrumentation is what lets that question be answered. Without it, a model upgrade is a leap of faith.</p>
+<p>A fifth trap is over-instrumenting. Every field added to the log record is a field that must be maintained, migrated, and explained to new team members. The record shown earlier has eight fields, and that is close to the practical minimum for the queries described here. Resist adding fields until a specific query requires them.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before committing to the full instrumentation described here, it is worth checking the following:</p>
+<ul>
+<li>Can three to five user-visible outcomes be named for this product? If not, the problem is product definition, not measurement.</li>
+<li>Is there a single place in the code where the model call returns and the outcome is knowable? If not, the boundary needs to be identified before anything else.</li>
+<li>Is there a log sink that already exists? If yes, add fields to it. If no, a single JSON line to stdout is enough to start.</li>
+<li>Is the volume high enough that reading every trace is impractical? If not, manual review is the better investment.</li>
+<li>Is there a person who will look at the numbers weekly? If not, the dashboard is decoration.</li>
+</ul>
+<p>If the answer to the last question is no, fix that first. Instrumentation without a reader is just storage cost.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The broader lesson is that prompts and agent graphs are code, and like any code they need a way to tell good changes from bad. The unit of measurement is not the prompt or the graph — it is the outcome at the boundary where the system meets the user. Everything else is implementation.</p>
+<p>This is a reversal of the usual instinct. The usual instinct is to measure what is easy: tokens, steps, latency, cost. Those are real and worth watching, but they are inputs, not outcomes. A system that uses more tokens and produces a better result is a better system. A system that uses fewer tokens and produces a worse result is a worse system. The only way to know which one is in front of you is to measure the result.</p>
+<p>The second part of the lesson is that the measurement does not have to be sophisticated to be useful. A structured log line with a prompt version and an outcome label, written to a file, queried with a script, is enough to answer most of the questions a small team actually has. A platform is not required. A consistent record and a willingness to look at it are.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by writing down three outcomes that matter for the product. Not metrics — outcomes. "The user got an answer they did not have to rephrase." "The suggestion compiled." "The ticket did not come back." Then find the one place in the code where the model call returns and the outcome is knowable, and add a log line there with the prompt version and the graph version.</p>
+<p>If logs already exist, add two fields to the existing record: <code>prompt_id</code> and <code>graph_id</code>. If they do not, add a single <code>print</code> statement that emits JSON. The goal is to be able to run one query — "what is the outcome distribution for prompt version X versus version Y?" — by the end of the week.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="how-do-i-measure-prompt-quality-without-a-golden-dataset">How do I measure prompt quality without a golden dataset?</h3>
+<p>A golden dataset is not required to start. A consistent outcome label is. The simplest version is a human review queue: every hundredth trace gets read by a team member, and the outcome is recorded as good or bad. This gives a noisy but unbiased signal. A golden dataset is useful later, when automated evals need to run in CI, but it is not the first step. The first step is deciding what "good" means and writing it down.</p>
+<h3 id="what-is-the-difference-between-a-prompt-version-and-a-graph-version">What is the difference between a prompt version and a graph version?</h3>
+<p>A prompt version is the text of a single prompt. A graph version is the structure of the agent — which nodes exist, how they are connected, and what each node does. They are separate because they change for different reasons. A prompt is changed to fix a wording problem. A graph is changed to fix a decomposition problem. Logging both lets a team tell which kind of change caused an outcome shift, which is the whole point.</p>
+<h3 id="why-not-just-use-an-llm-to-grade-every-output">Why not just use an LLM to grade every output?</h3>
+<p>This is possible, and many teams do it. The problem is that the grader is itself a model with its own failure modes, and it can drift as the model behind it is updated. If an LLM grader is used, pin the grader version the same way prompt versions are pinned, and periodically spot-check its labels against human review. Treat it as a noisy sensor, not as ground truth.</p>
+<h3 id="when-should-i-stop-measuring-and-just-ship">When should I stop measuring and just ship?</h3>
+<p>When the cost of measurement exceeds the cost of being wrong. For a pre-product team, that is almost immediately. For a product with paying users and a support burden, measurement pays for itself quickly. The signal to start is when the question "did that change help?" can no longer be answered from memory. That is the point where a log line is cheaper than a guess.</p>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Open the file where the application makes its main model call, and add two fields to whatever is logged there: a <code>prompt_id</code> string and a <code>graph_id</code> string. They can be hardcoded for now. The point is to have the fields in place before the next prompt change, so that when the question "did that help?" comes up, there is something to query.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/">7 ways to measure prompt platform ROI in 2026</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/">Multi-agent systems: when they quietly degrade</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
+                        <h3>Multi-agent systems: when they quietly degrade</h3>
+                        <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+                        <span class="related-meta">12 min read · 24 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
+                        <h3>7 ways to measure prompt platform ROI in 2026</h3>
+                        <p>How to attribute token cost, latency and developer time to prompt and agent platforms, with instrumentation recipes, failure modes and a decision checklist.</p>
+                        <span class="related-meta">14 min read · 8 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
+                        <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
+                        <p>Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+                        <span class="related-meta">11 min read · 29 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

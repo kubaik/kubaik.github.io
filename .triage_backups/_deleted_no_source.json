@@ -1,0 +1,418 @@
+{
+  "ai-agents-need-circuit-breakers-in-2026": {
+    "deleted_at": "2026-09-14T10:58:27.154137",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-code-debt-llm-debt-vs-prompt-debt": {
+    "deleted_at": "2026-09-14T10:58:27.154344",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-evals-the-3-metrics-that-pay-off": {
+    "deleted_at": "2026-09-14T10:58:27.154658",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "pick-niches-ai-cant-automate-by-2026": {
+    "deleted_at": "2026-09-14T10:58:27.154912",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "2026-technical-screens-what-actually-works": {
+    "deleted_at": "2026-09-18T15:37:32.471016",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "47-ai-code-debt-in-2026": {
+    "deleted_at": "2026-09-18T15:37:32.471893",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ab-pricing-tests-that-lifted-arr-18": {
+    "deleted_at": "2026-09-18T15:37:32.472666",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-api-docs-what-humans-still-write-in-2026": {
+    "deleted_at": "2026-09-18T15:37:32.473164",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ate-our-niche-heres-how-we-picked-a-new-one": {
+    "deleted_at": "2026-09-18T15:37:32.473332",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-codebases-guardrails-vs-chaos-in-2026": {
+    "deleted_at": "2026-09-18T15:37:32.473854",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-codes-hidden-cves-exposed": {
+    "deleted_at": "2026-09-18T15:37:32.474119",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-scans-your-code-real-risks-and-defenses": {
+    "deleted_at": "2026-09-18T15:37:32.474724",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-services-slow-fix-the-network-first": {
+    "deleted_at": "2026-09-18T15:37:32.475097",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "batteries-included-offline-mode-for-unreliable-networks": {
+    "deleted_at": "2026-09-18T15:37:32.475578",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "claude-4-prompts-broke-my-prod": {
+    "deleted_at": "2026-09-18T15:37:32.477743",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "claude-code-in-2026-one-year-of-lessons-learned": {
+    "deleted_at": "2026-09-18T15:37:32.478158",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "dagster-replaced-airflow-in-2026-heres-the-stack-we": {
+    "deleted_at": "2026-09-18T15:37:32.478522",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "engineering-interviews-what-ai-wants-now": {
+    "deleted_at": "2026-09-18T15:37:32.478776",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "freelance-rates-after-ai-took-the-boilerplate": {
+    "deleted_at": "2026-09-18T15:37:32.479165",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "hiring-engineers-the-3-things-ai-cares-about-now": {
+    "deleted_at": "2026-09-18T15:37:32.479634",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "internal-dev-portal-that-developers-open-daily": {
+    "deleted_at": "2026-09-18T15:37:32.480232",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "kubernetes-in-2026-what-teams-offload": {
+    "deleted_at": "2026-09-18T15:37:32.480483",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "land-a-45k-remote-job-africas-2026-map": {
+    "deleted_at": "2026-09-18T15:37:32.480811",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "latency-spike-after-llm-feature-rollout": {
+    "deleted_at": "2026-09-18T15:37:32.480949",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-evals-the-two-metrics-that-bite-you": {
+    "deleted_at": "2026-09-18T15:37:32.481167",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-security-mistakes-in-2026-owasp-top-10-fixes": {
+    "deleted_at": "2026-09-18T15:37:32.481606",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "money-moves-need-stricter-parsers": {
+    "deleted_at": "2026-09-18T15:37:32.482034",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "negotiate-salary-2026-with-ai-resume-tool": {
+    "deleted_at": "2026-09-18T15:37:32.482479",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "roll-your-own-migrations-why-blue-green-fails-you": {
+    "deleted_at": "2026-09-18T15:37:32.482943",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "scan-10k-repos-daily-without-false-positives": {
+    "deleted_at": "2026-09-18T15:37:32.483549",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "senior-devs-flee-big-tech-not-for-money": {
+    "deleted_at": "2026-09-18T15:37:32.484045",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "skip-the-zero-trust-hype-for-5-person-teams": {
+    "deleted_at": "2026-09-18T15:37:32.484735",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "stop-shipping-daily-the-burn-rate-math": {
+    "deleted_at": "2026-09-18T15:37:32.485229",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "survive-ai-swipes-with-niche-picks": {
+    "deleted_at": "2026-09-18T15:37:32.485576",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "treat-every-user-input-as-hostile-in-2026": {
+    "deleted_at": "2026-09-18T15:37:32.486051",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "why-your-model-evaluation-missed-a-production-regression": {
+    "deleted_at": "2026-09-18T15:37:32.486434",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "zero-trust-mcp-servers-auth-trap-youll-hit-first": {
+    "deleted_at": "2026-09-18T15:37:32.486665",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "hit-5k-mrr-without-a-marketing-team": {
+    "deleted_at": "2026-09-19T11:43:23.195083",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "2026-salary-hacks-prove-ai-didnt-steal-your-value": {
+    "deleted_at": "2026-09-19T12:10:45.940887",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-side-gigs-that-paid-me-2k-usdmonth-in-2026": {
+    "deleted_at": "2026-09-19T12:10:45.941080",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "7-passive-income-streams-for-devs-in-2026": {
+    "deleted_at": "2026-09-19T12:10:45.941245",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ops-datadog-vs-granfa-for-infra-automation": {
+    "deleted_at": "2026-09-19T12:10:45.941452",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-tools-cut-rates-30-whats-real-in-2026": {
+    "deleted_at": "2026-09-19T12:10:45.941599",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "block-api-abuse-in-2026-before-it-blocks": {
+    "deleted_at": "2026-09-19T12:10:45.941736",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "bootcamp-to-120k-2026-steps-that-pay": {
+    "deleted_at": "2026-09-19T12:10:45.941872",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "price-tests-that-raised-revenue-vs-tests-that-killed": {
+    "deleted_at": "2026-09-19T12:10:45.942014",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "wireguard-vs-tailscale-for-5month-zero-trust": {
+    "deleted_at": "2026-09-19T12:10:45.942161",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-vibe-coding-tools-i-regret-shipping-in-production": {
+    "deleted_at": "2026-09-21T11:24:18.864000",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "added-circuit-breakers-3-days-after-cascade-failure": {
+    "deleted_at": "2026-09-21T11:24:18.864191",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "african-devs-arc-vs-andela-vs-toptal-in-2026": {
+    "deleted_at": "2026-09-21T11:24:18.864360",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "agent-design-after-llm-4-we-broke-5-assumptions": {
+    "deleted_at": "2026-09-21T11:24:18.864510",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ops-vs-dumb-alerts-the-incident-that-broke-us": {
+    "deleted_at": "2026-09-21T11:24:18.864665",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-portfolios-ruin-yours-fix-your-signal": {
+    "deleted_at": "2026-09-21T11:24:18.864814",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-skills-that-pay-data-vs-prompt-skills-in-2026": {
+    "deleted_at": "2026-09-21T11:24:18.864961",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "dumped-kubernetes-for-200-and-no-one-noticed": {
+    "deleted_at": "2026-09-21T11:24:18.865102",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "grew-5k-mrr-on-a-29-vps": {
+    "deleted_at": "2026-09-21T11:24:18.865255",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "htmx-stack-swap-5-things-i-gained-3-i-lost": {
+    "deleted_at": "2026-09-21T11:24:18.865399",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "killed-3k-kubernetes-kept-200-infra": {
+    "deleted_at": "2026-09-21T11:24:18.865562",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used": {
+    "deleted_at": "2026-09-21T11:24:18.865706",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "launched-ai-saas-under-150month": {
+    "deleted_at": "2026-09-21T11:24:18.865854",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "multi-agent-frameworks-in-2026-langgraph-wins": {
+    "deleted_at": "2026-09-21T11:24:18.866025",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "negotiate-after-ai-boosts-your-output": {
+    "deleted_at": "2026-09-21T11:24:18.866177",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa": {
+    "deleted_at": "2026-09-21T11:24:18.866355",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "portfolio-that-hires-6-projects-i-actually-used-to": {
+    "deleted_at": "2026-09-21T11:24:18.866504",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "price-saas-dev-tools-in-2026-without-guessing": {
+    "deleted_at": "2026-09-21T11:24:18.866735",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "saved-3kmonth-by-ditching-kubernetes": {
+    "deleted_at": "2026-09-21T11:24:18.866890",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "survived-12000-agents-with-redis": {
+    "deleted_at": "2026-09-21T11:24:18.867032",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "tool-calls-at-scale-sync-vs-async-patterns-that-live": {
+    "deleted_at": "2026-09-21T11:24:18.867524",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "trim-aws-iam-policies-in-one-afternoon": {
+    "deleted_at": "2026-09-21T11:24:18.867801",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "breakdown-nairobi-saas-infra-costs-2026": {
+    "deleted_at": "2026-09-21T14:38:51.237567",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "progressive-web-apps-what-browser-apis-finally-fixed": {
+    "deleted_at": "2026-09-21T14:38:51.238087",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "build-dev-platform-for-2kmonth": {
+    "deleted_at": "2026-10-18T16:58:12.290674",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "claude-code-after-365-days-what-actually-works": {
+    "deleted_at": "2026-10-18T16:58:12.291241",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "claude-code-review-wins-and-blind-spots": {
+    "deleted_at": "2026-10-18T16:58:12.291850",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "internal-developer-platform-adoption-traps": {
+    "deleted_at": "2026-10-18T16:58:12.292637",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-costs-fine-tune-vs-route-vs-bigger-model": {
+    "deleted_at": "2026-10-18T16:58:12.293291",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "llm-drift-before-users-complain-catch-it-early": {
+    "deleted_at": "2026-10-18T16:58:12.293836",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "route-fine-tune-or-scale-pick-right": {
+    "deleted_at": "2026-10-18T16:58:12.294527",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "silent-model-drift-catch-it-before-prod": {
+    "deleted_at": "2026-10-18T16:58:12.294850",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-ai-coders-ranked-cursor-windsurf-claude-code-in": {
+    "deleted_at": "2026-10-30T15:13:54.138075",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-mistakes-that-break-deployments-for-everyone": {
+    "deleted_at": "2026-10-30T15:13:54.138284",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-skills-to-outrun-ai-salary-cuts": {
+    "deleted_at": "2026-10-30T15:13:54.138463",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "5-notification-systems-ranked-push-email-sms": {
+    "deleted_at": "2026-10-30T15:13:54.138814",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "50-locations-50-headaches-edge-native-backends-in": {
+    "deleted_at": "2026-10-30T15:13:54.139182",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "7-ways-to-earn-extra-in-2026-without-shipping-saas": {
+    "deleted_at": "2026-10-30T15:13:54.139469",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "9-ai-wrapper-plays-that-worked-in-2026": {
+    "deleted_at": "2026-10-30T15:13:54.139638",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "african-fintech-rules-broke-our-stack": {
+    "deleted_at": "2026-10-30T15:13:54.139814",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-tools-rewrote-my-engineering-rules": {
+    "deleted_at": "2026-10-30T15:13:54.140004",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ui-tools-6-months-in-what-i-gained-and-lost": {
+    "deleted_at": "2026-10-30T15:13:54.140166",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "apis-must-die-in-2026": {
+    "deleted_at": "2026-10-30T15:13:54.140316",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "arm-in-production-graviton4-vs-ampere-in-2026": {
+    "deleted_at": "2026-10-30T15:13:54.140475",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "bootstrapped-5k-mrr-without-ads": {
+    "deleted_at": "2026-10-30T15:13:54.140856",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "build-apps-that-still-work-on-500-ms-latency": {
+    "deleted_at": "2026-10-30T15:13:54.141233",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "deploy-a-solo-stack-for-20month-in-2026": {
+    "deleted_at": "2026-10-30T15:13:54.141489",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "drop-ec2-bills-70-without-code": {
+    "deleted_at": "2026-10-30T15:13:54.141790",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "failed-ai-wrappers-2026-what-the-survivors-did-right": {
+    "deleted_at": "2026-10-30T15:13:54.142129",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "internal-platform-adoption-one-metric-kills-velocity": {
+    "deleted_at": "2026-10-30T15:13:54.142667",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "mcp-servers-real-time-pipelines-without-agents": {
+    "deleted_at": "2026-10-30T15:13:54.143264",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "network-tokens-what-changes-for-payment-engineers": {
+    "deleted_at": "2026-10-30T15:13:54.143651",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "pass-interviews-without-a-cs-degree": {
+    "deleted_at": "2026-10-30T15:13:54.143943",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "price-your-remote-salary-4-step-script": {
+    "deleted_at": "2026-10-30T15:13:54.144125",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ship-to-nairobi-users-starlink-latency-guide-2026": {
+    "deleted_at": "2026-10-30T15:13:54.144313",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "signals-5-state-tricks-that-broke-my-app": {
+    "deleted_at": "2026-10-30T15:13:54.144747",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "why-i-picked-playwright-and-vitest-in-2026": {
+    "deleted_at": "2026-10-30T15:13:54.144946",
+    "reason": "missing post.json (no source of truth)"
+  }
+}

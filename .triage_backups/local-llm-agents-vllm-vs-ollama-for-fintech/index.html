@@ -1,0 +1,524 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Local LLM agents: vLLM vs Ollama for fintech - Kubai Kevin</title>
+        <meta name="description" content="Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.">
+        <meta name="keywords" content="LocalLlm, Vllm, Ollama, FintechAiCompliance, Ai, Dataengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-18T12:42:41.960286">
+        <meta property="article:modified_time" content="2026-10-04T10:53:35.720501+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Local LLM agents: vLLM vs Ollama for fintech">
+        <meta property="og:description" content="Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.">
+        <meta property="og:url" content="https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/local-llm-agents-vllm-vs-ollama-for-fintech.png">
+        <meta property="og:image:alt" content="Local LLM agents: vLLM vs Ollama for fintech">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Local LLM agents: vLLM vs Ollama for fintech">
+        <meta name="twitter:description" content="Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/local-llm-agents-vllm-vs-ollama-for-fintech.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/#article",
+      "headline": "Local LLM agents: vLLM vs Ollama for fintech",
+      "description": "Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.",
+      "datePublished": "2026-09-18T12:42:41+00:00",
+      "dateModified": "2026-10-04T10:53:35+00:00",
+      "wordCount": 3190,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/"
+      },
+      "keywords": "LocalLlm, Vllm, Ollama, FintechAiCompliance, Ai, Dataengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/local-llm-agents-vllm-vs-ollama-for-fintech.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Local LLM agents: vLLM vs Ollama for fintech",
+          "item": "https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Local LLM agents: vLLM vs Ollama for fintech</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Local LLM agents: vLLM vs Ollama for fintech</h1>
+                
+                <p class="post-lead">Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LocalLlm</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Vllm</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Ollama</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FintechAiCompliance</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3190 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-the-serving-stack-decides-the-architecture">Why the serving stack decides the architecture</h2>
+<p>A common failure mode in regulated fintech is that a team picks a model, writes the agent, and only then discovers that the serving layer cannot handle the concurrency the product needs. The model choice is rarely the problem. The concurrency model is.</p>
+<p>Consider the constraint that drives most of these projects. A product team wants an LLM agent that reads transaction memos, drafts suspicious activity report narratives, or summarizes KYC documents. A compliance lead wants to know exactly where those bytes go. Sending customer PII to a hosted API endpoint is a non-starter for many regulated entities under Kenya's Data Protection Act 2019, Nigeria's NDPA 2023, and the GDPR's transfer rules where EU counterparties are involved. Open-weight models in the 7B–70B parameter range are good enough for a large share of back-office fintech tasks, and the tooling to serve them locally is mature. The question is no longer whether local inference is viable. It is which serving stack to standardize on.</p>
+<p>Two options dominate architecture reviews: vLLM, a high-throughput inference server built around PagedAttention and continuous batching, and Ollama, a developer-friendly model runner that wraps llama.cpp and GGUF quantization. They are not the same kind of tool. Treating them as interchangeable is the most common mistake in this decision, because their operational profiles diverge sharply once an agent loop with tool calls, retrieval, and a queue sits in front of them.</p>
+<h2 id="what-each-tool-actually-is">What each tool actually is</h2>
+<p>vLLM is a Python inference server. Its central design decision is PagedAttention, which manages the KV cache like virtual memory pages rather than one contiguous block per sequence. That is why a single GPU can hold many concurrent sequences without exhausting VRAM. It exposes an OpenAI-compatible HTTP API, supports tensor parallelism across GPUs, prefix caching for shared system prompts, and guided decoding for structured output.</p>
+<p>Ollama is a Go binary that manages GGUF-quantized models. It runs on macOS with Metal, on Linux with CUDA or ROCm, and on plain CPU. It handles model lifecycle, pulls, and serving behind a simple CLI and an HTTP API on port 11434, with an OpenAI-compatible <code>/v1</code> endpoint.</p>
+<p>The important asymmetry: vLLM is a serving tier you operate; Ollama is a model runner you install. The difference shows up the moment concurrency, structured output guarantees, or auditability enter the requirements.</p>
+<h2 id="concurrency-the-axis-that-decides-everything">Concurrency: the axis that decides everything</h2>
+<p>An agent that makes three sequential LLM calls multiplies every per-call delay by three. That is why the metric that matters is not single-stream tokens per second. It is p95 end-to-end latency under the concurrency the product actually generates.</p>
+<p>vLLM's continuous batching is the reason it scales. With a 14B model at 4-bit AWQ on a 24 GB A10G, a well-tuned server can hold dozens of concurrent sequences because the KV cache is paged and the scheduler admits new work as sequences finish. Ollama's scheduler is fundamentally different. The <code>OLLAMA_NUM_PARALLEL</code> environment variable, which defaults to 1 and is commonly raised to 4, splits a single loaded model into multiple context slots. Beyond that ceiling, requests queue, and queue latency grows faster than throughput.</p>
+<p>The practical consequence is a cliff rather than a slope. Below the parallel slot count, both tools feel responsive. Above it, Ollama's p95 latency climbs steeply while vLLM degrades gracefully. For an internal tool with a handful of analysts, the cliff may never be reached. For a customer-facing agent with a five-second SLA, it is reached on the first busy morning.</p>
+<h2 id="structured-output-guided-decoding-vs-grammar-constraints">Structured output: guided decoding vs grammar constraints</h2>
+<p>When an agent must emit valid JSON for a downstream ledger or case-management system, malformed output is not a cosmetic problem. It is a failed transaction, and regex repair of model output is a fragile substitute for a guarantee.</p>
+<p>vLLM supports guided decoding, including a <code>guided_json</code> parameter that constrains generation to a supplied JSON schema. This eliminates an entire class of agent bugs: no more parsing failures when a model decides to add a friendly preamble before its JSON. Ollama supports grammar constraints through the Modelfile, which is useful but more limited in expressiveness and harder to change per request.</p>
+<p>If the downstream system cannot tolerate malformed output, this single feature often settles the decision before throughput is even discussed.</p>
+<pre><code class="language-python"># vLLM, OpenAI-compatible client
+from openai import OpenAI
+
+client = OpenAI(base_url=&quot;http://localhost:8000/v1&quot;, api_key=&quot;EMPTY&quot;)
+
+resp = client.chat.completions.create(
+    model=&quot;Qwen/Qwen2.5-14B-Instruct-AWQ&quot;,
+    messages=[
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You extract structured data from transaction memos. Reply only with JSON.&quot;},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Memo: 'TRF/2026-04-11/FX SETTLE USD 48200 REF INV-9931'&quot;},
+    ],
+    temperature=0.0,
+    extra_body={&quot;guided_json&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+            &quot;amount&quot;: {&quot;type&quot;: &quot;number&quot;},
+            &quot;currency&quot;: {&quot;type&quot;: &quot;string&quot;},
+            &quot;reference&quot;: {&quot;type&quot;: &quot;string&quot;},
+        },
+        &quot;required&quot;: [&quot;amount&quot;, &quot;currency&quot;, &quot;reference&quot;],
+    }},
+)
+print(resp.choices[0].message.content)
+</code></pre>
+<p>The equivalent call against Ollama uses the native API, where <code>keep_alive</code> and <code>num_ctx</code> are the knobs worth setting explicitly:</p>
+<pre><code class="language-javascript">// Ollama native API
+const res = await fetch('http://localhost:11434/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    model: 'qwen2.5:14b-instruct-q4_K_M',
+    messages: [
+      { role: 'system', content: 'You are a KYC document summarizer. Cite page numbers.' },
+      { role: 'user', content: 'Summarize the attached passport and utility bill.' },
+    ],
+    stream: false,
+    keep_alive: '30m',
+    options: { temperature: 0, num_ctx: 8192 },
+  }),
+});
+const data = await res.json();
+console.log(data.message.content);
+</code></pre>
+<h2 id="how-to-measure-this-yourself-instead-of-trusting-a-table">How to measure this yourself instead of trusting a table</h2>
+<p>Published benchmark tables are close to useless for this decision, because throughput depends on your prompt length, your batch composition, your quantization, and your GPU. The honest approach is to measure on your own hardware with your own prompt shape.</p>
+<p>Instrument four things:</p>
+<ol>
+<li><strong>Time to first token (TTFT)</strong> at concurrency 1, 4, 10, and 20.</li>
+<li><strong>p95 end-to-end latency</strong> at each of those concurrency levels, not the mean. The tail is what breaks SLAs.</li>
+<li><strong>Tokens per second per sequence</strong> while the batch is warm.</li>
+<li><strong>KV cache utilisation</strong>, if the server exposes it. vLLM publishes Prometheus metrics including <code>vllm:num_requests_running</code>, <code>vllm:gpu_cache_usage_perc</code>, and a time-to-first-token histogram, which makes this straightforward.</li>
+</ol>
+<p>A simple way to generate the load is a load generator pointed at the OpenAI-compatible endpoint. <code>hey</code>, <code>wrk</code>, or a small async Python script all work. The key is to send a prompt that matches production length, including the system prompt and tool schema, because a 1,500-token prompt behaves very differently from a 20-token one. Run the same load against both servers on the same GPU, and compare the p95 curve rather than a single number.</p>
+<p>Two measurement traps are worth naming. First, cold-start latency is a one-time cost per process; do not mix it into steady-state numbers. Second, a warm-up phase matters, because both servers behave differently on the first few requests while caches and CUDA graphs settle.</p>
+<h2 id="cold-start-and-memory-behaviour">Cold start and memory behaviour</h2>
+<p>vLLM is slower to start than Ollama, typically on the order of tens of seconds, because it compiles CUDA graphs and allocates the KV cache pool up front. That cost is per process, not per request, and it disappears if the server stays warm. Ollama starts faster because it does less up front, but it also degrades faster under load.</p>
+<p>vLLM holds VRAM aggressively and allocates against <code>gpu_memory_utilization</code>. Misconfiguring that value produces a <code>torch.cuda.OutOfMemoryError</code> at startup rather than at request time, which is at least a fast, obvious failure. Ollama's memory behaviour is more forgiving and its CPU fallback means a 7B model can genuinely run on a laptop with no GPU.</p>
+<p>A second failure mode worth knowing: CUDA errors of the form <code>no kernel image is available for execution on the device</code> almost always mean the installed wheel was compiled for a different compute capability than the GPU. On older cards such as the T4 (compute capability 7.5), wheels built for newer architectures will not run. Check the wheel's target architecture against the GPU before blaming the model or the driver.</p>
+<h2 id="vram-budget-work-it-out-from-first-principles">VRAM budget: work it out from first principles</h2>
+<p>Rather than quoting a table, it is more useful to show the arithmetic, because the answer changes with context length and concurrency.</p>
+<p><strong>Weights.</strong> A 14B parameter model at 4-bit quantization stores roughly 4 bits per parameter, so:</p>
+<ul>
+<li>14 × 10^9 parameters × 0.5 bytes/parameter ≈ 7 GB of raw weights.</li>
+<li>Quantization metadata, embedding layers, and non-quantized tensors typically add overhead, so budget 9–11 GB in practice for the weights alone.</li>
+</ul>
+<p><strong>KV cache.</strong> The KV cache size depends on layers, KV heads, head dimension, context length, concurrency, and the cache dtype. As an illustrative example, take a 14B model with 48 layers, 8 KV heads, and a head dimension of 128, storing the cache in FP16 (2 bytes per element). Per token, per sequence:</p>
+<ul>
+<li>2 (key and value) × 48 layers × 8 KV heads × 128 dim × 2 bytes ≈ 196 KB per token.</li>
+</ul>
+<p>At an 8,192-token context with 20 concurrent sequences:</p>
+<ul>
+<li>196 KB × 8,192 × 20 ≈ 32 GB.</li>
+</ul>
+<p>That figure exceeds a 24 GB card, which is exactly the point: the weights are the small part. In practice, <code>max_model_len</code> and concurrency are tuned together until the KV cache fits, and vLLM's paged allocation lets you raise concurrency without pre-allocating the worst case per sequence. On a 16 GB card the model fits but leaves little headroom for batching, which is why a T4-class GPU is usually an Ollama box rather than a vLLM box.</p>
+<p>Treat those numbers as illustrative arithmetic, not measured results. Substitute your model's layer count, KV head count, head dimension, and cache dtype to get your own budget.</p>
+<h2 id="cost-a-worked-comparison">Cost: a worked comparison</h2>
+<p>Assume AWS on-demand pricing for a <code>g5.xlarge</code> (A10G, 24 GB) at roughly $1.00 per hour and a <code>g4dn.xlarge</code> (T4, 16 GB) at roughly $0.53 per hour, both in us-east-1. These are illustrative figures; verify current rates before budgeting.</p>
+<p><strong>Low volume.</strong> Fifty requests per day, eight hours of uptime:</p>
+<ul>
+<li><code>g4dn.xlarge</code>: $0.53 × 8 × 30 ≈ $127 per month.</li>
+<li><code>g5.xlarge</code>: $1.00 × 8 × 30 ≈ $240 per month.</li>
+</ul>
+<p>At this volume the software is free and you are paying for idle GPU time. Ollama on the cheaper instance is the rational choice, and the throughput ceiling is irrelevant because it is never approached.</p>
+<p><strong>High volume.</strong> Fifty thousand requests per day, 24/7 uptime:</p>
+<ul>
+<li>One <code>g5.2xlarge</code> running vLLM may serve the load.</li>
+<li>Four <code>g4dn.xlarge</code> instances running Ollama may be needed for equivalent throughput.</li>
+</ul>
+<p>The arithmetic: four <code>g4dn.xlarge</code> at $0.53 × 24 × 30 ≈ $1,526 per month, versus one <code>g5.2xlarge</code> at roughly $2.00 × 24 × 30 ≈ $1,440 per month, with better tail latency from the batched server. The exact crossover depends on your prompt length and model, but the direction is consistent: batching efficiency means fewer GPUs for the same throughput once volume is high enough.</p>
+<p>A rough planning rule, offered as a heuristic rather than a measured result: below a few thousand requests per day, Ollama's lower operational overhead usually wins; above roughly ten thousand per day, vLLM's throughput tends to win on cost per request.</p>
+<h2 id="operational-cost-that-does-not-appear-on-the-invoice">Operational cost that does not appear on the invoice</h2>
+<p>There is a second cost axis: audit surface. vLLM's configuration is explicit — model path, quantization, <code>max_model_len</code>, sampling parameters — which makes it easier to freeze and document for an auditor. Ollama's configuration is spread across a Modelfile and environment variables, which is workable but less obviously frozen.</p>
+<p>Neither tool sends data to a vendor by default in a typical deployment, but that claim should be verified rather than assumed. Check egress rules at the network layer regardless of which server you choose, because the compliance argument rests on bytes staying inside your perimeter, not on a default setting.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Use Ollama when most of the following hold:</p>
+<ul>
+<li>The workload is a prototype or an internal tool.</li>
+<li>Volume is below a few thousand LLM calls per day.</li>
+<li>The agent is interactive: one analyst, one conversation.</li>
+<li>Developers need to run the same model on laptops for offline work.</li>
+<li>There is no one on the team comfortable with CUDA and containerised GPUs.</li>
+</ul>
+<p>Use vLLM when most of the following hold:</p>
+<ul>
+<li>There is a batch pipeline: overnight memo classification or bulk document summarization.</li>
+<li>Downstream systems cannot tolerate malformed output, so guided JSON decoding is required.</li>
+<li>More than roughly ten users or agent workers hit the endpoint concurrently.</li>
+<li>Prometheus metrics are needed for latency and error-rate evidence.</li>
+<li>Prefix caching would meaningfully cut cost, because every request carries the same long tool schema.</li>
+</ul>
+<h2 id="migration-asymmetry">Migration asymmetry</h2>
+<p>The migration path is not symmetric, and this is the key practical insight.</p>
+<p>Moving from Ollama to vLLM is mostly a <code>base_url</code> change plus a container. Client code written against the OpenAI-compatible interface does not care which server answers. Moving from vLLM back to Ollama means giving up prefix caching and guided decoding, which usually means rewriting prompts and adding output validation.</p>
+<p>The implication for an unsure team is straightforward: prototype on Ollama, but design the client so the endpoint is a configuration value rather than a hardcoded string. That single discipline preserves the option to migrate, and it costs almost nothing to adopt.</p>
+<h2 id="a-recommended-default-and-its-honest-weakness">A recommended default, and its honest weakness</h2>
+<p>For a fintech workflow that must keep data on-premises or in-country, a reasonable default is vLLM serving a 14B 4-bit model on a 24 GB GPU, fronted by a small service that handles authentication, rate limiting, and audit logging. The reasons are concrete: guided JSON removes a class of agent failures, prefix caching reduces the cost of repeated tool schemas, and Prometheus metrics supply the evidence needed when compliance asks how reliability is demonstrated. A 24 GB card fits a 14B 4-bit model with room for a useful context window, which covers most memo-extraction and document-summarization tasks.</p>
+<p>The honest weakness of that default is operational burden. vLLM is a heavier dependency, it breaks more often on driver upgrades, and it demands someone comfortable with CUDA and containerised GPUs. If that person does not exist on the team, Ollama is the correct choice even at higher volume, because a working Ollama beats a broken vLLM every time.</p>
+<h2 id="failure-modes-to-watch">Failure modes to watch</h2>
+<p><strong>Ollama behind a queue.</strong> A single worker with <code>OLLAMA_NUM_PARALLEL=1</code> will serialise an agent that fans out tool calls. The symptom is a p95 latency that grows linearly with concurrency while throughput stays flat. Fix by raising the parallel slot count, or by moving to a batched server.</p>
+<p><strong>vLLM OOM at startup.</strong> Almost always <code>gpu_memory_utilization</code> set too high for the chosen <code>max_model_len</code> and concurrency. Lower the memory fraction or the context length and restart.</p>
+<p><strong>CUDA kernel image mismatch.</strong> A wheel built for a newer compute capability than the GPU produces a runtime error at load. Verify architecture compatibility before installing.</p>
+<p><strong>Silent JSON drift.</strong> Without guided decoding, a model may occasionally wrap JSON in prose. If the downstream parser is lenient, the bug hides until a specific memo triggers it. Constrain the output or validate strictly.</p>
+<p><strong>Cold-start spikes.</strong> Both servers are slow on the first request after a restart. Keep the process warm, or accept a health check that fails until the model is loaded.</p>
+<h2 id="final-verdict">Final verdict</h2>
+<p>vLLM is the better fit for production fintech agent workloads above roughly ten thousand requests per day, for batch pipelines, and wherever structured output must be guaranteed. Ollama is the better fit for prototyping, low-volume internal tools, and laptop-first development. They are less competitors than different stages of the same journey, and teams that get this right treat the serving layer as a swappable component behind an OpenAI-compatible interface. The compliance argument for local inference is settled: open-weight 14B models at 4-bit quantization handle structured extraction and summarization well enough that sending PII abroad is a choice, not a requirement.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Can Ollama serve concurrent requests for a fintech agent?</strong>
+Yes, with a low ceiling. Setting <code>OLLAMA_NUM_PARALLEL=4</code> lets one loaded model serve up to four concurrent sequences by splitting its context window. Beyond that, requests queue and p95 latency climbs sharply. For an internal tool with a handful of analysts that is acceptable; for a customer-facing agent with a five-second SLA it is not, and a batched server is the better fit.</p>
+<p><strong>Does local inference settle data protection compliance?</strong>
+It removes the cross-border transfer problem, which is the largest hurdle for LLM features in fintech. It does not remove the rest. Access logging, retention limits, and the fact that prompts and outputs may contain personal data landing in your logs all remain. The serving layer is the easy part; the audit trail and retention policy around it is where teams underestimate the work.</p>
+<p><strong>How much VRAM does a 14B model at 4-bit quantization need?</strong>
+The weights alone typically require roughly 9–11 GB once quantization metadata and non-quantized tensors are counted. The KV cache is the larger variable, and it scales with context length and concurrency. Working the arithmetic for a specific model — layers, KV heads, head dimension, cache dtype — is the only reliable way to size the GPU.</p>
+<p><strong>Does vLLM support CPU-only inference?</strong>
+vLLM has an experimental CPU backend, but its throughput is low and its feature set lags the GPU path. For a regulated workflow without GPU budget, a smaller quantized model on Ollama running on a CPU instance is the more predictable choice for asynchronous batch work, accepting single-digit tokens per second.</p>
+<p><strong>Is a 16 GB GPU enough?</strong>
+For a 14B 4-bit model, the weights fit but leave little headroom for batching, which limits concurrency. That configuration is usually better suited to Ollama than to a batched server. A 24 GB card is the more comfortable floor for serving a 14B model with a useful context window and meaningful concurrency.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Pick the model you are actually considering and measure it on the hardware you actually have. Start the server, then drive it with a load generator that sends production-length prompts at increasing concurrency:</p>
+<pre><code>docker run --gpus all -p 8000:8000 vllm/vllm-openai:latest \
+  --model Qwen/Qwen2.5-14B-Instruct-AWQ --max-model-len 8192
+</code></pre>
+<p>Then, from another shell, send a warm-up batch, followed by a measured run at concurrency 1, 4, 10, and 20, and record p95 latency at each level. Repeat against Ollama on the same GPU with the same prompt. The p95 curve under concurrency tells you more about which server belongs in your architecture than any published benchmark, including the arithmetic in this article.
+===BODY===
+(full markdown article)</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/">Agent compliance in African fintech: the CBN gap</a></li>
+<li><a href="https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/">Foreign AI models vs sovereign fintech stacks: 2026 reality</a></li>
+<li><a href="https://kubaik.github.io/apm-lied-about-our-ai-incidents/">Why APM Misses GPU-Bound LLM Incidents</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/">
+                        <h3>Foreign AI models vs sovereign fintech stacks: 2026 reality</h3>
+                        <p>How to choose between offshore LLM APIs and locally hosted inference for regulated fintech, with latency math, cost break-even, and a compliance checklist.</p>
+                        <span class="related-meta">12 min read · 13 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/apm-lied-about-our-ai-incidents/">
+                        <h3>APM lied about our AI incidents</h3>
+                        <p>Application monitoring traces Python calls, not CUDA kernels or batch queues. Here is how to instrument the layers where LLM latency actually hides.</p>
+                        <span class="related-meta">12 min read · 1 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/african-devs-ai-tools-that-work-now-2026/">
+                        <h3>African devs: AI tools that work now (2026)</h3>
+                        <p>How to evaluate AI coding assistants under limited bandwidth, modest hardware and unreliable power, with concrete measurement steps instead of vendor claims.</p>
+                        <span class="related-meta">12 min read · 15 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

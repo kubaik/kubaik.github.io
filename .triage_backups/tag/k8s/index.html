@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K8S Articles — Kubai Kevin</title>
+  <meta name="description" content="Articles on K8S covering practical, hands-on approaches to k8s for software developers, including &quot;HPA vs KEDA vs Karpenter: autoscaling traps,&quot; &quot;Cost tools fail when agents scale autonomously,&quot; and &quot;Only boring stacks survive AI services&quot;.">
+  <meta name="robots" content="index, follow">
+  <meta name="base-path" content="">
+  <link rel="canonical" href="https://kubaik.github.io/tag/k8s/">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+  <script src="/static/consent.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="K8S Articles — Kubai Kevin">
+  <meta property="og:description" content="Articles on K8S covering practical, hands-on approaches to k8s for software developers, including &quot;HPA vs KEDA vs Karpenter: autoscaling traps,&quot; &quot;Cost tools fail when agents scale autonomously,&quot; and &quot;Only boring stacks survive AI services&quot;.">
+  <meta property="og:url" content="https://kubaik.github.io/tag/k8s/">
+  <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="K8S Articles — Kubai Kevin">
+  <meta name="twitter:description" content="Articles on K8S covering practical, hands-on approaches to k8s for software developers, including &quot;HPA vs KEDA vs Karpenter: autoscaling traps,&quot; &quot;Cost tools fail when agents scale autonomously,&quot; and &quot;Only boring stacks survive AI services&quot;.">
+  <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
+  <meta name="twitter:site" content="@KubaiKevin">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage",
+    "name":"K8S Articles","url":"https://kubaik.github.io/tag/k8s/",
+    "description":"Articles on K8S covering practical, hands-on approaches to k8s for software developers, including \"HPA vs KEDA vs Karpenter: autoscaling traps,\" \"Cost tools fail when agents scale autonomously,\" and \"Only boring stacks survive AI services\"."}
+  </script>
+</head>
+<body>
+  <header><div class="container">
+    <h1><a href="/">Kubai Kevin</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div></header>
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">K8S</span>
+    </nav>
+    <h2>13 articles tagged <em>K8S</em></h2>
+    <div class="post-grid">
+
+      <a class="post-card" href="/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+        <h3>HPA vs KEDA vs Karpenter: autoscaling traps</h3>
+        <p class="post-excerpt">How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</p>
+        <p class="post-reading-time">17 min read · 26 October 2026</p>
+      </a>
+      <a class="post-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
+        <h3>Cost tools fail when agents scale autonomously</h3>
+        <p class="post-excerpt">Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
+        <p class="post-reading-time">11 min read · 9 September 2026</p>
+      </a>
+      <a class="post-card" href="/only-boring-stacks-survive-ai-services/">
+        <h3>Only boring stacks survive AI services</h3>
+        <p class="post-excerpt">Why monoliths beat microservices for solo AI builders, how to spot the &quot;one more abstraction&quot; trap, and how to measure when vertical scaling stops working.</p>
+        <p class="post-reading-time">16 min read · 31 August 2026</p>
+      </a>
+      <a class="post-card" href="/observability-agents-lied-to-us/">
+        <h3>Observability Agents as Application Code</h3>
+        <p class="post-excerpt">Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">
+        <h3>Agent followed instructions too literally: the cron job trap</h3>
+        <p class="post-excerpt">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
+        <p class="post-reading-time">12 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
+        <h3>Kubernetes or Nomad: the real experiment cost split</h3>
+        <p class="post-excerpt">A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 3 August 2026</p>
+      </a>
+      <a class="post-card" href="/cloud-agents-burned-18k-8-tools-that-didnt-work/">
+        <h3>Why Cloud Cost Tools Miss Agent-Driven GPU Spend</h3>
+        <p class="post-excerpt">Agent-driven GPU spend breaks assumptions in standard cloud cost tools. Learn why they miss it, how to measure detection latency, and what to build instead.</p>
+        <p class="post-reading-time">12 min read · 10 July 2026</p>
+      </a>
+      <a class="post-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+        <h3>7 skills senior engineers need now agents are live</h3>
+        <p class="post-excerpt">Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+        <p class="post-reading-time">15 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-governance-opa-vs-kyverno-after-our-incident/">
+        <h3>Agent Governance: OPA vs Kyverno in Kubernetes</h3>
+        <p class="post-excerpt">Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">
+        <h3>CI/CD pipelines stall with GPU pods: 2026 benchmarks</h3>
+        <p class="post-excerpt">GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/self-healing-pipelines-argo-vs-crossplane-in-2026/">
+        <h3>Self-healing pipelines: Argo vs Crossplane in 2026</h3>
+        <p class="post-excerpt">Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
+        <p class="post-reading-time">13 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/use-feature-flags-to-deploy-ai-models-safely/">
+        <h3>Use feature flags to deploy AI models safely</h3>
+        <p class="post-excerpt">Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.</p>
+        <p class="post-reading-time">15 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
+        <h3>Self-healing agents vs rule-based deployment rollback</h3>
+        <p class="post-excerpt">Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.</p>
+        <p class="post-reading-time">12 min read · 11 June 2026</p>
+      </a>
+    </div>
+  </main>
+  <footer><div class="container">
+    <p>&copy; 2026 Kubai Kevin</p>
+  </div></footer>
+</body>
+</html>

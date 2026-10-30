@@ -1,0 +1,538 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Store data once, serve everywhere: cheaper - Kubai Kevin</title>
+        <meta name="description" content="How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.">
+        <meta name="keywords" content="MultiRegionBackend, MultiRegionCaching, EdgeCaching2026, Postgresql, Backend, Softwareengineering, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-25T08:39:15.607832">
+        <meta property="article:modified_time" content="2026-10-04T13:02:35.951224+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Store data once, serve everywhere: cheaper">
+        <meta property="og:description" content="How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.">
+        <meta property="og:url" content="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/store-data-once-serve-everywhere-cheaper.png">
+        <meta property="og:image:alt" content="Store data once, serve everywhere: cheaper">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Store data once, serve everywhere: cheaper">
+        <meta name="twitter:description" content="How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/store-data-once-serve-everywhere-cheaper.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/#article",
+      "headline": "Store data once, serve everywhere: cheaper",
+      "description": "How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.",
+      "datePublished": "2026-06-25T08:39:15+00:00",
+      "dateModified": "2026-10-04T13:02:35+00:00",
+      "wordCount": 2397,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/"
+      },
+      "keywords": "MultiRegionBackend, MultiRegionCaching, EdgeCaching2026, Postgresql, Backend, Softwareengineering, Redis",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/store-data-once-serve-everywhere-cheaper.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Store data once, serve everywhere: cheaper",
+          "item": "https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Store data once, serve everywhere: cheaper</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Store data once, serve everywhere: cheaper</h1>
+                
+                <p class="post-lead">How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MultiRegionBackend</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MultiRegionCaching</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">EdgeCaching2026</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/backend/"
+                       style="text-decoration:none;">Backend</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2397 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="what-the-multi-region-docs-leave-out">What the multi-region docs leave out</h2>
+<p>Provider documentation covers the control plane well: latency-based DNS routing, global accelerators, CDN edge functions. What it covers poorly is the cost structure that appears once real traffic flows.</p>
+<p>A common failure mode looks like this: a team replicates compute into three regions, points latency-based DNS at them, and ships. Each region's application still reads from the original database. Every request from a distant region becomes a cross-region round trip. Latency rises by the speed-of-light floor plus TLS and query time, and the egress line item grows with read volume, not write volume. Compute was cheap to duplicate; data access was not.</p>
+<p>The reason is data gravity. Replicating a database into N regions means paying for replication traffic continuously, whether or not anyone reads those replicas. Caching reads at the edge inverts that: you pay for data movement only on cache misses, and the miss rate is a tunable you control.</p>
+<p>The rest of this article works through a read-heavy API design that keeps one authoritative database and serves most reads from regional caches, including the invalidation logic that makes it safe.</p>
+<h2 id="the-two-cost-drivers-nobody-puts-on-the-slide">The two cost drivers nobody puts on the slide</h2>
+<p><strong>Replication transfer.</strong> Managed cross-region replication is billed per GB transferred. Exact prices vary by provider, region pair, and direction, and they change. The relevant point is structural: replication cost scales with <em>dataset size × number of regions × time</em>, independent of traffic. A 1 TB dataset replicated to three regions moves roughly 1 TB per region on initial sync, then incremental changes thereafter. If you want a real number, pull the current per-GB cross-region rate from your provider's pricing page and multiply by your dataset size and region count. Treat any figure you see quoted in a blog post (including this one) as stale until you verify it.</p>
+<p><strong>Read egress.</strong> When application servers in region B query a database in region A, the response bytes cross a region boundary and are billed. This cost scales with <em>read volume × response size</em>. It is the one that surprises teams, because it looks like normal database traffic in application code.</p>
+<p>A useful measurement exercise: instrument your database client to log response bytes per query, tagged with the region of the caller and the region of the database. Aggregate by day. If cross-region bytes dominate, caching is the lever. If write volume dominates, it is not.</p>
+<h2 id="how-regional-caching-actually-works">How regional caching actually works</h2>
+<p>The design has four moving parts.</p>
+<p><strong>One authoritative database.</strong> All writes go to a single primary. This keeps consistency reasoning simple and avoids multi-master conflict resolution, which is a much harder problem than most teams want to take on.</p>
+<p><strong>A cache in each serving region.</strong> The cache holds serialized read results keyed by resource ID and any dimension that affects the response (locale, region preference, API version). TTLs are short — seconds to minutes — so staleness is bounded by design rather than by invalidation correctness alone.</p>
+<p><strong>Explicit invalidation on write.</strong> After a successful write, the application deletes the affected cache keys in every region. Deletion, not update, so the next read repopulates from the source of truth.</p>
+<p><strong>A stale-serving fallback.</strong> If the cache misses and the origin is slow or unavailable, serve a stale copy with a short revalidation window. This converts an outage into degraded freshness.</p>
+<p>The correctness argument: a read is either a cache hit (bounded staleness, at most the TTL) or a miss (fresh from the primary). A write invalidates all cached copies before returning. The window where a client can read stale data after a write is the gap between the write committing and the invalidation completing — which is why invalidation should be synchronous in the write path, not queued.</p>
+<h2 id="worked-example-when-caching-beats-replication">Worked example: when caching beats replication</h2>
+<p>State the assumptions explicitly, because the answer flips if they change.</p>
+<p>Assume a read-heavy API with:
+- 1 TB of relational data
+- Three serving regions
+- 100 reads per second per region, average response 4 KB
+- 1 write per second per region</p>
+<p><strong>Option A: replicate the database to all three regions.</strong>
+Replication transfer is roughly dataset size per region on initial sync, plus incremental change traffic. Steady-state cost scales with write volume and dataset size. Read egress is zero, because reads are local. But you now operate three database clusters, three backup schedules, three upgrade paths, and a replication topology.</p>
+<p><strong>Option B: one primary, regional caches.</strong>
+Cross-region traffic occurs only on cache misses. At a 90% hit rate, cross-region read volume is 10 reads/sec/region × 4 KB = 40 KB/sec/region, or about 3.4 GB/day/region. Writes still cross regions for invalidation, but invalidation messages are tiny — a key name, not a payload.</p>
+<p>The arithmetic that matters here is the ratio, not the dollar figure: Option B moves roughly (1 − hit rate) × read volume across region boundaries, while Option A moves a function of dataset size and write volume. For read-heavy workloads with a high hit rate, B moves far less data. Plug in your provider's current per-GB rate to get a number; do not trust a number from an article.</p>
+<p>The break-even point is a write-heavy workload with a low cache hit rate. If most requests are writes, or if cache keys are so diverse that hit rates stay low, Option B pays invalidation overhead for little benefit.</p>
+<h2 id="implementation-origin-cache-and-invalidation">Implementation: origin, cache, and invalidation</h2>
+<p>A minimal FastAPI service with a single PostgreSQL primary and a per-region Redis cache.</p>
+<pre><code class="language-python"># main.py
+from fastapi import FastAPI, Header, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+import psycopg2
+import redis
+import os
+import time
+
+app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origins=[&quot;*&quot;])
+
+DB_URL = os.getenv(&quot;DATABASE_URL&quot;)
+REDIS_URL = os.getenv(&quot;REDIS_URL&quot;)
+
+r = redis.Redis.from_url(REDIS_URL, decode_responses=True, socket_timeout=5)
+
+
+def get_db():
+    return psycopg2.connect(DB_URL, connect_timeout=2)
+
+
+@app.get(&quot;/user/{user_id}&quot;)
+async def get_user(user_id: str, x_region: str = Header(&quot;us-east-1&quot;, alias=&quot;X-Region&quot;)):
+    cache_key = f&quot;user:{user_id}:{x_region}&quot;
+
+    cached = r.get(cache_key)
+    if cached is not None:
+        return {&quot;user_id&quot;: user_id, &quot;data&quot;: cached, &quot;source&quot;: &quot;cache&quot;}
+
+    start = time.time()
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(&quot;SELECT data FROM users WHERE id = %s&quot;, (user_id,))
+            row = cur.fetchone()
+    finally:
+        conn.close()
+
+    if row is None:
+        raise HTTPException(status_code=404, detail=&quot;not_found&quot;)
+
+    latency_ms = (time.time() - start) * 1000
+    r.set(cache_key, row[0], ex=30)
+    return {
+        &quot;user_id&quot;: user_id,
+        &quot;data&quot;: row[0],
+        &quot;latency_ms&quot;: round(latency_ms, 2),
+        &quot;source&quot;: &quot;origin&quot;,
+    }
+</code></pre>
+<p>Two things to note. The <code>Header</code> default is the actual value, with <code>alias</code> mapping the HTTP header name — the earlier form where the default was a header name was wrong. And the cache stores the column value, not the whole row tuple, so what you read back is what you wrote.</p>
+<p>Invalidation on write, using <code>SCAN</code> rather than <code>KEYS</code>:</p>
+<pre><code class="language-python">@app.post(&quot;/user/{user_id}&quot;)
+async def update_user(user_id: str, payload: dict):
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                &quot;UPDATE users SET data = %s WHERE id = %s&quot;,
+                (payload[&quot;data&quot;], user_id),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+
+    pattern = f&quot;user:{user_id}:*&quot;
+    cursor = 0
+    while True:
+        cursor, batch = r.scan(cursor=cursor, match=pattern, count=100)
+        if batch:
+            r.delete(*batch)
+        if cursor == 0:
+            break
+
+    return {&quot;updated&quot;: user_id}
+</code></pre>
+<p><code>SCAN</code> is safe to run against a live cache; <code>KEYS</code> blocks the server on large keyspaces. The loop terminates when the returned cursor is zero. Deleting in batches of 100 keeps each round trip bounded.</p>
+<h2 id="regional-fan-out-for-warm-caches">Regional fan-out for warm caches</h2>
+<p>Invalidation deletes; it does not warm. After a write, the next read in each region is a miss. For frequently read records, that means a burst of cross-region reads right after every write.</p>
+<p>A durable queue per region solves this. The write path publishes a small event (user ID plus the new value) to each region's queue. A regional consumer writes the value into that region's cache. The cache is warm before the next read arrives.</p>
+<p>Redis Streams with consumer groups work for this, as do managed queues. The important properties are durability (the event survives a consumer restart) and at-least-once delivery (duplicate writes to a cache are idempotent, so this is fine).</p>
+<pre><code class="language-python"># consumer.py
+import json
+import os
+import redis
+
+r = redis.Redis.from_url(os.getenv(&quot;REDIS_URL&quot;))
+
+STREAM = &quot;user_updates&quot;
+GROUP = &quot;region_group&quot;
+CONSUMER = os.getenv(&quot;AWS_REGION&quot;, &quot;local&quot;)
+
+try:
+    r.xgroup_create(STREAM, GROUP, id=&quot;0&quot;, mkstream=True)
+except redis.exceptions.ResponseError:
+    pass  # group already exists
+
+while True:
+    response = r.xreadgroup(GROUP, CONSUMER, {STREAM: &quot;&gt;&quot;}, count=10, block=5000)
+    if not response:
+        continue
+    for _stream_name, messages in response:
+        for msg_id, fields in messages:
+            user_id = fields[b&quot;user_id&quot;].decode()
+            data = fields[b&quot;data&quot;].decode()
+            r.set(f&quot;user:{user_id}:{CONSUMER}&quot;, data, ex=30)
+            r.xack(STREAM, GROUP, msg_id)
+</code></pre>
+<p>Unlike pub/sub, a consumer group tracks which messages each consumer has acknowledged, so a restarted consumer resumes where it left off. The stream is trimmed separately by a scheduled job; deleting each message immediately after acknowledgment removes the durability benefit for any consumer that is temporarily offline.</p>
+<h2 id="measuring-whether-it-worked">Measuring whether it worked</h2>
+<p>Do not trust a hit-rate number from anywhere, including this article. Measure your own.</p>
+<p>Instrument three counters at the cache client: <code>hits</code>, <code>misses</code>, and <code>bytes_returned_from_origin</code>. Emit them per region per minute. The hit rate is <code>hits / (hits + misses)</code>; the cross-region byte volume is the sum of <code>bytes_returned_from_origin</code> for regions that are not the primary's region.</p>
+<p>For latency, measure p50 and p99 at the edge, not in the application. A cache hit that still traverses a slow proxy is not a fast request. Compare the p99 of a region against the p99 of a single-region deployment serving the same endpoints; the difference is the cost of the topology, and it should be small.</p>
+<p>For cost, pull the actual line items from your provider's billing export and separate cross-region transfer from intra-region. If cross-region transfer is not the dominant variable cost, caching is not your lever — look at compute or storage instead.</p>
+<h2 id="failure-modes-and-how-to-handle-each">Failure modes and how to handle each</h2>
+<p><strong>Cache stampede.</strong> When a hot key expires, many concurrent requests miss simultaneously and hit the primary. Mitigate with a per-key lock: <code>SET lock:{key} 1 NX PX 5000</code>. The first request acquires the lock and refreshes; others serve the stale value or wait briefly. Alternatively, add jitter to TTLs so keys do not expire in lockstep.</p>
+<p><strong>Invalidation gaps.</strong> If the write commits but the invalidation call fails, the cache serves stale data until the TTL expires. Keep TTLs short enough that this window is acceptable, and log every failed invalidation. Do not retry invalidation in a background worker unless the TTL is longer than the retry window.</p>
+<p><strong>Clock skew.</strong> TTLs are enforced by the cache server's clock, not the application's. If cache nodes drift, effective TTLs vary. Run NTP on cache hosts and monitor drift. This is a real concern but a small one; the fix is operational, not architectural.</p>
+<p><strong>Unbounded key spaces.</strong> If every request produces a unique key — search queries with arbitrary parameters, paginated results — the cache fills with single-use entries and the hit rate collapses. Either normalize keys (drop irrelevant parameters, round pagination) or do not cache those endpoints.</p>
+<p><strong>Cold start after a region comes online.</strong> A new region's empty cache sends every request to the primary. Pre-warm by replaying the top-N most-read keys before routing traffic to the region, or ramp traffic gradually so the cache fills at a rate the primary can absorb.</p>
+<p><strong>Memory growth.</strong> Caches hold more than the sum of their values: per-key overhead, fragmentation, and connection buffers all count. Set a <code>maxmemory</code> policy and monitor eviction rate. If evictions climb while hit rate falls, your working set does not fit and you need a larger cache or a smaller TTL.</p>
+<h2 id="when-not-to-use-this">When not to use this</h2>
+<p><strong>Strong cross-region consistency is required.</strong> Financial ledgers, inventory with hard reservation semantics, and anything requiring serializable transactions across regions are poor fits. Use a database designed for it and accept the latency and cost.</p>
+<p><strong>Writes dominate reads.</strong> Caching helps reads. If your workload is 80% writes, the cache is overhead.</p>
+<p><strong>Data residency rules forbid it.</strong> Some jurisdictions require that personal data never leave the country. A shared primary in another region violates that regardless of caching. You need regional databases and a replication strategy that respects the boundary — caching does not solve a legal constraint.</p>
+<p><strong>Your traffic is already regional.</strong> If 95% of users are within one region, the operational cost of multi-region caching exceeds the benefit. One region plus a disaster-recovery replica is simpler.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before committing to regional caching, answer these:</p>
+<ul>
+<li>What is the read-to-write ratio on the endpoints you plan to cache?</li>
+<li>What is the realistic cache hit rate given your key space? Estimate from request logs, not intuition.</li>
+<li>What is the maximum staleness your product tolerates? That sets your TTL ceiling.</li>
+<li>What is the current cross-region egress cost per month, from the billing export?</li>
+<li>Can your write path tolerate a synchronous invalidation call? If not, what is the failure behavior?</li>
+<li>What is the p99 latency from each target region today?</li>
+<li>Do any compliance rules restrict where the data can be stored or processed?</li>
+</ul>
+<p>If the read-to-write ratio is high, the hit rate is estimable above roughly 80%, staleness of seconds is acceptable, and egress dominates your variable cost, caching is the right lever. Otherwise, replicate and pay for it deliberately.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick your slowest endpoint and measure it from a region far from your database. Run a loop of 100 requests from a machine in that region, recording the response time of each, and compute the p99. Then check your provider's billing export for cross-region transfer on that same endpoint's traffic. If the p99 exceeds your target and cross-region transfer is a visible line item, you have the two numbers that justify a cache — and you can size the TTL from the staleness your product already tolerates.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/">AWS costs for Nairobi SaaS: 2026 bill split</a></li>
+<li>50 locations, 50 headaches: edge-native backends in</li>
+<li><a href="https://kubaik.github.io/ai-stole-system-design/">AI stole system design</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/save-12kmonth-cloud-egress-costs-in-2026/">
+                        <h3>Cutting cloud egress costs: architecture that works</h3>
+                        <p>Egress costs come from small, frequent cross-boundary calls. Learn the architecture patterns that reduce data transfer and how to verify savings.</p>
+                        <span class="related-meta">13 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-in-local-currency-costs-that-surprise/">
+                        <h3>AI in local currency: costs that surprise you</h3>
+                        <p>How to choose where to run AI inference: decouple variable compute cost from fixed per-region compliance cost, and measure the trade-off.</p>
+                        <span class="related-meta">15 min read · 7 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/aws-costs-for-nairobi-saas-2026-bill-split/">
+                        <h3>AWS costs for Nairobi SaaS: 2026 bill split</h3>
+                        <p>How to split an AWS bill by service for a Nairobi-facing SaaS: cost drivers, measurement commands, and a decision checklist for region choice and DR.</p>
+                        <span class="related-meta">13 min read · 28 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubai Kevin — Backend engineering, AI tooling and developer careers</title>
+    <meta name="description" content="Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.">
+    <meta name="base-path" content="">
+    <link rel="canonical" href="https://kubaik.github.io/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kubai Kevin — Backend engineering, AI tooling and developer careers">
+    <meta property="og:description" content="Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.">
+    <meta property="og:url" content="https://kubaik.github.io/">
+    <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kubai Kevin — Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.">
+    <meta name="twitter:description" content="Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.">
+    <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="/static/consent.js" defer></script>
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://kubaik.github.io/#organization",
+  "name": "Kubai Kevin",
+  "description": "Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.",
+  "url": "https://kubaik.github.io/",
+  "sameAs": [
+    "https://twitter.com/KubaiKevin",
+    "https://www.linkedin.com/in/kevin-kubai-22b61b37",
+    "https://github.com/kubaik"
+  ]
+}
+</script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://kubaik.github.io/#website",
+  "name": "Kubai Kevin",
+  "description": "Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.",
+  "url": "https://kubaik.github.io/",
+  "publisher": {
+    "@id": "https://kubaik.github.io/#organization"
+  }
+}
+</script>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="alternate" type="application/rss+xml" title="Kubai Kevin" href="/rss.xml">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <style>
+        .search-container { margin: 0 0 1.5rem; max-width: 420px; }
+        .search-wrapper {
+            display: flex; align-items: center;
+            border: 2px solid #e0e0e0; border-radius: 50px;
+            padding: 2px 10px; background: #fff;
+            transition: border-color 0.2s; overflow: hidden;
+        }
+        .search-wrapper:focus-within { border-color: #6366f1; }
+        .search-icon { color: #9ca3af; pointer-events: none; flex-shrink: 0; display: flex; align-items: center; margin-right: 8px; }
+        .search-input {
+            flex: 1; padding: 8px 0;
+            border: none !important; outline: none !important; box-shadow: none !important;
+            -webkit-appearance: none; appearance: none;
+            font-size: 0.95rem; background: transparent; border-radius: 0;
+        }
+        .search-input::-webkit-search-decoration,
+        .search-input::-webkit-search-cancel-button { display: none !important; }
+        .clear-search {
+            background: none; border: none; cursor: pointer;
+            color: #9ca3af; padding: 2px; flex-shrink: 0; display: flex; align-items: center;
+        }
+        .clear-search:hover { color: #333; }
+        .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
+        .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
+        .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
+
+        .post-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+        .post-card h3 {
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+        }
+        .post-card .post-excerpt {
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 3.2rem;
+        }
+        .post-card .tags {
+            overflow: visible;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+        .post-card .tag {
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+        }
+        .post-card .tag:hover { opacity: 0.85; color: #fff; }
+        .tag { text-decoration: none; color: #fff; }
+        .tag:hover { text-decoration: none; opacity: 0.85; color: #fff; }
+
+        .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; margin-bottom: 2px; flex-shrink: 0; }
+        .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+        .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
+        .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px; border-radius: 50%; background: #6366f1; color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .post-lead { font-size: 1.05rem; color: #555; line-height: 1.6; margin: 0.25rem 0 1rem; font-style: italic; }
+        .editorial-policy-note { background: #f0f4ff; border-left: 3px solid #6366f1; padding: 0.75rem 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #555; }
+        .editorial-policy-note a { color: #6366f1; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="hero">
+            <h2>Real Systems. Real Failures. Real Fixes.</h2>
+            <p>Practical backend engineering, AI tooling, and developer career advice — no theory, just what's worked in real production systems.</p>
+        </div>
+
+        <div class="editorial-policy-note">
+            Articles are written by <a href="/about/">Kubai Kevin</a>, a software developer
+            with 10+ years of production experience in fintech and AI. Topics are selected from real
+            production work; drafts are produced by an automated LLM pipeline that is gated by
+            hard quality controls (minimum length, duplicate detection, boilerplate rejection).
+            Individual line-by-line human review is not performed on every post before publication —
+            the author maintains the quality gates and corrects articles when readers report issues.
+            <a href="/ai-content-policy/">Full AI content policy →</a>
+            · <a href="/about/#editorial">Editorial process →</a>
+        </div>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="text" id="search-input" class="search-input"
+                    placeholder="Search posts..."
+                    autocomplete="off" autocorrect="off" autocapitalize="off"
+                    spellcheck="false" data-form-type="other">
+                <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="search-results-count" class="search-results-count"></div>
+        </div>
+
+        <section class="recent-posts">
+            <h2>Latest Posts</h2>
+            
+            <div id="posts-container" class="post-grid">
+                
+                <a class="post-card" href="/kyc-integrations-the-data-you-shouldnt-store/"
+                   data-title="KYC integrations: the data you shouldn&#39;t store"
+                   data-description="Design a KYC integration that persists only the decision and a vendor reference, with the raw identity evidence kept by the vendor under contract."
+                   data-tags="KycIntegration,IdentityVerification,Gdpr,DataMinimisation,KycArchitecture,Dataengineering">
+                    <h3>KYC integrations: the data you shouldn&#39;t store</h3>
+                    <p class="post-excerpt">Design a KYC integration that persists only the decision and a vendor reference, with the raw identity evidence kept by the vendor under contract.</p>
+                    
+                    <p class="post-reading-time">16 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Gdpr</span>
+                        
+                        <span class="tag"
+                              >KycIntegration</span>
+                        
+                        <span class="tag"
+                              >KycArchitecture</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/opentelemetry-collector-pipelines-sampling-batching/"
+                   data-title="OpenTelemetry collector pipelines: sampling, batching…"
+                   data-description="How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch."
+                   data-tags="Opentelemetry,Collector,Tail">
+                    <h3>OpenTelemetry collector pipelines: sampling, batching…</h3>
+                    <p class="post-excerpt">How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</p>
+                    
+                    <p class="post-reading-time">13 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Tail</span>
+                        
+                        <span class="tag"
+                              >Collector</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/opentelemetry/">Opentelemetry</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/nodejs-memory-leak-find-it-in-10-min/"
+                   data-title="Node.js memory leak: find it in 10 min"
+                   data-description="Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure."
+                   data-tags="HeapSnapshot,MemoryProfiling,Backend,Softwareengineering">
+                    <h3>Node.js memory leak: find it in 10 min</h3>
+                    <p class="post-excerpt">Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/backend/">Backend</span>
+                        
+                        <span class="tag"
+                              >HeapSnapshot</span>
+                        
+                        <span class="tag"
+                              >MemoryProfiling</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/ai-answers-first-judgment-later/"
+                   data-title="AI answers first, judgment later"
+                   data-description="AI assistants give juniors fast, confident answers without your system&amp;#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment."
+                   data-tags="Mentoring,JuniorEngineers,AiAssistants,CodeReview,Engineering,Ai,Coding">
+                    <h3>AI answers first, judgment later</h3>
+                    <p class="post-excerpt">AI assistants give juniors fast, confident answers without your system&amp;#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/ai/">Ai</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/coding/">Coding</span>
+                        
+                        <span class="tag"
+                              >Mentoring</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/database-restore-drills-that-mean-something/"
+                   data-title="Database restore drills that mean something"
+                   data-description="A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie."
+                   data-tags="DatabaseBackup,DisasterRecovery,RestoreDrill,Postgresql,MeasureRtoRpo,Database">
+                    <h3>Database restore drills that mean something</h3>
+                    <p class="post-excerpt">A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.</p>
+                    
+                    <p class="post-reading-time">15 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/database/">Database</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/postgresql/">Postgresql</span>
+                        
+                        <span class="tag"
+                              >RestoreDrill</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/multi-agent-dx-langgraph-vs-crewai-gaps/"
+                   data-title="Multi-agent DX: LangGraph vs CrewAI gaps"
+                   data-description="Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces."
+                   data-tags="MultiAgentSystems,Debugging,Langgraph,Crewai,AgentObservability,Softwareengineering,Coding,Multiagent">
+                    <h3>Multi-agent DX: LangGraph vs CrewAI gaps</h3>
+                    <p class="post-excerpt">Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</p>
+                    
+                    <p class="post-reading-time">16 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Crewai</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/coding/">Coding</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/debugging/">Debugging</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/jwt-sessions-revocation-rotation-storage/"
+                   data-title="JWT sessions: revocation, rotation, storage"
+                   data-description="Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model."
+                   data-tags="Jwt,SessionManagement,TokenRevocation,RefreshTokenRotation,JwtStorage,Rag,Vectorsearch">
+                    <h3>JWT sessions: revocation, rotation, storage</h3>
+                    <p class="post-excerpt">Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Jwt</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/rag/">Rag</span>
+                        
+                        <span class="tag"
+                              >JwtStorage</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/context-engineering-the-real-fix-for-agent-hallucinations/"
+                   data-title="Context engineering: the real fix for agent hallucinations"
+                   data-description="Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context."
+                   data-tags="AgentHallucinations,ContextEngineering,LongRunningAgents,LlmContextManagement,Reduce,Llm,Generativeai">
+                    <h3>Context engineering: the real fix for agent hallucinations</h3>
+                    <p class="post-excerpt">Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context.</p>
+                    
+                    <p class="post-reading-time">16 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/llm/">Llm</span>
+                        
+                        <span class="tag"
+                              >Reduce</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/generativeai/">Generativeai</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
+                   data-title="HPA vs KEDA vs Karpenter: autoscaling traps"
+                   data-description="How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives."
+                   data-tags="Kubernetes,Hpa,Keda,Karpenter,K8s">
+                    <h3>HPA vs KEDA vs Karpenter: autoscaling traps</h3>
+                    <p class="post-excerpt">How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</p>
+                    
+                    <p class="post-reading-time">17 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Hpa</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/k8s/">K8s</span>
+                        
+                        <span class="tag"
+                              >Keda</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/drift-detection-the-plan-that-lies/"
+                   data-title="Drift detection: the plan that lies"
+                   data-description="Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely."
+                   data-tags="TerraformDrift,InfrastructureDrift,Opentofu,Terraform">
+                    <h3>Drift detection: the plan that lies</h3>
+                    <p class="post-excerpt">Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</p>
+                    
+                    <p class="post-reading-time">16 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Opentofu</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/terraform/">Terraform</span>
+                        
+                        <span class="tag"
+                              >TerraformDrift</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/7-guardrails-for-safer-llm-apps/"
+                   data-title="7 guardrails for safer LLM apps"
+                   data-description="A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first."
+                   data-tags="LlmGuardrails,PromptInjection,InputFilters,OutputValidators,LlmPolicyLayer,Llm,Generativeai">
+                    <h3>7 guardrails for safer LLM apps</h3>
+                    <p class="post-excerpt">A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first.</p>
+                    
+                    <p class="post-reading-time">18 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/llm/">Llm</span>
+                        
+                        <span class="tag"
+                              >InputFilters</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/generativeai/">Generativeai</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/when-velocity-is-hard-to-measure-evaluating-engineering/"
+                   data-title="When velocity is hard to measure: evaluating engineering…"
+                   data-description="Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have."
+                   data-tags="EngineeringOutput,VelocityMetrics,Measure,ChangeFailureRate,DeploymentFrequency,Performance,Softwareengineering">
+                    <h3>When velocity is hard to measure: evaluating engineering…</h3>
+                    <p class="post-excerpt">Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Measure</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/performance/">Performance</span>
+                        
+                        <span class="tag"
+                              >VelocityMetrics</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/iso-20022-where-payment-rails-actually-break/"
+                   data-title="ISO 20022: where payment rails actually break"
+                   data-description="ISO 20022 migrations fail in mapping policy, code-list governance and character rules, not XML parsing. A layered design and checklist for payment rails."
+                   data-tags="Iso,PaymentRails,IsoMigration,PacsMessageMapping,IsoValidationRules">
+                    <h3>ISO 20022: where payment rails actually break</h3>
+                    <p class="post-excerpt">ISO 20022 migrations fail in mapping policy, code-list governance and character rules, not XML parsing. A layered design and checklist for payment rails.</p>
+                    
+                    <p class="post-reading-time">17 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Iso</span>
+                        
+                        <span class="tag"
+                              >PaymentRails</span>
+                        
+                        <span class="tag"
+                              >IsoMigration</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/http3-changes-less-than-the-demos-imply/"
+                   data-title="HTTP/3 changes less than the demos imply"
+                   data-description="HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout."
+                   data-tags="Http,Quic,HttpProduction,QuicBackendImpact,HttpFallbackHttp,Backend,Softwareengineering">
+                    <h3>HTTP/3 changes less than the demos imply</h3>
+                    <p class="post-excerpt">HTTP/3 usually terminates at the CDN, so origin behavior barely changes. Here is where QUIC matters, where it does not, and how to measure a rollout.</p>
+                    
+                    <p class="post-reading-time">13 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Http</span>
+                        
+                        <span class="tag"
+                              >Quic</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/backend/">Backend</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/agentic-systems-architecture-principles-that-hold/"
+                   data-title="Agentic systems: architecture principles that hold"
+                   data-description="How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests."
+                   data-tags="AgenticArchitecture,MultiModelSystems,IdempotencyKey,TokenBudgetControl,Llm,Generativeai,Agenticai">
+                    <h3>Agentic systems: architecture principles that hold</h3>
+                    <p class="post-excerpt">How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</p>
+                    
+                    <p class="post-reading-time">15 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/llm/">Llm</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/agenticai/">Agenticai</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/generativeai/">Generativeai</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/agent-code-review-7-traps-that-slip-through/"
+                   data-title="Agent code review: 7 traps that slip through"
+                   data-description="Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure."
+                   data-tags="AgentCodeReview,AiGeneratedCode,CodeReviewChecklist,Ai,Generativeai">
+                    <h3>Agent code review: 7 traps that slip through</h3>
+                    <p class="post-excerpt">Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</p>
+                    
+                    <p class="post-reading-time">17 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/ai/">Ai</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/generativeai/">Generativeai</span>
+                        
+                        <span class="tag"
+                              >AgentCodeReview</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/oauth-21-migration-what-breaks-in-existing-integrations/"
+                   data-title="OAuth 2.1 migration: what breaks in existing integrations"
+                   data-description="OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration."
+                   data-tags="Oauth,Pkce,OauthMigration,ImplicitGrantRemoval,RedirectUriMatching">
+                    <h3>OAuth 2.1 migration: what breaks in existing integrations</h3>
+                    <p class="post-excerpt">OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration.</p>
+                    
+                    <p class="post-reading-time">18 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Pkce</span>
+                        
+                        <span class="tag"
+                              >Oauth</span>
+                        
+                        <span class="tag"
+                              >OauthMigration</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/velocity-up-ownership-down-team-scaling-trap/"
+                   data-title="Velocity Up, Ownership Down: Team Scaling Trap"
+                   data-description="A practical framework for finding ownership blur, assigning accountable owners, and enforcing it with CODEOWNERS, CI checks, and incident tooling."
+                   data-tags="TeamOwnership,Velocity,Codeowners,ResponsibilityMatrix,OwnershipBlur">
+                    <h3>Velocity Up, Ownership Down: Team Scaling Trap</h3>
+                    <p class="post-excerpt">A practical framework for finding ownership blur, assigning accountable owners, and enforcing it with CODEOWNERS, CI checks, and incident tooling.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Velocity</span>
+                        
+                        <span class="tag"
+                              >Codeowners</span>
+                        
+                        <span class="tag"
+                              >TeamOwnership</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/remote-premium-rates-skills-ai-cant-copy/"
+                   data-title="Remote premium rates: skills AI can&#39;t copy"
+                   data-description="Four drills for remote engineers: latency budgets, evidence-based diagnosis, decision records and handoff artifacts that outlast the work."
+                   data-tags="RemoteWork,PremiumRates,LatencyBudget,RemoteDiagnosis,DecisionRecord,Ai,Softwareengineering">
+                    <h3>Remote premium rates: skills AI can&#39;t copy</h3>
+                    <p class="post-excerpt">Four drills for remote engineers: latency budgets, evidence-based diagnosis, decision records and handoff artifacts that outlast the work.</p>
+                    
+                    <p class="post-reading-time">19 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/ai/">Ai</span>
+                        
+                        <span class="tag"
+                              >RemoteWork</span>
+                        
+                        <span class="tag"
+                              >PremiumRates</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/docs-that-survive-the-bus-factor-fix/"
+                   data-title="Docs that survive: the bus factor fix"
+                   data-description="How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback."
+                   data-tags="Documentation,BusFactor,Runbook,Survivable,Softwareengineering">
+                    <h3>Docs that survive: the bus factor fix</h3>
+                    <p class="post-excerpt">How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</p>
+                    
+                    <p class="post-reading-time">15 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Runbook</span>
+                        
+                        <span class="tag"
+                              >BusFactor</span>
+                        
+                        <span class="tag"
+                              >Survivable</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/mcp-vs-a2a-pick-the-wrong-layer/"
+                   data-title="MCP vs A2A: pick the wrong layer"
+                   data-description="MCP connects models to tools; A2A connects agents to agents. How to tell which layer a boundary belongs to, and what breaks when you mix them."
+                   data-tags="Mcp,A2a,ModelContextProtocol">
+                    <h3>MCP vs A2A: pick the wrong layer</h3>
+                    <p class="post-excerpt">MCP connects models to tools; A2A connects agents to agents. How to tell which layer a boundary belongs to, and what breaks when you mix them.</p>
+                    
+                    <p class="post-reading-time">16 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Mcp</span>
+                        
+                        <span class="tag"
+                              >A2a</span>
+                        
+                        <span class="tag"
+                              >ModelContextProtocol</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/property-based-testing-vs-example-tests-the-bug-gap/"
+                   data-title="Property-based testing vs example tests: the bug gap"
+                   data-description="How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code."
+                   data-tags="PropertyBasedTesting,ExampleTests,Financial,Softwareengineering">
+                    <h3>Property-based testing vs example tests: the bug gap</h3>
+                    <p class="post-excerpt">How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.</p>
+                    
+                    <p class="post-reading-time">18 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Financial</span>
+                        
+                        <span class="tag"
+                              >ExampleTests</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/softwareengineering/">Softwareengineering</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/staging-wont-catch-prod-bugs-make/"
+                   data-title="Staging won&#39;t catch prod bugs. Make…"
+                   data-description="Why full parity between staging and production misses state-dependent bugs, and how to build cheap fault injection that catches them before deploy."
+                   data-tags="StagingEnvironment,FaultInjection,ProductionOnlyBugs,ConcurrencyTesting,Dataengineering">
+                    <h3>Staging won&#39;t catch prod bugs. Make…</h3>
+                    <p class="post-excerpt">Why full parity between staging and production misses state-dependent bugs, and how to build cheap fault injection that catches them before deploy.</p>
+                    
+                    <p class="post-reading-time">13 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/faultinjection/">FaultInjection</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/dataengineering/">Dataengineering</span>
+                        
+                        <span class="tag"
+                              >StagingEnvironment</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+                <a class="post-card" href="/pci-dss-architecture-12-requirements-that-matter/"
+                   data-title="PCI DSS architecture: 12 requirements that matter"
+                   data-description="Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction."
+                   data-tags="PciDss,PaymentArchitecture,PciDssRequirements,Cardholder,Dataengineering">
+                    <h3>PCI DSS architecture: 12 requirements that matter</h3>
+                    <p class="post-excerpt">Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >PciDss</span>
+                        
+                        <span class="tag"
+                              >Cardholder</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/dataengineering/">Dataengineering</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
+            </div>
+
+            <div id="loading-spinner" class="loading-spinner" style="display:none;">
+                <div class="spinner"></div>
+                <p>Loading more posts...</p>
+            </div>
+
+            <div id="scroll-sentinel" style="height:1px;"></div>
+
+            
+            <!-- Real, crawlable fallback for non-JS crawlers and users who
+                 land here before the infinite-scroll JS has fired. The JS
+                 loader above still handles progressive enhancement for
+                 everyone else. -->
+            <p class="pagination-fallback" style="text-align:center;margin-top:1.5rem;">
+                <a href="/page/2/">Browse older posts →</a>
+            </p>
+            
+
+            
+        </section>
+    </main>
+    
+
+    <button id="back-to-top" class="back-to-top" style="display:none;" aria-label="Back to top"><span>&#8593;</span></button>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin</p>
+            <div class="social-links">
+                
+                <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener">Linkedin</a>
+                
+                <a href="https://twitter.com/KubaiKevin" target="_blank" rel="noopener">Twitter</a>
+                
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/navigation.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var searchInput    = document.getElementById('search-input');
+        var clearBtn       = document.getElementById('clear-search');
+        var resultsCount   = document.getElementById('search-results-count');
+        var postsContainer = document.getElementById('posts-container');
+        var loadingSpinner = document.getElementById('loading-spinner');
+        var sentinel       = document.getElementById('scroll-sentinel');
+        var backToTopBtn   = document.getElementById('back-to-top');
+
+        var PAGE_SIZE = 24;
+        var BASE_PATH = '';
+        // Tags with a real generated /tag/{slug}/ page. Posts loaded
+        // client-side from posts.json go through the same qualifying-tag
+        // check as server-rendered cards, so a JS-built card can never
+        // link to a tag page that doesn't exist either.
+        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "africatech", "agent", "agentdrift", "agentgovernance", "agentic", "agenticai", "agenticfinops", "agentorchestration", "agentpermissions", "agentplatform", "agentversioning", "ai", "aiagentmonitoring", "aiagentpermissions", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodereview", "aicodingtools", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiplatform", "aiuitools", "apachekafka", "apis", "apisecurity2026", "apiversioning", "artificialintelligence", "audittrail", "backend", "buildinpublic", "cache", "careeradvice", "cicd", "circuitbreaker", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownership", "codereview", "codereviewchecklist", "coding", "compensation", "connection", "containers", "context", "cursorai", "cybersecurity", "database", "dataengineering", "debugging", "developer", "devops", "devtoolpricing", "docker", "documentation", "driftdetection", "durable", "engineering", "eventsourcing", "fastapi", "faultinjection", "featureflags", "featureflagsai", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "generativeai", "github", "golang", "goldenpath", "graphql", "idempotency", "idempotencykey", "idempotencykeys", "indiehacker", "infosec", "internal", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmmonitoring", "llmobservability", "llmsecurity", "llmsecurityrisks", "llmstructuredoutput", "longrunningagents", "microservices", "mobiledev", "model", "multiagent", "multiagentsystems", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "payment", "performance", "pgvector0.7", "platformengineering", "postgresql", "productionagents", "prometheus", "prompt", "promptinjection", "promptversioning", "python", "python3", "rag", "ragpipelineproduction", "reactjs", "redis", "rust", "rustlang", "saas", "salary", "seniorengineer", "serverless", "softwareengineering", "sql", "structuredlogging", "systemdesign", "tech", "techcareer", "techjobs", "technology", "terraform", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "webdev", "webhook", "webhookretries2026"];
+
+        var fullPosts   = [];
+        var loadedCount = postsContainer
+            ? postsContainer.querySelectorAll('a.post-card').length
+            : 0;
+        var jsonReady   = false;
+        var isLoading   = false;
+        var searchMode  = false;
+        var observer    = null;
+
+        document.addEventListener('click', function (e) {
+            var el = e.target;
+            if (el && el.tagName === 'SPAN' && el.dataset.tagHref) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = el.dataset.tagHref;
+            }
+        }, true);
+
+        function startObserver() {
+            if (!sentinel || !window.IntersectionObserver || observer) return;
+            observer = new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) onSentinelVisible();
+            }, { rootMargin: '0px 0px 400px 0px' });
+            observer.observe(sentinel);
+        }
+
+        function stopObserver() {
+            if (observer) { observer.disconnect(); observer = null; }
+        }
+
+        function onSentinelVisible() {
+            if (!jsonReady || isLoading || searchMode) return;
+            if (loadedCount >= fullPosts.length) { stopObserver(); return; }
+            loadNextPage();
+        }
+
+        function buildCard(post) {
+            var a       = document.createElement('a');
+            a.className = 'post-card';
+            a.href      = BASE_PATH + '/' + post.slug + '/';
+
+            var h3         = document.createElement('h3');
+            h3.textContent = post.title;
+            a.appendChild(h3);
+
+            var excerpt = (post.meta_description || '').trim();
+            if (!excerpt && post.content) {
+                excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
+            }
+            if (excerpt) {
+                var p         = document.createElement('p');
+                p.className   = 'post-excerpt';
+                p.textContent = excerpt;
+                a.appendChild(p);
+            }
+
+            if (post.reading_time) {
+                var rt         = document.createElement('p');
+                rt.className   = 'post-reading-time';
+                rt.textContent = post.reading_time + ' min read';
+                a.appendChild(rt);
+            }
+
+            var tags = (post.tags || []).filter(function(t) { return t && t.trim(); });
+            if (tags.length) {
+                var div       = document.createElement('div');
+                div.className = 'tags';
+                tags.slice().sort(function (x, y) { return x.length - y.length; })
+                    .slice(0, 3)
+                    .forEach(function (t) {
+                        var sp         = document.createElement('span');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        var slug = t.toLowerCase().replace(/\s+/g, '-');
+                        if (QUALIFYING_TAG_SLUGS.indexOf(slug) !== -1) {
+                            sp.dataset.tagHref = BASE_PATH + '/tag/' + slug + '/';
+                        }
+                        div.appendChild(sp);
+                    });
+                a.appendChild(div);
+            }
+            return a;
+        }
+
+        function loadNextPage() {
+            if (isLoading) return;
+            isLoading = true;
+            var batchStart = loadedCount;
+            if (loadingSpinner) loadingSpinner.style.display = 'flex';
+            setTimeout(function () {
+                var slice    = fullPosts.slice(batchStart, batchStart + PAGE_SIZE);
+                var fragment = document.createDocumentFragment();
+                var newCards = [];
+                slice.forEach(function (post) {
+                    var card = buildCard(post);
+                    card.classList.add('post-card--entering');
+                    fragment.appendChild(card);
+                    newCards.push(card);
+                });
+                postsContainer.appendChild(fragment);
+                loadedCount = batchStart + slice.length;
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        newCards.forEach(function (el, i) {
+                            setTimeout(function () { el.classList.remove('post-card--entering'); }, i * 60);
+                        });
+                    });
+                });
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+                isLoading = false;
+                if (loadedCount >= fullPosts.length) stopObserver();
+            }, 250);
+        }
+
+        fetch(BASE_PATH + '/posts.json')
+            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+            .then(function (posts) {
+                fullPosts = posts;
+                jsonReady = true;
+                if (loadedCount < fullPosts.length) {
+                    requestAnimationFrame(function () { startObserver(); });
+                }
+                if (searchMode && searchInput && searchInput.value.trim()) {
+                    runSearch(searchInput.value.trim());
+                }
+            })
+            .catch(function (err) { console.warn('posts.json fetch failed:', err); jsonReady = false; });
+
+        function readText(el, selector) {
+            if (!el) return '';
+            var child = el.querySelector(selector);
+            return child ? (child.textContent || '') : '';
+        }
+
+        var domIndex = [];
+        if (postsContainer) {
+            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                domIndex.push({
+                    element:     el,
+                    title:       (el.dataset.title       || readText(el, 'h3')).toLowerCase(),
+                    description: (el.dataset.description || readText(el, '.post-excerpt')).toLowerCase(),
+                    tags:        (el.dataset.tags        || '').toLowerCase()
+                });
+            });
+        }
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            var lower  = text.toLowerCase();
+            var qLower = query.toLowerCase();
+            var result = '';
+            var pos    = 0;
+            var idx;
+            while ((idx = lower.indexOf(qLower, pos)) !== -1) {
+                result += escapeHtml(text.slice(pos, idx))
+                       +  '<mark class="search-highlight">'
+                       +  escapeHtml(text.slice(idx, idx + query.length))
+                       +  '</mark>';
+                pos = idx + query.length;
+            }
+            result += escapeHtml(text.slice(pos));
+            return result;
+        }
+
+        function escapeHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function runSearch(rawQuery) {
+            if (!postsContainer) return;
+            var query = rawQuery.toLowerCase().trim();
+            if (!query) { clearSearch(); return; }
+            searchMode = true;
+            stopObserver();
+            var matched;
+            if (jsonReady && fullPosts.length) {
+                matched = fullPosts.filter(function (p) {
+                    return (p.title            || '').toLowerCase().indexOf(query) !== -1 ||
+                           (p.meta_description || '').toLowerCase().indexOf(query) !== -1 ||
+                           (p.tags             || []).some(function (t) { return t.toLowerCase().indexOf(query) !== -1; });
+                });
+                postsContainer.innerHTML = '';
+                matched.forEach(function (post) {
+                    var card    = buildCard(post);
+                    var h3      = card.querySelector('h3');
+                    var excerpt = card.querySelector('.post-excerpt');
+                    if (h3)      h3.innerHTML      = highlightText(h3.textContent,      rawQuery);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.textContent, rawQuery);
+                    postsContainer.appendChild(card);
+                });
+            } else {
+                matched = [];
+                domIndex.forEach(function (item) {
+                    var hit = item.title.indexOf(query) !== -1 ||
+                              item.description.indexOf(query) !== -1 ||
+                              item.tags.indexOf(query) !== -1;
+                    item.element.style.display = hit ? '' : 'none';
+                    if (hit) matched.push(item);
+                });
+                matched.forEach(function (item) {
+                    var h3      = item.element.querySelector('h3');
+                    var excerpt = item.element.querySelector('.post-excerpt');
+                    if (h3)      h3.innerHTML      = highlightText(h3.dataset.plain      || h3.textContent,      rawQuery);
+                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, rawQuery);
+                });
+            }
+            var n = matched.length;
+            if (resultsCount) {
+                resultsCount.textContent = n === 0
+                    ? 'No results for "' + rawQuery + '"'
+                    : n === 1 ? '1 post found' : n + ' posts found';
+            }
+            var old = document.getElementById('no-results-msg');
+            if (old) old.remove();
+            if (n === 0) {
+                var msg       = document.createElement('div');
+                msg.id        = 'no-results-msg';
+                msg.className = 'no-results-message';
+                msg.innerHTML = '<p>No posts matched <strong>' + rawQuery + '</strong>. Try different keywords.</p>';
+                postsContainer.insertAdjacentElement('afterend', msg);
+            }
+        }
+
+        function clearSearch() {
+            searchMode = false;
+            stopObserver();
+            domIndex.forEach(function (item) {
+                item.element.style.display = '';
+                var h3      = item.element.querySelector('h3');
+                var excerpt = item.element.querySelector('.post-excerpt');
+                if (h3)      h3.textContent      = h3.dataset.plain      || item.title;
+                if (excerpt) excerpt.textContent = excerpt.dataset.plain || item.description;
+            });
+            if (jsonReady && fullPosts.length) {
+                postsContainer.innerHTML = '';
+                var first = fullPosts.slice(0, PAGE_SIZE);
+                first.forEach(function (post) { postsContainer.appendChild(buildCard(post)); });
+                loadedCount = first.length;
+            } else {
+                postsContainer.querySelectorAll('a.post-card').forEach(function (el) { el.style.display = ''; });
+            }
+            var old = document.getElementById('no-results-msg');
+            if (old) old.remove();
+            if (resultsCount) resultsCount.textContent = '';
+            if (jsonReady && loadedCount < fullPosts.length) {
+                requestAnimationFrame(function () { startObserver(); });
+            }
+        }
+
+        if (postsContainer) {
+            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
+                var h3      = el.querySelector('h3');
+                var excerpt = el.querySelector('.post-excerpt');
+                if (h3      && !h3.dataset.plain)      h3.dataset.plain      = h3.textContent;
+                if (excerpt && !excerpt.dataset.plain) excerpt.dataset.plain = excerpt.textContent;
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                var q = this.value.trim();
+                if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+                if (q) { runSearch(q); } else { clearSearch(); }
+            });
+            searchInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { this.value = ''; if (clearBtn) clearBtn.style.display = 'none'; clearSearch(); }
+            });
+        }
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function () {
+                if (searchInput) searchInput.value = '';
+                this.style.display = 'none';
+                clearSearch();
+                if (searchInput) searchInput.focus();
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            if (backToTopBtn)
+                backToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
+        }, { passive: true });
+
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        }
+
+    }());
+    </script>
+    <script defer src="/static/pwa.js"></script>
+</body>
+</html>

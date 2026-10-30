@@ -1,0 +1,571 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent frameworks: stop rewriting the same glue code - Kubai Kevin</title>
+        <meta name="description" content="Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.">
+        <meta name="keywords" content="AgentFrameworks, LlmAgentBoilerplate, MinimalAgentRuntime, AgentDevelopmentIn, ReduceAgentCode, Llm, Generativeai, Techjobs">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-10T11:51:32.452320">
+        <meta property="article:modified_time" content="2026-10-04T10:09:56.993531+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent frameworks: stop rewriting the same glue code">
+        <meta property="og:description" content="Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-frameworks-stop-rewriting-the-same-glue-code.png">
+        <meta property="og:image:alt" content="Agent frameworks: stop rewriting the same glue code">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent frameworks: stop rewriting the same glue code">
+        <meta name="twitter:description" content="Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-frameworks-stop-rewriting-the-same-glue-code.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/#article",
+      "headline": "Agent frameworks: stop rewriting the same glue code",
+      "description": "Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.",
+      "datePublished": "2026-08-10T11:51:32+00:00",
+      "dateModified": "2026-10-04T10:09:56+00:00",
+      "wordCount": 2629,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/"
+      },
+      "keywords": "AgentFrameworks, LlmAgentBoilerplate, MinimalAgentRuntime, AgentDevelopmentIn, ReduceAgentCode, Llm, Generativeai, Techjobs",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/agent-frameworks-stop-rewriting-the-same-glue-code.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent frameworks: stop rewriting the same glue code",
+          "item": "https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent frameworks: stop rewriting the same glue code</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent frameworks: stop rewriting the same glue code</h1>
+                
+                <p class="post-lead">Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentFrameworks</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmAgentBoilerplate</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/techjobs/"
+                       style="text-decoration:none;">Techjobs</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2629 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Agent codebases tend to converge on the same shape: a thin slice of genuinely novel logic (prompting, tool selection, domain rules) wrapped in a thick layer of plumbing that has nothing to do with the product. The plumbing is where incidents live. This article is about the plumbing: what to abstract, what to leave alone, and how to tell whether the abstraction is paying for itself.</p>
+<h2 id="the-short-version">The short version</h2>
+<p>Most of the code in a typical agent service is not agent logic. It is retry loops, credential fetches, state persistence, and per-provider rate-limit handling. Three abstractions cover the bulk of it:</p>
+<ol>
+<li>A job queue adapter with deterministic, per-provider retries.</li>
+<li>A credentials service that issues short-lived tokens and logs rotations.</li>
+<li>A minimal DAG schema plus a compiler that emits code for whichever runtime you actually deploy on.</li>
+</ol>
+<p>The design constraint that matters: the abstractions must be opinionated enough to delete the boilerplate, but thin enough that swapping the underlying queue, secret store, or runtime is a configuration change rather than a rewrite.</p>
+<h2 id="why-this-is-confusing-at-first">Why this is confusing at first</h2>
+<p>The first mistake is treating an agent framework as "more async." Async runtimes in Python 3.11+ or Node 20 LTS handle concurrency. They do not handle retries that respect a provider's <code>Retry-After</code> header, credential rotation without a process restart, or a step that blocks for hours waiting on a human. Those are orchestration concerns, and they sit above the event loop.</p>
+<p>The second trap is assuming a cron job or a serverless scheduler is a sufficient orchestrator. Cron has no idempotency keys, so a duplicate trigger becomes duplicate work. Serverless functions have execution time limits that are shorter than a realistic human-in-the-loop step, so the workflow either fails or has to be split in ways the scheduler does not model.</p>
+<p>A recurring failure mode is the retry loop that never converges. A service receives a 429, sleeps a fixed interval, and that interval is simultaneously too short for one provider, too long for another, and blind to the <code>Retry-After</code> header the provider actually sent. A second failure mode is credential sprawl: each tool has its own <code>.env</code>, and rotating one key means touching many repositories. A third is state management without an idempotency strategy — intermediate results stored in object storage or a relational table, where a retried job is indistinguishable from a new request downstream.</p>
+<p>All three have the same root cause: the orchestration logic is duplicated per integration instead of centralized.</p>
+<h2 id="the-mental-model">The mental model</h2>
+<p>Model an agent as a directed acyclic graph. Each node is one of: an API call, a human step, or a conditional branch. Edges carry retry policy, timeouts, and credential lookups. The traversal logic — scheduling ready nodes, honoring retry budgets, persisting state between steps — is generic. It should not be written per agent.</p>
+<p>The three abstractions below are the minimum surface area that removes the duplication.</p>
+<p><strong>1. Job queue with deterministic retries.</strong> "Deterministic" here means three concrete properties: the retry delay honors the provider's <code>Retry-After</code> header when present; each provider has its own retry budget rather than a global one; and the adapter emits metrics (attempts, delays, failures by provider) that you can alert on. In practice this is a thin adapter over whatever queue you already run — Celery, RQ, SQS, or a Redis-backed queue — that normalizes retry behavior across providers.</p>
+<p><strong>2. Credentials as a service.</strong> A single endpoint that issues short-lived tokens, refreshes them on access, and logs every rotation. The pattern is the same one Vault and cloud secret managers implement; the point is that agents need rotation at runtime, not at deploy time, because a long-running agent can outlive a static key.</p>
+<p><strong>3. A minimal DAG compiler.</strong> A YAML or JSON schema describing the graph, plus a code generator that emits either in-process code, Kubernetes Jobs, or serverless functions. The compiler injects retry budgets, credential lookups, and idempotency keys so the agent author never writes them.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Scenario: a support agent that (a) classifies a ticket, (b) fetches customer history from a CRM, (c) optionally asks a human for clarification, and (d) updates the ticket status.</p>
+<p>The DAG schema:</p>
+<pre><code class="language-yaml"># agent.yaml
+steps:
+  - id: classify
+    action: llm
+    input: ticket_text
+    output: classification
+    retries:
+      budget: 3
+      backoff: exponential
+      per_provider:
+        openai: 2000ms
+        anthropic: 4000ms
+
+  - id: fetch_history
+    action: crm_api
+    input: customer_id
+    output: history
+    depends_on: classify
+    retries:
+      budget: 5
+      backoff: linear
+
+  - id: ask_human
+    action: human_review
+    input: classification, history
+    output: resolution
+    only_if: classification == &quot;needs_human&quot;
+
+  - id: update_ticket
+    action: crm_api
+    input: ticket_id, resolution
+    depends_on: ask_human OR fetch_history
+    retries:
+      budget: 2
+</code></pre>
+<p>From this schema the compiler emits three artifacts: a module containing the retry loop (honoring <code>Retry-After</code> per provider), a deployment artifact for the target runtime (a scheduled job, a queue consumer, or a set of functions), and a small credentials client that fetches short-lived tokens.</p>
+<p><strong>Reasoning about the retry budget.</strong> Take the <code>classify</code> step with <code>budget: 3</code> and exponential backoff starting at 2s for one provider. The delays are 2s, 4s, 8s — three retries, total worst-case added latency 14s, plus the original attempt. That is arithmetic from stated assumptions, not a measurement. If your provider's rate-limit window is 60s, a 14s worst case will exhaust the budget before the window resets; you would raise the base delay or the budget. The point of putting the budget in the schema is that this calculation is reviewable in a pull request instead of buried in a <code>sleep()</code> call.</p>
+<p><strong>Reasoning about idempotency.</strong> <code>update_ticket</code> writes to the CRM. If the worker crashes after the write but before acknowledging the message, the queue redelivers and the write happens twice. The compiler therefore injects an idempotency key derived from the step ID and the run ID, and the CRM call includes it. If the CRM does not support idempotency keys, the step must instead be preceded by a read that checks current state — a pattern the schema can express but the compiler cannot invent for you.</p>
+<h2 id="how-this-relates-to-tools-you-already-know">How this relates to tools you already know</h2>
+<p>If you have used Airflow or Temporal, the DAG-and-retry model will be familiar. Airflow requires a metadata database and a scheduler process; Temporal requires a cluster. The abstractions here are deliberately smaller: a schema, a queue adapter, and a code generator. The trade is that you give up the operational maturity of those systems in exchange for something you can read end to end in an afternoon. For teams running a handful of agents, that trade is often correct; for teams running hundreds of workflows with complex visibility requirements, it usually is not.</p>
+<p>The credentials piece overlaps with the twelve-factor principle of storing config in the environment. The difference is timing: twelve-factor assumes secrets are injected at deploy time, while an agent that runs for hours needs to refresh credentials mid-flight without a restart.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>"The framework already handles retries."</strong> Many agent libraries ship some retry behavior. The question to ask is whether it honors <code>Retry-After</code>, whether the budget is per-provider or global, and whether the delay is configurable per provider. If the answer to any of those is no, you will end up writing the retry layer yourself, and it is better to do that once in a queue adapter than once per tool.</p>
+<p><strong>"One retry budget is enough."</strong> Providers differ in how their rate-limit windows reset and in whether they send <code>Retry-After</code> at all. A single global budget tuned for the fastest-resetting provider will hammer the slowest one; tuned for the slowest, it will under-utilize the fastest. Per-provider budgets are the minimum viable configuration.</p>
+<p><strong>"The runtime choice is permanent."</strong> It is not, provided the DAG schema is runtime-agnostic. The compiler emits a different deployment artifact per target; the schema does not change. That is the main argument for keeping the schema declarative rather than expressing the graph directly in code.</p>
+<h2 id="adding-a-circuit-breaker">Adding a circuit breaker</h2>
+<p>Once the queue adapter is stable, the next useful addition is a circuit breaker that disables a provider for a cooldown period after a failure threshold. It belongs in the adapter, not in agent code, so that every agent benefits without changes.</p>
+<pre><code class="language-python">from dataclasses import dataclass, field
+from datetime import datetime, timedelta, timezone
+
+
+@dataclass
+class _BreakerState:
+    failure_count: int = 0
+    last_failure: datetime | None = None
+
+
+@dataclass
+class CircuitBreaker:
+    failure_threshold: int = 5
+    timeout: timedelta = timedelta(minutes=5)
+    _state: dict[str, _BreakerState] = field(default_factory=dict)
+
+    def _get(self, provider: str) -&gt; _BreakerState:
+        if provider not in self._state:
+            self._state[provider] = _BreakerState()
+        return self._state[provider]
+
+    def allow_request(self, provider: str) -&gt; bool:
+        cb = self._get(provider)
+        now = datetime.now(timezone.utc)
+        if cb.last_failure and (now - cb.last_failure) &lt; self.timeout:
+            return False
+        if cb.failure_count &gt;= self.failure_threshold:
+            return False
+        return True
+
+    def record_success(self, provider: str) -&gt; None:
+        cb = self._get(provider)
+        cb.failure_count = 0
+        cb.last_failure = None
+
+    def record_failure(self, provider: str) -&gt; None:
+        cb = self._get(provider)
+        cb.failure_count += 1
+        cb.last_failure = datetime.now(timezone.utc)
+</code></pre>
+<p>Two details worth noting. First, <code>datetime.utcnow()</code> is deprecated as of Python 3.12; use <code>datetime.now(timezone.utc)</code> as above. Second, the breaker as written is per-process. If you run multiple workers, each has its own view of failures, which is usually acceptable but worth knowing before you rely on it for a global rate-limit guard.</p>
+<h2 id="human-in-the-loop-without-blocking-a-worker">Human-in-the-loop without blocking a worker</h2>
+<p>A human step should not occupy a worker slot. The standard pattern is to persist the pending step, return immediately, and resume when a callback arrives.</p>
+<pre><code class="language-python">from datetime import datetime, timezone
+from uuid import uuid4
+import json
+
+import redis.asyncio as redis
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+
+app = FastAPI()
+r = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0, decode_responses=True)
+
+
+class HumanStepRequest(BaseModel):
+    input_data: dict
+    ttl_seconds: int = 86400  # 24 hours
+
+
+@app.post(&quot;/human-step&quot;)
+async def create_human_step(request: HumanStepRequest):
+    step_id = str(uuid4())
+    key = f&quot;human_step:{step_id}&quot;
+    await r.json().set(key, &quot;$&quot;, {
+        &quot;input&quot;: request.input_data,
+        &quot;status&quot;: &quot;waiting&quot;,
+        &quot;created_at&quot;: datetime.now(timezone.utc).isoformat(),
+    })
+    await r.expire(key, request.ttl_seconds)
+    return {&quot;step_id&quot;: step_id, &quot;callback_url&quot;: f&quot;/human-step/{step_id}/result&quot;}
+
+
+@app.post(&quot;/human-step/{step_id}/result&quot;)
+async def complete_human_step(step_id: str, result: dict):
+    key = f&quot;human_step:{step_id}&quot;
+    if not await r.exists(key):
+        raise HTTPException(status_code=404, detail=&quot;Step not found or expired&quot;)
+    await r.json().set(key, &quot;$.result&quot;, result)
+    await r.json().set(key, &quot;$.status&quot;, &quot;completed&quot;)
+    await r.lpush(&quot;human_step_callbacks&quot;, json.dumps({&quot;step_id&quot;: step_id, &quot;result&quot;: result}))
+    return {&quot;status&quot;: &quot;ok&quot;}
+</code></pre>
+<p>The <code>TTL</code> on the key is what prevents orphaned pending steps from accumulating. A separate worker consumes <code>human_step_callbacks</code> and resumes the DAG. Note that the callback endpoint must be authenticated; a human step that accepts unauthenticated results is an authorization hole, not just a design smell.</p>
+<h2 id="a-credentials-client-with-a-local-cache">A credentials client with a local cache</h2>
+<p>The cache is what keeps the credentials service off the hot path. The trade is a bounded window in which a revoked token is still used.</p>
+<pre><code class="language-python">from datetime import datetime, timedelta, timezone
+
+import hvac
+
+
+class VaultCredentials:
+    def __init__(self, vault_url: str, role_id: str, secret_id: str, cache_ttl: timedelta = timedelta(minutes=5)):
+        self.client = hvac.Client(url=vault_url)
+        self.client.auth.approle.login(role_id=role_id, secret_id=secret_id)
+        self.cache: dict[str, dict] = {}
+        self.cache_ttl = cache_ttl
+
+    def get_token(self, provider: str) -&gt; str:
+        now = datetime.now(timezone.utc)
+        cached = self.cache.get(provider)
+        if cached and (now - cached[&quot;fetched_at&quot;]) &lt; self.cache_ttl:
+            return cached[&quot;token&quot;]
+
+        path = f&quot;secret/data/providers/{provider}&quot;
+        secret = self.client.secrets.kv.v2.read_secret_version(path=path)
+        token = secret[&quot;data&quot;][&quot;data&quot;][&quot;api_key&quot;]
+        self.cache[provider] = {&quot;token&quot;: token, &quot;fetched_at&quot;: now}
+        return token
+</code></pre>
+<p>Set the cache TTL well below the token lifetime. If tokens live one hour and the cache is five minutes, a revoked token is usable for at most five minutes after revocation, plus whatever propagation delay the issuer has. That number belongs in your threat model, not in a comment.</p>
+<h2 id="measuring-whether-the-abstraction-helps">Measuring whether the abstraction helps</h2>
+<p>Do not trust a claimed speedup. Instrument these four things before and after the change, and compare on the same workload:</p>
+<ul>
+<li><strong>Retry attempts per provider per day.</strong> Emit a counter at the point where the adapter decides to retry. A drop here means the per-provider budgets are doing work.</li>
+<li><strong>Wall-clock latency per step, split by step type.</strong> Histogram, not average. Retry delays show up in the tail, which the mean hides.</li>
+<li><strong>Credential fetches per hour versus cache hits.</strong> A high miss rate means the cache TTL is too short or the token lifetime is too short.</li>
+<li><strong>Time from "new tool needed" to "tool in production."</strong> This is the metric the abstraction is actually for. Track it in your issue tracker, not in code.</li>
+</ul>
+<p>To get the retry numbers without spending on real API calls, run the DAG against a mock provider that returns 429 with a known <code>Retry-After</code> value and assert that the recorded delay matches. That test is cheap, deterministic, and catches the most common regression: someone changing a backoff constant.</p>
+<h2 id="failure-modes-the-abstraction-does-not-fix">Failure modes the abstraction does not fix</h2>
+<p><strong>Queue unavailability.</strong> If the queue backend is unreachable, the adapter cannot help. A local durable fallback (an on-disk queue) adds resilience but also adds a second source of truth and a reconciliation problem. Decide deliberately whether that complexity is worth it for your workload.</p>
+<p><strong>Provider policy changes.</strong> When a provider changes its rate limit, the per-provider budget in the schema is stale until someone updates it. The abstraction makes the change one line, but it does not make it automatic. If your provider publishes limits in a machine-readable form, a scheduled job that reconciles the schema against it is worth building; otherwise, alert on sustained 429 rates instead.</p>
+<p><strong>Runtime-specific code.</strong> A DAG that calls into a heavy native library may not compile to every target. The compiler should fail loudly with a clear message rather than emitting something that breaks at runtime.</p>
+<p><strong>Clock and timezone assumptions.</strong> A schedule expressed in UTC will fire at the wrong local time for users in other zones. Add a <code>timezone</code> field to the schema and emit the zone explicitly in the generated cron expression rather than assuming UTC.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting these abstractions, answer:</p>
+<ul>
+<li>How many agents or workflows do you run today, and how many do you expect in a year? Below roughly five, the abstraction may cost more than it saves.</li>
+<li>How many distinct API providers do your agents call? One provider means per-provider retry budgets buy you little.</li>
+<li>Do any steps require human input, and can they run longer than your serverless timeout?</li>
+<li>Do you already run a queue you trust, or would this introduce a new piece of infrastructure?</li>
+<li>Who is on call when the credentials service is down, and what is the documented fallback?</li>
+<li>Can you measure the four metrics above before and after, or will you be guessing?</li>
+</ul>
+<p>If you cannot answer the last question, the change is not ready to ship — you will not be able to tell whether it worked.</p>
+<h2 id="next-step-do-this-in-the-next-30-minutes">Next step: do this in the next 30 minutes</h2>
+<p>Open your agent codebase and count the places where a retry delay is hard-coded or a credential is fetched inline. Pick the single most-duplicated one. Write a failing test that asserts the retry delay honors a <code>Retry-After</code> header of <code>0</code>, then make it pass by routing that call through one shared adapter function. You now have one adapter, one test, and a baseline count of the remaining call sites — which is exactly the evidence you need to decide whether to continue.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/one-payment-stack-for-kenya-nigeria-ghana/">
+                        <h3>One payment stack for Kenya, Nigeria, Ghana</h3>
+                        <p>How to unify M-Pesa, Flutterwave, Paystack and mobile money behind one payment abstraction, with fallback logic, reconciliation and compliance.</p>
+                        <span class="related-meta">13 min read · 20 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-your-routing-layer-will-collapse-at-scale/">
+                        <h3>Why your routing layer will collapse at scale</h3>
+                        <p>How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+                        <span class="related-meta">12 min read · 4 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/merge-three-payment-apis-into-one-system/">
+                        <h3>Merge three payment APIs into one system</h3>
+                        <p>How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.</p>
+                        <span class="related-meta">15 min read · 10 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

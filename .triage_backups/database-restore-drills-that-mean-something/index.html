@@ -1,0 +1,519 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Database restore drills that mean something - Kubai Kevin</title>
+        <meta name="description" content="A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.">
+        <meta name="keywords" content="DatabaseBackup, DisasterRecovery, RestoreDrill, Postgresql, MeasureRtoRpo, BackupVerification, Database">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-28T18:06:31.553898">
+        <meta property="article:modified_time" content="2026-10-28T18:07:35.774502+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Database restore drills that mean something">
+        <meta property="og:description" content="A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.">
+        <meta property="og:url" content="https://kubaik.github.io/database-restore-drills-that-mean-something/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/database-restore-drills-that-mean-something.png">
+        <meta property="og:image:alt" content="Database restore drills that mean something">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Database restore drills that mean something">
+        <meta name="twitter:description" content="A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/database-restore-drills-that-mean-something.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/database-restore-drills-that-mean-something/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/database-restore-drills-that-mean-something/#article",
+      "headline": "Database restore drills that mean something",
+      "description": "A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.",
+      "datePublished": "2026-10-28T18:06:31+00:00",
+      "dateModified": "2026-10-28T18:07:35+00:00",
+      "wordCount": 3089,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/database-restore-drills-that-mean-something/"
+      },
+      "keywords": "DatabaseBackup, DisasterRecovery, RestoreDrill, Postgresql, MeasureRtoRpo, BackupVerification, Database",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/database-restore-drills-that-mean-something.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Database restore drills that mean something",
+          "item": "https://kubaik.github.io/database-restore-drills-that-mean-something/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Database restore drills that mean something</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Database restore drills that mean something</h1>
+                
+                <p class="post-lead">A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DatabaseBackup</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DisasterRecovery</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">RestoreDrill</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MeasureRtoRpo</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/database/"
+                       style="text-decoration:none;">Database</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3089 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-28
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-backup-you-never-tested-is-a-rumour">The backup you never tested is a rumour</h2>
+<p>Every team has a backup job. Far fewer have a restore they can prove. The gap between the two is where disasters live: a <code>pg_dump</code> that has been failing silently for weeks because the cron user's password expired, a WAL archive that stopped shipping after a disk filled, an object-storage lifecycle rule that quietly transitioned backups to an archive tier and made a restore take hours longer than the RTO on the slide. None of these show up in a backup dashboard. They show up in a restore drill.</p>
+<p>The problem this article addresses is that most "DR tests" are theatre — a quarterly checkbox where someone restores a small table to a staging box, sees rows, and declares victory. A drill that means something measures the same things a real incident would: how long until the database is usable, how much data is missing, and whether the application can actually run against the restored copy. What follows is a repeatable drill harness for PostgreSQL (the mechanics generalise to MySQL and managed equivalents) that produces a number you can put in front of a CTO, plus the failure modes that make drills lie.</p>
+<h2 id="what-a-drill-has-to-measure-and-what-a-backup-dashboard-wont-tell-you">What a drill has to measure (and what a backup dashboard won't tell you)</h2>
+<p>Three quantities matter, and none of them is "backup succeeded":</p>
+<ul>
+<li><strong>RTO (recovery time objective)</strong> — wall-clock time from "we decide to restore" to "the application serves reads and writes against the restored database." This includes provisioning, data transfer, replay, and application smoke tests. A dump that restores quickly from a local disk can take far longer when it has to come back from cold object storage over a constrained link. The only way to know which case applies is to measure the real retrieval path.</li>
+<li><strong>RPO (recovery point objective)</strong> — the timestamp of the last committed transaction present in the restored copy. Nightly logical backups imply an RPO of up to 24 hours, no matter what the slide says. Continuous WAL shipping implies an RPO equal to the gap between the last archived segment and the failure.</li>
+<li><strong>Integrity</strong> — does the restored database pass the checks the application depends on: foreign keys valid, row counts within expected bounds, sequences ahead of <code>max(id)</code>, extensions present, roles and grants intact.</li>
+</ul>
+<p>A drill that only checks "the restore command exited 0" measures none of these. A drill that only checks row counts measures integrity but not RTO. The harness below records all three per run so they can be trended.</p>
+<h2 id="prerequisites-a-restore-target-that-is-not-production">Prerequisites: a restore target that is not production</h2>
+<p>Three things are needed before the first drill is meaningful:</p>
+<ol>
+<li><strong>An isolated restore environment.</strong> A separate VPC or at minimum a separate database instance with no route to production. A common drill accident is a <code>pg_restore</code> pointed at the wrong <code>PGHOST</code> because someone exported the variable in the wrong shell. Use a dedicated hostname like <code>drill-db.internal</code> and refuse to run if <code>PGHOST</code> resolves to a production address.</li>
+<li><strong>A backup artefact fetched the same way an incident would fetch it.</strong> If backups live in object storage with lifecycle rules, the drill must go through the same retrieval path — including any restore-from-archive-tier step. Testing against a local copy of the dump tests nothing about retrieval.</li>
+<li><strong>A smoke-test script that exercises the application's real queries.</strong> Not <code>SELECT 1</code>. The queries the app runs on its hottest path, plus any query that touches recently added columns or indexes.</li>
+</ol>
+<p>For PostgreSQL, the two backup shapes worth drilling are logical (<code>pg_dump</code> / <code>pg_dumpall</code>, custom format with <code>-Fc</code>) and physical (base backup plus WAL archive, via <code>pg_basebackup</code> and continuous archiving, or a managed service's point-in-time restore). Drill both if both are relied on; they fail differently. Logical backups miss things like large objects depending on flags, and exclude roles unless <code>pg_dumpall --globals-only</code> is used alongside; physical backups depend on a WAL archive that can silently stop.</p>
+<h2 id="step-1-record-the-restore-start-and-the-backups-own-timestamp">Step 1 — Record the restore start and the backup's own timestamp</h2>
+<p>Before restoring anything, capture the metadata that makes the run comparable across weeks. The dump file's mtime is not the backup time; for logical dumps, the meaningful timestamp is when the dump transaction started. For custom-format dumps, <code>pg_restore -l</code> lists the archive's table of contents and header, which includes creation info. For physical backups, the <code>backup_label</code> inside the base backup records the start and stop WAL positions and time.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+DRILL_ID=&quot;$(date -u +%Y%m%dT%H%M%SZ)&quot;
+DUMP_URI=&quot;s3://example-backups/pg/prod-$(date -u +%Y-%m-%d).dump&quot;
+WORKDIR=&quot;/var/tmp/drill-${DRILL_ID}&quot;
+mkdir -p &quot;$WORKDIR&quot;
+
+# Refuse to run against anything that looks like production.
+case &quot;${PGHOST:-}&quot; in
+  *prod*) echo &quot;refusing: PGHOST looks like production&quot; &gt;&amp;2; exit 1 ;;
+esac
+
+START_EPOCH=$(date +%s)
+aws s3 cp &quot;$DUMP_URI&quot; &quot;$WORKDIR/prod.dump&quot;
+FETCH_EPOCH=$(date +%s)
+echo &quot;{\&quot;drill_id\&quot;:\&quot;$DRILL_ID\&quot;,\&quot;fetch_seconds\&quot;:$((FETCH_EPOCH-START_EPOCH))}&quot; &gt;&gt; &quot;$WORKDIR/metrics.jsonl&quot;
+</code></pre>
+<p>Why this matters: RTO is dominated by fetch time more often than teams expect, especially when backups sit in infrequent-access or archive storage tiers. Recording fetch separately from restore tells you whether to fix the storage class or the database.</p>
+<h2 id="step-2-restore-into-a-clean-database-and-time-it">Step 2 — Restore into a clean database and time it</h2>
+<p>For a custom-format logical dump, restore with <code>pg_restore</code> into a freshly created database. Use <code>--exit-on-error</code> so a partial restore fails loudly instead of leaving a half-populated schema that passes a row-count check.</p>
+<pre><code class="language-bash">DRILL_DB=&quot;drill_${DRILL_ID}&quot;
+createdb &quot;$DRILL_DB&quot;
+RESTORE_START=$(date +%s)
+pg_restore \
+  --dbname=&quot;$DRILL_DB&quot; \
+  --jobs=4 \
+  --exit-on-error \
+  --no-owner \
+  &quot;$WORKDIR/prod.dump&quot;
+RESTORE_END=$(date +%s)
+echo &quot;{\&quot;drill_id\&quot;:\&quot;$DRILL_ID\&quot;,\&quot;restore_seconds\&quot;:$((RESTORE_END-RESTORE_START))}&quot; &gt;&gt; &quot;$WORKDIR/metrics.jsonl&quot;
+</code></pre>
+<p>Two gotchas here are documented and still bite teams every quarter:</p>
+<ul>
+<li><strong><code>--jobs</code> with <code>--single-transaction</code> is invalid.</strong> Parallel restore and single-transaction are mutually exclusive in <code>pg_restore</code>; combining them errors out. For atomicity, drop <code>--jobs</code> and accept the slower restore, or accept a partial restore and rely on <code>--exit-on-error</code> plus dropping the database on failure.</li>
+<li><strong><code>--no-owner</code> changes semantics.</strong> Restoring without ownership means objects end up owned by the restoring role. That is usually what a drill wants (the production owner role may not exist on the target), but it means a drill that passes with <code>--no-owner</code> does not prove that a restore <em>with</em> ownership will succeed. If the runbook restores with owners, drill that path.</li>
+</ul>
+<p>For a physical backup with WAL replay, the drill is a <code>pg_basebackup</code> restore into a data directory plus <code>restore_command</code> pointing at the WAL archive, then starting the server and waiting for recovery to reach the target. The measurement runs from "start recovery" to "database accepts connections and <code>pg_is_in_recovery()</code> returns false." Managed services expose this as point-in-time restore; the drill is the same shape, but the timing is whatever the console or API takes — which is precisely why it should be measured rather than trusted from an SLA page.</p>
+<h2 id="step-3-smoke-test-the-restored-database-like-the-application-would">Step 3 — Smoke-test the restored database like the application would</h2>
+<p>Row counts are necessary, not sufficient. The restored database has to answer the application's queries. Write the smoke test as SQL the app actually issues, with assertions.</p>
+<pre><code class="language-sql">-- smoke.sql: run with psql -v ON_ERROR_STOP=1 -f smoke.sql
+DO $$
+DECLARE
+  n bigint;
+  seq_last bigint;
+  max_id bigint;
+BEGIN
+  -- Hot-path query the app runs on every page load.
+  SELECT count(*) INTO n
+  FROM orders o
+  JOIN order_items oi ON oi.order_id = o.id
+  WHERE o.created_at &gt; now() - interval '1 day';
+  IF n = 0 THEN
+    RAISE EXCEPTION 'hot-path join returned zero rows; data may be stale or missing';
+  END IF;
+
+  -- Sequences must be ahead of max(id) or the first insert after failover collides.
+  SELECT last_value INTO seq_last FROM orders_id_seq;
+  SELECT max(id) INTO max_id FROM orders;
+  IF seq_last &lt; max_id THEN
+    RAISE EXCEPTION 'sequence orders_id_seq (%) behind max(id) (%)', seq_last, max_id;
+  END IF;
+END $$;
+</code></pre>
+<p>The sequence check catches a real and common failure: logical restores recreate sequences at their dump-time value, but if any data was loaded or replayed after the dump (or if the restore is partial), the sequence can lag. The first write after cutover then throws a duplicate key error — during an incident, when it is least welcome. The <code>--no-owner</code> path can also leave sequences owned by the wrong role, which breaks <code>nextval</code> for the application role.</p>
+<p>For physical restores, sequences are part of the data directory and generally consistent, but the smoke test still earns its keep: it proves the WAL replay reached a point where the application's schema and data are coherent.</p>
+<p>A zero-row failure on the hot-path query deserves a note of caution: if the application legitimately has quiet periods, a strict <code>n = 0</code> assertion produces false alarms. Compare against a stored baseline instead — record the hot-path row count from production at the same hour on a previous day, and fail only if the restored count is below some fraction of it. The fraction is a judgement call; the point is that the threshold is explicit and reviewable rather than implicit in a human's glance at the output.</p>
+<h2 id="step-4-measure-rpo-by-finding-the-last-committed-transaction">Step 4 — Measure RPO by finding the last committed transaction</h2>
+<p>RPO is the quantity teams most often assert and least often measure. For logical dumps, the honest RPO is "time of dump start" — everything committed after that is gone. For WAL-based recovery, RPO is the gap between the last archived WAL segment and the failure time.</p>
+<p>A practical drill technique: write a heartbeat row to a known table on a schedule (say every minute) from the application or a sidecar, with a timestamp. After restore, query the max heartbeat timestamp. The difference between that and the drill start time is the measured RPO for that run.</p>
+<pre><code class="language-sql">SELECT max(beat_at) AS last_heartbeat,
+       now() - max(beat_at) AS measured_rpo
+FROM drill_heartbeat;
+</code></pre>
+<p>This works for both logical and physical restores and turns RPO from a slide into a number. If the heartbeat table doesn't exist in production, add it — it is a single-row-per-minute table and among the cheapest observability available.</p>
+<p>A worked example makes the arithmetic concrete. Suppose the heartbeat runs every 60 seconds, the last archived WAL segment covers transactions up to 14:00:00, and the simulated failure is declared at 14:04:30. The measured RPO is 4 minutes 30 seconds, because everything committed between 14:00:00 and the failure is not in the restored copy. If the target RPO is 5 minutes, the drill passes; if it is 2 minutes, the drill fails and the fix is either more frequent WAL archiving or <code>archive_timeout</code> set low enough to force segment switches. Note that <code>archive_timeout</code> forces a segment switch on a timer, so a low value trades archive volume for a tighter RPO bound — that trade-off is the actual engineering decision the drill surfaces.</p>
+<h2 id="step-5-verify-grants-extensions-and-the-things-dumps-forget">Step 5 — Verify grants, extensions, and the things dumps forget</h2>
+<p>A restore that passes row counts and smoke tests can still fail at cutover because of what the dump did not include. The recurring list:</p>
+<ul>
+<li><strong>Roles and grants.</strong> <code>pg_dump</code> of a single database does not include roles; <code>pg_dumpall --globals-only</code> does. If the runbook restores only the database dump, the application role may not exist on the target, and <code>--no-owner</code> will have handed ownership to the restoring superuser. Drill the globals restore too if production relies on it.</li>
+<li><strong>Extensions.</strong> <code>CREATE EXTENSION</code> statements are in the dump, but the extension binaries must be installed on the target. A drill on a host without the required extensions fails at restore, not at query time — better to find out in the drill.</li>
+<li><strong>Large objects.</strong> <code>pg_dump</code> includes large objects by default, but <code>--no-blobs</code> excludes them. If any part of the app stores files as large objects, drill with blobs included.</li>
+<li><strong>Foreign keys and constraints.</strong> Restoring with <code>--disable-triggers</code> (which requires superuser) or restoring data before constraints can leave invalid state that only shows up under write load. Prefer the default order and let <code>pg_restore</code> handle it; if reordering is necessary for speed, add a post-restore <code>ALTER TABLE ... VALIDATE CONSTRAINT</code> pass.</li>
+</ul>
+<p>A verification query that catches the most common of these:</p>
+<pre><code class="language-sql">SELECT rolname FROM pg_roles WHERE rolname = 'app_rw';
+SELECT extname FROM pg_extension;
+SELECT count(*) FROM pg_largeobject_metadata;
+</code></pre>
+<p>If the first returns zero rows, the application role is missing and the restore is not usable regardless of data.</p>
+<h2 id="edge-cases-and-the-traps-that-make-drills-lie">Edge cases and the traps that make drills lie</h2>
+<ul>
+<li><strong>The dump that has been failing silently.</strong> A cron job that writes to a local path and then uploads can fail at either step. Check the artefact's age as part of the drill: if the newest dump is older than the backup interval, the drill should fail before restoring. Listing the object store and comparing dates is enough.</li>
+<li><strong>Storage class transitions.</strong> If lifecycle rules move backups to a colder tier, the fetch step in Step 1 will be slow or, for archive tiers, require an explicit restore request that takes time. Drill the real retrieval path, not a cached copy.</li>
+<li><strong>WAL archive gaps.</strong> For physical backups, a gap in the WAL archive means recovery stops at the gap. The drill should assert that recovery reached the target LSN or timestamp, not merely that the server started. <code>pg_waldump</code> on the archive, or the recovery target settings in <code>postgresql.conf</code> (such as <code>recovery_target_time</code>), make this explicit.</li>
+<li><strong>The <code>--jobs</code> / <code>--single-transaction</code> combination</strong> mentioned earlier: it errors, and teams sometimes "fix" it by removing <code>--exit-on-error</code>, which is worse.</li>
+<li><strong>Restoring into a database that already has objects.</strong> <code>pg_restore</code> into a non-empty database produces a stream of "already exists" errors that <code>--exit-on-error</code> will halt on. Always drop and recreate, or restore into a fresh name per drill.</li>
+<li><strong>Time zone and clock skew.</strong> RPO measurement via heartbeat assumes clocks are synced. If the application host and database host drift, the measured RPO is wrong. Use the database's <code>now()</code> for both the heartbeat write and the post-restore query.</li>
+</ul>
+<p>A failure-mode walkthrough shows how these interact. Consider a team that runs a quarterly drill against a dump copied to a workstation. The drill passes in 15 minutes every quarter. During a real incident, the restore from object storage takes 70 minutes because the objects were in an archive tier, the application role is missing because only the database dump was restored, and the sequence is behind <code>max(id)</code> because the dump predates the most recent data load. All three failures were invisible to the drill because the drill tested a different artefact, a different retrieval path, and a different set of checks. Each of the six traps above maps to one of those three substitutions.</p>
+<h2 id="verification-turning-drills-into-a-trend-not-an-anecdote">Verification: turning drills into a trend, not an anecdote</h2>
+<p>The output of each drill is a line of JSON. Keep them. After a few runs there is a trend of fetch seconds, restore seconds, measured RPO, and pass/fail per check. That trend is what to show when someone asks whether the DR plan works — not a slide, but a series of dated runs with numbers.</p>
+<p>A minimal pass/fail gate suitable for CI or a scheduled job:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+# Fail the drill if any check regressed beyond stated thresholds.
+MAX_RESTORE_SECONDS=1800   # illustrative threshold; set from your RTO
+MAX_RPO_SECONDS=300        # illustrative; set from your RPO
+
+restore_seconds=$(jq -s 'map(.restore_seconds // 0) | max' &quot;$WORKDIR/metrics.jsonl&quot;)
+rpo_seconds=$(psql -Atc &quot;SELECT extract(epoch FROM now() - max(beat_at))::int FROM drill_heartbeat&quot;)
+
+if (( restore_seconds &gt; MAX_RESTORE_SECONDS )); then
+  echo &quot;FAIL: restore took ${restore_seconds}s &gt; ${MAX_RESTORE_SECONDS}s&quot; &gt;&amp;2
+  exit 1
+fi
+if (( rpo_seconds &gt; MAX_RPO_SECONDS )); then
+  echo &quot;FAIL: measured RPO ${rpo_seconds}s &gt; ${MAX_RPO_SECONDS}s&quot; &gt;&amp;2
+  exit 1
+fi
+echo &quot;PASS: restore ${restore_seconds}s, RPO ${rpo_seconds}s&quot;
+</code></pre>
+<p>The thresholds are illustrative; derive them from the RTO and RPO the team has committed to, and treat a breach as a real incident ticket, not a note in a wiki. The point of the drill is to find the breach on a Tuesday afternoon, not during a failover.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How often should database restore drills run?</strong>
+Frequency should follow how fast the schema and backup configuration change, not a calendar. A team shipping schema migrations weekly and changing backup tooling quarterly gets more value from a weekly automated drill than a quarterly manual one. The practical rule: automate the drill so it runs on a schedule, and have a human review the trend monthly. If a drill fails, that is a ticket, not a rerun.</p>
+<p><strong>What is the difference between RTO and RPO in a restore drill?</strong>
+RTO is how long until the database is usable again; RPO is how much data was lost, expressed as time. A drill that measures only restore duration measures RTO and ignores RPO. Measure both: RTO from restore start to passing smoke test, RPO from the newest heartbeat row in the restored copy versus the drill start time.</p>
+<p><strong>Can restores be tested against a replica instead of a separate environment?</strong>
+A replica tests replication, not restore. Restoring from a dump or a base backup exercises a different code path — file retrieval, archive replay, role and extension setup — and that is where the failures are. Use a replica for failover drills and a separate restore target for restore drills; they answer different questions.</p>
+<p><strong>Why does a logical restore pass but the application fail after cutover?</strong>
+The usual causes are missing roles (single-database dumps exclude globals), sequences behind <code>max(id)</code>, or extensions not installed on the target. All three pass a row-count check and fail the first real write. Add the role, sequence, and extension checks from Step 5 to the smoke test.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the backup job's configuration and find the exact command that produces the artefact — then run <code>pg_restore -l</code> (or the equivalent listing command for the backup tool) against the newest artefact and confirm it is younger than the backup interval and contains the tables expected. If it is not, the failure has been found before an incident did; if it is, the drill harness above has its input.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/postgres-17-buried-redis-s3-cron/">
+                        <h3>Postgres 17 buried Redis, S3, cron</h3>
+                        <p>How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.</p>
+                        <span class="related-meta">11 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">
+                        <h3>Log audit costs without breaking compliance</h3>
+                        <p>Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.</p>
+                        <span class="related-meta">13 min read · 22 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
+                        <h3>Audit logs: ship them fast, keep them forever</h3>
+                        <p>Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.</p>
+                        <span class="related-meta">14 min read · 6 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

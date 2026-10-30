@@ -1,0 +1,549 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Memory Systems for Production Agents: Context Leaks Explained - Kubai Kevin</title>
+        <meta name="description" content="How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.">
+        <meta name="keywords" content="Redis, Caching, MemorySystems, ProductionAgents, ContextLeaks, InMemoryDatabases, Stateful, Performance, Database, Microservices">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-15T04:09:36.116554">
+        <meta property="article:modified_time" content="2026-10-04T10:03:07.376672+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Memory Systems for Production Agents: Context Leaks Explained">
+        <meta property="og:description" content="How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.">
+        <meta property="og:url" content="https://kubaik.github.io/memory-systems-for-production-agents/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/memory-systems-for-production-agents.png">
+        <meta property="og:image:alt" content="Memory Systems for Production Agents: Context Leaks Explained">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Memory Systems for Production Agents: Context Leaks Explained">
+        <meta name="twitter:description" content="How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/memory-systems-for-production-agents.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/memory-systems-for-production-agents/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/memory-systems-for-production-agents/#article",
+      "headline": "Memory Systems for Production Agents: Context Leaks Explained",
+      "description": "How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.",
+      "datePublished": "2026-09-15T04:09:36+00:00",
+      "dateModified": "2026-10-04T10:03:07+00:00",
+      "wordCount": 2196,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/memory-systems-for-production-agents/"
+      },
+      "keywords": "Redis, Caching, MemorySystems, ProductionAgents, ContextLeaks, InMemoryDatabases, Stateful, Performance",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/memory-systems-for-production-agents.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Memory Systems for Production Agents: Context Leaks Explained",
+          "item": "https://kubaik.github.io/memory-systems-for-production-agents/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Memory Systems for Production Agents: Context Leaks Explained</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Memory Systems for Production Agents: Context Leaks Explained</h1>
+                
+                <p class="post-lead">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Caching</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MemorySystems</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/productionagents/"
+                       style="text-decoration:none;">ProductionAgents</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ContextLeaks</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/database/"
+                       style="text-decoration:none;">Database</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2196 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Production gives you neither a clean environment nor a patient timeline. Memory systems for agents fail in ways that unit tests rarely surface: state that outlives its usefulness, caches that serve stale reasoning, and sessions that accumulate until a node falls over. The gap between what documentation promises and what a live environment requires is usually found in configuration defaults, eviction behavior, and the boundary between what the agent remembers and what it should forget.</p>
+<h2 id="the-gap-between-documented-behavior-and-production-behavior">The gap between documented behavior and production behavior</h2>
+<p>Documentation describes a system in isolation. Production runs that system next to a database, a network that drops packets, a scheduler that evicts pods, and a workload that changes shape at 3 a.m. The documented behavior of a cache is that it returns the value most recently written. The production behavior is that it returns the most recently written value <em>that survived eviction, serialization, and replication</em>. Those are different guarantees.</p>
+<p>A common trap is assuming default configurations suffice for production workloads. Defaults are chosen to be safe for a single-node demo, not for a multi-tenant agent that holds conversation state across hours. The subtle part is not that things break loudly — it is that context leaks quietly. A session that should have expired at 30 minutes lives for six hours and slowly biases every downstream decision the agent makes.</p>
+<p>Before adopting any memory layer, answer three questions: what is the maximum acceptable staleness, what happens when the store is full, and who is responsible for deleting state. If any answer is "the default," that is the leak.</p>
+<h2 id="three-approaches-and-where-each-leaks-context">Three approaches and where each leaks context</h2>
+<p>The three common shapes for agent memory are in-memory stores, caching layers, and stateful services. Each leaks context differently, and the leak usually traces back to a lifecycle decision nobody made explicitly.</p>
+<h3 id="in-memory-stores">In-memory stores</h3>
+<p>In-memory stores such as Redis or Memcached keep data in RAM for low-latency reads and writes. They suit session management, short-term agent scratchpads, and rate-limit counters. Context leaks appear in three places:</p>
+<ul>
+<li><strong>Eviction policy.</strong> When the store reaches <code>maxmemory</code>, it must evict. Redis supports policies including <code>noeviction</code>, <code>allkeys-lru</code>, <code>volatile-lru</code>, and <code>allkeys-lfu</code>. With <code>noeviction</code>, writes fail once memory is full — which is honest but can cascade into application errors. With <code>allkeys-lru</code>, the store will happily evict a session key that a long-running agent still needs, because recency is a proxy for importance and it is a poor one. A leak here looks like an agent that "forgets" mid-task under load.</li>
+<li><strong>Network round trips.</strong> Every read is a network hop. Code that assumes the hop is instantaneous will produce timeouts and retries under contention, and retries against a store that is already saturated make things worse.</li>
+<li><strong>Serialization.</strong> Data must be encoded on write and decoded on read. Large JSON blobs inflate memory and CPU, and a schema change on one side of the boundary can silently produce garbage on the other.</li>
+</ul>
+<h3 id="caching-layers">Caching layers</h3>
+<p>A caching layer sits in front of a slower backend to absorb read load. It is the right tool for read-heavy agent workloads: tool results, retrieved documents, embedding lookups.</p>
+<p>Context leaks in caches come from:</p>
+<ul>
+<li><strong>Invalidation.</strong> If the cache is not invalidated when the underlying data changes, the agent reasons over stale facts. This is the single most common agent-memory bug: a document is updated, the cache is not, and the agent confidently cites the old version.</li>
+<li><strong>Stampedes.</strong> When a popular key expires, every concurrent request misses simultaneously and hits the backend. For an agent that fans out to an LLM provider, a stampede can mean a burst of duplicate, billable calls.</li>
+<li><strong>Size limits.</strong> Caches are finite. If the working set exceeds capacity, hit rate collapses and the backend absorbs the load the cache was meant to remove.</li>
+</ul>
+<h3 id="stateful-services">Stateful services</h3>
+<p>Stateful services keep state across requests — session-affine workers, actor-style runtimes, or Kubernetes StatefulSets with persistent volumes. They suit agents that must maintain a long conversation or a multi-step plan.</p>
+<p>Leaks here are structural:</p>
+<ul>
+<li><strong>Session lifetime.</strong> Sessions that are never explicitly terminated hold memory and connections. A failure mode is a service that grows steadily until it is restarted, then repeats the cycle.</li>
+<li><strong>Replication.</strong> State replicated across nodes must converge. During a network partition, two nodes can both believe they own a session, and reconciliation can silently drop one branch of the conversation.</li>
+<li><strong>Resource footprint.</strong> Stateful services are harder to scale and to reschedule than stateless ones. Over-provisioning to avoid eviction wastes capacity; under-provisioning turns a node failure into data loss.</li>
+</ul>
+<h2 id="a-worked-example-versioned-cache-keys">A worked example: versioned cache keys</h2>
+<p>The following example uses Redis with the <code>redis-py</code> client. It demonstrates the invalidation pattern that avoids the stale-read leak: instead of deleting cache entries on write, bump a version key and let the old entries expire naturally. This is sometimes called a versioned or generational cache.</p>
+<pre><code class="language-sh">docker run -d --name redis-cache -p 6379:6379 redis:7.2
+</code></pre>
+<pre><code class="language-python">import redis
+
+redis_client = redis.StrictRedis(host=&quot;localhost&quot;, port=6379, db=0, decode_responses=True)
+
+VERSION_SUFFIX = &quot;:version&quot;
+
+def current_version(key):
+    version = redis_client.get(f&quot;{key}{VERSION_SUFFIX}&quot;)
+    return int(version) if version is not None else 0
+
+def get_data_from_backend(key):
+    # Stand-in for an expensive lookup: database, API, or model call.
+    return f&quot;Data for {key}&quot;
+
+def read_through(key, ttl=60):
+    version = current_version(key)
+    cached = redis_client.get(f&quot;{key}:{version}&quot;)
+    if cached is not None:
+        return cached, True
+
+    # Stampede guard: only one caller fetches; others wait briefly.
+    lock_key = f&quot;{key}:lock&quot;
+    got_lock = redis_client.set(lock_key, &quot;1&quot;, nx=True, ex=5)
+    if not got_lock:
+        # Another worker is fetching. Re-check the cache once.
+        cached = redis_client.get(f&quot;{key}:{current_version(key)}&quot;)
+        if cached is not None:
+            return cached, True
+        return get_data_from_backend(key), False
+
+    try:
+        data = get_data_from_backend(key)
+        redis_client.set(f&quot;{key}:{version}&quot;, data, ex=ttl)
+        return data, False
+    finally:
+        redis_client.delete(lock_key)
+
+def invalidate(key):
+    # New generation. Old keys age out via TTL.
+    redis_client.incr(f&quot;{key}{VERSION_SUFFIX}&quot;)
+
+def write_and_invalidate(key, new_value, ttl=60):
+    # Persist to the source of truth first, then invalidate.
+    persist_to_backend(key, new_value)
+    invalidate(key)
+    redis_client.set(f&quot;{key}:{current_version(key)}&quot;, new_value, ex=ttl)
+
+def persist_to_backend(key, value):
+    # Placeholder for the actual write path.
+    pass
+</code></pre>
+<p>Two design points are worth stating explicitly, because both are common sources of bugs.</p>
+<p>First, <strong>write the source of truth before invalidating the cache</strong>. If the order is reversed, a concurrent reader can miss the cache, read the old value from the backend, and repopulate the cache with stale data — and that entry will survive until its TTL expires.</p>
+<p>Second, <strong>increment the version rather than deleting keys</strong>. Deletion races: a reader that fetched the old value just before the delete can write it back afterward. A version bump makes the old key unreachable immediately, and TTL cleans it up. The cost is that old generations occupy memory until they expire, so the TTL must be short relative to the write rate.</p>
+<p>The stampede guard above uses a single lock key with a 5-second expiry. This is a coarse mechanism: if the backend call takes longer than the lock TTL, a second caller will also fetch. That is an acceptable trade for most workloads, but it means the lock TTL must be tuned above the p99 backend latency, not the average.</p>
+<h2 id="how-to-measure-instead-of-guessing">How to measure instead of guessing</h2>
+<p>Every number that matters here is measurable on your own infrastructure. The following is what to instrument and how to compare, rather than a borrowed benchmark.</p>
+<p><strong>Latency distribution.</strong> Record the full histogram, not the mean. In Python, wrap the Redis call and record elapsed time; export to Prometheus as a histogram and read p50, p95, and p99 from Grafana. The mean hides the tail, and the tail is where agent timeouts live.</p>
+<p><strong>Hit rate.</strong> Redis exposes <code>keyspace_hits</code> and <code>keyspace_misses</code> via <code>INFO stats</code>. Hit rate is <code>hits / (hits + misses)</code>. Track it over time; a falling hit rate is the earliest signal that the working set has outgrown the cache or that a key scheme is wrong.</p>
+<p><strong>Eviction pressure.</strong> <code>INFO stats</code> also reports <code>evicted_keys</code>. If this is climbing, the store is discarding data you asked it to keep. Cross-reference with <code>used_memory</code> against <code>maxmemory</code>.</p>
+<p><strong>Memory per item.</strong> Measure directly: load a representative sample of your real payloads, read <code>used_memory</code> before and after, and divide. Serialization format, key length, and data structure overhead all matter, and the only honest number is the one from your own data.</p>
+<p><strong>Stampede behavior.</strong> Under a controlled load test, expire a hot key and count backend calls in the following second. If the count equals the request count, the guard is not working.</p>
+<p>A simple instrumentation wrapper for the read path:</p>
+<pre><code class="language-python">import time
+from prometheus_client import Histogram, Counter
+
+CACHE_LATENCY = Histogram(&quot;cache_read_seconds&quot;, &quot;Cache read latency&quot;)
+CACHE_RESULT = Counter(&quot;cache_reads_total&quot;, &quot;Cache reads&quot;, [&quot;result&quot;])
+
+def timed_read(key):
+    start = time.perf_counter()
+    data, hit = read_through(key)
+    CACHE_LATENCY.observe(time.perf_counter() - start)
+    CACHE_RESULT.labels(result=&quot;hit&quot; if hit else &quot;miss&quot;).inc()
+    return data
+</code></pre>
+<p>Run this for a week before changing any configuration. The data will tell you whether the problem is capacity, key design, TTL, or backend latency — and those have different fixes.</p>
+<h2 id="failure-modes-that-rarely-appear-in-documentation">Failure modes that rarely appear in documentation</h2>
+<p><strong>Cache stampede.</strong> Many concurrent misses on one key produce a burst of backend load. Mitigations: a distributed lock (shown above), request coalescing, or probabilistic early expiration, where a fraction of readers refresh the key slightly before it expires.</p>
+<p><strong>Stale reads after writes.</strong> The cache and the source of truth diverge because invalidation happened before or instead of the write. Mitigation: write-then-invalidate, versioned keys, and a short TTL as a backstop.</p>
+<p><strong>Unbounded session growth.</strong> Sessions are created but never closed. Mitigation: an explicit session TTL enforced by the store, not by application code that might skip a cleanup path.</p>
+<p><strong>Eviction of live state.</strong> The store evicts keys the agent still needs because the policy treats all keys as equal. Mitigation: separate the stores. Put ephemeral cache data in one instance with <code>allkeys-lru</code> and durable session state in another with <code>noeviction</code> or <code>volatile-*</code> policies, so a cache miss never destroys a session.</p>
+<p><strong>Replication divergence.</strong> Two nodes disagree about session state during a partition. Mitigation: a single writer per session, or a consensus-backed store if the workload genuinely requires it.</p>
+<p><strong>Memory fragmentation.</strong> Long-running stores can hold more RSS than <code>used_memory</code> reports. Mitigation: monitor the ratio and restart or reshard on a schedule if it drifts.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Use this to pick an approach before writing code.</p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>In-memory store</th>
+<th>Caching layer</th>
+<th>Stateful service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-millisecond reads</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Depends on implementation</td>
+</tr>
+<tr>
+<td>Survives node restart</td>
+<td>Only with persistence enabled</td>
+<td>No by default</td>
+<td>Yes, with persistent volumes</td>
+</tr>
+<tr>
+<td>Strong consistency</td>
+<td>Not by default</td>
+<td>No</td>
+<td>Achievable with consensus</td>
+</tr>
+<tr>
+<td>Handles long conversations</td>
+<td>Possible, with explicit TTLs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Scales horizontally</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Harder; needs partitioning</td>
+</tr>
+<tr>
+<td>Operational complexity</td>
+<td>Low</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>Choose an in-memory store when state is short-lived and loss is tolerable. Choose a caching layer when the goal is absorbing read load in front of a slower backend. Choose a stateful service when state must survive restarts and requests must be routed to the node holding it. If two rows conflict, the harder requirement wins.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<ul>
+<li><strong>Low read/write volume.</strong> If the backend handles the load comfortably, a cache adds a consistency problem in exchange for nothing. Measure before adding a layer.</li>
+<li><strong>Strong consistency required.</strong> Caches and eventually consistent replicas cannot provide it. Use a database with the consistency model you actually need.</li>
+<li><strong>Limited operational capacity.</strong> A stateful service is a commitment: backups, failover, upgrades, and partition management. If that is not staffed, a managed database is the better answer.</li>
+<li><strong>Regulated data.</strong> Cached personal data inherits every retention and deletion obligation of the source. If deletion requests must be honored promptly, a cache with opaque TTLs is a compliance risk.</li>
+</ul>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Run these two commands against your production Redis instance and read the output:</p>
+<pre><code class="language-sh">redis-cli config get maxmemory
+redis-cli config get maxmemory-policy
+redis-cli info stats | grep -E &quot;evicted_keys|keyspace_hits|keyspace_misses&quot;
+</code></pre>
+<p>If <code>maxmemory</code> is <code>0</code>, the store has no memory ceiling and will consume the host's RAM until the OS intervenes. If <code>maxmemory-policy</code> is <code>noeviction</code> and the store holds session state, writes will begin failing under pressure. If <code>evicted_keys</code> is nonzero and climbing, the store is discarding data you asked it to keep. Note the three values, then decide whether the current policy matches what the data in that instance actually is.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/">Stop guessing tech stacks: validate tools in 2 hours</a></li>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/cache-stampedes-the-patterns-that-scale-and-the-ones/">
+                        <h3>Cache stampedes: the patterns that scale and the ones that don’t</h3>
+                        <p>How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.</p>
+                        <span class="related-meta">16 min read · 21 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-context-short-term-vs-long-term-memory/">
+                        <h3>Agent context: short-term vs long-term memory</h3>
+                        <p>Compare Redis-style short-term agent context with Postgres event logs: latency, durability, auditability, cost, and how to measure each.</p>
+                        <span class="related-meta">15 min read · 9 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+                        <h3>AI on slow networks: Nairobi teams&#39; 2026 playbook</h3>
+                        <p>How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

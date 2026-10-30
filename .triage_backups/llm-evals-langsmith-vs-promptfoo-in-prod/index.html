@@ -1,0 +1,502 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LLM evals: LangSmith vs Promptfoo in prod - Kubai Kevin</title>
+        <meta name="description" content="How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.">
+        <meta name="keywords" content="LlmEvals, PromptTesting, LangsmithVsPromptfoo, Llm, Generativeai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-03T04:27:57.976269">
+        <meta property="article:modified_time" content="2026-10-04T10:26:10.683619+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="LLM evals: LangSmith vs Promptfoo in prod">
+        <meta property="og:description" content="How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.">
+        <meta property="og:url" content="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/llm-evals-langsmith-vs-promptfoo-in-prod.png">
+        <meta property="og:image:alt" content="LLM evals: LangSmith vs Promptfoo in prod">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="LLM evals: LangSmith vs Promptfoo in prod">
+        <meta name="twitter:description" content="How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/llm-evals-langsmith-vs-promptfoo-in-prod.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/#article",
+      "headline": "LLM evals: LangSmith vs Promptfoo in prod",
+      "description": "How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.",
+      "datePublished": "2026-10-03T04:27:57+00:00",
+      "dateModified": "2026-10-04T10:26:10+00:00",
+      "wordCount": 3011,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/"
+      },
+      "keywords": "LlmEvals, PromptTesting, LangsmithVsPromptfoo, Llm, Generativeai",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/llm-evals-langsmith-vs-promptfoo-in-prod.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "LLM evals: LangSmith vs Promptfoo in prod",
+          "item": "https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>LLM evals: LangSmith vs Promptfoo in prod</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">LLM evals: LangSmith vs Promptfoo in prod</h1>
+                
+                <p class="post-lead">How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmEvals</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PromptTesting</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LangsmithVsPromptfoo</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3011 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most evaluation stack writeups assume the reader has already made the mistake they're warning about. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch.</p>
+<h2 id="why-this-comparison-matters">Why this comparison matters</h2>
+<p>Production LLM features have a nasty property: they pass every manual spot-check run before launch, then quietly regress on the small slice of inputs that actually matter to users. The failure mode is rarely a crash. It's a summarization endpoint that starts dropping the constraint clause in a legal disclaimer, or a support classifier that routes refund requests to the wrong queue because someone tweaked the system prompt to fix an unrelated tone complaint. By the time a human notices, there is a week of bad outputs in the logs and no clean baseline to compare against.</p>
+<p>Evaluation tooling is supposed to catch this. In practice, teams end up with one of two stacks: a hosted observability platform that stores traces and lets you annotate them, or a local, config-driven test runner that treats prompts like unit tests. The two approaches have genuinely different cost curves, latency profiles, and failure modes, and picking the wrong one for your team's shape is a six-month detour.</p>
+<p>The comparison that matters is between a hosted tracing and eval platform (LangSmith, the service from the LangChain team) and a CLI-first, config-driven eval runner (Promptfoo). They overlap on the surface — both run assertions against model outputs — but they optimize for opposite things. Hosted platforms optimize for visibility into live traffic. CLI runners optimize for fast, deterministic regression testing in CI. The part that trips people up is that both properties are hard to get from one tool without paying for it in either latency or maintenance, and that's what this post actually covers.</p>
+<h2 id="option-a-hosted-trace-based-eval-platforms">Option A — hosted trace-based eval platforms</h2>
+<p>A hosted platform such as LangSmith is a service. You instrument your application with the SDK (Python or TypeScript), set the tracing environment variables and an API key, and every chain, tool call, and LLM invocation gets shipped to the backend as a structured trace. From there you can build datasets from real production traces, run evaluations against those datasets, and attach human feedback via an annotation queue.</p>
+<p>The core value is that evaluation data comes from production. You don't have to invent test cases — you filter traces by latency, token count, or user thumbs-down, promote the interesting ones into a dataset, and re-run your prompt versions against them. This is the workflow that catches drift: a prompt change that looked fine on 20 hand-written examples fails on the 400 real inputs collected last month.</p>
+<p>Where it shines is teams with live traffic and a human in the loop. If a support team flags bad outputs, or a product manager wants to compare two prompt variants on real conversations, a hosted UI is genuinely faster than building that workflow yourself. An annotation queue alone can save weeks of internal tooling.</p>
+<p>It's also the better choice if you're already on LangChain or LangGraph. Instrumentation is nearly free — you add environment variables and the traces appear. For a team running LangGraph agents with tool calls, the trace view showing the full call tree is hard to replicate with a CLI tool.</p>
+<p>The weakness is that it's a hosted dependency. If the service is down, your evaluation pipeline is down. If you're in a regulated environment where trace data can't leave your VPC, you're looking at a self-hosted enterprise tier, which changes the cost math entirely. And SDK instrumentation adds overhead to every request. The exact figure depends on your SDK version, network path, and whether tracing is batched and asynchronous; a common failure mode is enabling synchronous tracing and discovering a double-digit-millisecond tax on endpoints that only have a 200ms budget. Measure it rather than assuming: run a load test with tracing on and off and compare p50 and p99 latency for the same endpoint.</p>
+<h2 id="option-b-a-local-cli-eval-runner">Option B — a local CLI eval runner</h2>
+<p>Promptfoo is a Node-based CLI that reads a YAML config, runs your prompts against a list of providers, and applies assertions to the outputs. It runs locally, ships as an npm package, and produces a pass/fail result you can wire into CI. Recent versions support custom Python assertion functions, which is what makes it viable for anything beyond string matching.</p>
+<pre><code class="language-yaml"># promptfooconfig.yaml
+prompts:
+  - file://prompts/support_classifier.txt
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0
+  - id: anthropic:claude-3-5-haiku-latest
+    config:
+      temperature: 0
+tests:
+  - vars:
+      ticket: &quot;I was charged twice for the same order&quot;
+    assert:
+      - type: contains
+        value: &quot;billing&quot;
+      - type: javascript
+        value: output.category === 'billing' &amp;&amp; output.confidence &gt; 0.8
+  - vars:
+      ticket: &quot;How do I export my data?&quot;
+    assert:
+      - type: llm-rubric
+        value: &quot;Classifies as 'account' or 'data-export', not 'billing'&quot;
+</code></pre>
+<p>The defining feature is that it's just a test runner. It exits non-zero on failure, so your existing CI pipeline (pytest, jest, GitHub Actions, whatever) treats it like any other test suite. No dashboard, no API key management for the eval layer itself, no vendor to page when it's slow. For a team that already has strong CI discipline, this is the lower-friction choice.</p>
+<p>Where it shines is regression testing against a fixed dataset. You commit your test cases to the repo, you run <code>promptfoo eval</code> on every PR that touches a prompt, and you catch the regression before merge. The cost is that you have to curate the dataset yourself — there's no "promote this production trace into a test case" button. You either export from your observability tool or write cases by hand.</p>
+<p>It also handles multi-provider comparison well. Running the same 50 test cases against GPT-4o-mini, Claude 3.5 Haiku, and a local Llama 3.1 8B via Ollama is a single config change, and the output table shows you pass rates side by side. That's the workflow that makes model-swap decisions defensible instead of vibes-based.</p>
+<p>The weakness is visibility. A CLI runner tells you pass/fail on cases you already thought of. It does not tell you what your users are actually sending. Teams that adopt it without a separate tracing layer often discover months later that their test suite covers the happy path and nothing else.</p>
+<h2 id="head-to-head-performance">Head-to-head: performance</h2>
+<p>Performance here means two things: eval run latency and production overhead. They're different problems and the tools behave differently on each.</p>
+<p>On eval run latency, a local runner has a structural advantage because it runs on your machine and parallelizes aggressively. A 200-case suite against GPT-4o-mini with <code>--max-concurrency 10</code> typically completes in tens of seconds to a couple of minutes depending on provider rate limits. The bottleneck is almost always the model API, not the runner. Hosted evaluation runs go through a backend, which adds a queue and scheduling layer; the same 200-case suite commonly takes longer end to end, and worse if you're on a shared tier during peak hours.</p>
+<p>On production overhead, the tradeoff reverses. A CLI runner adds zero runtime overhead because it doesn't run in production — it's a CI tool. SDK instrumentation adds latency to every traced call. The size of that tax depends on the SDK, whether it batches, and network health. A reasonable procedure:</p>
+<ol>
+<li>Instrument a staging endpoint with tracing enabled.</li>
+<li>Run a fixed load test (e.g. <code>k6</code> or <code>wrk</code> at a fixed request rate) and record p50 and p99 latency.</li>
+<li>Disable tracing, rerun the identical load test.</li>
+<li>Compare. If the delta is more than a few percent of your latency budget, switch to batched/asynchronous export or sample traces.</li>
+</ol>
+<p>That measurement takes about 20 minutes and is worth far more than any generic number, because it's specific to your SDK version, region, and request shape.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Hosted trace platform</th>
+<th>CLI eval runner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eval run time (200 cases)</td>
+<td>Longer (hosted queue)</td>
+<td>Shorter (local, parallel)</td>
+</tr>
+<tr>
+<td>Production latency overhead</td>
+<td>Non-zero per traced call</td>
+<td>Zero (CI only)</td>
+</tr>
+<tr>
+<td>Data residency</td>
+<td>Hosted; self-host is enterprise tier</td>
+<td>Fully local</td>
+</tr>
+<tr>
+<td>Dataset source</td>
+<td>Production traces</td>
+<td>Hand-curated or exported</td>
+</tr>
+<tr>
+<td>CI integration</td>
+<td>API-based, custom glue</td>
+<td>Native CLI exit codes</td>
+</tr>
+<tr>
+<td>Human annotation UI</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Multi-provider compare</td>
+<td>Manual setup</td>
+<td>First-class</td>
+</tr>
+</tbody>
+</table>
+<p>The practical implication: if your eval suite is part of your PR gate, local runner speed matters because slow CI gets bypassed. If your eval suite is a weekly review meeting, a few minutes of hosted run time is irrelevant and the production visibility is worth far more.</p>
+<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
+<p>The onboarding paths are almost opposite. A hosted platform is fastest to start and slowest to fully own. A CLI runner is slowest to start and fastest to fully own.</p>
+<p>With a hosted platform, a developer adds a few environment variables, redeploys, and sees traces within minutes. The first eval run against a promoted dataset is maybe an hour of work. The friction shows up later: defining custom evaluators requires understanding the SDK's evaluator interface, and building a CI gate on top of the hosted API means writing your own wrapper that triggers a run, polls for completion, and interprets results. Teams that hit this typically end up with a couple hundred lines of glue code in a script that nobody wants to maintain.</p>
+<p>A CLI runner inverts this. The first hour is spent reading the config schema, figuring out how to pass structured inputs, and wrestling with the assertion types. But once the config exists, it's a file in your repo. CI integration is <code>npx promptfoo eval --ci</code> and checking the exit code. Custom assertions are plain JavaScript or Python functions. There's no API surface to learn beyond the config schema.</p>
+<p>The debugging experience also differs. When a hosted eval fails, you open the trace, look at the input, the output, and the assertion result, and you can usually see what went wrong. When a CLI assertion fails, you get a diff in the terminal — sometimes less context, but always faster to iterate on. A common failure mode with rubric-style assertions is a grader prompt that's too vague; the grader model returns inconsistent verdicts and your suite becomes flaky. The fix is to make rubrics concrete ("mentions the refund window in days") rather than abstract ("is helpful"), but teams burn a day or two discovering that.</p>
+<p>For teams with strong engineering experience but no dedicated ML platform person, the "it's just a test file" model usually wins on maintainability. For teams with a PM or support lead who needs to look at traces, a hosted UI wins on adoption.</p>
+<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
+<p>Cost is where the two approaches diverge most sharply, and where budget tier actually determines the answer.</p>
+<p>The CLI runner itself is free and open source. Your cost is the model API calls during eval runs. Work it out from your own numbers:</p>
+<ul>
+<li>Cases per run: 200</li>
+<li>Runs per PR: 2</li>
+<li>PRs per day: 20</li>
+<li>Input tokens per case: 800</li>
+<li>Output tokens per case: 200</li>
+</ul>
+<p>That's 200 × 2 × 20 = 8,000 cases/day, or 6.4M input tokens and 1.6M output tokens per day. Multiply by your provider's current per-token price for the model under test. If you're also running an LLM-as-judge assertion, double it. That's the entire cost — no seats, no tiers.</p>
+<p>A hosted platform's free tier covers a small number of traces per month, which is enough for a solo developer or a prototype. Once you're in production with real traffic, you're on a paid tier priced per trace. The bill scales with production traffic, not with eval frequency, so a traffic spike doubles your observability bill even if your eval suite didn't change. Plug your own monthly request count and the vendor's current per-trace price into a spreadsheet before committing.</p>
+<p>The self-hosted tier changes the math entirely. You're now running a database-backed service and paying for the compute, which for a small team is real infrastructure work. If your constraint is "data cannot leave our VPC," that's the price. If your constraint is budget, a CLI runner plus a lightweight self-hosted trace store (an open-source tracer, or even structured logs to object storage) gets you most of the visibility for a fraction of the operational burden.</p>
+<p>For a bootstrapped contractor on a cheap VPS, the CLI runner is the only realistic answer — the hosted tier is fine, but trace volume from any real client work pushes you into paid territory fast. For a funded startup with an enterprise cloud agreement and a compliance team, the self-hosted hosted-platform tier is often the path of least resistance because the procurement and security review are already done.</p>
+<h2 id="a-decision-framework">A decision framework</h2>
+<p>Use this to pick, not to hedge. The two tools are not complementary in the way vendors like to claim — running both is a real maintenance cost and most teams that try end up abandoning one.</p>
+<p>Pick a hosted trace platform if: you have live production traffic you need to inspect, you have a non-engineer who needs to review outputs, you're already on LangChain or LangGraph, and you're on a paid tier where per-trace costs are budgeted. The self-hosted tier is the right call if data residency is a hard requirement.</p>
+<p>Pick a CLI eval runner if: your eval suite needs to run in CI on every PR, you want deterministic pass/fail without a hosted dependency, you're comparing multiple model providers, and you have an engineer who can curate a test dataset from scratch. The lack of a tracing UI is a real gap — pair it with structured logging or a lightweight self-hosted tracer if you need production visibility.</p>
+<p>The mistake to avoid is adopting a hosted platform for eval and then discovering you can't gate PRs on it because the API round-trip adds minutes to every CI run. The opposite mistake is adopting a CLI runner for eval and then discovering six months in that your test suite covers only the cases you imagined, not the cases your users actually send.</p>
+<h3 id="failure-mode-analysis">Failure-mode analysis</h3>
+<p>Three concrete ways this goes wrong, and the signal that catches each:</p>
+<p><strong>The flaky rubric.</strong> A vague grader prompt produces inconsistent verdicts. Signal: the same commit passes on one CI run and fails on the next. Fix: replace subjective rubrics with observable checks, or run the assertion three times and require a majority pass.</p>
+<p><strong>The orphaned dataset.</strong> Test cases were written by one engineer at launch and never updated. Signal: pass rate stays near 100% while user complaints rise. Fix: schedule a monthly job that samples production inputs and diffs them against your test distribution.</p>
+<p><strong>The bypassed gate.</strong> CI eval runs got slow enough that reviewers started merging anyway. Signal: PRs merged with a red or skipped eval check. Fix: cut the suite to a fast smoke set (10–20 cases) on every PR and run the full suite nightly.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Can you use a CLI runner and a hosted tracer together?</strong></p>
+<p>Yes, and it's a reasonable setup: the hosted platform for production tracing and human review, the CLI runner for the CI gate. The integration point is exporting curated traces into a test file, which you can script. The cost is maintaining two systems, so only do this if you have a clear owner for each.</p>
+<p><strong>How many eval cases are actually needed?</strong></p>
+<p>For a single-prompt classifier, 100–200 well-chosen cases usually surface the regressions that matter. For a multi-step agent, you need more because the failure space is larger — 300–500 is common. The number matters less than whether the cases resemble production inputs. A suite of 50 real cases beats 500 synthetic ones.</p>
+<p><strong>Why does an LLM-as-judge assertion give inconsistent results?</strong></p>
+<p>Grader models are non-deterministic even at <code>temperature: 0</code>, and vague rubrics amplify this. Rewrite the rubric to check for a specific, observable property ("includes the order ID") rather than a subjective one ("is accurate"). If you still see flakiness, run the assertion three times and require a majority pass.</p>
+<p><strong>Does tracing every request get expensive?</strong></p>
+<p>It scales with traffic, not with eval frequency, so yes — a traffic spike doubles your observability cost. Sample instead of tracing everything: 10–20% of requests is usually enough to catch drift, and you can force-trace requests that hit error paths or user thumbs-down.</p>
+<h2 id="final-verdict">Final verdict</h2>
+<p>For regression testing, the CLI-as-CI-gate model wins clearly. It's the right shape for how prompt changes actually get reviewed, local execution keeps eval latency low for a typical suite, and zero production overhead means you're not paying a latency tax on every request just to have tests. Use a hosted trace platform if you need production trace visibility and have a non-engineer reviewing outputs, but don't adopt it as your CI gate — the hosted round-trip makes PR checks slow enough that teams start bypassing them.</p>
+<p>The action to take in the next 30 minutes: create a <code>promptfooconfig.yaml</code> at your repo root with three test cases pulled from your last week of production logs, run <code>npx promptfoo eval</code>, and check whether your current prompt passes. If it doesn't, you've just found your first regression before a user did.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
+<li><a href="https://docs.anthropic.com/">Anthropic documentation</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI platform documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ship-evals-before-your-agent-ships/">
+                        <h3>Ship evals before your agent ships</h3>
+                        <p>Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.</p>
+                        <span class="related-meta">16 min read · 31 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-idp-shifts-for-ai-feature-delivery/">
+                        <h3>7 IDP shifts for AI feature delivery</h3>
+                        <p>Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</p>
+                        <span class="related-meta">15 min read · 10 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/debug-ai-agent-failures-differently/">
+                        <h3>Debug AI agent failures differently</h3>
+                        <p>Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

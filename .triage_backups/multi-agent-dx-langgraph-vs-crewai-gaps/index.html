@@ -1,0 +1,570 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Multi-agent DX: LangGraph vs CrewAI gaps - Kubai Kevin</title>
+        <meta name="description" content="Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.">
+        <meta name="keywords" content="MultiAgentSystems, Debugging, Langgraph, Crewai, AgentObservability, Softwareengineering, Coding, Multiagent">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-28T04:45:55.701506">
+        <meta property="article:modified_time" content="2026-10-28T04:47:21.550126+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Multi-agent DX: LangGraph vs CrewAI gaps">
+        <meta property="og:description" content="Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.">
+        <meta property="og:url" content="https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/multi-agent-dx-langgraph-vs-crewai-gaps.png">
+        <meta property="og:image:alt" content="Multi-agent DX: LangGraph vs CrewAI gaps">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Multi-agent DX: LangGraph vs CrewAI gaps">
+        <meta name="twitter:description" content="Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/multi-agent-dx-langgraph-vs-crewai-gaps.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/#article",
+      "headline": "Multi-agent DX: LangGraph vs CrewAI gaps",
+      "description": "Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.",
+      "datePublished": "2026-10-28T04:45:55+00:00",
+      "dateModified": "2026-10-28T04:47:21+00:00",
+      "wordCount": 3300,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/"
+      },
+      "keywords": "MultiAgentSystems, Debugging, Langgraph, Crewai, AgentObservability, Softwareengineering, Coding, Multiagent",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/multi-agent-dx-langgraph-vs-crewai-gaps.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Multi-agent DX: LangGraph vs CrewAI gaps",
+          "item": "https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Multi-agent DX: LangGraph vs CrewAI gaps</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Multi-agent DX: LangGraph vs CrewAI gaps</h1>
+                
+                <p class="post-lead">Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/multiagentsystems/"
+                       style="text-decoration:none;">MultiAgentSystems</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/debugging/"
+                       style="text-decoration:none;">Debugging</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/langgraph/"
+                       style="text-decoration:none;">Langgraph</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Crewai</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentObservability</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3300 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-28
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-the-debugging-gap-is-structural-not-a-missing-feature">Why the debugging gap is structural, not a missing feature</h2>
+<p>Multi-agent systems introduce a new failure mode: non-determinism at the orchestration layer. A single LLM call is already stochastic; chaining several agents with tool access multiplies the state space. Traditional debugging assumes you can reproduce a bug by replaying inputs. With agents, the same input can produce different tool calls, different intermediate reasoning, and different final outputs — even at temperature 0, because model providers generally do not guarantee bitwise determinism across requests.</p>
+<p>That means the developer experience challenge is less about adding a <code>print()</code> statement and more about capturing enough context to reconstruct <em>why</em> a particular branch was taken. Both LangGraph and CrewAI provide tracing hooks, but they capture different things by default. LangGraph, built around an explicit state graph, records node transitions and state deltas when you attach callbacks. CrewAI, built around role-based agents and tasks, records task execution and agent delegation when verbose logging or callbacks are enabled. Neither gives you a full causal chain out of the box; you have to instrument the boundaries yourself.</p>
+<p>The gap matters because teams commonly discover it only after deploying to staging. A typical failure mode: an agent silently retries a failed tool call three times, the retries are logged at DEBUG level, and the final output looks plausible but is wrong. Without a trace that links the retry to the final answer, the bug is invisible until a user reports it.</p>
+<h2 id="langgraph-explicit-state-implicit-observability">LangGraph: explicit state, implicit observability</h2>
+<p>LangGraph's core abstraction is a state graph: nodes are functions that transform a shared state object, edges define control flow, and conditional edges allow branching. This explicitness is a double-edged sword for debugging. On one hand, you can inspect the graph structure statically — you know which nodes <em>can</em> run. On the other hand, the framework does not automatically log state transitions unless you add callbacks.</p>
+<p>A minimal LangGraph example illustrates the instrumentation burden:</p>
+<pre><code class="language-python">from langgraph.graph import StateGraph, END
+from typing import TypedDict, Annotated
+import operator
+
+class AgentState(TypedDict):
+    messages: Annotated[list, operator.add]
+    next_step: str
+
+def planner(state: AgentState):
+    # In a real app, this calls an LLM
+    return {&quot;next_step&quot;: &quot;research&quot;}
+
+def researcher(state: AgentState):
+    # Simulate a tool call
+    return {&quot;messages&quot;: [&quot;research result&quot;]}
+
+graph = StateGraph(AgentState)
+graph.add_node(&quot;planner&quot;, planner)
+graph.add_node(&quot;researcher&quot;, researcher)
+graph.set_entry_point(&quot;planner&quot;)
+graph.add_conditional_edges(&quot;planner&quot;, lambda s: s[&quot;next_step&quot;], {&quot;research&quot;: &quot;researcher&quot;})
+graph.add_edge(&quot;researcher&quot;, END)
+app = graph.compile()
+</code></pre>
+<p>To debug this, you would typically add a callback handler that logs each node's input and output. LangGraph supports callbacks via the <code>callbacks</code> parameter in the run config, but the documentation focuses on integration with external tracing tools (LangSmith, OpenTelemetry) rather than built-in local debugging. That is a gap: if you are not using a hosted tracing service, you are writing your own logger. The framework gives you the graph, but not the flight recorder.</p>
+<p>One subtlety worth knowing: the <code>Annotated[list, operator.add]</code> reducer means the <code>messages</code> key accumulates across nodes rather than being overwritten. That is convenient, and it is also how unbounded growth sneaks into long runs. When you inspect state snapshots, check the length of accumulated keys, not just their contents.</p>
+<h2 id="crewai-role-based-simplicity-opaque-execution">CrewAI: role-based simplicity, opaque execution</h2>
+<p>CrewAI models agents as roles with goals and backstories, and tasks as units of work assigned to agents. The abstraction is higher-level than LangGraph's: you define a crew, give it a process (sequential or hierarchical), and let it run. This makes the initial setup faster but the debugging experience more opaque. Because the framework decides which agent handles which task (especially in hierarchical mode), the execution path is less predictable.</p>
+<p>A minimal CrewAI example:</p>
+<pre><code class="language-python">from crewai import Agent, Task, Crew
+
+researcher = Agent(
+    role=&quot;Researcher&quot;,
+    goal=&quot;Find recent papers on multi-agent systems&quot;,
+    backstory=&quot;You are a diligent academic researcher.&quot;,
+    verbose=True
+)
+
+writer = Agent(
+    role=&quot;Writer&quot;,
+    goal=&quot;Summarize research findings&quot;,
+    backstory=&quot;You are a technical writer.&quot;,
+    verbose=True
+)
+
+task1 = Task(description=&quot;Search for papers&quot;, agent=researcher)
+task2 = Task(description=&quot;Write summary&quot;, agent=writer)
+
+crew = Crew(agents=[researcher, writer], tasks=[task1, task2], verbose=True)
+result = crew.kickoff()
+</code></pre>
+<p>Setting <code>verbose=True</code> prints agent thoughts and actions to stdout, which is helpful for local development but not for production. CrewAI also integrates with external tracing tools, but the built-in logging is unstructured text. There is no built-in way to query "show me all tasks where the researcher agent used the search tool and got an empty result." You would have to parse logs or add custom callbacks.</p>
+<h2 id="head-to-head-where-each-framework-leaves-you-guessing">Head-to-head: where each framework leaves you guessing</h2>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>LangGraph</th>
+<th>CrewAI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>State visibility</strong></td>
+<td>Explicit state object; you can snapshot and diff it between nodes.</td>
+<td>Implicit state; agent context is managed internally. Harder to inspect mid-run.</td>
+</tr>
+<tr>
+<td><strong>Control flow tracing</strong></td>
+<td>Graph structure is static and inspectable; conditional edges are visible.</td>
+<td>Process (sequential/hierarchical) is configured, but runtime delegation is opaque.</td>
+</tr>
+<tr>
+<td><strong>Error propagation</strong></td>
+<td>Node failures raise exceptions unless caught; you can add retry logic per node.</td>
+<td>Task failures may be retried by the agent or crew; default behavior is less documented.</td>
+</tr>
+<tr>
+<td><strong>Local debugging</strong></td>
+<td>Requires custom callbacks or external tracing; no built-in step-through debugger.</td>
+<td><code>verbose=True</code> gives stdout logs; no structured event stream.</td>
+</tr>
+<tr>
+<td><strong>Reproducibility</strong></td>
+<td>State graph can be replayed if you capture state snapshots; LLM calls still non-deterministic.</td>
+<td>Harder to replay because agent delegation decisions are made at runtime.</td>
+</tr>
+<tr>
+<td><strong>Integration with observability</strong></td>
+<td>Callback hooks that map onto OpenTelemetry and LangSmith.</td>
+<td>External tracing supported, with fewer granular hooks.</td>
+</tr>
+</tbody>
+</table>
+<p>Both frameworks share a common gap: neither provides a built-in, queryable event log of agent decisions. You get logs, but not a database you can ask questions of. That is the developer experience gap that remains.</p>
+<h2 id="the-missing-piece-a-causal-trace-of-agent-decisions">The missing piece: a causal trace of agent decisions</h2>
+<p>What developers actually need is a trace that answers: <em>Why did the system do X instead of Y?</em> For a single LLM call, that is the prompt and the response. For a multi-agent system, it is the chain of delegations, tool calls, and state changes that led to the final output. Neither LangGraph nor CrewAI gives you that out of the box.</p>
+<p>A workaround is to instrument your agents with a custom callback that emits structured events to a local store (for example, SQLite or a JSONL file). Here is a minimal example for LangGraph using a callback handler:</p>
+<pre><code class="language-python">from langchain_core.callbacks import BaseCallbackHandler
+import json, time
+
+class JsonlLogger(BaseCallbackHandler):
+    def __init__(self, path=&quot;agent_trace.jsonl&quot;):
+        self.path = path
+        self.f = open(path, &quot;a&quot;)
+
+    def on_chain_start(self, serialized, inputs, **kwargs):
+        event = {&quot;ts&quot;: time.time(), &quot;event&quot;: &quot;chain_start&quot;,
+                 &quot;name&quot;: (serialized or {}).get(&quot;name&quot;), &quot;inputs&quot;: inputs}
+        self.f.write(json.dumps(event, default=str) + &quot;\n&quot;)
+
+    def on_chain_end(self, outputs, **kwargs):
+        event = {&quot;ts&quot;: time.time(), &quot;event&quot;: &quot;chain_end&quot;, &quot;outputs&quot;: outputs}
+        self.f.write(json.dumps(event, default=str) + &quot;\n&quot;)
+
+# Attach to graph invocation
+# app.invoke({&quot;messages&quot;: [], &quot;next_step&quot;: &quot;&quot;},
+#            config={&quot;callbacks&quot;: [JsonlLogger()]})
+</code></pre>
+<p>Note the <code>default=str</code> in the serialiser: callback payloads routinely contain objects that <code>json.dumps</code> cannot handle, and a logging callback that throws will either crash the run or be swallowed, depending on the framework. Also note the commented invocation — the callback only sees events for runs it is attached to, so attach it at the outermost invocation, not per node, or you will get nested duplicates.</p>
+<p>This is not a complete solution — it does not capture LLM prompts unless you also implement <code>on_llm_start</code> — but it demonstrates the kind of plumbing teams end up writing. The gap is that this plumbing should be part of the framework's default developer experience, not an afterthought.</p>
+<h2 id="the-edge-cases-that-eat-your-weekend">The edge cases that eat your weekend</h2>
+<p>The happy-path examples above cover the majority of what gets shipped. The remainder is where multi-agent systems get genuinely nasty, and it is worth naming the specific failures because they recur across teams with almost boring regularity. None of these are exotic; they are the default behavior of LLMs plus tools plus concurrency.</p>
+<p><strong>The infinite tool loop with a clean final answer.</strong> An agent calls a search tool, gets a result it deems insufficient, reformulates the query, calls again, and does this six times before finally synthesizing an answer. The final output looks fine. The token bill does not. This happens because the agent's stop condition is "I have enough information," which is a judgment call the model makes, not a constraint the framework enforces. LangGraph will not stop it unless you add a recursion limit or a counter in your state; CrewAI's <code>max_iter</code> on an agent caps iterations, but the default is generous and the failure is silent. The fix is a hard step budget in the state object and a check at every conditional edge.</p>
+<p><strong>Tool schema drift between agents.</strong> Agent A produces a JSON payload that Agent B's tool expects, but the model generating A's output decides to add a field, rename a key, or wrap the whole thing in an extra object. This is one of the most common integration failures in crews, and it is maddening because each agent works in isolation. The failure surfaces only in the handoff. Structured outputs (function calling with a strict schema) reduce it but do not eliminate it — models still occasionally emit <code>{"result": {...}}</code> instead of <code>{...}</code>. Validate at every boundary, not just at the tool call.</p>
+<p><strong>Context window collapse in long-running crews.</strong> A hierarchical crew with ten tasks accumulates message history across every agent. By task seven, the manager agent is summarizing a history that no longer fits the window, and the framework silently truncates — usually from the front, which is exactly where the original task definition lives. The agent then "forgets" the goal and produces plausible-but-off-target output. This is a structural problem with the role-based model: shared context is convenient until it is not. LangGraph's explicit state lets you prune deliberately; CrewAI's implicit context makes it harder to see what got dropped.</p>
+<p><strong>Partial failure in parallel branches.</strong> LangGraph supports fan-out to parallel nodes, which is good for latency and bad for error handling. One branch raises, the others keep running, and the join node receives a half-populated state. Depending on how you wrote the reducer, this either raises a confusing <code>KeyError</code> three nodes downstream or, worse, silently produces a result from incomplete data. You need per-branch error capture and an explicit merge policy — fail-fast, best-effort, or quorum — and you need to choose it before production, not after.</p>
+<p><strong>Retry storms against rate-limited APIs.</strong> An agent hits a 429, the framework's retry logic backs off, but so do four other agents in the same crew, and they all retry in lockstep. Now a transient rate limit has become a sustained one. Neither framework coordinates retries across agents by default. You need a shared token bucket or a queue, and you need to instrument retry counts per tool so you can see the storm forming before it exhausts your quota.</p>
+<p><strong>The stale-tool-cache trap.</strong> Tools that cache results (search, database lookups, HTTP fetches) return stale data to an agent that has already reasoned about the previous version. The agent does not know the data is stale, so it treats a cached empty result as ground truth and loops trying to "find" something that exists. Cache TTLs tuned for human use are wrong for agent use; agents hammer tools in seconds, not minutes. Log cache hits and misses alongside tool calls or you will spend a day chasing a bug that is not in your code.</p>
+<h2 id="worked-example-sizing-a-step-budget">Worked example: sizing a step budget</h2>
+<p>The loop problem above has a simple fix, but choosing the number requires arithmetic rather than intuition. Consider a three-agent pipeline (planner, retriever, writer) where the retriever may re-query up to a bounded number of times.</p>
+<p>State the assumptions explicitly:</p>
+<ul>
+<li>Each retriever iteration costs one LLM call for query reformulation plus one tool call.</li>
+<li>The writer runs exactly once, at the end.</li>
+<li>The planner runs exactly once, at the start.</li>
+<li>A per-run hard cap of <code>N</code> retriever iterations is enforced in state.</li>
+</ul>
+<p>Then the maximum number of LLM calls per run is <code>1 (planner) + N (retriever reformulations) + 1 (writer) = N + 2</code>. If the observed average is 1.2 retriever iterations and the worst legitimate case is 3, then <code>N = 3</code> gives a maximum of 5 LLM calls per run. Setting <code>N = 10</code> does not make the system more capable; it only raises the ceiling on the damage a misbehaving run can do.</p>
+<p>To measure rather than guess, instrument the retry counter per run and emit it as an attribute on the run's root span. Then query the trace backend for the 99th percentile of that counter over a week of traffic. If p99 is 2 and the cap is 3, the cap is doing its job without truncating legitimate work. If p99 equals the cap, you are clipping real behavior and need to investigate why the retriever is unsatisfied — usually a tool returning empty results, which brings you back to the stale-cache failure mode.</p>
+<p>The same arithmetic applies to token cost. If the average run costs <code>C</code> tokens and a loop multiplies that by <code>k</code>, the monthly bill scales linearly with the loop rate. Capping <code>k</code> caps the tail; it does not reduce the mean unless you also fix the cause. The cap is insurance, not optimization.</p>
+<h2 id="wiring-it-into-tools-you-already-run">Wiring it into tools you already run</h2>
+<p>The frameworks do not exist in a vacuum, and the real developer experience question is how they behave once you bolt on the observability and orchestration stack your team already runs. Three integration categories matter most: OpenTelemetry for vendor-neutral tracing, an LLM-observability backend for prompt-and-completion-level views, and a durable execution engine for long-running crews. The pattern below uses LangGraph with an LLM-observability callback handler plus an OTLP span, which is a common combination because it gives you both a queryable trace UI and a vendor-neutral export.</p>
+<pre><code class="language-python">import os
+from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from langgraph.graph import StateGraph, END
+
+# OTLP: point at your collector (Tempo, Jaeger, Grafana Agent, etc.)
+provider = TracerProvider()
+provider.add_span_processor(
+    BatchSpanProcessor(OTLPSpanExporter(endpoint=os.environ[&quot;OTLP_ENDPOINT&quot;]))
+)
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer(&quot;agents.orchestrator&quot;)
+
+def instrumented_node(name, fn):
+    def wrapped(state):
+        with tracer.start_as_current_span(f&quot;node.{name}&quot;) as span:
+            span.set_attribute(&quot;agent.node&quot;, name)
+            span.set_attribute(&quot;agent.step&quot;, state.get(&quot;step&quot;, 0))
+            out = fn(state)
+            span.set_attribute(&quot;agent.next_step&quot;, out.get(&quot;next_step&quot;, &quot;end&quot;))
+            return {**out, &quot;step&quot;: state.get(&quot;step&quot;, 0) + 1}
+    return wrapped
+
+# ... build graph as before, wrapping nodes ...
+# app.invoke({&quot;messages&quot;: [], &quot;next_step&quot;: &quot;&quot;, &quot;step&quot;: 0},
+#            config={&quot;callbacks&quot;: [your_llm_observability_handler]})
+</code></pre>
+<p>Two things to notice. First, the OTLP span and an LLM-observability callback are complementary, not redundant: OTLP gives you infrastructure-grade tracing that slots into whatever backend your platform team runs, while an LLM-aware backend gives you prompt, completion, and token-cost views that generic tracing backends render poorly. Second, wrapping nodes this way gives you the step counter you need for the loop-budget fix from the previous section — the instrumentation and the guardrail are the same code. For CrewAI, the equivalent is passing an observability handler into the crew's callback list (check the version you are on; callback support has changed across releases) and using a step callback to emit OTLP spans per agent step. A durable execution engine can wrap the whole <code>crew.kickoff()</code> or <code>app.invoke()</code> in a flow so a crashed run resumes from the last completed task instead of re-paying for every LLM call — which, at production token volumes, is the difference between a bad afternoon and a bad quarter.</p>
+<h2 id="how-to-measure-whether-instrumentation-paid-off">How to measure whether instrumentation paid off</h2>
+<p>Claims about tracing improving diagnosis time are easy to make and hard to verify, so measure them on your own system. Four metrics cover most of the value:</p>
+<ol>
+<li><strong>Mean time to root cause.</strong> Log the timestamp of the first alert or user report and the timestamp when the faulty node or tool call is identified. Compare a sample of incidents before and after instrumentation. The comparison is only fair if the incidents are of similar type, so bucket them.</li>
+<li><strong>Token cost distribution, not just the mean.</strong> Export per-run token counts as a histogram. The mean hides the tail, and the tail is where loops live. A cap on retries shows up as a hard cutoff in the histogram's right edge; if you see a spike just below the cap, the cap is being hit routinely and is masking a real problem.</li>
+<li><strong>Retry counts per tool.</strong> Emit a counter per tool call and per retry. A retry rate climbing over time is an early warning of a rate limit or a schema drift, often days before it produces a bad output.</li>
+<li><strong>Replay success rate.</strong> For a sample of runs, attempt to replay the orchestration from captured state. Count how many reproduce the same control-flow path. This is the honest measure of reproducibility: LLM outputs will differ, but the graph should not.</li>
+</ol>
+<p>Each of these is a query against the trace store, not a manual exercise. If your instrumentation cannot answer them, it is logging, not observability.</p>
+<h2 id="who-should-pick-which-and-when-to-pick-neither">Who should pick which (and when to pick neither)</h2>
+<p>Choose LangGraph if you need explicit control over the orchestration graph and plan to integrate with existing observability tooling. The state graph gives you a mental model that maps well to debugging: you can reason about which nodes executed and in what order. The trade-off is that you will write more instrumentation code upfront.</p>
+<p>Choose CrewAI if you want faster prototyping and your agents' roles are well-defined. The higher-level abstraction means less boilerplate, but the debugging experience is more opaque. For simple sequential crews, <code>verbose=True</code> may suffice; for hierarchical crews with dynamic delegation, you will likely need custom logging.</p>
+<p>Pick neither if your system has strict reproducibility requirements or if you need to debug complex failure modes without external services. In that case, consider building a thin orchestration layer on top of raw LLM APIs, where you control every state transition and can log exactly what you need. The frameworks save time on the happy path but can cost more time on the unhappy path.</p>
+<p>A decision checklist:</p>
+<ul>
+<li><strong>Prototype due within days, well-defined roles</strong> → CrewAI. Accept the debugging debt explicitly and schedule the instrumentation work.</li>
+<li><strong>Debugging a production incident now</strong> → LangGraph, because the explicit graph gives you a place to start.</li>
+<li><strong>Every decision must be auditable</strong> → neither; build an event log you control.</li>
+<li><strong>Already using LangChain</strong> → LangGraph integrates more naturally.</li>
+<li><strong>Team new to agents</strong> → CrewAI's role metaphor is easier to grasp.</li>
+<li><strong>Long-running jobs that must survive restarts</strong> → either framework, wrapped in a durable execution engine.</li>
+</ul>
+<h2 id="the-next-concrete-step">The next concrete step</h2>
+<h1 id="open-your-agents-main-orchestration-file-and-add-a-single-structured-log-line-at-the-entry-and-exit-of-each-agent-or-node-including-a-correlation-id-in-langgraph-wrap-your-node-functions-with-a-decorator-that-logs-node_name-input_state_keys-and-timestamp-to-a-jsonl-file-in-crewai-use-the-step-callback-to-emit-similar-events-run-your-test-suite-and-inspect-the-log-for-any-node-that-executes-more-than-once-that-is-your-first-clue-to-a-retry-loop-or-a-misconfigured-edge-this-takes-about-30-minutes-and-will-surface-at-least-one-hidden-behavior-in-your-multi-agent-system">Open your agent's main orchestration file and add a single structured log line at the entry and exit of each agent or node, including a correlation ID. In LangGraph, wrap your node functions with a decorator that logs <code>node_name</code>, <code>input_state_keys</code>, and <code>timestamp</code> to a JSONL file. In CrewAI, use the step callback to emit similar events. Run your test suite and inspect the log for any node that executes more than once — that is your first clue to a retry loop or a misconfigured edge. This takes about 30 minutes and will surface at least one hidden behavior in your multi-agent system.</h1>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://kubaik.github.io/debug-ai-agent-failures-differently/">Debug AI agent failures differently</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
+                        <h3>Multi-agent systems: why failures hide</h3>
+                        <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/debug-ai-agent-failures-differently/">
+                        <h3>Debug AI agent failures differently</h3>
+                        <p>Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/multi-agent-systems-when-they-quietly-degrade/">
+                        <h3>Multi-agent systems: when they quietly degrade</h3>
+                        <p>Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+                        <span class="related-meta">12 min read · 24 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

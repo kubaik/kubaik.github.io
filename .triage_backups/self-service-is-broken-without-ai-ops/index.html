@@ -1,0 +1,505 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Self-service is broken without AI ops - Kubai Kevin</title>
+        <meta name="description" content="Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.">
+        <meta name="keywords" content="SelfServicePlatform, AiGuardrails, PlatformEngineering, IamPolicyChecks, Lambda, SelfServiceMeaning, PlatformTeamMetrics, AwsBedrock, Ai, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-24T12:59:05.104603">
+        <meta property="article:modified_time" content="2026-10-04T10:46:55.626882+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Self-service is broken without AI ops">
+        <meta property="og:description" content="Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.">
+        <meta property="og:url" content="https://kubaik.github.io/self-service-is-broken-without-ai-ops/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/self-service-is-broken-without-ai-ops.png">
+        <meta property="og:image:alt" content="Self-service is broken without AI ops">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Self-service is broken without AI ops">
+        <meta name="twitter:description" content="Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/self-service-is-broken-without-ai-ops.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/self-service-is-broken-without-ai-ops/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/self-service-is-broken-without-ai-ops/#article",
+      "headline": "Self-service is broken without AI ops",
+      "description": "Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.",
+      "datePublished": "2026-08-24T12:59:05+00:00",
+      "dateModified": "2026-10-04T10:46:55+00:00",
+      "wordCount": 2486,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/self-service-is-broken-without-ai-ops/"
+      },
+      "keywords": "SelfServicePlatform, AiGuardrails, PlatformEngineering, IamPolicyChecks, Lambda, SelfServiceMeaning, PlatformTeamMetrics, AwsBedrock",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/self-service-is-broken-without-ai-ops.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Self-service is broken without AI ops",
+          "item": "https://kubaik.github.io/self-service-is-broken-without-ai-ops/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Self-service is broken without AI ops</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Self-service is broken without AI ops</h1>
+                
+                <p class="post-lead">Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SelfServicePlatform</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiGuardrails</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/platformengineering/"
+                       style="text-decoration:none;">PlatformEngineering</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">IamPolicyChecks</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/lambda/"
+                       style="text-decoration:none;">Lambda</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2486 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Self-service platform defaults are fine right up until they aren't. The failure is rarely a missing permission — it is a missing guardrail.</p>
+<h2 id="the-core-argument-in-one-pass">The core argument in one pass</h2>
+<p>"Self-service" for platform teams is often treated as an access-control problem: hand engineers a namespace template, a README and a kubectl alias, then step back. That framing worked when the surface area was small. It breaks down when the same engineer is expected to reason correctly about IAM roles across dozens of accounts, VPC CIDR layouts, Lambda concurrency limits tied to downstream database throttling, event-bus schemas with hundreds of types, and CI runners holding ephemeral secrets. A single misconfiguration in any of those can cascade into a production incident.</p>
+<p>The confusion has three common sources. First, teams treat self-service as a permissions problem rather than a cognitive-load and error-prevention problem. Second, teams assume tooling alone solves it — a developer portal with golden-path templates looks like a solution until the templates go stale and nobody trusts them. Third, teams conflate autonomy with safety. A genuinely self-service platform does not just let you deploy; it tells you why a deployment is likely to fail before you merge, and it can often propose the fix.</p>
+<p>The shift that AI-assisted tooling makes possible is not "replace the platform team." It is embedding reasoning into every layer of the deployment path so the platform can anticipate, explain and correct — instead of gatekeeping after the fact.</p>
+<h2 id="why-the-permissions-framing-fails">Why the permissions framing fails</h2>
+<p>Permissions answer the question "are you allowed to do this?" They do not answer "will this work, will it cost what you think, and will it page someone at 3 AM?"</p>
+<p>Consider the difference in practice. A permissions system grants a developer the right to create an IAM role. A guardrail system reviews the policy document that role will carry and flags that <code>s3:PutObject</code> on <code>Resource: "*"</code> is almost certainly not what the developer intended. The first system is satisfied. The second system prevents an incident.</p>
+<p>The reason this matters more now than it did a few years ago is surface-area growth. Platform teams commonly report that the number of resource types a developer is expected to configure grows faster than the number of platform engineers available to review changes. That is an arithmetic problem, not a cultural one. If review capacity is roughly constant and configuration surface area keeps growing, the fraction of changes a human reviews carefully must fall. Guardrails are how you keep coverage without hiring proportionally.</p>
+<h2 id="the-mental-model-three-layers-of-guardrails">The mental model: three layers of guardrails</h2>
+<p>Think of self-service as a guardrail system with three layers, each catching a different class of error.</p>
+<p><strong>Pre-flight.</strong> Before code reaches CI, a review step checks the deployment manifest against a knowledge base of past failures, cost models and compliance rules. If a Lambda's memory is set far below what the workload needs, the check suggests a corrected value and explains the consequence — for example, that the current setting will cause cold-start timeouts under load. Pre-flight catches intent errors: the developer meant one thing and wrote another.</p>
+<p><strong>Mid-flight.</strong> During rollout, a monitoring agent watches the deployment in real time. If a canary causes a downstream read-capacity spike, the agent can pause the rollout, adjust capacity, and notify the deploying engineer — before user-facing errors appear in your metrics. Mid-flight catches interaction errors: the change is fine in isolation but not in combination with current production state.</p>
+<p><strong>Post-flight.</strong> After deployment, an audit step compares the resource against runtime telemetry. If a queue backlog grows past a threshold, the agent opens a ticket against the team that owns the producer. Post-flight catches drift and slow-burn problems that no single deployment caused.</p>
+<p>The important property is that each layer has a different latency budget and a different tolerance for false positives. Pre-flight can afford to be slow and opinionated because it runs on a pull request. Mid-flight must be fast and must never make things worse. Post-flight can be asynchronous and analytical. Designing one agent to do all three usually produces something that is too slow for mid-flight and too shallow for post-flight.</p>
+<h2 id="a-worked-example-the-over-permissive-iam-policy">A worked example: the over-permissive IAM policy</h2>
+<p>This is a failure mode most teams will recognise. A developer copies a working template and inherits a policy that is broader than the workload requires.</p>
+<h3 id="the-change-under-review">The change under review</h3>
+<pre><code class="language-hcl">resource &quot;aws_lambda_function&quot; &quot;processor&quot; {
+  role = aws_iam_role.lambda_role.arn
+  # ... other config
+}
+
+resource &quot;aws_iam_role_policy&quot; &quot;lambda_s3_access&quot; {
+  role = aws_iam_role.lambda_role.id
+  policy = jsonencode({
+    Version = &quot;2012-10-17&quot;
+    Statement = [
+      {
+        Action   = [&quot;s3:PutObject&quot;]
+        Effect   = &quot;Allow&quot;
+        Resource = &quot;*&quot;
+      }
+    ]
+  })
+}
+</code></pre>
+<h3 id="what-pre-flight-should-say">What pre-flight should say</h3>
+<p>A review agent reading this diff does not need a sophisticated model to spot the problem — a static policy linter would also catch it. What the agent adds is the explanation and the specific fix, delivered in the pull request where the developer is already working:</p>
+<pre><code>[Guardrail] IAM policy is broader than the workload requires
+- Resource: &quot;*&quot;
+- Action:   s3:PutObject
+- Risk:     the function can write to every bucket in the account,
+            including buckets owned by other teams and any future bucket
+- Suggested fix: restrict to the bucket this function is designed to write
+</code></pre>
+<p>The developer narrows the resource:</p>
+<pre><code class="language-hcl">Resource = &quot;arn:aws:s3:::prod-data-bucket/*&quot;
+</code></pre>
+<h3 id="where-mid-flight-adds-value">Where mid-flight adds value</h3>
+<p>Pre-flight catches the policy as written. Mid-flight catches the case where the policy is correct in the repository but the deployed role has a broader attachment — for example, a policy attached out-of-band during an earlier incident and never removed. A mid-flight check comparing the live IAM role against the intended state can pause the rollout and post a message such as:</p>
+<pre><code>Canary paused: deployed role has s3:PutObject on *
+Intended:      s3:PutObject on arn:aws:s3:::prod-data-bucket/*
+Action:        reconcile role before resuming
+</code></pre>
+<h3 id="where-post-flight-adds-value">Where post-flight adds value</h3>
+<p>Neither of the above would catch a Lambda whose memory is set at a value that works in staging but times out under production traffic. Post-flight watches the runtime metrics and raises a ticket:</p>
+<pre><code>[Guardrail] Lambda memory appears undersized for observed workload
+- Configured: 128 MB
+- Observed peak working set: ~2 GB
+- Symptom: cold-start timeouts at sustained high request rates
+- Suggested action: review memory_size and re-benchmark
+</code></pre>
+<h3 id="what-the-outcome-looks-like">What the outcome looks like</h3>
+<p>The incident does not happen, or it happens in a form that is caught before customer impact. More importantly, the developer learns the reason the constraint exists. That is the difference between a gate and a guardrail: the gate says no, the guardrail explains why and lets you proceed correctly.</p>
+<h2 id="how-to-measure-whether-this-is-working">How to measure whether this is working</h2>
+<p>Claims about incident reduction are only meaningful if you instrument them. Before adding any guardrail, capture a baseline for these four numbers over a fixed window (four to six weeks is usually enough to see signal):</p>
+<ol>
+<li><strong>Change failure rate</strong> — the fraction of deployments that require a rollback, hotfix or incident response. Your CI/CD system or deployment tool usually exposes this directly.</li>
+<li><strong>Mean time to detect (MTTD)</strong> — from the moment a fault is introduced to the moment an alert fires. Derive it by correlating deployment timestamps with the first relevant alert.</li>
+<li><strong>Mean time to recover (MTTR)</strong> — from alert to service restored. Your incident tooling already tracks this.</li>
+<li><strong>Pull-request cycle time</strong> — from first commit to merge. Expect this to move in the <em>wrong</em> direction when you add pre-flight checks; the question is whether the change-failure and recovery improvements outweigh it.</li>
+</ol>
+<p>Then add one guardrail at a time and re-measure. A guardrail that does not move any of these numbers is either redundant with an existing control or generating noise that reviewers have learned to ignore. Both are reasons to remove it.</p>
+<p>Two measurement traps are worth calling out. First, MTTD and MTTR are easy to game by reclassifying incidents; keep the classification rule fixed for the whole measurement period. Second, a drop in incident count can simply mean fewer changes were attempted. Track deployment frequency alongside the failure metrics so you can tell prevention from paralysis.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>"Guardrails will replace platform engineers."</strong> They change what the role consists of. Less time is spent reviewing individual changes against a mental checklist; more time is spent defining what "safe" means for the organisation and curating the rules that encode it. The leverage per engineer goes up, but the work does not disappear — someone has to own the guardrail definitions and their false-positive rate.</p>
+<p><strong>"Guardrails will slow deployments down."</strong> Pre-flight checks do add latency to the pull-request cycle. The trade is against the time currently spent debugging and rolling back incidents. Whether the trade is favourable is an empirical question for your team, which is why the measurement section above matters more than any general claim.</p>
+<p><strong>"Guardrails only work for simple resources."</strong> The pattern applies to any resource with a checkable invariant. An EKS cluster's <code>aws-auth</code> ConfigMap can be checked for roles that should not have cluster-admin. An RDS multi-AZ configuration can be checked against the team's durability requirements. What does not scale is trying to write a guardrail for every possible misconfiguration; prioritise by the failure modes you have actually seen.</p>
+<p><strong>"Guardrails are just gatekeeping with better marketing."</strong> The distinction is behavioural. A gate rejects a change that does not match a template. A guardrail accepts the change, explains the specific risk, and proposes a correction. If your "guardrail" only ever says no, you have built a gate.</p>
+<h2 id="advanced-patterns-with-caveats">Advanced patterns, with caveats</h2>
+<p><strong>Autonomous remediation.</strong> Once the guardrail system is stable, the next step is letting the agent apply fixes rather than only suggesting them. This is where the risk profile changes substantially. A reasonable default is a canary model: the agent proposes a change, a human approves it, and the agent applies it — with the approval step removed only for a narrow, well-understood class of fixes where the blast radius is provably small. Removing the approval step for IAM or network changes is not advisable without a very strong rollback story.</p>
+<p><strong>Context-aware guardrails.</strong> Static rules cannot distinguish a batch job running overnight from a latency-sensitive API. An agent that can read workload context from your observability stack can apply different thresholds to each. The cost is that the guardrail's behaviour is now harder to predict and test. If you go this route, log the context the agent used for every decision so you can reproduce it after the fact.</p>
+<p><strong>Multi-cloud consistency.</strong> Teams running on more than one cloud often want a single policy knowledge base that flags inconsistencies across providers. This is genuinely useful for catching a rule enforced on one cloud and forgotten on another. It is also the pattern most likely to produce false confidence, because the semantics of equivalent-looking controls differ between providers. Treat cross-cloud mapping as a review aid, not an enforcement mechanism.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it checks</th>
+<th>Typical trigger</th>
+<th>Latency budget</th>
+<th>Failure mode if misconfigured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-flight</td>
+<td>Intent vs. written config; policy breadth; cost and compliance rules</td>
+<td>Pull request opened or updated</td>
+<td>Seconds to minutes</td>
+<td>Slows merges; reviewers start ignoring noisy findings</td>
+</tr>
+<tr>
+<td>Mid-flight</td>
+<td>Deployed state vs. intended state; live health during rollout</td>
+<td>Deployment or canary in progress</td>
+<td>Sub-second to low seconds</td>
+<td>Can halt a healthy rollout; needs a clear resume path</td>
+</tr>
+<tr>
+<td>Post-flight</td>
+<td>Runtime telemetry vs. configured limits</td>
+<td>Scheduled audit or metric threshold</td>
+<td>Minutes</td>
+<td>Ticket noise; alerts nobody acts on</td>
+</tr>
+<tr>
+<td>Autonomous remediation</td>
+<td>Applies a fix without human approval</td>
+<td>Guardrail finding marked auto-fixable</td>
+<td>Seconds</td>
+<td>Applies a wrong fix at scale; requires strong rollback</td>
+</tr>
+<tr>
+<td>Context-aware</td>
+<td>Adjusts thresholds based on workload class</td>
+<td>Request or job metadata</td>
+<td>Sub-second</td>
+<td>Unpredictable behaviour; hard to reproduce</td>
+</tr>
+</tbody>
+</table>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does a developer portal catalog go stale?</strong> A catalog of static templates has no way to detect that the templates no longer match reality. The fix is to make the catalog an interface to live checks: when a developer scaffolds a service, run the same validation that pre-flight would run, so the template cannot silently drift out of date.</p>
+<p><strong>How do I know if a guardrail is worth keeping?</strong> Measure its precision. For every finding it raises, how many were acted on versus dismissed? A guardrail with a low action rate is training your team to ignore it, which is worse than not having it.</p>
+<p><strong>What is the easiest guardrail to add first?</strong> Start with a static check on the resource type that has caused your most recent incidents. Static policy linters and schema validators are deterministic, cheap, and easy to explain — they are a good first step before introducing any model-based review.</p>
+<p><strong>Can this be done without a managed LLM service?</strong> Yes. The pre-flight and post-flight layers can be built entirely from deterministic tools — policy linters, schema validators, and metric threshold checks. A model-based review adds explanation quality and handles fuzzier inputs, but it is an enhancement, not a prerequisite.</p>
+<p><strong>How do guardrails interact with existing policy-as-code tools?</strong> They are complementary. Deterministic policy engines are good at enforcing hard invariants and are cheap to run on every change. Model-based review is better at explaining <em>why</em> a rule exists and at flagging patterns a rule has not yet been written for. Use the deterministic layer as the enforcement mechanism and the model-based layer as the explanation and discovery mechanism.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick the resource type involved in your most recent rollback and write down the single invariant it violated — for example, "this role must not have write access outside its own bucket prefix." Then find the cheapest deterministic check that would have caught it: a policy linter rule, a schema constraint, or a one-line script in your CI pipeline. Add that check to a single repository as a non-blocking warning, and log how often it fires over the next week. That log is your first real data point on whether guardrails will pay for themselves in your environment.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
+<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+<li>Internal developer platform: adoption traps</li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/7-guardrails-for-safer-llm-apps/">
+                        <h3>7 guardrails for safer LLM apps</h3>
+                        <p>A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first.</p>
+                        <span class="related-meta">18 min read · 25 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-compliance-the-layer-you-build-after-failure/">
+                        <h3>Agent compliance: the layer you build after failure</h3>
+                        <p>Pre-execution policy gates miss most agent compliance failures. Build a decision trace that reconstructs what happened, why, and what would have stopped it.</p>
+                        <span class="related-meta">16 min read · 22 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-access-for-non-ai-engineers/">
+                        <h3>Agent access for non-AI engineers</h3>
+                        <p>A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+                        <span class="related-meta">16 min read · 17 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

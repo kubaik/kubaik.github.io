@@ -1,0 +1,531 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Postgres 17 swallowed Redis, Kafka, Timescale - Kubai Kevin</title>
+        <meta name="description" content="How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.">
+        <meta name="keywords" content="PostgresVsRedis, Postgres17Features, Kafka, Timescaledb, PgmqVsKafka, Postgres, Database, Postgresql, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-02T17:01:10.771305">
+        <meta property="article:modified_time" content="2026-10-03T11:33:32.107458+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Postgres 17 swallowed Redis, Kafka, Timescale">
+        <meta property="og:description" content="How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.">
+        <meta property="og:url" content="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/postgres-17-swallowed-redis-kafka-timescale.png">
+        <meta property="og:image:alt" content="Postgres 17 swallowed Redis, Kafka, Timescale">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Postgres 17 swallowed Redis, Kafka, Timescale">
+        <meta name="twitter:description" content="How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/postgres-17-swallowed-redis-kafka-timescale.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/#article",
+      "headline": "Postgres 17 swallowed Redis, Kafka, Timescale",
+      "description": "How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.",
+      "datePublished": "2026-07-02T17:01:10+00:00",
+      "dateModified": "2026-10-03T11:33:32+00:00",
+      "wordCount": 2880,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/"
+      },
+      "keywords": "PostgresVsRedis, Postgres17Features, Kafka, Timescaledb, PgmqVsKafka, Postgres, Database, Postgresql",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/postgres-17-swallowed-redis-kafka-timescale.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Postgres 17 swallowed Redis, Kafka, Timescale",
+          "item": "https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Postgres 17 swallowed Redis, Kafka, Timescale</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Postgres 17 swallowed Redis, Kafka, Timescale</h1>
+                
+                <p class="post-lead">How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PostgresVsRedis</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Kafka</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PgmqVsKafka</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/database/"
+                       style="text-decoration:none;">Database</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2880 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="what-the-consolidation-argument-actually-claims">What the consolidation argument actually claims</h2>
+<p>Postgres has accumulated extensions that cover ground once owned by separate systems: in-database job scheduling, partitioned tables with automatic retention, approximate vector search, and queue-style message tables. The pitch is that a single Postgres deployment can absorb three categories of infrastructure — a cache, a lightweight event bus, and a time-series store — and that the reduction in moving parts outweighs the loss of specialised features.</p>
+<p>That pitch is sometimes right. It is most often wrong when it is stated as a blanket rule. This article lays out what each substitution really costs, where each one breaks, and how to measure the trade-off on your own workload rather than trusting a comparison table.</p>
+<p>The framing to keep in mind throughout: you are not choosing between "Postgres" and "Redis". You are choosing between one operational surface with weaker primitives, and three operational surfaces with stronger ones. The question is whether your workload actually depends on the stronger primitives.</p>
+<h2 id="the-three-substitutions-stated-precisely">The three substitutions, stated precisely</h2>
+<p>Each of the three replacements is a different kind of bet.</p>
+<p><strong>Cache.</strong> Redis is an in-memory data structure server with its own eviction policies, TTL semantics, pub/sub, and persistence modes. Postgres has a buffer pool that caches disk blocks, plus unlogged tables and temporary tables. The substitution is not "Postgres is a cache"; it is "for read-mostly hot data, the buffer pool plus a small unlogged table may be fast enough that a network hop to a separate cache is not worth it."</p>
+<p><strong>Event bus.</strong> Kafka is a partitioned, replicated, ordered log with consumer groups, offset management, and configurable retention. Postgres queue extensions are tables with visibility timeouts and archive functions. The substitution is "for fire-and-forget work where per-key ordering and replay are not required, a table-backed queue is adequate."</p>
+<p><strong>Time series.</strong> A dedicated time-series database typically offers columnar compression, continuous aggregates, and retention policies tuned for append-heavy metric data. Postgres offers declarative partitioning plus a scheduler that can pre-create and drop partitions. The substitution is "for metrics where you control the retention window and query patterns, partitioned Postgres tables may be sufficient."</p>
+<p>None of these substitutions is free. Each one moves complexity from infrastructure into SQL and schema design.</p>
+<h2 id="cache-what-you-gain-and-what-you-lose">Cache: what you gain and what you lose</h2>
+<h3 id="the-mechanism">The mechanism</h3>
+<p>A common pattern is an unlogged table keyed by the entity you want to cache, written on read miss and read on subsequent hits, relying on the buffer pool to keep hot pages resident. Unlogged tables skip WAL for their contents, which makes writes cheaper at the cost of being truncated after a crash — acceptable for data you can rebuild.</p>
+<pre><code class="language-sql">CREATE UNLOGGED TABLE session_cache (
+  session_id   uuid PRIMARY KEY,
+  payload      jsonb NOT NULL,
+  expires_at   timestamptz NOT NULL,
+  last_access  timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX session_cache_expires_idx ON session_cache (expires_at);
+
+-- Upsert on write
+INSERT INTO session_cache (session_id, payload, expires_at)
+VALUES ($1, $2, now() + interval '30 minutes')
+ON CONFLICT (session_id)
+DO UPDATE SET payload = EXCLUDED.payload,
+              expires_at = EXCLUDED.expires_at,
+              last_access = now();
+</code></pre>
+<p>Expiry is enforced by a scheduled job rather than by the storage engine:</p>
+<pre><code class="language-sql">DELETE FROM session_cache WHERE expires_at &lt; now();
+</code></pre>
+<p>If the <code>pg_cron</code> extension is installed and listed in <code>shared_preload_libraries</code>, that statement can be scheduled:</p>
+<pre><code class="language-sql">SELECT cron.schedule('expire-sessions', '* * * * *',
+  $$DELETE FROM session_cache WHERE expires_at &lt; now()$$);
+</code></pre>
+<h3 id="what-this-costs-you">What this costs you</h3>
+<p>The expiry job is a full scan of the expiry index on every run. At small table sizes that is irrelevant; at large ones it becomes a background write load that competes with your foreground traffic. Redis expires keys lazily and in a background cycle without you writing the sweep.</p>
+<p>Eviction is the sharper problem. Redis will evict under memory pressure according to a policy you choose. Postgres has no per-table eviction policy. When the table outgrows <code>shared_buffers</code>, reads start hitting disk, and a cache that hits disk is slower than no cache at all because you now pay both the lookup and the miss. A cache in front of Postgres usually degrades gracefully; a cache inside Postgres degrades into a disk read.</p>
+<p>The failure mode to watch for: latency looks fine during testing, then a data growth event pushes the working set past <code>shared_buffers</code> and p99 read latency steps up without any error being logged. Instrument <code>pg_stat_user_tables</code> hit ratios and <code>pg_statio_user_tables</code> read counts for the cache table specifically, and alert when the hit ratio for that table drops below your threshold.</p>
+<h3 id="how-to-measure-whether-it-is-worth-it">How to measure whether it is worth it</h3>
+<p>Do not run a synthetic benchmark. Instrument the real path.</p>
+<ol>
+<li>Record the current p50, p95 and p99 latency of the code path that talks to the cache, and the cache's own hit ratio.</li>
+<li>Record the query count and rows returned for that path from <code>pg_stat_statements</code>.</li>
+<li>Build the Postgres version behind a flag, and split traffic so both paths run concurrently.</li>
+<li>Compare p99 and the number of disk reads per request for the cache table.</li>
+</ol>
+<p>The decision rule that matters is not "is Postgres faster". It is "does the added p99 from disk reads exceed the p99 of the network round trip to the existing cache". On a same-host or same-cluster deployment the network hop is often sub-millisecond, which sets a low bar for the in-database version to clear.</p>
+<h2 id="event-bus-what-you-gain-and-what-you-lose">Event bus: what you gain and what you lose</h2>
+<h3 id="the-mechanism_1">The mechanism</h3>
+<p>Table-backed queues generally work by inserting a row, marking rows as invisible for a visibility timeout when a consumer reads them, and either deleting or archiving the row when processing succeeds. The exact function names differ between implementations, but the shape is consistent.</p>
+<pre><code class="language-sql">CREATE TABLE outbound_events (
+  id           bigserial PRIMARY KEY,
+  topic        text NOT NULL,
+  payload      jsonb NOT NULL,
+  visible_at   timestamptz NOT NULL DEFAULT now(),
+  attempts     int NOT NULL DEFAULT 0,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX outbound_events_ready_idx
+  ON outbound_events (topic, visible_at)
+  WHERE attempts &lt; 5;
+</code></pre>
+<p>Consumers claim work with a locking read that skips rows already held by another transaction:</p>
+<pre><code class="language-sql">WITH claimed AS (
+  SELECT id FROM outbound_events
+  WHERE topic = $1 AND visible_at &lt;= now() AND attempts &lt; 5
+  ORDER BY id
+  FOR UPDATE SKIP LOCKED
+  LIMIT 10
+)
+UPDATE outbound_events e
+SET visible_at = now() + interval '30 seconds',
+    attempts = attempts + 1
+FROM claimed
+WHERE e.id = claimed.id
+RETURNING e.id, e.payload;
+</code></pre>
+<p>This is the core primitive. Everything else — retry backoff, dead-letter handling, metrics — is application code you now own.</p>
+<h3 id="what-this-costs-you_1">What this costs you</h3>
+<p>The queue and the business data share one resource. A long-running analytics query that holds snapshots for minutes will block vacuum on the queue table, and a queue table that is never vacuumed accumulates bloat until the index scan that claims work becomes the slowest query in the system. This is a real and common failure mode, and it does not exist when the queue lives in a separate system with its own storage.</p>
+<p>Ordering is the second cost. <code>FOR UPDATE SKIP LOCKED</code> gives you no ordering guarantee across concurrent consumers. If two workers claim rows 5 and 6, row 6 may commit first. If your workflow requires that events for a given entity be processed in order, you must add a per-entity lock or a single-consumer-per-key scheme, and both reduce throughput.</p>
+<p>Replay is the third. Kafka retains a log you can rewind. A table-backed queue that deletes processed rows cannot be replayed. If you archive instead of delete, you can replay, but the archive table grows without bound unless you partition it and drop old partitions on a schedule.</p>
+<p>The failure mode to watch for: consumer lag grows during a traffic spike, the queue table bloats, autovacuum cannot keep up, and claim queries slow down, which reduces consumer throughput further. Instrument the claim query's duration and the table's dead tuple count together; a rising claim duration with a rising dead tuple count is this failure in progress.</p>
+<h3 id="how-to-measure-whether-it-is-worth-it_1">How to measure whether it is worth it</h3>
+<ol>
+<li>Instrument the current broker's publish-to-consume latency at p50 and p99, and the consumer lag in messages.</li>
+<li>Instrument the claim query duration and the queue table's dead tuple ratio.</li>
+<li>Run both paths concurrently with a traffic split, and compare the tail latency of the end-to-end workflow, not just the enqueue step.</li>
+<li>Watch dead tuple count on the queue table during the test. If it climbs and does not recover between load pulses, the queue is not keeping up with its own garbage.</li>
+</ol>
+<p>The decision rule: if your workflow tolerates out-of-order processing and at-least-once delivery, the table-backed queue is likely adequate. If it needs per-key ordering, replay, or fan-out to independent consumer groups with independent offsets, the broker is doing work you would otherwise have to build.</p>
+<h2 id="time-series-what-you-gain-and-what-you-lose">Time series: what you gain and what you lose</h2>
+<h3 id="the-mechanism_2">The mechanism</h3>
+<p>Declarative partitioning on a time column, plus a scheduler that pre-creates future partitions and drops expired ones, reproduces the retention half of a time-series database.</p>
+<pre><code class="language-sql">CREATE TABLE api_metrics (
+  recorded_at timestamptz NOT NULL,
+  service     text NOT NULL,
+  route       text NOT NULL,
+  latency_ms  numeric NOT NULL
+) PARTITION BY RANGE (recorded_at);
+
+CREATE TABLE api_metrics_2026_01
+  PARTITION OF api_metrics
+  FOR VALUES FROM ('2026-01-01') TO ('2026-02-01');
+</code></pre>
+<p>Queries that filter on <code>recorded_at</code> benefit from partition pruning, which is the main reason this works at all. A query without a time filter will scan every partition and will be slower than the same query against a single table, because the planner has more work to do.</p>
+<p>Retention becomes a <code>DROP TABLE</code> on the oldest partition, which is a metadata operation and effectively instant, unlike a bulk <code>DELETE</code> that has to write WAL and wait for vacuum.</p>
+<h3 id="what-this-costs-you_2">What this costs you</h3>
+<p>Compression. A columnar time-series engine stores each column contiguously and compresses runs of similar values, which is why metrics compress so well. Postgres stores rows, and its built-in compression applies to variable-length values within a row. If your metric rows have many columns and you query only one or two of them, you are paying to read and decompress the others.</p>
+<p>Continuous aggregates. A time-series engine can maintain a materialised rollup incrementally as data arrives. In Postgres you build this yourself with a materialised view and a refresh job. A full refresh recomputes the whole window; a concurrent refresh blocks less but still does the full computation. For high-cardinality rollups this becomes the dominant cost.</p>
+<p>Cardinality. Partitioning by time does not help when the expensive part of the query is grouping by a high-cardinality label. The planner still has to aggregate across all matching rows in each partition.</p>
+<p>The failure mode to watch for: partition count grows faster than expected because the interval is too fine, and planning time — not execution time — becomes the bottleneck. Every query against a partitioned table pays planning cost proportional to the number of partitions. Instrument planning time separately from execution time; if planning dominates on simple queries, widen the partition interval.</p>
+<h3 id="how-to-measure-whether-it-is-worth-it_2">How to measure whether it is worth it</h3>
+<ol>
+<li>Capture the ten most frequent metric queries and their current p99, with their row counts.</li>
+<li>Recreate the same data in partitioned Postgres tables with the same retention window.</li>
+<li>Compare p99 execution time, and separately compare planning time.</li>
+<li>Measure the size on disk of both representations for the same data and retention window.</li>
+<li>Measure the wall-clock time of the retention operation in both systems — dropping a partition versus whatever the existing system does.</li>
+</ol>
+<p>The decision rule: if your metric queries are dominated by time-range filters and simple aggregations, partitioning is likely sufficient. If they depend on incremental rollups over high-cardinality dimensions, or on compression ratios that row storage cannot reach, the specialised engine is earning its keep.</p>
+<h2 id="a-worked-sizing-example">A worked sizing example</h2>
+<p>Here is the arithmetic for a hypothetical service, with every assumption stated so you can substitute your own.</p>
+<p>Assume an event rate of 2,000 events per second, sustained. Each event row is 400 bytes including the payload and row overhead.</p>
+<ul>
+<li>Rows per day: 2,000 × 86,400 = 172,800,000.</li>
+<li>Bytes per day: 172,800,000 × 400 = 69,120,000,000 bytes ≈ 64 GiB per day before any index overhead.</li>
+<li>With a 30-day retention window: 64 × 30 = 1,920 GiB ≈ 1.9 TiB of table data.</li>
+</ul>
+<p>Now add indexes. A primary key on a <code>bigserial</code> plus a composite index on <code>(topic, visible_at)</code> might add 30 to 50 bytes per row depending on fill factor and key width. Take 40 bytes:</p>
+<ul>
+<li>Index bytes per day: 172,800,000 × 40 = 6,912,000,000 bytes ≈ 6.4 GiB per day.</li>
+<li>Over 30 days: 6.4 × 30 = 192 GiB.</li>
+</ul>
+<p>Total steady-state footprint is roughly 1.9 TiB plus 0.19 TiB, or about 2.1 TiB. That is the number you compare against the storage and memory of the broker you would otherwise run, and against the disk size you must provision for Postgres.</p>
+<p>The more important number is the write path. At 2,000 rows per second with WAL enabled, you are generating WAL at roughly the row size plus WAL record overhead — call it 500 bytes per row, so about 1 MB per second, or roughly 86 GiB per day of WAL. Your archive strategy and checkpoint tuning have to sustain that, and your replica has to apply it. This is the constraint that usually decides the question, not storage.</p>
+<p>Run the same arithmetic with your own event rate, row size and retention window before you commit to anything.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order. A "no" early on is a strong signal to stop.</p>
+<ol>
+<li>Does the workload tolerate at-least-once delivery with possible reordering? If not, keep the broker.</li>
+<li>Is the cache working set comfortably smaller than the memory you can dedicate to Postgres, with headroom for growth? If not, keep the external cache.</li>
+<li>Are the metric queries dominated by time-range filters over a fixed retention window? If not, keep the time-series engine.</li>
+<li>Can your team write and review PL/pgSQL, and debug query plans? If not, the consolidation moves work to the people least equipped to absorb it.</li>
+<li>Can you run both stacks concurrently behind a traffic split for long enough to observe a full traffic cycle, including a peak? If not, you cannot measure the trade-off, and you should not make the change.</li>
+<li>Do you have monitoring on the specific failure modes named above — cache table hit ratio, queue dead tuple ratio, partition planning time? If not, build that first.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does an unlogged table survive a crash?</strong></p>
+<p>No. Unlogged tables are truncated after an unclean shutdown. They are appropriate for data you can rebuild from a source of truth, and inappropriate for anything you would be upset to lose.</p>
+<p><strong>Can a table-backed queue provide exactly-once processing?</strong></p>
+<p>No. You can get at-least-once delivery plus idempotent consumers, which produces the same observable effect if every consumer operation is idempotent. That requires designing idempotency into the consumer, not configuring it in the queue.</p>
+<p><strong>Why is planning time a problem with many partitions?</strong></p>
+<p>The planner considers each partition when building the plan. With thousands of partitions, planning cost grows and can exceed execution time for simple queries. Widening the partition interval reduces the count at the cost of coarser retention granularity.</p>
+<p><strong>Is a partitioned Postgres table as fast as a columnar store for analytics?</strong></p>
+<p>For narrow time-range scans over a few columns, it can be competitive. For wide scans over many columns, or for queries that benefit from per-column compression, row storage reads more data than necessary and the columnar store wins. Measure with your own column count and query shape.</p>
+<p><strong>What is the first thing to instrument before attempting this?</strong></p>
+<p>The tail latency of the specific code path you intend to move, split by hit and miss where applicable. Without a baseline for that path alone, an aggregate system metric will not tell you whether the change helped or hurt.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick the single highest-traffic code path that currently talks to your external cache, broker or time-series store. Find it in <code>pg_stat_statements</code> if it already touches Postgres, or in your tracing if it does not. Write down its current p99 latency, its request rate, and the size of the data it reads. That one row of numbers is the baseline you need before any consolidation decision is worth making.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
+<li><a href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
+<li><a href="https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/">Compare Kafka, Redpanda, NATS for event-driven systems</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/postgres-17-buried-redis-s3-cron/">
+                        <h3>Postgres 17 buried Redis, S3, cron</h3>
+                        <p>How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.</p>
+                        <span class="related-meta">11 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/replace-managed-services-with-postgres-17/">
+                        <h3>Replace managed services with Postgres 17</h3>
+                        <p>How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.</p>
+                        <span class="related-meta">14 min read · 16 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">
+                        <h3>Log audit costs without breaking compliance</h3>
+                        <p>Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.</p>
+                        <span class="related-meta">13 min read · 22 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

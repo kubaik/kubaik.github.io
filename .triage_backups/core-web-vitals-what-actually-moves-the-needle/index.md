@@ -1,0 +1,161 @@
+# Core Web Vitals: what actually moves the needle
+
+The default configuration is fine right up until it isn't. Core Web Vitals failures in production rarely look like the scenarios a postmortem template anticipates. The work below covers how to choose the fix, what it costs to find out late, and what to monitor.
+
+## The gap between the docs and field data
+
+The official Core Web Vitals documentation explains what the metrics are and how they are calculated. It is accurate. It is also written for a world where you control every byte on the page. Most teams shipping to users in multiple countries do not live in that world. They live in a world where a third-party tag manager injects a script that blocks the main thread for hundreds of milliseconds, where the largest contentful paint element is a hero image served from a CDN edge far from the user, and where the interaction to next paint metric is dominated by a single event handler that does synchronous layout.
+
+The docs do not tell you which of those to fix first. They do not tell you that field data and lab data will disagree, sometimes by a factor of two, and that the disagreement is the most useful signal available. They do not tell you that the metric thresholds are pass/fail lines, not goals, and that the distribution of your users matters more than the average.
+
+This article is about the decision layer that sits on top of the docs. It assumes familiarity with LCP, INP, and CLS. It assumes you have a RUM pipeline or at least access to the Chrome UX Report. It assumes a budget that is not infinite and a backlog that is not empty. The problem addressed here is the one that shows up after the docs have been read: given a dashboard full of red, which three changes actually move the field metric, and which five are cargo cult that will cost a sprint and change nothing.
+
+## Prerequisites and what you will build
+
+You need access to field data. That can be the Chrome UX Report (CrUX) via the public API or BigQuery, or your own RUM. If you only have lab data from Lighthouse, fix that first — lab data is a diagnostic tool, not a scoreboard. The field metric is the one that matters for search ranking and, more importantly, for users.
+
+You need a way to deploy a change and measure the field impact. That means either a canary deploy with RUM segmented by release, or a before/after comparison over a window long enough to average out day-of-week effects. For a medium-traffic site, a week is usually enough; a day is not.
+
+You will build a prioritization pass over your field data that separates three categories: changes that affect the metric for a large fraction of users, changes that affect it for a small fraction but by a large amount, and changes that affect the lab score but not the field metric. Then you will implement one change from the first category and verify it.
+
+## Step 1 — separate the metric from the element
+
+Before touching code, determine which element is the LCP element for your users. This is not always the hero image. On a product listing page it is often the first product card image. On a news article it is often the headline text block. On a dashboard it might be a chart canvas that renders after data arrives.
+
+The LCP element is reported by the browser in the `PerformanceObserver` entry for `largest-contentful-paint`. If you are collecting RUM, you already have this. If you are not, CrUX does not break down by element — it gives the distribution of LCP times across your origin. That distribution is still useful: a p75 of 3.2s with a p50 of 1.8s indicates a long tail problem, not a median problem.
+
+Here is the first decision point. A p75 of 3.2s with a p50 of 1.8s means the majority of users are fine and a minority are not. The minority is usually one of three groups: users on slow connections, users far from your origin, or users on a specific device class where a script is slow. One change will not fix all three. Pick the group that is largest.
+
+A common trap is optimizing the median. Teams see a p50 of 1.8s and a p75 of 3.2s and assume the fix is to shave 200ms off the median. That moves the p50 to 1.6s and the p75 to 3.0s. It does not cross the threshold. The fix that crosses the threshold usually removes a fixed cost — a render-blocking script, a synchronous font load, a redirect — that affects the slow tail disproportionately.
+
+## Step 2 — find the fixed costs that hit the tail
+
+The tail is usually not caused by bandwidth. It is caused by fixed costs paid by every user but only visible on slow devices or slow connections. The three most common fixed costs seen in field data are:
+
+1. A third-party script that blocks the main thread. This shows up as a long task that delays LCP and INP. The script may be analytics, A/B testing, chat, or tag management. The fix is not necessarily to remove it — it is to load it after the LCP element has painted, or to move it to a web worker if it does not need DOM access.
+
+2. A font that is loaded synchronously and used for the LCP text block. If the LCP element is text and the font is not preloaded, the browser may wait for the font before painting. The fix is `font-display: swap` plus a preload hint, or a system font stack for the LCP text.
+
+3. A redirect chain. A single 301 from `example.com` to `www.example.com` to `www.example.com/en` adds two round trips before the HTML even starts. On a slow connection that can be hundreds of milliseconds of pure latency. The fix is to collapse the redirects at the edge.
+
+None of these are exotic. They are documented. The reason they persist is that they are invisible in lab data on a fast connection. Lighthouse on a fast laptop will not show the redirect cost or the font block. Field data will.
+
+Here is a minimal RUM snippet that captures the LCP element and the long tasks that precede it. This is not a full RUM library — it is a diagnostic to run for a week to find the fixed cost.
+
+```javascript
+// diagnostic only — do not ship this as your production RUM
+const lcpEntries = [];
+new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    lcpEntries.push({
+      startTime: entry.startTime,
+      element: entry.element ? entry.element.tagName : null,
+      url: entry.url || null,
+      size: entry.size || null,
+    });
+  }
+}).observe({ type: 'largest-contentful-paint', buffered: true });
+
+const longTasks = [];
+new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    longTasks.push({
+      startTime: entry.startTime,
+      duration: entry.duration,
+      attribution: entry.attribution ? entry.attribution[0].name : null,
+    });
+  }
+}).observe({ type: 'longtask', buffered: true });
+
+// send once, after load + idle
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const lastLcp = lcpEntries[lcpEntries.length - 1];
+    navigator.sendBeacon('/rum', JSON.stringify({
+      lcp: lastLcp,
+      longTasks: lastLcp
+        ? longTasks.filter(t => t.startTime < lastLcp.startTime)
+        : [],
+    }));
+  }, 2000);
+});
+```
+
+The gotcha: `largest-contentful-paint` entries are not final until the user interacts or the page is hidden. Sending on `load` may capture a candidate LCP that is later replaced by a larger element. For a diagnostic this is acceptable — you are looking for patterns, not exact numbers. For production RUM, use the `web-vitals` library, which handles this correctly.
+
+## Step 3 — handle the interaction metric separately
+
+INP replaced FID as the responsiveness metric. The difference matters: FID measured only the delay before the first interaction, while INP measures the full duration of the interaction, including processing and presentation. A page can have a good FID and a bad INP if the event handler does a lot of work.
+
+Field data for INP is harder to interpret because it is interaction-driven. A page with few interactions will have a noisy INP distribution. A page with many interactions will have a stable one. If INP p75 is bad, the first question is not "which handler is slow" but "which interactions are slow for the users who interact most."
+
+The most common INP problem in field data is a single handler that does synchronous layout. This is usually a scroll handler, a resize handler, or a click handler that reads `offsetHeight` or `getBoundingClientRect` and then writes to the DOM. The browser is forced to recalculate layout between the read and the write, and that cost is paid on every interaction.
+
+The fix is to batch reads and writes. Read all the values you need first, then write. If you are using a framework, this is often handled by the framework's scheduler, but not always — a direct DOM read in a React event handler still forces layout.
+
+A second common INP problem is a long task that is not an event handler at all. It is a script that runs on a timer or on an animation frame and blocks the main thread. The interaction happens to land during that task, and the input delay is attributed to the interaction. The fix is to move the work off the main thread or to break it into smaller chunks with `scheduler.yield()` or `setTimeout`.
+
+The decision rule: if the long task is under your control, break it up. If it is a third-party script, defer it or move it. If it is a framework hydration cost, the fix is usually to reduce the amount of JavaScript that hydrates on the initial load, not to optimize the hydration itself.
+
+## Step 4 — treat CLS as a layout contract, not a metric
+
+CLS is the metric most likely to be gamed and least likely to be gamed successfully. The common cargo cult is to add `min-height` to every container and call it done. That works for images and ads, but it does not fix the two most common CLS causes in field data: late-loading fonts and dynamically injected content above the fold.
+
+Late-loading fonts cause CLS when the fallback font has different metrics than the web font. The fix is not `font-display: swap` alone — that trades invisible text for layout shift. The fix is either a font with metrics close to the fallback (`size-adjust`, `ascent-override`) or a system font stack for the above-the-fold text.
+
+Dynamically injected content above the fold causes CLS when a banner, a cookie notice, or a personalized recommendation block is inserted after the initial paint. The fix is to reserve the space in the initial HTML, even if the content is empty. If the content is inserted by a third-party script, you cannot control the insertion — but you can control the container. Reserve the height, and the shift becomes a fill.
+
+A layout contract is a rule that says: every element above the fold has a reserved size in the initial HTML. If that rule is enforced in code review, CLS stops being a metric to chase and becomes a property of the page. That is the only version of CLS work that scales.
+
+## Step 5 — verify with field data, not lab data
+
+After shipping a change, the verification is not a Lighthouse run. It is a comparison of field data before and after, segmented by the user group you were targeting. If targeting slow connections, segment by effective connection type. If targeting a geography, segment by country. If targeting a device class, segment by device memory or hardware concurrency.
+
+The comparison window matters. Core Web Vitals field data is typically reported as a 28-day rolling window in CrUX. A change shipped today will not be fully reflected for 28 days. If you need faster feedback, you need your own RUM with a shorter window. A week of RUM data is usually enough to see a directional change if the change is large.
+
+A common mistake is to compare the p75 before and after without segmenting. If the change affected only 10% of users, the p75 may not move at all even though the change worked. The p75 is a percentile of the whole distribution. A change that fixes the worst 10% may not move the p75 if the 75th percentile was already in the fixed group. Look at the p90 and p99 as well.
+
+Here is a simple before/after table structure that makes the segmentation visible. The numbers are illustrative.
+
+| Segment | Before p75 | After p75 | Before p90 | After p90 |
+|---|---|---|---|---|
+| All users | 3.1s | 3.0s | 5.2s | 4.1s |
+| Slow 4G | 4.8s | 3.4s | 7.1s | 4.9s |
+| Fast 4G | 2.2s | 2.2s | 3.0s | 2.9s |
+
+The pattern to look for is a large move in the target segment and a small or no move elsewhere. If the target segment moves and the rest does not, the change worked. If nothing moves, the change did not address the bottleneck.
+
+## How to measure the impact yourself
+
+Because no external benchmark can tell you what your bottleneck is, the measurement has to come from your own data. The instrumentation is straightforward:
+
+- **Instrument the page.** Capture LCP entries (with the element), long tasks, and INP attribution. The snippet in Step 2 covers LCP and long tasks; for INP, the `web-vitals` library exposes attribution data (`interactionTarget`, `processingStart`, `processingEnd`) that identifies the responsible element and handler.
+- **Segment the data.** Tag each event with effective connection type (`navigator.connection.effectiveType`), country (from a server-side header or CDN geo), device memory (`navigator.deviceMemory`), and your release identifier.
+- **Compare before and after.** For each segment, compute p50, p75, p90, and p99 over a fixed window (for example, seven days). Compare the same weekday-to-weekday pairs to avoid day-of-week bias.
+- **Check the sample size.** A segment with fewer than a few hundred samples per day will produce noisy percentiles. Either widen the window or merge related segments.
+- **Cross-check against CrUX.** CrUX gives you a 28-day rolling p75 for your origin. If your RUM shows a large improvement that CrUX does not reflect after 28 days, your RUM sampling or segmentation is probably biased.
+
+The point of this loop is to answer one question per change: did the target segment move, and did the rest of the distribution stay flat? If yes, the change worked. If the target segment did not move, the change did not address the bottleneck, regardless of what the lab score says.
+
+## Common questions and variations
+
+**Why does my lab LCP not match my field LCP?** Lab tools run on a fixed device and network profile. Field data is the distribution of real devices and networks. The gap is usually largest on sites with heavy third-party scripts, because lab tools often block or defer them. If lab LCP is 1.5s and field p75 is 4s, the difference is almost certainly third-party scripts or a CDN geography issue.
+
+**Should I use the `web-vitals` library or roll my own RUM?** Use the library. The metric definitions have edge cases — bfcache, prerender, soft navigations — that are easy to get wrong. Rolling your own is a good diagnostic exercise but a bad production choice. If you need custom attribution, the library exposes the raw `PerformanceEntry` objects.
+
+**Does INP affect search ranking the same way LCP does?** Core Web Vitals are a ranking signal as a group. The relative weight of each metric is not published and is not stable. The practical answer is that a page that fails any of the three is at a disadvantage, and a page that passes all three is not automatically rewarded. Treat the thresholds as a floor, not a target.
+
+**What about soft navigation?** Soft navigations — client-side route changes in a single-page app — are measured differently and are not part of Core Web Vitals as of the current documentation. If your app is a SPA, your field data may undercount the user experience because each route change is not a new page load. The soft navigation API is available in some browsers but is not universal. Do not build your strategy around it yet.
+
+## Failure modes to watch for
+
+- **Optimizing the median when the tail is the problem.** A 200ms median improvement rarely crosses a threshold. A fixed-cost removal often does.
+- **Trusting a single Lighthouse run as verification.** Lab data cannot see third-party scripts that are blocked in the lab profile or CDN latency in regions you are not testing from.
+- **Comparing unsegmented p75 before and after.** A change that helps 10% of users may leave p75 unchanged. Segment first, then compare.
+- **Shipping a change and checking CrUX the next day.** The CrUX window is 28 days. Without your own RUM, you have no fast feedback loop.
+- **Reserving space for content you do not control.** If a third-party injects a banner, reserve the container height in your own HTML; you cannot reserve space inside a script you do not own.
+- **Moving a third-party script to a worker without checking DOM access.** Many analytics and A/B scripts touch the DOM and will break or silently fail in a worker.
+
+## Where to go from here
+
+The next 30 minutes: open your RUM dashboard or the CrUX API, pick the metric with the worst p75, and segment it by effective connection type. If the slow-connection segment is more than twice as slow as the fast-connection segment, your bottleneck is a fixed cost — a redirect, a blocking script, or a font — and that is your next ticket. If the segments are close, your bottleneck is in the median path, and you should look at the LCP element and the long tasks that precede it. Either way, you now have a decision, not a dashboard.

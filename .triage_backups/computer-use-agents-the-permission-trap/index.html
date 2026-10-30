@@ -1,0 +1,508 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Computer-use agents: the permission trap - Kubai Kevin</title>
+        <meta name="description" content="GUI agents inherit a human&amp;#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.">
+        <meta name="keywords" content="ComputerUseAgent, AgentSecurity, PromptInjection, LeastPrivilegeAgent, Cybersecurity, Infosec">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-19T12:00:05.749785">
+        <meta property="article:modified_time" content="2026-10-04T10:32:09.453266+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Computer-use agents: the permission trap">
+        <meta property="og:description" content="GUI agents inherit a human&amp;#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.">
+        <meta property="og:url" content="https://kubaik.github.io/computer-use-agents-the-permission-trap/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/computer-use-agents-the-permission-trap.png">
+        <meta property="og:image:alt" content="Computer-use agents: the permission trap">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Computer-use agents: the permission trap">
+        <meta name="twitter:description" content="GUI agents inherit a human&amp;#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/computer-use-agents-the-permission-trap.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/computer-use-agents-the-permission-trap/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/computer-use-agents-the-permission-trap/#article",
+      "headline": "Computer-use agents: the permission trap",
+      "description": "GUI agents inherit a human's full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.",
+      "datePublished": "2026-09-19T12:00:05+00:00",
+      "dateModified": "2026-10-04T10:32:09+00:00",
+      "wordCount": 3021,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/computer-use-agents-the-permission-trap/"
+      },
+      "keywords": "ComputerUseAgent, AgentSecurity, PromptInjection, LeastPrivilegeAgent, Cybersecurity, Infosec",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/computer-use-agents-the-permission-trap.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Computer-use agents: the permission trap",
+          "item": "https://kubaik.github.io/computer-use-agents-the-permission-trap/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Computer-use agents: the permission trap</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Computer-use agents: the permission trap</h1>
+                
+                <p class="post-lead">GUI agents inherit a human&amp;#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ComputerUseAgent</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentSecurity</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/promptinjection/"
+                       style="text-decoration:none;">PromptInjection</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LeastPrivilegeAgent</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3021 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A computer-use agent drives a browser or desktop GUI the way a person does: it reads the screen, moves the pointer, types, and clicks. That design is what makes it attractive, because it needs no API integration and no new endpoint from the vendor. It is also what makes it dangerous, because the security model of a GUI assumes a human is at the keyboard. This article covers the failure mode that assumption creates, and the architecture that contains it.</p>
+<h2 id="why-a-gui-agent-inverts-the-usual-permission-model">Why a GUI agent inverts the usual permission model</h2>
+<p>With an API integration, the caller presents a credential and the server enforces a scope. A token scoped to <code>transactions:read</code> cannot write to the payments table no matter what the calling code does, because the enforcement point is the server and the scope is narrow.</p>
+<p>A GUI agent works differently. It authenticates as a user, and the application then renders whatever that user is entitled to see. Every button the human could press is a button the agent can press. The agent does not hold a scope; it holds an identity. The enforcement point is the interface, and the interface was designed to be convenient for a person, not to bound a machine.</p>
+<p>Three consequences follow, and they are the reason security reviews tend to stall on GUI agents:</p>
+<ol>
+<li><strong>Rate of abuse changes even when permission does not.</strong> A human exporting ten thousand records clicks through paginated screens for minutes and leaves a trail of session activity. An agent does the same export in seconds. The authorization decision is identical; the exposure is not.</li>
+<li><strong>The agent has no concept of intent.</strong> It executes the instruction it was given, and any text it reads on screen is potential instruction material. Content that arrives from a customer, a ticket, or a web page is untrusted input that the agent may treat as a command. This is prompt injection, and GUI agents are exposed to it through the very surface they are reading.</li>
+<li><strong>The audit trail is not semantic.</strong> A log of screenshots and click coordinates answers "where was the pointer" but not "what business action occurred." When an incident review asks what the agent did at a specific time, a PNG of a button is not an answer.</li>
+</ol>
+<p>The common first attempt at mitigation is to give the agent a service account with the same permissions as the human role it replaces, on the reasoning that a trusted human and a trusted agent are equivalent. That reasoning holds only if the human's slowness, judgment, and audit trail are incidental rather than load-bearing. They are load-bearing.</p>
+<h2 id="the-approval-prompt-failure-mode">The approval-prompt failure mode</h2>
+<p>The next instinct is to insert a human approval step in front of sensitive actions. Define sensitive as any write, or any read above some record count, and have the agent pause and request confirmation.</p>
+<p>This works in a demo and degrades in production. Approvals arrive faster than a reviewer can evaluate them, the reviewer's context is a truncated prompt rather than the full task, and the cost of saying no (the agent stalls, the ticket waits) is higher than the cost of saying yes. The predictable result is that approvals become reflexive. Once that happens the control still exists in the architecture diagram and no longer exists in practice. The design lesson is that an approval gate is only meaningful if it fires rarely enough that each firing gets genuine attention.</p>
+<h2 id="what-a-workable-architecture-looks-like">What a workable architecture looks like</h2>
+<p>The approach that survives review treats the agent not as a user but as a constrained process. Three properties do most of the work.</p>
+<p><strong>Intent is expressed as data before it becomes an action.</strong> The model does not emit raw mouse and keyboard events. It emits a structured request describing what it wants to do, and a policy layer evaluates that request before any GUI interaction occurs. The agent may still drive the interface, but only for actions the policy layer already approved.</p>
+<p><strong>The interface the agent drives is not the production interface.</strong> A purpose-built console exposes only the actions the agent is permitted to take. If the production admin panel has dozens of controls, the console has a handful. This is interface reduction: an action that has no control cannot be clicked, and an action that has no endpoint cannot be requested.</p>
+<p><strong>Every action is a structured event.</strong> The primary audit record is a row, not an image. Screenshots remain useful as a secondary artifact for debugging, but the queryable record is the event stream.</p>
+<h3 id="a-policy-layer-in-code">A policy layer in code</h3>
+<p>The wrapper below is deliberately dull. Its purpose is to confine the agent's creativity to choosing among permitted actions rather than inventing new ones. Note that the rate counters here are illustrative values chosen for the example, not recommendations.</p>
+<pre><code class="language-python">from dataclasses import dataclass
+from typing import Literal
+
+@dataclass
+class AgentAction:
+    kind: Literal[&quot;read_transaction&quot;, &quot;read_customer&quot;, &quot;open_ticket&quot;, &quot;add_note&quot;]
+    target_id: str
+    reason: str
+
+# Illustrative limits. Choose values from your own traffic profile.
+ALLOWED_ACTIONS = {
+    &quot;read_transaction&quot;: {&quot;max_per_minute&quot;: 50, &quot;requires_ticket&quot;: True},
+    &quot;read_customer&quot;: {&quot;max_per_minute&quot;: 20, &quot;requires_ticket&quot;: True},
+    &quot;open_ticket&quot;: {&quot;max_per_minute&quot;: 10, &quot;requires_ticket&quot;: False},
+    &quot;add_note&quot;: {&quot;max_per_minute&quot;: 10, &quot;requires_ticket&quot;: True},
+}
+
+def validate(action: AgentAction, context: dict) -&gt; bool:
+    rule = ALLOWED_ACTIONS.get(action.kind)
+    if not rule:
+        return False
+    if rule[&quot;requires_ticket&quot;] and not context.get(&quot;ticket_id&quot;):
+        return False
+    if context[&quot;recent_actions&quot;].count(action.kind) &gt;= rule[&quot;max_per_minute&quot;]:
+        return False
+    return True
+</code></pre>
+<p>Two details matter more than they look. First, <code>ALLOWED_ACTIONS</code> is a closed set: an action kind that is not in the dictionary is denied by default, so adding a capability is a deliberate edit to a reviewable file. Second, the policy is a separate artifact from the agent loop. A rules file can be read by a security reviewer in one sitting; policy logic scattered across a control loop cannot.</p>
+<p>A rejected action should not crash the agent. Return a structured error describing which rule fired, log the attempt, and let the agent choose a different action. Rejections are signal: a rising rejection rate means the agent is repeatedly attempting something the policy forbids, which is worth investigating whether or not it succeeded.</p>
+<h3 id="the-constrained-console">The constrained console</h3>
+<p>The console is a small application that renders only the permitted actions and calls only the permitted endpoints. It is not the admin panel with controls hidden. Hiding controls client-side does not work, because the underlying markup and endpoints are still reachable; an agent that can read the DOM can find a hidden element, and a model that can guess a URL can call an endpoint that was never rendered.</p>
+<p>The console should run on its own host with its own network policy. A useful shape is: reachable to the read replica and the ticketing system, not reachable to the write primary, not reachable to the payment processor's production API, and no general outbound internet access. The agent's browser runs in a container whose only permitted destination is the console. This turns the network layer into a second, independent enforcement point: even if the policy layer has a bug, the container cannot reach a host it was never allowed to reach.</p>
+<p>The cost is real. A console for a typical web-based workflow is on the order of one to two thousand lines, plus deployment. That cost is the price of a deployable agent, and it is usually smaller than the cost of the security review that an unconstrained agent never passes.</p>
+<h3 id="structured-audit-events">Structured audit events</h3>
+<p>Each action emits an event. In Node, using the built-in UUID generator available in current LTS releases:</p>
+<pre><code class="language-javascript">// Node LTS, using the built-in crypto.randomUUID
+const event = {
+  correlationId: crypto.randomUUID(),
+  timestamp: new Date().toISOString(),
+  agentId: process.env.AGENT_ID,
+  action: action.kind,
+  target: action.target_id,
+  policyDecision: decision, // &quot;allow&quot; or &quot;deny&quot;
+  reason: action.reason,
+  ticketId: context.ticket_id,
+  durationMs: Date.now() - start,
+};
+await auditLog.write(event);
+</code></pre>
+<p>Store these in a relational table with an index on the columns you will actually query, typically <code>(agentId, timestamp)</code> and <code>(target, timestamp)</code>. The second index is what makes "show me every read of customer 12345 in the last 24 hours" a query rather than a screenshot review.</p>
+<p>Sizing is easy to estimate once you know your volume. If the agent performs 8,000 actions per day, that is 8,000 rows per day, roughly 2.9 million rows per year (8,000 × 365 = 2,920,000). That volume is comfortably within a single relational instance; partitioning only becomes interesting at a much higher order of magnitude. A retention split of 90 days hot and two years cold is a common starting point, but the right numbers come from your own regulatory and incident-response requirements, not from a template.</p>
+<h3 id="a-kill-switch-with-a-stated-latency">A kill switch with a stated latency</h3>
+<p>The most common question in a security review is "how do you stop it." A useful answer includes a number and the mechanism that produces it. Run the agent under a supervisor that polls a control endpoint on a fixed interval, and expose a stop control to the operations team. If the supervisor polls every 500 milliseconds, the worst-case stop latency is bounded by that interval plus the time to terminate the process, which in practice is a small number of seconds. The point is not the specific figure; it is that the figure is derived from a stated polling interval rather than asserted.</p>
+<h2 id="measuring-the-trade-off-instead-of-guessing-it">Measuring the trade-off instead of guessing it</h2>
+<p>Claims about agent speed and reliability are only useful if they are tied to instrumentation. The following are the quantities worth recording, and how to record them.</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Instrument</th>
+<th>What to compare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>How long does a task take?</td>
+<td>Wall-clock timer from task start to terminal event, emitted as a field on the final audit event</td>
+<td>Agent path vs. the same task performed manually, on the same data</td>
+</tr>
+<tr>
+<td>How often does the agent attempt a forbidden action?</td>
+<td>Count of <code>policyDecision: "deny"</code> events, grouped by <code>action</code></td>
+<td>Deny rate over time; a rising rate indicates drift or injection</td>
+</tr>
+<tr>
+<td>How often does the agent fail the task?</td>
+<td>Terminal outcome field on the task record, with a reason code</td>
+<td>Failure rate before and after interface reduction</td>
+</tr>
+<tr>
+<td>What is the blast radius of a stop?</td>
+<td>Number of in-flight tasks at the moment the kill switch fires</td>
+<td>Tasks that must be replayed or reconciled after a stop</td>
+</tr>
+<tr>
+<td>Is the audit complete?</td>
+<td>Count of executed GUI interactions vs. count of emitted events</td>
+<td>Any gap means an unlogged path exists</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the one teams skip. If the agent can perform an interaction that produces no event, the audit trail has a hole, and the hole is exactly where an incident will be. The check is mechanical: count interactions at the input layer, count events at the audit sink, and reconcile.</p>
+<p>A worked example makes the arithmetic concrete. Suppose manual handling of a task takes 90 seconds of agent-attention time and the agent takes 12 seconds unconstrained. The speedup is 90 ÷ 12 = 7.5×. Now suppose policy checks and an extra round trip to the console add 6 seconds, making the constrained agent take 18 seconds. The speedup becomes 90 ÷ 18 = 5×. The constrained version is 50% slower than the prototype ((18 − 12) ÷ 12 = 0.5) and still five times faster than the manual path. Whether that trade is worth taking is a judgment call, but it is a call that can be made from two stopwatch measurements rather than from intuition.</p>
+<p>There is a second effect worth measuring, because it often runs in the opposite direction to expectation. A production admin panel with dozens of visually similar controls gives a vision-driven agent many opportunities to click the wrong one. A console with a handful of distinct controls removes most of those opportunities. Teams that instrument misclicks before and after interface reduction commonly find the constrained agent is more reliable on the happy path, not less. Constraint buys security and, past a certain point, accuracy.</p>
+<h2 id="where-the-design-usually-goes-wrong">Where the design usually goes wrong</h2>
+<p><strong>Bolting security on after the prototype.</strong> The prototype establishes the action space, the prompt structure, and the integration points. Retrofitting a policy layer onto that means rewriting the agent loop. Designing the policy layer first determines what the agent can do, which in turn determines whether it is useful at all. That ordering is uncomfortable because it front-loads uncertainty, and it is still cheaper than the alternative.</p>
+<p><strong>Client-side hiding.</strong> CSS overlays, disabled buttons, and hidden menu items are presentation, not enforcement. If the DOM contains the control or the endpoint accepts the request, the boundary does not exist. Constrain at the server.</p>
+<p><strong>Approval gates that fire constantly.</strong> A gate that fires on a large fraction of actions trains reviewers to approve reflexively. Gates should be reserved for genuinely unusual actions, and the policy layer should handle the routine ones automatically. If most actions need a human, the policy is too loose or the workflow is a poor fit for an agent.</p>
+<p><strong>Treating the agent as trusted code.</strong> A prompt-injected agent is executing attacker-influenced instructions with the authority of its identity. The correct posture is to treat it as untrusted, which means it should never hold a credential it could leak. Credentials belong to a proxy that enforces policy; the agent talks to the proxy.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before deploying a computer-use agent against real systems, confirm each of the following.</p>
+<ul>
+<li>The set of semantic actions is enumerated, closed, and small enough that one person can review it.</li>
+<li>Each action has a written policy rule covering preconditions, rate limits, and the data it may touch.</li>
+<li>The policy lives in a reviewable artifact separate from the agent loop.</li>
+<li>The interface the agent drives is a separate application with its own endpoints, not the production UI with controls hidden.</li>
+<li>The agent's runtime has network access only to that application.</li>
+<li>The agent never holds a credential it could read or exfiltrate.</li>
+<li>Every executed action produces a structured event with a correlation ID, and interaction counts reconcile with event counts.</li>
+<li>A stop control exists with a measured, stated latency.</li>
+<li>Deny events are monitored as a signal, not merely logged.</li>
+<li>Approval prompts are rare enough that each one receives genuine review.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>Can prompt injection be prevented in a computer-use agent?</strong>
+Not fully, because the agent's input surface includes content written by third parties. It can be contained. The containment property to aim for is that an injected instruction cannot produce an action the agent was not already permitted to take. If the allowed set is read-transaction and add-note, an injection demanding a bulk export fails because no export action exists to invoke. Treat instructions found in user-generated content as untrusted data, and keep the allowed set narrow enough that the worst injection is bounded.</p>
+<p><strong>How does this differ from an API integration?</strong>
+An API integration grants explicit scopes that the server enforces, so the maximum damage is defined by the scope. A GUI agent inherits the identity of the user it impersonates, so its maximum damage is defined by that user's entitlements, executed at machine speed without a semantic log. The mitigation described here reconstructs something close to scope enforcement by putting a policy layer and a reduced interface between intent and action.</p>
+<p><strong>What should an audit event contain?</strong>
+At minimum: a correlation ID, a timestamp, the agent identity, the action kind, the target, the policy decision, the stated reason, and the outcome. Screenshots are a debugging aid, not the audit record, because they are not queryable and they do not name the business action. Index the fields you will query, typically agent identity plus time, and target plus time.</p>
+<p><strong>Should the agent ever use production credentials?</strong>
+The credential should belong to a proxy with the minimum permissions the workflow requires, and the agent should not be able to read it. If the agent can read its own credential, a model error or an injection can exfiltrate it. Treat the agent as untrusted code, because that is what it is.</p>
+<h2 id="the-underlying-principle">The underlying principle</h2>
+<p>An agent's permission model should be defined by what it can request, not by the credential it holds. A GUI agent with a login is a confused deputy: it carries a user's authority without a user's judgment. Inserting a policy layer between intent and action, and shrinking the action space until the policy can be reasoned about, restores the property that API scopes give you for free.</p>
+<p>None of this is novel. It is the same reasoning behind OAuth scopes, database roles, and capability-based security. What is new is that computer-use agents make it easy to skip the policy layer entirely, because the GUI looks like it is already the interface. It is a presentation layer, and treating it as a security boundary is the mistake.</p>
+<p>The corollary is that constraint and capability are not opposites here. A constrained agent is slower per task, more auditable, more reliable on routine work, and deployable. An unconstrained agent is faster in a demo and blocked in review.</p>
+<p><strong>Next 30 minutes:</strong> open your agent's action definition or loop code and list every distinct semantic action it can take. If the list is longer than ten, you have a constraint problem. Choose the three actions your primary workflow actually requires, and write a policy rule for each — preconditions, rate limit, permitted data — before writing any more agent code.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">Agent permissions: the mistake that breaks production</a></li>
+<li><a href="https://kubaik.github.io/platform-teams-agentic-world-struggle/">Platform Teams: Agentic World Struggle</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/least-privilege-for-agents-the-config-line-nobody-writes/">
+                        <h3>Least privilege for agents: the config line nobody writes</h3>
+                        <p>Why permissive agent tool defaults break in production, and how to add runtime, context-aware policy checks before every tool call.</p>
+                        <span class="related-meta">14 min read · 10 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/sandboxed-computer-use-agents-with-gvisor/">
+                        <h3>Sandboxed computer-use agents with gVisor</h3>
+                        <p>How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agents-create-incidents-at-2am/">
+                        <h3>Agents create incidents at 2am</h3>
+                        <p>Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.</p>
+                        <span class="related-meta">12 min read · 6 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

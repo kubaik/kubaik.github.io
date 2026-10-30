@@ -1,0 +1,617 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent permissions: the mistake that breaks production - Kubai Kevin</title>
+        <meta name="description" content="How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.">
+        <meta name="keywords" content="Agent, Vbscript, Gui">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-30T14:11:31.108539">
+        <meta property="article:modified_time" content="2026-10-03T10:45:37.627871+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent permissions: the mistake that breaks production">
+        <meta property="og:description" content="How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-permissions-the-mistake-that-breaks-production.png">
+        <meta property="og:image:alt" content="Agent permissions: the mistake that breaks production">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent permissions: the mistake that breaks production">
+        <meta name="twitter:description" content="How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-permissions-the-mistake-that-breaks-production.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/#article",
+      "headline": "Agent permissions: the mistake that breaks production",
+      "description": "How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.",
+      "datePublished": "2026-07-30T14:11:31+00:00",
+      "dateModified": "2026-10-03T10:45:37+00:00",
+      "wordCount": 3405,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/"
+      },
+      "keywords": "Agent, Vbscript, Gui",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/agent-permissions-the-mistake-that-breaks-production.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent permissions: the mistake that breaks production",
+          "item": "https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent permissions: the mistake that breaks production</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent permissions: the mistake that breaks production</h1>
+                
+                <p class="post-lead">How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/agent/"
+                       style="text-decoration:none;">Agent</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3405 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Agents that drive real desktop applications fail in production for a predictable reason: they are designed against a development machine's permissions, not the target machine's. The failure usually surfaces as a silent hang, a dialog nobody reads, or a file that never moves out of an input folder. This article works through the constraint set that causes most of these failures, the automation approaches that respect it, and a concrete design that survives legacy Windows desktops with no administrator rights.</p>
+<h2 id="the-constraint-set-that-breaks-desktop-agents">The constraint set that breaks desktop agents</h2>
+<p>A recurring production failure mode looks like this. An agent needs to read scanned documents or fill forms in a desktop application. It is developed on a machine where the developer has local administrator rights, a modern runtime, and a stable network. It is deployed to machines where none of those hold. The agent then fails in ways that never appeared during development.</p>
+<p>The constraints that matter, in rough order of how often they kill a deployment:</p>
+<ul>
+<li><strong>No local administrator rights.</strong> IT policy forbids service accounts with full control over the machine, often because a previous incident involved a script damaging shared storage. Any design that assumes elevation is dead on arrival.</li>
+<li><strong>Session-bound GUI.</strong> On Windows, a process running as a service under a system account does not share the interactive desktop session. Tools that simulate mouse and keyboard input depend on that session. If the user locks the screen, the session is no longer interactive and coordinate-based automation stops working.</li>
+<li><strong>Legacy OS and applications.</strong> Older Windows versions ship older scripting runtimes, older browser engines, and older document viewers. Modern frameworks may not install or may not run within the available memory.</li>
+<li><strong>Limited hardware.</strong> Low RAM and slow CPUs rule out heavy runtimes, GPU-dependent models, and large in-memory image preprocessing.</li>
+<li><strong>Intermittent or absent connectivity.</strong> Cloud OCR, cloud queues, and remote state stores become unavailable for long stretches. Any design that requires a round trip to a remote service must define what happens when that service is unreachable.</li>
+<li><strong>Shared machines.</strong> The user is doing other work on the same desktop. The agent cannot assume it owns the foreground window, the clipboard, or the file system paths it wrote last hour.</li>
+</ul>
+<p>The design principle that follows is simple to state and hard to follow: treat every constraint as a first-class requirement. An agent that cannot run without administrator rights, without internet, and without a modern runtime will not run in the field. This applies well beyond any single program — it is the normal situation for NGO field deployments, government offices, small businesses, and any enterprise where endpoint policy is strict.</p>
+<h2 id="why-gui-simulation-fails-in-these-environments">Why GUI simulation fails in these environments</h2>
+<p>Simulating keystrokes and mouse movement is the first approach most teams reach for, because it works against any application with a visible window. It also has the worst failure profile on a locked-down, shared desktop.</p>
+<p>The documented behavior is that input simulation operates on the interactive desktop session. Three consequences follow:</p>
+<ol>
+<li><strong>Locked screen means no session.</strong> When the user locks the workstation, the interactive session is no longer accepting synthetic input. An agent that was running fine at 09:00 stops making progress at 09:15 when the user steps away.</li>
+<li><strong>Foreground contention.</strong> A user clicking, alt-tabbing, or opening a dialog changes which window has focus. A script that assumes a specific window is focused will type into the wrong place. This is not a rare race; on a shared machine it is the normal condition.</li>
+<li><strong>Coordinate fragility.</strong> Screen resolution, window position, DPI scaling, and application chrome all affect where a click lands. A Windows update that changes a dialog layout breaks the script with no code change.</li>
+</ol>
+<p>There is a narrower case where input simulation is the only option: an application with no programmatic interface at all. In that case, the agent must run inside the user's interactive session, must verify the expected window is actually focused before every action, and must treat any deviation as a hard stop rather than continuing blindly. Those guards are not optional.</p>
+<p>A related trap is OCR-driven extraction. Running optical character recognition over a screenshot is attractive because it needs no application cooperation. But recognition accuracy degrades sharply on rotated, low-resolution, or noisy scans, and image preprocessing to compensate costs memory and CPU that low-spec machines do not have. When accuracy is marginal, the failure is silent: the agent writes a wrong value rather than reporting an error. Any OCR path needs a confidence threshold and a quarantine path for low-confidence results.</p>
+<h2 id="the-approach-that-survives-object-model-automation">The approach that survives: object-model automation</h2>
+<p>Windows applications frequently expose a COM automation interface — an object model the operating system can drive directly, without simulating input. A spreadsheet application exposes workbooks, sheets, and cells. A document viewer may expose a document object with text extraction. A browser exposes a document object model.</p>
+<p>The properties that matter here:</p>
+<ul>
+<li><strong>No administrator rights required.</strong> COM activation is a per-user capability. A process running as a standard user can instantiate these objects.</li>
+<li><strong>Independent of the interactive session.</strong> Object-model calls do not require the desktop to be visible, unlocked, or focused. An agent can drive an application while the user works in another window, and can continue while the screen is locked.</li>
+<li><strong>No coordinates.</strong> Calls address objects, not pixels. A window moved or resized does not change behavior.</li>
+</ul>
+<p>The cost is that COM interfaces are unevenly documented, version-dependent, and sometimes disabled by policy. That last point is important: a group policy can block COM activation of a specific application, and the agent must detect that at startup rather than failing on the first real document.</p>
+<p>A practical rule: prefer the object model wherever it exists, fall back to input simulation only for applications that expose nothing, and never mix the two within a single transaction without a clear handoff point.</p>
+<h3 id="a-minimal-agent-skeleton">A minimal agent skeleton</h3>
+<p>The following is a small agent that walks an input folder, extracts text from each document through the viewer's object model, writes a result, and moves the file atomically. It is written for a scripting host that is present by default on the target OS; the same structure translates directly to a modern scripting language.</p>
+<pre><code class="language-vbs">Option Explicit
+
+Const INCOMING = &quot;C:\Scans\Incoming&quot;
+Const DONE_DIR = &quot;C:\Scans\Done&quot;
+Const ERR_DIR  = &quot;C:\Scans\Errors&quot;
+
+Sub Main()
+    Dim fso, folder, f
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+    If Not fso.FolderExists(INCOMING) Then Exit Sub
+    Set folder = fso.GetFolder(INCOMING)
+    For Each f In folder.Files
+        If LCase(fso.GetExtensionName(f.Name)) = &quot;pdf&quot; Then
+            ProcessOne f.Path
+        End If
+    Next
+End Sub
+
+Sub ProcessOne(pdfPath)
+    Dim fso, text, dest
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+    On Error Resume Next
+    text = ExtractText(pdfPath)
+    If Err.Number &lt;&gt; 0 Then
+        Log &quot;extract failed: &quot; &amp; pdfPath &amp; &quot; :: &quot; &amp; Err.Description
+        Err.Clear
+        On Error GoTo 0
+        MoveTo pdfPath, ERR_DIR
+        Exit Sub
+    End If
+    On Error GoTo 0
+
+    If Len(Trim(text)) = 0 Then
+        Log &quot;empty extraction, quarantining: &quot; &amp; pdfPath
+        MoveTo pdfPath, ERR_DIR
+        Exit Sub
+    End If
+
+    If Not WriteResult(pdfPath, text) Then
+        Log &quot;write failed: &quot; &amp; pdfPath
+        MoveTo pdfPath, ERR_DIR
+        Exit Sub
+    End If
+
+    MoveTo pdfPath, DONE_DIR
+    Log &quot;ok: &quot; &amp; pdfPath
+End Sub
+
+Function ExtractText(pdfPath)
+    Dim app, doc
+    Set app = CreateObject(&quot;AcroExch.App&quot;)
+    Set doc = CreateObject(&quot;AcroExch.AVDoc&quot;)
+    If Not doc.Open(pdfPath, &quot;&quot;) Then
+        ExtractText = &quot;&quot;
+        Exit Function
+    End If
+    ExtractText = doc.GetPDDoc.GetText(0)
+    doc.Close False
+    app.Exit
+End Function
+
+Function WriteResult(pdfPath, text)
+    Dim fso, ts
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+    On Error Resume Next
+    Set ts = fso.CreateTextFile(pdfPath &amp; &quot;.txt&quot;, True)
+    ts.Write text
+    ts.Close
+    WriteResult = (Err.Number = 0)
+    On Error GoTo 0
+End Function
+
+Sub MoveTo(src, destDir)
+    Dim fso
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+    If Not fso.FolderExists(destDir) Then fso.CreateFolder destDir
+    ' Name() on the same volume is an atomic rename.
+    fso.MoveFile src, fso.BuildPath(destDir, fso.GetFileName(src))
+End Sub
+
+Sub Log(msg)
+    Dim fso, ts
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+    Set ts = fso.OpenTextFile(&quot;C:\Logs\agent.log&quot;, 8, True)
+    ts.WriteLine Now() &amp; &quot; &quot; &amp; msg
+    ts.Close
+End Sub
+
+Main
+</code></pre>
+<p>Three details in that listing are load-bearing and worth calling out:</p>
+<ul>
+<li><strong><code>MoveFile</code> within a volume is a rename</strong>, which the file system performs atomically. A crash mid-move leaves the file in exactly one of the two folders, never in both and never in neither. This is why the agent moves files between states rather than copying and deleting.</li>
+<li><strong>Empty extraction is treated as failure.</strong> A viewer that opens a document but returns no text is the common case for a corrupt or image-only file. Silently writing an empty result is worse than quarantining, because downstream consumers cannot tell the difference between "no data" and "no text found."</li>
+<li><strong>Errors are logged with the file path and the error description</strong>, then the file is quarantined. The agent never retries in place, which prevents a poison file from blocking the queue.</li>
+</ul>
+<h2 id="state-heartbeats-and-failure-detection">State, heartbeats, and failure detection</h2>
+<p>An agent that runs unattended needs a way to prove it is alive. The cheapest mechanism is a heartbeat row in a local database, written on a fixed interval.</p>
+<pre><code class="language-sql">CREATE TABLE heartbeat (
+    id        INTEGER PRIMARY KEY CHECK (id = 1),
+    last_seen TEXT NOT NULL,
+    status    TEXT NOT NULL
+);
+</code></pre>
+<p>Writing a single row keyed on a constant id avoids unbounded table growth:</p>
+<pre><code class="language-sql">INSERT INTO heartbeat (id, last_seen, status)
+VALUES (1, datetime('now'), 'ok')
+ON CONFLICT(id) DO UPDATE SET
+    last_seen = excluded.last_seen,
+    status    = excluded.status;
+</code></pre>
+<p>A separate monitor process reads that row and compares <code>last_seen</code> against the current time. If the gap exceeds a threshold, the monitor surfaces a message to the user. The threshold should be several multiples of the write interval, not a single multiple — a brief stall during a large document should not trigger an alarm. If the agent writes every five minutes, a fifteen-minute threshold tolerates two missed writes, which is enough to absorb a slow operation without hiding a genuine hang.</p>
+<p>Two refinements matter in practice:</p>
+<ul>
+<li><strong>Write the heartbeat from the main loop, not a separate thread.</strong> A background timer that keeps ticking while the main loop is stuck produces a false "healthy" signal. The heartbeat should be evidence that work is progressing.</li>
+<li><strong>Record the current step, not just a timestamp.</strong> A heartbeat row that includes the file being processed and the stage turns a "stuck" alert into a diagnosis.</li>
+</ul>
+<h2 id="per-user-installation">Per-user installation</h2>
+<p>If administrator rights are unavailable, the installer must not require elevation. A per-user installation writes everything under the user's profile directory and registers nothing machine-wide. This is a documented installation mode on Windows and is supported by standard installer tooling.</p>
+<p>What a per-user installer should do:</p>
+<ul>
+<li>Place all binaries, scripts, and data under the user's application data directory.</li>
+<li>Register any scheduled task under the current user, not under a system account.</li>
+<li>Set environment variables at the user scope only.</li>
+<li>Avoid writing to protected locations such as the program files directory or the machine registry hive.</li>
+<li>Verify at the end of installation that the agent can start in a standard user session.</li>
+</ul>
+<p>The last point is the one teams skip. An installer that reports success but produces an agent that cannot activate its COM objects has not solved the problem. A startup self-check that instantiates each required object and logs the result converts a mysterious field failure into an immediate, actionable error.</p>
+<p>For scripted dependencies, a per-user package installation achieves the same effect without an installer. The constraint is identical: nothing may write outside the user's profile.</p>
+<h2 id="a-comparison-of-automation-strategies">A comparison of automation strategies</h2>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Needs admin?</th>
+<th>Works with screen locked?</th>
+<th>Drives legacy desktop apps?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input simulation</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Coordinate- and focus-dependent; breaks on layout changes</td>
+</tr>
+<tr>
+<td>Object-model automation (COM)</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Windows only; interface may be version-specific or policy-blocked</td>
+</tr>
+<tr>
+<td>Browser automation</td>
+<td>Sometimes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Requires the app to be a web app; needs a browser runtime</td>
+</tr>
+<tr>
+<td>Remote cloud service</td>
+<td>No</td>
+<td>N/A</td>
+<td>Depends</td>
+<td>Requires connectivity; may conflict with data-residency policy</td>
+</tr>
+<tr>
+<td>Local OCR over screenshots</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Accuracy-sensitive; needs confidence thresholds and quarantine</td>
+</tr>
+</tbody>
+</table>
+<p>The table is a starting filter, not a decision. The right question is which of these can satisfy the constraint list for the specific target machines, and the answer is often a combination: object-model automation for the applications that support it, with a quarantined fallback for the ones that do not.</p>
+<h2 id="worked-example-sizing-the-daily-run">Worked example: sizing the daily run</h2>
+<p>Suppose the requirement is 50 documents per day per machine, 10 fields each, and the extraction path takes 10 seconds per document. That is 500 seconds, or about 8 minutes of agent runtime per machine per day. Across 20 machines, that is 160 minutes of total daily runtime.</p>
+<p>Two conclusions follow from that arithmetic, and they are the reason to do it:</p>
+<ul>
+<li>The workload is small relative to a day, so the agent does not need to run continuously. A periodic trigger — hourly, or on a file-arrival check — is sufficient and simpler to reason about.</li>
+<li>The margin is large enough that a retry policy is affordable. If a document fails and is retried three times with backoff, the worst case adds well under an hour of runtime. A design that cannot afford retries is a sign the sizing was never done.</li>
+</ul>
+<p>The arithmetic also exposes the real risk: it is not throughput, it is correctness. At 50 documents per day, a 5% silent error rate produces roughly two to three wrong records daily, and those errors are far more expensive than a slow run. This is the argument for quarantining low-confidence extractions rather than writing them.</p>
+<h2 id="instrumenting-instead-of-guessing">Instrumenting instead of guessing</h2>
+<p>Claims about reliability should come from measurement, and the measurement is straightforward to set up.</p>
+<ul>
+<li><strong>Instrument per-document timing.</strong> Record a start and end timestamp around each document's processing, and write both to the log. From that log, compute the mean and the 95th percentile with a one-line aggregation. The percentile matters more than the mean: a mean of 12 seconds with a 95th percentile of 22 seconds tells you the slow tail is where the timeouts will occur.</li>
+<li><strong>Instrument outcomes by category.</strong> Count successes, extraction failures, empty extractions, write failures, and timeouts separately. A single "failure rate" number hides which stage is degrading.</li>
+<li><strong>Replay a fixed corpus.</strong> Keep a set of known documents with known correct outputs and run the agent against it after every change. This is the only way to detect a regression introduced by an application update or a policy change.</li>
+<li><strong>Watch the heartbeat gap distribution.</strong> The maximum observed gap between heartbeats is a direct measure of how long the agent can stall before a monitor should fire.</li>
+</ul>
+<p>None of this requires a metrics service. A log file and a short aggregation script are sufficient, and they work with no connectivity.</p>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p>Each of the following has a specific mitigation, and each is worth a line in the design document.</p>
+<ul>
+<li><strong>Policy blocks the automation interface.</strong> A group policy can disable COM activation for a specific application. Mitigation: instantiate every required object at startup and fail loudly if any is unavailable.</li>
+<li><strong>Profile redirection.</strong> The user's application data directory may be redirected to a network share with slow or unreliable writes. Mitigation: write state locally where possible, and treat a slow write as a timeout rather than a hang.</li>
+<li><strong>Scheduled task does not run.</strong> Task scheduling behavior differs by OS version and by whether a user is logged in. Mitigation: verify task execution empirically on a target machine, and add a second trigger path (for example, a startup-folder script) as a fallback.</li>
+<li><strong>Poison document.</strong> One malformed file blocks the queue if retried in place. Mitigation: bounded retries with backoff, then quarantine.</li>
+<li><strong>Partial write.</strong> The process dies after opening an output file but before closing it. Mitigation: write to a temporary name and rename into place, so consumers never observe a partial file.</li>
+<li><strong>False health signal.</strong> A heartbeat written by a thread that is not doing work. Mitigation: write the heartbeat from the main loop and include the current step.</li>
+<li><strong>Silent wrong data.</strong> OCR or parsing returns a plausible but incorrect value. Mitigation: confidence thresholds, field-level validation, and a quarantine path for anything that fails validation.</li>
+</ul>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before writing code, answer these for the target machines:</p>
+<ol>
+<li>What is the exact OS version and patch level?</li>
+<li>Does the deploying account have local administrator rights? If not, can any component require elevation?</li>
+<li>Which applications must the agent drive, and does each expose a documented automation interface?</li>
+<li>Is that interface blocked by policy on the target machines?</li>
+<li>Does the agent need to run while the screen is locked? If yes, input simulation is eliminated.</li>
+<li>What is the network availability pattern, and what must work while it is unavailable?</li>
+<li>What are the RAM, CPU, and disk limits, and does the chosen runtime fit within them?</li>
+<li>Where does state live, and what happens if that location is redirected or unavailable?</li>
+<li>How will a stuck agent be detected, and who is alerted?</li>
+<li>What is the quarantine path for documents that fail, and who reviews them?</li>
+</ol>
+<p>If any answer is "unknown," that is the next task — not the next feature.</p>
+<h2 id="testing-in-the-real-environment">Testing in the real environment</h2>
+<p>Development machines and target machines differ in ways that are invisible until deployment. A short pilot on real hardware, with a real user logged in and doing real work, catches the failures that no virtual machine reproduces. The issues that surface in that setting tend to be environmental: a policy that disables an interface, a profile path that is redirected, a task that does not fire under a particular session state.</p>
+<p>The practical sequence is: install as a standard user, run the agent through a full day of normal use including a screen lock, kill the agent mid-document to verify recovery, and confirm that a quarantined document is visible to the person who needs to fix it. Each of those is a five-minute test that prevents a category of production incident.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The choice between scripting languages or between automation strategies is secondary. The primary decision is whether the constraints of the target environment are treated as requirements or as obstacles to work around. Teams that design for the constraints ship agents that keep running after the developer has moved on. Teams that assume a flexible environment ship agents that are blocked before they reach the field.</p>
+<p>Concretely, that means: prefer the application's object model over simulated input, install per user, keep state local, prove liveness with a heartbeat written by the working loop, move files atomically, quarantine anything that fails validation, and measure the tail rather than the mean.</p>
+<h2 id="take-the-next-30-minutes">Take the next 30 minutes</h2>
+<p>On a target machine, log in as a standard user with no administrator rights. Create a small script that instantiates the automation object for the application you intend to drive, and run it with the console host:</p>
+<pre><code class="language-cmd">cscript //nologo check.vbs
+</code></pre>
+<p>where <code>check.vbs</code> contains:</p>
+<pre><code class="language-vbs">On Error Resume Next
+Dim o
+Set o = CreateObject(&quot;Excel.Application&quot;)
+If Err.Number &lt;&gt; 0 Then
+    WScript.Echo &quot;FAIL: &quot; &amp; Err.Description
+Else
+    WScript.Echo &quot;OK: object model available&quot;
+    o.Quit
+End If
+</code></pre>
+<p>If it prints <code>OK</code>, the object model is available to a standard user on that machine and the COM-based design is viable. If it prints <code>FAIL</code>, read the error description — a policy block and a missing component produce different messages — and adjust the design before writing any agent logic. Repeat the check for every application the agent must drive.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://kubaik.github.io/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
+<li><a href="https://kubaik.github.io/computer-use-agents-the-permission-trap/">Computer-use agents: the permission trap</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/computer-use-agents-the-permission-trap/">
+                        <h3>Computer-use agents: the permission trap</h3>
+                        <p>GUI agents inherit a human&amp;#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.</p>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/platform-teams-agentic-world-struggle/">
+                        <h3>Platform Teams: Agentic World Struggle</h3>
+                        <p>Platform teams must adapt identity, tooling, and observability for AI agents that call APIs instead of using dashboards, with concrete patterns and failure modes.</p>
+                        <span class="related-meta">13 min read · 12 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-reliability-7-metrics-users-trust/">
+                        <h3>Agent reliability: 7 metrics users trust</h3>
+                        <p>Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.</p>
+                        <span class="related-meta">16 min read · 14 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

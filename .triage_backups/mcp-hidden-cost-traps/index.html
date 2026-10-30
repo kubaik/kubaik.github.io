@@ -1,0 +1,557 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MCP hidden cost traps - Kubai Kevin</title>
+        <meta name="description" content="How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.">
+        <meta name="keywords" content="Mcp, Security, FintechMcpCompliance, Cybersecurity, Infosec">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-12T13:48:03.599862">
+        <meta property="article:modified_time" content="2026-10-04T10:41:06.760211+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="MCP hidden cost traps">
+        <meta property="og:description" content="How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.">
+        <meta property="og:url" content="https://kubaik.github.io/mcp-hidden-cost-traps/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/mcp-hidden-cost-traps.png">
+        <meta property="og:image:alt" content="MCP hidden cost traps">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="MCP hidden cost traps">
+        <meta name="twitter:description" content="How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/mcp-hidden-cost-traps.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/mcp-hidden-cost-traps/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/mcp-hidden-cost-traps/#article",
+      "headline": "MCP hidden cost traps",
+      "description": "How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.",
+      "datePublished": "2026-09-12T13:48:03+00:00",
+      "dateModified": "2026-10-04T10:41:06+00:00",
+      "wordCount": 2570,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/mcp-hidden-cost-traps/"
+      },
+      "keywords": "Mcp, Security, FintechMcpCompliance, Cybersecurity, Infosec",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/mcp-hidden-cost-traps.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "MCP hidden cost traps",
+          "item": "https://kubaik.github.io/mcp-hidden-cost-traps/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>MCP hidden cost traps</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">MCP hidden cost traps</h1>
+                
+                <p class="post-lead">How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FintechMcpCompliance</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2570 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Managed container platforms (MCPs) hide Kubernetes control-plane complexity behind a small set of knobs. Those knobs have defaults, and the defaults are chosen for broad compatibility rather than for cost or security. The result is a class of failure that is hard to diagnose because two unrelated-looking symptoms appear at once: a step change in the monthly bill and a burst of authorization errors from the secret store.</p>
+<p>This article covers the coupling between those two symptoms — how secret-lease churn can look like sustained load to an autoscaler, and how missing cost attribution hides which node group is responsible.</p>
+<h2 id="the-symptom-pair-and-why-it-misleads">The symptom pair and why it misleads</h2>
+<p>A common report looks like this: the cost report shows a jump over the previous cycle, and simultaneously the monitoring dashboard shows a spike in <code>PermissionDenied</code> errors from the secret backend. A representative log line:</p>
+<pre><code>2026-09-12T14:23:07Z ERROR failed to fetch secret from Vault: permission denied (code=403)
+</code></pre>
+<p>The instinct is to treat these as two tickets. The cost increase looks like a capacity problem; the 403s look like an IAM problem. In practice they are frequently one problem, and the reason is that the autoscaler does not know <em>why</em> CPU went up.</p>
+<p>The autoscaler reacts to a metric. If a workload's CPU rises because it is doing useful work, scaling out is correct. If CPU rises because every request is failing fast and retrying in a tight loop, scaling out is actively harmful: it adds capacity to a workload that will never succeed, and the added capacity is billed until the scale-down delay elapses.</p>
+<p>A second source of confusion is token caching. Many secret clients cache a token for its full lease — a common default is a 24-hour lease for a service-account or AppRole token. When that lease expires, every replica of every service that shares the credential fails at roughly the same moment. The resulting retry storm is synchronized across the fleet, which makes it look like a load event rather than an expiry event.</p>
+<p>The third source of confusion is cost attribution. If node groups are not tagged, the cost explorer aggregates everything under one line item, and there is no way to tell whether the increase came from the node group you changed or one you forgot about.</p>
+<h2 id="root-causes">Root causes</h2>
+<p>Three independent misconfigurations combine into a self-reinforcing loop.</p>
+<p><strong>1. Aggressive scale-in behavior.</strong> A short scale-in delay means transient spikes — including failure-induced spikes — translate into node additions that persist. The relevant parameters are the scale-in cooldown and the CPU target utilization. A low target (for example 0.6) means the autoscaler adds nodes while the fleet is still comfortably below saturation.</p>
+<p><strong>2. Over-permissive credentials and long lease lifetimes.</strong> If a single role is reused across many microservices, and the token lease is long, then expiry is both fleet-wide and infrequent enough that nobody has instrumented for it. If the same role also carries broad permissions — for example a binding that grants <code>cluster-admin</code> within the namespace — then a leaked credential is not just a read incident.</p>
+<p><strong>3. Missing cost tags.</strong> Without a tag on each node group, cost data cannot be joined to configuration. This is what turns a five-minute diagnosis into a week of guessing.</p>
+<p>A plausible chain of events:</p>
+<ol>
+<li>A developer commits a manifest or image that references an environment variable holding a credential.</li>
+<li>At runtime the container cannot read the intended path in the secret store, because the role binding only covers a narrower path.</li>
+<li>The application falls back to a placeholder value, fails every outbound call, and retries.</li>
+<li>The retry traffic raises CPU above the autoscaler target, and nodes are added.</li>
+<li>The added nodes are billed for at least the scale-in cooldown duration after the incident ends.</li>
+<li>Separately, the committed credential is scraped from the repository history.</li>
+</ol>
+<p>Step 4 is the coupling. Steps 1 and 3 are ordinary bugs; step 4 is what makes an ordinary bug expensive.</p>
+<h2 id="fix-1-make-the-autoscaler-ignore-failure-traffic">Fix 1 — Make the autoscaler ignore failure traffic</h2>
+<p>The first fix is to raise the CPU target and lengthen the scale-in cooldown so that short-lived failure spikes do not convert into billed capacity. The Terraform below configures a node group and a target-tracking policy. Note that <code>aws_eks_node_group</code> does not expose <code>autoscaling_group_name</code> as an attribute in the way the snippet below assumes; in practice the autoscaling policy is attached to the ASG that backs the node group, which is discoverable via the node group's <code>resources</code> block or by referencing the ASG directly. Confirm the correct reference for your provider version before applying.</p>
+<pre><code class="language-hcl">resource &quot;aws_eks_node_group&quot; &quot;prod&quot; {
+  cluster_name    = aws_eks_cluster.main.name
+  node_group_name = &quot;prod-standard&quot;
+  node_role_arn   = aws_iam_role.eks_node_role.arn
+  subnet_ids      = aws_subnet.private[*].id
+
+  scaling_config {
+    desired_size = 3
+    min_size     = 2
+    max_size     = 6
+  }
+
+  tags = {
+    CostCenter  = &quot;FinTech&quot;
+    Environment = &quot;prod&quot;
+  }
+
+  launch_template {
+    id      = aws_launch_template.prod.id
+    version = &quot;$Latest&quot;
+  }
+}
+
+resource &quot;aws_autoscaling_policy&quot; &quot;cpu_target&quot; {
+  name                   = &quot;cpu-target-policy&quot;
+  autoscaling_group_name = aws_eks_node_group.prod.resources[0].autoscaling_groups[0].name
+  policy_type            = &quot;TargetTrackingScaling&quot;
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = &quot;ASGAverageCPUUtilization&quot;
+    }
+    target_value       = 0.75
+    scale_in_cooldown  = 900
+    scale_out_cooldown = 300
+  }
+}
+</code></pre>
+<p>What each change does:</p>
+<ul>
+<li><code>target_value = 0.75</code> raises the utilization threshold, so the autoscaler tolerates more headroom before adding nodes.</li>
+<li><code>scale_in_cooldown = 900</code> keeps a newly added node for 15 minutes before it becomes eligible for removal. This is a trade: it costs money during genuine short spikes, but it prevents flapping when the spike is caused by a failure that will recur.</li>
+<li>The <code>CostCenter</code> tag is what makes the next step possible.</li>
+</ul>
+<h3 id="how-to-measure-whether-this-helped">How to measure whether this helped</h3>
+<p>Do not trust a claimed percentage. Instrument it:</p>
+<ol>
+<li>Record the autoscaling group's <code>DesiredCapacity</code> and <code>InServiceCapacity</code> on a fixed interval (a CloudWatch metric alarm, a Prometheus exporter, or a cron job calling the provider API). Store the series.</li>
+<li>Record the secret store's error count as a separate series, with the error code as a label.</li>
+<li>Overlay the two series for a two-week window that includes at least one token-expiry event.</li>
+<li>The metric that matters is node additions that occur within 10 minutes of a spike in secret errors. Before the fix, this count is nonzero; after the fix, it should be zero.</li>
+</ol>
+<p>That comparison — node additions correlated with secret errors — is the actual verification. A dollar figure is a downstream consequence and depends on instance type, region and duration.</p>
+<h2 id="fix-2-shorten-leases-and-stop-committing-credentials">Fix 2 — Shorten leases and stop committing credentials</h2>
+<p>The second fix addresses the trigger. Two parts: prevent credentials from entering the repository, and reduce the blast radius when a lease expires.</p>
+<p>The Python below reads a secret using AppRole authentication and renews the token on an interval shorter than its lease. The <code>hvac</code> client is a real, widely used Python client for the HashiCorp Vault HTTP API; verify the method names against the version you install.</p>
+<pre><code class="language-python">import os
+import time
+
+import hvac
+
+client = hvac.Client(url=os.getenv(&quot;VAULT_ADDR&quot;))
+
+client.auth.approle.login(
+    role_id=os.getenv(&quot;VAULT_ROLE_ID&quot;),
+    secret_id=os.getenv(&quot;VAULT_SECRET_ID&quot;),
+)
+
+secret = client.secrets.kv.v2.read_secret_version(path=&quot;payments/api_key&quot;)
+api_key = secret[&quot;data&quot;][&quot;data&quot;][&quot;key&quot;]
+
+# Renew well before the lease expires so that expiry is never fleet-synchronized.
+while True:
+    time.sleep(300)
+    client.auth.token.renew_self(increment=&quot;15m&quot;)
+</code></pre>
+<p>Two properties matter here. First, the renewal interval (5 minutes) is much shorter than the lease increment (15 minutes), so a single missed renewal does not immediately produce an outage. Second, because renewal is per-process and jittered by process start time, expiry is no longer synchronized across the fleet.</p>
+<p>For the CI side, add a secret scanner to the pipeline. Any scanner that supports a severity threshold and a non-zero exit code works; the specific product matters less than the gate. A generic GitHub Actions step:</p>
+<pre><code class="language-yaml">- name: Scan for secrets
+  run: |
+    secret-scanner scan --severity-threshold high --exit-code 1 .
+</code></pre>
+<p>The important detail is <code>--exit-code 1</code>. A scanner that reports findings but exits zero is a dashboard, not a control.</p>
+<h3 id="how-to-measure-whether-this-helped_1">How to measure whether this helped</h3>
+<ul>
+<li>Count <code>token_renew_success</code> entries in the secret store's audit log per service per hour. A healthy service renews on a predictable cadence; a gap indicates a process that has stopped renewing.</li>
+<li>Count secret-read failures by error code. A drop in <code>403</code> counts that is not accompanied by a drop in total requests indicates the fix worked.</li>
+<li>Re-run the node-addition correlation from Fix 1. If the coupling is broken, the correlation disappears even if occasional 403s remain.</li>
+</ul>
+<h2 id="fix-3-close-the-network-and-permission-surface">Fix 3 — Close the network and permission surface</h2>
+<p>The third fix is environment-specific, but the principle is uniform: reduce what is reachable and reduce what a compromised workload can do.</p>
+<p>On AWS, the EKS control-plane endpoint can be configured for private access only. The <code>eksctl</code> configuration below does that and disables public access:</p>
+<pre><code class="language-yaml">apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: fintech-prod
+  region: us-east-1
+  version: &quot;1.28&quot;
+
+vpc:
+  clusterEndpoints:
+    publicAccess: false
+    privateAccess: true
+
+nodeGroups:
+  - name: prod-standard
+    instanceType: m5.large
+    desiredCapacity: 3
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+</code></pre>
+<p>Note that the field for endpoint access lives under <code>vpc.clusterEndpoints</code> in the <code>eksctl</code> schema, not as a top-level <code>privateCluster</code> block. Validate against the schema version you are using with <code>eksctl utils schema</code> or the project's published schema before applying.</p>
+<p>On GCP, the equivalent concern is egress between zones and the reachability of the control plane. A regional cluster with IP aliasing and a NAT gateway avoids per-zone egress surprises:</p>
+<pre><code class="language-bash">gcloud container clusters create health-prod \
+  --region us-central1 \
+  --release-channel stable \
+  --enable-ip-alias \
+  --node-locations us-central1-a,us-central1-b \
+  --num-nodes 4
+</code></pre>
+<p>The <code>--node-locations</code> flag pins nodes to two zones rather than spreading across all zones in the region, which reduces cross-zone traffic. Whether that is a saving or a resilience cost depends on your availability requirements — two zones is a real reduction in failure tolerance compared to three.</p>
+<h3 id="how-to-measure-whether-this-helped_2">How to measure whether this helped</h3>
+<ul>
+<li>Query the API server audit log for requests whose source IP is outside your VPC CIDR. After disabling public access, this set should be empty.</li>
+<li>Break down network egress by destination zone using the provider's flow logs. Cross-zone traffic attributable to the cluster should drop.</li>
+<li>Confirm that the control plane is still reachable from your CI runners and bastion. A private endpoint that nobody can reach is an outage, not a fix.</li>
+</ul>
+<h2 id="a-worked-estimate-with-assumptions-stated">A worked estimate, with assumptions stated</h2>
+<p>The following is an illustrative calculation, not a measurement. It shows the arithmetic so you can substitute your own numbers.</p>
+<p>Assume a node type billed at $0.096 per hour, and a scale-in cooldown of 900 seconds (15 minutes). If a failure-induced spike adds 2 nodes and the spike lasts 3 minutes, the nodes remain for at least the cooldown period after they become idle:</p>
+<ul>
+<li>Nodes added: 2</li>
+<li>Minimum billed duration per node: 15 minutes = 0.25 hours</li>
+<li>Cost per incident: 2 × 0.25 × $0.096 = $0.048</li>
+</ul>
+<p>That is trivial for one incident. The cost becomes material through frequency, not magnitude. At 200 such incidents per month:</p>
+<ul>
+<li>200 × $0.048 = $9.60 per month</li>
+</ul>
+<p>Still small. The figure only becomes large when the failures are continuous rather than intermittent — for example, a token that expires and is never renewed, leaving a service in a permanent retry loop. In that case the added nodes are billed continuously, and the monthly cost is:</p>
+<ul>
+<li>2 nodes × 730 hours × $0.096 = $140.16 per month</li>
+</ul>
+<p>The lesson is that the arithmetic is easy; the hard part is knowing how many incidents occurred and how long each lasted. That is exactly what the instrumentation in Fix 1 provides, and it is why the instrumentation is not optional.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before changing anything, confirm each of the following. Any "no" is a prerequisite, not a nice-to-have.</p>
+<ul>
+<li>[ ] Node groups carry a cost-attribution tag, and the cost explorer is grouped by it.</li>
+<li>[ ] The autoscaling group's desired and in-service capacity are being recorded as time series.</li>
+<li>[ ] Secret-store errors are recorded as a time series with the error code as a label.</li>
+<li>[ ] Secret tokens are renewed on an interval shorter than their lease.</li>
+<li>[ ] No credential is readable from a repository, a ConfigMap, or a container image layer.</li>
+<li>[ ] The control-plane endpoint is reachable only from expected networks.</li>
+<li>[ ] No service account in production holds <code>cluster-admin</code>.</li>
+</ul>
+<h2 id="escalation-path">Escalation path</h2>
+<p>If the cost trend continues upward and secret errors continue after the three fixes, the remaining explanations are usually one of:</p>
+<ul>
+<li>A workload outside the node group you changed is consuming the capacity.</li>
+<li>A second credential path is failing independently of the one you fixed.</li>
+<li>The autoscaler is reacting to a metric other than the one you tuned.</li>
+</ul>
+<p>Collect the following before escalating: the current node-group configuration, the secret-store audit log for the affected window, and the cost breakdown grouped by tag. Escalating with these three artifacts lets the receiving team reproduce the correlation rather than re-derive it.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I find which resources drive the bill?</strong>
+Enable cost allocation tags in the provider's billing settings, tag every node group, and group the cost report by that tag. Without the tag, the report cannot be joined to configuration, and the investigation stalls.</p>
+<p><strong>Why would revoking a secret role cause node scaling?</strong>
+Because the autoscaler reacts to CPU, not to success rate. A failing service that retries in a loop consumes CPU, and the autoscaler cannot distinguish that from useful load.</p>
+<p><strong>What is a safe way to hold API credentials for a service?</strong>
+Read them at runtime from a secret manager using a short-lived, narrowly scoped identity, and renew on an interval shorter than the lease. Do not bake them into images, ConfigMaps, or environment variables that are checked into source control.</p>
+<p><strong>When should the control-plane endpoint be private?</strong>
+When your compliance framework requires network isolation, or when the API server audit log shows requests from unexpected source addresses. Note that private endpoints require your CI and operator access paths to be inside the network or connected to it.</p>
+<p><strong>Does raising the scale-in cooldown cost money?</strong>
+Yes. A longer cooldown means nodes that are no longer needed stay billed for longer. The trade is deliberate: it prevents flapping when spikes are failure-driven. Measure the incident frequency before and after to confirm the trade is favorable.</p>
+<h2 id="do-this-next">Do this next</h2>
+<p>Open your Terraform configuration, find the node group that backs your busiest workload, and add the <code>CostCenter</code> tag if it is missing. Then run <code>terraform plan</code> and confirm the tag appears in the diff. Tagging takes under 30 minutes and is the prerequisite for every measurement described above — without it, you cannot tell which change helped.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
+<li><a href="https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
+<li><a href="https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/replace-env-with-these-in-2026/">
+                        <h3>Replace .env with these in 2026</h3>
+                        <p>Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.</p>
+                        <span class="related-meta">15 min read · 18 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
+                        <h3>Cost tools fail when agents scale autonomously</h3>
+                        <p>Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
+                        <span class="related-meta">11 min read · 9 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/platform-teams-in-2026-docs-vs-production-reality/">
+                        <h3>Platform teams in 2026: Docs vs. production reality</h3>
+                        <p>Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.</p>
+                        <span class="related-meta">18 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

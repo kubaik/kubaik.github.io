@@ -1,0 +1,496 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Self-healing agents vs rule-based deployment rollback - Kubai Kevin</title>
+        <meta name="description" content="Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.">
+        <meta name="keywords" content="AiAgentsDeployment, CanaryAnalysisRollback, Prometheus3.1, MttrDeploymentPipeline, Argo, Ai, Artificialintelligence, Kubernetes, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-11T21:16:42.291244">
+        <meta property="article:modified_time" content="2026-10-03T11:09:39.554230+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Self-healing agents vs rule-based deployment rollback">
+        <meta property="og:description" content="Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.">
+        <meta property="og:url" content="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/self-healing-ai-agents-vs-rule-based-ops-40-fewer.png">
+        <meta property="og:image:alt" content="Self-healing agents vs rule-based deployment rollback">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Self-healing agents vs rule-based deployment rollback">
+        <meta name="twitter:description" content="Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/self-healing-ai-agents-vs-rule-based-ops-40-fewer.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/#article",
+      "headline": "Self-healing agents vs rule-based deployment rollback",
+      "description": "Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.",
+      "datePublished": "2026-06-11T21:16:42+00:00",
+      "dateModified": "2026-10-03T11:09:39+00:00",
+      "wordCount": 2479,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/"
+      },
+      "keywords": "AiAgentsDeployment, CanaryAnalysisRollback, Prometheus3.1, MttrDeploymentPipeline, Argo, Ai, Artificialintelligence, Kubernetes",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/self-healing-ai-agents-vs-rule-based-ops-40-fewer.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Self-healing agents vs rule-based deployment rollback",
+          "item": "https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Self-healing agents vs rule-based deployment rollback</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Self-healing agents vs rule-based deployment rollback</h1>
+                
+                <p class="post-lead">Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiAgentsDeployment</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">CanaryAnalysisRollback</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Prometheus3.1</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/artificialintelligence/"
+                       style="text-decoration:none;">Artificialintelligence</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2479 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-comparison-stated-honestly">The comparison, stated honestly</h2>
+<p>Deployment pipelines recover from bad releases in one of two ways. Either a human writes explicit rules — "if error rate exceeds 1% for 30 seconds, roll back" — or a controller observes metrics and decides what to do, including actions nobody wrote down in advance.</p>
+<p>The first approach is deterministic and auditable. The second can react faster and handle situations the rule author never anticipated, but it also can act on reasoning that exists only inside the controller's memory. This article compares the two as engineering options: what each is good at, how each fails, what to measure before choosing, and where the boundary between them actually sits.</p>
+<p>Nothing here depends on a specific vendor product. The rule-based side is represented by the pattern most teams already run: a GitOps controller plus a progressive-delivery analysis step. The agent side is represented by a Kubernetes controller that reconciles metrics and writes back to the cluster. Both are described by their behavior, not by a product name, because the behavior is what determines the trade-off.</p>
+<h2 id="option-a-rule-based-rollback">Option A: rule-based rollback</h2>
+<p>A rule-based pipeline is a set of conditionals. You write them in YAML or HCL, they live in Git, and the system executes them deterministically. A typical shape:</p>
+<ol>
+<li>A CI workflow triggers on push to the main branch.</li>
+<li>A container image is built and pushed to a registry.</li>
+<li>A GitOps controller syncs the new image to a staging cluster and runs a canary analysis.</li>
+<li>If the analysis detects an SLO breach, the controller rolls back automatically.</li>
+<li>Alert rules page a human for anything the analysis did not cover.</li>
+</ol>
+<p>The canary analysis step is where the interesting logic lives. A progressive-delivery controller queries a metrics backend at a fixed interval and compares each result against a threshold range. A representative analysis block looks like this:</p>
+<pre><code class="language-yaml">analysis:
+  metrics:
+    - name: api-error-rate
+      thresholdRange:
+        min: 0
+        max: 1
+      interval: 30s
+    - name: api-p99-latency
+      thresholdRange:
+        min: 0
+        max: 200
+      interval: 30s
+  webhooks:
+    - name: load-test-gate
+      url: http://load-test-service.default.svc:8080/run
+      timeout: 5m
+</code></pre>
+<p>The <code>load-test-gate</code> webhook runs a load generator in the same namespace and exits non-zero if any metric breaches its threshold. This is the key structural point: the gate is a separate process with a binary exit code, so its verdict is as auditable as the threshold it enforces.</p>
+<p><strong>Where this shines.</strong> Every decision is in Git. <code>git blame</code> on the rollback policy tells you who changed the threshold and when. The same pipeline deploys to dev, staging, and production without modification. The resource cost is negligible — a controller and a metrics backend you are probably already running.</p>
+<p><strong>Where it fails.</strong> The failure mode is not slowness, it is coverage. A rule-based pipeline promotes a bad image whenever the badness falls outside the metrics you thought to encode. A memory leak that only manifests under a traffic pattern you do not test, a DNS resolution spike every few minutes, a slow query that degrades p99 without breaching the error-rate threshold — none of these trip a rule that was never written.</p>
+<p>The second failure mode is threshold drift. A p99 latency ceiling tuned in January is wrong by June if traffic composition changes. The rule does not know this. It either fires too late (threshold too loose) or rolls back healthy builds (threshold too tight). Both are silent until someone investigates.</p>
+<h2 id="option-b-agent-driven-rollback">Option B: agent-driven rollback</h2>
+<p>An agent-driven pipeline replaces the fixed decision with a controller that watches the same metrics and chooses among several actions. The controller runs inside the cluster and reconciles on an interval. A typical decision loop:</p>
+<ol>
+<li>A new image is pushed and synced to the cluster.</li>
+<li>The controller notices the new revision and begins collecting metrics.</li>
+<li>After a warm-up window it computes a rolling statistic — a z-score, a ratio, a distance from a learned baseline.</li>
+<li>If the statistic crosses a boundary, it takes one of several actions: roll back, patch resource requests, or temporarily scale the workload.</li>
+<li>It records the decision in a custom resource and emits a counter metric so the branch taken can be counted.</li>
+</ol>
+<p>A simplified reconciliation loop in Go:</p>
+<pre><code class="language-go">func (r *AutoHealReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+    dep := &amp;appsv1.Deployment{}
+    if err := r.Get(ctx, req.NamespacedName, dep); err != nil {
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+
+    latency, err := r.promClient.Query(ctx, &quot;rate(http_request_duration_seconds_sum[5m])&quot;, time.Now())
+    if err != nil {
+        return ctrl.Result{}, err
+    }
+
+    if latency &gt; thresholdHigh {
+        r.recordHealAction(&quot;rollback&quot;, dep)
+        return ctrl.Result{}, r.rollbackDeployment(ctx, dep)
+    } else if memoryPressure &gt; thresholdMemory {
+        r.recordHealAction(&quot;patch_memory&quot;, dep)
+        return ctrl.Result{}, r.patchDeployment(ctx, dep, map[string]interface{}{
+            &quot;spec&quot;: map[string]interface{}{
+                &quot;template&quot;: map[string]interface{}{
+                    &quot;spec&quot;: map[string]interface{}{
+                        &quot;containers&quot;: []map[string]interface{}{
+                            {
+                                &quot;name&quot;: dep.Spec.Template.Spec.Containers[0].Name,
+                                &quot;resources&quot;: map[string]interface{}{
+                                    &quot;limits&quot;: map[string]interface{}{
+                                        &quot;memory&quot;: &quot;2Gi&quot;,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        })
+    }
+    return ctrl.Result{RequeueAfter: 10 * time.Second}, nil
+}
+</code></pre>
+<p>Note what is missing: the thresholds. In a full implementation they are loaded from a ConfigMap that the controller updates itself, typically by running a clustering job over the last N days of metrics. This is the central design decision. The brittleness does not disappear; it moves from the pipeline YAML into the threshold-generation job. A clustering job that produces a p99 latency ceiling 20 ms too low for one day's traffic will roll back a perfectly healthy build, and the rollback log may not name the metric that triggered it.</p>
+<p><strong>Where this shines.</strong> Adaptability is real. During a noisy-neighbor incident, a controller that notices memory saturation causing GC pauses can raise a memory limit and avoid a restart — an action no one wrote a rule for. Agents also surface latent problems: an endpoint leaking memory only under high-percentile load, or a periodic DNS latency spike from a misconfigured cache, are exactly the kind of slow-burn issues that threshold rules miss because nobody knew to look.</p>
+<p><strong>Where it fails.</strong> Opacity, and its downstream cost. When the controller patches instead of rolling back, the reason lives in a decision tree that grew organically. Reproducing a patch applied during a database failover can take days, especially if the trigger was a derived metric that exists only in the controller's logs and never in the metrics backend.</p>
+<h2 id="a-worked-example-the-derived-metric-trap">A worked example: the derived-metric trap</h2>
+<p>Consider a controller that decides pod health by computing restarts divided by uptime and flagging any value above 0.1 as unhealthy. Walk through the arithmetic. A pod that has restarted twice in 18 hours has an uptime of 18 hours, so the ratio is 2/18 ≈ 0.111 — above the 0.1 boundary. The controller blocks the rollout.</p>
+<p>The metric is not wrong in isolation. It is wrong because it was never defined, never reviewed, and never bounded. A pod that has run for 18 hours with two restarts is not obviously unhealthy; a pod that restarted twice in ten minutes is. The ratio conflates the two because uptime is in the denominator and the boundary was chosen without reference to expected restart frequency.</p>
+<p>The failure is not that an agent invented a metric. The failure is that the metric was not registered, versioned, or alerted on. Three mitigations follow directly:</p>
+<ul>
+<li><strong>Register derived metrics in the same system as raw ones.</strong> If the controller computes a ratio, export it to the metrics backend with a name and a help string. Then it appears in dashboards and can be alerted on like anything else.</li>
+<li><strong>Bound every derived metric.</strong> A ratio of restarts to uptime should have a documented expected range and a maximum plausible value. A value that exceeds the maximum should escalate to a human rather than trigger an action.</li>
+<li><strong>Make the decision reason a first-class field.</strong> The custom resource the controller writes should name the metric, the query, the observed value, and the threshold. If any of those is missing, the decision is not auditable.</li>
+</ul>
+<h2 id="what-to-measure-before-choosing">What to measure before choosing</h2>
+<p>Benchmarks comparing the two approaches are only meaningful if they are measured on your system. What follows is what to instrument, not a table of results.</p>
+<p><strong>Pipeline latency.</strong> Compare the time from image push to a completed canary decision. Instrument the CI job duration and the analysis step duration separately; the agent's advantage, if any, is in the analysis step, not the build. Compare medians and p95, not means — rollback latency is tail-dominated.</p>
+<p><strong>Mean time to recovery.</strong> Define the start point precisely. "SLO breach detected" is not the same as "first bad metric observed," and the two produce very different numbers. Instrument the timestamp of the first metric that would have breached the rule-based threshold, the timestamp of the rollback action, and the timestamp the service returned to baseline. The difference between the first and second is the decision latency; between the second and third is the recovery latency.</p>
+<p><strong>False-positive rate.</strong> Count rollbacks of builds that were, on later inspection, healthy. This requires a definition of "healthy" that a human applies after the fact. Do not let the controller grade its own homework by using its own thresholds.</p>
+<p><strong>Escalation rate.</strong> Count how often the automated path hands off to a human. A controller that handles more incidents but escalates the hard ones is not obviously better than a rule that pages a human for everything — the human's context switch is the cost.</p>
+<p><strong>Audit time.</strong> Measure how long it takes an engineer unfamiliar with the system to explain why a specific rollback happened. This is the metric that most consistently favors rules, and it is the one teams most often forget to measure.</p>
+<h2 id="the-decision-checklist">The decision checklist</h2>
+<p>Work through these in order. The first "no" is usually decisive.</p>
+<ol>
+<li><strong>Can you afford a non-deterministic rollback?</strong> If a compliance regime requires that every automated action be traceable to a written policy, an agent that generates its own thresholds is out of scope. This is a hard constraint, not a preference.</li>
+<li><strong>Is your outage cost high enough that speed matters?</strong> If a bad release costs minutes of degraded service and no revenue, the agent's latency advantage is worth little. If it costs money per minute, it is worth a lot.</li>
+<li><strong>Is your traffic stable enough to tune thresholds once?</strong> Stable traffic means rule-based thresholds stay correct for long periods, which removes the agent's main advantage.</li>
+<li><strong>Do you have the instrumentation to audit a decision?</strong> If you cannot answer "which metric, which query, which threshold, which value" for every automated action, do not deploy an agent. You will not be able to debug it.</li>
+<li><strong>Can you run both?</strong> A parallel pilot on a non-critical service, with identical metrics and both paths logging decisions, gives you a real comparison in weeks. This is almost always cheaper than an argument.</li>
+</ol>
+<p>A useful heuristic: if your current mean time to recovery is above roughly 15 minutes and dominated by human acknowledgement time, an agent will likely halve it. If it is already under about 5 minutes, the speed gain rarely justifies the audit burden.</p>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>The agent that blocks its own rollout.</strong> A controller that decides a new revision is unhealthy based on a metric it computed at runtime will hold the pipeline. Mitigation: a timeout on any hold. If the controller has not reached a decision within a bounded window, it should escalate rather than continue to hold.</p>
+<p><strong>The threshold job that drifts.</strong> If thresholds are regenerated from recent data, a traffic shift changes them. A shift toward lower latency makes the ceiling tighter and can roll back healthy builds. Mitigation: clamp regenerated thresholds to a documented range, and require human review when the new value moves more than a set fraction from the previous one.</p>
+<p><strong>The crash that loses state.</strong> A controller that keeps its decision tree in memory loses it on eviction. If the tree determines future actions, the replacement starts from a different baseline. Mitigation: persist the state to a versioned object and reload it on startup; make the reconciliation loop idempotent so a restart delays decisions rather than duplicating them.</p>
+<p><strong>The annotation escape hatch.</strong> Any controller that can act on a workload needs a per-workload opt-out, expressed as an annotation:</p>
+<pre><code class="language-yaml">metadata:
+  annotations:
+    autoheal.ai/disable: &quot;true&quot;
+</code></pre>
+<p>When present, the controller should restrict itself to non-destructive actions. This matters for canary services that intentionally run with elevated error rates and for synthetic load-test pods that should not be interfered with.</p>
+<h2 id="auditing-an-agents-decision">Auditing an agent's decision</h2>
+<p>If you run an agent, the audit trail is the product. Every decision should be written to a queryable object with the reason, the query, and the observed value. Listing them:</p>
+<pre><code class="language-sh">kubectl get healactions -A -o wide
+</code></pre>
+<p>When the reason names a derived metric, the raw values may only exist in the controller's logs:</p>
+<pre><code class="language-sh">kubectl logs -l app.kubernetes.io/name=autoheal -n autoheal --tail=1000
+</code></pre>
+<p>If that second command is routinely necessary, the instrumentation is insufficient. The target state is that the first command answers the question without the second.</p>
+<h2 id="recommendation">Recommendation</h2>
+<p>Default to rule-based rollback. It is deterministic, cheap, and auditable, and it covers the majority of failure modes that teams actually hit. Add agent-driven actions only where you can name the specific gap rules leave open — typically slow-burn resource degradation that no threshold captures — and only with the instrumentation to audit every decision.</p>
+<p>If you do adopt an agent, do it in parallel. Run it alongside the existing rules on a non-critical service, with both paths logging decisions to the same place. Compare decision latency, false positives, escalation rate, and audit time over a fixed window. The comparison is the deliverable; the agent is just one of the two things being compared.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one service and add a decision-reason field to whatever currently triggers its rollback — even if that is a human. Record the metric name, the query, the observed value, and the threshold in the same place the rollback is logged. Then ask one engineer who did not write the policy to read the last five rollback records and explain each one. If they cannot, you have found the gap that either approach has to close before it is worth automating further.
+===END===</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">Self-healing pipelines: Argo vs Crossplane in 2026</a></li>
+<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/self-healing-pipelines-argo-vs-crossplane-in-2026/">
+                        <h3>Self-healing pipelines: Argo vs Crossplane in 2026</h3>
+                        <p>Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
+                        <span class="related-meta">13 min read · 25 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">
+                        <h3>AI agents vs Argo, Tekton: which pipeline heals itself?</h3>
+                        <p>How Argo Workflows and Tekton Pipelines differ for automated failure detection and recovery, with working code and failure-mode analysis.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
+                        <h3>Spot evictions: the retry logic that holds up</h3>
+                        <p>Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+                        <span class="related-meta">13 min read · 12 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

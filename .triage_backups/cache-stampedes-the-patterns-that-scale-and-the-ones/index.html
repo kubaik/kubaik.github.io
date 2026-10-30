@@ -1,0 +1,605 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cache stampedes: the patterns that scale and the ones that don’t - Kubai Kevin</title>
+        <meta name="description" content="How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.">
+        
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-21T02:56:30.208859">
+        <meta property="article:modified_time" content="2026-10-03T11:26:44.167980+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Cache stampedes: the patterns that scale and the ones that don’t">
+        <meta property="og:description" content="How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.">
+        <meta property="og:url" content="https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png">
+        <meta property="og:image:alt" content="Cache stampedes: the patterns that scale and the ones that don’t">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cache stampedes: the patterns that scale and the ones that don’t">
+        <meta name="twitter:description" content="How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/#article",
+      "headline": "Cache stampedes: the patterns that scale and the ones that don’t",
+      "description": "How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.",
+      "datePublished": "2026-07-21T02:56:30+00:00",
+      "dateModified": "2026-10-03T11:26:44+00:00",
+      "wordCount": 3254,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/"
+      },
+      "keywords": "",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cache stampedes: the patterns that scale and the ones that don’t",
+          "item": "https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Cache stampedes: the patterns that scale and the ones that don’t</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Cache stampedes: the patterns that scale and the ones that don’t</h1>
+                
+                <p class="post-lead">How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.</p>
+                
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3254 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most caching write-ups stop exactly where the interesting part starts: the moment a popular key expires and every client races to rebuild it at once. This article covers the root cause, the patterns that hold up, and the failure modes that show up only after deployment.</p>
+<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
+<p>Caching clients typically expose a simple <code>get(key)</code> and <code>set(key, value)</code> pair, maybe with a TTL, and that is where the documentation ends. In practice, caching is a distributed systems problem wrapped in a key-value interface. The examples work fine in isolation, but break when real traffic, real databases, and real concurrency arrive.</p>
+<p>A typical production failure looks like this: cache keys are derived from a session identifier plus a time window. When the window rolls over, every client holding that key misses simultaneously and races to rebuild it. If 400 clients share the key, the database receives 400 identical queries in the same instant. Database CPU saturates, p99 latency climbs by an order of magnitude, and the on-call rotation gets paged.</p>
+<p>This is not a cache-server problem. It is a tool-use pattern problem. Teams that treat the cache as a local variable — set it once, forget it — are optimizing for the happy path and ignoring the failure modes. That works until it doesn't, and when it fails, it fails at exactly the moment the system is under the most load.</p>
+<p>The documentation gap is wider than most engineers expect. Client libraries assume you will handle concurrency, retries, and invalidation yourself. They do not warn that a single misconfigured TTL can turn a 100 ms API call into a multi-second database query when the key expires.</p>
+<p>The practical conclusion: design your cache usage patterns before you pick a cache layer. Otherwise the cache scales the happy path and collapses the moment reality hits.</p>
+<h2 id="how-stampedes-actually-work-under-the-hood">How stampedes actually work under the hood</h2>
+<p>Caching is a coordination problem. Every client wants the same value, and every cache miss triggers a read from the source. When that scales to hundreds of clients, a small event — a TTL expiry — can cascade into a full stampede.</p>
+<p>A thundering herd happens when many processes race to refresh the same stale key at the same time. The first process to miss triggers a database query; if every process misses simultaneously, the database sees load proportional to the client count. This is feedback amplification: one cache miss becomes many database reads.</p>
+<p>The key insight is that the problem is not the cache. It is the coordination mechanism around the cache. If you do not control how clients refresh stale keys, you are relying on luck to avoid a stampede.</p>
+<p>There are three common patterns for refreshing stale keys:</p>
+<ol>
+<li><strong>Lazy invalidation</strong> — the key expires naturally, and the first client to request it refreshes it. Simple, but dangerous under load.</li>
+<li><strong>Proactive refresh</strong> — a background job refreshes keys before they expire, so clients rarely see stale data. Reduces misses but adds complexity and can waste resources if data rarely changes.</li>
+<li><strong>Coordinated refresh</strong> — clients coordinate so only one refreshes the key while others wait or use a stale value temporarily. The most robust, but requires a coordination mechanism.</li>
+</ol>
+<p>Most teams default to lazy invalidation because it is the simplest. In low-traffic systems it works fine. In systems with traffic spikes or shared sessions, it fails spectacularly: the moment a popular key expires, every client that needs it races to refresh it, the database becomes the bottleneck, and latency spikes.</p>
+<p>The trigger can be surprisingly small. A session token that expires after 30 minutes of inactivity is a classic case: users log out, but browser tabs still hold the token. When it expires, every open tab races to refresh at once. The trigger is not a traffic spike — it is a silent session expiry.</p>
+<p>Cache eviction policy is another hidden factor. Redis supports several eviction policies, and <code>allkeys-lru</code> evicts keys aggressively under memory pressure. If keys are large or the memory limit is tight, Redis can evict keys before their TTL expires, producing extra misses on top of the scheduled ones. That extra miss pressure compounds the stampede.</p>
+<p>The patterns that scale reduce coordination overhead and distribute refresh load. The patterns that fail assume clients will refresh keys independently and luckily avoid a stampede.</p>
+<p>A single-node cache is also subject to single-instance bottlenecks regardless of client version. Cluster mode helps with horizontal scaling and memory distribution, but it does not solve the stampede problem by itself, because coordination for a given key still lands on one shard.</p>
+<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
+<p>The walkthrough below builds a cache layer in Python using a Redis client with a coordinated refresh pattern: only one client refreshes a stale key at a time, while others wait or use a stale value.</p>
+<h3 id="step-1-define-the-cache-miss-handler">Step 1: Define the cache miss handler</h3>
+<p>The first step is to handle cache misses gracefully. Instead of letting every client race to refresh the key, use a distributed lock so only one client refreshes it. Others wait or use a stale value temporarily.</p>
+<pre><code class="language-python">import time
+import logging
+from redis import Redis
+from redis.lock import Lock
+
+logger = logging.getLogger(__name__)
+
+class StampedeSafeCache:
+    def __init__(self, redis_client: Redis, lock_timeout=5.0, stale_ttl=10.0):
+        self.redis = redis_client
+        self.lock_timeout = lock_timeout  # Max time to hold lock
+        self.stale_ttl = stale_ttl       # How long to serve stale data
+
+    def get(self, key: str, fetch_func, ttl: int):
+        # Try to get the value from cache
+        value = self.redis.get(key)
+        if value is not None:
+            return value
+
+        # Cache miss: try to acquire a lock for this key
+        lock = Lock(self.redis, key + ':lock', timeout=self.lock_timeout, blocking_timeout=2.0)
+        acquired = lock.acquire(blocking=True)
+        if not acquired:
+            # Failed to get lock: serve stale data if available
+            stale = self.redis.getdel(key + ':stale')
+            if stale is not None:
+                logger.warning(f&quot;Using stale data for key {key}&quot;)
+                return stale
+            # If no stale data, just wait a bit and retry
+            time.sleep(0.1)
+            return self.get(key, fetch_func, ttl)
+
+        try:
+            # Re-check cache in case another client refreshed it while we waited
+            value = self.redis.get(key)
+            if value is not None:
+                return value
+
+            # Fetch fresh data
+            value = fetch_func()
+            if value is None:
+                return None
+
+            # Set the new value with TTL
+            self.redis.setex(key, ttl, value)
+
+            # Publish the new value as stale for others to use temporarily if needed
+            self.redis.setex(key + ':stale', self.stale_ttl, value)
+            return value
+        finally:
+            lock.release()
+</code></pre>
+<p>What this code does:</p>
+<ul>
+<li>Tries to read the key from cache first.</li>
+<li>On a miss, acquires a lock for the key, ensuring only one client refreshes it.</li>
+<li>If the lock cannot be acquired, tries stale data or waits briefly and retries.</li>
+<li>Once the lock is held, re-checks the cache in case another client refreshed it while waiting.</li>
+<li>Fetches fresh data, sets the new value, and also sets a short-lived stale copy as a fallback.</li>
+</ul>
+<p>The lock timeout bounds how long a crashed holder can block others. The stale TTL bounds how long fallback data can be served. Both values should be derived from the observed cost of <code>fetch_func()</code>: if a refresh normally takes 200 ms, a 5-second lock timeout is generous; if it can take 3 seconds under load, a 5-second timeout is tight and should be raised.</p>
+<h3 id="step-2-add-a-background-refresher">Step 2: Add a background refresher</h3>
+<p>Coordinated refresh works well for interactive requests, but it does not help background jobs or cron-like tasks. A complementary approach is to refresh keys proactively before they expire, so clients rarely see stale data.</p>
+<pre><code class="language-python">import asyncio
+import time
+import logging
+from redis.asyncio import Redis
+
+logger = logging.getLogger(__name__)
+
+async def background_refresher(redis: Redis, key_pattern: str, fetch_func, ttl: int):
+    while True:
+        # Scan for keys matching the pattern
+        keys = []
+        async for key in redis.scan_iter(match=key_pattern):
+            keys.append(key.decode())
+
+        # For each key, refresh if it's within a &quot;refresh window&quot;
+        for key in keys:
+            ttl_remaining = await redis.ttl(key)
+            if ttl_remaining &lt;= ttl // 2:  # Refresh when half the TTL is left
+                try:
+                    value = await fetch_func(key)
+                    if value is not None:
+                        await redis.setex(key, ttl, value)
+                        await redis.setex(key + ':stale', ttl // 3, value)
+                except Exception as e:
+                    logger.error(f&quot;Failed to refresh key {key}: {e}&quot;)
+
+        await asyncio.sleep(5)  # Run every 5 seconds
+</code></pre>
+<p>This refresher scans for keys matching a pattern and refreshes them when their TTL drops below half. It sets a new TTL and updates the stale copy with a shorter TTL so it does not linger.</p>
+<p>Two operational notes: <code>scan_iter</code> is a cursor-based scan, not a blocking <code>KEYS</code> call, so it is safe to run against a live instance, but the loop cost grows with key count. And the 5-second sleep is a starting point, not a recommendation — the correct interval is short enough that the refresher visits every hot key at least twice per refresh window.</p>
+<h3 id="step-3-integrate-with-your-api">Step 3: Integrate with your API</h3>
+<pre><code class="language-python">from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from redis import Redis
+
+app = FastAPI()
+redis = Redis(host='localhost', port=6379, db=0)
+cache = StampedeSafeCache(redis, lock_timeout=5.0, stale_ttl=10.0)
+
+def fetch_user_session(session_id: str):
+    # Simulate a database query
+    return {&quot;session_id&quot;: session_id, &quot;user_id&quot;: &quot;user_123&quot;, &quot;valid&quot;: True}
+
+@app.get(&quot;/session/{session_id}&quot;)
+async def get_session(session_id: str, request: Request):
+    # Use the cache with a 30-minute TTL
+    session_data = cache.get(
+        f&quot;session:{session_id}&quot;,
+        lambda: fetch_user_session(session_id),
+        ttl=1800
+    )
+    if session_data is None:
+        return JSONResponse(status_code=404, content={&quot;error&quot;: &quot;Session not found&quot;})
+    return session_data
+</code></pre>
+<p>The endpoint uses the cache to fetch session data. On a miss, it calls <code>fetch_user_session</code>, and the cache layer handles refresh coordination. Note that the sync Redis client is called from an async endpoint here; in a real deployment, use the async client (<code>redis.asyncio</code>) for request paths so the lock wait does not block the event loop.</p>
+<h3 id="step-4-monitor-and-tune">Step 4: Monitor and tune</h3>
+<p>The last step is to monitor cache behavior and tune TTLs, lock timeouts, and stale TTLs against real traffic. Instrument at minimum:</p>
+<ul>
+<li><code>cache_hits_total</code> and <code>cache_misses_total</code> — the ratio is your hit rate.</li>
+<li><code>cache_lock_wait_seconds</code> — a histogram, not an average; the tail is what matters.</li>
+<li><code>cache_stale_usage_total</code> — how often clients fall back to stale data.</li>
+<li><code>cache_refresh_duration_seconds</code> — how long <code>fetch_func</code> actually takes.</li>
+<li>Database query rate during cache expiry windows.</li>
+</ul>
+<p>Alerts should be tied to these signals rather than to a fixed number copied from another system. A reasonable starting rule is to alert when the hit rate drops materially below its trailing baseline, or when the p99 lock wait approaches the lock timeout, because that means clients are starting to time out and fall back.</p>
+<h2 id="how-to-measure-whether-your-fix-worked">How to measure whether your fix worked</h2>
+<p>Because every workload differs, the useful guidance is a measurement method, not a benchmark table. To evaluate a stampede fix:</p>
+<ol>
+<li><strong>Establish a baseline.</strong> Record p50, p95, and p99 request latency, database queries per second, and cache hit rate under a representative load. A load-testing tool that can simulate many concurrent clients hitting the same key is sufficient; the test script matters more than the tool.</li>
+<li><strong>Reproduce the stampede.</strong> Expire a hot key deliberately while the load test is running, and watch database QPS and p99 latency for the next few seconds. If nothing happens, the key is not hot enough or the load is not concurrent enough.</li>
+<li><strong>Apply the pattern.</strong> Enable coordinated refresh and repeat the identical test.</li>
+<li><strong>Compare the same metrics.</strong> The meaningful comparison is database QPS at the moment of expiry, and the shape of the p99 latency curve across the expiry window, not a single peak number.</li>
+<li><strong>Watch the tail, not the average.</strong> Lock waits and stale fallbacks are tail events. Averages will hide them.</li>
+</ol>
+<p>The expected shape of the improvement is a flat database QPS line through the expiry event, at the cost of a small latency increase for the clients that wait on the lock. Whether that trade is worth it depends on how much headroom the database has.</p>
+<h2 id="failure-modes-nobody-warns-you-about">Failure modes nobody warns you about</h2>
+<p>Even with a well-designed cache layer, several failure modes appear only after deployment.</p>
+<h3 id="1-lock-contention-under-extreme-load">1. Lock contention under extreme load</h3>
+<p>The coordinated refresh pattern uses a lock per key. Under extreme load, if thousands of clients miss the same key at once, they all contend for the same lock, lock acquisition time spikes, and some clients time out.</p>
+<p><strong>Fix:</strong> shard the lock. Instead of one lock per key, derive a lock name from a hash of the key so contention spreads across a pool.</p>
+<pre><code class="language-python">import hashlib
+from redis.lock import Lock
+
+def get_lock_name(key: str, shard_count=100):
+    return f&quot;lock:{hashlib.md5(key.encode()).hexdigest()[:8]}&quot;
+
+lock = Lock(redis, get_lock_name(key), timeout=lock_timeout)
+</code></pre>
+<p>With this scheme, clients waiting on a shard that happens to be occupied will still wait, so the shard count should be chosen so that collisions are rare for your hot-key distribution. The benefit is bounded by how many distinct hot keys exist.</p>
+<h3 id="2-stale-data-poisoning">2. Stale data poisoning</h3>
+<p>The stale-data mechanism is useful, but it can poison the cache if the refresher fails or fetches bad data. If the refresher writes an incorrect stale copy, clients may serve it for the entire stale TTL.</p>
+<p><strong>Fix:</strong> validate before writing the stale copy, and keep the stale TTL short.</p>
+<pre><code class="language-python">if value is not None and is_valid(value):
+    await redis.setex(key + ':stale', self.stale_ttl, value)
+</code></pre>
+<p>The deeper fix is to make the stale copy a last resort, not a default: log every stale serve, and alert if the rate rises, because that is an early signal that the refresher is failing.</p>
+<h3 id="3-memory-bloat-from-stale-copies">3. Memory bloat from stale copies</h3>
+<p>Each key has a stale copy with a shorter TTL. At millions of keys, stale copies can consume a meaningful fraction of cache memory, which in turn triggers evictions and more misses.</p>
+<p><strong>Fix:</strong> account for stale copies in capacity planning, or avoid storing them entirely and let clients fall back to the source under a bounded timeout. If you keep them, consider a separate eviction policy or a separate logical namespace so stale copies cannot evict primary entries.</p>
+<h3 id="4-clock-skew-across-clients">4. Clock skew across clients</h3>
+<p>If clients have skewed clocks, TTL calculations can differ, and expiries scatter in ways that are hard to predict. In systems spanning multiple regions or observing daylight-saving transitions, some clients may see a TTL expire at one local time and others at another.</p>
+<p><strong>Fix:</strong> compute TTLs from a consistent time source, store timestamps in UTC, and add jitter so expiries spread out.</p>
+<pre><code class="language-python">import random
+
+def get_ttl_with_jitter(base_ttl: int, jitter_pct=0.1):
+    jitter = int(base_ttl * jitter_pct)
+    return base_ttl + random.randint(-jitter, jitter)
+
+ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
+</code></pre>
+<p>Jitter is the cheapest stampede mitigation available and should be applied even when coordinated refresh is in place, because it reduces the number of keys that expire in the same second.</p>
+<h3 id="5-cache-failover-during-a-stampede">5. Cache failover during a stampede</h3>
+<p>If the cache fails over to a replica during a stampede, the new primary may not have the latest data, and clients that miss will fetch from the database while the failover is still settling. That combination can produce timeouts and 5xx responses.</p>
+<p><strong>Fix:</strong> size replicas so failover does not degrade throughput, and add client-side retries with exponential backoff for cache misses during failover. Note that retries add load to the source, so bound them and pair them with a circuit breaker.</p>
+<h3 id="the-hidden-cost-of-complexity">The hidden cost of complexity</h3>
+<p>The biggest failure mode is operational. Coordinated refresh adds moving parts: lock contention, stale data usage, memory bloat, TTL tuning. Each one needs a metric and an alert, or the system becomes harder to debug than the stampede it replaced.</p>
+<p>The rule that follows: do not add this complexity unless the measurements say you need it. If your hit rate is high and your tail latency is flat through expiry windows, you do not have a stampede problem. If database QPS spikes every time a hot key expires, you do.</p>
+<h2 id="choosing-tooling-by-capability-not-by-name">Choosing tooling by capability, not by name</h2>
+<p>Tool choice matters less than capability. When evaluating a cache and its client for stampede resistance, check for:</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Why it matters</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atomic set-if-absent</td>
+<td>Needed for lock acquisition without races</td>
+<td>Documented behavior of the set operation with a conditional flag</td>
+</tr>
+<tr>
+<td>TTL introspection</td>
+<td>The refresher needs to know remaining TTL</td>
+<td>A command that returns remaining TTL per key</td>
+</tr>
+<tr>
+<td>Non-blocking key iteration</td>
+<td>Refreshers must not stall the server</td>
+<td>Cursor-based scan, not a blocking keys command</td>
+</tr>
+<tr>
+<td>Scripted atomic operations</td>
+<td>Re-check-and-set must be atomic</td>
+<td>Server-side scripting support</td>
+</tr>
+<tr>
+<td>Cluster-aware locking</td>
+<td>Locks must land on the right shard</td>
+<td>How the client routes lock keys</td>
+</tr>
+<tr>
+<td>Async client</td>
+<td>Request paths must not block the event loop</td>
+<td>An async API in the client library</td>
+</tr>
+</tbody>
+</table>
+<p>Background job runners and metrics systems should be selected on the same basis: retry semantics, task prioritization, and histogram support respectively. A tool that lacks the capability you need will cost more to work around than it saves.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>Coordinated refresh is not a silver bullet. It adds complexity, latency, and operational overhead. It is worth it only when:</p>
+<ol>
+<li><strong>Cache misses are expensive.</strong> If the source can absorb the miss load, the pattern adds latency for no benefit.</li>
+<li><strong>Keys are hot and shared.</strong> If each client has its own keys, stampedes are unlikely.</li>
+<li><strong>Traffic is bursty or unpredictable.</strong> Steady, low load rarely produces simultaneous misses.</li>
+<li><strong>You have operational capacity.</strong> Without monitoring for lock contention and stale usage, the pattern can hide problems rather than fix them.</li>
+<li><strong>The cache is genuinely distributed.</strong> A single-node cache can still stampede, but the coordination mechanics and failure modes differ.</li>
+</ol>
+<p>A decision checklist for a specific system:</p>
+<ul>
+<li>Does a single key expire while more than a handful of clients are waiting on it?</li>
+<li>Does database QPS spike in a narrow window after expiry?</li>
+<li>Is the refresh operation idempotent and safe to run once per key?</li>
+<li>Can the source tolerate the retry load if the lock holder fails?</li>
+<li>Do you have a metric for lock wait and stale fallback?</li>
+</ul>
+<p>If the first two answers are yes and the last three are yes, coordinated refresh is likely worth the complexity. If not, start with jitter and a shorter, staggered TTL, measure again, and only then add locking.</p>
+<h2 id="next-30-minutes">Next 30 minutes</h2>
+<p>Pick your single hottest cache key, add jitter to its TTL, and instrument two counters — cache misses and source queries — around its expiry window. Run a load test that expires the key deliberately, and record the source query rate for the ten seconds after expiry. That number tells you whether you have a stampede problem, and it gives you the baseline you need before changing anything else.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
+<li><a href="https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/memory-systems-for-production-agents/">
+                        <h3>Memory Systems for Production Agents: Context Leaks Explained</h3>
+                        <p>How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+                        <span class="related-meta">11 min read · 15 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+                        <h3>AI on slow networks: Nairobi teams&#39; 2026 playbook</h3>
+                        <p>How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
+                        <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
+                        <p>How idempotency keys work, where they fail, and the failure modes they don&amp;#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

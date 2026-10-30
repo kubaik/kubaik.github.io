@@ -1,0 +1,812 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Temporal changed our agent retries for good - Kubai Kevin</title>
+        <meta name="description" content="Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.">
+        <meta name="keywords" content="TemporalWorkflow, DurableExecution, AgentPlatform, Workflow, TemporalCloud, InngestVsTemporal, LambdaRetryCost, ExactlyOnceExecution, Cloudcomputing">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-03T16:05:45.341821">
+        <meta property="article:modified_time" content="2026-10-04T16:40:21.305734+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Temporal changed our agent retries for good">
+        <meta property="og:description" content="Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.">
+        <meta property="og:url" content="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/temporal-changed-our-agent-retries-for-good.png">
+        <meta property="og:image:alt" content="Temporal changed our agent retries for good">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Temporal changed our agent retries for good">
+        <meta name="twitter:description" content="Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/temporal-changed-our-agent-retries-for-good.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/#article",
+      "headline": "Temporal changed our agent retries for good",
+      "description": "Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.",
+      "datePublished": "2026-09-03T16:05:45+00:00",
+      "dateModified": "2026-10-04T16:40:21+00:00",
+      "wordCount": 3139,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/"
+      },
+      "keywords": "TemporalWorkflow, DurableExecution, AgentPlatform, Workflow, TemporalCloud, InngestVsTemporal, LambdaRetryCost, ExactlyOnceExecution",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/temporal-changed-our-agent-retries-for-good.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Temporal changed our agent retries for good",
+          "item": "https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Temporal changed our agent retries for good</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Temporal changed our agent retries for good</h1>
+                
+                <p class="post-lead">Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TemporalWorkflow</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DurableExecution</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/agentplatform/"
+                       style="text-decoration:none;">AgentPlatform</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Workflow</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TemporalCloud</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">Cloudcomputing</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3139 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-failure-mode-retrying-a-step-is-not-the-same-as-retrying-a-workflow">The failure mode: retrying a step is not the same as retrying a workflow</h2>
+<p>Agent platforms commonly start out with cron jobs, message queues, or hand-rolled retry loops. That is adequate while an agent performs one bounded action. It stops being adequate once the agent orchestrates a sequence of side-effecting steps — for example, a refund that calls a payment gateway, then a fraud engine, then writes a row to PostgreSQL.</p>
+<p>The assumption that trips teams up is this: <em>if a step fails, retrying from the same point will eventually succeed.</em> Three things break that assumption.</p>
+<ol>
+<li><strong>Errors are not uniform over time.</strong> A downstream API may return 500, 429, 409, or a 200 with a semantically failed body. Blind retry treats all of these identically.</li>
+<li><strong>Agent state may have changed between attempts.</strong> A retry that re-reads current state can act on data the original attempt never saw.</li>
+<li><strong>Partial results may be invalid.</strong> If step 2 succeeded and step 3 failed, the side effect of step 2 is still live. Retrying the whole sequence duplicates it.</li>
+</ol>
+<p>The observable symptoms are cascading retries, duplicated side effects, and orphaned records that need manual reconciliation. Teams typically respond by adding idempotency keys, compensating transactions, and exponential backoff — all correct, but each one is a hand-built mechanism that must be reasoned about per workflow, and the reasoning gets harder as the number of steps grows.</p>
+<p>Durable execution runtimes address this by moving retry, state persistence, and replay out of application code and into a runtime. The workflow function is written as ordinary sequential code; the runtime records each step's result and, after a crash, replays the workflow from the recorded history rather than re-executing completed steps. This article builds a refund workflow on that model, then examines where the model helps and where it does not.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>You will need:</p>
+<ul>
+<li>A Node.js 20 LTS project with TypeScript</li>
+<li>A durable execution runtime — either a managed service or a self-hosted cluster; the code below uses the Temporal SDK, but the concepts map to any runtime with the same execution model</li>
+<li>A database to store final results (PostgreSQL is used here)</li>
+<li>An event source for incoming work (any queue or HTTP endpoint will do)</li>
+</ul>
+<p>What you will build: a refund workflow that calls three external services in sequence, writes the result to PostgreSQL, and retries failed steps without duplicating work. The workflow survives worker restarts, API timeouts, and transient errors without leaving half-processed refunds behind.</p>
+<h2 id="step-1-project-and-worker-setup">Step 1 — project and worker setup</h2>
+<p>Initialize the project and install dependencies:</p>
+<pre><code class="language-bash">npm init -y
+npm i -D typescript @types/node tsx
+npx tsc --init
+mkdir src
+npm i @temporalio/worker @temporalio/client @temporalio/workflow
+</code></pre>
+<p>Create a worker in <code>src/worker.ts</code>:</p>
+<pre><code class="language-typescript">import { Worker } from '@temporalio/worker';
+import * as activities from './activities';
+
+async function run() {
+  const worker = await Worker.create({
+    workflowsPath: require.resolve('./workflows'),
+    activities,
+    taskQueue: 'refund-queue-v1',
+  });
+  await worker.run();
+}
+
+run().catch((err) =&gt; {
+  console.error(err);
+  process.exit(1);
+});
+</code></pre>
+<p>Configure the connection to your runtime. A managed cluster normally requires mTLS on port 7233; a local development server listens on <code>localhost:7233</code> without TLS. The address and namespace are supplied through environment variables:</p>
+<pre><code class="language-bash">export TEMPORAL_ADDRESS=localhost:7233
+export TEMPORAL_NAMESPACE=default
+</code></pre>
+<p>If your deployment requires client certificates, pass <code>tls</code> options to the connection object rather than relying on environment variables alone.</p>
+<p><strong>Gotcha:</strong> the port number is the same for local and managed deployments, but the transport is not. A worker pointed at a managed endpoint without TLS configuration fails at connection time, not at task execution time, so the error surfaces immediately on startup.</p>
+<h2 id="step-2-the-workflow-and-its-activities">Step 2 — the workflow and its activities</h2>
+<p>Define the workflow in <code>src/workflows.ts</code>. Note that the workflow function contains only orchestration logic — no network calls, no database access, no <code>Date.now()</code>, no randomness. Everything nondeterministic belongs in an activity.</p>
+<pre><code class="language-typescript">import {
+  proxyActivities,
+  defineSignal,
+  setHandler,
+  condition,
+} from '@temporalio/workflow';
+import type * as activities from './activities';
+import type { RefundInput } from './types';
+
+const { callPaymentGateway, callFraudEngine, writeToPostgres, reversePayment } =
+  proxyActivities&lt;typeof activities&gt;({
+    startToCloseTimeout: '30 seconds',
+    retry: {
+      maximumAttempts: 5,
+      initialInterval: '1 second',
+      maximumInterval: '10 seconds',
+      backoffCoefficient: 2,
+    },
+  });
+
+export const cancelSignal = defineSignal&lt;[boolean]&gt;('cancel');
+
+export async function refundWorkflow(input: RefundInput): Promise&lt;void&gt; {
+  let cancelled = false;
+  setHandler(cancelSignal, () =&gt; {
+    cancelled = true;
+  });
+
+  const paymentResult = await callPaymentGateway(input.paymentId, input.idempotencyKey);
+  if (paymentResult.status === 'DECLINED') {
+    throw new Error('Payment declined');
+  }
+
+  if (cancelled) {
+    await reversePayment(input.paymentId, input.idempotencyKey);
+    return;
+  }
+
+  const fraudResult = await callFraudEngine(input.userId, input.amount);
+  if (fraudResult.status === 'REJECTED') {
+    await reversePayment(input.paymentId, input.idempotencyKey);
+    return;
+  }
+
+  await writeToPostgres({
+    refundId: input.refundId,
+    userId: input.userId,
+    amount: input.amount,
+    status: 'COMPLETED',
+    timestamp: input.requestedAt,
+  });
+}
+</code></pre>
+<p>Two details matter here. First, <code>input.requestedAt</code> is passed in as data rather than computed inside the workflow, because calling <code>new Date()</code> inside a workflow body is nondeterministic and will diverge on replay. Second, cancellation is handled by checking a flag and performing compensation explicitly — throwing from a signal handler is not a reliable way to unwind a workflow, because the handler runs on a different code path than the main workflow body.</p>
+<p>Implement the activities in <code>src/activities.ts</code>:</p>
+<pre><code class="language-typescript">import { createPool, sql } from 'slonik';
+import type { RefundRecord } from './types';
+
+const pool = createPool(process.env.DATABASE_URL!, {
+  maximumPoolSize: 10,
+  idleTimeout: 30,
+  connectionTimeout: 2,
+});
+
+export async function callPaymentGateway(
+  paymentId: string,
+  idempotencyKey: string,
+): Promise&lt;{ status: 'APPROVED' | 'DECLINED' }&gt; {
+  const res = await fetch(
+    `https://payment.example.com/api/v1/payments/${paymentId}/refund`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': process.env.PAYMENT_API_KEY!,
+        'Idempotency-Key': idempotencyKey,
+      },
+    },
+  );
+  if (!res.ok) throw new Error(`Payment API ${res.status}`);
+  return (await res.json()) as { status: 'APPROVED' | 'DECLINED' };
+}
+
+export async function callFraudEngine(
+  userId: string,
+  amount: number,
+): Promise&lt;{ status: 'APPROVED' | 'REJECTED' }&gt; {
+  const res = await fetch('https://fraud.example.com/v1/check', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': process.env.FRAUD_API_KEY!,
+    },
+    body: JSON.stringify({ userId, amount }),
+  });
+  if (!res.ok) throw new Error(`Fraud API ${res.status}`);
+  return (await res.json()) as { status: 'APPROVED' | 'REJECTED' };
+}
+
+export async function reversePayment(
+  paymentId: string,
+  idempotencyKey: string,
+): Promise&lt;void&gt; {
+  const res = await fetch(
+    `https://payment.example.com/api/v1/payments/${paymentId}/reversal`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': process.env.PAYMENT_API_KEY!,
+        'Idempotency-Key': `${idempotencyKey}-reversal`,
+      },
+    },
+  );
+  if (!res.ok) throw new Error(`Reversal API ${res.status}`);
+}
+
+export async function writeToPostgres(record: RefundRecord): Promise&lt;void&gt; {
+  await pool.query(sql`
+    INSERT INTO refunds (refund_id, user_id, amount, status, timestamp)
+    VALUES (${record.refundId}, ${record.userId}, ${record.amount},
+            ${record.status}, ${record.timestamp})
+    ON CONFLICT (refund_id) DO NOTHING
+  `);
+}
+</code></pre>
+<p>Create the table:</p>
+<pre><code class="language-sql">CREATE TABLE refunds (
+  refund_id   TEXT PRIMARY KEY,
+  user_id     TEXT NOT NULL,
+  amount      NUMERIC NOT NULL,
+  status      TEXT NOT NULL,
+  timestamp   TIMESTAMPTZ NOT NULL
+);
+
+CREATE INDEX idx_refunds_user_id ON refunds(user_id);
+</code></pre>
+<p>Start the worker:</p>
+<pre><code class="language-bash">npx tsx src/worker.ts
+</code></pre>
+<p><strong>Timeout relationship.</strong> Activity timeouts should be shorter than the workflow's overall timeout. If the workflow has a 5-minute execution timeout and each activity has a 2-minute <code>startToCloseTimeout</code>, a slow activity is retried by the runtime without restarting the workflow. If the activity timeout exceeds the workflow timeout, the workflow will be terminated while the activity is still in flight, and the activity's result is discarded.</p>
+<h2 id="step-3-edge-cases-that-actually-bite">Step 3 — edge cases that actually bite</h2>
+<h3 id="idempotency-keys-must-be-generated-once-per-workflow-run">Idempotency keys must be generated once per workflow run</h3>
+<p>The key must be stable across retries. Generate it at workflow start, from data already in the input, and pass it to every activity that performs a side effect:</p>
+<pre><code class="language-typescript">export async function refundWorkflow(input: RefundInput): Promise&lt;void&gt; {
+  const idempotencyKey = `refund-${input.refundId}`;
+  // ... pass idempotencyKey to every activity
+}
+</code></pre>
+<p>Do not generate the key inside an activity. If the activity is retried, a freshly generated key defeats the purpose entirely — the downstream service sees a new request rather than a duplicate of the old one.</p>
+<h3 id="compensation-must-be-explicit">Compensation must be explicit</h3>
+<p>If a later step fails, earlier side effects remain. The workflow must reverse them. Note that the reversal itself is an activity and therefore retryable:</p>
+<pre><code class="language-typescript">let paymentApproved = false;
+
+try {
+  const paymentResult = await callPaymentGateway(input.paymentId, idempotencyKey);
+  paymentApproved = true;
+
+  const fraudResult = await callFraudEngine(input.userId, input.amount);
+  if (fraudResult.status === 'REJECTED') {
+    throw new Error('Fraud check failed');
+  }
+
+  await writeToPostgres({ /* ... */ });
+} catch (err) {
+  if (paymentApproved) {
+    await reversePayment(input.paymentId, idempotencyKey);
+  }
+  throw err;
+}
+</code></pre>
+<p>The <code>paymentApproved</code> flag lives in workflow state, which is persisted. If the worker crashes mid-workflow, replay restores the flag correctly before the catch block re-executes.</p>
+<h3 id="transient-database-errors">Transient database errors</h3>
+<p>PostgreSQL error codes <code>40P01</code> (deadlock detected) and <code>40001</code> (serialization failure) are safe to retry. Connection-level codes such as <code>57P01</code> and <code>57P02</code> indicate the server is shutting down and the connection is gone; the client should reconnect rather than retry on the same connection. A Slonik interceptor can distinguish these:</p>
+<pre><code class="language-typescript">import { createPool, createTypeParserPreset } from 'slonik';
+
+const TRANSIENT = new Set(['40P01', '40001']);
+
+export const retryOnTransientError = {
+  name: 'retry-transient',
+  queryExecutionError: async (ctx, query, error) =&gt; {
+    const code = (error as { code?: string }).code;
+    if (code &amp;&amp; TRANSIENT.has(code)) {
+      // Let the caller's retry policy handle it.
+      throw error;
+    }
+    throw error;
+  },
+};
+</code></pre>
+<p><strong>Failure-mode note:</strong> the interceptor above does not itself retry; it classifies. Retrying at two layers — the interceptor and the activity retry policy — produces multiplicative retry counts. Pick one layer. For database work inside a durable workflow, the activity retry policy is usually the better choice, because the runtime records the attempt count and visibility tooling can show it.</p>
+<h3 id="cancellation">Cancellation</h3>
+<p>Send a signal from a client process:</p>
+<pre><code class="language-typescript">import { Client, Connection } from '@temporalio/client';
+
+const connection = await Connection.connect();
+const client = new Client({ connection });
+
+await client.workflow.getHandle(workflowId).signal(cancelSignal, true);
+</code></pre>
+<p>The workflow's main body observes the flag at the next await point and runs compensation. A signal handler that throws does not reliably unwind the workflow, because the handler executes outside the main body's call stack.</p>
+<p><strong>Common mistake:</strong> omitting a workflow execution timeout. Without one, a workflow stuck on a step that never resolves occupies a worker slot indefinitely. Set a <code>workflowExecutionTimeout</code> appropriate to the domain — minutes for automated refunds, days for workflows that wait on human approval.</p>
+<h2 id="step-4-observability-and-testing">Step 4 — observability and testing</h2>
+<h3 id="visibility">Visibility</h3>
+<p>The runtime's web UI and CLI expose workflow state directly: which workflows are running, which are retrying, which have failed, and the full event history of each. For a refund workflow, the useful filters are by workflow type, by status, and by start time.</p>
+<h3 id="metrics">Metrics</h3>
+<p>The worker SDK exposes metrics that can be scraped by Prometheus:</p>
+<pre><code class="language-typescript">import { Runtime, DefaultLogger } from '@temporalio/worker';
+
+Runtime.install({
+  logger: new DefaultLogger('info'),
+  metrics: {
+    otel: {
+      metricsExporter: { url: process.env.OTEL_EXPORTER_URL },
+    },
+  },
+});
+</code></pre>
+<p>The metrics worth alerting on:</p>
+<ul>
+<li><strong>Task queue backlog</strong> — the number of pending tasks relative to worker capacity. This is the leading indicator that workers are undersized.</li>
+<li><strong>Activity failure rate by activity type</strong> — a spike isolated to one activity points at a downstream dependency, not at the worker.</li>
+<li><strong>Workflow task failure rate</strong> — this indicates nondeterminism, which is a code defect, not a load problem.</li>
+<li><strong>Schedule-to-start latency</strong> — how long work waits before a worker picks it up. This is the metric that correlates with user-visible delay.</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<p>The runtime provides a test environment that runs workflows and activities in-process without a cluster:</p>
+<pre><code class="language-typescript">import { TestWorkflowEnvironment } from '@temporalio/testing';
+import { Worker } from '@temporalio/worker';
+import { refundWorkflow } from './workflows';
+
+describe('refundWorkflow', () =&gt; {
+  let env: TestWorkflowEnvironment;
+  let worker: Worker;
+
+  beforeAll(async () =&gt; {
+    env = await TestWorkflowEnvironment.createLocal();
+  });
+
+  afterAll(async () =&gt; {
+    await env?.teardown();
+  });
+
+  it('completes a refund end to end', async () =&gt; {
+    worker = await Worker.create({
+      connection: env.nativeConnection,
+      taskQueue: 'test-refund-queue',
+      workflowsPath: require.resolve('./workflows'),
+      activities: {
+        callPaymentGateway: async () =&gt; ({ status: 'APPROVED' }),
+        callFraudEngine: async () =&gt; ({ status: 'APPROVED' }),
+        writeToPostgres: async () =&gt; undefined,
+        reversePayment: async () =&gt; undefined,
+      },
+    });
+
+    await worker.runUntil(async () =&gt; {
+      const handle = await env.client.workflow.start(refundWorkflow, {
+        taskQueue: 'test-refund-queue',
+        workflowId: 'test-refund-wf-1',
+        args: [{
+          refundId: 'r-123',
+          paymentId: 'p-456',
+          userId: 'u-789',
+          amount: 100,
+          idempotencyKey: 'refund-r-123',
+          requestedAt: '2025-01-01T00:00:00.000Z',
+        }],
+      });
+      await handle.result();
+    });
+  });
+
+  it('compensates when the fraud check rejects', async () =&gt; {
+    const reversed: string[] = [];
+    worker = await Worker.create({
+      connection: env.nativeConnection,
+      taskQueue: 'test-refund-queue',
+      workflowsPath: require.resolve('./workflows'),
+      activities: {
+        callPaymentGateway: async () =&gt; ({ status: 'APPROVED' }),
+        callFraudEngine: async () =&gt; ({ status: 'REJECTED' }),
+        writeToPostgres: async () =&gt; undefined,
+        reversePayment: async (paymentId: string) =&gt; {
+          reversed.push(paymentId);
+        },
+      },
+    });
+
+    await worker.runUntil(async () =&gt; {
+      const handle = await env.client.workflow.start(refundWorkflow, {
+        taskQueue: 'test-refund-queue',
+        workflowId: 'test-refund-wf-2',
+        args: [{
+          refundId: 'r-124',
+          paymentId: 'p-457',
+          userId: 'u-790',
+          amount: 100,
+          idempotencyKey: 'refund-r-124',
+          requestedAt: '2025-01-01T00:00:00.000Z',
+        }],
+      });
+      await handle.result().catch(() =&gt; undefined);
+    });
+
+    expect(reversed).toEqual(['p-457']);
+  });
+});
+</code></pre>
+<p>The second test is the one that matters. Happy-path tests pass on systems with broken compensation logic; the failure-path test is what catches it.</p>
+<h2 id="how-to-measure-whether-this-is-actually-better">How to measure whether this is actually better</h2>
+<p>Any claim that a durable execution runtime reduces latency or error rate is a claim about <em>your</em> system, and the only way to know is to measure it. Here is what to instrument.</p>
+<p><strong>Baseline, before migration:</strong></p>
+<ul>
+<li>Record, per workflow instance, the wall-clock time from first attempt to terminal state (success or abandoned).</li>
+<li>Count duplicate side effects: rows in the downstream system with the same logical operation ID but different request IDs.</li>
+<li>Count orphans: records left in an intermediate state past a defined staleness threshold.</li>
+<li>Record the number of manual interventions per week (support tickets, scripts run against production data).</li>
+</ul>
+<p><strong>After migration, measure the same four things.</strong> Keep the measurement window the same length and, ideally, the same traffic mix. If you cannot hold traffic constant, report the numbers as rates rather than counts.</p>
+<p><strong>What to expect, and why.</strong> The p95 latency for a <em>successful</em> workflow should improve mainly because steps that previously triggered a full-sequence retry now retry only the failed step. The improvement scales with the number of steps and the failure rate of the later steps — if almost all failures happen at step 1, there is little to gain. The duplicate-side-effect count should go to zero if idempotency keys are implemented correctly; if it does not, the bug is in the key generation, not in the runtime.</p>
+<p><strong>Cost.</strong> Durable execution runtimes typically charge per action or per task, plus storage for event history. A hand-rolled Lambda-plus-queue system charges per invocation and per message. Which is cheaper depends on how many steps each workflow has and how long it waits between them. Workflows that spend most of their time waiting (human approval, long polling) are usually cheaper on a durable execution runtime, because waiting does not consume compute. Workflows that are a single short step are usually cheaper on a queue.</p>
+<h2 id="choosing-between-approaches">Choosing between approaches</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Durable execution runtime</th>
+<th>Queue + retry loop</th>
+<th>Managed step functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State persistence</td>
+<td>Runtime-managed, per workflow</td>
+<td>Application-managed</td>
+<td>Runtime-managed</td>
+</tr>
+<tr>
+<td>Deterministic replay</td>
+<td>Required (constrains workflow code)</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Retry granularity</td>
+<td>Per activity</td>
+<td>Per message</td>
+<td>Per state</td>
+</tr>
+<tr>
+<td>Compensation</td>
+<td>Explicit, in code</td>
+<td>Explicit, in code</td>
+<td>Explicit, in state machine</td>
+</tr>
+<tr>
+<td>Visibility into in-flight work</td>
+<td>Full event history</td>
+<td>Depends on queue tooling</td>
+<td>Full execution history</td>
+</tr>
+<tr>
+<td>Operational overhead</td>
+<td>Cluster or managed service</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Best fit</td>
+<td>Multi-step, long-lived, cross-service</td>
+<td>Single-step, short-lived</td>
+<td>AWS-native, bounded workflows</td>
+</tr>
+</tbody>
+</table>
+<p>The constraint worth understanding before committing is <strong>determinism</strong>. Workflow code must produce the same sequence of commands on replay as it did on the original execution. That means no <code>Date.now()</code>, no <code>Math.random()</code>, no direct network calls, and no iteration over unordered collections inside the workflow body. These rules are enforced by a sandbox at runtime, and violations produce a nondeterminism error that terminates the workflow. This is a real cost: it forces a discipline that ordinary application code does not require.</p>
+<p>The benefit is that the workflow body reads as linear code — <code>await stepA(); await stepB(); await stepC();</code> — while the runtime handles persistence, retry, and recovery. For workflows with more than a handful of side-effecting steps, that trade is usually worth making. For a single step, it is not.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>What happens if the worker crashes mid-activity?</strong>
+The runtime records activity heartbeats. When a worker restarts, the activity is either resumed if it was heartbeating, or retried from the start if it was not. Activities that do not heartbeat are retried from the beginning, so they must be idempotent.</p>
+<p><strong>Can this be done in Python or Go?</strong>
+Yes. The execution model — workflows, activities, signals, queries — is the same across SDKs. Workflow and activity definitions are not portable between languages, but the design is.</p>
+<p><strong>Why not use a managed step function service?</strong>
+Managed step functions are a good fit when the workflow is confined to one cloud provider and the steps are all provider-native services. Durable execution runtimes are a better fit when the workflow spans multiple providers, calls arbitrary HTTP services, or needs to run for months.</p>
+<p><strong>How does this interact with an existing queue?</strong>
+It sits in front of it. The queue delivers a message, a small handler starts a workflow with the message as input, and the workflow takes over from there. The queue is responsible for delivery; the runtime is responsible for execution.</p>
+<p><strong>Does the workflow need a timeout?</strong>
+Yes. Set a <code>workflowExecutionTimeout</code> for the overall bound and a <code>workflowRunTimeout</code> for a single run if the workflow can be continued-as-new. Without a timeout, a workflow waiting on something that never arrives runs indefinitely.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one workflow in your system that has more than two sequential side-effecting steps. Write down, for each step, what happens if it succeeds and a later step fails. If any step's answer is "we would have to clean that up manually," you have found the exact place where a durable execution runtime earns its keep — and you have a concrete test case to write before you migrate anything.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">Agents keep breaking prod: 3 boundary rules you still need</a></li>
+<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Stopping a runaway polling agent from flooding your API</a></li>
+<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-platform-abstractions-a-case-study/">
+                        <h3>Agent platform abstractions: a case study</h3>
+                        <p>Why agent failures are platform failures: typed tool contracts, durable execution, and structured traces that make runs replayable and retries safe.</p>
+                        <span class="related-meta">11 min read · 16 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/webhooks-done-right-retries-that-dont-explode-in-2026/">
+                        <h3>Webhooks done right: retries that don’t explode in 2026</h3>
+                        <p>A practical guide to webhook delivery: idempotency, retry budgets, silent rate limits, poison-message triage, and what to instrument before you scale.</p>
+                        <span class="related-meta">10 min read · 25 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-patterns-for-systems-that-wont-die-when-networks/">
+                        <h3>7 patterns for systems that won’t die when networks</h3>
+                        <p>Concrete patterns for building services that tolerate network partitions: retries, idempotency, outbox, sagas, and how to measure each trade-off.</p>
+                        <span class="related-meta">18 min read · 14 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

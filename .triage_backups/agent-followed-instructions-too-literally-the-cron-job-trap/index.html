@@ -1,0 +1,545 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent followed instructions too literally: the cron job trap - Kubai Kevin</title>
+        <meta name="description" content="Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.">
+        <meta name="keywords" content="CronJobTimeout, Literal, Python, Python3, Kubernetes, K8s, Techjobs">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-11T08:43:33.018896">
+        <meta property="article:modified_time" content="2026-10-06T05:33:38.769870+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent followed instructions too literally: the cron job trap">
+        <meta property="og:description" content="Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-followed-instructions-too-literally-the-cron-job-trap.png">
+        <meta property="og:image:alt" content="Agent followed instructions too literally: the cron job trap">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent followed instructions too literally: the cron job trap">
+        <meta name="twitter:description" content="Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-followed-instructions-too-literally-the-cron-job-trap.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/#article",
+      "headline": "Agent followed instructions too literally: the cron job trap",
+      "description": "Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.",
+      "datePublished": "2026-08-11T08:43:33+00:00",
+      "dateModified": "2026-10-06T05:33:38+00:00",
+      "wordCount": 2494,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/"
+      },
+      "keywords": "CronJobTimeout, Literal, Python, Python3, Kubernetes, K8s, Techjobs",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/agent-followed-instructions-too-literally-the-cron-job-trap.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent followed instructions too literally: the cron job trap",
+          "item": "https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent followed instructions too literally: the cron job trap</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent followed instructions too literally: the cron job trap</h1>
+                
+                <p class="post-lead">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">CronJobTimeout</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Literal</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python3/"
+                       style="text-decoration:none;">Python3</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2494 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-06
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-symptom-a-job-that-never-finishes-and-never-fails">The symptom: a job that never finishes and never fails</h2>
+<p>A recurring production pattern in agent-style workloads looks like this: an alert fires for a job stuck in a <code>Running</code> state, the application log contains no stack trace, and CPU usage sits near idle. The container may exit cleanly after a long interval with exit code 0 and no error message, or it may simply keep running. Teams typically start by reading pod logs looking for a panic or timeout, then check <code>kubectl top pod</code>, and find nothing obviously wrong.</p>
+<p>The confusion comes from a specific mismatch. The agent was built to a ticket that said something like: "run every 5 minutes; if the task errors, retry up to 3 times with 1-minute backoff." The spec described retries but never described a timeout. An implementation that follows that spec literally has no upper bound on how long a single attempt may take, so a blocked I/O call never produces an error, never triggers a retry, and never hard-fails.</p>
+<p>That mismatch between <em>process alive</em> and <em>work done</em> is the core trap. Kubernetes reports the pod as healthy because the process has not crashed. The liveness probe returns 200 because the health endpoint is served by a different code path than the blocked work. The surface symptom is "pods stay green but do not process anything," which reads like a monitoring gap rather than a bug in the agent code.</p>
+<h2 id="why-the-literal-reading-fails">Why the literal reading fails</h2>
+<p>The root cause is the conflation of two distinct failure modes in distributed systems: process exit and work completion. The retry spec treats retries as a process-level concern — restart or re-enter the loop on error — but the actual failure is a network-level hang that never raises an exception.</p>
+<p>In Python, <code>requests</code> documents <code>timeout=None</code> as the default, meaning the underlying socket blocks until the server responds or the connection is reset. A hung TCP connection leaves the process blocked in a syscall, and from the process's point of view nothing has gone wrong. There is no exception to catch, so the retry branch is never entered.</p>
+<p>A common failure mode is that teams rely on load balancer or ingress timeouts to bound request duration. That works when traffic traverses those layers. Kubernetes-native agents frequently call internal services directly over a service mesh or pod IPs, bypassing the layer that would have cut the connection. The bound that existed before no longer applies.</p>
+<p>A second contributing factor is DNS. Resolution happens before the HTTP client's connect timeout starts, so a slow resolver adds latency that no HTTP-level timeout covers. In Kubernetes, CoreDNS can become slow under load, and a multi-second lookup followed by a slow TCP handshake looks like a single long hang attributed to the server.</p>
+<h2 id="fix-1-set-explicit-socket-level-timeouts">Fix 1 — set explicit socket-level timeouts</h2>
+<p>The most common cause is the absence of a timeout on the HTTP client. The fix is to pass a timeout on every outbound call. In <code>requests</code>, a tuple splits connect and read timeouts.</p>
+<pre><code class="language-python">import requests
+
+# Set timeouts everywhere the agent calls external services.
+response = requests.get(
+    &quot;https://internal-service/api/v1/tasks&quot;,
+    timeout=(2.0, 10.0),  # (connect, read) in seconds
+)
+</code></pre>
+<p>The connect timeout bounds how long the client waits for the TCP handshake. The read timeout bounds how long it waits for bytes after the connection is established. Both matter: a server that accepts the connection and then stalls will pass the connect check and hang on the read.</p>
+<p>A common objection is "we already have a 30-second liveness probe." That probe only detects process crashes or a dead health endpoint. It does not detect a blocked worker thread, because the health endpoint is usually served by a separate thread or path.</p>
+<h3 id="worked-example-why-the-retry-loop-never-fires">Worked example: why the retry loop never fires</h3>
+<p>Consider a worker that processes one task per invocation with this structure:</p>
+<pre><code class="language-python">for attempt in range(3):
+    try:
+        result = requests.get(url)  # no timeout
+        return result
+    except Exception:
+        time.sleep(60)
+</code></pre>
+<p>If the server accepts the connection and then stalls, the call blocks in the read. No exception is raised, so <code>except</code> never runs, <code>sleep(60)</code> never runs, and the loop never advances. The job runs until the process is killed or the connection is reset by something upstream. The retry logic is present and correct in isolation; it simply never gets control.</p>
+<p>Adding <code>timeout=(2.0, 10.0)</code> changes the outcome: after 10 seconds the call raises <code>requests.exceptions.ReadTimeout</code>, the <code>except</code> branch runs, and the loop proceeds. The retry behavior the ticket asked for now actually executes.</p>
+<h3 id="how-to-measure-whether-this-is-your-problem">How to measure whether this is your problem</h3>
+<p>Instrument the client, not the process. Add a histogram around outbound calls, for example <code>http_client_duration_seconds</code> with buckets at 0.5, 1, 2, 4, 8, 10, 30, 60. Then:</p>
+<ol>
+<li>Compare the p99 against the intended timeout. If p99 exceeds the timeout you believe you set, the timeout is not being applied on that code path.</li>
+<li>Check for a spike in the highest bucket. A cluster of samples at exactly 60 seconds usually means something upstream is cutting the connection, not your client.</li>
+<li>Correlate with <code>http_client_errors_total</code> by exception type. If <code>ReadTimeout</code> never appears, the timeout is not firing.</li>
+</ol>
+<p>During an active hang, inspect the socket state:</p>
+<pre><code class="language-bash">kubectl exec &lt;pod&gt; -- ss -tunap | grep &lt;port&gt;
+</code></pre>
+<p>Connections stuck in <code>SYN_SENT</code> indicate the handshake never completed (connect timeout territory). Connections in <code>ESTABLISHED</code> for longer than the read timeout indicate the read is not being interrupted.</p>
+<h2 id="fix-2-retry-the-work-not-the-process">Fix 2 — retry the work, not the process</h2>
+<p>The less obvious cause is retry logic that treats retries as process restarts rather than work retries. When the retry loop wraps a blocking call, the backoff sleeps inside the same process while the socket stays open. The retry interval is consumed waiting for a connection that may never resolve.</p>
+<p>The fix is to bound each attempt and let the retry loop run between bounded attempts. An async client with a total timeout makes this explicit.</p>
+<pre><code class="language-python">import asyncio
+from aiohttp import ClientSession, ClientTimeout
+
+async def fetch_task(session: ClientSession, url: str) -&gt; dict:
+    timeout = ClientTimeout(total=10)
+    async with session.get(url, timeout=timeout) as response:
+        return await response.json()
+
+async def retry_task(url: str, max_retries: int = 3):
+    for attempt in range(max_retries):
+        try:
+            async with ClientSession() as session:
+                return await fetch_task(session, url)
+        except (asyncio.TimeoutError, ConnectionError):
+            if attempt == max_retries - 1:
+                raise
+            await asyncio.sleep(2 ** attempt)  # exponential backoff
+</code></pre>
+<p>Two details matter here. First, <code>ClientTimeout(total=10)</code> bounds the entire request, including connection setup and body read, so a stalled server cannot hold the coroutine open. Second, <code>asyncio.sleep</code> yields the event loop, so the backoff does not block other work.</p>
+<p>If migrating to async is not feasible, the same shape can be achieved with a thread pool and a timeout:</p>
+<pre><code class="language-python">from concurrent.futures import ThreadPoolExecutor, TimeoutError
+
+def call_with_timeout(fn, timeout_s):
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        future = pool.submit(fn)
+        return future.result(timeout=timeout_s)
+</code></pre>
+<p>Be aware of the caveat: the thread is not cancelled when the timeout fires. It continues running in the background until the underlying call returns. This bounds the caller's wait but leaks the blocked thread, so it is a mitigation, not a full fix.</p>
+<h3 id="failure-mode-analysis-async-does-not-fix-a-blocking-library">Failure-mode analysis: async does not fix a blocking library</h3>
+<p>A frequent trap is wrapping a blocking library in an async function. If <code>requests.get</code> is called inside an <code>async def</code>, it blocks the event loop for the duration of the call. The coroutine timeout never gets a chance to fire because the loop cannot schedule the timeout callback while it is blocked. The symptom is identical to the original bug: the agent hangs with no error. The fix is to use an async-native client such as <code>aiohttp</code> or <code>httpx</code>, or to run the blocking call in an executor.</p>
+<h2 id="fix-3-bound-dns-resolution-separately">Fix 3 — bound DNS resolution separately</h2>
+<p>DNS resolution happens before the HTTP client's connect timeout starts, so it needs its own bound. In Kubernetes, CoreDNS can slow down under load, and a slow lookup plus a slow handshake looks like one long server-side hang.</p>
+<p>In Node.js, <code>dns.lookup</code> accepts a <code>timeout</code> option, and the default result order can be pinned:</p>
+<pre><code class="language-javascript">import { setDefaultResultOrder, lookup } from 'dns/promises';
+
+setDefaultResultOrder('ipv4first');
+try {
+  await lookup('internal-service', { all: false, timeout: 2000 });
+} catch (err) {
+  console.log('DNS lookup failed or timed out after 2s');
+  throw err;
+}
+</code></pre>
+<p>In Python, DNS timeout is not exposed by <code>requests</code> directly. Options include setting a resolver-level timeout via the container's <code>resolv.conf</code> (<code>options timeout:2 attempts:2</code>), or using a client library that exposes resolver configuration. Checking from inside the pod is quick:</p>
+<pre><code class="language-bash">kubectl exec &lt;pod&gt; -- dig +time=2 +tries=1 internal-service.svc.cluster.local
+</code></pre>
+<p>If the lookup takes longer than the configured bound, the resolver is the bottleneck, and no HTTP client timeout will help.</p>
+<h2 id="timeout-defaults-across-common-clients">Timeout defaults across common clients</h2>
+<p>The table below lists documented defaults for widely used HTTP clients. Verify against the version you actually ship; defaults change between majors.</p>
+<table>
+<thead>
+<tr>
+<th>Runtime / library</th>
+<th>Setting</th>
+<th>Documented default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python <code>requests</code></td>
+<td><code>timeout</code></td>
+<td><code>None</code> (no timeout)</td>
+<td>Tuple form sets connect and read separately</td>
+</tr>
+<tr>
+<td>Python <code>urllib3</code></td>
+<td><code>Timeout</code></td>
+<td><code>None</code></td>
+<td>Underlying library for <code>requests</code></td>
+</tr>
+<tr>
+<td>Node.js <code>http</code></td>
+<td><code>timeout</code></td>
+<td><code>0</code> (no timeout)</td>
+<td>Applies to socket inactivity, not total duration</td>
+</tr>
+<tr>
+<td>Node.js <code>dns.lookup</code></td>
+<td><code>timeout</code></td>
+<td><code>-1</code> (OS default)</td>
+<td>Resolution only, not TCP</td>
+</tr>
+<tr>
+<td>Go <code>http.Client</code></td>
+<td><code>Timeout</code></td>
+<td><code>0</code> (no timeout)</td>
+<td>Covers dial, TLS handshake, headers, body</td>
+</tr>
+<tr>
+<td>Java <code>HttpClient</code></td>
+<td><code>connectTimeout</code></td>
+<td>Implementation-defined</td>
+<td>Set both connect and request timeouts explicitly</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern across languages is consistent: the default is unbounded, and the burden is on the caller to set a bound.</p>
+<h2 id="how-to-verify-a-fix-actually-took-effect">How to verify a fix actually took effect</h2>
+<p>A timeout change that is not exercised proves nothing. Verification requires forcing the failure.</p>
+<ol>
+<li><strong>Synthetic delay.</strong> Introduce a proxy that delays responses on the target endpoint by more than the configured timeout. A tool such as <code>toxiproxy</code> can inject a fixed latency. After the fix, the client should abort at the timeout and log a <code>ReadTimeout</code> (or the equivalent exception for your runtime).</li>
+<li><strong>Metric check.</strong> Confirm the histogram's upper buckets are empty and that the error counter increments by exception type. If the error counter does not move, the timeout path was never taken.</li>
+<li><strong>Socket check during the hang.</strong> Run <code>ss -tunap</code> inside the pod while the synthetic delay is active and confirm no connection stays in <code>ESTABLISHED</code> beyond the read timeout.</li>
+<li><strong>Log check.</strong> Confirm the exception is logged with the endpoint and the elapsed time. A timeout that fires but is swallowed by a broad <code>except Exception</code> is invisible and will not be caught in review.</li>
+</ol>
+<h2 id="prevention-checklist">Prevention checklist</h2>
+<ul>
+<li>Require an explicit timeout on every outbound call in code review. Treat a missing timeout as a blocker, not a nit.</li>
+<li>Add static analysis to CI. For Python, <code>bandit</code> can flag <code>requests</code> calls without a <code>timeout</code> argument. For Node.js, ESLint rules can flag <code>http.request</code> without a timeout. Configure the rule to fail the build.</li>
+<li>Document the timeout choice next to the call, ideally in the function docstring, so a future override is a deliberate decision rather than an accident.</li>
+<li>Keep a default client wrapper that applies a baseline timeout, and allow per-call overrides with a stated reason. This makes the default safe and the exceptions visible.</li>
+<li>Run periodic fault injection against the endpoints the agent depends on. A weekly or per-release experiment that injects latency and verifies fast failure catches timeout gaps before they reach production.</li>
+</ul>
+<h2 id="related-failure-modes-and-what-they-actually-indicate">Related failure modes and what they actually indicate</h2>
+<ul>
+<li><strong>Task stuck in <code>Pending</code>.</strong> Usually a scheduling or resource constraint, not a timeout issue. Check pod events and resource requests before touching client code.</li>
+<li><strong>Exit code 137.</strong> The process was killed, typically by the OOM killer. Often caused by buffering a large response in memory. Streaming responses and a memory limit address this.</li>
+<li><strong><code>ECONNRESET</code>.</strong> The peer closed the connection. This can mask a client timeout misconfiguration because the error looks like a server problem. Check whether the server has its own idle timeout that fires first.</li>
+<li><strong><code>ENOTFOUND</code>.</strong> Resolution failed outright. Common when the agent runs outside the cluster and uses the host resolver. Pin the resolver or verify it from inside the pod.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does the agent still hang after setting <code>timeout=10</code>?</strong>
+The timeout may not be applied on every code path. Check whether some calls use a session object with its own defaults, whether a wrapper overrides the value, and whether any call bypasses the HTTP client entirely (for example, a raw <code>socket.create_connection</code> without a timeout).</p>
+<p><strong>How do I tell whether DNS is the cause?</strong>
+Run <code>dig +time=2 +tries=1 &lt;host&gt;</code> from inside the pod. If it takes longer than the bound, the resolver is slow. Check CoreDNS resource usage and consider scaling it or pinning the resolver in <code>resolv.conf</code>.</p>
+<p><strong>The agent uses asyncio but still hangs. What is missing?</strong>
+A blocking library called inside an async function blocks the event loop, so the coroutine timeout cannot fire. Use an async-native HTTP client, or run the blocking call in an executor.</p>
+<p><strong>Should every request use the same timeout?</strong>
+No. Set timeouts per endpoint based on observed latency distributions. A health check can tolerate a short bound; a bulk export may need a long one. Record the rationale next to the call.</p>
+<p><strong>What is a reasonable starting default for internal services?</strong>
+A common starting point is a 2-second connect timeout and a read timeout set above the endpoint's observed p99. Measure first, then set the bound with headroom, and revisit when the service's latency profile changes.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the module that wraps outbound HTTP calls in your agent — commonly <code>clients/http.py</code>, <code>utils/network.py</code>, or an equivalent. Grep for every call site that constructs a request without a timeout argument. For each one, add an explicit connect and read timeout, choosing the read value from the endpoint's observed p99 plus headroom. Then run one synthetic delay against a single endpoint and confirm the client aborts at the configured bound and logs the exception. That single verified abort proves the timeout path is wired correctly end to end.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/">Survive network drops: agentic workflows that keep running</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">
+                        <h3>Mobile money agent fees: why your bot keeps failing</h3>
+                        <p>USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.</p>
+                        <span class="related-meta">13 min read · 5 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+                        <h3>7 skills senior engineers need now agents are live</h3>
+                        <p>Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+                        <span class="related-meta">15 min read · 5 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tame-python-asyncs-hidden-traps/">
+                        <h3>Tame Python async’s hidden traps</h3>
+                        <p>Compare threaded and task-based async in Python: how each works, where each fails, how to measure the tradeoff yourself, and a checklist for choosing.</p>
+                        <span class="related-meta">11 min read · 29 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

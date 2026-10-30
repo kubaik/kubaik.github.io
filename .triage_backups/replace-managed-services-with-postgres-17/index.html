@@ -1,0 +1,483 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Replace managed services with Postgres 17 - Kubai Kevin</title>
+        <meta name="description" content="How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.">
+        <meta name="keywords" content="Postgres, PgSearch, PgCron, ManagedServicesCost, StartupTechStack, RedisAlternatives, Elasticsearch, PostgresCaching, Tech, Technology, Postgresql, Redis, Postgres17">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-16T12:45:50.709187">
+        <meta property="article:modified_time" content="2026-10-04T12:28:21.393862+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Replace managed services with Postgres 17">
+        <meta property="og:description" content="How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.">
+        <meta property="og:url" content="https://kubaik.github.io/replace-managed-services-with-postgres-17/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/replace-managed-services-with-postgres-17.png">
+        <meta property="og:image:alt" content="Replace managed services with Postgres 17">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Replace managed services with Postgres 17">
+        <meta name="twitter:description" content="How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/replace-managed-services-with-postgres-17.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/replace-managed-services-with-postgres-17/#article",
+      "headline": "Replace managed services with Postgres 17",
+      "description": "How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.",
+      "datePublished": "2026-08-16T12:45:50+00:00",
+      "dateModified": "2026-10-04T12:28:21+00:00",
+      "wordCount": 2773,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/replace-managed-services-with-postgres-17/"
+      },
+      "keywords": "Postgres, PgSearch, PgCron, ManagedServicesCost, StartupTechStack, RedisAlternatives, Elasticsearch, PostgresCaching",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/replace-managed-services-with-postgres-17.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Replace managed services with Postgres 17",
+          "item": "https://kubaik.github.io/replace-managed-services-with-postgres-17/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Replace managed services with Postgres 17</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Replace managed services with Postgres 17</h1>
+                
+                <p class="post-lead">How to decide whether to replace managed cache, search, and scheduler services with Postgres extensions, and how to measure the trade-off honestly.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Postgres</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PgSearch</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PgCron</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ManagedServicesCost</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/tech/"
+                       style="text-decoration:none;">Tech</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/technology/"
+                       style="text-decoration:none;">Technology</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2773 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The default architecture for a growing product tends to converge on the same shape: a managed cache, a managed search cluster, and a scheduler or queue for retries. Each is easy to provision and each is documented well enough that a small team can run it without a specialist. The costs of that shape are less visible than the provisioning, and they show up later as latency, spend, and operational surface area.</p>
+<p>This article is about when consolidation into a single Postgres instance is a reasonable engineering decision, how to evaluate it with measurements rather than opinions, and where the approach genuinely fails.</p>
+<h2 id="the-conventional-wisdom-and-where-it-is-incomplete">The conventional wisdom and where it is incomplete</h2>
+<p>The standard advice is to use managed services for caching, search, and retries because they scale independently and do not require a senior engineer to operate. The pitch is accurate as far as it goes. A managed cache handles eviction and failover. A managed search cluster handles sharding and replication. A workflow service or scheduler handles retries with a durable state machine.</p>
+<p>The incompleteness is in the accounting. Three managed services mean three sets of credentials, three dashboards, three scaling models, three failure modes, and three separate bills. Cross-availability-zone traffic, connection churn, and per-request pricing are all real line items. The operational cost is harder to quantify but usually larger: a new engineer has to learn three systems before they can debug a single slow request.</p>
+<p>The conventional advice also assumes that complexity is outsourced rather than moved. It is moved. It ends up in runbooks, in alerting rules, and in the mental model each engineer has to carry.</p>
+<p>The assumption worth questioning is narrower than "managed services are bad." It is this: that caching, search, and retries require three separate systems. Postgres can perform all three functions at moderate scale, and the question is whether your scale is moderate.</p>
+<h2 id="a-typical-failure-chain">A typical failure chain</h2>
+<p>Consider a team that provisions a managed cache, a managed search cluster, and a scheduler on a small instance, then grows traffic by two orders of magnitude over a few weeks. Three failure modes recur.</p>
+<p><strong>Cache stampede.</strong> A popular page is shared widely and many users hit the same uncached key within a short window. If the cache is sized smaller than the working set and uses an eviction policy that evicts entries still in demand, the misses fall through to the database simultaneously. The managed dashboard often reports a healthy aggregate hit rate, because the stampede is concentrated on a small number of keys and short in duration. Aggregate hit rate is a poor detector for this. Per-key miss rate and database query rate are better signals.</p>
+<p><strong>Search skew.</strong> A search cluster created with default shard counts can develop hot shards when one category or tenant grows faster than the others. Latency rises for queries routed to the hot shard while cluster-level health indicators stay green. The symptom is a latency distribution with a long tail that does not correlate with total query volume. Shard-level latency percentiles are the metric that exposes it.</p>
+<p><strong>Retry avalanche.</strong> A retry loop with linear backoff and no jitter, pointed at a downstream dependency that has begun throttling, will synchronize its retries and amplify load. The scheduler instance saturates, the database connection pool is consumed by retry transactions, and unrelated request paths fail. This is a design problem, not a capacity problem, and adding capacity makes the synchronized burst larger rather than smaller.</p>
+<p>The common response to all three is to increase capacity. That raises the ceiling on the next incident without changing its shape.</p>
+<h2 id="what-postgres-actually-provides">What Postgres actually provides</h2>
+<p>Postgres is a general-purpose database with an extension system. Several capabilities that are often assumed to require separate services are available inside it, with different trade-offs than the dedicated systems.</p>
+<ul>
+<li><strong>Full-text search.</strong> Postgres ships with built-in full-text search using <code>tsvector</code> and <code>tsquery</code>, supporting stemming, ranking via <code>ts_rank</code>, and GIN or GiST indexes. This is available in core Postgres and requires no extension. Third-party extensions exist that add BM25-style ranking and additional tokenization options; their performance and feature set should be evaluated against your own corpus rather than assumed.</li>
+<li><strong>Scheduling.</strong> The <code>pg_cron</code> extension runs SQL on a cron schedule inside the database. It is a scheduler, not a workflow engine: it does not provide step functions, branching, or cross-system orchestration. For retry loops that operate on rows already in the database, it removes a network hop and lets the retry participate in the same transaction as the state change.</li>
+<li><strong>Serving hot rows from memory.</strong> Postgres caches pages in shared buffers, and the operating system page cache holds additional data. You can also use <code>UNLOGGED</code> tables for data that is safe to lose on crash, which avoids WAL write overhead. There is no separate in-memory table type in stock Postgres; the practical approach is to size <code>shared_buffers</code> appropriately, keep the hot working set smaller than RAM, and use partial or covering indexes so hot queries touch few pages.</li>
+<li><strong>Connection management.</strong> Postgres uses one process per connection. A connection pooler in front of the database, or the built-in pooler in newer managed offerings, keeps the number of backend processes bounded while allowing many application connections. The default <code>max_connections</code> is 100, and raising it consumes memory per backend, so pooling is usually the better answer than raising the limit.</li>
+</ul>
+<p>The mental shift is to treat the database as a compute platform rather than a passive store. The constraint is that all of these workloads now compete for the same CPU, memory, and I/O. That is the central trade-off and it deserves explicit planning.</p>
+<h2 id="where-the-consolidation-argument-is-strongest">Where the consolidation argument is strongest</h2>
+<p>Consolidation tends to be a good fit when several of the following hold:</p>
+<ul>
+<li>The working set for cache and search fits comfortably in RAM on a single instance, with headroom for the database's own buffers and for query execution.</li>
+<li>The team has no dedicated database or infrastructure specialist, so the operational cost of three systems is paid by application engineers.</li>
+<li>The dominant workload is read-heavy with a modest write rate, and query patterns are known well enough to index deliberately.</li>
+<li>Availability requirements tolerate a single primary with a standby, rather than requiring independent failure domains for each subsystem.</li>
+<li>The retry logic operates on data already in the database, so keeping it in the same transaction removes reconciliation work.</li>
+</ul>
+<p>The argument is weakest when the subsystems need to fail independently. If losing the database takes down search and caching anyway, consolidating them does not reduce your blast radius; it just removes the illusion that they were separate.</p>
+<h2 id="where-it-breaks-down">Where it breaks down</h2>
+<p>Be specific about the limits, because they are reached faster than the enthusiasm suggests.</p>
+<ul>
+<li><strong>Working set larger than RAM.</strong> Once the hot data exceeds memory, the database begins reading from disk for what was previously an in-memory lookup. Latency degrades non-linearly, and no amount of indexing fixes a working set that does not fit.</li>
+<li><strong>Analytical or high-cardinality search.</strong> Ranking quality for typo tolerance, synonym expansion, and semantic similarity is generally better in a dedicated search engine. If search relevance is a product differentiator rather than a lookup, a dedicated engine is the right tool.</li>
+<li><strong>Write-heavy ingest.</strong> Search indexes and caches that receive high write rates compete with transactional writes for I/O and for autovacuum capacity. Postgres handles high write rates, but the tuning required is real and the failure mode is bloat and index degradation.</li>
+<li><strong>Independent scaling.</strong> If search needs ten times the CPU of your transactional workload, running them on the same instance means paying for the maximum of the two on one machine, or accepting that search will be slow during transaction peaks.</li>
+<li><strong>Multi-region requirements.</strong> A single primary does not provide geographic redundancy. Managed services often provide cross-region replication as a configuration option; replicating Postgres across regions is possible but is a project.</li>
+</ul>
+<p>A reasonable pattern is to run the consolidated stack first and offload a subsystem only when a specific measurement crosses a threshold you defined in advance.</p>
+<h2 id="how-to-measure-whether-consolidation-helps">How to measure whether consolidation helps</h2>
+<p>Do not estimate. Instrument.</p>
+<p><strong>Latency.</strong> Enable <code>pg_stat_statements</code> and record the mean and p95 execution time per query shape before and after any change. For end-to-end latency, measure at the application boundary, not the database, because the network hop to a managed service is part of what you are evaluating.</p>
+<pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+SELECT
+  calls,
+  round(mean_exec_time::numeric, 2) AS mean_ms,
+  round(total_exec_time::numeric, 2) AS total_ms,
+  query
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 10;
+</code></pre>
+<p>Reset the statistics before a controlled comparison with <code>SELECT pg_stat_statements_reset();</code> so the window is clean.</p>
+<p><strong>Cache effectiveness.</strong> If you are considering moving a cache into Postgres, first measure what the existing cache is actually saving. Log cache hits and misses per key prefix, then compute the miss rate and the cost of a miss:</p>
+<pre><code>miss_rate = misses / (hits + misses)
+cost_of_miss = p95_database_query_time_for_that_key
+expected_savings = miss_rate * cost_of_miss
+</code></pre>
+<p>If the miss rate is low and the underlying query is already fast, the cache is not doing much work and moving it into the database changes little.</p>
+<p><strong>Search relevance and latency.</strong> Build a small evaluation set of representative queries with expected top results. Measure recall at k and latency for the current engine and for the candidate. Relevance cannot be measured by latency alone, and a faster engine that returns worse results is not an improvement.</p>
+<p><strong>Cost.</strong> Compare on the same basis. Include compute, storage, network egress, cross-AZ traffic, backup storage, and any per-request charges. For the consolidated option, include the cost of a standby instance and a larger instance size to absorb peak combined load. A single-instance comparison against a multi-service bill is not a fair comparison.</p>
+<p><strong>Operational load.</strong> Count pages per week attributable to each subsystem over a month before the change. This is the metric most often left out and often the one that decides the question.</p>
+<h2 id="a-worked-sizing-example">A worked sizing example</h2>
+<p>The following is illustrative, not a benchmark. Suppose the following assumptions hold for a read-heavy product:</p>
+<ul>
+<li>Total dataset: 200 GB.</li>
+<li>Hot working set (rows accessed in a typical hour): 40 GB.</li>
+<li>Peak read rate: 8,000 queries per second, of which 90 percent are simple key lookups served from cache or from a covering index.</li>
+<li>Peak write rate: 300 rows per second.</li>
+<li>Search index size: 15 GB.</li>
+</ul>
+<p>Sizing the instance:</p>
+<ul>
+<li>Shared buffers: a common starting point is 25 percent of RAM. On a 64 GB instance that is 16 GB, which covers a large fraction of the hot working set.</li>
+<li>Operating system page cache: the remainder of RAM after shared buffers and the Postgres process overhead, roughly 40 GB, holds the rest of the hot set and the search index.</li>
+<li>Write volume: 300 rows per second at an average row size of 2 KB is 600 KB per second, or about 52 GB per day of WAL before compression. That is a substantial but manageable rate for a single instance with fast storage, and it determines your backup and replication bandwidth requirements.</li>
+</ul>
+<p>If the hot working set were 120 GB instead of 40 GB, the same instance would be reading from disk for a large share of lookups and the consolidated design would be the wrong choice. The sizing exercise is the decision, not an afterthought.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order. Stop at the first one that fails.</p>
+<ol>
+<li>Does the hot working set plus index size fit in RAM on a single instance with at least 30 percent headroom?</li>
+<li>Is search relevance a lookup problem rather than a ranking problem?</li>
+<li>Can the workload tolerate a single primary with a standby, or does each subsystem need an independent failure domain?</li>
+<li>Is the write rate low enough that autovacuum can keep up without tuning that your team understands?</li>
+<li>Do you have a measurement for the current latency, cost, and page volume per subsystem, so the comparison is empirical?</li>
+<li>Do you have a rollback plan that does not require downtime?</li>
+</ol>
+<p>If all six pass, a consolidation trial is reasonable. Run it on one subsystem at a time, keep the old system in place as a fallback, and define the threshold that would end the trial before you start.</p>
+<h2 id="migration-mechanics">Migration mechanics</h2>
+<p>Moving a cache into the database is the easiest of the three, because a cache can be wrong without corrupting data.</p>
+<p>A dual-write approach works as follows. Write to both the old cache and the database for a period. Read from the old cache first, and on a miss read from the database and populate both. Track the database read rate as the primary metric. When the database read rate has been stable for a full traffic cycle, including your peak, switch reads to the database first and keep the old cache as a fallback. Remove the fallback when you are confident.</p>
+<p>For search, the migration is a backfill plus a dual-write. Backfill the new index, then write to both indexes while you compare result sets on a sample of production queries. Switch reads only after relevance and latency both meet the threshold.</p>
+<p>For retries, the migration is a rewrite rather than a move. The important properties are that retries are idempotent, that backoff includes jitter, and that a retry that fails permanently is recorded rather than silently dropped. Moving the retry into the database transaction is valuable only if those properties already hold.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Does Postgres full-text search replace a dedicated search engine?</strong></p>
+<p>For structured lookups and straightforward keyword search on a corpus that fits in memory, core Postgres full-text search is often sufficient. For typo tolerance, synonym expansion, complex relevance tuning, or semantic search, a dedicated engine is generally the better tool. Measure recall on a representative query set before deciding.</p>
+<p><strong>How do I avoid connection exhaustion?</strong></p>
+<p>Use a connection pooler between the application and the database. Keep the number of backend processes bounded, size the pool to the number of CPU cores times a small multiplier, and set the client-side connection limit separately from <code>max_connections</code>. Raising <code>max_connections</code> directly increases memory usage per backend and is usually the wrong fix.</p>
+<p><strong>What happens to availability if everything runs on one instance?</strong></p>
+<p>You lose independent failure domains. A primary with a streaming standby and an automated failover tool gives you recovery, but it is not the same as three systems failing independently. If your availability target requires that search stay up while the database is down, consolidation is not appropriate.</p>
+<p><strong>Is <code>pg_cron</code> a replacement for a workflow engine?</strong></p>
+<p>No. It runs SQL on a schedule. It does not provide branching, cross-system orchestration, or durable multi-step state. It is a good fit for periodic maintenance and for retries that operate on rows already in the database.</p>
+<p><strong>How do I know when to offload a subsystem?</strong></p>
+<p>Define the threshold before you start. For example: offload search when p95 search latency exceeds a value you have committed to, or when the index no longer fits in memory. A threshold defined in advance prevents the decision from being made during an incident.</p>
+<h2 id="actionable-next-step">Actionable next step</h2>
+<p>Run the following in a read replica or a staging copy of your database, then compare the output against your current cache and search latency numbers:</p>
+<pre><code class="language-sql">CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+SELECT
+  calls,
+  round(mean_exec_time::numeric, 2) AS mean_ms,
+  round((total_exec_time / calls)::numeric, 2) AS avg_ms,
+  query
+FROM pg_stat_statements
+WHERE calls &gt; 100
+ORDER BY total_exec_time DESC
+LIMIT 20;
+</code></pre>
+<p>The queries at the top of this list by total time are where your database is actually spending effort. If the top entries are the same queries your cache and search services exist to avoid, you have a concrete basis for the consolidation decision. If they are not, the cache and search services are earning their cost and the discussion is settled.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
+<li><a href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">Postgres 17 swallowed Redis, Kafka, Timescale</a></li>
+<li><a href="https://kubaik.github.io/llm-agents-why-monoliths-win/">LLM agents: why monoliths win</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/postgres-17-buried-redis-s3-cron/">
+                        <h3>Postgres 17 buried Redis, S3, cron</h3>
+                        <p>How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.</p>
+                        <span class="related-meta">11 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/postgres-17-swallowed-redis-kafka-timescale/">
+                        <h3>Postgres 17 swallowed Redis, Kafka, Timescale</h3>
+                        <p>How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.</p>
+                        <span class="related-meta">14 min read · 2 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/postgres-vector-search-what-breaks-first/">
+                        <h3>Postgres vector search: what breaks first</h3>
+                        <p>pgvector works until load grows. Here is what fails first, how to measure it, and when a dedicated ANN service earns its operational cost.</p>
+                        <span class="related-meta">13 min read · 24 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

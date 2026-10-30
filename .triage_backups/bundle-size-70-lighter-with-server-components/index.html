@@ -1,0 +1,556 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cutting Client Bundle Size with React Server Components - Kubai Kevin</title>
+        <meta name="description" content="How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.">
+        <meta name="keywords" content="ServerComponentsReact, Next.jsBundleSize, ReduceReactBundle, Next.jsPerformance, ClientBundleOptimization, Reactjs, Performance, Nextjs, Nextjsbundlesize">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-13T19:12:48.025770">
+        <meta property="article:modified_time" content="2026-10-03T11:24:13.743558+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Cutting Client Bundle Size with React Server Components">
+        <meta property="og:description" content="How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.">
+        <meta property="og:url" content="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/bundle-size-70-lighter-with-server-components.png">
+        <meta property="og:image:alt" content="Cutting Client Bundle Size with React Server Components">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cutting Client Bundle Size with React Server Components">
+        <meta name="twitter:description" content="How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/bundle-size-70-lighter-with-server-components.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/bundle-size-70-lighter-with-server-components/#article",
+      "headline": "Cutting Client Bundle Size with React Server Components",
+      "description": "How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.",
+      "datePublished": "2026-06-13T19:12:48+00:00",
+      "dateModified": "2026-10-03T11:24:13+00:00",
+      "wordCount": 2676,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/bundle-size-70-lighter-with-server-components/"
+      },
+      "keywords": "ServerComponentsReact, Next.jsBundleSize, ReduceReactBundle, Next.jsPerformance, ClientBundleOptimization, Reactjs, Performance, Nextjs",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/bundle-size-70-lighter-with-server-components.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cutting Client Bundle Size with React Server Components",
+          "item": "https://kubaik.github.io/bundle-size-70-lighter-with-server-components/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Cutting Client Bundle Size with React Server Components</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Cutting Client Bundle Size with React Server Components</h1>
+                
+                <p class="post-lead">How React Server Components move dependency weight off the client, with a worked migration, a measurement method, and the failure modes that bite in production.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ServerComponentsReact</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Next.jsBundleSize</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ReduceReactBundle</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Next.jsPerformance</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/reactjs/"
+                       style="text-decoration:none;">Reactjs</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2676 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>React Server Components (RSC) are usually introduced as a data-fetching feature. In practice, their most measurable effect is on the client bundle: code that only ever executes on the server does not need to be shipped to the browser. That sounds trivial, and the documentation states it plainly, but the consequences are easy to misjudge. Teams routinely expect a large drop from adding a directive to one or two files and see almost nothing, because the weight was never in the React components — it was in the dependency tree underneath them.</p>
+<p>This article covers what RSC actually removes from the client build, how to find the removable weight, a worked migration with code, how to measure the result honestly, and the failure modes that show up after the first successful deploy.</p>
+<h2 id="what-the-client-actually-downloads">What the client actually downloads</h2>
+<p>A Server Component runs on the server and produces a serialized description of UI rather than JavaScript that the browser must execute. The browser receives that serialized output — in the React ecosystem usually called the RSC payload — and renders it. The component's own source code is never part of the client bundle.</p>
+<p>The important detail is transitive. If a module is imported only by Server Components, the bundler can drop that module and everything it pulls in from the client graph. The saving is not limited to the component file. A single <code>import</code> of a date library inside a Server Component can remove that library, its locale data, and its transitive dependencies from what the browser downloads.</p>
+<p>That leads to a useful mental model:</p>
+<ul>
+<li><strong>Client Components</strong> — interactive, hold state, use hooks and browser APIs. Their code and dependencies ship to the browser.</li>
+<li><strong>Server Components</strong> — fetch data, render markup, import heavy libraries. Their code does not ship.</li>
+<li><strong>Shared modules</strong> — used by both. They ship if any Client Component reaches them.</li>
+</ul>
+<p>The boundary is therefore not primarily about where code executes. It is about what the client is forced to download. A module used by exactly one Server Component and nothing else is free, from the browser's point of view.</p>
+<p>Two caveats matter from the start. First, the RSC payload itself has a size; a Server Component that renders an enormous tree produces a large payload even though no component code ships. Second, the client still ships the framework runtime and every Client Component, so there is a floor you cannot go below.</p>
+<h2 id="finding-the-removable-weight">Finding the removable weight</h2>
+<p>Before changing anything, get a picture of the client bundle. The standard approach is a bundle analyzer that produces a treemap of the client build.</p>
+<pre><code class="language-bash">npm install --save-dev @next/bundle-analyzer
+</code></pre>
+<pre><code class="language-javascript">// next.config.js
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer({
+  // ... rest of config
+});
+</code></pre>
+<p>Then build with analysis enabled:</p>
+<pre><code class="language-bash">ANALYZE=true npm run build
+</code></pre>
+<p>What to look for, in order:</p>
+<ol>
+<li><strong>Large third-party libraries reached from a single page or component.</strong> Date formatting, timezone data, icon sets, charting, map tiles, rich-text editors, and syntax highlighters are common offenders. These are frequently used in exactly one place.</li>
+<li><strong>Locale and dataset bundles.</strong> A date library that imports all locales, or an icon package that bundles every icon as a sprite, can dwarf the code that uses it.</li>
+<li><strong>Utility libraries pulled in for one function.</strong> A full utility package imported for a single <code>debounce</code> or <code>cloneDeep</code> is pure overhead.</li>
+<li><strong>Duplicated framework copies.</strong> Two versions of the same library in the graph usually indicate a version mismatch somewhere in the tree.</li>
+</ol>
+<p>A useful heuristic: for each large chunk, ask whether any interactive behaviour depends on it. If the library only produces markup or transforms data before render, it is a candidate for the server.</p>
+<h2 id="a-worked-migration">A worked migration</h2>
+<p>The following is a representative refactor of a dashboard page. The numbers used are illustrative and chosen to make the arithmetic checkable; the method is what matters, and the section after this explains how to measure your own.</p>
+<p>Suppose a client bundle of 1.4 MB (minified, before compression) breaks down roughly like this:</p>
+<ul>
+<li>Framework runtime and router: 300 KB</li>
+<li>Date/timezone library plus locale data: 280 KB</li>
+<li>Date picker component: 180 KB</li>
+<li>Icon set bundled as SVG sprites: 220 KB</li>
+<li>Application components and state: 420 KB</li>
+</ul>
+<p>The date library, picker, and icon set total 680 KB. If all three are used only to render static or semi-static markup, they are candidates for removal from the client graph. The realistic target is not zero for those modules — the picker is interactive and must stay client-side — but the date library and icon set may be removable entirely.</p>
+<h3 id="step-1-split-data-fetching-from-interactivity">Step 1: Split data fetching from interactivity</h3>
+<p>The original page is a Client Component that fetches data, formats dates, renders icons, and hosts a date picker.</p>
+<pre><code class="language-javascript">'use client';
+import { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { format } from 'date-fns-tz';
+
+export default function DashboardPage() {
+  const [startDate, setStartDate] = useState(new Date());
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() =&gt; {
+    fetch('/api/patients')
+      .then((r) =&gt; r.json())
+      .then(setPatients);
+  }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Last updated {format(new Date(), 'yyyy-MM-dd')}&lt;/p&gt;
+      &lt;DatePicker selected={startDate} onChange={setStartDate} /&gt;
+      {/* table of patients */}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<h3 id="step-2-move-fetching-and-formatting-to-a-server-component">Step 2: Move fetching and formatting to a Server Component</h3>
+<p>The page becomes a Server Component. It fetches directly and formats dates on the server. Only the picker remains a Client Component.</p>
+<pre><code class="language-javascript">// app/dashboard/page.js  (Server Component - no 'use client')
+import { format } from 'date-fns-tz';
+import { fetchPatients } from '@/lib/patients';
+import PatientTable from '@/components/PatientTable';
+import DatePickerClient from '@/components/DatePicker.client';
+
+export default async function DashboardPage() {
+  const patients = await fetchPatients();
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Last updated {format(new Date(), 'yyyy-MM-dd')}&lt;/p&gt;
+      &lt;DatePickerClient initialDate={patients[0]?.createdAt ?? null} /&gt;
+      &lt;PatientTable patients={patients} /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<pre><code class="language-javascript">// components/PatientTable.js  (Server Component)
+import { formatInTimeZone } from 'date-fns-tz';
+
+export default function PatientTable({ patients }) {
+  return (
+    &lt;table&gt;
+      &lt;tbody&gt;
+        {patients.map((p) =&gt; (
+          &lt;tr key={p.id}&gt;
+            &lt;td&gt;{p.name}&lt;/td&gt;
+            &lt;td&gt;{formatInTimeZone(p.createdAt, 'UTC', 'yyyy-MM-dd HH:mm')}&lt;/td&gt;
+          &lt;/tr&gt;
+        ))}
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  );
+}
+</code></pre>
+<pre><code class="language-javascript">// components/DatePicker.client.js
+'use client';
+import { useState } from 'react';
+import DatePicker from 'react-datepicker';
+
+export default function DatePickerClient({ initialDate }) {
+  const [date, setDate] = useState(initialDate ? new Date(initialDate) : new Date());
+  return &lt;DatePicker selected={date} onChange={setDate} /&gt;;
+}
+</code></pre>
+<p>After this change, <code>date-fns-tz</code> is reachable only from Server Components, so it leaves the client graph. <code>react-datepicker</code> remains, because the picker is interactive.</p>
+<h3 id="step-3-stream-slow-sections">Step 3: Stream slow sections</h3>
+<p>If a section is slow to produce, wrap it in a Suspense boundary so the rest of the page can be sent first. In the App Router, a <code>loading.js</code> file next to a route segment provides the fallback automatically; an explicit boundary gives finer control.</p>
+<pre><code class="language-javascript">import { Suspense } from 'react';
+import PatientTable from '@/components/PatientTable';
+import { fetchPatients } from '@/lib/patients';
+
+export default function DashboardPage() {
+  return (
+    &lt;section&gt;
+      &lt;Suspense fallback={&lt;p&gt;Loading patients…&lt;/p&gt;}&gt;
+        &lt;Patients /&gt;
+      &lt;/Suspense&gt;
+    &lt;/section&gt;
+  );
+}
+
+async function Patients() {
+  const patients = await fetchPatients();
+  return &lt;PatientTable patients={patients} /&gt;;
+}
+</code></pre>
+<p>Streaming changes perceived performance rather than bundle size. It is worth doing, but it is not a substitute for removing weight.</p>
+<h3 id="step-4-re-measure">Step 4: Re-measure</h3>
+<p>Rebuild with the analyzer and compare the same chunks you recorded before. The date library should be gone from the client graph; the picker should remain. If a module you expected to disappear is still present, something on the client still imports it — often a shared utility file, a barrel export, or a type-only import that was not marked as such.</p>
+<h2 id="how-to-measure-the-result-honestly">How to measure the result honestly</h2>
+<p>Bundle size claims are easy to make and hard to verify, so measure in a way that can be repeated.</p>
+<p><strong>Client bundle size.</strong> Record the size of the client JavaScript reported by the build output, before and after. Report both minified and gzipped or brotli-compressed figures, and state which. A useful convention is to report the total of all client chunks plus the framework runtime.</p>
+<p><strong>RSC payload size.</strong> The payload is a separate transfer. Inspect it in the browser's network panel by filtering for the document or the RSC request, and record its compressed size. A payload that grows to hundreds of kilobytes can offset the JavaScript you removed.</p>
+<p><strong>Interaction timing.</strong> Use Lighthouse or the browser's performance panel in a throttled profile that matches your target device and network. Record first contentful paint and time to interactive. Run each measurement several times and report a range, not a single number; variance on throttled mobile profiles is large.</p>
+<p><strong>Real-user data.</strong> If you have field data (for example from a web-vitals reporting library), compare the same percentile before and after: p75 or p95 for the metrics you care about. Aggregate field data is the only honest source for claims about real users.</p>
+<p><strong>Server cost.</strong> Watch CPU time per request and memory per instance, because serializing large trees costs server CPU. Compare request latency percentiles before and after, and watch for regressions in the server-rendered path.</p>
+<p>A worked arithmetic example, using illustrative figures: if the client JavaScript drops from 1.4 MB to 0.9 MB minified, that is a 500 KB reduction, or roughly 36% of the original. If the same assets compress to about 30% of their minified size, the transfer drops from roughly 420 KB to 270 KB. State the assumption (the compression ratio) explicitly, because it varies with content.</p>
+<h2 id="failure-modes">Failure modes</h2>
+<p>These are the problems that tend to appear after the first successful migration.</p>
+<h3 id="oversized-payloads">Oversized payloads</h3>
+<p>A Server Component that renders thousands of rows produces a large serialized payload, and the browser still has to parse it. The symptom is a page that ships little JavaScript but still feels slow, with a large document transfer. The fix is pagination or virtualization on the server side, plus streaming so the shell arrives first. The payload is a real cost, not a free channel.</p>
+<h3 id="client-libraries-that-assume-a-browser">Client libraries that assume a browser</h3>
+<p>Many libraries touch <code>window</code>, <code>document</code>, or <code>localStorage</code> at import time or during render. Importing one into a Server Component produces a <code>ReferenceError</code> on the server. The fix is to keep the library in a Client Component and pass data in as props. When a library's entry point has import-time side effects, even a type-only or unused import can trigger the error; check that imports are genuinely server-safe.</p>
+<h3 id="hydration-mismatches">Hydration mismatches</h3>
+<p>If the server renders different markup than the client produces on first render, React reports a mismatch. Common causes are <code>Date.now()</code>, <code>Math.random()</code>, locale-dependent formatting, and reading a value that differs between environments. The reliable fix is to render the same value on both sides: compute it on the server and pass it down, or defer the differing part to an effect after mount. Adding an effect that rewrites state to match a prop is usually a symptom of a value that should have been passed correctly in the first place.</p>
+<h3 id="accidental-client-imports">Accidental client imports</h3>
+<p>A shared utility file that imports a heavy library will pull that library into the client bundle for every consumer, even if the heavy function is never called on the client. Barrel files that re-export everything are a common cause. Split shared modules so that server-only helpers live in files that no Client Component imports.</p>
+<h3 id="cache-and-data-fetching-regressions">Cache and data-fetching regressions</h3>
+<p>Moving a fetch to the server does not make it fast. A slow query now blocks the server render instead of showing a client-side spinner, which can make perceived performance worse. Cache aggressively where the data allows, and stream the slow parts so the rest of the page is not held hostage.</p>
+<h3 id="server-cpu-growth">Server CPU growth</h3>
+<p>Serializing component trees costs CPU. On high-traffic routes this can shift load from the client to the server in a way that shows up as higher instance CPU and latency. Measure server CPU per request before and after, and consider caching rendered output for routes that are expensive and rarely change.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>RSC is not universally beneficial. It is a poor fit when:</p>
+<ul>
+<li><strong>The page is inherently real-time.</strong> Live dashboards driven by sockets or frequent polling keep their logic on the client; the server-rendered path adds overhead without removing much weight.</li>
+<li><strong>Server and users are far apart.</strong> If the server is in one region and users are on another continent, added round trips can cost more than the bundle saving. Edge runtimes can help, but the latency budget should be measured, not assumed.</li>
+<li><strong>The bundle is already small.</strong> If the app has few heavy dependencies, moving logic to the server saves little and adds a new mental model. A small internal tool may gain nothing.</li>
+<li><strong>The team is not comfortable with async boundaries.</strong> Server and Client Components have different rules, and mistakes surface as runtime errors rather than compile-time ones. The cost of confusion can exceed the benefit.</li>
+<li><strong>Browser APIs are central.</strong> Anything relying on <code>localStorage</code>, <code>navigator</code>, or device APIs must stay on the client. If most of the app is like this, the boundary buys little.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I decide whether a component should be a Server or Client Component?</strong></p>
+<p>Ask what the component needs. If it fetches data, renders large markup, or imports heavy libraries, it can be a Server Component. If it holds state, uses effects, or attaches event handlers, it must be a Client Component. The decision is about the component's needs, not its size.</p>
+<p><strong>Can Server Components use React context?</strong></p>
+<p>Server Components cannot read context that is created and updated on the client. If global state is needed, keep the provider in a Client Component and pass initial values from a Server Component as props. State libraries that support hydration from server-provided initial state work well here.</p>
+<p><strong>Do dynamic imports help?</strong></p>
+<p>Dynamic imports inside a Server Component are resolved on the server and do not ship to the client. On the client, <code>React.lazy</code> or the framework's dynamic import helper still provides code splitting. Use the client-side form where the goal is to defer interactive code.</p>
+<p><strong>Does this affect SEO?</strong></p>
+<p>Server-rendered output is available to crawlers as HTML. The RSC payload is for hydration. As with any server-rendered framework, verify with your own crawl or a rendering test rather than assuming.</p>
+<p><strong>How do I debug a hydration mismatch?</strong></p>
+<p>Compare the server-rendered HTML with what the client produces on first render. The usual culprits are time, randomness, and locale-dependent formatting. Remove the non-determinism by computing values on the server and passing them down.</p>
+<p><strong>Can I mix Server and Client Components in the same tree?</strong></p>
+<p>Yes. A Server Component can render a Client Component, and a Client Component can render another Client Component. A Client Component cannot import a Server Component directly, but it can receive one as a <code>children</code> prop. This is the mechanism for composing interactive shells around server-rendered content.</p>
+<h2 id="a-30-minute-action">A 30-minute action</h2>
+<p>Open a terminal in your project and run your build with bundle analysis enabled. Find the single largest client chunk that is not framework runtime, and check whether anything interactive depends on it. If nothing does, move that import into a Server Component, rebuild, and compare the same chunk's size before and after. One measured change, with the number written down, is worth more than a plan to migrate everything.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/">AI UI generation: what it fixed and what still breaks</a></li>
+<li><a href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">AI UI Generators: Production Constraints and Fixes</a></li>
+<li><a href="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">React 19 compiler: my components changed how</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://react.dev/">React documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">
+                        <h3>Next.js 15 vs Remix vs SvelteKit: 2026 choices</h3>
+                        <p>A practical comparison of Next.js, Remix and SvelteKit: routing and data contracts, bundle measurement, caching pitfalls, and a decision checklist.</p>
+                        <span class="related-meta">13 min read · 16 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/9-vibe-coding-traps-that-break-production-code/">
+                        <h3>9 Vibe coding traps that break production code</h3>
+                        <p>Nine patterns that make AI-assisted prototypes fail under load, with the instrumentation to catch each one before it reaches production.</p>
+                        <span class="related-meta">11 min read · 1 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/starlink-4g-fallback-serve-pages-under-800ms/">
+                        <h3>Starlink 4G fallback: serve pages under 800ms</h3>
+                        <p>How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.</p>
+                        <span class="related-meta">13 min read · 26 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

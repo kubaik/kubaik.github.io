@@ -1,0 +1,600 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vibe coding: MVP gem, prod albatross - Kubai Kevin</title>
+        <meta name="description" content="Vibe coding ships prototypes fast but accumulates hidden costs. Here is how to spot the failure modes, measure them, and migrate incrementally.">
+        <meta name="keywords" content="VibeCoding, MaintainableCode, TypescriptStrictMode, Javascript, Js, Buildinpublic">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-19T20:47:43.902749">
+        <meta property="article:modified_time" content="2026-10-03T12:35:38.107165+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Vibe coding: MVP gem, prod albatross">
+        <meta property="og:description" content="Vibe coding ships prototypes fast but accumulates hidden costs. Here is how to spot the failure modes, measure them, and migrate incrementally.">
+        <meta property="og:url" content="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/vibe-coding-mvp-gem-prod-albatross.png">
+        <meta property="og:image:alt" content="Vibe coding: MVP gem, prod albatross">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Vibe coding: MVP gem, prod albatross">
+        <meta name="twitter:description" content="Vibe coding ships prototypes fast but accumulates hidden costs. Here is how to spot the failure modes, measure them, and migrate incrementally.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/vibe-coding-mvp-gem-prod-albatross.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/#article",
+      "headline": "Vibe coding: MVP gem, prod albatross",
+      "description": "Vibe coding ships prototypes fast but accumulates hidden costs. Here is how to spot the failure modes, measure them, and migrate incrementally.",
+      "datePublished": "2026-06-19T20:47:43+00:00",
+      "dateModified": "2026-10-03T12:35:38+00:00",
+      "wordCount": 3053,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/"
+      },
+      "keywords": "VibeCoding, MaintainableCode, TypescriptStrictMode, Javascript, Js, Buildinpublic",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/vibe-coding-mvp-gem-prod-albatross.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Vibe coding: MVP gem, prod albatross",
+          "item": "https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Vibe coding: MVP gem, prod albatross</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Vibe coding: MVP gem, prod albatross</h1>
+                
+                <p class="post-lead">Vibe coding ships prototypes fast but accumulates hidden costs. Here is how to spot the failure modes, measure them, and migrate incrementally.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/vibecoding/"
+                       style="text-decoration:none;">VibeCoding</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MaintainableCode</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TypescriptStrictMode</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/js/"
+                       style="text-decoration:none;">Js</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/buildinpublic/"
+                       style="text-decoration:none;">Buildinpublic</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3053 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="what-vibe-coding-actually-optimizes-for">What "vibe coding" actually optimizes for</h2>
+<p>Vibe coding is the practice of writing code by iterating quickly against immediate feedback — a REPL session, a notebook cell, a browser refresh — without a design step, tests, or type checking. It is genuinely effective at one thing: reducing the time between an idea and a running artifact.</p>
+<p>That property is valuable. It is also narrowly scoped. The techniques that make prototyping fast (global state, copy-paste reuse, no schemas, no tests) are the same techniques that make a codebase expensive to change once it has users, multiple contributors, and a deployment pipeline.</p>
+<p>The failure is not that vibe coding produces bad code. It is that the code keeps working long enough to acquire dependents. A prototype that gets one paying customer is now a production system with a prototype's architecture.</p>
+<p>This article covers where the approach breaks, how to measure the breakage in your own repository rather than trusting anyone's numbers, which tooling categories reduce the cost, and how to migrate incrementally without a rewrite.</p>
+<h2 id="the-four-failure-modes">The four failure modes</h2>
+<p>Almost every "the prototype became production" incident traces back to one of these.</p>
+<h3 id="1-implicit-state">1. Implicit state</h3>
+<p>Notebook cells and REPL sessions accumulate state that is not visible in the source file. A cell defines a variable; a later cell reads it. The notebook runs top-to-bottom in an interactive session and fails when run headlessly in CI, because the execution order or the pre-existing globals are gone.</p>
+<p>The same pattern appears in application code as module-level mutable state: a cache dictionary that is populated at import time, a singleton client that is created on first call, a global config object mutated by whichever module loads first. It works until two code paths disagree about initialization order.</p>
+<h3 id="2-untyped-boundaries">2. Untyped boundaries</h3>
+<p>When data crosses a boundary — HTTP request to handler, queue message to worker, environment variable to config — there is no check that the shape is what the consumer expects. In a dynamic language, a missing field surfaces as <code>undefined is not a function</code> deep inside a call stack, far from the request that caused it. The debugging cost is proportional to the distance between the boundary and the crash site.</p>
+<h3 id="3-no-regression-signal">3. No regression signal</h3>
+<p>Without tests that assert behavior, the only way to know a change is safe is to exercise the affected path manually. As the surface area grows, the fraction of paths a developer can manually check in a session shrinks toward zero. Changes become risky by default, and the team compensates with slow, careful releases rather than fast ones — which is the opposite of what vibe coding was supposed to buy.</p>
+<h3 id="4-configuration-drift">4. Configuration drift</h3>
+<p>Infrastructure defined by ad-hoc commands (<code>terraform apply</code> against a state file nobody inspects, Kubernetes manifests with literal IPs, environment variables edited in a dashboard) diverges from what is in version control. The failure mode is a deploy that works from one machine and not another, or an environment that cannot be recreated after an incident.</p>
+<p>None of these are language problems. They are all consequences of skipping a boundary, a check, or a record.</p>
+<h2 id="how-to-measure-whether-your-codebase-has-drifted">How to measure whether your codebase has drifted</h2>
+<p>Rather than quoting error rates or onboarding times from someone else's project, instrument your own. Every measurement below is a command or a count you can run today.</p>
+<p><strong>Untyped surface area.</strong> If the project is TypeScript, count occurrences of <code>any</code> and of <code>@ts-ignore</code> / <code>@ts-expect-error</code>:</p>
+<pre><code>grep -rn --include='*.ts' --include='*.tsx' -E '\bany\b|@ts-(ignore|expect-error)' src | wc -l
+</code></pre>
+<p>Compare that number to the total line count of <code>src</code>. A ratio that grows over time means the type system is being routed around rather than used.</p>
+<p><strong>Test signal quality.</strong> Run the suite twice under identical conditions and compare results. A suite with order-dependent or timing-dependent tests will produce different outcomes. Then check coverage of the modules that handle money, auth, and persistence specifically — aggregate coverage numbers hide the fact that the risky modules are untested.</p>
+<p><strong>Boundary validation.</strong> For each external input (HTTP handler, queue consumer, cron entry point), check whether there is a schema or type assertion at the entry. The count of validated entry points divided by the total number of entry points is your boundary coverage. This is a small, countable number, not a survey.</p>
+<p><strong>Time to reproduce a failure.</strong> Take a recent production bug. Measure wall-clock time from "we know something is wrong" to "we have a failing test that reproduces it." If that number is measured in hours or days, the codebase lacks the observability and test scaffolding to localize faults.</p>
+<p><strong>Onboarding.</strong> Have someone unfamiliar with the repository attempt a small, well-specified change — add a field to an existing response, for example — and record where they get stuck. The blockers they hit are the actual documentation and structure gaps.</p>
+<p><strong>Error rate under load.</strong> If you want a load figure, generate it yourself. Put the service behind a load generator at your expected peak request rate, run it for a duration longer than your longest cache TTL and longer than your connection pool's idle timeout, and record the error rate and the p99 latency. The interesting failures — connection leaks, eviction storms, retry amplification — appear at the timescale of those timeouts, not in the first minute.</p>
+<p>A note on one specific trap: a cache configured with an eviction policy that only evicts keys carrying a TTL will fail to evict keys that have none. When memory fills with non-expiring keys, writes start failing. The symptom is periodic, correlated with memory pressure rather than traffic. This is a configuration property you can check directly — list the eviction policy and count keys without TTL — rather than something to discover during an incident.</p>
+<h2 id="the-tooling-that-pays-for-itself">The tooling that pays for itself</h2>
+<p>The categories below are not a ranked list of technologies. They are the four mechanisms that address the four failure modes above.</p>
+<h3 id="static-types-at-the-boundaries">Static types at the boundaries</h3>
+<p>A type system that runs before the code does converts a class of runtime failures into compile failures. The important part is not annotating every internal function; it is annotating the boundaries — request payloads, response shapes, config, and the return types of anything that touches the network or disk.</p>
+<p>Runtime validation complements static types at the edges where data is genuinely untrusted. A schema library that parses an incoming payload and throws on mismatch turns a downstream <code>undefined</code> into a clear error at the entry point.</p>
+<h3 id="tests-that-assert-behavior">Tests that assert behavior</h3>
+<p>The value of a test is the regression it catches, not the line it covers. A test that asserts a function returns the sum of its inputs catches nothing; a test that asserts a retry stops after N attempts, or that a timeout rejects with a specific error, catches a real change in behavior.</p>
+<p>Write tests at the level where the behavior is specified. For a retry helper, that means testing the retry count and the timeout, not the internal timer implementation.</p>
+<h3 id="linting-and-formatting">Linting and formatting</h3>
+<p>Linting is cheap consistency enforcement. The rules that matter most are the ones that prevent whole categories of bug — floating promises, unchecked <code>any</code>, unused variables that mask a typo — rather than stylistic preferences. Formatting is best delegated entirely to a tool so it never appears in a code review.</p>
+<h3 id="reproducible-configuration">Reproducible configuration</h3>
+<p>Infrastructure and environment configuration should be reconstructable from version control. The test is simple: can a new environment be created from the repository alone, with no manual steps that exist only in someone's memory? If not, the configuration is documentation, not infrastructure.</p>
+<h2 id="a-worked-example-making-a-retry-helper-safe">A worked example: making a retry helper safe</h2>
+<p>Consider a retry-with-timeout helper, the kind of utility that gets written quickly during a prototype and then relied on everywhere.</p>
+<p>The prototype version typically looks like this:</p>
+<pre><code class="language-typescript">// prototype version — do not ship
+export function withTimeout(fn: () =&gt; Promise&lt;any&gt;, ms: number, retries: number) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; reject(new Error('timeout')), ms);
+    fn().then(resolve).catch((err) =&gt; {
+      if (retries &gt; 0) return withTimeout(fn, ms, retries - 1);
+      reject(err);
+    });
+  });
+}
+</code></pre>
+<p>Three defects are visible on inspection:</p>
+<ol>
+<li>The timer is never cleared. On success, the promise resolves but the timer still fires later and calls <code>reject</code> on an already-settled promise — harmless in this case, but it keeps the event loop alive and, in a server process, holds a handle per call.</li>
+<li>The timeout does not cancel the in-flight operation. <code>fn</code> keeps running after the caller has given up.</li>
+<li>The retry recursion has no delay, so a failing dependency is hit as fast as the event loop allows — the classic retry-amplification pattern that turns a partial outage into a full one.</li>
+</ol>
+<p>The corrected version separates configuration validation from the retry loop, clears the timer on every path, and adds a delay between attempts:</p>
+<pre><code class="language-typescript">// src/utils/timeout.ts
+import { z } from 'zod';
+
+const TimeoutConfig = z.object({
+  timeoutMs: z.number().min(100).max(10000),
+  retries: z.number().min(0).max(5),
+  delayMs: z.number().min(0).max(5000).default(100),
+});
+
+type TimeoutConfig = z.infer&lt;typeof TimeoutConfig&gt;;
+
+export function withTimeout&lt;T&gt;(
+  fn: () =&gt; Promise&lt;T&gt;,
+  config: TimeoutConfig
+): Promise&lt;T&gt; {
+  const { timeoutMs, retries, delayMs } = TimeoutConfig.parse(config);
+
+  return new Promise((resolve, reject) =&gt; {
+    const timer = setTimeout(() =&gt; {
+      reject(new Error(`Timeout after ${timeoutMs}ms`));
+    }, timeoutMs);
+
+    fn()
+      .then((result) =&gt; {
+        clearTimeout(timer);
+        resolve(result);
+      })
+      .catch((err) =&gt; {
+        clearTimeout(timer);
+        if (retries &gt; 0) {
+          setTimeout(() =&gt; {
+            withTimeout(fn, { timeoutMs, retries: retries - 1, delayMs })
+              .then(resolve)
+              .catch(reject);
+          }, delayMs);
+          return;
+        }
+        reject(err);
+      });
+  });
+}
+</code></pre>
+<p>The tests target the behavior that matters — the timeout, the retry count, the delay, and the configuration bounds:</p>
+<pre><code class="language-typescript">// __tests__/timeout.test.ts
+import { withTimeout } from '../src/utils/timeout';
+
+describe('withTimeout', () =&gt; {
+  it('rejects when the function exceeds the timeout', async () =&gt; {
+    const slowFn = () =&gt;
+      new Promise((resolve) =&gt; setTimeout(resolve, 200));
+    await expect(
+      withTimeout(slowFn, { timeoutMs: 100, retries: 0, delayMs: 0 })
+    ).rejects.toThrow('Timeout after 100ms');
+  });
+
+  it('retries until the function succeeds', async () =&gt; {
+    let attempts = 0;
+    const flakyFn = () =&gt; {
+      attempts++;
+      if (attempts &lt; 3) return Promise.reject(new Error('flaky'));
+      return Promise.resolve('ok');
+    };
+    const result = await withTimeout(flakyFn, {
+      timeoutMs: 100,
+      retries: 3,
+      delayMs: 0,
+    });
+    expect(result).toBe('ok');
+    expect(attempts).toBe(3);
+  });
+
+  it('stops retrying after the configured limit', async () =&gt; {
+    let attempts = 0;
+    const alwaysFails = () =&gt; {
+      attempts++;
+      return Promise.reject(new Error('always'));
+    };
+    await expect(
+      withTimeout(alwaysFails, { timeoutMs: 100, retries: 2, delayMs: 0 })
+    ).rejects.toThrow('always');
+    expect(attempts).toBe(3); // initial attempt plus two retries
+  });
+
+  it('rejects invalid configuration before calling the function', async () =&gt; {
+    const fn = jest.fn().mockResolvedValue('ok');
+    await expect(
+      // timeoutMs below the minimum of 100
+      withTimeout(fn, { timeoutMs: 50, retries: 0, delayMs: 0 })
+    ).rejects.toThrow();
+    expect(fn).not.toHaveBeenCalled();
+  });
+});
+</code></pre>
+<p>The last test is the one that matters most in practice: it asserts that a misconfiguration fails at the boundary rather than after the operation has already been attempted. That is the difference between a five-minute fix and a three-day investigation.</p>
+<h2 id="configuration-for-the-tooling">Configuration for the tooling</h2>
+<pre><code class="language-json">// package.json
+{
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;jest&quot;,
+    &quot;lint&quot;: &quot;eslint . --ext .ts,.tsx&quot;,
+    &quot;typecheck&quot;: &quot;tsc --noEmit&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;@types/jest&quot;: &quot;^29.5.12&quot;,
+    &quot;@typescript-eslint/eslint-plugin&quot;: &quot;^7.11.0&quot;,
+    &quot;eslint&quot;: &quot;^8.56.0&quot;,
+    &quot;eslint-config-prettier&quot;: &quot;^9.1.0&quot;,
+    &quot;jest&quot;: &quot;^29.7.0&quot;,
+    &quot;ts-jest&quot;: &quot;^29.1.2&quot;,
+    &quot;typescript&quot;: &quot;^5.4.5&quot;
+  }
+}
+</code></pre>
+<pre><code class="language-json">// .eslintrc.json
+{
+  &quot;root&quot;: true,
+  &quot;parser&quot;: &quot;@typescript-eslint/parser&quot;,
+  &quot;plugins&quot;: [&quot;@typescript-eslint&quot;],
+  &quot;extends&quot;: [
+    &quot;eslint:recommended&quot;,
+    &quot;plugin:@typescript-eslint/recommended&quot;,
+    &quot;plugin:@typescript-eslint/strict&quot;,
+    &quot;prettier&quot;
+  ],
+  &quot;rules&quot;: {
+    &quot;@typescript-eslint/no-explicit-any&quot;: &quot;error&quot;,
+    &quot;@typescript-eslint/no-floating-promises&quot;: &quot;error&quot;
+  }
+}
+</code></pre>
+<p>Pin exact versions in your own project and update deliberately. Version ranges in a lockfile-less setup are a common source of "it worked yesterday" failures.</p>
+<h2 id="other-tooling-categories-worth-knowing">Other tooling categories worth knowing</h2>
+<p><strong>Compiled languages with strict compilers.</strong> Languages whose compilers reject unsafe memory access or unchecked errors move a class of defect from runtime to build time. The tradeoff is development velocity: the compiler rejects programs that a dynamic language would run, at least until they fail. This is a reasonable trade for services where a crash is expensive and the domain is stable, and a poor trade for exploratory work where the shape of the problem is still unknown.</p>
+<p><strong>Languages with minimal feature sets and built-in tooling.</strong> A small language surface makes code easier to read across a team and reduces the space of clever-but-wrong constructs. Error handling that is explicit and verbose is a cost, but it also makes failure paths visible in the source rather than hidden in exception propagation.</p>
+<p><strong>Dynamically typed languages with optional static checking.</strong> Adding a type checker to a dynamic language is a common middle path. The checker catches a subset of errors before runtime, and the annotations double as documentation. The cost is that the checker is opt-in per module, so coverage is uneven unless enforced in CI.</p>
+<p><strong>Managed platforms for internal tools.</strong> Drag-and-drop builders produce working internal dashboards quickly. The costs are that the generated behavior is opaque when it breaks, and that the tool's data model is not portable. For short-lived internal tools this is often the right trade; for anything with a long lifetime, the exit cost should be estimated up front.</p>
+<p><strong>AI code completion.</strong> Completion tools generate plausible code quickly. The relevant risk is that plausibility and correctness are different properties. Generated code that compiles and reads correctly can still be wrong in ways that only appear under load or at a boundary — a connection that is opened and never closed, a retry with no backoff, a check that is inverted for the empty case. The mitigation is not to avoid these tools but to apply the same review and test discipline to generated code as to hand-written code, with particular attention to resource lifecycle and error paths.</p>
+<h2 id="when-to-stop-vibe-coding">When to stop vibe coding</h2>
+<p>The decision is not about code quality in the abstract. It is about whether the system has dependents whose failures are expensive.</p>
+<p>Vibe coding remains appropriate when:</p>
+<ul>
+<li>The only user is the author.</li>
+<li>The artifact has a defined, short lifetime and will be discarded.</li>
+<li>The problem domain is still being explored and the shape of the solution is unknown.</li>
+<li>A full rewrite is acceptable and expected.</li>
+</ul>
+<p>Move to structured tooling when any of these becomes true:</p>
+<ul>
+<li>Someone other than the author depends on the system working.</li>
+<li>The code will outlive the current sprint.</li>
+<li>More than one person edits it.</li>
+<li>It runs in an environment where failure is visible to users.</li>
+<li>A change can no longer be verified by hand in a single session.</li>
+</ul>
+<p>The last condition is the practical trigger. Once manual verification stops being sufficient, the absence of automated verification becomes the dominant cost.</p>
+<h2 id="a-migration-path-that-does-not-require-a-rewrite">A migration path that does not require a rewrite</h2>
+<p>Rewrites are expensive and usually unnecessary. The failure modes above can be addressed incrementally, in an order that front-loads the highest-value fixes.</p>
+<ol>
+<li><strong>Turn on the compiler in non-strict mode and fix what it reports.</strong> This is mechanical and produces immediate value at the boundaries.</li>
+<li><strong>Add schema validation at every external entry point.</strong> This is the highest-value change per line of code, because it converts distant crashes into local errors.</li>
+<li><strong>Write tests for the paths that handle money, auth, and persistence.</strong> Coverage of these modules matters more than aggregate coverage.</li>
+<li><strong>Run the tests and the type checker in CI on every change.</strong> A check that is not enforced will not be maintained.</li>
+<li><strong>Turn on linting rules that prevent whole bug categories</strong>, not stylistic rules.</li>
+<li><strong>Move configuration into version control</strong> and verify it by recreating an environment from scratch.</li>
+<li><strong>Tighten the compiler</strong>, one module at a time, as each is brought under test.</li>
+</ol>
+<p>Each step is independently shippable. None requires pausing feature work.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I tell whether a codebase is still in "vibe" state?</strong></p>
+<p>Look for commented-out code nobody dares delete, tests that only cover the happy path, environment variables committed to the repository, a <code>utils</code> module whose contents are unfamiliar to the current maintainers, and a README that does not describe how to run the project. Any one of these indicates the codebase is being maintained by memory rather than by structure.</p>
+<p><strong>What is the fastest way to make a prototype maintainable?</strong></p>
+<p>Add validation at the boundaries first, then tests for the risky paths, then enforce both in CI. Types and linting follow. The ordering matters: boundary validation and tests catch the failures that actually page someone.</p>
+<p><strong>Why does prototyping feel more productive than structured development?</strong></p>
+<p>Because prototyping optimizes for the feedback loop, and the feedback is immediate and visible. Structured development's payoff is deferred and mostly invisible — it shows up as the bug that did not happen. Comparing the two by how they feel during a work session systematically favors the prototype.</p>
+<p><strong>Can AI tools replace the discipline described here?</strong></p>
+<p>No. They change the cost of producing code, not the cost of verifying it. Generated code still has to be reviewed, tested, and maintained, and it is subject to the same failure modes — resource leaks, missing backoff, incorrect edge-case handling — as code written by hand. The discipline is what makes the output of these tools safe to depend on.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Run the type checker and the linter over your current project and count the errors:</p>
+<pre><code>npx tsc --noEmit
+npx eslint . --ext .ts,.tsx
+</code></pre>
+<p>If the project is not TypeScript, run the equivalent static check for your language. Record the two numbers. Then pick the single module that handles the most valuable data — payments, authentication, or persistence — and write one test that asserts a behavior you would be upset to lose. That test, not the error count, is the first piece of the safety net.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/">9 Vibe coding traps that break production code</a></li>
+<li><a href="https://kubaik.github.io/vibe-code-works-great-fails-forever/">Vibe code: works great, fails forever</a></li>
+<li><a href="https://kubaik.github.io/agent-code-review-gap-nobody-admits/">agent code review gap nobody admits</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/vibe-code-works-great-fails-forever/">
+                        <h3>Vibe code: works great, fails forever</h3>
+                        <p>Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.</p>
+                        <span class="related-meta">13 min read · 20 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/9-vibe-coding-traps-that-break-production-code/">
+                        <h3>9 Vibe coding traps that break production code</h3>
+                        <p>Nine patterns that make AI-assisted prototypes fail under load, with the instrumentation to catch each one before it reaches production.</p>
+                        <span class="related-meta">11 min read · 1 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/test-ai-code-without-testing-the-ai/">
+                        <h3>Test AI code without testing the AI</h3>
+                        <p>A practical testing strategy for AI-assisted code: property-based, contract, fuzz, snapshot, and chaos testing, with worked examples and a decision table.</p>
+                        <span class="related-meta">16 min read · 1 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

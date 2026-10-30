@@ -1,0 +1,511 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Runbooks vs AI Runbooks: A Decision Framework - Kubai Kevin</title>
+        <meta name="description" content="Compare static and AI-generated runbooks on detection, MTTR, cost, and auditability, with a 30-day experiment to test which fits your team.">
+        <meta name="keywords" content="AiRunbooks, Static, MttrReduction, FirehydrantAiCopilot, PagerdutyAiopsCost, RunbookAutomation, IncidentResponseAi, Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-18T05:28:24.531662">
+        <meta property="article:modified_time" content="2026-10-08T05:13:36.350593+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Runbooks vs AI Runbooks: A Decision Framework">
+        <meta property="og:description" content="Compare static and AI-generated runbooks on detection, MTTR, cost, and auditability, with a 30-day experiment to test which fits your team.">
+        <meta property="og:url" content="https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/runbooks-vs-ai-which-cuts-outages-50.png">
+        <meta property="og:image:alt" content="Runbooks vs AI Runbooks: A Decision Framework">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Runbooks vs AI Runbooks: A Decision Framework">
+        <meta name="twitter:description" content="Compare static and AI-generated runbooks on detection, MTTR, cost, and auditability, with a 30-day experiment to test which fits your team.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/runbooks-vs-ai-which-cuts-outages-50.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/#article",
+      "headline": "Runbooks vs AI Runbooks: A Decision Framework",
+      "description": "Compare static and AI-generated runbooks on detection, MTTR, cost, and auditability, with a 30-day experiment to test which fits your team.",
+      "datePublished": "2026-06-18T05:28:24+00:00",
+      "dateModified": "2026-10-08T05:13:36+00:00",
+      "wordCount": 2362,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/"
+      },
+      "keywords": "AiRunbooks, Static, MttrReduction, FirehydrantAiCopilot, PagerdutyAiopsCost, RunbookAutomation, IncidentResponseAi, Ai",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/runbooks-vs-ai-which-cuts-outages-50.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Runbooks vs AI Runbooks: A Decision Framework",
+          "item": "https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Runbooks vs AI Runbooks: A Decision Framework</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Runbooks vs AI Runbooks: A Decision Framework</h1>
+                
+                <p class="post-lead">Compare static and AI-generated runbooks on detection, MTTR, cost, and auditability, with a 30-day experiment to test which fits your team.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiRunbooks</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Static</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MttrReduction</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FirehydrantAiCopilot</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PagerdutyAiopsCost</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2362 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-08
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-this-comparison-matters">Why this comparison matters</h2>
+<p>Runbooks rot. A procedure that was correct when written can silently become wrong after a config rename, a chart upgrade, or a service split. The failure mode is consistent and expensive: during an incident, an on-call engineer follows a documented step that no longer matches the system, loses minutes on a dead end, and has to reconstruct the correct action under pressure.</p>
+<p>AI-assisted runbook tooling claims to address this by generating procedures on demand from live infrastructure state, detecting anomalies against learned baselines instead of static thresholds, and updating itself as the environment changes. The claim is plausible. It is also the kind of claim that hides new failure modes: fabricated steps, non-idempotent remediation, inference latency on the paging path, and audit gaps.</p>
+<p>This article is a trade-off sheet. It covers how each approach works, where each breaks, how to measure the difference honestly, and how to decide for a specific team.</p>
+<h2 id="option-a-static-runbooks">Option A — static runbooks</h2>
+<p>Static runbooks are versioned documents, usually Markdown, one per alert or per service, stored in a repository and rendered somewhere the on-call engineer can find them fast.</p>
+<p>A common stack:</p>
+<ul>
+<li>Git for storage and review</li>
+<li>A static site generator for rendering</li>
+<li>The incident or alerting tool for embedding a link</li>
+<li>A linter in CI that enforces required fields</li>
+</ul>
+<p>A typical runbook:</p>
+<pre><code class="language-markdown">## Alert: PostgreSQL connection exhaustion
+Severity: P1
+Owner: @platform-team
+
+### Symptoms
+- `pg_stat_database.connections &gt; 95%` for 3 minutes
+- connection error rate above the alert threshold
+
+### Triage
+```bash
+kubectl exec -n postgres -it pg-primary-0 -- psql -c &quot;select count(*) from pg_stat_activity;&quot;
+</code></pre>
+<h3 id="remediation">Remediation</h3>
+<ol>
+<li>Raise the connection limit in <code>values.yaml</code>:
+   <code>yaml
+   postgres:
+     max_connections: 500</code></li>
+<li>Apply:
+   <code>bash
+   helm upgrade pg bitnami/postgresql -f ./values.yaml</code></li>
+<li>Verify:
+   <code>bash
+   kubectl rollout status deployment pg-primary</code></li>
+</ol>
+<h3 id="post-incident">Post-incident</h3>
+<ul>
+<li>Lower the dashboard threshold to catch the condition earlier
+```</li>
+</ul>
+<p>The runbook lives next to the code, gets reviewed in pull requests, and can be linted in CI for required fields such as severity, owner, at least one code block, and a post-incident action.</p>
+<h3 id="where-static-runbooks-work-well">Where static runbooks work well</h3>
+<ul>
+<li>Infrastructure changes slowly, on the order of a few times a month.</li>
+<li>The team has a review culture that treats documentation with the same rigor as code.</li>
+<li>Human-readable artifacts are required for compliance (SOC 2, ISO 27001).</li>
+<li>Ownership of a runbook is a gate for service ownership.</li>
+</ul>
+<h3 id="where-static-runbooks-break">Where static runbooks break</h3>
+<ul>
+<li>New services ship without runbooks and get one only after their first incident.</li>
+<li>Engineers copy steps without understanding them, so a subtly wrong step propagates.</li>
+<li>Multi-alert incidents require merging several runbooks by hand. Each runbook assumes a different system state, and reconciling them under time pressure is where minutes disappear.</li>
+<li>Maintenance decays. Without a forcing function, stale runbooks accumulate faster than they are retired.</li>
+</ul>
+<p>The maintenance tax is the real cost. It is not the writing; it is the periodic verification that the steps still match production. A useful forcing function is a scheduled job that flags files not touched in a set number of days and opens a review task, plus a rule that any change to a service's deploy or config requires a corresponding runbook update in the same pull request.</p>
+<h2 id="option-b-ai-assisted-runbooks">Option B — AI-assisted runbooks</h2>
+<p>AI-assisted runbook systems replace or augment static documents with a pipeline of components. The categories are stable even though specific vendors change:</p>
+<ol>
+<li><strong>Anomaly detection.</strong> A model ingests metrics from your monitoring system and flags deviations from a learned baseline rather than crossing a fixed threshold. This is the part that can catch seasonal or workload-dependent behavior that a static number misses.</li>
+<li><strong>Runbook generation.</strong> When an anomaly crosses a severity boundary, the system queries your inventory or configuration source and generates a step-by-step procedure in whatever form your stack consumes: shell, Terraform, Ansible, or Kubernetes manifests.</li>
+<li><strong>Verification loop.</strong> After each step, the system runs a lightweight check and either proceeds or rolls back. This is what prevents a generated script from restarting a pod forever.</li>
+<li><strong>Post-incident capture.</strong> The generated procedure is stored as an artifact and linked to the incident record. Over time, the system can be retrained on the incident corpus.</li>
+</ol>
+<h3 id="where-ai-runbooks-work-well">Where AI runbooks work well</h3>
+<ul>
+<li>Infrastructure changes weekly or faster, so static documents are stale by design.</li>
+<li>Alert volume is high enough that triage consistency across time zones matters.</li>
+<li>The team accepts adaptive procedures in exchange for losing deterministic scripts.</li>
+<li>Someone owns the model, the guardrails, and the retraining loop.</li>
+</ul>
+<h3 id="where-ai-runbooks-break">Where AI runbooks break</h3>
+<ul>
+<li><strong>Fabricated steps.</strong> A generated procedure can include a plausible but wrong command. The classic example is a destructive command that matches the shape of the alert but not its cause. Any generated step that mutates state needs a guardrail and an undo.</li>
+<li><strong>Latency on the paging path.</strong> An inference call adds time before a human sees guidance. If your alerting SLA is tight, that delay is a real cost.</li>
+<li><strong>Cost.</strong> Hosted inference is metered. Self-hosting shifts cost from a bill to operational burden: model serving, drift monitoring, and retraining.</li>
+<li><strong>Auditability.</strong> Compliance reviewers want evidence of what changed during an incident. Generated diffs, confidence signals, approvals, and rollback commands must all be exported and retained. If that export is not automated, it becomes a manual scramble.</li>
+</ul>
+<h2 id="how-to-measure-the-difference-honestly">How to measure the difference honestly</h2>
+<p>Published comparisons of runbook strategies tend to quote MTTR improvements without stating the test conditions. Do not trust those numbers; produce your own. The measurements below are the ones that actually drive the decision, and each is cheap to instrument.</p>
+<p><strong>What to instrument</strong></p>
+<ul>
+<li><strong>MTTD:</strong> timestamp of the first alert or detection event minus the timestamp the condition actually began, taken from the metric series, not from human memory.</li>
+<li><strong>MTTR:</strong> timestamp the incident is declared resolved minus the timestamp the condition began. Record the resolver and the steps taken in a structured field, not free text.</li>
+<li><strong>Recurrence:</strong> count incidents of the same class within a fixed window, say 30 days, per service.</li>
+<li><strong>False positives:</strong> pages that required no action, counted per week.</li>
+<li><strong>Cost per incident:</strong> engineer minutes multiplied by a loaded hourly rate, plus any metered inference attributed to that incident.</li>
+</ul>
+<p><strong>How to run the comparison</strong></p>
+<ol>
+<li>Pick one service and one incident class, for example Redis memory eviction on a single cluster.</li>
+<li>Run the existing static runbook for a set number of incidents and record the metrics above.</li>
+<li>Enable the AI system in shadow mode: it generates procedures and logs them, but no step executes automatically and the on-call engineer still follows the static runbook.</li>
+<li>Diff each generated procedure against the static one and record every discrepancy, especially any step that would have mutated state incorrectly.</li>
+<li>Only after the shadow period, allow the generated procedure to be used with human approval on every destructive step, and re-measure.</li>
+</ol>
+<p>The shadow-mode diff is the most valuable output of the whole exercise. It tells you whether the model understands your environment before it is allowed to touch it.</p>
+<h2 id="a-worked-cost-comparison">A worked cost comparison</h2>
+<p>Numbers here are illustrative, with the arithmetic shown so you can substitute your own.</p>
+<p>Assume a team with 40 incidents per year. Assume the loaded cost of an on-call engineer is $120 per hour, and that the static-runbook path averages 60 minutes of engineer time per incident while an AI-assisted path averages 25 minutes. That is a 35-minute saving per incident.</p>
+<ul>
+<li>Static: 40 × 1.0 h × $120 = $4,800 per year in incident time.</li>
+<li>AI-assisted: 40 × (25/60) h × $120 = $2,000 per year in incident time.</li>
+<li>Saving: $2,800 per year.</li>
+</ul>
+<p>Now subtract the AI costs. If hosted inference and licensing run $1,800 per month, that is $21,600 per year, and the AI path is far more expensive. If a self-hosted model runs on one instance at $500 per month, that is $6,000 per year, still more than the saving. Break-even on incident time alone occurs when the annual saving exceeds the annual AI cost:</p>
+<ul>
+<li>Required incidents per year = annual AI cost ÷ saving per incident.</li>
+<li>At $6,000 per year and $70 saved per incident (35 minutes at $120/hour), break-even is about 86 incidents per year.</li>
+</ul>
+<p>The point of the arithmetic is not the number. It is that incident-time savings rarely justify the tooling cost on their own at low incident volume. The justification has to come from something else: reduced recurrence, less stale documentation, or consistency across a distributed on-call rotation. If those do not apply, the math does not work.</p>
+<h2 id="the-guardrail-problem">The guardrail problem</h2>
+<p>The single most important design decision in an AI-assisted runbook system is what the model is allowed to do without a human in the loop.</p>
+<p>A workable three-layer model:</p>
+<ol>
+<li><strong>Deterministic policy check before execution.</strong> A rule engine evaluates every generated command against a blocklist and an allowlist. Blocklist patterns include recursive deletion, namespace deletion, and infrastructure destroy operations. The policy engine, not the model, makes the final call.</li>
+<li><strong>Human approval for state-mutating steps.</strong> Read-only triage commands can run automatically. Anything that changes configuration, deletes a resource, or restarts a workload requires an explicit approval action.</li>
+<li><strong>Mandatory rollback.</strong> Every generated procedure includes a tested undo command. The rollback path is exercised in staging on a schedule, not only during incidents.</li>
+</ol>
+<p>A guardrail that is only a prompt instruction is not a guardrail. The model can be asked to be careful; it cannot be relied on to be careful. Enforcement belongs in code that the model cannot modify.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order. The first "no" usually settles it.</p>
+<ul>
+<li><strong>Alert volume.</strong> How many pages per day? Under ten, static runbooks plus a staleness bot are almost always the better investment.</li>
+<li><strong>Rate of change.</strong> Does infrastructure change more than twice a month? If not, static documents can stay accurate with modest effort.</li>
+<li><strong>Incident volume.</strong> How many incidents per year? Below roughly 80, the incident-time saving rarely covers tooling cost on its own.</li>
+<li><strong>Ownership.</strong> Is there a team of at least four engineers who can own model serving, guardrails, and retraining? If not, a hosted option only makes sense if the vendor owns the operational burden.</li>
+<li><strong>Compliance.</strong> What does your auditor require as evidence of changes made during an incident? If the answer is "a human-readable document," confirm that generated artifacts can be exported and retained before committing.</li>
+<li><strong>Trust budget.</strong> Has the system been run in shadow mode long enough to diff its output against reality? One destructive false step can cost weeks of engineer trust.</li>
+</ul>
+<h2 id="common-mistakes">Common mistakes</h2>
+<ul>
+<li><strong>Adopting AI to avoid writing runbooks.</strong> The system still needs a source of truth about your environment. If your inventory and configuration data are unreliable, generated procedures will be too.</li>
+<li><strong>Skipping shadow mode.</strong> Letting generated procedures execute before diffing them against known-good ones converts a cheap experiment into an incident.</li>
+<li><strong>Ignoring the paging path.</strong> Inference latency sits between the alert and the human. Measure it under load, not on an idle system.</li>
+<li><strong>Treating compliance as an afterthought.</strong> Exporting generated diffs, approvals, and rollbacks needs to be automated on day one, not reconstructed during an audit.</li>
+<li><strong>Assuming cost scales with compute.</strong> In practice, licensing and the operational overhead of self-hosting dominate. Model the full line items before committing.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I know if alert volume justifies AI runbooks?</strong></p>
+<p>Measure pages per week for two weeks using your alerting tool's own reporting. If the number is consistently above roughly 30 per week and triage quality varies by responder, the consistency argument for AI-assisted triage gets stronger. Below ten pages per day, the tooling cost usually outweighs the benefit.</p>
+<p><strong>Which model should be used for self-hosted runbook generation?</strong></p>
+<p>Model choice changes quickly, so evaluate against your own incident corpus rather than a leaderboard. The relevant axes are latency on the paging path, quality on your stack's command vocabulary, and serving cost per thousand prompts. Run the shadow-mode diff described above with two or three candidates and compare discrepancy rates. Fine-tuning on incident logs helps, but only if the logs are clean.</p>
+<p><strong>How do I prevent a generated procedure from running destructive commands?</strong></p>
+<p>Do not rely on prompt instructions. Enforce a policy check in code before execution, require human approval for any state-mutating step, and require a tested rollback command in every generated procedure. Test the blocklist regularly with known-bad commands to confirm it still fires.</p>
+<p><strong>What is the hidden cost teams miss?</strong></p>
+<p>Audit and export. Every generated procedure used during an incident becomes evidence. It must be captured, linked to the incident record, and retained in a form the auditor accepts. If that pipeline is not automated, someone rebuilds it manually under deadline.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open your alerting tool's reporting view and count the pages your team received in the last seven days. Write the number down. If it is above 30, pick one service and one incident class and start a shadow-mode evaluation this week, recording MTTD, MTTR, and every discrepancy between the generated procedure and your static runbook. If it is below 30, add a scheduled job that flags runbook files not updated in 90 days and opens a review task for the owner. Either way, you will have a measured baseline instead of an assumption.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/2026-ai-stack-solo-saas-cost-showdown/">2026 AI stack: solo SaaS cost showdown</a></li>
+<li><a href="https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/">AI codebases: two onboarding paths that actually work</a></li>
+<li><a href="https://kubaik.github.io/debug-ai-agent-failures-differently/">Debug AI agent failures differently</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-ops-vs-human-ops-the-incidents-that-broke-them/">
+                        <h3>AI-First vs Human-First Incident Response</h3>
+                        <p>Compare AI-first autonomous incident response with human-first ops plus AI triage: architecture, failure modes, cost modeling, and a decision checklist.</p>
+                        <span class="related-meta">12 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/2026-ai-stack-solo-saas-cost-showdown/">
+                        <h3>2026 AI stack: solo SaaS cost showdown</h3>
+                        <p>A framework for choosing between AI-generated and hand-written infrastructure for a solo SaaS, with cost models, failure modes and a 30-minute audit.</p>
+                        <span class="related-meta">13 min read · 30 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/">
+                        <h3>AI ops: PagerDuty vs Opsgenie — which burns your team</h3>
+                        <p>How PagerDuty AIOps and Opsgenie Incident AI differ in event grouping, template suggestions, cost, and lock-in, plus a pilot plan to measure which fits.</p>
+                        <span class="related-meta">13 min read · 29 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

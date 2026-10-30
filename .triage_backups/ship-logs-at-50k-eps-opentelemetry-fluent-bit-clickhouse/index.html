@@ -1,0 +1,436 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse - Kubai Kevin</title>
+        <meta name="description" content="Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.">
+        <meta name="keywords" content="Observability, LogIngestionCost">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-03T13:30:22.215019">
+        <meta property="article:modified_time" content="2026-10-03T12:53:24.453962+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
+        <meta property="og:description" content="Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.">
+        <meta property="og:url" content="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png">
+        <meta property="og:image:alt" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
+        <meta name="twitter:description" content="Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/#article",
+      "headline": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
+      "description": "Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.",
+      "datePublished": "2026-07-03T13:30:22+00:00",
+      "dateModified": "2026-10-03T12:53:24+00:00",
+      "wordCount": 2150,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/"
+      },
+      "keywords": "Observability, LogIngestionCost",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
+          "item": "https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</h1>
+                
+                <p class="post-lead">Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.</p>
+                
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2150 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>At high event rates, log pipelines stop being an observability detail and become a distributed systems problem. The failure is rarely a single dramatic crash. It is a slow accumulation of merge pressure, shard imbalance, buffer exhaustion, and query latency that turns a dashboard refresh into an outage.</p>
+<p>This article compares two broad architectures for shipping and querying tens of thousands of events per second (EPS), explains where each one breaks, and gives you the instrumentation to measure your own pipeline rather than trust someone else's numbers. All figures below are either documented defaults, arithmetic shown step by step from stated assumptions, or explicitly labelled illustrative.</p>
+<h2 id="the-two-architectures">The two architectures</h2>
+<p><strong>Architecture A: collector + forwarder + columnar SQL store.</strong> A vendor-neutral collector receives logs over OTLP, a lightweight host-level forwarder tails files and ships them, and a columnar analytical database stores and queries them. This is the "logs are a table" model: you write SQL, you control partitioning and sorting keys, and you own the merge behavior.</p>
+<p><strong>Architecture B: shipper + search cluster + visualization layer.</strong> An agent tails files and bulk-indexes into a distributed search engine with an inverted index, and a dashboard tool queries it. This is the "logs are documents" model: you get relevance scoring and a mature query UI, but you pay for refresh cycles, JVM heap management, and shard routing.</p>
+<p>Neither is universally better. The decision hinges on four things: cardinality of your filter dimensions, your latency SLA, your team size, and whether full-text search is a first-class requirement.</p>
+<h2 id="constraint-1-cardinality">Constraint 1: cardinality</h2>
+<p>High-cardinality fields — <code>tenant_id</code>, <code>user_id</code>, <code>deployment_id</code>, <code>request_id</code> — are where the two models diverge most sharply.</p>
+<p>In a columnar store, a skip index on a low-cardinality or well-ordered column lets the engine eliminate granules before reading them. A query like:</p>
+<pre><code class="language-sql">SELECT count(*)
+FROM logs
+WHERE tenant_id = 'acme'
+  AND deployment_id = 'api-prod'
+  AND region = 'eu-central-1'
+  AND timestamp &gt; now() - INTERVAL 5 MINUTE
+</code></pre>
+<p>can be answered by reading only the granules whose min/max metadata overlaps the predicate. The cost scales with the number of matching granules, not the total table size.</p>
+<p>In an inverted-index search engine, the same query hits the term dictionary for each filter and intersects posting lists. That is fast when the terms are rare and the index is warm. It degrades when the filter matches a large fraction of documents, when the field is mapped as <code>keyword</code> with a large cardinality, or when the index is still refreshing. A <code>refresh_interval</code> of 1s (the default) means recently indexed documents are not yet searchable, and a forced refresh is expensive.</p>
+<p><strong>How to measure it:</strong> build a query that filters on your highest-cardinality dimension and run it against both backends with the same data volume. Instrument:</p>
+<ul>
+<li>The query planner output (in a columnar store, <code>EXPLAIN</code> and the <code>system.query_log</code> table; in a search engine, the profile API).</li>
+<li>Wall-clock p50 and p99 over at least 100 runs, not one.</li>
+<li>The number of rows/granules/documents scanned, not just the time.</li>
+</ul>
+<p>If the search engine's profile shows it is visiting a large fraction of the index, cardinality is your bottleneck.</p>
+<h2 id="constraint-2-latency-budget">Constraint 2: latency budget</h2>
+<p>End-to-end latency is the sum of every hop:</p>
+<pre><code>app write → forwarder read → collector receive → batch → store commit → query visible
+</code></pre>
+<p>Each hop has a configurable timeout, and each timeout is a latency floor. A batch timeout of 1s means a low-volume stream can sit for up to 1s before flushing. A search engine's refresh interval of 1s means a document is not queryable for up to 1s after it is indexed.</p>
+<p><strong>How to measure it:</strong> embed a monotonic timestamp at the application, carry it through as a field, and at query time compute <code>now() - app_timestamp</code>. This measures true end-to-end latency including queueing, which no component-level metric captures. Do this at p50, p95, and p99; the tail is where pipelines fail.</p>
+<p>A useful arithmetic exercise: if your batch timeout is 1s and your refresh interval is 1s, your worst-case visibility latency is already ~2s before any queueing. Tightening either requires trading throughput for latency.</p>
+<h2 id="constraint-3-team-size-and-operational-surface">Constraint 3: team size and operational surface</h2>
+<p>The operational surface of a pipeline is roughly the number of independently tunable components times the number of failure modes each one has.</p>
+<p>Architecture A typically has three moving parts: the forwarder (stateless, restartable), the collector (stateless, horizontally scalable), and the store (stateful, needs capacity planning for merges and disk). The store is the only component that requires deep expertise.</p>
+<p>Architecture B typically has three moving parts too, but the search cluster is a JVM application with heap sizing, garbage collection tuning, shard allocation awareness, and index lifecycle management. The visualization layer adds a reverse proxy and role-based access control. The failure modes are more numerous.</p>
+<p><strong>A decision heuristic:</strong> if your observability team is one or two engineers, minimize the number of components that require JVM-level tuning. If you already employ search engineers, that constraint does not apply.</p>
+<h2 id="constraint-4-schema-evolution">Constraint 4: schema evolution</h2>
+<p>Log schemas change. New fields appear weekly in active services.</p>
+<p>In a columnar store, adding a column is a metadata operation:</p>
+<pre><code class="language-sql">ALTER TABLE logs ADD COLUMN IF NOT EXISTS user_agent LowCardinality(String);
+</code></pre>
+<p>This is near-instant because existing data files simply lack the column and read as default values. <code>LowCardinality(String)</code> is worth using for fields with fewer than roughly 10,000 distinct values; it stores a dictionary plus integer references instead of repeated strings.</p>
+<p>In an inverted-index search engine, adding a field to an existing index requires either a reindex or a runtime field. A reindex copies and rebuilds the entire index, which is proportional to data volume and competes with live indexing for I/O.</p>
+<p><strong>How to measure it:</strong> time an <code>ALTER TABLE ... ADD COLUMN</code> on a representative table, and time a reindex of a representative index. The ratio is usually the deciding factor for teams that change schemas often.</p>
+<h2 id="storage-and-compression">Storage and compression</h2>
+<p>Columnar stores compress well because values in a column share type and often share distribution. Compression codecs like ZSTD with a moderate level are common; the exact ratio depends entirely on your data.</p>
+<p><strong>How to measure it:</strong> write a representative day of logs, then compare <code>sum(bytes_on_disk)</code> from the store's system tables against the raw input size. Do not trust a ratio from someone else's dataset — log compression is highly sensitive to field repetition, timestamp regularity, and the number of distinct string values.</p>
+<p>For search engines, compression is applied per segment and interacts with merge behavior. More aggressive compression means slower merges and higher CPU.</p>
+<h2 id="failure-modes-worth-designing-for">Failure modes worth designing for</h2>
+<p><strong>Merge storms.</strong> In any LSM-style or columnar store, background merges compete with ingestion and queries for CPU and I/O. If partitions are too large or the merge policy is too aggressive, merges can saturate the disk. Mitigation: partition by day, keep active partitions bounded, and monitor merge queue depth as a first-class metric.</p>
+<p><strong>Buffer exhaustion.</strong> A forwarder or collector with a memory-only buffer will drop or block when the downstream stalls. A filesystem buffer survives restarts but can fill the disk. The correct choice depends on whether you prefer backpressure (block the app) or data loss (drop oldest). Document the choice explicitly.</p>
+<p><strong>Retry without backoff.</strong> A forwarder that retries immediately on failure turns a brief downstream hiccup into a retry storm. Verify that your forwarder's retry policy includes exponential backoff and a maximum retry count, or implement it in a filter.</p>
+<p><strong>Shard imbalance.</strong> In a search cluster, uneven shard distribution after a node restart concentrates load on a few nodes. Monitor per-node shard counts, not just cluster health, which can report green while individual nodes are overloaded.</p>
+<p><strong>Query-triggered write blocking.</strong> A high-cardinality ad-hoc query can consume enough resources to delay indexing. This is the classic "one dashboard took down the cluster" failure. Mitigation: query isolation, separate read replicas, or a store whose query engine does not compete with ingestion for the same resources.</p>
+<h2 id="a-worked-cost-example-illustrative">A worked cost example (illustrative)</h2>
+<p>Cost comparisons are only meaningful with stated assumptions. Here is one, clearly labelled illustrative.</p>
+<p>Assume 50,000 EPS, 1 KB per event, 30 days of retention, and a 4:1 compression ratio.</p>
+<ul>
+<li>Raw volume: 50,000 × 1,000 bytes = 50 MB/s.</li>
+<li>Per day: 50 MB/s × 86,400 s = 4,320,000 MB ≈ 4.3 TB/day.</li>
+<li>Over 30 days: ~130 TB raw.</li>
+<li>Compressed at 4:1: ~32 TB on disk.</li>
+</ul>
+<p>At a hypothetical $0.08 per GB-month for block storage, 32 TB ≈ 32,768 GB × $0.08 ≈ $2,621/month in storage alone. Compute cost depends on the number of nodes required to sustain ingestion and merges, which you must measure on your own hardware.</p>
+<p>The point of this exercise is not the number. It is that storage dominates at this scale, so compression ratio and retention policy matter more than per-node instance pricing. If your compression ratio is 2:1 instead of 4:1, you double the storage bill.</p>
+<p><strong>How to measure your own ratio:</strong> ingest one representative day, then query the store's system tables for bytes on disk and divide by the raw byte count of the input files.</p>
+<h2 id="instrumentation-checklist">Instrumentation checklist</h2>
+<p>Before comparing stacks, instrument both with the same signals:</p>
+<ul>
+<li><strong>Ingestion rate:</strong> records accepted per second at the collector and at the store.</li>
+<li><strong>Drop rate:</strong> records rejected or dropped, by reason. This should be zero in steady state.</li>
+<li><strong>Queue depth:</strong> buffer occupancy at every hop. A rising queue depth is the earliest warning of a stall.</li>
+<li><strong>End-to-end latency:</strong> from an application-embedded timestamp, at p50/p95/p99.</li>
+<li><strong>Query latency:</strong> by query shape, not just overall. A single slow query class can dominate.</li>
+<li><strong>Merge or compaction pressure:</strong> queue depth and CPU time spent on background work.</li>
+<li><strong>Disk I/O wait:</strong> the most common hidden bottleneck at high EPS.</li>
+</ul>
+<p>If you cannot produce these seven numbers for your current pipeline, you are not ready to compare it against an alternative.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Lean toward a columnar SQL store when:</p>
+<ol>
+<li>You filter on high-cardinality dimensions and need sub-second tail latency.</li>
+<li>Your observability team is small and you want to avoid JVM tuning.</li>
+<li>Schema changes are frequent and reindexing is unacceptable.</li>
+<li>You are comfortable writing SQL and do not need relevance scoring.</li>
+</ol>
+<p>Lean toward a search cluster when:</p>
+<ol>
+<li>Full-text search on unstructured logs is a first-class requirement.</li>
+<li>Your team is already trained on the query language and dashboards.</li>
+<li>You need the ecosystem's mature visualization and alerting tooling.</li>
+<li>Your retention window is short and merge overhead is not a concern.</li>
+</ol>
+<h2 id="common-follow-up-questions">Common follow-up questions</h2>
+<p><strong>Can I run both?</strong> Yes, but the query languages and data models differ enough that you will maintain two mental models. Teams that bolt a columnar store onto an existing search cluster often regret it because materialized views and saved searches do not map cleanly between them.</p>
+<p><strong>Does the collector add latency?</strong> It adds one hop. Measure it with the end-to-end timestamp method above; it is usually single-digit milliseconds on the same node.</p>
+<p><strong>Is a filesystem buffer always better than a memory buffer?</strong> No. A filesystem buffer survives restarts but can fill the disk and cause write failures. A memory buffer is faster but loses data on restart. Choose based on whether you prefer backpressure or data loss.</p>
+<p><strong>How do I size partitions?</strong> Start with daily partitions and keep the active partition small enough that merges complete within your lowest-traffic window. Measure merge duration, do not guess.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Pick your highest-cardinality log field and run one query filtering on it against your current backend. Capture the query profile and the p99 wall-clock time over 100 runs. Then run the same query against a single-node columnar store loaded with one day of the same data. Compare granules or documents scanned, not just elapsed time. That single comparison will tell you more about which architecture fits than any benchmark table.</p>
+<p>If the search backend scans a large fraction of the index while the columnar store prunes to a handful of granules, cardinality is your bottleneck and the architecture decision is effectively made.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubaik.github.io/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/audit-logs-that-scale-skip-the-3am-fire-drills/">
+                        <h3>Audit logs that scale: skip the 3AM fire drills</h3>
+                        <p>How to design audit log pipelines that satisfy auditors and engineers: immutable event streams, hash chains, tiered retention, and a decision checklist.</p>
+                        <span class="related-meta">16 min read · 17 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">
+                        <h3>Log audit costs without breaking compliance</h3>
+                        <p>Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.</p>
+                        <span class="related-meta">13 min read · 22 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/observability-2026-ditch-the-three-pillars/">
+                        <h3>Observability 2026: ditch the three pillars</h3>
+                        <p>Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
+                        <span class="related-meta">14 min read · 10 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

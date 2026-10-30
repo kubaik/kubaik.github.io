@@ -1,0 +1,628 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Why your multi-agent system degraded slowly - Kubai Kevin</title>
+        <meta name="description" content="Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.">
+        <meta name="keywords" content="Orchestration, NatsLatencyTuning, Retry, Performance, Multiagent">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-09T12:58:50.019727">
+        <meta property="article:modified_time" content="2026-10-04T10:14:22.099562+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Why your multi-agent system degraded slowly">
+        <meta property="og:description" content="Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.">
+        <meta property="og:url" content="https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/why-your-multi-agent-system-degraded-slowly.png">
+        <meta property="og:image:alt" content="Why your multi-agent system degraded slowly">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Why your multi-agent system degraded slowly">
+        <meta name="twitter:description" content="Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-your-multi-agent-system-degraded-slowly.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/#article",
+      "headline": "Why your multi-agent system degraded slowly",
+      "description": "Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.",
+      "datePublished": "2026-08-09T12:58:50+00:00",
+      "dateModified": "2026-10-04T10:14:22+00:00",
+      "wordCount": 2869,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/"
+      },
+      "keywords": "Orchestration, NatsLatencyTuning, Retry, Performance, Multiagent",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/why-your-multi-agent-system-degraded-slowly.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Why your multi-agent system degraded slowly",
+          "item": "https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I know if my multi-agent system’s degradation is from orchestration overhead?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check three metrics: p99 latency, payload size, and broker queue depth. If p99 latency is rising but agent CPU and memory are flat, the problem is orchestration overhead. If payload size has grown by >50% in the last three months, that’s a strong signal. Use OpenTelemetry to trace message flow and identify where latency is added. A common failure mode is seeing 80% of latency in the orchestrator’s serialization and network layers, not in agent processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I switch to gRPC instead of JSON-RPC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Switching to gRPC won’t help unless you also address payload size growth and broker queueing. gRPC adds ~1-2ms of framing overhead vs. JSON-RPC’s ~0.5ms. The real win is reducing payload size with Protobuf and tuning NATS. gRPC is better for bidirectional streaming, but for request-reply orchestration, Protobuf over NATS is often simpler."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My team uses Node.js for the orchestrator. Is this problem the same?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Node.js (v20 LTS) has similar issues with JSON payloads and GC pauses. The Node.js V8 engine’s GC pauses increase with large payloads, adding ~2-3ms to p99 latency. The fix is the same: reduce payload size, reuse connections, and monitor orchestration overhead with OpenTelemetry. Node.js’s event loop adds ~1ms of overhead per message, which compounds with fan-out."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "We’ve already tuned NATS and switched to Protobuf. Why is p99 still high?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check for retry loops and connection pooling. If your orchestrator retries 5% of requests without adjusting timeouts, the retry overhead can add 250ms to p99 latency. Also, verify that your NATS connections are pooled—new TCP handshakes add ~0.5ms per request. Finally, check for GC pauses in your orchestrator language. Python 3.11’s GC pauses increase with payload size, even after switching to Protobuf."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much latency does a single retry add?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A single retry adds ~250ms to p99 latency in a system with 8 agents and 30ms timeouts. The retry itself takes 30ms, but the queueing pressure it creates adds another 220ms. Retries are a positive feedback loop—the more you retry, the worse latency gets. The fix is to increase timeouts or reduce the need for retries by fixing the root cause (payload size, broker queueing)."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Why your multi-agent system degraded slowly</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Why your multi-agent system degraded slowly</h1>
+                
+                <p class="post-lead">Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Orchestration</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">NatsLatencyTuning</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/performance/"
+                       style="text-decoration:none;">Performance</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/multiagent/"
+                       style="text-decoration:none;">Multiagent</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2869 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>Most teams assume a multi-agent system degrades because one agent failed or the orchestrator crashed. A quieter failure mode is a slow, cumulative change in how messages travel between agents. A small increase in a common header, or a small extra cost per serialization, can push p99 latency far above its original value over months without any obvious alert. The part that trips people up is that the agents themselves still succeed: queries return, tasks complete, the process does not crash. Every user request simply waits longer. That is the failure mode this article covers.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Engineers expect degradation to announce itself: exceptions, timeouts, CPU spikes. Here the failure is invisible because the system keeps producing correct outputs.</p>
+<p>A typical scenario is a Python orchestrator that fans out to several agents over a message broker, using JSON payloads. Each agent processes tasks quickly, but the orchestrator fans out to eight agents per request. Over time, teams add lightweight metadata: request IDs, trace context, agent tags, retry counters, agent version. Each addition is small and individually justified. After a few months, p99 latency has risen sharply while average latency stays nearly flat, because the slowest slice of requests now dominates. Alerts based on average latency never fire, and p99 is rarely monitored in staging. Teams spend days chasing agent CPU or database queries, missing the fact that the bottleneck is now serialization and round trips between agents.</p>
+<p>This confusion is rooted in how observability tools are tuned. Most teams instrument agent-level metrics: CPU, memory, queue depth, error rates. Network and serialization costs between agents are invisible unless explicitly measured with tracing and payload-size tracking. The common mistake is to assume that because agents still respond within their usual budget, the entire system is healthy, ignoring that the orchestration layer now adds far more overhead per request than it used to.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of the multi-agent system as a city transit network. The agents are buses, each completing its route in a predictable time. The orchestrator is the control system that schedules routes and dispatches riders. The problem is not the buses. It is the growing number of riders and their increasingly heavy luggage.</p>
+<ul>
+<li><strong>Payload size</strong>: weight of luggage per rider</li>
+<li><strong>Serialization overhead</strong>: time to load and unload luggage at each stop</li>
+<li><strong>Network latency</strong>: time for the bus to travel between stops</li>
+<li><strong>Orchestration latency</strong>: time the control system spends coordinating schedules</li>
+</ul>
+<p>A small increase in payload size does not break the bus, but it adds time at every stop. With eight stops per trip, that per-stop cost is multiplied by eight on every request. Over months, teams add several stops' worth of metadata, and the overhead grows accordingly. Meanwhile, the buses still run on time. No alarms fire, but commuters wait longer. The degradation is gradual, cumulative, and invisible unless you measure the transit time between agents, not just the time agents spend working.</p>
+<p>Another useful analogy: a restaurant kitchen with multiple stations. Each dish moves between stations to be prepared. The head chef assigns tasks and tracks progress. Adding a new label to each ticket slows the ticket's movement because the chef spends more time reading labels before assigning stations. The stations themselves work at the same speed, but the tickets spend more time in transit. The kitchen is not on fire, but service slows down.</p>
+<p>The key insight: <strong>the system's correctness is preserved, but its responsiveness degrades because coordination overhead grows silently.</strong></p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a Python orchestrator that fans out to eight agents per request and collects responses. Suppose each agent processes tasks in roughly 15 ms, and the initial p99 latency is 80 ms. Over three months, several small changes accumulate. All figures below are illustrative, chosen to make the arithmetic visible; substitute your own measurements.</p>
+<ol>
+<li>
+<p><strong>Metadata creep.</strong> Each request starts with a 120-byte JSON payload. Over time the team adds a request ID (16 bytes), trace context (32 bytes), agent tags (8 bytes), retry metadata (16 bytes), and agent version (4 bytes). Total added: 76 bytes. Payload grows from 120 to 196 bytes.</p>
+</li>
+<li>
+<p><strong>Serialization cost.</strong> Suppose serialization cost scales with payload size. If the measured cost is 0.02 ms per agent per 100 bytes, then 196 bytes costs about 0.039 ms per agent versus 0.024 ms at 120 bytes. Across eight agents that is about 0.31 ms versus 0.19 ms per request, a delta of roughly 0.12 ms.</p>
+</li>
+<li>
+<p><strong>Network framing.</strong> The broker adds a roughly constant per-message framing cost. If that is 0.5 ms per message, eight agents cost about 4 ms per request. This does not grow with payload size, but it is a fixed tax that is easy to forget.</p>
+</li>
+<li>
+<p><strong>Broker queueing.</strong> As payload size increases, broker memory usage grows. If the broker's memory limit is not tuned, occasional pauses and queueing delays appear. Suppose these add 2 ms to p99 intermittently.</p>
+</li>
+<li>
+<p><strong>Orchestrator GC.</strong> In a garbage-collected runtime, larger payloads mean more live objects and longer pauses. Suppose pauses grow from about 1 ms to about 3 ms per cycle under the larger payload.</p>
+</li>
+</ol>
+<p>Summing the deltas that scale with payload: serialization adds about 0.12 ms, and GC adds about 2 ms. Broker queueing adds about 1 ms. Payload growth itself adds a small amount of copy and allocation cost. That is on the order of a few milliseconds, not hundreds.</p>
+<p>So where does a large p99 increase come from? The answer is usually <strong>queueing and retries</strong>, not the per-message arithmetic. As broker memory pressure grows, queueing becomes more volatile. The orchestrator starts seeing timeouts on a small percentage of requests. It retries those requests. Retries add load, which increases queueing, which causes more timeouts. The p99 latency balloons while the average stays low, because only a small fraction of requests are affected.</p>
+<p>The lesson is not that metadata is expensive in absolute terms. It is that metadata pushes the system closer to a threshold where queueing and retry feedback take over.</p>
+<h2 id="the-orchestrator-code-before-and-after">The orchestrator code, before and after</h2>
+<p>A first version of the orchestrator might look like this:</p>
+<pre><code class="language-python">import asyncio
+import json
+import nats
+from fastapi import FastAPI
+
+app = FastAPI()
+nc = await nats.connect(&quot;nats://localhost:4222&quot;)
+
+async def call_agent(payload: dict) -&gt; dict:
+    subject = f&quot;agent.{payload['agent_id']}&quot;
+    response = await nc.request(subject, json.dumps(payload).encode(), timeout=0.03)
+    return json.loads(response.data)
+
+@app.post(&quot;/task&quot;)
+async def process_task(task: dict):
+    agents = [&quot;agent1&quot;, &quot;agent2&quot;, &quot;agent3&quot;, &quot;agent4&quot;, &quot;agent5&quot;, &quot;agent6&quot;, &quot;agent7&quot;, &quot;agent8&quot;]
+    tasks = [call_agent({&quot;task&quot;: task, &quot;agent_id&quot;: agent}) for agent in agents]
+    results = await asyncio.gather(*tasks)
+    return {&quot;results&quot;: results}
+</code></pre>
+<p>After some months, payload size grows and the orchestrator starts timing out on a small percentage of requests. A natural reaction is to add retries:</p>
+<pre><code class="language-python">async def call_agent_with_retry(payload: dict, max_retries=3) -&gt; dict:
+    for attempt in range(max_retries):
+        try:
+            subject = f&quot;agent.{payload['agent_id']}&quot;
+            response = await nc.request(subject, json.dumps(payload).encode(), timeout=0.03)
+            return json.loads(response.data)
+        except asyncio.TimeoutError:
+            if attempt == max_retries - 1:
+                raise
+            payload[&quot;retry_count&quot;] = attempt + 1
+            await asyncio.sleep(0.01 * (attempt + 1))
+</code></pre>
+<p>The retry logic adds latency variability. Worse, if the timeout and backoff are not adjusted as payload size grows, retries increase queueing pressure, which increases latency, which triggers more retries. The p99 latency balloons while the average stays low because only a small fraction of requests are affected.</p>
+<p>Note also that the first snippet uses a top-level <code>await</code> outside an async context, which will not run as written. In practice the connection is created during application startup, as shown later.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>This problem is a cousin of the N+1 query problem in databases, but it happens in distributed orchestration instead of SQL. In a monolith, an N+1 query adds database latency proportional to the number of rows fetched. In a multi-agent system, a fan-out to eight agents multiplies every per-message cost by eight, and retries multiply it again.</p>
+<p>It is also similar to the thundering herd problem in caching: when many requests retry simultaneously, the broker becomes overwhelmed. The difference is that the thundering herd here is silent. No cache stampede alerts fire because the broker does not surface serialization or queueing latency by default.</p>
+<p>Another familiar pattern is memory growth in long-running services. In this case, the growth is not a leak in the classic sense. It is payload size. Each request carries more metadata, and the broker's memory usage grows. GC pauses increase, but the team does not correlate GC pauses with payload size because they are monitoring CPU, not serialization or broker memory.</p>
+<p>The key connection: <strong>orchestration overhead is invisible unless you measure it explicitly.</strong> Most teams measure agent-level metrics and assume the orchestration layer is negligible. When the fan-out factor is high and payload size grows, the orchestration layer becomes the bottleneck.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<h3 id="misconception-1-if-the-agents-are-fast-the-system-is-fast">Misconception 1: "If the agents are fast, the system is fast."</h3>
+<p><strong>Correction:</strong> Agent speed is necessary but not sufficient. The orchestration layer's overhead, including serialization, network framing, queueing, and GC pauses, can dwarf agent processing time. A system with eight agents each taking 15 ms can still have a high p99 latency if orchestration overhead and queueing dominate.</p>
+<h3 id="misconception-2-retries-fix-timeouts">Misconception 2: "Retries fix timeouts."</h3>
+<p><strong>Correction:</strong> Retries can amplify the problem. Each retry increases queueing pressure, which increases latency, which triggers more retries. The retry loop becomes a positive feedback loop that degrades p99 latency without changing average latency. The fix is not more retries. It is reducing the need for retries by increasing timeouts, reducing payload size, or fixing the underlying bottleneck.</p>
+<h3 id="misconception-3-monitoring-message-rate-is-enough">Misconception 3: "Monitoring message rate is enough."</h3>
+<p><strong>Correction:</strong> Message rate tells you throughput, not latency. A broker can handle the same message rate at very different latencies. The difference is serialization, queueing, and GC overhead. Monitor message latency, not just rate.</p>
+<h3 id="misconception-4-payload-size-growth-is-unavoidable">Misconception 4: "Payload size growth is unavoidable."</h3>
+<p><strong>Correction:</strong> It is avoidable with discipline. Prefer compact binary encodings over JSON for internal messages. Enforce size limits on payloads and reject or log requests that exceed them. Compression can help for large payloads, but measure the CPU cost, because compression can add milliseconds per message.</p>
+<h3 id="misconception-5-gc-pauses-are-a-python-problem">Misconception 5: "GC pauses are a Python problem."</h3>
+<p><strong>Correction:</strong> GC pauses happen in any language runtime with garbage collection. Node.js has similar issues with large JSON payloads. Python's GC is more visible because it is synchronous and can block the event loop. In both cases, the fix is to reduce payload size or move the orchestrator to a runtime with more predictable latency.</p>
+<h2 id="the-advanced-version">The advanced version</h2>
+<p>Once payload size and serialization are under control, the next layer of degradation comes from broker queueing and connection handling.</p>
+<h3 id="tune-broker-memory-and-queueing">Tune broker memory and queueing</h3>
+<p>Brokers typically have a configurable memory limit. If the broker handles a high message rate with small payloads, memory usage grows slowly. If payload size grows, memory usage grows proportionally. Over time, the broker's memory usage approaches its limit, and queueing delays increase.</p>
+<p>To address this:</p>
+<ol>
+<li>
+<p>Set an explicit memory limit in the broker configuration. The exact key depends on the broker; for a NATS-style server it looks like this:
+   <code>yaml
+   max_memory: 4GB
+   max_file_descriptors: 10000</code></p>
+</li>
+<li>
+<p>Use persistent streams if you need durability across restarts. Persistence adds latency but prevents message loss.</p>
+</li>
+<li>
+<p>Monitor disk and memory usage for the broker and set alerts well below the limit.</p>
+</li>
+</ol>
+<h3 id="switch-to-a-compact-binary-encoding">Switch to a compact binary encoding</h3>
+<p>JSON is convenient but verbose. A schema-based binary encoding or a compact binary format such as MessagePack can cut payload size substantially and reduce serialization time. The exact numbers depend on the schema and the data, so measure them on your own payloads. A simple benchmark is to serialize a representative payload one thousand times in each format and compare total wall time and byte size.</p>
+<h3 id="reuse-connections-in-the-orchestrator">Reuse connections in the orchestrator</h3>
+<p>Creating a new broker connection per request adds a TCP handshake and protocol setup cost. For high request rates this is wasted work. Reuse a single connection created during application startup:</p>
+<pre><code class="language-python">import json
+import nats
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.nats = await nats.connect(
+        &quot;nats://localhost:4222&quot;,
+        max_reconnect_attempts=-1,
+        reconnect_time_wait=1,
+        connection_name=&quot;orchestrator&quot;,
+    )
+    yield
+    await app.state.nats.close()
+
+app = FastAPI(lifespan=lifespan)
+
+async def call_agent(payload: dict) -&gt; dict:
+    subject = f&quot;agent.{payload['agent_id']}&quot;
+    response = await app.state.nats.request(subject, json.dumps(payload).encode(), timeout=0.03)
+    return json.loads(response.data)
+</code></pre>
+<h3 id="monitor-orchestration-overhead-explicitly">Monitor orchestration overhead explicitly</h3>
+<p>Tracing lets you attribute latency to serialization, network, and broker queueing. A minimal instrumentation looks like this:</p>
+<pre><code class="language-python">from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+
+provider = TracerProvider()
+processor = BatchSpanProcessor(OTLPSpanExporter(endpoint=&quot;http://otel-collector:4317&quot;))
+provider.add_span_processor(processor)
+trace.set_tracer_provider(provider)
+
+tracer = trace.get_tracer(__name__)
+
+async def call_agent(payload: dict) -&gt; dict:
+    with tracer.start_as_current_span(&quot;call_agent&quot;) as span:
+        span.set_attribute(&quot;payload_size&quot;, len(json.dumps(payload).encode()))
+        subject = f&quot;agent.{payload['agent_id']}&quot;
+        response = await app.state.nats.request(subject, json.dumps(payload).encode(), timeout=0.03)
+        return json.loads(response.data)
+</code></pre>
+<p>Then set alerts on the metrics that actually matter:</p>
+<ul>
+<li>broker message latency at the 99th percentile</li>
+<li>average and maximum payload size per subject</li>
+<li>broker queue depth</li>
+<li>orchestrator GC pause duration</li>
+</ul>
+<h3 id="consider-a-runtime-with-more-predictable-latency">Consider a runtime with more predictable latency</h3>
+<p>For high-throughput systems, a runtime with less GC pressure can reduce latency variability. The trade-off is development cost and ecosystem maturity. Measure before committing. A useful experiment is to run the same workload against two orchestrator implementations and compare p99 latency under sustained load.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Symptom</th>
+<th>Root cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payload size growth</td>
+<td>p99 latency rises, agent CPU flat</td>
+<td>Added metadata, verbose encoding</td>
+<td>Compact encoding, enforce size limits</td>
+</tr>
+<tr>
+<td>Broker queueing pressure</td>
+<td>Intermittent timeouts, memory growth</td>
+<td>Memory pressure from larger payloads</td>
+<td>Tune broker memory, use persistence carefully</td>
+</tr>
+<tr>
+<td>Orchestrator GC pauses</td>
+<td>High latency variability</td>
+<td>Large payloads in a GC runtime</td>
+<td>Reduce payload size, change runtime</td>
+</tr>
+<tr>
+<td>Retry amplification</td>
+<td>p99 spikes, retry count rises</td>
+<td>Timeouts too low, no backoff</td>
+<td>Raise timeouts, add exponential backoff</td>
+</tr>
+<tr>
+<td>Connection overhead</td>
+<td>Fixed per-request cost</td>
+<td>New connection per request</td>
+<td>Reuse connections</td>
+</tr>
+</tbody>
+</table>
+<h2 id="faq">FAQ</h2>
+<h3 id="how-do-i-know-if-degradation-is-from-orchestration-overhead">How do I know if degradation is from orchestration overhead?</h3>
+<p>Check three things: p99 latency, payload size, and broker queue depth. If p99 latency is rising but agent CPU and memory are flat, the problem is likely orchestration overhead. If payload size has grown substantially over the same period, that is a strong signal. Trace message flow to see where latency is added. A common failure mode is finding that most of the latency sits in serialization and network layers, not in agent processing.</p>
+<h3 id="should-i-switch-to-grpc-instead-of-json-rpc">Should I switch to gRPC instead of JSON-RPC?</h3>
+<p>Switching transport will not help unless you also address payload size growth and broker queueing. The real win is reducing payload size with a compact encoding and tuning the broker. gRPC is better for bidirectional streaming, but for request-reply orchestration a compact encoding over your existing broker is often simpler.</p>
+<h3 id="my-team-uses-nodejs-for-the-orchestrator-is-this-problem-the-same">My team uses Node.js for the orchestrator. Is this problem the same?</h3>
+<p>Yes. Node.js has similar issues with large JSON payloads and GC pauses. The fix is the same: reduce payload size, reuse connections, and monitor orchestration overhead with tracing. The event loop adds per-message overhead that compounds with fan-out.</p>
+<h3 id="we-have-already-tuned-the-broker-and-switched-encodings-why-is-p99-still-high">We have already tuned the broker and switched encodings. Why is p99 still high?</h3>
+<p>Check for retry loops and connection reuse. If the orchestrator retries a small percentage of requests without adjusting timeouts, the retry overhead can dominate p99. Verify that broker connections are reused rather than created per request. Finally, check for GC pauses in the orchestrator runtime, which can persist even after switching to a compact encoding.</p>
+<h3 id="how-much-latency-does-a-single-retry-add">How much latency does a single retry add?</h3>
+<p>It depends entirely on the timeout and the queueing state. If the timeout is 30 ms, the retry itself costs at least 30 ms, plus whatever queueing delay the retry causes. Under pressure, that second cost can be much larger than the first. Retries are a positive feedback loop: the more you retry, the worse latency gets. The fix is to increase timeouts or remove the need for retries.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Open your orchestrator's request handler and add one line that records the serialized payload size as a metric, tagged by subject or route. Then graph the 99th percentile of that metric over the last 30 days alongside your p99 request latency. If payload size has grown while agent latency has not, you have found the beginning of the failure mode.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/">Multi-agent systems: when they quietly degrade</a></li>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://grpc.io/docs/">gRPC documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/orchestration-tax-kills-multi-agent-systems/">
+                        <h3>Orchestration tax kills multi-agent systems</h3>
+                        <p>Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/scope-agent-permissions-per-task/">
+                        <h3>Scope agent permissions per task</h3>
+                        <p>Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
+                        <span class="related-meta">20 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/built-a-multi-agent-system-without-langgraph/">
+                        <h3>Built a multi-agent system without LangGraph</h3>
+                        <p>Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.</p>
+                        <span class="related-meta">13 min read · 27 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

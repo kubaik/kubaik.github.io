@@ -1,0 +1,735 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Built a multi-agent system without LangGraph - Kubai Kevin</title>
+        <meta name="description" content="Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.">
+        <meta name="keywords" content="Langgraph, FastapiAsyncAgents, Python, Python3, Redis, Multiagent">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-27T14:44:13.456532">
+        <meta property="article:modified_time" content="2026-10-03T11:31:15.091183+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Built a multi-agent system without LangGraph">
+        <meta property="og:description" content="Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.">
+        <meta property="og:url" content="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/built-a-multi-agent-system-without-langgraph.png">
+        <meta property="og:image:alt" content="Built a multi-agent system without LangGraph">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Built a multi-agent system without LangGraph">
+        <meta name="twitter:description" content="Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/built-a-multi-agent-system-without-langgraph.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/#article",
+      "headline": "Built a multi-agent system without LangGraph",
+      "description": "Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.",
+      "datePublished": "2026-07-27T14:44:13+00:00",
+      "dateModified": "2026-10-03T11:31:15+00:00",
+      "wordCount": 2684,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/"
+      },
+      "keywords": "Langgraph, FastapiAsyncAgents, Python, Python3, Redis, Multiagent",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/built-a-multi-agent-system-without-langgraph.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Built a multi-agent system without LangGraph",
+          "item": "https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Built a multi-agent system without LangGraph</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Built a multi-agent system without LangGraph</h1>
+                
+                <p class="post-lead">Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/langgraph/"
+                       style="text-decoration:none;">Langgraph</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FastapiAsyncAgents</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python3/"
+                       style="text-decoration:none;">Python3</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/multiagent/"
+                       style="text-decoration:none;">Multiagent</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2684 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Multi-agent LLM pipelines fail in boring ways: an upstream API starts returning 504s, a worker dies mid-job, a retry storm hammers a flaky endpoint, or two consumers process the same message twice. Framework choice matters less than whether the design answers those four cases. This article builds a three-agent research pipeline on plain Python, Redis Streams, and a managed retry layer, and shows how to measure whether it is actually working.</p>
+<h2 id="the-problem-with-graph-frameworks-for-small-teams">The problem with graph frameworks for small teams</h2>
+<p>Graph orchestration libraries exist to solve real problems: cyclic state machines, human-in-the-loop interrupts, checkpointed resumption, visual debugging. If a workflow genuinely needs those, adopting one is reasonable.</p>
+<p>The friction appears when a team adopts a graph framework for a pipeline that is really a linear chain of three or four steps. Common failure modes reported by teams in that situation:</p>
+<ul>
+<li><strong>Version churn in checkpointing APIs.</strong> Pre-1.0 orchestration libraries change persistence formats between minor releases. Code that pins to an internal checkpoint schema breaks on upgrade.</li>
+<li><strong>Opaque deadlocks.</strong> When the scheduler stalls, the queue state is often not exposed through public APIs, so debugging means reading library internals.</li>
+<li><strong>Impedance mismatch with existing infrastructure.</strong> If retries, queues, and observability already exist in the platform (Step Functions, SQS, CloudWatch, an existing tracer), a second orchestration layer duplicates them.</li>
+</ul>
+<p>None of that makes graph frameworks bad. It means the decision should be driven by whether the workflow is genuinely graph-shaped. A pipeline that is "research, then validate, then summarize, with retries" is a chain. A pipeline where any agent can hand off to any other agent, with approval gates and resumable checkpoints, is a graph.</p>
+<p>A useful decision checklist before adding a framework:</p>
+<ol>
+<li>Does any step need to loop back to an earlier step based on output? If no, a chain suffices.</li>
+<li>Does a human need to inspect and approve mid-run?</li>
+<li>Must a partially completed run resume after a process restart, with state persisted per node?</li>
+<li>Do you need a visual trace of the graph structure, not just spans?</li>
+<li>Is the team already operating a queue and retry system it trusts?</li>
+</ol>
+<p>Two or more "yes" answers point toward a graph framework. Otherwise, a queue plus a retry layer is usually less code and less surface area.</p>
+<h2 id="architecture-overview">Architecture overview</h2>
+<p>The pipeline:</p>
+<ul>
+<li>Three agents: <strong>researcher</strong>, <strong>validator</strong>, <strong>summarizer</strong>.</li>
+<li>Redis Streams for task queues, consumer groups, and results.</li>
+<li>A managed state machine (AWS Step Functions is one option; Temporal and Argo Workflows are alternatives in the same category) for retries and execution history.</li>
+<li>FastAPI for the HTTP entry point.</li>
+<li>Lambda or a container for the worker compute.</li>
+</ul>
+<p>Why Redis Streams rather than a plain message queue: streams support consumer groups, which give fan-out to N workers with per-message acknowledgement, plus a pending-entries list that survives worker crashes. A standard queue can do this too, but streams keep ordering per stream and give you <code>XADD</code>/<code>XREADGROUP</code>/<code>XACK</code> in one primitive.</p>
+<p>Important caveat: <strong>Redis Streams ordering is per stream, not global.</strong> If ordering across agents matters, route everything through a single stream with one consumer group and make job handlers idempotent.</p>
+<h2 id="step-1-environment-setup">Step 1 — environment setup</h2>
+<p>Create a project and pin dependencies:</p>
+<pre><code class="language-bash">uv init multi_agent_research --python 3.11
+cd multi_agent_research
+uv add fastapi uvicorn redis httpx pydantic-settings
+uv add --dev pytest pytest-asyncio httpx black
+</code></pre>
+<p>Environment file:</p>
+<pre><code>HF_TOKEN=&lt;your token&gt;
+REDIS_URL=redis://localhost:6379/0
+</code></pre>
+<p>A note on the Redis URL: the trailing <code>/0</code> selects database 0. Omitting it defaults to database 0 in most clients, but some connection helpers have historically parsed the path differently, and code that assumes one DB while writing to another produces the confusing symptom of "keys disappear after restart." Always specify the database explicitly.</p>
+<p>Local Redis for testing:</p>
+<pre><code class="language-bash">docker run -d --name redis72 -p 6379:6379 redis:7.2-alpine
+</code></pre>
+<p>Minimal FastAPI app in <code>main.py</code>:</p>
+<pre><code class="language-python">from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get(&quot;/health&quot;)
+async def health():
+    return {&quot;status&quot;: &quot;ok&quot;}
+</code></pre>
+<p>The hard-to-reverse decision at this stage is the <strong>Redis key layout</strong>. Once writers depend on <code>agent:researcher:job:{job_id}</code>, migrating is a coordinated rewrite. Pick a scheme and document it before the first deploy.</p>
+<h2 id="step-2-agent-interface-and-queue">Step 2 — agent interface and queue</h2>
+<p>Define a single agent class. Keeping one class parameterized by name keeps the retry and timeout logic in one place.</p>
+<pre><code class="language-python">import os
+import httpx
+from typing import Any
+
+class Agent:
+    def __init__(self, name: str, model: str = &quot;mistralai/Mistral-7B-Instruct-v0.3&quot;):
+        self.name = name
+        self.model = model
+        self._client: httpx.AsyncClient | None = None
+
+    async def _ensure_client(self) -&gt; httpx.AsyncClient:
+        if self._client is None:
+            self._client = httpx.AsyncClient(timeout=30.0)
+        return self._client
+
+    async def aclose(self) -&gt; None:
+        if self._client is not None:
+            await self._client.aclose()
+            self._client = None
+
+    def _build_prompt(self, data: dict[str, Any]) -&gt; str:
+        return f&quot;You are a {self.name}. {data.get('prompt', '')}&quot;
+
+    async def run(self, input_payload: dict[str, Any]) -&gt; dict[str, Any]:
+        client = await self._ensure_client()
+        headers = {&quot;Authorization&quot;: f&quot;Bearer {os.getenv('HF_TOKEN')}&quot;}
+        r = await client.post(
+            &quot;https://api-inference.huggingface.co/models/&quot; + self.model,
+            json={&quot;inputs&quot;: self._build_prompt(input_payload), &quot;parameters&quot;: {&quot;max_tokens&quot;: 512}},
+            headers=headers,
+        )
+        r.raise_for_status()
+        return {&quot;agent&quot;: self.name, &quot;output&quot;: r.json()[0][&quot;generated_text&quot;]}
+</code></pre>
+<p>Enqueue helper:</p>
+<pre><code class="language-python">import json
+import os
+from uuid import uuid4
+import redis.asyncio as redis
+
+async def enqueue_job(topic: str, payload: dict[str, Any]) -&gt; str:
+    job_id = str(uuid4())
+    payload[&quot;job_id&quot;] = job_id
+    rc = redis.from_url(os.getenv(&quot;REDIS_URL&quot;))
+    await rc.xadd(topic, {&quot;payload&quot;: json.dumps(payload)})
+    await rc.aclose()
+    return job_id
+</code></pre>
+<p>Worker loop using a consumer group. <code>XREADGROUP</code> with <code>&gt;</code> delivers only new messages; <code>XACK</code> removes them from the pending list. Unacknowledged messages remain in the pending entries list and can be reclaimed with <code>XAUTOCLAIM</code> if a worker dies.</p>
+<pre><code class="language-python">import asyncio
+import json
+import os
+import redis.asyncio as redis
+
+GROUP = &quot;agents&quot;
+
+async def ensure_group(rc, stream: str, group: str) -&gt; None:
+    try:
+        await rc.xgroup_create(stream, group, id=&quot;0&quot;, mkstream=True)
+    except redis.ResponseError as e:
+        if &quot;BUSYGROUP&quot; not in str(e):
+            raise
+
+async def worker(name: str, stream: str, consumer: str) -&gt; None:
+    rc = redis.from_url(os.getenv(&quot;REDIS_URL&quot;))
+    await ensure_group(rc, stream, GROUP)
+    agent = Agent(name)
+    try:
+        while True:
+            messages = await rc.xreadgroup(
+                GROUP, consumer, {stream: &quot;&gt;&quot;}, count=1, block=5000
+            )
+            if not messages:
+                continue
+            _, entries = messages[0]
+            message_id, data = entries[0]
+            payload = json.loads(data[b&quot;payload&quot;].decode())
+            try:
+                result = await agent.run(payload)
+            except Exception as e:
+                # Leave unacked so it can be reclaimed; do not delete.
+                print(f&quot;agent={name} job={payload['job_id']} error={e}&quot;)
+                continue
+            await rc.xadd(
+                f&quot;results:{name}&quot;,
+                {&quot;job_id&quot;: payload[&quot;job_id&quot;], &quot;result&quot;: json.dumps(result)},
+            )
+            await rc.xack(stream, GROUP, message_id)
+    finally:
+        await agent.aclose()
+        await rc.aclose()
+
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(worker(&quot;researcher&quot;, &quot;tasks:research&quot;, &quot;worker-1&quot;))
+</code></pre>
+<p>Two deliberate choices in that loop:</p>
+<ul>
+<li>On failure, the message is <strong>not</strong> acknowledged and <strong>not</strong> deleted. It stays pending for reclamation. Deleting on failure is the classic bug that turns a transient error into silent data loss.</li>
+<li>The agent's HTTP client is created once and closed in a <code>finally</code> block. Creating an <code>AsyncClient</code> per call leaks file descriptors and memory under load.</li>
+</ul>
+<h2 id="step-3-retries-and-timeouts">Step 3 — retries and timeouts</h2>
+<p>There are two layers where retries can live, and mixing them is a common source of confusion.</p>
+<p><strong>In-process retries</strong> are cheap and appropriate for transient network errors. Bound them tightly, use exponential backoff with jitter, and cap the total time so the worker does not exceed its own execution timeout.</p>
+<pre><code class="language-python">import asyncio
+import random
+
+MAX_ATTEMPTS = 3
+BASE_DELAY = 0.5
+
+async def safe_run(agent: Agent, payload: dict) -&gt; dict | None:
+    for attempt in range(MAX_ATTEMPTS):
+        try:
+            return await agent.run(payload)
+        except Exception as e:
+            if attempt == MAX_ATTEMPTS - 1:
+                return None
+            delay = BASE_DELAY * (2 ** attempt)
+            await asyncio.sleep(delay + random.uniform(0, delay * 0.1))
+    return None
+</code></pre>
+<p>The arithmetic is worth spelling out: with <code>BASE_DELAY = 0.5</code> and <code>MAX_ATTEMPTS = 3</code>, waits are roughly 0.5s then 1.0s, for a worst-case in-process budget of ~1.5s plus request time. That must fit inside the worker timeout with headroom. If the worker timeout is 15s and each request can take 10s, three attempts cannot fit — the retry layer has to move outward.</p>
+<p><strong>Out-of-process retries</strong> belong to the state machine. A Step Functions task with a <code>Retry</code> block retries the whole invocation, which is correct when the failure is "the worker died" rather than "the HTTP call blipped." Example definition:</p>
+<pre><code class="language-json">{
+  &quot;Comment&quot;: &quot;Multi-agent research workflow&quot;,
+  &quot;StartAt&quot;: &quot;Research&quot;,
+  &quot;States&quot;: {
+    &quot;Research&quot;: {
+      &quot;Type&quot;: &quot;Task&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:states:us-east-1:123456789012:function:multi-agent-research&quot;,
+      &quot;Next&quot;: &quot;Validate&quot;
+    },
+    &quot;Validate&quot;: {
+      &quot;Type&quot;: &quot;Task&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:states:us-east-1:123456789012:function:multi-agent-research&quot;,
+      &quot;Retry&quot;: [
+        {
+          &quot;ErrorEquals&quot;: [&quot;States.TaskFailed&quot;],
+          &quot;IntervalSeconds&quot;: 2,
+          &quot;MaxAttempts&quot;: 3,
+          &quot;BackoffRate&quot;: 2.0
+        }
+      ],
+      &quot;Next&quot;: &quot;Summarize&quot;
+    },
+    &quot;Summarize&quot;: {
+      &quot;Type&quot;: &quot;Task&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:lambda:us-east-1:123456789012:function:multi-agent-research&quot;,
+      &quot;End&quot;: true
+    }
+  }
+}
+</code></pre>
+<p>Note the change from <code>States.ALL</code> to <code>States.TaskFailed</code>. Retrying on <code>States.ALL</code> also retries deterministic errors such as a malformed payload, which wastes the retry budget on failures that will never succeed. Enumerate the transient error classes explicitly.</p>
+<p>The rule of thumb: <strong>retry in-process for network jitter, retry out-of-process for worker death.</strong> If both layers retry the same failure, you multiply attempt counts and can produce a retry storm against an already-degraded upstream.</p>
+<h2 id="step-4-failure-modes-and-how-to-handle-them">Step 4 — failure modes and how to handle them</h2>
+<h3 id="duplicate-processing">Duplicate processing</h3>
+<p>Redis Streams deliver at-least-once. A worker that processes a message and crashes before <code>XACK</code> will have that message reclaimed and processed again. The fix is idempotency at the job level, not at the queue level: derive a deterministic result key from <code>job_id</code> and use <code>SET key value NX</code> (or an upsert) so a duplicate write is a no-op.</p>
+<pre><code class="language-python">async def store_result(rc, job_id: str, result: dict) -&gt; None:
+    # NX makes duplicate writes harmless.
+    await rc.set(f&quot;result:{job_id}&quot;, json.dumps(result), nx=True)
+</code></pre>
+<h3 id="poison-messages">Poison messages</h3>
+<p>A message that fails deterministically will be reclaimed forever. Track an attempt counter in the message payload or in a Redis hash keyed by message ID, and after N attempts move it to a dead-letter stream and acknowledge the original.</p>
+<pre><code class="language-python">MAX_DELIVERIES = 5
+
+async def handle_failure(rc, stream: str, group: str, msg_id: str, payload: dict, err: str) -&gt; None:
+    key = f&quot;attempts:{msg_id}&quot;
+    attempts = await rc.incr(key)
+    await rc.expire(key, 86400)
+    if attempts &gt;= MAX_DELIVERIES:
+        await rc.xadd(&quot;deadletter&quot;, {&quot;job_id&quot;: payload[&quot;job_id&quot;], &quot;error&quot;: err})
+        await rc.xack(stream, group, msg_id)
+</code></pre>
+<h3 id="upstream-timeouts">Upstream timeouts</h3>
+<p>Wrap the model call in a short timeout and fall back to a cached result keyed by a hash of the prompt. This converts a hard failure into a degraded-but-successful response, which is usually preferable for a summarization pipeline.</p>
+<pre><code class="language-python">import hashlib
+from fastapi import HTTPException
+
+async def call_model(prompt: str) -&gt; str:
+    key = &quot;cache:&quot; + hashlib.sha256(prompt.encode()).hexdigest()
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            r = await client.post(
+                &quot;https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3&quot;,
+                json={&quot;inputs&quot;: prompt},
+                headers={&quot;Authorization&quot;: f&quot;Bearer {os.getenv('HF_TOKEN')}&quot;},
+            )
+            r.raise_for_status()
+            text = r.json()[0][&quot;generated_text&quot;]
+            await _cache_set(key, text)
+            return text
+    except Exception:
+        cached = await _cache_get(key)
+        if cached is not None:
+            return cached
+        raise HTTPException(status_code=503, detail=&quot;model unavailable&quot;)
+</code></pre>
+<h3 id="retry-storms">Retry storms</h3>
+<p>Two mitigations: jitter (shown above) and a concurrency cap on the worker. On Lambda, <code>reserved_concurrency</code> caps simultaneous invocations so a backlog cannot overwhelm the upstream. On ECS or Kubernetes, cap replicas and use a queue-depth-based autoscaler rather than a CPU-based one — CPU stays low while the queue grows.</p>
+<h2 id="step-5-observability-and-tests">Step 5 — observability and tests</h2>
+<p>Instrument three things before optimizing anything: per-agent latency, failure rate by error class, and queue depth. Without those, "the system is slow" is unfalsifiable.</p>
+<p>Structured logging with a correlation ID per job:</p>
+<pre><code class="language-python">import logging
+import json
+
+log = logging.getLogger(&quot;agent&quot;)
+
+def log_event(job_id: str, agent: str, event: str, **fields) -&gt; None:
+    log.info(json.dumps({&quot;job_id&quot;: job_id, &quot;agent&quot;: agent, &quot;event&quot;: event, **fields}))
+</code></pre>
+<p>An integration test using a real Redis container. The <code>asyncio.sleep</code> in the original version is a flaky-test generator; poll instead.</p>
+<pre><code class="language-python">import asyncio
+import pytest
+from testcontainers.redis import RedisContainer
+
+@pytest.fixture(scope=&quot;session&quot;)
+def redis_url():
+    with RedisContainer(&quot;redis:7.2-alpine&quot;) as r:
+        host = r.get_container_host_ip()
+        port = r.get_exposed_port(6379)
+        yield f&quot;redis://{host}:{port}/0&quot;
+
+@pytest.mark.asyncio
+async def test_research_agent(redis_url, monkeypatch):
+    monkeypatch.setenv(&quot;REDIS_URL&quot;, redis_url)
+    job_id = await enqueue_job(&quot;tasks:research&quot;, {&quot;prompt&quot;: &quot;test&quot;})
+    # Poll for the result rather than sleeping a fixed interval.
+    for _ in range(50):
+        result = await _read_result(redis_url, job_id)
+        if result is not None:
+            break
+        await asyncio.sleep(0.1)
+    assert result is not None
+</code></pre>
+<h3 id="how-to-measure-the-numbers-that-matter">How to measure the numbers that matter</h3>
+<p>Do not trust anyone's published latency or cost figures, including any in this article. Measure your own:</p>
+<ul>
+<li><strong>End-to-end latency.</strong> Add a <code>time.perf_counter()</code> around the request handler and emit a histogram. Percentiles require a histogram, not an average — a mean of 850ms can hide a p99 of 8s.</li>
+<li><strong>Per-agent latency.</strong> Same instrumentation inside <code>Agent.run</code>, tagged by agent name.</li>
+<li><strong>Failure rate by error class.</strong> Count exceptions by type (timeout, HTTP 5xx, validation) rather than a single "errors" counter.</li>
+<li><strong>Queue depth and pending count.</strong> <code>XLEN</code> for stream length and <code>XPENDING</code> for unacknowledged messages. Rising pending count means workers are dying or too slow.</li>
+<li><strong>Cost.</strong> Multiply invocation count by per-invocation price for each service. Keep the arithmetic visible in a spreadsheet rather than a hardcoded number in a dashboard.</li>
+</ul>
+<p>A minimal load test that gives real numbers:</p>
+<pre><code class="language-bash"># Fire 100 requests and capture per-request total time.
+for i in $(seq 1 100); do
+  curl -s -o /dev/null -w &quot;%{time_total}\n&quot; http://localhost:8000/run
+done | sort -n | awk '{a[NR]=$1} END {print &quot;p50=&quot;a[int(NR*0.5)], &quot;p99=&quot;a[int(NR*0.99)]}'
+</code></pre>
+<h2 id="comparison-chain-with-queue-vs-graph-framework">Comparison: chain-with-queue vs. graph framework</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Queue + state machine</th>
+<th>Graph framework</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear pipelines</td>
+<td>Minimal code, uses existing infra</td>
+<td>Adds a dependency and a scheduler</td>
+</tr>
+<tr>
+<td>Cyclic or conditional routing</td>
+<td>Awkward; needs a router step</td>
+<td>First-class</td>
+</tr>
+<tr>
+<td>Human-in-the-loop interrupts</td>
+<td>Manual (store state, resume)</td>
+<td>Built in</td>
+</tr>
+<tr>
+<td>Checkpointing / resume</td>
+<td>State machine execution history</td>
+<td>Framework-managed, version-sensitive</td>
+</tr>
+<tr>
+<td>Debugging a stall</td>
+<td>Inspect queue + execution history</td>
+<td>Depends on framework internals</td>
+</tr>
+<tr>
+<td>Operational familiarity</td>
+<td>Reuses existing queues and alarms</td>
+<td>New system to learn and monitor</td>
+</tr>
+</tbody>
+</table>
+<p>Neither column is universally better. The table is a prompt to check which rows matter for your workflow.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Can this scale past one instance?</strong>
+Yes. Run multiple workers in the same consumer group; Redis distributes messages across consumers. Scale on pending-entries count or stream length, not CPU. Redis itself becomes the bottleneck eventually — monitor its CPU and connection count, and shard by stream name if needed.</p>
+<p><strong>Should I use a standard message queue instead of Redis Streams?</strong>
+If the platform already runs one and the team knows it, reuse it. Streams are convenient because consumer groups, pending lists, and fan-out come from one primitive, but a standard queue with visibility timeouts and a dead-letter queue provides equivalent semantics. Adding a second queueing system purely for this pipeline is usually a net negative.</p>
+<p><strong>How do I resume a partially completed job?</strong>
+Persist the job's stage to a durable store keyed by <code>job_id</code> after each successful step, and make each step idempotent. On restart, read the stage and replay from there. The state machine's execution history also provides this for the workflow layer.</p>
+<p><strong>What about checkpoints for long-running agents?</strong>
+If a single agent run can exceed the worker timeout, split it into multiple steps with explicit state persisted between them. That is the point at which a graph framework's checkpointing starts to earn its complexity.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Add a latency histogram and a pending-entries gauge to your current pipeline, then run one load test:</p>
+<pre><code class="language-bash">for i in $(seq 1 50); do
+  curl -s -o /dev/null -w &quot;%{time_total}\n&quot; http://localhost:8000/run
+done | sort -n | awk '{a[NR]=$1} END {print &quot;p50=&quot;a[int(NR*0.5)], &quot;p99=&quot;a[int(NR*0.99)]}'
+</code></pre>
+<p>Then check <code>XPENDING</code> on your task stream. If p99 is more than roughly three times p50, or pending count is climbing, the retry and acknowledgement logic is where the next hour of work should go — not the framework choice.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/">Agent frameworks: stop rewriting the same glue code</a></li>
+<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.temporal.io/">Temporal documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/orchestration-tax-kills-multi-agent-systems/">
+                        <h3>Orchestration tax kills multi-agent systems</h3>
+                        <p>Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/build-agent-workflows-that-survive-restarts/">
+                        <h3>Build agent workflows that survive restarts</h3>
+                        <p>How to build agent task pipelines that resume after crashes, schema drift and model changes, using Redis streams, idempotent steps and replay.</p>
+                        <span class="related-meta">12 min read · 6 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/multi-agent-systems-break-first/">
+                        <h3>Multi-agent systems break first</h3>
+                        <p>Why multi-agent systems break in production: non-determinism, state bloat, silent data loss, and how to instrument and fix each failure mode.</p>
+                        <span class="related-meta">13 min read · 8 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

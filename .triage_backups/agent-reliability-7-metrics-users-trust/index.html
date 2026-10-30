@@ -1,0 +1,525 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent reliability: 7 metrics users trust - Kubai Kevin</title>
+        <meta name="description" content="Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.">
+        <meta name="keywords" content="AgentReliability, TrustMetrics, Agent, MeasureAgentTrust, AgentRecoveryRate">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-14T04:08:59.754027">
+        <meta property="article:modified_time" content="2026-10-14T04:09:43.571027+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent reliability: 7 metrics users trust">
+        <meta property="og:description" content="Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-reliability-7-metrics-users-trust/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-reliability-7-metrics-users-trust.png">
+        <meta property="og:image:alt" content="Agent reliability: 7 metrics users trust">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent reliability: 7 metrics users trust">
+        <meta name="twitter:description" content="Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-reliability-7-metrics-users-trust.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-reliability-7-metrics-users-trust/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-reliability-7-metrics-users-trust/#article",
+      "headline": "Agent reliability: 7 metrics users trust",
+      "description": "Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.",
+      "datePublished": "2026-10-14T04:08:59+00:00",
+      "dateModified": "2026-10-14T04:09:43+00:00",
+      "wordCount": 3132,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-reliability-7-metrics-users-trust/"
+      },
+      "keywords": "AgentReliability, TrustMetrics, Agent, MeasureAgentTrust, AgentRecoveryRate",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/agent-reliability-7-metrics-users-trust.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent reliability: 7 metrics users trust",
+          "item": "https://kubaik.github.io/agent-reliability-7-metrics-users-trust/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent reliability: 7 metrics users trust</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent reliability: 7 metrics users trust</h1>
+                
+                <p class="post-lead">Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentReliability</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TrustMetrics</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/agent/"
+                       style="text-decoration:none;">Agent</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MeasureAgentTrust</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3132 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-14
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-with-reliability-as-a-single-number">The problem with "reliability" as a single number</h2>
+<p>For agents that book appointments, answer support tickets, or move money, there is a recurring dashboard problem. Uptime is green. Latency is fine. Error rate is near zero. And yet users keep abandoning the thing mid-task.</p>
+<p>The usual metrics — request success rate, p95 latency, token throughput — describe the <em>service</em>, not the <em>agent</em>. An agent can return HTTP 200 with a perfectly formatted response that a user will not trust, because it contradicted itself, forgot a constraint, or silently did the wrong thing. Those failures don't show up in an APM.</p>
+<p>This article covers seven reliability metrics that correlate with what users experience as trust: did the agent do what it said, did it stay inside its boundaries, and did it fail in a way the user could recover from. None of these require a data science team. All of them can be computed from logs most agent services already write.</p>
+<h2 id="what-this-list-actually-solves">What this list actually solves</h2>
+<p>The core issue is a mismatch between <em>system</em> reliability and <em>agent</em> reliability. System reliability asks: did the request complete? Agent reliability asks: was the outcome correct, consistent, and recoverable from the user's point of view?</p>
+<p>A concrete example. A support agent is asked to refund an order. It calls the refund tool, gets a success response, and tells the user the refund is processed. But the tool returned success for a <em>partial</em> refund because of a currency rounding issue, and the user expected the full amount. Request success rate: 100%. User trust: broken. The metric that would have caught this is not error rate — it's a task-level outcome check.</p>
+<p>The list below is organized around four questions that map to user trust:</p>
+<ol>
+<li>Did the agent complete the <em>task</em>, not just the <em>call</em>?</li>
+<li>Did it stay within the boundaries the user assumed?</li>
+<li>Was it consistent when asked the same thing twice?</li>
+<li>When it failed, could the user tell and recover?</li>
+</ol>
+<h2 id="evaluation-criteria">Evaluation criteria</h2>
+<p>Each metric below is judged against the same four criteria. The criteria matter more than the specific metric choice.</p>
+<ul>
+<li><strong>Computable from existing logs.</strong> A metric that requires a new tracing pipeline and a labeling team will not survive the next sprint. Prefer things derivable from request/response logs and tool-call records.</li>
+<li><strong>Correlates with a user-visible outcome.</strong> The metric should move when a real user would have had a worse experience. A metric that only moves when infrastructure hiccups is a system metric, not an agent metric.</li>
+<li><strong>Has a documented failure mode.</strong> You should be able to say "when this number goes bad, here is what is happening." Without that, it's a vanity metric.</li>
+<li><strong>Works with partial instrumentation.</strong> Many teams run on limited budgets and shared infrastructure. A metric that demands a full distributed-tracing deployment before it returns anything useful is a poor fit.</li>
+</ul>
+<p>Deliberately excluded: any metric that requires a ground-truth label for every conversation. Human labeling is valuable but slow, and it belongs in a separate evaluation loop, not a reliability dashboard.</p>
+<h2 id="the-7-metrics">The 7 metrics</h2>
+<h3 id="1-task-completion-rate-not-request-success-rate">1. Task completion rate (not request success rate)</h3>
+<p><strong>What it does:</strong> Measures the fraction of user-initiated tasks that reach a defined terminal state the user asked for — booking confirmed, ticket resolved, refund issued — rather than the fraction of API calls that returned 200.</p>
+<p><strong>Strength:</strong> It's the closest single number to "did the user get what they came for." It catches the class of failure where every tool call succeeds but the task silently doesn't. A team that tracks only request success will see 99.9% and miss that a meaningful share of refunds were partial.</p>
+<p><strong>Weakness:</strong> "Terminal state" must be defined per task type, and that definition drifts. A booking that gets rescheduled is neither success nor failure. In practice you end up with a small taxonomy — completed, abandoned, escalated, errored — and "abandoned" ends up doing a lot of work.</p>
+<p><strong>Best for:</strong> Any agent with a small number of well-defined task types. If "done" can be written down, this is the top-line metric.</p>
+<h3 id="2-constraint-violation-rate">2. Constraint violation rate</h3>
+<p><strong>What it does:</strong> Counts the fraction of tasks where the agent took an action outside a boundary the user or the business assumed — spending above a limit, contacting an external party, deleting something, or acting on stale data.</p>
+<p><strong>Strength:</strong> This maps to <em>trust</em> rather than <em>satisfaction</em>. Users forgive a failed task; they do not forgive an agent that did something they didn't authorize. It's also cheap to compute if tool calls are logged with their arguments: a violation is a predicate over those arguments.</p>
+<p><strong>Weakness:</strong> Constraints must be enumerated, and the enumeration is never complete. The first version will miss the constraint that actually bites. Treat it as a living list, and add a constraint every time a new violation is found.</p>
+<p><strong>Best for:</strong> Agents that touch money, permissions, or external systems. If the agent can only read, this metric is less urgent.</p>
+<h3 id="3-determinism-under-repetition">3. Determinism under repetition</h3>
+<p><strong>What it does:</strong> Sends the same input (or a close paraphrase) multiple times and measures how often the agent produces materially different outcomes. Not identical text — identical <em>decisions</em>.</p>
+<p><strong>Strength:</strong> Users notice inconsistency immediately. If asking the same question twice yields two different answers, trust drops even when both answers are individually reasonable. This metric makes that visible. It's also a good proxy for whether prompts and tools are stable.</p>
+<p><strong>Weakness:</strong> LLM-based agents are not deterministic by default, and forcing determinism can make them worse at handling edge cases. The useful version is <em>bounded</em> variation: the decision should be stable, the phrasing can vary. Setting that threshold is a judgment call.</p>
+<p><strong>Best for:</strong> Agents that answer questions or make recommendations, where users will naturally re-ask. Less critical for one-shot batch jobs.</p>
+<h3 id="4-recovery-rate-after-failure">4. Recovery rate after failure</h3>
+<p><strong>What it does:</strong> Of the tasks that hit an error or an ambiguous state, what fraction did the user successfully complete — either by retrying, by a fallback path, or by the agent self-correcting?</p>
+<p><strong>Strength:</strong> This separates agents users keep using from agents users abandon. A 5% failure rate with a 90% recovery rate is a far better user experience than a 2% failure rate with a 20% recovery rate. It also rewards good error messages and clear handoff to a human, which are cheap to improve.</p>
+<p><strong>Weakness:</strong> Requires linking a failed attempt to a later successful one, which means session- or user-level correlation. If logs are per-request, a correlation ID has to be added first. Worth it.</p>
+<p><strong>Best for:</strong> Every agent. If only one metric from this list is tracked, track this one alongside task completion.</p>
+<h3 id="5-grounding-accuracy-on-tool-results">5. Grounding accuracy on tool results</h3>
+<p><strong>What it does:</strong> Measures how often the agent's final answer is consistent with the tool results it actually received, rather than with what the model "remembers" or assumes. A refund agent that says "refunded $40" when the tool returned $39.60 is a grounding failure.</p>
+<p><strong>Strength:</strong> This catches hallucination in its most damaging form — not invented facts, but <em>contradicted</em> facts. Users trust an agent that reports what it did accurately. It's computable if both the tool output and the final message are logged: extract the key figure from each and compare.</p>
+<p><strong>Weakness:</strong> Extraction is fuzzy. "$39.60" and "thirty-nine sixty" are the same value. A small normalization step is needed, and it will have false positives. Budget for tuning.</p>
+<p><strong>Best for:</strong> Agents whose output includes numbers, dates, IDs, or statuses derived from tools. That's most transactional agents.</p>
+<h3 id="6-escalation-precision">6. Escalation precision</h3>
+<p><strong>What it does:</strong> Of the tasks the agent escalated to a human (or to a fallback), what fraction actually needed escalation? And conversely, of the tasks that should have been escalated, what fraction were?</p>
+<p><strong>Strength:</strong> Escalation is the safety valve for trust. Users tolerate an agent that says "I can't do this, let me get a human" far more than one that confidently does the wrong thing. Precision here tells you whether the valve is working or whether the agent is just giving up too easily.</p>
+<p><strong>Weakness:</strong> "Should have been escalated" requires a ground-truth judgment, which is expensive. A practical compromise is to track the <em>precision</em> side (escalations that were unnecessary) automatically, and sample the <em>recall</em> side manually.</p>
+<p><strong>Best for:</strong> Agents in regulated or high-stakes domains — finance, health, anything with a compliance surface.</p>
+<h3 id="7-time-to-trust">7. Time-to-trust</h3>
+<p><strong>What it does:</strong> Measures how many interactions a new user needs before they stop double-checking the agent — for example, before they stop re-reading the output or verifying it against the source system.</p>
+<p><strong>Strength:</strong> This is the only metric on the list that directly measures trust rather than a proxy for it. It's also the one that tells you whether reliability work is actually landing. A drop in time-to-trust after a fix is strong evidence the fix mattered.</p>
+<p><strong>Weakness:</strong> It needs behavioral instrumentation — click tracking, edit rate, re-query rate — and it's noisy. It's also slow: a cohort of new users has to be observed. Treat it as a quarterly metric, not a daily one.</p>
+<p><strong>Best for:</strong> Products with returning users and enough traffic to form cohorts. With ten users, this metric doesn't exist yet.</p>
+<h2 id="the-strongest-default-and-why">The strongest default, and why</h2>
+<p>If only one thing can be shipped, ship <strong>task completion rate plus recovery rate</strong>, computed from a single correlation ID per task.</p>
+<p>The reasoning: task completion answers "did it work," recovery answers "when it didn't, did the user get there anyway." Together they cover the two failure modes users actually feel. Constraint violations and grounding errors are important, but they're rarer and more domain-specific. Determinism and time-to-trust are valuable but expensive. Start with the pair that's cheap and universal.</p>
+<p>A minimal implementation looks like this. Assume the agent logs one JSON line per request with a <code>task_id</code>, <code>user_id</code>, <code>ts</code>, <code>status</code>, and <code>tool_calls</code> field. Both metrics can be computed with a short script:</p>
+<pre><code class="language-python">import json
+from collections import defaultdict
+
+def load_events(path):
+    with open(path) as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+def task_outcomes(events):
+    # A task is complete if any of its events reached a terminal success state.
+    # A task is recovered if it had a failure followed by a success.
+    by_task = defaultdict(list)
+    for e in events:
+        by_task[e[&quot;task_id&quot;]].append(e)
+
+    completed = 0
+    recovered = 0
+    failed_unrecovered = 0
+
+    for task_id, evs in by_task.items():
+        evs.sort(key=lambda e: e[&quot;ts&quot;])
+        saw_failure = False
+        saw_success = False
+        for e in evs:
+            if e[&quot;status&quot;] == &quot;error&quot;:
+                saw_failure = True
+            if e[&quot;status&quot;] == &quot;completed&quot;:
+                saw_success = True
+        if saw_success:
+            completed += 1
+            if saw_failure:
+                recovered += 1
+        elif saw_failure:
+            failed_unrecovered += 1
+
+    total = len(by_task)
+    return {
+        &quot;task_completion_rate&quot;: completed / total if total else 0.0,
+        &quot;recovery_rate&quot;: recovered / completed if completed else 0.0,
+        &quot;unrecovered_failures&quot;: failed_unrecovered,
+    }
+</code></pre>
+<p>This is deliberately simple. It assumes logs already have a <code>task_id</code> and a terminal status. If they don't, adding those two fields is the highest-leverage change available. The script is illustrative — status names will differ — but the shape is the point: one pass over events, grouped by task, counting outcomes.</p>
+<p>One caveat: this treats "completed" as a binary. In reality a third state is needed for "user abandoned," which usually shows up as a task with no terminal event within a timeout window. Add that once the basic version is running.</p>
+<h3 id="how-to-verify-the-numbers-mean-anything">How to verify the numbers mean anything</h3>
+<p>A metric that never moves is indistinguishable from a metric that is broken. Before trusting either number, confirm it can detect a known failure. Inject one: in a staging environment, force a tool to return an error status on a fraction of calls and confirm <code>unrecovered_failures</code> rises in proportion. Then force a tool to return a valid response with a wrong value and confirm that task completion <em>does not</em> move — that gap is exactly why metric 5 exists.</p>
+<p>For grounding accuracy, the measurement procedure is: log the tool response payload and the final user-facing message for every task; extract the salient fields (amounts, dates, IDs, statuses) from each; normalize both sides (parse numbers, resolve relative dates against the request timestamp, canonicalize IDs); compare field by field; count tasks where any extracted field disagrees. Report the disagreement rate and sample twenty disagreements per week to estimate the false-positive rate of the extractor itself. If the false-positive rate is above roughly a fifth of flagged items, the extractor needs work before the number is actionable.</p>
+<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
+<p>A few metrics that didn't make the main list:</p>
+<ul>
+<li><strong>Tool-call correctness rate.</strong> Fraction of tool calls with arguments that pass schema and business validation. Useful as a leading indicator — it often degrades before task completion does. But it's a system metric in disguise, and high correctness doesn't imply user trust.</li>
+<li><strong>Contradiction rate across turns.</strong> How often the agent's later statements contradict its earlier ones within a session. This is a sharper version of determinism, but it requires turn-level parsing and is easy to over-count.</li>
+<li><strong>Human handoff latency.</strong> Time from "agent decides to escalate" to "human picks up." Not strictly an agent metric, but users experience it as part of agent reliability. Worth tracking if escalation is common.</li>
+</ul>
+<h2 id="options-that-look-appealing-but-fail-in-practice">Options that look appealing but fail in practice</h2>
+<p>Some metrics get proposed in every reliability discussion and then quietly get dropped. Here's why, so they can be skipped.</p>
+<p><strong>Overall "hallucination rate."</strong> It sounds like the metric you want, but it's not operational. "Hallucination" spans everything from a wrong date to a fabricated policy, and the ground truth requires a human to check every output. Teams that try to track it as a dashboard metric end up with a number nobody trusts. Better to decompose it: grounding accuracy (metric 5) covers the transactional cases, and a sampled human review covers the rest.</p>
+<p><strong>Average user rating as a reliability metric.</strong> Ratings are lagging, sparse, and biased toward extreme experiences. They're useful for product direction, but they won't tell you that the refund agent started rounding wrong on Tuesday. Keep ratings, but don't let them stand in for reliability measurement.</p>
+<p><strong>Token-level confidence scores.</strong> Model-reported confidence is not calibrated to correctness, and treating it as a reliability signal leads to false comfort. If a confidence signal is wanted, build it from outcome data — for example, the historical success rate of tasks that look like this one — not from the model's self-report.</p>
+<p><strong>"Number of retries" as a health metric.</strong> Retries are a symptom, not a cause. A high retry count could mean flaky tools or a confused agent, and the metric can't distinguish them. Track recovery rate instead; it captures the user-relevant consequence.</p>
+<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
+<p>A short decision framework:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Start with</th>
+<th>Add next</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Early prototype, few users</td>
+<td>Task completion rate</td>
+<td>Recovery rate</td>
+</tr>
+<tr>
+<td>Agent touches money or permissions</td>
+<td>Constraint violation rate</td>
+<td>Grounding accuracy</td>
+</tr>
+<tr>
+<td>High-stakes / regulated domain</td>
+<td>Escalation precision</td>
+<td>Recovery rate</td>
+</tr>
+<tr>
+<td>Q&amp;A or recommendation agent</td>
+<td>Determinism under repetition</td>
+<td>Grounding accuracy</td>
+</tr>
+<tr>
+<td>Established product, returning users</td>
+<td>Time-to-trust</td>
+<td>Constraint violations</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern: start with the metric that matches the worst plausible failure, then add the one that matches the second-worst. Instrumenting all seven at once produces seven half-built metrics and no action.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I measure agent reliability without a dedicated data team?</strong>
+Start with logs that already exist. If the agent writes one line per request, add a <code>task_id</code> and a terminal status, then compute task completion and recovery with a script like the one above. That's a day of work, not a quarter. Metrics that require human labeling — escalation recall, hallucination rate — should wait until the automated ones are running and trusted.</p>
+<p><strong>Why doesn't an uptime dashboard catch agent failures?</strong>
+Because uptime measures whether the service answered, not whether the agent did the right thing. An agent can return a well-formed response that contradicts its own tool results or violates a user constraint, and every system metric stays green. Agent reliability needs outcome-level metrics — task completion, constraint violations, grounding accuracy — that live above the HTTP layer.</p>
+<p><strong>What's the difference between task completion rate and request success rate?</strong>
+Request success rate counts individual API calls that returned without error. Task completion rate counts user-initiated tasks that reached the outcome the user asked for. A single task might involve five tool calls; if four succeed and one returns a wrong-but-valid result, request success is 100% and the task is a failure. Track both, but treat task completion as the one that reflects user experience.</p>
+<p><strong>How often should these metrics be re-measured?</strong>
+Daily for task completion, recovery, and constraint violations — they're cheap and belong on a dashboard. Weekly for determinism and grounding accuracy, since they need sampling. Quarterly for time-to-trust, which needs cohorts. The cadence should match how fast the metric can move meaningfully; a daily time-to-trust number will just be noise.</p>
+<p><strong>Can these metrics work with a small user base?</strong>
+Yes for the log-derived ones — task completion, recovery, constraint violations, and grounding all work at low volume because they're computed per task, not per cohort. Determinism needs enough traffic to sample repeats. Time-to-trust needs enough new users to form a cohort, so it's the one to defer when the user base is small. The absence of the expensive metrics shouldn't stop the cheap ones from shipping.</p>
+<h2 id="final-recommendation">Final recommendation</h2>
+<p>Agent reliability is not a service metric, and the gap between the two is where user trust leaks out. The fix is not a bigger observability stack — it's a task-level outcome metric and a recovery metric, both computable from logs that can be added today.</p>
+<p>Your next 30 minutes: open the agent's request logging code and add a <code>task_id</code> field that stays constant across all calls made on behalf of a single user request, plus a terminal <code>status</code> field on the final event. That one change unlocks task completion rate, recovery rate, and most of the list above. Everything else can wait until that's in place.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/slos-for-agentic-features-beyond-latency/">SLOs for agentic features: beyond latency</a></li>
+<li><a href="https://kubaik.github.io/detect-lazy-agents-without-false-alarms/">Detect lazy agents without false alarms</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/slos-for-agentic-features-beyond-latency/">
+                        <h3>SLOs for agentic features: beyond latency</h3>
+                        <p>Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.</p>
+                        <span class="related-meta">15 min read · 6 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">
+                        <h3>Agents keep breaking prod: 3 boundary rules you still need</h3>
+                        <p>Agents that mutate external state fail silently when 2xx is mistaken for completion. Three boundary rules: outcome polling, schema drift gates, atomic claims.</p>
+                        <span class="related-meta">14 min read · 17 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
+                        <h3>Agent drift: why prod breaks without human checkpoints</h3>
+                        <p>Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
+                        <span class="related-meta">15 min read · 1 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

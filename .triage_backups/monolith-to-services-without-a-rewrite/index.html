@@ -1,0 +1,544 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monolith to services without a rewrite - Kubai Kevin</title>
+        <meta name="description" content="Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.">
+        <meta name="keywords" content="Monolith, Microservices, MonolithRefactor2026, DistributedMonolith, ServiceExtraction, OutboxPatternRedis, StranglerFig2026, Postgresql, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-27T20:07:07.246730">
+        <meta property="article:modified_time" content="2026-10-03T15:58:52.167851+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Monolith to services without a rewrite">
+        <meta property="og:description" content="Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.">
+        <meta property="og:url" content="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/monolith-to-services-without-a-rewrite.png">
+        <meta property="og:image:alt" content="Monolith to services without a rewrite">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Monolith to services without a rewrite">
+        <meta name="twitter:description" content="Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/monolith-to-services-without-a-rewrite.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/monolith-to-services-without-a-rewrite/#article",
+      "headline": "Monolith to services without a rewrite",
+      "description": "Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.",
+      "datePublished": "2026-06-27T20:07:07+00:00",
+      "dateModified": "2026-10-03T15:58:52+00:00",
+      "wordCount": 2878,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/monolith-to-services-without-a-rewrite/"
+      },
+      "keywords": "Monolith, Microservices, MonolithRefactor2026, DistributedMonolith, ServiceExtraction, OutboxPatternRedis, StranglerFig2026, Postgresql",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/monolith-to-services-without-a-rewrite.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Monolith to services without a rewrite",
+          "item": "https://kubaik.github.io/monolith-to-services-without-a-rewrite/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Monolith to services without a rewrite</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Monolith to services without a rewrite</h1>
+                
+                <p class="post-lead">Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Monolith</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/microservices/"
+                       style="text-decoration:none;">Microservices</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MonolithRefactor2026</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DistributedMonolith</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ServiceExtraction</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2878 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-conventional-wisdom-and-where-it-breaks-down">The conventional wisdom, and where it breaks down</h2>
+<p>The standard playbook for splitting a monolith goes like this: identify bounded contexts, draw the boundaries on a whiteboard, then carve out services one at a time behind a strangler fig facade. The promised benefits are cleaner code, independent deployments, and a path to horizontal scalability.</p>
+<p>That playbook is not wrong, but it is incomplete. It assumes the monolith is already modular in its data model, the team has DevOps capacity to spare, and the infrastructure can absorb the overhead of network calls between what used to be function calls. Many real systems satisfy none of those assumptions.</p>
+<p>The missing piece in most write-ups is <strong>data coupling</strong>. When a large fraction of your queries join across what you want to be separate services, you are not extracting a service. You are extracting a distributed monolith, and a distributed monolith typically has worse latency and harder debugging than the original. A common failure mode is a team spending months extracting a "User Service" only to find that every other service still queries the <code>users</code> table for address history, preferences, and purchase summaries. The result is not independence. It is a mesh of cross-service queries that used to be a single indexed join.</p>
+<h2 id="three-failure-modes-worth-understanding-before-you-plan-anything">Three failure modes worth understanding before you plan anything</h2>
+<p><strong>Failure mode 1: the invisible lock.</strong> A service is extracted behind an internal API gateway. Staging looks fine. In production, the service starts timing out on a small percentage of requests. The root cause is often a write lock on a shared table that the monolith holds during a transaction. The extracted service queries that table directly for validation. The lock was always there; it just used to be invisible because the caller was inside the same process and the same transaction. After extraction, the lock surfaces as tail latency. Service extraction does not change the data model. It relocates the contention to a boundary where it is harder to reason about.</p>
+<p><strong>Failure mode 2: duplicated load, not reduced load.</strong> A monolith running on one large database instance is split so that a payment module runs on its own application servers. The database bill stays flat because the same queries still hit the same tables. The compute bill rises because you now run two application tiers instead of one. Nothing was scaled down. The team justifies the cost as "investment in scalability," but if traffic is flat, there is no scalability being bought. The right question is not "how many services do we have" but "what resource is actually saturated, and does a service boundary relieve it."</p>
+<p><strong>Failure mode 3: the latency tax.</strong> In-process function calls are measured in fractions of a millisecond. An HTTP round trip inside a VPC is typically single-digit to low tens of milliseconds. That difference is the latency tax, and it is paid on every cross-service call. Teams routinely underestimate it because staging traffic is low and the network is quiet. The tax scales with fan-out: a request that touches five services serially pays it five times.</p>
+<h2 id="a-different-mental-model-start-with-coupling-points">A different mental model: start with coupling points</h2>
+<p>Instead of starting with contexts, start with <strong>coupling points</strong> — the places where data or behavior is shared across what you think are separate features. The goal is not to extract services. The goal is to reduce coupling so that a future extraction does not drag half the monolith along with it.</p>
+<h3 id="step-1-map-your-queries">Step 1: map your queries</h3>
+<p>On PostgreSQL, <code>pg_stat_statements</code> ranks statements by total execution time. That ranking, not your mental model of the code, is the honest map of where the database spends its work:</p>
+<pre><code class="language-sql">-- Top 20 statements by total time
+SELECT
+  queryid,
+  calls,
+  total_exec_time,
+  mean_exec_time,
+  rows,
+  left(query, 120) AS query_snippet
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 20;
+</code></pre>
+<p>A frequent finding is that one or two statements dominate. A single reporting view that joins a dozen tables, written years ago for a dashboard nobody uses anymore, can account for a large share of total database time. Dropping or materializing that view is a database change, not a service change, and it can remove more load than any extraction would.</p>
+<p>To see whether a specific query crosses feature boundaries, run:</p>
+<pre><code class="language-sql">EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
+SELECT ... ;
+</code></pre>
+<p>Look at which relations appear in the plan. If a query you associate with billing touches <code>users</code>, <code>addresses</code>, and <code>orders</code>, those tables are coupling points between billing and whatever else owns them.</p>
+<h3 id="step-2-identify-transaction-boundaries">Step 2: identify transaction boundaries</h3>
+<p>If two operations must be atomic with respect to each other, they are coupled. Creating a user and sending a welcome email inside one transaction is a coupling. You cannot extract the email path without either accepting duplicate emails, accepting lost emails, or introducing a coordination mechanism.</p>
+<p>The standard coordination mechanism is the <strong>outbox pattern</strong>. The monolith writes the business row and an event row to an <code>outbox</code> table in the same local transaction. A background worker reads unpublished rows and publishes them to a broker. Consumers subscribe. The atomicity guarantee is preserved by the single local transaction; the delivery is at-least-once, so consumers must be idempotent.</p>
+<p>A sketch of the outbox table:</p>
+<pre><code class="language-sql">CREATE TABLE outbox (
+  id           bigserial PRIMARY KEY,
+  aggregate    text        NOT NULL,
+  event_type   text        NOT NULL,
+  payload      jsonb       NOT NULL,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  published_at timestamptz
+);
+
+CREATE INDEX outbox_unpublished_idx
+  ON outbox (created_at)
+  WHERE published_at IS NULL;
+</code></pre>
+<p>And the publisher loop, showing the idempotency contract rather than a specific broker:</p>
+<pre><code class="language-python">def publish_pending(batch_size: int = 100) -&gt; int:
+    with db.transaction():
+        rows = db.execute(
+            &quot;&quot;&quot;
+            SELECT id, aggregate, event_type, payload
+            FROM outbox
+            WHERE published_at IS NULL
+            ORDER BY created_at
+            LIMIT %s
+            FOR UPDATE SKIP LOCKED
+            &quot;&quot;&quot;,
+            (batch_size,),
+        ).fetchall()
+
+        for row in rows:
+            broker.publish(
+                topic=f&quot;{row['aggregate']}.{row['event_type']}&quot;,
+                key=str(row[&quot;id&quot;]),
+                value=row[&quot;payload&quot;],
+            )
+            db.execute(
+                &quot;UPDATE outbox SET published_at = now() WHERE id = %s&quot;,
+                (row[&quot;id&quot;],),
+            )
+    return len(rows)
+</code></pre>
+<p>Two details matter. <code>FOR UPDATE SKIP LOCKED</code> lets multiple publisher workers run without stepping on each other. Publishing before marking as published means a crash between the two produces a duplicate, which is why consumers must be idempotent — that is the at-least-once contract, not a bug.</p>
+<p>The coupling is broken at the event layer without any service extraction. The email path can later become its own process, or stay a worker inside the monolith, and the contract does not change.</p>
+<h3 id="step-3-measure-before-you-move">Step 3: measure before you move</h3>
+<p>Before extracting anything, establish a baseline and then simulate the extraction.</p>
+<p>Instrument at minimum:</p>
+<ul>
+<li>P50, P95, and P99 latency for the endpoints you intend to split.</li>
+<li>Query counts per request (to catch N+1 patterns that appear when a join becomes a remote call).</li>
+<li>Database connection pool saturation.</li>
+<li>Error rate by endpoint.</li>
+</ul>
+<p>Then run a load test that replays production-shaped traffic against a staging clone. A tool such as Locust or k6 can drive the load; the choice matters less than replaying a realistic mix. Record the baseline numbers.</p>
+<p>Next, simulate the extraction. Route a fraction of the relevant calls through a mock service that adds a fixed delay equal to your expected network hop, and re-run the same load. If P95 latency rises by more than your acceptable budget — a common internal target is 20ms — the extraction will hurt performance unless the boundary is redesigned.</p>
+<p>The point of the simulation is that it is cheap. A mock that sleeps for 20ms takes an afternoon. A production extraction that turns out to be a latency regression takes a quarter.</p>
+<h2 id="a-worked-example-with-the-arithmetic-shown">A worked example, with the arithmetic shown</h2>
+<p>Suppose a monolith serves 5,000 requests per second, and a candidate "notifications" module is invoked on 30% of those requests. That is:</p>
+<pre><code>5,000 req/s × 0.30 = 1,500 calls/s to the notifications module
+</code></pre>
+<p>In-process, each call costs about 0.3ms of CPU. After extraction, each call becomes an HTTP round trip. Suppose the measured RTT inside the VPC is 20ms:</p>
+<pre><code>1,500 calls/s × 20ms = 30,000 ms/s = 30 CPU-seconds of waiting per wall-clock second
+</code></pre>
+<p>That waiting is not CPU work, but it is concurrency demand: to sustain 1,500 in-flight calls at 20ms each, you need roughly:</p>
+<pre><code>1,500 calls/s × 0.020 s = 30 concurrent in-flight requests
+</code></pre>
+<p>A thread-per-request server needs 30 threads just to hold those calls open, plus the threads for the rest of the request. A monolith that was comfortably using 40 worker threads may now need 70 or more, depending on how much of the request path is blocked. If the pool is not sized for that, requests queue and P99 latency degrades long before CPU saturates.</p>
+<p>Now consider the same numbers with a 5ms RTT (same-region, same-AZ, connection reuse):</p>
+<pre><code>1,500 calls/s × 5ms = 7,500 ms/s = 7.5 CPU-seconds of waiting per second
+1,500 calls/s × 0.005 s = 7.5 concurrent in-flight requests
+</code></pre>
+<p>The difference between 20ms and 5ms is a factor of four in concurrency demand, which is why the network path matters as much as the number of services.</p>
+<p>These figures are illustrative, not measured. The method is what transfers: instrument the call rate, measure the RTT, multiply, and compare against your thread pool and connection pool limits.</p>
+<h2 id="when-the-conventional-wisdom-is-right">When the conventional wisdom is right</h2>
+<p>The strangler fig approach works well when the monolith is already modular. If each domain already has its own Django app (or Rails engine, or Spring module) with its own models and URL namespace, the extraction is largely a deployment change. The code does not need to be untangled because it was never tangled.</p>
+<p>It also works when the coupling is <strong>resource-based</strong> rather than data-based. If a search workload is starving the primary database of I/O, moving search to its own cluster with dedicated storage relieves a real bottleneck. The service boundary follows the resource boundary, which is a clean line to draw.</p>
+<p>It works when the module has a genuinely different scaling profile: a batch job that needs burst CPU, a media transcoder that needs GPU, a workload with a different runtime. The boundary is justified by the resource, not by an architectural preference.</p>
+<p>And it works when you are replacing a legacy subsystem outright. A rewrite is sometimes unavoidable — for example, replacing a nightly batch system with a real-time one. In that case the strangler fig is less a migration strategy than a way to land the rewrite incrementally, keeping the old path alive until the new one is proven.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order. Stop at the first one that applies.</p>
+<ol>
+<li><strong>Is there a query or view that dominates database time?</strong> If <code>pg_stat_statements</code> shows one statement consuming a large share of total time, fix that first. It is often a stale view or a missing index, and the fix is measured in hours, not months.</li>
+<li><strong>Do more than roughly 30% of your top queries join across the proposed service boundary?</strong> If yes, the boundary is wrong or premature. Refactor the schema first: split schemas, remove cross-feature joins, introduce read replicas for read-heavy paths.</li>
+<li><strong>Are there atomic operations spanning the boundary?</strong> If yes, introduce an outbox pattern and make consumers idempotent before extracting anything.</li>
+<li><strong>What is the measured RTT between the proposed service and its callers?</strong> If it is above single-digit milliseconds, the latency tax will be felt. Consider co-locating, or reducing call frequency with batching.</li>
+<li><strong>What is the simulated P95 delta?</strong> If it exceeds your budget, do not extract. The simulation is cheap; the regression is not.</li>
+<li><strong>Does the team have observability and rollback in place?</strong> Distributed tracing, per-service dashboards, and a rehearsed rollback procedure are prerequisites, not nice-to-haves. Without them, an incident becomes an outage.</li>
+<li><strong>Is the business case resource-based or preference-based?</strong> If the driver is "we should have microservices," the answer is usually no. If the driver is a saturated resource or a genuinely independent scaling need, the answer may be yes.</li>
+</ol>
+<p>A comparison of the three common approaches:</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Primary change</th>
+<th>Typical effort</th>
+<th>Main risk</th>
+<th>When it fits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database-first refactor</td>
+<td>Schema, indexes, views, read replicas</td>
+<td>Weeks</td>
+<td>Underestimating query rewrites</td>
+<td>High data coupling, one dominant query</td>
+</tr>
+<tr>
+<td>Outbox plus events</td>
+<td>Async boundaries, consumer idempotency</td>
+<td>Weeks to a couple of months</td>
+<td>Duplicate delivery if consumers are not idempotent</td>
+<td>Atomic operations spanning a proposed boundary</td>
+</tr>
+<tr>
+<td>Strangler fig extraction</td>
+<td>Deployment topology, internal APIs</td>
+<td>Months</td>
+<td>Latency tax, distributed debugging</td>
+<td>Already-modular monolith, resource-driven scaling</td>
+</tr>
+</tbody>
+</table>
+<p>The effort and risk columns are qualitative. The only way to make them quantitative for your system is to run the audit and the simulation described above.</p>
+<h2 id="objections-and-honest-responses">Objections, and honest responses</h2>
+<p><strong>"We need independent deployments for CI/CD."</strong> Independent deployments are a means, not an end. Feature flags and canary releases deliver most of the deployment-risk reduction without splitting the codebase. If the CI pipeline is slow because the test suite is slow, fix the test suite. Splitting the service does not make the tests faster; it makes them distributed.</p>
+<p><strong>"The monolith is spaghetti and we cannot test it."</strong> Extracting services from a codebase you do not understand usually produces distributed spaghetti. The order of operations is wrong. Write characterization tests first — tests that capture current behavior, bugs included — then refactor internally. Only when the module has a stable, tested interface is extraction a mechanical change rather than a rewrite.</p>
+<p><strong>"We need to scale this module independently."</strong> Check whether the module needs independent <em>compute</em> or independent <em>data</em>. Read replicas, connection pooling, and dedicated queue workers often solve the compute case inside the monolith. A separate service is justified when the scaling requirement is genuinely different in kind — a different runtime, a different storage engine, a different hardware profile.</p>
+<p><strong>"Leadership wants microservices."</strong> Architecture that does not serve a measurable bottleneck tends to be rolled back. The useful move is to translate the request into a resource question: what is saturated, and what change relieves it? Sometimes the answer is a service. Often it is not, and the data to show that is the audit described above.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Can a monolith be migrated to services with zero downtime?</strong>
+Zero downtime is achievable only if there is no shared mutable state and no atomic operation spanning the boundary. If the monolith uses one database with foreign keys across the proposed services, the migration requires either a dual-write period or a schema refactor first. Dual-write is not zero downtime; it is a longer window during which two systems must agree.</p>
+<p><strong>What is the most common mistake in monolith-to-services migrations?</strong>
+Extracting a service before reducing data coupling. The extracted service ends up querying the same tables as the monolith, so the boundary adds latency without adding independence. The second most common mistake is not measuring the latency tax before committing.</p>
+<p><strong>How do you decouple a monolith before extracting services?</strong>
+Start with a query audit using <code>pg_stat_statements</code>. Identify the statements that dominate total execution time and check whether they join across proposed boundaries. Then split schemas, remove cross-feature joins, add read replicas for read-heavy paths, and introduce an outbox pattern for operations that must be atomic. Extract services only after the data layer is decoupled.</p>
+<p><strong>When should you not extract a service from a monolith?</strong>
+When the monolith's P95 latency is already within budget and the extraction would add more than your latency budget per call. When the team lacks observability and rollback. When the module shares foreign keys or complex joins with other modules. When the only driver is architectural preference rather than a saturated resource.</p>
+<h2 id="summary">Summary</h2>
+<p>The conventional advice to extract services early assumes a modular monolith, a mature team, and infrastructure headroom. Many systems have none of those. The failure mode is a distributed monolith: same data coupling, now with network latency and harder debugging. The safer sequence is to audit coupling at the query level, break atomic dependencies with an outbox pattern, measure the latency tax with a simulated extraction, and only then decide whether a service boundary is justified.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Run this against your production PostgreSQL database and read the top 20 rows:</p>
+<pre><code class="language-sql">SELECT
+  calls,
+  round(total_exec_time::numeric, 1) AS total_ms,
+  round(mean_exec_time::numeric, 2)  AS mean_ms,
+  left(query, 100)                  AS query_snippet
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 20;
+</code></pre>
+<p>For each row, note which tables appear in the query. If more than about a third of the top 20 join tables that you consider separate features, your next task is a schema refactor, not a service extraction.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+<li><a href="https://docs.locust.io/">Locust documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/why-monoliths-die-slowly-in-2026/">
+                        <h3>Why monoliths die slowly in 2026</h3>
+                        <p>Monolith decomposition usually fails on data locality, not routing. A step-by-step order for extracting data first, routing traffic later, with checks.</p>
+                        <span class="related-meta">13 min read · 19 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/nigerias-2026-api-rules-broke-our-microservices/">
+                        <h3>Nigeria’s 2026 API rules broke our microservices</h3>
+                        <p>Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llm-agents-why-monoliths-win/">
+                        <h3>LLM agents: why monoliths win</h3>
+                        <p>Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.</p>
+                        <span class="related-meta">11 min read · 10 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

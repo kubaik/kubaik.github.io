@@ -1,0 +1,486 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spot instances vs on-demand for AI experiments - Kubai Kevin</title>
+        <meta name="description" content="How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.">
+        <meta name="keywords" content="SpotInstances, GpuCost, Checkpoint, Preemptible, Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-18T13:01:40.090270">
+        <meta property="article:modified_time" content="2026-10-04T09:58:55.702182+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Spot instances vs on-demand for AI experiments">
+        <meta property="og:description" content="How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.">
+        <meta property="og:url" content="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/spot-instances-vs-on-demand-for-ai-experiments.png">
+        <meta property="og:image:alt" content="Spot instances vs on-demand for AI experiments">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Spot instances vs on-demand for AI experiments">
+        <meta name="twitter:description" content="How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/spot-instances-vs-on-demand-for-ai-experiments.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/#article",
+      "headline": "Spot instances vs on-demand for AI experiments",
+      "description": "How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.",
+      "datePublished": "2026-09-18T13:01:40+00:00",
+      "dateModified": "2026-10-04T09:58:55+00:00",
+      "wordCount": 2587,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/"
+      },
+      "keywords": "SpotInstances, GpuCost, Checkpoint, Preemptible, Ai",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/spot-instances-vs-on-demand-for-ai-experiments.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Spot instances vs on-demand for AI experiments",
+          "item": "https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Spot instances vs on-demand for AI experiments</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Spot instances vs on-demand for AI experiments</h1>
+                
+                <p class="post-lead">How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SpotInstances</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GpuCost</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Checkpoint</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2587 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Choosing between spot and on-demand GPU capacity for AI experiments looks like a pricing question and turns out to be a reliability engineering question. The hourly rate is easy to compare; the cost of a training job that silently resumes from a stale checkpoint is not. This article covers the mechanics of each option, the failure modes that show up in practice, and a way to decide based on numbers you can measure yourself.</p>
+<h2 id="why-this-comparison-matters">Why this comparison matters</h2>
+<p>A typical LoRA fine-tune of a 7B parameter model might consume on the order of 12 GPU-hours on an A100-class device. At an illustrative on-demand rate of $3.50 per GPU-hour, that is $42 per experiment. Fifty such experiments a week across a small team works out to roughly $8,400 a month before any inference serving is counted. Those figures are illustrative arithmetic, not measured benchmarks — substitute your own rates and durations, because the conclusion depends heavily on them.</p>
+<p>The two levers that move that number are the price per GPU-hour (spot capacity) and the utilization rate (shutting down idle capacity). They are independent, and the second one is usually cheaper to fix.</p>
+<p>A recurring failure mode: a team enables spot, watches its first job get preempted at epoch 3, and concludes spot is unusable. The actual problem is almost always the training script — no resumable checkpoint, or checkpoints written only at epoch boundaries while epochs run for hours. The interaction between checkpoint frequency and preemption rate is the part that determines whether spot works, and it is what the rest of this article addresses.</p>
+<h2 id="option-a-spot-capacity">Option A: spot capacity</h2>
+<p>Spot capacity is a request for unused provider VMs at a discount, with the provider retaining the right to reclaim them on short notice. AWS calls it EC2 Spot, GCP calls it Spot VMs (formerly preemptible), Azure calls it Spot Virtual Machines.</p>
+<p>The core mechanic is the interruption notice. AWS publishes a termination time through the instance metadata service and emits an EventBridge event, with a documented two-minute warning. GCP and Azure both provide roughly 30 seconds of notice through their respective metadata and scheduled-event mechanisms. A job either handles that signal or it does not.</p>
+<p>Spot fits embarrassingly parallel work and long training runs with frequent checkpoints. A hyperparameter sweep of 200 configurations, each taking 20 minutes, is a natural fit: a preempted unit is requeued and rerun. A single 8-hour run is a worse fit unless checkpoints are frequent.</p>
+<p>Discounts vary by instance family, region, and time. GPU instance discounts are commonly in the range of 55–75% off on-demand, and CPU instance discounts are often deeper. These are observed ranges rather than guarantees: during capacity crunches spot prices can climb toward on-demand, and the discount is never contractual.</p>
+<p>A minimal interruption handler for AWS looks like this:</p>
+<pre><code class="language-python"># spot_handler.py — minimal interruption handler for AWS EC2 Spot
+import requests
+import signal
+import sys
+import threading
+import time
+
+CHECKPOINT_INTERVAL = 600  # seconds
+
+def watch_for_termination():
+    while True:
+        try:
+            r = requests.get(
+                &quot;http://169.254.169.254/latest/meta-data/spot/termination-time&quot;,
+                timeout=2,
+            )
+            if r.status_code == 200:
+                print(f&quot;Termination notice: {r.text}&quot;, file=sys.stderr)
+                # Trigger emergency checkpoint
+                save_checkpoint(emergency=True)
+                sys.exit(0)
+        except requests.exceptions.RequestException:
+            pass
+        time.sleep(5)
+
+threading.Thread(target=watch_for_termination, daemon=True).start()
+</code></pre>
+<p>Note the explicit <code>status_code == 200</code> check. The metadata endpoint returns 404 while no termination is pending, and some HTTP client configurations raise on that. A handler that treats any exception as a termination signal will kill the job on its first poll.</p>
+<h2 id="option-b-on-demand-with-autoscaling">Option B: on-demand with autoscaling</h2>
+<p>The on-demand pattern is to run on full-price instances but scale the fleet to zero between experiments, feeding work through a queue (SQS, Pub/Sub, or a Redis list). The saving here is not the hourly rate; it is the utilization rate. A single A100-class instance left running over a weekend costs roughly $168 at an illustrative $3.50/hour, and ten of them cost $1,680. That idle capacity is the first thing to eliminate, because it requires no changes to the training code.</p>
+<p>On-demand fits jobs that cannot tolerate interruption, workloads with hard deadlines, and experiments short enough that checkpoint overhead dominates. A five-minute inference benchmark does not need spot pricing; it needs to not run on a machine that has been idle for three hours.</p>
+<p>Autoscaling for GPU nodes is well supported across the major providers, and Kubernetes offers several options for provisioning GPU nodes on demand. Cold-start times for GPU nodes are the practical constraint: provisioning a new node, pulling a container image, and loading model weights commonly takes several minutes, which matters when experiments are short. The usual mitigation is a small warm pool of one or two instances that stay running, which bounds idle cost while removing cold-start latency from the critical path.</p>
+<p>The other on-demand lever is commitment. Savings Plans and Reserved Instances cut the effective rate for steady-state workloads in exchange for a one- or three-year commitment. For a team that knows it will run a minimum number of GPU instances continuously, a commitment is often cheaper than spot once the engineering time spent on interruption handling is counted.</p>
+<h2 id="comparing-effective-throughput">Comparing effective throughput</h2>
+<p>Raw throughput on spot and on-demand is identical, because it is the same hardware. The meaningful comparison is effective throughput: useful work completed per unit of wall-clock time after preemptions, restarts, and checkpoint overhead are accounted for.</p>
+<p>Preemption cost per event is roughly the work since the last checkpoint plus the time to acquire a replacement instance and reload state. Checkpoint overhead is the write time of the checkpoint itself. These two costs pull in opposite directions:</p>
+<ul>
+<li>Checkpoint rarely, and each preemption discards more work.</li>
+<li>Checkpoint often, and the job spends a growing fraction of its time writing state.</li>
+</ul>
+<p>There is a trap at the frequent end. A 7B model's optimizer state is on the order of tens of gigabytes. Writing a checkpoint that large to object storage takes minutes at typical throughput. If the checkpoint interval is shorter than the time required to write one checkpoint, the job becomes checkpoint-bound and never makes forward progress. The interval must be longer than the write time with margin, and the write should be asynchronous so it does not block the training step.</p>
+<p>A practical configuration for many teams is checkpointing every 8–12 minutes to local NVMe with an asynchronous upload to object storage. That keeps the preemption penalty bounded without putting checkpoint I/O on the critical path.</p>
+<p>To measure this on your own workload rather than trusting a table, instrument three things:</p>
+<ol>
+<li>Wall-clock time from job start to a fixed evaluation milestone, for both spot and on-demand runs of the same configuration.</li>
+<li>Time spent in checkpoint writes, logged as a fraction of total runtime.</li>
+<li>Count of preemptions and the wall-clock gap between the termination notice and the first training step on the replacement instance.</li>
+</ol>
+<p>Compare the milestone times. The ratio is your effective throughput penalty, measured on your hardware and your data pipeline rather than borrowed from someone else's.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Spot</th>
+<th>On-demand with warm pool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hourly rate</td>
+<td>Discounted, variable</td>
+<td>Full rate</td>
+</tr>
+<tr>
+<td>Preemption penalty</td>
+<td>Work since last checkpoint plus restart</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Cold start when scaling from zero</td>
+<td>Minutes</td>
+<td>Minutes, hidden by warm pool</td>
+</tr>
+<tr>
+<td>Engineering overhead</td>
+<td>Medium to high</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Main risk</td>
+<td>Silent divergence on resume</td>
+<td>Idle capacity drift</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-failure-modes-that-matter">The failure modes that matter</h2>
+<p>The expensive problems with spot are not preemptions themselves. They are the ways a resumed run can produce a wrong result without anyone noticing.</p>
+<p><strong>Partial checkpoints.</strong> If a checkpoint writes model weights but not optimizer state, a resumed run starts from a worse point and the loss curve looks plausible. The divergence may only surface as evaluation numbers that are slightly off. The fix is to write checkpoints atomically — write to a temporary path, flush, then rename — and to include a manifest recording which components are present.</p>
+<p><strong>Unseeded data loaders.</strong> If the shuffle is not seeded, a resumed run sees a different data order than an uninterrupted run would have. This is not a crash; it is a distribution shift in the training stream. Seed the shuffle from a value stored in the checkpoint.</p>
+<p><strong>Checkpoint racing the termination notice.</strong> If the emergency checkpoint handler and the periodic checkpoint writer can run concurrently, they can write to the same path. Serialize them with a lock, or have the emergency path write to a distinct location that the resume logic prefers.</p>
+<p><strong>Untested resume paths.</strong> A resume path that has never been exercised is not a resume path. Kill a job mid-epoch deliberately, resume it, and compare the final loss to an uninterrupted run of the same configuration. This is the single highest-value test for a spot pipeline, and it is the one most often skipped.</p>
+<p>On the on-demand side, the corresponding failure mode is drift: instances that were meant to scale down but did not, because a scaling policy was never configured or a budget alarm was never set. Tagging instances and setting a budget alarm with a notification threshold catches most of this.</p>
+<h2 id="estimating-the-crossover">Estimating the crossover</h2>
+<p>The decision is a comparison between compute savings and engineering cost, and both are estimable from stated assumptions.</p>
+<p>Assume a team running 200 GPU-hours per month at an illustrative on-demand rate of $3.50 per hour. That is 200 × $3.50 = $700 per month. Assume spot at a 65% discount, or $1.225 per hour. Assume a 15% effective throughput penalty, meaning 200 hours of useful work requires about 235 hours of spot runtime. The spot compute cost is 235 × $1.225 ≈ $288 per month, a saving of roughly $412 per month.</p>
+<p>Now assume building and maintaining a resumable spot pipeline takes two to four weeks of initial engineering and a few hours a month thereafter. At an illustrative fully-loaded rate of $100 per hour, the initial work is $8,000 to $16,000. The payback period is $8,000 ÷ $412 ≈ 19 months at the low end, or $16,000 ÷ $412 ≈ 39 months at the high end. Spot does not pay back at this scale.</p>
+<p>Repeat with 2,000 GPU-hours per month. On-demand is $7,000. Spot compute is 2,350 × $1.225 ≈ $2,879, a saving of about $4,121 per month. Payback is under four months. The crossover sits somewhere between these two points, and it depends entirely on your discount, your throughput penalty, and your engineering rate. Compute it with your own numbers.</p>
+<p>The third option is worth stating because it is frequently larger than either: make the experiments cheaper rather than the instances cheaper. Parameter-efficient fine-tuning instead of full fine-tuning, distillation, and quantized serving all reduce the GPU-hours or GPU-memory required, and none of them require interruption handling. If a technique cuts GPU-hours by a factor of five, it dominates a 65% discount.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order:</p>
+<ol>
+<li><strong>Is utilization low?</strong> Compute idle GPU-hours divided by total GPU-hours over the last 30 days. If the ratio is poor, fix autoscaling and shutdown policies first. This requires no training-code changes.</li>
+<li><strong>Is the workload checkpointable?</strong> If the job cannot be resumed from a checkpoint, spot is not an option until it can be. Fix that first, independently of pricing.</li>
+<li><strong>Is the workload parallel-friendly?</strong> Sweeps and batch inference tolerate preemption well because a lost unit is simply requeued. Single long runs tolerate it only with frequent checkpoints.</li>
+<li><strong>Does the spend clear the crossover?</strong> Estimate monthly compute savings and divide the estimated engineering cost by it. If the payback period is longer than the horizon over which you care about the spend, do not do it.</li>
+<li><strong>Is the resume path tested?</strong> If not, the discount is not worth a wrong result. Test it before enabling spot in production.</li>
+</ol>
+<p>A hybrid pattern is often the best fit: long training jobs on spot, where the discount is largest and checkpointing is easiest, and short evaluation or inference jobs on on-demand, where instant availability matters more than rate. This captures most of the discount with a fraction of the operational complexity, because only the long-running jobs need resume logic.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How much cheaper is spot than on-demand for GPU training?</strong>
+GPU instance discounts commonly fall in the 55–75% range off on-demand, varying by instance family, region, and time of day, with CPU instances often discounted more deeply. The rate is not fixed and can approach on-demand during capacity shortages, so check current pricing for the specific instance type and region before estimating savings.</p>
+<p><strong>What happens to a training job when a spot instance is reclaimed?</strong>
+AWS provides a two-minute warning through the instance metadata service and an EventBridge event. GCP and Azure provide roughly 30 seconds. If the job does not handle the signal, it is terminated and everything since the last checkpoint is lost. A background thread polling the metadata endpoint and triggering an emergency checkpoint on notice is the standard mitigation.</p>
+<p><strong>Why does a resumed run sometimes produce worse results?</strong>
+The usual causes are a checkpoint that omits optimizer state, or a data loader whose shuffle is not seeded, so the resumed run sees a different data order. Both produce silent divergence rather than a crash. Test the resume path by killing a job mid-epoch and comparing the final loss against an uninterrupted run of the same configuration.</p>
+<p><strong>Is spot worth it for a small team?</strong>
+Below roughly a few thousand dollars a month in GPU spend, the engineering cost of building and maintaining resumable spot infrastructure typically exceeds the compute savings. At that scale, effort is better spent on reducing the cost per experiment through parameter-efficient fine-tuning, distillation, or quantization, all of which reduce GPU-hours without requiring interruption handling.</p>
+<h2 id="bottom-line">Bottom line</h2>
+<p>Spot capacity is the larger lever per hour, but it is only the larger lever per dollar once the engineering cost of a correct resume path is amortized across enough spend. Below that threshold, on-demand with working autoscaling and a warm pool is usually cheaper in total, and it is strictly simpler. Above it, spot with an interval longer than the checkpoint write time and a resume path that has been deliberately tested is the largest single cost reduction available.</p>
+<p>The action to take in the next 30 minutes: open your cloud billing console, filter to GPU instances for the last 30 days, and write down two numbers — total GPU spend and idle GPU-hours divided by total GPU-hours. If spend is high and utilization is low, the autoscaling fix comes first, because it requires no changes to training code and it is reversible. Only after utilization is under control is it worth evaluating whether spot pricing clears the crossover for your workload.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/">AI in local currency: costs that surprise…</a></li>
+<li><a href="https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/">Spot evictions: the retry logic that holds up</a></li>
+<li><a href="https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
+                        <h3>Kubernetes or Nomad: the real experiment cost split</h3>
+                        <p>A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
+                        <span class="related-meta">11 min read · 3 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-in-local-currency-costs-that-surprise/">
+                        <h3>AI in local currency: costs that surprise you</h3>
+                        <p>How to choose where to run AI inference: decouple variable compute cost from fixed per-region compliance cost, and measure the trade-off.</p>
+                        <span class="related-meta">15 min read · 7 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
+                        <h3>Spot evictions: the retry logic that holds up</h3>
+                        <p>Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+                        <span class="related-meta">13 min read · 12 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

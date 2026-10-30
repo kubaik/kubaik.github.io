@@ -1,0 +1,529 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mobile money agent fees: why your bot keeps failing - Kubai Kevin</title>
+        <meta name="description" content="USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.">
+        <meta name="keywords" content="ErrPaymentFailed, UssdSessionTimeout, MtnMomoSession, Apis, Mobiledev">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-05T14:16:59.891393">
+        <meta property="article:modified_time" content="2026-10-04T10:53:15.131348+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Mobile money agent fees: why your bot keeps failing">
+        <meta property="og:description" content="USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.">
+        <meta property="og:url" content="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/mobile-money-agent-fees-why-your-bot-keeps-failing.png">
+        <meta property="og:image:alt" content="Mobile money agent fees: why your bot keeps failing">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Mobile money agent fees: why your bot keeps failing">
+        <meta name="twitter:description" content="USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/mobile-money-agent-fees-why-your-bot-keeps-failing.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/#article",
+      "headline": "Mobile money agent fees: why your bot keeps failing",
+      "description": "USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.",
+      "datePublished": "2026-08-05T14:16:59+00:00",
+      "dateModified": "2026-10-04T10:53:15+00:00",
+      "wordCount": 2654,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/"
+      },
+      "keywords": "ErrPaymentFailed, UssdSessionTimeout, MtnMomoSession, Apis, Mobiledev",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/mobile-money-agent-fees-why-your-bot-keeps-failing.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mobile money agent fees: why your bot keeps failing",
+          "item": "https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Mobile money agent fees: why your bot keeps failing</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Mobile money agent fees: why your bot keeps failing</h1>
+                
+                <p class="post-lead">USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ErrPaymentFailed</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">UssdSessionTimeout</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/mobiledev/"
+                       style="text-decoration:none;">Mobiledev</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2654 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A payment agent that works on a laptop and fails in the cloud after a few minutes of runtime is a well-documented pattern. The cause is usually not the payment logic. It is a mismatch between the agent's connection lifecycle and the provider's session contract.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>An agent submits USSD requests to a mobile-money provider on behalf of a user paying from a phone wallet in local currency. It runs correctly against a local test harness. Deployed to a cloud runtime, it starts returning <code>ERR_PAYMENT_FAILED</code> after two to three minutes. The provider's payment logs show successful transactions. The agent's own logs show no exceptions. The error string is generic, and the provider documentation often says nothing about session timeouts.</p>
+<p>The mismatch is between a stateless HTTP client loop and a stateful USSD session contract. USSD gateways were built for feature phones, where a session is a short-lived, interactive exchange. Many gateways enforce a hard idle timeout — commonly around 90 seconds — and release session state when it expires. A modern HTTP agent that keeps a long-lived connection pool reuses the same TCP socket across requests. If the provider maps a socket to a session, an idle gap longer than the timeout invalidates that session. The next request over the same socket is rejected, and the rejection surfaces as a payment error rather than a session error. This is silent session invalidation disguised as a payment failure.</p>
+<p>The confusion compounds because health checks and balance queries may keep returning 200 OK on the same client. Only the transaction path fails, and only after an idle period.</p>
+<h2 id="whats-actually-causing-it">What's actually causing it</h2>
+<p>Three mechanisms are responsible, and they can overlap.</p>
+<p><strong>Socket-to-session binding.</strong> Some gateways treat an open TCP connection as a session. Connection pooling — for example an HTTP client configured with <code>limits=10</code> — keeps sockets open between requests. After the idle timeout, the gateway discards session state but the socket remains open on the client side. The next write goes to a socket the provider no longer recognises.</p>
+<p><strong>Keep-alive that does not reset the timer.</strong> Some providers expose a keep-alive or ping endpoint. A common trap is assuming a ping resets the session timer. On legacy SS7-backed gateways, keep-alive traffic can be advisory: the gateway still enforces the idle timeout independently. The documentation rarely states this, and teams typically discover it only from traffic captures.</p>
+<p><strong>Egress-layer idle timers.</strong> Cloud NAT gateways and load balancers have their own TCP idle timeouts. A NAT gateway may hold a connection open for several minutes. If the provider's session timeout is shorter, the socket survives past the point where the provider has forgotten the session. The next request is then routed over a socket the provider considers new or invalid. This is environment-specific: it depends on the egress timeout of the runtime, and it is more likely to appear on platforms with short default NAT timeouts and cold-start behaviour.</p>
+<p>A typical failure sequence: an agent drains a queue of local-currency payment requests. It reuses one HTTP client to avoid TLS handshake overhead. A gap between requests exceeds the gateway idle timeout. The provider drops session state. The agent sends the next request on the same socket and receives <code>ERR_PAYMENT_FAILED</code>. The agent classifies this as a payment failure and retries, which can double-charge or exhaust the user's balance if the retry lands on a fresh session.</p>
+<h2 id="diagnosing-before-fixing">Diagnosing before fixing</h2>
+<p>Do not apply fixes blind. Establish which mechanism is active.</p>
+<ol>
+<li>Capture traffic. Run <code>tcpdump -i any -w momo.pcap port 443</code> on the agent host (or a sidecar) for five minutes, then inspect in Wireshark. Look for whether the client reuses one TCP stream across requests, and whether the server sends <code>FIN</code> or <code>RST</code> after an idle period.</li>
+<li>Log connection identity. In Python with <code>httpx</code>, log <code>id(response)</code> and the underlying transport's connection info per request. In Node.js, log the socket's local port. If the local port is identical across requests separated by more than the gateway timeout, socket reuse is confirmed.</li>
+<li>Correlate timing. Plot request timestamps against failures. A cluster of failures at a fixed offset after the last successful request is strong evidence of an idle timeout.</li>
+<li>Check the provider's response headers. Some gateways return <code>X-Session-Timeout</code>, <code>X-Idle-Timeout</code>, or a session identifier in headers. If present, record the value; it is the authoritative number, not a guess.</li>
+<li>Compare environments. Run the same agent against the same provider from a local machine and from the cloud runtime. If only the cloud path fails, an egress timer is involved.</li>
+</ol>
+<p>Only after this step does it make sense to choose a fix.</p>
+<h2 id="fix-1-session-per-transaction">Fix 1 — session per transaction</h2>
+<p>The most direct fix is to stop sharing connections across transactions. Create a fresh HTTP client per request, or per transaction, so each payment gets a new socket and therefore a new session.</p>
+<pre><code class="language-python"># Before — shared client, session reuse, eventual ERR_PAYMENT_FAILED
+import httpx
+
+client = httpx.Client(timeout=30.0, limits=httpx.Limits(max_connections=10))
+
+# After — new client per request, matching the per-session contract
+import uuid
+import httpx
+
+def send_payment(payload: dict) -&gt; str:
+    with httpx.Client(timeout=30.0) as client:
+        r = client.post(
+            &quot;https://example-provider.invalid/v2/ussd/send&quot;,
+            json=payload,
+            headers={&quot;X-Reference-Id&quot;: str(uuid.uuid4())}
+        )
+        r.raise_for_status()
+        return r.json()[&quot;status&quot;]
+</code></pre>
+<p>The tradeoff is a TLS handshake per request: added latency, more ephemeral source ports, and possibly more NAT gateway traffic. To measure whether this is acceptable, instrument the following before and after the change:</p>
+<ul>
+<li>Median and p99 request latency, from the agent's own timing, with the client creation included.</li>
+<li>Count of <code>ERR_PAYMENT_FAILED</code> responses per thousand requests.</li>
+<li>Number of distinct source ports observed by the provider, if it exposes that, or locally via <code>ss -tn</code> sampling.</li>
+<li>NAT gateway or egress cost line item, if the platform bills per connection or per GB processed.</li>
+</ul>
+<p>A pool of two or three shared clients does not fix this. If the provider binds sessions to sockets and enforces an idle timeout, any socket that idles past the timeout is invalid, regardless of pool size.</p>
+<h2 id="fix-2-explicit-session-identifiers">Fix 2 — explicit session identifiers</h2>
+<p>Newer REST/JSON gateways expose an explicit session identifier that the client must echo back. Where that is available, use it. The session identifier, not the socket, becomes the unit of continuity, and the provider's timer resets on each request that carries a valid identifier.</p>
+<pre><code class="language-python">import uuid
+import httpx
+
+async def send_with_session(payload: dict, session_id: str | None = None):
+    headers = {&quot;X-Reference-Id&quot;: str(uuid.uuid4())}
+    if session_id:
+        headers[&quot;X-Session-Id&quot;] = session_id
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        r = await client.post(
+            &quot;https://example-provider.invalid/v2/ussd/send&quot;,
+            json=payload,
+            headers=headers
+        )
+        data = r.json()
+        return data[&quot;status&quot;], data.get(&quot;sessionId&quot;)
+</code></pre>
+<p>Two cautions. First, confirm in the provider's documentation that the session identifier is intended to be reused across requests within a transaction, and whether it has its own expiry. Second, propagate the identifier across retries and async workers. If a retry starts without the identifier, it creates a new session, which may duplicate a payment.</p>
+<p>To measure the effect, track the same error rate and latency metrics as in Fix 1, plus the rate of <code>ERR_SESSION_INVALID</code> responses. A rise in that error alongside a fall in <code>ERR_PAYMENT_FAILED</code> indicates the session model is now explicit and observable rather than silent.</p>
+<h2 id="fix-3-egress-timers">Fix 3 — egress timers</h2>
+<p>When the provider's session timeout is shorter than the cloud egress idle timeout, the socket can outlive the session. The fix is to make the client's connection lifetime shorter than the provider's session timeout.</p>
+<p>Options, in order of preference:</p>
+<ul>
+<li><strong>Disable connection reuse for the transaction path.</strong> This is Fix 1, and it removes the egress timer from the equation entirely.</li>
+<li><strong>Set the socket keepalive and user timeout.</strong> On Linux, <code>TCP_USER_TIMEOUT</code> bounds how long unacknowledged data is retried before the socket errors. This is set per socket and typically requires a container image or runtime that exposes socket options. It is not a portable fix.</li>
+<li><strong>Reduce the NAT idle timeout.</strong> Some cloud NAT services allow the TCP idle timeout to be configured. Check the platform's documented minimum. Note that the tag-based configuration shown in some examples is not a real AWS feature: NAT gateway idle timeout is a property of the NAT gateway resource, not an arbitrary tag. Verify the current API surface before relying on it.</li>
+<li><strong>Send traffic more often than the shortest timer.</strong> A periodic lightweight request on the same connection can keep both the egress socket and the provider session alive, provided the provider's keep-alive semantics actually reset the timer. Confirm this from a traffic capture rather than assuming it.</li>
+</ul>
+<p>The decision rule is simple: make the shortest timer in the chain the one you control, and make the client's connection lifetime shorter than it.</p>
+<h2 id="how-to-verify-the-fix">How to verify the fix</h2>
+<p>Pick three metrics and watch them for at least a week, because mobile-money traffic is bursty and a single day can mislead.</p>
+<ul>
+<li><code>ERR_PAYMENT_FAILED</code> count per thousand transactions, segmented by provider and by endpoint path.</li>
+<li>Median and p99 latency, including client construction time.</li>
+<li>Egress cost per thousand transactions.</li>
+</ul>
+<p>A fix is working when the error rate falls and stays low across at least one full weekly traffic cycle, latency stays within an acceptable band, and cost does not rise disproportionately to the error reduction. There is no universal "good" error rate: the correct baseline is the provider's own documented success rate for the endpoint, plus your agent's own historical floor under known-good conditions.</p>
+<p>For log-based checking, a query such as the following surfaces bursts:</p>
+<pre><code class="language-sql">filter @message like /ERR_PAYMENT_FAILED/
+| stats count(*) as errors by bin(5m)
+| filter errors &gt; 5
+</code></pre>
+<p>If failures persist, capture the provider's response headers for a failing request and compare them against a passing request. Differences in session or timeout headers are the fastest way to confirm the contract.</p>
+<h2 id="preventing-recurrence">Preventing recurrence</h2>
+<p>Add a contract test that exercises the idle boundary. The test does not need to run on every commit; a nightly job is usually enough.</p>
+<pre><code class="language-python"># tests/test_provider_session.py
+import time
+import uuid
+import httpx
+import pytest
+
+@pytest.mark.asyncio
+async def test_session_timeout_recovery():
+    payload = {&quot;amount&quot;: &quot;100&quot;, &quot;currency&quot;: &quot;GHS&quot;, &quot;msisdn&quot;: &quot;233551234567&quot;}
+    url = &quot;https://example-provider.invalid/v2/ussd/send&quot;
+
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        r = await client.post(url, json=payload, headers={&quot;X-Reference-Id&quot;: str(uuid.uuid4())})
+        assert r.status_code == 200
+
+    # Idle past the provider's documented session timeout.
+    time.sleep(95)
+
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        r = await client.post(url, json=payload, headers={&quot;X-Reference-Id&quot;: str(uuid.uuid4())})
+        if r.status_code == 200:
+            return
+        data = r.json()
+        assert &quot;ERR_SESSION_INVALID&quot; in data.get(&quot;status&quot;, &quot;&quot;)
+</code></pre>
+<p>Two design notes. The test asserts that a post-idle failure is reported as a session error, not a payment error — that is the contract you actually care about. And the idle duration should come from configuration, not a hard-coded 95, so it can be tuned to the provider's documented timeout.</p>
+<p>Run this in staging against the provider's sandbox. Running it against production is a cost and risk decision that belongs to the team operating the agent.</p>
+<h2 id="related-errors-and-what-they-usually-mean">Related errors and what they usually mean</h2>
+<ul>
+<li><strong><code>ERR_SESSION_INVALID</code></strong> — the provider explicitly invalidated the session. This is the well-behaved version of the failure. Fix: use explicit session identifiers and refresh them on expiry.</li>
+<li><strong><code>ERR_RATE_LIMIT</code></strong> — throttling, often caused by retry storms after session failures. Fix: reduce concurrency and apply backoff before increasing retry count.</li>
+<li><strong><code>ERR_INVALID_SIGNATURE</code></strong> — a signature or HMAC mismatch, sometimes because the agent reused a key tied to an expired session. Fix: regenerate the signature per request.</li>
+<li><strong><code>ERR_TIMEOUT</code></strong> — a TCP-level timeout before an HTTP response. Fix: distinguish this from session invalidation in your metrics, then adjust client timeouts and add a circuit breaker.</li>
+</ul>
+<h2 id="retry-policy-that-does-not-burn-money">Retry policy that does not burn money</h2>
+<p>Retries are where session confusion becomes expensive. Two rules reduce most of the damage.</p>
+<p>First, classify the error before retrying. A session invalidation is not a payment failure. Retrying a session invalidation on a fresh connection is usually safe; retrying an ambiguous payment failure is not, because the original may have succeeded.</p>
+<p>Second, bound the retries and the window.</p>
+<pre><code class="language-python">import random
+
+def retry_delay(attempt: int) -&gt; int | None:
+    if attempt &gt;= 3:
+        return None
+    return int(min(2 ** attempt + random.uniform(0, 1), 10))
+
+for attempt in range(3):
+    try:
+        send_payment(payload)
+        break
+    except PaymentFailed:
+        delay = retry_delay(attempt)
+        if delay is None:
+            raise
+        time.sleep(delay)
+</code></pre>
+<p>The cap of three attempts and the maximum delay of ten seconds are illustrative choices, not provider requirements. The important properties are: bounded attempts, jitter to avoid synchronised retries, and a hard stop that escalates to a human or a reconciliation job rather than looping.</p>
+<h2 id="escalation-checklist">Escalation checklist</h2>
+<p>If the failure survives all of the above, escalate with evidence rather than a description.</p>
+<ul>
+<li>A short packet capture (<code>tcpdump -w momo.pcap</code>) covering at least one failure, showing socket reuse and the provider's close behaviour.</li>
+<li>Request and response logs for one failing transaction and one passing transaction, including reference identifiers and any session identifier.</li>
+<li>A minimal reproduction script that runs in staging.</li>
+<li>The provider's documented session timeout, if any, and the observed timeout from the capture, if they differ.</li>
+</ul>
+<p>The gap between documented and observed behaviour is usually the fastest thing a provider's support team can explain, and it is the detail most likely to be missing from a first escalation.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Why does the agent fail after roughly the same interval each time in production but not locally?</strong></p>
+<p>Locally, connections are typically short-lived and each request looks like a fresh session. In production, a pooled connection survives across requests, and an egress layer may keep it open longer than the provider's session timeout. The fixed interval is the provider's idle timeout, not a property of the payment logic.</p>
+<p><strong>Does reducing the connection pool size help?</strong></p>
+<p>Not on its own. If the provider binds sessions to sockets and enforces an idle timeout, any socket that idles past the timeout is invalid. Pool size changes how many sockets exist, not how long each one lives.</p>
+<p><strong>How can latency be reduced after switching to per-request clients?</strong></p>
+<p>Use protocol features the provider supports, such as HTTP/2, for endpoints that do not require fresh sessions. Keep the per-request pattern only for the transaction path. Measure the split before assuming it helps: the handshake cost and the protocol benefit may cancel out on short requests.</p>
+<p><strong>Can sessions be shared across async workers?</strong></p>
+<p>Only if the provider exposes an explicit session identifier and the agent propagates it correctly. A shared store with a TTL shorter than the provider's session timeout is the usual pattern. The failure mode to avoid is a worker picking up an identifier that has already expired, which produces the same silent invalidation the fix was meant to remove.</p>
+<p><strong>What is the safest retry strategy?</strong></p>
+<p>Classify errors first, cap attempts, add jitter, and stop rather than loop. Treat an ambiguous payment failure as potentially successful until reconciled.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Run one packet capture against your staging environment while sending two requests separated by 120 seconds, then open the capture and check whether the client reused the same TCP stream and whether the server closed it in between. That single observation tells you whether your provider binds sessions to sockets, which determines which of the three fixes above applies to your agent.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/">USSD fintech in 2026: the 300M user channel nobody</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">
+                        <h3>Agent followed instructions too literally: the cron job trap</h3>
+                        <p>Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
+                        <span class="related-meta">12 min read · 11 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/mobile-money-agents-when-m-pesa-api-fails/">
+                        <h3>Mobile money agents: when M-Pesa API fails</h3>
+                        <p>Mobile money APIs return pending, then settle asynchronously. Learn to poll, deduplicate callbacks, and reconcile orphaned transactions.</p>
+                        <span class="related-meta">14 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tool-calling-stateless-beats-stateful-under-load/">
+                        <h3>Tool calling: stateless beats stateful under load</h3>
+                        <p>How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.</p>
+                        <span class="related-meta">11 min read · 19 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tool calling patterns: patterns that survive load vs - Kubai Kevin</title>
+        <meta name="description" content="A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.">
+        <meta name="keywords" content="ToolCallingPatterns, BackoffCurve, ToolCallSafety, Production, RetryBudget, GrpcRetryPolicy">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-27T14:22:36.645569">
+        <meta property="article:modified_time" content="2026-10-04T10:37:17.459226+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Tool calling patterns: patterns that survive load vs">
+        <meta property="og:description" content="A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.">
+        <meta property="og:url" content="https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/tool-calling-patterns-patterns-that-survive-load-vs.png">
+        <meta property="og:image:alt" content="Tool calling patterns: patterns that survive load vs">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Tool calling patterns: patterns that survive load vs">
+        <meta name="twitter:description" content="A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/tool-calling-patterns-patterns-that-survive-load-vs.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/#article",
+      "headline": "Tool calling patterns: patterns that survive load vs",
+      "description": "A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.",
+      "datePublished": "2026-06-27T14:22:36+00:00",
+      "dateModified": "2026-10-04T10:37:17+00:00",
+      "wordCount": 2846,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/"
+      },
+      "keywords": "ToolCallingPatterns, BackoffCurve, ToolCallSafety, Production, RetryBudget, GrpcRetryPolicy",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/tool-calling-patterns-patterns-that-survive-load-vs.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tool calling patterns: patterns that survive load vs",
+          "item": "https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Tool calling patterns: patterns that survive load vs</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Tool calling patterns: patterns that survive load vs</h1>
+                
+                <p class="post-lead">A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/toolcallingpatterns/"
+                       style="text-decoration:none;">ToolCallingPatterns</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">BackoffCurve</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ToolCallSafety</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2846 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-tool-call-patterns-decide-whether-an-outage-stays-small">Why tool call patterns decide whether an outage stays small</h2>
+<p>A tool call is a network call to something you do not control. The downstream service can garbage-collect, restart, throttle, or change its latency profile without warning. The pattern wrapped around that call determines whether a brief downstream hiccup produces a few slow requests or a self-inflicted denial-of-service.</p>
+<p>The failure mode is well documented and easy to reproduce. A client retries on 5xx without a budget. The downstream is already saturated, so each retry adds load instead of relieving it. Latency rises, more requests cross the client timeout, more retries fire. The retry loop becomes the outage. CPU on the downstream climbs, connection pools drain, and the incident outlives the original trigger by an order of magnitude.</p>
+<p>Two broad families of patterns exist:</p>
+<ul>
+<li><strong>Naive synchronous calls</strong>: one call per request, a fixed timeout, retries on failure with no ceiling, no circuit breaker, no concurrency limit, no batching. This is the default shape of hand-rolled HTTP clients and simple RPC stubs.</li>
+<li><strong>Shaped calls</strong>: retry budgets, backoff with jitter, circuit breakers, bulkheads, rate limits, and batching, all applied at the call site or in a shared client.</li>
+</ul>
+<p>Naive calls look clean in review because the happy path is short. Shaped calls look noisy because the failure path is explicit. The trade-off only becomes visible under tail latency, downstream degradation, or a traffic spike. That is the comparison this article works through: what each pattern does, how to measure the difference, and how to choose.</p>
+<h2 id="pattern-a-naive-synchronous-calls">Pattern A: naive synchronous calls</h2>
+<p>The anatomy is minimal:</p>
+<ol>
+<li>One thread, goroutine, or event-loop tick issues the call.</li>
+<li>The call blocks or yields until a response arrives or a timeout fires.</li>
+<li>On a non-2xx response, the client retries on a fixed interval or a simple exponential backoff with no ceiling.</li>
+<li>No circuit breaker, no bulkhead, no batching, no per-caller rate limit.</li>
+</ol>
+<p>A minimal Python example using <code>httpx</code>:</p>
+<pre><code class="language-python">import httpx
+
+def call_payment_gateway(order_id: str) -&gt; dict:
+    url = f&quot;https://payments.internal/v2/charge/{order_id}&quot;
+    response = httpx.post(url, json={&quot;amount&quot;: 999}, timeout=5.0)
+    response.raise_for_status()
+    return response.json()
+</code></pre>
+<p>This is readable and matches the happy path exactly. It also has three properties that cause damage under load:</p>
+<ul>
+<li><strong>No retry budget.</strong> The caller issues a new attempt on every 5xx, even when the downstream is saturated. Retries add load precisely when the downstream can least absorb it.</li>
+<li><strong>No backpressure.</strong> The calling thread blocks for the full timeout. Under a 5xx storm the handler pool drains and the service stops accepting new work.</li>
+<li><strong>No failure-path observability.</strong> Logs show <code>timeout</code> or <code>retrying</code>, but the aggregate retry rate is rarely exported as a metric, so the storm is invisible until it is an incident.</li>
+</ul>
+<p>Pattern A is defensible in a narrow set of cases:</p>
+<ol>
+<li><strong>In-memory downstreams with sub-10 ms p99.</strong> A cache lookup against a local or same-AZ in-memory store typically returns fast enough that a blocking call never accumulates. The failure mode is a miss, not a stall.</li>
+<li><strong>Low-volume internal calls.</strong> A cron job or an admin endpoint running at a few requests per minute has no meaningful concurrency to exhaust.</li>
+<li><strong>Prototypes.</strong> Code that will be replaced before it takes production traffic.</li>
+</ol>
+<p>The failure mode to watch for is a downstream that occasionally becomes slow rather than unavailable. A cron job that calls an endpoint which normally returns in 50 ms but sometimes takes 8 seconds will hold its connection for the full 8 seconds. If the scheduler allows overlapping runs, several instances pile up, each holding a connection. The connection pool empties and the next invocation fails for reasons unrelated to the original slowdown. This is the classic pattern: a latency change in one dependency propagates into a resource-exhaustion failure in the caller.</p>
+<h2 id="pattern-b-shaped-calls">Pattern B: shaped calls</h2>
+<p>Shaped calls treat the tool call as a distributed-systems problem rather than a function invocation. The components:</p>
+<ul>
+<li><strong>Retry budget.</strong> A ceiling on total attempts per logical call, for example three attempts including the first. A budget is not the same as "retry three times after failure," which is four attempts.</li>
+<li><strong>Backoff curve with jitter.</strong> Exponential growth with a cap and randomized jitter, for example 100 ms, 200 ms, 400 ms, capped at 5 s, with 20 percent jitter. Jitter prevents synchronized retries from many clients arriving at the same instant.</li>
+<li><strong>Circuit breaker.</strong> After N failures within a window, the breaker opens and rejects calls immediately for a cooldown period. This converts a slow downstream into a fast failure, which is usually the better outcome for the caller.</li>
+<li><strong>Bulkhead.</strong> A cap on concurrent in-flight calls to a given downstream. Excess calls fail fast instead of queueing and consuming threads.</li>
+<li><strong>Rate limit.</strong> A per-caller or per-endpoint ceiling that prevents one tenant or one code path from consuming the whole capacity of a shared dependency.</li>
+<li><strong>Batching.</strong> Grouping calls that target the same downstream to reduce connection churn and per-call overhead.</li>
+</ul>
+<p>A Go example combining a retryable client, a circuit breaker, and a weighted semaphore as a bulkhead:</p>
+<pre><code class="language-go">import (
+    &quot;bytes&quot;
+    &quot;fmt&quot;
+    &quot;io&quot;
+    &quot;net/http&quot;
+    &quot;time&quot;
+
+    &quot;github.com/hashicorp/go-retryablehttp&quot;
+    &quot;github.com/sony/gobreaker&quot;
+    &quot;golang.org/x/sync/semaphore&quot;
+)
+
+var (
+    sem = semaphore.NewWeighted(50) // bulkhead: max 50 concurrent calls
+
+    cb = gobreaker.NewCircuitBreaker(gobreaker.Settings{
+        Name:        &quot;payment-gateway&quot;,
+        MaxRequests: 1,
+        Interval:    30 * time.Second,
+        Timeout:     10 * time.Second,
+        ReadyToTrip: func(counts gobreaker.Counts) bool {
+            return counts.ConsecutiveFailures &gt;= 5
+        },
+    })
+
+    client = retryablehttp.NewClient()
+)
+
+func init() {
+    client.RetryMax = 2 // 3 attempts total
+    client.RetryWaitMin = 100 * time.Millisecond
+    client.RetryWaitMax = 5 * time.Second
+    client.Backoff = retryablehttp.LinearJitterBackoff
+}
+
+func callWithSafety(orderID string) ([]byte, error) {
+    if !sem.TryAcquire(1) {
+        return nil, fmt.Errorf(&quot;bulkhead full&quot;)
+    }
+    defer sem.Release(1)
+
+    req, err := retryablehttp.NewRequest(
+        &quot;POST&quot;,
+        fmt.Sprintf(&quot;https://payments.internal/v2/charge/%s&quot;, orderID),
+        bytes.NewReader([]byte(`{&quot;amount&quot;:999}`)),
+    )
+    if err != nil {
+        return nil, err
+    }
+    req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+
+    respAny, err := cb.Execute(func() (any, error) {
+        return client.Do(req)
+    })
+    if err != nil {
+        return nil, err
+    }
+    resp := respAny.(*http.Response)
+    defer resp.Body.Close()
+
+    return io.ReadAll(resp.Body)
+}
+</code></pre>
+<p>The behavior under stress is what matters:</p>
+<ul>
+<li><strong>Downstream GC pause.</strong> The backoff curve spaces retries so the downstream has a chance to recover before the next attempt arrives.</li>
+<li><strong>5xx storm.</strong> The circuit breaker opens after the configured consecutive failures, cutting traffic to zero until the cooldown expires and a probe succeeds.</li>
+<li><strong>Traffic spike.</strong> The bulkhead rejects excess calls immediately, so the caller's thread pool does not drain.</li>
+</ul>
+<p>Shaped calls are the right default for public APIs, payment flows, multi-tenant systems, and any downstream whose latency exceeds roughly 50 ms or is subject to garbage collection pauses.</p>
+<h2 id="how-to-measure-which-pattern-you-actually-have">How to measure which pattern you actually have</h2>
+<p>Benchmark tables are easy to fabricate and hard to trust. What is useful is knowing exactly what to instrument and what to compare, so the numbers come from your own system.</p>
+<p>Instrument these four signals on the client side:</p>
+<ol>
+<li><code>call_duration_seconds</code> as a histogram, labelled by downstream and by attempt number. The attempt label is what separates "the downstream is slow" from "our retries are slow."</li>
+<li><code>retry_attempts_total</code> as a counter, labelled by downstream and by reason (timeout, 5xx, connection error).</li>
+<li><code>circuit_breaker_state</code> as a gauge: 0 closed, 1 half-open, 2 open.</li>
+<li><code>inflight_calls</code> as a gauge, plus a counter for bulkhead rejections.</li>
+</ol>
+<p>On the downstream side, capture p50, p95, and p99 latency, error rate, and connection pool saturation.</p>
+<p>To compare patterns, run the same load profile against both implementations. A workable profile:</p>
+<ul>
+<li>Ramp from 1x to 10x expected peak concurrency over five minutes.</li>
+<li>Inject a latency fault: add a fixed delay to a percentage of downstream responses, or run the downstream with a constrained heap so it pauses under pressure.</li>
+<li>Inject an error fault: return 5xx for a short window, then recover.</li>
+<li>Record p50, p95, p99, error rate, retry rate, bulkhead rejections, and client and server CPU.</li>
+</ul>
+<p>The comparison that matters is not "which is faster at steady state." It is "what happens to p99 and error rate during the fault window, and how long after the fault clears does the system return to baseline." A naive client typically shows a p99 spike that outlasts the fault because its own retries keep the downstream busy. A shaped client typically shows a bounded p99 and a faster return to baseline, at the cost of a small number of fast failures while the breaker is open.</p>
+<p>If you want a single number to track, use the ratio of retry attempts to successful calls during the fault window. A ratio above roughly 1.5 means the client is amplifying load rather than absorbing it.</p>
+<h2 id="failure-modes-of-shaped-calls">Failure modes of shaped calls</h2>
+<p>Shaped calls are not free. The failure modes are specific and worth designing around.</p>
+<p><strong>Cold-start breaker trips.</strong> A newly started instance has no history. If the downstream is slow during startup, the breaker can open on the first few requests and reject traffic that would have succeeded. Mitigations: require a minimum request count before the breaker can trip, or use a half-open probe with a generous timeout.</p>
+<p><strong>Backoff on the happy path.</strong> Some implementations add a small delay before the first attempt, or retry on errors that are not worth retrying. Keep the first attempt immediate and only retry on genuinely transient conditions.</p>
+<p><strong>Retry budget too generous.</strong> A budget of five attempts with a 50 ms base interval and no jitter turns a 200 ms downstream pause into a multi-second tail because attempts stack up. Cap the interval, add jitter, and keep the total attempt count low.</p>
+<p><strong>Correlated retries.</strong> Without jitter, many clients retry at the same instant after a shared failure, producing a thundering herd. Jitter of 20 to 30 percent is usually enough to spread the load.</p>
+<p><strong>Observability gaps.</strong> A breaker that opens silently looks like a sudden drop in traffic. Export the breaker state and alert on it, otherwise the first sign of trouble is a support ticket.</p>
+<p><strong>Non-idempotent retries.</strong> Retrying a charge, a send, or a state mutation without an idempotency key can duplicate the effect. The retry pattern must be paired with an idempotency mechanism on the downstream, or the retries must be restricted to read-only operations.</p>
+<p>That last point deserves emphasis. A retry budget is only safe when the operation is idempotent or the downstream deduplicates. Teams that add retry budgets without idempotency keys often trade a latency incident for a correctness incident, which is worse.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these questions before choosing a pattern.</p>
+<ul>
+<li><strong>Is the operation idempotent?</strong> If not, either add an idempotency key or restrict retries to safe methods. Without this, no retry pattern is safe.</li>
+<li><strong>What is the downstream's p99, not its p50?</strong> If p99 is more than roughly three times p50, the downstream has tail behavior that a naive client will amplify.</li>
+<li><strong>Is the downstream subject to garbage collection or periodic pauses?</strong> Runtimes with stop-the-world pauses produce exactly the kind of latency spike that triggers retry storms.</li>
+<li><strong>Can the caller absorb a traffic surge during a downstream outage?</strong> If the answer is no, a bulkhead and circuit breaker are mandatory, not optional.</li>
+<li><strong>Is the retry configuration changeable without a deploy?</strong> If every tuning change requires a code release, the configuration will drift out of date.</li>
+<li><strong>Is the caller multi-tenant?</strong> If one tenant can consume the shared capacity of a downstream, per-tenant rate limits are needed.</li>
+<li><strong>What is the cost of a fast failure versus a slow success?</strong> For user-facing checkout, a fast failure with a clear error is usually better than a 30-second hang.</li>
+</ul>
+<p>A rough mapping from service characteristics to pattern:</p>
+<table>
+<thead>
+<tr>
+<th>Service type</th>
+<th>Typical downstream latency</th>
+<th>Pause-prone</th>
+<th>Outage blast radius</th>
+<th>Suggested pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internal admin job</td>
+<td>&lt; 10 ms</td>
+<td>No</td>
+<td>Low</td>
+<td>Naive</td>
+</tr>
+<tr>
+<td>Feature flag lookup</td>
+<td>&lt; 50 ms</td>
+<td>No</td>
+<td>Medium</td>
+<td>Naive with a timeout</td>
+</tr>
+<tr>
+<td>Cache-aside read</td>
+<td>&lt; 5 ms</td>
+<td>No</td>
+<td>Low</td>
+<td>Naive with a timeout</td>
+</tr>
+<tr>
+<td>Payment or charge call</td>
+<td>100-300 ms</td>
+<td>Often</td>
+<td>High</td>
+<td>Shaped, with idempotency keys</td>
+</tr>
+<tr>
+<td>Real-time analytics write</td>
+<td>50-200 ms</td>
+<td>Often</td>
+<td>Medium</td>
+<td>Shaped</td>
+</tr>
+<tr>
+<td>Image or media processing</td>
+<td>200-500 ms</td>
+<td>Often</td>
+<td>Medium</td>
+<td>Shaped</td>
+</tr>
+<tr>
+<td>Multi-tenant SaaS dependency</td>
+<td>Variable</td>
+<td>Often</td>
+<td>High</td>
+<td>Shaped, with per-tenant limits</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-worked-example-sizing-a-retry-budget">A worked example: sizing a retry budget</h2>
+<p>Suppose a downstream has a p50 of 80 ms and a p99 of 400 ms, and a stop-the-world pause of roughly 300 ms every 30 seconds. A client timeout of 1 second will mostly succeed, but during a pause requests will time out.</p>
+<p>With no retry budget, every timed-out request retries immediately. If the client sends 200 requests per second and the pause causes a 1-second window of timeouts, that is 200 retries arriving at the moment the downstream is trying to recover. The retries themselves take time, so the effective load during recovery is higher than the original load.</p>
+<p>With a retry budget of three attempts, a 100 ms base backoff, a 5-second cap, and 20 percent jitter, the first retry for a request that timed out at t=1s arrives at roughly t=1.1s, the second at roughly t=1.3s, and the third at roughly t=1.7s. The retries are spread across 700 ms instead of arriving in a single burst. If the pause was 300 ms, the downstream is already recovered before the second retry, and most requests succeed on that attempt.</p>
+<p>The arithmetic is illustrative, but the reasoning generalizes: the retry budget and backoff curve determine the shape of the load the downstream sees during recovery, and that shape is what decides whether the incident is brief or sustained.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>What is the minimum viable set of safeguards?</strong></p>
+<p>Four things: a retry budget with a low ceiling, a backoff curve with jitter and a cap, a circuit breaker with a minimum request count before tripping, and a bulkhead that caps concurrent calls. Add an idempotency key on the downstream for any mutating operation. Anything less than this leaves one of the amplification paths open.</p>
+<p><strong>How do I know if my current pattern is already unsafe?</strong></p>
+<p>Export <code>retry_attempts_total</code> and <code>call_duration_seconds</code> by attempt number. If the retry rate rises during downstream latency spikes rather than falling, the pattern is amplifying load. If the p99 of the total call duration is more than a few multiples of the downstream p99, retries are contributing to the tail.</p>
+<p><strong>Does a circuit breaker help if the downstream is only slow, not failing?</strong></p>
+<p>Yes, if the breaker is configured to trip on slow calls as well as errors. Many implementations only count errors, which means a downstream that returns 200 responses slowly will never trip the breaker. Configure a slow-call threshold or use a timeout that converts slow responses into errors the breaker can see.</p>
+<p><strong>Can shaped calls work in serverless environments?</strong></p>
+<p>Yes, with adjustments. Serverless platforms cap concurrency at the platform level, which acts as a bulkhead. The retry budget, backoff, and idempotency requirements still apply. Keep timeouts short so a slow downstream does not consume the function's entire execution budget.</p>
+<p><strong>What is the most common configuration mistake?</strong></p>
+<p>A retry budget that is too large combined with a backoff base that is too small. Five attempts with a 50 ms base interval and no jitter produces a burst of retries within a few hundred milliseconds, which is exactly when the downstream is least able to handle them.</p>
+<p><strong>Do shaped calls add latency on the happy path?</strong></p>
+<p>A well-implemented client adds essentially nothing on the first attempt. Latency only appears when a retry or a breaker rejection occurs. If your implementation adds a fixed delay before the first attempt, remove it.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Open the file in your codebase that issues calls to your most critical downstream dependency. Find the retry logic, if any. Answer three questions in writing: is the operation idempotent, what is the total attempt ceiling, and what happens to concurrent calls when the downstream slows down. If you cannot answer all three from the code, that is the gap to close first. Add a counter for retry attempts labelled by downstream and reason, deploy it, and watch it for one traffic cycle. A retry rate that rises during latency spikes is the signal that the pattern needs to change.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-systems-circuit-breakers-are-not-enough/">
+                        <h3>Agent Systems: Circuit Breakers Are Not Enough</h3>
+                        <p>Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.</p>
+                        <span class="related-meta">13 min read · 12 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tool-calls-why-retries-stampede/">
+                        <h3>Tool calls: why retries stampede</h3>
+                        <p>Why per-client backoff fails under fan-out tool use, and how shared token buckets, single-flight and one-layer retries fix it.</p>
+                        <span class="related-meta">12 min read · 22 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+                        <h3>AI agents: circuit breakers are not optional</h3>
+                        <p>AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

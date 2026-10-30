@@ -1,0 +1,556 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Postmortems for AI agents: drift, cost, replay - Kubai Kevin</title>
+        <meta name="description" content="How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.">
+        <meta name="keywords" content="AiAgentPostmortem, AiObservabilityTools, LlmFailureModes, AiIncidentResponse, AgentDriftDetection, AiHallucinationRate, AiPostmortemTools, Ai, Llm">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-29T21:20:13.013851">
+        <meta property="article:modified_time" content="2026-10-03T12:42:05.290491+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Postmortems for AI agents: drift, cost, replay">
+        <meta property="og:description" content="How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.">
+        <meta property="og:url" content="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/fix-ai-agent-failures-postmortem-guide.png">
+        <meta property="og:image:alt" content="Postmortems for AI agents: drift, cost, replay">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Postmortems for AI agents: drift, cost, replay">
+        <meta name="twitter:description" content="How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/fix-ai-agent-failures-postmortem-guide.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/#article",
+      "headline": "Postmortems for AI agents: drift, cost, replay",
+      "description": "How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.",
+      "datePublished": "2026-06-29T21:20:13+00:00",
+      "dateModified": "2026-10-03T12:42:05+00:00",
+      "wordCount": 2390,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/"
+      },
+      "keywords": "AiAgentPostmortem, AiObservabilityTools, LlmFailureModes, AiIncidentResponse, AgentDriftDetection, AiHallucinationRate, AiPostmortemTools, Ai",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/fix-ai-agent-failures-postmortem-guide.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Postmortems for AI agents: drift, cost, replay",
+          "item": "https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Postmortems for AI agents: drift, cost, replay</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Postmortems for AI agents: drift, cost, replay</h1>
+                
+                <p class="post-lead">How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/aiagentpostmortem/"
+                       style="text-decoration:none;">AiAgentPostmortem</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/aiobservabilitytools/"
+                       style="text-decoration:none;">AiObservabilityTools</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmFailureModes</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/aiincidentresponse/"
+                       style="text-decoration:none;">AiIncidentResponse</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentDriftDetection</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2390 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-agent-postmortems-look-different">Why agent postmortems look different</h2>
+<p>An agent rarely crashes. It degrades. A prompt template gets edited, a retrieval index goes stale, a model version is swapped upstream, and the agent keeps returning HTTP 200 while quietly producing worse decisions. There is no stack trace for that. The incident is discovered later, through a billing spike, a support queue, or an audit.</p>
+<p>That changes what a postmortem has to contain. Traditional incident review asks: what broke, when did it start, how many requests failed, how do we prevent recurrence. For an agent, the useful questions are:</p>
+<ul>
+<li>What changed in the input distribution, the prompt, the retrieval corpus, or the model version?</li>
+<li>When did output quality move, and how is "quality" defined for this task?</li>
+<li>What did the incident cost in tokens, retries, and downstream actions?</li>
+<li>Can a specific bad session be replayed and reproduced?</li>
+</ul>
+<p>If your postmortem template cannot answer those four, it will produce a document that says "the model behaved unexpectedly" and nothing actionable.</p>
+<p>Four failure modes are specific enough to plan for:</p>
+<ol>
+<li><strong>Output drift.</strong> Behavior changes gradually because inputs, prompts, or the model itself changed. Prompt templates are code, and they rot like code.</li>
+<li><strong>Non-determinism.</strong> The same input can produce different outputs. Replay is not free; it requires capturing enough state to constrain the run.</li>
+<li><strong>Compute amplification.</strong> One bad routing decision fans out into many model calls, or a retry loop multiplies calls for a subset of sessions.</li>
+<li><strong>Confident fabrication.</strong> The agent cites a regulation, function, or citation that does not exist. This is usually caught by a human downstream, not by monitoring.</li>
+</ol>
+<h2 id="the-minimum-telemetry-an-agent-postmortem-needs">The minimum telemetry an agent postmortem needs</h2>
+<p>Most teams already log something. The gap is usually in what is captured per call. A postmortem is only as good as the fields you recorded before the incident. At minimum, record one structured event per model call with:</p>
+<ul>
+<li><code>request_id</code> and <code>session_id</code></li>
+<li><code>timestamp</code></li>
+<li><code>model</code> and <code>model_version</code> (the exact snapshot identifier, not a family name)</li>
+<li><code>prompt_template_id</code> and <code>prompt_template_hash</code></li>
+<li><code>input_tokens</code>, <code>output_tokens</code>, and the computed cost for that call</li>
+<li><code>latency_ms</code></li>
+<li><code>retrieval_doc_ids</code> if the agent uses retrieval</li>
+<li><code>tool_calls</code> made and their outcomes</li>
+<li><code>finish_reason</code> and any error field</li>
+<li>a hash of the user input, and the raw input if policy allows storing it</li>
+</ul>
+<p>Two fields are commonly omitted and are the ones you will miss most: the prompt template hash and the retrieval document IDs. Without the first, you cannot correlate a quality shift with a template edit. Without the second, you cannot tell whether the model changed or the context it was given changed.</p>
+<p>Store these as structured events, not free-text log lines. JSON to stdout is fine if a collector parses it into a queryable store. The important property is that you can group by session and filter by template hash and model version after the fact.</p>
+<h2 id="measuring-drift-without-a-vendor">Measuring drift without a vendor</h2>
+<p>Drift detection does not require a specialized platform. It requires a definition of "normal" and a way to compare today's traffic to it.</p>
+<p><strong>Step 1: pick a signal.</strong> For unstructured text, common signals are output length distribution, refusal rate, and embedding distance from a reference set. For structured output, use schema-validity rate and field-level value distributions. For task-specific agents, use a labeled evaluation set and track pass rate.</p>
+<p><strong>Step 2: build a reference window.</strong> Take a period you consider healthy, for example the first week after a known-good deployment. Compute the signal's distribution over that window and store it.</p>
+<p><strong>Step 3: compare on a schedule.</strong> Recompute the signal over a rolling window, for example the last 24 hours, and compare it to the reference. For a scalar like mean output length, a simple z-score or a fixed percentage band works. For distributions, use a divergence measure such as population stability index or KL divergence over bucketed values.</p>
+<p><strong>Step 4: alert on the comparison, not the raw value.</strong> A mean output length of 400 tokens is meaningless on its own. A mean output length that moved 30 percent from the reference window is a signal.</p>
+<p>A worked example makes the arithmetic concrete. Suppose the reference window has a mean output length of 320 tokens with a standard deviation of 40 tokens, computed over 5,000 calls. Today's window has 5,000 calls with a mean of 380 tokens. The standard error of the mean for each window is <code>40 / sqrt(5000)</code>, which is about 0.57 tokens. The difference in means is 60 tokens, which is roughly 105 standard errors. That is not noise; something changed. The same calculation on a 50-call window would have a standard error near 5.7 tokens, so a 60-token move would still be large but far less certain. This is why small windows generate false alarms.</p>
+<p>The same structure applies to cost. Track cost per session, not cost per call. A session that fans out into 40 calls is the failure mode you care about, and per-call averages hide it.</p>
+<h2 id="tracing-a-real-failure-a-worked-example">Tracing a real failure: a worked example</h2>
+<p>Consider an agent that drafts replies to inbound support tickets. On a Tuesday morning the support lead notices replies getting longer and more hedged. No alerts fired. Here is how the postmortem proceeds.</p>
+<p><strong>Establish the timeline.</strong> Query per-call events grouped by hour for the last seven days, filtering on <code>model_version</code> and <code>prompt_template_hash</code>. The output shows the template hash changed at 09:14 on Monday. Output length begins rising within the same hour. The model version did not change. That narrows the cause to the template or to the inputs.</p>
+<p><strong>Check the inputs.</strong> Group by a coarse input category, for example the ticket's product area. The length increase appears across all categories, which argues against an input shift and points at the template.</p>
+<p><strong>Diff the template.</strong> The change added an instruction to "consider all relevant policies before responding." The model interpreted this as an instruction to enumerate policies, inflating output length and adding hedging language.</p>
+<p><strong>Quantify the cost.</strong> Multiply the mean output token increase by the number of calls in the affected window and by the per-token output price. If the increase is 60 tokens per call, the window has 12,000 calls, and output costs $10 per million tokens, the added cost is <code>60 * 12000 / 1_000_000 * 10</code>, which is $7.20. That is small. Now suppose the same template change also increased the chance of a second model call for policy lookup on 15 percent of sessions, at 800 input tokens each and $2.50 per million input tokens. That adds <code>0.15 * 12000 * 800 / 1_000_000 * 2.50</code>, which is $3.60. The point of the arithmetic is not the total; it is that you can defend the number in the review instead of guessing.</p>
+<p><strong>Write the action items.</strong> Roll back the template. Add a regression check that runs the evaluation set against any template change before deploy. Add an alert on output length relative to the reference window. Add the template hash to the deploy record so the next timeline query is faster.</p>
+<p>This example is illustrative, but the method is not: timeline by version and template hash, then narrow by input grouping, then quantify with per-token arithmetic.</p>
+<h2 id="choosing-a-pipeline-log-based-or-instrumented">Choosing a pipeline: log-based or instrumented</h2>
+<p>Two broad approaches exist. The log-based approach uses your existing observability stack: structured logs, a log store, a query layer, and scheduled jobs you write yourself. The instrumented approach uses SDKs or sidecars that capture model calls and compute metrics for you, either self-hosted or as a managed service.</p>
+<p>The decision is not about which is better in the abstract. It is about which constraints bind.</p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Log-based pipeline</th>
+<th>Instrumented pipeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where the logic lives</td>
+<td>Queries and jobs you write and maintain</td>
+<td>SDK or sidecar plus configuration</td>
+</tr>
+<tr>
+<td>Time to first useful signal</td>
+<td>Fast if logs already exist</td>
+<td>Depends on instrumentation coverage</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>Only what you logged</td>
+<td>Only what the SDK captures</td>
+</tr>
+<tr>
+<td>Data residency</td>
+<td>Whatever your log store supports</td>
+<td>Depends on the vendor or your deployment</td>
+</tr>
+<tr>
+<td>Cost model</td>
+<td>Storage and query cost</td>
+<td>Storage plus per-event or per-seat pricing</td>
+</tr>
+<tr>
+<td>Custom metrics</td>
+<td>Fully flexible</td>
+<td>Limited to what the platform exposes</td>
+</tr>
+<tr>
+<td>Failure mode</td>
+<td>You forget a field and cannot recover it retroactively</td>
+<td>You forget to instrument a call path and it is invisible</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the one that causes the most pain in both directions. In a log-based pipeline, the fields you did not log are gone. In an instrumented pipeline, the call paths you did not wrap are invisible, and that is often worse because the dashboard looks complete.</p>
+<p>A practical hybrid is common: use an instrumented pipeline for standard metrics such as latency, token counts, and cost, and keep a log-based path for the fields specific to your domain, such as retrieval document IDs or tool call arguments. This avoids paying per-event for high-cardinality fields a vendor will not index usefully anyway.</p>
+<h2 id="instrumentation-sketch">Instrumentation sketch</h2>
+<p>The following is a minimal pattern for capturing the fields a postmortem needs, independent of vendor. It assumes a single function wraps every model call.</p>
+<pre><code class="language-python">import hashlib
+import json
+import time
+from dataclasses import dataclass, asdict
+
+@dataclass
+class CallEvent:
+    request_id: str
+    session_id: str
+    timestamp: float
+    model: str
+    model_version: str
+    prompt_template_id: str
+    prompt_template_hash: str
+    input_tokens: int
+    output_tokens: int
+    cost_usd: float
+    latency_ms: float
+    finish_reason: str
+    retrieval_doc_ids: list
+
+def template_hash(template: str) -&gt; str:
+    return hashlib.sha256(template.encode(&quot;utf-8&quot;)).hexdigest()[:16]
+
+def call_model(client, session_id, request_id, template, variables, model, model_version, price_in, price_out):
+    prompt = template.format(**variables)
+    start = time.monotonic()
+    response = client.complete(model=model, prompt=prompt)
+    latency_ms = (time.monotonic() - start) * 1000
+
+    usage = response.usage
+    cost = (usage.input_tokens / 1_000_000) * price_in + \
+           (usage.output_tokens / 1_000_000) * price_out
+
+    event = CallEvent(
+        request_id=request_id,
+        session_id=session_id,
+        timestamp=time.time(),
+        model=model,
+        model_version=model_version,
+        prompt_template_id=template_id_of(template),
+        prompt_template_hash=template_hash(template),
+        input_tokens=usage.input_tokens,
+        output_tokens=usage.output_tokens,
+        cost_usd=cost,
+        latency_ms=latency_ms,
+        finish_reason=response.finish_reason,
+        retrieval_doc_ids=response.retrieval_doc_ids or [],
+    )
+    emit(json.dumps(asdict(event)))
+    return response
+</code></pre>
+<p>Two details matter here. First, <code>model_version</code> must be the exact snapshot identifier the provider returns, not a family name, or the timeline query will not separate one deployment from another. Second, the price constants must be updated deliberately; a stale price makes every cost figure in the postmortem wrong in a way nobody notices.</p>
+<h2 id="replay-and-non-determinism">Replay and non-determinism</h2>
+<p>Full replay of a model call is not generally possible. Providers do not guarantee that the same input returns the same output, and sampling parameters may not be exposed or stable across versions. What you can do is capture enough to make a bad session reproducible in the sense that matters: you can rerun the same template with the same variables and the same retrieval documents and observe whether the failure recurs.</p>
+<p>That requires storing, per call:</p>
+<ul>
+<li>the rendered prompt, or the template plus the exact variable values</li>
+<li>the retrieval document IDs and their contents at the time of the call</li>
+<li>the model version identifier</li>
+<li>the sampling parameters, if the provider exposes them</li>
+</ul>
+<p>If the failure does not reproduce with those held fixed, the cause is likely the model or an upstream change you cannot control, which is itself a finding worth recording.</p>
+<h2 id="a-postmortem-template-for-agent-incidents">A postmortem template for agent incidents</h2>
+<p>Use these sections. They map to the failure modes above and force the numbers to be shown.</p>
+<p><strong>Summary.</strong> One paragraph: what the agent did wrong, over what window, and what the user-visible impact was.</p>
+<p><strong>Detection.</strong> How the incident was found, and how long after onset. If detection was manual, that is an action item.</p>
+<p><strong>Timeline.</strong> Grouped by <code>model_version</code> and <code>prompt_template_hash</code> changes, with timestamps.</p>
+<p><strong>Impact.</strong> Sessions affected, extra model calls, added token cost computed from per-token prices, and downstream actions taken incorrectly.</p>
+<p><strong>Root cause.</strong> Which of the four failure modes, with the evidence that distinguishes it from the others.</p>
+<p><strong>What made it hard to see.</strong> The missing field, the unlogged call path, the alert that did not exist.</p>
+<p><strong>Action items.</strong> Each with an owner and a verification method. "Add an alert" is not an action item; "alert when mean output length over a 24-hour window deviates more than 20 percent from the reference window, verified by replaying last week's traffic" is.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before the next incident, answer these. If any answer is "we do not know," that is the gap to close.</p>
+<ul>
+<li>Can you list every model call path in the agent, including retries and tool calls?</li>
+<li>Is the exact model version recorded per call?</li>
+<li>Is the prompt template hash recorded per call?</li>
+<li>Can you compute cost per session, not just per call?</li>
+<li>Do you have a reference window for at least one quality signal?</li>
+<li>Can you group calls by session and reconstruct the sequence?</li>
+<li>Are retrieval document IDs recorded?</li>
+<li>Is there a labeled evaluation set that runs before deploy?</li>
+<li>Does the alert fire on a comparison to a reference, not on a raw threshold?</li>
+<li>Is there a documented rollback for a prompt template change?</li>
+</ul>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one agent in production. Query your logs for the last 24 hours and count distinct <code>session_id</code> values and the number of model calls per session. If the distribution has a tail where a small number of sessions account for a disproportionate share of calls, you have found a compute amplification risk before it became an incident. Write down the query, save it, and add the two fields most likely missing from your events: the prompt template hash and the retrieval document IDs.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">AI agent postmortem: human loop vs blind replay</a></li>
+<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/">AI-era promotions hinge on this one thing</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://sre.google/sre-book/postmortem-culture/">Google SRE Book: Postmortem Culture</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-agent-postmortem-human-loop-vs-blind-replay/">
+                        <h3>Postmortems for AI agents: human review vs blind replay</h3>
+                        <p>Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.</p>
+                        <span class="related-meta">16 min read · 20 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agent-postmortems-trace-vs-logs-vs-code/">
+                        <h3>AI agent postmortems: trace vs logs vs code</h3>
+                        <p>Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.</p>
+                        <span class="related-meta">13 min read · 14 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agent-postmortems-the-three-surprises/">
+                        <h3>AI agent postmortems: the three surprises</h3>
+                        <p>How to run postmortems for AI agents that fail semantically, not just technically: structured semantic logging, live shadowing, and a decision checklist.</p>
+                        <span class="related-meta">14 min read · 24 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

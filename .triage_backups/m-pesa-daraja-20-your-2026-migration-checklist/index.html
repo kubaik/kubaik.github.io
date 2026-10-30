@@ -1,0 +1,760 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>M-Pesa Daraja 2.0: your 2026 migration checklist - Kubai Kevin</title>
+        <meta name="description" content="A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.">
+        <meta name="keywords" content="SafaricomApi2026, Apis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-02T16:41:45.048601">
+        <meta property="article:modified_time" content="2026-10-03T11:11:51.279792+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="M-Pesa Daraja 2.0: your 2026 migration checklist">
+        <meta property="og:description" content="A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.">
+        <meta property="og:url" content="https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/m-pesa-daraja-20-your-2026-migration-checklist.png">
+        <meta property="og:image:alt" content="M-Pesa Daraja 2.0: your 2026 migration checklist">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="M-Pesa Daraja 2.0: your 2026 migration checklist">
+        <meta name="twitter:description" content="A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/m-pesa-daraja-20-your-2026-migration-checklist.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/#article",
+      "headline": "M-Pesa Daraja 2.0: your 2026 migration checklist",
+      "description": "A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.",
+      "datePublished": "2026-07-02T16:41:45+00:00",
+      "dateModified": "2026-10-03T11:11:51+00:00",
+      "wordCount": 2900,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/"
+      },
+      "keywords": "SafaricomApi2026, Apis",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/m-pesa-daraja-20-your-2026-migration-checklist.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "M-Pesa Daraja 2.0: your 2026 migration checklist",
+          "item": "https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>M-Pesa Daraja 2.0: your 2026 migration checklist</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">M-Pesa Daraja 2.0: your 2026 migration checklist</h1>
+                
+                <p class="post-lead">A practical checklist for migrating an M-Pesa Daraja integration across a breaking API change: auth, idempotency, callbacks, error handling and rollout.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2900 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>API version migrations are rarely a version bump. They change authentication, request schemas, callback shapes and error semantics all at once, and the failure modes only appear under production traffic. This article is a migration checklist for an M-Pesa Daraja-style integration, written so that it applies whether the breaking change you are facing is a documented major version, a silent gateway upgrade, or a deprecation deadline you have been ignoring.</p>
+<p>It assumes you already integrate with the Daraja APIs, know what a Lipa Na M-Pesa Online (STK push) request looks like, and have a sandbox account on the Safaricom Developer Portal. If you are starting from scratch, register there first and obtain a Consumer Key and Consumer Secret before continuing.</p>
+<h2 id="why-version-migrations-break-in-production">Why version migrations break in production</h2>
+<p>The recurring failure mode is not that the new endpoint is hard to call. It is that the old one keeps working in sandbox long after it stops working in production, or vice versa. A few patterns show up repeatedly:</p>
+<ul>
+<li><strong>Mocked headers.</strong> Sandbox test suites often mock request headers, so a newly required header is never exercised. The call passes locally and returns a precondition error against the live gateway.</li>
+<li><strong>Silent schema changes.</strong> A field is renamed, re-cased, or moved one level deeper in the JSON response. Naive parsers that index directly into the payload raise <code>KeyError</code> or return <code>None</code> at exactly the wrong moment.</li>
+<li><strong>Deadline clustering.</strong> Deprecation dates push many teams into the same final week. Support queues lengthen, and incident response capacity drops precisely when it is needed most.</li>
+<li><strong>Callback drift.</strong> The request succeeds, the money moves, and the callback handler silently drops the notification because the payload shape changed.</li>
+</ul>
+<p>The checklist below is ordered so that each step makes the next one testable. Nothing here depends on a specific SDK version; it depends on reading the current portal documentation and verifying behaviour against the sandbox.</p>
+<h2 id="prerequisites-and-what-you-will-build">Prerequisites and what you will build</h2>
+<p>You will need:</p>
+<ul>
+<li>A Unix shell (Linux or macOS; Windows via WSL2 is fine)</li>
+<li>Python 3.11 or Node 20 LTS</li>
+<li>Redis 7.2 for caching access tokens (optional but recommended)</li>
+<li>A sandbox app registered on the Safaricom portal</li>
+<li>A public HTTPS tunnel such as ngrok to expose your webhook — localhost callbacks will not be delivered</li>
+</ul>
+<p>The result is a minimal but production-shaped integration that:</p>
+<ul>
+<li>Authenticates against the OAuth token endpoint and caches the token</li>
+<li>Issues an STK push request</li>
+<li>Parses the callback payload defensively</li>
+<li>Sends an idempotency key with every payment attempt</li>
+<li>Handles success, timeout and user cancellation with structured logging</li>
+</ul>
+<h2 id="step-1-pin-your-environment">Step 1 — pin your environment</h2>
+<p>Create a directory and install pinned packages:</p>
+<pre><code class="language-bash">git init mpesa-migration
+cd mpesa-migration
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install requests==2.31.0 redis==7.2.0 python-dotenv==1.0.0 tenacity==8.2.3
+</code></pre>
+<p>The Node equivalent:</p>
+<pre><code class="language-bash">npm init -y
+npm install axios@1.6.2 redis@7.2.0 dotenv@16.3.1 p-retry@6.1.0
+touch .env
+</code></pre>
+<p>Create a <code>.env</code> file. Values come from your portal app; the shortcode below is the standard sandbox test shortcode used in Safaricom's public examples:</p>
+<pre><code>MPESA_CONSUMER_KEY=your_consumer_key
+MPESA_CONSUMER_SECRET=your_consumer_secret
+MPESA_PASSKEY=your_passkey
+MPESA_BUSINESS_SHORT_CODE=174379
+MPESA_CALLBACK_URL=https://your-public-url.com/mpesa/callback
+REDIS_URL=redis://localhost:6379/0
+</code></pre>
+<p>Start Redis locally if you want token caching:</p>
+<pre><code class="language-bash">docker run --name redis-mpesa -p 6379:6379 -d redis:7.2-alpine
+</code></pre>
+<p>Before writing any code, do one thing manually: call the OAuth endpoint with <code>curl</code> and print the raw response body. Do not assume the token is at the top level. Response envelopes change between environments, and one extra nesting level is enough to break a parser that indexes directly.</p>
+<pre><code class="language-bash">curl -s -X POST &quot;https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials&quot; \
+  -u &quot;$MPESA_CONSUMER_KEY:$MPESA_CONSUMER_SECRET&quot; | python -m json.tool
+</code></pre>
+<p>Whatever structure that command prints is the structure your client must handle. Treat the code below as a template and adjust the accessor to match what you actually observe.</p>
+<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
+<p>Save this as <code>mpesa.py</code>. Note that the token accessor is written defensively: it accepts either a top-level <code>access_token</code> or one nested under <code>body</code>, because both shapes have appeared in Daraja responses across environments.</p>
+<pre><code class="language-python">import os
+import uuid
+import hashlib
+import logging
+import requests
+import redis
+from datetime import datetime, timezone
+from dotenv import load_dotenv
+
+load_dotenv()
+log = logging.getLogger(&quot;mpesa&quot;)
+
+class DarajaClient:
+    OAUTH_URL = &quot;https://sandbox.safaricom.co.ke/oauth/v1/generate&quot;
+    STK_URL = &quot;https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest&quot;
+
+    def __init__(self):
+        self.consumer_key = os.environ[&quot;MPESA_CONSUMER_KEY&quot;]
+        self.consumer_secret = os.environ[&quot;MPESA_CONSUMER_SECRET&quot;]
+        self.passkey = os.environ[&quot;MPESA_PASSKEY&quot;]
+        self.shortcode = os.environ[&quot;MPESA_BUSINESS_SHORT_CODE&quot;]
+        self.callback = os.environ[&quot;MPESA_CALLBACK_URL&quot;]
+        self.redis = redis.from_url(os.getenv(&quot;REDIS_URL&quot;, &quot;redis://localhost:6379/0&quot;))
+
+    def get_token(self):
+        cache_key = &quot;daraja_token&quot;
+        cached = self.redis.get(cache_key)
+        if cached:
+            return cached.decode()
+
+        resp = requests.post(
+            self.OAUTH_URL,
+            params={&quot;grant_type&quot;: &quot;client_credentials&quot;},
+            auth=(self.consumer_key, self.consumer_secret),
+            timeout=10,
+        )
+        resp.raise_for_status()
+        payload = resp.json()
+        # Accept either envelope shape; log which one you got so you notice drift.
+        token = payload.get(&quot;access_token&quot;) or payload.get(&quot;body&quot;, {}).get(&quot;access_token&quot;)
+        if not token:
+            raise RuntimeError(f&quot;no access_token in response keys={list(payload)}&quot;)
+        self.redis.setex(cache_key, 3500, token)  # token lifetime minus a buffer
+        return token
+
+    def lipa_stk(self, phone: str, amount: int, reference: str, idempotency_key: str):
+        token = self.get_token()
+        timestamp = datetime.now(timezone.utc).strftime(&quot;%Y%m%d%H%M%S&quot;)
+        password = self._generate_password(timestamp)
+
+        payload = {
+            &quot;BusinessShortCode&quot;: self.shortcode,
+            &quot;Password&quot;: password,
+            &quot;Timestamp&quot;: timestamp,
+            &quot;TransactionType&quot;: &quot;CustomerPayBillOnline&quot;,
+            &quot;Amount&quot;: amount,
+            &quot;PartyA&quot;: phone,
+            &quot;PartyB&quot;: self.shortcode,
+            &quot;PhoneNumber&quot;: phone,
+            &quot;CallBackURL&quot;: self.callback,
+            &quot;AccountReference&quot;: reference,
+            &quot;TransactionDesc&quot;: &quot;Payment for goods&quot;,
+        }
+
+        headers = {
+            &quot;Authorization&quot;: f&quot;Bearer {token}&quot;,
+            &quot;Content-Type&quot;: &quot;application/json&quot;,
+            &quot;X-Idempotency-Key&quot;: idempotency_key,
+        }
+
+        resp = requests.post(self.STK_URL, json=payload, headers=headers, timeout=10)
+        resp.raise_for_status()
+        return resp.json()
+
+    def _generate_password(self, timestamp):
+        raw = f&quot;{self.shortcode}{self.passkey}{timestamp}&quot;
+        return hashlib.sha256(raw.encode()).hexdigest()
+</code></pre>
+<p>Three details are worth calling out because they are the ones that change between versions:</p>
+<ul>
+<li><strong>Timestamp format.</strong> The STK push password is derived from <code>BusinessShortCode + PassKey + Timestamp</code>, where the timestamp is a 14-digit <code>YYYYMMDDHHMMSS</code> string. If your timestamp helper produces a different width or includes separators, the derived password will not match and the request will be rejected. Assert the length before sending.</li>
+<li><strong>Password derivation.</strong> Older integrations used Base64 of the concatenated string. Newer ones use a SHA-256 hex digest. These are not interchangeable — check the current documentation for your account and verify against the sandbox before switching.</li>
+<li><strong>Idempotency key.</strong> Send a fresh UUID per logical payment attempt, not per HTTP attempt. Retries of the same logical payment must reuse the same key; distinct payments must not.</li>
+</ul>
+<p>The Node equivalent, saved as <code>mpesa.js</code>:</p>
+<pre><code class="language-javascript">import axios from &quot;axios&quot;;
+import crypto from &quot;crypto&quot;;
+import dotenv from &quot;dotenv&quot;;
+import { createClient } from &quot;redis&quot;;
+
+dotenv.config();
+
+const client = createClient({ url: process.env.REDIS_URL });
+await client.connect();
+
+class DarajaClient {
+  OAUTH_URL = &quot;https://sandbox.safaricom.co.ke/oauth/v1/generate&quot;;
+  STK_URL = &quot;https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest&quot;;
+
+  async getToken() {
+    const key = &quot;daraja_token&quot;;
+    const cached = await client.get(key);
+    if (cached) return cached;
+
+    const auth = Buffer.from(
+      `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
+    ).toString(&quot;base64&quot;);
+
+    const res = await axios.post(
+      this.OAUTH_URL,
+      null,
+      {
+        params: { grant_type: &quot;client_credentials&quot; },
+        headers: { Authorization: `Basic ${auth}` },
+        timeout: 10_000,
+      }
+    );
+    const payload = res.data;
+    const token = payload.access_token ?? payload.body?.access_token;
+    if (!token) throw new Error(`no access_token in keys=${Object.keys(payload)}`);
+    await client.setEx(key, 3500, token);
+    return token;
+  }
+
+  async lipaStk(phone, amount, reference, idempotencyKey) {
+    const token = await this.getToken();
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[-:TZ.]/g, &quot;&quot;)
+      .slice(0, 14);
+    const password = this.generatePassword(timestamp);
+
+    const payload = {
+      BusinessShortCode: process.env.MPESA_BUSINESS_SHORT_CODE,
+      Password: password,
+      Timestamp: timestamp,
+      TransactionType: &quot;CustomerPayBillOnline&quot;,
+      Amount: amount,
+      PartyA: phone,
+      PartyB: process.env.MPESA_BUSINESS_SHORT_CODE,
+      PhoneNumber: phone,
+      CallBackURL: process.env.MPESA_CALLBACK_URL,
+      AccountReference: reference,
+      TransactionDesc: &quot;Payment for goods&quot;,
+    };
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      &quot;Content-Type&quot;: &quot;application/json&quot;,
+      &quot;X-Idempotency-Key&quot;: idempotencyKey,
+    };
+
+    const res = await axios.post(this.STK_URL, payload, { headers, timeout: 10_000 });
+    return res.data;
+  }
+
+  generatePassword(timestamp) {
+    const raw = `${process.env.MPESA_BUSINESS_SHORT_CODE}${process.env.MPESA_PASSKEY}${timestamp}`;
+    return crypto.createHash(&quot;sha256&quot;).update(raw).digest(&quot;hex&quot;);
+  }
+}
+
+const daraja = new DarajaClient();
+daraja
+  .lipaStk(&quot;+254712345678&quot;, 100, &quot;INV-12345&quot;, crypto.randomUUID())
+  .then(console.log)
+  .catch(console.error);
+</code></pre>
+<h2 id="step-3-handle-errors-and-retries">Step 3 — handle errors and retries</h2>
+<p>The most useful thing you can do here is not memorise a table of error codes. It is to log the full response body on any non-2xx status, including the status code and any correlation identifier the gateway returns. Error taxonomies change between versions; the habit of capturing the raw body does not.</p>
+<p>That said, a few classes of failure are stable enough to plan for:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Typical cause</th>
+<th>Correct response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400 validation</td>
+<td>Malformed timestamp, wrong password derivation, bad payload shape</td>
+<td>Do not retry. Fix the request. Log the full body.</td>
+</tr>
+<tr>
+<td>401 / 403</td>
+<td>Expired or wrong credentials, wrong environment</td>
+<td>Refresh the token; if it persists, check the portal app. Do not retry in a tight loop.</td>
+</tr>
+<tr>
+<td>409 / duplicate</td>
+<td>Same idempotency key submitted twice</td>
+<td>Treat as success if the original succeeded. Query the transaction status before assuming failure.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Rate limiting</td>
+<td>Retry with exponential backoff and jitter. Cap the total attempts.</td>
+</tr>
+<tr>
+<td>5xx / timeout</td>
+<td>Gateway or network failure</td>
+<td>Retry with the same idempotency key so the payment is not duplicated.</td>
+</tr>
+</tbody>
+</table>
+<p>The critical rule: <strong>retry with the same idempotency key, never a new one.</strong> Generating a fresh UUID inside the retry wrapper is the single most common way to double-charge a customer.</p>
+<pre><code class="language-python">from tenacity import retry, stop_after_attempt, wait_exponential_jitter, retry_if_exception_type
+
+class TransientError(Exception):
+    pass
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential_jitter(initial=1, max=5),
+    retry=retry_if_exception_type(TransientError),
+)
+def lipa_stk_retry(self, phone, amount, reference, idempotency_key):
+    try:
+        return self.lipa_stk(phone, amount, reference, idempotency_key)
+    except requests.HTTPError as exc:
+        status = exc.response.status_code if exc.response is not None else None
+        if status is not None and 500 &lt;= status &lt; 600:
+            raise TransientError(str(exc)) from exc
+        raise  # 4xx: do not retry
+</code></pre>
+<p>The Node equivalent with <code>p-retry</code>:</p>
+<pre><code class="language-javascript">import retry from &quot;p-retry&quot;;
+
+async function lipaStkRetry(phone, amount, reference, idempotencyKey) {
+  return retry(
+    async () =&gt; {
+      try {
+        return await daraja.lipaStk(phone, amount, reference, idempotencyKey);
+      } catch (err) {
+        const status = err.response?.status;
+        if (status &gt;= 500) throw err; // retryable
+        throw new retry.AbortError(err.message); // 4xx: stop
+      }
+    },
+    { retries: 3, minTimeout: 1000, maxTimeout: 5000 }
+  );
+}
+</code></pre>
+<h2 id="step-4-parse-the-callback-defensively">Step 4 — parse the callback defensively</h2>
+<p>Callback payload shapes are the most common source of silent data loss during a migration. The request succeeds, the customer is charged, and your handler throws on a missing key and returns a 500 — which may cause the gateway to retry, or may simply leave your system out of sync.</p>
+<p>Write the handler so that an unexpected shape produces an alert rather than an exception. Log the raw body first, then parse.</p>
+<pre><code class="language-javascript">import express from &quot;express&quot;;
+
+const app = express();
+
+app.post(&quot;/mpesa/callback&quot;, express.json(), (req, res) =&gt; {
+  const raw = JSON.stringify(req.body);
+  console.log(&quot;mpesa.callback.raw&quot;, raw);
+
+  const callback = req.body?.Body?.stkCallback ?? req.body?.stkCallback;
+  if (!callback) {
+    console.error(&quot;mpesa.callback.unrecognised_shape&quot;, raw);
+    // Acknowledge anyway: a 5xx here causes gateway retries, not a fix.
+    return res.status(200).send(&quot;Accepted&quot;);
+  }
+
+  const { ResultCode, ResultDesc, CheckoutRequestID, CallbackMetadata } = callback;
+
+  if (ResultCode === 0) {
+    const items = CallbackMetadata?.Item ?? [];
+    const receipt = items.find((i) =&gt; i.Name === &quot;MpesaReceiptNumber&quot;)?.Value;
+    console.log(&quot;mpesa.callback.success&quot;, { CheckoutRequestID, receipt });
+  } else {
+    // ResultCode 1032 is a user cancellation; 1037 is a timeout.
+    console.log(&quot;mpesa.callback.failure&quot;, { CheckoutRequestID, ResultCode, ResultDesc });
+  }
+
+  res.status(200).send(&quot;Accepted&quot;);
+});
+</code></pre>
+<p>Two operational rules matter more than the parsing itself:</p>
+<ol>
+<li><strong>Always return 200 once you have accepted the body.</strong> If your business logic needs to fail, fail asynchronously and alert. A non-200 response invites retries you probably do not want.</li>
+<li><strong>Persist the raw payload before parsing.</strong> When a shape changes, the stored payload is the only way to reconstruct what happened.</li>
+</ol>
+<h2 id="step-5-observability-and-tests">Step 5 — observability and tests</h2>
+<p>Instrument four things. Each maps to a failure mode above:</p>
+<ul>
+<li><strong>Token fetch count.</strong> A counter incremented on every cache miss. If this climbs during steady traffic, your cache TTL is wrong or Redis is unreachable.</li>
+<li><strong>Non-2xx responses by status class.</strong> Split 4xx from 5xx. A spike in 4xx means a schema or credential problem; a spike in 5xx means upstream trouble.</li>
+<li><strong>Idempotency key reuse within a window.</strong> Increment a counter when the same key is seen twice inside, say, five minutes. This catches double-submission races in your own checkout flow.</li>
+<li><strong>Callback parse failures.</strong> Increment when the defensive branch above fires. This is your earliest signal that a payload shape changed.</li>
+</ul>
+<p>A minimal OpenTelemetry span around the token fetch:</p>
+<pre><code class="language-python">from opentelemetry import trace
+
+tracer = trace.get_tracer(__name__)
+
+def get_token(self):
+    with tracer.start_as_current_span(&quot;mpesa.get_token&quot;) as span:
+        span.set_attribute(&quot;component&quot;, &quot;mpesa&quot;)
+        # ... existing implementation
+</code></pre>
+<p>For tests, mock the HTTP layer and assert on the <em>shape</em> you expect, so that a change in the real response fails a test rather than a production deploy:</p>
+<pre><code class="language-python">from unittest.mock import patch, MagicMock
+from mpesa import DarajaClient
+
+def test_token_top_level():
+    client = DarajaClient()
+    resp = MagicMock()
+    resp.json.return_value = {&quot;access_token&quot;: &quot;abc&quot;}
+    with patch(&quot;requests.post&quot;, return_value=resp):
+        assert client.get_token() == &quot;abc&quot;
+
+def test_token_nested():
+    client = DarajaClient()
+    resp = MagicMock()
+    resp.json.return_value = {&quot;body&quot;: {&quot;access_token&quot;: &quot;abc&quot;}}
+    with patch(&quot;requests.post&quot;, return_value=resp):
+        assert client.get_token() == &quot;abc&quot;
+
+def test_timestamp_is_fourteen_digits():
+    client = DarajaClient()
+    ts = &quot;20260101120000&quot;
+    assert len(ts) == 14
+    assert client._generate_password(ts) == client._generate_password(ts)
+</code></pre>
+<h2 id="measuring-the-migration-instead-of-guessing">Measuring the migration instead of guessing</h2>
+<p>Any claim about latency improvement, failure-rate reduction or cost saving should come from your own instrumentation, not from a blog post. Here is how to produce the numbers honestly.</p>
+<p><strong>Latency.</strong> Wrap every outbound HTTP call in a timer and export a histogram. Compare the p50 and p95 of the STK push call before and after the migration, over the same traffic mix. If you add token caching at the same time, measure the token fetch separately so you can attribute the change.</p>
+<p><strong>Failure rate.</strong> Count STK push attempts and non-zero <code>ResponseCode</code> values. Report the ratio over a fixed window, and segment by error class. A drop from one rate to another is only meaningful if the traffic mix and the upstream gateway are the same.</p>
+<p><strong>Callback processing time.</strong> Time the handler from request receipt to acknowledgement. If your handler does synchronous database work before responding, that is the number to reduce, and it is usually reducible without touching the payment API at all.</p>
+<p><strong>Cost.</strong> Only compute this from your own billing data. Count callbacks, count retries, and multiply by your actual per-message rate. Do not accept a percentage figure from an article — including this one.</p>
+<h2 id="a-rollout-checklist">A rollout checklist</h2>
+<p>Run the migration in this order. Each step is a gate.</p>
+<ol>
+<li><strong>Confirm the current contract.</strong> Call the OAuth and STK endpoints from <code>curl</code> against the sandbox and save the raw responses.</li>
+<li><strong>Diff against your client.</strong> For every field your code reads, confirm the path still exists. Any field you read with a direct index is a risk.</li>
+<li><strong>Add the defensive accessors.</strong> Token and callback parsing should tolerate both old and new shapes during the transition.</li>
+<li><strong>Add idempotency keys.</strong> Before any retry logic exists, make sure a stable key is generated once per logical payment.</li>
+<li><strong>Add retry logic with the same key.</strong> Verify with a test that a simulated 500 does not produce two payments.</li>
+<li><strong>Instrument the four metrics.</strong> Deploy them before the migration so you have a baseline.</li>
+<li><strong>Canary.</strong> Route a small percentage of traffic to the new path and watch the 4xx rate. Roll forward only when it is stable.</li>
+<li><strong>Retire the old path.</strong> Remove the dual-shape accessors once the old endpoint is decommissioned, so the code does not accumulate dead branches.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>Should I cache the access token?</strong>
+Yes, if you make more than a handful of calls per minute. The token has a finite lifetime; cache it for slightly less than that and refresh on expiry. Handle a 401 by invalidating the cache and retrying once.</p>
+<p><strong>What if the sandbox and production return different response shapes?</strong>
+This happens. The defensive accessor pattern in Step 2 exists for exactly this reason. Log which shape you received at least once per environment so the difference is visible rather than mysterious.</p>
+<p><strong>Do I need a public HTTPS URL for callbacks?</strong>
+Yes. The gateway must be able to reach your callback endpoint over the public internet. A tunnel such as ngrok works for development; production needs a real hostname with a valid certificate.</p>
+<p><strong>How do I test a user cancellation?</strong>
+The sandbox supports simulating failure result codes. Assert that your handler distinguishes a cancellation from a timeout and that neither is treated as success.</p>
+<p><strong>Can I keep the old endpoints running in parallel?</strong>
+During a canary period, yes. Keep the two code paths separate and route by configuration rather than by branching inside a single function, so retiring one is a deletion rather than a refactor.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open your integration's HTTP client code and find every place it reads a field from an M-Pesa response by direct index — <code>response["access_token"]</code>, <code>payload["Body"]["stkCallback"]</code>, and so on. For each one, replace it with a defensive accessor that logs the full response body when the expected path is missing, and add a test that asserts the accessor handles both the old and new shapes. That single change converts your next schema surprise from a production incident into a log line.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://opentelemetry.io/docs/">OpenTelemetry documentation</a></li>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+<li><a href="https://developer.safaricom.co.ke/">Safaricom Daraja API</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/mobile-money-agents-when-m-pesa-api-fails/">
+                        <h3>Mobile money agents: when M-Pesa API fails</h3>
+                        <p>Mobile money APIs return pending, then settle asynchronously. Learn to poll, deduplicate callbacks, and reconcile orphaned transactions.</p>
+                        <span class="related-meta">14 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
+                        <h3>Stop assuming payment APIs never fail</h3>
+                        <p>How to combine AI recommendations with M-Pesa, Paystack and Flutterwave calls so gateway timeouts, rate limits and duplicate charges don&amp;#x27;t break checkout.</p>
+                        <span class="related-meta">13 min read · 13 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/show-real-work-not-ai-clones/">
+                        <h3>Show real work, not AI clones</h3>
+                        <p>A hiring-focused guide to portfolio projects that demonstrate retry logic, circuit breakers, latency percentiles and honest post-mortems for unreliable networks.</p>
+                        <span class="related-meta">18 min read · 29 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

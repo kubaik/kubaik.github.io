@@ -1,0 +1,500 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent Systems: Circuit Breakers Are Not Enough - Kubai Kevin</title>
+        <meta name="description" content="Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.">
+        
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-12T11:54:46.323734">
+        <meta property="article:modified_time" content="2026-10-03T12:53:42.479217+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent Systems: Circuit Breakers Are Not Enough">
+        <meta property="og:description" content="Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-systems-circuit-breakers-are-not-enough.png">
+        <meta property="og:image:alt" content="Agent Systems: Circuit Breakers Are Not Enough">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent Systems: Circuit Breakers Are Not Enough">
+        <meta name="twitter:description" content="Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-systems-circuit-breakers-are-not-enough.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/#article",
+      "headline": "Agent Systems: Circuit Breakers Are Not Enough",
+      "description": "Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.",
+      "datePublished": "2026-09-12T11:54:46+00:00",
+      "dateModified": "2026-10-03T12:53:42+00:00",
+      "wordCount": 2528,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/"
+      },
+      "keywords": "",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/agent-systems-circuit-breakers-are-not-enough.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent Systems: Circuit Breakers Are Not Enough",
+          "item": "https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent Systems: Circuit Breakers Are Not Enough</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent Systems: Circuit Breakers Are Not Enough</h1>
+                
+                <p class="post-lead">Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.</p>
+                
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2528 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Circuit breakers and bulkheads are the standard resilience playbook, inherited from the microservices era. They work well when failures are binary: a dependency is up or down, fast or slow. Agent systems break that assumption in three specific ways, and a naive port of the microservices playbook leaves teams with a false sense of security and cascades that are harder to diagnose than the original outage.</p>
+<p>This article covers the failure modes that circuit breakers miss, what to add instead, and how to measure whether the additions actually help. The code examples use .NET, but the patterns apply to any language with a policy library.</p>
+<h2 id="why-the-microservices-playbook-is-incomplete-for-agents">Why the microservices playbook is incomplete for agents</h2>
+<p>A classic circuit breaker trips when a downstream call fails or times out repeatedly. That model assumes failures are <em>resource-shaped</em>: the dependency is overloaded, unreachable, or slow. When the breaker opens, the system stops hammering a struggling dependency and gives it room to recover. When the dependency recovers, the breaker closes.</p>
+<p>Agent systems violate three of the assumptions underneath that model:</p>
+<ol>
+<li><strong>Failures can be logical, not resource-shaped.</strong> An agent can return a well-formed, fast, HTTP 200 response that is semantically wrong — a malformed plan, a request routed back to the sender, a "no data" result that is actually a validation error. A circuit breaker that only inspects status codes and latency will never trip on these, and a breaker that trips on <em>any</em> error will open on expected outcomes and stay open.</li>
+<li><strong>Agents are stateful.</strong> In-process caches, short-term memory, and per-agent context mean that a bulkhead sized for a stateless handler will saturate for reasons that have nothing to do with downstream load. Cache churn, eviction thrash, and lock contention all consume the same thread pool that the bulkhead is trying to protect.</li>
+<li><strong>Agents call each other recursively.</strong> A single user request can fan out into a tree of sub-tasks, and the number of concurrent downstream calls can grow multiplicatively with depth. A circuit breaker on the leaf service will trip, but by then the tail latency of the original request has already been destroyed by the fan-out itself.</li>
+</ol>
+<p>Each of these has a specific fix. None of them is a circuit breaker.</p>
+<h2 id="failure-mode-1-self-referential-feedback-loops">Failure mode 1: self-referential feedback loops</h2>
+<p>Consider two agents, A and B. A receives a request, decides it needs enrichment, and forwards to B. B inspects the payload, decides it is malformed, and forwards it back to A for re-validation. A sees a fast round-trip (a few milliseconds) and, depending on how the breaker is configured, either ignores it or trips immediately.</p>
+<p>The pathological case is the second one. If the breaker trips on any error, it opens on a <em>logical</em> failure and never cools down, because the underlying services are healthy and there is nothing to recover. Every subsequent external request is rejected instantly. The system looks down while every dependency is up.</p>
+<p>The fix is a <strong>semantic circuit breaker</strong>: inspect the error payload, not just the status code, and classify failures into two buckets.</p>
+<ul>
+<li><strong>Tripping failures</strong>: timeouts, connection errors, 5xx responses, rate-limit responses. These indicate the dependency is unhealthy. Count them toward the breaker threshold.</li>
+<li><strong>Non-tripping failures</strong>: validation errors, "no data" results, business-rule rejections. These are expected outcomes. Log them, return them to the caller, but do not count them toward the breaker.</li>
+</ul>
+<p>In practice this means a predicate on the response body. With Polly, <code>HandleResult</code> can inspect the deserialized payload:</p>
+<pre><code class="language-csharp">AsyncCircuitBreakerPolicy&lt;LlmResult&gt; breaker = Policy
+    .HandleResult&lt;LlmResult&gt;(r =&gt;
+        r.IsTransientFailure ||          // timeout, 5xx, rate limit
+        r.StatusCode &gt;= 500)
+    .CircuitBreakerAsync(
+        handledEventsAllowedBeforeBreaking: 5,
+        durationOfBreak: TimeSpan.FromSeconds(30));
+</code></pre>
+<p>The predicate is the whole point. A breaker without one is a coin flip on whether a logical error takes down the service.</p>
+<p>There is a second-order problem: a feedback loop between two agents can bounce a request back and forth indefinitely without ever producing a tripping failure. Add a <strong>hop counter</strong> to the request envelope and reject any request that exceeds it. This is cheap and catches the loop before it becomes a latency problem.</p>
+<h2 id="failure-mode-2-state-leak-bulkhead-saturation">Failure mode 2: state-leak bulkhead saturation</h2>
+<p>Bulkheads isolate a dependency by capping concurrent calls to it. The classic model assumes the handler is stateless: a thread is either waiting on the downstream call or it is not.</p>
+<p>Agents are not stateless. A typical agent holds an in-process cache of recent embeddings, tool results, or conversation context. When traffic spikes, the cache eviction policy starts thrashing: every request spends time evicting and re-fetching instead of doing useful work. The bulkhead's thread pool fills with threads that are <em>not</em> waiting on the downstream dependency — they are waiting on the cache. The bulkhead opens and rejects traffic even though the downstream service is healthy.</p>
+<p>This is a state-leak: mutable state inside the protected region consumes the same capacity that the bulkhead is trying to ration.</p>
+<p>The fix is to <strong>externalize mutable state</strong> so the bulkhead protects only compute and I/O, not memory management. Move the cache to a shared store with a TTL:</p>
+<pre><code class="language-csharp">public class CacheService
+{
+    private readonly IDatabase _db;
+    private readonly TimeSpan _ttl;
+
+    public CacheService(IConnectionMultiplexer redis, TimeSpan ttl)
+    {
+        _db = redis.GetDatabase();
+        _ttl = ttl;
+    }
+
+    public async Task&lt;string?&gt; GetAsync(string key) =&gt;
+        await _db.StringGetAsync(key);
+
+    public async Task SetAsync(string key, string value) =&gt;
+        await _db.StringSetAsync(key, value, _ttl);
+}
+</code></pre>
+<p>Two details matter. First, the TTL must be set on every write, not just at the store level, so that a burst of writes cannot evict unrelated entries. Second, the cache key must be deterministic and stable — if it depends on a hash of an object whose serialization order varies, hit rates collapse and the cache becomes pure overhead.</p>
+<p>Once state is externalized, the bulkhead behaves as designed: it caps concurrent calls to the LLM, and cache lookups that hit do not consume a bulkhead slot at all. A cache hit should short-circuit before the policy wrap, not inside it.</p>
+<h2 id="failure-mode-3-recursive-dependency-explosion">Failure mode 3: recursive dependency explosion</h2>
+<p>A single agent request can delegate to a sub-agent, which delegates to three helpers, each of which calls a shared service. If depth grows linearly, the number of concurrent leaf calls grows multiplicatively. At depth 1 there is 1 call; depth 2, 3 calls; depth 3, 9; depth 4, 27; depth 5, 81. The arithmetic is exact and the growth is the problem: a shared service sized for a few thousand requests per second can be overwhelmed by a handful of deep requests.</p>
+<p>The circuit breaker on the shared service will eventually trip, but it trips <em>after</em> the fan-out has already happened. The original request has already spawned its tree, and the tail latency experienced by the user is the sum of the slowest path through that tree, not the latency of any single call.</p>
+<p>Two guards are needed, and they are complementary:</p>
+<ol>
+<li><strong>A max recursion depth.</strong> Reject any delegation that would exceed a configured depth. This is a hard cap, not a heuristic. It is the only thing that bounds the fan-out.</li>
+<li><strong>A fallback that returns partial results.</strong> When the depth cap is hit, return what has been computed so far with an explicit marker that the result is partial. A user who gets a partial plan in 200 ms is better served than one who gets a full plan in 20 seconds or a timeout.</li>
+</ol>
+<pre><code class="language-csharp">public record AgentRequest(string Prompt, int Depth = 0);
+
+public const int MaxDepth = 3;
+
+public async Task&lt;Plan&gt; HandleAsync(AgentRequest request)
+{
+    if (request.Depth &gt;= MaxDepth)
+        return Plan.Partial(request.Prompt, &quot;max recursion depth reached&quot;);
+
+    var subRequests = Decompose(request.Prompt)
+        .Select(p =&gt; new AgentRequest(p, request.Depth + 1));
+
+    var results = await Task.WhenAll(subRequests.Select(HandleAsync));
+    return Plan.Merge(results);
+}
+</code></pre>
+<p>The depth cap is not a substitute for the circuit breaker. It is what keeps the breaker from being the <em>first</em> line of defense against a problem that has already propagated.</p>
+<h2 id="putting-the-three-fixes-together">Putting the three fixes together</h2>
+<p>A resilient agent handler applies all three fixes in a specific order. The order matters because each fix removes work from the layers below it.</p>
+<ol>
+<li><strong>Check the cache first.</strong> A cache hit never enters the policy wrap. This is the cheapest possible outcome and should be the most common one for repeated prompts.</li>
+<li><strong>Enforce the recursion guard.</strong> Reject or truncate before any downstream call is made. This bounds the fan-out at the source.</li>
+<li><strong>Apply the semantic circuit breaker around the LLM call.</strong> Count only tripping failures toward the threshold.</li>
+<li><strong>Apply the bulkhead around the same call.</strong> With state externalized, the bulkhead now bounds only concurrent LLM calls.</li>
+</ol>
+<pre><code class="language-csharp">app.MapPost(&quot;/agent/plan&quot;, async (
+    [FromBody] string userPrompt,
+    CacheService cache,
+    IHttpClientFactory httpFactory,
+    AsyncBulkheadPolicy&lt;HttpResponseMessage&gt; bulkhead,
+    AsyncCircuitBreakerPolicy&lt;HttpResponseMessage&gt; breaker) =&gt;
+{
+    var cacheKey = $&quot;plan:{StableHash(userPrompt)}&quot;;
+    var cached = await cache.GetAsync(cacheKey);
+    if (cached is not null)
+        return Results.Ok(cached);
+
+    var http = httpFactory.CreateClient(&quot;llm&quot;);
+    var policyWrap = Policy.WrapAsync(bulkhead, breaker);
+
+    HttpResponseMessage response;
+    try
+    {
+        response = await policyWrap.ExecuteAsync(
+            () =&gt; CallLlmAsync(userPrompt, http));
+    }
+    catch (BrokenCircuitException)
+    {
+        return Results.StatusCode(503);
+    }
+    catch (BulkheadRejectedException)
+    {
+        return Results.StatusCode(429);
+    }
+
+    if (!response.IsSuccessStatusCode)
+        return Results.StatusCode((int)response.StatusCode);
+
+    var plan = await response.Content.ReadAsStringAsync();
+    await cache.SetAsync(cacheKey, plan);
+    return Results.Ok(plan);
+});
+</code></pre>
+<p>Two things to note. First, <code>StableHash</code> must be a deterministic hash — <code>string.GetHashCode()</code> is randomized per process in modern .NET and will produce cache misses across restarts and across instances. Use a cryptographic hash or a stable non-cryptographic hash such as FNV-1a. Second, the <code>BrokenCircuitException</code> and <code>BulkheadRejectedException</code> are caught separately so the caller can distinguish "dependency is down" (503) from "we are overloaded" (429). Collapsing them into one status code makes debugging harder.</p>
+<h2 id="how-to-measure-whether-any-of-this-helps">How to measure whether any of this helps</h2>
+<p>The published benchmarks for policy libraries measure the libraries, not your system. The only measurement that matters is the one taken against your own workload. Here is what to instrument and what to compare.</p>
+<p><strong>Instrument these four things:</strong></p>
+<ul>
+<li><strong>Circuit breaker state transitions</strong>, with the triggering error class attached. If the breaker opens, you want to know whether it opened on a timeout, a 5xx, or a logical error that slipped through the predicate.</li>
+<li><strong>Bulkhead queue depth and rejection count.</strong> Queue depth rising toward the cap is an early warning; rejections are the late warning.</li>
+<li><strong>Cache hit rate and cache latency.</strong> A hit rate below roughly half usually means the key is unstable or the TTL is too short.</li>
+<li><strong>Tail latency of the original request</strong>, not just the leaf call. This is the number the user experiences, and it is the one that recursive fan-out destroys.</li>
+</ul>
+<p><strong>Then run two configurations against the same traffic:</strong></p>
+<ul>
+<li><strong>Baseline:</strong> circuit breaker on status codes only, in-process cache, no recursion cap.</li>
+<li><strong>Enhanced:</strong> semantic predicate, externalized cache, recursion cap with partial-result fallback.</li>
+</ul>
+<p>Compare p50, p95, and p99 latency, breaker trips per hour, bulkhead rejections per hour, and node CPU. Run for long enough to cover a full traffic cycle — at least one weekday and one weekend for a consumer workload, or several business days for an internal tool. A short test will miss the burst patterns that trigger the failures you are trying to fix.</p>
+<p>If the enhanced configuration does not reduce breaker trips, the predicate is probably still counting logical errors. If it does not reduce tail latency, the recursion cap is probably set too high to matter. If it does not reduce CPU, the cache is probably not being hit — check the key stability first.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adopting the standard circuit-breaker-and-bulkhead playbook for an agent system, answer these:</p>
+<ul>
+<li>Does the breaker predicate inspect the response body, or only the status code and latency?</li>
+<li>Is there a hop counter on the request envelope to catch agent-to-agent loops?</li>
+<li>Is any mutable state held inside the bulkhead's protected region?</li>
+<li>Is the cache key deterministic across processes and restarts?</li>
+<li>Is there a hard cap on recursion depth, and does the cap return a partial result rather than an error?</li>
+<li>Are cache hits short-circuited before the policy wrap, so they consume no bulkhead slot?</li>
+<li>Are "dependency down" and "we are overloaded" reported as distinct status codes?</li>
+<li>Is the tail latency of the <em>original</em> request measured, not just the leaf call?</li>
+</ul>
+<p>A "no" on any of the first five means the system has a failure mode that the circuit breaker will not catch. A "no" on either of the last three means the failure, when it happens, will be harder to diagnose than it needs to be.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does a semantic circuit breaker require parsing every response body?</strong></p>
+<p>No. In most systems, the tripping failures (timeouts, connection errors, 5xx) are identifiable before the body is read. Only successful responses need body inspection, and only to distinguish "expected empty result" from "unexpected payload." The cost is one deserialization per successful call, which is usually already happening.</p>
+<p><strong>Can the recursion cap be replaced by a timeout?</strong></p>
+<p>No. A timeout bounds how long a request runs, not how much work it spawns. A deep fan-out can consume downstream capacity for the full duration of the timeout and still return nothing useful. The cap bounds the work; the timeout bounds the wait. They solve different problems.</p>
+<p><strong>Is an external cache always better than an in-process cache?</strong></p>
+<p>No. An in-process cache is faster and has no network hop. It is the right choice when the working set is small, the process is long-lived, and the bulkhead is not the bottleneck. It becomes the wrong choice when cache churn consumes the same capacity the bulkhead is trying to ration. Measure the time spent on cache operations as a fraction of request time; if it is more than a few percent under load, externalize it.</p>
+<p><strong>What if the LLM provider already has its own rate limiting?</strong></p>
+<p>Provider-side rate limiting protects the provider, not your system. It surfaces as 429 responses, which your breaker should count as tripping failures — but by the time you see them, your bulkhead queue is already full. Client-side bulkheading is what keeps you from reaching that point.</p>
+<h2 id="take-action-in-the-next-30-minutes">Take action in the next 30 minutes</h2>
+<p>Open the file that configures your circuit breaker and read the predicate. If it only checks status codes and latency, add a body inspection that classifies at least one logical error as non-tripping. Then add a hop counter to your request envelope and reject requests above a small fixed limit. Those two changes are a few lines each and close the two failure modes that a circuit breaker cannot see.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+                        <h3>AI agents: circuit breakers are not optional</h3>
+                        <p>AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tool-calling-patterns-patterns-that-survive-load-vs/">
+                        <h3>Tool calling patterns: patterns that survive load vs</h3>
+                        <p>A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.</p>
+                        <span class="related-meta">14 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-features-as-tech-debt-or-golden-paths/">
+                        <h3>AI features as tech debt or golden paths</h3>
+                        <p>Why wrapper-plus-cache AI features fail under network drops and model drift, and how to design state-machine fallbacks you can actually measure.</p>
+                        <span class="related-meta">12 min read · 17 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

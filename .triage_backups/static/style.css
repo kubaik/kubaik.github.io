@@ -1,0 +1,1112 @@
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 20px 20px;
+}
+
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */
+
+header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1002;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+header.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+header h1 a:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateY(-1px);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 0.3px;
+}
+
+nav a:hover {
+    color: #6366f1;
+    background: #f0f4ff;
+    transform: translateY(-2px);
+}
+
+nav a.active {
+    color: #6366f1;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    font-weight: 600;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 60%;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2c3e50;
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    color: #6366f1;
+}
+
+.mobile-menu-close {
+    display: none;
+}
+
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+main {
+    margin: 2rem auto;
+    background: #fff;
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero>* {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* ============================================
+   POST GRID
+   ============================================ */
+
+.post-grid {
+    display: grid;
+    /* minmax(0,1fr) prevents columns from expanding beyond container */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+    /* align-items:stretch (the default) makes all cards in a row equal height */
+    align-items: stretch;
+}
+
+/* ============================================
+   POST CARD — complete rewrite
+   Root cause of all screenshot bugs:
+   1. `height:100%` on a flex child inside a grid cell has no effect
+      (the grid stretch already handles it) but was causing blank-card
+      rendering in some browsers when the grid row height was computed
+      before content loaded.
+   2. `overflow:hidden` on the card clipped the tags row when it wrapped.
+   3. `white-space:nowrap` on h3 truncated every title to one line,
+      making cards with short titles have large empty gaps above the excerpt.
+   4. `.tags` had `position:relative` + `::after` gradient overlay that
+      visually hid the last tag and made the tags appear outside the card.
+   ============================================ */
+
+.post-card {
+    /* flex column so excerpt stretches and tags always sit at the bottom */
+    display: flex;
+    flex-direction: column;
+    /* DO NOT use height:100% here — grid stretch handles equal height */
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    /* CRITICAL FIX: overflow visible so wrapped tags are never clipped */
+    overflow: visible;
+    /* Guard against fully-empty cards rendering as thin slivers */
+    min-height: 180px;
+}
+
+/* Top accent bar — uses ::before so it doesn't affect layout */
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover::before {
+    transform: scaleX(1);
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.13);
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ── Title
+   FIX: replace white-space:nowrap (which forced every title to one line
+   and left a large blank region below) with a 3-line clamp.
+   A 3-line clamp gives consistent vertical rhythm: short titles get
+   exactly 1 line of height, long ones wrap gracefully up to 3 lines.
+   ── */
+.post-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease;
+
+    /* multi-line title clamp — replaces the broken nowrap */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    /* reserve minimum height for 1 line so single-word titles
+       don't create a tiny h3 that misaligns neighbouring cards */
+    min-height: calc(1.15rem * 1.35);
+}
+
+.post-card:hover h3 {
+    color: #667eea;
+}
+
+/* ── Excerpt
+   flex:1 stretches the excerpt to fill available space so the
+   reading-time + tags always land at the card bottom regardless
+   of how much text is in the title.
+   4-line clamp prevents runaway long descriptions.
+   ── */
+.post-excerpt {
+    color: #6c757d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease;
+
+    /* pushes reading-time and tags to card bottom */
+    flex: 1;
+
+    /* overflow guard — never let a massive description break the layout */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    /* minimum so very-short excerpts don't collapse to near-zero */
+    min-height: calc(0.9rem * 1.6 * 2);
+}
+
+.post-card:hover .post-excerpt {
+    color: #555;
+}
+
+/* ── Reading time ── */
+.post-reading-time {
+    font-size: 0.78rem;
+    color: #999;
+    margin-bottom: 0.6rem;
+    /* never grows — stays pinned above tags */
+    flex-shrink: 0;
+}
+
+/* ── Tags row
+   FIX: remove overflow:hidden, position:relative, and the ::after
+   gradient overlay — they were the direct cause of tags appearing
+   to "float outside" cards and being clipped in the screenshots.
+   ── */
+.post-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    /* allow wrapping rather than forcing overflow */
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+    /* no overflow:hidden, no position:relative, no ::after */
+    flex-shrink: 0;
+}
+
+/* ── Tag pills
+   FIX: explicit color:#fff so pills never inherit the card link
+   hover state (#667eea text on a purple gradient = invisible).
+   ── */
+.post-card .tag {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    padding: 0.18rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1.6;
+    /* prevent a single long tag from stretching the card width */
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.post-card .tag:hover {
+    opacity: 0.85;
+    color: #fff;
+}
+
+/* ── Global .tag (used outside cards e.g. post header) ── */
+.tag {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* ── Post meta (date / reading time row at card bottom) ── */
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.3rem;
+    color: #6c757d;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+.post-content a:hover {
+    border-bottom-color: #764ba2;
+}
+
+/* ============================================
+   LOAD MORE / INFINITE SCROLL
+   ============================================ */
+
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    color: #6c757d;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.scroll-options {
+    display: none !important;
+}
+
+.toggle-switch {
+    display: none !important;
+}
+
+/* ============================================
+   READING PROGRESS BAR
+   ============================================ */
+
+#reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    z-index: 9999;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+/* ============================================
+   BACK TO TOP
+   ============================================ */
+
+.back-to-top {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.45);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    visibility: visible;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+    background: linear-gradient(135deg, #5558e3 0%, #6a3d9a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+    outline: none;
+}
+
+/* ============================================
+   MOBILE NAV
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1.3rem;
+        cursor: pointer;
+        color: #2c3e50;
+        padding: 0;
+        transition: color 0.2s, border-color 0.2s;
+        flex-shrink: 0;
+    }
+
+    .mobile-menu-toggle:hover {
+        color: #6366f1;
+        border-color: #6366f1;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: min(280px, 80vw);
+        background: white;
+        flex-direction: column;
+        padding: 0 0 2rem 0;
+        gap: 0;
+        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+        transition: right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        overflow-y: auto;
+        display: flex;
+    }
+
+    nav.mobile-menu-open {
+        right: 0;
+    }
+
+    .mobile-menu-close {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 1rem 1.25rem 0.5rem;
+        background: white;
+        border: none;
+        font-size: 2rem;
+        line-height: 1;
+        cursor: pointer;
+        color: #2c3e50;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 0.5rem;
+    }
+
+    .mobile-menu-close:hover {
+        color: #6366f1;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: left;
+        padding: 0.85rem 1.5rem;
+        border-radius: 0;
+        border-bottom: 1px solid #f5f5f5;
+        font-size: 1rem;
+        color: #333;
+        display: block;
+    }
+
+    nav a:hover,
+    nav a.active {
+        background: #f0f4ff;
+        color: #6366f1;
+        transform: none;
+    }
+
+    nav a::after {
+        display: none;
+    }
+
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 1000;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+
+    header .container {
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+    }
+
+    header h1 {
+        font-size: 1.15rem;
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    header h1 a {
+        font-size: 1.15rem;
+    }
+}
+
+/* ============================================
+   ADSENSE
+   ============================================ */
+
+.ad-header,
+.ad-middle,
+.ad-footer {
+    text-align: center;
+    margin: 20px 0;
+    min-height: 100px;
+}
+
+.ad-header {
+    margin-bottom: 20px;
+}
+
+.ad-middle {
+    margin: 30px 0;
+}
+
+.ad-footer {
+    margin-top: 20px;
+}
+
+.adsbygoogle {
+    display: block;
+    margin: 20px auto;
+}
+
+.ad-placeholder {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* ============================================
+   AFFILIATE
+   ============================================ */
+
+a[rel*="sponsored"] {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px dashed #007bff;
+}
+
+a[rel*="sponsored"]:hover {
+    color: #0056b3;
+    border-bottom-style: solid;
+}
+
+.affiliate-disclaimer {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 30px 0;
+    font-size: 0.9rem;
+    color: #856404;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 3rem 0;
+    margin-top: 3rem;
+}
+
+footer a {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.social-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #34495e;
+}
+
+/* ============================================
+   STATIC PAGES
+   ============================================ */
+
+.page-content {
+    max-width: 100%;
+}
+
+.page-content h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.page-content ul {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+}
+
+.page-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   SEARCH
+   ============================================ */
+
+.search-container {
+    margin: 2rem 0;
+    max-width: 480px;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-wrapper:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.search-icon {
+    color: #6c757d;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #333;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.clear-search {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+}
+
+.clear-search:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.search-results-count {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.search-highlight {
+    background: #fff3cd;
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.no-results-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+
+.no-results-message h3 {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.no-results-message p {
+    color: #6c757d;
+}
+
+/* Infinite-scroll card entry animation */
+.post-card--entering {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.post-card:not(.post-card--entering) {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    header .container {
+        padding: 1rem;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 280px;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 2rem 2rem;
+        gap: 0.5rem;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 1001;
+        overflow-y: auto;
+    }
+
+    nav.mobile-menu-open {
+        right: 0;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+    }
+
+    .mobile-menu-close {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #2c3e50;
+        padding: 0.5rem;
+        line-height: 1;
+    }
+
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+    }
+
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    header h1 a {
+        font-size: 1.2rem;
+    }
+
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    main {
+        padding: 1rem 0.75rem;
+    }
+
+    /* single column on mobile */
+    .post-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .post-card {
+        padding: 1.25rem;
+    }
+
+    /* keep meta as a row on mobile — was collapsing to column */
+    .post-meta {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+    }
+
+    .ad-header,
+    .ad-middle,
+    .ad-footer {
+        min-height: 80px;
+        margin: 15px 0;
+    }
+
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 42px;
+        height: 42px;
+    }
+
+    .search-container {
+        max-width: 100%;
+    }
+
+    /* prevent iOS zoom on focus */
+    .search-input {
+        font-size: 16px;
+    }
+
+    .search-input::placeholder {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 1rem 0.5rem;
+    }
+
+    .hero {
+        padding: 1.5rem 1rem;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+
+    .post-card {
+        padding: 1rem;
+    }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+
+@media print {
+
+    .back-to-top,
+    #reading-progress,
+    .loading-spinner,
+    .ad-header,
+    .ad-middle,
+    .ad-footer,
+    .ad-placeholder,
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST
+   ============================================ */
+
+@media (prefers-contrast: high) {
+    .post-card {
+        border: 2px solid #000;
+    }
+
+    .hero {
+        background: #000;
+        color: #fff;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .post-card:hover,
+    .back-to-top:hover,
+    nav a:hover {
+        transform: none;
+    }
+
+    #reading-progress {
+        transition: none;
+    }
+}

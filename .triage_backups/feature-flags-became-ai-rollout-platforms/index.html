@@ -1,0 +1,569 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Feature flags became AI rollout platforms - Kubai Kevin</title>
+        <meta name="description" content="How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.">
+        <meta name="keywords" content="FeatureFlags, AiRollout, FeatureFlagTools, Ai, LlmRolloutStrategy, Llm">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-18T03:52:01.902652">
+        <meta property="article:modified_time" content="2026-10-04T10:18:55.870221+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Feature flags became AI rollout platforms">
+        <meta property="og:description" content="How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.">
+        <meta property="og:url" content="https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/feature-flags-became-ai-rollout-platforms.png">
+        <meta property="og:image:alt" content="Feature flags became AI rollout platforms">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Feature flags became AI rollout platforms">
+        <meta name="twitter:description" content="How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/feature-flags-became-ai-rollout-platforms.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/#article",
+      "headline": "Feature flags became AI rollout platforms",
+      "description": "How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.",
+      "datePublished": "2026-09-18T03:52:01+00:00",
+      "dateModified": "2026-10-04T10:18:55+00:00",
+      "wordCount": 3600,
+      "timeRequired": "PT18M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/"
+      },
+      "keywords": "FeatureFlags, AiRollout, FeatureFlagTools, Ai, LlmRolloutStrategy, Llm",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/feature-flags-became-ai-rollout-platforms.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Feature flags became AI rollout platforms",
+          "item": "https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Feature flags became AI rollout platforms</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Feature flags became AI rollout platforms</h1>
+                
+                <p class="post-lead">How flag platforms handle structured model configs, eval-metric gating, and offline fallback — plus a checklist for choosing one for AI rollouts.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/featureflags/"
+                       style="text-decoration:none;">FeatureFlags</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiRollout</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FeatureFlagTools</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmRolloutStrategy</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        18 min read
+                        &nbsp;·&nbsp; 3600 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A default flag configuration is fine right up until it isn't. Flag problems tend to surface mid-migration, when there is no time to solve them properly. This article covers the root cause rather than the symptom: AI rollout is not a bigger canary deploy, and flag systems built for booleans strain under it.</p>
+<h2 id="why-this-comparison-exists">Why this comparison exists</h2>
+<p>Feature flags began as a way to toggle behavior without a deploy. They are now used as the control plane for model rollouts, prompt changes, retrieval index swaps, and A/B tests on generated output. The category moved quickly enough that vendor marketing pages often still describe older problems while the SDKs ship newer primitives: percentage rollouts scoped to user attributes, model-variant targeting, guardrail hooks, and evaluation pipelines that gate a release on a metric instead of a human.</p>
+<p>The practical problem is that teams commonly choose tools on the wrong axis. They compare "does it have flags" when every serious product does. The real question is whether the flag evaluation path can carry AI-specific payloads: model ID, prompt version, temperature, retrieval config, and a fallback policy for when the LLM provider returns a 429. A flag system that only knows boolean and string variations forces that payload into a JSON string, and once it is a string you lose per-field targeting, per-field audit, and per-field rollback.</p>
+<p>What trips people up is that AI rollout is not a scaled-up canary deploy. It is a different failure mode: the artifact being shipped changes at runtime, the cost per request is variable, and the same input can produce different output. That difference is what the rest of this article is about.</p>
+<h2 id="evaluation-criteria">Evaluation criteria</h2>
+<p>Six dimensions matter, weighted toward what actually breaks in production.</p>
+<ol>
+<li>
+<p><strong>Evaluation model.</strong> Can a flag return a structured config rather than a scalar? The target shape is something like <code>{model: "…", temperature: 0.2, prompt_version: 17}</code> as a first-class variation, with targeting on user tier and region. If structured values are not supported, everything downstream — audit, per-field rollback, validation — has to be rebuilt outside the flag system.</p>
+</li>
+<li>
+<p><strong>Guardrail integration.</strong> Does the SDK expose a pre-request hook for a classifier or regex check, and a post-request hook for output validation? Without them, safety logic lives outside the flag system and the audit trail is split across two places.</p>
+</li>
+<li>
+<p><strong>Evaluation and metrics.</strong> Can the platform consume an eval score — offline or online — and automatically roll back a variant that regresses below a threshold over a rolling window? This is the capability that separates a rollout platform from a flag tool.</p>
+</li>
+<li>
+<p><strong>Latency.</strong> Local evaluation matters. An SDK that performs a network round trip per evaluation adds tens of milliseconds per call. In a deployment where the nearest edge point of presence is far from your users, that cost is paid on every request. In-process evaluation against a cached ruleset is the property to look for.</p>
+</li>
+<li>
+<p><strong>Pricing model.</strong> Per-seat pricing breaks when evaluation volume scales with traffic rather than headcount. Per-request pricing breaks when a single page render evaluates dozens of flags. Look for a model that survives both patterns, or be explicit about which one you will hit.</p>
+</li>
+<li>
+<p><strong>Operational cost in constrained environments.</strong> Offline mode, small binary size, and no hard dependency on a control plane in a single region. If users are on slow connections and deploy windows are tight, a flag system that requires a persistent socket to the control plane is a liability.</p>
+</li>
+</ol>
+<p>A common trap is evaluating tools on the demo dashboard. The dashboard is always fine. What pages someone at 2am is the SDK's behavior when the flag service is unreachable — whether it serves the last known good ruleset or throws and takes down the request path. Weight that heavily.</p>
+<h2 id="how-to-measure-these-properties-yourself">How to measure these properties yourself</h2>
+<p>None of the criteria above require trusting a vendor page. Each can be tested in an afternoon.</p>
+<p><strong>Fallback behavior.</strong> Point the SDK at an unreachable host (a blackholed IP or a stopped local container), then evaluate a flag. Record whether the call returns the last cached value, returns the supplied default, or raises. Repeat after clearing the local cache to see the cold-start path. This is the single highest-value test.</p>
+<p><strong>Evaluation latency.</strong> Instrument the evaluation call itself, not the whole request. Record a histogram of evaluation durations over a few thousand calls, then compare in-process evaluation against a forced remote evaluation. Compare p50 and p99, not the mean.</p>
+<p><strong>Structured variation support.</strong> Define a variation with a nested object containing at least three fields, then attempt to target on one of those fields in the platform's UI or API. If targeting is only possible on the whole blob, the platform does not support structured targeting regardless of what the SDK types say.</p>
+<p><strong>Metric gating.</strong> Configure a synthetic metric that you can drive below a threshold on demand, attach it to a variation, and observe whether the rollout pauses without human action. Measure the lag between the metric crossing the threshold and the rollout stopping — that lag is the real safety window.</p>
+<p><strong>Cost at your traffic.</strong> Take your actual daily evaluation count, multiply by the vendor's per-evaluation rate, and compare against the per-seat tier you would need. Do the same arithmetic for the self-hosted option: instance cost plus the engineering hours to run it.</p>
+<h2 id="the-platforms-ranked-by-fit-for-ai-rollout">The platforms, ranked by fit for AI rollout</h2>
+<h3 id="1-launchdarkly-with-ai-configs">1. LaunchDarkly (with AI Configs)</h3>
+<p><strong>What it does:</strong> A feature flag platform that also offers AI Configs — structured variations carrying model, prompt, and parameter sets, with targeting and a metrics pipeline that can gate a rollout on an evaluation metric.</p>
+<p><strong>Concrete strength:</strong> The evaluation pipeline is the most complete among the options discussed here. A metric can be attached to a variation, and an automatic rollback can be configured when that metric drops more than a set threshold over a rolling window. That closes the loop between shipping a prompt and detecting that the prompt is worse.</p>
+<p><strong>Concrete weakness:</strong> Cost and complexity at the low end. Per-seat pricing plus per-request evaluation costs are hard to justify for a very small team. The SDK footprint is also heavier than the pure open-source options, typically involving a background streaming connection unless a polling fallback is configured.</p>
+<p><strong>Best for:</strong> Teams with a dedicated platform engineer and a real experimentation budget that need audit trails and automated rollback.</p>
+<h3 id="2-flagsmith-self-hosted">2. Flagsmith (self-hosted)</h3>
+<p><strong>What it does:</strong> Open-source feature flag platform that can run on your own infrastructure, with edge-side evaluation and an API that supports structured flag values.</p>
+<p><strong>Concrete strength:</strong> Self-hosting is a genuine option rather than a checkbox. The API and frontend can run on modest hardware with all evaluation data in your own Postgres database. For teams with data-residency requirements, that matters more than any dashboard feature.</p>
+<p><strong>Concrete weakness:</strong> AI-specific tooling is thinner. There is no built-in eval-metric gating; that has to be built by reading flag state and writing back to a kill-switch flag. Fine with an engineer available, painful without one.</p>
+<p><strong>Best for:</strong> Teams that must keep data in-country or on-premises and are willing to write a small amount of glue code.</p>
+<h3 id="3-unleash-self-hosted-or-cloud">3. Unleash (self-hosted or cloud)</h3>
+<p><strong>What it does:</strong> Open-source flag platform with a gradual-rollout model, strategy constraints, and SDKs for most languages.</p>
+<p><strong>Concrete strength:</strong> The strategy model is expressive without being a full programming language. Constraints like region, plan, and a percentage rollout compose cleanly, which maps well onto AI rollout by region and tier.</p>
+<p><strong>Concrete weakness:</strong> Structured variations exist, but the surrounding tooling assumes scalar values. Encoding a model config typically means storing JSON in a string variation and parsing it client-side, which loses per-field targeting and audit.</p>
+<p><strong>Best for:</strong> Teams already running Unleash for classic flags who want to extend it to model rollouts without adding a second vendor.</p>
+<h3 id="4-statsig-experimentation-first">4. Statsig (experimentation-first)</h3>
+<p><strong>What it does:</strong> A platform built around experiments and metrics first, with flags as a delivery mechanism, plus statistical tooling and a warehouse-native model.</p>
+<p><strong>Concrete strength:</strong> The experimentation statistics are the strongest of the group. Sequential testing, variance reduction techniques such as CUPED, and multiple-comparison handling are built in, which matters when many prompt variants run at once.</p>
+<p><strong>Concrete weakness:</strong> The flag evaluation path is more network-dependent than the open-source options, and free-tier evaluation limits are easy to hit if flags are evaluated on every request. For high-traffic applications the per-evaluation cost compounds.</p>
+<p><strong>Best for:</strong> Teams whose primary question is "which variant is actually better" rather than "how do I ship this safely."</p>
+<h3 id="5-posthog-flags-plus-product-analytics">5. PostHog (flags plus product analytics)</h3>
+<p><strong>What it does:</strong> Product analytics with a feature flag system, session replay, and LLM observability features.</p>
+<p><strong>Concrete strength:</strong> The flag system is coupled to analytics, so targeting can use any event property already tracked. That is useful for AI rollout — target users who hit a specific error, or who belong to a specific cohort, without exporting data.</p>
+<p><strong>Concrete weakness:</strong> It is a broad product, and the flag SDK is not the fastest. Local evaluation exists, but ruleset sync is heavier than a dedicated flag tool's. If flags are on the critical path, you pay for a lot of analytics you may not use.</p>
+<p><strong>Best for:</strong> Teams already using PostHog for analytics who want flags without adding a vendor.</p>
+<h3 id="6-openfeature-the-standard-not-a-vendor">6. OpenFeature (the standard, not a vendor)</h3>
+<p><strong>What it does:</strong> A CNCF specification and set of SDKs that abstract flag providers behind a common API.</p>
+<p><strong>Concrete strength:</strong> It decouples application code from the vendor. A call such as <code>client.getObjectValue("ai-config", defaultConfig)</code> stays the same when the provider package changes. For AI rollout that means moving from a self-hosted provider to a managed one without touching application code.</p>
+<p><strong>Concrete weakness:</strong> It is a spec, not a platform. A provider is still required, and AI-specific primitives such as eval gating and guardrail hooks are not in the spec — they are provider-specific extensions. Adopting OpenFeature does not solve the hard problem; it makes the easy part portable.</p>
+<p><strong>Best for:</strong> Teams that expect to change providers and want to avoid a rewrite.</p>
+<h3 id="7-growthbook-self-hosted-warehouse-native">7. GrowthBook (self-hosted, warehouse-native)</h3>
+<p><strong>What it does:</strong> Open-source experimentation platform that reads metrics from your data warehouse and can be self-hosted.</p>
+<p><strong>Concrete strength:</strong> The warehouse-native model means experiment metrics live where the data already is. For AI evaluation, a quality score can be computed in the warehouse and read directly, avoiding a data export.</p>
+<p><strong>Concrete weakness:</strong> The flag evaluation path is designed around experiments rather than high-frequency runtime config. If a flag is evaluated on every LLM call, the overhead is noticeable compared with a dedicated flag SDK.</p>
+<p><strong>Best for:</strong> Data teams with a warehouse already in place who want experimentation without a new data pipeline.</p>
+<h2 id="the-top-pick-and-the-reasoning">The top pick, and the reasoning</h2>
+<p>LaunchDarkly with AI Configs ranks first, but not for the reason the marketing suggests. It ranks first because automatic rollback on an evaluation metric is the only feature in this list that closes the loop between "a new prompt shipped" and "the new prompt is worse." Every other option requires a human to notice and act.</p>
+<p>The scenario is worth spelling out. A team ships prompt version 18 to 100% of traffic. The new prompt is more concise, which users like, but it omits a required citation in a small share of responses. Without metric gating, that ships and stays shipped until someone files a bug. With a metric gate on a groundedness score, the rollout pauses automatically when the score drops below the threshold over a rolling window. The size of the affected share does not change the mechanism — what changes is whether detection takes minutes or weeks.</p>
+<p>That is the difference between a flag system and an AI rollout platform. A flag system lets you turn it off. A rollout platform turns it off for you.</p>
+<p>The cost is real. For a small team with a large monthly evaluation count, the bill is meaningfully higher than a self-hosted instance on a modest VM. But the failure mode being insured against — a silent quality regression on a model rollout — erodes user trust, and trust is harder to restore than a VM is to provision.</p>
+<h2 id="honorable-mentions">Honorable mentions</h2>
+<p><strong>OpenFeature with a managed provider.</strong> If the evaluation engine is desirable but vendor lock-in is not, an OpenFeature provider gives a portable API over it. The tradeoff is that structured AI configs are exposed through provider-specific extensions, so portability is partial.</p>
+<p><strong>Unleash's gradual rollout for model migration.</strong> Migrating from one model to another with a clean percentage rollout and a kill switch is something Unleash does well and cheaply. It is not an experimentation platform, but it is a solid rollout mechanism.</p>
+<p><strong>PostHog's LLM observability.</strong> Seeing the prompt, the response, and the flag state in one trace is genuinely useful for debugging. It is not a replacement for a flag platform, but it pairs well with one.</p>
+<p><strong>Rolling your own config service.</strong> A small Go or Node service serving a JSON ruleset, cached in Redis with a short TTL and evaluated in-process, is a legitimate design. The trap is that targeting, audit, and a UI eventually become requirements, and the result is a worse version of a flag platform. Do this only if flag needs are genuinely simple and stable.</p>
+<h2 id="failure-modes-that-justify-dropping-an-option">Failure modes that justify dropping an option</h2>
+<p>These are patterns worth testing for explicitly, because each one has ended an evaluation.</p>
+<p><strong>A pure analytics platform with flags bolted on.</strong> The flag SDK was an afterthought, and the evaluation path made a network call that added tens of milliseconds per evaluation. For a single LLM call that already takes hundreds of milliseconds, that is survivable; for a page that evaluates a dozen flags, it is not.</p>
+<p><strong>A per-seat flag tool with no structured variations.</strong> The pricing looked attractive until model config was being encoded as a JSON string and parsed in five places. Every new field meant a change in five files. That cost shows up as maintenance, not as an invoice.</p>
+<p><strong>A self-hosted platform with a heavy control plane.</strong> An API and worker needing multiple gigabytes of RAM to run comfortably, more than the application it serves, is backwards for a constrained deployment.</p>
+<p><strong>A vendor whose SDK throws when the control plane is unreachable.</strong> This is the failure mode weighted most heavily above. If the flag service is down and the SDK throws, the request path goes down with it. The correct behavior is to serve the last known good ruleset. Documentation mentioning a fallback is not enough — the SDK default is what matters, and it should be verified by test.</p>
+<h2 id="choosing-based-on-your-situation">Choosing based on your situation</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended option</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small team, managed cloud acceptable, eval gating required</td>
+<td>LaunchDarkly AI Configs</td>
+<td>Automatic rollback on metric regression is the differentiator</td>
+</tr>
+<tr>
+<td>Data residency required, self-hosted</td>
+<td>Flagsmith or Unleash</td>
+<td>Runs on your own infrastructure, database-backed</td>
+</tr>
+<tr>
+<td>Already using PostHog for analytics</td>
+<td>PostHog flags</td>
+<td>No new vendor, targeting on existing event properties</td>
+</tr>
+<tr>
+<td>Experimentation is the primary goal</td>
+<td>Statsig</td>
+<td>Strongest statistical tooling for many-variant tests</td>
+</tr>
+<tr>
+<td>Warehouse-native, data team in place</td>
+<td>GrowthBook</td>
+<td>Metrics computed where the data already lives</td>
+</tr>
+<tr>
+<td>Provider portability required</td>
+<td>OpenFeature plus a provider</td>
+<td>Swap providers without rewriting application code</td>
+</tr>
+<tr>
+<td>Very simple, stable flag needs</td>
+<td>Self-hosted config service plus a cache</td>
+<td>Cheapest, but you own the maintenance</td>
+</tr>
+</tbody>
+</table>
+<p>The deciding question is not "which has the most features." It is "what happens when the flag service is unreachable, and what happens when a model rollout regresses quality." Answer those two and the choice usually makes itself.</p>
+<h2 id="a-worked-evaluation-path">A worked evaluation path</h2>
+<p>The following illustrates the shape of the integration using OpenFeature with an in-memory provider. The provider is a stand-in; the structure — a structured variation, a safe fallback, and a targeting context — is the part that generalizes.</p>
+<pre><code class="language-python">from openfeature import api
+from openfeature.provider.in_memory_provider import InMemoryProvider
+
+# Provider configured with a structured AI config variation
+api.set_provider(InMemoryProvider({
+    &quot;ai-config&quot;: {
+        &quot;variations&quot;: {
+            &quot;default&quot;: {
+                &quot;model&quot;: &quot;claude-sonnet-4&quot;,
+                &quot;temperature&quot;: 0.2,
+                &quot;prompt_version&quot;: 17,
+                &quot;max_tokens&quot;: 1024,
+            },
+            &quot;canary&quot;: {
+                &quot;model&quot;: &quot;claude-sonnet-4&quot;,
+                &quot;temperature&quot;: 0.0,
+                &quot;prompt_version&quot;: 18,
+                &quot;max_tokens&quot;: 1024,
+            },
+        },
+        &quot;defaultVariant&quot;: &quot;default&quot;,
+    }
+}))
+
+client = api.get_client()
+config = client.get_object_value(
+    &quot;ai-config&quot;,
+    {&quot;model&quot;: &quot;claude-sonnet-4&quot;, &quot;temperature&quot;: 0.2, &quot;prompt_version&quot;: 17},
+    evaluation_context=api.EvaluationContext(
+        targeting_key=user_id,
+        attributes={&quot;region&quot;: &quot;NG&quot;, &quot;plan&quot;: &quot;trial&quot;},
+    ),
+)
+</code></pre>
+<p>The important detail is that the fallback value is a safe default, not an exception. If the provider is unreachable, the SDK returns the fallback and the request proceeds. That is the behavior to want in a constrained deployment, and it is worth verifying rather than assuming.</p>
+<p>On the guardrail side, the pattern is a pre-request check and a post-request validation. The exact hook names differ by SDK; the two-phase shape does not.</p>
+<pre><code class="language-javascript">// Node 20 LTS, using a flag SDK with a hook API
+client.on('before-evaluation', async (context) =&gt; {
+  const config = context.flagValue;
+  if (config.prompt_version &lt; 10) {
+    throw new Error('Prompt version below minimum supported: ' + config.prompt_version);
+  }
+  return context;
+});
+
+client.on('after-evaluation', async (context) =&gt; {
+  const score = await runGroundednessCheck(context.response);
+  if (score &lt; 0.7) {
+    await metrics.record('groundedness_below_threshold', {
+      variant: context.variant,
+      score,
+    });
+  }
+  return context;
+});
+</code></pre>
+<p>The flag platform owns the rollout decision; application code owns the quality signal. The platform's job is to act on that signal without a human in the loop.</p>
+<p>Note the asymmetry between the two hooks. The pre-request hook can fail closed, because a prompt version below the supported minimum is a configuration error. The post-request hook should fail open and record, because a groundedness checker that itself errors must not take down the response path. Getting that asymmetry backwards turns a safety mechanism into an availability risk.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>What is the difference between a feature flag and an AI rollout platform?</strong></p>
+<p>A feature flag returns a value that changes application behavior, usually a boolean or a string. An AI rollout platform returns a structured configuration — model, prompt version, parameters — and can act on evaluation metrics to pause or roll back a rollout automatically. The flag is the mechanism; the rollout platform is the control loop around it.</p>
+<p><strong>How do I roll out a new LLM prompt to 10% of users?</strong></p>
+<p>Define the prompt as a variation in the flag platform, set a percentage rollout targeting 10% of users, and attach a metric that measures quality. Evaluate the flag on each request and pass the resulting prompt version to the LLM call. The key detail is making the fallback a known-good prompt version rather than an exception, so an unreachable flag service does not break the request path.</p>
+<p><strong>Do I need a separate tool for AI experimentation and feature flags?</strong></p>
+<p>Usually not, but it depends on whether statistical rigor is required. Comparing two prompt variants and wanting a confidence interval calls for a platform with proper experimentation statistics. Shipping a config change with a kill switch is served by a flag platform. Many teams start with flags and add experimentation tooling as the number of variants grows.</p>
+<p><strong>What happens if the feature flag service goes down during an AI rollout?</strong></p>
+<p>It depends entirely on the SDK's fallback behavior. The correct behavior is to serve the last known good ruleset from a local cache and proceed with the fallback value. The failure mode to avoid is an SDK that throws when the control plane is unreachable, which takes down the request path. Check this explicitly before adopting a vendor — it is the single most important operational property of a flag SDK.</p>
+<p><strong>How many flags should be evaluated per request?</strong></p>
+<p>There is no universal number, but the cost is linear in evaluations, so the practical answer is to evaluate once per request and pass the result down. Evaluating the same flag in several layers of the call stack multiplies both latency and cost without changing the outcome, and it makes the audit trail harder to read.</p>
+<h2 id="final-recommendation">Final recommendation</h2>
+<p>Choose a platform with AI Configs if budget and a platform engineer are available, because automatic rollback on an evaluation metric is the feature that turns a flag system into a rollout platform. Choose Flagsmith or Unleash if data residency or self-hosting is a hard requirement — some glue code will be needed, but the whole path stays under your control. Choose OpenFeature if keeping the option to move matters more than any single provider's primitives.</p>
+<p>The action to take in the next 30 minutes: open the flag SDK configuration, find the fallback value for the AI config flag, and confirm it is a known-good default rather than an exception. If it throws, change it to return the last known good config. That single change is the difference between a flag service outage being a non-event and being an incident.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
+<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/when-flags-become-experiments/">
+                        <h3>When flags become experiments</h3>
+                        <p>How to run feature flags and A/B tests on a $5 VPS with no data warehouse, using offline-tolerant self-hosted tooling and SMS replies as conversions.</p>
+                        <span class="related-meta">15 min read · 28 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/use-feature-flags-to-deploy-ai-models-safely/">
+                        <h3>Use feature flags to deploy AI models safely</h3>
+                        <p>Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.</p>
+                        <span class="related-meta">15 min read · 20 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-idp-shifts-for-ai-feature-delivery/">
+                        <h3>7 IDP shifts for AI feature delivery</h3>
+                        <p>Seven platform shifts that let teams version prompts, pin models, run offline evals, attribute token cost, and roll out AI changes gradually.</p>
+                        <span class="related-meta">15 min read · 10 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

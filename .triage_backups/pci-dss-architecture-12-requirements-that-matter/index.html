@@ -1,0 +1,458 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PCI DSS architecture: 12 requirements that matter - Kubai Kevin</title>
+        <meta name="description" content="Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.">
+        <meta name="keywords" content="PciDss, PaymentArchitecture, PciDssRequirements, Cardholder, Dataengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-19T03:52:49.796652">
+        <meta property="article:modified_time" content="2026-10-19T03:53:31.862726+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="PCI DSS architecture: 12 requirements that matter">
+        <meta property="og:description" content="Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.">
+        <meta property="og:url" content="https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/pci-dss-architecture-12-requirements-that-matter.png">
+        <meta property="og:image:alt" content="PCI DSS architecture: 12 requirements that matter">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="PCI DSS architecture: 12 requirements that matter">
+        <meta name="twitter:description" content="Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/pci-dss-architecture-12-requirements-that-matter.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/#article",
+      "headline": "PCI DSS architecture: 12 requirements that matter",
+      "description": "Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.",
+      "datePublished": "2026-10-19T03:52:49+00:00",
+      "dateModified": "2026-10-19T03:53:31+00:00",
+      "wordCount": 2724,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/"
+      },
+      "keywords": "PciDss, PaymentArchitecture, PciDssRequirements, Cardholder, Dataengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/pci-dss-architecture-12-requirements-that-matter.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "PCI DSS architecture: 12 requirements that matter",
+          "item": "https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>PCI DSS architecture: 12 requirements that matter</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">PCI DSS architecture: 12 requirements that matter</h1>
+                
+                <p class="post-lead">Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PciDss</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PaymentArchitecture</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PciDssRequirements</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Cardholder</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2724 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-19
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>PCI DSS is often treated as a compliance checkbox: scan the network, fill out the self-assessment questionnaire, get the certificate. But the standard's 12 requirements encode a set of architectural constraints. Ignore them during design and the rework arrives later, usually after a penetration test or a QSA review, when changes are most expensive.</p>
+<p>This article treats the requirements as design drivers rather than audit items. It walks through the ones that most often force structural decisions — network segmentation, key management, logging, secure development, scope reduction, and testing — and shows how a typical cardholder data environment (CDE) gets organized around them. The examples use AWS service names because they are widely documented, but the patterns apply to any cloud.</p>
+<h2 id="why-scope-is-the-real-design-problem">Why scope is the real design problem</h2>
+<p>A payment system that touches card data — even if it only stores a token or passes a PAN through — inherits PCI DSS scope. Scope drives everything downstream: the more systems in scope, the more controls you must apply, the more evidence you must produce, and the more places an auditor can find a gap.</p>
+<p>The standard is public and detailed, but its architectural implications are buried in requirement language that reads like policy. The translation that matters is concrete: where to put the CDE boundary, how to handle keys, what to log and how to protect it, and how to keep developers away from production card data. Each of the six steps below maps to one or more requirements and ends with a decision you can evaluate on its own.</p>
+<h2 id="prerequisites-and-the-target-skeleton">Prerequisites and the target skeleton</h2>
+<p>Readers should be comfortable with VPC networking, IAM, and basic cryptography concepts such as symmetric encryption and key wrapping. The goal is not a full payment gateway but the skeleton of a CDE: a segmented network, a key management flow, a logging pipeline, and a CI/CD gate. Each piece is small enough to reason about and to test.</p>
+<h2 id="step-1-draw-the-cde-boundary-before-anything-else">Step 1 — Draw the CDE boundary before anything else</h2>
+<p>Requirement 1 covers network security controls. The architectural consequence: you need a clearly defined boundary around systems that store, process, or transmit cardholder data. In AWS, that typically means a separate VPC, or a set of subnets with strict security groups and NACLs, plus rules that deny all traffic except explicitly required flows.</p>
+<p>A common mistake is to place the payment service in the same VPC as the rest of the application and rely on application-level authentication. That pulls every instance in the VPC into scope. A stronger pattern is a dedicated VPC for the CDE, connected to the application VPC only through a narrow set of endpoints — a private link endpoint or a transit gateway with route table isolation. The design goal is that compromise of the general application tier does not grant network access to the CDE.</p>
+<p>Once the boundary exists, stricter controls inside it become cheap to apply: no internet egress, no SSH from the corporate network, narrowly scoped IAM roles. Logging also becomes tractable, because you know exactly which flow logs and VPC flow logs belong to the CDE.</p>
+<p>A minimal security group setup for a CDE subnet looks like this (Terraform, illustrative):</p>
+<pre><code class="language-hcl">resource &quot;aws_security_group&quot; &quot;cde_api&quot; {
+  name        = &quot;cde-api&quot;
+  description = &quot;Allow only from app tier on 443&quot;
+  vpc_id      = aws_vpc.cde.id
+
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = &quot;tcp&quot;
+    security_groups = [aws_security_group.app_tier.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = &quot;-1&quot;
+    cidr_blocks = []
+  }
+}
+</code></pre>
+<p>The empty egress block is deliberate: no outbound traffic from the CDE except to specific internal endpoints such as KMS and logging. A frequent trap is to allow broad egress for package updates and then forget to lock it down. That weakens the isolation Requirement 1 is meant to demonstrate and makes data exfiltration easier.</p>
+<p><strong>Decision to make:</strong> is the CDE a separate VPC or a set of subnets? The separate VPC is easier to demonstrate and to audit; subnets in a shared VPC require you to prove that security groups and NACLs prevent lateral movement, which is harder to evidence.</p>
+<h2 id="step-2-encrypt-data-at-rest-and-in-transit-but-design-around-keys">Step 2 — Encrypt data at rest and in transit, but design around keys</h2>
+<p>Requirement 3 covers protection of stored cardholder data; Requirement 4 covers encryption in transit. The architectural driver is not the algorithm — it is key management. Storing encrypted PANs requires a documented process for key generation, distribution, rotation, retirement, and split knowledge. In AWS, that usually means KMS customer managed keys with automatic rotation enabled where possible, and never storing keys alongside the data they protect.</p>
+<p>The standard pattern is envelope encryption: the payment service calls KMS to encrypt a data key, then uses that data key with AES-256-GCM to encrypt the PAN. The encrypted data key is stored with the ciphertext. The service's IAM role needs <code>kms:Decrypt</code> on the specific key, and that role should not be assumable by developers directly.</p>
+<p>This forces a service boundary. You cannot let the general application tier decrypt PANs. Only the CDE service should hold decrypt permission, and only for the specific key it needs. Everything else works with tokens.</p>
+<p>A common failure mode is a single KMS key shared across all environments and data types. Rotation then becomes catastrophic because you cannot rotate without re-encrypting everything, and least privilege is impossible to express. Separate keys per environment and per data classification, with key policies that deny decryption to anyone except the specific service role, avoid both problems.</p>
+<p>In transit, TLS 1.2 or later is table stakes. The architectural point is to terminate TLS at the CDE edge and re-encrypt internally if traffic crosses subnets, or to use mTLS between services. A service mesh provides mTLS but adds operational complexity; a simpler approach is to keep the CDE small enough that internal traffic stays within a single security group and never leaves the VPC.</p>
+<p><strong>Worked example of key separation.</strong> Suppose you have three environments (dev, staging, production) and two data classes (PANs, tokens). A single-key design gives you one key to rotate and one blast radius. A separated design gives six keys: dev-PAN, dev-token, staging-PAN, staging-token, prod-PAN, prod-token. Rotating the production PAN key then touches only the production payment service, and a staging compromise cannot decrypt production ciphertext even if the ciphertext leaks. The cost is six key policies to maintain, which is trivial compared to a rotation project that requires coordinated re-encryption across every environment.</p>
+<h2 id="step-3-log-everything-then-protect-the-logs">Step 3 — Log everything, then protect the logs</h2>
+<p>Requirement 10 is the one that most often forces a logging pipeline redesign. You must log all access to cardholder data, all administrative actions, and all authentication events, and you must protect those logs from modification. The architectural consequence: logs cannot live on the same host as the application, and they cannot be writable by the application user.</p>
+<p>A standard pattern is to ship logs to a centralized logging account or a dedicated archive bucket with S3 Object Lock in compliance mode and a retention policy. Use CloudTrail for API activity, VPC Flow Logs for network flows, and application logs for access events. The application writes to stdout; a sidecar or agent forwards the records. The application never has write access to the final store.</p>
+<p>If an attacker compromises the CDE host, they should not be able to delete or alter logs. The log forwarder therefore uses a separate IAM role with write-only permission to the log store, and the application role must not have <code>s3:PutObject</code> on the log bucket. A common trap is granting the application role broad S3 permissions for unrelated reasons, which accidentally hands it log deletion rights.</p>
+<p>A minimal log archive bucket policy (illustrative) denies deletion and requires encryption in transit:</p>
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Sid&quot;: &quot;DenyDelete&quot;,
+      &quot;Effect&quot;: &quot;Deny&quot;,
+      &quot;Principal&quot;: &quot;*&quot;,
+      &quot;Action&quot;: &quot;s3:DeleteObject&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::cde-logs/*&quot;
+    },
+    {
+      &quot;Sid&quot;: &quot;RequireTLS&quot;,
+      &quot;Effect&quot;: &quot;Deny&quot;,
+      &quot;Principal&quot;: &quot;*&quot;,
+      &quot;Action&quot;: &quot;s3:*&quot;,
+      &quot;Resource&quot;: &quot;arn:aws:s3:::cde-logs/*&quot;,
+      &quot;Condition&quot;: {&quot;Bool&quot;: {&quot;aws:SecureTransport&quot;: &quot;false&quot;}}
+    }
+  ]
+}
+</code></pre>
+<p>You also need to log access to the logs themselves. CloudTrail data events on the log bucket provide that record. Note that a bucket policy is only one layer: an account administrator can still change the policy. Sending logs to a separate logging account with a restrictive policy that denies deletion even to the CDE account's root is the stronger pattern, and the one auditors most often expect.</p>
+<p><strong>Decision to make:</strong> same-account log archive or separate logging account? Same-account is simpler to operate but leaves logs reachable by anyone who gains admin in the CDE account. Separate-account costs one more account and a cross-account delivery role, and removes that path.</p>
+<h2 id="step-4-secure-the-development-process">Step 4 — Secure the development process</h2>
+<p>Requirement 6 covers secure development. The architectural driver: you need a CI/CD pipeline that enforces code review, separates duties, and prevents developers from deploying directly to production. In practice that means infrastructure as code, peer review on every change, and a deployment pipeline that uses a separate role with no human access.</p>
+<p>A common pattern is GitOps: changes merge to main, a pipeline builds and tests, and a separate deployment role applies changes to the CDE. Developers have no console access to the CDE account; they get read-only access for debugging through a break-glass process that is logged and requires approval.</p>
+<p>If developers can deploy directly, separation of duties cannot be enforced and there is no guarantee that only reviewed code reaches the CDE. This often forces a multi-account structure: a shared services account for CI/CD, a CDE account for production, and a development account for non-production. AWS Organizations service control policies can restrict what the CDE account is used for.</p>
+<p>A full SCP that allows only the pipeline role is complex to write and maintain. A simpler first step is an IAM permissions boundary on developer roles that denies <code>sts:AssumeRole</code> into the CDE account. A common trap: a developer with admin in the dev account can still assume a role in the CDE account if the trust policy is too broad. Check the trust policy, not just the permissions policy — the trust policy is what decides who can enter.</p>
+<h2 id="step-5-tokenize-early-to-reduce-scope">Step 5 — Tokenize early to reduce scope</h2>
+<p>Requirement 3 also recognizes tokenization as a way to reduce scope. The architectural decision: if the PAN can be replaced with a token before it reaches your systems, those systems fall out of scope. This is often the highest-leverage change available. A tokenization service sits at the edge, receives the PAN from the payment form through a JavaScript integration that posts directly to the tokenization provider, and returns a token. The application never sees the PAN.</p>
+<p>If you build your own tokenization, the token vault becomes the most sensitive part of the system and must sit inside the CDE. Keep the vault small, give it a narrow API, and use format-preserving encryption only if downstream systems genuinely require it. Many teams are better served by a payment processor's tokenization than by building and auditing a vault themselves.</p>
+<p>Scope reduction changes both the audit effort and the blast radius. If the application is compromised, the attacker gets tokens, not PANs. The trade-off is dependency: you now rely on the provider's availability and on the correctness of the integration, so the boundary between your systems and theirs needs the same scrutiny as any other trust boundary.</p>
+<h2 id="step-6-monitor-and-test-the-boundary">Step 6 — Monitor and test the boundary</h2>
+<p>Requirement 11 covers security testing. The architectural driver: continuous monitoring of the CDE boundary plus regular penetration testing. In AWS, that means GuardDuty, Security Hub, and Config rules that alert on changes to security groups, IAM policies, or encryption settings. You also need file integrity monitoring on CDE hosts, which can be done with a host-based agent or with immutable infrastructure — container images that are replaced rather than patched.</p>
+<p>A common failure mode is to treat monitoring as an afterthought and enable it only after an incident. Build it into the CDE from day one: enable VPC Flow Logs, CloudTrail, and GuardDuty in the CDE account, and route findings to a security account. Use AWS Config rules to detect public S3 buckets or unencrypted volumes.</p>
+<h2 id="how-to-verify-it-works">How to verify it works</h2>
+<p>Each control above has a test that takes minutes and catches the most common misconfigurations.</p>
+<ul>
+<li><strong>Segmentation:</strong> from an app-tier instance, run <code>nc -zv &lt;cde-host&gt; 22</code>. It should time out. Repeat for any port that is not on the approved flow list.</li>
+<li><strong>Key isolation:</strong> using the application role's credentials, run <code>aws kms decrypt --ciphertext-blob fileb://ciphertext.bin</code>. It should return <code>AccessDenied</code>. Then run the same command with the CDE service role; it should succeed.</li>
+<li><strong>Log immutability:</strong> using the application role, attempt <code>aws s3 rm s3://cde-logs/&lt;object&gt;</code>. It should fail. Confirm the same object is still present via the logging account.</li>
+<li><strong>Pipeline separation:</strong> attempt to assume the CDE deployment role from a developer role. It should be denied by the trust policy or permissions boundary.</li>
+<li><strong>Detection coverage:</strong> make a benign change that should trigger an alert — for example, add an overly broad ingress rule to a non-production security group in the CDE account — and confirm the finding reaches the security account within your expected window.</li>
+</ul>
+<p>If any of these succeed when they should fail, you have found a real gap before an auditor does.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What is the minimum scope for PCI DSS?</strong></p>
+<p>The minimum scope is any system that stores, processes, or transmits cardholder data, plus any system that can impact the security of the CDE. In practice that includes the CDE network, the tokenization service if self-hosted, the logging pipeline, and the CI/CD pipeline that deploys to the CDE. Outsourcing tokenization and using a payment processor's hosted payment page removes the most sensitive systems from scope.</p>
+<p><strong>Is a separate VPC required for PCI compliance?</strong></p>
+<p>Not strictly. It is the simplest way to demonstrate segmentation, because a separate VPC with strict security groups and no internet egress is easy to show as isolated. Subnets within a shared VPC are acceptable if you can prove that security groups and NACLs prevent lateral movement, but that proof is harder to produce and to audit.</p>
+<p><strong>How often should keys be rotated?</strong></p>
+<p>PCI DSS requires key rotation but does not prescribe a frequency. A common practice is annual rotation for keys protecting data at rest, plus immediate rotation on suspected compromise. KMS automatic rotation rotates the backing key annually and satisfies the requirement in many cases, but the rotation policy should be documented and tested rather than assumed.</p>
+<p><strong>Can logs live in the same account as the CDE?</strong></p>
+<p>They can, but it is risky: an attacker with admin in the CDE account can delete them. Sending logs to a separate logging account with a bucket policy that denies deletion even to the CDE account's root is the stronger pattern, and same-account storage is a recurring audit finding.</p>
+<p><strong>Does tokenization remove a system from scope entirely?</strong></p>
+<p>It removes the systems that never see a PAN. The tokenization service itself, if self-hosted, remains in scope and becomes the most sensitive component. If a third party provides tokenization, their environment is their responsibility, but your integration and the token-handling paths on your side still need review.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>Open the IAM policy for your application role and search for <code>kms:Decrypt</code>. If it appears, the general application tier can decrypt card data, which is both a scope problem and a least-privilege problem. Remove that permission and move decryption into a dedicated service role that only the CDE service can assume. That single change is a concrete first step toward the boundary the rest of this article describes.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/platform-teams-agentic-world-struggle/">Platform Teams: Agentic World Struggle</a></li>
+<li><a href="https://kubaik.github.io/ndpr-2026-broke-fintech-apis/">NDPR 2026 broke fintech APIs</a></li>
+<li><a href="https://kubaik.github.io/choose-no-code-only-when/">Choose no-code only when</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/replace-env-with-these-in-2026/">
+                        <h3>Replace .env with these in 2026</h3>
+                        <p>Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.</p>
+                        <span class="related-meta">15 min read · 18 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agents-create-incidents-at-2am/">
+                        <h3>Agents create incidents at 2am</h3>
+                        <p>Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.</p>
+                        <span class="related-meta">12 min read · 6 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/self-service-ai-tooling-the-permission-trap/">
+                        <h3>Self-service AI tooling: the permission trap</h3>
+                        <p>Design self-service LLM layers so identity, context and budget controls prevent quiet permission failures instead of only working on the happy path.</p>
+                        <span class="related-meta">14 min read · 9 October 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

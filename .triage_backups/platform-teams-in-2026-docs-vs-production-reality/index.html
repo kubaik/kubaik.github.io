@@ -1,0 +1,805 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Platform teams in 2026: Docs vs. production reality - Kubai Kevin</title>
+        <meta name="description" content="Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.">
+        <meta name="keywords" content="Softwareengineering, Coding, Platformengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-27T12:07:28.402718">
+        <meta property="article:modified_time" content="2026-10-03T12:50:14.490449+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Platform teams in 2026: Docs vs. production reality">
+        <meta property="og:description" content="Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.">
+        <meta property="og:url" content="https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/platform-teams-in-2026-docs-vs-production-reality.png">
+        <meta property="og:image:alt" content="Platform teams in 2026: Docs vs. production reality">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Platform teams in 2026: Docs vs. production reality">
+        <meta name="twitter:description" content="Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/platform-teams-in-2026-docs-vs-production-reality.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/#article",
+      "headline": "Platform teams in 2026: Docs vs. production reality",
+      "description": "Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.",
+      "datePublished": "2026-06-27T12:07:28+00:00",
+      "dateModified": "2026-10-03T12:50:14+00:00",
+      "wordCount": 3593,
+      "timeRequired": "PT18M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/"
+      },
+      "keywords": "Softwareengineering, Coding, Platformengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/platform-teams-in-2026-docs-vs-production-reality.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Platform teams in 2026: Docs vs. production reality",
+          "item": "https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Platform teams in 2026: Docs vs. production reality</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Platform teams in 2026: Docs vs. production reality</h1>
+                
+                <p class="post-lead">Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/coding/"
+                       style="text-decoration:none;">Coding</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        18 min read
+                        &nbsp;·&nbsp; 3593 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="why-documentation-and-production-diverge">Why documentation and production diverge</h2>
+<p>Platform documentation describes the happy path: a cluster comes up, a workload schedules, a pipeline goes green. Production adds time, drift, partial failures, and humans under pressure. The gap between the two is where most platform toil lives.</p>
+<p>The divergence is structural, not a documentation defect. Docs are written against a clean reference environment with a single owner and no legacy. Production has clusters that were upgraded across several Kubernetes minor versions, teams that joined after the platform was built, and defaults that were correct when chosen and are now expensive. None of that shows up in a getting-started guide, because a getting-started guide cannot assume any of it.</p>
+<p>Three categories of gap recur:</p>
+<ul>
+<li><strong>Default drift.</strong> A default that was reasonable at cluster creation (storage class, garbage collection retention, node drain behavior) becomes a cost or reliability problem as usage grows.</li>
+<li><strong>Process gaps behind tooling.</strong> A tool that supports a safe workflow does not force the workflow. A ConfigMap edit without a rollout restart is a process failure wearing a tool's clothing.</li>
+<li><strong>Ownership ambiguity.</strong> When a platform is a side project that graduated, nobody owns the upgrade path until an upgrade breaks thirty services.</li>
+</ul>
+<p>The rest of this article works through each category with concrete mechanisms, then builds a minimal internal developer platform, then covers the failure modes that survive good tooling.</p>
+<h2 id="cluster-defaults-that-quietly-cost-money-and-stability">Cluster defaults that quietly cost money and stability</h2>
+<h3 id="control-plane-retention">Control-plane retention</h3>
+<p>Managed Kubernetes control planes expose limited tuning. On self-managed clusters, etcd retention is a common source of unbounded growth. The <code>--auto-compaction-retention</code> flag controls how much history etcd retains; leaving it at a long window while a metrics or logging workload writes heavily means the store grows with write volume, not with useful data.</p>
+<p>The documented behavior is that etcd compacts revisions according to that flag and the configured compaction mode. The operational consequence is that a cluster ingesting high-cardinality series can accumulate a large etcd footprint with no corresponding query benefit. The fix is to set retention to a value matched to your backup and recovery window (commonly 8h–24h for high-churn clusters) and to verify the effect rather than assume it.</p>
+<p>How to measure it, rather than trust a number:</p>
+<pre><code class="language-bash"># etcd database size on a control-plane node (self-managed)
+sudo ETCDCTL_API=3 etcdctl \
+  --endpoints=https://127.0.0.1:2379 \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  endpoint status --write-out=table
+</code></pre>
+<p>Run this before and after changing retention, and record the <code>DB SIZE</code> column. On managed offerings, the equivalent signal is the control-plane metrics endpoint or the provider's cluster-health view. Instrument it as a time series so you can see growth rate, not just absolute size.</p>
+<h3 id="storage-class-defaults">Storage class defaults</h3>
+<p>New clusters commonly receive a default StorageClass that is not the one you would choose today. The practical consequences are cost per GB-month and IOPS behavior. The check is one command:</p>
+<pre><code class="language-bash">kubectl get storageclass
+</code></pre>
+<p>Look for the <code>(default)</code> annotation. If the default is a legacy class and your workloads do not pin a class explicitly, every PersistentVolumeClaim without <code>storageClassName</code> inherits it. The remedy is to create the class you want, annotate it as default, and remove the default annotation from the legacy class — then audit existing PVCs for the class they actually bound to.</p>
+<h3 id="resource-requests-and-limits">Resource requests and limits</h3>
+<p>Requests drive scheduling; limits drive throttling and OOM behavior. A cluster where most containers have requests but no limits is vulnerable to noisy neighbors. A cluster where limits are set far below steady-state usage produces CPU throttling that looks like application latency.</p>
+<p>Instrument three things before changing anything: container CPU throttling rate, container memory working set versus limit, and the ratio of scheduled-to-pending pods. The throttling metric is exposed by the kubelet and is the single best signal that a limit is too low.</p>
+<h2 id="internal-developer-platforms-by-company-size">Internal developer platforms by company size</h2>
+<p>The shape of an internal developer platform (IDP) tracks organizational size far more than it tracks technology preference. The same primitives appear at every size; what changes is how much of the platform is enforced versus suggested.</p>
+<h3 id="small-teams-roughly-150-engineers">Small teams (roughly 1–50 engineers)</h3>
+<p>The platform is a thin opinionated layer over a managed control plane. The goal is cognitive load reduction: one manifest per service, one deployment path, no per-team variation.</p>
+<p>Typical composition: a managed Kubernetes service, a GitOps controller watching a single repository, and a templated manifest that defines deployment, service, ingress, and autoscaling together. A common early failure is an image-pull permission gap: nodes assume a role that lacks registry read permissions, and pods fail with <code>ImagePullBackOff</code> while the application logs show nothing at all. The fix belongs in the bootstrap template, not in a runbook, because the next cluster will hit it too.</p>
+<p>The measurement that matters at this size is time from repository creation to first successful deploy. Instrument it by timestamping the first commit and the first healthy rollout.</p>
+<h3 id="mid-size-teams-roughly-50500-engineers">Mid-size teams (roughly 50–500 engineers)</h3>
+<p>The platform becomes a negotiation between autonomy and control. Composition typically includes:</p>
+<ul>
+<li>One cluster per environment (dev, staging, production)</li>
+<li>A declarative provisioning layer for managed services (databases, caches, object storage)</li>
+<li>A developer portal with a service catalog</li>
+<li>Policy as code for admission control</li>
+<li>In-cluster workflow execution for CI/CD steps that need cluster access</li>
+</ul>
+<p>The dominant failure here is manifest sprawl. When every team may customize its deployment, the platform accumulates one variant per team: some Helm, some Kustomize overlays, some raw manifests. Debugging requires reading each variant. The countermeasure is a single shared chart with enforced defaults and an explicit escape hatch that requires review.</p>
+<h3 id="large-organizations-roughly-500-engineers">Large organizations (roughly 500+ engineers)</h3>
+<p>The platform becomes a shared-responsibility model with hard boundaries: multiple clusters segmented by business unit or compliance region, mutual TLS enforced by a service mesh, centralized secrets management, cost allocation via tagging, and admission policies for security controls.</p>
+<p>The complexity at this size is organizational. When many teams deploy to one cluster without coordination, the symptoms are resource starvation at peak, noisy-neighbor latency, and cloud spend that cannot be attributed to a team. The technical fix — namespace quotas and limit ranges — is straightforward. The durable fix is topology: separate clusters or separate node pools per team or business unit, so that one team's burst cannot consume another's headroom.</p>
+<p>A useful diagnostic at this scale is a cost-allocation coverage check: what fraction of resources carry a tag that maps to an owning team? Anything untagged is unattributable, and unattributable spend cannot be optimized.</p>
+<h2 id="building-a-minimal-platform-provisioning-deployment-policy">Building a minimal platform: provisioning, deployment, policy</h2>
+<p>The example below targets a mid-size organization. The goal is a consistent, auditable path from "new service" to "running in staging" without a ticket to the platform team. Three capabilities: cluster bootstrap, a standardized service chart, and admission policy.</p>
+<h3 id="step-1-bootstrap-the-cluster-with-opinionated-defaults">Step 1: Bootstrap the cluster with opinionated defaults</h3>
+<p>The following Terraform uses the community EKS module. Pin versions and verify the module's current major version before applying; module interfaces change between majors.</p>
+<pre><code class="language-hcl"># main.tf
+terraform {
+  required_version = &quot;&gt;= 1.6&quot;
+  required_providers {
+    aws = {
+      source  = &quot;hashicorp/aws&quot;
+      version = &quot;~&gt; 5.0&quot;
+    }
+    kubernetes = {
+      source  = &quot;hashicorp/kubernetes&quot;
+      version = &quot;~&gt; 2.25&quot;
+    }
+    helm = {
+      source  = &quot;hashicorp/helm&quot;
+      version = &quot;~&gt; 2.11&quot;
+    }
+  }
+}
+
+provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
+
+module &quot;eks&quot; {
+  source  = &quot;terraform-aws-modules/eks/aws&quot;
+  version = &quot;~&gt; 19.16&quot;
+
+  cluster_name    = &quot;dev-cluster&quot;
+  cluster_version = &quot;1.30&quot;
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  eks_managed_node_groups = {
+    default = {
+      min_size     = 3
+      max_size     = 10
+      desired_size = 3
+
+      instance_types = [&quot;t4g.large&quot;] # ARM64 Graviton
+      capacity_type  = &quot;SPOT&quot;
+      labels = {
+        &quot;node-group&quot; = &quot;default&quot;
+      }
+      taints = []
+    }
+  }
+
+  cluster_addons = {
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+      configuration_values = jsonencode({
+        enableNetworkPolicy = &quot;true&quot;
+      })
+    }
+    aws-ebs-csi-driver = {
+      most_recent = true
+      configuration_values = jsonencode({
+        storage = {
+          gp3 = {
+            fsType = &quot;ext4&quot;
+            type   = &quot;gp3&quot;
+          }
+        }
+      })
+    }
+  }
+}
+</code></pre>
+<p>Design decisions worth stating explicitly:</p>
+<ul>
+<li><strong>ARM64 node types.</strong> Graviton instances generally offer better price/performance than comparable x86 instances for containerized workloads. The trade-off is image compatibility: every image must have an ARM64 variant, or the workload must run under emulation, which is slower and often not worth it.</li>
+<li><strong>Spot capacity.</strong> Spot reduces compute cost substantially but introduces interruption. Only use it for workloads that tolerate eviction — stateless services with more than one replica and a disruption budget. Never use Spot for a single-replica stateful workload.</li>
+<li><strong>EBS CSI driver with gp3.</strong> Installing the driver and configuring gp3 gives you a modern default storage class instead of inheriting the legacy default.</li>
+<li><strong>VPC CNI with network policy enabled.</strong> Enabling network policy support at bootstrap means policies are enforceable later without a CNI change.</li>
+</ul>
+<p>Verify the result before building on it:</p>
+<pre><code class="language-bash">kubectl get nodes -o wide
+kubectl get storageclass
+</code></pre>
+<p>The storage class output should show your intended class as <code>(default)</code>. If it does not, fix it now — this is the cheapest moment.</p>
+<h3 id="step-2-a-single-shared-helm-chart">Step 2: A single shared Helm chart</h3>
+<p>Create the chart skeleton:</p>
+<pre><code class="language-bash">helm create platform-service
+cd platform-service
+rm -rf templates/*
+</code></pre>
+<pre><code class="language-yaml"># Chart.yaml
+apiVersion: v2
+name: platform-service
+description: &quot;Standardized service deployment for internal platform&quot;
+version: 0.1.0
+type: application
+appVersion: &quot;1.0&quot;
+</code></pre>
+<pre><code class="language-yaml"># values.yaml
+replicaCount: 2
+
+image:
+  repository: &quot;public.ecr.aws/my-org/default-service&quot;
+  tag: &quot;latest&quot;
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: &quot;100m&quot;
+    memory: &quot;256Mi&quot;
+  limits:
+    cpu: &quot;500m&quot;
+    memory: &quot;512Mi&quot;
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+env:
+  - name: LOG_LEVEL
+    value: &quot;info&quot;
+</code></pre>
+<pre><code class="language-yaml"># templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include &quot;platform-service.fullname&quot; . }}
+  labels:
+    {{- include &quot;platform-service.labels&quot; . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include &quot;platform-service.selectorLabels&quot; . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include &quot;platform-service.selectorLabels&quot; . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: &quot;{{ .Values.image.repository }}:{{ .Values.image.tag }}&quot;
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      nodeSelector:
+        kubernetes.io/os: linux
+</code></pre>
+<p>Two things to note. First, the probe paths and ports are fixed by the chart, which means every service must expose <code>/health</code> and <code>/ready</code> on the named <code>http</code> port. That is a real constraint and it should be documented as such — teams will push back, and the counterargument is that uniform probes make rollout behavior predictable across the fleet. Second, the default <code>image.tag: "latest"</code> is convenient for a first deploy and dangerous for production. Override it with an immutable tag (a commit SHA or digest) in the environment-specific values file.</p>
+<h3 id="step-3-enforce-the-standard-with-admission-policy">Step 3: Enforce the standard with admission policy</h3>
+<p>A chart that teams <em>may</em> use is a suggestion. A policy that rejects non-conforming manifests is a standard. Kyverno is one option for admission-time validation without writing a custom controller.</p>
+<pre><code class="language-bash">helm repo add kyverno https://kyverno.github.io/kyverno
+helm repo update
+helm install kyverno kyverno/kyverno -n kyverno --create-namespace
+</code></pre>
+<pre><code class="language-yaml"># policies/require-resource-limits.yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-resource-limits
+  annotations:
+    policies.kyverno.io/title: &quot;Require resource limits&quot;
+    policies.kyverno.io/severity: &quot;medium&quot;
+spec:
+  validationFailureAction: enforce
+  background: true
+  rules:
+    - name: check-resource-limits
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+      validate:
+        message: &quot;Resource limits are required.&quot;
+        pattern:
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: &quot;*&quot;
+                    resources:
+                      limits:
+                        memory: &quot;?*&quot;
+                        cpu: &quot;?*&quot;
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f policies/require-resource-limits.yaml
+</code></pre>
+<p>A non-conforming manifest is then rejected at admission:</p>
+<pre><code class="language-yaml"># bad-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bad-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bad-service
+  template:
+    metadata:
+      labels:
+        app: bad-service
+    spec:
+      containers:
+        - name: bad-service
+          image: nginx:latest
+          resources:
+            requests:
+              cpu: &quot;100m&quot;
+              memory: &quot;128Mi&quot;
+            # no limits
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f bad-deployment.yaml
+# Error from server: admission webhook &quot;validate.kyverno.svc-fail&quot; denied the request:
+# resource Deployment/default/bad-service is disallowed for the following reason:
+# Resource limits are required.
+</code></pre>
+<p>The important operational detail is that admission webhooks sit in the request path. If the policy engine is unavailable and the webhook is configured to fail closed, deployments stop. Decide deliberately whether each policy fails open or closed, and monitor the webhook's latency and error rate as a first-class platform metric.</p>
+<h2 id="how-to-measure-whether-the-platform-is-working">How to measure whether the platform is working</h2>
+<p>Published platform benchmarks are rarely transferable, because they depend on workload mix, cluster size, and team behavior. Measure your own system. The table below lists the signals worth instrumenting and where each comes from.</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Where it comes from</th>
+<th>What a bad reading looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deployment success rate</td>
+<td>CI/CD system records, per environment</td>
+<td>Failures clustered in one team or one chart version</td>
+</tr>
+<tr>
+<td>Time to first successful deploy</td>
+<td>Timestamp of repo creation vs. first healthy rollout</td>
+<td>Long tail driven by onboarding steps, not build time</td>
+</tr>
+<tr>
+<td>Lead time for change</td>
+<td>Version control to production</td>
+<td>Growing while deploy count is flat</td>
+</tr>
+<tr>
+<td>CPU throttling rate</td>
+<td>Container metrics from the kubelet</td>
+<td>Non-zero under normal load means limits are too low</td>
+</tr>
+<tr>
+<td>Pending pod duration</td>
+<td>Scheduler metrics</td>
+<td>Spikes at peak indicate capacity or request inflation</td>
+</tr>
+<tr>
+<td>Admission webhook latency</td>
+<td>Policy engine metrics</td>
+<td>p99 rising toward the API server timeout</td>
+</tr>
+<tr>
+<td>Cost per namespace</td>
+<td>Cloud billing joined to resource tags</td>
+<td>Untagged resources with no owner</td>
+</tr>
+<tr>
+<td>Developer satisfaction</td>
+<td>Short recurring survey, one or two questions</td>
+<td>Falling after a platform change, not before</td>
+</tr>
+</tbody>
+</table>
+<p>Two cautions on interpreting these. First, deployment success rate improves trivially if you make the pipeline accept anything — pair it with a policy-violation count so the two cannot both be gamed. Second, a latency increase after adding a service mesh is expected; the question is whether the error-rate reduction justifies it, and that is a per-organization judgment, not a universal rule.</p>
+<h2 id="failure-modes-that-survive-good-tooling">Failure modes that survive good tooling</h2>
+<h3 id="the-platform-as-a-side-project">The platform as a side project</h3>
+<p>A platform often begins as one engineer's chart in a repository. It works, so it spreads, until most services depend on it. Nobody owns the upgrade path. When a Kubernetes minor version removes a deprecated API field, every dependent service breaks at once.</p>
+<p>The countermeasure is treating the platform as a product with a versioning policy: semantic versions for charts, a documented deprecation window, and a CI job that renders every consumer's manifests against the next cluster version before you upgrade. That render check is the single highest-value test a platform team can add.</p>
+<h3 id="the-golden-path-that-becomes-a-bottleneck">The golden path that becomes a bottleneck</h3>
+<p>A golden path is the recommended route. When it cannot express a legitimate need, teams route around it, and the platform loses the standardization it was built for. The signal is the number of distinct deployment mechanisms in use. If it is growing, the golden path is missing a capability, not being disrespected.</p>
+<p>The fix is to make the golden path the only supported path <em>and</em> to give it a fast, documented extension mechanism. A design review for every exception is a bottleneck; a parameterized chart with a reviewed escape hatch is not.</p>
+<h3 id="convenience-with-a-hidden-bill">Convenience with a hidden bill</h3>
+<p>Managed observability is convenient and its costs are opaque. Log ingestion, log retention, and cross-AZ or cross-region data transfer are the usual culprits. A logging pipeline that ships every application log at debug level can generate substantial egress and storage cost with no corresponding debugging value.</p>
+<p>Instrument ingestion volume per service before optimizing anything. Then apply retention tiers: hot storage for a short window, object storage for the rest. The same discipline applies to metrics — high-cardinality labels are the most common cause of metrics cost growth.</p>
+<h3 id="cultural-debt">Cultural debt</h3>
+<p>Technical debt is visible in a repository. Cultural debt is invisible until adoption stalls. A platform built without input from the engineers who must use it tends to be adopted only where mandated. The measurable symptom is the gap between the number of services that <em>could</em> use a platform feature and the number that do.</p>
+<p>The countermeasure is to treat adoption as a product metric and to run recurring intake sessions where engineers bring their actual friction points. Features that come from those sessions get adopted; features that come from platform-team intuition often do not.</p>
+<h3 id="the-compliance-illusion">The compliance illusion</h3>
+<p>Passing an audit is not the same as enforcing a control. A secrets-rotation policy that exists in a document but not in the pipeline does not rotate secrets. The check is to trace one control end to end: for a given secret type, what enforces rotation, where is the evidence, and what happens when the enforcement fails?</p>
+<p>The common gap is the CI/CD path. If secrets are injected as static environment variables at build time, rotation is manual by construction. Integrating a secrets manager with short-lived credentials issued per pipeline run removes the class of problem rather than detecting it.</p>
+<h2 id="a-tooling-checklist-by-capability">A tooling checklist by capability</h2>
+<p>Rather than a list of products, here is the capability set a platform needs, with the question to ask of any candidate:</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Question to ask</th>
+<th>Common failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infrastructure provisioning</td>
+<td>Can a new environment be created from version-controlled input alone?</td>
+<td>Manual console steps that are undocumented</td>
+</tr>
+<tr>
+<td>GitOps reconciliation</td>
+<td>Does the cluster converge to the repository state without human action?</td>
+<td>Drift that only surfaces during an incident</td>
+</tr>
+<tr>
+<td>Managed service provisioning</td>
+<td>Can a database be requested declaratively with the same review process as code?</td>
+<td>Ticket queues for routine provisioning</td>
+</tr>
+<tr>
+<td>Policy enforcement</td>
+<td>Are violations rejected at admission, and is the webhook's availability monitored?</td>
+<td>Policies that exist but are not enforced</td>
+</tr>
+<tr>
+<td>Secrets management</td>
+<td>Are credentials short-lived and issued per workload identity?</td>
+<td>Long-lived static secrets in CI variables</td>
+</tr>
+<tr>
+<td>Service mesh</td>
+<td>Is mTLS enforced, and is the added latency measured against the error-rate benefit?</td>
+<td>Mesh installed but not enforced</td>
+</tr>
+<tr>
+<td>Linting and scanning</td>
+<td>Do manifest checks run in CI and block merge?</td>
+<td>Scanners available but optional</td>
+</tr>
+<tr>
+<td>Cost attribution</td>
+<td>Does every resource carry an owner tag?</td>
+<td>Untagged spend with no accountable team</td>
+</tr>
+<tr>
+<td>Developer portal</td>
+<td>Do engineers use it voluntarily?</td>
+<td>Portal that duplicates information available elsewhere</td>
+</tr>
+</tbody>
+</table>
+<h2 id="faq">FAQ</h2>
+<p><strong>Should a small team build an IDP at all?</strong>
+Only enough to remove repeated manual steps. For a small team, that is usually a cluster bootstrap template, one shared chart, and a GitOps controller. Anything more is a maintenance liability until the team grows.</p>
+<p><strong>How do you introduce policy enforcement without blocking delivery?</strong>
+Start in audit mode. Run the policy with <code>validationFailureAction: audit</code>, collect violations for a period, fix the templates that cause most of them, then switch to enforce. Switching to enforce on day one converts a standards problem into an outage.</p>
+<p><strong>Is a service mesh required for mTLS?</strong>
+No. Some stacks provide workload identity and encryption at a lower layer. A mesh adds traffic management and observability alongside mTLS, at the cost of an extra hop and a new control plane to operate. Decide based on whether you need the traffic features, not on mTLS alone.</p>
+<p><strong>How do you choose between one cluster and many?</strong>
+The deciding factors are blast radius, compliance boundaries, and cost attribution. Many small clusters give cleaner isolation and simpler quotas; one large cluster gives better utilization and simpler networking. Most organizations end up with a small number of clusters segmented by environment and compliance domain, not one per team.</p>
+<p><strong>What is the first metric to instrument?</strong>
+Deployment success rate per environment, paired with policy-violation count. Together they show whether delivery is getting better or whether the pipeline is simply accepting more.</p>
+<h2 id="next-30-minutes-run-one-audit">Next 30 minutes: run one audit</h2>
+<p>Pick your production cluster and run these three commands. Record the output somewhere durable.</p>
+<pre><code class="language-bash"># 1. Which storage class will untyped PVCs inherit?
+kubectl get storageclass
+
+# 2. Which workloads have no CPU or memory limits?
+kubectl get pods -A -o json | \
+  jq -r '.items[] |
+    select(.spec.containers[]?.resources.limits == null) |
+    &quot;\(.metadata.namespace)/\(.metadata.name)&quot;'
+
+# 3. Are there namespaces with no resource quota?
+kubectl get ns -o json | \
+  jq -r '.items[].metadata.name' | \
+  while read ns; do
+    kubectl get resourcequota -n &quot;$ns&quot; --no-headers 2&gt;/dev/null | \
+      grep -q . || echo &quot;no quota: $ns&quot;
+  done
+</code></pre>
+<p>The output is your starting backlog. The storage class tells you whether new volumes are silently inheriting a legacy default. The unlabeled-limits list tells you which workloads can become noisy neighbors. The quota list tells you which namespaces can consume unbounded cluster resources. Fix the storage class default first — it is a one-line change with the widest blast radius.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/">Stop guessing tech stacks: validate tools in 2 hours</a></li>
+<li>Internal developer platform: adoption traps</li>
+<li><a href="https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/">AI wrote the docs — humans wrote the gaps</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/deployment-platforms-senior-vs-new-hire/">
+                        <h3>Deployment platforms: senior vs new hire</h3>
+                        <p>How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</p>
+                        <span class="related-meta">17 min read · 7 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-governance-opa-vs-kyverno-after-our-incident/">
+                        <h3>Agent governance: OPA vs Kyverno after our incident</h3>
+                        <p>Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.</p>
+                        <span class="related-meta">11 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/platform-engineering-roi-metrics-that-fund-teams/">
+                        <h3>Platform engineering ROI: metrics that fund teams</h3>
+                        <p>How to connect platform work to business outcomes with flow metrics, honest attribution, and instrumentation you can build in an afternoon.</p>
+                        <span class="related-meta">13 min read · 19 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

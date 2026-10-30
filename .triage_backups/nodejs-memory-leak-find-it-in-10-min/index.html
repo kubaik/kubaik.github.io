@@ -1,0 +1,539 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Node.js memory leak: find it in 10 min - Kubai Kevin</title>
+        <meta name="description" content="Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.">
+        <meta name="keywords" content="HeapSnapshot, MemoryProfiling, Heap, Backend, Softwareengineering, Nodejsmemoryleak">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-29T12:50:43.370815">
+        <meta property="article:modified_time" content="2026-10-29T12:52:16.189827+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Node.js memory leak: find it in 10 min">
+        <meta property="og:description" content="Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.">
+        <meta property="og:url" content="https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/nodejs-memory-leak-find-it-in-10-min.png">
+        <meta property="og:image:alt" content="Node.js memory leak: find it in 10 min">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Node.js memory leak: find it in 10 min">
+        <meta name="twitter:description" content="Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/nodejs-memory-leak-find-it-in-10-min.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/#article",
+      "headline": "Node.js memory leak: find it in 10 min",
+      "description": "Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.",
+      "datePublished": "2026-10-29T12:50:43+00:00",
+      "dateModified": "2026-10-29T12:52:16+00:00",
+      "wordCount": 2850,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/"
+      },
+      "keywords": "HeapSnapshot, MemoryProfiling, Heap, Backend, Softwareengineering, Nodejsmemoryleak",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/nodejs-memory-leak-find-it-in-10-min.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Node.js memory leak: find it in 10 min",
+          "item": "https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Node.js memory leak: find it in 10 min</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Node.js memory leak: find it in 10 min</h1>
+                
+                <p class="post-lead">Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">HeapSnapshot</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MemoryProfiling</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/backend/"
+                       style="text-decoration:none;">Backend</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2850 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-29
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A Node.js service runs for hours or days, RSS climbs, the container is OOM-killed, and the process restarts. Staging rarely reproduces it because staging does not carry the same traffic mix or stay up long enough. A single heap snapshot looks unremarkable — until two snapshots taken an hour apart show a constructor count that only goes up. The core problem is that a leak in a long-running service is a <em>rate</em>, not a state, and most teams look for it with the wrong instrument. This article is about matching the instrument to the failure mode before restarting the pod.</p>
+<h2 id="read-the-symptom-before-opening-a-profiler">Read the symptom before opening a profiler</h2>
+<p>Not every rising memory graph is a leak. Classify what you are seeing first; the three patterns below point to different causes and different fixes.</p>
+<p><strong>Pattern A — sawtooth with a rising floor.</strong> RSS climbs, GC brings it down partially, but the trough after each collection is higher than the last. This is the classic leak signature: something is retained that should be collectable, and the retained set grows monotonically.</p>
+<p><strong>Pattern B — flat then cliff.</strong> Memory is stable for hours, then jumps sharply and stays. This is usually a cache or buffer that crossed a size threshold, or a connection pool that grew in response to a burst. It may not be a leak at all — it may be an unbounded data structure that only reveals itself under a specific input.</p>
+<p><strong>Pattern C — high but stable.</strong> RSS sits at a level you dislike but does not grow. This is often V8 heap fragmentation or an external buffer (<code>Buffer</code>, <code>ArrayBuffer</code>, native addon) that the GC cannot see well. It is a tuning problem, not a leak.</p>
+<p>A first check that costs nothing: log <code>process.memoryUsage()</code> on an interval (every 60 seconds is fine) and watch <code>heapUsed</code> versus <code>rss</code>.</p>
+<pre><code class="language-javascript">setInterval(() =&gt; {
+  const m = process.memoryUsage();
+  console.log(JSON.stringify({
+    rss: Math.round(m.rss / 1024 / 1024),
+    heapUsed: Math.round(m.heapUsed / 1024 / 1024),
+    heapTotal: Math.round(m.heapTotal / 1024 / 1024),
+    external: Math.round(m.external / 1024 / 1024),
+  }));
+}, 60_000).unref();
+</code></pre>
+<p>Run this for an hour under real traffic. The shape of those four numbers tells you which pattern you have before you spend time on a snapshot. If <code>heapUsed</code> is flat but <code>rss</code> climbs, the leak is outside the JS heap — native memory, Buffers, or a native addon. If <code>heapUsed</code> climbs, you are looking at retained JS objects and the heap snapshot is the right tool.</p>
+<h2 id="the-causes-in-the-order-they-commonly-occur">The causes, in the order they commonly occur</h2>
+<h3 id="1-event-listeners-and-subscriptions-that-outlive-their-owner">1. Event listeners and subscriptions that outlive their owner</h3>
+<p>The most common leak in Node services is an <code>EventEmitter</code> listener added per request or per connection and never removed. Express middleware, WebSocket handlers, and message-queue consumers are the usual suspects. The symptom is a listener count that grows with request volume. You can confirm it without a profiler:</p>
+<pre><code class="language-javascript">// on the emitter in question, during an incident
+console.log(emitter.listenerCount('data'));
+</code></pre>
+<p>If that number tracks your request count, you have found it. Node also emits a <code>MaxListenersExceededWarning</code> when a single emitter exceeds its limit (default 10), which is a strong hint even if the warning is buried in logs.</p>
+<p><strong>Fix:</strong> remove the listener in the same scope that added it, ideally in a <code>finally</code> block. For request-scoped work, prefer <code>once</code> over <code>on</code> when the handler should fire a single time. For long-lived subscriptions, tie the listener to an <code>AbortController</code> and remove it on abort.</p>
+<h3 id="2-closures-captured-by-timers-and-intervals">2. Closures captured by timers and intervals</h3>
+<p>A <code>setInterval</code> that closes over a request object keeps that object alive for as long as the interval runs. If the interval is never cleared, every request that touched it is retained. This is subtle because the interval itself is small — it is the captured scope that is large.</p>
+<p><strong>Confirm:</strong> search for <code>setInterval</code> and check whether each one has a matching <code>clearInterval</code> on a shutdown path. In a heap snapshot, look for <code>Timeout</code> objects whose retained size is dominated by a closure scope you recognize.</p>
+<p><strong>Fix:</strong> clear intervals on shutdown and on the event that makes them irrelevant. <code>timer.unref()</code> stops the timer from keeping the process alive, but it does not clear the interval and does not release the captured scope.</p>
+<h3 id="3-unbounded-caches-and-maps">3. Unbounded caches and maps</h3>
+<p>An in-memory cache is a leak with good intentions. A <code>Map</code> used as a cache grows until something evicts from it, and if nothing does, it grows until the process dies. The symptom is Pattern B: flat, then a cliff as the map crosses a threshold.</p>
+<p><strong>Confirm:</strong> log <code>map.size</code> on an interval. If it only goes up, you have your answer.</p>
+<p><strong>Fix:</strong> use an LRU with a maximum size, or a TTL cache with active expiry. Without a dependency, a <code>Map</code> plus a periodic sweep that deletes entries older than a timestamp is enough — but write the sweep, do not assume it exists.</p>
+<h3 id="4-promises-and-async-contexts-that-never-settle">4. Promises and async contexts that never settle</h3>
+<p>A promise that never resolves retains its closure and everything reachable from it. This shows up as a slow leak in services that do fan-out requests with no timeout. The fix is to put a timeout on every outbound call and to make sure the timeout path actually rejects rather than silently dropping.</p>
+<p><strong>Confirm:</strong> in a heap snapshot, look for a large number of <code>Promise</code> objects with retained sizes pointing at request payloads. If the count grows with uptime, this is likely.</p>
+<p><strong>Fix:</strong> wrap outbound calls with <code>AbortSignal.timeout(ms)</code> where the client supports it, and ensure the rejection is handled. An unhandled rejection swallowed by an empty <code>.catch(() =&gt; {})</code> is worse than a crash — it hides the leak.</p>
+<h3 id="5-native-memory-and-buffers">5. Native memory and Buffers</h3>
+<p>Buffers allocated outside the V8 heap do not show up in <code>heapUsed</code>. If <code>rss</code> climbs while <code>heapUsed</code> is flat, look at <code>external</code> and <code>arrayBuffers</code> in <code>process.memoryUsage()</code>. Common causes are pooled Buffers that are never released, native addons with their own allocators, and stream pipelines where the readable side is paused and the writable side keeps buffering.</p>
+<p><strong>Confirm:</strong> compare <code>external</code> growth to <code>rss</code> growth. If they track each other, the leak is in Buffer or native territory.</p>
+<p><strong>Fix:</strong> for streams, respect backpressure — do not <code>pipe</code> into a slow consumer without checking <code>write()</code> return values, and do not buffer an entire response in memory when you can stream it.</p>
+<h2 id="taking-a-heap-snapshot-that-is-actually-useful">Taking a heap snapshot that is actually useful</h2>
+<p>A single snapshot tells you what is in memory. Two snapshots tell you what is <em>accumulating</em>. The difference is where the leak lives.</p>
+<p>Take the first snapshot after the service has warmed up (for example, 10 minutes after deploy), then take a second one an hour later under similar load. In Chrome DevTools, load both and use the "Comparison" view. Sort by "# Delta" — the constructors with the largest positive delta are your candidates. Then expand the retainer paths for the top few and look for the frame in <em>your</em> code, not in a library.</p>
+<p>On a server without a GUI, write snapshots to disk and pull them locally:</p>
+<pre><code class="language-javascript">const v8 = require('node:v8');
+
+function snapshot(label) {
+  const file = `/tmp/heap-${label}-${Date.now()}.heapsnapshot`;
+  v8.writeHeapSnapshot(file);
+  console.log('wrote', file);
+}
+
+// call snapshot('warm') once, snapshot('later') an hour later
+</code></pre>
+<p>Two practical warnings. First, <code>writeHeapSnapshot</code> blocks the event loop for the duration of the write — on a large heap this can be seconds. Do it on a canary instance, not on the whole fleet. Second, the snapshot file is roughly the size of the heap, so make sure <code>/tmp</code> has room and that old files are deleted.</p>
+<p>The retainer path is the important part. It answers "why is this object still alive?" — and the answer is usually a global, a module-level variable, or a closure held by a long-lived object. If the retainer path runs through a library you do not control, the fix is usually to stop giving that library new objects, not to patch the library.</p>
+<h2 id="when-the-heap-looks-fine-but-the-container-still-dies">When the heap looks fine but the container still dies</h2>
+<p>If <code>heapUsed</code> is stable and <code>rss</code> still climbs, you are outside V8. Three things to check, in order:</p>
+<ol>
+<li><strong>Buffers and streams.</strong> Log <code>external</code> and <code>arrayBuffers</code>. Growing <code>arrayBuffers</code> with a flat heap points at stream backpressure or a Buffer pool that is not being released.</li>
+<li><strong>Native addons.</strong> If you use a database driver or image library with a native component, its allocations are invisible to V8. Check the addon's issue tracker for known leaks and pin to a version that does not have them.</li>
+<li><strong>V8 heap fragmentation.</strong> If <code>heapUsed</code> is well below <code>heapTotal</code> but <code>rss</code> is high, the heap has fragmented. This is a tuning problem: adjusting <code>--max-old-space-size</code> or the semi-space size can help, but the real fix is usually to reduce allocation churn in hot paths.</li>
+</ol>
+<p>A container memory limit set close to the heap limit is a common configuration mistake. If the container limit is 512 MB and <code>--max-old-space-size</code> is 400, that leaves 112 MB for the stack, native memory, and Buffers — which may not be enough. Leave headroom, and set the container limit above the sum of what the process is expected to use at peak.</p>
+<h2 id="prevention-make-leaks-visible-before-they-page-you">Prevention: make leaks visible before they page you</h2>
+<p>Three practices that cost little and catch most of the problems above.</p>
+<p><strong>Log memory on a schedule and alert on slope, not level.</strong> A service at 400 MB that has been flat for a week is fine. One at 200 MB that has climbed 20 MB a day is not. Alert on the derivative. Instrument by storing the <code>process.memoryUsage()</code> samples and computing a linear fit over the last 24 hours; alert when the slope exceeds a threshold derived from a known-good baseline rather than a number borrowed from an article.</p>
+<p><strong>Cap every in-memory structure.</strong> If you write <code>new Map()</code> in a service, the next line should be a comment explaining what bounds it. If there is no bound, it is a leak waiting for traffic.</p>
+<p><strong>Test with a soak, not a spike.</strong> Load tests that run for five minutes will not reveal a leak that needs an hour. A nightly soak against a staging environment with production-like traffic is the cheapest leak detector you can build.</p>
+<p>A minimal soak check that can be added to CI:</p>
+<pre><code class="language-javascript">// after a 30-minute soak against staging, assert heap growth is bounded
+const before = await getHeapUsed();
+await runSoak({ durationMs: 30 * 60 * 1000 });
+const after = await getHeapUsed();
+const growthMb = (after - before) / 1024 / 1024;
+if (growthMb &gt; 50) {
+  throw new Error(`heap grew ${growthMb.toFixed(1)} MB during soak`);
+}
+</code></pre>
+<p>The threshold is illustrative — pick one based on the service's normal allocation pattern, not on a number from a blog post. To calibrate: run the soak three times against a known-good build, record the maximum observed growth, and set the threshold above it with margin.</p>
+<h2 id="worked-example-classifying-a-leak-from-four-numbers">Worked example: classifying a leak from four numbers</h2>
+<p>Suppose a service logs the following samples (values are illustrative, rounded to MB):</p>
+<table>
+<thead>
+<tr>
+<th>Minute</th>
+<th>rss</th>
+<th>heapUsed</th>
+<th>heapTotal</th>
+<th>external</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>210</td>
+<td>60</td>
+<td>90</td>
+<td>20</td>
+</tr>
+<tr>
+<td>70</td>
+<td>260</td>
+<td>62</td>
+<td>92</td>
+<td>21</td>
+</tr>
+<tr>
+<td>130</td>
+<td>310</td>
+<td>61</td>
+<td>91</td>
+<td>22</td>
+</tr>
+<tr>
+<td>190</td>
+<td>360</td>
+<td>63</td>
+<td>93</td>
+<td>21</td>
+</tr>
+</tbody>
+</table>
+<p>Reasoning step by step:</p>
+<ol>
+<li><code>heapUsed</code> moves between 60 and 63 MB across three hours. That is noise, not a trend. The JS heap is not the problem.</li>
+<li><code>rss</code> rises 210 → 360 MB, a 150 MB increase over 180 minutes, about 0.83 MB per minute. The growth is real and roughly linear.</li>
+<li><code>external</code> is flat at about 21 MB, so the growth is not in tracked Buffers either. That leaves native allocations not counted in <code>external</code> (some native addons and allocators), or fragmentation, or memory the OS attributes to the process for other reasons.</li>
+<li>Next step is not a heap snapshot — it would show a flat heap and waste an hour. Instead, isolate: run the same build with the native addon disabled (or swap it for a pure-JS equivalent) and repeat the sample. If <code>rss</code> flattens, the addon is the source. If it still climbs, check for fragmentation by comparing <code>heapUsed</code> to <code>heapTotal</code> and by observing whether RSS drops after a forced GC (run the process with <code>--expose-gc</code> on a canary and call <code>global.gc()</code>).</li>
+</ol>
+<p>The same table with <code>heapUsed</code> rising instead would send you straight to two snapshots and the delta view. The point of classification is to avoid spending the expensive instrument on the wrong target.</p>
+<h2 id="which-tool-for-which-budget">Which tool for which budget</h2>
+<p>Heap snapshots and <code>process.memoryUsage()</code> are built in and free. Beyond that, the choice depends on what you are running.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Reasonable choice</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single Node process, bootstrapped</td>
+<td><code>node --inspect</code> + Chrome DevTools, <code>v8.writeHeapSnapshot</code></td>
+<td>No cost, no agent, works on a small VM</td>
+</tr>
+<tr>
+<td>Container fleet on a cloud provider</td>
+<td>The provider's managed profiling service</td>
+<td>Useful when you cannot SSH into every pod</td>
+</tr>
+<tr>
+<td>Multi-language backend</td>
+<td>An APM with continuous profiling</td>
+<td>The value is correlation with traces, not the profiler alone</td>
+</tr>
+<tr>
+<td>Existing enterprise contract</td>
+<td>Whatever is already in the contract</td>
+<td>Adding a vendor for memory profiling alone is rarely worth a procurement cycle</td>
+</tr>
+</tbody>
+</table>
+<p>The trap is buying an APM to solve a leak that has not been classified. A continuous profiler shows <em>where</em> CPU and allocation go; it does not tell you what is retained. For retention, a heap snapshot is required. Use the paid tool to find the hot path, then take a snapshot to find the retainer.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before starting a debugging session, answer these in order:</p>
+<ul>
+<li>Is <code>heapUsed</code> trending up, or only <code>rss</code>? (Determines JS heap vs native.)</li>
+<li>Is the growth linear, stepped, or flat-then-cliff? (Pattern A, B, or C.)</li>
+<li>Does the growth correlate with request volume, uptime, or a specific input? (Narrows the suspect.)</li>
+<li>Which in-memory structures have no documented bound? (Candidates for Pattern B.)</li>
+<li>Can the leak be reproduced on a single canary with production-like traffic? (If not, fix observability first.)</li>
+<li>Is there a snapshot from before the last restart? (If not, capture one before the next.)</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why does Node.js memory keep growing but heapUsed is stable?</strong></p>
+<p>Because the growth is outside the V8 heap. <code>rss</code> includes native memory, Buffers, and the code itself. Check <code>external</code> and <code>arrayBuffers</code> in <code>process.memoryUsage()</code> — if they are growing, the leak is in Buffer or native territory, and a JS heap snapshot will not show it. The fix is usually in stream handling or a native addon, not in application objects.</p>
+<p><strong>How many heap snapshots are needed to find a leak?</strong></p>
+<p>Two, taken under similar load at different times. A single snapshot shows what is in memory; the comparison between two shows what is accumulating. Take the first after warm-up and the second an hour or more later, then sort by delta in DevTools. If the delta is small, a longer interval or heavier traffic may be needed to make the leak visible.</p>
+<p><strong>What causes MaxListenersExceededWarning in production?</strong></p>
+<p>A single <code>EventEmitter</code> has more than its configured limit of listeners (default 10). In a service, this almost always means a listener is being added per request or per connection without a matching removal. Check <code>emitter.listenerCount(eventName)</code> — if it tracks request volume, the leak is found. The fix is to remove the listener in the same scope that added it.</p>
+<p><strong>When should the pod be restarted instead of debugged?</strong></p>
+<p>When the service is degraded and the leak is not yet understood, restart to restore service — but capture <code>process.memoryUsage()</code> and, if possible, a heap snapshot before the restart. A restart without a snapshot destroys the evidence. A scheduled restart that masks a leak is a signal to schedule the debugging, not a fix.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Add the <code>process.memoryUsage()</code> interval logger shown above to the service's main entry file, deploy it to one canary instance, and let it run for an hour under real traffic. When you return, compare <code>heapUsed</code> and <code>rss</code>: that single comparison tells you whether you are hunting a JS retention leak or a native-memory leak, and which section above to read first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">7 skills senior engineers need now agents are live</a></li>
+<li><a href="https://kubaik.github.io/ai-reshaped-my-engineering-principles/">AI Code Generation: Failure Modes and Guardrails</a></li>
+<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+                        <h3>7 skills senior engineers need now agents are live</h3>
+                        <p>Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+                        <span class="related-meta">15 min read · 5 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-reshaped-my-engineering-principles/">
+                        <h3>AI reshaped my engineering principles</h3>
+                        <p>AI code assistants change interfaces, concurrency and state in ways that pass review. Here are the failure modes and the checks that catch them.</p>
+                        <span class="related-meta">11 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/mcp-servers-the-3-hidden-costs-nobody-quotes/">
+                        <h3>MCP servers: the 3 hidden costs nobody quotes</h3>
+                        <p>MCP servers are stateful async processes, not stateless APIs. Here are the real cost drivers, failure modes, and how to measure them yourself.</p>
+                        <span class="related-meta">16 min read · 5 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

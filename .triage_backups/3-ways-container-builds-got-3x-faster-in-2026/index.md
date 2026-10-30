@@ -1,0 +1,181 @@
+# Container Build Caching: What Actually Speeds Up CI
+
+## The problem: a build that rebuilds everything
+
+A common CI failure mode looks like this: a pipeline takes 40-plus minutes per commit, and the time is not spent on tests. It is spent rebuilding a multi-gigabyte base image from scratch on every run. The build tool is configured correctly in a superficial sense — caching flags are present, the registry is reachable — yet the cache hit rate sits in the low double digits and nothing moves the needle by more than a few percent.
+
+This is almost always a cache-key problem, not a build-tool problem. Before evaluating any cache backend, it helps to understand what a cache key actually is and why it changes.
+
+## How build cache keys actually work
+
+A container build is a sequence of steps. Each step produces a layer. The build engine computes a cache key for each step from several inputs:
+
+- The digest of the parent layer (or the base image digest for the first step)
+- The exact instruction text of the step
+- For `COPY` and `ADD`, the content hashes of the files being copied
+- Any build arguments that the step references
+
+If the computed key matches a previously stored key, the engine reuses the stored layer. If it does not, the step executes and produces a new layer, and every downstream step gets a new parent digest — so every downstream key changes too. This is the cascade that turns one changed byte into a full rebuild.
+
+The practical consequence: cache invalidation is not a roulette wheel. It is deterministic, and it is driven by the inputs above. A cache miss you cannot explain is a cache miss whose input you have not identified yet.
+
+Two failure modes dominate:
+
+1. **Unpinned base images.** A `FROM node:20` tag can resolve to a different digest over time or across runners. The first layer's key changes, and the entire chain invalidates. Pinning to a digest (`FROM node:20@sha256:...`) makes the key stable.
+2. **Copying the whole context early.** A `COPY . .` before `RUN npm ci` means any source file change invalidates the dependency-install layer. Copying only the lockfile first, installing, then copying source, keeps the expensive layer stable across source changes.
+
+## What changed in the tooling (and what did not)
+
+The mechanics above have been stable for years. What has changed is where cache layers can be stored and how they are addressed:
+
+- **Cache exporters in the build CLI.** Build tools now expose a general cache-export interface, so a build can push cache metadata to a registry, to a local directory, or to a CI provider's cache service, and pull it back on the next run. The `--cache-to` and `--cache-from` flags are the common interface.
+- **Inline cache metadata.** Rather than storing cache in a separate location, the cache manifest can be embedded in the image itself, so pulling the image also pulls its cache. This trades a larger image for one fewer moving part.
+- **Managed remote cache services.** A category of hosted service now runs a build engine on its own infrastructure and exposes a remote cache endpoint, with per-layer freshness rules and latency guarantees stated in their documentation. These are convenient but add a vendor dependency and a per-build cost.
+- **CI-provider cache backends.** Some CI providers expose their own blob cache to the build CLI through an exporter, avoiding registry egress entirely.
+
+None of these change the key derivation. They change where the cache lives and what you pay to move it.
+
+## The three numbers worth measuring
+
+Before choosing anything, measure three things on your own pipeline. Do not trust vendor figures or anyone else's benchmark — including the illustrative numbers in this article.
+
+**1. Median end-to-end build time.** Record wall-clock time from build start to image push, for a representative sample of at least 20 builds, and report the median rather than the mean. The mean is skewed by cold-cache outliers. Instrument this by wrapping the build step with `date +%s` at start and end, or by reading the CI provider's step duration from the API.
+
+**2. Cache hit rate.** This is the fraction of layers reused rather than rebuilt. Most build engines can emit this. With the Docker build CLI, `--progress=plain` prints per-step `CACHED` markers, so you can count them:
+
+```bash
+docker buildx build --progress=plain --cache-from=type=registry,ref=registry.example.com/app:buildcache . 2>&1 \
+  | tee build.log
+grep -c 'CACHED' build.log
+grep -c '^#[0-9]* \[.*\]' build.log
+```
+
+Divide the first count by the second for a per-build hit rate. Aggregate across your sample.
+
+**3. Cost per 1000 builds.** This is arithmetic, not measurement, and it depends entirely on your stated assumptions. Work it out explicitly. For example, if a registry charges $0.09 per GB of egress and a warm build pulls 3 GB of cache layers, that is 3 × $0.09 = $0.27 per build, or $270 per 1000 builds. If the same registry charges $0.005 per 1000 GET requests and a build issues 400 cache GETs, that is 0.4 × $0.005 = $0.002 per build. Add the compute cost of the runner separately. Substitute your own region's published rates; the point is that the number should be reproducible from inputs you can name.
+
+## Cache backend options, compared honestly
+
+The table below compares categories, not products. Fill in the cost column with your own arithmetic.
+
+| Backend | Where cache lives | Main cost driver | Main weakness |
+|---|---|---|---|
+| Registry-backed cache | Your container registry | Egress on every cache pull | Registry egress can dominate at high build volume |
+| Inline cache metadata | Inside the image in the registry | Larger image to push and pull | Cache travels with the image; stale images carry stale cache |
+| CI-provider blob cache | The CI provider's storage | Usually included in CI pricing | Tied to one provider; often size-capped and expires |
+| Managed remote cache service | Vendor infrastructure | Per-build fee plus egress | Vendor dependency; cold cache on first build of the day |
+| Self-hosted build engine with local SSD | The runner's disk | Runner uptime and storage | Cache is lost when the runner is replaced |
+
+### Registry-backed cache
+
+The build pushes cache metadata to a tag in your existing registry and pulls it back on the next run. There is no new service to operate. The tradeoff is that every cache pull is egress, billed at your registry's rate, and the cache key derivation is sensitive to the exact layer hashes — so a single dependency change can invalidate a long chain of layers.
+
+Best suited to teams that already pay registry egress and want no additional vendor.
+
+### Inline cache metadata
+
+The cache manifest is embedded in the image, so one pull gets both the image and its cache. This removes a separate cache tag and simplifies the workflow. The cost is a larger image and the risk that a frequently pulled but stale image carries an equally stale cache.
+
+Best suited to teams with a small number of long-lived images and low build frequency.
+
+### CI-provider blob cache
+
+The CI provider exposes its own storage to the build CLI through a cache exporter. There is typically no separate egress charge, but the cache is scoped to the repository, often capped in total size, and frequently expires after a fixed period. Latency from runners in other regions to a single-region cache bucket can add noticeable time per build.
+
+Best suited to teams already committed to one CI provider and building at moderate volume.
+
+### Managed remote cache service
+
+A hosted service runs the build engine and exposes a remote cache endpoint. This is the least operationally demanding option and can offer lower latency than a cross-region registry pull. The costs are a per-build fee plus egress, and a dependency on a vendor's availability and pricing. Cold-cache behaviour on the first build of a period is the same as anywhere else.
+
+Best suited to teams that ship many times per day and value removing cache infrastructure from their own backlog.
+
+### Self-hosted build engine with local SSD
+
+The build engine runs on your own persistent runner and stores cache on local NVMe storage. There is no egress and the hit rate approaches 100 percent after the first build. The weakness is that the cache dies with the runner. On ephemeral CI runners this option is effectively useless unless you add a step to push the cache to shared storage after every build — at which point you have re-created the registry-backed option with more moving parts.
+
+Best suited to teams with stable, long-lived runners and low churn.
+
+## Why "one extra line" is rarely the whole story
+
+Vendor and blog posts often present the fix as a single added flag. In practice, adding a cache exporter changes three things at once: where cache is written, who can read it, and what credentials the build needs. Expect to configure registry authentication for the cache tag, to set a retention policy so cache tags do not accumulate indefinitely, and to verify that the cache is actually being hit rather than silently missed.
+
+A cache that is written but never read looks identical to a working cache in the build log until you count the `CACHED` markers. Measure after the change, not before.
+
+## Worked example: diagnosing a cascade invalidation
+
+Suppose a build has five steps and the measured hit rate is 20 percent — one in five steps reused. The steps are:
+
+1. `FROM node:20`
+2. `COPY package.json package-lock.json ./`
+3. `RUN npm ci`
+4. `COPY . .`
+5. `RUN npm run build`
+
+Reasoning through the keys: step 1's key depends on the resolved digest of `node:20`. If that tag was re-pushed upstream, step 1 misses, and steps 2 through 5 all get new parent digests and therefore all miss. That alone produces a 0 percent hit rate, so it is probably not the only cause.
+
+Now assume the base image is pinned. Step 2's key depends on the content of `package.json` and `package-lock.json`. If either changes, step 2 misses. Step 3 inherits that miss. Steps 4 and 5 depend on the source tree, so any source edit misses them regardless.
+
+The measured 20 percent — one hit out of five — is consistent with a pipeline where the lockfile changes on most commits, or where the base image tag is floating and usually but not always stable. To distinguish the two, check whether step 1 reports `CACHED`. If it does not, the base image is the culprit. If it does, the lockfile is.
+
+The fix in either case is the same class of change: pin the base image by digest, and make sure the lockfile is regenerated only when dependencies actually change. Neither fix requires a new cache backend.
+
+## Decision checklist
+
+Work through these in order. Stop at the first "yes".
+
+1. **Is the base image pinned by digest?** If not, pin it. This is free and fixes the most common cascade.
+2. **Is the dependency install layer separated from the source copy?** If not, reorder the Dockerfile so the lockfile is copied and dependencies installed before the source tree is copied.
+3. **Is the measured hit rate above 70 percent?** If yes, the remaining time is probably compute-bound, and a faster cache backend will not help much.
+4. **Is the dominant cost registry egress?** If yes, a CI-provider blob cache or a managed remote cache removes that line item.
+5. **Are builds frequent enough that a per-build fee beats egress?** Do the arithmetic with your own numbers before committing.
+6. **Are runners ephemeral?** If yes, rule out local-SSD caching unless you are prepared to push cache to shared storage.
+7. **Is the environment Kubernetes-only with no Docker daemon?** Then a daemonless builder is a constraint, not a choice, and cache options narrow accordingly.
+
+## FAQ
+
+**Why does the cache still miss after adding a cache-from flag?**
+
+Because the flag controls where cache is read from, not whether the keys match. If the base image digest, the lockfile, or the referenced build arguments changed, the keys differ and no amount of cache configuration will produce a hit. Print the per-step cache keys and compare them between two builds.
+
+**How do I see per-step cache keys?**
+
+Run the build with plain progress output and inspect the log:
+
+```bash
+docker buildx build --progress=plain \
+  --cache-from=type=registry,ref=registry.example.com/app:buildcache \
+  --cache-to=type=registry,ref=registry.example.com/app:buildcache,mode=max \
+  -t registry.example.com/app:latest .
+```
+
+Each step is printed with its instruction and whether it was cached. Comparing two consecutive logs shows exactly which step first diverged.
+
+**What is the cheapest option for low build frequency?**
+
+Arithmetic, not measurement: a small always-on instance plus attached SSD is billed per hour regardless of build count, so it wins only if the instance is already running for other reasons. For a handful of builds per day, a registry-backed or CI-provider cache almost always costs less because you pay per byte moved rather than per hour of idle capacity. Substitute your provider's published hourly and per-GB rates and compute both.
+
+**Can I switch cache backends without rewriting the Dockerfile?**
+
+Usually yes, if the build tool exposes a general cache-export interface. The Dockerfile itself does not reference the cache backend; only the build command does. What changes between backends is the `--cache-from` and `--cache-to` values and the credentials the build needs. Verify that the new backend supports the same cache mode (for example, whether it stores all layers or only the final stage) before switching.
+
+**Does a larger cache always mean a faster build?**
+
+No. Cache lookup and transfer have a cost. If a warm build pulls several gigabytes of cache layers over a slow link, the transfer can exceed the time saved by reuse. Measure end-to-end time, not hit rate alone, and consider whether a smaller, more targeted cache — for example, caching only the dependency layer — gives a better trade.
+
+**Why does the first build of the day take so long?**
+
+Because the cache is cold. This is true of every backend listed above. If cold-start time matters, the lever is reducing the work the cold build does — smaller base images, fewer layers, parallel stages — not changing where the cache lives.
+
+## What to do in the next 30 minutes
+
+Measure your current cache hit rate before changing anything. Run your build twice in a row with plain progress output and count the cached steps:
+
+```bash
+docker buildx build --progress=plain -t app:local . 2>&1 | tee build1.log
+docker buildx build --progress=plain -t app:local . 2>&1 | tee build2.log
+grep -c 'CACHED' build2.log
+```
+
+If the second build reports zero cached steps, you have a key-stability problem, not a backend problem. Pin your base image by digest and split the dependency-install layer from the source copy, then run the same two commands again. Only after the hit rate is stable should you evaluate whether a different cache backend is worth its cost.
+===

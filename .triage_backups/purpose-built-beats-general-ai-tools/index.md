@@ -1,0 +1,227 @@
+# Purpose-built beats general AI tools
+
+Most write-ups about AI architecture stop exactly where the interesting part starts: the decision. They compare feature lists and conclude that "it depends." This article tries to make the dependency concrete. It covers what general AI platforms actually do well, where they fail, how to measure the difference on your own workload, and how to choose without guessing.
+
+## The conventional wisdom (and why it's incomplete)
+
+The market is saturated with AI platforms that promise to do everything: generate product copy, answer support tickets, write SQL against your analytics warehouse, and summarise documents. The pitch is consistent: "Use one general-purpose platform and skip the integration work of stitching together a dozen services." That advice is repeated often enough to sound like a default.
+
+The honest version is narrower. A general platform is often the right choice, but the reason people give for choosing it — "fewer moving parts" — is usually not the real reason it wins. It wins when the AI feature is not load-bearing. It loses when the feature is the product, because the platform's behaviour becomes part of your product's behaviour, and you don't control it.
+
+The opposing view is also seductive. Advocates of general platforms argue that the integration cost of maintaining multiple services outweighs any performance gain from specialisation. They point to a single vendor relationship and to consolidated usage. They are not wrong about integration pain. They are usually optimising for the wrong variable.
+
+For a solo founder who is also the only engineer, the priority is not minimising the number of services. It is minimising the number of decisions that can break the product while you sleep. A general platform can save a week of integration work and cost a month of debugging when its fallback behaviour changes after an update. A purpose-built stack gives you control over the data pipeline, the model choice, and the fallback rules. Whether that control is worth the setup cost depends on how much of your product depends on the answer being right.
+
+## What actually happens when a general platform is the default
+
+A common pattern: a team adopts a general AI orchestration framework for a simple chatbot, then within weeks tries to bolt on retrieval-augmented generation (RAG), a summariser, and an analytics helper. The architecture becomes a stack of layers anyway — the "general" platform calls a vector database, then a third-party embedding API, then a custom script to sanitise output. Each layer adds latency, cost, and a new failure mode. The generality was in the marketing, not in the request path.
+
+The failure mode that catches people is silent behaviour change. Consider a support bot built on a hosted vector database plus a hosted LLM. It works in testing. In production, it starts returning truncated or generic answers. The logs show the vector store returning empty results for a fraction of queries. After investigation, the cause is that the orchestration layer changed its document chunking strategy in an update: documents are now split more aggressively, so the stored embeddings no longer match the chunks being queried. The platform's fallback is to answer from the prompt alone, which looks like an answer but isn't grounded in your data. Fixing it means rebuilding the indexing pipeline.
+
+The hidden cost is not only engineering time. It is cognitive load. Every abstraction layer you don't control obscures real behaviour. When retry logic, rate limits, or response formats change, you often learn about it from user complaints rather than from a changelog.
+
+A second failure mode is the pricing cliff. Most platforms offer a free or cheap tier that covers small-scale usage, then route traffic to a more capable and more expensive model once usage crosses a threshold. The routing is often automatic and not prominently surfaced. A feature that adds modest traffic can move a meaningful share of requests into a higher tier, and the bill can grow much faster than request volume. This is not malice; it is how tiered pricing works. It is still a risk you have to model before you ship, not after.
+
+## A different mental model: platforms versus stacks
+
+The decision is less about features than about ownership. A general platform takes ownership of routing, fallback, and often of the data format. A purpose-built stack keeps ownership in your codebase.
+
+A useful analogy: a general platform is a multi-tool. It can open a can, cut fabric, and file a nail, but it is never the best tool for any of those jobs. A purpose-built stack is a set of specialised tools; each does one job, and you can replace one without replacing the rest. The upfront cost is higher. The failure modes are visible in your own logs.
+
+The mental shift is from "platform" to "stack." A stack is a set of components with narrow responsibilities that together form a system. A platform is one component that claims all responsibilities. The stack gives you control. The platform gives you convenience, and the price of that convenience is that you cannot inspect the parts you didn't build.
+
+This matters most at 3 a.m. If a request fails, a stack lets you trace it: did retrieval return nothing, did the model time out, did the prompt exceed the context window? A platform often gives you a status code and a support form.
+
+## How to measure the difference on your own workload
+
+Published benchmarks rarely match your traffic. The only numbers that matter are the ones you collect. Here is what to instrument and how to compare, without inventing figures.
+
+**Latency.** Record per-request wall-clock time and break it into stages: retrieval, prompt construction, model inference, post-processing. Do not trust a single median. Record p50, p95, and p99, because tail latency is what users notice. A simple approach is to wrap each stage in a timer and emit structured logs, then compute percentiles over a fixed window.
+
+**Error rate, split by cause.** "Error" is too coarse. Separate: retrieval returned zero results, model call timed out, model returned a refusal, output failed a schema or format check, and fallback path was taken. The fallback rate is the number most teams never measure, and it is usually the one that explains user complaints.
+
+**Cost per successful request.** Take your provider's published per-token prices, multiply by actual input and output token counts from your logs, and divide by the number of requests that produced a usable answer. This is the number that exposes pricing cliffs: a request that falls back to a more expensive model and then fails is pure cost.
+
+**Grounding rate.** For retrieval-based features, log whether the answer cited or used retrieved context. A high answer rate with a low grounding rate means the system is confidently answering without your data.
+
+**Fallback transparency.** Deliberately trigger failures in a staging environment — empty retrieval, a malformed prompt, a timeout — and record exactly what the user sees. If you cannot predict the fallback output, you do not control the feature.
+
+A comparison table is only meaningful if the columns come from your own instrumentation. A template:
+
+| Metric | General platform | Purpose-built stack |
+|---|---|---|
+| p50 / p95 latency (ms) | measured | measured |
+| Retrieval-empty rate | measured | measured |
+| Fallback rate | measured | measured |
+| Cost per successful request | measured | measured |
+| Time to diagnose a bad answer | measured | measured |
+
+Fill it in with your own numbers over a representative traffic window. The last row is the one teams forget: how long does it take, from a user complaint, to a root cause? That is the real maintenance cost.
+
+## Worked example: reasoning about a pricing cliff
+
+Suppose a feature averages 1,000 requests per day. Each request sends 2,000 input tokens and receives 300 output tokens. The provider charges $0.50 per million input tokens on the cheap tier and $3.00 per million output tokens, and $5.00 per million input tokens on the expensive tier with $15.00 per million output tokens.
+
+On the cheap tier, per request: input 2,000 tokens at $0.50/M is $0.001; output 300 tokens at $3.00/M is $0.0009. Total roughly $0.0019 per request, or about $1.90 per day, about $57 per month.
+
+Now suppose a new feature causes 30% of requests to be routed to the expensive tier. Those 300 requests cost: input 2,000 tokens at $5.00/M is $0.01; output 300 tokens at $15.00/M is $0.0045; total $0.0145 per request, or $4.35 per day. The remaining 700 requests cost $1.33 per day. Total $5.68 per day, about $170 per month — roughly triple, from a routing change, not from a traffic change.
+
+These are illustrative figures with stated assumptions, not a benchmark. The point is the method: model the routing split before you ship, and instrument the actual split after. If you cannot see the split in your logs, you cannot control the bill.
+
+## Where a general platform is the right call
+
+Three situations genuinely favour a general platform. Each has a trade-off worth naming.
+
+**The AI feature is not core.** If the product works without it, a general platform is a reasonable default. The trade-off is vendor lock-in on pricing and fallback behaviour, but for a peripheral feature that is acceptable. Define "peripheral" precisely: if the feature breaks for a day, does the product still do its job? If yes, it is peripheral.
+
+**There is no engineering capacity to maintain a stack.** A non-technical founder with no engineer is better served by a platform that abstracts model routing and vector search than by a half-built stack. The trade-off is limited customisation and a ceiling on what can be fixed when behaviour changes. That ceiling is real and should be acknowledged up front.
+
+**You are validating an idea and speed dominates.** A platform can let you test a hypothesis in days. The trade-off is that migration cost grows the longer you stay. If you take this path, set a deadline and write it down. "We will re-evaluate when the feature becomes core or when monthly cost exceeds X" is a decision; "we'll migrate later" is not.
+
+## Decision checklist
+
+Work through these in order. The answer to the first question usually settles it.
+
+1. If the AI feature stopped working today, would the product still function? If yes, a general platform is defensible. If no, treat the feature as core.
+2. Is the output of the feature something a user acts on — a price, a medical or legal claim, a financial figure, a customer-facing answer? If yes, you need control over fallback behaviour, because a confident wrong answer is worse than an error.
+3. Can you see, in your own logs, why any given request produced the answer it did? If not, you cannot debug it, regardless of which architecture you chose.
+4. Do you know your current routing split across model tiers, and your cost per successful request? If not, measure before deciding.
+5. Can you, with the people you have, rebuild the retrieval index from scratch in under a day? If not, a purpose-built stack may be more than you can maintain, and that is a legitimate reason to choose a platform.
+6. What is the migration cost from your current choice? Estimate it honestly: exporting vectors, prompts, fallback rules, and evaluation sets. If that estimate is large, the current choice is effectively permanent, so choose deliberately.
+
+## A minimal purpose-built stack
+
+A workable starting point for a solo developer is a local model server, a vector database, a small routing service, and request tracing. Ollama is a common choice for local model serving. Qdrant is a common choice for vector search, and it supports an in-memory mode for low-latency search and a persistent mode for production. For observability, self-hosted tracing tools in the Langfuse category record request-level traces, token usage, and model metadata. Each component is replaceable independently, which is the point.
+
+The trade-off is real: you now own upgrades, backups, and capacity planning. In exchange, when something breaks you can read the code that broke.
+
+A minimal FastAPI service that retrieves context, calls a local model, and traces the request:
+
+```python
+# main.py
+from fastapi import FastAPI
+from qdrant_client import QdrantClient
+from langfuse import Langfuse
+import ollama
+import os
+
+app = FastAPI()
+
+OLLAMA_MODEL = "llama3.2:latest"
+QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
+QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
+LANGFUSE_HOST = os.getenv("LANGFUSE_HOST", "localhost")
+
+qdrant = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
+langfuse = Langfuse(
+    host=LANGFUSE_HOST,
+    public_key=os.environ["LANGFUSE_PUBLIC_KEY"],
+    secret_key=os.environ["LANGFUSE_SECRET_KEY"],
+)
+
+@app.post("/chat")
+async def chat(query: str):
+    trace = langfuse.trace(name="chat", input=query)
+
+    # Retrieve context. Note: query_vector must be a real embedding,
+    # not the raw string. Embed the query with the same model used at index time.
+    query_vector = embed(query)
+    results = qdrant.search(
+        collection_name="docs",
+        query_vector=query_vector,
+        limit=3,
+    )
+    context = "\n".join(r.payload["text"] for r in results)
+
+    if not results:
+        # Explicit fallback: do not answer as if context existed.
+        trace.update(output="no_context", metadata={"fallback": True})
+        return {"response": "I don't have information on that.", "grounded": False}
+
+    response = ollama.generate(
+        model=OLLAMA_MODEL,
+        prompt=f"Context:\n{context}\n\nQuery: {query}\n\nAnswer:",
+        options={"temperature": 0.3},
+    )
+
+    trace.update(
+        output=response["response"],
+        metadata={
+            "model": OLLAMA_MODEL,
+            "prompt_tokens": response.get("prompt_eval_count"),
+            "retrieved": len(results),
+            "fallback": False,
+        },
+    )
+    return {"response": response["response"], "grounded": True}
+```
+
+Two things in that snippet matter more than the framework choice. First, the embedding of the query must use the same model that produced the stored vectors; mixing models is a common cause of empty or irrelevant retrieval. Second, the empty-retrieval branch is explicit and returns a non-answer rather than letting the model improvise. That single branch is often the difference between a trustworthy feature and one that quietly fabricates.
+
+A Dockerfile for it:
+
+```dockerfile
+# Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+And a requirements file:
+
+```
+fastapi
+uvicorn
+qdrant-client
+ollama
+langfuse
+```
+
+Pin these to specific versions in your own project once you have tested them; pinning is part of owning the stack.
+
+## Common objections
+
+**"A general platform saves integration time."** It does, once. Integration is a one-time cost; maintenance is ongoing. The relevant comparison is not setup time versus setup time, but setup time plus maintenance versus setup time plus maintenance. If the platform's fallback behaviour changes and you cannot see it, the maintenance cost is unbounded.
+
+**"Purpose-built stacks are harder to maintain."** They are harder to set up and easier to reason about. Once running, you control upgrades, and a failure is visible in your logs. The cost is that you must actually do the upgrades and backups — that work does not disappear, it just moves to you.
+
+**"I don't have time to build a stack."** Then you also don't have time to debug an opaque platform, and the debugging is the part you cannot schedule. The honest question is which kind of work you can absorb: predictable setup work, or unpredictable incident work.
+
+**"The general platform ecosystem is more mature."** Maturity is not one property. General platforms are mature in breadth. Open-source model servers, vector databases, and tracing tools are mature in their narrow jobs. Pick the maturity that matches the job.
+
+**"I'll outsource the stack."** You can, but you keep ownership of the outcome. Outsourcing setup is reasonable; outsourcing the ability to diagnose a bad answer is not, unless the feature is peripheral.
+
+## FAQ
+
+**How do I know if an AI feature is core?**
+Ask whether the product still works if the feature returns an error for a day. If it does not, the feature is core, and you need control over fallback behaviour.
+
+**What is hardest about migrating off a general platform?**
+Usually the data and the implicit behaviour: vector indexes, prompt templates, and fallback rules that were never written down. Exporting vectors is mechanical; reconstructing undocumented fallback logic is not. Budget for it before you need it.
+
+**Can I prototype on a platform and migrate later?**
+Yes, deliberately. Set a trigger — the feature becoming core, or monthly cost crossing a threshold — and treat the trigger as a commitment, not a preference.
+
+**Do I need a hosted vector database?**
+Only if you need capabilities a single self-hosted instance cannot provide, such as multi-region replication or very large indexes. For most single-product workloads, one instance is sufficient. Measure your query rate and index size before assuming otherwise.
+
+**How much observability is enough to start?**
+Enough to answer, for any bad answer: what was retrieved, which model ran, how many tokens were used, and whether a fallback path was taken. If your logs can answer those four questions, you can debug. If not, add tracing before adding features.
+
+## Summary
+
+The choice between a general AI platform and a purpose-built stack is mostly a choice about who owns the failure modes. A platform owns them and shows you a status code. A stack leaves them in your codebase, where you can read them.
+
+For a solo developer whose product depends on the AI feature being right, that ownership is usually worth the setup cost. For a peripheral feature, a prototype, or a team with no engineering capacity, a platform is a reasonable and honest choice. The mistake is choosing a platform for convenience and then discovering the feature was core all along.
+
+The decision hinges on measurement, not on preference: know your routing split, your cost per successful request, your fallback rate, and how long it takes you to diagnose a bad answer. Those four numbers settle the question faster than any feature comparison.
+
+## Do this in the next 30 minutes
+
+Pick your most important AI feature and add one log line at the point where retrieval returns no results. Emit a counter or a structured log entry with the query ID and a `retrieval_empty` flag. Run it for a day. If that counter is nonzero, you have a fallback path you did not know about, and you now have the first number you need to decide whether this feature deserves a stack you control.

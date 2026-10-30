@@ -1,0 +1,585 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Self-healing pipelines: Argo vs Crossplane in 2026 - Kubai Kevin</title>
+        <meta name="description" content="Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.">
+        <meta name="keywords" content="GitopsSelfHealing, Kubernetes, Crossplane, Ai, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-25T13:16:29.832770">
+        <meta property="article:modified_time" content="2026-10-03T11:05:04.572818+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Self-healing pipelines: Argo vs Crossplane in 2026">
+        <meta property="og:description" content="Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.">
+        <meta property="og:url" content="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/self-healing-pipelines-argo-vs-crossplane-in-2026.png">
+        <meta property="og:image:alt" content="Self-healing pipelines: Argo vs Crossplane in 2026">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Self-healing pipelines: Argo vs Crossplane in 2026">
+        <meta name="twitter:description" content="Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/self-healing-pipelines-argo-vs-crossplane-in-2026.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/#article",
+      "headline": "Self-healing pipelines: Argo vs Crossplane in 2026",
+      "description": "Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.",
+      "datePublished": "2026-06-25T13:16:29+00:00",
+      "dateModified": "2026-10-03T11:05:04+00:00",
+      "wordCount": 2592,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/"
+      },
+      "keywords": "GitopsSelfHealing, Kubernetes, Crossplane, Ai, K8s",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/self-healing-pipelines-argo-vs-crossplane-in-2026.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Self-healing pipelines: Argo vs Crossplane in 2026",
+          "item": "https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Self-healing pipelines: Argo vs Crossplane in 2026</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Self-healing pipelines: Argo vs Crossplane in 2026</h1>
+                
+                <p class="post-lead">Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GitopsSelfHealing</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2592 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="what-self-healing-actually-means-in-each-tool">What "self-healing" actually means in each tool</h2>
+<p>Self-healing is a marketing word covering at least three different mechanisms. Keeping them separate prevents most bad comparisons.</p>
+<p><strong>Continuous reconciliation.</strong> A controller reads a desired state, reads the observed state, and issues API calls to close the gap. This is the Kubernetes controller pattern, and both tools use it. The difference is <em>what</em> they reconcile: Argo CD reconciles Kubernetes manifests into a cluster; Crossplane reconciles cloud provider APIs through Kubernetes custom resources.</p>
+<p><strong>Health-driven rollback.</strong> A controller watches a workload's health signal and, when the signal degrades, reverts to a previously known-good revision. This is a Git operation in Argo CD's case: the desired state is a commit, and reverting means pointing the Application back at an earlier revision.</p>
+<p><strong>Drift correction.</strong> Something outside the pipeline changes a resource — a console edit, another automation, a provider-side mutation. The controller notices the live state no longer matches the desired state and re-applies the desired state.</p>
+<p>Argo CD is strongest at the first and third mechanisms applied to Kubernetes objects, plus health-driven sync status. Crossplane is strongest at the first and third mechanisms applied to cloud resources. Neither predicts failures. Neither repairs a resource whose provider API refuses the change. Any claim that one is "proactive" and the other "reactive" is really a statement about <em>polling interval and health signal quality</em>, not about a fundamentally different control model.</p>
+<h2 id="argo-cd-reconciliation-over-kubernetes-state">Argo CD: reconciliation over Kubernetes state</h2>
+<p>Argo CD stores desired state in Git and runs a controller inside the cluster. The controller compares the rendered manifests against live objects and reports a sync status (<code>Synced</code> / <code>OutOfSync</code>) and a health status (<code>Healthy</code> / <code>Progressing</code> / <code>Degraded</code> / <code>Missing</code> / <code>Unknown</code>).</p>
+<p>Two settings matter for self-healing:</p>
+<ul>
+<li><code>syncPolicy.automated.selfHeal: true</code> makes the controller re-apply desired state when live state drifts.</li>
+<li><code>syncPolicy.automated.prune: true</code> makes the controller delete resources that are no longer in Git.</li>
+</ul>
+<p>Health status is not computed by Argo CD from first principles. It comes from health checks that Argo CD ships for built-in Kubernetes kinds, plus Lua health checks you can supply for custom resources. If a CRD has no health check, Argo CD reports <code>Unknown</code> and will not treat the resource as degraded. This is the single most common reason an Argo CD "self-healing" setup silently does nothing: the resource that fails is not one Argo CD knows how to evaluate.</p>
+<p>A minimal ApplicationSet that syncs one app to every registered cluster:</p>
+<pre><code class="language-yaml">apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: multi-cluster-apps
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          argocd.argoproj.io/secret-type: cluster
+  template:
+    metadata:
+      name: '{{.name}}-{{.application}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/example-org/gitops.git
+        targetRevision: HEAD
+        path: apps/{{.application}}
+        helm:
+          releaseName: {{.application}}
+      destination:
+        server: '{{.server}}'
+        namespace: {{.application}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: false
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+</code></pre>
+<p>Notes on this manifest, because small mistakes here produce confusing behavior:</p>
+<ul>
+<li><code>allowEmpty: false</code> prevents an empty render from pruning everything. Keep it.</li>
+<li>The retry block governs <em>sync</em> retries, not health evaluation. A resource stuck in <code>Progressing</code> will not be retried by this block; it will simply stay <code>Progressing</code>.</li>
+<li><code>selfHeal</code> corrects drift in objects Argo CD manages. It does not correct drift in objects created by an operator that Argo CD does not track.</li>
+</ul>
+<p><strong>Failure mode to design around:</strong> a health check that returns healthy for a broken workload. A liveness probe that only checks that the process is listening will report healthy while the process returns errors for every request. Argo CD will see <code>Healthy</code>, will not roll back, and the outage continues. The fix is at the application layer — health endpoints that exercise real dependencies — not in Argo CD's configuration.</p>
+<p><strong>Second failure mode:</strong> a CRD with no health check. The resource is <code>Unknown</code> forever. Argo CD never considers the app degraded. Teams typically discover this only during an incident. Audit which kinds in your manifests have health checks before you rely on rollback.</p>
+<h2 id="crossplane-reconciliation-over-cloud-apis">Crossplane: reconciliation over cloud APIs</h2>
+<p>Crossplane installs providers that expose cloud resources as Kubernetes custom resources. A <code>VPC</code>, a <code>Cluster</code>, an <code>RDSInstance</code> — each is a Kubernetes object with a <code>spec.forProvider</code> block that mirrors the provider's API. A composite resource (XR) groups several of these, and a Composition describes how to build them from the XR's fields.</p>
+<p>The control loop is the same pattern as any Kubernetes controller: read desired, read observed, act. Crossplane's provider controllers watch their resources and re-issue create/update/delete calls when the observed state diverges from the spec.</p>
+<p>A Composition that builds a VPC and an EKS cluster from a composite resource:</p>
+<pre><code class="language-yaml">apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xeks.aws.example.org
+  labels:
+    provider: aws
+    guide: quickstart
+    vpcNetwork: &quot;true&quot;
+spec:
+  compositeTypeRef:
+    apiVersion: example.org/v1alpha1
+    kind: XEKS
+  resources:
+    - name: vpc
+      base:
+        apiVersion: ec2.aws.upbound.io/v1beta1
+        kind: VPC
+        spec:
+          forProvider:
+            region: us-west-2
+            cidrBlock: 10.0.0.0/16
+            enableDnsSupport: true
+            enableDnsHostnames: true
+      patches:
+        - fromFieldPath: &quot;metadata.uid&quot;
+          toFieldPath: &quot;spec.writeConnectionSecretToRef.name&quot;
+          transforms:
+            - type: string
+              string:
+                fmt: &quot;%s-vpc&quot;
+    - name: eks-cluster
+      base:
+        apiVersion: eks.aws.upbound.io/v1beta1
+        kind: Cluster
+        spec:
+          forProvider:
+            region: us-west-2
+            version: &quot;1.28&quot;
+            roleArnSelector:
+              matchControllerRef: true
+            vpcConfig:
+              - subnetIdSelector:
+                  matchLabels:
+                    access: public
+              - securityGroupIdSelector:
+                  matchControllerRef: true
+          writeConnectionSecretToRef:
+            namespace: crossplane-system
+      patches:
+        - fromFieldPath: &quot;metadata.uid&quot;
+          toFieldPath: &quot;spec.writeConnectionSecretToRef.name&quot;
+          transforms:
+            - type: string
+              string:
+                fmt: &quot;%s-eks&quot;
+      connectionDetails:
+        - fromConnectionSecretKey: kubeconfig
+      readinessChecks:
+        - type: MatchString
+          fieldPath: &quot;status.atProvider.status&quot;
+          matchString: &quot;ACTIVE&quot;
+</code></pre>
+<p>Corrections worth flagging, because they appear in a lot of copied examples:</p>
+<ul>
+<li><code>healthPolicy</code> is not a field on a Composition resource entry. Readiness for a composed resource is expressed with <code>readinessChecks</code> (Crossplane's own readiness evaluation) or, for provider resources, by the provider's own <code>status.conditions</code>. The version above uses <code>readinessChecks</code> with a field path into the observed state.</li>
+<li><code>matchControllerRef: true</code> in a selector means "match the resource created by the same composite." It is correct here, but note that it only resolves after the referenced resource exists, so ordering matters.</li>
+<li>The <code>patches</code> blocks derive a connection secret name from the composite's UID. Without a stable, unique name, two composites can collide on the same secret.</li>
+</ul>
+<p><strong>Failure mode to design around:</strong> provider-side immutability. Many cloud fields cannot be updated in place. Changing an RDS engine version, an EKS cluster version, or a VPC CIDR may require replacement. Crossplane will attempt the change, the provider API will reject it or the resource will enter a failed state, and no amount of reconciliation will fix it. The controller is doing exactly what it should; the desired state is simply not achievable by update. Teams that model infrastructure declaratively often assume "the reconciler will handle it," and this is the assumption that breaks.</p>
+<p><strong>Second failure mode:</strong> drift that the provider API does not report. If a console change is invisible in the resource's observed state, Crossplane has nothing to compare against. Reconciliation is only as good as the provider's read API.</p>
+<h2 id="how-to-measure-detection-and-recovery-yourself">How to measure detection and recovery yourself</h2>
+<p>Benchmarks comparing these tools are almost always unverifiable, because results depend on probe timings, provider latency, and which resource drifted. The useful thing is a procedure you can run on your own stack.</p>
+<p><strong>Instrument these four timestamps for every simulated failure:</strong></p>
+<ol>
+<li><code>t_drift</code> — the moment you mutate the resource.</li>
+<li><code>t_detect</code> — the first time the controller reports the resource as not-ready or out-of-sync.</li>
+<li><code>t_act</code> — the first API call the controller makes to correct it.</li>
+<li><code>t_healthy</code> — the moment the health signal returns to healthy.</li>
+</ol>
+<p>Detection latency is <code>t_detect - t_drift</code>. Recovery latency is <code>t_healthy - t_detect</code>. Total impact window is <code>t_healthy - t_drift</code>.</p>
+<p><strong>What to watch:</strong></p>
+<ul>
+<li>For Argo CD: <code>argocd app get &lt;app&gt; -o yaml</code> shows <code>status.sync.status</code> and <code>status.health.status</code>. The controller's own metrics are exposed for Prometheus; the reconciliation and health-check counters tell you how often it is evaluating. Watch the Application's <code>.status.conditions</code> for the reason a health check is <code>Unknown</code>.</li>
+<li>For Crossplane: <code>kubectl get &lt;kind&gt; &lt;name&gt; -o yaml</code> and read <code>status.conditions</code> (<code>Synced</code>, <code>Ready</code>). Provider controller logs show the reconciliation attempts and the API errors. The <code>Synced</code> condition going <code>False</code> with reason <code>ReconcileError</code> is the signal that the desired state is not achievable.</li>
+</ul>
+<p><strong>A minimal, reproducible experiment.</strong> Pick one non-production resource. Change one mutable field out of band — for example, alter a security group rule or a bucket policy through the provider console. Then record the four timestamps above using a script that polls the status field every few seconds. Repeat five times and note the spread, not just the median. The spread is what determines whether your rollback window is predictable.</p>
+<p><strong>Why the numbers vary so much between setups.</strong> Detection latency for Argo CD is bounded below by the controller's reconciliation interval <em>and</em> by the workload's own health-probe configuration. A pod with a 60-second liveness probe and a failure threshold of 3 takes at least 180 seconds to be marked unhealthy, regardless of how often Argo CD polls. Detection latency for Crossplane is bounded by the provider controller's reconcile interval and by the provider API's own eventual consistency. Neither number is a property of the tool alone.</p>
+<h2 id="where-each-approach-breaks-down">Where each approach breaks down</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Argo CD behavior</th>
+<th>Crossplane behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom resource with no health check</td>
+<td>Reports <code>Unknown</code>; no rollback triggered</td>
+<td>Not applicable; Crossplane uses provider readiness conditions</td>
+</tr>
+<tr>
+<td>Workload healthy at the probe but failing requests</td>
+<td>No rollback; health check is the weak link</td>
+<td>No rollback; same weak link</td>
+</tr>
+<tr>
+<td>Cloud field that cannot be updated in place</td>
+<td>Not managed by Argo CD</td>
+<td>Reconciliation fails; manual replacement needed</td>
+</tr>
+<tr>
+<td>Drift invisible in the provider's read API</td>
+<td>Not managed by Argo CD</td>
+<td>Not detected</td>
+</tr>
+<tr>
+<td>Desired state deleted from Git</td>
+<td>Prunes managed resources (if <code>prune: true</code>)</td>
+<td>Prunes composed resources when the XR is deleted</td>
+</tr>
+<tr>
+<td>Provider API rate limiting</td>
+<td>Not applicable</td>
+<td>Reconciliation backs off and retries; expect delays</td>
+</tr>
+<tr>
+<td>Change made directly in the cluster to a managed object</td>
+<td>Re-applied on next sync</td>
+<td>Not applicable</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern in this table is that both tools fail at the same two places: an unreliable health signal, and a provider that will not accept the correction. Choosing between them does not remove those failure modes; it changes which layer you are debugging when they occur.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Work through these in order. The first question that produces a clear answer usually decides it.</p>
+<ol>
+<li><strong>What is the resource that fails most often?</strong> If it is a Kubernetes workload, Argo CD's model matches the problem. If it is a cloud resource — a database, a network, an IAM policy — Crossplane's model matches.</li>
+<li><strong>Do you already have Terraform or another IaC tool that works?</strong> Migrating existing modules to Compositions is a rewrite, not a port. If the existing tooling is not causing pain, the migration cost is unlikely to be repaid by faster reconciliation.</li>
+<li><strong>Can your team write and debug Go?</strong> Composition functions are the extension point for nontrivial logic. Teams without Go experience tend to hit a wall the first time a Composition needs conditional behavior.</li>
+<li><strong>How good are your health signals today?</strong> If your liveness probes only check that a process is listening, neither tool will roll back correctly. Fix the probes first; the tool choice is secondary.</li>
+<li><strong>What is your actual recovery-time objective, and is it met by a manual rollback?</strong> A Git revert plus a sync is often fast enough. If it is, the marginal gain from infrastructure-layer reconciliation may not justify the setup cost.</li>
+<li><strong>How many distinct cloud resources do you manage?</strong> At small counts, per-resource controllers add overhead without much benefit. At large counts, a single control plane reduces the number of places drift can hide.</li>
+<li><strong>Can you test the failure path?</strong> If you cannot simulate a drift event in staging and observe the rollback, you do not know whether self-healing works. This is a prerequisite, not a nice-to-have.</li>
+</ol>
+<h2 id="combining-the-two">Combining the two</h2>
+<p>These tools are not mutually exclusive, and the combination is often more honest than either alone.</p>
+<p>A common arrangement: Argo CD manages the Kubernetes-side resources, including the Crossplane installation itself and the composite resources. Crossplane manages the cloud resources those composites describe. Argo CD's Git history then provides the audit trail for infrastructure changes, and Crossplane's controllers provide the reconciliation for resources that do not live in the cluster.</p>
+<p>The tradeoff is that a failure can now originate in two control planes. When debugging, the first question becomes "which controller last touched this object?" — and the answer is in the <code>managedFields</code> of the object and in the <code>status.conditions</code> of the composite. Teams that adopt both should decide up front which system owns which class of resource, and write that boundary down. Ambiguous ownership is the failure mode that the combination introduces.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Does Argo CD roll back automatically when health degrades?</strong>
+Not by default. <code>selfHeal: true</code> re-applies desired state; it does not revert to an earlier revision. Automatic rollback requires either a separate controller that watches health and rewrites the desired revision, or an Argo Rollouts-style progressive delivery setup. This distinction is the most common misunderstanding about Argo CD self-healing.</p>
+<p><strong>How often does Crossplane reconcile?</strong>
+The interval is configurable per controller and per provider. There is no single default that applies to every resource. Check the provider's documentation and the controller's flags for the version you are running rather than assuming a fixed number.</p>
+<p><strong>Can Argo CD manage cloud resources directly?</strong>
+It can apply any Kubernetes manifest, including Crossplane custom resources. That is the combination described above: Argo CD delivers the manifest, and Crossplane's controllers do the cloud API work. Argo CD itself does not call cloud provider APIs.</p>
+<p><strong>What happens when the desired state is genuinely impossible?</strong>
+Both controllers will retry, log errors, and eventually back off. The resource stays in a failed condition. Someone has to change the desired state. Self-healing does not mean "always converges" — it means "converges when the correction is expressible as an API call the provider accepts."</p>
+<p><strong>Is one of these faster?</strong>
+Detection latency depends on the controller's reconcile interval, the workload's health probe configuration, and the provider API's consistency guarantees. It is not a fixed property of either tool. Measure it on your own stack with the four-timestamp procedure above.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one non-production resource that a controller currently manages. Note its current health or readiness condition. Change one mutable field out of band — through the provider console or <code>kubectl edit</code> — and start a timer. Poll the condition every five seconds and write down when it flips to not-ready and when it flips back. That single measurement tells you more about your pipeline's real detection latency than any comparison table, and it takes less time than reading one more evaluation.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">Self-healing agents vs rule-based deployment rollback</a></li>
+<li><a href="https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">AI agents vs Argo, Tekton: which pipeline heals itself?</a></li>
+<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://developer.hashicorp.com/terraform/docs">Terraform documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://argo-cd.readthedocs.io/">Argo CD documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">
+                        <h3>AI agents vs Argo, Tekton: which pipeline heals itself?</h3>
+                        <p>How Argo Workflows and Tekton Pipelines differ for automated failure detection and recovery, with working code and failure-mode analysis.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
+                        <h3>Self-healing agents vs rule-based deployment rollback</h3>
+                        <p>Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.</p>
+                        <span class="related-meta">12 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-made-self-service-platforms-trivial-in-2026/">
+                        <h3>AI made self-service platforms trivial in 2026</h3>
+                        <p>AI can draft Terraform and Kubernetes manifests, but correctness still needs policy checks, schema validation, and runtime verification before merge.</p>
+                        <span class="related-meta">10 min read · 3 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

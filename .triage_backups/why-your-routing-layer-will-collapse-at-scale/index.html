@@ -1,0 +1,645 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Why your routing layer will collapse at scale - Kubai Kevin</title>
+        <meta name="description" content="How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.">
+        <meta name="keywords" content="LlmRouting, ModelRouting, GdprModelRouting, RedisRetryState, Model, LlmCostOptimization, LlmAuditTrail, CircuitBreakerModel, Cloudcomputing, Llm, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-04T03:38:05.904453">
+        <meta property="article:modified_time" content="2026-10-04T10:33:51.426373+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Why your routing layer will collapse at scale">
+        <meta property="og:description" content="How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.">
+        <meta property="og:url" content="https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/why-your-routing-layer-will-collapse-at-scale.png">
+        <meta property="og:image:alt" content="Why your routing layer will collapse at scale">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Why your routing layer will collapse at scale">
+        <meta name="twitter:description" content="How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-your-routing-layer-will-collapse-at-scale.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/#article",
+      "headline": "Why your routing layer will collapse at scale",
+      "description": "How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.",
+      "datePublished": "2026-09-04T03:38:05+00:00",
+      "dateModified": "2026-10-04T10:33:51+00:00",
+      "wordCount": 2499,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/"
+      },
+      "keywords": "LlmRouting, ModelRouting, GdprModelRouting, RedisRetryState, Model, LlmCostOptimization, LlmAuditTrail, CircuitBreakerModel",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/why-your-routing-layer-will-collapse-at-scale.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Why your routing layer will collapse at scale",
+          "item": "https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Why your routing layer will collapse at scale</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Why your routing layer will collapse at scale</h1>
+                
+                <p class="post-lead">How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmRouting</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ModelRouting</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GdprModelRouting</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">RedisRetryState</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/model/"
+                       style="text-decoration:none;">Model</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">Cloudcomputing</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2499 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A routing layer for LLM calls looks trivial in a demo: pick a provider, call it, return the result. The trouble starts when the same code has to survive latency spikes, cost pressure, data-residency rules, and provider-specific error behaviour at the same time. The sections below describe a design that handles those constraints, the failure modes that show up in practice, and how to measure whether it is actually working.</p>
+<h2 id="why-a-simple-if-statement-is-not-enough">Why a simple <code>if</code> statement is not enough</h2>
+<p>Routing is often described as one decision: which model do I call? In production, that decision has to be <em>stateful across retries</em>. Three constraints drive most of the complexity:</p>
+<ul>
+<li><strong>Latency variance.</strong> Cold model loads and provider-side queueing mean the same call can take very different amounts of time. A retry policy tuned for the median will fire too early and create retry storms.</li>
+<li><strong>Cost.</strong> Sending every request to the top-tier model first is the simplest policy and usually the most expensive one. A tiered policy needs a way to fall back without doubling spend.</li>
+<li><strong>Residency.</strong> If a prompt must be processed in a specific jurisdiction, the region is part of the routing decision, not an afterthought. A retry that silently switches region can break a compliance obligation even when the first attempt was fine.</li>
+</ul>
+<p>The retry loop is where these constraints collide. Provider documentation typically describes a single call. It rarely specifies what to persist between attempts, so teams ship code that works in staging and then fails an audit because the second attempt went somewhere the first one was not allowed to go.</p>
+<p>A related trap is caching model responses without tying the cache key to the model version. When a provider rolls out a new embedding or chat model, cached entries can keep being served until someone notices a quality change. The symptom is usually a support ticket describing output that changed "overnight" with no code change.</p>
+<p>Provider-specific error behaviour matters too. Different providers emit rate-limit and overload errors with different status codes, retry hints, and backoff expectations. A retry policy hardcoded for one provider will misbehave when traffic shifts to another.</p>
+<h2 id="the-core-design">The core design</h2>
+<p>The system has one source of truth: a config file that maps a user context to model tiers, regions, and retry policies. A simplified entry looks like this:</p>
+<pre><code class="language-json">{
+  &quot;eu-users&quot;: {
+    &quot;tier&quot;: &quot;standard&quot;,
+    &quot;providers&quot;: [
+      {
+        &quot;name&quot;: &quot;provider-a&quot;,
+        &quot;model&quot;: &quot;provider-a-large&quot;,
+        &quot;region&quot;: &quot;eu-west-1&quot;,
+        &quot;cost_per_1k_token&quot;: 0.0000018,
+        &quot;max_retries&quot;: 2,
+        &quot;retry_delay_ms&quot;: 1000,
+        &quot;timeout_ms&quot;: 30000
+      },
+      {
+        &quot;name&quot;: &quot;provider-b&quot;,
+        &quot;model&quot;: &quot;provider-b-flagship&quot;,
+        &quot;region&quot;: &quot;eu-central-1&quot;,
+        &quot;cost_per_1k_token&quot;: 0.000010,
+        &quot;max_retries&quot;: 1,
+        &quot;retry_delay_ms&quot;: 500,
+        &quot;timeout_ms&quot;: 45000
+      }
+    ]
+  }
+}
+</code></pre>
+<p>The router reads this file at startup, validates it against a JSON schema, and builds an in-memory table. On each request it does three things:</p>
+<ol>
+<li><strong>Context matching</strong> — read the user's region and tier from headers or verified JWT claims.</li>
+<li><strong>Provider selection</strong> — pick the first provider that has not exhausted its retry budget.</li>
+<li><strong>Stateful retry</strong> — persist the attempt count and the provider used, so a retry does not repeat a provider that already failed and does not cross a region boundary.</li>
+</ol>
+<p>State can live in a Redis list keyed by request ID. Each entry is a tuple of <code>{provider, attempt, status}</code>. A Lua script atomically checks the list length against <code>max_retries</code>, appends the new attempt, and returns the current budget. Doing this atomically matters under concurrency: a read-then-write sequence in application code will let two workers both believe they have budget left.</p>
+<p>Residency is enforced by two rules baked into the config:</p>
+<ul>
+<li>Every provider entry must declare a region.</li>
+<li>The router injects a region header into the downstream call and logs it.</li>
+</ul>
+<p>The audit trail is a separate Redis stream that records every decision: timestamp, request ID, a hashed user identifier, provider, region, token count, and error if any. A scheduled job flushes the stream to object storage, where a query engine can reconstruct the full history for a given user or time window.</p>
+<h3 id="choosing-the-retry-delay">Choosing the retry delay</h3>
+<p>A common mistake is to set <code>retry_delay_ms</code> to a round number that has no relationship to observed latency. If the delay is shorter than the provider's typical response time, retries fire while the original request is still in flight, which multiplies load instead of relieving it.</p>
+<p>The practical rule is to derive the delay from measured latency for that provider, not from intuition. Concretely:</p>
+<ul>
+<li>Instrument the provider client to record the duration of every call, success or failure.</li>
+<li>Compute a high percentile (p95 or p99) over a rolling window, for example the last 1,000 calls.</li>
+<li>Set the base delay to at least that percentile, then add jitter so retries from different requests do not align.</li>
+<li>Cap the delay at a value your latency budget can tolerate.</li>
+</ul>
+<p>To measure this, you need per-provider latency histograms. A Prometheus histogram with buckets spanning 50 ms to 30 s, labelled by provider and model, is enough. Compare the configured <code>retry_delay_ms</code> against the <code>histogram_quantile(0.95, ...)</code> value for the same provider. If the configured delay is below the p95, retries will overlap with in-flight requests.</p>
+<h2 id="implementation-walkthrough">Implementation walkthrough</h2>
+<h3 id="1-config-schema-and-validation">1. Config schema and validation</h3>
+<p>Validate the config at startup and fail fast. In Node, a JSON schema validator such as Ajv can enforce required fields and region formats:</p>
+<pre><code class="language-javascript">import Ajv from 'ajv';
+const ajv = new Ajv({ allErrors: true });
+
+const schema = {
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  type: 'object',
+  additionalProperties: false,
+  patternProperties: {
+    '^[a-zA-Z0-9_-]+$': {
+      type: 'object',
+      properties: {
+        tier: { type: 'string' },
+        providers: {
+          type: 'array',
+          items: {
+            type: 'object',
+            required: ['name', 'model', 'region', 'cost_per_1k_token', 'max_retries'],
+            properties: {
+              region: { pattern: '^(us|eu|ap)-[a-z0-9-]+-[0-9]$' }
+            }
+          }
+        }
+      },
+      required: ['tier', 'providers']
+    }
+  }
+};
+
+const validate = ajv.compile(schema);
+</code></pre>
+<p>In Kubernetes this becomes a readiness check; in a serverless function it throws an exception that your alerting catches. The important property is that an invalid config never reaches the request path.</p>
+<h3 id="2-provider-client-factory-with-circuit-breakers">2. Provider client factory with circuit breakers</h3>
+<p>Wrap each provider's SDK in a factory that returns a client configured for the region and guarded by a circuit breaker:</p>
+<pre><code class="language-javascript">import { CircuitBreaker } from 'opossum';
+
+function createClient(provider) {
+  const breaker = new CircuitBreaker(async (prompt, options) =&gt; {
+    const client = new ProviderClient({ region: provider.region });
+    return client.chat(provider.model, prompt, options);
+  }, {
+    timeout: provider.timeout_ms,
+    errorThresholdPercentage: 50,
+    resetTimeout: 30000
+  });
+  return breaker;
+}
+</code></pre>
+<p>The breaker opens after the configured error percentage is exceeded within the rolling window, which stops traffic from hammering a provider that is already failing. It also emits events you can export as metrics.</p>
+<h3 id="3-request-router-with-stateful-retries">3. Request router with stateful retries</h3>
+<p>The core router needs to read the attempt history, choose a provider, call it, and record the outcome:</p>
+<pre><code class="language-javascript">import express from 'express';
+import { createHash } from 'crypto';
+import { Redis } from 'ioredis';
+
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+const app = express();
+
+app.post('/chat', async (req, res) =&gt; {
+  const userRegion = req.headers['x-user-region'] || 'eu-users';
+  const config = await loadConfig();
+  const ctx = config[userRegion];
+  const requestId = createHash('sha256').update(req.body.prompt).digest('hex');
+
+  const key = `retry:${requestId}`;
+  const attempts = await redis.lrange(key, 0, -1);
+
+  const available = ctx.providers.filter(p =&gt;
+    !attempts.some(a =&gt; JSON.parse(a).provider === p.name)
+  );
+
+  if (available.length === 0) {
+    return res.status(429).json({ error: 'All providers exhausted' });
+  }
+
+  const provider = available[0];
+  const client = providerClients[provider.name];
+
+  try {
+    const response = await client.fire(req.body.prompt, {
+      maxTokens: 2048,
+      temperature: 0.7
+    });
+
+    await redis.xadd('model_audit', '*', {
+      requestId,
+      userRegion,
+      provider: provider.name,
+      region: provider.region,
+      tokens: response.usage.total_tokens,
+      status: 'success'
+    });
+
+    res.json(response);
+  } catch (err) {
+    await redis.rpush(key, JSON.stringify({ provider: provider.name, attempt: attempts.length + 1 }));
+    await redis.expire(key, provider.timeout_ms / 1000 + 60);
+
+    if (attempts.length + 1 &lt; provider.max_retries) {
+      return res.status(503).json({ error: 'retry' });
+    }
+
+    await redis.xadd('model_audit', '*', {
+      requestId,
+      userRegion,
+      provider: provider.name,
+      region: provider.region,
+      status: 'failed',
+      error: err.message
+    });
+    res.status(500).json({ error: 'All providers failed' });
+  }
+});
+</code></pre>
+<p>Two things are worth noting. First, the retry budget is per provider, not per request, so a provider that failed once is not retried beyond its own limit. Second, the TTL on the retry list should be longer than the longest timeout in the config, otherwise a slow request can outlive its own state.</p>
+<h3 id="4-auto-tuning-the-retry-delay">4. Auto-tuning the retry delay</h3>
+<p>A background worker can read recent audit entries per provider and recompute the p95 latency. If the configured delay is below the p95, it updates the in-memory config and publishes the change so other instances pick it up.</p>
+<pre><code class="language-javascript">const p95 = (arr) =&gt; {
+  const sorted = [...arr].sort((a, b) =&gt; a - b);
+  const pos = Math.floor(sorted.length * 0.95);
+  return sorted[pos];
+};
+
+setInterval(async () =&gt; {
+  const stats = await redis.xrange('model_audit', '-', '+', 'COUNT', 1000);
+  const latencies = stats
+    .filter(e =&gt; e[1][6] === 'success')
+    .map(e =&gt; parseInt(e[1][8], 10));
+
+  const newDelay = Math.min(Math.max(p95(latencies) * 2, 1000), 5000);
+  await updateProviderConfig(provider.name, { retry_delay_ms: newDelay });
+}, 30000);
+</code></pre>
+<p>The multiplier and the floor are policy choices, not derived values. Pick them so the resulting delay exceeds your measured p95 and stays inside your latency budget, then revisit them when the provider's behaviour changes.</p>
+<h3 id="5-audit-export">5. Audit export</h3>
+<p>A scheduled job reads the audit stream and writes partitioned files to object storage, organised by date. A query engine can then answer questions like "show every request processed for user X in region Y between two dates" without touching production Redis. Partitioning by date keeps scan costs bounded.</p>
+<h2 id="failure-modes-to-plan-for">Failure modes to plan for</h2>
+<ol>
+<li>
+<p><strong>Config reload stampede.</strong> When a config change is published, every instance may try to fetch the new file at once. Serialise reloads with a lock, or publish the change and have each instance wait a randomised jitter before fetching.</p>
+</li>
+<li>
+<p><strong>Region drift on provider upgrade.</strong> A provider may move a model between regions. If the config is not updated, requests can route to the wrong region and fail a residency check. Enforce region immutability in the schema and require an explicit migration step for region changes.</p>
+</li>
+<li>
+<p><strong>Audit stream backpressure.</strong> At high request rates, the audit stream can grow faster than the flush job drains it. Cap the stream length (<code>XADD ... MAXLEN</code>) and increase the flush frequency. Monitor the stream length as a first-class metric.</p>
+</li>
+<li>
+<p><strong>Retry list eviction.</strong> If Redis is configured to evict keys under memory pressure, retry lists can disappear mid-request, producing "all providers exhausted" errors when budget remains. Mark retry keys as non-evictable and rely on TTLs for cleanup.</p>
+</li>
+<li>
+<p><strong>Trusting client-supplied region headers.</strong> A client can claim any region. Validate the region claim against the allowed set for the user's identity, and log a warning when the header and the claim disagree. Never let an unverified header determine where a prompt is processed.</p>
+</li>
+</ol>
+<h2 id="what-to-measure">What to measure</h2>
+<p>Before adding routing complexity, instrument the following and compare before and after:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What to instrument</th>
+<th>How to compare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Router overhead</td>
+<td>Time spent in routing logic per request</td>
+<td>Histogram of router duration, compare to total request duration</td>
+</tr>
+<tr>
+<td>Retry rate</td>
+<td>Count of retries per provider</td>
+<td>Counter labelled by provider; alert if it exceeds your baseline</td>
+</tr>
+<tr>
+<td>Retry overlap</td>
+<td>Retries issued while the original call is in flight</td>
+<td>Compare configured delay to provider p95 latency</td>
+</tr>
+<tr>
+<td>Circuit breaker trips</td>
+<td>Breaker open events per provider</td>
+<td>Counter; correlate with provider status pages</td>
+</tr>
+<tr>
+<td>Audit lag</td>
+<td>Difference between stream length and flush rate</td>
+<td>Gauge of stream length; alert on sustained growth</td>
+</tr>
+<tr>
+<td>Residency violations</td>
+<td>Requests whose region header does not match the allowed set</td>
+<td>Counter; should be zero in steady state</td>
+</tr>
+</tbody>
+</table>
+<p>None of these require a specific vendor. They require that the routing layer emits structured events with provider, region, and outcome attached.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<ul>
+<li><strong>Very low latency budgets.</strong> Routing adds a round trip to Redis and some in-process work. If your p99 budget is under 100 ms, measure the overhead before committing; it may be the wrong place to spend latency.</li>
+<li><strong>Single provider, single region.</strong> A thin wrapper around the SDK is enough. The routing table, retry state, and audit stream are all overhead you do not need.</li>
+<li><strong>Hard residency boundaries.</strong> If regulation requires that data physically never leaves a jurisdiction, dynamic region selection is a liability. Pre-partition the config per region and disable cross-region routing entirely.</li>
+<li><strong>Low request volume.</strong> The fixed cost of a managed Redis instance and a scheduled flush job can dominate at small scale. A single function with in-memory retry state may be cheaper until volume grows.</li>
+</ul>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I handle model version upgrades without downtime?</strong>
+Add a new provider entry with the new model name and region, and keep the old entry until the new model's latency and error rate have stabilised over a full traffic cycle. Use the audit stream to compare token counts and error rates between the two before shifting traffic.</p>
+<p><strong>How large does the retry store need to be?</strong>
+Size it from the number of concurrent in-flight requests, not the daily volume. Each retry list holds at most <code>max_retries + 1</code> entries and expires after the longest timeout plus a margin. Measure actual memory per key under load and multiply by peak concurrency.</p>
+<p><strong>How do I test the residency path in staging?</strong>
+Run a second Redis instance and force the router to use a single region for every request. Run an export script and assert that the region header in the downstream call matches the expected value. Automate it in CI so a missing or wrong header fails the build.</p>
+<p><strong>Can this run outside Kubernetes?</strong>
+Yes. The only platform-specific piece is the health check endpoint. Keep the retry store external and durable, because ephemeral local storage will lose retry state on restart.</p>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Grep your codebase for hardcoded provider names and region strings. Count the distinct call sites. If the same provider or region appears in more than one place, extract those values into a single config file and add a startup validation step that rejects unknown regions. That one change turns an implicit policy into something you can review, test, and audit.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/">Big model API vs fine-tune: the 2026 math</a></li>
+<li><a href="https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/">Foreign AI models vs sovereign fintech stacks: 2026 reality</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/merge-three-payment-apis-into-one-system/">
+                        <h3>Merge three payment APIs into one system</h3>
+                        <p>How to consolidate multiple payment provider integrations behind one gateway: routing, idempotency, webhook normalization, and observability.</p>
+                        <span class="related-meta">15 min read · 10 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-frameworks-stop-rewriting-the-same-glue-code/">
+                        <h3>Agent frameworks: stop rewriting the same glue code</h3>
+                        <p>Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+                        <span class="related-meta">13 min read · 10 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
+                        <h3>Senior engineer title inflation in 2026</h3>
+                        <p>How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
+                        <span class="related-meta">11 min read · 13 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

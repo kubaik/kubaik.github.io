@@ -1,0 +1,181 @@
+# Postgres 17 buried Redis, S3, cron
+
+## Why this comparison keeps coming up
+
+A recurring architectural question is whether a single Postgres instance can replace three separate systems: a cache, a blob store, and a scheduler. The appeal is obvious. Every additional service adds a connection pool to tune, a backup strategy to test, a dashboard to maintain, and a failure mode to page someone about. Consolidation reduces that surface area.
+
+The counter-argument is equally obvious: Postgres is not a cache, and treating it like one can produce latency cliffs, index bloat, and connection starvation that a purpose-built cache would never hit.
+
+This article covers where Postgres genuinely substitutes for the three tools, where it does not, and how to measure the difference on your own workload rather than relying on someone else's numbers. It uses Postgres 17 as the reference version, but the relevant features (JSONB, GiST indexes, TOAST, large objects, and the `pg_cron` extension) are not new in 17 and behave similarly on recent major versions. Verify extension availability on your platform before planning anything.
+
+## What Postgres actually provides
+
+Three capabilities are relevant here.
+
+**Scheduling.** `pg_cron` is an extension that runs scheduled SQL inside the database. Jobs are stored in a table and executed by a background worker:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+SELECT cron.schedule(
+  'cleanup-old-sessions',
+  '0 4 * * *',
+  $$DELETE FROM sessions WHERE last_used < NOW() - INTERVAL '30 days'$$
+);
+```
+
+The important operational detail is that `pg_cron` runs on the primary only. It does not run independently on standbys, and it does not give you the distributed locking semantics of a real job scheduler. If your database fails over, the schedule moves with the primary. That is usually fine for cleanup jobs and usually not fine for anything that must run exactly once across a fleet.
+
+**Blob storage.** Postgres stores large values in two ways. TOAST automatically moves oversized column values out of line into a side table, transparently, up to about 1GB per value. `pg_largeobject` provides a separate chunked storage API with its own access functions. Both give you transactional writes: a blob and the row that references it commit together, which is genuinely difficult to get right across two systems.
+
+The practical limits matter more than the feature list. Reading a blob through TOAST means the value passes through the normal buffer cache and WAL path. Every write is logged. A workload that writes many multi-megabyte objects will generate WAL and backup volume proportional to that traffic, and will compete with ordinary query traffic for shared buffers. This is the single most common way a blob-in-Postgres migration goes wrong: storage cost looks cheap, but WAL, replication bandwidth, and backup time do not.
+
+**JSON caching.** JSONB columns with a GIN or GiST index support containment queries:
+
+```sql
+CREATE INDEX idx_profile_data ON user_profiles USING GIN (profile_data jsonb_path_ops);
+
+SELECT profile_data
+FROM user_profiles
+WHERE profile_data @> '{"preferences": {"theme": "dark"}}';
+```
+
+`jsonb_path_ops` produces a smaller index than the default `jsonb_ops` and supports `@>` containment, which covers most cache-lookup patterns. The index does not support key-existence operators like `?` or `?|`, so choose deliberately.
+
+The key property is that this is not a cache. There is no eviction policy, no TTL, no memory ceiling you can set independently of the table. Rows stay until something deletes them. If the working set exceeds shared buffers, reads go to disk, and the latency profile changes from memory access to storage access. That transition is the whole ballgame, and it is invisible until it happens.
+
+## The old stack, honestly described
+
+Redis, S3, and a cron host each do one thing well.
+
+Redis is an in-memory data structure store with configurable eviction. It gives you a hard memory ceiling and predictable behavior when you hit it. It supports pub/sub and streams, which have no direct Postgres equivalent. Its persistence model is different from Postgres's, and its failover semantics are different too — worth understanding before assuming either system is a drop-in for the other.
+
+S3 (or any object store) is built for durability and scale-out reads. Clients fetch objects directly without proxying through your application. There is no WAL amplification, no shared buffer contention, and no backup window that grows with object count. For objects over a few megabytes, or objects read by many clients concurrently, this is a fundamentally better fit than a database.
+
+A cron host is simple until it isn't. The classic failure mode: the instance reboots, the timer is lost, and nobody notices until a downstream report is missing. Distributed schedulers exist precisely because this problem is common. Running jobs inside the database removes the separate host but introduces its own failure modes, covered below.
+
+## How to measure before you decide
+
+Do not migrate based on someone else's benchmark. The relevant variables — working set size, query shape, read/write ratio, latency target — differ enough between systems that published numbers rarely transfer. Measure your own.
+
+**Step 1: Characterize the cache working set.**
+
+Instrument your application to log, per cache key: the key size in bytes, the read frequency, and the write frequency. Aggregate over a representative period, ideally at least a week to capture weekly patterns.
+
+```sql
+-- After loading measurements into a table, compute the working set
+-- that covers the hottest N% of reads.
+SELECT
+  SUM(value_bytes) AS bytes_for_top_90pct_reads
+FROM (
+  SELECT value_bytes,
+         SUM(read_count) OVER (ORDER BY read_count DESC) AS cumulative_reads,
+         SUM(read_count) OVER () AS total_reads
+  FROM cache_key_stats
+) t
+WHERE cumulative_reads <= total_reads * 0.90;
+```
+
+Compare `bytes_for_top_90pct_reads` against the shared buffers you can actually dedicate to this table. If the hot set fits comfortably, Postgres is viable. If it does not, expect disk reads and measure accordingly.
+
+**Step 2: Measure latency at the 99th percentile, not the median.**
+
+Instrument the query path with timing that captures p50, p95, and p99 separately. A median of 2ms with a p99 of 200ms is a different system from a median of 5ms with a p99 of 8ms, even though the medians look similar.
+
+```sql
+SELECT
+  query,
+  calls,
+  mean_exec_time,
+  stddev_exec_time,
+  total_exec_time
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 20;
+```
+
+`pg_stat_statements` gives you mean and standard deviation, not percentiles. For percentiles, log per-request timings in the application or use `auto_explain` with `log_min_duration_statement` set to a threshold near your target, then count how often it fires.
+
+**Step 3: Measure the write amplification of blob storage.**
+
+Before moving blobs into Postgres, measure the WAL volume generated per gigabyte written:
+
+```sql
+SELECT pg_current_wal_lsn();
+-- write a known quantity of blob data
+SELECT pg_current_wal_lsn();
+```
+
+Convert the LSN delta to bytes and compare against the payload size. The ratio tells you how much WAL, replication traffic, and backup volume each gigabyte of blob data costs you. For small objects the ratio is close to 1; for large objects with full-page writes it can be considerably higher.
+
+**Step 4: Measure scheduler reliability under failover.**
+
+If you are considering `pg_cron`, test what happens to in-flight and scheduled jobs during a controlled failover. This is the failure mode that documentation tends to understate and that only a test will reveal.
+
+## Failure modes to plan for
+
+**Connection pool exhaustion.** Moving cache reads into Postgres means every cache lookup now consumes a connection. Under load, a cache that previously absorbed traffic with no database involvement now competes with transactional queries for pool slots. Size the pool for the combined load, and consider a separate pool for cache-path queries so a cache stampede cannot starve writes.
+
+**Index bloat from high-churn JSON.** A JSONB index on a table with frequent updates accumulates dead tuples faster than a read-mostly table. Autovacuum settings tuned for ordinary tables may not keep up. Monitor index size and dead tuple counts, and expect to tune `autovacuum_vacuum_scale_factor` downward for these tables.
+
+**TOAST read amplification.** A query that selects a TOASTed column detoasts the whole value. Selecting `profile_data` when you only need one field forces a full read and decompression. Project only the fields you need, or store frequently accessed fields as separate columns.
+
+**Scheduler single point of failure.** `pg_cron` jobs stop when the database is down. If a job's absence causes user-visible problems, that job needs an external check — a monitor that alerts when the expected side effect has not occurred within its window.
+
+**Backup and restore time.** A database holding blobs takes longer to back up and longer to restore. Measure restore time, not just backup time. The restore is the number that matters during an incident.
+
+## A decision checklist
+
+Work through these in order. Stop at the first item that disqualifies the consolidation.
+
+1. **Does the hot cache working set fit in shared buffers with headroom?** If the hot 90% of reads exceeds roughly half of available shared buffers, keep a dedicated cache.
+2. **Is your p99 latency target above the measured Postgres p99 for your query shape?** Measure; do not assume.
+3. **Are your cache queries simple containment lookups?** If you depend on pub/sub, streams, or server-side scripting, those have no Postgres equivalent and you keep Redis.
+4. **Are your blobs small and written infrequently?** If writes are large or frequent, the WAL and backup cost usually outweighs the storage saving.
+5. **Can every scheduled job tolerate running on the primary only, and stopping during failover?** If not, keep an external scheduler for those jobs.
+6. **Have you measured restore time for the combined database?** If it exceeds your recovery objective, split the blobs out.
+
+If all six pass, consolidation is worth piloting. If any fails, keep the specialized system for that workload and consolidate only the parts that pass.
+
+## Worked example: reasoning through a decision
+
+Suppose an application has these measured characteristics, all from instrumentation rather than assumption:
+
+- Hot cache working set: 4 GB, read-heavy, 95% reads.
+- Shared buffers available for this table: 12 GB.
+- p99 latency target: 20 ms.
+- Measured Postgres p99 for the containment query: 9 ms.
+- Blob writes: 200 objects per day, average 300 KB, total 60 MB per day.
+- Scheduled jobs: nightly cleanup, weekly report, both idempotent.
+
+Working through the checklist: the working set (4 GB) fits well within available shared buffers (12 GB), so item 1 passes. The measured p99 (9 ms) is under the target (20 ms), so item 2 passes. The queries are containment lookups, so item 3 passes. Blob writes are small and infrequent — 60 MB per day produces manageable WAL growth — so item 4 passes. Both jobs are idempotent, so a missed run during failover is recoverable by the next run, and item 5 passes. Restore time is the remaining unknown and must be measured before committing.
+
+This is a case where consolidation is defensible. Change one variable — a 40 GB working set, or a p99 target of 2 ms — and the conclusion flips.
+
+## When to keep the specialized systems
+
+Keep a dedicated cache when your working set exceeds available memory, when you need sub-millisecond p99, or when you depend on Redis data structures like sorted sets, streams, or pub/sub.
+
+Keep an object store when objects are large, when clients should fetch them directly without proxying through your application, or when write volume would generate unacceptable WAL and backup overhead.
+
+Keep an external scheduler when jobs must run exactly once across a fleet, when they must survive database failover, or when their absence has immediate user-visible consequences.
+
+None of these is a permanent decision. The measurement steps above are cheap to run and can be repeated as your workload changes.
+
+## Action for the next 30 minutes
+
+Run this against your production database and record the output:
+
+```sql
+SELECT
+  query,
+  calls,
+  mean_exec_time,
+  stddev_exec_time,
+  total_exec_time
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 10;
+```
+
+For each of the top ten queries, note whether it is a simple containment lookup, how often it runs, and its mean execution time. Then check the size of the table it reads from against your shared buffers setting (`SHOW shared_buffers;`). If your hottest queries are containment lookups whose tables fit comfortably in shared buffers, you have a candidate for consolidation and a baseline to measure against. If not, you have just saved yourself a migration.

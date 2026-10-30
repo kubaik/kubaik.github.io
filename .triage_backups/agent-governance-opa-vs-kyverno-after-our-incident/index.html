@@ -1,0 +1,512 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent governance: OPA vs Kyverno after our incident - Kubai Kevin</title>
+        <meta name="description" content="Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.">
+        <meta name="keywords" content="AgentGovernance, OpaVsKyverno, Policy, Kubernetes, AgentCompliance, AgentGovernanceTools, PolicyEngineLatency, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-03T22:13:29.570767">
+        <meta property="article:modified_time" content="2026-10-03T11:13:43.792574+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent governance: OPA vs Kyverno after our incident">
+        <meta property="og:description" content="Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-governance-opa-vs-kyverno-after-our-incident.png">
+        <meta property="og:image:alt" content="Agent governance: OPA vs Kyverno after our incident">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent governance: OPA vs Kyverno after our incident">
+        <meta name="twitter:description" content="Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-governance-opa-vs-kyverno-after-our-incident.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/#article",
+      "headline": "Agent governance: OPA vs Kyverno after our incident",
+      "description": "Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.",
+      "datePublished": "2026-07-03T22:13:29+00:00",
+      "dateModified": "2026-10-03T11:13:43+00:00",
+      "wordCount": 2203,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/"
+      },
+      "keywords": "AgentGovernance, OpaVsKyverno, Policy, Kubernetes, AgentCompliance, AgentGovernanceTools, PolicyEngineLatency, K8s",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/agent-governance-opa-vs-kyverno-after-our-incident.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent governance: OPA vs Kyverno after our incident",
+          "item": "https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent governance: OPA vs Kyverno after our incident</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent governance: OPA vs Kyverno after our incident</h1>
+                
+                <p class="post-lead">Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/agentgovernance/"
+                       style="text-decoration:none;">AgentGovernance</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">OpaVsKyverno</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Policy</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2203 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-governance-gap-in-multi-agent-systems">The governance gap in multi-agent systems</h2>
+<p>A recurring failure mode in production multi-agent systems is a governance layer that covers the API surface but not the agent runtime. The agents run in their own namespace, talk to their own controllers, and can take actions — exporting data, mutating their own configuration, calling external services — that never pass through the policy engine the team already trusts. The result is a control plane that reports "all policies enforced" while the agent path is unguarded.</p>
+<p>The symptom is rarely a single dramatic bug. It is a class of actions that are technically permitted because nothing in the request path evaluates them:</p>
+<ul>
+<li>An agent exports records containing regulated fields without a recorded approval reference.</li>
+<li>An agent rewrites its own ConfigMap or runtime flags, changing its own constraints.</li>
+<li>An agent makes outbound calls with no correlation ID, so the audit trail cannot be reconstructed after the fact.</li>
+</ul>
+<p>This article compares the two policy engines most teams reach for when they need to close that gap: Open Policy Agent (OPA) and Kyverno. Both can validate, mutate, and audit. They solve the problem in structurally different ways, and the difference determines where each one fits.</p>
+<h2 id="how-opa-works">How OPA works</h2>
+<p>OPA is a general-purpose policy engine that evaluates policies against JSON input. It runs as a sidecar, a daemon, or a library, receives a JSON document, and returns a decision. Policies are written in Rego, a declarative query language with Datalog-style semantics.</p>
+<p>A minimal Rego rule for PII export validation looks like this:</p>
+<pre><code class="language-rego">package agent.governance
+
+violation[msg] {
+  input.action == &quot;export_data&quot;
+  contains(input.fields, &quot;ssn&quot;)
+  not input.approval.ref
+  msg := sprintf(&quot;PII export without approval: %v&quot;, [input.request_id])
+}
+</code></pre>
+<p>The engine returns a JSON decision:</p>
+<pre><code class="language-json">{
+  &quot;decision_id&quot;: &quot;4b345c...&quot;,
+  &quot;result&quot;: &quot;deny&quot;,
+  &quot;reason&quot;: &quot;PII export without approval&quot;
+}
+</code></pre>
+<p>OPA is a good fit when you need:</p>
+<ul>
+<li>Logic that spans multiple inputs — agent state, request metadata, and external context in one evaluation.</li>
+<li>Fine-grained traversal of nested JSON structures.</li>
+<li>Enforcement outside Kubernetes: Lambda, ECS, bare-metal services, or edge nodes.</li>
+</ul>
+<p>The costs are structural, not incidental. Rego has a steep learning curve. OPA runs as a separate service, so you own its availability, its API endpoint security, and its monitoring. And because the decision is a network round trip from the caller to OPA and back, every enforcement point pays that latency.</p>
+<h2 id="how-kyverno-works">How Kyverno works</h2>
+<p>Kyverno is a policy engine that runs inside the Kubernetes admission control path. Policies are Kubernetes Custom Resources written in YAML, so there is no separate query language to learn. Kyverno validates and mutates resources as they are created or updated.</p>
+<p>A policy requiring an approval label on agent pods:</p>
+<pre><code class="language-yaml">apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: agent-pii-approved
+spec:
+  validationFailureAction: enforce
+  rules:
+  - name: require-pii-approval-label
+    match:
+      resources:
+      - kind: Pod
+        selector:
+          matchLabels:
+            app: agent
+    validate:
+      message: &quot;Agent must have pii-approved label&quot;
+      pattern:
+        metadata:
+          labels:
+            governance/pii-approved: &quot;true&quot;
+</code></pre>
+<p>Kyverno is a good fit when:</p>
+<ul>
+<li>Everything you need to govern is a Kubernetes resource.</li>
+<li>Policies are expressible as label, annotation, and field constraints.</li>
+<li>You want audit output without standing up a separate logging pipeline — violations surface as Kubernetes events.</li>
+</ul>
+<p>The limits are equally structural. Kyverno only sees what the API server sees. If your agent state lives in object storage, in a queue message, or in a Lambda event, Kyverno cannot evaluate it. Policies that need external data require an admission webhook that calls out to something else, which reintroduces the network hop and the operational surface you were trying to avoid.</p>
+<h2 id="comparing-the-two-engines">Comparing the two engines</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>OPA</th>
+<th>Kyverno</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policy language</td>
+<td>Rego (declarative query)</td>
+<td>YAML (declarative rules)</td>
+</tr>
+<tr>
+<td>Enforcement point</td>
+<td>Anywhere you can call it with JSON</td>
+<td>Kubernetes admission control</td>
+</tr>
+<tr>
+<td>Input scope</td>
+<td>Arbitrary JSON</td>
+<td>Kubernetes resources</td>
+</tr>
+<tr>
+<td>External data</td>
+<td>Native (HTTP calls from Rego)</td>
+<td>Requires an admission webhook</td>
+</tr>
+<tr>
+<td>Decision path</td>
+<td>Network round trip to the engine</td>
+<td>In-process with the API server</td>
+</tr>
+<tr>
+<td>Audit output</td>
+<td>Decision log API, needs a pipeline</td>
+<td>Kubernetes events, queryable with kubectl</td>
+</tr>
+<tr>
+<td>Non-Kubernetes runtimes</td>
+<td>Supported</td>
+<td>Not supported</td>
+</tr>
+</tbody>
+</table>
+<p>The decision path difference is the one that most often decides the choice. Kyverno evaluates during admission, so there is no extra hop. OPA evaluates wherever you call it, which is more flexible but adds a round trip at every enforcement point.</p>
+<h2 id="how-to-measure-the-tradeoff-for-your-workload">How to measure the tradeoff for your workload</h2>
+<p>Published benchmark numbers are not a substitute for measuring your own policies, because latency depends on policy complexity, input size, and where the engine sits relative to the caller. Here is what to instrument.</p>
+<p><strong>Decision latency.</strong> For Kyverno, admission latency shows up in the API server's admission duration metrics and in the audit events. For OPA, wrap the client call and record the elapsed time around it. Compare the median and the 95th percentile, not just the mean — the tail is what breaks user-facing timeouts.</p>
+<p><strong>Policy evaluation cost as a function of complexity.</strong> Write the same rule in both engines — for example, "deny an export request whose payload contains a regulated field and whose metadata lacks an approval reference." Then add nesting depth and branch count in steps and re-measure. This tells you where each engine's cost curve bends for your actual rule shapes.</p>
+<p><strong>Resource footprint.</strong> Use <code>kubectl top pod</code> and <code>kubectl top node</code> for steady-state memory and CPU. Run the comparison at the replica count you would actually deploy for availability, not a single instance.</p>
+<p><strong>Audit completeness.</strong> Attempt a policy violation deliberately and confirm it appears in your audit path. For Kyverno, that is <code>kubectl get events --sort-by=.metadata.creationTimestamp</code>. For OPA, confirm the decision log reaches your collector and that the decision ID is correlatable with the request ID your agent emitted.</p>
+<p><strong>Failure behavior.</strong> Kill the policy engine under load and observe what the caller does. A fail-open policy engine is a governance gap that only appears during an incident, which is the worst time to discover it.</p>
+<h2 id="a-worked-example-enforcing-one-rule-end-to-end">A worked example: enforcing one rule end to end</h2>
+<p>Consider a rule that is common in agent governance: an agent may not export records containing a regulated field unless the request carries an approval reference that resolves to a recorded approval.</p>
+<p><strong>Step 1 — define the decision precisely.</strong> The rule takes three inputs: the action type, the set of fields in the payload, and the approval reference. It returns allow or deny. Writing this down before choosing an engine matters, because the shape of the inputs determines which engine can express the rule directly.</p>
+<p><strong>Step 2 — express it in Kyverno.</strong> If the export is a Kubernetes resource, the rule maps cleanly onto a validate pattern: match the resource kind, require the approval annotation, and constrain the field list. The approval reference is checked for presence, not resolved against an external store. If you need resolution, you add a webhook — and at that point you have an external call in the admission path, with the latency and availability implications that follow.</p>
+<p><strong>Step 3 — express it in OPA.</strong> The same rule is a Rego violation rule. The approval reference can be resolved by an HTTP call from within the policy, or the caller can resolve it and pass the result in the input document. The second option keeps evaluation local and moves the external dependency into the caller, which is usually the better design.</p>
+<p><strong>Step 4 — decide where enforcement lives.</strong> If the export happens through the Kubernetes API, Kyverno enforces it without any new moving parts. If the export happens from a Lambda function, a queue consumer, or a long-running service outside the cluster, Kyverno never sees it, and OPA is the only one of the two that can enforce the rule at all.</p>
+<p>The worked example exposes the real decision: it is not "which engine is faster" but "where does the action happen, and what can see it." Latency and ergonomics are tiebreakers among engines that can actually observe the action.</p>
+<h2 id="failure-modes-to-design-against">Failure modes to design against</h2>
+<p><strong>Split-brain governance.</strong> API traffic goes through OPA, agent traffic goes through Kyverno, and no one owns the union. A rule added to one engine silently does not apply to the other path. The fix is a single inventory of enforcement points and a test that asserts each rule is present at each point where it is required.</p>
+<p><strong>Fail-open admission.</strong> If the policy engine is unavailable, does the API server admit the resource or reject it? The answer is a configuration choice, and it should be a deliberate one. A fail-open default means an attacker who can degrade the policy engine can bypass it.</p>
+<p><strong>Uncorrelated audit trails.</strong> Both engines can produce a decision record. Neither can correlate it with the agent action unless the agent propagates a request ID into the input. Without that ID, post-incident reconstruction is guesswork.</p>
+<p><strong>Policy drift between environments.</strong> A rule enforced in staging but not production, or vice versa, produces exactly the class of incident this governance layer exists to prevent. Version policies alongside application code and diff them across environments.</p>
+<p><strong>Rules that only check presence.</strong> Requiring an annotation to exist is not the same as requiring it to be valid. A policy that checks for <code>governance/pii-approved: "true"</code> passes any resource that sets the label, including one that sets it without authorization. Where the check is meaningful, resolve the reference.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Work through these in order. The first question that resolves to a "no" usually determines the answer.</p>
+<ol>
+<li><strong>Does every action you need to govern pass through the Kubernetes API server?</strong> If no, Kyverno cannot enforce it, and OPA is the candidate.</li>
+<li><strong>Do your rules need data from outside the cluster — an approval store, a risk service, a database?</strong> If yes, either engine needs an external call. OPA can make it natively; Kyverno needs a webhook. Decide which of those you would rather operate.</li>
+<li><strong>How complex is your most complex rule?</strong> Enumerate the branches and nesting. If the rules are label and annotation constraints, Kyverno expresses them directly. If they traverse nested payloads and combine multiple inputs, Rego is the more natural fit.</li>
+<li><strong>What is your latency budget at the enforcement point?</strong> Measure the round trip for your candidate design, at the 95th percentile, under load. Compare it to the timeout the calling agent already has.</li>
+<li><strong>What does your team already operate?</strong> A policy engine you cannot debug at 3 a.m. is worse than a simpler one you can. Rego fluency is a real prerequisite, not a nice-to-have.</li>
+<li><strong>What does your auditor require?</strong> If they need a queryable record of every decision with the inputs that produced it, confirm the engine can produce that before you commit.</li>
+</ol>
+<h2 id="recommendation">Recommendation</h2>
+<p>For agents that run entirely inside Kubernetes and whose rules are expressible as resource constraints, Kyverno is the lower-overhead choice: no separate service to operate, no network hop in the decision path, and audit output through the Kubernetes event stream.</p>
+<p>For agents that run outside Kubernetes, or rules that must evaluate arbitrary JSON or resolve external data, OPA is the engine that can actually see the action. Accept the operational cost of running it and the learning curve of Rego as the price of coverage.</p>
+<p>If a system spans both — Kubernetes-resident agents and external ones — the common mistake is to pick one engine and assume it covers everything. It will not. Either run both with a single rule inventory and tests that assert coverage at every enforcement point, or route all agent decisions through one engine that can see all the inputs, even if that means an extra hop for the in-cluster path.</p>
+<p>The choice that fails is not OPA and it is not Kyverno. It is assuming the policy engine you already run covers a path it cannot observe.</p>
+<h2 id="do-this-in-the-next-30-minutes">Do this in the next 30 minutes</h2>
+<p>Pick one agent action that currently has no policy in its path — an export, a configuration change, an outbound call — and write down its inputs, its decision rule, and where the action physically executes. Then check whether that execution point passes through your existing policy engine. If it does not, you have found the gap this article is about, and you have the three facts you need to choose between the two engines above.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/agent-compliance-the-layer-you-build-after-failure/">Agent compliance: the layer you build after failure</a></li>
+<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/least-privilege-for-agents-the-config-line-nobody-writes/">
+                        <h3>Least privilege for agents: the config line nobody writes</h3>
+                        <p>Why permissive agent tool defaults break in production, and how to add runtime, context-aware policy checks before every tool call.</p>
+                        <span class="related-meta">14 min read · 10 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-compliance-the-layer-you-build-after-failure/">
+                        <h3>Agent compliance: the layer you build after failure</h3>
+                        <p>Pre-execution policy gates miss most agent compliance failures. Build a decision trace that reconstructs what happened, why, and what would have stopped it.</p>
+                        <span class="related-meta">16 min read · 22 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/platform-teams-in-2026-docs-vs-production-reality/">
+                        <h3>Platform teams in 2026: Docs vs. production reality</h3>
+                        <p>Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.</p>
+                        <span class="related-meta">18 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

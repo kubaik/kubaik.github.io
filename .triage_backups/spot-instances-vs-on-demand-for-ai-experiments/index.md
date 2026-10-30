@@ -1,0 +1,151 @@
+# Spot instances vs on-demand for AI experiments
+
+Choosing between spot and on-demand GPU capacity for AI experiments looks like a pricing question and turns out to be a reliability engineering question. The hourly rate is easy to compare; the cost of a training job that silently resumes from a stale checkpoint is not. This article covers the mechanics of each option, the failure modes that show up in practice, and a way to decide based on numbers you can measure yourself.
+
+## Why this comparison matters
+
+A typical LoRA fine-tune of a 7B parameter model might consume on the order of 12 GPU-hours on an A100-class device. At an illustrative on-demand rate of $3.50 per GPU-hour, that is $42 per experiment. Fifty such experiments a week across a small team works out to roughly $8,400 a month before any inference serving is counted. Those figures are illustrative arithmetic, not measured benchmarks — substitute your own rates and durations, because the conclusion depends heavily on them.
+
+The two levers that move that number are the price per GPU-hour (spot capacity) and the utilization rate (shutting down idle capacity). They are independent, and the second one is usually cheaper to fix.
+
+A recurring failure mode: a team enables spot, watches its first job get preempted at epoch 3, and concludes spot is unusable. The actual problem is almost always the training script — no resumable checkpoint, or checkpoints written only at epoch boundaries while epochs run for hours. The interaction between checkpoint frequency and preemption rate is the part that determines whether spot works, and it is what the rest of this article addresses.
+
+## Option A: spot capacity
+
+Spot capacity is a request for unused provider VMs at a discount, with the provider retaining the right to reclaim them on short notice. AWS calls it EC2 Spot, GCP calls it Spot VMs (formerly preemptible), Azure calls it Spot Virtual Machines.
+
+The core mechanic is the interruption notice. AWS publishes a termination time through the instance metadata service and emits an EventBridge event, with a documented two-minute warning. GCP and Azure both provide roughly 30 seconds of notice through their respective metadata and scheduled-event mechanisms. A job either handles that signal or it does not.
+
+Spot fits embarrassingly parallel work and long training runs with frequent checkpoints. A hyperparameter sweep of 200 configurations, each taking 20 minutes, is a natural fit: a preempted unit is requeued and rerun. A single 8-hour run is a worse fit unless checkpoints are frequent.
+
+Discounts vary by instance family, region, and time. GPU instance discounts are commonly in the range of 55–75% off on-demand, and CPU instance discounts are often deeper. These are observed ranges rather than guarantees: during capacity crunches spot prices can climb toward on-demand, and the discount is never contractual.
+
+A minimal interruption handler for AWS looks like this:
+
+```python
+# spot_handler.py — minimal interruption handler for AWS EC2 Spot
+import requests
+import signal
+import sys
+import threading
+import time
+
+CHECKPOINT_INTERVAL = 600  # seconds
+
+def watch_for_termination():
+    while True:
+        try:
+            r = requests.get(
+                "http://169.254.169.254/latest/meta-data/spot/termination-time",
+                timeout=2,
+            )
+            if r.status_code == 200:
+                print(f"Termination notice: {r.text}", file=sys.stderr)
+                # Trigger emergency checkpoint
+                save_checkpoint(emergency=True)
+                sys.exit(0)
+        except requests.exceptions.RequestException:
+            pass
+        time.sleep(5)
+
+threading.Thread(target=watch_for_termination, daemon=True).start()
+```
+
+Note the explicit `status_code == 200` check. The metadata endpoint returns 404 while no termination is pending, and some HTTP client configurations raise on that. A handler that treats any exception as a termination signal will kill the job on its first poll.
+
+## Option B: on-demand with autoscaling
+
+The on-demand pattern is to run on full-price instances but scale the fleet to zero between experiments, feeding work through a queue (SQS, Pub/Sub, or a Redis list). The saving here is not the hourly rate; it is the utilization rate. A single A100-class instance left running over a weekend costs roughly $168 at an illustrative $3.50/hour, and ten of them cost $1,680. That idle capacity is the first thing to eliminate, because it requires no changes to the training code.
+
+On-demand fits jobs that cannot tolerate interruption, workloads with hard deadlines, and experiments short enough that checkpoint overhead dominates. A five-minute inference benchmark does not need spot pricing; it needs to not run on a machine that has been idle for three hours.
+
+Autoscaling for GPU nodes is well supported across the major providers, and Kubernetes offers several options for provisioning GPU nodes on demand. Cold-start times for GPU nodes are the practical constraint: provisioning a new node, pulling a container image, and loading model weights commonly takes several minutes, which matters when experiments are short. The usual mitigation is a small warm pool of one or two instances that stay running, which bounds idle cost while removing cold-start latency from the critical path.
+
+The other on-demand lever is commitment. Savings Plans and Reserved Instances cut the effective rate for steady-state workloads in exchange for a one- or three-year commitment. For a team that knows it will run a minimum number of GPU instances continuously, a commitment is often cheaper than spot once the engineering time spent on interruption handling is counted.
+
+## Comparing effective throughput
+
+Raw throughput on spot and on-demand is identical, because it is the same hardware. The meaningful comparison is effective throughput: useful work completed per unit of wall-clock time after preemptions, restarts, and checkpoint overhead are accounted for.
+
+Preemption cost per event is roughly the work since the last checkpoint plus the time to acquire a replacement instance and reload state. Checkpoint overhead is the write time of the checkpoint itself. These two costs pull in opposite directions:
+
+- Checkpoint rarely, and each preemption discards more work.
+- Checkpoint often, and the job spends a growing fraction of its time writing state.
+
+There is a trap at the frequent end. A 7B model's optimizer state is on the order of tens of gigabytes. Writing a checkpoint that large to object storage takes minutes at typical throughput. If the checkpoint interval is shorter than the time required to write one checkpoint, the job becomes checkpoint-bound and never makes forward progress. The interval must be longer than the write time with margin, and the write should be asynchronous so it does not block the training step.
+
+A practical configuration for many teams is checkpointing every 8–12 minutes to local NVMe with an asynchronous upload to object storage. That keeps the preemption penalty bounded without putting checkpoint I/O on the critical path.
+
+To measure this on your own workload rather than trusting a table, instrument three things:
+
+1. Wall-clock time from job start to a fixed evaluation milestone, for both spot and on-demand runs of the same configuration.
+2. Time spent in checkpoint writes, logged as a fraction of total runtime.
+3. Count of preemptions and the wall-clock gap between the termination notice and the first training step on the replacement instance.
+
+Compare the milestone times. The ratio is your effective throughput penalty, measured on your hardware and your data pipeline rather than borrowed from someone else's.
+
+| Dimension | Spot | On-demand with warm pool |
+|---|---|---|
+| Hourly rate | Discounted, variable | Full rate |
+| Preemption penalty | Work since last checkpoint plus restart | None |
+| Cold start when scaling from zero | Minutes | Minutes, hidden by warm pool |
+| Engineering overhead | Medium to high | Low |
+| Main risk | Silent divergence on resume | Idle capacity drift |
+
+## The failure modes that matter
+
+The expensive problems with spot are not preemptions themselves. They are the ways a resumed run can produce a wrong result without anyone noticing.
+
+**Partial checkpoints.** If a checkpoint writes model weights but not optimizer state, a resumed run starts from a worse point and the loss curve looks plausible. The divergence may only surface as evaluation numbers that are slightly off. The fix is to write checkpoints atomically — write to a temporary path, flush, then rename — and to include a manifest recording which components are present.
+
+**Unseeded data loaders.** If the shuffle is not seeded, a resumed run sees a different data order than an uninterrupted run would have. This is not a crash; it is a distribution shift in the training stream. Seed the shuffle from a value stored in the checkpoint.
+
+**Checkpoint racing the termination notice.** If the emergency checkpoint handler and the periodic checkpoint writer can run concurrently, they can write to the same path. Serialize them with a lock, or have the emergency path write to a distinct location that the resume logic prefers.
+
+**Untested resume paths.** A resume path that has never been exercised is not a resume path. Kill a job mid-epoch deliberately, resume it, and compare the final loss to an uninterrupted run of the same configuration. This is the single highest-value test for a spot pipeline, and it is the one most often skipped.
+
+On the on-demand side, the corresponding failure mode is drift: instances that were meant to scale down but did not, because a scaling policy was never configured or a budget alarm was never set. Tagging instances and setting a budget alarm with a notification threshold catches most of this.
+
+## Estimating the crossover
+
+The decision is a comparison between compute savings and engineering cost, and both are estimable from stated assumptions.
+
+Assume a team running 200 GPU-hours per month at an illustrative on-demand rate of $3.50 per hour. That is 200 × $3.50 = $700 per month. Assume spot at a 65% discount, or $1.225 per hour. Assume a 15% effective throughput penalty, meaning 200 hours of useful work requires about 235 hours of spot runtime. The spot compute cost is 235 × $1.225 ≈ $288 per month, a saving of roughly $412 per month.
+
+Now assume building and maintaining a resumable spot pipeline takes two to four weeks of initial engineering and a few hours a month thereafter. At an illustrative fully-loaded rate of $100 per hour, the initial work is $8,000 to $16,000. The payback period is $8,000 ÷ $412 ≈ 19 months at the low end, or $16,000 ÷ $412 ≈ 39 months at the high end. Spot does not pay back at this scale.
+
+Repeat with 2,000 GPU-hours per month. On-demand is $7,000. Spot compute is 2,350 × $1.225 ≈ $2,879, a saving of about $4,121 per month. Payback is under four months. The crossover sits somewhere between these two points, and it depends entirely on your discount, your throughput penalty, and your engineering rate. Compute it with your own numbers.
+
+The third option is worth stating because it is frequently larger than either: make the experiments cheaper rather than the instances cheaper. Parameter-efficient fine-tuning instead of full fine-tuning, distillation, and quantized serving all reduce the GPU-hours or GPU-memory required, and none of them require interruption handling. If a technique cuts GPU-hours by a factor of five, it dominates a 65% discount.
+
+## A decision checklist
+
+Work through these in order:
+
+1. **Is utilization low?** Compute idle GPU-hours divided by total GPU-hours over the last 30 days. If the ratio is poor, fix autoscaling and shutdown policies first. This requires no training-code changes.
+2. **Is the workload checkpointable?** If the job cannot be resumed from a checkpoint, spot is not an option until it can be. Fix that first, independently of pricing.
+3. **Is the workload parallel-friendly?** Sweeps and batch inference tolerate preemption well because a lost unit is simply requeued. Single long runs tolerate it only with frequent checkpoints.
+4. **Does the spend clear the crossover?** Estimate monthly compute savings and divide the estimated engineering cost by it. If the payback period is longer than the horizon over which you care about the spend, do not do it.
+5. **Is the resume path tested?** If not, the discount is not worth a wrong result. Test it before enabling spot in production.
+
+A hybrid pattern is often the best fit: long training jobs on spot, where the discount is largest and checkpointing is easiest, and short evaluation or inference jobs on on-demand, where instant availability matters more than rate. This captures most of the discount with a fraction of the operational complexity, because only the long-running jobs need resume logic.
+
+## FAQ
+
+**How much cheaper is spot than on-demand for GPU training?**
+GPU instance discounts commonly fall in the 55–75% range off on-demand, varying by instance family, region, and time of day, with CPU instances often discounted more deeply. The rate is not fixed and can approach on-demand during capacity shortages, so check current pricing for the specific instance type and region before estimating savings.
+
+**What happens to a training job when a spot instance is reclaimed?**
+AWS provides a two-minute warning through the instance metadata service and an EventBridge event. GCP and Azure provide roughly 30 seconds. If the job does not handle the signal, it is terminated and everything since the last checkpoint is lost. A background thread polling the metadata endpoint and triggering an emergency checkpoint on notice is the standard mitigation.
+
+**Why does a resumed run sometimes produce worse results?**
+The usual causes are a checkpoint that omits optimizer state, or a data loader whose shuffle is not seeded, so the resumed run sees a different data order. Both produce silent divergence rather than a crash. Test the resume path by killing a job mid-epoch and comparing the final loss against an uninterrupted run of the same configuration.
+
+**Is spot worth it for a small team?**
+Below roughly a few thousand dollars a month in GPU spend, the engineering cost of building and maintaining resumable spot infrastructure typically exceeds the compute savings. At that scale, effort is better spent on reducing the cost per experiment through parameter-efficient fine-tuning, distillation, or quantization, all of which reduce GPU-hours without requiring interruption handling.
+
+## Bottom line
+
+Spot capacity is the larger lever per hour, but it is only the larger lever per dollar once the engineering cost of a correct resume path is amortized across enough spend. Below that threshold, on-demand with working autoscaling and a warm pool is usually cheaper in total, and it is strictly simpler. Above it, spot with an interval longer than the checkpoint write time and a resume path that has been deliberately tested is the largest single cost reduction available.
+
+The action to take in the next 30 minutes: open your cloud billing console, filter to GPU instances for the last 30 days, and write down two numbers — total GPU spend and idle GPU-hours divided by total GPU-hours. If spend is high and utilization is low, the autoscaling fix comes first, because it requires no changes to training code and it is reversible. Only after utilization is under control is it worth evaluating whether spot pricing clears the crossover for your workload.

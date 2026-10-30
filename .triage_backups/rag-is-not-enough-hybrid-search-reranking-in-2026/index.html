@@ -1,0 +1,517 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RAG is not enough: hybrid search + reranking in 2026 - Kubai Kevin</title>
+        <meta name="description" content="Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.">
+        <meta name="keywords" content="Hybrid, RagHallucinationFix, Bm25, Elasticsearch, Generativeai, Rag, Vectorsearch, Elasticsearch812bm25">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-27T09:26:41.755095">
+        <meta property="article:modified_time" content="2026-10-03T12:00:18.803101+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="RAG is not enough: hybrid search + reranking in 2026">
+        <meta property="og:description" content="Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.">
+        <meta property="og:url" content="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/rag-is-not-enough-hybrid-search-reranking-in-2026.png">
+        <meta property="og:image:alt" content="RAG is not enough: hybrid search + reranking in 2026">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="RAG is not enough: hybrid search + reranking in 2026">
+        <meta name="twitter:description" content="Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/rag-is-not-enough-hybrid-search-reranking-in-2026.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/#article",
+      "headline": "RAG is not enough: hybrid search + reranking in 2026",
+      "description": "Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.",
+      "datePublished": "2026-06-27T09:26:41+00:00",
+      "dateModified": "2026-10-03T12:00:18+00:00",
+      "wordCount": 2314,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/"
+      },
+      "keywords": "Hybrid, RagHallucinationFix, Bm25, Elasticsearch, Generativeai, Rag, Vectorsearch, Elasticsearch812bm25",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/rag-is-not-enough-hybrid-search-reranking-in-2026.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "RAG is not enough: hybrid search + reranking in 2026",
+          "item": "https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>RAG is not enough: hybrid search + reranking in 2026</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">RAG is not enough: hybrid search + reranking in 2026</h1>
+                
+                <p class="post-lead">Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Hybrid</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">RagHallucinationFix</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Bm25</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/rag/"
+                       style="text-decoration:none;">Rag</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/vectorsearch/"
+                       style="text-decoration:none;">Vectorsearch</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2314 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Retrieval-augmented generation has a ranking problem, not a recall problem. Dense embedding search will usually put the right passage somewhere in the top hundred results. It will not reliably put it first. And an LLM reading a context window full of near-misses will answer confidently from the wrong chunk.</p>
+<p>The standard remedy is a two-stage pipeline: cheap wide retrieval, then an expensive narrow reranker. This article covers why that split works, how to build it, and how to measure whether it is working in your own system.</p>
+<h2 id="why-single-stage-retrieval-disappoints">Why single-stage retrieval disappoints</h2>
+<p>A bi-encoder embeds the query and each document independently, then compares the two vectors. That independence is what makes it fast enough to search millions of documents, and it is also its weakness: the query never gets to "look at" the document. Paraphrase, negation, and multi-hop conditions all get compressed into a single vector before the comparison happens.</p>
+<p>Sparse lexical retrieval has the mirror-image problem. BM25 is excellent at exact terms, rare identifiers, product codes, and names. It is indifferent to meaning. A query for "how do I cancel" and a document titled "Cancellation policy" share a stem and will match; a query for "how do I stop my subscription" and the same document may not.</p>
+<p>Both failure modes are ranking failures. The correct document is often retrieved and then buried at position 40 behind documents with higher lexical overlap or closer vector proximity.</p>
+<p>Context windows make this worse rather than better. A larger window lets you stuff more candidates into the prompt, but every additional irrelevant chunk dilutes the signal and increases the chance the model anchors on the wrong passage. Retrieval quality and generation quality are separate concerns, and improving one does not fix the other.</p>
+<h2 id="the-funnel-model">The funnel model</h2>
+<p>Think of retrieval as a funnel with two stages.</p>
+<p>Stage 1 is a coarse sieve. It is fast, wide, and forgiving. Run BM25, dense vector search, or both, and return somewhere between 50 and 200 candidates. Recall matters here; precision does not.</p>
+<p>Stage 2 is a precision filter. A cross-encoder takes each query-document pair and scores them jointly, letting the query attend to the document text directly. It is far slower per pair, which is exactly why it only ever sees the shortlist.</p>
+<p>The critical property: the reranker does not need to be smarter than your retriever in general. It only needs to be better at ordering a small candidate set. That is a much easier problem, and small models solve it well.</p>
+<p>A useful intermediate stage is query rewriting or expansion before Stage 1 — correcting typos, expanding abbreviations, or generating paraphrases so the first stage has more to work with. This is optional and adds its own latency, so treat it as a tuning knob rather than a default.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a support assistant over an internal policy corpus. The goal is to answer questions like "how do I dispute a charge?" with citations to current policy documents.</p>
+<p>The pipeline:</p>
+<ol>
+<li>Stage 1: BM25 over a <code>question</code> field, returning the top 100 candidates.</li>
+<li>Stage 2: a cross-encoder scoring each (query, passage) pair, keeping the top 5.</li>
+<li>Stage 3: an LLM generating an answer from those 5 passages only.</li>
+</ol>
+<pre><code class="language-python">from elasticsearch import Elasticsearch
+from sentence_transformers import CrossEncoder
+
+es = Elasticsearch(&quot;https://search.internal:9200&quot;)
+
+query = &quot;How do I dispute a charge?&quot;
+
+# Stage 1: wide lexical retrieval
+response = es.search(
+    index=&quot;policies_v1&quot;,
+    query={&quot;match&quot;: {&quot;text&quot;: query}},
+    size=100,
+)
+candidates = [hit[&quot;_source&quot;][&quot;text&quot;] for hit in response[&quot;hits&quot;][&quot;hits&quot;]]
+
+# Stage 2: joint scoring of query-document pairs
+reranker = CrossEncoder(&quot;cross-encoder/ms-marco-MiniLM-L-6-v2&quot;, max_length=512)
+scores = reranker.predict([(query, passage) for passage in candidates])
+
+ranked = sorted(zip(candidates, scores), key=lambda pair: pair[1], reverse=True)
+top_passages = [passage for passage, _ in ranked[:5]]
+</code></pre>
+<p>Two details matter here. First, <code>predict</code> accepts a list of pairs and batches internally, so do not loop over candidates one at a time. Second, the reranker's <code>max_length</code> truncates long passages; if your chunks are much longer than 512 tokens, the tail of each chunk is invisible to the reranker and you should chunk smaller.</p>
+<p>The same pattern works with dense first-stage retrieval. Swap the Elasticsearch call for a vector query and the rest is unchanged:</p>
+<pre><code class="language-python"># Stage 1 alternative: dense retrieval
+query_vector = embedder.encode(query).tolist()
+response = es.search(
+    index=&quot;policies_v1&quot;,
+    knn={&quot;field&quot;: &quot;embedding&quot;, &quot;query_vector&quot;: query_vector, &quot;k&quot;: 100},
+)
+candidates = [hit[&quot;_source&quot;][&quot;text&quot;] for hit in response[&quot;hits&quot;][&quot;hits&quot;]]
+</code></pre>
+<p>And the two can be combined before reranking, which is the actual "hybrid" step:</p>
+<pre><code class="language-python">def reciprocal_rank_fusion(rank_lists, k=60):
+    &quot;&quot;&quot;Combine multiple ranked lists by reciprocal rank.&quot;&quot;&quot;
+    fused = {}
+    for ranks in rank_lists:
+        for position, doc_id in enumerate(ranks, start=1):
+            fused[doc_id] = fused.get(doc_id, 0.0) + 1.0 / (k + position)
+    return sorted(fused.items(), key=lambda item: item[1], reverse=True)
+</code></pre>
+<p>Reciprocal rank fusion is a common way to merge a BM25 list and a vector list without having to normalize two incomparable score scales. The constant <code>k=60</code> is the value used in the original RRF paper and is a reasonable default; it damps the influence of top ranks so that a document appearing high in both lists beats a document appearing first in only one.</p>
+<h2 id="measuring-whether-it-helps">Measuring whether it helps</h2>
+<p>Published leaderboard numbers do not transfer to your corpus. The only number that matters is the delta on your own data. Here is how to get it.</p>
+<p><strong>Build a labeled set.</strong> Take 100 to 200 real queries from your logs. For each, have a human mark which passages are relevant. This is a few hours of work and it is the single highest-leverage investment in the whole pipeline. Without it, every tuning decision is guesswork.</p>
+<p><strong>Instrument the right things.</strong> Log, per query:</p>
+<ul>
+<li>The rank of the first relevant passage before reranking</li>
+<li>The rank of the first relevant passage after reranking</li>
+<li>The reranker's score for the top result and for the second result</li>
+<li>The number of tokens sent to the LLM</li>
+<li>End-to-end latency at p50 and p95</li>
+</ul>
+<p><strong>Compare configurations.</strong> Run the same query set through BM25-only, dense-only, hybrid without reranking, and hybrid with reranking. For each, compute MRR@10 (mean reciprocal rank of the first relevant result) and recall@5. The interesting comparison is not "does reranking help" but "how much does it help per millisecond of added latency."</p>
+<p><strong>Watch the score gap.</strong> The difference between the top and second reranker scores is a cheap proxy for confidence. If that gap is near zero on many queries, the reranker is not separating relevant from irrelevant and you likely have a chunking or labeling problem rather than a model problem.</p>
+<p><strong>Measure latency honestly.</strong> Reranking latency scales linearly with the number of candidates. Benchmark at your actual k, on your actual hardware, with your actual batch size. A single-query benchmark will overstate throughput because it ignores batching.</p>
+<h2 id="failure-modes-to-expect">Failure modes to expect</h2>
+<p><strong>Stale documents with high lexical overlap.</strong> A superseded policy that uses the same vocabulary as the current one will score well on both BM25 and a reranker trained on relevance rather than recency. Mitigation: filter by date or validity flag before reranking, or add a recency feature to the ranking. Do not expect the reranker to learn your document lifecycle.</p>
+<p><strong>Short or ambiguous queries.</strong> A one-word query gives the reranker almost nothing to condition on. The scores will be tightly clustered and the ordering will be close to arbitrary. Mitigation: detect short queries and either ask a clarifying question or fall back to a retrieval strategy that uses session context.</p>
+<p><strong>Chunking that splits semantics.</strong> If a policy's exception clause lives in a different chunk from its main rule, no reranker can recover it. Reranking operates on whatever units you indexed. Mitigation: chunk on document structure rather than fixed token counts, and consider overlapping chunks.</p>
+<p><strong>Truncation at the reranker's max length.</strong> Cross-encoders have a hard input limit. Passages longer than that limit are silently truncated. If your chunks are 1000 tokens and your reranker's limit is 512, you are ranking on the first half of each chunk. Mitigation: align chunk size to the reranker's limit.</p>
+<p><strong>Score scale drift.</strong> Reranker scores are not calibrated probabilities. A threshold that works on one corpus will not transfer to another. Mitigation: tune thresholds on your labeled set, and re-tune when the corpus or query distribution changes.</p>
+<p><strong>Latency spikes under load.</strong> The reranker is usually the last thing to get a GPU, and the first thing to get preempted. Mitigation: cache reranker scores keyed by (query hash, document id) with a short TTL, and make the reranker optional — if it times out, fall back to first-stage ordering rather than failing the request.</p>
+<h2 id="where-the-pieces-live-in-practice">Where the pieces live in practice</h2>
+<p>The two-stage pattern is available in several forms, and the right choice depends on how much control you need.</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>First stage</th>
+<th>Reranker</th>
+<th>Control</th>
+<th>Operational cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Self-hosted</td>
+<td>Elasticsearch or Postgres + pgvector</td>
+<td>Cross-encoder on your own GPU/CPU</td>
+<td>Full</td>
+<td>You own scaling and uptime</td>
+</tr>
+<tr>
+<td>Managed vector database</td>
+<td>Vendor's hybrid query</td>
+<td>Vendor's reranker or your own</td>
+<td>Partial</td>
+<td>Vendor pricing and limits</td>
+</tr>
+<tr>
+<td>Managed retrieval API</td>
+<td>Vendor's hybrid query</td>
+<td>Vendor's built-in reranker</td>
+<td>Least</td>
+<td>Simplest, least tunable</td>
+</tr>
+</tbody>
+</table>
+<p>A self-hosted stack typically looks like a search engine for Stage 1 and a small cross-encoder served behind an HTTP endpoint for Stage 2. The reranker is stateless, which makes it easy to scale horizontally and easy to cache in front of.</p>
+<p>A managed vector database with hybrid query support lets you express the first stage in one call, but check whether the reranker is applied before or after your <code>top_k</code> cutoff — applying it after is a common source of confusion.</p>
+<p>A managed retrieval API that bundles hybrid search and reranking is the fastest path to a working system and the hardest to tune. It is a reasonable starting point if you have not yet built a labeled evaluation set, because you cannot tune what you cannot measure.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before adding a reranker, confirm:</p>
+<ul>
+<li>You have a labeled query set of at least 100 examples.</li>
+<li>You know your current MRR@10 and recall@5 without reranking.</li>
+<li>Your chunks fit within the reranker's maximum input length.</li>
+<li>You have a latency budget and know how much of it reranking may consume.</li>
+<li>You have a fallback path if the reranker is unavailable.</li>
+<li>You are logging the reranker's score distribution, not just the final answer.</li>
+</ul>
+<p>If the answer to the first two is no, build the evaluation set first. Everything else is premature.</p>
+<h2 id="common-misconceptions">Common misconceptions</h2>
+<p><strong>"Reranking is just another embedding model."</strong> A cross-encoder scores a query-document pair jointly and produces a relevance score, not an embedding. It cannot be indexed or precomputed, which is why it only runs on a shortlist.</p>
+<p><strong>"You need a large GPU."</strong> Small cross-encoders in the tens of millions of parameters run acceptably on CPU with an optimized runtime, and comfortably on a modest GPU. Benchmark your own candidate counts rather than trusting published throughput figures.</p>
+<p><strong>"Hybrid search means combining sparse and dense vectors."</strong> Hybrid search describes the first stage. Reranking describes the second. You can rerank a dense-only shortlist, a BM25-only shortlist, or a fused list. The stages are independent choices.</p>
+<p><strong>"More candidates always means better results."</strong> Recall improves with k, but latency grows linearly and the reranker's job gets harder as the shortlist fills with marginal candidates. Tune k on your labeled set; do not simply maximize it.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>Should the reranker be an LLM?</strong>
+An LLM can score relevance, but it costs far more per query and adds substantial latency compared to a small cross-encoder. Reserve the LLM for generation and use a purpose-built reranker for ranking.</p>
+<p><strong>Does reranking work for non-English queries?</strong>
+It depends entirely on the reranker's training data. Multilingual cross-encoders exist, but their quality on any specific language should be verified on your own labeled set before you rely on it. Fine-tuning on in-domain pairs is usually necessary for low-resource languages.</p>
+<p><strong>What is the smallest reranker worth using?</strong>
+Small cross-encoders in the 20-100M parameter range are the common starting point. The right size is the one that fits your latency budget while producing a measurable MRR improvement on your evaluation set. Measure, do not assume.</p>
+<p><strong>How do I know the reranker is actually doing work?</strong>
+Log the rank change between first-stage and post-rerank ordering, and the score gap between the top two results. If the ordering rarely changes, the reranker is not adding value and you are paying latency for nothing.</p>
+<p><strong>Can I skip Stage 1 and just rerank everything?</strong>
+No. Cross-encoder cost scales with the number of pairs scored. Reranking a million documents per query is not viable; the two-stage split exists precisely to make the expensive scorer affordable.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Pick one production query from your logs, run it through your current retrieval, and print the rank of the first genuinely relevant passage. Then add a cross-encoder reranker over the top 100 candidates and print the new rank. That single before-and-after comparison tells you more about whether reranking will help your system than any published benchmark.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/">RAG pipelines: 4 silent prod killers</a></li>
+<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/">RAG rots if you don’t refresh indexes</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/rag-pipelines-4-silent-prod-killers/">
+                        <h3>RAG pipelines: 4 silent prod killers</h3>
+                        <p>A practical guide to the silent failure modes that break RAG pipelines at scale: tokenizer drift, GPU fragmentation, index skew, and cache stampedes.</p>
+                        <span class="related-meta">13 min read · 8 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">
+                        <h3>LLMOps 2026: evaluation stack that replaced RAG dashboards</h3>
+                        <p>Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.</p>
+                        <span class="related-meta">13 min read · 5 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-rots-if-you-dont-refresh-indexes/">
+                        <h3>RAG rots if you don’t refresh indexes</h3>
+                        <p>RAG indexes rot when source documents change. Learn change detection, chunk versioning, and incremental refresh patterns, with code and a cost model.</p>
+                        <span class="related-meta">15 min read · 4 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

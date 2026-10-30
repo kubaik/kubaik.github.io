@@ -1,0 +1,205 @@
+# Open banking APIs: the integration traps
+
+Open banking integrations tend to pass the happy path and fail in a small number of predictable ways once real money and real consents are involved. The root cause is rarely authentication or field mapping. It is that teams treat open banking as one REST API with regional quirks, when it is a family of contracts that share a name and disagree on semantics.
+
+The useful mental model is this: **open banking is not one API with regional quirks; it is a family of incompatible contracts that happen to share a name.** The differences between markets are not edge cases to handle later. They are the design constraint. If you build for the lowest common denominator and patch per market, you will spend the rest of the project patching, and some of those patches will be financial corrections rather than code changes.
+
+This article covers the specific, documented differences that catch teams out: consent models, authentication flows, payload semantics, error taxonomies, and the gap between sandbox and production behaviour. It is not a market-by-market catalogue, because those change too fast to be useful in a written reference. It is a set of failure modes, a worked example, and a decision framework so the right questions get asked before the first line of integration code is written.
+
+## The conventional wisdom, and where it stops
+
+The standard advice runs roughly like this: adopt a standard (Berlin Group, the UK Open Banking Standard, FDX, or a local variant), use an aggregator or gateway that normalises across markets, and keep a clean domain model by translating everything into a canonical schema. That advice is not wrong. It is incomplete in three specific ways.
+
+First, **standards are not interchangeable at the semantic level.** Two APIs can both claim to implement account information and still disagree on what a balance means: available versus booked, whether pending transactions are included, how overdrafts are represented, and whether an account identifier is stable across consents. A canonical schema that flattens these differences will be wrong in at least one market, and the error surfaces as a customer dispute rather than a failed test.
+
+Second, **consent is a state machine with legal weight, not a checkbox.** Consent has an expiry, a revocation path, and rules about what may be done with data after revocation, and those rules differ by regime. An integration that treats consent as a token to refresh like any other will work in sandbox and fail an audit.
+
+Third, **the error model is part of the contract.** A `400` in one market can mean "malformed request" and in another "consent expired". Retry logic that treats all 4xx as permanent will drop payments that should have been retried after re-consent. Retry logic that treats all 5xx as retryable will double-submit in markets where payment initiation is not idempotent by default.
+
+The conventional wisdom assumes the hard part is authentication and data mapping. The hard part is that the same verb means different things in different markets, and the documentation rarely says so in one place.
+
+## Where integrations actually break
+
+A recurring failure mode is the sandbox-to-production gap. Sandboxes are commonly more permissive than production: they may accept consent without a real redirect, return synthetic data with stable identifiers, and never simulate partial failures. Teams build against the sandbox, pass integration tests, and then meet production behaviour such as the following.
+
+- **Consent expiry is enforced differently.** A token the sandbox refreshes indefinitely may, in production, require the user to be present for re-authentication after a fixed period. A nightly transaction sync then fails with a consent error that the code maps to a generic `401`.
+- **Rate limits are per-consent, not per-client.** A generous global quota can sit alongside a much tighter per-account limit, so a batch job fanning out across many accounts hits `429` on a subset and the retry logic thundering-herds.
+- **Idempotency keys are not universal.** Some payment initiation endpoints honour an idempotency key; others do not, or honour it only for a limited window. A network timeout followed by a retry can create a duplicate payment. This is among the most expensive integration bugs in open banking, and it is documented in some markets and glossed over in others.
+- **Webhook delivery is not guaranteed.** Some markets rely on polling; others offer webhooks with at-least-once delivery and no ordering guarantee. A state machine that assumes ordered events will process a "settled" before a "pending" and corrupt the ledger.
+
+The pattern: the standard advice optimises for code reuse across markets, and code reuse hides semantic differences until they become financial discrepancies.
+
+## A different mental model
+
+Instead of "one integration, many configurations", think **"one core, many adapters, and a market capability matrix that is a first-class artefact."** The core is domain logic: what a payment is, what a consent authorises, how reconciliation works. The adapters are per-market and are allowed to be ugly. The capability matrix keeps the team honest: for each market, it records which features are supported, which are emulated, and which are impossible.
+
+A capability matrix is not a spreadsheet filled in once. It is a set of assertions encoded in code and tested. A minimal TypeScript type that forces a declaration, per market, of whether idempotency and consent refresh are supported:
+
+```typescript
+type MarketCapabilities = {
+  idempotentPaymentInitiation: boolean;
+  consentRefreshRequiresUserPresence: boolean;
+  webhookDelivery: 'guaranteed' | 'at-least-once' | 'none';
+  balanceSemantics: 'available' | 'booked' | 'both';
+  errorModel: 'standardised' | 'market-specific';
+};
+
+const uk: MarketCapabilities = {
+  idempotentPaymentInitiation: true,
+  consentRefreshRequiresUserPresence: true,
+  webhookDelivery: 'at-least-once',
+  balanceSemantics: 'both',
+  errorModel: 'standardised',
+};
+
+const marketX: MarketCapabilities = {
+  idempotentPaymentInitiation: false,
+  consentRefreshRequiresUserPresence: false,
+  webhookDelivery: 'none',
+  balanceSemantics: 'available',
+  errorModel: 'market-specific',
+};
+
+type PaymentRequest = { amountMinorUnits: number; currency: string; creditorIban: string };
+
+declare function initiateWithClientDedup(request: PaymentRequest): Promise<string>;
+declare function initiateWithIdempotencyKey(request: PaymentRequest): Promise<string>;
+
+function initiatePayment(market: MarketCapabilities, request: PaymentRequest) {
+  if (!market.idempotentPaymentInitiation) {
+    // fall back to a client-side deduplication key stored before the call
+    return initiateWithClientDedup(request);
+  }
+  return initiateWithIdempotencyKey(request);
+}
+```
+
+This is deliberately not clever. The point is that the difference is visible at the call site, not buried in a configuration flag that someone flips without understanding the consequence.
+
+The model shift also changes how aggregators and gateways are evaluated. An aggregator that claims to normalise across markets is really offering its capability matrix, not yours. That can be a good trade, but only when you know which differences it has flattened and whether those flattenings are lossy for your use case. If you need to know whether a balance includes pending transactions and the aggregator's canonical model says "balance", you have outsourced a decision you may not be able to audit.
+
+## Documented differences worth checking
+
+The differences are in the specifications, not just in anecdote. The UK Open Banking Standard defines consent as a resource with an explicit expiry and a status that moves through states such as `AwaitingAuthorisation`, `Authorised`, `Rejected`, `Revoked`, and `Expired`. The Berlin Group NextGenPSD2 framework defines consent with different endpoint shapes and error codes. The FDX API in the US has its own consent and data-sharing model. These are publicly documented standards, and they do not share a single consent lifecycle. Treat any claim that they do as a claim to verify against the current specification text.
+
+A concrete trap is **the meaning of `401` versus `403`**. In OAuth 2.0, `401` means the access token is missing or invalid; `403` means the token is valid but lacks scope. Open banking APIs generally follow this, but some return `401` for an expired consent and expect the client to re-initiate the consent flow, while others return `403` with a specific error code that means the same thing. An HTTP client with a global rule "on 401, refresh token" will attempt a refresh that cannot succeed, because the consent, not the token, is the problem. The fix is to map error codes to domain actions per market rather than relying on HTTP status alone.
+
+Another documented difference is **payment initiation idempotency**. Some standards define an idempotency header or equivalent; others rely on a client-generated payment identifier that must be unique. If the header is assumed to be honoured everywhere, a retry after a timeout can create a second payment. The mitigation is not clever code; it is a pre-call deduplication record with a unique constraint in your own database, written before the network call and reconciled after.
+
+Here is the shape of that in Python, using a unique constraint to make deduplication safe under concurrency:
+
+```python
+import uuid
+from sqlalchemy import create_engine, Column, String, DateTime, UniqueConstraint
+from sqlalchemy.orm import declarative_base, sessionmaker
+from datetime import datetime, timezone
+
+Base = declarative_base()
+
+class PaymentAttempt(Base):
+    __tablename__ = 'payment_attempts'
+    id = Column(String, primary_key=True)
+    client_dedup_key = Column(String, nullable=False)
+    market = Column(String, nullable=False)
+    status = Column(String, nullable=False, default='initiated')
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    __table_args__ = (UniqueConstraint('client_dedup_key', 'market', name='uq_dedup'),)
+
+engine = create_engine('sqlite:///payments.db')
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+
+def call_market_api(market: str, payload: dict, idempotency_key: str) -> dict:
+    raise NotImplementedError
+
+def initiate_payment(market: str, dedup_key: str, payload: dict) -> str:
+    session = Session()
+    attempt_id = str(uuid.uuid4())
+    try:
+        session.add(PaymentAttempt(id=attempt_id, client_dedup_key=dedup_key, market=market))
+        session.commit()
+    except Exception:
+        session.rollback()
+        # A row already exists for this dedup key: return the existing attempt
+        existing = session.query(PaymentAttempt).filter_by(
+            client_dedup_key=dedup_key, market=market).one()
+        return existing.id
+    # Only now make the network call
+    call_market_api(market, payload, idempotency_key=dedup_key)
+    attempt = session.get(PaymentAttempt, attempt_id)
+    attempt.status = 'submitted'
+    session.commit()
+    return attempt_id
+```
+
+This is illustrative and simplified: it omits error handling, the reconciliation job that resolves attempts stuck in `initiated`, and the mapping of provider responses to statuses. The principle is the point. The database constraint, not the remote API, is what makes retries safe, and it works even in markets where the API does not support idempotency keys.
+
+### Measure the gap rather than guess it
+
+Claims about how a market behaves should be tested, not assumed. A practical way to build evidence for the capability matrix is to instrument the integration at the boundary:
+
+- **Log every outbound request and inbound response** with a correlation ID, the market, the endpoint, the HTTP status, the provider error code, and the latency. Redact tokens and personal data at write time.
+- **Record retries as first-class events**, with the attempt number and the dedup key, so duplicate submissions can be counted rather than argued about.
+- **Run a fault-injection suite against the sandbox**: force a timeout after the request is sent, then retry, and assert that exactly one payment exists in your own ledger and, where the API allows it, at the provider.
+- **Compare sandbox and production behaviour on the same scenarios** once production access exists, and diff the observed error codes against the matrix.
+- **Watch `429` rates per account, not just per client**, so per-consent limits show up before they become a batch failure.
+
+The output is a table of observed behaviour per market, dated, with the specification version it was checked against. That table is the capability matrix, and it is worth more than any blog post, this one included.
+
+## When the conventional wisdom is right
+
+There are situations where a single normalised integration is the correct call. For a product where the financial consequence of a semantic difference is low, such as an expense categorisation tool that reads transactions but never initiates payments, a lossy canonical model is an acceptable trade for speed. Likewise, in a single market with no near-term expansion plans, building a market-specific adapter is over-engineering; the capability matrix is a document written when the second market appears.
+
+Aggregators are also genuinely the right choice when the team lacks the compliance capacity to manage consent and data handling per market. The trade is real: some control over semantics is given up in exchange for not maintaining several consent state machines. The mistake is choosing an aggregator without asking which differences it has flattened, then discovering the answer during an audit or a customer dispute.
+
+The conventional wisdom is right about code reuse in principle. It goes wrong when code reuse becomes the primary goal rather than a constraint balanced against semantic correctness.
+
+## A decision framework
+
+Work through these in order of importance.
+
+1. **Does the integration move money?** If yes, every semantic difference is a potential financial discrepancy, and per-market adapters plus explicit idempotency are warranted. If no, a normalised read model is usually fine.
+2. **How many markets, and how different are their consent regimes?** One market: build directly. Two or three with similar regimes: a shared core with thin adapters. Many markets with materially different consent law: an aggregator or gateway, with a documented list of what it normalises.
+3. **What is the audit and dispute exposure?** If the team must be able to explain to a regulator or a customer why a balance differed, raw provider responses must be retained alongside the canonical model. That requirement alone rules out some aggregators that do not expose raw payloads.
+4. **What is the operational capacity?** Every market adapter is a thing to monitor, alert on, and update when the standard changes. A capability matrix with ten markets is ten rows of ongoing work. Be honest about whether that can be staffed.
+
+The output is not a single answer; it is a documented decision per market, which is exactly what the capability matrix encodes.
+
+## Common objections
+
+**"This sounds like a lot of abstraction for something that is mostly CRUD."** It is mostly CRUD until a payment double-submits or a consent expires mid-sync. The abstraction exists to make differences explicit where they matter. A capability matrix is cheaper than a reconciliation incident.
+
+**"An aggregator already solves this."** An aggregator solves the integration effort, not the semantic problem. It gives you its model. If that model is sufficient for the product, use it. If you need to know whether a balance includes pending items, ask the aggregator directly and get the answer in writing before building on it.
+
+**"Market differences can be handled with configuration."** Configuration is fine for endpoints and credentials. It is not fine for behavioural differences such as idempotency support or consent refresh semantics, because those change control flow, not just values. Encode them in types or interfaces that force a decision at the call site.
+
+**"The standards are converging."** They are converging in some areas and diverging in others, and convergence takes years. Build for the differences that exist now, and the design will hold as they narrow.
+
+## What changes in practice
+
+Adopting the capability-matrix model changes three things. First, integration tests become market-specific: a test asserts that a retry after timeout does not create a duplicate in a market without idempotency keys, not just that a happy-path payment succeeds. Second, incident response improves because errors map to domain actions per market, so an on-call engineer sees "consent expired, re-auth required" rather than "401". Third, expansion cost becomes predictable: adding a market means filling in a matrix row and writing an adapter, not discovering a new class of bug in production.
+
+It also changes vendor conversations. Instead of "do you support open banking?", the questions become "how do you represent a balance, what happens to consent on expiry, and do you honour idempotency keys on payment initiation?" Those questions get useful answers.
+
+## Summary
+
+The integration differences between open banking markets are not quirks to be patched; they are the core design constraint. Normalising everything into one model is a reasonable default for read-only products and a dangerous one for anything that moves money. The alternative is to treat per-market capabilities as a first-class artefact, encode them where they affect control flow, and make retries safe with your own database constraints rather than trusting remote idempotency.
+
+## Frequently Asked Questions
+
+**Why does an open banking integration work in sandbox but fail in production?**
+Sandboxes often relax consent expiry, return stable synthetic identifiers, and do not simulate partial failures or per-consent rate limits. Production enforces these, so code paths that assume a token can be refreshed indefinitely, or that every 4xx is permanent, will fail. Test against documented production constraints, not just sandbox behaviour.
+
+**Do all open banking APIs support idempotency keys for payments?**
+No. Some standards define an idempotency header or a client-supplied payment identifier, and some markets honour neither reliably. The safe approach is deduplication on your side with a unique constraint in your database, written before the network call and reconciled afterwards. Do not assume the remote API will prevent duplicates.
+
+**How should consent expiry be handled across markets?**
+Model consent as a state machine with an explicit expiry and a re-authentication path, and map each market's error codes onto that state machine. Do not treat consent expiry as an authentication failure that a token refresh can fix. Some markets require the user to be present for re-consent, which means background sync jobs must degrade gracefully rather than retry indefinitely.
+
+**Is it better to use an aggregator or integrate directly with each bank?**
+It depends on whether the aggregator's normalised model is sufficient for the product and whether its flattening decisions can be audited. For read-only products, an aggregator is often the right trade. For payment initiation or anything where balance semantics matter, ask specifically how it represents balances, consent expiry, and idempotency, and get the answer in writing before building.
+
+**Do the standards define the same consent lifecycle?**
+No. The UK Open Banking Standard, Berlin Group NextGenPSD2, and FDX each define consent with different resource shapes, status values, and error codes. Verify against the current specification for each market rather than assuming a shared lifecycle.
+
+**Do this next:** open your payment initiation code and find the branch that handles a network timeout. If the retry path does not write a deduplication record with a unique constraint before the second call, that is the bug most likely to cost you money. Add the constraint today, before adding another market.

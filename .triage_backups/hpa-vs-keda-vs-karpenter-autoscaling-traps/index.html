@@ -1,0 +1,593 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HPA vs KEDA vs Karpenter: autoscaling traps - Kubai Kevin</title>
+        <meta name="description" content="How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.">
+        <meta name="keywords" content="Kubernetes, Hpa, Keda, Karpenter, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-26T08:01:33.191005">
+        <meta property="article:modified_time" content="2026-10-26T08:03:25.645277+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="HPA vs KEDA vs Karpenter: autoscaling traps">
+        <meta property="og:description" content="How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.">
+        <meta property="og:url" content="https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png">
+        <meta property="og:image:alt" content="HPA vs KEDA vs Karpenter: autoscaling traps">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="HPA vs KEDA vs Karpenter: autoscaling traps">
+        <meta name="twitter:description" content="How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/#article",
+      "headline": "HPA vs KEDA vs Karpenter: autoscaling traps",
+      "description": "How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.",
+      "datePublished": "2026-10-26T08:01:33+00:00",
+      "dateModified": "2026-10-26T08:03:25+00:00",
+      "wordCount": 3432,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
+      },
+      "keywords": "Kubernetes, Hpa, Keda, Karpenter, K8s",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "HPA vs KEDA vs Karpenter: autoscaling traps",
+          "item": "https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>HPA vs KEDA vs Karpenter: autoscaling traps</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">HPA vs KEDA vs Karpenter: autoscaling traps</h1>
+                
+                <p class="post-lead">How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Hpa</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Keda</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Karpenter</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3432 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-26
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-problem-this-solves">The problem this solves</h2>
+<p>A Kubernetes cluster usually hosts three workload shapes at once. Steady HTTP APIs. Queue consumers that sit idle until a burst of jobs arrives. Batch jobs that need a GPU for twenty minutes and then vanish. Three autoscalers are commonly available — HorizontalPodAutoscaler (HPA), KEDA, and Karpenter — and they overlap in ways that are not obvious from their names. HPA scales pods based on CPU, memory, or custom metrics. KEDA scales pods based on external events such as queue depth, Kafka lag, or cron schedules. Karpenter scales <em>nodes</em> by provisioning cloud instances directly, bypassing the traditional Cluster Autoscaler and node-group model.</p>
+<p>The trap is assuming the three are interchangeable, or that stacking all three without thought produces a system that scales correctly. A typical failure mode is a system that scales too late, too aggressively, or not at all, and the failure is invisible until traffic arrives. This article is a decision framework plus working configuration for each tool, with the specific edge cases that cause incidents: HPA's missing-metrics behavior, KEDA's scale-to-zero cold-start cost, and Karpenter's interaction with pod disruption budgets and spot interruptions. By the end, a reader should be able to look at a workload and know which autoscaler owns it.</p>
+<h2 id="the-three-tools-and-what-each-actually-controls">The three tools, and what each actually controls</h2>
+<p>Before any YAML, get the mental model right. These tools operate at different layers.</p>
+<p><strong>HPA</strong> is a built-in Kubernetes controller. It reads metrics from the metrics API (served by metrics-server for resource metrics, or by an adapter for custom and external metrics) and adjusts the <code>replicas</code> field on a Deployment, ReplicaSet, or StatefulSet. It does not create nodes. If the cluster has no schedulable capacity, HPA will scale the replica count up and the new pods will sit <code>Pending</code>.</p>
+<p><strong>KEDA</strong> is a Kubernetes Operator that installs a <code>ScaledObject</code> custom resource. KEDA does not replace HPA — it creates and manages an HPA object under the hood, feeding it metrics from external sources via the Kubernetes external metrics API. When a <code>ScaledObject</code> targets zero replicas, KEDA activates the workload from zero and then hands control to the HPA it manages. KEDA supports scaling to zero, which a plain HPA cannot do.</p>
+<p><strong>Karpenter</strong> is a node autoscaler. It watches for unschedulable pods and provisions cloud instances that match the pod's resource requests, node selectors, and tolerations. It also consolidates underutilized nodes. Karpenter does not scale pods; it makes sure pods have somewhere to land.</p>
+<p>The layers are therefore: KEDA or HPA decide <em>how many pods</em>. Karpenter decides <em>how many nodes and of what shape</em>. A common mistake is treating Karpenter as a replacement for HPA — it is not. A Deployment with a fixed replica count of 3 will stay at 3 pods no matter how many nodes Karpenter provisions.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Scales</th>
+<th>Metric source</th>
+<th>Scale to zero</th>
+<th>Node awareness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HPA</td>
+<td>Pod replicas</td>
+<td>CPU, memory, custom/external metrics</td>
+<td>No (minReplicas ≥ 1)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>KEDA</td>
+<td>Pod replicas (via managed HPA)</td>
+<td>Scaler-specific: SQS, Kafka, Prometheus, cron, and others</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Karpenter</td>
+<td>Nodes (cloud instances)</td>
+<td>Pod resource requests, node selectors, taints</td>
+<td>N/A</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites-and-what-to-build">Prerequisites and what to build</h2>
+<p>A working cluster is assumed, with a Kubernetes version supported by the Karpenter release in use — check the Karpenter compatibility matrix for the exact supported versions rather than assuming. <code>kubectl</code> and <code>helm</code> are required. For KEDA, the KEDA Helm chart. For Karpenter, the Karpenter Helm chart plus IAM permissions for the controller to create instances — the exact policy differs by cloud provider, so follow the official Karpenter getting-started guide for that provider rather than copying a policy from a blog post.</p>
+<p>Three workloads represent the three shapes:</p>
+<ol>
+<li>A stateless HTTP API scaled by CPU with HPA — the boring case, done correctly.</li>
+<li>A queue consumer scaled by SQS depth with KEDA, including scale-to-zero.</li>
+<li>A batch job that requests a GPU, scheduled onto a node that Karpenter provisions on demand.</li>
+</ol>
+<h2 id="step-1-set-up-the-environment-and-verify-the-metrics-pipeline">Step 1 — Set up the environment and verify the metrics pipeline</h2>
+<p>HPA and KEDA both depend on a working metrics pipeline. If <code>kubectl top pods</code> returns an error, HPA will not scale and the reason will be buried in events. Verify first.</p>
+<pre><code class="language-bash"># metrics-server is required for CPU/memory HPA
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl top nodes
+kubectl top pods -A | head
+</code></pre>
+<p>If <code>kubectl top</code> fails, check that metrics-server pods are running and that the API service <code>v1beta1.metrics.k8s.io</code> is available:</p>
+<pre><code class="language-bash">kubectl get apiservice v1beta1.metrics.k8s.io -o yaml
+</code></pre>
+<p>A common failure is metrics-server unable to scrape kubelets because of TLS certificate issues — the fix is provider-specific (adding <code>--kubelet-insecure-tls</code> is a workaround, not a production fix). Do not proceed to HPA until <code>kubectl top pods</code> works.</p>
+<p>For KEDA, install the operator:</p>
+<pre><code class="language-bash">helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+helm install keda kedacore/keda --namespace keda --create-namespace
+kubectl get pods -n keda
+</code></pre>
+<p>For Karpenter, install the controller per the official guide for the provider. The controller needs a node IAM role and a controller IAM role; the exact names and policies are documented per provider. Do not guess them.</p>
+<h2 id="step-2-hpa-for-steady-http-workloads">Step 2 — HPA for steady HTTP workloads</h2>
+<p>HPA is the right tool when traffic correlates with a resource that can be measured — CPU, memory, or a custom metric the app exports. The default behavior scales on average CPU utilization across pods.</p>
+<pre><code class="language-yaml">apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 25
+          periodSeconds: 60
+</code></pre>
+<p>The <code>behavior</code> block is where most production HPA configs go wrong. By default, HPA scales down after a 5-minute stabilization window, which is reasonable. Scale-up can be sluggish if the default 0-second window is combined with a low percentage policy — the controller may only add one pod per evaluation cycle. The config above allows doubling every 15 seconds on the way up and removes at most 25% of pods per minute on the way down. The asymmetry is deliberate: scale up fast, scale down slow, because a premature scale-down followed by a traffic spike causes a thundering herd on the remaining pods.</p>
+<p><strong>Gotcha: HPA and missing metrics.</strong> When the metrics API returns no data for a pod — for example, a pod that just started and has not been scraped yet — HPA treats that pod's utilization as unknown. If enough pods are unknown, HPA cannot compute a ratio and does not scale. The event on the HPA object reports that it failed to get CPU utilization. The fix is to set resource <em>requests</em> on every container. HPA computes utilization as a percentage of the request, not of the limit. A container with no CPU request is invisible to HPA.</p>
+<p><strong>Gotcha: HPA with memory.</strong> Memory-based HPA is a trap for most workloads. Memory usage rarely drops when load drops, because runtimes hold onto heap. An HPA targeting 70% memory will scale up and then never scale down. Use CPU or a custom request-rate metric for HTTP services.</p>
+<p>For a custom metric, expose something like requests-per-second via Prometheus and use the Prometheus Adapter to register it as a custom metric. That is more work but produces scaling that tracks traffic rather than CPU, which is often a poor proxy for a service that is I/O-bound.</p>
+<p><strong>How to measure whether the HPA is doing its job.</strong> Run a fixed load generator at a known request rate against the service, record the pod count every 15 seconds with <code>kubectl get deploy api -o jsonpath='{.status.replicas}'</code>, and plot pod count against request rate. A healthy HPA produces a roughly linear relationship between load and replicas once above <code>minReplicas</code>. A flat line means the metric is missing or the request is not set; a sawtooth means the scale-down policy is too aggressive relative to the traffic variance.</p>
+<h2 id="step-3-keda-for-event-driven-and-scale-to-zero-workloads">Step 3 — KEDA for event-driven and scale-to-zero workloads</h2>
+<p>KEDA's value is twofold: it can read metrics HPA cannot (queue depth, Kafka consumer lag, cron schedules), and it can scale a Deployment to zero replicas when there is no work. That second property is what makes it appropriate for queue consumers that are idle most of the day.</p>
+<p>Here is a <code>ScaledObject</code> for an SQS consumer:</p>
+<pre><code class="language-yaml">apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: sqs-consumer
+spec:
+  scaleTargetRef:
+    name: sqs-consumer
+  minReplicaCount: 0
+  maxReplicaCount: 30
+  pollingInterval: 15
+  cooldownPeriod: 120
+  triggers:
+    - type: aws-sqs-queue
+      metadata:
+        queueURL: https://sqs.us-east-1.amazonaws.com/123456789012/jobs
+        queueLength: &quot;10&quot;
+        awsRegion: us-east-1
+        identityOwner: pod
+</code></pre>
+<p><code>queueLength: "10"</code> means KEDA targets one replica per 10 messages in the queue. With 100 messages visible, it asks for 10 replicas. <code>pollingInterval: 15</code> means it checks SQS every 15 seconds. <code>cooldownPeriod: 120</code> means after the last message is consumed, it waits two minutes before scaling to zero.</p>
+<p>Those three numbers are where the tuning happens. A short polling interval reacts faster but costs more SQS API calls and more load on the scaler. A long cooldown avoids flapping when the queue drains and refills, but keeps idle pods running longer. For a queue that bursts every few minutes, a cooldown of 120–300 seconds is a reasonable starting point. For a queue that gets one message per hour, a shorter cooldown saves money.</p>
+<p><strong>Gotcha: scale-to-zero cold start.</strong> When KEDA scales a Deployment from 0 to 1, the new pod must schedule, pull its image, start the process, and connect to the queue. That is not instant. If the queue receives a burst and the consumer takes 30 seconds to become ready, messages sit in the queue for 30 seconds. For latency-sensitive queues, set <code>minReplicaCount: 1</code> and accept the cost of one warm pod. Scale-to-zero suits workloads where a cold start is acceptable — batch processing, nightly jobs, low-priority consumers.</p>
+<p><strong>Gotcha: KEDA and HPA conflict.</strong> KEDA creates an HPA object named <code>keda-hpa-&lt;scaledobject-name&gt;</code>. If a separate HPA is also created targeting the same Deployment, the two fight. Do not mix them on the same workload. Pick one.</p>
+<p>KEDA also supports cron triggers, which is useful for predictable traffic:</p>
+<pre><code class="language-yaml">  triggers:
+    - type: cron
+      metadata:
+        timezone: UTC
+        start: &quot;0 8 * * *&quot;
+        end: &quot;0 20 * * *&quot;
+        desiredReplicas: &quot;5&quot;
+</code></pre>
+<p>This scales to 5 replicas during business hours and back down outside them, regardless of load. It is a blunt instrument, but for a service with a known daily pattern it is more reliable than waiting for CPU to rise.</p>
+<p><strong>Worked example: sizing the queue consumer.</strong> Suppose messages arrive in bursts of 2,000, each message takes 250 ms to process, and the target is to drain a burst in under 2 minutes. One replica processes 4 messages per second, so 2,000 messages need 500 replica-seconds. Draining in 120 seconds requires about 4.2 replicas, so 5 replicas. With <code>queueLength: "10"</code>, KEDA asks for 2,000 / 10 = 200 replicas, which exceeds <code>maxReplicaCount: 30</code>. The trigger is therefore not the constraint — the ceiling is. Either raise <code>maxReplicaCount</code>, raise <code>queueLength</code> so the trigger asks for fewer replicas, or accept a longer drain time. Running the arithmetic before deployment makes the trade-off explicit.</p>
+<h2 id="step-4-karpenter-for-node-provisioning">Step 4 — Karpenter for node provisioning</h2>
+<p>Karpenter's job is to make sure pods have nodes to run on, and to remove nodes that are no longer needed. It does this by watching for unschedulable pods and provisioning instances that satisfy their requirements.</p>
+<p>A minimal <code>NodePool</code> and <code>EC2NodeClass</code> (AWS-specific; other providers have equivalents):</p>
+<pre><code class="language-yaml">apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: default
+spec:
+  template:
+    spec:
+      requirements:
+        - key: kubernetes.io/arch
+          operator: In
+          values: [&quot;amd64&quot;]
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: [&quot;on-demand&quot;, &quot;spot&quot;]
+        - key: node.kubernetes.io/instance-type
+          operator: In
+          values: [&quot;m5.large&quot;, &quot;m5.xlarge&quot;, &quot;m5.2xlarge&quot;]
+  limits:
+    cpu: &quot;1000&quot;
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 30s
+---
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: default
+spec:
+  amiFamily: AL2
+  role: KarpenterNodeRole
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: my-cluster
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: my-cluster
+</code></pre>
+<p>The <code>requirements</code> block constrains what Karpenter is allowed to provision. Allowing both <code>on-demand</code> and <code>spot</code> lets Karpenter choose spot when available, which is cheaper but interruptible. The <code>consolidationPolicy</code> tells Karpenter to remove nodes that are empty or underutilized — this is how nodes that HPA scaled down stop costing money.</p>
+<p><strong>Gotcha: Karpenter and pod disruption budgets.</strong> When Karpenter consolidates a node, it evicts pods. If a pod's PodDisruptionBudget (PDB) does not allow eviction, the node stays. A common pattern is a PDB with <code>minAvailable: 1</code> on a Deployment that Karpenter wants to consolidate from 2 pods to 1 — the eviction is blocked and the node lingers. Check <code>kubectl get pdb -A</code> and the Karpenter logs when consolidation seems stuck.</p>
+<p><strong>Gotcha: Karpenter and spot interruptions.</strong> Spot instances can be reclaimed with a short warning. Karpenter handles the interruption notice by cordoning and draining the node, but pods need to tolerate that. For stateful workloads or long-running batch jobs, spot is a poor fit unless the job can checkpoint. For stateless services with a PDB and multiple replicas, spot is usually fine.</p>
+<p><strong>Gotcha: Karpenter does not scale pods.</strong> This is worth repeating because it is the most common misconception. Deploying a GPU batch job with <code>replicas: 1</code> causes Karpenter to provision one GPU node. Ten parallel batch workers require either a fixed replica count of 10 or an HPA/KEDA scaling on a queue. Karpenter only responds to what the scheduler cannot place.</p>
+<p><strong>How to measure node provisioning latency.</strong> Record the time a pod first appears as <code>Pending</code> and the time it becomes <code>Running</code>, using <code>kubectl get events --sort-by=.lastTimestamp</code> or a pod-startup-latency metric from the scheduler. Repeat during a controlled scale-up. That interval — not the HPA reaction time — is the floor on how fast the cluster can absorb a spike that exceeds current capacity.</p>
+<h2 id="how-the-three-interact-in-practice">How the three interact in practice</h2>
+<p>A typical production setup uses all three, each at its layer:</p>
+<ul>
+<li>HPA scales the HTTP API between 2 and 20 pods based on CPU.</li>
+<li>KEDA scales the queue consumer between 0 and 30 pods based on SQS depth.</li>
+<li>Karpenter provisions nodes when either of the above creates pods that do not fit, and consolidates when they scale down.</li>
+</ul>
+<p>The interaction to watch is timing. HPA reacts in tens of seconds. KEDA's polling interval adds up to 15 seconds of lag. Karpenter's node provisioning takes minutes — instance launch, kubelet registration, image pull. So the end-to-end time from traffic spike to a new pod serving requests is dominated by Karpenter, not HPA. If HPA scales to 20 pods but the cluster only has capacity for 5, the other 15 sit <code>Pending</code> until Karpenter catches up. That is why <code>minReplicas</code> and node headroom matter: keep enough spare capacity to absorb the first minute of a spike, and let Karpenter handle the sustained load.</p>
+<p>A useful pattern is to set HPA <code>minReplicas</code> to a value that fits on the existing nodes, and let Karpenter handle anything above that. If HPA's minimum is 2 and the nodes can hold 6 pods, a spike to 6 is instant; a spike to 20 triggers Karpenter.</p>
+<h2 id="decision-checklist-which-tool-owns-the-workload">Decision checklist: which tool owns the workload</h2>
+<p>Use this to classify a workload before writing any YAML.</p>
+<ol>
+<li><strong>Is the load measurable as CPU, memory, or an in-process custom metric, and does the workload need at least one replica at all times?</strong> Use HPA alone.</li>
+<li><strong>Does the workload need to reach zero replicas when idle, or does the trigger live outside the app (queue, stream, cron)?</strong> Use KEDA. If it also needs CPU-based scaling, add a CPU trigger to the same <code>ScaledObject</code> rather than a second HPA.</li>
+<li><strong>Does the workload need hardware the default node pool does not offer (GPU, ARM, large memory, spot)?</strong> That is a Karpenter <code>NodePool</code> requirement, independent of the pod scaler.</li>
+<li><strong>Is the workload a batch job that runs to completion?</strong> Consider a Kubernetes Job instead of a Deployment; HPA does not scale Jobs, and KEDA's <code>ScaledJob</code> covers queue-driven batch work.</li>
+<li><strong>Is a cold start acceptable?</strong> If not, <code>minReplicaCount: 1</code> and keep warm capacity; Karpenter cannot make an image pull faster.</li>
+<li><strong>Can the workload tolerate eviction?</strong> If not, it does not belong on spot, and its PDB will block consolidation.</li>
+</ol>
+<h2 id="verification-checklist">Verification checklist</h2>
+<p>After configuring all three, verify each layer independently:</p>
+<ol>
+<li><strong>Metrics:</strong> <code>kubectl top pods</code> returns data for every pod expected to scale.</li>
+<li><strong>HPA:</strong> <code>kubectl describe hpa api-hpa</code> shows current metrics and no <code>failed to get</code> events.</li>
+<li><strong>KEDA:</strong> <code>kubectl get scaledobject</code> shows <code>READY=True</code>, and <code>kubectl get hpa</code> shows a <code>keda-hpa-*</code> object for each ScaledObject.</li>
+<li><strong>Karpenter:</strong> <code>kubectl get nodepool</code> shows <code>READY=True</code>, and the Karpenter controller logs show no provisioning errors.</li>
+<li><strong>End-to-end:</strong> generate load against the API and watch <code>kubectl get pods -w</code> — HPA should add pods and Karpenter should add nodes if needed. Send a burst of messages to the queue and watch the consumer scale from zero.</li>
+</ol>
+<p>If HPA does not scale, check events on the HPA object first. If KEDA does not scale, check the ScaledObject status and the KEDA operator logs. If Karpenter does not provision, check for unschedulable pods with <code>kubectl get pods -A --field-selector=status.phase=Pending</code> and read the events.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Can HPA and KEDA be used together on the same Deployment?</strong>
+Not as two separate objects. KEDA creates and manages its own HPA object for each ScaledObject. If a standalone HPA also targets the same Deployment, the two controllers fight over the replica count. Pick one. If both CPU-based and queue-based scaling are needed, use KEDA with multiple triggers, since KEDA supports a CPU trigger alongside external triggers.</p>
+<p><strong>Does Karpenter replace the Cluster Autoscaler?</strong>
+Yes, in the sense that one or the other is run, not both. Karpenter provisions nodes directly rather than through Auto Scaling Groups, which lets it choose instance types based on pod requirements rather than predefined node groups. Running both against the same cluster causes conflicting node lifecycle decisions.</p>
+<p><strong>Why does an HPA show "unknown" for current metrics?</strong>
+The most common cause is missing CPU requests on the container. HPA computes utilization as a percentage of the request, so a container without a request has no denominator. The second most common cause is metrics-server not scraping the pod yet — new pods take a scrape interval to appear. Check <code>kubectl describe hpa</code> for the specific event.</p>
+<p><strong>How do you scale a GPU batch job that runs occasionally?</strong>
+Use KEDA with a queue trigger (SQS, RabbitMQ, or a cron trigger) to scale the job Deployment from zero, and Karpenter with a NodePool that allows GPU instance types. The pod template must request <code>nvidia.com/gpu: 1</code> so Karpenter knows to provision a GPU node. Set <code>minReplicaCount: 0</code> so the job costs nothing when idle, and accept the cold-start time for the node and image pull.</p>
+<p><strong>Why does a node stay around after load drops?</strong>
+Check PDBs first: an eviction that violates a PDB blocks consolidation. Second, check whether pods on the node have local storage or <code>emptyDir</code> data that makes them non-evictable by Karpenter's policy. Third, confirm <code>consolidationPolicy</code> is set to <code>WhenEmptyOrUnderutilized</code> rather than <code>WhenEmpty</code> if underutilized nodes should be removed.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>Start with the workload that is least understood: list the HPA objects in the cluster and confirm that every container in the target Deployments has a CPU request set. That single check catches the most common autoscaling failure before it reaches production. Run <code>kubectl get hpa -A -o yaml | grep -A2 'target:'</code>, then cross-check each target Deployment's pod template for a <code>requests.cpu</code> value on every container — if one is missing, add it and watch the HPA's behavior change on the next load test.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+<li><a href="https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">
+                        <h3>CI/CD pipelines stall with GPU pods: 2026 benchmarks</h3>
+                        <p>GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.</p>
+                        <span class="related-meta">13 min read · 28 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
+                        <h3>Kubernetes or Nomad: the real experiment cost split</h3>
+                        <p>A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
+                        <span class="related-meta">11 min read · 3 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/observability-agents-lied-to-us/">
+                        <h3>Observability agents lied to us</h3>
+                        <p>Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

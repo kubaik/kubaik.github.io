@@ -1,0 +1,511 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AI apps break when you treat them like regular software - Kubai Kevin</title>
+        <meta name="description" content="AI apps fail differently from CRUD services: state accumulates, caches churn, and model outputs drift. Here is how to design, measure, and bound those failure modes.">
+        <meta name="keywords" content="AiNativeArchitecture, AiApplicationDesign, Vector, Llm, AiSystemScalability, AiStateManagement, BoundedStalenessAi, ManagedVectorStore, Ai, Vectordb">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-27T18:14:00.551986">
+        <meta property="article:modified_time" content="2026-10-04T04:59:48.489555+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="AI apps break when you treat them like regular software">
+        <meta property="og:description" content="AI apps fail differently from CRUD services: state accumulates, caches churn, and model outputs drift. Here is how to design, measure, and bound those failure modes.">
+        <meta property="og:url" content="https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ai-apps-break-when-you-treat-them-like-regular-software.png">
+        <meta property="og:image:alt" content="AI apps break when you treat them like regular software">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AI apps break when you treat them like regular software">
+        <meta name="twitter:description" content="AI apps fail differently from CRUD services: state accumulates, caches churn, and model outputs drift. Here is how to design, measure, and bound those failure modes.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-apps-break-when-you-treat-them-like-regular-software.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/#article",
+      "headline": "AI apps break when you treat them like regular software",
+      "description": "AI apps fail differently from CRUD services: state accumulates, caches churn, and model outputs drift. Here is how to design, measure, and bound those failure modes.",
+      "datePublished": "2026-06-27T18:14:00+00:00",
+      "dateModified": "2026-10-04T04:59:48+00:00",
+      "wordCount": 2939,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/"
+      },
+      "keywords": "AiNativeArchitecture, AiApplicationDesign, Vector, Llm, AiSystemScalability, AiStateManagement, BoundedStalenessAi, ManagedVectorStore",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/ai-apps-break-when-you-treat-them-like-regular-software.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI apps break when you treat them like regular software",
+          "item": "https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>AI apps break when you treat them like regular software</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">AI apps break when you treat them like regular software</h1>
+                
+                <p class="post-lead">AI apps fail differently from CRUD services: state accumulates, caches churn, and model outputs drift. Here is how to design, measure, and bound those failure modes.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiNativeArchitecture</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiApplicationDesign</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/vector/"
+                       style="text-decoration:none;">Vector</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiSystemScalability</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2939 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-conventional-playbook-and-where-it-stops-working">The conventional playbook and where it stops working</h2>
+<p>The standard advice for AI features is familiar: put embeddings in a vector store, call a model endpoint, return structured output, then scale horizontally and cache aggressively. That advice is not wrong so much as incomplete, because it was written for stateless request/response services and AI features are rarely stateless.</p>
+<p>Three properties separate AI components from ordinary microservices:</p>
+<ul>
+<li><strong>Probabilistic output.</strong> The same input can produce different outputs across calls. Cache keys built on request parameters alone will miss, or worse, serve a semantically different answer.</li>
+<li><strong>Accumulated state.</strong> Embeddings, session history, retrieved context, and cached generations all persist and all go stale. State leaks into places a stateless design assumes are empty.</li>
+<li><strong>External dependency on a variable-latency service.</strong> The model endpoint is often the slowest and least predictable hop in the request path, and its latency distribution shifts over time.</li>
+</ul>
+<p>A typical failure mode is a system that passes staging and degrades under production traffic in ways that look like infrastructure problems but are actually design problems: connection pools sized for a stateless service, caches keyed on inputs that no longer determine outputs, and retrieval windows that quietly return month-old context.</p>
+<h2 id="failure-mode-1-connection-pool-exhaustion-behind-a-slow-dependency">Failure mode 1: connection pool exhaustion behind a slow dependency</h2>
+<p>Consider a service that embeds a query, searches a vector index, and returns results. Under load, teams often scale the application tier first. If the bottleneck is the connection pool to the database backing the index, adding replicas makes things worse: each new replica opens its own pool, and the database's connection limit is reached sooner.</p>
+<p>A concrete arithmetic example, with illustrative numbers:</p>
+<ul>
+<li>12 application pods, each configured with a pool of 50 connections = 600 connections.</li>
+<li>The database allows 500 concurrent connections.</li>
+<li>Under load, 100 connection attempts queue. Each waits on a checkout timeout.</li>
+<li>If the checkout timeout is 5 seconds and the median query takes 6–8 seconds, connections are returned to the pool after the caller has already given up. The pool churns: connections are marked bad, dropped, and reopened, which costs more than the original query.</li>
+</ul>
+<p>The visible symptom is latency spikes that do not correlate with CPU or memory. The actual cause is a timeout shorter than the work it guards.</p>
+<p><strong>How to measure it.</strong> Instrument pool checkout wait time as a separate histogram from query duration. In PostgreSQL, <code>pg_stat_activity</code> shows current connections by state; a growing count in <code>idle in transaction</code> or repeated connection resets in the server log points at pool churn. Compare p99 checkout wait against p99 query duration. If checkout wait is a meaningful fraction of query duration, the pool is the bottleneck, not the model.</p>
+<p><strong>The fix is a sizing exercise, not a scaling exercise.</strong> Set the checkout timeout above the p99 of the guarded operation, size the pool so that <code>pods × pool_size</code> stays below the database's connection limit, and consider a pooler that multiplexes many client connections onto fewer server connections. Adding replicas only helps once the per-connection cost is understood.</p>
+<h2 id="failure-mode-2-state-that-accumulates-and-never-gets-evicted">Failure mode 2: state that accumulates and never gets evicted</h2>
+<p>Stateless designs assume memory is released when a request ends. AI features often break that assumption:</p>
+<ul>
+<li>Session context is appended to a conversation buffer and never trimmed, so the prompt grows until it hits the context limit or the cost per request becomes unacceptable.</li>
+<li>Embeddings are written for every document version, and old versions are never deleted, so the index grows and retrieval quality degrades as near-duplicates compete for the same top-k slots.</li>
+<li>Caches hold generated answers keyed on inputs that no longer map to the same output.</li>
+</ul>
+<p>A common pattern is a service whose memory grows steadily over days of traffic, then fails when the process is restarted and the cache is cold. The restart itself is the incident.</p>
+<p><strong>How to measure it.</strong> Track resident memory per pod over a multi-day window, not a multi-hour one. Track index size and the ratio of distinct documents to total vectors — a ratio well below 1 means duplicates are accumulating. Track prompt token count per request as a distribution; a p99 that creeps upward over weeks is context growth, not traffic growth.</p>
+<p><strong>Bound state explicitly.</strong> Give every piece of accumulated state a maximum age and a maximum size:</p>
+<ul>
+<li>Conversation buffers: keep the last N turns plus a rolling summary, not the full history.</li>
+<li>Embeddings: version documents and delete superseded vectors on write, or run a compaction job on a schedule.</li>
+<li>Caches: set a TTL that reflects how long the underlying data is meaningful, not a default.</li>
+</ul>
+<h2 id="failure-mode-3-cache-hit-rates-that-collapse-under-model-variance">Failure mode 3: cache hit rates that collapse under model variance</h2>
+<p>Caching is the first instinct for latency and cost, and it is the wrong first instinct for generative components when the cache key is the raw input.</p>
+<p>Two problems compound:</p>
+<ol>
+<li><strong>Semantic equivalence.</strong> "How do I reset my password?" and "I forgot my password, how do I change it?" are the same intent but different strings. An exact-match cache misses both.</li>
+<li><strong>Output variance.</strong> Even with a stable key, the model may return different text on each call. A cache that stores one sample and serves it forever can serve an answer that no longer matches the model's current behavior.</li>
+</ol>
+<p>A realistic sequence: a summarization service caches on input hash. The model provider ships an update that changes output length characteristics. Cache hit rate falls because more inputs are now producing outputs that differ from the cached version, and the service starts calling the model for requests it previously served from cache. The upstream model becomes the bottleneck, and p99 latency rises sharply.</p>
+<p><strong>How to measure it.</strong> Log cache hit, miss, and "stale-but-served" as three separate counters. Track the distribution of output lengths or token counts over time; a shift in that distribution is an early signal that cached outputs and fresh outputs have diverged. Track upstream request rate as a share of total request rate — if that share rises without a traffic increase, the cache is losing effectiveness.</p>
+<p><strong>Design the cache around semantics, not strings.</strong> Normalize inputs before keying (lowercase, strip punctuation, canonicalize intent where feasible), store the embedding alongside the cached entry, and use a similarity threshold for lookup. Set a TTL even on semantic hits, and version the cache by model identifier so a model change invalidates rather than silently serves stale output.</p>
+<h2 id="failure-mode-4-staleness-that-is-invisible-to-the-user">Failure mode 4: staleness that is invisible to the user</h2>
+<p>Eventual consistency is a reasonable choice for recommendation, search, and support features. The failure is not staleness itself but unbounded, unobserved staleness.</p>
+<p>A typical pipeline: user activity events land in a queue, a consumer updates a feature store, and a serving layer reads from it. If the consumer falls behind, the serving layer keeps returning recommendations based on old activity. There is no error, no failed health check, and no alert — the system is "up" and serving wrong answers.</p>
+<p><strong>How to measure it.</strong> The key metric is consumer lag, expressed in time rather than messages: how old is the oldest unprocessed event? Compare that against the staleness budget. Also measure the age of the data actually used to serve each response, and expose it. A response that reports its own data age is debuggable; one that does not is not.</p>
+<p><strong>Bound staleness and degrade deliberately.</strong> Define a staleness budget per feature — for example, personalized recommendations may use activity up to five minutes old. When lag exceeds the budget, serve a non-personalized fallback rather than stale personalized results. This converts a silent correctness failure into a visible, bounded quality reduction, and it keeps the system responsive while the consumer catches up.</p>
+<p>The same principle applies to retrieval: if the index has not been refreshed within its window, either serve from a known-good snapshot or disclose the age of the results.</p>
+<h2 id="failure-mode-5-model-drift-with-no-detection-path">Failure mode 5: model drift with no detection path</h2>
+<p>Models degrade as the world changes. A recommender trained on one interaction pattern returns less relevant results after a UI redesign changes how users behave. A classifier trained on one distribution of inputs sees different inputs in production.</p>
+<p>Drift is not a single event, so detection should not be a single check. Practical signals, in rough order of how early they fire:</p>
+<ul>
+<li><strong>Input drift.</strong> The distribution of incoming requests shifts — new languages, new document formats, longer inputs. Cheap to compute, fires early.</li>
+<li><strong>Embedding drift.</strong> The distribution of embedding vectors shifts in norm or direction. Also cheap, and it does not require labels.</li>
+<li><strong>Output drift.</strong> The distribution of model outputs changes — answer length, refusal rate, retrieval scores. Cheap, and often the first signal users would notice.</li>
+<li><strong>Outcome drift.</strong> Business or quality metrics move — click-through, resolution rate, escalation rate. Expensive to collect and delayed, but the most meaningful.</li>
+</ul>
+<p><strong>How to measure it.</strong> Store a sample of production inputs and their embeddings. Compute a distribution distance between a reference window and the current window on a schedule. Alert on a threshold, not on a single observation. For outcome metrics, maintain a held-out evaluation set and re-run it on a schedule so you have a stable comparison point independent of live traffic.</p>
+<p><strong>Close the loop.</strong> Drift detection is only useful if it triggers something: a retraining job, a prompt or retrieval change, or a fallback to a more conservative model. A dashboard nobody acts on is not a drift strategy.</p>
+<h2 id="a-decision-checklist">A decision checklist</h2>
+<p>Before choosing between standard stateless design and an explicitly stateful, probabilistic design, answer these:</p>
+<ol>
+<li><strong>What is the latency budget, and what fraction does the model call consume?</strong> If the model call is most of the budget, caching and retrieval design matter more than the application tier.</li>
+<li><strong>What state does a request depend on, and how old may it be?</strong> Write down a staleness budget per state source. If you cannot state one, you cannot enforce one.</li>
+<li><strong>What happens when the model is slow or unavailable?</strong> Decide the fallback before launch: cached answer, degraded answer, or explicit error.</li>
+<li><strong>How will you know the system is serving wrong answers?</strong> Health checks measure liveness, not correctness. Name the metric that would move first.</li>
+<li><strong>What is the eviction policy for every accumulating store?</strong> Conversation buffers, embeddings, and caches all need one.</li>
+<li><strong>How will you detect drift, and what will it trigger?</strong> An alert with no action is not detection.</li>
+</ol>
+<p>A short comparison of when each approach fits:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Stateless design is fine</th>
+<th>Explicit state and staleness design needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency budget</td>
+<td>Loose (seconds acceptable)</td>
+<td>Tight, model call dominates</td>
+</tr>
+<tr>
+<td>Traffic</td>
+<td>Low and predictable</td>
+<td>High or spiky</td>
+</tr>
+<tr>
+<td>Request state</td>
+<td>None beyond the request</td>
+<td>Session, history, or live data</td>
+</tr>
+<tr>
+<td>Output determinism</td>
+<td>Deterministic or near-deterministic</td>
+<td>Probabilistic, varies per call</td>
+</tr>
+<tr>
+<td>Data freshness</td>
+<td>Not user-visible</td>
+<td>User-visible and must be bounded</td>
+</tr>
+<tr>
+<td>Drift impact</td>
+<td>Low, model rarely changes</td>
+<td>High, distribution shifts over time</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-the-conventional-advice-is-genuinely-correct">Where the conventional advice is genuinely correct</h2>
+<p>The standard playbook is not a straw man. It is the right answer in several common situations:</p>
+<ul>
+<li><strong>The AI component is a small feature in a larger system.</strong> A single classification call inside an otherwise ordinary service does not justify a stateful architecture.</li>
+<li><strong>Traffic is low and predictable.</strong> A single instance with a modest connection pool and a simple TTL cache will serve hundreds of requests per day comfortably.</li>
+<li><strong>The model is effectively deterministic.</strong> A fixed-threshold model over stable features behaves like ordinary software; standard autoscaling and load balancing apply.</li>
+<li><strong>The workload is batch.</strong> If results are generated on a schedule rather than on demand, latency budgets and cache design are far less constrained.</li>
+<li><strong>The team is small and operational maturity is low.</strong> Complexity you cannot operate is worse than simplicity you can. Start with the standard design and add state management only where a measured failure demands it.</li>
+</ul>
+<p>The mistake is not following the conventional playbook. The mistake is following it without checking whether its assumptions — statelessness, determinism, bounded dependencies — hold for the component in question.</p>
+<h2 id="common-objections-examined">Common objections, examined</h2>
+<p><strong>"This architecture is too complex and expensive."</strong></p>
+<p>Complexity here is not optional decoration; it is proportional to the problem. Stateful, probabilistic systems have state and variance, and those must be managed somewhere. The choice is whether you manage them explicitly or discover them during an incident. That said, complexity should be added in response to measured failures, not in anticipation of every possible one. Start with the simplest design that meets the latency and freshness budgets, and add bounded staleness, drift detection, and semantic caching when a specific metric shows they are needed.</p>
+<p><strong>"We can just optimize the model instead."</strong></p>
+<p>Model optimization and architecture optimization address different bottlenecks. Reducing model latency from 500 ms to 300 ms does not help if retrieval is doing a brute-force scan over millions of vectors, and shrinking a context window does not help if the system's real cost is re-fetching state on every request. Optimize the model, but measure where time is actually spent first — the two are complements, not substitutes.</p>
+<p><strong>"Eventual consistency is too risky for our use case."</strong></p>
+<p>For some domains — clinical decision support, transaction authorization — it genuinely is. For recommendation, search, and support, bounded staleness is usually acceptable, provided the bound is enforced and the age of the data is visible. The practical technique is to make freshness observable: expose the age of the context used to produce a response, and fall back to a non-personalized result when the bound is exceeded. Staleness that is disclosed and bounded is a design decision; staleness that is silent is a defect.</p>
+<p><strong>"We don't have the data to detect drift."</strong></p>
+<p>You do not need labels to start. Input and embedding distributions are computable from production traffic alone, and they fire earlier than outcome metrics. Begin with a reference window, a scheduled comparison, and a threshold. Add outcome-based detection when you have a held-out evaluation set or a reliable business metric.</p>
+<h2 id="what-to-do-first-in-order">What to do first, in order</h2>
+<p>If you are building or repairing an AI feature, the highest-value work is usually observability before architecture:</p>
+<ol>
+<li>Separate the latency histogram of the model call from the rest of the request path.</li>
+<li>Instrument pool checkout wait as distinct from query duration.</li>
+<li>Emit the age of every piece of state used to serve a response.</li>
+<li>Track cache hit, miss, and stale-serve as three counters.</li>
+<li>Record a sample of inputs and embeddings for later distribution comparison.</li>
+</ol>
+<p>These five measurements will tell you which of the failure modes above you actually have, rather than which ones you might have.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>How do I know if my AI system needs explicit state and staleness handling?</strong></p>
+<p>Check three things: whether a request depends on state beyond the request itself, whether the latency budget is dominated by a model call, and whether the age of the data used is visible to users. If any answer is yes, the standard stateless design will need modification. If all are no, start simple.</p>
+<p><strong>What is the single most common mistake when scaling AI features?</strong></p>
+<p>Treating the model endpoint and the vector store as ordinary stateless dependencies. That assumption leads to undersized connection pools, caches keyed on inputs that do not determine outputs, and state that accumulates without an eviction policy.</p>
+<p><strong>Does an explicit state design cost more to run?</strong></p>
+<p>Usually yes, because it involves more infrastructure and more instrumentation. The right way to evaluate it is to compare the cost of the added infrastructure against the cost of the failures it prevents — measured in error rate, latency SLO violations, and engineering time spent on incidents. Do not assume the added cost is justified; measure both sides.</p>
+<p><strong>Can managed services remove the need for this work?</strong></p>
+<p>Managed vector stores and managed model gateways remove some operational burden — sharding, index maintenance, and capacity management — but they do not remove the need to reason about staleness, cache validity, and drift. Those are properties of your data flow and your users' expectations, not of the hosting model.</p>
+<p><strong>How do I set a staleness budget?</strong></p>
+<p>Start from what the user would notice. If a recommendation reflects activity from five minutes ago, is that acceptable? If a support answer reflects a policy change from an hour ago, is that acceptable? Write the answer down per feature, then enforce it as a hard bound with a defined fallback when it is exceeded.</p>
+<h2 id="one-action-for-the-next-30-minutes">One action for the next 30 minutes</h2>
+<p>Open the code path that serves your most latency-sensitive AI request and add a single metric: the age, in seconds, of the oldest piece of state used to produce the response — session history, retrieved document, cached generation, or feature value. Emit it as a histogram. If you cannot compute that number from the code as written, you have found the first thing to fix.</p>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-native-apps-break-when-you-copy-old-rules/">
+                        <h3>AI-native apps break when you copy old rules</h3>
+                        <p>Model calls are distributed workloads, not function calls. Here is how to design task queues, cache keys, token budgets and retry policy for AI features.</p>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+                        <h3>AI on slow networks: Nairobi teams&#39; 2026 playbook</h3>
+                        <p>How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-era-promotions-hinge-on-this-one-thing/">
+                        <h3>AI-era promotions hinge on this one thing</h3>
+                        <p>AI features fail through cache eviction, schema drift and missing rollback paths. A practical guide to validation gates, fallback caches and metrics.</p>
+                        <span class="related-meta">11 min read · 15 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cost-Effective AI Infrastructure for Micro-SaaS - Kubai Kevin</title>
+        <meta name="description" content="How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.">
+        <meta name="keywords" content="LlmCostOptimization, ServerlessAiBackend, CloudflareWorkersAi, MemorydbRedisPricing, LambdaPythonArm64, GeminiApiPricing, Prompt, Ai, Python, Redis, Serverless">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-05T18:25:11.119543">
+        <meta property="article:modified_time" content="2026-10-18T13:43:45.879962+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Cost-Effective AI Infrastructure for Micro-SaaS">
+        <meta property="og:description" content="How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.">
+        <meta property="og:url" content="https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ai-micro-saas-under-150month-the-real-infra-choices.png">
+        <meta property="og:image:alt" content="Cost-Effective AI Infrastructure for Micro-SaaS">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cost-Effective AI Infrastructure for Micro-SaaS">
+        <meta name="twitter:description" content="How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-micro-saas-under-150month-the-real-infra-choices.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/#article",
+      "headline": "Cost-Effective AI Infrastructure for Micro-SaaS",
+      "description": "How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.",
+      "datePublished": "2026-08-05T18:25:11+00:00",
+      "dateModified": "2026-10-18T13:43:45+00:00",
+      "wordCount": 3001,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/"
+      },
+      "keywords": "LlmCostOptimization, ServerlessAiBackend, CloudflareWorkersAi, MemorydbRedisPricing, LambdaPythonArm64, GeminiApiPricing, Prompt, Ai",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/ai-micro-saas-under-150month-the-real-infra-choices.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cost-Effective AI Infrastructure for Micro-SaaS",
+          "item": "https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Cost-Effective AI Infrastructure for Micro-SaaS</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Cost-Effective AI Infrastructure for Micro-SaaS</h1>
+                
+                <p class="post-lead">How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/llmcostoptimization/"
+                       style="text-decoration:none;">LlmCostOptimization</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ServerlessAiBackend</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cloudflareworkersai/"
+                       style="text-decoration:none;">CloudflareWorkersAi</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MemorydbRedisPricing</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3001 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-18
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most cost-planning guides for AI products assume a clean environment, patient timelines, and traffic that behaves. The design holds in the simple case and breaks in specific ways once the cache is cold, the upstream API rate-limits, or a single customer's workload grows ten-fold overnight. The notes below describe the tradeoffs that actually matter when the monthly infra ceiling is $150.</p>
+<h2 id="the-one-paragraph-version">The one-paragraph version</h2>
+<p>AI products leak money on undifferentiated infrastructure. Treat the prompt layer like an ORM and the API gateway like a database connection pool: cache aggressively, batch aggressively, and never let a cold start touch the LLM budget. Build the rest of the stack (auth, billing, queues) on serverless that scales to zero when traffic dies. The mental trap is believing every request requires a GPU in production; once that assumption is dropped, the arithmetic becomes tractable.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Teams get stuck because they treat "AI infra" as one monolithic problem. They picture a single GPU-heavy endpoint that must be always-on, with every request billed at a high per-call rate and every prompt hitting the model in real time. That mental model leads to bills in the thousands before a single feature ships. The confusion is that the cost driver is rarely the inference itself — it is the orchestration around it: auth checks, prompt templating, rate limiting, billing meters, and the retry storms that follow an upstream hiccup. Separate those concerns and the budget becomes tractable.</p>
+<p>A second confusion is the belief that launching an AI product requires running custom embeddings or a self-hosted vector database. That is only true for a bespoke retrieval pipeline. For classification, summarization, or question answering, managed model APIs generally win on price/performance once prompt-engineering overhead is counted, and they ship with retry policies, rate limits, and regional failover that would otherwise take weeks to replicate.</p>
+<p>A third confusion is conflating "AI" with "real-time." Most micro-SaaS products do not need sub-50 ms responses; they need sub-500 ms p95 with occasional spikes. That tolerance is what makes batching, caching, and queue-offloaded background work viable, and those three techniques are usually the largest levers on the LLM bill.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of the product as a restaurant kitchen:</p>
+<ul>
+<li>The chef (the LLM) is expensive and slow; use them only when required.</li>
+<li>The line cooks (prompt templating, tokenization, safety checks) prepare everything so the chef only sees the final dish.</li>
+<li>The host (API gateway) buffers orders, batches similar requests, and never lets the chef take a single order when a full tray is available.</li>
+<li>The dishwasher (cache) cleans plates so the chef is not re-run for an identical dish.</li>
+<li>The maître d' (auth and billing) checks identity and runs the card before the host hands the order to the kitchen.</li>
+</ul>
+<p>If a station idles, shut it down to zero. If a station is overloaded, scale only that station. Every dollar should map to a visible station, not a hidden tax on the chef's time.</p>
+<p>In concrete terms:</p>
+<ul>
+<li>Every API request goes through an edge runtime (auth, routing, caching) before touching the backend.</li>
+<li>The backend is a single serverless function that talks only to managed services: a cache, a queue, and the model API for the final step.</li>
+<li>No GPU runs in production; inference is rented by the token.</li>
+<li>Customers are charged based on tokens consumed, not on internal infra.</li>
+</ul>
+<h2 id="a-worked-example-with-the-arithmetic-shown">A worked example with the arithmetic shown</h2>
+<p>The scenario below is illustrative. Every figure is derived from stated assumptions so the reader can substitute their own.</p>
+<p>Assume: 1,000 monthly active users, 100 API calls per user per month, 200-token prompt per call, 500-byte cached response. That is 100,000 calls/month.</p>
+<p><strong>Step 1 — Cache before you call.</strong></p>
+<p>Key the cache on a content hash (document hash, prompt-template version, model version). On a hit, return the stored JSON; on a miss, call the model and store the result. If the hit rate is 60%, only 40,000 calls reach the model.</p>
+<p><em>How to measure hit rate:</em> instrument every handler with a counter for <code>cache_hit</code> and <code>cache_miss</code>, emit them as structured logs, and compute the ratio over a rolling window. A dashboard that shows only total request count cannot tell you whether caching is working.</p>
+<p><strong>Step 2 — Batch the misses.</strong></p>
+<p>Instead of one document per prompt, batch up to 10 documents with a delimiter and a strict output schema. This cuts the model-call count by roughly 90% at the same total token volume, because batching reduces per-call overhead and amortizes the system prompt.</p>
+<pre><code class="language-python">BATCH_PROMPT = &quot;&quot;&quot;
+Extract key fields from these documents.
+Each document is delimited by &lt;doc id=&quot;N&quot;&gt; ... &lt;/doc&gt;.
+Return a JSON array with one object per document, in order.
+
+{documents}
+&quot;&quot;&quot;
+</code></pre>
+<p><em>How to measure batching efficiency:</em> log <code>tokens_in</code>, <code>tokens_out</code>, and <code>documents_per_call</code> per invocation. Compare cost-per-document before and after; if it does not drop, the batch is not amortizing the system prompt.</p>
+<p><strong>Step 3 — Hide cold starts.</strong></p>
+<p>Edge runtimes have a small cold-start penalty (single-digit milliseconds to low tens). Pre-warming a handful of instances per region after deploy keeps the first request after a quiet period fast. The cost of a warm-up is a few requests against a health endpoint; the benefit is that a cold start never lands on a user's first request.</p>
+<p><em>How to measure cold starts:</em> emit a <code>cold_start: true</code> flag on the first invocation of each instance and track its p95 separately from warm requests.</p>
+<p><strong>Step 4 — Absorb bursts with a queue.</strong></p>
+<p>Put the model call behind a queue with a visibility timeout and a dead-letter queue. On a 429 from the upstream, retry with exponential backoff and jitter, capped at a small number of attempts. After the cap, return a cached failure or a <code>503</code> with <code>Retry-After</code>, and log the incident.</p>
+<p><em>How to measure retry storms:</em> count <code>429</code> responses per minute and the average number of retries per request. A rising retry count with flat success rate means the backoff is too aggressive or the concurrency limit is too high.</p>
+<p><strong>Step 5 — Auth and metering at the edge.</strong></p>
+<p>Validate the token at the edge and pass verified claims downstream so the backend never re-parses JWTs. Meter usage by writing a small record per request and flushing in batches to an analytics store. The backend then only has three jobs: verify the passed claims, check the cache, and call the model on a miss.</p>
+<p><strong>Step 6 — Size the cache honestly.</strong></p>
+<p>A cache that holds 500-byte responses for 100,000 distinct keys needs roughly 50 MB of working set, plus overhead. Provision for the tail, not the average: the top 1% of keys may be 10× larger. A 1 GB managed Redis instance is generous for this workload; a smaller tier is usually enough. The point is to size from measured key size and cardinality, not from a guess.</p>
+<p><em>How to measure:</em> log <code>key_size_bytes</code> and <code>distinct_keys_per_day</code>. Multiply the p99 key size by the daily distinct key count to get a working-set estimate.</p>
+<p><strong>Step 7 — Monitoring that costs nothing and says something.</strong></p>
+<p>Free tiers of edge logs and a cloud metrics service are sufficient for a product at this scale. Alert on: cache hit rate below a threshold, function duration p95 above the latency budget, and upstream error rate above a few percent. These three signals catch the majority of cost and reliability regressions.</p>
+<p><strong>Putting it together.</strong></p>
+<p>The dominant cost at this scale is the cache tier, followed by the edge plan, then inference. Compute, queue, and analytics are rounding errors. The exact dollar figures depend on the current published prices of the specific services chosen, which change; the structural point is that caching and batching move inference from the largest line item to one of the smallest.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you have run a web service behind a reverse proxy with a Redis cache, this stack is that pattern stretched across multiple providers:</p>
+<ul>
+<li>Edge runtime = reverse proxy plus cache in front of the app server</li>
+<li>Serverless function = the app server</li>
+<li>Managed Redis = the in-memory cache layer</li>
+<li>Queue = the background worker queue</li>
+<li>Columnar analytics store = the warehouse</li>
+</ul>
+<p>The only novelty is treating the model API as an external dependency rather than part of the stack. That means the same reliability patterns apply: retries, circuit breakers, caching, rate limiting. The cost of inference is externalized to the provider rather than internalized into a GPU budget.</p>
+<p>The second familiar pattern is pay-per-use serverless. The edge runtime, the function platform, and the queue all scale to zero when traffic dies. The difference is applying that model to the prompt layer, not just the backend — which most teams miss because they think of the model as part of the backend rather than as a service they consume.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>Misconception 1: "We need a GPU in production to keep latency low."</strong></p>
+<p>Managed model APIs with regional endpoints typically return a thousand tokens well inside a 500 ms p95 budget. If the latency budget is 500 ms, batching and caching can be applied aggressively without ever touching a GPU. A local GPU becomes necessary only for custom fine-tuned models with strict data-residency requirements — a narrow case for most micro-SaaS.</p>
+<p><strong>Misconception 2: "Caching prompts is unsafe; every user deserves a fresh response."</strong></p>
+<p>For non-personalized tasks such as document extraction or summarization, a content hash is a valid cache key. If the user edits the document, the hash changes and the cache invalidates. The real risk is prompt drift: when the template or the model version changes, cached outputs may no longer match the expected format. Mitigate by including a template hash and model version in the cache key, so updating the prompt invalidates old entries automatically.</p>
+<p><strong>Misconception 3: "Batching increases latency for the first request in the batch."</strong></p>
+<p>Batching increases latency only if the handler waits for the full batch before responding. Use a fast lane: return a cached result immediately when available, and return an estimated completion time when the batch is still assembling. That keeps p95 latency low while still reducing cost.</p>
+<pre><code class="language-javascript">// Fast-lane batcher (illustrative)
+const batch = new Map();
+const MAX_BATCH_SIZE = 10;
+const MAX_WAIT_MS = 200;
+
+async function handle(request) {
+  const docId = new URL(request.url).searchParams.get('docId');
+  const cached = await CACHE.get(docId);
+  if (cached) return new Response(cached);
+
+  if (!batch.has(docId)) batch.set(docId, { promises: [] });
+  const entry = batch.get(docId);
+
+  if (entry.promises.length &gt;= MAX_BATCH_SIZE) {
+    return new Response(
+      JSON.stringify({ status: 'queued', etaMs: MAX_WAIT_MS }),
+      { status: 202 }
+    );
+  }
+
+  const result = await Promise.race([
+    batchPromises(entry.promises),
+    new Promise(resolve =&gt;
+      setTimeout(() =&gt; resolve({ status: 'queued', etaMs: MAX_WAIT_MS }), MAX_WAIT_MS)
+    )
+  ]);
+
+  return new Response(JSON.stringify(result));
+}
+</code></pre>
+<p><strong>Misconception 4: "Serverless can't handle high request rates."</strong></p>
+<p>Edge runtimes are designed for very high per-instance throughput, and function platforms offer provisioned concurrency when needed. The bottleneck is almost never the serverless platform; it is the model API or the cache layer. At 100,000 requests per month, the average rate is roughly 0.038 requests per second — orders of magnitude below any serverless limit.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version, once the basics are solid</h2>
+<p>Apply these only after the cache hit rate is stable and the inference bill is a small fraction of the total.</p>
+<p><strong>1. Prompt compression.</strong> Use a smaller, cheaper model to condense long inputs before sending them to the larger model. Measure token reduction and latency change separately; compression that saves tokens but adds 300 ms of latency may not be worth it.</p>
+<p><strong>2. Dynamic batch sizing.</strong> Instead of a fixed batch size, stop adding documents when the cumulative token count approaches the context limit. This maximizes throughput without risking truncated outputs.</p>
+<pre><code class="language-python">def can_add(doc_text: str, current_tokens: int, tokenizer, limit: int = 8000) -&gt; bool:
+    new_tokens = len(tokenizer.encode(doc_text))
+    return (current_tokens + new_tokens) &lt;= limit
+</code></pre>
+<p><strong>3. Regional failover with latency-aware routing.</strong> Route requests to the nearest model endpoint and fail over when the primary region degrades. Measure the latency difference between regions before committing; if the gap is small, the extra routing complexity may not pay for itself.</p>
+<p><strong>4. Cache stampede protection.</strong> When a popular key expires, many concurrent requests can hit the model at once. Serialize the recomputation with a short-lived lock:</p>
+<pre><code class="language-javascript">const lockKey = `lock:${docId}`;
+const lock = await KV.get(lockKey);
+if (!lock) {
+  await KV.put(lockKey, 'locked', { expirationTtl: 30 });
+  try {
+    const value = await fetchLLM(docId);
+    await CACHE.put(docId, value);
+    return value;
+  } finally {
+    await KV.delete(lockKey);
+  }
+}
+// Another request holds the lock; wait briefly and re-read the cache.
+</code></pre>
+<p><strong>5. Cost attribution per customer.</strong> Write usage records keyed by customer ID so you can bill on actual token consumption. Shard the table only if a single table becomes a bottleneck; premature sharding adds complexity for no benefit at small scale.</p>
+<p><strong>6. Warm-up on deploy.</strong> Run a short script after each deploy that hits the health endpoint in each region. The cost is trivial; the benefit is zero cold starts during the first minutes after a release.</p>
+<p><strong>7. Canary deployments.</strong> Route a small percentage of traffic to a new version and roll back automatically if error rate or latency degrades. This is standard practice and does not require special infrastructure beyond what the edge runtime or function platform already provides.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<p>Before adding any component, answer these questions:</p>
+<ol>
+<li>Does this component scale to zero when traffic is zero? If not, can it be replaced by one that does?</li>
+<li>Is there a cache key that would let this request avoid the model entirely? If yes, implement the cache first.</li>
+<li>Can similar requests be batched without violating the latency budget? If yes, batch.</li>
+<li>What is the measured p95 latency and cost per request today? If you cannot answer, instrument before optimizing.</li>
+<li>Does this component have a documented failure mode and a retry policy? If not, it will become the incident.</li>
+<li>Is the cost of this component proportional to usage, or is it a fixed monthly fee? Fixed fees are the enemy of a $150 ceiling.</li>
+</ol>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Component category</th>
+<th>Typical configuration</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge routing &amp; auth</td>
+<td>Edge runtime</td>
+<td>Pay-per-request plan</td>
+<td>Token validation, rate limiting, caching</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>Managed Redis</td>
+<td>Small instance, sized to measured working set</td>
+<td>Key on content + template + model version</td>
+</tr>
+<tr>
+<td>Prompt templating</td>
+<td>Edge KV store</td>
+<td>Small storage tier</td>
+<td>Version the template; include hash in cache key</td>
+</tr>
+<tr>
+<td>Background queue</td>
+<td>Managed queue</td>
+<td>Standard, with dead-letter queue</td>
+<td>Cap retries; alert on 429 rate</td>
+</tr>
+<tr>
+<td>Compute</td>
+<td>Serverless function</td>
+<td>ARM64, modest memory</td>
+<td>200 ms average duration is a reasonable target</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>Columnar warehouse</td>
+<td>On-demand queries</td>
+<td>Flush usage records in batches</td>
+</tr>
+<tr>
+<td>Model API</td>
+<td>Managed model endpoint</td>
+<td>Batch up to N documents</td>
+<td>Price depends on provider and model</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Edge logs + cloud metrics</td>
+<td>Free tier</td>
+<td>Alert on hit rate, p95 latency, error rate</td>
+</tr>
+</tbody>
+</table>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>How should GDPR and data residency be handled for EU users?</strong></p>
+<p>Use regional services in the EU for the edge runtime, cache, and analytics store, and confirm that the model provider offers an EU endpoint. Store customer data in EU-only buckets and encrypt at rest with region-scoped keys. The extra region adds a small fixed cost, but it remains within a modest budget.</p>
+<p><strong>What happens if the model API rate-limits the application?</strong></p>
+<p>First, apply exponential backoff with jitter in the handler. If retries are exhausted, return a cached result when available, otherwise a <code>503</code> with <code>Retry-After</code>. Log the incident and alert. Most providers apply a short cooldown; waiting and retrying usually resolves it without user-visible impact.</p>
+<p><strong>When do open-weight models become cheaper than managed APIs?</strong></p>
+<p>The break-even depends on the GPU rental price, the model's throughput, and the managed API's per-token price — all of which change. The correct approach is to compute cost-per-thousand-tokens for both options using current published prices and measured throughput, then compare. Below the break-even, the managed API wins on price and operational overhead; above it, self-hosting may win, but only if the team has the capacity to operate it.</p>
+<p><strong>How should customers be billed based on tokens used?</strong></p>
+<p>Meter tokens per request in the handler, write usage records keyed by customer ID to the analytics store, and run a daily job that sums tokens per customer. Generate invoices from that table. At small scale, the query cost is negligible.</p>
+<h2 id="one-thing-to-do-in-the-next-30-minutes">One thing to do in the next 30 minutes</h2>
+<p>Open the cost dashboard for the current infrastructure (cloud billing console, edge analytics, or warehouse query history). Filter to the last seven days and list the top five line items. For each, write down whether it scales to zero and whether a cache or batch could eliminate it. Pick the single largest line item that does not scale to zero, and add one instrumentation counter — <code>cache_hit</code>, <code>cache_miss</code>, or <code>model_call</code> — to the code path that touches it. You cannot optimize a cost you are not measuring.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+<li><a href="https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/">AI unit costs: the metric both teams fight over</a></li>
+<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+                        <h3>AI on slow networks: Nairobi teams&#39; 2026 playbook</h3>
+                        <p>How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+                        <span class="related-meta">13 min read · 26 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-native-apps-break-when-you-copy-old-rules/">
+                        <h3>AI-native apps break when you copy old rules</h3>
+                        <p>Model calls are distributed workloads, not function calls. Here is how to design task queues, cache keys, token budgets and retry policy for AI features.</p>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/trim-llm-bills-3-finops-moves-that-work/">
+                        <h3>Trim LLM bills: 3 FinOps moves that work</h3>
+                        <p>Request shaping, two-layer caching and priority queuing explained with working code, honest failure modes, and a cost measurement method you can run today.</p>
+                        <span class="related-meta">11 min read · 12 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

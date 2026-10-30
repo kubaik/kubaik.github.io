@@ -1,0 +1,580 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Double-entry ledger: concurrent write errors - Kubai Kevin</title>
+        <meta name="description" content="Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.">
+        <meta name="keywords" content="DoubleEntryLedger, ConcurrentWrites, SerializationFailure, LedgerConsistency">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-01T18:15:25.356366">
+        <meta property="article:modified_time" content="2026-10-04T10:50:24.105862+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Double-entry ledger: concurrent write errors">
+        <meta property="og:description" content="Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.">
+        <meta property="og:url" content="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/double-entry-ledger-concurrent-write-errors.png">
+        <meta property="og:image:alt" content="Double-entry ledger: concurrent write errors">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Double-entry ledger: concurrent write errors">
+        <meta name="twitter:description" content="Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/double-entry-ledger-concurrent-write-errors.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/#article",
+      "headline": "Double-entry ledger: concurrent write errors",
+      "description": "Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.",
+      "datePublished": "2026-10-01T18:15:25+00:00",
+      "dateModified": "2026-10-04T10:50:24+00:00",
+      "wordCount": 2922,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/"
+      },
+      "keywords": "DoubleEntryLedger, ConcurrentWrites, SerializationFailure, LedgerConsistency",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/double-entry-ledger-concurrent-write-errors.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Double-entry ledger: concurrent write errors",
+          "item": "https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Double-entry ledger: concurrent write errors</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Double-entry ledger: concurrent write errors</h1>
+                
+                <p class="post-lead">Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DoubleEntryLedger</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ConcurrentWrites</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SerializationFailure</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LedgerConsistency</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2922 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A double-entry ledger has one job: every transaction's debits equal its credits, and the sum of all account balances stays constant. That invariant holds trivially in a single-threaded test and fails in production the moment two requests touch the same account at the same time. This article covers why the invariant breaks, how to enforce it at the database level, how to measure whether your fix actually works, and how to keep it from regressing.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>A ledger schema typically looks like this: a <code>transactions</code> table, an <code>entries</code> table with one row per debit or credit, and an <code>accounts</code> table with a balance column. Each transaction inserts two or more entries summing to zero and updates the affected account balances.</p>
+<p>Under normal load this works. Under concurrency, teams see one of several failure modes:</p>
+<ul>
+<li><code>ERROR: could not serialize access due to concurrent update</code></li>
+<li><code>ERROR: deadlock detected</code></li>
+<li><code>Duplicate key value violates unique constraint "entries_transaction_id_account_id_key"</code></li>
+<li>No error at all, but the trial balance drifts by small amounts over thousands of transactions.</li>
+</ul>
+<p>The last case is the dangerous one. There is no exception to alert on, no failed request to retry, and no obvious moment when the books went wrong. The drift is discovered weeks later during reconciliation, by which point the audit trail is cold.</p>
+<p>The reason these errors don't appear in development is that development rarely reproduces the interleaving that causes them. Two requests must overlap in a specific window: both read state, both decide their write is valid, both commit. A single-threaded test or a low-traffic staging environment almost never produces that window.</p>
+<p>The root cause is that double-entry accounting requires atomicity across multiple rows, and most databases do not provide that automatically. You must enforce the invariant at the database level, not just in application code. The specific trap is that the default isolation level in PostgreSQL, <code>READ COMMITTED</code>, does not prevent write skew or lost updates on aggregate reads.</p>
+<h2 id="whats-actually-causing-it">What's actually causing it</h2>
+<p>The surface symptom is a failed transaction or a drifted balance. The underlying reason is that a multi-row invariant is being treated as if it were a single-row update.</p>
+<p>The invariant "sum of debits equals sum of credits for this transaction" spans multiple rows, often across different accounts. Under concurrent writes, two transactions can interleave in ways that break the invariant even though each transaction individually preserves it. This is write skew.</p>
+<p>A concrete example:</p>
+<ol>
+<li>Transaction A reads account X (balance 100) and account Y (balance 100).</li>
+<li>Transaction B reads account X (balance 100) and account Y (balance 100).</li>
+<li>A inserts a debit of 50 to X and a credit of 50 to Y, then updates balances.</li>
+<li>B inserts a debit of 50 to Y and a credit of 50 to X, then updates balances.</li>
+<li>Both commit.</li>
+</ol>
+<p>Under <code>READ COMMITTED</code>, each transaction saw a consistent snapshot at read time and each write is individually valid. The final state depends on which updates landed last, and the aggregate may not reflect either intended transfer. If a cached balance column is also being updated, you get lost updates on top of write skew.</p>
+<p>Three recurring causes:</p>
+<p><strong>Cause 1: relying on application-level checks under <code>READ COMMITTED</code>.</strong> Two transactions both read the same balance, both decide it is sufficient, and both proceed. The result is an overdraft or a double-spend that no constraint catches.</p>
+<p><strong>Cause 2: misusing <code>SELECT ... FOR UPDATE</code>.</strong> Locking account rows in a different order in different transactions produces deadlocks. Not locking them at all produces lost updates. Locking them but reading the balance from a cache produces inconsistency anyway.</p>
+<p><strong>Cause 3: derived tables updated outside the main transaction.</strong> Triggers or application hooks that update a monthly summary or running balance outside the transaction that wrote the entries will drift under concurrency, because the summary update can commit or fail independently.</p>
+<p>The fix in every case is to make the database enforce the invariant, either through isolation level, explicit locking, or constraints.</p>
+<h2 id="fix-1-serializable-isolation-with-retries">Fix 1: SERIALIZABLE isolation with retries</h2>
+<p><strong>Symptom:</strong> PostgreSQL logs show <code>could not serialize access due to concurrent update</code> or <code>deadlock detected</code>. Errors spike under peak traffic. Application-level retries sometimes succeed and sometimes don't.</p>
+<p><strong>Cause:</strong> You are using <code>READ COMMITTED</code> (the PostgreSQL default) and relying on application-level checks to maintain the ledger invariant.</p>
+<p><strong>Fix:</strong> Use <code>SERIALIZABLE</code> isolation for transactions that touch the ledger, and retry the whole transaction on serialization failure.</p>
+<pre><code class="language-sql">BEGIN ISOLATION LEVEL SERIALIZABLE;
+-- ledger operations here
+COMMIT;
+</code></pre>
+<p>In application code, catch SQLSTATE <code>40001</code> and retry the entire transaction:</p>
+<pre><code class="language-python">import psycopg2
+from psycopg2 import errors
+import time
+
+def transfer(conn, from_account, to_account, amount, transaction_id):
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            with conn.cursor() as cur:
+                cur.execute(&quot;BEGIN ISOLATION LEVEL SERIALIZABLE&quot;)
+                cur.execute(&quot;SELECT balance FROM accounts WHERE id = %s&quot;, (from_account,))
+                balance = cur.fetchone()[0]
+                if balance &lt; amount:
+                    raise ValueError(&quot;Insufficient funds&quot;)
+                cur.execute(
+                    &quot;INSERT INTO entries (transaction_id, account_id, amount) VALUES (%s, %s, %s)&quot;,
+                    (transaction_id, from_account, -amount),
+                )
+                cur.execute(
+                    &quot;INSERT INTO entries (transaction_id, account_id, amount) VALUES (%s, %s, %s)&quot;,
+                    (transaction_id, to_account, amount),
+                )
+                cur.execute(
+                    &quot;UPDATE accounts SET balance = balance - %s WHERE id = %s&quot;,
+                    (amount, from_account),
+                )
+                cur.execute(
+                    &quot;UPDATE accounts SET balance = balance + %s WHERE id = %s&quot;,
+                    (amount, to_account),
+                )
+                conn.commit()
+                return
+        except errors.SerializationFailure:
+            conn.rollback()
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(0.1 * (2 ** attempt))
+</code></pre>
+<p>Note that the retry wraps the entire transaction, including the balance read. Retrying only the failed statement is not sufficient: the read that informed the decision must be re-executed against a fresh snapshot.</p>
+<p><code>SERIALIZABLE</code> in PostgreSQL 14 and later uses Serializable Snapshot Isolation (SSI), which detects write skew and other anomalies. It is not free. Expect throughput overhead and a nonzero serialization failure rate under contention. The overhead is workload-dependent, so measure it rather than assuming a number.</p>
+<p><strong>How to measure the retry rate.</strong> Instrument your transfer function to count attempts and failures, and export the ratio as a metric. Alternatively, query <code>pg_stat_database</code> for <code>xact_rollback</code> before and after a load test and compute rollbacks as a fraction of total transactions. A small failure rate is normal; a sustained high rate means a hot account is serializing the workload, and the fix is to reduce contention rather than to increase retries.</p>
+<h2 id="fix-2-deferred-constraint-triggers">Fix 2: deferred constraint triggers</h2>
+<p><strong>Symptom:</strong> No database errors, but the trial balance drifts over time. The discrepancy is small and hard to reproduce, sometimes appearing only after weeks of running.</p>
+<p><strong>Cause:</strong> Entries are written in separate transactions, or derived tables are updated outside the main transaction, or a retry partially succeeded and left the ledger in an unbalanced state.</p>
+<p><strong>Fix:</strong> Ensure all writes that affect the invariant happen in one transaction, and add a deferred constraint trigger that verifies the per-transaction balance at commit time.</p>
+<pre><code class="language-sql">CREATE OR REPLACE FUNCTION check_ledger_balance() RETURNS TRIGGER AS $$
+BEGIN
+    IF (SELECT SUM(amount) FROM entries WHERE transaction_id = NEW.transaction_id) != 0 THEN
+        RAISE EXCEPTION 'Ledger imbalance for transaction %', NEW.transaction_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE CONSTRAINT TRIGGER ledger_balance_check
+AFTER INSERT ON entries
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW
+EXECUTE FUNCTION check_ledger_balance();
+</code></pre>
+<p>The <code>DEFERRABLE INITIALLY DEFERRED</code> clause is what makes this correct. A regular <code>AFTER INSERT</code> trigger fires per row and would see only the first entry of a two-entry transaction, which by definition does not sum to zero. A deferred trigger fires at commit time, when all entries for the transaction are visible.</p>
+<p>There is a performance cost: the trigger runs a <code>SUM</code> over the entries for the transaction at commit. For a two-entry transaction this is cheap, but it is a per-transaction query, so measure it under your own load rather than assuming it is negligible.</p>
+<p>Critically, this trigger does not prevent write skew across transactions. It only guarantees each transaction is internally balanced. For cross-transaction consistency you still need <code>SERIALIZABLE</code> isolation or explicit locking. The two mechanisms are complementary: the trigger catches application bugs, and the isolation level catches concurrency anomalies.</p>
+<h2 id="fix-3-connection-pooling-and-lock-scope">Fix 3: connection pooling and lock scope</h2>
+<p><strong>Symptom:</strong> Everything works in staging, but production shows intermittent <code>deadlock detected</code>, <code>Lock wait timeout exceeded</code> (MySQL), or <code>canceling statement due to lock timeout</code> (PostgreSQL). Errors become more frequent as you scale horizontally.</p>
+<p><strong>Cause:</strong> Three environment-specific issues are common.</p>
+<p>First, a connection pooler running in transaction mode may reuse a session for a different transaction. Session-level advisory locks (<code>pg_advisory_lock</code>) then leak across transactions or fail to protect what you intended.</p>
+<p>Second, managed database services may ship with different default isolation levels than a local install. Do not assume the default matches your staging environment; verify it.</p>
+<p>Third, multiple application instances each maintaining an in-memory cache of account balances will serve stale reads, and any decision based on a stale balance is wrong regardless of the database's isolation level.</p>
+<p><strong>Fix:</strong> If you use a connection pooler in transaction mode, use transaction-scoped advisory locks (<code>pg_advisory_xact_lock</code>) rather than session-scoped locks. Transaction-scoped locks are released at commit or rollback, so they cannot leak into the next transaction on the same pooled session.</p>
+<pre><code class="language-sql">BEGIN;
+SELECT pg_advisory_xact_lock(hashtext('account_' || account_id));
+UPDATE accounts SET balance = balance - 100 WHERE id = account_id;
+COMMIT;
+</code></pre>
+<p>For in-memory caches, either remove them for balances on the critical path or read the balance directly from the database inside the transaction. A distributed cache with strong consistency adds its own failure modes and does not remove the need for a correct transaction boundary.</p>
+<h2 id="choosing-an-approach">Choosing an approach</h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Isolation</th>
+<th>Concurrency behavior</th>
+<th>Complexity</th>
+<th>Fits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SERIALIZABLE + retry</td>
+<td>Serializable</td>
+<td>Retries on conflict</td>
+<td>Low</td>
+<td>General ledgers, moderate contention</td>
+</tr>
+<tr>
+<td>SELECT ... FOR UPDATE</td>
+<td>Read Committed</td>
+<td>Blocking; deadlock risk if lock order varies</td>
+<td>Medium</td>
+<td>Explicit control over hot rows</td>
+</tr>
+<tr>
+<td>Advisory locks</td>
+<td>Read Committed</td>
+<td>Blocking; scoped to transaction</td>
+<td>Medium</td>
+<td>Serializing a specific resource</td>
+</tr>
+<tr>
+<td>Optimistic version column</td>
+<td>Read Committed</td>
+<td>Retries on version mismatch</td>
+<td>High</td>
+<td>High contention, distributed writers</td>
+</tr>
+</tbody>
+</table>
+<p>Two practical notes. First, any blocking approach requires a consistent lock order, usually by sorting account IDs before locking, or you trade lost updates for deadlocks. Second, retry-based approaches require idempotency, because a retry after a partial commit can duplicate an entry.</p>
+<h2 id="idempotency-required-by-every-retry-strategy">Idempotency: required by every retry strategy</h2>
+<p>Every approach above retries transactions. A retry is only safe if applying the same transaction twice has the same effect as applying it once. The standard pattern is a <code>processed_transactions</code> table with a unique constraint on the transaction ID:</p>
+<pre><code class="language-sql">CREATE TABLE processed_transactions (
+    transaction_id UUID PRIMARY KEY,
+    processed_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+</code></pre>
+<p>Insert into this table as the first statement of the transaction. If the insert fails with a duplicate key error, the transaction has already been applied; skip it and return success. Because the insert and the ledger writes share a transaction, a rolled-back attempt leaves no trace and can be retried safely.</p>
+<p>Without this, a serialization failure that occurs after the entries are written but before commit is fine (the rollback removes them), but a network failure after commit and before the client receives the acknowledgement is not: the client retries and the entries are applied twice.</p>
+<h2 id="how-to-verify-the-fix-under-load">How to verify the fix under load</h2>
+<p>You cannot verify a concurrency fix by reading the code. You have to run concurrent writers and check the invariant afterward.</p>
+<p><strong>Step 1: build a concurrency test.</strong> Spawn many clients performing random transfers between a fixed set of accounts. <code>pgbench</code> with a custom script works, as does a script using a thread pool. The essential property is that multiple clients hit the same accounts simultaneously, because disjoint accounts never contend.</p>
+<p><strong>Step 2: instrument the failure modes.</strong> Count serialization failures and deadlocks per attempt. In PostgreSQL, <code>pg_stat_database.xact_rollback</code> gives a rollback count; compare it before and after the test run and divide by total transactions to get a rollback rate. Export retry attempts from the application as a counter.</p>
+<p><strong>Step 3: check the invariant after the run.</strong> Both of these queries should return zero rows:</p>
+<pre><code class="language-sql">-- Imbalanced transactions
+SELECT transaction_id, SUM(amount) AS total
+FROM entries
+GROUP BY transaction_id
+HAVING SUM(amount) != 0;
+</code></pre>
+<pre><code class="language-sql">-- Total balance should equal the starting total
+SELECT SUM(balance) FROM accounts;
+</code></pre>
+<p><strong>Step 4: test partial failure.</strong> Kill a connection mid-transaction and confirm the transaction rolls back cleanly and the ledger remains balanced. A proxy that can inject network failures makes this reproducible.</p>
+<p><strong>Step 5: measure throughput.</strong> Record transactions per second and the retry rate at the same time. A fix that eliminates drift but drops throughput by an order of magnitude may not be acceptable, and the only way to know the trade-off is to measure both numbers under the same load.</p>
+<h2 id="preventing-regression">Preventing regression</h2>
+<ul>
+<li><strong>Enforce the invariant in the database, not only in code.</strong> The deferred trigger above catches unbalanced transactions at commit. Application-level assertions can be bypassed by a second service, a migration script, or a manual fix.</li>
+<li><strong>Make retries idempotent.</strong> The <code>processed_transactions</code> table is a small cost for eliminating double-application.</li>
+<li><strong>Lock in a deterministic order.</strong> Sort account IDs before any <code>SELECT ... FOR UPDATE</code> or advisory lock acquisition. Inconsistent ordering is the usual cause of deadlocks in ledger code.</li>
+<li><strong>Run a periodic reconciliation.</strong> Compare the sum of entries against the sum of balances on a schedule and alert on any nonzero difference. This catches drift before it compounds.</li>
+<li><strong>Verify isolation level in every environment.</strong> Managed services and poolers can change what your transaction actually sees. Query the current setting at startup and log it.</li>
+</ul>
+<h2 id="related-errors">Related errors</h2>
+<ul>
+<li><code>deadlock detected</code> — usually inconsistent lock ordering. Lock accounts in a deterministic order.</li>
+<li><code>could not serialize access due to read/write dependencies among transactions</code> — a serialization failure variant. Retry the whole transaction.</li>
+<li><code>duplicate key value violates unique constraint</code> — expected if you retry a partially applied transaction. Use an idempotency key.</li>
+<li><code>canceling statement due to lock timeout</code> — reduce contention or raise <code>lock_timeout</code> deliberately.</li>
+<li><code>Ledger imbalance</code> from your own application — add the deferred trigger to catch it at commit rather than at reconciliation.</li>
+</ul>
+<h2 id="when-the-standard-fixes-dont-work">When the standard fixes don't work</h2>
+<p>If <code>SERIALIZABLE</code>, explicit locking, and deferred triggers are all in place and inconsistencies remain, look further out:</p>
+<ol>
+<li>Check for storage or network faults. Silent corruption is rare but real; use your database's integrity-checking tools.</li>
+<li>Audit for non-transactional writes. If multiple services write to the ledger without a shared transaction, no isolation level will save you. A saga with compensating actions, or a single writer per account, is the structural fix.</li>
+<li>Reconsider the storage engine. A ledger-specific database that handles the invariant internally is a legitimate option for new systems, though migrating an existing one is a separate project.</li>
+<li>Bring in a specialist. Complex concurrency bugs are worth an outside pair of eyes before they become an audit finding.</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<p><strong>What isolation level should a double-entry ledger use in PostgreSQL?</strong>
+<code>SERIALIZABLE</code> for transactions that modify the ledger. <code>READ COMMITTED</code> allows two transactions to read the same balance and both proceed, which is exactly the write-skew pattern that breaks the invariant. <code>SERIALIZABLE</code> can produce retryable failures, which the application must handle.</p>
+<p><strong>How do I retry without double-spending?</strong>
+Use an idempotency key. Insert the transaction ID into a table with a unique constraint as the first statement of the transaction. A duplicate-key error means the work is already done; return success without reapplying.</p>
+<p><strong>Can triggers enforce the double-entry invariant?</strong>
+Yes, if they are deferred constraint triggers. A per-row <code>AFTER INSERT</code> trigger sees only one entry and cannot check the sum. A deferred trigger runs at commit, when all entries for the transaction are visible. It catches application bugs but does not prevent cross-transaction write skew.</p>
+<p><strong>Why do deadlocks still occur under <code>SERIALIZABLE</code>?</strong>
+<code>SERIALIZABLE</code> prevents write skew; it does not prevent deadlocks. Deadlocks come from inconsistent lock ordering. Sort the rows you lock and acquire locks in that order.</p>
+<p><strong>How should I test ledger consistency under concurrency?</strong>
+Run many concurrent clients performing random transfers between a shared set of accounts, then verify that every transaction's entries sum to zero and that the total of all balances equals the starting total. Measure throughput and retry rate in the same run.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Run the imbalance query from the verification section against your current database:</p>
+<pre><code class="language-sql">SELECT transaction_id, SUM(amount) AS total
+FROM entries
+GROUP BY transaction_id
+HAVING SUM(amount) != 0;
+</code></pre>
+<p>If it returns rows, you have a live consistency bug and the deferred constraint trigger is the fastest mitigation. If it returns nothing, check <code>pg_stat_database.xact_rollback</code> and your application logs for serialization failures and deadlocks. Either result tells you which fix to apply first.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/">Offline-first money apps with DynamoDB Streams</a></li>
+<li><a href="https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/nigerias-2026-api-rules-broke-our-microservices/">
+                        <h3>Nigeria’s 2026 API rules broke our microservices</h3>
+                        <p>Regulatory audit deadlines change how you should split services. A worked example of transaction boundaries, outbox patterns and WAL-based audit reads.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/offline-first-money-apps-with-dynamodb-streams/">
+                        <h3>Offline-first money apps with DynamoDB Streams</h3>
+                        <p>Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.</p>
+                        <span class="related-meta">15 min read · 8 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/reconciling-mobile-money-edge-cases-banks-ignore/">
+                        <h3>Reconciling mobile money: edge cases banks ignore</h3>
+                        <p>Why provider webhooks are only approximate signals, and how to reconcile them against MNO ledgers with tolerance windows, dedup keys and batch jobs.</p>
+                        <span class="related-meta">17 min read · 12 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

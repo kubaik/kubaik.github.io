@@ -1,0 +1,493 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Multi-agent handoffs: the latency tax nobody measures - Kubai Kevin</title>
+        <meta name="description" content="Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.">
+        <meta name="keywords" content="MultiAgentLatency, AgentHandoff, LlmOrchestration, AgentHandoffOverhead, Llm, Generativeai, Multiagent">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-29T17:53:25.995285">
+        <meta property="article:modified_time" content="2026-10-04T10:34:20.613552+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Multi-agent handoffs: the latency tax nobody measures">
+        <meta property="og:description" content="Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.">
+        <meta property="og:url" content="https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/multi-agent-handoffs-the-latency-tax-nobody-measures.png">
+        <meta property="og:image:alt" content="Multi-agent handoffs: the latency tax nobody measures">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Multi-agent handoffs: the latency tax nobody measures">
+        <meta name="twitter:description" content="Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/multi-agent-handoffs-the-latency-tax-nobody-measures.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/#article",
+      "headline": "Multi-agent handoffs: the latency tax nobody measures",
+      "description": "Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.",
+      "datePublished": "2026-09-29T17:53:25+00:00",
+      "dateModified": "2026-10-04T10:34:20+00:00",
+      "wordCount": 2259,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/"
+      },
+      "keywords": "MultiAgentLatency, AgentHandoff, LlmOrchestration, AgentHandoffOverhead, Llm, Generativeai, Multiagent",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/multi-agent-handoffs-the-latency-tax-nobody-measures.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Multi-agent handoffs: the latency tax nobody measures",
+          "item": "https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Multi-agent handoffs: the latency tax nobody measures</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Multi-agent handoffs: the latency tax nobody measures</h1>
+                
+                <p class="post-lead">Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MultiAgentLatency</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentHandoff</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmOrchestration</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/multiagent/"
+                       style="text-decoration:none;">Multiagent</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2259 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Multi-agent systems get pitched on capability: split a complex task across specialised agents, let each do what it is good at, orchestrate the results. The demos look impressive. The standard advice, however, almost always stops at what the system can do and says little about what it spends to do it. That gap is where the latency tax hides.</p>
+<h2 id="the-conventional-wisdom-and-where-it-stops">The conventional wisdom and where it stops</h2>
+<p>When teams discuss multi-agent performance, the conversation usually turns to token counts and model choice: use a smaller model for routing, cache the system prompt, trim the tool list. All of that is useful. But the dominant cost in many multi-agent pipelines is not inference. It is the handoff — the serialisation, transport, deserialisation, re-prompting and re-validation that happens every time control passes from one agent to another.</p>
+<p>The overhead is invisible in most observability setups. An APM trace shows a 2.4-second request. It does not break out the portion that was handoff tax. Without that breakdown, optimisation effort goes to the wrong place: teams tune prompts and swap models while the structural cost sits untouched.</p>
+<h2 id="what-a-handoff-actually-costs">What a handoff actually costs</h2>
+<p>A handoff is a remote procedure call with a model behind it. Four cost centres accumulate, and most of them are not instrumented by default.</p>
+<p><strong>Serialisation.</strong> Every handoff converts an in-memory object (typically a Pydantic model or a dict) to JSON, sends it, and parses it back. The cost scales with payload size and with the encoder used. <code>orjson</code> is meaningfully faster than the standard library <code>json</code> module on large payloads, but the difference is small next to what the payload size itself does to the total.</p>
+<p><strong>Transport.</strong> A same-region HTTP round trip has a floor set by network and TLS behaviour. Loopback and Unix sockets are cheaper than HTTP over TCP, which is cheaper than a cross-region call. This floor cannot be optimised away, only avoided by not making the call.</p>
+<p><strong>Re-prompting.</strong> Each agent needs to know what came before. If full history is passed, the final agent in a pipeline receives far more tokens than it needs. Longer prompts mean longer prefill, which means longer time-to-first-token. This is the largest of the four costs in most pipelines, and the one most often overlooked because it shows up as "model latency" rather than "handoff latency".</p>
+<p><strong>Validation.</strong> Well-built systems validate outputs between agents: a JSON schema check, sometimes a retry loop, sometimes a separate grading call. Each validation adds time, and each retry is a full agent invocation.</p>
+<p>A fifth contributor is the orchestration layer itself — graph traversal, state management, callback hooks. It is usually small per step but compounds across a long pipeline.</p>
+<p>The failure mode to watch for: a pipeline tested on a handful of sequential requests looks acceptable, then degrades under concurrent load. Handoff overhead scales with queue depth and context size, so p95 latency under real traffic can be substantially worse than the sequential test suggested. Demos rarely run at concurrency, which is why the problem surfaces after launch.</p>
+<h2 id="a-better-mental-model">A better mental model</h2>
+<p>Stop thinking of agents as workers passing a baton. Think of them as functions in a pipeline where every boundary is a network call with a cost. An agent handoff is an RPC in a hot path, and it deserves the same suspicion any RPC in a hot path would get. Nobody calls a microservice five times inside a request handler without asking whether those calls could be batched or removed.</p>
+<p>This reframing changes the questions worth asking:</p>
+<ul>
+<li>Can two agents be merged into one prompt with structured output?</li>
+<li>Can the handoff carry a summary instead of full history?</li>
+<li>Can validation happen in-process rather than as a separate call?</li>
+<li>Can independent agents run in parallel instead of serially?</li>
+</ul>
+<p>There is an uncomfortable truth underneath the architecture choice. Multi-agent designs are often selected for developer ergonomics, not runtime performance. Four small prompts are easier to reason about, test and iterate on than one large one. That is a legitimate reason to start there. It is not a legitimate reason to stay there once the cost has been measured.</p>
+<h2 id="a-worked-example">A worked example</h2>
+<p>Consider a document-analysis pipeline: extract entities, classify sentiment, summarise, fact-check. Four agents, serial, full history passed between each. The numbers below are illustrative, chosen to make the arithmetic visible; substitute your own measurements.</p>
+<p>Assume a 4,000-token history. A rough rule of thumb is that one token is about four bytes of JSON-encoded text, so the payload is roughly 16KB. Assume a same-region HTTP round trip of 25ms and a prefill rate that adds measurable time per 1,000 input tokens. Four handoffs at 25ms each is 100ms of pure transport. Now add prefill: if each successive agent receives the accumulated history, the last agent sees roughly four times the context of the first, and the prefill cost grows with it. On a serial pipeline where each agent also generates output, the handoff-attributable share of end-to-end latency commonly lands in the range that makes the pipeline feel sluggish relative to a single well-structured prompt.</p>
+<p>The fix that shows up repeatedly is to pass a summary plus the current task, not the full history.</p>
+<pre><code class="language-python">import orjson
+import httpx
+from pydantic import BaseModel
+
+
+class SlimState(BaseModel):
+    task: str
+    summary: str          # keep this bounded, e.g. a few hundred tokens
+    current_output: str
+
+
+async def slim_handoff(state: SlimState, next_agent_url: str) -&gt; SlimState:
+    payload = orjson.dumps(state.model_dump())
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        resp = await client.post(next_agent_url, content=payload)
+    return SlimState(**orjson.loads(resp.content))
+</code></pre>
+<p>The payload shrinks by roughly an order of magnitude, transport time falls proportionally to payload size, and prefill time falls because the prompt is shorter. The mechanism is not clever. It is the removal of work that was never necessary.</p>
+<p>The same pattern applies to parallelism. If entity extraction and sentiment classification do not depend on each other, <code>asyncio.gather</code> runs them concurrently and the pipeline pays the latency of the slower branch rather than the sum of both.</p>
+<pre><code class="language-python">import asyncio
+
+
+async def analyse(document: str) -&gt; dict:
+    entities, sentiment = await asyncio.gather(
+        extract_entities(document),
+        classify_sentiment(document),
+    )
+    return {&quot;entities&quot;: entities, &quot;sentiment&quot;: sentiment}
+</code></pre>
+<p>Both changes preserve task quality because neither removes information the downstream agent actually needs. They remove information it was carrying by default.</p>
+<h2 id="how-to-measure-the-tax">How to measure the tax</h2>
+<p>The reason this cost stays hidden is that it is not a metric any framework surfaces by default. Instrument it directly.</p>
+<p><strong>Log payload size per handoff.</strong> In the function that builds each handoff payload, record <code>len(payload)</code> in bytes alongside the agent name and step index. This one line turns an invisible cost into a number.</p>
+<p><strong>Time the boundary, not the agent.</strong> Wrap the serialisation and the HTTP call separately. Serialisation time and transport time have different fixes: serialisation responds to smaller payloads and a faster encoder, transport responds to co-location or fewer calls.</p>
+<p><strong>Compare prompt sizes across steps.</strong> Log input token counts at each agent. If the count grows monotonically down the pipeline, full history is being carried and summarisation is the highest-leverage change available.</p>
+<p><strong>Measure at concurrency.</strong> Run the benchmark with realistic parallel request counts, not sequentially. Report p50 and p95. The gap between them is where the handoff tax lives.</p>
+<p><strong>Establish a baseline before changing anything.</strong> Record end-to-end latency, per-step latency, payload sizes and token counts on the current pipeline. Without the baseline, no improvement claim is verifiable.</p>
+<p>The resulting number — handoff time as a share of total request latency — is the optimisation budget. If it is small, the pipeline has a different problem and effort belongs elsewhere.</p>
+<h2 id="when-multi-agent-is-the-right-call">When multi-agent is the right call</h2>
+<p>Multi-agent architectures are not wrong. They are the right call in specific situations, and treating them as always-wrong would be as lazy as treating them as always-right.</p>
+<p><strong>Genuinely different tool access.</strong> If a research agent has web search and a writer agent has a sandboxed code interpreter, keeping them separate is a security boundary, not just an architectural preference. Merging them means the writer inherits permissions it should not have. That isolation is worth the handoff cost.</p>
+<p><strong>Independent auditability.</strong> In regulated environments, a separate critic agent whose only job is to validate output is a compliance feature. The handoff needs to be logged, attributable and immutable. The latency is the price of the audit trail.</p>
+<p><strong>Different infrastructure.</strong> If a planner runs on a GPU host and a tool executor runs on a sandboxed VM, the handoff is a real network boundary that cannot be eliminated, only made cheaper.</p>
+<p><strong>Genuinely long-running tasks.</strong> For a job that takes tens of seconds end to end, handoff overhead is a rounding error. The tax only matters when the baseline is short and concurrency is high.</p>
+<p>The mistake is applying multi-agent architecture by default to tasks that are short, serial and share tool access. That is where the tax dominates and the benefits do not materialise.</p>
+<h2 id="decision-checklist">Decision checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Separate agents</th>
+<th>Merge or single agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool access differs per step</td>
+<td>Yes — security boundary</td>
+<td>No — merge prompts</td>
+</tr>
+<tr>
+<td>Audit or compliance requirement</td>
+<td>Yes — separate traces</td>
+<td>No — one trace is fine</td>
+</tr>
+<tr>
+<td>Infrastructure differs per step</td>
+<td>Yes — real network boundary</td>
+<td>No — same process</td>
+</tr>
+<tr>
+<td>Steps are independent</td>
+<td>Run in parallel</td>
+<td>Merge into one prompt</td>
+</tr>
+<tr>
+<td>Context carried per handoff</td>
+<td>Bounded summary</td>
+<td>Full history</td>
+</tr>
+<tr>
+<td>Latency budget</td>
+<td>Generous</td>
+<td>Tight</td>
+</tr>
+<tr>
+<td>Concurrency</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>A practical rule: if you cannot name the specific reason two agents are separate — security, audit, infrastructure, or a genuinely different model — merge them. The default should be one agent with structured output, not a graph of specialists.</p>
+<h2 id="common-objections">Common objections</h2>
+<p><strong>"Merging agents makes prompts too long and hurts quality."</strong> Sometimes true. But the usual fix is structured output with clear sections, not more agents. A single prompt with explicit task, context and output-format sections often matches or beats a three-agent pipeline on quality while costing less. Test it rather than assuming.</p>
+<p><strong>"Summarisation loses information the next agent needs."</strong> It can. The mitigation is to summarise and keep a retrieval path: store the full history, let the next agent fetch specific spans on demand. That is a tool call, not a handoff, and it is cheaper because it is paid only when needed.</p>
+<p><strong>"The framework makes multi-agent easy, so why fight it?"</strong> Because the framework optimises for developer experience, not runtime. Easy to build is not the same as cheap to run. Graph-based orchestration libraries are genuinely useful for prototyping; they are less useful as a production runtime if the handoff cost has never been measured.</p>
+<p><strong>"Parallelism changes semantics — agents might race."</strong> Only if they share mutable state. Design agents as pure functions over immutable inputs and parallelism is safe. If they share state, that is a separate problem the multi-agent design did not cause.</p>
+<p><strong>"We already shipped; ripping out agents is too expensive."</strong> Nothing has to be ripped out. Start by changing what the handoff carries — summary instead of full history. In most codebases that is a small change in one function, and it is where the largest single win usually lives.</p>
+<h2 id="what-better-defaults-would-look-like">What better defaults would look like</h2>
+<p>If the RPC mental model were the default, three things would change.</p>
+<p>Architecture diagrams would show latency budgets on every edge the way they show data flow. A handoff labelled with a duration and a payload size invites a different conversation than an unlabelled arrow.</p>
+<p>Framework defaults would change. The sensible default for a handoff payload is a summary plus the current task, not full history. Frameworks that default to full history are optimising for debuggability at the cost of runtime — a defensible tradeoff during development, a poor one in production.</p>
+<p>Observability tools would surface handoff tax as a first-class metric. Today it has to be instrumented by hand, which is precisely why it stays hidden.</p>
+<p>The broader point is that multi-agent systems are a real architectural pattern with real costs. Treating them as free — which is what most tutorials implicitly do — produces systems that work in demos and disappoint in production. The fix is not to abandon the pattern. It is to measure the boundaries.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open the function that builds the payload for each handoff in your pipeline. Add one line that logs the serialised size in bytes and the agent name. Run your existing latency benchmark, sequentially and at realistic concurrency, and record the numbers. If any payload is larger than a few kilobytes, replace the full history with a bounded summary and re-run the same benchmark. That single change is where the largest win usually hides, and it takes less than thirty minutes to find out whether it applies to you.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/prompts-are-code-how-to-measure-their-value/">
+                        <h3>Prompts are code: how to measure their value</h3>
+                        <p>Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.</p>
+                        <span class="related-meta">19 min read · 16 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
+                        <h3>Multi-agent systems: why failures hide</h3>
+                        <p>Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
+                        <span class="related-meta">13 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/orchestration-tax-kills-multi-agent-systems/">
+                        <h3>Orchestration tax kills multi-agent systems</h3>
+                        <p>Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

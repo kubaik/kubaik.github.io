@@ -1,0 +1,897 @@
+{
+  "2026-technical-screens-what-actually-works": {
+    "removed_at": "2026-09-18T11:25:18.686784+00:00",
+    "reason": "Queue needs_review + fabricated hiring claims",
+    "source": "content_audit_verdicts"
+  },
+  "47-ai-code-debt-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.688150+00:00",
+    "reason": "Fabricated studies + queue needs_review",
+    "source": "content_audit_verdicts"
+  },
+  "ab-pricing-tests-that-lifted-arr-18": {
+    "removed_at": "2026-09-18T11:25:18.688891+00:00",
+    "reason": "Fabricated ProfitWell stats",
+    "source": "content_audit_verdicts"
+  },
+  "ai-api-docs-what-humans-still-write-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.689464+00:00",
+    "reason": "Fabricated DORA stats",
+    "source": "content_audit_verdicts"
+  },
+  "ai-ate-our-niche-heres-how-we-picked-a-new-one": {
+    "removed_at": "2026-09-18T11:25:18.690330+00:00",
+    "reason": "Fabricated McKinsey Kenya stats",
+    "source": "content_audit_verdicts"
+  },
+  "ai-codebases-guardrails-vs-chaos-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.691082+00:00",
+    "reason": "Fabricated African Tech Policy Forum survey",
+    "source": "content_audit_verdicts"
+  },
+  "ai-codes-hidden-cves-exposed": {
+    "removed_at": "2026-09-18T11:25:18.691643+00:00",
+    "reason": "Fabricated Snyk / LF / OWASP benchmarks",
+    "source": "content_audit_verdicts"
+  },
+  "ai-scans-your-code-real-risks-and-defenses": {
+    "removed_at": "2026-09-18T11:25:18.692623+00:00",
+    "reason": "Fabricated Trail of Bits study",
+    "source": "content_audit_verdicts"
+  },
+  "ai-services-slow-fix-the-network-first": {
+    "removed_at": "2026-09-18T11:25:18.693700+00:00",
+    "reason": "Fabricated CNCF survey",
+    "source": "content_audit_verdicts"
+  },
+  "batteries-included-offline-mode-for-unreliable-networks": {
+    "removed_at": "2026-09-18T11:25:18.694691+00:00",
+    "reason": "Unsourced market research",
+    "source": "content_audit_verdicts"
+  },
+  "claude-4-prompts-broke-my-prod": {
+    "removed_at": "2026-09-18T11:25:18.695257+00:00",
+    "reason": "Fabricated Stanford HAI stat",
+    "source": "content_audit_verdicts"
+  },
+  "claude-code-in-2026-one-year-of-lessons-learned": {
+    "removed_at": "2026-09-18T11:25:18.695876+00:00",
+    "reason": "Fabricated McKinsey stat",
+    "source": "content_audit_verdicts"
+  },
+  "dagster-replaced-airflow-in-2026-heres-the-stack-we": {
+    "removed_at": "2026-09-18T11:25:18.696667+00:00",
+    "reason": "Invented sentiment survey",
+    "source": "content_audit_verdicts"
+  },
+  "engineering-interviews-what-ai-wants-now": {
+    "removed_at": "2026-09-18T11:25:18.697284+00:00",
+    "reason": "Fabricated KSEA / NTRG studies",
+    "source": "content_audit_verdicts"
+  },
+  "freelance-rates-after-ai-took-the-boilerplate": {
+    "removed_at": "2026-09-18T11:25:18.698006+00:00",
+    "reason": "Fabricated Upwork survey",
+    "source": "content_audit_verdicts"
+  },
+  "hiring-engineers-the-3-things-ai-cares-about-now": {
+    "removed_at": "2026-09-18T11:25:18.698598+00:00",
+    "reason": "Fabricated DevIQ Labs study",
+    "source": "content_audit_verdicts"
+  },
+  "internal-dev-portal-that-developers-open-daily": {
+    "removed_at": "2026-09-18T11:25:18.699064+00:00",
+    "reason": "Fabricated Dev Interrupted study",
+    "source": "content_audit_verdicts"
+  },
+  "kubernetes-in-2026-what-teams-offload": {
+    "removed_at": "2026-09-18T11:25:18.699591+00:00",
+    "reason": "Fabricated CNCF survey",
+    "source": "content_audit_verdicts"
+  },
+  "land-a-45k-remote-job-africas-2026-map": {
+    "removed_at": "2026-09-18T11:25:18.700035+00:00",
+    "reason": "Unverifiable salary-map claims",
+    "source": "content_audit_verdicts"
+  },
+  "latency-spike-after-llm-feature-rollout": {
+    "removed_at": "2026-09-18T11:25:18.700610+00:00",
+    "reason": "Invented incident numbers",
+    "source": "content_audit_verdicts"
+  },
+  "llm-evals-the-two-metrics-that-bite-you": {
+    "removed_at": "2026-09-18T11:25:18.701068+00:00",
+    "reason": "Fabricated eval benchmarks",
+    "source": "content_audit_verdicts"
+  },
+  "llm-security-mistakes-in-2026-owasp-top-10-fixes": {
+    "removed_at": "2026-09-18T11:25:18.701569+00:00",
+    "reason": "Fake OWASP attribution",
+    "source": "content_audit_verdicts"
+  },
+  "money-moves-need-stricter-parsers": {
+    "removed_at": "2026-09-18T11:25:18.702189+00:00",
+    "reason": "Unsourced fintech incident stats",
+    "source": "content_audit_verdicts"
+  },
+  "negotiate-salary-2026-with-ai-resume-tool": {
+    "removed_at": "2026-09-18T11:25:18.703009+00:00",
+    "reason": "Thin career bait + invented comps",
+    "source": "content_audit_verdicts"
+  },
+  "roll-your-own-migrations-why-blue-green-fails-you": {
+    "removed_at": "2026-09-18T11:25:18.703783+00:00",
+    "reason": "Fabricated migration-failure stats",
+    "source": "content_audit_verdicts"
+  },
+  "scan-10k-repos-daily-without-false-positives": {
+    "removed_at": "2026-09-18T11:25:18.704424+00:00",
+    "reason": "Fabricated scanner benchmarks",
+    "source": "content_audit_verdicts"
+  },
+  "senior-devs-flee-big-tech-not-for-money": {
+    "removed_at": "2026-09-18T11:25:18.704906+00:00",
+    "reason": "Unverifiable attrition anecdotes",
+    "source": "content_audit_verdicts"
+  },
+  "skip-the-zero-trust-hype-for-5-person-teams": {
+    "removed_at": "2026-09-18T11:25:18.705497+00:00",
+    "reason": "Fabricated survey claims",
+    "source": "content_audit_verdicts"
+  },
+  "stop-shipping-daily-the-burn-rate-math": {
+    "removed_at": "2026-09-18T11:25:18.706601+00:00",
+    "reason": "Invented burn-rate figures",
+    "source": "content_audit_verdicts"
+  },
+  "survive-ai-swipes-with-niche-picks": {
+    "removed_at": "2026-09-18T11:25:18.707390+00:00",
+    "reason": "Thin / keyword-farm",
+    "source": "content_audit_verdicts"
+  },
+  "treat-every-user-input-as-hostile-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.707951+00:00",
+    "reason": "Fabricated security stats",
+    "source": "content_audit_verdicts"
+  },
+  "why-your-model-evaluation-missed-a-production-regression": {
+    "removed_at": "2026-09-18T11:25:18.708485+00:00",
+    "reason": "Invented eval-miss numbers",
+    "source": "content_audit_verdicts"
+  },
+  "zero-trust-mcp-servers-auth-trap-youll-hit-first": {
+    "removed_at": "2026-09-18T11:25:18.709087+00:00",
+    "reason": "Fabricated auth-incident stats",
+    "source": "content_audit_verdicts"
+  },
+  "hit-5k-mrr-without-a-marketing-team": {
+    "removed_at": "2026-09-19T08:27:14.108620+00:00",
+    "reason": "demoted from improve: Improve strip left 1772 words (< 1800)",
+    "source": "content_audit_verdicts"
+  },
+  "2026-salary-hacks-prove-ai-didnt-steal-your-value": {
+    "removed_at": "2026-09-19T09:10:08.253580+00:00",
+    "reason": "Policy-risk title: Income/salary/side-gig bait — low-value monetization content and unverifiable earnings claims.",
+    "source": "content_audit_verdicts"
+  },
+  "3-side-gigs-that-paid-me-2k-usdmonth-in-2026": {
+    "removed_at": "2026-09-19T09:10:08.255208+00:00",
+    "reason": "Policy-risk title: Income/salary/side-gig bait — low-value monetization content and unverifiable earnings claims.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "7-passive-income-streams-for-devs-in-2026": {
+    "removed_at": "2026-09-19T09:10:08.256423+00:00",
+    "reason": "Policy-risk title: Income/salary/side-gig bait — low-value monetization content and unverifiable earnings claims.",
+    "source": "content_audit_verdicts"
+  },
+  "ai-ops-datadog-vs-granfa-for-infra-automation": {
+    "removed_at": "2026-09-19T09:10:08.257604+00:00",
+    "reason": "Claim: Named organization 'Datadog' paired with a precise statistic and no verifiable source URL.",
+    "source": "content_audit_verdicts"
+  },
+  "ai-tools-cut-rates-30-whats-real-in-2026": {
+    "removed_at": "2026-09-19T09:10:08.258791+00:00",
+    "reason": "Claim: Unsourced 'study/survey/report by' phrasing — treat as a fabricated citation.",
+    "source": "content_audit_verdicts"
+  },
+  "block-api-abuse-in-2026-before-it-blocks": {
+    "removed_at": "2026-09-19T09:10:08.259539+00:00",
+    "reason": "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "bootcamp-to-120k-2026-steps-that-pay": {
+    "removed_at": "2026-09-19T09:10:08.260363+00:00",
+    "reason": "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.; Claim: Unverifiable first-person incident language (2 sentence(s)).; Technical post with fewer than two code fences",
+    "source": "content_audit_verdicts"
+  },
+  "price-tests-that-raised-revenue-vs-tests-that-killed": {
+    "removed_at": "2026-09-19T09:10:08.261366+00:00",
+    "reason": "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "wireguard-vs-tailscale-for-5month-zero-trust": {
+    "removed_at": "2026-09-19T09:10:08.262060+00:00",
+    "reason": "Claim: Unsourced 'study/survey/report by' phrasing — treat as a fabricated citation.; Claim: Unverifiable first-person incident language (2 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "3-vibe-coding-tools-i-regret-shipping-in-production": {
+    "removed_at": "2026-09-21T11:23:19.920104",
+    "reason": "narrative title: first-person claim in title ('3 vibe coding tools I regret shipping in productio')",
+    "source": "adsense_triage"
+  },
+  "added-circuit-breakers-3-days-after-cascade-failure": {
+    "removed_at": "2026-09-21T11:23:19.922037",
+    "reason": "narrative title: past-tense action verb + specific number ('Added circuit breakers 3 days after cascade failur')",
+    "source": "adsense_triage"
+  },
+  "african-devs-arc-vs-andela-vs-toptal-in-2026": {
+    "removed_at": "2026-09-21T11:23:19.923717",
+    "reason": "unverifiable named-source citation: 'The 2026 Freelance Pulse survey found'",
+    "source": "adsense_triage"
+  },
+  "agent-design-after-llm-4-we-broke-5-assumptions": {
+    "removed_at": "2026-09-21T11:23:19.925582",
+    "reason": "narrative title: first-person claim in title ('Agent design after LLM-4: we broke 5 assumptions')",
+    "source": "adsense_triage"
+  },
+  "ai-ops-vs-dumb-alerts-the-incident-that-broke-us": {
+    "removed_at": "2026-09-21T11:23:19.927085",
+    "reason": "unverifiable named-source citation: 'The 2026 PagerDuty SRE survey shows'",
+    "source": "adsense_triage"
+  },
+  "ai-portfolios-ruin-yours-fix-your-signal": {
+    "removed_at": "2026-09-21T11:23:19.929296",
+    "reason": "unverifiable named-source citation: 'A 2026 LinkedIn Engineering survey found'",
+    "source": "adsense_triage"
+  },
+  "ai-skills-that-pay-data-vs-prompt-skills-in-2026": {
+    "removed_at": "2026-09-21T11:23:19.931043",
+    "reason": "unverifiable named-source citation: '2026 Stack Overflow Developer Survey shows'",
+    "source": "adsense_triage"
+  },
+  "dumped-kubernetes-for-200-and-no-one-noticed": {
+    "removed_at": "2026-09-21T11:23:19.932915",
+    "reason": "narrative title: past-tense action verb + specific number ('Dumped Kubernetes for $200 and no one noticed')",
+    "source": "adsense_triage"
+  },
+  "grew-5k-mrr-on-a-29-vps": {
+    "removed_at": "2026-09-21T11:23:19.934588",
+    "reason": "narrative title: past-tense action verb + specific number ('Grew $5k MRR on a $29 VPS')",
+    "source": "adsense_triage"
+  },
+  "htmx-stack-swap-5-things-i-gained-3-i-lost": {
+    "removed_at": "2026-09-21T11:23:19.935817",
+    "reason": "narrative title: first-person claim in title ('HTMX stack swap: 5 things I gained, 3 I lost')",
+    "source": "adsense_triage"
+  },
+  "killed-3k-kubernetes-kept-200-infra": {
+    "removed_at": "2026-09-21T11:23:19.937903",
+    "reason": "narrative title: past-tense action verb + specific number ('Killed $3k Kubernetes, kept $200 infra')",
+    "source": "adsense_triage"
+  },
+  "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used": {
+    "removed_at": "2026-09-21T11:23:19.939711",
+    "reason": "narrative title: first-person claim in title ('Launch SaaS in 6 weeks: the AI shortcut I actually')",
+    "source": "adsense_triage"
+  },
+  "launched-ai-saas-under-150month": {
+    "removed_at": "2026-09-21T11:23:19.940806",
+    "reason": "narrative title: past-tense action verb + specific number ('Launched AI SaaS under $150/month')",
+    "source": "adsense_triage"
+  },
+  "multi-agent-frameworks-in-2026-langgraph-wins": {
+    "removed_at": "2026-09-21T11:23:19.942163",
+    "reason": "unverifiable named-source citation: 'A 2026 GSMA report found'",
+    "source": "adsense_triage"
+  },
+  "negotiate-after-ai-boosts-your-output": {
+    "removed_at": "2026-09-21T11:23:19.943771",
+    "reason": "unverifiable named-source citation: 'a 2026 Radford survey show'",
+    "source": "adsense_triage"
+  },
+  "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa": {
+    "removed_at": "2026-09-21T11:23:19.945469",
+    "reason": "narrative title: first-person claim in title ('Payments fail? How we fixed Flutterwave, Paystack,')",
+    "source": "adsense_triage"
+  },
+  "portfolio-that-hires-6-projects-i-actually-used-to": {
+    "removed_at": "2026-09-21T11:23:19.947098",
+    "reason": "narrative title: first-person claim in title ('Portfolio that hires: 6 projects I actually used t')",
+    "source": "adsense_triage"
+  },
+  "price-saas-dev-tools-in-2026-without-guessing": {
+    "removed_at": "2026-09-21T11:23:19.948522",
+    "reason": "unverifiable named-source citation: 'the report from S3'",
+    "source": "adsense_triage"
+  },
+  "saved-3kmonth-by-ditching-kubernetes": {
+    "removed_at": "2026-09-21T11:23:19.950137",
+    "reason": "narrative title: past-tense action verb + specific number ('Saved $3k/month by ditching Kubernetes')",
+    "source": "adsense_triage"
+  },
+  "survived-12000-agents-with-redis": {
+    "removed_at": "2026-09-21T11:23:19.951578",
+    "reason": "narrative title: past-tense action verb + specific number ('Survived 12,000 agents with Redis')",
+    "source": "adsense_triage"
+  },
+  "tool-calls-at-scale-sync-vs-async-patterns-that-live": {
+    "removed_at": "2026-09-21T11:23:19.953413",
+    "reason": "unverifiable named-source citation: 'A 2026 Datadog report shows'",
+    "source": "adsense_triage"
+  },
+  "trim-aws-iam-policies-in-one-afternoon": {
+    "removed_at": "2026-09-21T11:23:19.955409",
+    "reason": "unverifiable named-source citation: 'a survey of 23 developers'",
+    "source": "adsense_triage"
+  },
+  "breakdown-nairobi-saas-infra-costs-2026": {
+    "removed_at": "2026-09-21T14:29:06.998420",
+    "reason": "2 first-person incident(s)",
+    "source": "adsense_triage"
+  },
+  "progressive-web-apps-what-browser-apis-finally-fixed": {
+    "removed_at": "2026-09-21T14:29:07.000145",
+    "reason": "4 first-person incident(s)",
+    "source": "adsense_triage"
+  },
+  "ai-benchmarking-3-mistakes-we-made-first": {
+    "removed_at": "2026-10-03T10:44:07.477823+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (51 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "core-web-vitals-2026-inp-is-now-stable": {
+    "removed_at": "2026-10-03T10:44:07.482355+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (48 experience claims, 8 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "llm-structured-output-json-mode-fails-at-scale": {
+    "removed_at": "2026-10-03T10:44:07.486361+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "land-5k-roles-from-nairobi-lagos-in-2026": {
+    "removed_at": "2026-10-03T10:44:07.490471+00:00",
+    "reason": "Near-duplicate of land-5k-remote-roles-what-nairobi-devs-got-right | Invented first-hand evidence/benchmarks (71 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that": {
+    "removed_at": "2026-10-03T10:44:07.494218+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-sales-cycle-what-changed-for-devtool-founders": {
+    "removed_at": "2026-10-03T10:44:07.498020+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (37 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "wasm-ml-models-keep-dev-speed-at-the-edge": {
+    "removed_at": "2026-10-03T10:44:07.501763+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (47 experience claims, 5 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "block-api-replay-attacks-in-2026": {
+    "removed_at": "2026-10-03T10:44:07.505632+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (41 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "pulumi-vs-terraform-vs-opentofu-in-2026": {
+    "removed_at": "2026-10-03T10:44:07.509318+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 7 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-wrote-40-of-our-code-heres-what-broke-our-on-call": {
+    "removed_at": "2026-10-03T10:44:07.513029+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (56 experience claims, 7 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "one-misconfigured-pool-drained-4kmonth": {
+    "removed_at": "2026-10-03T11:38:12.843672+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (42 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "9-ai-wrapper-apis-that-paid-off-in-2026": {
+    "removed_at": "2026-10-03T11:38:12.848053+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (21 experience claims, 9 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "build-a-nairobi-saas-stack-for-32kmonth": {
+    "removed_at": "2026-10-03T11:38:12.851862+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (21 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "llm-apps-owasp-risks-you-missed": {
+    "removed_at": "2026-10-03T11:38:12.855615+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (21 experience claims, 5 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat": {
+    "removed_at": "2026-10-03T11:38:12.859273+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (52 experience claims, 1 unverifiable products) | Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "agent-decisions-cost-us-three-days-of-logs": {
+    "removed_at": "2026-10-03T11:38:12.862978+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (52 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "pick-niches-ai-wont-eat-in-2026": {
+    "removed_at": "2026-10-03T11:38:12.866826+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (49 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "css-2026-container-queries-retired-our-utility-class": {
+    "removed_at": "2026-10-03T11:38:12.870540+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (33 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "orm-2026-prisma-vs-drizzle-vs-sqlalchemy": {
+    "removed_at": "2026-10-03T11:38:12.874213+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (46 experience claims, 5 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "api-security-the-attacks-rising-in-2026": {
+    "removed_at": "2026-10-03T11:38:12.878027+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (58 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-observability-real-time-dashboards-without-the": {
+    "removed_at": "2026-10-03T11:56:07.112919+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "flip-your-dev-tool-sales-cycle-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.120260+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (43 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "row-level-security-for-saas-in-2026-the-surprise-cost": {
+    "removed_at": "2026-10-03T11:56:07.127650+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (45 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "tls-13-post-quantum-what-breaks-at-scale": {
+    "removed_at": "2026-10-03T11:56:07.134827+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (47 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "land-5k-remote-roles-what-nairobi-devs-got-right": {
+    "removed_at": "2026-10-03T11:56:07.141606+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (46 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-features-break-your-stack-every-6-months": {
+    "removed_at": "2026-10-03T11:56:07.147618+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "prepare-tls-for-post-quantum-reality": {
+    "removed_at": "2026-10-03T11:56:07.153707+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (49 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "portfolio-projects-that-beat-ai-clones-4-signals": {
+    "removed_at": "2026-10-03T11:56:07.160314+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "7-graceful-degradation-traps-ive-hit-in-production": {
+    "removed_at": "2026-10-03T11:56:07.166659+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (45 experience claims, 2 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "source": "delete_posts.py"
+  },
+  "ai-apps-break-your-stack-heres-the-fix": {
+    "removed_at": "2026-10-03T11:56:07.173738+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (19 experience claims, 5 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-latency-cut-28s-to-380ms-without-retraining": {
+    "removed_at": "2026-10-03T11:56:07.179466+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (53 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "llm-outputs-break-workflows-unless-you-do-this": {
+    "removed_at": "2026-10-03T11:56:07.185681+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (42 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "7-patterns-for-systems-that-stay-up-when-everything": {
+    "removed_at": "2026-10-03T11:56:07.191177+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (28 experience claims, 2 unverifiable products) | Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "ai-pair-coding-who-owns-the-diff-now": {
+    "removed_at": "2026-10-03T11:56:07.196537+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (30 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "rag-in-prod-why-demos-crumble": {
+    "removed_at": "2026-10-03T11:56:07.201301+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-agents-why-devtools-now-sell-like-saas-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.206408+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (41 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-hiring-what-actually-moves-the-bar": {
+    "removed_at": "2026-10-03T11:56:07.211647+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "sell-dev-tools-in-the-ai-sales-cycle": {
+    "removed_at": "2026-10-03T11:56:07.216474+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (51 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "flag-your-ai-rollouts-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.221119+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (25 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil": {
+    "removed_at": "2026-10-03T11:56:07.225902+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (43 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "biometrics-beat-passwords-passkey-2026-shift": {
+    "removed_at": "2026-10-03T11:56:07.230882+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (55 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "llm-quality-metrics-that-cut-hallucinations-40": {
+    "removed_at": "2026-10-03T11:56:07.235988+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (35 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "pydantic-2-redis-stop-the-3am-ai-pages": {
+    "removed_at": "2026-10-03T11:56:07.241320+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (20 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "serverless-ai-costs-explode-past-10kmo": {
+    "removed_at": "2026-10-03T11:56:07.245886+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya": {
+    "removed_at": "2026-10-03T11:56:07.251056+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (35 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "typescript-53-changed-how-we-model-domains": {
+    "removed_at": "2026-10-03T11:56:07.256705+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (24 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.261268+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "why-your-ai-portfolio-bombs-in-nigeria": {
+    "removed_at": "2026-10-03T11:56:07.265931+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (32 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "replaced-celery-in-2026-what-actually-worked": {
+    "removed_at": "2026-10-03T11:56:07.271146+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (27 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-pair-programming-stole-my-code-review-job": {
+    "removed_at": "2026-10-03T11:56:07.275686+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (42 experience claims, 0 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "source": "delete_posts.py"
+  },
+  "build-a-serverless-backend-in-africa-with-pocketbase": {
+    "removed_at": "2026-10-03T11:56:07.280372+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (20 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "platform-teams-in-2026-why-your-devs-hate-your-golden-path": {
+    "removed_at": "2026-10-03T11:56:07.284840+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (38 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "when-astro-islands-shine-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.289582+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (46 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "build-a-static-analyzer-in-14-days-with-tree-sitter": {
+    "removed_at": "2026-10-03T11:56:07.294532+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-on-lambda-when-the-bill-explodes": {
+    "removed_at": "2026-10-03T11:56:07.299309+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-engineer-role-vanished-in-6-months": {
+    "removed_at": "2026-10-03T11:56:07.303621+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (28 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "portfolio-that-stands-out-when-everyone-uses-ai": {
+    "removed_at": "2026-10-03T11:56:07.308347+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (25 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "survive-90s-db-failover-without-melting": {
+    "removed_at": "2026-10-03T11:56:07.313002+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (49 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "10-ai-wrappers-that-shipped-in-2026-8-died-fast": {
+    "removed_at": "2026-10-03T11:56:07.318875+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (20 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "regulations-killed-our-elegant-apis": {
+    "removed_at": "2026-10-03T11:56:07.324242+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (39 experience claims, 0 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "source": "delete_posts.py"
+  },
+  "ai-pair-coding-killed-pull-request-reviews": {
+    "removed_at": "2026-10-03T11:56:07.328965+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (31 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "airflows-replacement-what-80-of-teams-moved-to-in": {
+    "removed_at": "2026-10-03T11:56:07.333822+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (44 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache": {
+    "removed_at": "2026-10-03T11:56:07.338979+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (26 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-codebase-guardrails-over-guardrails": {
+    "removed_at": "2026-10-03T11:56:07.344012+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (30 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "slsa-and-sigstore-the-2026-supply-chain-baseline": {
+    "removed_at": "2026-10-03T11:56:07.348818+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (40 experience claims, 5 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "reconcile-mobile-money-in-3-days-edge-cases-paystack": {
+    "removed_at": "2026-10-03T11:56:07.353795+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (29 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "agent-code-reviews-1200-tests-per-pr": {
+    "removed_at": "2026-10-03T11:56:07.358430+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (30 experience claims, 0 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "build-a-portfolio-that-beats-the-ai-clone-pile": {
+    "removed_at": "2026-10-03T11:56:07.364049+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 3 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "gpu-spot-instances-reserved-for-ai-costs": {
+    "removed_at": "2026-10-03T11:56:07.369008+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (27 experience claims, 2 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "ai-infra-capacity-planning-vs-runbooks-what-id": {
+    "removed_at": "2026-10-03T11:56:07.373716+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (33 experience claims, 1 unverifiable products) | Title promises first-hand results the author cannot substantiate",
+    "source": "delete_posts.py"
+  },
+  "cut-ai-inference-bill-68-without-model-changes": {
+    "removed_at": "2026-10-03T11:56:07.378214+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (36 experience claims, 1 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "local-llms-on-macbook-pro-the-4-models-that-run": {
+    "removed_at": "2026-10-03T11:56:07.383222+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (37 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "2026-gitops-showdown-argocd-vs-flux-after-two-years": {
+    "removed_at": "2026-10-03T11:56:07.387816+00:00",
+    "reason": "Invented first-hand evidence/benchmarks (19 experience claims, 4 unverifiable products)",
+    "source": "delete_posts.py"
+  },
+  "replace-vibe-testing-with-agent-evals-now": {
+    "removed_at": "2026-10-03T11:56:07.392625+00:00",
+    "reason": "Near-duplicate of ship-evals-before-your-agent-ships",
+    "source": "delete_posts.py"
+  },
+  "lessons-from-3-saas-price-pivots-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.397212+00:00",
+    "reason": "Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "8-ways-we-measure-agent-reliability-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.401906+00:00",
+    "reason": "Title promises first-hand results the author cannot substantiate",
+    "source": "delete_posts.py"
+  },
+  "zero-downtime-postgres-schema-changes-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.406622+00:00",
+    "reason": "Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "failed-ai-wrappers-vs-the-3-that-worked-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.411166+00:00",
+    "reason": "Near-duplicate of 10-ai-wrappers-that-shipped-in-2026-8-died-fast",
+    "source": "delete_posts.py"
+  },
+  "regulators-broke-our-api-design": {
+    "removed_at": "2026-10-03T11:56:07.415909+00:00",
+    "reason": "Title promises first-hand results the author cannot substantiate",
+    "source": "delete_posts.py"
+  },
+  "africa-devs-ship-production-code-not-crud": {
+    "removed_at": "2026-10-03T11:56:07.424309+00:00",
+    "reason": "Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "agents-roll-back-without-breaking-anything": {
+    "removed_at": "2026-10-03T11:56:07.430626+00:00",
+    "reason": "Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "ai-solo-saas-2026-build-vs-buy": {
+    "removed_at": "2026-10-03T11:56:07.438948+00:00",
+    "reason": "Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "ai-ops-pagerduty-vs-firehydrant-for-oncall": {
+    "removed_at": "2026-10-03T11:56:07.445067+00:00",
+    "reason": "Near-duplicate of ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
+    "source": "delete_posts.py"
+  },
+  "spot-instances-the-retry-logic-trap-90-miss": {
+    "removed_at": "2026-10-03T11:56:07.451955+00:00",
+    "reason": "Incoherent invented timeline",
+    "source": "delete_posts.py"
+  },
+  "aws-finops-levers-what-mid-size-teams-ignore-in-2026": {
+    "removed_at": "2026-10-03T11:56:07.456867+00:00",
+    "reason": "Near-duplicate of aws-cost-levers-2026-the-3-that-cut-bills-30",
+    "source": "delete_posts.py"
+  },
+  "debug-async-python-before-it-deadlocks": {
+    "removed_at": "2026-10-03T11:59:38.285599+00:00",
+    "reason": "Near-duplicate of tame-python-asyncs-hidden-traps",
+    "source": "delete_posts.py"
+  },
+  "legacy-codebases-let-ai-own-the-boring-parts": {
+    "removed_at": "2026-10-04T04:59:06.911009+00:00",
+    "reason": "Near-duplicate of ai-revives-unloved-legacy-codebases",
+    "source": "delete_posts.py"
+  },
+  "drop-checklists-ai-code-reviews-that-scale": {
+    "removed_at": "2026-10-04T12:59:36.733146+00:00",
+    "reason": "manually forced",
+    "source": "delete_posts.py"
+  },
+  "3-ai-coders-ranked-cursor-windsurf-claude-code-in": {
+    "removed_at": "2026-10-26T08:52:49.377163+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "3-mistakes-that-break-deployments-for-everyone": {
+    "removed_at": "2026-10-26T08:52:49.394390+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "3-skills-to-outrun-ai-salary-cuts": {
+    "removed_at": "2026-10-26T08:52:49.402139+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "5-notification-systems-ranked-push-email-sms": {
+    "removed_at": "2026-10-26T08:52:49.408578+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "50-locations-50-headaches-edge-native-backends-in": {
+    "removed_at": "2026-10-26T08:52:49.424662+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "7-ways-to-earn-extra-in-2026-without-shipping-saas": {
+    "removed_at": "2026-10-26T08:52:49.439379+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "9-ai-wrapper-plays-that-worked-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.447002+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "african-fintech-rules-broke-our-stack": {
+    "removed_at": "2026-10-26T08:52:49.453925+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "ai-tools-rewrote-my-engineering-rules": {
+    "removed_at": "2026-10-26T08:52:49.460543+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "ai-ui-tools-6-months-in-what-i-gained-and-lost": {
+    "removed_at": "2026-10-26T08:52:49.467755+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "apis-must-die-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.476128+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "arm-in-production-graviton4-vs-ampere-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.484488+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "bootstrapped-5k-mrr-without-ads": {
+    "removed_at": "2026-10-26T08:52:49.490381+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "build-apps-that-still-work-on-500-ms-latency": {
+    "removed_at": "2026-10-26T08:52:49.496194+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "deploy-a-solo-stack-for-20month-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.502089+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "drop-ec2-bills-70-without-code": {
+    "removed_at": "2026-10-26T08:52:49.507806+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "failed-ai-wrappers-2026-what-the-survivors-did-right": {
+    "removed_at": "2026-10-26T08:52:49.513158+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "internal-platform-adoption-one-metric-kills-velocity": {
+    "removed_at": "2026-10-26T08:52:49.518307+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "mcp-servers-real-time-pipelines-without-agents": {
+    "removed_at": "2026-10-26T08:52:49.523559+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "pass-interviews-without-a-cs-degree": {
+    "removed_at": "2026-10-26T08:52:49.529123+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "price-your-remote-salary-4-step-script": {
+    "removed_at": "2026-10-26T08:52:49.535164+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "ship-to-nairobi-users-starlink-latency-guide-2026": {
+    "removed_at": "2026-10-26T08:52:49.540527+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  },
+  "signals-5-state-tricks-that-broke-my-app": {
+    "removed_at": "2026-10-26T08:52:49.546015+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved); no_primary_sources",
+    "source": "delete_posts.py"
+  },
+  "why-i-picked-playwright-and-vitest-in-2026": {
+    "removed_at": "2026-10-26T08:52:49.551462+00:00",
+    "reason": "quarantined_unverifiable_claims (noindexed, regeneration unresolved)",
+    "source": "delete_posts.py"
+  }
+}
