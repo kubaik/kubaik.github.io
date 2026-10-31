@@ -2557,6 +2557,17 @@
   "title": "Agent SLOs: measure what agents actually do",
   "words": 2591
  },
+ "small-language-models-the-classifier-trap": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Small language models: the classifier trap",
+  "words": 2178
+ },
  "personal-ai-assistants-avoid-vendor-lock-in-traps": {
   "verdict": "KEEP",
   "reasons": [],
@@ -2798,11 +2809,15 @@
   "words": 2341
  },
  "dependency-pinning-the-lockfile-lie": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Dependency pinning: the lockfile lie",
-  "words": 2988
+  "words": 3177
  },
  "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
   "verdict": "IMPROVE",

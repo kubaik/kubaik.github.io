@@ -1103,6 +1103,9 @@
   "slos-for-agentic-features-beyond-latency": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "small-language-models-the-classifier-trap": {
+    "first_seen": "2026-10-31T17:02:38.834359+00:00"
+  },
   "soft-deletes-fail-what-breaks-first": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

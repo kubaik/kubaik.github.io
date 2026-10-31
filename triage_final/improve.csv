@@ -65,6 +65,7 @@ docs/cut-cold-starts-70-lambda-cost-hack/,add_sources|restructure_outline,templa
 docs/cut-false-positives-85-with-this-ci-security-trick/,add_sources,no_primary_sources,2302,Context-aware security gates that cut CI alert noise
 docs/debug-ai-agents-failures-arent-just-bugs/,add_sources,no_primary_sources,2167,Debug AI agents: failures aren't just bugs
 docs/debugging-techniques-that-outlast-any-framework/,add_sources,no_primary_sources,2286,Debugging techniques that outlast any framework
+docs/dependency-pinning-the-lockfile-lie/,add_sources,no_primary_sources,3177,Dependency pinning: the lockfile lie
 docs/deployment-platforms-senior-vs-new-hire/,restructure_outline,template_clone_ending x8,3382,Deployment platforms: senior vs new hire
 docs/detect-lazy-agents-without-false-alarms/,add_sources,no_primary_sources,2887,Detect lazy agents without false alarms
 docs/docs-that-survive-the-bus-factor-fix/,add_sources,no_primary_sources,3089,Docs that survive: the bus factor fix
@@ -135,6 +136,7 @@ docs/sbom-attestation-that-gets-used/,restructure_outline,template_clone_ending 
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/,add_sources,no_primary_sources,2479,Self-healing agents vs rule-based deployment rollback
 docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/,add_sources,no_primary_sources,2566,"Senior engineer: the bar moved, nobody updated the rubric"
 docs/ship-1mb-pages-on-4g-starlink-africa-case-study/,restructure_outline,template_clone_ending x12,2617,Ship 1MB pages on 4G: Starlink Africa case study
+docs/small-language-models-the-classifier-trap/,add_sources,no_primary_sources,2178,Small language models: the classifier trap
 docs/soft-deletes-fail-what-breaks-first/,add_sources,no_primary_sources,2575,Soft deletes fail: what breaks first
 docs/staging-wont-catch-prod-bugs-make/,add_sources,no_primary_sources,2613,Staging won't catch prod bugs. Make…
 docs/stay-relevant-when-tools-change-faster-than-you-can/,add_sources,no_primary_sources,3127,Stay relevant when tools change faster than you can

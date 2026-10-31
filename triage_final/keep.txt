@@ -100,7 +100,6 @@ docs/currency-switch-fails-in-ghana-one-config-file-to-rule/
 docs/database-restore-drills-that-mean-something/
 docs/dead-letter-queues-stop-poison-messages/
 docs/debug-ai-agent-failures-differently/
-docs/dependency-pinning-the-lockfile-lie/
 docs/detecting-silent-agent-failures/
 docs/double-entry-ledger-concurrent-write-errors/
 docs/double-the-price-double-the-revenue/

@@ -2198,6 +2198,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "small-language-models-the-classifier-trap",
+      "source": "post.json",
+      "word_count": 3029,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "personal-ai-assistants-avoid-vendor-lock-in-traps",
       "source": "post.json",
       "word_count": 3070,

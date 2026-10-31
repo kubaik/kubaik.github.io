@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-31T04:43:26.222031",
+  "built_at": "2026-10-31T17:01:57.650301",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5705,6 +5705,11 @@
       "slug": "dependency-pinning-the-lockfile-lie",
       "title": "Dependency pinning: the lockfile lie",
       "summary": "The obvious answer to a software composition question in code review is usually the incomplete one. It only shows up under the exact conditions nobody tests for. This is the version of the write-up that includes the part that broke. Most teams believe a lockfile guarantees reproducible builds. It do"
+    },
+    {
+      "slug": "small-language-models-the-classifier-trap",
+      "title": "Small language models: the classifier trap",
+      "summary": "The default configuration is fine right up until it isn't. There's a one-line change buried in most small language setups that nobody flags until it's expensive. This is the writeup that includes the part that usually goes wrong. The scenario: a backend task that looks like it needs a large model A "
     }
   ]
 }
