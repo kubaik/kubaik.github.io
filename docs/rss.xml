@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Oct 2026 18:03:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 04:46:50 +0000</lastBuildDate>
+    <item>
+      <title>Dependency pinning: the lockfile lie</title>
+      <link>https://kubaik.github.io/dependency-pinning-the-lockfile-lie/</link>
+      <description>A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</description>
+      <pubDate>Sat, 31 Oct 2026 04:43:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/dependency-pinning-the-lockfile-lie/</guid>
+    </item>
     <item>
       <title>KYC integrations: the data you shouldn&apos;t store</title>
       <link>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</link>
@@ -138,13 +145,6 @@
       <description>Four drills for remote engineers: latency budgets, evidence-based diagnosis, decision records and handoff artifacts that outlast the work.</description>
       <pubDate>Wed, 21 Oct 2026 08:45:29 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-premium-rates-skills-ai-cant-copy/</guid>
-    </item>
-    <item>
-      <title>Docs that survive: the bus factor fix</title>
-      <link>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</link>
-      <description>How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</description>
-      <pubDate>Wed, 21 Oct 2026 03:54:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/docs-that-survive-the-bus-factor-fix/</guid>
     </item>
   </channel>
 </rss>

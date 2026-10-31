@@ -2380,6 +2380,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "dependency-pinning-the-lockfile-lie",
+      "source": "post.json",
+      "word_count": 3177,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
       "source": "post.json",
       "word_count": 2479,

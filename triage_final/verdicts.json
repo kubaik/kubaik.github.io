@@ -2797,6 +2797,13 @@
   "title": "Rust rewrites: where they pay off, where they don't",
   "words": 2341
  },
+ "dependency-pinning-the-lockfile-lie": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Dependency pinning: the lockfile lie",
+  "words": 2988
+ },
  "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
   "verdict": "IMPROVE",
   "reasons": [

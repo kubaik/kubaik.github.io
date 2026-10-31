@@ -205,5 +205,6 @@
   "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
   "Memory profiling and leak hunting in long-running backend services",
   "OpenTelemetry collector pipelines: sampling, batching, and routing explained",
-  "KYC and identity verification integrations: architecture and data handling concerns"
+  "KYC and identity verification integrations: architecture and data handling concerns",
+  "Software composition analysis and dependency pinning strategies for backend teams"
 ]

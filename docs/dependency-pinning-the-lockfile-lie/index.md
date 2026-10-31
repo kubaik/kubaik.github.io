@@ -1,0 +1,176 @@
+# Dependency pinning: the lockfile lie
+
+A lockfile records the exact versions of transitive dependencies that a resolver selected at a particular moment. It does not, by itself, guarantee that the next install produces the same graph. The gap between "we commit a lockfile" and "our builds are reproducible" is where most dependency incidents live, and it is also where software composition analysis (SCA) and pinning policy tend to drift apart.
+
+Most teams treat these as separate concerns: SCA for compliance, pinning for stability. In practice they are two views of the same graph. A pinning strategy that ignores vulnerability data produces false confidence. An SCA process that ignores pinning produces a flood of alerts against a moving target that nobody can audit. This article covers where lockfiles break down, how resolution actually works, which pinning strategies are worth their maintenance cost, and how to wire enforcement into CI so the policy is real rather than aspirational.
+
+## The lockfile is not a reproducibility guarantee
+
+The lockfile's promise is simple: record the exact version of every dependency so that installs are deterministic. In practice, determinism breaks in several documented ways.
+
+**Package manager version drift.** Lockfile formats change over time. npm's `package-lock.json` has gone through multiple format versions (`lockfileVersion` 1, 2, and 3), and a lockfile written by one major npm version may be rewritten or partially re-resolved by another. Yarn's `yarn.lock` has its own format changes across Yarn versions. If CI runs a different Node.js image than developers, the lockfile may be re-resolved on install, pulling in transitive versions that were never reviewed.
+
+**Platform-specific optional dependencies.** Native bindings and platform-gated optional dependencies (for example, packages that ship per-OS binaries) may be represented differently depending on the platform where the lockfile was generated. A lockfile produced on Linux can omit entries that a macOS or Windows install needs, and the package manager may fetch additional packages that were not locked. The reverse also happens: entries exist in the lockfile that are unused on the current platform.
+
+**Silent lockfile updates.** Running `npm install` instead of `npm ci` will update the lockfile when the manifest has changed, and many CI pipelines use `npm install` out of habit. That single word defeats the purpose of committing a lockfile. The same applies to `yarn install` without `--frozen-lockfile`, and to `pip install -r requirements.txt` without hashes.
+
+**Multiple sources and non-manifest dependencies.** A lockfile covers the graph as resolved by the package manager from the sources it knows about. If the build also fetches from a private registry, downloads binaries via a post-install script, or loads plugins at runtime, the lockfile does not describe those artifacts. Peer dependencies and bundled dependencies can also mean the runtime versions differ from what the lockfile appears to state.
+
+The counterintuitive part is that a lockfile is most reliable when it is treated as an output, not an input. Generate it in a controlled environment, commit it, and verify that it does not change between builds. A changed lockfile during a build is a signal that something in dependency resolution is non-deterministic, and that signal is worth failing on.
+
+## How dependency resolution actually works
+
+To design a pinning strategy, you need a mental model of how package managers resolve versions. Most modern package managers (npm, Yarn, pip, Go modules, Cargo) use a variant of semantic versioning and a resolution algorithm that tries to find a version satisfying all constraints.
+
+The process typically works like this:
+
+1. Read the manifest (`package.json`, `requirements.txt`, `go.mod`, and so on) for direct dependencies and their version constraints.
+2. For each dependency, fetch the list of available versions from the registry.
+3. Apply the constraints to select a version. When multiple constraints apply to the same package (because it is a transitive dependency of several direct dependencies), the resolver must find a version that satisfies all of them. If no such version exists, resolution fails.
+4. Recursively resolve the dependencies of the selected versions.
+5. Write the resolved versions to the lockfile.
+
+The resolver is not guaranteed to pick the latest version that satisfies the constraints. It picks a version according to the package manager's algorithm, which may prioritize the highest version, the lowest version, or the version already recorded in an existing lockfile. This is why the same manifest can produce different lockfiles on different machines or at different times.
+
+npm's resolver processes dependencies and, for each, selects a version that satisfies the constraint, installing nested copies when two dependents require incompatible ranges. Yarn uses a similar model with different deduplication behavior. Go modules use minimal version selection (MVS), which picks the lowest version that satisfies all requirements rather than the highest — a meaningfully different default that changes what "pinning" buys you.
+
+Understanding this mechanism matters because it tells you where pinning helps and where it does not. Pinning a direct dependency to an exact version (`"lodash": "4.17.21"`) removes the resolver's freedom for that package. It does not constrain transitive dependencies unless you also pin them, either through a lockfile or through an override mechanism that can force a version across the graph.
+
+## Pinning strategies: from loose to strict
+
+There is a spectrum of pinning strategies, each with trade-offs. The right choice depends on risk tolerance, team size, and deployment frequency.
+
+| Strategy | Manifest example | Lockfile | Pros | Cons |
+|----------|------------------|----------|------|------|
+| Range (default) | `"lodash": "^4.17.0"` | Yes | Easy to receive patch releases | Non-deterministic without lockfile; minor ranges can pull behavior changes |
+| Exact direct pins | `"lodash": "4.17.21"` | Yes | Direct deps are stable and auditable | Transitive deps still float; manual updates |
+| Lockfile-only exactness | `"lodash": "^4.17.0"` + committed lockfile | Yes, committed | Deterministic if the lockfile is respected | Lockfile can be bypassed; transitive versions not visible in the manifest |
+| Full graph pinning | `"lodash": "4.17.21"` + overrides/resolutions | Yes, plus overrides | Complete control over the graph | High maintenance; can create conflicts |
+| Vendoring | Copy source into the repo | Not applicable | Ultimate reproducibility | Bloats the repo; hard to patch |
+
+**Range pinning** is the default. It is convenient because it allows patch and minor updates, but it is non-deterministic without a lockfile. Even with a lockfile, a fresh install can resolve differently if the lockfile is not used or is out of date.
+
+**Exact direct pins** remove ambiguity for direct dependencies. This is common in Python (`requirements.txt` with `==`) and in Go (`go.mod` records exact versions, though MVS means the selected version can be higher than the one written). It does not constrain transitive dependencies: if a direct dependency declares a range for its own dependencies, those can still float.
+
+**Full graph pinning** means pinning every dependency, direct and transitive. This is impractical to maintain by hand because it requires tracking the entire graph. Some ecosystems support it through overrides — npm's `overrides` field, Yarn's `resolutions`, pip constraints files — which force a specific version of a transitive dependency. Overrides can conflict when other packages require a different version, and the conflict often surfaces only at install time.
+
+**Vendoring** means copying dependency source into the repository. It is common in Go (the `vendor` directory) and in some C/C++ projects. It gives complete control and reproducibility, but it makes updates painful and bloats the repository.
+
+A pragmatic middle ground for application teams: use exact pins for direct dependencies where the ecosystem supports them, commit the lockfile, use `npm ci` or the equivalent in CI to enforce it, and use overrides sparingly and with a comment explaining why each exists. This gives determinism for direct dependencies and a recorded full graph, while still allowing security patches to arrive through lockfile updates.
+
+## Implementing a reproducible install in CI
+
+The single most effective step is to ensure CI uses an install command that fails when the lockfile is out of sync with the manifest. For npm that is `npm ci`. For Yarn it is `yarn install --frozen-lockfile`. For pip it is `pip install --require-hashes` against a fully pinned requirements file. For Go, `go mod verify` plus a check that `go mod tidy` produces no diff.
+
+A minimal GitHub Actions workflow that enforces lockfile integrity for a Node.js project:
+
+```yaml
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm test
+```
+
+`npm ci` fails if `package-lock.json` is missing or does not match `package.json`, and it installs from the lockfile without modifying it. That catches the common mistake of committing a manifest change without regenerating the lockfile.
+
+For Python, a common pattern uses `pip-tools` to compile a fully pinned `requirements.txt` with hashes, then installs with `pip install --require-hashes -r requirements.txt`. The `--require-hashes` flag requires every package to be pinned to a specific version and hash, which also mitigates dependency confusion attacks because a package substituted from another index will not match the recorded hash.
+
+For Go, run `go mod tidy` in CI and fail if it produces a diff, and run `go mod verify` to check that downloaded modules match the hashes in `go.sum`.
+
+Beyond the install command, verify that the lockfile does not change during the build:
+
+```bash
+npm ci
+git diff --exit-code -- package-lock.json
+```
+
+If the lockfile changed, the build fails. This catches cases where the package manager silently rewrites the lockfile. The same pattern works for `yarn.lock`, `poetry.lock`, or any other committed lock artifact.
+
+## Measuring your dependency risk surface
+
+You cannot manage what you do not measure. For dependency risk, the useful metrics are:
+
+- **Direct dependency count.** A high count increases attack surface and maintenance burden. There is no universal threshold, but a useful exercise is to list every direct dependency and ask what would break if it were removed.
+- **Transitive dependency count.** Usually much larger than the direct count. `npm ls --all` or `pipdeptree` shows the full tree; the ratio of transitive to direct dependencies indicates how much of your graph you have never reviewed.
+- **Time since last update per dependency.** Stale dependencies are more likely to have unpatched vulnerabilities and to be hard to upgrade later.
+- **Vulnerability count by severity.** SCA tools provide this, but raw counts are misleading. A more useful figure is the count of vulnerabilities reachable from your code (see the next section).
+- **Time to remediate.** The interval from vulnerability disclosure to deployed fix is a leading indicator of process health, and it is measurable from your own issue tracker.
+
+A practical way to track these is to run SCA in CI and export JSON to your observability stack. `npm audit --json`, `pip-audit -f json`, `govulncheck -json`, and OWASP Dependency-Check all produce machine-readable output. To measure rather than guess, record the direct and transitive counts on a fixed schedule (for example, weekly) and plot them. A rising transitive count with a flat direct count usually means a dependency is pulling in a large subtree that nobody is reviewing.
+
+Raw vulnerability counts are noisy. A typical Node.js application with a few hundred transitive dependencies will produce dozens of alerts, most of which are not exploitable in context. The signal-to-noise ratio is poor unless alerts are filtered by reachability and by whether the affected package is in the production dependency set.
+
+## The failure modes that SCA tools miss
+
+SCA tools match package versions against vulnerability databases. They are poor at determining whether a vulnerability is actually exploitable in your application. That gap produces two failure modes.
+
+**Alert fatigue.** A tool reports hundreds of vulnerabilities, many in development dependencies or in code paths that are never executed. Teams learn to ignore the alerts and then miss the one that matters. A common example is a vulnerability in a test framework or build tool that never ships to production, mixed into the same report as a remotely reachable deserialization bug.
+
+**False negatives.** A vulnerability exists but the tool does not detect it. This can happen because the advisory is not yet in the database, the tool does not support the package manager, or the dependency is vendored or loaded dynamically. A Python package that loads a native library at runtime may not appear in a scan that only reads `requirements.txt`.
+
+Mitigations worth combining:
+
+- **Reachability analysis.** Some tools determine whether a vulnerable function is actually called. This is not perfect, but it reduces noise substantially. `govulncheck` does this for Go using call graph analysis.
+- **Runtime detection.** Runtime application self-protection or kernel-level monitoring can detect exploitation attempts, catching vulnerabilities that static scanning missed.
+- **Dependency review on pull requests.** A PR check that blocks newly introduced known-vulnerable dependencies prevents new risk from entering the codebase, which is cheaper than remediating it later.
+
+A typical failure mode is a team that runs SCA only on a nightly schedule. By the time the report is reviewed, the vulnerable dependency has been merged and deployed. Shifting SCA to a required pull-request check, failing only on newly introduced high-severity findings, keeps the signal actionable without blocking unrelated work.
+
+## When pinning is the wrong lever
+
+Pinning is not a universal solution. There are cases where strict pinning causes more harm than good.
+
+**Rapidly evolving internal libraries.** If a shared internal library changes frequently, pinning every service to an exact version creates a coordination problem: every change requires updating every consumer. A range pin with a lockfile, plus a policy that consumers update within a defined window, is usually better.
+
+**Security patches.** Pinning to an exact version without an update process means missing security patches. Pinning without automation produces stale dependencies. An update bot that opens PRs and a CI pipeline that catches regressions are prerequisites, not optional extras.
+
+**Ecosystems with strong compatibility guarantees.** Go modules use minimal version selection and semantic import versioning, which reduces the need for aggressive pinning. The Go documentation explicitly recommends against unnecessary exact pins in `go.mod` for libraries, because they can cause version conflicts for consumers. Reproducibility comes from `go.sum` and the module graph rather than from hand-pinning.
+
+**Monorepos with many packages.** In a monorepo, pinning every package to exact versions can produce many duplicate versions in the dependency graph, increasing build times and bundle sizes. Package managers with content-addressable stores handle duplication differently, but strict pinning may still not be the best fit.
+
+The decision rule is to match the pinning strategy to the risk profile and the team's ability to maintain it. A small team with a few services can afford exact pins and manual updates. A large organization with hundreds of services needs automation and a written policy that distinguishes applications (pin hard, automate updates) from libraries (pin loosely, test against a range).
+
+## A worked example: tracing a non-reproducible build
+
+Consider a Node.js service where two builds from the same commit produce different `node_modules` trees. The investigation follows a fixed order.
+
+**Step 1: Confirm the lockfile is being used.** Check the CI log for the install command. If it is `npm install`, the lockfile may have been rewritten. Run `git status` after install; a modified `package-lock.json` confirms it.
+
+**Step 2: Compare lockfile versions.** Run `node -p "require('./package-lock.json').lockfileVersion"` on the developer machine and in CI. A mismatch means one environment is rewriting the lockfile format.
+
+**Step 3: Diff the resolved graphs.** Install in both environments into separate directories and compare `npm ls --all --json` output. The first diverging package identifies the dependency whose resolution differs. Common causes: a range in a transitive dependency, an optional dependency present on one platform, or a private registry returning different metadata.
+
+**Step 4: Check for non-registry fetches.** Search `package.json` scripts for `postinstall`, `preinstall`, and any `curl` or `git` invocations. These fetch artifacts the lockfile does not describe.
+
+**Step 5: Fix and enforce.** Replace the install command with `npm ci`, add the `git diff --exit-code` check, and pin the Node.js version in CI to match the development environment. Re-run the pipeline twice and confirm the diff is empty both times.
+
+This sequence is general: confirm enforcement, compare tool versions, diff the resolved graph, find non-registry fetches, then lock down the environment. It applies to Python and Go with the equivalent commands (`pip-compile` output diffs, `go mod graph` comparisons).
+
+## Frequently Asked Questions
+
+**Should I commit the lockfile?**
+Yes, for applications. The lockfile is what makes installs reproducible across machines and CI. For libraries published to a registry, the lockfile is typically not published, and consumers resolve their own versions; in that case, test against a range of dependency versions to confirm compatibility.
+
+**How often should dependencies be updated?**
+There is no single answer, but a workable policy is: security patches within days, minor updates within weeks, major updates on a planned cadence. The important part is automation that opens PRs and CI that catches regressions. Manual updates tend to be deferred indefinitely.
+
+**What is the difference between SCA and dependency pinning?**
+SCA identifies known vulnerabilities in dependencies. Pinning controls which versions are used. They are complementary: pinning without SCA leaves known vulnerabilities unaddressed; SCA without pinning produces alerts against a graph that changes underneath you and cannot be audited.
+
+**Why does my lockfile change when I run `npm install`?**
+`npm install` updates the lockfile to match the manifest and the available versions that satisfy the constraints. To install exactly what the lockfile records without modifying it, use `npm ci`. If the lockfile changes unexpectedly, the manifest may have been modified, or the registry may now offer a version that satisfies a range.
+
+**Does `npm ci` guarantee the same tree on every platform?**
+No. It guarantees that the install follows the lockfile for the current platform's dependency set, but optional and platform-specific dependencies can differ. Reproducibility across platforms requires testing on each target platform, not just relying on the lockfile.
+
+## Audit your CI install command now
+
+Open the CI configuration (`.github/workflows/ci.yml`, `.gitlab-ci.yml`, or `Jenkinsfile`) and find the dependency install step. If it runs `npm install`, `yarn install` without `--frozen-lockfile`, or `pip install -r requirements.txt` without `--require-hashes`, replace it with `npm ci`, `yarn install --frozen-lockfile`, or a hash-pinned `pip install --require-hashes -r requirements.txt`, then add a `git diff --exit-code` check on the lockfile after install. Commit the change and run the pipeline. If it fails, the lockfile was out of sync, which means the builds were not reproducible; fixing that is the highest-leverage dependency management change available today.

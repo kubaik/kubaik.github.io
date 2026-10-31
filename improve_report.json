@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "dependency-pinning-the-lockfile-lie",
+      "attempts": 1,
+      "retitled": false
+    }
+  ],
   "failed": []
 }

@@ -1,5 +1,12 @@
 {
-  "changed": [],
+  "changed": [
+    {
+      "slug": "dependency-pinning-the-lockfile-lie",
+      "sentences_removed": 0,
+      "sections_added": 1,
+      "footer_migrated": false
+    }
+  ],
   "needs_regeneration": [],
   "retitle": []
 }

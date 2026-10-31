@@ -1,0 +1,509 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dependency pinning: the lockfile lie - Kubai Kevin</title>
+        <meta name="description" content="A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.">
+        <meta name="keywords" content="Software, DependencyPinning, Lockfile, ScaTools, ReproducibleBuilds, DependencyManagement, Backend, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-10-31T04:43:23.222613">
+        <meta property="article:modified_time" content="2026-10-31T04:46:08.012455+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Dependency pinning: the lockfile lie">
+        <meta property="og:description" content="A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.">
+        <meta property="og:url" content="https://kubaik.github.io/dependency-pinning-the-lockfile-lie/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/dependency-pinning-the-lockfile-lie.png">
+        <meta property="og:image:alt" content="Dependency pinning: the lockfile lie">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Dependency pinning: the lockfile lie">
+        <meta name="twitter:description" content="A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/dependency-pinning-the-lockfile-lie.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/dependency-pinning-the-lockfile-lie/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/dependency-pinning-the-lockfile-lie/#article",
+      "headline": "Dependency pinning: the lockfile lie",
+      "description": "A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.",
+      "datePublished": "2026-10-31T04:43:23+00:00",
+      "dateModified": "2026-10-31T04:46:08+00:00",
+      "wordCount": 3177,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/dependency-pinning-the-lockfile-lie/"
+      },
+      "keywords": "Software, DependencyPinning, Lockfile, ScaTools, ReproducibleBuilds, DependencyManagement, Backend, Softwareengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/dependency-pinning-the-lockfile-lie.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Dependency pinning: the lockfile lie",
+          "item": "https://kubaik.github.io/dependency-pinning-the-lockfile-lie/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Dependency pinning: the lockfile lie</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Dependency pinning: the lockfile lie</h1>
+                
+                <p class="post-lead">A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Software</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DependencyPinning</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Lockfile</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ScaTools</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ReproducibleBuilds</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/backend/"
+                       style="text-decoration:none;">Backend</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3177 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-10-31
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A lockfile records the exact versions of transitive dependencies that a resolver selected at a particular moment. It does not, by itself, guarantee that the next install produces the same graph. The gap between "we commit a lockfile" and "our builds are reproducible" is where most dependency incidents live, and it is also where software composition analysis (SCA) and pinning policy tend to drift apart.</p>
+<p>Most teams treat these as separate concerns: SCA for compliance, pinning for stability. In practice they are two views of the same graph. A pinning strategy that ignores vulnerability data produces false confidence. An SCA process that ignores pinning produces a flood of alerts against a moving target that nobody can audit. This article covers where lockfiles break down, how resolution actually works, which pinning strategies are worth their maintenance cost, and how to wire enforcement into CI so the policy is real rather than aspirational.</p>
+<h2 id="the-lockfile-is-not-a-reproducibility-guarantee">The lockfile is not a reproducibility guarantee</h2>
+<p>The lockfile's promise is simple: record the exact version of every dependency so that installs are deterministic. In practice, determinism breaks in several documented ways.</p>
+<p><strong>Package manager version drift.</strong> Lockfile formats change over time. npm's <code>package-lock.json</code> has gone through multiple format versions (<code>lockfileVersion</code> 1, 2, and 3), and a lockfile written by one major npm version may be rewritten or partially re-resolved by another. Yarn's <code>yarn.lock</code> has its own format changes across Yarn versions. If CI runs a different Node.js image than developers, the lockfile may be re-resolved on install, pulling in transitive versions that were never reviewed.</p>
+<p><strong>Platform-specific optional dependencies.</strong> Native bindings and platform-gated optional dependencies (for example, packages that ship per-OS binaries) may be represented differently depending on the platform where the lockfile was generated. A lockfile produced on Linux can omit entries that a macOS or Windows install needs, and the package manager may fetch additional packages that were not locked. The reverse also happens: entries exist in the lockfile that are unused on the current platform.</p>
+<p><strong>Silent lockfile updates.</strong> Running <code>npm install</code> instead of <code>npm ci</code> will update the lockfile when the manifest has changed, and many CI pipelines use <code>npm install</code> out of habit. That single word defeats the purpose of committing a lockfile. The same applies to <code>yarn install</code> without <code>--frozen-lockfile</code>, and to <code>pip install -r requirements.txt</code> without hashes.</p>
+<p><strong>Multiple sources and non-manifest dependencies.</strong> A lockfile covers the graph as resolved by the package manager from the sources it knows about. If the build also fetches from a private registry, downloads binaries via a post-install script, or loads plugins at runtime, the lockfile does not describe those artifacts. Peer dependencies and bundled dependencies can also mean the runtime versions differ from what the lockfile appears to state.</p>
+<p>The counterintuitive part is that a lockfile is most reliable when it is treated as an output, not an input. Generate it in a controlled environment, commit it, and verify that it does not change between builds. A changed lockfile during a build is a signal that something in dependency resolution is non-deterministic, and that signal is worth failing on.</p>
+<h2 id="how-dependency-resolution-actually-works">How dependency resolution actually works</h2>
+<p>To design a pinning strategy, you need a mental model of how package managers resolve versions. Most modern package managers (npm, Yarn, pip, Go modules, Cargo) use a variant of semantic versioning and a resolution algorithm that tries to find a version satisfying all constraints.</p>
+<p>The process typically works like this:</p>
+<ol>
+<li>Read the manifest (<code>package.json</code>, <code>requirements.txt</code>, <code>go.mod</code>, and so on) for direct dependencies and their version constraints.</li>
+<li>For each dependency, fetch the list of available versions from the registry.</li>
+<li>Apply the constraints to select a version. When multiple constraints apply to the same package (because it is a transitive dependency of several direct dependencies), the resolver must find a version that satisfies all of them. If no such version exists, resolution fails.</li>
+<li>Recursively resolve the dependencies of the selected versions.</li>
+<li>Write the resolved versions to the lockfile.</li>
+</ol>
+<p>The resolver is not guaranteed to pick the latest version that satisfies the constraints. It picks a version according to the package manager's algorithm, which may prioritize the highest version, the lowest version, or the version already recorded in an existing lockfile. This is why the same manifest can produce different lockfiles on different machines or at different times.</p>
+<p>npm's resolver processes dependencies and, for each, selects a version that satisfies the constraint, installing nested copies when two dependents require incompatible ranges. Yarn uses a similar model with different deduplication behavior. Go modules use minimal version selection (MVS), which picks the lowest version that satisfies all requirements rather than the highest — a meaningfully different default that changes what "pinning" buys you.</p>
+<p>Understanding this mechanism matters because it tells you where pinning helps and where it does not. Pinning a direct dependency to an exact version (<code>"lodash": "4.17.21"</code>) removes the resolver's freedom for that package. It does not constrain transitive dependencies unless you also pin them, either through a lockfile or through an override mechanism that can force a version across the graph.</p>
+<h2 id="pinning-strategies-from-loose-to-strict">Pinning strategies: from loose to strict</h2>
+<p>There is a spectrum of pinning strategies, each with trade-offs. The right choice depends on risk tolerance, team size, and deployment frequency.</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Manifest example</th>
+<th>Lockfile</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Range (default)</td>
+<td><code>"lodash": "^4.17.0"</code></td>
+<td>Yes</td>
+<td>Easy to receive patch releases</td>
+<td>Non-deterministic without lockfile; minor ranges can pull behavior changes</td>
+</tr>
+<tr>
+<td>Exact direct pins</td>
+<td><code>"lodash": "4.17.21"</code></td>
+<td>Yes</td>
+<td>Direct deps are stable and auditable</td>
+<td>Transitive deps still float; manual updates</td>
+</tr>
+<tr>
+<td>Lockfile-only exactness</td>
+<td><code>"lodash": "^4.17.0"</code> + committed lockfile</td>
+<td>Yes, committed</td>
+<td>Deterministic if the lockfile is respected</td>
+<td>Lockfile can be bypassed; transitive versions not visible in the manifest</td>
+</tr>
+<tr>
+<td>Full graph pinning</td>
+<td><code>"lodash": "4.17.21"</code> + overrides/resolutions</td>
+<td>Yes, plus overrides</td>
+<td>Complete control over the graph</td>
+<td>High maintenance; can create conflicts</td>
+</tr>
+<tr>
+<td>Vendoring</td>
+<td>Copy source into the repo</td>
+<td>Not applicable</td>
+<td>Ultimate reproducibility</td>
+<td>Bloats the repo; hard to patch</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Range pinning</strong> is the default. It is convenient because it allows patch and minor updates, but it is non-deterministic without a lockfile. Even with a lockfile, a fresh install can resolve differently if the lockfile is not used or is out of date.</p>
+<p><strong>Exact direct pins</strong> remove ambiguity for direct dependencies. This is common in Python (<code>requirements.txt</code> with <code>==</code>) and in Go (<code>go.mod</code> records exact versions, though MVS means the selected version can be higher than the one written). It does not constrain transitive dependencies: if a direct dependency declares a range for its own dependencies, those can still float.</p>
+<p><strong>Full graph pinning</strong> means pinning every dependency, direct and transitive. This is impractical to maintain by hand because it requires tracking the entire graph. Some ecosystems support it through overrides — npm's <code>overrides</code> field, Yarn's <code>resolutions</code>, pip constraints files — which force a specific version of a transitive dependency. Overrides can conflict when other packages require a different version, and the conflict often surfaces only at install time.</p>
+<p><strong>Vendoring</strong> means copying dependency source into the repository. It is common in Go (the <code>vendor</code> directory) and in some C/C++ projects. It gives complete control and reproducibility, but it makes updates painful and bloats the repository.</p>
+<p>A pragmatic middle ground for application teams: use exact pins for direct dependencies where the ecosystem supports them, commit the lockfile, use <code>npm ci</code> or the equivalent in CI to enforce it, and use overrides sparingly and with a comment explaining why each exists. This gives determinism for direct dependencies and a recorded full graph, while still allowing security patches to arrive through lockfile updates.</p>
+<h2 id="implementing-a-reproducible-install-in-ci">Implementing a reproducible install in CI</h2>
+<p>The single most effective step is to ensure CI uses an install command that fails when the lockfile is out of sync with the manifest. For npm that is <code>npm ci</code>. For Yarn it is <code>yarn install --frozen-lockfile</code>. For pip it is <code>pip install --require-hashes</code> against a fully pinned requirements file. For Go, <code>go mod verify</code> plus a check that <code>go mod tidy</code> produces no diff.</p>
+<p>A minimal GitHub Actions workflow that enforces lockfile integrity for a Node.js project:</p>
+<pre><code class="language-yaml">name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm test
+</code></pre>
+<p><code>npm ci</code> fails if <code>package-lock.json</code> is missing or does not match <code>package.json</code>, and it installs from the lockfile without modifying it. That catches the common mistake of committing a manifest change without regenerating the lockfile.</p>
+<p>For Python, a common pattern uses <code>pip-tools</code> to compile a fully pinned <code>requirements.txt</code> with hashes, then installs with <code>pip install --require-hashes -r requirements.txt</code>. The <code>--require-hashes</code> flag requires every package to be pinned to a specific version and hash, which also mitigates dependency confusion attacks because a package substituted from another index will not match the recorded hash.</p>
+<p>For Go, run <code>go mod tidy</code> in CI and fail if it produces a diff, and run <code>go mod verify</code> to check that downloaded modules match the hashes in <code>go.sum</code>.</p>
+<p>Beyond the install command, verify that the lockfile does not change during the build:</p>
+<pre><code class="language-bash">npm ci
+git diff --exit-code -- package-lock.json
+</code></pre>
+<p>If the lockfile changed, the build fails. This catches cases where the package manager silently rewrites the lockfile. The same pattern works for <code>yarn.lock</code>, <code>poetry.lock</code>, or any other committed lock artifact.</p>
+<h2 id="measuring-your-dependency-risk-surface">Measuring your dependency risk surface</h2>
+<p>You cannot manage what you do not measure. For dependency risk, the useful metrics are:</p>
+<ul>
+<li><strong>Direct dependency count.</strong> A high count increases attack surface and maintenance burden. There is no universal threshold, but a useful exercise is to list every direct dependency and ask what would break if it were removed.</li>
+<li><strong>Transitive dependency count.</strong> Usually much larger than the direct count. <code>npm ls --all</code> or <code>pipdeptree</code> shows the full tree; the ratio of transitive to direct dependencies indicates how much of your graph you have never reviewed.</li>
+<li><strong>Time since last update per dependency.</strong> Stale dependencies are more likely to have unpatched vulnerabilities and to be hard to upgrade later.</li>
+<li><strong>Vulnerability count by severity.</strong> SCA tools provide this, but raw counts are misleading. A more useful figure is the count of vulnerabilities reachable from your code (see the next section).</li>
+<li><strong>Time to remediate.</strong> The interval from vulnerability disclosure to deployed fix is a leading indicator of process health, and it is measurable from your own issue tracker.</li>
+</ul>
+<p>A practical way to track these is to run SCA in CI and export JSON to your observability stack. <code>npm audit --json</code>, <code>pip-audit -f json</code>, <code>govulncheck -json</code>, and OWASP Dependency-Check all produce machine-readable output. To measure rather than guess, record the direct and transitive counts on a fixed schedule (for example, weekly) and plot them. A rising transitive count with a flat direct count usually means a dependency is pulling in a large subtree that nobody is reviewing.</p>
+<p>Raw vulnerability counts are noisy. A typical Node.js application with a few hundred transitive dependencies will produce dozens of alerts, most of which are not exploitable in context. The signal-to-noise ratio is poor unless alerts are filtered by reachability and by whether the affected package is in the production dependency set.</p>
+<h2 id="the-failure-modes-that-sca-tools-miss">The failure modes that SCA tools miss</h2>
+<p>SCA tools match package versions against vulnerability databases. They are poor at determining whether a vulnerability is actually exploitable in your application. That gap produces two failure modes.</p>
+<p><strong>Alert fatigue.</strong> A tool reports hundreds of vulnerabilities, many in development dependencies or in code paths that are never executed. Teams learn to ignore the alerts and then miss the one that matters. A common example is a vulnerability in a test framework or build tool that never ships to production, mixed into the same report as a remotely reachable deserialization bug.</p>
+<p><strong>False negatives.</strong> A vulnerability exists but the tool does not detect it. This can happen because the advisory is not yet in the database, the tool does not support the package manager, or the dependency is vendored or loaded dynamically. A Python package that loads a native library at runtime may not appear in a scan that only reads <code>requirements.txt</code>.</p>
+<p>Mitigations worth combining:</p>
+<ul>
+<li><strong>Reachability analysis.</strong> Some tools determine whether a vulnerable function is actually called. This is not perfect, but it reduces noise substantially. <code>govulncheck</code> does this for Go using call graph analysis.</li>
+<li><strong>Runtime detection.</strong> Runtime application self-protection or kernel-level monitoring can detect exploitation attempts, catching vulnerabilities that static scanning missed.</li>
+<li><strong>Dependency review on pull requests.</strong> A PR check that blocks newly introduced known-vulnerable dependencies prevents new risk from entering the codebase, which is cheaper than remediating it later.</li>
+</ul>
+<p>A typical failure mode is a team that runs SCA only on a nightly schedule. By the time the report is reviewed, the vulnerable dependency has been merged and deployed. Shifting SCA to a required pull-request check, failing only on newly introduced high-severity findings, keeps the signal actionable without blocking unrelated work.</p>
+<h2 id="when-pinning-is-the-wrong-lever">When pinning is the wrong lever</h2>
+<p>Pinning is not a universal solution. There are cases where strict pinning causes more harm than good.</p>
+<p><strong>Rapidly evolving internal libraries.</strong> If a shared internal library changes frequently, pinning every service to an exact version creates a coordination problem: every change requires updating every consumer. A range pin with a lockfile, plus a policy that consumers update within a defined window, is usually better.</p>
+<p><strong>Security patches.</strong> Pinning to an exact version without an update process means missing security patches. Pinning without automation produces stale dependencies. An update bot that opens PRs and a CI pipeline that catches regressions are prerequisites, not optional extras.</p>
+<p><strong>Ecosystems with strong compatibility guarantees.</strong> Go modules use minimal version selection and semantic import versioning, which reduces the need for aggressive pinning. The Go documentation explicitly recommends against unnecessary exact pins in <code>go.mod</code> for libraries, because they can cause version conflicts for consumers. Reproducibility comes from <code>go.sum</code> and the module graph rather than from hand-pinning.</p>
+<p><strong>Monorepos with many packages.</strong> In a monorepo, pinning every package to exact versions can produce many duplicate versions in the dependency graph, increasing build times and bundle sizes. Package managers with content-addressable stores handle duplication differently, but strict pinning may still not be the best fit.</p>
+<p>The decision rule is to match the pinning strategy to the risk profile and the team's ability to maintain it. A small team with a few services can afford exact pins and manual updates. A large organization with hundreds of services needs automation and a written policy that distinguishes applications (pin hard, automate updates) from libraries (pin loosely, test against a range).</p>
+<h2 id="a-worked-example-tracing-a-non-reproducible-build">A worked example: tracing a non-reproducible build</h2>
+<p>Consider a Node.js service where two builds from the same commit produce different <code>node_modules</code> trees. The investigation follows a fixed order.</p>
+<p><strong>Step 1: Confirm the lockfile is being used.</strong> Check the CI log for the install command. If it is <code>npm install</code>, the lockfile may have been rewritten. Run <code>git status</code> after install; a modified <code>package-lock.json</code> confirms it.</p>
+<p><strong>Step 2: Compare lockfile versions.</strong> Run <code>node -p "require('./package-lock.json').lockfileVersion"</code> on the developer machine and in CI. A mismatch means one environment is rewriting the lockfile format.</p>
+<p><strong>Step 3: Diff the resolved graphs.</strong> Install in both environments into separate directories and compare <code>npm ls --all --json</code> output. The first diverging package identifies the dependency whose resolution differs. Common causes: a range in a transitive dependency, an optional dependency present on one platform, or a private registry returning different metadata.</p>
+<p><strong>Step 4: Check for non-registry fetches.</strong> Search <code>package.json</code> scripts for <code>postinstall</code>, <code>preinstall</code>, and any <code>curl</code> or <code>git</code> invocations. These fetch artifacts the lockfile does not describe.</p>
+<p><strong>Step 5: Fix and enforce.</strong> Replace the install command with <code>npm ci</code>, add the <code>git diff --exit-code</code> check, and pin the Node.js version in CI to match the development environment. Re-run the pipeline twice and confirm the diff is empty both times.</p>
+<p>This sequence is general: confirm enforcement, compare tool versions, diff the resolved graph, find non-registry fetches, then lock down the environment. It applies to Python and Go with the equivalent commands (<code>pip-compile</code> output diffs, <code>go mod graph</code> comparisons).</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Should I commit the lockfile?</strong>
+Yes, for applications. The lockfile is what makes installs reproducible across machines and CI. For libraries published to a registry, the lockfile is typically not published, and consumers resolve their own versions; in that case, test against a range of dependency versions to confirm compatibility.</p>
+<p><strong>How often should dependencies be updated?</strong>
+There is no single answer, but a workable policy is: security patches within days, minor updates within weeks, major updates on a planned cadence. The important part is automation that opens PRs and CI that catches regressions. Manual updates tend to be deferred indefinitely.</p>
+<p><strong>What is the difference between SCA and dependency pinning?</strong>
+SCA identifies known vulnerabilities in dependencies. Pinning controls which versions are used. They are complementary: pinning without SCA leaves known vulnerabilities unaddressed; SCA without pinning produces alerts against a graph that changes underneath you and cannot be audited.</p>
+<p><strong>Why does my lockfile change when I run <code>npm install</code>?</strong>
+<code>npm install</code> updates the lockfile to match the manifest and the available versions that satisfy the constraints. To install exactly what the lockfile records without modifying it, use <code>npm ci</code>. If the lockfile changes unexpectedly, the manifest may have been modified, or the registry may now offer a version that satisfies a range.</p>
+<p><strong>Does <code>npm ci</code> guarantee the same tree on every platform?</strong>
+No. It guarantees that the install follows the lockfile for the current platform's dependency set, but optional and platform-specific dependencies can differ. Reproducibility across platforms requires testing on each target platform, not just relying on the lockfile.</p>
+<h2 id="audit-your-ci-install-command-now">Audit your CI install command now</h2>
+<p>Open the CI configuration (<code>.github/workflows/ci.yml</code>, <code>.gitlab-ci.yml</code>, or <code>Jenkinsfile</code>) and find the dependency install step. If it runs <code>npm install</code>, <code>yarn install</code> without <code>--frozen-lockfile</code>, or <code>pip install -r requirements.txt</code> without <code>--require-hashes</code>, replace it with <code>npm ci</code>, <code>yarn install --frozen-lockfile</code>, or a hash-pinned <code>pip install --require-hashes -r requirements.txt</code>, then add a <code>git diff --exit-code</code> check on the lockfile after install. Commit the change and run the pipeline. If it fails, the lockfile was out of sync, which means the builds were not reproducible; fixing that is the highest-leverage dependency management change available today.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
+<li><a href="https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
+<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/pypi-poisoned-models-hit-prod-in-2025/">
+                        <h3>PyPI poisoned models hit prod in 2025</h3>
+                        <p>How to pin, hash and audit Python packages and datasets so a poisoned model or tampered dataset cannot reach training or production.</p>
+                        <span class="related-meta">11 min read · 25 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cicd-for-ai-code-test-secure-rollback-fast/">
+                        <h3>CI/CD for AI code: test, secure, rollback fast</h3>
+                        <p>A CI/CD pattern for AI-assisted code changes: deterministic locks, prompt-injection checks, smoke tests, metrics gates, and blue-green rollback.</p>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-model-poisoning-3-real-attacks-on-datasets/">
+                        <h3>AI model poisoning: 3 real attacks on datasets</h3>
+                        <p>How data, model, and dependency poisoning enter AI pipelines, plus concrete controls for provenance, review, sandboxing, and rollback.</p>
+                        <span class="related-meta">15 min read · 4 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

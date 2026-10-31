@@ -281,6 +281,7 @@ currency-switch-fails-in-ghana-one-config-file-to-rule,100,2579,Currency switch 
 cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware security gates that cut CI alert noise,2026-06-12T07:15:04.340904,0,
 database-restore-drills-that-mean-something,100,3089,Database restore drills that mean something,2026-10-28T18:06:31.553898,0,
 debugging-techniques-that-outlast-any-framework,100,2286,Debugging techniques that outlast any framework,2026-10-06T18:07:18.600534,0,
+dependency-pinning-the-lockfile-lie,100,2988,Dependency pinning: the lockfile lie,2026-10-31T04:43:23.222613,0,
 deployment-platforms-senior-vs-new-hire,100,3382,Deployment platforms: senior vs new hire,2026-10-07T05:01:41.493415,0,
 detecting-silent-agent-failures,100,3026,Detecting silent agent failures,2026-10-13T06:03:55.281045,0,
 docs-that-survive-the-bus-factor-fix,100,3089,Docs that survive: the bus factor fix,2026-10-21T03:54:11.003570,0,

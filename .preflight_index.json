@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-30T09:37:14.935291",
+  "built_at": "2026-10-31T04:43:26.222031",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5700,6 +5700,11 @@
       "slug": "kyc-integrations-the-data-you-shouldnt-store",
       "title": "KYC integrations: the data you shouldn't store",
       "summary": "There's a one-line change buried in most kyc identity setups that nobody flags until it's expensive. The dashboards look healthy right up until the incident starts. This is the version of the write-up that includes the part that broke. Most teams integrating KYC treat it like any other third-party A"
+    },
+    {
+      "slug": "dependency-pinning-the-lockfile-lie",
+      "title": "Dependency pinning: the lockfile lie",
+      "summary": "The obvious answer to a software composition question in code review is usually the incomplete one. It only shows up under the exact conditions nobody tests for. This is the version of the write-up that includes the part that broke. Most teams believe a lockfile guarantees reproducible builds. It do"
     }
   ]
 }

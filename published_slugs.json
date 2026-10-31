@@ -554,6 +554,9 @@
   "debugging-techniques-that-outlast-any-framework": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "dependency-pinning-the-lockfile-lie": {
+    "first_seen": "2026-10-31T04:44:01.622786+00:00"
+  },
   "deploy-a-solo-stack-for-20month-in-2026": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
