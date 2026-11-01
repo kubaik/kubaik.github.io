@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-01T05:02:37.793736",
+  "built_at": "2026-11-01T17:48:07.819248",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5715,6 +5715,11 @@
       "slug": "stride-is-a-checklist-not-a-threat-model",
       "title": "STRIDE is a checklist, not a threat model",
       "summary": "The building unit advice that circulates internally rarely matches what's in the public docs. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke. Most teams that say they do threat modeling are running a brains"
+    },
+    {
+      "slug": "3-llm-context-techniques-when-each-fails",
+      "title": "3 LLM context techniques: when each fails",
+      "summary": "It's a one-line fix once you know where to look, and expensive until then. common mcp is the kind of decision that looks reversible until it isn't. Here's the root cause, not just the symptom. Every team building on an LLM eventually hits the same wall: the model doesn't know something it needs to k"
     }
   ]
 }

@@ -1806,6 +1806,17 @@
   "title": "Agent compliance: the layer you build after failure",
   "words": 3281
  },
+ "3-llm-context-techniques-when-each-fails": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "3 LLM context techniques: when each fails",
+  "words": 2804
+ },
  "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
   "verdict": "KEEP",
   "reasons": [],
@@ -2321,7 +2332,7 @@
    "add_sources"
   ],
   "title": "STRIDE is a checklist, not a threat model",
-  "words": 2471
+  "words": 3051
  },
  "always-on-agents-cost-more-than-you-think": {
   "verdict": "KEEP",

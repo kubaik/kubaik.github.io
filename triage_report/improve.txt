@@ -1,6 +1,7 @@
 docs/2026-ai-stack-solo-saas-cost-showdown/index.md
 docs/2026-alert-triage-when-opsgenie-slept-for-you/index.md
 docs/2026-tech-salaries-where-cuts-stopped-where-raises/index.md
+docs/3-llm-context-techniques-when-each-fails/index.md
 docs/3-ways-container-builds-got-3x-faster-in-2026/index.md
 docs/40-ai-code-meant-60-more-alerts/index.md
 docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/index.md

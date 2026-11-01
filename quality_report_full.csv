@@ -46,7 +46,6 @@ poolers-wont-save-your-serverless-db,90,2791,Poolers won’t save your serverles
 self-healing-ai-agents-vs-rule-based-ops-40-fewer,90,2479,Self-healing agents vs rule-based deployment rollback,2026-06-11T21:16:42.291244,2,no markdown table | no FAQ section
 ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse,90,2150,High-Volume Log Pipelines: Shipping 50k Events Per Second,2026-07-03T13:30:22.215019,2,no markdown table | no FAQ section
 store-data-once-serve-everywhere-cheaper,90,2397,"Store data once, serve everywhere: cheaper",2026-06-25T08:39:15.607832,2,no markdown table | no FAQ section
-stride-is-a-checklist-not-a-threat-model,90,2471,"STRIDE is a checklist, not a threat model",2026-11-01T05:02:36.033413,2,no markdown table | no FAQ section
 tame-python-asyncs-hidden-traps,90,2163,Tame Python async’s hidden traps,2026-06-29T17:45:56.376188,2,no markdown table | no FAQ section
 thundering-herd-the-hidden-scaling-trap,90,2334,Thundering Herd: The Hidden Scaling Trap,2026-09-10T08:29:58.184595,2,no markdown table | no FAQ section
 unlock-python-313s-free-threaded-gil-for-web-apps,90,2761,Unlock Python 3.13's free-threaded GIL for web apps,2026-06-22T19:38:03.246787,1,AI filler (1): 'this article will'
@@ -185,6 +184,7 @@ starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
 stop-the-writes-zero-downtime-db-migrations,95,2518,Stop the writes — zero-downtime DB migrations,2026-07-02T18:33:14.783703,1,no markdown table
 stop-trusting-agents-for-core-logic,95,2260,Stop trusting agents for core logic,2026-09-14T17:56:40.332505,1,no FAQ section
+stride-is-a-checklist-not-a-threat-model,95,3051,"STRIDE is a checklist, not a threat model",2026-11-01T05:02:36.033413,1,no FAQ section
 tool-calling-stateless-beats-stateful-under-load,95,2269,Tool calling: stateless beats stateful under load,2026-06-19T09:01:43.310641,1,no FAQ section
 tool-calls-under-load-async-batch-vs-fire-and-forget,95,3101,Tool calls under load: async batch vs fire-and-forget,2026-06-13T10:23:27.741037,1,no markdown table
 trim-llm-bills-3-finops-moves-that-work,95,2144,Trim LLM bills: 3 FinOps moves that work,2026-07-12T09:48:02.503208,1,no FAQ section
@@ -193,6 +193,7 @@ vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forev
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
 websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
 why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Reward Keywords Over Correct Design,2026-06-14T17:09:29.558838,1,no FAQ section
+3-llm-context-techniques-when-each-fails,100,2804,3 LLM context techniques: when each fails,2026-11-01T17:48:05.092232,0,
 3-ways-container-builds-got-3x-faster-in-2026,100,2630,Container Build Caching: What Actually Speeds Up CI,2026-06-14T01:45:48.667847,0,
 5-ai-tools-that-let-us-ship-faster-than-sf-teams,100,2107,Choosing AI Coding Assistants for Cloud-Heavy Stacks,2026-06-23T17:36:37.395172,0,
 7-bundling-decisions-that-still-matter,100,2857,7 bundling decisions that still matter,2026-10-10T05:00:55.208475,0,

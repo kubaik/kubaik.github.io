@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Nov 2026 05:04:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Nov 2026 17:51:25 +0000</lastBuildDate>
+    <item>
+      <title>3 LLM context techniques: when each fails</title>
+      <link>https://kubaik.github.io/3-llm-context-techniques-when-each-fails/</link>
+      <description>Compare fine-tuning, retrieval-augmented generation and long context by failure mode, cost arithmetic and a decision checklist, with code for each.</description>
+      <pubDate>Sun, 01 Nov 2026 17:48:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-llm-context-techniques-when-each-fails/</guid>
+    </item>
     <item>
       <title>STRIDE is a checklist, not a threat model</title>
       <link>https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/</link>
@@ -138,13 +145,6 @@
       <description>Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</description>
       <pubDate>Fri, 23 Oct 2026 03:59:36 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</guid>
-    </item>
-    <item>
-      <title>OAuth 2.1 migration: what breaks in existing integrations</title>
-      <link>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</link>
-      <description>OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration.</description>
-      <pubDate>Thu, 22 Oct 2026 16:52:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/oauth-21-migration-what-breaks-in-existing-integrations/</guid>
     </item>
   </channel>
 </rss>

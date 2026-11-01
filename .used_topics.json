@@ -209,5 +209,7 @@
   "Software composition analysis and dependency pinning strategies for backend teams",
   "Small language models for backend tasks: classification, extraction, and routing",
   "Building unit economics for AI features that product and finance teams can both read",
-  "Threat modeling for backend systems with STRIDE and attack trees"
+  "Threat modeling for backend systems with STRIDE and attack trees",
+  "Common MCP server security mistakes that expose internal tools",
+  "Fine-tuning versus retrieval versus long context: matching technique to problem"
 ]

@@ -1,6 +1,7 @@
 path,fixes,reasons,words,title
 docs/2026-ai-stack-solo-saas-cost-showdown/,add_sources,no_primary_sources,2633,2026 AI stack: solo SaaS cost showdown
 docs/2026-tech-salaries-where-cuts-stopped-where-raises/,add_sources,no_primary_sources,2321,"2026 tech salaries: where cuts stopped, where raises"
+docs/3-llm-context-techniques-when-each-fails/,add_sources,no_primary_sources,2804,3 LLM context techniques: when each fails
 docs/5-ways-to-find-hidden-latency-before-production/,add_sources,no_primary_sources,2422,5 ways to find hidden latency before production
 docs/7-bundling-decisions-that-still-matter/,restructure_outline,template_clone_ending x8,2857,7 bundling decisions that still matter
 docs/7-code-review-traps-when-ai-writes-half-your-code/,add_sources,no_primary_sources,2304,7 code review traps when AI writes half your code
@@ -144,7 +145,7 @@ docs/stop-false-positives-in-ci-scanning-now/,add_sources,no_primary_sources,280
 docs/stop-guessing-tech-stacks-validate-tools-in-2-hours/,restructure_outline,template_clone_ending x12,2509,Stop guessing tech stacks: validate tools in 2 hours
 docs/stop-trusting-agents-for-core-logic/,add_sources,no_primary_sources,2260,Stop trusting agents for core logic
 docs/store-data-once-serve-everywhere-cheaper/,restructure_outline,template_clone_ending x9,2397,"Store data once, serve everywhere: cheaper"
-docs/stride-is-a-checklist-not-a-threat-model/,add_sources,no_primary_sources,2471,"STRIDE is a checklist, not a threat model"
+docs/stride-is-a-checklist-not-a-threat-model/,add_sources,no_primary_sources,3051,"STRIDE is a checklist, not a threat model"
 docs/tame-python-asyncs-hidden-traps/,add_sources,no_primary_sources,2163,Tame Python async’s hidden traps
 docs/test-ai-code-without-testing-the-ai/,add_sources,no_primary_sources,3174,Test AI code without testing the AI
 docs/trim-llm-bills-3-finops-moves-that-work/,add_sources,no_primary_sources,2144,Trim LLM bills: 3 FinOps moves that work
