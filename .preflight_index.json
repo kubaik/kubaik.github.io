@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-31T17:01:57.650301",
+  "built_at": "2026-11-01T05:02:37.793736",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5710,6 +5710,11 @@
       "slug": "small-language-models-the-classifier-trap",
       "title": "Small language models: the classifier trap",
       "summary": "The default configuration is fine right up until it isn't. There's a one-line change buried in most small language setups that nobody flags until it's expensive. This is the writeup that includes the part that usually goes wrong. The scenario: a backend task that looks like it needs a large model A "
+    },
+    {
+      "slug": "stride-is-a-checklist-not-a-threat-model",
+      "title": "STRIDE is a checklist, not a threat model",
+      "summary": "The building unit advice that circulates internally rarely matches what's in the public docs. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke. Most teams that say they do threat modeling are running a brains"
     }
   ]
 }

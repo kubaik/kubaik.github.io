@@ -1,4 +1,4 @@
-❌ Internal link audit: 400 broken link(s) found across 401 posts checked.
+❌ Internal link audit: 401 broken link(s) found across 402 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -341,6 +341,7 @@ Source Post                              Anchor Text                    Missing 
   /show-real-work-not-ai-clones           AI content policy              /ai-content-policy/
   /skip-m-pesa-build-one-api-for-3-african-markets AI content policy              /ai-content-policy/
   /slos-for-agentic-features-beyond-latency AI content policy              /ai-content-policy/
+  /small-language-models-the-classifier-trap AI content policy              /ai-content-policy/
   /soft-deletes-fail-what-breaks-first    AI content policy              /ai-content-policy/
   /spot-ais-hidden-cost-spike-in-your-stack AI content policy              /ai-content-policy/
   /spot-evictions-the-retry-logic-that-holds-up AI content policy              /ai-content-policy/

@@ -136,7 +136,7 @@ docs/sbom-attestation-that-gets-used/,restructure_outline,template_clone_ending 
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/,add_sources,no_primary_sources,2479,Self-healing agents vs rule-based deployment rollback
 docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/,add_sources,no_primary_sources,2566,"Senior engineer: the bar moved, nobody updated the rubric"
 docs/ship-1mb-pages-on-4g-starlink-africa-case-study/,restructure_outline,template_clone_ending x12,2617,Ship 1MB pages on 4G: Starlink Africa case study
-docs/small-language-models-the-classifier-trap/,add_sources,no_primary_sources,2178,Small language models: the classifier trap
+docs/small-language-models-the-classifier-trap/,add_sources,no_primary_sources,3029,Small language models: the classifier trap
 docs/soft-deletes-fail-what-breaks-first/,add_sources,no_primary_sources,2575,Soft deletes fail: what breaks first
 docs/staging-wont-catch-prod-bugs-make/,add_sources,no_primary_sources,2613,Staging won't catch prod bugs. Make…
 docs/stay-relevant-when-tools-change-faster-than-you-can/,add_sources,no_primary_sources,3127,Stay relevant when tools change faster than you can
@@ -144,6 +144,7 @@ docs/stop-false-positives-in-ci-scanning-now/,add_sources,no_primary_sources,280
 docs/stop-guessing-tech-stacks-validate-tools-in-2-hours/,restructure_outline,template_clone_ending x12,2509,Stop guessing tech stacks: validate tools in 2 hours
 docs/stop-trusting-agents-for-core-logic/,add_sources,no_primary_sources,2260,Stop trusting agents for core logic
 docs/store-data-once-serve-everywhere-cheaper/,restructure_outline,template_clone_ending x9,2397,"Store data once, serve everywhere: cheaper"
+docs/stride-is-a-checklist-not-a-threat-model/,add_sources,no_primary_sources,2471,"STRIDE is a checklist, not a threat model"
 docs/tame-python-asyncs-hidden-traps/,add_sources,no_primary_sources,2163,Tame Python async’s hidden traps
 docs/test-ai-code-without-testing-the-ai/,add_sources,no_primary_sources,3174,Test AI code without testing the AI
 docs/trim-llm-bills-3-finops-moves-that-work/,add_sources,no_primary_sources,2144,Trim LLM bills: 3 FinOps moves that work

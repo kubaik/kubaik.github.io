@@ -2312,6 +2312,17 @@
   "title": "Tool calling patterns: patterns that survive load vs",
   "words": 2846
  },
+ "stride-is-a-checklist-not-a-threat-model": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "STRIDE is a checklist, not a threat model",
+  "words": 2471
+ },
  "always-on-agents-cost-more-than-you-think": {
   "verdict": "KEEP",
   "reasons": [],
@@ -2566,7 +2577,7 @@
    "add_sources"
   ],
   "title": "Small language models: the classifier trap",
-  "words": 2178
+  "words": 3029
  },
  "personal-ai-assistants-avoid-vendor-lock-in-traps": {
   "verdict": "KEEP",

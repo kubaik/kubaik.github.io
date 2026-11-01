@@ -1,0 +1,518 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>STRIDE is a checklist, not a threat model - Kubai Kevin</title>
+        <meta name="description" content="STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.">
+        <meta name="keywords" content="ThreatModeling, Stride, AttackTrees, ThreatModelBackend, Backend, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-01T05:02:36.033413">
+        <meta property="article:modified_time" content="2026-11-01T05:04:19.229405+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="STRIDE is a checklist, not a threat model">
+        <meta property="og:description" content="STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.">
+        <meta property="og:url" content="https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/stride-is-a-checklist-not-a-threat-model.png">
+        <meta property="og:image:alt" content="STRIDE is a checklist, not a threat model">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="STRIDE is a checklist, not a threat model">
+        <meta name="twitter:description" content="STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/stride-is-a-checklist-not-a-threat-model.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/#article",
+      "headline": "STRIDE is a checklist, not a threat model",
+      "description": "STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.",
+      "datePublished": "2026-11-01T05:02:36+00:00",
+      "dateModified": "2026-11-01T05:04:19+00:00",
+      "wordCount": 3051,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/"
+      },
+      "keywords": "ThreatModeling, Stride, AttackTrees, ThreatModelBackend, Backend, Softwareengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/stride-is-a-checklist-not-a-threat-model.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "STRIDE is a checklist, not a threat model",
+          "item": "https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>STRIDE is a checklist, not a threat model</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">STRIDE is a checklist, not a threat model</h1>
+                
+                <p class="post-lead">STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ThreatModeling</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Stride</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AttackTrees</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ThreatModelBackend</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/backend/"
+                       style="text-decoration:none;">Backend</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3051 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-01
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most teams that say they do threat modeling are running a brainstorming session with a STRIDE-shaped agenda. They write six categories on a whiteboard, list a few scary things under each, and call it done. That is a taxonomy exercise, and it produces a document that is long on nouns and short on decisions. The claim that follows is narrow: STRIDE is a useful checklist for prompting memory, but it is not a model of your system, and treating it as one is a common reason threat models end up as PDFs nobody opens after the review meeting. Attack trees force reasoning about how an adversary actually reaches an asset — and that is the part that changes what gets built. The two belong together, but in the opposite order from how most teams use them.</p>
+<p>The problem worth solving is the gap between a threat-model artifact that satisfies a compliance checkbox and a threat model that changes a design decision before code ships. A team that has produced a STRIDE table, filed it, and then shipped a feature with the same authorization bug the table was supposed to catch has not failed at security review. It has failed at modeling, and the fix is structural rather than cultural.</p>
+<h2 id="the-steelman-why-stride-workshops-are-the-default">The steelman: why STRIDE workshops are the default</h2>
+<p>The case for the status quo is genuinely strong, and it is worth stating before knocking it down. STRIDE — Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege — is memorable, vendor-neutral, and maps cleanly onto the categories auditors and security reviewers already recognize. It is cheap to teach. A facilitator can run a two-hour session with engineers who have never done threat modeling and get a non-empty list of concerns out the other side. Microsoft's threat modeling guidance has used this framing for years, and the mnemonic has spread because it works as a memory aid. For an organization that has never done any structured security review, going from zero to a STRIDE session is a real improvement.</p>
+<p>The second part of the steelman is that STRIDE forces breadth. Left to their own devices, engineers tend to think about the threats they already know how to fix — usually injection and authentication. STRIDE's six categories push the conversation toward repudiation and information disclosure, which are the ones people forget. A checklist that reliably surfaces forgotten categories has value.</p>
+<p>None of that is wrong. The problem is what happens after the session.</p>
+<h2 id="where-the-stride-workshop-falls-apart">Where the STRIDE workshop falls apart</h2>
+<p>A STRIDE list is a set of categories, not a set of paths. "Elevation of privilege" is not a threat; it is a heading. The actual threat is something like: an authenticated user can change the <code>tenant_id</code> in a request body and the handler trusts it, so they can read another tenant's invoices. That sentence has an actor, a precondition, a mechanism, and an asset. The category heading has none of those. When the output of a session is a list of headings with one-line examples underneath, the team has no way to rank the items, no way to tell whether a given mitigation actually closes the path, and no way to know when they are done.</p>
+<p>The second failure is that STRIDE sessions are usually run against a diagram of the system, and the diagram is usually wrong. It shows the services and the queues and maybe the database, but it does not show the trust boundaries that actually matter in a modern backend: the boundary between the public load balancer and the service mesh, the boundary between the application and the payment provider's webhook endpoint, the boundary between the job runner and the credentials it holds. If the diagram flattens those, the STRIDE prompts fire against the wrong edges.</p>
+<p>The third failure is temporal. A STRIDE workshop is a point-in-time event. Backend systems change weekly. The threat model does not. Six months later the service has a new async worker, a new third-party integration, and a new admin endpoint, and the document describes none of them. The team is not being lazy; the process has no mechanism for staying current because it was designed as an event, not a practice.</p>
+<h2 id="attack-trees-are-the-model-stride-is-the-prompt">Attack trees are the model; STRIDE is the prompt</h2>
+<p>The better mental model is to invert the relationship. An attack tree starts from an asset and works backward. The root is the thing the adversary wants — read another tenant's data, move money out of a merchant account, take the service down during a peak. The children are the ways to get there, and each of those has children, until you reach leaves that are concrete enough to test or mitigate. That structure gives you three things a STRIDE list does not: a ranking (the shortest path to the root is the scariest), a completeness check (every branch either has a mitigation or is explicitly accepted), and a maintenance story (when the system changes, you add or prune branches).</p>
+<p>STRIDE's job in this model is to prompt at each node. When expanding a branch, running the six categories against that specific step is a fast way to avoid missing an angle. "To reach the root, the attacker must forge a session token" — at that node, Spoofing, Tampering, and Information disclosure are the relevant prompts. The exercise is not a STRIDE pass over the whole system; it is a STRIDE pass over one edge of one tree. That is a much smaller, much more productive unit of work.</p>
+<p>The practical consequence is that the artifact changes. Instead of a table of categories, the output is a tree per critical asset plus a decision log that says which branches are mitigated, which are accepted, and which are still open. That is a document an engineer can act on.</p>
+<h2 id="a-worked-example-the-multi-tenant-invoice-endpoint">A worked example: the multi-tenant invoice endpoint</h2>
+<p>Take a concrete backend shape that is common in payments-adjacent systems: a REST endpoint <code>GET /invoices/{id}</code> that returns an invoice for the authenticated user's tenant. The asset is another tenant's invoice data. The root of the tree is "read an invoice belonging to a different tenant."</p>
+<p>Here is the tree, expanded two levels, with STRIDE prompts applied at each node. The numbering is for reference only; no costs or likelihoods are asserted.</p>
+<pre><code class="language-text">ROOT: read another tenant's invoice
+├── 1. Guess or enumerate an invoice id
+│   ├── 1a. Ids are sequential integers           [Information disclosure]
+│   ├── 1b. Ids are UUIDv4 but leaked in logs     [Information disclosure]
+│   └── 1c. Ids are exposed in a public share link [Information disclosure]
+├── 2. Authenticate as a user in the target tenant
+│   ├── 2a. Steal a session token                 [Spoofing]
+│   ├── 2b. Forge a JWT with a weak/leaked key    [Spoofing, Tampering]
+│   └── 2c. Reuse a token after role change       [Elevation of privilege]
+├── 3. Authenticate as yourself but confuse the tenant resolution
+│   ├── 3a. Send `tenant_id` in the request body  [Tampering]
+│   ├── 3b. Send `X-Tenant-Id` header the gateway trusts [Tampering]
+│   └── 3c. Exploit a cached authorization decision keyed only on user id [Elevation of privilege]
+└── 4. Reach the data through a side channel
+    ├── 4a. Error messages leak existence of ids  [Information disclosure]
+    └── 4b. Timing difference reveals tenant     [Information disclosure]
+</code></pre>
+<p>Now the useful part: each leaf gets a status. 1a is mitigated by using unguessable ids. 1b stays open until log scrubbing is in place. 3a is the branch that most often ships broken, because the handler reads <code>tenant_id</code> from the body and the authorization check reads it from the session — two sources of truth. 3c is the one that bites in systems that added a cache for latency and keyed it on the wrong field.</p>
+<p>The tree tells you what to test. For 3a, the test is: authenticate as tenant A, send a request with <code>tenant_id</code> set to tenant B in the body, assert 403 or 404. For 3c, the test is: warm the cache as user A in tenant A, change the user's tenant association, replay, assert the old decision is not served. Those are concrete, automatable checks. A STRIDE table saying "Tampering: validate inputs" produces neither.</p>
+<h3 id="working-the-tree-by-hand">Working the tree by hand</h3>
+<p>A worked expansion shows why the tree changes decisions. Start at the root and ask the STRIDE prompts about the step, not the system.</p>
+<p>At node 3, the mechanism is "the request carries a tenant identifier and the server resolves it." Spoofing: can the caller claim a tenant they are not in? Only if the identifier is trusted from the caller rather than derived from the session. Tampering: can the identifier be changed mid-flight? Yes, if it travels in a body field or a client-settable header. Elevation of privilege: does the resolved tenant grant access the caller's role does not allow? Only if authorization and resolution read different fields.</p>
+<p>That chain of questions produces a design rule, not a list item: derive the tenant from the authenticated session, ignore any tenant identifier the client supplies, and assert that the authorization layer reads the same value the query uses. The rule is testable, reviewable in a diff, and narrow enough to enforce in code review. A STRIDE row reading "Tampering — validate all input" is none of those things.</p>
+<p>At node 4, the mechanism is "the response differs depending on whether the invoice exists and whether it belongs to the caller." Information disclosure: does a 404 for missing and a 403 for forbidden let an attacker distinguish existence across tenants? Yes, if both cases can be probed. The design rule is to return the same status and body shape for "not found" and "not yours," and to keep timing roughly constant by avoiding a fast path that skips the ownership query. That rule is a two-line test and a one-line code convention.</p>
+<p>Two nodes, two design rules, two tests. That ratio — every branch that matters ending in a rule and a test — is the difference between a model and a taxonomy.</p>
+<h2 id="the-decision-rule-when-to-use-which">The decision rule: when to use which</h2>
+<p>A defensible rule for a team is this. Use STRIDE as a prompt at the leaf of an attack tree, not as the organizing structure of the model. Use attack trees whenever the asset is one an adversary would pay for or a regulator would fine you over — money movement, tenant data, authentication state, admin surfaces. Use a plain STRIDE checklist when doing a first pass on a system nobody has modeled and the immediate need is to discover what the assets even are; that is a legitimate use of the checklist as a discovery tool, and it is where the common advice is still right.</p>
+<p>The corollary is that not every service needs a tree. A stateless formatting service behind an authenticated gateway with no data store does not justify one. The tree is for assets, and if a service holds no asset, the tree is overhead. The failure mode in the other direction — treeing everything — is how threat modeling becomes a tax that teams route around.</p>
+<p>A short comparison makes the division of labor concrete:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>STRIDE checklist</th>
+<th>Attack tree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What does it produce?</td>
+<td>A list of categories with examples</td>
+<td>Paths from attacker to asset</td>
+</tr>
+<tr>
+<td>Can it be ranked?</td>
+<td>No, categories are peers</td>
+<td>Yes, by path length and feasibility</td>
+</tr>
+<tr>
+<td>Does it show when you are done?</td>
+<td>No</td>
+<td>Yes, when every leaf has a status</td>
+</tr>
+<tr>
+<td>How does it stay current?</td>
+<td>Re-run the workshop</td>
+<td>Diff the tree in the same PR as the code</td>
+</tr>
+<tr>
+<td>Best first use</td>
+<td>Asset and boundary discovery</td>
+<td>Modeling a specific high-value asset</td>
+</tr>
+<tr>
+<td>Main failure mode</td>
+<td>Filed and forgotten</td>
+<td>Over-applied to services with no asset</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-the-common-advice-is-still-right">Where the common advice is still right</h2>
+<p>Two pieces of the conventional wisdom hold up. First, do the modeling before the code, not after. A tree drawn against a design doc catches the 3a-style bug in an afternoon; the same tree drawn against a shipped service catches it in a postmortem. Second, involve the people who will operate the system. The on-call engineer knows which endpoints get hammered and which third-party webhooks are flaky, and those are the branches that matter. A threat model produced by a security team in isolation will miss the operational edges.</p>
+<p>There is also a version of the STRIDE-first approach that works: when a team is new to this, run one STRIDE session to inventory assets and trust boundaries, then convert the output into trees for the two or three assets that clearly matter. The session is a bootstrap, not the deliverable.</p>
+<h2 id="keeping-the-tree-alive-with-a-small-amount-of-code">Keeping the tree alive with a small amount of code</h2>
+<p>The maintenance problem is real, and the answer is not a heavyweight tool. A tree that lives in a YAML file in the repo, next to the service it describes, and that is rendered by a script in CI, stays current because it is reviewed in the same pull request as the change that affects it. The example below reads a tree from YAML, checks that every leaf has a status, and fails if any leaf is marked <code>open</code> without an owner or <code>accepted</code> without a reason. That is enough to stop the drift where a new branch is added and nobody notices it is unmitigated.</p>
+<pre><code class="language-python"># threat_tree.py — run in CI: python threat_tree.py tree.yaml
+import sys
+import yaml
+
+VALID_STATUS = {&quot;mitigated&quot;, &quot;accepted&quot;, &quot;open&quot;}
+
+def walk(node, path, errors):
+    name = node.get(&quot;name&quot;, &quot;&lt;unnamed&gt;&quot;)
+    here = path + [name]
+    if &quot;children&quot; in node and node[&quot;children&quot;]:
+        for child in node[&quot;children&quot;]:
+            walk(child, here, errors)
+        return
+    status = node.get(&quot;status&quot;)
+    if status not in VALID_STATUS:
+        errors.append(f&quot;leaf {' &gt; '.join(here)}: invalid status {status!r}&quot;)
+        return
+    if status == &quot;open&quot; and not node.get(&quot;owner&quot;):
+        errors.append(f&quot;leaf {' &gt; '.join(here)}: open with no owner&quot;)
+    if status == &quot;accepted&quot; and not node.get(&quot;reason&quot;):
+        errors.append(f&quot;leaf {' &gt; '.join(here)}: accepted with no reason&quot;)
+
+def main(path):
+    with open(path) as f:
+        tree = yaml.safe_load(f)
+    errors = []
+    walk(tree, [], errors)
+    if errors:
+        print(&quot;\n&quot;.join(errors))
+        sys.exit(1)
+    print(&quot;threat tree ok&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main(sys.argv[1])
+</code></pre>
+<p>And the YAML it validates, trimmed to the branches that matter:</p>
+<pre><code class="language-yaml"># tree.yaml
+name: read another tenant's invoice
+children:
+  - name: confuse tenant resolution
+    children:
+      - name: tenant_id in request body
+        status: mitigated
+        test: tests/test_tenant_isolation.py::test_body_tenant_id_rejected
+      - name: authorization cache keyed on user id only
+        status: open
+        owner: payments-platform
+  - name: reach data via error messages
+    status: accepted
+    reason: 404 for both missing and forbidden; no existence leak
+</code></pre>
+<p>The point is not the script. The point is that the tree is now a file with a schema, it is diffable, and the CI check makes an unowned open branch a build failure. That is what turns threat modeling from an event into a practice. Teams that adopt this pattern commonly find the tree stays roughly current because the PR that adds an endpoint is the PR that adds the branch.</p>
+<h3 id="measuring-whether-it-is-working">Measuring whether it is working</h3>
+<p>Claims that a process "works" are cheap. Two measurements are cheap and honest, and both can be computed from data the team already has.</p>
+<p>The first is branch freshness. For each tree file, record the commit date of the last change to the tree and the last change to the service's source. Track the gap over time. The signal is not a specific number; it is whether tree edits cluster in the same commits as code edits. A tree that changes only in quarterly sweeps is stale by construction.</p>
+<p>The second is test coverage of mitigated leaves. The schema above already carries a <code>test</code> field on mitigated leaves. Count leaves where <code>status: mitigated</code> and <code>test</code> is empty. That count should be zero; anything else is a mitigation asserted without a check. Both numbers come from <code>git log</code> and a grep over the YAML, so no new tooling is required.</p>
+<h2 id="a-short-checklist-for-the-next-tree-you-draw">A short checklist for the next tree you draw</h2>
+<p>When sitting down to draw one, the questions that separate a useful tree from a decorative one are:</p>
+<ul>
+<li>What is the asset, stated as a sentence an adversary would agree with? "Read another tenant's invoice" beats "data confidentiality."</li>
+<li>What are the trust boundaries the attacker must cross, and are they on the diagram? If the boundary between the service and the payment provider's webhook is not drawn, the tree will miss the replay branch.</li>
+<li>Does every leaf have a status and, if open, an owner and a test? A leaf without a test is a wish.</li>
+<li>Is the shortest path to the root mitigated? If the cheapest branch is open, the rest of the tree is decoration.</li>
+<li>When did the tree last change, and did it change in the same PR as the code? If not, it is already stale.</li>
+</ul>
+<h2 id="the-next-concrete-step">The next concrete step</h2>
+<p>Open the repository for the service that handles money or tenant data, pick the single endpoint that would hurt most if it leaked, and write its attack tree as a <code>tree.yaml</code> in that repo — root, two levels, status on every leaf. Do not run a STRIDE workshop first. Draw the tree, mark the leaves that cannot honestly be called mitigated as <code>open</code>, and file one ticket per open leaf with the test that would close it. Thirty minutes gets a model that names a real path and a real test, which is more than most STRIDE tables ever produce.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/red-teaming-agents-without-killing-velocity/">Red-teaming agents without killing velocity</a></li>
+<li><a href="https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/">Prompt Injection Is Not Your Biggest LLM Data Risk</a></li>
+<li><a href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">7 skills senior engineers need now agents are live</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">
+                        <h3>Prompt injection got the hype — poison data ruined us</h3>
+                        <p>Prompt injection dominates LLM security checklists, but poisoned training data and label drift often cause more damage. A pipeline-stage model for triage.</p>
+                        <span class="related-meta">17 min read · 3 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/senior-role-projects-3-real-paths/">
+                        <h3>Senior role projects: 3 real paths</h3>
+                        <p>Build three portfolio projects that demonstrate tenant isolation, retry-storm handling, and event sourcing, with concrete ways to measure each claim.</p>
+                        <span class="related-meta">16 min read · 5 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/who-owns-ai-generated-code/">
+                        <h3>Who owns AI-generated code?</h3>
+                        <p>AI can write code, but a human still signs off on behavior. Here is how to make code ownership explicit with prompts, tags, and a security gate.</p>
+                        <span class="related-meta">10 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
