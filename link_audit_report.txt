@@ -1,4 +1,4 @@
-❌ Internal link audit: 403 broken link(s) found across 404 posts checked.
+❌ Internal link audit: 404 broken link(s) found across 405 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -175,6 +175,7 @@ Source Post                              Anchor Text                    Missing 
   /deployment-platforms-senior-vs-new-hire AI content policy              /ai-content-policy/
   /detect-lazy-agents-without-false-alarms AI content policy              /ai-content-policy/
   /detecting-silent-agent-failures        AI content policy              /ai-content-policy/
+  /distroless-images-smaller-attack-surface AI content policy              /ai-content-policy/
   /docs-that-survive-the-bus-factor-fix   AI content policy              /ai-content-policy/
   /double-entry-ledger-concurrent-write-errors AI content policy              /ai-content-policy/
   /double-the-price-double-the-revenue    AI content policy              /ai-content-policy/

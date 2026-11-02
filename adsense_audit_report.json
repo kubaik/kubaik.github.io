@@ -2884,6 +2884,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "gateway-api-wont-fix-your-ingress-mess",
+      "source": "post.json",
+      "word_count": 2669,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "ai-code-in-prod-postmortems-still-work",
       "source": "post.json",
       "word_count": 2262,

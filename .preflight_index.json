@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-02T05:05:05.886881",
+  "built_at": "2026-11-02T21:32:07.376890",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5725,6 +5725,11 @@
       "slug": "distroless-images-smaller-attack-surface",
       "title": "Distroless images: smaller attack surface",
       "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. The same skills that mistake shows up across production codebases often enough to be a pattern, not bad luck. This post covers what comes after the happy path. A container image is a filesystem, a process entrypoint"
+    },
+    {
+      "slug": "gateway-api-wont-fix-your-ingress-mess",
+      "title": "Gateway API won't fix your Ingress mess",
+      "summary": "kubernetes gateway tends to expose the difference between working and being trustworthy. It's fine in staging because staging never sees the traffic pattern that breaks it. This is the writeup that includes the part that usually goes wrong. The Kubernetes Gateway API is not a better Ingress. It is a"
     }
   ]
 }

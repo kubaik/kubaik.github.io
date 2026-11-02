@@ -1,0 +1,504 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gateway API won&#39;t fix your Ingress mess - Kubai Kevin</title>
+        <meta name="description" content="Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.">
+        <meta name="keywords" content="GatewayApi, KubernetesIngress, HttprouteDelegation, Apis, Kubernetes, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-02T21:32:05.551213">
+        <meta property="article:modified_time" content="2026-11-02T21:33:45.746906+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Gateway API won&#39;t fix your Ingress mess">
+        <meta property="og:description" content="Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.">
+        <meta property="og:url" content="https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/gateway-api-wont-fix-your-ingress-mess.png">
+        <meta property="og:image:alt" content="Gateway API won&#39;t fix your Ingress mess">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Gateway API won&#39;t fix your Ingress mess">
+        <meta name="twitter:description" content="Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/gateway-api-wont-fix-your-ingress-mess.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/#article",
+      "headline": "Gateway API won't fix your Ingress mess",
+      "description": "Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.",
+      "datePublished": "2026-11-02T21:32:05+00:00",
+      "dateModified": "2026-11-02T21:33:45+00:00",
+      "wordCount": 2669,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/"
+      },
+      "keywords": "GatewayApi, KubernetesIngress, HttprouteDelegation, Apis, Kubernetes, K8s",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/gateway-api-wont-fix-your-ingress-mess.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Gateway API won't fix your Ingress mess",
+          "item": "https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Gateway API won&#39;t fix your Ingress mess</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Gateway API won&#39;t fix your Ingress mess</h1>
+                
+                <p class="post-lead">Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GatewayApi</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">KubernetesIngress</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">HttprouteDelegation</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2669 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-02
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-stance-gateway-api-is-an-ownership-boundary-not-an-ingress-upgrade">The stance: Gateway API is an ownership boundary, not an Ingress upgrade</h2>
+<p>The Kubernetes Gateway API tends to expose the difference between routing that works and routing that is trustworthy. It often looks fine in staging because staging never sees the traffic pattern that breaks it. This article covers the part that usually goes wrong.</p>
+<p>The Gateway API is not a better Ingress. It is a different contract between the platform team and everyone else. Platform teams adopting it because Ingress is "deprecated" or "limited" risk inheriting a second, parallel configuration surface with its own CRDs, its own RBAC model, and its own upgrade treadmill — while the original Ingress objects stay exactly where they are, because removing them breaks every tenant who filed a ticket last quarter.</p>
+<p>The contrarian position is simple: if the problem is that developers cannot self-serve HTTP routing safely, Gateway API is worth the migration cost. If the problem is that Ingress manifests are messy, Gateway API will make them messier, because it offers more knobs and more ways to misconfigure them. The API is not the fix; the ownership model it enables is. What follows is how to tell which situation applies before spending a quarter on a migration that changes nothing for users.</p>
+<h2 id="why-ingress-is-deprecated-migrate-is-the-wrong-reason">Why "Ingress is deprecated, migrate" is the wrong reason</h2>
+<p>Ingress is not deprecated. The <code>networking.k8s.io/v1</code> Ingress API is stable and has been since Kubernetes 1.19. It is frozen in the sense that the community is not adding features to it, but frozen is not removed. The Gateway API project itself describes Ingress as continuing to be supported. Claims that Ingress is going away usually stem from confusion with the old <code>extensions/v1beta1</code> version that was removed, or from vendor material that wants customers on a newer controller.</p>
+<p>The practical consequence: a migration driven by deprecation fear has no deadline and no forcing function. Teams start it, discover that every annotation on every Ingress maps to a different Gateway API filter or policy attachment, and stall halfway with both APIs live. That half-migrated state is worse than either endpoint, because there are now two routing planes, two sets of debugging tools, and two places a request can be misrouted.</p>
+<p>The better reason to migrate is a capability gap you can name. Documented examples: Ingress has no first-class way to express header-based matching, traffic weighting across backends, or request mirroring without vendor annotations. Gateway API expresses these as part of the route spec. Ingress has no standard way to attach a policy (rate limiting, auth, TLS options) to a route without an annotation that only one controller understands. Gateway API has <code>BackendTLSPolicy</code>, <code>GRPCRoute</code>, and a policy attachment model that is still maturing but is at least a shared vocabulary. If the capability you need and the Ingress workaround you are tired of cannot be named, there is no migration reason yet.</p>
+<h2 id="the-mental-model-three-objects-three-owners">The mental model: three objects, three owners</h2>
+<p>What actually changes for platform teams is not the YAML. It is that the API forces an explicit record of who owns what. The model has three layers, and each maps to a team boundary:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Scope</th>
+<th>Typical owner</th>
+<th>What it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GatewayClass</code></td>
+<td>Cluster</td>
+<td>Infrastructure / platform</td>
+<td>Which controller implements this class, and with what global config</td>
+</tr>
+<tr>
+<td><code>Gateway</code></td>
+<td>Namespaced (usually a platform namespace)</td>
+<td>Platform team</td>
+<td>Which listeners (ports, protocols, hostnames, TLS) are exposed, and which namespaces may attach routes</td>
+</tr>
+<tr>
+<td><code>HTTPRoute</code> (and <code>GRPCRoute</code>, <code>TLSRoute</code>)</td>
+<td>Namespaced (tenant namespace)</td>
+<td>Application team</td>
+<td>How a specific host/path/header maps to backends</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Gateway</code> object has an <code>allowedRoutes</code> field on each listener that controls which namespaces can attach an <code>HTTPRoute</code> to it. That single field is the delegation mechanism. Set to <code>Same</code> (the default), only routes in the Gateway's own namespace can attach, and the result is Ingress with extra steps. Set to <code>All</code> or a label selector, and application teams can create routes in their own namespaces without a ticket for every new path. That is the operational change. Everything else is syntax.</p>
+<p>A minimal, correct example that shows the boundary. The platform team creates the Gateway in a <code>platform-ingress</code> namespace:</p>
+<pre><code class="language-yaml">apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: shared-gateway
+  namespace: platform-ingress
+spec:
+  gatewayClassName: example-class
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: &quot;*.example.com&quot;
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-example-com
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: &quot;true&quot;
+</code></pre>
+<p>An application team in a namespace labeled <code>gateway-access: "true"</code> then creates its own route:</p>
+<pre><code class="language-yaml">apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: checkout
+  namespace: checkout-team
+spec:
+  parentRefs:
+    - name: shared-gateway
+      namespace: platform-ingress
+  hostnames:
+    - &quot;checkout.example.com&quot;
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api
+      backendRefs:
+        - name: checkout-svc
+          port: 8080
+</code></pre>
+<p>Note what the application team did not need: the platform team's namespace, the TLS secret, the listener port, or an annotation. Note what the platform team can still control: the hostname wildcard, the TLS termination mode, and which namespaces are allowed to attach at all. That is the contract Ingress never had.</p>
+<h2 id="where-the-old-advice-is-still-right">Where the old advice is still right</h2>
+<p>A few pieces of conventional wisdom survive the migration intact.</p>
+<p>First, most teams should not run their own Gateway controller. The Gateway API is a spec; the implementation is a controller such as those from major cloud load balancers, ingress-nginx's successor work, or service mesh data planes. Running the controller is the same operational burden as running an Ingress controller, with the same upgrade and CVE cadence. If a cloud provider already supplies a managed load balancer, check whether its Gateway API implementation is generally available before building anything.</p>
+<p>Second, the one-big-shared-Gateway pattern is still the right default for most clusters. The Gateway API supports many Gateways, but each listener consumes a port and a certificate, and a fleet of per-team Gateways is a fleet of load balancers. Start with one shared Gateway per environment and use <code>allowedRoutes</code> for delegation. Split only for a hard isolation requirement (separate TLS certs per business unit, separate IP allowlists, separate WAF policy).</p>
+<p>Third, the debugging instinct is the same. When a route does not work, the question is still "did the controller see it, and did it accept it?" Gateway API improves this: every <code>Gateway</code> and <code>HTTPRoute</code> has a <code>status.parents</code> section with <code>conditions</code> that report whether the route was accepted, resolved, and programmed. That is more structured than reading controller logs to find out why an annotation was ignored, but it is the same investigation.</p>
+<h2 id="the-decision-rule-delegate-or-wait">The decision rule: delegate or wait</h2>
+<p>Use this rule, in order. It is deliberately blunt because the cost of a wrong migration is a quarter of platform time.</p>
+<ol>
+<li><strong>Can you name the Ingress workaround you are tired of?</strong> If the answer is "annotations are ugly," wait. If the answer is "canary weighting requires a vendor annotation that breaks on controller upgrade," there is a reason.</li>
+<li><strong>Are application teams going to own <code>HTTPRoute</code> objects?</strong> If the platform team will write every route anyway, Gateway API adds CRDs without adding delegation. Stay on Ingress until the ownership model changes.</li>
+<li><strong>Does the chosen controller implement the needed features at the needed version?</strong> The Gateway API has graduated features (the core <code>Gateway</code>, <code>HTTPRoute</code>, <code>GatewayClass</code> are GA) and experimental ones (<code>BackendTLSPolicy</code>, some filter types, <code>GRPCRoute</code> maturity varies by controller). Check the controller's conformance report before promising a capability to a tenant.</li>
+<li><strong>Is there a rollback plan that keeps both APIs live?</strong> During migration, a single hostname can be served by an Ingress and an <code>HTTPRoute</code> at the same time only if they point at different controllers or the same controller handles both. Plan per-hostname cutover, not big-bang.</li>
+</ol>
+<p>If any of the first three answers is "no," the correct decision is to wait and revisit when it changes. That is not a failure; it is avoiding a migration that would have produced a second routing plane with no user-visible benefit.</p>
+<h2 id="failure-modes-that-show-up-after-the-migration-not-during-it">Failure modes that show up after the migration, not during it</h2>
+<p>The migration itself is mostly mechanical: translate host/path rules, replace annotations with filters or policy attachments, move TLS secrets to <code>certificateRefs</code>. The failures appear in the weeks after, when tenants start using the new delegation. Three are common enough to plan for.</p>
+<p><strong>Route attachment sprawl.</strong> Once application teams can create <code>HTTPRoute</code> objects, they will, and some will attach to the shared Gateway with a hostname that collides with another team's. Gateway API does not prevent two routes from claiming the same hostname and path; the controller picks a winner based on its own conflict resolution, and the loser gets a condition on <code>status.parents</code> that nobody reads. The fix is a policy, not a feature: either assign hostname prefixes per namespace via a label convention, or run an admission policy that rejects <code>HTTPRoute</code> objects whose <code>hostnames</code> do not match the namespace's assigned domain. Plan for this before flipping <code>allowedRoutes</code> to <code>All</code>.</p>
+<p><strong>The <code>GatewayClass</code> becomes a shared dependency.</strong> Every <code>Gateway</code> references a <code>GatewayClass</code>, and the <code>GatewayClass</code> carries controller-level configuration (which load balancer type, which global parameters). Changing it is a cluster-wide operation that can reprogram every listener at once. Treat <code>GatewayClass</code> changes like a cluster upgrade: staged, announced, and reversible. Teams that treat it as a per-team setting discover that one edit took down routing for every tenant.</p>
+<p><strong>Status conditions are the new logs.</strong> The structured <code>status.parents</code> conditions are better than annotation guessing, but only if tenants know to look. A route that is not accepted shows <code>Accepted: False</code> with a reason such as <code>NotAllowedByListeners</code> or <code>NoMatchingParent</code>. Platform teams should document the three or four conditions that matter and put them in the onboarding doc, because the failure mode is a developer staring at a 404 with no idea that their route was never attached.</p>
+<h2 id="a-worked-example-measuring-whether-you-actually-need-gateway-api">A worked example: measuring whether you actually need Gateway API</h2>
+<p>Rather than trusting a vendor's migration pitch, measure the gap. The following procedure takes about an hour per cluster and produces numbers you can defend in a planning meeting.</p>
+<p><strong>Step 1: inventory annotation dependence.</strong> List every Ingress and extract the annotations in use:</p>
+<pre><code class="language-bash">kubectl get ingress -A -o json |
+  jq -r '.items[] | .metadata.namespace + &quot;/&quot; + .metadata.name as $n |
+    (.metadata.annotations // {} | keys[]) | $n + &quot; &quot; + .'
+</code></pre>
+<p>Count how many distinct annotation keys appear and how many Ingress objects use each. An annotation that appears on one object is a local quirk; one that appears on dozens is a load-bearing behavior that must have a Gateway API equivalent before cutover.</p>
+<p><strong>Step 2: classify each annotation.</strong> Sort them into three buckets: (a) cosmetic or redundant with standard fields, (b) expressible as a core Gateway API filter such as <code>URLRewrite</code> or <code>RequestHeaderModifier</code>, (c) controller-specific policy with no portable equivalent. Bucket (c) is the migration risk. If bucket (c) is empty, the migration is largely mechanical. If it is large, the migration will either block on missing features or silently change behavior.</p>
+<p><strong>Step 3: verify controller conformance.</strong> Install the controller in a non-production cluster and read its conformance report for the exact version you intend to run. Then check the CRD versions present:</p>
+<pre><code class="language-bash">kubectl get crd gateways.gateway.networking.k8s.io \
+  -o jsonpath='{.spec.versions[*].name}'
+</code></pre>
+<p>Compare the installed CRD versions against the <code>apiVersion</code> in your manifests. A mismatch produces objects that apply cleanly and are never reconciled, which is the most expensive kind of bug because nothing errors.</p>
+<p><strong>Step 4: test delegation in a scratch namespace.</strong> Create a namespace labeled <code>gateway-access: "true"</code>, bind a service account to a role that can create <code>httproutes</code>, and have a developer (not a platform engineer) create a route. Then inspect acceptance:</p>
+<pre><code class="language-bash">kubectl get httproute -n &lt;namespace&gt; -o yaml \
+  | yq '.items[].status.parents'
+</code></pre>
+<p>If the conditions show <code>Accepted: True</code> and <code>ResolvedRefs: True</code>, delegation works end to end. If not, read the <code>reason</code> field — it names the exact listener or reference that failed, which is the whole point of the structured status.</p>
+<p>The output of these four steps is a decision, not a feeling: a count of annotations that have no equivalent, a conformance gap list, and a demonstrated delegation path. Teams that skip this and migrate on schedule rather than on evidence tend to end up with both APIs live indefinitely.</p>
+<h2 id="what-to-check-before-you-commit">What to check before you commit</h2>
+<p>Before writing a single <code>HTTPRoute</code>, verify the controller, not the API. Gateway API conformance is reported per feature, and a controller that passes core conformance may still not implement the filter or policy being counted on. The upstream project publishes conformance reports; read the one for the controller version in use, not the marketing page. Then check two things in the cluster: whether the CRDs are installed at the version the manifests expect (the <code>kubectl get crd</code> command above), and whether RBAC already allows application-team service accounts to create <code>httproutes</code> in their namespaces. If RBAC is still platform-only, the object model exists without the delegation, and the migration will not change anything for developers.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Is Ingress deprecated in Kubernetes?</strong>
+No. The <code>networking.k8s.io/v1</code> Ingress API is stable and remains supported. What happened is that the older <code>extensions/v1beta1</code> Ingress version was removed in Kubernetes 1.22, which is where a lot of the "Ingress is deprecated" talk originates. The Gateway API project positions itself as the successor for new feature work, but Ingress objects continue to function and controllers continue to reconcile them.</p>
+<p><strong>Can Ingress and Gateway API run at the same time?</strong>
+Yes, and most migrations do. They are separate APIs reconciled by controllers, and a cluster can have an Ingress controller and a Gateway controller running side by side. The risk is not technical conflict but operational confusion: two routing planes mean two places to debug a 404. Plan a per-hostname cutover so each hostname has exactly one authoritative routing object at any time.</p>
+<p><strong>Do application teams need cluster-admin to create HTTPRoutes?</strong>
+No. <code>HTTPRoute</code> is namespaced, so a role binding in the team's namespace is enough, provided the <code>Gateway</code> listener's <code>allowedRoutes</code> permits that namespace to attach. The platform team controls attachment via the Gateway; the application team controls routing within the hosts and paths the Gateway exposes. That separation is the point of the API.</p>
+<p><strong>What replaces Ingress annotations like rewrite-target or rate limiting?</strong>
+Rewrites are expressed as <code>URLRewrite</code> filters on <code>HTTPRoute</code> rules. Rate limiting and auth are not core Gateway API fields; they are attached through the policy attachment model, and support depends on the controller. This is where "Gateway API is portable" is weakest in practice: the core routing spec is portable, but policy attachments are still controller-specific. Check the controller's documentation before assuming a policy relied on today has a direct equivalent.</p>
+<h2 id="the-30-minute-check">The 30-minute check</h2>
+<p>Open the current Ingress manifests, run the annotation inventory command from the worked example, and count how many objects rely on a controller-specific annotation for behavior that would be lost on migration. Then run <code>kubectl get gatewayclass</code> in a cluster where the chosen controller is installed and read the conformance report for that controller version. If the annotation count is low and the conformance report covers the needed features, there is a migration case; if the annotation count is high and the report is thin, there is a documented reason to wait.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/">AI made self-service platforms trivial in 2026</a></li>
+<li><a href="https://kubaik.github.io/why-monoliths-die-slowly-in-2026/">Why monoliths die slowly in 2026</a></li>
+<li><a href="https://kubaik.github.io/choose-no-code-only-when/">Choose no-code only when</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
+                        <h3>Self-healing agents vs rule-based deployment rollback</h3>
+                        <p>Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.</p>
+                        <span class="related-meta">12 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/self-healing-pipelines-argo-vs-crossplane-in-2026/">
+                        <h3>Self-healing pipelines: Argo vs Crossplane in 2026</h3>
+                        <p>Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
+                        <span class="related-meta">13 min read · 25 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-made-self-service-platforms-trivial-in-2026/">
+                        <h3>AI made self-service platforms trivial in 2026</h3>
+                        <p>AI can draft Terraform and Kubernetes manifests, but correctness still needs policy checks, schema validation, and runtime verification before merge.</p>
+                        <span class="related-meta">10 min read · 3 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

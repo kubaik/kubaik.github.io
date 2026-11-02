@@ -635,6 +635,9 @@
   "fraud-detection-rules-vs-scoring-where-they-meet": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "gateway-api-wont-fix-your-ingress-mess": {
+    "first_seen": "2026-11-02T21:32:30.903742+00:00"
+  },
   "global-state-is-the-wrong-tool-for-ai-features": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

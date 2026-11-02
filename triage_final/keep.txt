@@ -113,6 +113,7 @@ docs/event-sourcing-pay-the-complexity-tax-only-here/
 docs/evolve-your-monolith-without-rewriting-in-2026/
 docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/
 docs/fraud-detection-rules-vs-scoring-where-they-meet/
+docs/gateway-api-wont-fix-your-ingress-mess/
 docs/golden-paths-that-dont-handcuff/
 docs/graphql-vs-rest-vs-trpc-2026s-api-fight/
 docs/hpa-vs-keda-vs-karpenter-autoscaling-traps/

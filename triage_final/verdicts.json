@@ -645,7 +645,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Distroless images: smaller attack surface",
-  "words": 2310
+  "words": 2522
  },
  "multi-agent-systems-when-they-quietly-degrade": {
   "verdict": "KEEP",
@@ -3471,6 +3471,13 @@
   ],
   "title": "Price your remote job like a New York dev",
   "words": 2660
+ },
+ "gateway-api-wont-fix-your-ingress-mess": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Gateway API won't fix your Ingress mess",
+  "words": 2506
  },
  "ai-code-in-prod-postmortems-still-work": {
   "verdict": "KEEP",
