@@ -1,10 +1,11 @@
-❌ Internal link audit: 402 broken link(s) found across 403 posts checked.
+❌ Internal link audit: 403 broken link(s) found across 404 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
   /2026-ai-stack-solo-saas-cost-showdown  AI content policy              /ai-content-policy/
   /2026-alert-triage-when-opsgenie-slept-for-you AI content policy              /ai-content-policy/
   /2026-tech-salaries-where-cuts-stopped-where-raises AI content policy              /ai-content-policy/
+  /3-llm-context-techniques-when-each-fails AI content policy              /ai-content-policy/
   /3-ways-container-builds-got-3x-faster-in-2026 AI content policy              /ai-content-policy/
   /40-ai-code-meant-60-more-alerts        AI content policy              /ai-content-policy/
   /5-ai-tools-that-let-us-ship-faster-than-sf-teams AI content policy              /ai-content-policy/

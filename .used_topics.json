@@ -211,5 +211,8 @@
   "Building unit economics for AI features that product and finance teams can both read",
   "Threat modeling for backend systems with STRIDE and attack trees",
   "Common MCP server security mistakes that expose internal tools",
-  "Fine-tuning versus retrieval versus long context: matching technique to problem"
+  "Fine-tuning versus retrieval versus long context: matching technique to problem",
+  "The skills that became table stakes for senior engineers once agents reached production",
+  "Event sourcing in financial systems: audit benefits and operational costs",
+  "Container image hardening: distroless, minimal base images, and vulnerability scanning"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Nov 2026 17:51:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Nov 2026 05:08:25 +0000</lastBuildDate>
+    <item>
+      <title>Distroless images: smaller attack surface</title>
+      <link>https://kubaik.github.io/distroless-images-smaller-attack-surface/</link>
+      <description>How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.</description>
+      <pubDate>Mon, 02 Nov 2026 05:05:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/distroless-images-smaller-attack-surface/</guid>
+    </item>
     <item>
       <title>3 LLM context techniques: when each fails</title>
       <link>https://kubaik.github.io/3-llm-context-techniques-when-each-fails/</link>
@@ -138,13 +145,6 @@
       <description>How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</description>
       <pubDate>Fri, 23 Oct 2026 16:44:39 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-systems-architecture-principles-that-hold/</guid>
-    </item>
-    <item>
-      <title>Agent code review: 7 traps that slip through</title>
-      <link>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</link>
-      <description>Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</description>
-      <pubDate>Fri, 23 Oct 2026 03:59:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/</guid>
     </item>
   </channel>
 </rss>

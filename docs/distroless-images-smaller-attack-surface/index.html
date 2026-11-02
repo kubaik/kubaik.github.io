@@ -1,0 +1,505 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Distroless images: smaller attack surface - Kubai Kevin</title>
+        <meta name="description" content="How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.">
+        <meta name="keywords" content="Distroless, ContainerSecurity, MinimalBaseImage, Vulnerability, DistrolessDocker, TrivyImageScan, Cybersecurity, Infosec, Docker, Containers">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-02T05:05:03.074731">
+        <meta property="article:modified_time" content="2026-11-02T05:07:42.813188+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Distroless images: smaller attack surface">
+        <meta property="og:description" content="How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.">
+        <meta property="og:url" content="https://kubaik.github.io/distroless-images-smaller-attack-surface/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/distroless-images-smaller-attack-surface.png">
+        <meta property="og:image:alt" content="Distroless images: smaller attack surface">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Distroless images: smaller attack surface">
+        <meta name="twitter:description" content="How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/distroless-images-smaller-attack-surface.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/distroless-images-smaller-attack-surface/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/distroless-images-smaller-attack-surface/#article",
+      "headline": "Distroless images: smaller attack surface",
+      "description": "How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.",
+      "datePublished": "2026-11-02T05:05:03+00:00",
+      "dateModified": "2026-11-02T05:07:42+00:00",
+      "wordCount": 2522,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/distroless-images-smaller-attack-surface/"
+      },
+      "keywords": "Distroless, ContainerSecurity, MinimalBaseImage, Vulnerability, DistrolessDocker, TrivyImageScan, Cybersecurity, Infosec",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/distroless-images-smaller-attack-surface.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Distroless images: smaller attack surface",
+          "item": "https://kubaik.github.io/distroless-images-smaller-attack-surface/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Distroless images: smaller attack surface</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Distroless images: smaller attack surface</h1>
+                
+                <p class="post-lead">How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Distroless</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ContainerSecurity</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MinimalBaseImage</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/vulnerability/"
+                       style="text-decoration:none;">Vulnerability</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DistrolessDocker</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2522 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-02
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A container image is a filesystem, a process entrypoint, and a set of metadata. Hardening it means shrinking what's in that filesystem and what that process can do. The usual starting point is a general-purpose base image such as <code>ubuntu:22.04</code> or <code>node:20</code>. Those images are built to be useful for many jobs, so they include a shell, package managers, and debugging tools. In a build environment that is helpful. In a runtime container it is a liability: every extra binary is another potential entry point, and every extra package is another CVE to track.</p>
+<p>The recurring failure mode is treating image hardening as a one-time cleanup — switch to Alpine, run a scanner once, call it done — after which the next base image bump reintroduces a shell or a vulnerable library. Hardening has to be a repeatable pipeline step. The sequence below is a practical one: measure the baseline, choose a minimal base, move to distroless where it fits, make the scanner block bad builds, and verify the result with the same tools an attacker would use.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You need a container runtime (Docker or Podman), a registry you can push to, and a CI system that can run a scanner. The examples use Docker and GitHub Actions, but the same steps work with GitLab CI, Jenkins, or any runner that can execute shell commands.</p>
+<p>You also need to know two things about your application: which dynamic libraries it links against at runtime, and whether it needs a shell for its entrypoint script. If the answer to the second is yes, distroless will require a small refactor — more on that later.</p>
+<h2 id="step-1-measure-the-image-you-have-before-changing-anything">Step 1: Measure the image you have before changing anything</h2>
+<p>Before choosing a base image, get a baseline. Two numbers matter: the number of installed packages and the number of known vulnerabilities. The package count is available without a scanner on Debian-derived images:</p>
+<pre><code class="language-bash">docker run --rm --entrypoint sh your-image:latest -c 'dpkg -l | wc -l'
+</code></pre>
+<p>For vulnerabilities, use a scanner. Trivy is a widely used open-source option that works on local images and in CI:</p>
+<pre><code class="language-bash">trivy image --severity HIGH,CRITICAL your-image:latest
+</code></pre>
+<p>Record the counts. This baseline is what you compare against after each change. Without it, there is no way to tell whether a switch to a smaller base actually helped or just moved the CVEs around.</p>
+<p>A common trap at this stage: scanning only the <code>latest</code> tag. If deployment uses a digest or a version tag, scan that exact reference. Tags move; digests don't. When comparing two images, compare the same way each time — same scanner version, same database update, same severity filter — otherwise the delta reflects the scanner rather than the image.</p>
+<h2 id="step-2-pick-a-minimal-base-image-that-matches-your-runtime">Step 2: Pick a minimal base image that matches your runtime</h2>
+<p>The first instinct is Alpine. Alpine uses musl libc instead of glibc, and that difference matters. Native Node.js modules, Python wheels with C extensions, and Go binaries built with cgo can all behave differently on musl. Some prebuilt wheels won't load at all. The failure mode is usually a runtime error such as <code>Error loading shared library libc.musl-x86_64.so.1</code> or a segfault that doesn't reproduce on a glibc-based development machine.</p>
+<p>If dependencies are pure (no native extensions), Alpine is a fine choice and the image is small. If there are native dependencies, a better fit is a slim variant of the same distribution used for building — for example <code>debian:bookworm-slim</code> or <code>python:3.12-slim</code>. Slim variants strip documentation, man pages, and compilers but keep glibc, so native modules keep working.</p>
+<p>A comparison of the main options:</p>
+<table>
+<thead>
+<tr>
+<th>Base</th>
+<th>libc</th>
+<th>Typical use</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alpine:3.20</code></td>
+<td>musl</td>
+<td>Pure-language apps, static Go binaries</td>
+<td>Native modules, DNS resolution differences</td>
+</tr>
+<tr>
+<td><code>debian:bookworm-slim</code></td>
+<td>glibc</td>
+<td>Apps with native extensions</td>
+<td>Still includes apt and a shell</td>
+</tr>
+<tr>
+<td><code>gcr.io/distroless/static-debian12</code></td>
+<td>none (static)</td>
+<td>Go and Rust static binaries</td>
+<td>No shell, no package manager</td>
+</tr>
+<tr>
+<td><code>gcr.io/distroless/base-debian12</code></td>
+<td>glibc</td>
+<td>Apps needing libc but not a shell</td>
+<td>Debugging is harder</td>
+</tr>
+</tbody>
+</table>
+<p>Distroless images, maintained by Google, contain only the runtime dependencies the app needs — no shell, no package manager, no <code>apt</code>. The <code>static</code> variant has no libc at all; the <code>base</code> variant includes glibc. There are language-specific variants (<code>java</code>, <code>python3</code>, <code>nodejs</code>) that bundle the runtime but still omit the shell.</p>
+<h2 id="step-3-build-a-multi-stage-dockerfile-that-discards-the-build-toolchain">Step 3: Build a multi-stage Dockerfile that discards the build toolchain</h2>
+<p>The most reliable way to get a small runtime image is to build in one stage and copy only the artifacts into the final stage. Here is a Go example that produces a static binary and runs it on distroless:</p>
+<pre><code class="language-dockerfile"># syntax=docker/dockerfile:1
+FROM golang:1.22-bookworm AS build
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags='-s -w' -o /out/app ./cmd/app
+
+FROM gcr.io/distroless/static-debian12:nonroot
+COPY --from=build /out/app /app
+USER nonroot:nonroot
+ENTRYPOINT [&quot;/app&quot;]
+</code></pre>
+<p>Three things in that final stage matter. <code>CGO_ENABLED=0</code> produces a static binary so it doesn't need libc. <code>-ldflags='-s -w'</code> strips debug symbols, which reduces size and slightly reduces the information an attacker gets from the binary. <code>USER nonroot:nonroot</code> runs as a non-root user — the distroless <code>nonroot</code> tag includes that user, and running as root inside a container is a privilege escalation risk if the container is compromised.</p>
+<p>For Python, the pattern is similar but the final stage uses <code>gcr.io/distroless/python3-debian12</code>. The virtualenv or site-packages are copied into the image. One gotcha: distroless Python expects the app to be importable; <code>pip install</code> cannot run at runtime because there is no shell or package manager. Install dependencies in the build stage and copy them.</p>
+<p>For Node.js, use <code>gcr.io/distroless/nodejs20-debian12</code>. The entrypoint is <code>node</code>, so <code>CMD</code> should be the path to the script, not <code>npm start</code> — there is no npm in the image.</p>
+<p>A subtlety worth planning for: the build stage and the runtime stage should agree on architecture and libc. Building with <code>GOOS=linux</code> on an ARM machine and deploying to x86 will fail at exec time, not build time. Pin <code>--platform</code> in the build command or in the Dockerfile when the CI runner and the target differ.</p>
+<h2 id="step-4-fix-the-entrypoint-script-problem">Step 4: Fix the entrypoint-script problem</h2>
+<p>Distroless images have no shell. Any <code>ENTRYPOINT</code> or <code>CMD</code> that starts with <code>sh -c</code> or uses shell syntax will fail with an error like <code>exec: "/bin/sh": stat /bin/sh: no such file or directory</code>. This is the most common reason a distroless migration stalls.</p>
+<p>The fix is to make the container run a single executable directly. If a start script currently sets environment variables, waits for a database, or runs migrations, move that logic into the application or into an init container. Instead of:</p>
+<pre><code class="language-dockerfile">CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;node server.js&quot;]
+</code></pre>
+<p>use:</p>
+<pre><code class="language-dockerfile">CMD [&quot;node&quot;, &quot;server.js&quot;]
+</code></pre>
+<p>If environment variable substitution is needed, do it at deploy time (the orchestrator can set env vars) rather than in a shell. If the app must wait for a dependency, use the platform's health-check or init-container mechanism — Kubernetes <code>initContainers</code> or a Compose <code>depends_on</code> with a healthcheck — rather than a shell loop.</p>
+<p>A second common trap: some base images set <code>ENTRYPOINT</code> to a shell script. When switching to distroless, that entrypoint disappears. Always check the base image's Dockerfile or documentation for its default <code>ENTRYPOINT</code> and <code>CMD</code>, and override them explicitly.</p>
+<h2 id="step-5-add-a-vulnerability-scanner-that-fails-the-build">Step 5: Add a vulnerability scanner that fails the build</h2>
+<p>Scanning is only useful if it blocks. A scanner that prints a report but exits zero produces a dashboard nobody reads. Configure the scanner to fail on HIGH and CRITICAL severities, and set a policy for what counts as acceptable.</p>
+<p>With Trivy in GitHub Actions:</p>
+<pre><code class="language-yaml">name: build-and-scan
+on: [push]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t app:${{ github.sha }} .
+      - name: Scan image
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: app:${{ github.sha }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+</code></pre>
+<p><code>ignore-unfixed: true</code> is a pragmatic default: it skips vulnerabilities that have no available fix, so the build doesn't fail on something that cannot be remediated. The trade-off is that those vulnerabilities are being accepted. Review the ignore list periodically and document why each is accepted.</p>
+<p>A second scanner worth running is Grype, which uses a different vulnerability database and can catch things Trivy misses. Running two scanners is not paranoia — their databases update on different schedules and have different coverage. If only one is run, keep its database updated; a stale database is worse than no scanner because it gives false confidence.</p>
+<p>The blocking policy also needs an owner and an expiry. A practical rule: an exception must name the CVE, the reason it is unreachable or unfixable, and a date to re-check. Exceptions without an expiry become permanent.</p>
+<h2 id="step-6-verify-the-runtime-not-just-the-build">Step 6: Verify the runtime, not just the build</h2>
+<p>A clean scan at build time doesn't guarantee a clean runtime. The image can be modified after the scan (by a compromised registry or a malicious layer), and the running container can have a different filesystem than the image if volumes are mounted.</p>
+<p>Verify three things after deployment:</p>
+<ol>
+<li><strong>The running image digest matches what was scanned.</strong> In Kubernetes, <code>kubectl get pod &lt;pod&gt; -o jsonpath='{.status.containerStatuses[0].imageID}'</code> shows the digest. Compare it to the digest that was scanned.</li>
+<li><strong>The process is not running as root.</strong> <code>kubectl exec &lt;pod&gt; -- id</code> will fail on distroless because there is no <code>id</code> binary, so check the pod spec's <code>securityContext.runAsNonRoot: true</code> and <code>runAsUser</code>. If the pod spec doesn't set it, the image's <code>USER</code> directive may still apply, but explicit is better.</li>
+<li><strong>No unexpected open ports or capabilities.</strong> Use <code>kubectl debug</code> to inspect a distroless pod; don't add a shell to the production image just for debugging.</li>
+</ol>
+<p>A useful verification step is to run the image locally with a read-only root filesystem and see if it still starts:</p>
+<pre><code class="language-bash">docker run --rm --read-only --tmpfs /tmp app:latest
+</code></pre>
+<p>If the app writes to disk outside <code>/tmp</code>, it will fail. That failure is informative: it tells you where the app expects to write and whether that should be a mounted volume instead. Many hardened deployments run with <code>readOnlyRootFilesystem: true</code> in Kubernetes, so catching this early avoids a production surprise.</p>
+<h2 id="edge-cases-and-errors">Edge cases and errors</h2>
+<p><strong>DNS resolution on Alpine.</strong> musl's DNS resolver behaves differently from glibc's, particularly with search domains and <code>ndots</code>. A service that resolves fine on Debian can fail on Alpine with <code>no such host</code>. If that happens, check <code>/etc/resolv.conf</code> and consider switching to a glibc-based slim image.</p>
+<p><strong>CA certificates.</strong> Distroless <code>static</code> images include CA certificates, but an image built <code>FROM scratch</code> must copy them explicitly: <code>COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/</code>. Without them, outbound HTTPS calls fail with <code>x509: certificate signed by unknown authority</code>.</p>
+<p><strong>Timezones.</strong> Distroless images include tzdata in the <code>base</code> and language variants, but <code>static</code> does not. If the app formats timestamps in a local timezone, either use UTC everywhere or copy tzdata into the image.</p>
+<p><strong>Debugging without a shell.</strong> <code>kubectl exec -it &lt;pod&gt; -- sh</code> will fail on distroless. Use <code>kubectl debug</code> to attach an ephemeral container with a shell and the same process namespace. This is the intended workflow, and it is safer than shipping a shell in the production image.</p>
+<p><strong>Scanner false positives on distroless.</strong> Distroless images sometimes report CVEs for packages present in the image metadata but not actually used at runtime. Check whether the vulnerable binary is reachable. If it isn't, document the exception rather than switching back to a larger base image just to make the scanner quiet.</p>
+<p><strong>Silent failures at startup.</strong> A distroless container that crashes immediately produces almost no diagnostic output. If the app logs to stdout, capture it. If the entrypoint is wrong, the error is usually a single line from the runtime (<code>exec: ... no such file or directory</code>) before exit. Run the image locally with <code>docker run --rm &lt;image&gt;</code> before pushing; the failure is much cheaper to diagnose there than in a cluster.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Does distroless mean no package manager in production?</strong>
+Correct. Distroless images have no <code>apt</code>, <code>apk</code>, or <code>yum</code>. All dependencies must be installed in the build stage and copied into the final image. This is the point: it removes a common attacker tool and reduces image size. If something must be installed at runtime, distroless is the wrong base for that container.</p>
+<p><strong>Is Alpine more secure than Debian slim?</strong>
+Not inherently. Alpine has a smaller default package set, which reduces attack surface, but musl compatibility issues can force extra packages or workarounds for native modules. The more important factor is how often the image is rebuilt and rescanned. A Debian slim image rebuilt weekly with a scanner in CI is usually in better shape than an Alpine image that hasn't been rebuilt in six months.</p>
+<p><strong>How should vulnerabilities with no fix be handled?</strong>
+Most scanners can ignore unfixed vulnerabilities or add them to an allowlist with an expiry date. The policy should be explicit: accept the risk, document why, and set a reminder to re-check when a fix is released. Silently ignoring them is how a known CVE stays in production for years.</p>
+<p><strong>Can distroless be used with a language that needs a JIT compiler?</strong>
+Yes, for the languages that have distroless variants. The <code>java</code> variant includes a JRE, and the <code>nodejs</code> variant includes Node.js. The constraint is the same: no shell, no package manager. If the app spawns subprocesses that expect a shell, those will fail; rewrite them to call executables directly.</p>
+<p><strong>How much smaller is a distroless image?</strong>
+It depends entirely on the app and its dependencies, so measure rather than assume. Compare <code>docker image ls</code> for the old and new tags, and compare the package counts from Step 1. The more useful comparison is the vulnerability delta from the scanner, since that is what the hardening is for.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the main service's Dockerfile and change the final stage to a distroless base that matches the runtime — <code>gcr.io/distroless/static-debian12:nonroot</code> for a static Go binary, or the appropriate language variant otherwise. Then run <code>trivy image --severity HIGH,CRITICAL &lt;your-image&gt;</code> against both the old and new image and compare the counts. If the new image fails to start, check the entrypoint first: a <code>sh -c</code> command is the most likely cause.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
+<li><a href="https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
+<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/cicd-for-django-in-20ms-africa-networks/">
+                        <h3>CI/CD for Django in 20ms Africa networks</h3>
+                        <p>Design a Django CI/CD pipeline for 1-2 vCPU runners, slow links and metered egress: caching, image size, migrations and health checks.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ship-a-solo-project-pipeline-under-20month/">
+                        <h3>A Solo-Project Deploy Pipeline That Stays Under $20/Month</h3>
+                        <p>Build a test-and-deploy pipeline with GitHub Actions and a container host, then measure cost, cold start, and rollback time yourself.</p>
+                        <span class="related-meta">16 min read · 15 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/3-ways-container-builds-got-3x-faster-in-2026/">
+                        <h3>Container Build Caching: What Actually Speeds Up CI</h3>
+                        <p>How container build caching works, why cache keys invalidate, and how to measure hit rate and cost before choosing a cache backend.</p>
+                        <span class="related-meta">13 min read · 14 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

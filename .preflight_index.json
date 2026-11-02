@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-01T17:48:07.819248",
+  "built_at": "2026-11-02T05:05:05.886881",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5720,6 +5720,11 @@
       "slug": "3-llm-context-techniques-when-each-fails",
       "title": "3 LLM context techniques: when each fails",
       "summary": "It's a one-line fix once you know where to look, and expensive until then. common mcp is the kind of decision that looks reversible until it isn't. Here's the root cause, not just the symptom. Every team building on an LLM eventually hits the same wall: the model doesn't know something it needs to k"
+    },
+    {
+      "slug": "distroless-images-smaller-attack-surface",
+      "title": "Distroless images: smaller attack surface",
+      "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. The same skills that mistake shows up across production codebases often enough to be a pattern, not bad luck. This post covers what comes after the happy path. A container image is a filesystem, a process entrypoint"
     }
   ]
 }

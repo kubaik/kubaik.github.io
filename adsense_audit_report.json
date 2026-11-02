@@ -819,6 +819,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "distroless-images-smaller-attack-surface",
+      "source": "post.json",
+      "word_count": 2522,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "multi-agent-systems-when-they-quietly-degrade",
       "source": "post.json",
       "word_count": 2410,

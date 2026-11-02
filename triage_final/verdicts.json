@@ -640,6 +640,13 @@
   "title": "Core Web Vitals: what actually moves the needle",
   "words": 3127
  },
+ "distroless-images-smaller-attack-surface": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Distroless images: smaller attack surface",
+  "words": 2310
+ },
  "multi-agent-systems-when-they-quietly-degrade": {
   "verdict": "KEEP",
   "reasons": [],
@@ -1815,7 +1822,7 @@
    "add_sources"
   ],
   "title": "3 LLM context techniques: when each fails",
-  "words": 2804
+  "words": 3097
  },
  "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
   "verdict": "KEEP",

@@ -193,7 +193,7 @@ vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forev
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
 websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
 why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Reward Keywords Over Correct Design,2026-06-14T17:09:29.558838,1,no FAQ section
-3-llm-context-techniques-when-each-fails,100,2804,3 LLM context techniques: when each fails,2026-11-01T17:48:05.092232,0,
+3-llm-context-techniques-when-each-fails,100,3097,3 LLM context techniques: when each fails,2026-11-01T17:48:05.092232,0,
 3-ways-container-builds-got-3x-faster-in-2026,100,2630,Container Build Caching: What Actually Speeds Up CI,2026-06-14T01:45:48.667847,0,
 5-ai-tools-that-let-us-ship-faster-than-sf-teams,100,2107,Choosing AI Coding Assistants for Cloud-Heavy Stacks,2026-06-23T17:36:37.395172,0,
 7-bundling-decisions-that-still-matter,100,2857,7 bundling decisions that still matter,2026-10-10T05:00:55.208475,0,
@@ -286,6 +286,7 @@ debugging-techniques-that-outlast-any-framework,100,2286,Debugging techniques th
 dependency-pinning-the-lockfile-lie,100,3177,Dependency pinning: the lockfile lie,2026-10-31T04:43:23.222613,0,
 deployment-platforms-senior-vs-new-hire,100,3382,Deployment platforms: senior vs new hire,2026-10-07T05:01:41.493415,0,
 detecting-silent-agent-failures,100,3026,Detecting silent agent failures,2026-10-13T06:03:55.281045,0,
+distroless-images-smaller-attack-surface,100,2310,Distroless images: smaller attack surface,2026-11-02T05:05:03.074731,0,
 docs-that-survive-the-bus-factor-fix,100,3089,Docs that survive: the bus factor fix,2026-10-21T03:54:11.003570,0,
 double-entry-ledger-concurrent-write-errors,100,2922,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 ebpf-observability-in-2026-what-actually-works,100,2772,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,0,
