@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-02T21:32:07.376890",
+  "built_at": "2026-11-03T05:54:25.674454",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5730,6 +5730,11 @@
       "slug": "gateway-api-wont-fix-your-ingress-mess",
       "title": "Gateway API won't fix your Ingress mess",
       "summary": "kubernetes gateway tends to expose the difference between working and being trustworthy. It's fine in staging because staging never sees the traffic pattern that breaks it. This is the writeup that includes the part that usually goes wrong. The Kubernetes Gateway API is not a better Ingress. It is a"
+    },
+    {
+      "slug": "sqlalchemy-vs-asyncpg-pooling-in-async-services",
+      "title": "SQLAlchemy vs asyncpg: pooling in async services",
+      "summary": "The official documentation for service meshes is good. What it doesn't cover is what happens six months into production. Here's what holds up in practice, and why. The failure is quiet — no errors, just wrong answers. The pool is the service's real concurrency limit Every async Python service that t"
     }
   ]
 }

@@ -1127,6 +1127,9 @@
   "spot-instances-vs-on-demand-for-ai-experiments": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "sqlalchemy-vs-asyncpg-pooling-in-async-services": {
+    "first_seen": "2026-11-03T05:55:01.227415+00:00"
+  },
   "staging-wont-catch-prod-bugs-make": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

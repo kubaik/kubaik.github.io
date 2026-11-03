@@ -179,6 +179,7 @@ skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one A
 slos-for-agentic-features-beyond-latency,95,2936,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2575,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
 spot-ais-hidden-cost-spike-in-your-stack,95,2735,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,1,no FAQ section
+sqlalchemy-vs-asyncpg-pooling-in-async-services,95,2435,SQLAlchemy vs asyncpg: pooling in async services,2026-11-03T05:54:22.435630,1,no FAQ section
 staging-wont-catch-prod-bugs-make,95,2613,Staging won't catch prod bugs. Make…,2026-10-19T18:32:38.061474,1,no FAQ section
 starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,1,no FAQ section
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
@@ -296,7 +297,7 @@ evolve-your-monolith-without-rewriting-in-2026,100,3035,Evolve your monolith wit
 feature-flags-became-ai-rollout-platforms,100,3600,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
 flaky-tests-reliability-bug-not-test-noise,100,3189,"Flaky tests: reliability bug, not test noise",2026-10-14T16:49:03.461978,0,
 fraud-detection-rules-vs-scoring-where-they-meet,100,3367,"Fraud detection: rules vs scoring, where they meet",2026-10-04T11:01:21.830716,0,
-gateway-api-wont-fix-your-ingress-mess,100,2506,Gateway API won't fix your Ingress mess,2026-11-02T21:32:05.551213,0,
+gateway-api-wont-fix-your-ingress-mess,100,2669,Gateway API won't fix your Ingress mess,2026-11-02T21:32:05.551213,0,
 golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
 hpa-vs-keda-vs-karpenter-autoscaling-traps,100,3432,HPA vs KEDA vs Karpenter: autoscaling traps,2026-10-26T08:01:33.191005,0,
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,

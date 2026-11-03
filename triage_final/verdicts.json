@@ -1360,6 +1360,13 @@
   "title": "AI Supply Chain Security: Trust Boundaries for Model Artifacts",
   "words": 3139
  },
+ "sqlalchemy-vs-asyncpg-pooling-in-async-services": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "SQLAlchemy vs asyncpg: pooling in async services",
+  "words": 2435
+ },
  "agent-tracing-when-logs-lie-and-metrics-mislead": {
   "verdict": "KEEP",
   "reasons": [],
@@ -3477,7 +3484,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Gateway API won't fix your Ingress mess",
-  "words": 2506
+  "words": 2669
  },
  "ai-code-in-prod-postmortems-still-work": {
   "verdict": "KEEP",

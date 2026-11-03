@@ -205,6 +205,7 @@ docs/slos-for-agentic-features-beyond-latency/
 docs/spot-ais-hidden-cost-spike-in-your-stack/
 docs/spot-evictions-the-retry-logic-that-holds-up/
 docs/spot-instances-vs-on-demand-for-ai-experiments/
+docs/sqlalchemy-vs-asyncpg-pooling-in-async-services/
 docs/starlink-4g-fallback-serve-pages-under-800ms/
 docs/starlink-in-production-what-changed-in-our-stack/
 docs/stop-assuming-payment-apis-never-fail/

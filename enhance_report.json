@@ -1,7 +1,7 @@
 {
   "changed": [
     {
-      "slug": "gateway-api-wont-fix-your-ingress-mess",
+      "slug": "sqlalchemy-vs-asyncpg-pooling-in-async-services",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
