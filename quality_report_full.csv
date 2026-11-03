@@ -179,7 +179,7 @@ skip-m-pesa-build-one-api-for-3-african-markets,95,2901,Skip M-Pesa: build one A
 slos-for-agentic-features-beyond-latency,95,2936,SLOs for agentic features: beyond latency,2026-10-06T05:33:22.705373,1,no FAQ section
 soft-deletes-fail-what-breaks-first,95,2575,Soft deletes fail: what breaks first,2026-06-09T23:03:28.443649,1,no markdown table
 spot-ais-hidden-cost-spike-in-your-stack,95,2735,Spot AI’s hidden cost spike in your stack,2026-06-28T05:02:38.306656,1,no FAQ section
-sqlalchemy-vs-asyncpg-pooling-in-async-services,95,2435,SQLAlchemy vs asyncpg: pooling in async services,2026-11-03T05:54:22.435630,1,no FAQ section
+sqlalchemy-vs-asyncpg-pooling-in-async-services,95,2578,SQLAlchemy vs asyncpg: pooling in async services,2026-11-03T05:54:22.435630,1,no FAQ section
 staging-wont-catch-prod-bugs-make,95,2613,Staging won't catch prod bugs. Make…,2026-10-19T18:32:38.061474,1,no FAQ section
 starlink-4g-fallback-serve-pages-under-800ms,95,2597,Starlink 4G fallback: serve pages under 800ms,2026-06-26T22:22:56.127707,1,no FAQ section
 stop-false-positives-in-ci-scanning-now,95,2808,Stop false positives in CI scanning now,2026-07-03T01:59:46.096965,1,no markdown table
@@ -268,6 +268,7 @@ audit-logs-compliance-vs-performance,100,2553,Audit logs: compliance vs performa
 audit-logs-ship-them-fast-keep-them-forever,100,2793,"Audit logs: ship them fast, keep them forever",2026-07-06T08:45:31.208931,0,
 audit-trails-immutabledb-vs-dynamodb-streams,100,3036,Audit trails: ImmutableDB vs DynamoDB Streams,2026-07-04T16:10:41.079187,0,
 aws-local-zones-vs-localstack-ai-microservices-in,100,2819,AWS Local Zones vs LocalStack: AI microservices in,2026-06-28T12:14:45.547940,0,
+bm25-vs-dense-embeddings-hybrid-search-reality,100,2562,BM25 vs dense embeddings: hybrid search reality,2026-11-03T19:21:26.917877,0,
 buy-vs-build-ai-3-hard-rules-for-2026,100,3070,Buy vs build AI: 3 hard rules for 2026,2026-08-11T13:13:49.802757,0,
 chaos-engineering-without-an-sre-team,100,2713,Chaos engineering without an SRE team,2026-09-30T04:44:20.807784,0,
 cicd-pipelines-stall-with-gpu-pods-2026-benchmarks,100,2646,CI/CD pipelines stall with GPU pods: 2026 benchmarks,2026-06-28T11:45:59.811643,0,

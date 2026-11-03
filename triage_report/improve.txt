@@ -130,6 +130,7 @@ docs/aws-costs-for-nairobi-saas-2026-bill-split/index.md
 docs/aws-local-zones-vs-localstack-ai-microservices-in/index.md
 docs/bank-apis-broke-under-african-2g/index.md
 docs/big-model-api-vs-fine-tune-the-2026-math/index.md
+docs/bm25-vs-dense-embeddings-hybrid-search-reality/index.md
 docs/boring-aws-lambda-layers-that-dont-lock/index.md
 docs/build-a-search-system-in-2026-semantic-keyword/index.md
 docs/build-agent-workflows-that-survive-restarts/index.md

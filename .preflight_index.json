@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-03T05:54:25.674454",
+  "built_at": "2026-11-03T19:21:30.009388",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5735,6 +5735,11 @@
       "slug": "sqlalchemy-vs-asyncpg-pooling-in-async-services",
       "title": "SQLAlchemy vs asyncpg: pooling in async services",
       "summary": "The official documentation for service meshes is good. What it doesn't cover is what happens six months into production. Here's what holds up in practice, and why. The failure is quiet — no errors, just wrong answers. The pool is the service's real concurrency limit Every async Python service that t"
+    },
+    {
+      "slug": "bm25-vs-dense-embeddings-hybrid-search-reality",
+      "title": "BM25 vs dense embeddings: hybrid search reality",
+      "summary": "It's a one-line fix once you know where to look, and expensive until then. The first time mutual tls fails in production, it rarely fails in the way any postmortem template expects. Here's the root cause, not just the symptom. BM25 and dense embeddings fail in ways that are almost perfectly compleme"
     }
   ]
 }

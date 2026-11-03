@@ -78,6 +78,7 @@ docs/audit-trails-immutabledb-vs-dynamodb-streams/
 docs/aws-cloudwatch-synthetics-for-ai-pipelines/
 docs/aws-cost-levers-2026-the-3-that-cut-bills-30/
 docs/aws-costs-for-nairobi-saas-2026-bill-split/
+docs/bm25-vs-dense-embeddings-hybrid-search-reality/
 docs/build-a-search-system-in-2026-semantic-keyword/
 docs/build-agent-workflows-that-survive-restarts/
 docs/built-a-multi-agent-system-without-langgraph/

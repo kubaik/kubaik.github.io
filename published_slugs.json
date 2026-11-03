@@ -440,6 +440,9 @@
   "big-model-api-vs-fine-tune-the-2026-math": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "bm25-vs-dense-embeddings-hybrid-search-reality": {
+    "first_seen": "2026-11-03T19:22:05.981576+00:00"
+  },
   "bootstrapped-5k-mrr-without-ads": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

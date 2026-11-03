@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Nov 2026 05:57:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2026 19:24:49 +0000</lastBuildDate>
+    <item>
+      <title>BM25 vs dense embeddings: hybrid search reality</title>
+      <link>https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/</link>
+      <description>How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.</description>
+      <pubDate>Tue, 03 Nov 2026 19:21:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/</guid>
+    </item>
     <item>
       <title>SQLAlchemy vs asyncpg: pooling in async services</title>
       <link>https://kubaik.github.io/sqlalchemy-vs-asyncpg-pooling-in-async-services/</link>
@@ -138,13 +145,6 @@
       <description>Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</description>
       <pubDate>Sun, 25 Oct 2026 03:50:07 +0000</pubDate>
       <guid>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</guid>
-    </item>
-    <item>
-      <title>ISO 20022: where payment rails actually break</title>
-      <link>https://kubaik.github.io/iso-20022-where-payment-rails-actually-break/</link>
-      <description>ISO 20022 migrations fail in mapping policy, code-list governance and character rules, not XML parsing. A layered design and checklist for payment rails.</description>
-      <pubDate>Sat, 24 Oct 2026 15:37:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/iso-20022-where-payment-rails-actually-break/</guid>
     </item>
   </channel>
 </rss>

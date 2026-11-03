@@ -1,0 +1,156 @@
+# BM25 vs dense embeddings: hybrid search reality
+
+BM25 and dense embeddings fail in ways that are almost perfectly complementary. BM25, the ranking function behind Lucene and the default `match` query in Elasticsearch and OpenSearch, is a lexical scorer: it counts term occurrences, weights rare terms by inverse document frequency, and normalizes for document length. It finds a product SKU, a statute number, or a surname with high recall, and it returns little of use when the user types "how do I stop my laptop from overheating" and the document says "thermal throttling." Dense retrieval, which encodes queries and documents into vectors and ranks by cosine similarity or dot product, does the reverse: it handles paraphrase and synonymy gracefully, and it commonly misses exact identifiers, rare tokens, and out-of-vocabulary strings because the tokenizer fragments them into subwords.
+
+The standard remedy is hybrid retrieval: run both, then fuse the ranked lists. The non-obvious part — the part most vector database documentation glosses over — is that fusion is not a free lunch. The two scores live on incomparable scales, the fusion method silently determines which retriever wins ties, and the evaluation used to "prove" hybrid is better is often contaminated by the same lexical overlap that makes BM25 look good. This article covers the mechanics of fusion, where each retriever breaks, and how to decide whether both are needed.
+
+## Why a single retriever keeps losing
+
+The failure mode that pushes teams toward hybrid is easy to state and hard to fix with one model. Consider a corpus of support tickets. A user searches for "ERR_CONNECTION_RESET." BM25 tokenizes on the underscore and matches the exact string in the ticket body. A dense model trained on general text may map that query near "network error," "connection refused," and "timeout," and return a semantically adjacent but operationally wrong ticket. Conversely, a user searches for "can't log in after password change" and the relevant document is titled "Credential cache invalidation on rotation." BM25 sees almost no overlapping terms; the dense model sees the paraphrase.
+
+Neither retriever is wrong. They measure different things: lexical overlap versus learned semantic proximity. Hybrid works because the errors are weakly correlated. If BM25 misses a document because of vocabulary mismatch, the dense retriever may still surface it, and vice versa. Fusion exploits that independence — but only if the fusion step is done correctly.
+
+## BM25 on its own terms: what the parameters actually do
+
+BM25's scoring formula has two tunable parameters, `k1` and `b`, and many teams never touch them. That is usually fine, but understanding them explains BM25's failure modes. `k1` controls term-frequency saturation: how quickly repeated occurrences of a term stop adding to the score. `b` controls length normalization: how much a long document is penalized for containing the query term. Setting `b` to 0 disables length normalization; setting it to 1 applies full normalization. Lucene's implementation uses `k1` = 1.2 and `b` = 0.75 as defaults.
+
+The practical consequence: BM25 is brittle to tokenization. If the analyzer lowercases, stems, and strips punctuation, "C++" and "C#" may collapse into the same token, and "v2.1" may become "v2" and "1." The fix is not a better ranker; it is a better analyzer. In Elasticsearch or OpenSearch, that means defining a custom analyzer with appropriate token filters and, for identifier-heavy corpora, a `keyword` sub-field for exact matching. A hybrid system that feeds badly tokenized text to BM25 gets a weak lexical signal and then blames BM25.
+
+BM25 also has no notion of query intent beyond term presence. It cannot know that "apple" in a recipe corpus means fruit and in a hardware corpus means the company. Dense retrieval handles that disambiguation through context; BM25 cannot without query expansion or field boosts.
+
+## Dense retrieval on its own terms: the embedding is the product
+
+Dense retrieval quality is dominated by the embedding model, not the vector index. Two models with the same dimensionality can differ substantially on retrieval benchmarks, and the difference is usually domain fit: a model trained on web text will underperform on legal or biomedical text unless fine-tuned or replaced. The vector store (FAISS, pgvector, Qdrant, Weaviate, Milvus — all real, all with different tradeoffs) mostly determines latency and operational cost, not ranking quality.
+
+The failure modes specific to dense retrieval:
+
+- **Exact-match blindness.** Rare tokens, product codes, and proper nouns get fragmented by the tokenizer. A query for "ISO-8601" may embed near "date format" and retrieve generic date-formatting docs instead of the standard itself.
+- **Negative and numeric queries.** "Not available in Canada" and "available in Canada" embed close together. Dense models are poor at negation and at precise numeric constraints.
+- **Out-of-domain drift.** A model trained on one distribution will place unfamiliar queries in a region of the vector space that does not correspond to the corpus.
+- **Truncation.** Most embedding models have a maximum input length; BERT-family models commonly cap at 512 tokens. Long documents get truncated, and whatever falls off the end is invisible to retrieval.
+
+The last point is underappreciated. Embedding whole documents without chunking silently discards content. Chunking strategy — fixed-size with overlap, sentence-aware, or semantic — changes recall more than the choice of vector index.
+
+## Fusing the two lists: RRF, weighted score, and the scale problem
+
+The fusion method is where hybrid systems quietly succeed or fail. There are three common approaches, and they are not equivalent.
+
+**Reciprocal Rank Fusion (RRF)** ignores raw scores entirely and combines ranks:
+
+```
+score(d) = sum over retrievers r of 1 / (k + rank_r(d))
+```
+
+where `k` is a smoothing constant, commonly 60. RRF is popular because it is scale-free: it does not care that BM25 scores might range from 0 to 30 while cosine similarities range from -1 to 1. It is robust and hard to tune wrong. Its weakness is that it discards score magnitude — a document that BM25 ranks first by a huge margin is treated the same as one that barely edges out second place.
+
+**Weighted score fusion** normalizes each retriever's scores (min-max, z-score, or softmax) and combines them with a weight `alpha`:
+
+```
+score(d) = alpha * norm(bm25(d)) + (1 - alpha) * norm(dense(d))
+```
+
+This preserves magnitude but introduces two problems. First, normalization is query-dependent: min-max normalization on a query where BM25 returns one strong match and nine weak ones produces a very different distribution than a query with ten equally strong matches. Second, `alpha` is a hyperparameter that must be tuned on a labeled set, and it is corpus-specific. A value that works for product search will not transfer to legal search.
+
+**Learned fusion** (a cross-encoder reranker or a trained linear combination) is the highest-quality option and the most expensive. A cross-encoder takes the query and each candidate document jointly and scores relevance directly, which captures interactions that neither retriever can. The cost is latency: cross-encoders must run per candidate, so they are typically applied to a top-k list from the fused retrievers, not to the full corpus.
+
+| Axis | BM25 | Dense | Hybrid (RRF) | Hybrid (weighted) |
+|---|---|---|---|---|
+| Exact identifier recall | High | Low | High | High |
+| Paraphrase recall | Low | High | High | High |
+| Score comparability | N/A | N/A | Rank-based, no normalization | Requires normalization |
+| Tuning burden | Analyzer + k1/b | Embedding model + chunking | Low (k) | High (alpha, normalization) |
+| Latency | Low | Moderate | Sum of both | Sum of both |
+| Interpretability | High (term matches) | Low | Moderate | Moderate |
+| Failure mode | Vocabulary mismatch | Exact-match blindness | Dilutes a strong signal | Alpha mis-set for query type |
+
+## Where the head-to-head actually turns
+
+The interesting comparison is not "which retriever is better" — it is "which fusion strategy matches this corpus." Three axes decide it.
+
+**Query type distribution.** If most queries contain identifiers, codes, or proper nouns, BM25 carries more signal and weighted fusion with a higher `alpha` (favoring BM25) is appropriate. If queries are natural-language questions, dense carries more and `alpha` should favor it. RRF sidesteps the choice but underweights the dominant retriever on queries where one clearly wins.
+
+**Labeled data availability.** Weighted fusion and learned reranking require relevance judgments. Without them, `alpha` is a guess, and a guessed `alpha` can underperform either retriever alone on a subset of queries. RRF needs no labels and is the correct default when measurement is not possible.
+
+**Latency budget.** Running two retrievers doubles the retrieval cost before fusion. For a p99 budget under 100 ms, that matters. One mitigation is to run BM25 first and only run dense retrieval when BM25's top score falls below a threshold — a cascade rather than a parallel hybrid. This is cheaper but risks missing paraphrase matches that BM25 would never surface, so the threshold must be set conservatively.
+
+A subtle evaluation trap: if test queries are drawn from the same vocabulary as the documents, BM25 will look artificially strong and hybrid will look like it barely helps. The only honest evaluation uses queries written by people who did not see the corpus — or at minimum, paraphrased queries that deliberately avoid document terms.
+
+### Measuring whether fusion helps
+
+A worked procedure, since no benchmark table substitutes for your own data:
+
+1. Collect 50–200 queries from search logs. For each, record the document (or passage) a domain expert judges relevant, allowing multiple relevant documents per query.
+2. Compute recall@k and mean reciprocal rank (MRR) separately for BM25-only, dense-only, and each fusion variant, using the same query set and the same chunking for dense.
+3. Compare at the k you actually show users. If recall@10 for BM25-only is 0.71 and hybrid is 0.74, the gain is three points on that query set — report the confidence interval or at least the per-query win/loss counts, since small sets produce noisy differences.
+4. Slice the results by query type (identifier-bearing versus natural language) before deciding. A hybrid that helps natural-language queries and hurts identifier queries may net out to nothing overall.
+
+Instrument retrieval latency at the same time: log the wall-clock time of the BM25 call, the embedding call, the vector search, and the fusion step separately. The fusion step is usually negligible; the embedding call for the query is often the dominant added cost.
+
+## A minimal hybrid retriever you can actually run
+
+The following uses `rank_bm25` and a sentence-transformers model, both real and widely used. It implements RRF over BM25 and cosine similarity, with no external services.
+
+```python
+from rank_bm25 import BM25Okapi
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+docs = [
+    "Reset the credential cache after password rotation.",
+    "ERR_CONNECTION_RESET occurs when the TLS handshake fails.",
+    "Thermal throttling reduces CPU frequency under sustained load.",
+]
+tokenized = [d.lower().split() for d in docs]
+bm25 = BM25Okapi(tokenized)
+model = SentenceTransformer("all-MiniLM-L6-v2")
+doc_emb = model.encode(docs, normalize_embeddings=True)
+
+def rrf(rank_lists, k=60):
+    scores = {}
+    for ranks in rank_lists:
+        for rank, idx in enumerate(ranks):
+            scores[idx] = scores.get(idx, 0.0) + 1.0 / (k + rank + 1)
+    return sorted(scores.items(), key=lambda x: -x[1])
+
+def hybrid(query, top_k=3):
+    bm_scores = bm25.get_scores(query.lower().split())
+    bm_ranks = np.argsort(-bm_scores).tolist()
+    q_emb = model.encode([query], normalize_embeddings=True)[0]
+    dense_scores = doc_emb @ q_emb
+    dense_ranks = np.argsort(-dense_scores).tolist()
+    fused = rrf([bm_ranks, dense_ranks])
+    return [(docs[i], round(s, 4)) for i, s in fused[:top_k]]
+
+print(hybrid("ERR_CONNECTION_RESET"))
+print(hybrid("why does my CPU slow down when hot"))
+```
+
+The first query is lexical: BM25 ranks the TLS document first, and RRF preserves that. The second is semantic: BM25 finds little overlap, the dense retriever ranks the thermal document first, and RRF again preserves it. This is the mechanism hybrid exploits — not that fusion is smarter than either retriever, but that it lets the stronger retriever for each query type win without a hard-coded switch.
+
+Note one detail in the code: `rank_bm25`'s `BM25Okapi` applies its own default `k1` and `b`, and its tokenization here is a naive lowercase split. In production, the analyzer used for BM25 must match the one used at index time, and the same text must be fed consistently to both retrievers.
+
+## Who should pick which
+
+**Use BM25 alone** if the corpus is identifier-heavy (logs, code, SKUs, legal citations), queries are short and keyword-like, and there is no labeled relevance data. Adding dense retrieval adds latency and operational surface for marginal gain, and a badly tuned `alpha` can make results worse. The default `match` query with a tuned analyzer is a strong baseline that teams sometimes abandon too early.
+
+**Use dense retrieval alone** if queries are natural-language questions over prose, exact identifiers are rare, and there is infrastructure to manage an embedding model version alongside the index. The hidden cost is re-embedding the corpus whenever the model changes — a model upgrade is a full reindex, not a config change.
+
+**Use hybrid with RRF** if query types are mixed and there is no labeled data. It is the safest default, it needs almost no tuning, and it degrades gracefully when one retriever is weak. Accept that it underweights dominant signals on queries where one retriever clearly wins.
+
+**Use hybrid with weighted fusion or a cross-encoder reranker** if relevance judgments exist and the latency budget allows a reranking pass. This is where the real gains are, but they are only measurable against a clean evaluation set. Without one, `alpha` is being tuned to a feeling.
+
+**Do not use hybrid** if the latency budget is tight and queries are homogeneous. A cascade (BM25 first, dense only on low-confidence results) often captures most of the benefit at a fraction of the cost.
+
+## Frequently Asked Questions
+
+**Does hybrid search always beat BM25?** No. On corpora where queries are keyword-like and documents are short, BM25 alone often matches hybrid, and hybrid adds latency. Reported gains from hybrid come disproportionately from corpora with natural-language queries and vocabulary mismatch. If the evaluation set is drawn from document vocabulary, hybrid will look worse than it is — or BM25 will look better.
+
+**What is the best value for RRF's k?** The commonly cited default is 60, from the original RRF paper. Lower values sharpen the contribution of top-ranked results; higher values flatten the curve. In practice, 60 is a reasonable starting point and the ranking is not highly sensitive to it across a moderate range. Tune it only with labeled data; otherwise leave it.
+
+**Can BM25 and dense retrieval live in the same vector database?** Some vector databases support sparse vectors (which can encode BM25-style term weights) alongside dense vectors, allowing both to be stored and queried in one system. This reduces operational complexity but does not eliminate the fusion decision — RRF or a weighted combination is still chosen at query time. Check whether the sparse representation matches the analyzer's tokenization before assuming parity with a dedicated BM25 implementation.
+
+**Why does a hybrid system return worse results than either retriever alone?** The most common cause is score normalization: min-max normalizing BM25 scores per query can invert the ranking when the score distribution is skewed. A second cause is a dense model that is out-of-domain, producing near-random similarities that RRF then treats as meaningful. A third is duplicate documents across the two lists being counted twice under naive score addition. RRF avoids the first and third; the second requires checking the embedding model against a sample of queries.
+
+## The next 30 minutes
+
+Open the retrieval evaluation set — or, if there is none, pull 20 real queries from search logs and write down the document each should return. Run the current BM25-only system against those 20 queries and record which ones fail. Sort the failures into "vocabulary mismatch" and "identifier missed." If the failures are mostly vocabulary mismatch, hybrid is worth building; if they are mostly identifier misses, fix the analyzer before adding a second retriever. That one sort tells more than any benchmark table.

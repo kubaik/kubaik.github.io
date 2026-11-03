@@ -1,0 +1,511 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BM25 vs dense embeddings: hybrid search reality - Kubai Kevin</title>
+        <meta name="description" content="How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.">
+        <meta name="keywords" content="Bm25, HybridSearch, DenseEmbeddings, ReciprocalRankFusion">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-03T19:21:26.917877">
+        <meta property="article:modified_time" content="2026-11-03T19:24:06.394419+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="BM25 vs dense embeddings: hybrid search reality">
+        <meta property="og:description" content="How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.">
+        <meta property="og:url" content="https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/bm25-vs-dense-embeddings-hybrid-search-reality.png">
+        <meta property="og:image:alt" content="BM25 vs dense embeddings: hybrid search reality">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="BM25 vs dense embeddings: hybrid search reality">
+        <meta name="twitter:description" content="How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/bm25-vs-dense-embeddings-hybrid-search-reality.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/#article",
+      "headline": "BM25 vs dense embeddings: hybrid search reality",
+      "description": "How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.",
+      "datePublished": "2026-11-03T19:21:26+00:00",
+      "dateModified": "2026-11-03T19:24:06+00:00",
+      "wordCount": 2760,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/"
+      },
+      "keywords": "Bm25, HybridSearch, DenseEmbeddings, ReciprocalRankFusion",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/bm25-vs-dense-embeddings-hybrid-search-reality.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "BM25 vs dense embeddings: hybrid search reality",
+          "item": "https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>BM25 vs dense embeddings: hybrid search reality</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">BM25 vs dense embeddings: hybrid search reality</h1>
+                
+                <p class="post-lead">How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/bm25/"
+                       style="text-decoration:none;">Bm25</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">HybridSearch</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DenseEmbeddings</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ReciprocalRankFusion</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2760 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>BM25 and dense embeddings fail in ways that are almost perfectly complementary. BM25, the ranking function behind Lucene and the default <code>match</code> query in Elasticsearch and OpenSearch, is a lexical scorer: it counts term occurrences, weights rare terms by inverse document frequency, and normalizes for document length. It finds a product SKU, a statute number, or a surname with high recall, and it returns little of use when the user types "how do I stop my laptop from overheating" and the document says "thermal throttling." Dense retrieval, which encodes queries and documents into vectors and ranks by cosine similarity or dot product, does the reverse: it handles paraphrase and synonymy gracefully, and it commonly misses exact identifiers, rare tokens, and out-of-vocabulary strings because the tokenizer fragments them into subwords.</p>
+<p>The standard remedy is hybrid retrieval: run both, then fuse the ranked lists. The non-obvious part — the part most vector database documentation glosses over — is that fusion is not a free lunch. The two scores live on incomparable scales, the fusion method silently determines which retriever wins ties, and the evaluation used to "prove" hybrid is better is often contaminated by the same lexical overlap that makes BM25 look good. This article covers the mechanics of fusion, where each retriever breaks, and how to decide whether both are needed.</p>
+<h2 id="why-a-single-retriever-keeps-losing">Why a single retriever keeps losing</h2>
+<p>The failure mode that pushes teams toward hybrid is easy to state and hard to fix with one model. Consider a corpus of support tickets. A user searches for "ERR_CONNECTION_RESET." BM25 tokenizes on the underscore and matches the exact string in the ticket body. A dense model trained on general text may map that query near "network error," "connection refused," and "timeout," and return a semantically adjacent but operationally wrong ticket. Conversely, a user searches for "can't log in after password change" and the relevant document is titled "Credential cache invalidation on rotation." BM25 sees almost no overlapping terms; the dense model sees the paraphrase.</p>
+<p>Neither retriever is wrong. They measure different things: lexical overlap versus learned semantic proximity. Hybrid works because the errors are weakly correlated. If BM25 misses a document because of vocabulary mismatch, the dense retriever may still surface it, and vice versa. Fusion exploits that independence — but only if the fusion step is done correctly.</p>
+<h2 id="bm25-on-its-own-terms-what-the-parameters-actually-do">BM25 on its own terms: what the parameters actually do</h2>
+<p>BM25's scoring formula has two tunable parameters, <code>k1</code> and <code>b</code>, and many teams never touch them. That is usually fine, but understanding them explains BM25's failure modes. <code>k1</code> controls term-frequency saturation: how quickly repeated occurrences of a term stop adding to the score. <code>b</code> controls length normalization: how much a long document is penalized for containing the query term. Setting <code>b</code> to 0 disables length normalization; setting it to 1 applies full normalization. Lucene's implementation uses <code>k1</code> = 1.2 and <code>b</code> = 0.75 as defaults.</p>
+<p>The practical consequence: BM25 is brittle to tokenization. If the analyzer lowercases, stems, and strips punctuation, "C++" and "C#" may collapse into the same token, and "v2.1" may become "v2" and "1." The fix is not a better ranker; it is a better analyzer. In Elasticsearch or OpenSearch, that means defining a custom analyzer with appropriate token filters and, for identifier-heavy corpora, a <code>keyword</code> sub-field for exact matching. A hybrid system that feeds badly tokenized text to BM25 gets a weak lexical signal and then blames BM25.</p>
+<p>BM25 also has no notion of query intent beyond term presence. It cannot know that "apple" in a recipe corpus means fruit and in a hardware corpus means the company. Dense retrieval handles that disambiguation through context; BM25 cannot without query expansion or field boosts.</p>
+<h2 id="dense-retrieval-on-its-own-terms-the-embedding-is-the-product">Dense retrieval on its own terms: the embedding is the product</h2>
+<p>Dense retrieval quality is dominated by the embedding model, not the vector index. Two models with the same dimensionality can differ substantially on retrieval benchmarks, and the difference is usually domain fit: a model trained on web text will underperform on legal or biomedical text unless fine-tuned or replaced. The vector store (FAISS, pgvector, Qdrant, Weaviate, Milvus — all real, all with different tradeoffs) mostly determines latency and operational cost, not ranking quality.</p>
+<p>The failure modes specific to dense retrieval:</p>
+<ul>
+<li><strong>Exact-match blindness.</strong> Rare tokens, product codes, and proper nouns get fragmented by the tokenizer. A query for "ISO-8601" may embed near "date format" and retrieve generic date-formatting docs instead of the standard itself.</li>
+<li><strong>Negative and numeric queries.</strong> "Not available in Canada" and "available in Canada" embed close together. Dense models are poor at negation and at precise numeric constraints.</li>
+<li><strong>Out-of-domain drift.</strong> A model trained on one distribution will place unfamiliar queries in a region of the vector space that does not correspond to the corpus.</li>
+<li><strong>Truncation.</strong> Most embedding models have a maximum input length; BERT-family models commonly cap at 512 tokens. Long documents get truncated, and whatever falls off the end is invisible to retrieval.</li>
+</ul>
+<p>The last point is underappreciated. Embedding whole documents without chunking silently discards content. Chunking strategy — fixed-size with overlap, sentence-aware, or semantic — changes recall more than the choice of vector index.</p>
+<h2 id="fusing-the-two-lists-rrf-weighted-score-and-the-scale-problem">Fusing the two lists: RRF, weighted score, and the scale problem</h2>
+<p>The fusion method is where hybrid systems quietly succeed or fail. There are three common approaches, and they are not equivalent.</p>
+<p><strong>Reciprocal Rank Fusion (RRF)</strong> ignores raw scores entirely and combines ranks:</p>
+<pre><code>score(d) = sum over retrievers r of 1 / (k + rank_r(d))
+</code></pre>
+<p>where <code>k</code> is a smoothing constant, commonly 60. RRF is popular because it is scale-free: it does not care that BM25 scores might range from 0 to 30 while cosine similarities range from -1 to 1. It is robust and hard to tune wrong. Its weakness is that it discards score magnitude — a document that BM25 ranks first by a huge margin is treated the same as one that barely edges out second place.</p>
+<p><strong>Weighted score fusion</strong> normalizes each retriever's scores (min-max, z-score, or softmax) and combines them with a weight <code>alpha</code>:</p>
+<pre><code>score(d) = alpha * norm(bm25(d)) + (1 - alpha) * norm(dense(d))
+</code></pre>
+<p>This preserves magnitude but introduces two problems. First, normalization is query-dependent: min-max normalization on a query where BM25 returns one strong match and nine weak ones produces a very different distribution than a query with ten equally strong matches. Second, <code>alpha</code> is a hyperparameter that must be tuned on a labeled set, and it is corpus-specific. A value that works for product search will not transfer to legal search.</p>
+<p><strong>Learned fusion</strong> (a cross-encoder reranker or a trained linear combination) is the highest-quality option and the most expensive. A cross-encoder takes the query and each candidate document jointly and scores relevance directly, which captures interactions that neither retriever can. The cost is latency: cross-encoders must run per candidate, so they are typically applied to a top-k list from the fused retrievers, not to the full corpus.</p>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>BM25</th>
+<th>Dense</th>
+<th>Hybrid (RRF)</th>
+<th>Hybrid (weighted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exact identifier recall</td>
+<td>High</td>
+<td>Low</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Paraphrase recall</td>
+<td>Low</td>
+<td>High</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Score comparability</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Rank-based, no normalization</td>
+<td>Requires normalization</td>
+</tr>
+<tr>
+<td>Tuning burden</td>
+<td>Analyzer + k1/b</td>
+<td>Embedding model + chunking</td>
+<td>Low (k)</td>
+<td>High (alpha, normalization)</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>Low</td>
+<td>Moderate</td>
+<td>Sum of both</td>
+<td>Sum of both</td>
+</tr>
+<tr>
+<td>Interpretability</td>
+<td>High (term matches)</td>
+<td>Low</td>
+<td>Moderate</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>Failure mode</td>
+<td>Vocabulary mismatch</td>
+<td>Exact-match blindness</td>
+<td>Dilutes a strong signal</td>
+<td>Alpha mis-set for query type</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-the-head-to-head-actually-turns">Where the head-to-head actually turns</h2>
+<p>The interesting comparison is not "which retriever is better" — it is "which fusion strategy matches this corpus." Three axes decide it.</p>
+<p><strong>Query type distribution.</strong> If most queries contain identifiers, codes, or proper nouns, BM25 carries more signal and weighted fusion with a higher <code>alpha</code> (favoring BM25) is appropriate. If queries are natural-language questions, dense carries more and <code>alpha</code> should favor it. RRF sidesteps the choice but underweights the dominant retriever on queries where one clearly wins.</p>
+<p><strong>Labeled data availability.</strong> Weighted fusion and learned reranking require relevance judgments. Without them, <code>alpha</code> is a guess, and a guessed <code>alpha</code> can underperform either retriever alone on a subset of queries. RRF needs no labels and is the correct default when measurement is not possible.</p>
+<p><strong>Latency budget.</strong> Running two retrievers doubles the retrieval cost before fusion. For a p99 budget under 100 ms, that matters. One mitigation is to run BM25 first and only run dense retrieval when BM25's top score falls below a threshold — a cascade rather than a parallel hybrid. This is cheaper but risks missing paraphrase matches that BM25 would never surface, so the threshold must be set conservatively.</p>
+<p>A subtle evaluation trap: if test queries are drawn from the same vocabulary as the documents, BM25 will look artificially strong and hybrid will look like it barely helps. The only honest evaluation uses queries written by people who did not see the corpus — or at minimum, paraphrased queries that deliberately avoid document terms.</p>
+<h3 id="measuring-whether-fusion-helps">Measuring whether fusion helps</h3>
+<p>A worked procedure, since no benchmark table substitutes for your own data:</p>
+<ol>
+<li>Collect 50–200 queries from search logs. For each, record the document (or passage) a domain expert judges relevant, allowing multiple relevant documents per query.</li>
+<li>Compute recall@k and mean reciprocal rank (MRR) separately for BM25-only, dense-only, and each fusion variant, using the same query set and the same chunking for dense.</li>
+<li>Compare at the k you actually show users. If recall@10 for BM25-only is 0.71 and hybrid is 0.74, the gain is three points on that query set — report the confidence interval or at least the per-query win/loss counts, since small sets produce noisy differences.</li>
+<li>Slice the results by query type (identifier-bearing versus natural language) before deciding. A hybrid that helps natural-language queries and hurts identifier queries may net out to nothing overall.</li>
+</ol>
+<p>Instrument retrieval latency at the same time: log the wall-clock time of the BM25 call, the embedding call, the vector search, and the fusion step separately. The fusion step is usually negligible; the embedding call for the query is often the dominant added cost.</p>
+<h2 id="a-minimal-hybrid-retriever-you-can-actually-run">A minimal hybrid retriever you can actually run</h2>
+<p>The following uses <code>rank_bm25</code> and a sentence-transformers model, both real and widely used. It implements RRF over BM25 and cosine similarity, with no external services.</p>
+<pre><code class="language-python">from rank_bm25 import BM25Okapi
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+docs = [
+    &quot;Reset the credential cache after password rotation.&quot;,
+    &quot;ERR_CONNECTION_RESET occurs when the TLS handshake fails.&quot;,
+    &quot;Thermal throttling reduces CPU frequency under sustained load.&quot;,
+]
+tokenized = [d.lower().split() for d in docs]
+bm25 = BM25Okapi(tokenized)
+model = SentenceTransformer(&quot;all-MiniLM-L6-v2&quot;)
+doc_emb = model.encode(docs, normalize_embeddings=True)
+
+def rrf(rank_lists, k=60):
+    scores = {}
+    for ranks in rank_lists:
+        for rank, idx in enumerate(ranks):
+            scores[idx] = scores.get(idx, 0.0) + 1.0 / (k + rank + 1)
+    return sorted(scores.items(), key=lambda x: -x[1])
+
+def hybrid(query, top_k=3):
+    bm_scores = bm25.get_scores(query.lower().split())
+    bm_ranks = np.argsort(-bm_scores).tolist()
+    q_emb = model.encode([query], normalize_embeddings=True)[0]
+    dense_scores = doc_emb @ q_emb
+    dense_ranks = np.argsort(-dense_scores).tolist()
+    fused = rrf([bm_ranks, dense_ranks])
+    return [(docs[i], round(s, 4)) for i, s in fused[:top_k]]
+
+print(hybrid(&quot;ERR_CONNECTION_RESET&quot;))
+print(hybrid(&quot;why does my CPU slow down when hot&quot;))
+</code></pre>
+<p>The first query is lexical: BM25 ranks the TLS document first, and RRF preserves that. The second is semantic: BM25 finds little overlap, the dense retriever ranks the thermal document first, and RRF again preserves it. This is the mechanism hybrid exploits — not that fusion is smarter than either retriever, but that it lets the stronger retriever for each query type win without a hard-coded switch.</p>
+<p>Note one detail in the code: <code>rank_bm25</code>'s <code>BM25Okapi</code> applies its own default <code>k1</code> and <code>b</code>, and its tokenization here is a naive lowercase split. In production, the analyzer used for BM25 must match the one used at index time, and the same text must be fed consistently to both retrievers.</p>
+<h2 id="who-should-pick-which">Who should pick which</h2>
+<p><strong>Use BM25 alone</strong> if the corpus is identifier-heavy (logs, code, SKUs, legal citations), queries are short and keyword-like, and there is no labeled relevance data. Adding dense retrieval adds latency and operational surface for marginal gain, and a badly tuned <code>alpha</code> can make results worse. The default <code>match</code> query with a tuned analyzer is a strong baseline that teams sometimes abandon too early.</p>
+<p><strong>Use dense retrieval alone</strong> if queries are natural-language questions over prose, exact identifiers are rare, and there is infrastructure to manage an embedding model version alongside the index. The hidden cost is re-embedding the corpus whenever the model changes — a model upgrade is a full reindex, not a config change.</p>
+<p><strong>Use hybrid with RRF</strong> if query types are mixed and there is no labeled data. It is the safest default, it needs almost no tuning, and it degrades gracefully when one retriever is weak. Accept that it underweights dominant signals on queries where one retriever clearly wins.</p>
+<p><strong>Use hybrid with weighted fusion or a cross-encoder reranker</strong> if relevance judgments exist and the latency budget allows a reranking pass. This is where the real gains are, but they are only measurable against a clean evaluation set. Without one, <code>alpha</code> is being tuned to a feeling.</p>
+<p><strong>Do not use hybrid</strong> if the latency budget is tight and queries are homogeneous. A cascade (BM25 first, dense only on low-confidence results) often captures most of the benefit at a fraction of the cost.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Does hybrid search always beat BM25?</strong> No. On corpora where queries are keyword-like and documents are short, BM25 alone often matches hybrid, and hybrid adds latency. Reported gains from hybrid come disproportionately from corpora with natural-language queries and vocabulary mismatch. If the evaluation set is drawn from document vocabulary, hybrid will look worse than it is — or BM25 will look better.</p>
+<p><strong>What is the best value for RRF's k?</strong> The commonly cited default is 60, from the original RRF paper. Lower values sharpen the contribution of top-ranked results; higher values flatten the curve. In practice, 60 is a reasonable starting point and the ranking is not highly sensitive to it across a moderate range. Tune it only with labeled data; otherwise leave it.</p>
+<p><strong>Can BM25 and dense retrieval live in the same vector database?</strong> Some vector databases support sparse vectors (which can encode BM25-style term weights) alongside dense vectors, allowing both to be stored and queried in one system. This reduces operational complexity but does not eliminate the fusion decision — RRF or a weighted combination is still chosen at query time. Check whether the sparse representation matches the analyzer's tokenization before assuming parity with a dedicated BM25 implementation.</p>
+<p><strong>Why does a hybrid system return worse results than either retriever alone?</strong> The most common cause is score normalization: min-max normalizing BM25 scores per query can invert the ranking when the score distribution is skewed. A second cause is a dense model that is out-of-domain, producing near-random similarities that RRF then treats as meaningful. A third is duplicate documents across the two lists being counted twice under naive score addition. RRF avoids the first and third; the second requires checking the embedding model against a sample of queries.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the retrieval evaluation set — or, if there is none, pull 20 real queries from search logs and write down the document each should return. Run the current BM25-only system against those 20 queries and record which ones fail. Sort the failures into "vocabulary mismatch" and "identifier missed." If the failures are mostly vocabulary mismatch, hybrid is worth building; if they are mostly identifier misses, fix the analyzer before adding a second retriever. That one sort tells more than any benchmark table.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
+<li><a href="https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/">RAG pipelines: 4 silent prod killers</a></li>
+<li><a href="https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/">RAG rots if you don’t refresh indexes</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://github.com/pgvector/pgvector">pgvector README</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/rag-is-not-enough-hybrid-search-reranking-in-2026/">
+                        <h3>RAG is not enough: hybrid search + reranking in 2026</h3>
+                        <p>Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.</p>
+                        <span class="related-meta">12 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">
+                        <h3>LLMOps 2026: evaluation stack that replaced RAG dashboards</h3>
+                        <p>Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.</p>
+                        <span class="related-meta">13 min read · 5 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
+                        <h3>RAG on legacy systems: vector DB vs. full-text SQL</h3>
+                        <p>Compare vector databases and in-database vector search for adding RAG to legacy systems, with latency, cost, and operational trade-offs.</p>
+                        <span class="related-meta">14 min read · 30 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
