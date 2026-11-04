@@ -1,0 +1,471 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Technical debt: defend priorities to stakeholders - Kubai Kevin</title>
+        <meta name="description" content="A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.">
+        <meta name="keywords" content="TechnicalDebt, Prioritization, Technical, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-04T05:27:38.871384">
+        <meta property="article:modified_time" content="2026-11-04T05:29:49.023192+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Technical debt: defend priorities to stakeholders">
+        <meta property="og:description" content="A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.">
+        <meta property="og:url" content="https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/technical-debt-defend-priorities-to-stakeholders.png">
+        <meta property="og:image:alt" content="Technical debt: defend priorities to stakeholders">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Technical debt: defend priorities to stakeholders">
+        <meta name="twitter:description" content="A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/technical-debt-defend-priorities-to-stakeholders.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/#article",
+      "headline": "Technical debt: defend priorities to stakeholders",
+      "description": "A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.",
+      "datePublished": "2026-11-04T05:27:38+00:00",
+      "dateModified": "2026-11-04T05:29:49+00:00",
+      "wordCount": 2579,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/"
+      },
+      "keywords": "TechnicalDebt, Prioritization, Technical, Softwareengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/technical-debt-defend-priorities-to-stakeholders.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Technical debt: defend priorities to stakeholders",
+          "item": "https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Technical debt: defend priorities to stakeholders</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Technical debt: defend priorities to stakeholders</h1>
+                
+                <p class="post-lead">A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/technicaldebt/"
+                       style="text-decoration:none;">TechnicalDebt</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Prioritization</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Technical</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2579 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-04
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Technical debt has a reputation for being boring, which is exactly why it rarely gets budgeted. The hard part is not identifying debt; it is making the prioritisation defensible to people who do not read stack traces.</p>
+<p>A familiar scene: a CTO asks why the checkout service still runs on a deprecated runtime while the team spends a sprint on test coverage. The engineering manager has a gut answer — "it's risky" — but no number, no date, and no story that survives a budget meeting. The debt never gets fixed, or it gets fixed in a panic after an outage. The real problem is not identifying technical debt; it is making the prioritisation defensible to people who don't read stack traces.</p>
+<p>This article provides a framework that turns debt into a language stakeholders already understand: cost, risk, and time. It starts with the symptom that tells you your current approach is failing, then walks through the causes, the confirmation steps, the fixes, and the prevention. The output is a one-page artefact that can be pasted into a planning doc.</p>
+<h2 id="the-symptom-well-fix-it-after-the-launch">The symptom: "we'll fix it after the launch"</h2>
+<p>The exact phrase varies, but the pattern is consistent: debt items are logged in a backlog that nobody outside engineering reads, and every prioritisation conversation ends with "not now." The engineering manager leaves the room with a promise to "keep an eye on it," and six weeks later the same item appears in a post-incident review.</p>
+<p>A more measurable symptom is a growing gap between the debt backlog and the delivery roadmap. If debt items have no owner, no estimated effort, and no stated consequence of delay, they are not priorities — they are wishes. Stakeholders are not ignoring the list; they are responding rationally to a list that gives them nothing to trade off against feature work.</p>
+<p>The core mistake is treating technical debt as an engineering problem that needs engineering justification. It is a business problem that needs a business case. The framework below is designed to produce that case without requiring a finance degree.</p>
+<h2 id="cause-1-debt-is-described-in-implementation-terms">Cause 1: debt is described in implementation terms</h2>
+<p>The most common reason debt gets deprioritised is that the description is unreadable to the people who control the budget. "Refactor the auth module" means nothing to a head of sales. "Migrate from a deprecated runtime before vendor support ends" means something, because it has a date and a consequence.</p>
+<h3 id="how-to-confirm">How to confirm</h3>
+<p>Open the debt backlog and count how many items mention a business outcome (revenue, risk, compliance, customer-facing latency) versus a technical action. If the ratio is heavily skewed toward technical actions, this is the primary cause.</p>
+<h3 id="the-fix-rewrite-each-item-as-a-decision">The fix: rewrite each item as a decision</h3>
+<p>Convert each debt item into a one-line statement with four fields: what breaks if nothing is done, when it breaks, what it costs to fix now, and what it costs to fix later. The last field is the one stakeholders remember. Use ranges, not point estimates, and label them as estimates.</p>
+<p>A simple template, usable in a spreadsheet or issue tracker:</p>
+<pre><code class="language-markdown">| Debt item | Consequence if deferred | Trigger date | Fix now (est.) | Fix later (est.) |
+|-----------|--------------------------|--------------|----------------|------------------|
+| Auth service on unsupported runtime | No security patches; incident response time doubles | Vendor EOL 2026-09-30 | 3 engineer-weeks | 6 engineer-weeks + incident cost |
+| No integration tests for payments | Every release risks silent breakage; rollback rate high | Immediate | 2 engineer-weeks | 4 engineer-weeks + customer credits |
+</code></pre>
+<p>The numbers in the table are illustrative. The point is the structure: a date, a consequence, and a widening cost gap. Stakeholders can argue with a number; they cannot argue with "it's messy."</p>
+<h2 id="cause-2-no-shared-scoring-model-so-every-debate-restarts-from-zero">Cause 2: no shared scoring model, so every debate restarts from zero</h2>
+<p>When each debt item is argued on its own merits, prioritisation becomes a series of one-off negotiations. The engineering manager ends up defending the same principles repeatedly, and the loudest stakeholder wins.</p>
+<h3 id="how-to-confirm_1">How to confirm</h3>
+<p>If two people on the team would rank the same five debt items differently, there is no shared model. A quick test: ask each engineer to score the top five items on impact and effort without discussion. Wide disagreement confirms the cause.</p>
+<h3 id="the-fix-a-two-axis-score-with-a-forcing-function">The fix: a two-axis score with a forcing function</h3>
+<p>Use a simple impact-versus-effort score, but add a forcing function: any item that blocks a committed roadmap goal or has a hard external deadline gets automatic priority regardless of score. This prevents the model from burying urgent work under a pile of medium-impact items.</p>
+<p>A workable scoring model:</p>
+<ul>
+<li><strong>Impact (1–5):</strong> how much does this item affect revenue, customer experience, security, or delivery speed? Anchor 5 to a current roadmap goal, 1 to no measurable effect.</li>
+<li><strong>Effort (1–5):</strong> engineer-weeks, with 1 = under a week, 5 = over a month.</li>
+<li><strong>Reversibility (1–3):</strong> how hard is it to undo if the choice is wrong? Higher means more caution.</li>
+</ul>
+<p>Priority score = (Impact × 2) + Reversibility − Effort. The weights are arbitrary but must be fixed and published. The value is not mathematical precision; it is that the same inputs produce the same ranking every time, which ends the re-litigation.</p>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Best for</th>
+<th>Weakness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Impact/Effort matrix</td>
+<td>Fast triage of many items</td>
+<td>Ignores deadlines and dependencies</td>
+</tr>
+<tr>
+<td>Cost of delay</td>
+<td>Stakeholder conversations about timing</td>
+<td>Requires revenue estimates that may not exist</td>
+</tr>
+<tr>
+<td>Risk-adjusted backlog</td>
+<td>Security and compliance debt</td>
+<td>Hard to compare against feature work</td>
+</tr>
+<tr>
+<td>This two-axis score + forcing function</td>
+<td>Mixed debt portfolios with some hard deadlines</td>
+<td>Still needs calibration against real outcomes</td>
+</tr>
+</tbody>
+</table>
+<p>This table is a genuine comparison of trade-offs; pick the one that matches the stakeholder culture. If stakeholders think in money, cost of delay will land better. If they think in risk, lead with the risk-adjusted view.</p>
+<h2 id="cause-3-the-cost-of-delay-is-invisible">Cause 3: the cost of delay is invisible</h2>
+<p>The single most persuasive argument for debt work is the cost of waiting. But most teams never calculate it, so the default assumption is zero. When the cost of delay is zero, deferral is always rational.</p>
+<h3 id="how-to-confirm_2">How to confirm</h3>
+<p>Check whether any debt item in the backlog has an estimated cost per sprint of delay. If none do, this cause is active.</p>
+<h3 id="the-fix-a-worked-example-of-cost-of-delay">The fix: a worked example of cost of delay</h3>
+<p>Cost of delay does not require a finance team. It requires stated assumptions. Here is a worked example using only arithmetic and labelled assumptions.</p>
+<p>Assume a payments service has no automated regression tests. The team releases weekly. Assume, based on incident history, that one in ten releases causes a rollback that takes four engineer-hours to resolve. Assume a fully loaded engineer cost of $60 per hour (illustrative).</p>
+<ul>
+<li>Expected rollback cost per release = 0.1 × 4 hours × $60 = $24.</li>
+<li>Over a year (52 releases) = $24 × 52 = $1,248.</li>
+</ul>
+<p>That number alone will not win a budget meeting. Add the second-order cost: each rollback delays a planned feature by a day, and the feature is tied to a contract milestone. If the milestone penalty is $5,000 per week of delay, and one in ten releases causes a one-day delay, the expected penalty per release is 0.1 × (1/5) × $5,000 = $100. Annualised, that is $5,200. Now the total cost of delay is roughly $6,448 per year.</p>
+<p>Compare that to the estimated fix cost of two engineer-weeks ($4,800 at the same illustrative rate). The payback period is under a year, and the risk reduction is a bonus. That is a defensible case. The numbers are illustrative; the method is the point. Replace them with your own incident history and contract terms.</p>
+<p>Two practical notes on gathering the inputs. First, incident history is usually richer than people assume: ticketing systems, on-call logs, and deployment records already contain rollback counts and time-to-resolve. Second, when a number is genuinely unknown, state the assumption explicitly and show how the conclusion changes if it is wrong. A case built on visible assumptions can be challenged and improved; a case built on authority cannot.</p>
+<h2 id="cause-4-debt-work-has-no-visible-delivery">Cause 4: debt work has no visible delivery</h2>
+<p>Stakeholders fund visible progress. Debt work often produces no demo, no release note, and no metric movement in the short term, so it looks like a cost centre. This is a perception problem with a concrete fix.</p>
+<h3 id="how-to-confirm_3">How to confirm</h3>
+<p>If the last three sprint reviews contained no debt-related demo or metric, this cause is active.</p>
+<h3 id="the-fix-attach-a-leading-indicator-to-every-debt-item">The fix: attach a leading indicator to every debt item</h3>
+<p>Every debt item should have a metric that moves when the work is done. For test coverage debt, the indicator is rollback rate or escaped defect count, not coverage percentage. For runtime upgrade debt, the indicator is the number of unsupported dependencies. For architecture debt, the indicator is p95 latency or deploy frequency.</p>
+<p>Publish these indicators in the same dashboard stakeholders already check for feature progress. When a debt item ships, show the before-and-after on that metric. This converts invisible work into a visible trend line, which is the only language a roadmap review understands.</p>
+<h2 id="cause-5-no-capacity-reservation-so-debt-work-is-always-the-flex">Cause 5: no capacity reservation, so debt work is always the flex</h2>
+<p>Even with a good case, debt work loses because it has no reserved capacity. Feature work has a committed roadmap; debt work has good intentions. When the sprint gets tight, debt is what gets cut.</p>
+<h3 id="how-to-confirm_4">How to confirm</h3>
+<p>Look at the last four sprints. If debt work was planned and then dropped in more than one, there is no capacity reservation.</p>
+<h3 id="the-fix-a-fixed-debt-budget-with-a-rollover-rule">The fix: a fixed debt budget with a rollover rule</h3>
+<p>Reserve a fixed percentage of engineering capacity for debt, and make it non-negotiable in the same way a feature commitment is. A common starting point is 15–20% of each sprint, but the exact number matters less than the rule that unused debt capacity does not roll over into feature work. If the team finishes debt early, they pull the next debt item; they do not pull a feature.</p>
+<p>This is the hardest part to defend because it looks like a tax on delivery. The counter-argument is the cost-of-delay arithmetic above: a 20% reservation now is cheaper than an unplanned 40% outage later. Present it as insurance, not overhead.</p>
+<h2 id="failure-modes-that-undermine-the-framework">Failure modes that undermine the framework</h2>
+<p>A framework is only as good as its weak points. These are the failure modes most likely to appear once the model is in use.</p>
+<p><strong>Score gaming.</strong> When a score gates funding, scores drift upward. Every item becomes a 5 on impact. Countermeasure: require a named roadmap goal or incident for any impact score of 4 or 5, and review scores in a group rather than individually.</p>
+<p><strong>Estimate theatre.</strong> Ranges get collapsed into single dates that are then treated as commitments. Countermeasure: keep ranges visible in the artefact and state the confidence level alongside them. A "3–6 engineer-weeks, low confidence" estimate is more honest than a false precision of "4 weeks."</p>
+<p><strong>The forcing function swallows everything.</strong> If half the backlog is labelled a roadmap blocker, the automatic priority rule stops discriminating. Countermeasure: cap the number of items that can hold blocker status at any time, and require the roadmap owner to confirm the link.</p>
+<p><strong>Metrics that reward the wrong thing.</strong> Coverage percentage is the classic example: it can be raised without reducing risk. Countermeasure: prefer outcome metrics — rollback rate, escaped defects, unsupported dependency count, change failure rate — over activity metrics.</p>
+<p><strong>Reservation erodes silently.</strong> The capacity rule holds for two quarters, then a crunch arrives and debt capacity is quietly borrowed. Countermeasure: report on the reservation the same way as feature commitments, including when it was broken and what was traded for it.</p>
+<h2 id="prevention-make-debt-a-standing-agenda-item-not-a-project">Prevention: make debt a standing agenda item, not a project</h2>
+<p>The frameworks above fix individual prioritisation decisions. Prevention means changing the default so debt does not accumulate silently.</p>
+<p>Three practices that work:</p>
+<ol>
+<li><strong>Debt review in every sprint planning.</strong> Spend ten minutes scoring new debt items with the shared model. New items enter the backlog with a score, not just a description.</li>
+<li><strong>A debt budget line in the quarterly plan.</strong> Treat the reservation as a budget line item that stakeholders approve once, not a per-sprint negotiation.</li>
+<li><strong>Post-incident debt capture.</strong> Every incident review produces at least one debt item with a cost-of-delay estimate. This ties debt work directly to real failures, which is the most persuasive evidence available.</li>
+</ol>
+<p>The goal is not zero debt; it is debt that is visible, scored, and funded. Teams that do this stop having the same argument every quarter.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I prioritise technical debt when stakeholders only care about features?</strong></p>
+<p>Translate debt into feature risk. Every debt item that threatens a committed feature gets a cost-of-delay estimate tied to that feature's deadline. Stakeholders care about features; show them how debt puts those features at risk. The two-axis score with a forcing function for roadmap blockers is designed for exactly this situation.</p>
+<p><strong>What is a good technical debt prioritisation framework for a small team?</strong></p>
+<p>Start with the impact/effort matrix plus a hard rule that any item with an external deadline or a roadmap blocker goes first. Small teams rarely have the data for cost-of-delay modelling, so keep the model simple and publish the weights. The value is consistency, not precision.</p>
+<p><strong>How much engineering capacity should be reserved for technical debt?</strong></p>
+<p>There is no universal number, but 15–20% per sprint is a common starting range. The more important rule is that the reservation is fixed and does not roll over into feature work. Adjust based on incident rate and the age of the oldest debt items.</p>
+<p><strong>Why does technical debt keep getting deprioritised even when everyone agrees it matters?</strong></p>
+<p>Because agreement without a cost of delay is not a priority. Debt loses to features by default when it has no date, no consequence, and no metric. The fix is to attach all three to every item and reserve capacity so debt work is not the flex when the sprint gets tight.</p>
+<h2 id="your-next-30-minutes">Your next 30 minutes</h2>
+<p>Open the debt backlog and pick the three items that have been deferred the longest. For each, write one line with a consequence, a trigger date (or "immediate"), and an effort estimate in engineer-weeks. If a trigger date cannot be filled in, that is the first conversation to have with the system owner. Paste the three lines into the next planning doc and use them as the opening slide. That single artefact is the difference between a wish list and a defensible priority.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tech-debt-when-half-your-stack-is-unfamiliar/">Tech debt: when half your stack is unfamiliar</a></li>
+<li><a href="https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/">When velocity is hard to measure: evaluating engineering…</a></li>
+<li><a href="https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/">Designing AI-Assisted Sales for Developer Tools</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/when-velocity-is-hard-to-measure-evaluating-engineering/">
+                        <h3>When velocity is hard to measure: evaluating engineering output</h3>
+                        <p>Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</p>
+                        <span class="related-meta">14 min read · 25 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tech-debt-when-half-your-stack-is-unfamiliar/">
+                        <h3>Tech debt: when half your stack is unfamiliar</h3>
+                        <p>A repeatable process for debugging, verifying and governing tools you didn&amp;#x27;t write, with baselines, contracts, environment measurement and tool cards.</p>
+                        <span class="related-meta">14 min read · 26 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/build-in-public-without-burning-out/">
+                        <h3>Build in public without burning out</h3>
+                        <p>A practical framework for controlled transparency: what to publish, what to withhold, how to measure the cost, and when the standard build-in-public advice fails.</p>
+                        <span class="related-meta">11 min read · 16 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

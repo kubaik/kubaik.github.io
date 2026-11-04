@@ -207,6 +207,32 @@
             
             <div id="posts-container" class="post-grid">
                 
+                <a class="post-card" href="/technical-debt-defend-priorities-to-stakeholders/"
+                   data-title="Technical debt: defend priorities to stakeholders"
+                   data-description="A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules."
+                   data-tags="TechnicalDebt,Prioritization,Technical,Softwareengineering">
+                    <h3>Technical debt: defend priorities to stakeholders</h3>
+                    <p class="post-excerpt">A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.</p>
+                    
+                    <p class="post-reading-time">13 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Technical</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/technicaldebt/">TechnicalDebt</span>
+                        
+                        <span class="tag"
+                              >Prioritization</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
                 <a class="post-card" href="/bm25-vs-dense-embeddings-hybrid-search-reality/"
                    data-title="BM25 vs dense embeddings: hybrid search reality"
                    data-description="How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus."
@@ -805,32 +831,6 @@
                 </a>
                 
                 
-                <a class="post-card" href="/agent-code-review-7-traps-that-slip-through/"
-                   data-title="Agent code review: 7 traps that slip through"
-                   data-description="Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure."
-                   data-tags="AgentCodeReview,AiGeneratedCode,CodeReviewChecklist,Ai,Generativeai">
-                    <h3>Agent code review: 7 traps that slip through</h3>
-                    <p class="post-excerpt">Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</p>
-                    
-                    <p class="post-reading-time">17 min read</p>
-                    
-                    
-                    <div class="tags">
-                        
-                        <span class="tag"
-                              data-tag-href="/tag/ai/">Ai</span>
-                        
-                        <span class="tag"
-                              data-tag-href="/tag/generativeai/">Generativeai</span>
-                        
-                        <span class="tag"
-                              >AgentCodeReview</span>
-                        
-                    </div>
-                    
-                </a>
-                
-                
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -889,7 +889,7 @@
         // client-side from posts.json go through the same qualifying-tag
         // check as server-rendered cards, so a JS-built card can never
         // link to a tag page that doesn't exist either.
-        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "africatech", "agent", "agentdrift", "agentgovernance", "agentic", "agenticai", "agenticfinops", "agentorchestration", "agentpermissions", "agentplatform", "agentversioning", "ai", "aiagentmonitoring", "aiagentpermissions", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodereview", "aicodingtools", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiplatform", "aiuitools", "apachekafka", "apis", "apisecurity2026", "apiversioning", "artificialintelligence", "audittrail", "backend", "bm25", "buildinpublic", "cache", "careeradvice", "cicd", "circuitbreaker", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownership", "codereview", "codereviewchecklist", "coding", "connection", "containers", "cursorai", "cybersecurity", "database", "dataengineering", "debugging", "developer", "devops", "devtoolpricing", "docker", "documentation", "driftdetection", "durable", "engineering", "eventsourcing", "fastapi", "faultinjection", "featureflags", "featureflagsai", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "generativeai", "github", "golang", "goldenpath", "graphql", "idempotency", "idempotencykey", "idempotencykeys", "indiehacker", "infosec", "internal", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmmonitoring", "llmobservability", "llmsecurity", "llmsecurityrisks", "llmstructuredoutput", "longrunningagents", "microservices", "mobiledev", "model", "multiagent", "multiagentsystems", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "payment", "performance", "pgvector0.7", "platformengineering", "postgresql", "productionagents", "prometheus", "prompt", "promptinjection", "promptversioning", "python", "python3", "rag", "ragpipelineproduction", "reactjs", "redis", "rust", "rustlang", "saas", "salary", "seniorengineer", "serverless", "softwareengineering", "sql", "systemdesign", "tech", "techcareer", "techjobs", "technology", "terraform", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "vulnerability", "webdev", "webhook", "webhookretries2026"];
+        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "africatech", "agent", "agentdrift", "agentgovernance", "agentic", "agenticai", "agenticfinops", "agentorchestration", "agentpermissions", "agentplatform", "agentversioning", "ai", "aiagentmonitoring", "aiagentpermissions", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodereview", "aicodingtools", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiplatform", "aiuitools", "apachekafka", "apis", "apisecurity2026", "apiversioning", "artificialintelligence", "audittrail", "backend", "bm25", "buildinpublic", "cache", "careeradvice", "cicd", "circuitbreaker", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownership", "codereview", "codereviewchecklist", "coding", "connection", "containers", "cursorai", "cybersecurity", "database", "dataengineering", "debugging", "developer", "devops", "devtoolpricing", "docker", "documentation", "driftdetection", "durable", "engineering", "eventsourcing", "fastapi", "faultinjection", "featureflags", "featureflagsai", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "generativeai", "github", "golang", "goldenpath", "graphql", "idempotency", "idempotencykey", "idempotencykeys", "indiehacker", "infosec", "internal", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmmonitoring", "llmobservability", "llmsecurity", "llmsecurityrisks", "llmstructuredoutput", "longrunningagents", "microservices", "mobiledev", "model", "multiagent", "multiagentsystems", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "payment", "performance", "pgvector0.7", "platformengineering", "postgresql", "productionagents", "prometheus", "prompt", "promptinjection", "promptversioning", "python", "python3", "rag", "ragpipelineproduction", "reactjs", "redis", "rust", "rustlang", "saas", "salary", "seniorengineer", "serverless", "softwareengineering", "sql", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt", "technology", "terraform", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "vulnerability", "webdev", "webhook", "webhookretries2026"];
 
         var fullPosts   = [];
         var loadedCount = postsContainer

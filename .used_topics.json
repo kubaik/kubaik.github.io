@@ -221,5 +221,6 @@
   "Database and state management patterns that hold up under heavy agent usage",
   "Database connection management in Python async services with SQLAlchemy and asyncpg",
   "Mutual TLS and workload identity with SPIFFE for internal services",
-  "Hybrid search for retrieval systems: combining BM25 with dense embeddings"
+  "Hybrid search for retrieval systems: combining BM25 with dense embeddings",
+  "Technical debt prioritization frameworks engineering managers can defend to stakeholders"
 ]

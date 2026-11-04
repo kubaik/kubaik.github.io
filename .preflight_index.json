@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-03T19:21:30.009388",
+  "built_at": "2026-11-04T05:27:41.023395",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5740,6 +5740,11 @@
       "slug": "bm25-vs-dense-embeddings-hybrid-search-reality",
       "title": "BM25 vs dense embeddings: hybrid search reality",
       "summary": "It's a one-line fix once you know where to look, and expensive until then. The first time mutual tls fails in production, it rarely fails in the way any postmortem template expects. Here's the root cause, not just the symptom. BM25 and dense embeddings fail in ways that are almost perfectly compleme"
+    },
+    {
+      "slug": "technical-debt-defend-priorities-to-stakeholders",
+      "title": "Technical debt: defend priorities to stakeholders",
+      "summary": "technical debt has a reputation for being boring, which is exactly why nobody budgets time for it. This covers the fix, the cost of not knowing sooner, and what to monitor. It's the kind of problem that's easy to reproduce and hard to explain. A CTO asks why the checkout service still runs on a depr"
     }
   ]
 }

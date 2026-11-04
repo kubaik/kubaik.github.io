@@ -362,6 +362,7 @@ docs/stride-is-a-checklist-not-a-threat-model/index.md
 docs/supervisor-vs-swarm-vs-debate-vs-pipeline/index.md
 docs/tame-python-asyncs-hidden-traps/index.md
 docs/tech-debt-when-half-your-stack-is-unfamiliar/index.md
+docs/technical-debt-defend-priorities-to-stakeholders/index.md
 docs/temporal-changed-our-agent-retries-for-good/index.md
 docs/test-ai-code-without-testing-the-ai/index.md
 docs/thundering-herd-the-hidden-scaling-trap/index.md

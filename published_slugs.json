@@ -1181,6 +1181,9 @@
   "tech-debt-when-half-your-stack-is-unfamiliar": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "technical-debt-defend-priorities-to-stakeholders": {
+    "first_seen": "2026-11-04T05:28:10.617832+00:00"
+  },
   "temporal-changed-our-agent-retries-for-good": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

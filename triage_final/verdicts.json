@@ -3118,7 +3118,7 @@
   "reasons": [],
   "fixes": [],
   "title": "BM25 vs dense embeddings: hybrid search reality",
-  "words": 2562
+  "words": 2760
  },
  "slos-for-agentic-features-beyond-latency": {
   "verdict": "KEEP",
@@ -3337,6 +3337,17 @@
   "fixes": [],
   "title": "Designing a Schema That Survives Embedding Model Upgrades",
   "words": 2173
+ },
+ "technical-debt-defend-priorities-to-stakeholders": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Technical debt: defend priorities to stakeholders",
+  "words": 2266
  },
  "tool-calling-patterns-patterns-that-survive-load-vs": {
   "verdict": "KEEP",

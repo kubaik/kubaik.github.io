@@ -1,4 +1,4 @@
-❌ Internal link audit: 406 broken link(s) found across 407 posts checked.
+❌ Internal link audit: 407 broken link(s) found across 408 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -134,6 +134,7 @@ Source Post                              Anchor Text                    Missing 
   /aws-local-zones-vs-localstack-ai-microservices-in AI content policy              /ai-content-policy/
   /bank-apis-broke-under-african-2g       AI content policy              /ai-content-policy/
   /big-model-api-vs-fine-tune-the-2026-math AI content policy              /ai-content-policy/
+  /bm25-vs-dense-embeddings-hybrid-search-reality AI content policy              /ai-content-policy/
   /boring-aws-lambda-layers-that-dont-lock AI content policy              /ai-content-policy/
   /build-a-search-system-in-2026-semantic-keyword AI content policy              /ai-content-policy/
   /build-agent-workflows-that-survive-restarts AI content policy              /ai-content-policy/

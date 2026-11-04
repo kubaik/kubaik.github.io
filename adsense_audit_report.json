@@ -2800,6 +2800,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "technical-debt-defend-priorities-to-stakeholders",
+      "source": "post.json",
+      "word_count": 2579,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
       "source": "post.json",
       "word_count": 2846,

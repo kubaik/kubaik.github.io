@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Nov 2026 19:24:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Nov 2026 05:30:24 +0000</lastBuildDate>
+    <item>
+      <title>Technical debt: defend priorities to stakeholders</title>
+      <link>https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/</link>
+      <description>A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.</description>
+      <pubDate>Wed, 04 Nov 2026 05:27:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/</guid>
+    </item>
     <item>
       <title>BM25 vs dense embeddings: hybrid search reality</title>
       <link>https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/</link>
@@ -138,13 +145,6 @@
       <description>A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first.</description>
       <pubDate>Sun, 25 Oct 2026 15:48:20 +0000</pubDate>
       <guid>https://kubaik.github.io/7-guardrails-for-safer-llm-apps/</guid>
-    </item>
-    <item>
-      <title>When velocity is hard to measure: evaluating engineering…</title>
-      <link>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</link>
-      <description>Velocity measures capacity, not output. Build a three-layer evidence portfolio—delivery, stability, outcome—and compute it from data you already have.</description>
-      <pubDate>Sun, 25 Oct 2026 03:50:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-velocity-is-hard-to-measure-evaluating-engineering/</guid>
     </item>
   </channel>
 </rss>
