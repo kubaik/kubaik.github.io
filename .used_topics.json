@@ -222,5 +222,7 @@
   "Database connection management in Python async services with SQLAlchemy and asyncpg",
   "Mutual TLS and workload identity with SPIFFE for internal services",
   "Hybrid search for retrieval systems: combining BM25 with dense embeddings",
-  "Technical debt prioritization frameworks engineering managers can defend to stakeholders"
+  "Technical debt prioritization frameworks engineering managers can defend to stakeholders",
+  "Spot instances with smart retry logic for non-critical agent workloads: a cost comparison",
+  "Instant payment rails across Africa: PAPSS, mobile money interoperability, and integration design"
 ]

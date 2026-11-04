@@ -1,4 +1,4 @@
-❌ Internal link audit: 407 broken link(s) found across 408 posts checked.
+❌ Internal link audit: 408 broken link(s) found across 409 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -366,6 +366,7 @@ Source Post                              Anchor Text                    Missing 
   /supervisor-vs-swarm-vs-debate-vs-pipeline AI content policy              /ai-content-policy/
   /tame-python-asyncs-hidden-traps        AI content policy              /ai-content-policy/
   /tech-debt-when-half-your-stack-is-unfamiliar AI content policy              /ai-content-policy/
+  /technical-debt-defend-priorities-to-stakeholders AI content policy              /ai-content-policy/
   /temporal-changed-our-agent-retries-for-good AI content policy              /ai-content-policy/
   /test-ai-code-without-testing-the-ai    AI content policy              /ai-content-policy/
   /thundering-herd-the-hidden-scaling-trap AI content policy              /ai-content-policy/

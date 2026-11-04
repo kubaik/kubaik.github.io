@@ -163,6 +163,7 @@ docs/one-misconfigured-vector-db-killed-our-rag-pipeline/
 docs/only-boring-stacks-survive-ai-services/
 docs/opentelemetry-collector-pipelines-sampling-batching/
 docs/orchestration-tax-kills-multi-agent-systems/
+docs/papss-and-mobile-money-where-integration-breaks/
 docs/personal-ai-assistants-avoid-vendor-lock-in-traps/
 docs/platform-teams-in-2026-docs-vs-production-reality/
 docs/portfolio-projects-hiring-managers-skip/

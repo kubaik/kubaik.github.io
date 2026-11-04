@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-04T05:27:41.023395",
+  "built_at": "2026-11-04T19:33:09.347629",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5745,6 +5745,11 @@
       "slug": "technical-debt-defend-priorities-to-stakeholders",
       "title": "Technical debt: defend priorities to stakeholders",
       "summary": "technical debt has a reputation for being boring, which is exactly why nobody budgets time for it. This covers the fix, the cost of not knowing sooner, and what to monitor. It's the kind of problem that's easy to reproduce and hard to explain. A CTO asks why the checkout service still runs on a depr"
+    },
+    {
+      "slug": "papss-and-mobile-money-where-integration-breaks",
+      "title": "PAPSS and mobile money: where integration breaks",
+      "summary": "Production gives you neither a clean environment nor a patient timeline. spot instances is easy to demo and hard to keep honest at scale. This is the writeup that includes the part that usually goes wrong. Pan-African instant payments are often described as a plumbing problem: connect to PAPSS, conn"
     }
   ]
 }

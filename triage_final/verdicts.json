@@ -2489,6 +2489,13 @@
   "title": "CQRS: when it pays off and when it breaks",
   "words": 2430
  },
+ "papss-and-mobile-money-where-integration-breaks": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "PAPSS and mobile money: where integration breaks",
+  "words": 3070
+ },
  "ai-alert-triage-cut-pages-80-in-production": {
   "verdict": "KEEP",
   "reasons": [],
@@ -3347,7 +3354,7 @@
    "add_sources"
   ],
   "title": "Technical debt: defend priorities to stakeholders",
-  "words": 2266
+  "words": 2579
  },
  "tool-calling-patterns-patterns-that-survive-load-vs": {
   "verdict": "KEEP",
