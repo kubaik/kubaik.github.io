@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Nov 2026 19:36:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Nov 2026 05:52:05 +0000</lastBuildDate>
+    <item>
+      <title>Audit trails for AI agents: what breaks first</title>
+      <link>https://kubaik.github.io/audit-trails-for-ai-agents-what-breaks-first/</link>
+      <description>Design append-only decision records for AI agents: write-ahead ordering, policy snapshots, idempotency keys, and reconstruction drills that expose gaps.</description>
+      <pubDate>Thu, 05 Nov 2026 05:48:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/audit-trails-for-ai-agents-what-breaks-first/</guid>
+    </item>
     <item>
       <title>PAPSS and mobile money: where integration breaks</title>
       <link>https://kubaik.github.io/papss-and-mobile-money-where-integration-breaks/</link>
@@ -138,13 +145,6 @@
       <description>How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</description>
       <pubDate>Mon, 26 Oct 2026 08:01:33 +0000</pubDate>
       <guid>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</guid>
-    </item>
-    <item>
-      <title>Drift detection: the plan that lies</title>
-      <link>https://kubaik.github.io/drift-detection-the-plan-that-lies/</link>
-      <description>Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</description>
-      <pubDate>Mon, 26 Oct 2026 03:53:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/drift-detection-the-plan-that-lies/</guid>
     </item>
   </channel>
 </rss>

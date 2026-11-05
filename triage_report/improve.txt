@@ -123,6 +123,7 @@ docs/apm-lied-about-our-ai-incidents/index.md
 docs/audit-logs-compliance-vs-performance/index.md
 docs/audit-logs-ship-them-fast-keep-them-forever/index.md
 docs/audit-logs-that-scale-skip-the-3am-fire-drills/index.md
+docs/audit-trails-for-ai-agents-what-breaks-first/index.md
 docs/audit-trails-immutabledb-vs-dynamodb-streams/index.md
 docs/aws-cloudwatch-synthetics-for-ai-pipelines/index.md
 docs/aws-cost-levers-2026-the-3-that-cut-bills-30/index.md

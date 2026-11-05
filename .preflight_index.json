@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-04T19:33:09.347629",
+  "built_at": "2026-11-05T05:48:36.398499",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5750,6 +5750,11 @@
       "slug": "papss-and-mobile-money-where-integration-breaks",
       "title": "PAPSS and mobile money: where integration breaks",
       "summary": "Production gives you neither a clean environment nor a patient timeline. spot instances is easy to demo and hard to keep honest at scale. This is the writeup that includes the part that usually goes wrong. Pan-African instant payments are often described as a plumbing problem: connect to PAPSS, conn"
+    },
+    {
+      "slug": "audit-trails-for-ai-agents-what-breaks-first",
+      "title": "Audit trails for AI agents: what breaks first",
+      "summary": "After enough code that touches llm gateways gets reviewed, the same failure pattern keeps showing up. The workaround gets copy-pasted forward long after the original reason is forgotten. Here's the fuller picture, with the tradeoffs left in. Most agent audit trails fail not because they log too litt"
     }
   ]
 }

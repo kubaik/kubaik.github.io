@@ -224,5 +224,9 @@
   "Hybrid search for retrieval systems: combining BM25 with dense embeddings",
   "Technical debt prioritization frameworks engineering managers can defend to stakeholders",
   "Spot instances with smart retry logic for non-critical agent workloads: a cost comparison",
-  "Instant payment rails across Africa: PAPSS, mobile money interoperability, and integration design"
+  "Instant payment rails across Africa: PAPSS, mobile money interoperability, and integration design",
+  "LLM gateways and proxies: routing, fallbacks, and rate limit handling",
+  "Designing multi-tenant SaaS data isolation: schemas, row-level security, and separate databases",
+  "MCP in production: the operational costs and security gotchas most teams miss",
+  "Building audit trails for agent decisions that satisfy compliance and debugging needs"
 ]
