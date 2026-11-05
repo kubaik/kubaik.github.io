@@ -6,6 +6,7 @@ docs/3-ways-container-builds-got-3x-faster-in-2026/index.md
 docs/40-ai-code-meant-60-more-alerts/index.md
 docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/index.md
 docs/5-ways-to-find-hidden-latency-before-production/index.md
+docs/7-async-practices-that-cut-meeting-load/index.md
 docs/7-bundling-decisions-that-still-matter/index.md
 docs/7-code-review-traps-when-ai-writes-half-your-code/index.md
 docs/7-guardrails-for-safer-llm-apps/index.md

@@ -2,6 +2,7 @@ docs/2026-alert-triage-when-opsgenie-slept-for-you/
 docs/3-ways-container-builds-got-3x-faster-in-2026/
 docs/40-ai-code-meant-60-more-alerts/
 docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/
+docs/7-async-practices-that-cut-meeting-load/
 docs/7-ways-to-measure-prompt-platform-roi-in-2026/
 docs/agent-access-for-non-ai-engineers/
 docs/agent-auth-where-the-docs-ended-up-lying/

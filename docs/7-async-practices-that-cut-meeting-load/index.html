@@ -1,0 +1,512 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>7 async practices that cut meeting load - Kubai Kevin</title>
+        <meta name="description" content="Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.">
+        <meta name="keywords" content="AsyncCommunication, MeetingReduction, AsyncStandup, Written, Asynchronous, Reduce, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-05T19:43:18.938521">
+        <meta property="article:modified_time" content="2026-11-05T19:45:49.742191+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="7 async practices that cut meeting load">
+        <meta property="og:description" content="Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.">
+        <meta property="og:url" content="https://kubaik.github.io/7-async-practices-that-cut-meeting-load/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/7-async-practices-that-cut-meeting-load.png">
+        <meta property="og:image:alt" content="7 async practices that cut meeting load">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="7 async practices that cut meeting load">
+        <meta name="twitter:description" content="Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/7-async-practices-that-cut-meeting-load.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/7-async-practices-that-cut-meeting-load/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/7-async-practices-that-cut-meeting-load/#article",
+      "headline": "7 async practices that cut meeting load",
+      "description": "Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.",
+      "datePublished": "2026-11-05T19:43:18+00:00",
+      "dateModified": "2026-11-05T19:45:49+00:00",
+      "wordCount": 3217,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/7-async-practices-that-cut-meeting-load/"
+      },
+      "keywords": "AsyncCommunication, MeetingReduction, AsyncStandup, Written, Asynchronous, Reduce, Softwareengineering",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/7-async-practices-that-cut-meeting-load.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "7 async practices that cut meeting load",
+          "item": "https://kubaik.github.io/7-async-practices-that-cut-meeting-load/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubaik.github.io/7-async-practices-that-cut-meeting-load/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do you run an async standup without it becoming ignored?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use a bot that posts a reminder at a consistent time and aggregates responses. Keep the format short: three questions (done, next, blockers). Have a designated facilitator review updates each morning and follow up on blockers directly. Rotate the facilitator weekly to share the burden. If updates become stale, reduce frequency to three times a week or switch to a weekly written update."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best tool for async decision records?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best tool is the one your team already uses and will actually check. Common choices include Google Docs (simple, familiar), Notion (structured, searchable), Confluence (integrated with Jira), and plain markdown files in a Git repository (versioned, close to code). Avoid introducing a new tool just for this—the friction of another login will kill adoption. Start with a shared document and a clear template."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you handle urgent decisions that can't wait for async?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Define an escalation path. For example: if a decision is needed within 2 hours, use a video call with the minimum necessary people and document the outcome in the decision log afterward. Async is the default, not a religion. The goal is to reduce unnecessary meetings, not to eliminate all real-time collaboration."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do async practices fail in some teams?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Async practices fail when they are imposed without addressing underlying issues: lack of trust, unclear ownership, or a culture that rewards presence over output. They also fail when there is no enforcement mechanism—deadlines for comments, facilitators for standups, or clear expectations for response times. Finally, async requires strong writing skills; teams that struggle to communicate in writing may need training or templates before async can work."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>7 async practices that cut meeting load</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">7 async practices that cut meeting load</h1>
+                
+                <p class="post-lead">Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AsyncCommunication</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MeetingReduction</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AsyncStandup</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Written</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Asynchronous</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3217 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-05
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Engineering teams often default to synchronous meetings for decisions, status updates, and code reviews. The cost is fragmented focus time, timezone exclusion, and a written record that evaporates. Async communication practices can reduce meeting load, but only if they replace the meeting's actual function—not just move it to a chat thread. The problem is identifying which async practices work, which fail, and how to prioritize them when the calendar is already full.</p>
+<h2 id="why-this-list-exists">Why this list exists</h2>
+<p>Most advice about async work is either too abstract ("embrace written culture") or too tool-specific ("use product X"). The practices below are concrete, and each one is paired with the conditions under which it works and the conditions under which it fails. Async is not universally better—it has failure modes just like meetings do, and several of those failure modes are more expensive than the meeting they replaced.</p>
+<p>The list is ordered roughly by impact-to-effort ratio, but that ordering depends on team size, timezone spread, and existing documentation habits. Prioritization guidance comes at the end. A section on edge cases follows the practices, because the edge cases are where async processes actually break.</p>
+<h2 id="1-written-decision-records-with-a-comment-window">1. Written decision records with a comment window</h2>
+<p><strong>What it does:</strong> Instead of scheduling a meeting to make a decision, one person writes a decision record: a short document stating the context, the options considered, and the proposed decision. The document is posted in a designated channel with a clear deadline for comments (48 hours is a common default). If no blocking objection arrives by the deadline, the decision is accepted.</p>
+<p><strong>Where it works:</strong> It creates a searchable archive of why decisions were made, and it gives quieter team members a chance to contribute without interrupting. The comment window can scale with stakes—a rollback decision might get two hours, an architecture choice a week.</p>
+<p><strong>Where it fails:</strong> It requires discipline to read and respond within the window. Teams that don't enforce the deadline end up with zombie documents that never resolve. Some decisions also genuinely benefit from real-time debate, particularly those with high emotional stakes or deep uncertainty.</p>
+<p><strong>Best for:</strong> Teams with distributed timezones or more than five engineers, where scheduling a meeting is already painful. Start with low-risk decisions such as library choices or naming conventions.</p>
+<h2 id="2-asynchronous-standup-via-a-bot-or-form">2. Asynchronous standup via a bot or form</h2>
+<p><strong>What it does:</strong> Replace the daily standup with a written update collected by a bot or a simple form. Each team member posts what they did, what they will do next, and any blockers. Updates are visible to the whole team, and blockers can be routed to the relevant person immediately.</p>
+<p><strong>Where it works:</strong> It eliminates the context switch of a morning meeting and gives people time to compose thoughtful updates. It also leaves a written log that can be scanned quickly.</p>
+<p><strong>Where it fails:</strong> Without facilitation, updates become repetitive or ignored. The social pressure of a live standup often surfaces blockers that people would not otherwise write down. On colocated teams, a 15-minute standup may genuinely be cheaper than reading eight written updates.</p>
+<p><strong>Best for:</strong> Remote or hybrid teams whose standup is purely informational. Not suitable for teams that use standup for active problem-solving.</p>
+<h2 id="3-rfc-process-for-design-proposals">3. RFC process for design proposals</h2>
+<p><strong>What it does:</strong> A structured template for proposing significant changes—a new service, an API change, a data model. The RFC is circulated for a set period, comments are collected inline, and a final decision is recorded in the same document. This replaces the design review meeting.</p>
+<p><strong>Where it works:</strong> It forces the author to think the proposal through before seeking feedback, and it lets reviewers comment at their own pace with full context. It scales: reviewers can be added without scheduling conflicts.</p>
+<p><strong>Where it fails:</strong> RFCs can become bureaucratic. If every small change requires one, the process becomes the bottleneck. Feedback quality depends on reviewers engaging deeply; drive-by comments are common.</p>
+<p><strong>Best for:</strong> Architectural decisions that affect multiple services or teams. Pair with a lightweight template and a hard expiration date to avoid endless bikeshedding.</p>
+<h2 id="4-threaded-discussions-in-a-persistent-chat-tool">4. Threaded discussions in a persistent chat tool</h2>
+<p><strong>What it does:</strong> Use threaded conversations in whatever chat tool the team already runs to discuss topics that would otherwise become meetings. A thread opens with a clear subject and a question, and participants reply asynchronously.</p>
+<p><strong>Where it works:</strong> Threads are low-friction—anyone can start one—and they preserve context better than a meeting recap. They let people opt in by interest or expertise.</p>
+<p><strong>Where it fails:</strong> Important decisions get buried in busy channels. Threads lack the structure of a decision record and tend to meander. Without a clear owner, a thread can die unresolved.</p>
+<p><strong>Best for:</strong> Ad-hoc questions and quick alignment. Not suitable for decisions that need a formal record or input from many stakeholders.</p>
+<h2 id="5-recorded-video-walkthroughs-for-demos-and-updates">5. Recorded video walkthroughs for demos and updates</h2>
+<p><strong>What it does:</strong> Instead of a live demo meeting, record a short screen-share video walking through a feature, bug, or update. Share the link and collect questions in a thread.</p>
+<p><strong>Where it works:</strong> Viewers can watch at 1.5x speed, pause, and rewind—often more efficient than a live demo where someone inevitably asks to go back. It also creates a reusable artifact for onboarding.</p>
+<p><strong>Where it fails:</strong> Recording takes effort and can feel awkward. Video is harder to search than text. Some topics need live Q&amp;A, especially where the presenter has to gauge understanding in the room.</p>
+<p><strong>Best for:</strong> Product demos, sprint reviews, and primarily one-way updates. Not ideal for collaborative debugging or brainstorming.</p>
+<h2 id="6-asynchronous-code-reviews-with-explicit-expectations">6. Asynchronous code reviews with explicit expectations</h2>
+<p><strong>What it does:</strong> Move code review to pull request comments with written guidelines: reviewers respond within one business day, authors provide context in the PR description, and blocking comments are marked clearly.</p>
+<p><strong>Where it works:</strong> It respects deep work time and tends to produce more thoughtful feedback. It also creates a written record of the review.</p>
+<p><strong>Where it fails:</strong> It can slow urgent fixes and lengthen feedback loops when reviewers are unresponsive. Complex changes sometimes need a synchronous conversation to resolve disagreement.</p>
+<p><strong>Best for:</strong> Most code changes. Reserve synchronous review for high-risk changes, or when a PR has stalled for more than a day.</p>
+<h2 id="7-decision-log-in-the-repository">7. Decision log in the repository</h2>
+<p><strong>What it does:</strong> Maintain a <code>decisions/</code> directory in the repo with markdown files documenting significant technical decisions, for example <code>decisions/2026-01-15-use-postgres-for-auth.md</code>. Each file states the decision, the context, and the consequences. This removes the need to call a meeting to recall why something was done.</p>
+<p><strong>Where it works:</strong> It lives next to the code, so it is discoverable. It reduces repeated discussions about past decisions.</p>
+<p><strong>Where it fails:</strong> It requires ongoing maintenance; stale entries mislead. It is a record of discussion, not a substitute for it.</p>
+<p><strong>Best for:</strong> Teams that already version-control their documentation. Start by documenting one recent decision.</p>
+<h2 id="how-to-prioritize-these-practices">How to prioritize these practices</h2>
+<p>Not all async practices are equal. Use this framework to pick the first one to try:</p>
+<ol>
+<li><strong>Measure current meeting load.</strong> For one week, log every meeting: purpose, attendees, duration, and whether a written artifact came out of it. Sum the person-hours. This is the baseline every later comparison depends on.</li>
+<li><strong>Identify purely informational meetings.</strong> These are the easiest to replace with async updates—standup, sprint review, status updates.</li>
+<li><strong>Identify decisions that get revisited repeatedly.</strong> These benefit most from written decision records, because a record creates a single source of truth.</li>
+<li><strong>Check timezone spread.</strong> If the team spans more than four hours, prioritize practices that don't require simultaneous participation.</li>
+<li><strong>Start with one practice.</strong> Pick the one with the lowest barrier to entry—often async standup, or a decision record for a currently hot topic.</li>
+</ol>
+<p>A common mistake is implementing all seven at once, which produces process overload and resistance. Run a two-week experiment with one practice, measure the effect on meeting hours and team satisfaction, then decide whether to keep it.</p>
+<h2 id="edge-cases-that-break-async-processes">Edge cases that break async processes</h2>
+<p>The seven practices work fine on a calm week. Failures show up in the edge cases, and for any team past its first year these edge cases are normal operating conditions rather than exceptions.</p>
+<p><strong>The decision silently vetoed after the window closes.</strong> A decision record goes out with a 48-hour window. Nobody objects. Two weeks later, someone who was on vacation—or simply didn't read the channel—says "wait, we're not doing that," and work stalls. This is common when the window overlaps a release crunch or a holiday. The fix is not a longer window; it is an explicit acknowledgment requirement. For decisions above a certain blast radius, require a positive reaction from each named stakeholder, not merely the absence of objection. Silence then means "did not review," not "approved." Track acknowledgments inside the document so the gap is visible before it becomes a surprise.</p>
+<p><strong>The RFC that becomes a hostage negotiation.</strong> Two senior engineers disagree across forty inline threads, and the RFC sits open for three weeks. This happens when the proposal touches ownership boundaries or reopens a past architectural argument. The failure mode is treating the RFC as a debate venue. Cap the comment period hard—five business days is a reasonable default for most proposals—and when two reviewers are deadlocked, escalate to a single named decider with a deadline. Not another meeting: a person who must post a written ruling by a stated date. Record the ruling in the same RFC, and record the dissenting view too, so future readers understand the tradeoff that was made.</p>
+<p><strong>The async standup that hides a stuck engineer.</strong> Written updates are good at reporting progress and bad at surfacing that someone has been blocked for three days and is reluctant to say so. This happens most with junior engineers and anyone new to the team. The bot sees "working on the migration" every morning and nobody notices the repetition. Build in a cheap signal: make the blocker field required rather than optional, and have a facilitator scan for the same task appearing in "in progress" across more than three consecutive updates. That pattern is the async equivalent of silence in a live standup, and it needs a human to catch it.</p>
+<p><strong>The timezone that always loses.</strong> Comment windows and standup times can be labeled async while still assuming a European or US working day. The engineer in Bengaluru or São Paulo is structurally excluded because every deadline lands while they sleep. This happens on teams that went distributed without changing process defaults. Rotate the anchor: alternate comment-window deadlines between two time bands, and rotate the facilitator role across timezones so no single region always carries the follow-up burden. Async only delivers on its promise when the deadlines themselves are fair.</p>
+<h2 id="wiring-async-practices-into-existing-tools">Wiring async practices into existing tools</h2>
+<p>Async process lives or dies on tooling friction. The goal is to keep it inside the systems the team already opens every day—chat, issue tracker, and repo—rather than adding another dashboard nobody checks.</p>
+<p><strong>Chat + code host + a decision log in the repo.</strong> The pattern: a decision record is a markdown file in <code>decisions/</code>, the pull request that adds it is the comment window, and the chat tool notifies the right people with a deadline. The GitHub Actions workflow below posts a decision record to Slack when its PR opens. The <code>jq</code> call builds the JSON payload so that PR titles containing quotes or newlines don't break the request.</p>
+<pre><code class="language-yaml"># .github/workflows/decision-notify.yml
+name: Notify decision record
+on:
+  pull_request:
+    paths:
+      - 'decisions/**'
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Slack
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_DECISION_WEBHOOK }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          DEADLINE=$(date -u -d '+5 days' '+%Y-%m-%d %H:%M UTC')
+          curl -sS -X POST &quot;$SLACK_WEBHOOK&quot; \
+            -H 'Content-type: application/json' \
+            --data &quot;$(jq -n \
+              --arg t &quot;$PR_TITLE&quot; \
+              --arg u &quot;$PR_URL&quot; \
+              --arg d &quot;$DEADLINE&quot; \
+              '{text: (&quot;Decision record open for comment: &quot; + $t + &quot;\n&quot; + $u + &quot;\nComment window closes &quot; + $d + &quot;. Approve with a thumbs-up reaction.&quot;)}')&quot;
+</code></pre>
+<p>Note that <code>date -d</code> is GNU coreutils syntax; it works on the <code>ubuntu-latest</code> runner but not on macOS or BSD without <code>gdate</code>. The deadline is computed at notification time, so it does not drift with retries.</p>
+<p>Pair this with a chat workflow that collects thumbs-up reactions on the posted message and, at the deadline, posts a summary of who acknowledged. The acknowledgment list is the enforcement mechanism described in the edge cases above—it turns "nobody objected" into "these five people reviewed."</p>
+<p><strong>Issue tracker for the async standup trail.</strong> If async standup runs through a bot, mirror the blocker field into the issue tracker so it doesn't die in chat. A small automation rule—most trackers ship built-in automation; no plugin required—can create a linked task when a standup update carries the blocker flag, assign it to the facilitator, and set a due date of the next business day. That closes the loop between the written update and the tracker, which is exactly where async standups usually leak.</p>
+<p>The principle across all three: one source of truth per artifact (decision in the repo, blocker in the tracker, notification in chat), and automation that carries the deadline and the acknowledgment—not just the announcement.</p>
+<h2 id="how-to-measure-whether-it-worked">How to measure whether it worked</h2>
+<p>Any claim that async practices reduce meeting load should be checked against a baseline, not accepted on faith. The measurement is cheap and takes about two weeks of logging.</p>
+<p><strong>What to instrument:</strong></p>
+<ul>
+<li><strong>Meeting person-hours per week.</strong> For each recurring meeting, record attendees × duration. Multiply and sum. Compare the same weeks before and after.</li>
+<li><strong>Decision latency.</strong> Timestamp the moment a decision is proposed and the moment it is recorded as accepted. The median over a month is the number that matters; a single fast decision proves nothing.</li>
+<li><strong>Recorded-decision coverage.</strong> Count decisions made in a period and the subset that produced a written record. The ratio is the honest measure of documentation culture.</li>
+<li><strong>Review first-response time.</strong> For each PR, the time from "ready for review" to the first substantive comment. Report both median and p90—the tail is what hurts delivery.</li>
+<li><strong>Acknowledgment gaps.</strong> For each decision record, the number of named stakeholders who never responded. This is the leading indicator for the silent-veto failure mode.</li>
+</ul>
+<p><strong>How to collect it:</strong> Most code hosts expose PR timestamps through their API, so a short script can compute first-response times without any new tooling. Meeting hours come from calendar exports; if the calendar tool supports it, a per-attendee duration export is enough. Decision latency can be read directly from the decision log if each file records a "proposed" and "accepted" date. Keep the collection in a spreadsheet or a small script in the repo—the point is a repeatable before/after, not a dashboard.</p>
+<p><strong>What a plausible outcome looks like (illustrative, not measured):</strong> suppose a 12-person team moves its daily standup and its weekly design review to async. The standup was 15 minutes × 12 people = 3 person-hours per day, or 15 person-hours per week. The design review was 60 minutes × 8 attendees = 8 person-hours per week. Together that is 23 person-hours per week of synchronous time. If the async replacement costs each engineer 10 minutes per day on written updates (2 person-hours per day, 10 per week) plus 45 minutes of authoring per decision record at roughly two records per week (1.5 person-hours), the net change is 23 − 11.5 = 11.5 person-hours per week recovered, before counting the reduction in context-switching. Whether that trade is worth it depends on what those hours turn into—if they turn into more meetings, nothing was gained. That is why the measurement above compares hours <em>and</em> decision latency <em>and</em> acknowledgment gaps, not hours alone.</p>
+<p><strong>Do not expect uniform improvement.</strong> Review first-response medians often get <em>worse</em> under async review, because reviewers stop interrupting deep work to reply instantly. The tail (p90) frequently improves at the same time. That is a deliberate trade—reliable response within a stated SLA instead of the fastest possible first reply—and it should be reported as a trade, not hidden. Teams on call or shipping daily hotfixes should keep a synchronous fast lane for urgent changes and measure it separately.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<h3 id="how-do-you-run-an-async-standup-without-it-becoming-ignored">How do you run an async standup without it becoming ignored?</h3>
+<p>Use a bot that posts a reminder at a consistent time and aggregates responses. Keep the format to three questions: done, next, blockers. Have a designated facilitator review updates each morning and follow up on blockers directly. Rotate the facilitator weekly to share the burden. If updates go stale, reduce frequency to three times a week or switch to a weekly written update.</p>
+<h3 id="what-is-the-best-tool-for-async-decision-records">What is the best tool for async decision records?</h3>
+<p>The best tool is the one the team already uses and will actually check. Common choices are a shared document (simple, familiar), a wiki (structured, searchable), or plain markdown in a Git repository (versioned, close to code). Avoid introducing a new tool just for this—the friction of another login kills adoption. Start with a shared document and a clear template.</p>
+<h3 id="how-do-you-handle-urgent-decisions-that-cant-wait-for-async">How do you handle urgent decisions that can't wait for async?</h3>
+<p>Define an escalation path. For example: if a decision is needed within two hours, use a video call with the minimum necessary people and document the outcome in the decision log afterward. Async is the default, not a religion. The goal is to reduce unnecessary meetings, not to eliminate real-time collaboration.</p>
+<h3 id="why-do-async-practices-fail-in-some-teams">Why do async practices fail in some teams?</h3>
+<p>They fail when imposed without addressing underlying issues: lack of trust, unclear ownership, or a culture that rewards presence over output. They also fail without an enforcement mechanism—deadlines for comments, facilitators for standups, or stated response times. Finally, async depends on writing skill; teams that struggle to communicate in writing may need templates and practice before async can work.</p>
+<h3 id="does-async-review-make-code-review-slower">Does async review make code review slower?</h3>
+<p>Often yes, on the median, and that can be the intended trade. A team that moves from instant interrupt-driven review to a one-business-day SLA usually sees the median first-response time rise while the p90 falls. Measure both before deciding whether the trade is acceptable for your codebase.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open your calendar for the past week and count the total hours spent in meetings. Identify one recurring meeting that is purely informational—likely a standup or status update. Propose replacing it with a two-week async experiment using a simple form or bot, and log the baseline metrics from the measurement section before the experiment starts. Start with the meeting that has the most attendees and the least interactive agenda.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/">STRIDE is a checklist, not a threat model</a></li>
+<li><a href="https://kubaik.github.io/code-ai-wont-rewrite/">Code AI won’t rewrite</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/promotions-in-the-ai-era-the-mechanism/">
+                        <h3>Promotions in the AI era: the mechanism</h3>
+                        <p>Why code volume stopped being a promotion signal, and how decision artifacts — ADRs, PR descriptions, instrumented tradeoffs — restore legible evidence of judgment.</p>
+                        <span class="related-meta">17 min read · 8 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/two-engineer-classes-the-ai-tool-norm-trap/">
+                        <h3>Two engineer classes: the AI tool norm trap</h3>
+                        <p>Uneven AI tool adoption fractures teams through review load, not productivity. Here is how to make AI-assisted code reviewable with a PR template and one metric.</p>
+                        <span class="related-meta">12 min read · 7 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tame-python-asyncs-hidden-traps/">
+                        <h3>Tame Python async’s hidden traps</h3>
+                        <p>Compare threaded and task-based async in Python: how each works, where each fails, how to measure the tradeoff yourself, and a checklist for choosing.</p>
+                        <span class="related-meta">11 min read · 29 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

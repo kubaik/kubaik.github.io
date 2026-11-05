@@ -1,4 +1,4 @@
-❌ Internal link audit: 409 broken link(s) found across 410 posts checked.
+❌ Internal link audit: 410 broken link(s) found across 411 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -127,6 +127,7 @@ Source Post                              Anchor Text                    Missing 
   /audit-logs-compliance-vs-performance   AI content policy              /ai-content-policy/
   /audit-logs-ship-them-fast-keep-them-forever AI content policy              /ai-content-policy/
   /audit-logs-that-scale-skip-the-3am-fire-drills AI content policy              /ai-content-policy/
+  /audit-trails-for-ai-agents-what-breaks-first AI content policy              /ai-content-policy/
   /audit-trails-immutabledb-vs-dynamodb-streams AI content policy              /ai-content-policy/
   /aws-cloudwatch-synthetics-for-ai-pipelines AI content policy              /ai-content-policy/
   /aws-cost-levers-2026-the-3-that-cut-bills-30 AI content policy              /ai-content-policy/

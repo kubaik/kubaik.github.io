@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Nov 2026 05:52:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Nov 2026 19:46:29 +0000</lastBuildDate>
+    <item>
+      <title>Async practices that reduce meeting load</title>
+      <link>https://kubaik.github.io/7-async-practices-that-cut-meeting-load/</link>
+      <description>Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.</description>
+      <pubDate>Thu, 05 Nov 2026 19:43:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-async-practices-that-cut-meeting-load/</guid>
+    </item>
     <item>
       <title>Audit trails for AI agents: what breaks first</title>
       <link>https://kubaik.github.io/audit-trails-for-ai-agents-what-breaks-first/</link>
@@ -138,13 +145,6 @@
       <description>Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context.</description>
       <pubDate>Tue, 27 Oct 2026 04:15:49 +0000</pubDate>
       <guid>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</guid>
-    </item>
-    <item>
-      <title>HPA vs KEDA vs Karpenter: autoscaling traps</title>
-      <link>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</link>
-      <description>How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</description>
-      <pubDate>Mon, 26 Oct 2026 08:01:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/hpa-vs-keda-vs-karpenter-autoscaling-traps/</guid>
     </item>
   </channel>
 </rss>
