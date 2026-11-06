@@ -1837,6 +1837,17 @@
   "title": "AI agents eat your budget 3 ways",
   "words": 2483
  },
+ "envelope-encryption-with-cloud-kms-key-rotation-traps": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Envelope encryption with cloud KMS: key rotation traps",
+  "words": 2617
+ },
  "hybrid-cloud-routing-cost-speed-balance-for-sea": {
   "verdict": "IMPROVE",
   "reasons": [
@@ -1996,11 +2007,15 @@
   "words": 2724
  },
  "7-async-practices-that-cut-meeting-load": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
-  "title": "7 async practices that cut meeting load",
-  "words": 3213
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Async practices that reduce meeting load",
+  "words": 3217
  },
  "tool-calls-why-retries-stampede": {
   "verdict": "KEEP",

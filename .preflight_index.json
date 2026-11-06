@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-05T19:43:21.664686",
+  "built_at": "2026-11-06T05:44:20.992830",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5760,6 +5760,11 @@
       "slug": "7-async-practices-that-cut-meeting-load",
       "title": "7 async practices that cut meeting load",
       "summary": "The reducing meeting advice that circulates internally rarely matches what's in the public docs. This is the writeup that includes the part that usually goes wrong. The tutorials all show the happy path. Engineering teams often default to synchronous meetings for decisions, status updates, and code "
+    },
+    {
+      "slug": "envelope-encryption-with-cloud-kms-key-rotation-traps",
+      "title": "Envelope encryption with cloud KMS: key rotation traps",
+      "summary": "The postmortem always says the same thing: we should have caught this sooner. Teams often end up shipping key management twice — the second time because the first version failed quietly. This is the version of the write-up that includes the part that broke. You have a cloud KMS key and you're encryp"
     }
   ]
 }

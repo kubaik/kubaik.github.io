@@ -608,6 +608,9 @@
   "edge-agents-vs-cloud-round-trips-in-2026": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "envelope-encryption-with-cloud-kms-key-rotation-traps": {
+    "first_seen": "2026-11-06T05:44:50.982855+00:00"
+  },
   "evaluate-agents-with-spark-vs-custom-harness": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

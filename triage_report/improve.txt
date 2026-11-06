@@ -182,6 +182,7 @@ docs/drift-detection-the-plan-that-lies/index.md
 docs/duckdb-in-production-when-it-replaces-a-warehouse/index.md
 docs/ebpf-observability-in-2026-what-actually-works/index.md
 docs/edge-agents-vs-cloud-round-trips-in-2026/index.md
+docs/envelope-encryption-with-cloud-kms-key-rotation-traps/index.md
 docs/evaluate-agents-with-spark-vs-custom-harness/index.md
 docs/event-driven-beats-agent-driven-910-times/index.md
 docs/event-sourcing-pay-the-complexity-tax-only-here/index.md

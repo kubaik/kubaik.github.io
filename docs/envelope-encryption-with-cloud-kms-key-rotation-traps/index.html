@@ -1,0 +1,545 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Envelope encryption with cloud KMS: key rotation traps - Kubai Kevin</title>
+        <meta name="description" content="How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.">
+        <meta name="keywords" content="EnvelopeEncryption, Kms, KeyRotation, CloudKms, Hsm, AwsKms, DataKey, Encryption, Cloudcomputing, Dataengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-06T05:44:18.601505">
+        <meta property="article:modified_time" content="2026-11-06T05:46:46.685275+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Envelope encryption with cloud KMS: key rotation traps">
+        <meta property="og:description" content="How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.">
+        <meta property="og:url" content="https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/envelope-encryption-with-cloud-kms-key-rotation-traps.png">
+        <meta property="og:image:alt" content="Envelope encryption with cloud KMS: key rotation traps">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Envelope encryption with cloud KMS: key rotation traps">
+        <meta name="twitter:description" content="How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/envelope-encryption-with-cloud-kms-key-rotation-traps.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/#article",
+      "headline": "Envelope encryption with cloud KMS: key rotation traps",
+      "description": "How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.",
+      "datePublished": "2026-11-06T05:44:18+00:00",
+      "dateModified": "2026-11-06T05:46:46+00:00",
+      "wordCount": 2461,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/"
+      },
+      "keywords": "EnvelopeEncryption, Kms, KeyRotation, CloudKms, Hsm, AwsKms, DataKey, Encryption",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/envelope-encryption-with-cloud-kms-key-rotation-traps.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Envelope encryption with cloud KMS: key rotation traps",
+          "item": "https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Envelope encryption with cloud KMS: key rotation traps</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Envelope encryption with cloud KMS: key rotation traps</h1>
+                
+                <p class="post-lead">How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">EnvelopeEncryption</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Kms</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">KeyRotation</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">CloudKms</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Hsm</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cloudcomputing/"
+                       style="text-decoration:none;">Cloudcomputing</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2461 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-06
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Envelope encryption is the standard way to encrypt application data with a cloud KMS key. It is also the place where key rotation failures hide: a deployment looks healthy, then old records stop decrypting after a key change. The failure is rarely in the cryptography itself. It is almost always in what was stored alongside the ciphertext.</p>
+<p>This article covers the key hierarchy, a working Python implementation, the concrete rotation traps, and how to test the whole path before it reaches production.</p>
+<h2 id="why-encrypting-data-directly-with-a-kms-key-is-a-dead-end">Why encrypting data directly with a KMS key is a dead end</h2>
+<p>Managed KMS services are built to protect small payloads. AWS KMS, for example, documents a 4 KB limit on the plaintext passed to its symmetric <code>Encrypt</code> operation. They are not designed to encrypt database rows, files, or messages directly.</p>
+<p>The reasons are technical and economic:</p>
+<ul>
+<li><strong>Network cost per operation.</strong> Every <code>Encrypt</code>/<code>Decrypt</code> call is a round-trip to a highly available, audited service, billed per request. Encrypting a 1 MB file in 4 KB chunks would require roughly 256 KMS calls per file. That arithmetic is simple and the result is slow and expensive at any volume.</li>
+<li><strong>Availability coupling.</strong> KMS keys are regional resources. If every read path calls KMS, a KMS outage becomes an application outage.</li>
+<li><strong>Throughput ceilings.</strong> KMS request quotas are real. Bulk data encryption will hit them.</li>
+</ul>
+<p>Envelope encryption removes KMS from the hot path. A data key is generated locally or by KMS, used to encrypt the payload with a fast local cipher, and then discarded. Only the data key is wrapped by KMS. To decrypt, the wrapped key is unwrapped once, then the payload is decrypted locally.</p>
+<p>The pattern:</p>
+<ol>
+<li>Obtain a data key (plaintext plus a wrapped copy).</li>
+<li>Encrypt the payload locally with the plaintext data key.</li>
+<li>Store the wrapped data key with the ciphertext.</li>
+<li>Discard the plaintext data key from memory.</li>
+<li>To decrypt, unwrap the data key via KMS, then decrypt locally.</li>
+</ol>
+<p>The data key is sealed inside the KMS key. That seal is the part rotation affects, and it is where most deployments break.</p>
+<h2 id="prerequisites-iam-key-policies-and-a-local-crypto-library">Prerequisites: IAM, key policies, and a local crypto library</h2>
+<p>Before writing code, confirm the environment has the necessary permissions and libraries:</p>
+<ul>
+<li>An IAM principal with <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> on the KMS key. <code>GenerateDataKey</code> creates the data key; <code>Decrypt</code> unwraps it. <code>kms:Encrypt</code> is not needed for the <code>GenerateDataKey</code> flow.</li>
+<li>A symmetric KMS key for encryption and decryption. Record the key ARN. AWS KMS supports automatic annual rotation, which creates new key material while keeping the same key ARN.</li>
+<li>A local cryptographic library. In Python, <code>cryptography</code> is standard. In Go, <code>crypto/aes</code> and <code>crypto/cipher</code> in the standard library are sufficient.</li>
+</ul>
+<p>Install dependencies:</p>
+<pre><code class="language-bash">pip install boto3 cryptography
+</code></pre>
+<p>In production, use IAM roles rather than long-lived access keys. For local testing, any credentials with the permissions above work.</p>
+<h2 id="step-1-generate-a-data-key-with-kms">Step 1: Generate a data key with KMS</h2>
+<p><code>GenerateDataKey</code> returns both a plaintext data key and a ciphertext blob (the wrapped key). The plaintext key is used only in memory; the wrapped blob is what gets persisted.</p>
+<pre><code class="language-python">import boto3
+
+kms = boto3.client('kms')
+key_id = 'arn:aws:kms:us-east-1:123456789012:key/abcd1234-...'  # your KMS key ARN
+
+def generate_data_key(key_id):
+    response = kms.generate_data_key(
+        KeyId=key_id,
+        KeySpec='AES_256'  # or 'AES_128'
+    )
+    return response['Plaintext'], response['CiphertextBlob'], response['KeyId']
+</code></pre>
+<p>The response includes <code>KeyId</code>, the ARN of the key that produced the data key. AWS KMS also embeds the key ID inside the ciphertext blob, so a bare <code>Decrypt</code> call can resolve the correct key. Storing the key ID separately is still worth doing: it makes records self-describing for audits, cross-account access, and disaster recovery, and it lets you validate that a record was produced by the key you expect.</p>
+<h2 id="step-2-encrypt-your-data-locally-with-the-data-key">Step 2: Encrypt your data locally with the data key</h2>
+<p>AES-256-GCM is a reasonable default because it provides authenticated encryption. The one rule that cannot be broken: generate a unique nonce for every encryption operation under the same key. Reusing a nonce with GCM leaks plaintext relationships and destroys authentication guarantees.</p>
+<pre><code class="language-python">import os
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+def encrypt_data(plaintext, data_key):
+    aesgcm = AESGCM(data_key)
+    nonce = os.urandom(12)  # 96-bit nonce for GCM
+    ciphertext = aesgcm.encrypt(nonce, plaintext, None)
+    return nonce + ciphertext  # prepend nonce for storage
+</code></pre>
+<p>The output is the 12-byte nonce followed by the ciphertext and authentication tag. The nonce does not need to be secret, but it must be stored with the ciphertext and must never repeat for a given key.</p>
+<p>If the payload is large, stream it through AES-GCM rather than loading it whole, and still generate a fresh nonce per message. If you need to encrypt multiple fields under one data key, either use a fresh nonce per field or derive per-field subkeys; never reuse a nonce.</p>
+<h2 id="step-3-store-the-wrapped-key-and-ciphertext-together">Step 3: Store the wrapped key and ciphertext together</h2>
+<p>Three things must be persisted: the encrypted data (nonce plus ciphertext), the wrapped data key, and the KMS key ID. Optionally store the algorithm and a format version for future migrations.</p>
+<pre><code class="language-python">import json
+import base64
+
+def package_encrypted_data(nonce_ciphertext, wrapped_key, kms_key_id):
+    return json.dumps({
+        'data': base64.b64encode(nonce_ciphertext).decode('utf-8'),
+        'wrapped_key': base64.b64encode(wrapped_key).decode('utf-8'),
+        'kms_key_id': kms_key_id
+    })
+</code></pre>
+<p>In a database, these can be separate columns (<code>ciphertext</code>, <code>wrapped_key</code>, <code>kms_key_id</code>) or a single serialized blob. Separate columns make it easier to query and re-wrap keys later without touching the payload.</p>
+<h2 id="step-4-decrypt-by-unwrapping-the-data-key-with-kms">Step 4: Decrypt by unwrapping the data key with KMS</h2>
+<p>Decryption reverses the process: unwrap the data key with KMS, then decrypt locally.</p>
+<pre><code class="language-python">def decrypt_data(package):
+    obj = json.loads(package)
+    wrapped_key = base64.b64decode(obj['wrapped_key'])
+    kms_key_id = obj['kms_key_id']
+    response = kms.decrypt(
+        CiphertextBlob=wrapped_key,
+        KeyId=kms_key_id  # optional; acts as a safety check
+    )
+    data_key = response['Plaintext']
+    nonce_ciphertext = base64.b64decode(obj['data'])
+    nonce = nonce_ciphertext[:12]
+    ciphertext = nonce_ciphertext[12:]
+    aesgcm = AESGCM(data_key)
+    plaintext = aesgcm.decrypt(nonce, ciphertext, None)
+    return plaintext
+</code></pre>
+<p>The <code>KeyId</code> parameter in <code>Decrypt</code> is optional. When provided, KMS verifies that the ciphertext was produced under that key and fails otherwise. That check is useful, but it is also the source of one of the traps below.</p>
+<h2 id="the-rotation-trap-what-actually-breaks">The rotation trap: what actually breaks</h2>
+<p>Automatic rotation on a symmetric KMS key creates new backing key material while keeping the same key ARN, and KMS retains older versions for decryption. A wrapped data key produced before rotation still unwraps correctly after rotation, because the ciphertext blob identifies the version that produced it. So annual automatic rotation, by itself, does not break envelope encryption.</p>
+<p>The real traps are the ones that change the key identity or the reference used at decrypt time:</p>
+<p><strong>1. Replacing the key instead of rotating it.</strong> If a team creates a new KMS key (new ARN) and switches the application to it, data wrapped under the old key still decrypts — but only if the old key remains enabled and the record points at it. If the old key is scheduled for deletion or its policy is tightened, old records become unreadable. Deletion in AWS KMS is irreversible after the waiting period, so this is a data-loss event, not a bug.</p>
+<p><strong>2. Hardcoding the current key ARN in the decrypt path.</strong> If <code>decrypt_data</code> passes a hardcoded <code>KeyId</code> rather than the stored one, every record wrapped under a different key fails with <code>InvalidCiphertextException</code>, even though the correct key is still available. The stored key ID is what makes old records decryptable.</p>
+<p><strong>3. Storing an alias instead of a key ARN.</strong> Aliases are pointers. An alias can be repointed to a different key, so a record that stores only the alias may later resolve to the wrong key. Store the key ARN or key ID, not the alias.</p>
+<p><strong>4. Cross-region and cross-account replication.</strong> KMS keys are regional. Copying ciphertext to another region without the wrapped key, or without a key available there, produces undecryptable data. Multi-Region keys exist specifically to keep key material consistent across regions; otherwise the record must be re-wrapped with a key in the destination region as part of the copy.</p>
+<p><strong>5. Deleting or disabling old keys during cleanup.</strong> A rotation cleanup that disables old key versions or schedules old keys for deletion looks tidy and silently breaks historical data. Old keys must remain enabled for as long as any record depends on them.</p>
+<p>The common thread: the wrapped key and the key identity must travel with the ciphertext, and the decrypt path must use the stored identity rather than a globally configured one.</p>
+<h2 id="edge-cases-key-policies-grants-and-hsm-backed-keys">Edge cases: key policies, grants, and HSM-backed keys</h2>
+<p><strong>Key policy versus IAM policy.</strong> In AWS KMS, the key policy is the primary access control. An IAM policy granting <code>kms:Decrypt</code> does not help if the key policy does not permit the principal. <code>AccessDeniedException</code> on decrypt usually means one of the two was missed; check both.</p>
+<p><strong>Grants.</strong> Grants delegate permissions without editing the key policy. They are useful for temporary access, but they must be revoked when no longer needed. A stale grant is a standing permission.</p>
+<p><strong>HSM-backed keys.</strong> Keys in a custom key store backed by a hardware security module keep key material inside the HSM. Envelope encryption works identically, but expect additional latency and cost, and plan disaster recovery around the HSM cluster, since key material cannot be exported.</p>
+<p><strong>Data key caching.</strong> Some SDKs offer data key caching to reduce KMS calls. This trades a larger exposure window for lower latency and cost. If used, keep the TTL short and cap the number of uses per cached key.</p>
+<h2 id="verification-test-rotation-and-decryption">Verification: test rotation and decryption</h2>
+<p>Rotation behavior should be tested explicitly rather than assumed. The test has three parts: encrypt, change the key, decrypt both old and new records.</p>
+<pre><code class="language-python">plaintext = b&quot;secret message&quot;
+data_key, wrapped_key, key_id = generate_data_key(key_id)
+nonce_ciphertext = encrypt_data(plaintext, data_key)
+package = package_encrypted_data(nonce_ciphertext, wrapped_key, key_id)
+
+# Change the key here: enable automatic rotation, or create a new key
+# and update the application's configured key ARN.
+
+# Old record must still decrypt.
+assert decrypt_data(package) == plaintext
+
+# New record must use the current key.
+new_data_key, new_wrapped_key, new_key_id = generate_data_key(key_id)
+new_nonce_ciphertext = encrypt_data(b&quot;new secret&quot;, new_data_key)
+new_package = package_encrypted_data(new_nonce_ciphertext, new_wrapped_key, new_key_id)
+assert decrypt_data(new_package) == b&quot;new secret&quot;
+</code></pre>
+<p>Two notes on this test. First, AWS KMS automatic rotation is annual and there is no <code>rotate-key</code> command; to force a new version in a test, use a separate test key or wait for the rotation schedule. Second, a local KMS emulator can exercise the <code>GenerateDataKey</code> and <code>Decrypt</code> paths without touching production keys, but confirm that the emulator models key versions, since that is the behavior under test.</p>
+<p>What to instrument in a real deployment:</p>
+<ul>
+<li><strong>Decrypt failures by error type.</strong> A rise in <code>InvalidCiphertextException</code> after a key change is the signature of trap 2.</li>
+<li><strong>Key ID distribution in stored records.</strong> A query grouping records by stored key ID shows how many depend on old keys.</li>
+<li><strong>Key state.</strong> Track which keys are enabled, disabled, or pending deletion, and alert when a key with dependent records is scheduled for deletion.</li>
+</ul>
+<p>The comparison to make is simple: for each stored key ID, count records, and confirm the key is enabled. Any key pending deletion with a nonzero record count is a data-loss risk.</p>
+<h2 id="choosing-between-cloud-kms-and-self-managed-hsm">Choosing between cloud KMS and self-managed HSM</h2>
+<p>The envelope pattern is the same either way; the choice is about control, operations, and compliance.</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Cloud KMS</th>
+<th>Self-managed HSM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operational burden</td>
+<td>Low; provider manages availability and patching</td>
+<td>High; patching, HA, and backups are yours</td>
+</tr>
+<tr>
+<td>Cost model</td>
+<td>Per request and per key</td>
+<td>Capital expense plus operational cost</td>
+</tr>
+<tr>
+<td>Key material control</td>
+<td>Provider holds material unless BYOK/HYOK is used</td>
+<td>You hold material</td>
+</tr>
+<tr>
+<td>Compliance</td>
+<td>Meets many standards, with published validation</td>
+<td>Depends on the module</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>Network round-trip</td>
+<td>Local if on-premises</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td>High</td>
+<td>Limited by hardware</td>
+</tr>
+</tbody>
+</table>
+<p>Use cloud KMS when operational overhead matters more than holding key material directly. Use a self-managed HSM when compliance or policy requires full control of key material. Envelope encryption applies to both, and the rotation traps are the same shape: store the wrapped key and the key identity with the ciphertext, and never let the decrypt path guess.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How does envelope encryption work with AWS KMS?</strong></p>
+<p><code>GenerateDataKey</code> returns a plaintext data key and a copy wrapped under the KMS key. The plaintext key encrypts the payload locally and is then discarded. The wrapped key is stored with the ciphertext. To decrypt, <code>Decrypt</code> unwraps the data key, and the payload is decrypted locally. Large payloads never pass through KMS.</p>
+<p><strong>What happens when a KMS key is rotated?</strong></p>
+<p>Automatic rotation creates new backing key material under the same key ARN. KMS retains older versions for decryption, so data wrapped before rotation still decrypts. Problems arise when a new key replaces the old one and the old key is disabled or deleted, or when the decrypt path hardcodes a key ID instead of using the stored one.</p>
+<p><strong>Can I use envelope encryption with an HSM?</strong></p>
+<p>Yes. Envelope encryption is a pattern, not a product. With an HSM, the data key is generated or wrapped using the HSM (for example via PKCS#11), the payload is encrypted locally, and the wrapped key is stored. Cloud KMS services are managed HSMs, so the pattern is identical.</p>
+<p><strong>Why do I get InvalidCiphertextException when decrypting?</strong></p>
+<p>Common causes: the ciphertext blob is corrupted or truncated, the wrong key is specified, or the decrypt call passes a hardcoded key ID that does not match the key that produced the record. If a new key replaced an old one, records wrapped under the old key fail unless the old key ID is used and the old key remains enabled.</p>
+<h2 id="next-step-audit-your-key-ids">Next step: audit your key IDs</h2>
+<p>In the next 30 minutes, search the codebase for every KMS decrypt call and check what <code>KeyId</code> it passes. If it is hardcoded or comes from configuration rather than from the stored record, that is trap 2 waiting to fire. Change it to read the key ID stored alongside the ciphertext, then run the encrypt-rotate-decrypt test above against a non-production key to confirm old records still decrypt.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/replace-env-with-these-in-2026/">Replace .env with these in 2026</a></li>
+<li><a href="https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/">PCI DSS architecture: 12 requirements that matter</a></li>
+<li><a href="https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/">Cutting cloud egress costs: architecture that works</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/replace-env-with-these-in-2026/">
+                        <h3>Replace .env with these in 2026</h3>
+                        <p>Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.</p>
+                        <span class="related-meta">15 min read · 18 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/pci-dss-architecture-12-requirements-that-matter/">
+                        <h3>PCI DSS architecture: 12 requirements that matter</h3>
+                        <p>Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</p>
+                        <span class="related-meta">14 min read · 19 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
+                        <h3>Idempotency keys: what they fix, what they don&#39;t</h3>
+                        <p>How idempotency keys work, where they fail, and the failure modes they don&amp;#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
+                        <span class="related-meta">14 min read · 21 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

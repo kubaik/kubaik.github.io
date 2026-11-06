@@ -1743,6 +1743,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "envelope-encryption-with-cloud-kms-key-rotation-traps",
+      "source": "post.json",
+      "word_count": 2461,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "hybrid-cloud-routing-cost-speed-balance-for-sea",
       "source": "post.json",
       "word_count": 2605,

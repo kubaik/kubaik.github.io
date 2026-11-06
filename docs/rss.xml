@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Nov 2026 19:46:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 05:47:22 +0000</lastBuildDate>
+    <item>
+      <title>Envelope encryption with cloud KMS: key rotation traps</title>
+      <link>https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/</link>
+      <description>How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.</description>
+      <pubDate>Fri, 06 Nov 2026 05:44:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/</guid>
+    </item>
     <item>
       <title>Async practices that reduce meeting load</title>
       <link>https://kubaik.github.io/7-async-practices-that-cut-meeting-load/</link>
@@ -138,13 +145,6 @@
       <description>Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</description>
       <pubDate>Tue, 27 Oct 2026 17:43:39 +0000</pubDate>
       <guid>https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/</guid>
-    </item>
-    <item>
-      <title>Context engineering: the real fix for agent hallucinations</title>
-      <link>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</link>
-      <description>Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context.</description>
-      <pubDate>Tue, 27 Oct 2026 04:15:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/context-engineering-the-real-fix-for-agent-hallucinations/</guid>
     </item>
   </channel>
 </rss>

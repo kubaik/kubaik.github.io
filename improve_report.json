@@ -1,9 +1,9 @@
 {
   "improved": [
     {
-      "slug": "7-async-practices-that-cut-meeting-load",
+      "slug": "envelope-encryption-with-cloud-kms-key-rotation-traps",
       "attempts": 1,
-      "retitled": true
+      "retitled": false
     }
   ],
   "failed": []
