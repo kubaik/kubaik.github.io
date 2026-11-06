@@ -1,4 +1,4 @@
-❌ Internal link audit: 411 broken link(s) found across 412 posts checked.
+❌ Internal link audit: 412 broken link(s) found across 413 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -186,6 +186,7 @@ Source Post                              Anchor Text                    Missing 
   /duckdb-in-production-when-it-replaces-a-warehouse AI content policy              /ai-content-policy/
   /ebpf-observability-in-2026-what-actually-works AI content policy              /ai-content-policy/
   /edge-agents-vs-cloud-round-trips-in-2026 AI content policy              /ai-content-policy/
+  /envelope-encryption-with-cloud-kms-key-rotation-traps AI content policy              /ai-content-policy/
   /evaluate-agents-with-spark-vs-custom-harness AI content policy              /ai-content-policy/
   /event-driven-beats-agent-driven-910-times AI content policy              /ai-content-policy/
   /event-sourcing-pay-the-complexity-tax-only-here AI content policy              /ai-content-policy/

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Nov 2026 05:47:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 19:06:24 +0000</lastBuildDate>
+    <item>
+      <title>USSD/SMS fallback: the session trap</title>
+      <link>https://kubaik.github.io/ussdsms-fallback-the-session-trap/</link>
+      <description>Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</description>
+      <pubDate>Fri, 06 Nov 2026 19:03:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ussdsms-fallback-the-session-trap/</guid>
+    </item>
     <item>
       <title>Envelope encryption with cloud KMS: key rotation traps</title>
       <link>https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/</link>
@@ -138,13 +145,6 @@
       <description>Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</description>
       <pubDate>Wed, 28 Oct 2026 04:45:55 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</guid>
-    </item>
-    <item>
-      <title>JWT sessions: revocation, rotation, storage</title>
-      <link>https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/</link>
-      <description>Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</description>
-      <pubDate>Tue, 27 Oct 2026 17:43:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/</guid>
     </item>
   </channel>
 </rss>

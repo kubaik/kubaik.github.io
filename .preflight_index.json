@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-06T05:44:20.992830",
+  "built_at": "2026-11-06T19:03:59.511234",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5765,6 +5765,11 @@
       "slug": "envelope-encryption-with-cloud-kms-key-rotation-traps",
       "title": "Envelope encryption with cloud KMS: key rotation traps",
       "summary": "The postmortem always says the same thing: we should have caught this sooner. Teams often end up shipping key management twice — the second time because the first version failed quietly. This is the version of the write-up that includes the part that broke. You have a cloud KMS key and you're encryp"
+    },
+    {
+      "slug": "ussdsms-fallback-the-session-trap",
+      "title": "USSD/SMS fallback: the session trap",
+      "summary": "Most handling ussd guides assume a clean environment and a patient timeline. This is the writeup that includes the part that usually goes wrong. The answers online were either wrong or skipped the part that mattered. USSD and SMS fallback flows are the part of a fintech stack that looks trivial unti"
     }
   ]
 }

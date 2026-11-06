@@ -1162,6 +1162,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "ussdsms-fallback-the-session-trap",
+      "source": "post.json",
+      "word_count": 3223,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "7-bundling-decisions-that-still-matter",
       "source": "post.json",
       "word_count": 2857,

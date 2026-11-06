@@ -1,9 +1,9 @@
 {
   "changed": [
     {
-      "slug": "envelope-encryption-with-cloud-kms-key-rotation-traps",
+      "slug": "ussdsms-fallback-the-session-trap",
       "sentences_removed": 0,
-      "sections_added": 1,
+      "sections_added": 2,
       "footer_migrated": false
     }
   ],

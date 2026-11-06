@@ -1039,6 +1039,13 @@
   "title": "Orchestration tax kills multi-agent systems",
   "words": 2643
  },
+ "ussdsms-fallback-the-session-trap": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "USSD/SMS fallback: the session trap",
+  "words": 2353
+ },
  "7-bundling-decisions-that-still-matter": {
   "verdict": "IMPROVE",
   "reasons": [
@@ -1846,7 +1853,7 @@
    "add_sources"
   ],
   "title": "Envelope encryption with cloud KMS: key rotation traps",
-  "words": 2617
+  "words": 2461
  },
  "hybrid-cloud-routing-cost-speed-balance-for-sea": {
   "verdict": "IMPROVE",

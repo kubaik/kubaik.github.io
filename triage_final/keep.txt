@@ -226,6 +226,7 @@ docs/track-ai-agent-costs-in-fractal-workflows/
 docs/unlock-python-313s-free-threaded-gil-for-web-apps/
 docs/use-feature-flags-to-deploy-ai-models-safely/
 docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/
+docs/ussdsms-fallback-the-session-trap/
 docs/vibe-code-works-great-fails-forever/
 docs/wasm-servers-beat-containers-here/
 docs/webhook-delivery-that-survives-outages/

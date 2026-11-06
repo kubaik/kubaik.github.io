@@ -1,0 +1,574 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>USSD/SMS fallback: the session trap - Kubai Kevin</title>
+        <meta name="description" content="Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.">
+        <meta name="keywords" content="Ussd, Sms, UssdSessionTimeout, SmsFallbackFintech, UssdTransactionState, SmppDeliveryReceipt, DoubleDebitUssd">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-06T19:03:57.266043">
+        <meta property="article:modified_time" content="2026-11-06T19:05:53.521925+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="USSD/SMS fallback: the session trap">
+        <meta property="og:description" content="Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.">
+        <meta property="og:url" content="https://kubaik.github.io/ussdsms-fallback-the-session-trap/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ussdsms-fallback-the-session-trap.png">
+        <meta property="og:image:alt" content="USSD/SMS fallback: the session trap">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="USSD/SMS fallback: the session trap">
+        <meta name="twitter:description" content="Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ussdsms-fallback-the-session-trap.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ussdsms-fallback-the-session-trap/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ussdsms-fallback-the-session-trap/#article",
+      "headline": "USSD/SMS fallback: the session trap",
+      "description": "Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.",
+      "datePublished": "2026-11-06T19:03:57+00:00",
+      "dateModified": "2026-11-06T19:05:53+00:00",
+      "wordCount": 3223,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ussdsms-fallback-the-session-trap/"
+      },
+      "keywords": "Ussd, Sms, UssdSessionTimeout, SmsFallbackFintech, UssdTransactionState, SmppDeliveryReceipt, DoubleDebitUssd",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/ussdsms-fallback-the-session-trap.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "USSD/SMS fallback: the session trap",
+          "item": "https://kubaik.github.io/ussdsms-fallback-the-session-trap/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>USSD/SMS fallback: the session trap</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">USSD/SMS fallback: the session trap</h1>
+                
+                <p class="post-lead">Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Ussd</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Sms</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ussdsessiontimeout/"
+                       style="text-decoration:none;">UssdSessionTimeout</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">SmsFallbackFintech</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">UssdTransactionState</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3223 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-06
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>USSD and SMS fallback flows are the part of a payments stack that looks trivial until it isn't. A common misconception is to treat USSD as "a form that works on any phone" and SMS as "a notification channel," then discover in production that USSD is a stateful, timeout-bound, per-session protocol with no delivery guarantee, and SMS is a store-and-forward channel whose only reliable signal is a delivery receipt that may never arrive. The result is duplicated debits, orphaned sessions, and users who see "Transaction failed" while the money has already left their account. This article explains the underlying model, shows a worked fallback state machine, and ends with one file to check in the next 30 minutes.</p>
+<h2 id="the-misconception-ussd-is-not-a-form-sms-is-not-a-channel">The misconception: USSD is not a form, SMS is not a channel</h2>
+<p>The mental model most engineers arrive with is wrong in two directions.</p>
+<p>USSD (Unstructured Supplementary Service Data, specified in the GSM 02.90 family of standards) is not a stateless request/response like HTTP. When a user dials a short code such as <code>*123#</code>, the handset opens a session to the mobile network operator's USSD gateway. That gateway holds the session open while your application — usually reached over a gateway-specific HTTP or SMPP bridge — sends menus and receives responses. The session has a lifetime. On most networks it is short: tens of seconds between user inputs is the practical ceiling, and the operator terminates the session if the user does not respond. When the session ends, so does every variable held in process memory for that user. There is no cookie, no session ID you control, no reconnect.</p>
+<p>SMS, by contrast, is store-and-forward. Your application hands a message to an SMSC (Short Message Service Centre) via SMPP or an HTTP API. The SMSC queues it, tries to deliver it, and may retry for hours or days. You get a <code>submit_sm_resp</code> acknowledging that the SMSC accepted the message — not that the handset received it. A delivery receipt (<code>deliver_sm</code> with an <code>esm_class</code> indicating a receipt) may arrive, may arrive late, or may never arrive. Treating "accepted by SMSC" as "delivered" is the root of a large class of support tickets.</p>
+<p>The practical consequence: a fallback flow that says "if USSD fails, send an SMS" is under-specified. Fails how? At which step? With what state? If the USSD session dropped after the user entered a PIN but before the debit was confirmed, an SMS saying "your transaction failed, try again" invites a second debit. If the debit succeeded but the confirmation SMS was lost, the user calls support convinced they were robbed. Both are the same bug: the fallback path has no shared source of truth with the primary path.</p>
+<h2 id="the-underlying-model-sessions-transactions-and-messages-are-three-different-things">The underlying model: sessions, transactions, and messages are three different things</h2>
+<p>Separate three lifecycles that teams routinely conflate:</p>
+<ol>
+<li><strong>The USSD session.</strong> Owned by the operator gateway. Short-lived. Identified by a session ID the gateway assigns (in SMPP-based USSD, the <code>session_id</code> in the <code>ussd_request</code>/<code>ussd_response</code> payloads). Every inbound USSD request must be treated as potentially the first, middle, or last of a conversation, and state keyed on that session ID must be persisted outside process memory.</li>
+<li><strong>The financial transaction.</strong> Owned by your ledger. Long-lived. Must be idempotent and must survive the death of any USSD session. This is the record the user actually cares about.</li>
+<li><strong>The message.</strong> Owned by the SMSC. Fire-and-forget with an unreliable receipt. Message delivery must never be used as a proxy for transaction state.</li>
+</ol>
+<p>The correct architecture makes the transaction the source of truth and treats both USSD and SMS as unreliable transports that read from and write to it. A USSD menu step is a command against the transaction state machine. An SMS is a projection of the transaction state at send time, with a receipt that is advisory only.</p>
+<p>A second model point: USSD is synchronous from the user's perspective but asynchronous from the backend's. The user waits, staring at a menu, while the backend does whatever it does. If the backend takes longer than the operator's gateway timeout — commonly a few seconds; the exact value is operator-specific and should be confirmed in the gateway's integration documentation — the session drops and the user sees a generic error. Long-running work such as a core-banking call, a fraud check, or a third-party wallet debit must not block the USSD response. The pattern is: acknowledge the step, persist intent, respond to the user with "processing," and complete asynchronously.</p>
+<h2 id="a-worked-fallback-state-machine">A worked fallback state machine</h2>
+<p>The following is a minimal, self-contained example of the pattern. It is illustrative Python using only the standard library, not a production integration — the point is the state model, not the transport.</p>
+<pre><code class="language-python">import sqlite3
+import uuid
+from contextlib import contextmanager
+
+# States for a single transfer attempt.
+# INITIATED -&gt; CONFIRMED -&gt; SETTLED  (happy path)
+# INITIATED -&gt; FAILED                 (terminal failure)
+# INITIATED -&gt; PENDING_RECONCILE      (we lost the session mid-flight)
+
+@contextmanager
+def db(path=&quot;tx.db&quot;):
+    conn = sqlite3.connect(path)
+    conn.execute(&quot;PRAGMA journal_mode=WAL&quot;)
+    try:
+        yield conn
+        conn.commit()
+    finally:
+        conn.close()
+
+def init():
+    with db() as c:
+        c.execute(&quot;&quot;&quot;
+            CREATE TABLE IF NOT EXISTS tx (
+                id TEXT PRIMARY KEY,
+                msisdn TEXT NOT NULL,
+                amount_cents INTEGER NOT NULL,
+                state TEXT NOT NULL,
+                ussd_session TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        &quot;&quot;&quot;)
+        c.execute(&quot;&quot;&quot;
+            CREATE TABLE IF NOT EXISTS idem (
+                key TEXT PRIMARY KEY,
+                tx_id TEXT NOT NULL
+            )
+        &quot;&quot;&quot;)
+
+def start_transfer(msisdn, amount_cents, idem_key):
+    &quot;&quot;&quot;Idempotent on idem_key. Returns tx_id.&quot;&quot;&quot;
+    with db() as c:
+        row = c.execute(&quot;SELECT tx_id FROM idem WHERE key=?&quot;, (idem_key,)).fetchone()
+        if row:
+            return row[0]
+        tx_id = str(uuid.uuid4())
+        c.execute(
+            &quot;INSERT INTO tx (id, msisdn, amount_cents, state) VALUES (?,?,?,?)&quot;,
+            (tx_id, msisdn, amount_cents, &quot;INITIATED&quot;),
+        )
+        c.execute(&quot;INSERT INTO idem (key, tx_id) VALUES (?,?)&quot;, (idem_key, tx_id))
+        return tx_id
+
+def bind_session(tx_id, session_id):
+    with db() as c:
+        c.execute(&quot;UPDATE tx SET ussd_session=? WHERE id=?&quot;, (session_id, tx_id))
+
+def confirm(tx_id):
+    with db() as c:
+        cur = c.execute(
+            &quot;UPDATE tx SET state='CONFIRMED' WHERE id=? AND state='INITIATED'&quot;,
+            (tx_id,),
+        )
+        # rowcount == 0 means it was already confirmed or failed: safe to ignore
+        return cur.rowcount == 1
+
+def mark_pending_reconcile(tx_id):
+    &quot;&quot;&quot;Call when a USSD session drops after INITIATED but before CONFIRMED.&quot;&quot;&quot;
+    with db() as c:
+        c.execute(
+            &quot;UPDATE tx SET state='PENDING_RECONCILE' WHERE id=? AND state='INITIATED'&quot;,
+            (tx_id,),
+        )
+
+def reconcile(tx_id, settled):
+    &quot;&quot;&quot;Called by a background job that queries the core ledger.&quot;&quot;&quot;
+    with db() as c:
+        target = &quot;SETTLED&quot; if settled else &quot;FAILED&quot;
+        c.execute(
+            &quot;UPDATE tx SET state=? WHERE id=? AND state IN ('PENDING_RECONCILE','CONFIRMED')&quot;,
+            (target, tx_id),
+        )
+</code></pre>
+<p>Two properties matter here. First, <code>confirm</code> is guarded by <code>WHERE state='INITIATED'</code>, so a duplicate USSD callback (operators do retry) cannot double-confirm. Second, <code>PENDING_RECONCILE</code> is a first-class state, not an error. It exists precisely because USSD sessions die mid-flight and the only honest answer is "we don't know yet, go ask the ledger."</p>
+<p>The fallback SMS is then a projection of <code>tx.state</code>, sent by a worker that reads the table — not by the USSD handler inline. If the SMS is lost, the state is still correct. If the user dials back in, the USSD handler looks up their most recent <code>PENDING_RECONCILE</code> transaction and can say "we are checking your last transfer" instead of starting a fresh one.</p>
+<h3 id="walking-through-a-mid-session-drop">Walking through a mid-session drop</h3>
+<p>Consider a concrete sequence, with the reasoning shown at each step:</p>
+<ol>
+<li>The user dials <code>*123#</code> and selects "send money." The handler calls <code>start_transfer(msisdn, 5000, idem_key)</code> where <code>idem_key</code> is derived from the MSISDN and a coarse time bucket, or supplied by the gateway if it offers one. State is <code>INITIATED</code>, <code>tx_id</code> is a fresh UUID.</li>
+<li>The handler calls <code>bind_session(tx_id, session_id)</code> before showing the PIN prompt. The session is now tied to the transaction <em>before</em> any credential is entered.</li>
+<li>The user enters the PIN. The handler validates it, calls <code>confirm(tx_id)</code>, and returns "processing" to the gateway immediately. The core-banking debit is dispatched to a queue.</li>
+<li>The session drops — the user's phone lost signal, or the gateway timed out the next menu. A gateway callback arrives with the session ID and no further input. The handler looks up the transaction by session ID, sees <code>CONFIRMED</code>, and does nothing: the debit is already in flight.</li>
+<li>Alternatively, the session drops <em>between</em> step 2 and step 3. The handler sees <code>INITIATED</code> and calls <code>mark_pending_reconcile(tx_id)</code>. The user sees "session ended"; the transaction is not lost.</li>
+<li>A scheduled reconcile job picks up every <code>PENDING_RECONCILE</code> row older than a few minutes, queries the core ledger by <code>tx_id</code> (which must be passed as the ledger's idempotency key), and calls <code>reconcile(tx_id, settled=&lt;ledger says debited&gt;)</code>.</li>
+<li>Once the transaction reaches <code>SETTLED</code> or <code>FAILED</code>, the SMS worker sends a projection of that terminal state. If the SMS is lost, nothing breaks: the next USSD dial-in or app query reads the same row.</li>
+</ol>
+<p>The critical detail in step 6 is that the <code>tx_id</code> must be the idempotency key on the <em>ledger</em> side too. If the ledger assigns its own reference and your reconcile job matches on amount and MSISDN, two transfers of the same amount to the same number in the same minute will be ambiguous. Pass your UUID through.</p>
+<h3 id="a-failure-mode-analysis-of-the-same-flow">A failure-mode analysis of the same flow</h3>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>What breaks without the model</th>
+<th>What the model does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Session drops after PIN, before confirm</td>
+<td>Handler has no record of which transaction the PIN belonged to</td>
+<td><code>bind_session</code> ran first; handler finds the row and marks <code>PENDING_RECONCILE</code></td>
+</tr>
+<tr>
+<td>Gateway retries the confirm callback</td>
+<td>Second debit or double-confirm</td>
+<td><code>WHERE state='INITIATED'</code> guard makes the second call a no-op</td>
+</tr>
+<tr>
+<td>Backend slower than gateway timeout</td>
+<td>User sees error, backend still debits</td>
+<td>Handler responds "processing" before dispatch; state is <code>CONFIRMED</code>, not lost</td>
+</tr>
+<tr>
+<td>SMS confirmation lost</td>
+<td>User believes transfer failed, retries</td>
+<td>State is authoritative; retry path refuses a new transfer while <code>PENDING_RECONCILE</code> exists</td>
+</tr>
+<tr>
+<td>Reconcile job matches on amount + MSISDN</td>
+<td>Wrong transaction settled</td>
+<td>Reconcile matches on <code>tx_id</code>, which is also the ledger idempotency key</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-sms-fallback-actually-earns-its-place">Where SMS fallback actually earns its place</h2>
+<p>SMS fallback is not a substitute for USSD. It is useful in three narrow cases, and teams over-apply it to a fourth where it does harm.</p>
+<table>
+<thead>
+<tr>
+<th>Fallback scenario</th>
+<th>Appropriate?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USSD session drops after debit; notify user of outcome</td>
+<td>Yes</td>
+<td>The transaction state is authoritative; the SMS is a projection</td>
+</tr>
+<tr>
+<td>Smartphone user prefers an app link over USSD</td>
+<td>Yes, with caution</td>
+<td>Deep-link SMS is a real pattern; the link must not carry a bearer token</td>
+</tr>
+<tr>
+<td>Feature phone user has no data; send a one-time code for a call-centre flow</td>
+<td>Yes</td>
+<td>Short, single-purpose, no state carried in the message</td>
+</tr>
+<tr>
+<td>"If USSD fails, send an SMS asking the user to retry the transfer"</td>
+<td>No</td>
+<td>Invites duplicate debits; the retry must re-enter the state machine, not start a new one</td>
+</tr>
+</tbody>
+</table>
+<p>The fourth row is the trap. An SMS that says "your transfer failed, dial *123# to retry" is only safe if the retry path first looks up the prior transaction by MSISDN and refuses to start a new one while a <code>PENDING_RECONCILE</code> exists for that user. Without that guard, the user dials again, a second <code>INITIATED</code> transaction is created, and if the first one later settles there is a double debit and a very unhappy customer.</p>
+<p>A related trap: putting sensitive data in the SMS body. SMS is not encrypted end-to-end. It transits SMSCs and aggregators. One-time codes and reference numbers are fine; account balances, full names paired with account numbers, and anything that could be used for social engineering are not. Regulators in most markets treat SMS as an insecure channel, and treating it otherwise is a compliance finding waiting to happen.</p>
+<h2 id="common-misreadings-that-cause-real-incidents">Common misreadings that cause real incidents</h2>
+<p><strong>"The SMSC accepted it, so the user got it."</strong> The <code>submit_sm_resp</code> is an acknowledgement of receipt by the SMSC, nothing more. Delivery receipts are optional in SMPP and frequently dropped by aggregators. Build the product so that a missing SMS is a degraded experience, not a broken one — the user can always dial back in and check state.</p>
+<p><strong>"USSD menus are stateless, so the PIN can go in step 3."</strong> The PIN is fine in step 3 as long as step 3 is idempotent and the session ID is bound to the transaction before the PIN is requested. The failure mode is binding after: user enters PIN, session drops, the handler never learns which transaction the PIN was for, and there is a credential in the logs with no context. Bind the session to the transaction at the first menu, not the last.</p>
+<p><strong>"A session timeout is an error."</strong> It is a normal outcome. Model it as <code>PENDING_RECONCILE</code> and reconcile against the ledger. Treating it as an error leads teams to retry the debit, which is the double-debit bug.</p>
+<p><strong>"The USSD session ID can be the transaction ID."</strong> Session IDs are operator-assigned and may be reused or collide across operators. Use your own UUID and store the session ID as a foreign key, as in the example above.</p>
+<p><strong>"SMS delivery receipts close the loop on confirmation."</strong> They indicate that the message reached the handset, not that the user read it or acted on it. For anything that matters financially, the loop closes when the user re-enters USSD or the app and the state is queried, not when a receipt arrives.</p>
+<h2 id="measuring-whether-the-fallback-actually-works">Measuring whether the fallback actually works</h2>
+<p>Claims about fallback reliability are only credible if they are instrumented. The following are the metrics worth emitting, and how to compare them before and after a change:</p>
+<ul>
+<li><strong>Reconcile backlog age.</strong> Count <code>PENDING_RECONCILE</code> rows by age bucket (under 1 minute, 1–5, 5–30, over 30). A healthy system drains the under-5 buckets continuously; a growing over-30 bucket means the reconcile job is broken or the ledger query is timing out.</li>
+<li><strong>Reconcile outcome ratio.</strong> Of transactions that entered <code>PENDING_RECONCILE</code> in a window, what fraction settled versus failed versus are still open after the reconcile window? An "open after window" count above zero is a bug, not a statistic.</li>
+<li><strong>Duplicate-attempt rate.</strong> Count <code>start_transfer</code> calls that returned an existing <code>tx_id</code> because the idempotency key matched. A rising rate suggests users are retrying because they are not getting confirmation — a UX signal hiding in the data.</li>
+<li><strong>SMS projection lag.</strong> Time between a transaction reaching a terminal state and its SMS being submitted to the SMSC. This is a queue-depth metric, not a delivery metric.</li>
+<li><strong>Delivery-receipt arrival rate</strong>, tracked only as an advisory number. Because receipts are optional, a drop here is not proof of a delivery failure; correlate with support contacts before drawing conclusions.</li>
+</ul>
+<p>To measure these without a metrics stack, add a single query to the reconcile job that logs the age buckets to stdout once per run, and diff the output across deploys. To measure them properly, emit counters from the reconcile job and the SMS worker and chart them on the same dashboard. Either way, the comparison is before-versus-after a change, not against an industry figure.</p>
+<h2 id="what-to-check-first-the-reconcile-job">What to check first: the reconcile job</h2>
+<p>The single highest-leverage thing to verify in the next 30 minutes is whether the system has a reconcile job for <code>PENDING_RECONCILE</code> (or whatever the equivalent is called) transactions, and whether it runs on a schedule that can be named. Open the file or job definition that owns transaction state transitions — commonly a worker module, a cron entry, or a scheduled workflow — and confirm three things: it queries the core ledger (not the USSD gateway) for ground truth; it transitions <code>PENDING_RECONCILE</code> to a terminal state; and it emits a metric for how many transactions are older than, say, ten minutes in that state. If that metric does not exist, add it before touching anything else. A payments system without a reconcile job is one dropped USSD session away from a support queue it cannot clear.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How long does a USSD session stay open?</strong>
+It varies by operator and gateway, but the practical window between user inputs is short — on the order of tens of seconds, and the session terminates if the user does not respond. The exact timeout is operator-specific and should be confirmed in the gateway integration documentation rather than assumed. Design so that no step depends on the session surviving a slow backend call.</p>
+<p><strong>Why does a USSD flow show "Transaction failed" but the money left the account?</strong>
+Because the USSD response and the ledger debit are not atomic. The debit may succeed after the session has already dropped, or the gateway may time out the response while the backend continues processing. The fix is to make the transaction state authoritative, record <code>PENDING_RECONCILE</code> when the session dies, and have a reconcile job query the ledger. The user-facing message should say "we are checking," not "failed."</p>
+<p><strong>Can SMS be the primary channel instead of USSD?</strong>
+For some flows, yes — one-time codes and simple notifications are fine over SMS. But SMS is fire-and-forget with unreliable delivery receipts, so it cannot carry a multi-step interactive flow. USSD is the right primary channel for feature-phone users because it is interactive and session-bound; SMS is the fallback for outcomes, not for steps.</p>
+<p><strong>What is the difference between <code>submit_sm_resp</code> and a delivery receipt in SMPP?</strong>
+<code>submit_sm_resp</code> is the SMSC acknowledging that it received your <code>submit_sm</code> request — it says nothing about the handset. A delivery receipt is a separate <code>deliver_sm</code> message, sent later and optionally, indicating the final status at the handset. Treating the first as the second is a common cause of "we told the user, but they never got it" incidents.</p>
+<p><strong>Should the USSD handler ever call the core ledger synchronously?</strong>
+Only if the operator's gateway timeout comfortably exceeds the ledger's worst-case latency, which is rarely the case and is not something to assume. The safer default is to persist intent, respond immediately, and let a worker complete the call. If a synchronous call is unavoidable for a specific step, measure the ledger's latency distribution first and set an explicit timeout below the gateway's documented limit.</p>
+<h2 id="action-for-the-next-30-minutes">Action for the next 30 minutes</h2>
+<p>Open the file that owns transaction state transitions and add (or verify) one query: the count of transactions stuck in the pending-reconcile state for longer than ten minutes, logged once per reconcile run. If the state or the job does not exist, that absence is the finding — create the state and a scheduled job that queries the ledger by your own transaction ID before anything else ships.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/">Designing USSD fintech flows that survive live networks</a></li>
+<li><a href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
+<li><a href="https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ussd-fintech-in-2026-the-300m-user-channel-nobody/">
+                        <h3>Designing USSD fintech flows that survive live networks</h3>
+                        <p>A practical guide to building reliable USSD fintech flows on AWS: state machines, 160-character screens, carrier SLAs, idempotency, and latency instrumentation.</p>
+                        <span class="related-meta">17 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">
+                        <h3>Mobile money agent fees: why your bot keeps failing</h3>
+                        <p>USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.</p>
+                        <span class="related-meta">13 min read · 5 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/show-real-work-not-ai-clones/">
+                        <h3>Show real work, not AI clones</h3>
+                        <p>A hiring-focused guide to portfolio projects that demonstrate retry logic, circuit breakers, latency percentiles and honest post-mortems for unreliable networks.</p>
+                        <span class="related-meta">18 min read · 29 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
