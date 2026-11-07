@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-06T19:03:59.511234",
+  "built_at": "2026-11-07T05:14:54.736270",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5770,6 +5770,11 @@
       "slug": "ussdsms-fallback-the-session-trap",
       "title": "USSD/SMS fallback: the session trap",
       "summary": "Most handling ussd guides assume a clean environment and a patient timeline. This is the writeup that includes the part that usually goes wrong. The answers online were either wrong or skipped the part that mattered. USSD and SMS fallback flows are the part of a fintech stack that looks trivial unti"
+    },
+    {
+      "slug": "redis-vs-valkey-vs-dragonfly-which-in-memory-store",
+      "title": "Redis vs Valkey vs Dragonfly: which in-memory store?",
+      "summary": "The failure is quiet — no errors, just wrong answers. Most rate limiting incidents trace back to a default nobody remembers choosing. Here's the root cause, not just the symptom. A typical scenario: a team running Redis 7 on a single node hits a memory wall. They need to add a replica, but the licen"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Nov 2026 19:06:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 05:18:06 +0000</lastBuildDate>
+    <item>
+      <title>Redis vs Valkey vs Dragonfly: which in-memory store?</title>
+      <link>https://kubaik.github.io/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</link>
+      <description>A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</description>
+      <pubDate>Sat, 07 Nov 2026 05:14:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</guid>
+    </item>
     <item>
       <title>USSD/SMS fallback: the session trap</title>
       <link>https://kubaik.github.io/ussdsms-fallback-the-session-trap/</link>
@@ -138,13 +145,6 @@
       <description>A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.</description>
       <pubDate>Wed, 28 Oct 2026 18:06:31 +0000</pubDate>
       <guid>https://kubaik.github.io/database-restore-drills-that-mean-something/</guid>
-    </item>
-    <item>
-      <title>Multi-agent DX: LangGraph vs CrewAI gaps</title>
-      <link>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</link>
-      <description>Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</description>
-      <pubDate>Wed, 28 Oct 2026 04:45:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-dx-langgraph-vs-crewai-gaps/</guid>
     </item>
   </channel>
 </rss>

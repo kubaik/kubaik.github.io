@@ -1,0 +1,195 @@
+# Redis vs Valkey vs Dragonfly: which in-memory store?
+
+Most in-memory store incidents are quiet: no errors, just wrong answers or latency spikes. A frequent root cause is a default nobody remembers choosing — an eviction policy, a blocking command in an admin script, or an atomicity assumption carried over from a previous server. This article is about the mechanisms that differ between Redis, Valkey and Dragonfly, the failure modes each introduces, and a decision framework you can apply to your own workload.
+
+The core problem: choosing an in-memory store by benchmark numbers instead of by the compatibility and concurrency mechanisms that determine whether existing code and operational practices survive a migration.
+
+## The fork in the road: what actually changed when Valkey forked Redis
+
+Redis Ltd. relicensed Redis from BSD-3-Clause to a dual RSALv2/SSPLv1 license. The Linux Foundation then forked the last BSD-licensed code line (Redis 7.2.4) as Valkey. For a developer choosing a store, the politics matter less than what the fork point implies.
+
+Valkey starts from Redis 7.2.4. Every command, configuration directive and module API that existed in 7.2.4 is present in Valkey by construction. If an application uses `SET key value EX 60 NX`, `XADD`, `EVAL` or `CLIENT TRACKING`, Valkey implements it because the code is the same code. Divergence begins after the fork: Valkey has its own release cadence, its own new features (changes to replication internals, new commands), and its own security patches.
+
+The practical consequence: a client library written for Redis 7.2.4 connects to Valkey and works. A client written for a later Redis release also works for the commands that existed in 7.2.4, but any command added after the fork returns an error against Valkey unless Valkey has independently added it. That is the compatibility line to draw for a codebase: list the commands actually called, and check them against the Valkey command reference, not against the latest Redis reference.
+
+Dragonfly takes a different path. It is a from-scratch implementation of the Redis protocol (RESP) and command set, designed around a shared-nothing, multithreaded architecture. It is not a fork; it reimplements commands. Compatibility is therefore a matter of what Dragonfly has implemented, not what it inherited. The Dragonfly documentation maintains a compatibility page listing supported commands and known differences. An application that uses only strings, hashes, lists, sets, sorted sets and pub/sub is likely a drop-in. An application that relies on Lua scripting with `redis.call`, on modules, or on specific `DEBUG` subcommands should verify each one before committing.
+
+So the first decision axis is not performance. It is: **how much of the Redis surface does the application actually use, and which implementation covers that surface with the least behavioral risk?**
+
+## The mechanism that breaks first: single-threaded command execution under memory pressure
+
+Redis, and Valkey, which inherits the same event-loop design, executes commands on a single thread. That thread also handles client I/O, replication and expiry. The design is simple and predictable: one command at a time, no locks on data structures. It is also the source of the most common production surprise.
+
+When a command is slow, everything behind it waits. Slow commands fall into a few categories:
+
+- **O(N) commands on large collections.** `KEYS *`, `SMEMBERS` on a set with millions of members, `HGETALL` on a huge hash, `ZRANGE` with a wide range, `SORT` without `LIMIT`, `LRANGE` over a long list. These block the event loop for the duration of the scan.
+- **Expiry storms.** If many keys share the same TTL — for example, a cache warm-up that sets `EX 3600` on a million keys at once — they all become eligible for expiry in the same second. Redis uses a lazy plus active expiry strategy; the active cycle samples keys, but a large enough cohort can still produce latency spikes.
+- **Large `DEL` or `FLUSHALL`.** Deleting a big key frees memory incrementally but still runs on the main thread. `UNLINK` moves the free to a background thread and is the correct tool for large keys.
+- **Persistence forks.** `BGSAVE` and `BGREWRITEAOF` fork the process. On Linux, fork is copy-on-write, but the page-table copy itself is proportional to the size of the process's memory map. A 64 GB instance with millions of small allocations can take a noticeable pause at fork time, and writes during the save increase the copy-on-write footprint.
+
+A typical failure mode: p99 latency on `GET` jumps from sub-millisecond to tens of milliseconds for a few seconds, with no change in request rate. The cause is often a background save coinciding with a burst of writes, or a single `KEYS` call from an admin script. The fix is not a faster server; it is removing the blocking command and controlling persistence timing.
+
+Dragonfly's architecture addresses this directly. It uses multiple threads, with each thread owning a shard of the keyspace, and a different memory management approach (it advertises a "dashtable" structure for the hash table). A single Dragonfly instance can use multiple cores, so a slow command on one shard does not necessarily block commands on another. That is a real architectural difference, and it matters when the workload is CPU-bound on the Redis side — high-throughput `GET`/`SET` with large values, or heavy `EVAL` usage.
+
+The trade-off is behavioral compatibility. Multithreaded execution changes atomicity guarantees that code may implicitly rely on. In Redis, a Lua script is atomic: no other command runs while it executes. Dragonfly's documentation states that scripts are executed atomically as well, but the underlying concurrency model means multi-key operations that span shards should be verified. Commands like `MGET` across keys that hash to different shards, or transactions (`MULTI`/`EXEC`) that touch multiple keys, may have different performance characteristics or, in edge cases, different semantics. The Dragonfly docs call out which commands are unsupported or behave differently; read that list against the code.
+
+The mechanism to internalize: **single-threaded execution gives simple atomicity and predictable per-command latency, at the cost of head-of-line blocking. Multithreaded execution removes head-of-line blocking, at the cost of a more complex compatibility surface.** Neither is universally better; the question is which failure mode the workload can tolerate.
+
+## Picking by workload shape, not by benchmark chart
+
+Benchmarks for in-memory stores are sensitive to pipeline depth, value size, client count, and whether persistence is enabled. A `redis-benchmark` run with `-P 16` (pipeline depth 16) and no persistence shows very different numbers from a real application doing one round-trip per request with AOF enabled. Rather than quote a chart, use a decision framework based on workload characteristics.
+
+| Workload characteristic | Redis (7.x) | Valkey | Dragonfly |
+|---|---|---|---|
+| Existing Lua scripts using `redis.call` | Full support | Full support (fork of 7.2.4) | Supported; verify atomicity semantics for multi-key scripts |
+| Redis modules (RediSearch, RedisJSON and similar) | Supported via Redis Stack | Module ecosystem is nascent; check availability | Not supported; Dragonfly has its own search/JSON features with different APIs |
+| Single-node throughput bound by one core | Limited by single thread | Same as Redis | Scales across cores; primary reason to choose it |
+| Strict command-level compatibility with Redis 7.2.4 | Yes (it is Redis) | Yes (same code) | Mostly, with a documented compatibility list |
+| License | RSALv2/SSPLv1 (or commercial) | BSD-3-Clause | Apache 2.0 (check current license) |
+| Operational tooling (`redis-cli`, exporters, managed offerings) | Broadest | Growing; many managed providers now offer Valkey | Narrower; check the cloud provider and observability stack |
+
+A few notes on reading that table. "Module ecosystem" is the sharpest differentiator: if an application depends on RediSearch for full-text search or RedisJSON for document storage, Valkey's module support depends on third-party builds, and Dragonfly does not implement the Redis module API. Those features would be rewritten. For many teams, that alone decides the question.
+
+For a straightforward cache — `GET`/`SET` with TTLs, maybe some hashes and sorted sets — all three are viable. The tie-breakers become operational: does the cloud provider offer a managed version, does existing monitoring (for example, a Prometheus exporter that scrapes `INFO`) work unchanged, and does the client library have any version-specific behavior?
+
+For a workload that is CPU-bound on the Redis side — high request rate with small values, or heavy use of Lua — Dragonfly's multithreading is the mechanism that matters. A single Redis instance uses one core for command execution regardless of how many cores the machine has. If `INFO cpu` shows `used_cpu_sys` and `used_cpu_user` saturating one core while other cores idle, that is the signal that a multithreaded implementation could help. This is a statement about architecture, and it can be verified on a live instance by watching per-thread CPU with `top -H` or `pidstat -t`.
+
+### How to measure throughput honestly
+
+If a throughput comparison is needed anyway, make it reproducible rather than borrowed:
+
+1. Pin the server to a known CPU allocation and record the instance type.
+2. Use the same client, the same value sizes (for example, 64 B and 1 KB), and the same pipeline depth (0, 1, 16) for every candidate.
+3. Run with persistence off, then repeat with AOF `appendfsync everysec` and with RDB snapshots enabled — the gap between the two runs is often larger than the gap between products.
+4. Report p50, p99 and p999 latency alongside throughput. A store that wins on operations per second but doubles p99 has not won.
+5. Repeat each run at least three times and report the spread; a single run is noise.
+
+The number that matters is the one measured with the application's own command mix, not the one in a vendor chart.
+
+## The migration that goes wrong: client assumptions and expiry semantics
+
+The most common migration failure is not a command that returns an error. It is a command that returns a slightly different result, or a timing assumption that no longer holds.
+
+Consider expiry. Redis expires keys lazily on access and actively in a background cycle. The exact moment a key disappears is not guaranteed to be the TTL boundary; it is "at or after" the TTL. If an application uses the presence of a key as a lock (`SET lock:resource value NX EX 30`), it already depends on atomic set-with-expiry. All three implementations support this command, but the value returned by `TTL` immediately after setting can differ by a few milliseconds across implementations. Code that branches on `ttl == -2` to detect expiry is fragile; code that relies on atomic `SET NX EX` returning nil when the lock is held is robust.
+
+A more subtle case: `SCAN` guarantees. Redis's `SCAN` provides a set of guarantees (elements present for the entire iteration are returned; elements never present are never returned) but does not guarantee a consistent snapshot. If `SCAN` iterates keys for a background job, and the store is migrated to an implementation with different rehashing behavior, the iteration order and the number of calls can change. That is usually fine, but a job that assumes it will finish in a fixed number of `SCAN` calls may not.
+
+The fix is a compatibility test suite that runs against all candidate stores. It does not need to be large. A minimal example in Python using `redis-py`, which works with Valkey and, for supported commands, Dragonfly:
+
+```python
+import redis
+import time
+
+# Connect to any RESP-compatible server
+r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+
+def test_set_nx_ex():
+    r.delete("lock:test")
+    assert r.set("lock:test", "a", nx=True, ex=30) is True
+    assert r.set("lock:test", "b", nx=True, ex=30) is None
+    ttl = r.ttl("lock:test")
+    assert 0 < ttl <= 30, f"unexpected ttl {ttl}"
+    r.delete("lock:test")
+
+def test_scan_returns_all():
+    r.delete("scan:test:1", "scan:test:2", "scan:test:3")
+    r.mset({"scan:test:1": "x", "scan:test:2": "y", "scan:test:3": "z"})
+    seen = set()
+    cursor = 0
+    while True:
+        cursor, keys = r.scan(cursor=cursor, match="scan:test:*", count=10)
+        seen.update(keys)
+        if cursor == 0:
+            break
+    assert seen == {"scan:test:1", "scan:test:2", "scan:test:3"}, seen
+    r.delete(*seen)
+
+def test_lua_atomicity():
+    r.delete("lua:counter")
+    script = """
+    local c = redis.call('INCR', KEYS[1])
+    redis.call('EXPIRE', KEYS[1], 60)
+    return c
+    """
+    assert r.eval(script, 1, "lua:counter") == 1
+    assert r.eval(script, 1, "lua:counter") == 2
+    r.delete("lua:counter")
+
+if __name__ == "__main__":
+    test_set_nx_ex()
+    test_scan_returns_all()
+    test_lua_atomicity()
+    print("compatibility checks passed")
+```
+
+Run this against the current Redis instance, then against Valkey and Dragonfly. If a test fails, a behavioral difference has been found before it reaches production. The test is illustrative; extend it with the exact commands the application calls. That list can be extracted by enabling command logging on a staging instance — for example, with `MONITOR` for a short window, or by reviewing the client library's command usage.
+
+### Worked example: scoping the migration from one command list
+
+Suppose a 60-second `MONITOR` capture on a staging instance yields the following distinct commands, with counts (illustrative figures):
+
+| Command | Calls in 60 s | Notes |
+|---|---|---|
+| `GET` | 410,000 | Cache reads |
+| `SET` (with `EX`) | 38,000 | Cache writes |
+| `HGETALL` | 9,000 | Session objects, ~40 fields each |
+| `EVAL` | 1,200 | Rate limiter, touches 2 keys |
+| `EXPIRE` | 900 | Inside the Lua script |
+| `SCAN` | 12 | Nightly-style cleanup job |
+| `KEYS` | 1 | Ad-hoc admin script |
+
+Reasoning through the candidates:
+
+- `GET`, `SET`, `HGETALL`, `EXPIRE`: core commands present in all three. No blocker.
+- `EVAL` touching two keys: supported everywhere, but the atomicity question is real. In Redis and Valkey the script is atomic on a single thread. In Dragonfly, verify that a two-key script spanning shards still behaves atomically; add a concurrency test that runs the script from several clients and asserts the counter never skips a value.
+- `SCAN`: present in all three. The cleanup job should be rewritten to loop until the cursor returns to zero rather than assuming a fixed call count — good hygiene regardless of store.
+- `KEYS`: one call in 60 seconds is still a production hazard on a large keyspace. Replace it with `SCAN` before migrating; otherwise the same latency spike will follow to any single-threaded candidate.
+
+The output of this exercise is a concrete migration scope: one script to test under concurrency, one job to rewrite, one admin script to fix. That is a far better basis for a decision than a throughput chart.
+
+### The failover trap
+
+Replication and failover are another migration trap. Redis uses asynchronous replication by default. If the primary fails before a write reaches the replica, the write is lost after failover. Valkey inherits this model. Dragonfly has its own replication implementation; check its documentation for consistency guarantees and failover behavior. If the application uses `WAIT` to ensure a write reached N replicas, verify that `WAIT` is supported and behaves as expected on the target store. This is not a theoretical concern: a cache that loses writes on failover is usually acceptable, but a store used for session data or idempotency keys may not be.
+
+## What to watch after the switch
+
+Once the new store is running, the metrics that matter are the ones that reveal the failure modes above. Set up alerts before cutover, not after.
+
+- **Latency percentiles, not averages.** Track p50, p99 and p999 for the command mix. A rise in p99 with flat p50 is the signature of head-of-line blocking or a slow command. On Dragonfly, watch for shard-level imbalance: if keys hash unevenly, one thread may saturate while others idle. `INFO` output and per-thread CPU are the sources.
+- **Command duration.** Redis exposes latency monitoring (`LATENCY LATEST`, `LATENCY HISTORY`) with a configurable threshold (`latency-monitor-threshold`). Set it just above the expected p99 — for example, 10 ms — and alert on any event. This catches `KEYS`, large `DEL` and slow scripts. Check whether the target store supports the same commands; if not, use client-side timing.
+- **Memory fragmentation and eviction.** `INFO memory` gives `used_memory`, `used_memory_rss` and `mem_fragmentation_ratio`. A ratio well above 1 means the allocator is holding freed memory; a ratio below 1 means swapping, which is catastrophic for an in-memory store. Watch `evicted_keys`: if it is rising, the `maxmemory-policy` is evicting data that may still be needed. The default policy in Redis is `noeviction`, which returns an error on writes when memory is full; many teams switch to `allkeys-lru` or `volatile-lru` for caches. Confirm the target store's default and supported policies.
+- **Persistence health.** `INFO persistence` gives `rdb_last_bgsave_status`, `aof_last_bgrewrite_status` and `rdb_last_cow_size`. A failed background save is silent until a restart is needed. Alert on non-`ok` status. AOF with `appendfsync everysec` accepts up to one second of writes lost on crash; that is a documented trade-off, not a bug.
+- **Replication lag.** `INFO replication` gives `master_repl_offset` on the primary and `slave_repl_offset` on replicas. The difference is the lag in bytes. A growing lag means the replica cannot keep up, and failover to that replica loses more data. Alert when lag exceeds a threshold derived from the write rate. Illustrative arithmetic: at 1 MB/s of writes, a 10 MB offset difference corresponds to roughly 10 seconds of data at risk.
+
+For Dragonfly, metric names and `INFO` sections may differ. Map each of the above to the equivalent in its documentation before relying on a dashboard. A monitoring gap is a migration risk in itself.
+
+## The broader lesson: compatibility is a surface, not a checkbox
+
+"Redis-compatible" is not a binary property. It is a surface with layers: the wire protocol (RESP), the command set, command semantics (atomicity, expiry timing, error codes), the module API, the replication model, and the operational tooling. Two stores can both be "Redis-compatible" and still differ on the layer an application depends on.
+
+The principle: **choose the store whose incompatibilities can be enumerated.** Valkey's incompatibilities relative to Redis 7.2.4 are essentially zero at the fork point and grow only as the two projects diverge — a small, trackable surface. Dragonfly's incompatibilities are documented in a list that can be read in one sitting; the question is whether the application touches anything on that list. Redis's own incompatibilities relative to its past are the license and the feature additions after the fork point. For each option, risk is proportional to how much of the surface is used and how well it can be tested.
+
+This is also why benchmark-driven selection misleads. A throughput number describes the happy path under a specific load generator. It says nothing about whether a three-key `EVAL` script is atomic, whether a `SCAN`-based job terminates, or whether failover loses the last second of writes. Those are the things that page someone at 3 a.m.
+
+A corollary: the migration test suite is more valuable than the migration plan. A plan lists steps; a test suite proves the steps worked. Write the tests first, run them against the current store to establish a baseline, then run them against each candidate. The candidate that passes is the one that can be operated with confidence, regardless of what the benchmark chart says.
+
+## Decision checklist
+
+Before committing to a store, answer these in writing:
+
+1. Which commands does the application call? (Extract from `MONITOR` or client logs; compare against each candidate's reference.)
+2. Does the application depend on the Redis module API? If yes, Dragonfly is out and Valkey needs module availability verified.
+3. Are there Lua scripts touching more than one key? If yes, write a concurrency test and run it on every candidate.
+4. Is the current instance CPU-saturated on one core while others idle? If yes, multithreading is a real lever; if no, it is not a reason to migrate.
+5. What happens on failover — can the application tolerate losing the last second of writes? Verify `WAIT` support if not.
+6. Does the existing monitoring, backup and managed-hosting story carry over? List the gaps.
+
+## Start here: build the command list in the next 30 minutes
+
+Open a shell against a staging or local Redis instance and run `MONITOR` for 60 seconds while the application serves a representative workload, redirecting output to a file. Then extract the distinct command names:
+
+```bash
+awk '{print $3}' monitor.log | sort | uniq -c | sort -rn
+```
+
+Compare that list against the Valkey command reference and the Dragonfly compatibility page. Any command that appears on the list but not on a candidate's supported list is a blocker to resolve before that candidate is considered. That single list turns the decision from a benchmark argument into a concrete, testable migration scope.

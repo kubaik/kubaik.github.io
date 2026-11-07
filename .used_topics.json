@@ -231,5 +231,7 @@
   "Building audit trails for agent decisions that satisfy compliance and debugging needs",
   "Reducing meeting load on engineering teams: async communication practices that work",
   "Key management with HSMs and cloud KMS: envelope encryption in practice",
-  "Handling USSD and SMS fallback flows in fintech applications"
+  "Handling USSD and SMS fallback flows in fintech applications",
+  "Rate limiting and abuse prevention for public mobile money APIs",
+  "Redis versus Valkey versus Dragonfly: choosing an in-memory store"
 ]

@@ -1,7 +1,7 @@
 {
   "improved": [
     {
-      "slug": "ussdsms-fallback-the-session-trap",
+      "slug": "redis-vs-valkey-vs-dragonfly-which-in-memory-store",
       "attempts": 1,
       "retitled": false
     }
