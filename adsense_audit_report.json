@@ -2674,6 +2674,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "k6-vs-locust-traffic-models-that-lie",
+      "source": "post.json",
+      "word_count": 2653,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "ai-agent-postmortems-trace-vs-logs-vs-code",
       "source": "post.json",
       "word_count": 2593,

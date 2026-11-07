@@ -698,6 +698,9 @@
   "jwt-sessions-revocation-rotation-storage": {
     "first_seen": "2026-10-27T17:43:49.808289+00:00"
   },
+  "k6-vs-locust-traffic-models-that-lie": {
+    "first_seen": "2026-11-07T17:39:16.626053+00:00"
+  },
   "keep-multi-model-systems-stable-6-rules-that-worked": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

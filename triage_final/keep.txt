@@ -124,6 +124,7 @@ docs/idempotency-keys-what-they-fix-what-they-dont/
 docs/idp-for-ai-2026-stack-evolution/
 docs/istio-and-cilium-what-really-breaks-in-production/
 docs/json-modes-silent-failures-exposed/
+docs/k6-vs-locust-traffic-models-that-lie/
 docs/keep-multi-model-systems-stable-6-rules-that-worked/
 docs/kyc-integrations-the-data-you-shouldnt-store/
 docs/least-privilege-for-agents-the-config-line-nobody-writes/

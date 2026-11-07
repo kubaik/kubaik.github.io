@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-07T05:14:54.736270",
+  "built_at": "2026-11-07T17:38:40.372694",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5775,6 +5775,11 @@
       "slug": "redis-vs-valkey-vs-dragonfly-which-in-memory-store",
       "title": "Redis vs Valkey vs Dragonfly: which in-memory store?",
       "summary": "The failure is quiet — no errors, just wrong answers. Most rate limiting incidents trace back to a default nobody remembers choosing. Here's the root cause, not just the symptom. A typical scenario: a team running Redis 7 on a single node hits a memory wall. They need to add a replica, but the licen"
+    },
+    {
+      "slug": "k6-vs-locust-traffic-models-that-lie",
+      "title": "k6 vs Locust: traffic models that lie",
+      "summary": "The metric everyone watches for security models usually isn't the one that would have caught the problem early. This is the writeup that includes the part that usually goes wrong. The gap between the demo and the incident report is where this actually lives. Load testing tools are easy to run and ha"
     }
   ]
 }

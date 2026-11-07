@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Nov 2026 05:18:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 17:42:03 +0000</lastBuildDate>
+    <item>
+      <title>k6 vs Locust: traffic models that lie</title>
+      <link>https://kubaik.github.io/k6-vs-locust-traffic-models-that-lie/</link>
+      <description>Why closed-loop load tests under-report latency, how to build open-loop traffic models in k6 and Locust, and how to read the results without fooling yourself.</description>
+      <pubDate>Sat, 07 Nov 2026 17:38:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/k6-vs-locust-traffic-models-that-lie/</guid>
+    </item>
     <item>
       <title>Redis vs Valkey vs Dragonfly: which in-memory store?</title>
       <link>https://kubaik.github.io/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</link>
@@ -138,13 +145,6 @@
       <description>AI assistants give juniors fast, confident answers without your system&amp;#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment.</description>
       <pubDate>Thu, 29 Oct 2026 04:59:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-answers-first-judgment-later/</guid>
-    </item>
-    <item>
-      <title>Database restore drills that mean something</title>
-      <link>https://kubaik.github.io/database-restore-drills-that-mean-something/</link>
-      <description>A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.</description>
-      <pubDate>Wed, 28 Oct 2026 18:06:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-restore-drills-that-mean-something/</guid>
     </item>
   </channel>
 </rss>

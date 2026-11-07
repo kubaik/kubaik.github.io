@@ -1885,7 +1885,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Redis vs Valkey vs Dragonfly: which in-memory store?",
-  "words": 3057
+  "words": 3496
  },
  "agentic-workflows-how-we-kept-the-lights": {
   "verdict": "IMPROVE",
@@ -3144,6 +3144,13 @@
   ],
   "title": "AI-First vs Human-First Incident Response",
   "words": 2458
+ },
+ "k6-vs-locust-traffic-models-that-lie": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "k6 vs Locust: traffic models that lie",
+  "words": 2716
  },
  "ai-agent-postmortems-trace-vs-logs-vs-code": {
   "verdict": "KEEP",

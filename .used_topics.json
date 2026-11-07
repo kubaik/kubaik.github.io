@@ -233,5 +233,7 @@
   "Key management with HSMs and cloud KMS: envelope encryption in practice",
   "Handling USSD and SMS fallback flows in fintech applications",
   "Rate limiting and abuse prevention for public mobile money APIs",
-  "Redis versus Valkey versus Dragonfly: choosing an in-memory store"
+  "Redis versus Valkey versus Dragonfly: choosing an in-memory store",
+  "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
+  "Load testing methodology with k6 and Locust: realistic traffic models"
 ]
