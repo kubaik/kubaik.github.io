@@ -303,6 +303,7 @@ docs/prompts-are-code-how-to-measure-their-value/index.md
 docs/property-based-testing-vs-example-tests-the-bug-gap/index.md
 docs/purpose-built-beats-general-ai-tools/index.md
 docs/pypi-poisoned-models-hit-prod-in-2025/index.md
+docs/queueing-theory-for-backend-capacity/index.md
 docs/rag-in-prod-what-tutorials-wont-tell-you/index.md
 docs/rag-is-not-enough-hybrid-search-reranking-in-2026/index.md
 docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/index.md

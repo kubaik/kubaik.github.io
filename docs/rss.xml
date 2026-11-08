@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Nov 2026 05:10:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 17:51:32 +0000</lastBuildDate>
+    <item>
+      <title>Queueing theory for backend capacity</title>
+      <link>https://kubaik.github.io/queueing-theory-for-backend-capacity/</link>
+      <description>Why doubling traffic can quadruple tail latency, how to model each constrained resource as a queue, and how to measure utilisation before you hit the cliff.</description>
+      <pubDate>Sun, 08 Nov 2026 17:48:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/queueing-theory-for-backend-capacity/</guid>
+    </item>
     <item>
       <title>Pagination for large datasets: offset vs cursor</title>
       <link>https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/</link>
@@ -138,13 +145,6 @@
       <description>How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</description>
       <pubDate>Fri, 30 Oct 2026 04:57:12 +0000</pubDate>
       <guid>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</guid>
-    </item>
-    <item>
-      <title>Node.js memory leak: find it in 10 min</title>
-      <link>https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/</link>
-      <description>Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</description>
-      <pubDate>Thu, 29 Oct 2026 12:50:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/</guid>
     </item>
   </channel>
 </rss>

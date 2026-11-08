@@ -1,9 +1,9 @@
 {
   "changed": [
     {
-      "slug": "pagination-for-large-datasets-offset-vs-cursor",
+      "slug": "queueing-theory-for-backend-capacity",
       "sentences_removed": 0,
-      "sections_added": 2,
+      "sections_added": 1,
       "footer_migrated": false
     }
   ],

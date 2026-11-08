@@ -177,6 +177,7 @@ docs/price-saas-tools-in-2026-what-we-learned-pricing-a/
 docs/prompt-injection-got-the-hype-poison-data-ruined-us/
 docs/prompt-injection-what-breaks-first-in-prod/
 docs/purpose-built-beats-general-ai-tools/
+docs/queueing-theory-for-backend-capacity/
 docs/rag-in-prod-what-tutorials-wont-tell-you/
 docs/rag-is-not-enough-hybrid-search-reranking-in-2026/
 docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/

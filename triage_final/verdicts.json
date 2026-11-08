@@ -2073,6 +2073,13 @@
   "title": "Self-service AI tooling: where it breaks first",
   "words": 2986
  },
+ "queueing-theory-for-backend-capacity": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Queueing theory for backend capacity",
+  "words": 2684
+ },
  "audit-trails-immutabledb-vs-dynamodb-streams": {
   "verdict": "KEEP",
   "reasons": [],
@@ -2700,7 +2707,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Pagination for large datasets: offset vs cursor",
-  "words": 2637
+  "words": 2996
  },
  "why-does-my-model-drift-after-deploy": {
   "verdict": "KEEP",

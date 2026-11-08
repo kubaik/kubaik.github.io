@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-08T05:08:18.400151",
+  "built_at": "2026-11-08T17:48:06.182564",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5785,6 +5785,11 @@
       "slug": "pagination-for-large-datasets-offset-vs-cursor",
       "title": "Pagination for large datasets: offset vs cursor",
       "summary": "designing pagination was never the hard part. Knowing when it was about to fail was. This covers the fix, the cost of not knowing sooner, and what to monitor. The tutorials all show the happy path. Why offset pagination falls over at scale Every list endpoint starts the same way: . It works, it's ea"
+    },
+    {
+      "slug": "queueing-theory-for-backend-capacity",
+      "title": "Queueing theory for backend capacity",
+      "summary": "capacity planning was never the hard part. Knowing when it was about to fail was. Here's what changes once the guessing is replaced with measurement. It only shows up under the exact conditions nobody tests for. You don't need a PhD in queueing theory to avoid the classic capacity planning mistake. "
     }
   ]
 }

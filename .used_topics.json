@@ -236,5 +236,6 @@
   "Redis versus Valkey versus Dragonfly: choosing an in-memory store",
   "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
   "Load testing methodology with k6 and Locust: realistic traffic models",
-  "Designing pagination for large datasets: offset, cursor, and keyset approaches"
+  "Designing pagination for large datasets: offset, cursor, and keyset approaches",
+  "Capacity planning for backend systems using queueing theory basics"
 ]

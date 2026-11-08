@@ -1,4 +1,4 @@
-❌ Internal link audit: 415 broken link(s) found across 416 posts checked.
+❌ Internal link audit: 416 broken link(s) found across 417 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -279,6 +279,7 @@ Source Post                              Anchor Text                    Missing 
   /open-banking-apis-the-integration-traps AI content policy              /ai-content-policy/
   /opentelemetry-collector-pipelines-sampling-batching AI content policy              /ai-content-policy/
   /orchestration-tax-kills-multi-agent-systems AI content policy              /ai-content-policy/
+  /pagination-for-large-datasets-offset-vs-cursor AI content policy              /ai-content-policy/
   /papss-and-mobile-money-where-integration-breaks AI content policy              /ai-content-policy/
   /pci-dss-architecture-12-requirements-that-matter AI content policy              /ai-content-policy/
   /personal-ai-assistants-avoid-vendor-lock-in-traps AI content policy              /ai-content-policy/
