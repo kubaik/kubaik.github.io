@@ -147,6 +147,7 @@ offline-agent-workflows-for-last-mile-ops,95,3017,Offline agent workflows for la
 offline-first-money-apps-with-dynamodb-streams,95,3000,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,1,no FAQ section
 one-misconfigured-vector-db-killed-our-rag-pipeline,95,2255,When a vector DB misconfiguration breaks RAG silently,2026-07-29T14:18:17.130040,1,no FAQ section
 opentelemetry-collector-pipelines-sampling-batching,95,2669,"OpenTelemetry collector pipelines: sampling, batching…",2026-10-30T04:57:12.725295,1,no markdown table
+pagination-for-large-datasets-offset-vs-cursor,95,2637,Pagination for large datasets: offset vs cursor,2026-11-08T05:08:16.242950,1,no markdown table
 pci-dss-architecture-12-requirements-that-matter,95,2724,PCI DSS architecture: 12 requirements that matter,2026-10-19T03:52:49.796652,1,no markdown table
 pick-one-stripe-lemon-squeezy-paddle-in-2026,95,2733,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026",2026-06-25T13:28:15.693054,1,no markdown table
 portfolio-projects-that-hire-remote-senior-devs,95,2834,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,1,no FAQ section
@@ -309,7 +310,7 @@ http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the de
 json-modes-hidden-costs-revealed,100,2468,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2148,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
 jwt-sessions-revocation-rotation-storage,100,2756,"JWT sessions: revocation, rotation, storage",2026-10-27T17:43:39.631250,0,
-k6-vs-locust-traffic-models-that-lie,100,2716,k6 vs Locust: traffic models that lie,2026-11-07T17:38:37.096334,0,
+k6-vs-locust-traffic-models-that-lie,100,2653,k6 vs Locust: traffic models that lie,2026-11-07T17:38:37.096334,0,
 keep-multi-model-systems-stable-6-rules-that-worked,100,3027,Stabilize multi-model agent routers: six production rules,2026-07-15T02:44:07.331590,0,
 kill-noisy-alerts-the-triage-system-that-restored-sleep,100,2450,Designing Alert Triage That Suppresses Noise Safely,2026-07-11T13:28:35.352118,0,
 kubernetes-or-nomad-the-real-experiment-cost-split,100,2125,Kubernetes or Nomad: the real experiment cost split,2026-08-03T14:47:24.911552,0,

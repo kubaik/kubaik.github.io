@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-07T17:38:40.372694",
+  "built_at": "2026-11-08T05:08:18.400151",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5780,6 +5780,11 @@
       "slug": "k6-vs-locust-traffic-models-that-lie",
       "title": "k6 vs Locust: traffic models that lie",
       "summary": "The metric everyone watches for security models usually isn't the one that would have caught the problem early. This is the writeup that includes the part that usually goes wrong. The gap between the demo and the incident report is where this actually lives. Load testing tools are easy to run and ha"
+    },
+    {
+      "slug": "pagination-for-large-datasets-offset-vs-cursor",
+      "title": "Pagination for large datasets: offset vs cursor",
+      "summary": "designing pagination was never the hard part. Knowing when it was about to fail was. This covers the fix, the cost of not knowing sooner, and what to monitor. The tutorials all show the happy path. Why offset pagination falls over at scale Every list endpoint starts the same way: . It works, it's ea"
     }
   ]
 }

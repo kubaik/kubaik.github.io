@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Nov 2026 17:42:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 05:10:37 +0000</lastBuildDate>
+    <item>
+      <title>Pagination for large datasets: offset vs cursor</title>
+      <link>https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/</link>
+      <description>How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.</description>
+      <pubDate>Sun, 08 Nov 2026 05:08:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/</guid>
+    </item>
     <item>
       <title>k6 vs Locust: traffic models that lie</title>
       <link>https://kubaik.github.io/k6-vs-locust-traffic-models-that-lie/</link>
@@ -138,13 +145,6 @@
       <description>Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</description>
       <pubDate>Thu, 29 Oct 2026 12:50:43 +0000</pubDate>
       <guid>https://kubaik.github.io/nodejs-memory-leak-find-it-in-10-min/</guid>
-    </item>
-    <item>
-      <title>AI answers first, judgment later</title>
-      <link>https://kubaik.github.io/ai-answers-first-judgment-later/</link>
-      <description>AI assistants give juniors fast, confident answers without your system&amp;#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment.</description>
-      <pubDate>Thu, 29 Oct 2026 04:59:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-answers-first-judgment-later/</guid>
     </item>
   </channel>
 </rss>

@@ -2695,6 +2695,13 @@
   "title": "AI-native apps: forget the old stack",
   "words": 2028
  },
+ "pagination-for-large-datasets-offset-vs-cursor": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Pagination for large datasets: offset vs cursor",
+  "words": 2637
+ },
  "why-does-my-model-drift-after-deploy": {
   "verdict": "KEEP",
   "reasons": [],
@@ -3150,7 +3157,7 @@
   "reasons": [],
   "fixes": [],
   "title": "k6 vs Locust: traffic models that lie",
-  "words": 2716
+  "words": 2653
  },
  "ai-agent-postmortems-trace-vs-logs-vs-code": {
   "verdict": "KEEP",

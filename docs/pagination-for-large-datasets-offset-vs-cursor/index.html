@@ -1,0 +1,566 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pagination for large datasets: offset vs cursor - Kubai Kevin</title>
+        <meta name="description" content="How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.">
+        <meta name="keywords" content="Pagination, Keyset, Offset, Cursor, Cybersecurity, Infosec, Sql, Cursorai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-08T05:08:16.242950">
+        <meta property="article:modified_time" content="2026-11-08T05:10:06.426307+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Pagination for large datasets: offset vs cursor">
+        <meta property="og:description" content="How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.">
+        <meta property="og:url" content="https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/pagination-for-large-datasets-offset-vs-cursor.png">
+        <meta property="og:image:alt" content="Pagination for large datasets: offset vs cursor">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Pagination for large datasets: offset vs cursor">
+        <meta name="twitter:description" content="How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/pagination-for-large-datasets-offset-vs-cursor.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/#article",
+      "headline": "Pagination for large datasets: offset vs cursor",
+      "description": "How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.",
+      "datePublished": "2026-11-08T05:08:16+00:00",
+      "dateModified": "2026-11-08T05:10:06+00:00",
+      "wordCount": 2996,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/"
+      },
+      "keywords": "Pagination, Keyset, Offset, Cursor, Cybersecurity, Infosec, Sql, Cursorai",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/pagination-for-large-datasets-offset-vs-cursor.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Pagination for large datasets: offset vs cursor",
+          "item": "https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Pagination for large datasets: offset vs cursor</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Pagination for large datasets: offset vs cursor</h1>
+                
+                <p class="post-lead">How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Pagination</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Keyset</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Offset</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Cursor</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2996 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-08
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most pagination tutorials show the happy path: a <code>LIMIT</code>/<code>OFFSET</code> query, a page number in the URL, a total count in the response. That pattern works until the table grows, the client pages deep, and rows start shifting underneath them. This article covers offset, keyset (also called cursor or seek) pagination, where each one breaks, and how to implement keyset pagination on a real schema — including the security and API-contract details that are easy to get wrong when every row is addressable by a client-supplied token.</p>
+<h2 id="why-offset-pagination-falls-over-at-scale">Why offset pagination falls over at scale</h2>
+<p>A list endpoint typically starts like this:</p>
+<pre><code class="language-sql">SELECT * FROM orders ORDER BY created_at DESC LIMIT 20 OFFSET 40;
+</code></pre>
+<p>It is easy to reason about, and the client can jump to page 7 without any server-side state. Then the table grows past a few million rows and the endpoint that responded in milliseconds takes seconds. The database is doing exactly what was asked: counting and discarding <code>OFFSET</code> rows before returning the ones requested.</p>
+<p>The deeper problem is correctness, not just speed. Offset pagination is defined relative to the <em>current</em> ordering of the table. If a row is inserted or deleted between page 1 and page 2, the window shifts: a row can be returned twice, or skipped entirely. For an admin console that is annoying. For a payments ledger, a medical record list, or an audit feed, a skipped row is a data-integrity bug that surfaces as "the export is missing transactions" weeks later.</p>
+<p>The rest of this article covers offset, cursor, and keyset pagination, where each breaks, and how to ship keyset pagination on a real schema.</p>
+<h2 id="prerequisites-what-to-settle-before-choosing-a-scheme">Prerequisites: what to settle before choosing a scheme</h2>
+<p>Pagination is a query-design problem disguised as an API-design problem. Three things need to be nailed down first.</p>
+<ol>
+<li>
+<p><strong>A total ordering.</strong> Keyset pagination requires a column (or tuple of columns) that is unique and immutable per row. <code>created_at</code> alone is not enough — two rows can share a timestamp. Pair it with the primary key: <code>(created_at, id)</code>. A table without a stable unique key needs that fixed first.</p>
+</li>
+<li>
+<p><strong>An index that matches the sort.</strong> For keyset pagination on <code>(created_at DESC, id DESC)</code>, an index on <code>(created_at, id)</code> is the natural fit. Postgres, MySQL, and SQL Server can all use a composite index for a tuple comparison, but only if the index column order matches the <code>ORDER BY</code> direction. A missing index turns keyset pagination into a full scan with extra steps.</p>
+</li>
+<li>
+<p><strong>A contract for what the client sees.</strong> Will the client receive an opaque cursor string, or the raw <code>(created_at, id)</code> values? Opaque is better: it lets the sort key change later without breaking clients, and it stops clients from constructing cursors for rows they should not see.</p>
+</li>
+</ol>
+<p>There is also a decision that drives most of the edge cases later: is the list <em>stable</em> (rows don't change) or <em>mutable</em> (rows are inserted, updated, deleted while a client is paging)?</p>
+<h2 id="offset-pagination-when-its-fine-and-when-it-isnt">Offset pagination: when it's fine and when it isn't</h2>
+<p>Offset pagination is not wrong. It is the correct choice when:</p>
+<ul>
+<li>The dataset is small enough that <code>OFFSET</code> stays cheap (a few thousand rows, or a filtered subset that is always small).</li>
+<li>The client needs random access — "jump to page 12" — and that cannot be expressed as a cursor.</li>
+<li>The data is append-only and the client tolerates a shifting window (for example, a "load more" feed where duplicates are acceptable).</li>
+</ul>
+<p>The cost is linear in <code>OFFSET</code>. A query with <code>OFFSET 100000 LIMIT 20</code> makes the database walk 100,020 index entries and discard 100,000. On Postgres, <code>EXPLAIN ANALYZE</code> will show an <code>Index Scan</code> with a high <code>rows removed by filter</code> count, or a <code>Limit</code> node sitting above a large scan. The fix is not a bigger instance; it is a different access pattern.</p>
+<p>There is a second, subtler cost: <strong>offset pagination leaks row counts</strong>. If the endpoint returns <code>total_count</code>, an unauthenticated or low-privilege client can infer how many records exist in a table — useful reconnaissance for an attacker probing a multi-tenant system. Even without <code>total_count</code>, timing differences between <code>OFFSET 0</code> and <code>OFFSET 1000000</code> can confirm the existence of a large dataset.</p>
+<p>Here is the offset query most teams start with, and the index that makes it survivable:</p>
+<pre><code class="language-sql">-- Schema
+CREATE TABLE orders (
+  id          BIGSERIAL PRIMARY KEY,
+  tenant_id   BIGINT NOT NULL,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  status      TEXT NOT NULL
+);
+
+CREATE INDEX idx_orders_tenant_created
+  ON orders (tenant_id, created_at DESC, id DESC);
+
+-- Offset query
+SELECT id, tenant_id, created_at, status
+FROM orders
+WHERE tenant_id = $1
+ORDER BY created_at DESC, id DESC
+LIMIT 20 OFFSET $2;
+</code></pre>
+<p>The index makes the scan ordered, but it does not remove the <code>OFFSET</code> walk. At <code>OFFSET 500000</code> the query still pays for 500,000 skipped entries.</p>
+<h2 id="keyset-pagination-the-mechanics">Keyset pagination: the mechanics</h2>
+<p>Keyset pagination (also called seek pagination) replaces <code>OFFSET</code> with a <code>WHERE</code> clause that starts <em>after</em> the last row the client saw. Instead of asking the database to skip N rows, it asks for the first row whose sort key is greater than (or, for descending order, less than) the last one returned.</p>
+<p>For a descending sort on <code>(created_at, id)</code>, the predicate is a tuple comparison:</p>
+<pre><code class="language-sql">SELECT id, tenant_id, created_at, status
+FROM orders
+WHERE tenant_id = $1
+  AND (created_at, id) &lt; ($2, $3)
+ORDER BY created_at DESC, id DESC
+LIMIT 20;
+</code></pre>
+<p><code>($2, $3)</code> is the <code>(created_at, id)</code> of the last row on the previous page. The database seeks directly to that position in the index and reads 20 rows. Cost is roughly constant per page, regardless of how deep the client is — the index seek replaces the linear walk.</p>
+<p>Postgres, MySQL 8+, and SQL Server all support row-value comparison like this. Where the database does not, expand it manually:</p>
+<pre><code class="language-sql">WHERE tenant_id = $1
+  AND (
+    created_at &lt; $2
+    OR (created_at = $2 AND id &lt; $3)
+  )
+</code></pre>
+<p>That expansion is equivalent, but the tuple form is easier to read and lets the planner use the composite index more directly. Check the <code>EXPLAIN</code> output: a <code>Filter</code> node instead of an <code>Index Cond</code> means the index is not being used for the seek.</p>
+<h3 id="the-cursor-is-a-contract-so-treat-it-like-one">The cursor is a contract, so treat it like one</h3>
+<p>The client should not see <code>created_at=2026-01-14T09:00:00Z&amp;id=88213</code>. That leaks internal identifiers, lets clients forge cursors, and couples the public API to the schema. Encode the tuple into an opaque token:</p>
+<pre><code class="language-python">import base64, json, hmac, hashlib
+from datetime import datetime, timezone
+
+CURSOR_SECRET = b&quot;...load from secret manager...&quot;
+
+def encode_cursor(created_at: datetime, row_id: int) -&gt; str:
+    payload = json.dumps({
+        &quot;t&quot;: created_at.astimezone(timezone.utc).isoformat(),
+        &quot;i&quot;: row_id,
+    }, separators=(&quot;,&quot;, &quot;:&quot;)).encode()
+    sig = hmac.new(CURSOR_SECRET, payload, hashlib.sha256).digest()[:16]
+    return base64.urlsafe_b64encode(payload + sig).decode().rstrip(&quot;=&quot;)
+
+def decode_cursor(token: str) -&gt; tuple[datetime, int]:
+    padded = token + &quot;=&quot; * (-len(token) % 4)
+    raw = base64.urlsafe_b64decode(padded)
+    payload, sig = raw[:-16], raw[-16:]
+    expected = hmac.new(CURSOR_SECRET, payload, hashlib.sha256).digest()[:16]
+    if not hmac.compare_digest(sig, expected):
+        raise ValueError(&quot;invalid cursor&quot;)
+    data = json.loads(payload)
+    return datetime.fromisoformat(data[&quot;t&quot;]), int(data[&quot;i&quot;])
+</code></pre>
+<p>Two things matter here. First, the HMAC stops clients from tampering with the cursor to jump to arbitrary rows — a common way IDOR bugs get introduced into paginated APIs. Second, signing the cursor allows detection of stale tokens after a schema change and a clear <code>400 invalid_cursor</code> response instead of a confusing empty page.</p>
+<p><strong>Gotcha:</strong> do not put secrets in the cursor itself. A signed cursor is fine; an <em>encrypted</em> cursor is usually overkill and adds key-rotation pain. Sign for integrity, not confidentiality, and keep the payload free of anything sensitive.</p>
+<h2 id="cursor-pagination-on-mutable-data-the-hard-part">Cursor pagination on mutable data: the hard part</h2>
+<p>Keyset pagination is exact when the sort key is immutable. When rows are inserted or updated between pages, the cursor can still produce surprising results — but the failure modes are different from offset, and usually less severe.</p>
+<p>Consider a feed sorted by <code>created_at DESC</code>. A new row inserted at the top does not affect a client paging downward: the cursor points at a fixed position, and new rows simply appear on the next refresh. That is the desired behavior for most feeds. With offset, a single insert at the top shifts every subsequent page by one and causes a duplicate.</p>
+<p>Updates are trickier. If <code>created_at</code> is updated (it usually should not be — treat it as immutable), a row can move behind the cursor and disappear from the client's view. The fix is to sort on a column that never changes, or to snapshot the query at the start of the pagination session.</p>
+<p>Deletes are the classic edge case. If the row referenced by the cursor is deleted between page 1 and page 2, the next query <code>WHERE (created_at, id) &lt; (cursor)</code> still works — the predicate is a position, not a row lookup. The client just sees the next surviving row. That is one of the reasons keyset is more robust than offset for mutable tables.</p>
+<h3 id="when-a-stable-snapshot-is-required">When a stable snapshot is required</h3>
+<p>Some use cases — exports, compliance reports, "download all my data" — require the client to see a consistent snapshot even as writes continue. Keyset pagination alone does not give that. Two practical options:</p>
+<ol>
+<li><strong>Snapshot the result set</strong> into a temporary table or materialized view at the start of the export, then page over it with keyset. This is what most "export to CSV" endpoints should do.</li>
+<li><strong>Bound the query by time</strong>: <code>WHERE created_at &lt;= $snapshot_time</code>, where <code>$snapshot_time</code> is captured when the export begins. Rows inserted after that timestamp are excluded, giving a stable view without a temp table.</li>
+</ol>
+<p>The second is cheaper but only works if the sort key is time-based and monotonic. If the sort is by <code>updated_at</code> on a table that receives backdated writes, the snapshot approach is needed.</p>
+<h3 id="a-worked-example-what-a-shifting-window-actually-does">A worked example: what a shifting window actually does</h3>
+<p>Take a table with rows carrying <code>(created_at, id)</code> values of <code>(10:00, 1)</code>, <code>(10:01, 2)</code>, <code>(10:02, 3)</code>, <code>(10:03, 4)</code>, sorted descending. Page size is 2.</p>
+<p>Offset, page 1: <code>ORDER BY created_at DESC LIMIT 2 OFFSET 0</code> returns <code>(10:03, 4)</code> and <code>(10:02, 3)</code>. Now a new row <code>(10:04, 5)</code> is inserted. Page 2 asks for <code>LIMIT 2 OFFSET 2</code> against the <em>new</em> ordering, which is <code>5, 4, 3, 2, 1</code>. Positions 2 and 3 are <code>(10:02, 3)</code> and <code>(10:01, 2)</code>. Row <code>3</code> has now been returned twice, and the client never sees it flagged.</p>
+<p>Keyset, page 1 returns the same two rows, and the cursor is <code>(10:02, 3)</code>. After the insert, page 2 asks for <code>WHERE (created_at, id) &lt; (10:02, 3)</code>, which returns <code>(10:01, 2)</code> and <code>(10:00, 1)</code>. No duplicates, no skips. The new row at <code>(10:04, 5)</code> is simply not part of this traversal — which is the expected behavior for a descending feed.</p>
+<h2 id="multi-tenant-and-permission-edge-cases">Multi-tenant and permission edge cases</h2>
+<p>Pagination bugs and authorization bugs love each other. The most common failure mode in a multi-tenant API is a cursor that encodes only the sort position, not the tenant scope. A client can take a valid cursor from tenant A and replay it against tenant B's endpoint — the signature is valid, the position is valid, and if the query does not also filter by <code>tenant_id</code>, the response includes another tenant's rows.</p>
+<p>The fix is to bind the cursor to the scope it was issued for. Include the tenant ID (or a hash of it) in the signed payload, and verify it on decode:</p>
+<pre><code class="language-python">def encode_cursor(tenant_id: int, created_at: datetime, row_id: int) -&gt; str:
+    payload = json.dumps({
+        &quot;s&quot;: tenant_id,
+        &quot;t&quot;: created_at.astimezone(timezone.utc).isoformat(),
+        &quot;i&quot;: row_id,
+    }, separators=(&quot;,&quot;, &quot;:&quot;)).encode()
+    sig = hmac.new(CURSOR_SECRET, payload, hashlib.sha256).digest()[:16]
+    return base64.urlsafe_b64encode(payload + sig).decode().rstrip(&quot;=&quot;)
+
+def decode_cursor(token: str, expected_tenant: int) -&gt; tuple[datetime, int]:
+    padded = token + &quot;=&quot; * (-len(token) % 4)
+    raw = base64.urlsafe_b64decode(padded)
+    payload, sig = raw[:-16], raw[-16:]
+    expected = hmac.new(CURSOR_SECRET, payload, hashlib.sha256).digest()[:16]
+    if not hmac.compare_digest(sig, expected):
+        raise ValueError(&quot;invalid cursor&quot;)
+    data = json.loads(payload)
+    if data[&quot;s&quot;] != expected_tenant:
+        raise ValueError(&quot;cursor scope mismatch&quot;)
+    return datetime.fromisoformat(data[&quot;t&quot;]), int(data[&quot;i&quot;])
+</code></pre>
+<p>This is the pagination equivalent of an indirect object reference check. The cursor is an object reference; if the caller's right to use it is not validated, that is an IDOR. The same rule applies to filters: if the cursor was issued for <code>status=paid</code>, and the client replays it with <code>status=refunded</code>, either reject the cursor or re-derive the position — do not silently mix scopes.</p>
+<p>A second edge case: <strong>empty result sets</strong>. If the first page returns zero rows, there is no cursor to issue. Clients that assume <code>next_cursor</code> is always present will break. Make the contract explicit: <code>next_cursor</code> is <code>null</code> when there are no more rows, and the client must handle that. Do not return an empty string, which some clients will happily send back as a cursor.</p>
+<h3 id="choosing-between-the-two">Choosing between the two</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Offset</th>
+<th>Keyset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cost at depth</td>
+<td>Grows linearly with <code>OFFSET</code></td>
+<td>Roughly constant per page</td>
+</tr>
+<tr>
+<td>Random access ("page 12")</td>
+<td>Native</td>
+<td>Not supported without extra work</td>
+</tr>
+<tr>
+<td>Behavior under inserts/deletes</td>
+<td>Duplicates or skips possible</td>
+<td>Position-stable; no duplicates or skips</td>
+</tr>
+<tr>
+<td>Total count available</td>
+<td>Yes, if computed</td>
+<td>Not natively; requires a separate query</td>
+</tr>
+<tr>
+<td>Client-visible state</td>
+<td>Page number and page size</td>
+<td>Opaque cursor</td>
+</tr>
+<tr>
+<td>Index requirement</td>
+<td>Sort-matching index helps, does not remove the walk</td>
+<td>Sort-matching composite index required</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verification-what-to-check-before-shipping">Verification: what to check before shipping</h2>
+<p>Pagination bugs are hard to see in a demo and easy to see in production. Before shipping a new list endpoint, run through this list:</p>
+<ul>
+<li><strong><code>EXPLAIN</code> the query at depth.</strong> Run the keyset query with a cursor from page 1,000 and confirm the plan shows an index seek, not a scan. On Postgres, look for <code>Index Cond</code> rather than <code>Filter</code>. To quantify the difference, record <code>EXPLAIN (ANALYZE, BUFFERS)</code> output for both the offset and keyset forms at the same depth and compare <code>Execution Time</code> and <code>Buffers: shared hit/read</code>.</li>
+<li><strong>Test with a duplicate sort key.</strong> Insert two rows with the same <code>created_at</code> and confirm both appear exactly once across pages. If the cursor only encodes <code>created_at</code>, this test will fail.</li>
+<li><strong>Test with a delete between pages.</strong> Delete the row referenced by the cursor and confirm the next page returns the correct next row, not an error or a skip.</li>
+<li><strong>Test cross-tenant replay.</strong> Take a cursor from tenant A and send it to tenant B's endpoint. It must fail with <code>400</code>, not return data.</li>
+<li><strong>Test tampered cursor.</strong> Flip a byte in the token and confirm the HMAC check rejects it.</li>
+<li><strong>Check the response contract.</strong> Confirm <code>next_cursor</code> is <code>null</code> on the last page, and that the client can distinguish "no more rows" from "empty page due to filter".</li>
+</ul>
+<p>A useful load-test pattern: page through 10,000 rows in a loop and assert that the set of returned IDs has no duplicates and no missing IDs (relative to a snapshot). This catches off-by-one errors in the tuple comparison that unit tests miss. If the traversal is done while a writer inserts rows concurrently, the assertion should be "no duplicates and no skips of rows that existed at the start of the traversal" — new rows are allowed to be absent.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why is offset pagination slow on large tables?</strong>
+Because the database must count and discard <code>OFFSET</code> rows before returning the requested page. The cost grows linearly with the offset value, so page 10,000 is dramatically slower than page 1 even though both return the same number of rows. An index helps the scan stay ordered, but it does not eliminate the walk.</p>
+<p><strong>Can keyset pagination use a non-unique sort column?</strong>
+Not safely on its own. If two rows share the same <code>created_at</code>, the cursor cannot distinguish between them, and rows can be skipped or duplicated. Always pair the sort column with a unique tiebreaker such as the primary key, and build the index on the full tuple.</p>
+<p><strong>How is "jump to page N" handled with keyset pagination?</strong>
+Generally it cannot be, and that is a deliberate trade-off. Keyset pagination is designed for sequential traversal. If the UI genuinely needs random access, keep offset pagination for shallow pages and switch to keyset for deep traversal, or expose a search/filter interface instead of page numbers.</p>
+<p><strong>Should the cursor be encrypted or just signed?</strong>
+Sign it. Encryption adds key-management overhead without much benefit, because the payload (a timestamp and a row ID) is not sensitive on its own. Signing with an HMAC prevents tampering and allows the cursor to be bound to a tenant or filter scope, which is the security property that actually matters.</p>
+<h2 id="next-step-audit-one-endpoint-today">Next step: audit one endpoint today</h2>
+<p>Pick the list endpoint with the highest <code>OFFSET</code> values in the logs — the one where clients are paging deep — and run <code>EXPLAIN ANALYZE</code> on it with a representative offset. If the plan shows a large scan before the <code>Limit</code> node, that endpoint is a candidate for keyset pagination. The 30-minute version: add the composite index on <code>(tenant_id, created_at, id)</code>, rewrite the query to use the tuple comparison, and return a signed <code>next_cursor</code> instead of a page number. Ship it behind a new API version so existing clients keep working, and watch the p99 latency on that endpoint for a week.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/soft-deletes-fail-what-breaks-first/">Soft deletes fail: what breaks first</a></li>
+<li><a href="https://kubaik.github.io/why-our-schema-survived-ai-scaling/">Designing a Schema That Survives Embedding Model Upgrades</a></li>
+<li><a href="https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/">Rogue Agent API Calls: Stop the Bleeding</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/soft-deletes-fail-what-breaks-first/">
+                        <h3>Soft deletes fail: what breaks first</h3>
+                        <p>Soft deletes leak into every query and bloat indexes. Here is how to measure the damage and move to a tiered live/archive/cold lifecycle.</p>
+                        <span class="related-meta">13 min read · 9 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/postgres-17-swallowed-redis-kafka-timescale/">
+                        <h3>Postgres 17 swallowed Redis, Kafka, Timescale</h3>
+                        <p>How to evaluate consolidating Redis, Kafka and a time-series database into Postgres extensions, with honest limits, failure modes and a checklist.</p>
+                        <span class="related-meta">14 min read · 2 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/postgres-vector-search-what-breaks-first/">
+                        <h3>Postgres vector search: what breaks first</h3>
+                        <p>pgvector works until load grows. Here is what fails first, how to measure it, and when a dedicated ANN service earns its operational cost.</p>
+                        <span class="related-meta">13 min read · 24 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

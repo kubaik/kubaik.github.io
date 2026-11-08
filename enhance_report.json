@@ -1,7 +1,7 @@
 {
   "changed": [
     {
-      "slug": "k6-vs-locust-traffic-models-that-lie",
+      "slug": "pagination-for-large-datasets-offset-vs-cursor",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false
