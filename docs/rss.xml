@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Nov 2026 17:51:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 05:24:21 +0000</lastBuildDate>
+    <item>
+      <title>FastAPI vs Django vs Flask: API picks for 2026</title>
+      <link>https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/</link>
+      <description>Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.</description>
+      <pubDate>Mon, 09 Nov 2026 05:20:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/</guid>
+    </item>
     <item>
       <title>Queueing theory for backend capacity</title>
       <link>https://kubaik.github.io/queueing-theory-for-backend-capacity/</link>
@@ -138,13 +145,6 @@
       <description>Design a KYC integration that persists only the decision and a vendor reference, with the raw identity evidence kept by the vendor under contract.</description>
       <pubDate>Fri, 30 Oct 2026 09:37:11 +0000</pubDate>
       <guid>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</guid>
-    </item>
-    <item>
-      <title>OpenTelemetry collector pipelines: sampling, batching…</title>
-      <link>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</link>
-      <description>How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</description>
-      <pubDate>Fri, 30 Oct 2026 04:57:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/</guid>
     </item>
   </channel>
 </rss>

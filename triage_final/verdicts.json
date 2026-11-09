@@ -1733,6 +1733,13 @@
   "title": "React 19 Compiler: What It Rewrites and Where It Breaks",
   "words": 2121
  },
+ "fastapi-vs-django-vs-flask-api-picks-for-2026": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "FastAPI vs Django vs Flask: API picks for 2026",
+  "words": 2497
+ },
  "mobile-money-agents-when-m-pesa-api-fails": {
   "verdict": "KEEP",
   "reasons": [],
@@ -2074,11 +2081,15 @@
   "words": 2986
  },
  "queueing-theory-for-backend-capacity": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Queueing theory for backend capacity",
-  "words": 2684
+  "words": 2857
  },
  "audit-trails-immutabledb-vs-dynamodb-streams": {
   "verdict": "KEEP",

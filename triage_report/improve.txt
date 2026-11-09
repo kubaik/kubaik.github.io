@@ -187,6 +187,7 @@ docs/evaluate-agents-with-spark-vs-custom-harness/index.md
 docs/event-driven-beats-agent-driven-910-times/index.md
 docs/event-sourcing-pay-the-complexity-tax-only-here/index.md
 docs/evolve-your-monolith-without-rewriting-in-2026/index.md
+docs/fastapi-vs-django-vs-flask-api-picks-for-2026/index.md
 docs/feature-flags-became-ai-rollout-platforms/index.md
 docs/fintech-features-break-in-ghana-the-real-fix/index.md
 docs/fix-ai-agent-failures-postmortem-guide/index.md

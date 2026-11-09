@@ -43,7 +43,7 @@ observe-llm-features-90-faster,90,2733,Observability for LLM Features: Metrics T
 offline-agents-local-first-sync-patterns,90,2436,Offline Agents: Local-First Sync Patterns,2026-09-07T08:09:01.750326,2,no markdown table | no FAQ section
 platform-teams-agentic-world-struggle,90,2566,Platform Teams: Agentic World Struggle,2026-09-12T15:17:48.160046,2,no markdown table | no FAQ section
 poolers-wont-save-your-serverless-db,90,2791,Poolers won’t save your serverless DB,2026-07-19T02:59:58.647198,2,no markdown table | no FAQ section
-queueing-theory-for-backend-capacity,90,2684,Queueing theory for backend capacity,2026-11-08T17:48:03.189777,2,no markdown table | no FAQ section
+queueing-theory-for-backend-capacity,90,2857,Queueing theory for backend capacity,2026-11-08T17:48:03.189777,2,no markdown table | no FAQ section
 self-healing-ai-agents-vs-rule-based-ops-40-fewer,90,2479,Self-healing agents vs rule-based deployment rollback,2026-06-11T21:16:42.291244,2,no markdown table | no FAQ section
 ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse,90,2150,High-Volume Log Pipelines: Shipping 50k Events Per Second,2026-07-03T13:30:22.215019,2,no markdown table | no FAQ section
 store-data-once-serve-everywhere-cheaper,90,2397,"Store data once, serve everywhere: cheaper",2026-06-25T08:39:15.607832,2,no markdown table | no FAQ section
@@ -121,6 +121,7 @@ drift-detection-the-plan-that-lies,95,3215,Drift detection: the plan that lies,2
 duckdb-in-production-when-it-replaces-a-warehouse,95,2723,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,1,no FAQ section
 edge-agents-vs-cloud-round-trips-in-2026,95,2244,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,1,no FAQ section
 evaluate-agents-with-spark-vs-custom-harness,95,2430,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,1,no FAQ section
+fastapi-vs-django-vs-flask-api-picks-for-2026,95,2497,FastAPI vs Django vs Flask: API picks for 2026,2026-11-09T05:20:45.680557,1,no FAQ section
 fintech-features-break-in-ghana-the-real-fix,95,2686,Fintech features break in Ghana: the real fix,2026-07-18T13:24:23.053992,1,no FAQ section
 fix-ai-agent-failures-postmortem-guide,95,2390,"Postmortems for AI agents: drift, cost, replay",2026-06-29T21:20:13.013851,1,no FAQ section
 golden-paths-that-dont-handcuff,95,2301,Golden paths that don't handcuff,2026-09-21T08:28:08.494579,1,no FAQ section

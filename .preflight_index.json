@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-08T17:48:06.182564",
+  "built_at": "2026-11-09T05:20:48.827296",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5790,6 +5790,11 @@
       "slug": "queueing-theory-for-backend-capacity",
       "title": "Queueing theory for backend capacity",
       "summary": "capacity planning was never the hard part. Knowing when it was about to fail was. Here's what changes once the guessing is replaced with measurement. It only shows up under the exact conditions nobody tests for. You don't need a PhD in queueing theory to avoid the classic capacity planning mistake. "
+    },
+    {
+      "slug": "fastapi-vs-django-vs-flask-api-picks-for-2026",
+      "title": "FastAPI vs Django vs Flask: API picks for 2026",
+      "summary": "fastapi versus looks simple until it has to survive real traffic. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch. Choosing a Python web framework for a backend API in 2026 is less about raw speed and more about which failure mod"
     }
   ]
 }

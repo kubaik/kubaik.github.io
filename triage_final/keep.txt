@@ -113,6 +113,7 @@ docs/edge-agents-vs-cloud-round-trips-in-2026/
 docs/event-driven-beats-agent-driven-910-times/
 docs/event-sourcing-pay-the-complexity-tax-only-here/
 docs/evolve-your-monolith-without-rewriting-in-2026/
+docs/fastapi-vs-django-vs-flask-api-picks-for-2026/
 docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/
 docs/fraud-detection-rules-vs-scoring-where-they-meet/
 docs/gateway-api-wont-fix-your-ingress-mess/
@@ -177,7 +178,6 @@ docs/price-saas-tools-in-2026-what-we-learned-pricing-a/
 docs/prompt-injection-got-the-hype-poison-data-ruined-us/
 docs/prompt-injection-what-breaks-first-in-prod/
 docs/purpose-built-beats-general-ai-tools/
-docs/queueing-theory-for-backend-capacity/
 docs/rag-in-prod-what-tutorials-wont-tell-you/
 docs/rag-is-not-enough-hybrid-search-reranking-in-2026/
 docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/

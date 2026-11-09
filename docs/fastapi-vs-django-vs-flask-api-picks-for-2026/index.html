@@ -1,0 +1,476 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FastAPI vs Django vs Flask: API picks for 2026 - Kubai Kevin</title>
+        <meta name="description" content="Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.">
+        <meta name="keywords" content="Fastapi, Django, Flask, Async, Python, Python3">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-09T05:20:45.680557">
+        <meta property="article:modified_time" content="2026-11-09T05:23:35.880462+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="FastAPI vs Django vs Flask: API picks for 2026">
+        <meta property="og:description" content="Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.">
+        <meta property="og:url" content="https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/fastapi-vs-django-vs-flask-api-picks-for-2026.png">
+        <meta property="og:image:alt" content="FastAPI vs Django vs Flask: API picks for 2026">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="FastAPI vs Django vs Flask: API picks for 2026">
+        <meta name="twitter:description" content="Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/fastapi-vs-django-vs-flask-api-picks-for-2026.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/#article",
+      "headline": "FastAPI vs Django vs Flask: API picks for 2026",
+      "description": "Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.",
+      "datePublished": "2026-11-09T05:20:45+00:00",
+      "dateModified": "2026-11-09T05:23:35+00:00",
+      "wordCount": 2904,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/"
+      },
+      "keywords": "Fastapi, Django, Flask, Async, Python, Python3",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/fastapi-vs-django-vs-flask-api-picks-for-2026.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "FastAPI vs Django vs Flask: API picks for 2026",
+          "item": "https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>FastAPI vs Django vs Flask: API picks for 2026</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">FastAPI vs Django vs Flask: API picks for 2026</h1>
+                
+                <p class="post-lead">Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/fastapi/"
+                       style="text-decoration:none;">Fastapi</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Django</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Flask</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python3/"
+                       style="text-decoration:none;">Python3</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2904 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-09
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Choosing a Python web framework for a backend API is less about raw speed and more about which failure modes a team can afford to own. FastAPI, Django, and Flask have each settled into a distinct operating model: FastAPI is async-first with type-driven validation, Django is a batteries-included framework with an ORM and admin, and Flask is a minimal WSGI core that leaves most decisions to the application author. The comparison matters because the cost of switching later is usually not the framework itself — it is the ORM, the auth layer, the migration history, and the deployment shape built around it. Teams commonly pick on the wrong axis (syntax preference or a single benchmark) and then spend months working around the consequences. This article lays out the axes that actually decide the outcome and ends with a concrete step to validate a choice before committing.</p>
+<h2 id="the-three-operating-models-not-three-speeds">The three operating models, not three speeds</h2>
+<p>A useful way to frame the decision is to ask what the framework takes responsibility for versus what it hands to the application.</p>
+<p><strong>FastAPI</strong> is built on Starlette (ASGI) and Pydantic. It takes responsibility for request parsing, response serialization, and OpenAPI schema generation, driven by Python type hints. It does not take responsibility for an ORM, an admin interface, or a project layout. Applications get async request handling by default, dependency injection as a first-class pattern, and automatic docs. The trade-off is that the rest is assembled by the team: database access, migrations, auth, background jobs. A typical FastAPI service is a small constellation of libraries held together by project-specific conventions.</p>
+<p><strong>Django</strong> is a full-stack framework with an ORM, migrations, an admin, an auth system, and a template engine. For APIs, Django REST Framework (DRF) is the long-standing option, and Django Ninja is an alternative that borrows FastAPI's type-hint style. Django's operating model is convention over assembly: the framework owns the shape of the project, and the application works within it. Async support exists (ASGI, async views, async ORM methods) but the ecosystem is still predominantly synchronous. The trade-off is that the framework's opinions are inherited, and some of them (the ORM's query behavior, DRF serializers) become the thing debugged at 2 a.m.</p>
+<p><strong>Flask</strong> is a WSGI micro-framework. It takes responsibility for routing and request/response objects, and essentially nothing else. The application chooses the ORM (SQLAlchemy is common), the validation library, the auth, and the project layout. Flask 2.x added async view support, but the core is WSGI and the async story is not the primary design center. The trade-off is that every architectural decision belongs to the team, which is liberating on a small service and expensive on a large one.</p>
+<p>None of these is faster in a way that matters for most APIs. The bottleneck in a typical backend is usually the database, an external HTTP call, or a serialization step — not the framework's request dispatch. The differences that matter are in concurrency model, validation ergonomics, and how much structure is inherited.</p>
+<h2 id="fastapi-type-hints-as-the-contract">FastAPI: type hints as the contract</h2>
+<p>FastAPI's core idea is that the function signature is the API contract. A path operation declares its inputs and outputs with type hints, and FastAPI uses Pydantic to validate inputs and serialize outputs, and generates an OpenAPI schema from the same declarations.</p>
+<pre><code class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
+app = FastAPI()
+
+class OrderIn(BaseModel):
+    sku: str = Field(min_length=1, max_length=64)
+    quantity: int = Field(gt=0, le=1000)
+
+class OrderOut(BaseModel):
+    id: int
+    sku: str
+    quantity: int
+
+@app.post(&quot;/orders&quot;, response_model=OrderOut, status_code=201)
+async def create_order(order: OrderIn) -&gt; OrderOut:
+    # pretend persistence happens here
+    return OrderOut(id=1, sku=order.sku, quantity=order.quantity)
+</code></pre>
+<p>What this buys: request validation is declarative and consistent, the OpenAPI schema is generated rather than hand-maintained, and the same models can be reused for client generation. What it costs: Pydantic models are a second representation of the data alongside ORM models, and keeping them in sync is real work. The dependency injection system is powerful but has a learning curve; a common failure mode is a dependency that opens a database session per request and is not properly closed on exceptions.</p>
+<p>The async model is the other major consideration. FastAPI runs on ASGI, so a single worker can handle many concurrent requests while waiting on I/O. That is a genuine advantage for APIs that spend most of their time waiting on a database or an upstream service. It is not an advantage for CPU-bound work — an async endpoint that does heavy computation blocks the event loop for every other request on that worker. Teams commonly hit this when they add a synchronous, CPU-heavy library call inside an async endpoint and see latency for unrelated routes spike.</p>
+<p>A second failure mode is subtler: synchronous database drivers called from async endpoints. The call blocks the event loop exactly as a CPU-bound task would, but it looks correct in code review because the endpoint is declared <code>async</code>. The result is the complexity of async without the concurrency benefit. Either use an async driver end to end for that path, or declare the endpoint as a plain <code>def</code> and let the framework run it in a threadpool.</p>
+<h2 id="django-the-orm-and-admin-are-the-product">Django: the ORM and admin are the product</h2>
+<p>Django's value proposition is that a large fraction of a typical business API is already built: user auth, permissions, an admin for operations staff, migrations, and an ORM with a query API that covers most relational patterns. For an API that is fundamentally CRUD over a relational schema, Django plus DRF (or Django Ninja) gets a team to a working, secure baseline faster than assembling the same pieces.</p>
+<p>The cost shows up in two places. First, the ORM's convenience can hide query behavior: a serializer that accesses a related field per row produces an N+1 query pattern, and the fix (<code>select_related</code>, <code>prefetch_related</code>) requires understanding the ORM's query construction. This is among the most common Django API performance issues, and it is a code-review problem more than a framework problem. Second, Django's synchronous heritage means that async is available but not the default mental model. Mixing sync and async code in Django requires care; calling synchronous ORM code from an async context without the proper adapter is a documented footgun.</p>
+<p>DRF serializers are explicit and flexible, but they are also verbose, and validation logic tends to spread across serializers, model methods, and views. Django Ninja reduces that by using type hints and Pydantic, at the cost of being a smaller ecosystem than DRF. The choice between them is a real fork in the road for a Django API project.</p>
+<p>Django's admin is underrated as an API-adjacent tool: operations teams need to inspect and correct data, and building that from scratch is weeks of work. If the API serves a business where non-engineers need to look at records, the admin is a concrete reason to pick Django.</p>
+<h2 id="flask-the-minimal-core-and-its-tax">Flask: the minimal core and its tax</h2>
+<p>Flask gives routing, request/response handling, and a request context, and then gets out of the way. For a small service — a webhook receiver, an internal tool with a handful of endpoints, a service that wraps a single external API — that minimalism is an asset. There is no ORM to learn, no admin to configure, no project layout to adopt.</p>
+<p>The tax appears as the service grows. Validation is whatever the team chooses (Marshmallow, Pydantic, manual checks), and consistency depends on discipline. Auth is whatever the team chooses. Project structure is whatever the team chooses, which means every Flask codebase is a little different and onboarding takes longer. Async support exists but is not the design center; for I/O-heavy APIs, Flask's WSGI model means concurrency comes from worker processes (for example, Gunicorn workers) rather than from async concurrency within a process. That is a perfectly valid model — it is how a lot of production Python has run for years — but it changes capacity planning: more workers means more memory, and each worker handles one request at a time.</p>
+<p>Flask is also the framework most likely to be chosen for the wrong reason: familiarity. A team that knows Flask may pick it for a new API that would benefit from Django's structure or FastAPI's validation, and then rebuild those pieces badly. The reverse is also true: a team that picks Django for a two-endpoint internal service carries a lot of framework for very little API.</p>
+<h2 id="head-to-head-on-the-axes-that-decide">Head-to-head on the axes that decide</h2>
+<p>The axes that matter for a backend API are concurrency model, validation and schema, ORM and migrations, auth and admin, and operational surface. The table below compares them, with the caveat that "better" depends on which axis dominates the workload.</p>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>FastAPI</th>
+<th>Django</th>
+<th>Flask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Concurrency model</td>
+<td>ASGI, async-first; sync endpoints run in a threadpool</td>
+<td>WSGI by default; async views and ORM available</td>
+<td>WSGI; async views available but not primary</td>
+</tr>
+<tr>
+<td>Validation &amp; schema</td>
+<td>Pydantic models; OpenAPI generated from type hints</td>
+<td>DRF serializers or Django Ninja (Pydantic)</td>
+<td>Application's choice (Marshmallow, Pydantic, manual)</td>
+</tr>
+<tr>
+<td>ORM &amp; migrations</td>
+<td>Not included; SQLAlchemy + Alembic common</td>
+<td>Built-in ORM and migrations</td>
+<td>Not included; SQLAlchemy + Alembic common</td>
+</tr>
+<tr>
+<td>Auth &amp; admin</td>
+<td>Not included; assemble or use a library</td>
+<td>Built-in auth; admin included</td>
+<td>Not included</td>
+</tr>
+<tr>
+<td>Operational surface</td>
+<td>Small core, many dependencies</td>
+<td>Large framework, fewer assembly decisions</td>
+<td>Small core, many assembly decisions</td>
+</tr>
+<tr>
+<td>Typical failure mode</td>
+<td>Blocking call inside async endpoint; session lifecycle bugs</td>
+<td>N+1 queries; sync/async mixing</td>
+<td>Inconsistent validation and structure as service grows</td>
+</tr>
+</tbody>
+</table>
+<p>On concurrency, the honest summary is: FastAPI's async model is a real advantage for I/O-bound APIs with many concurrent, slow requests. Django's async support is real but the ecosystem around it is still catching up, and the synchronous path is well-trodden. Flask's process-based concurrency is simple and predictable, and for many APIs it is entirely sufficient. A common mistake is to choose FastAPI for async and then write synchronous database calls inside async endpoints, which gives the complexity of async without the benefit.</p>
+<p>On validation and schema, FastAPI's type-hint-driven approach produces the least duplication between validation and documentation. Django with DRF produces more code but very explicit code. Flask produces whatever the team decides, which is a risk on teams without strong review culture.</p>
+<p>On ORM and migrations, Django's integrated ORM and migration system is a genuine advantage for relational data with evolving schemas. SQLAlchemy is more flexible and more explicit, but the team owns the migration tooling (Alembic is the common pairing) and the session lifecycle. The session lifecycle is where FastAPI and Flask projects most often have subtle bugs: a session that is not closed on an exception, or a session shared across requests.</p>
+<p>On auth and admin, Django is the clear winner for business APIs where non-engineers need to see data. FastAPI and Flask require building or integrating that layer, and the build cost is easy to underestimate.</p>
+<h2 id="a-worked-example-estimating-where-the-time-goes">A worked example: estimating where the time goes</h2>
+<p>Assume an API endpoint that does three things per request: parse and validate a JSON body, run one database query, and call one external HTTP service. The framework affects the first and the third, and the database driver affects the second.</p>
+<p>The numbers below are illustrative assumptions, not measurements. Parsing and validation of a small JSON body might take on the order of tens to low hundreds of microseconds in any of the three frameworks; a local database query might take a few milliseconds; an external HTTP call might take tens to hundreds of milliseconds. The external call dominates. If the endpoint is async and the external call is awaited, a single worker can overlap many such requests. If the endpoint is synchronous and served by a process-per-worker model, each worker handles one request at a time, so concurrency scales with worker count and memory.</p>
+<p>The arithmetic that matters is: concurrency = (workers) × (requests in flight per worker). For an async worker, requests in flight is bounded by the event loop's capacity to overlap I/O waits, not by one. For a sync worker, it is one. Using the illustrative assumption that the external call takes 100 ms, a sync worker handles at most 1 / 0.1 s = 10 such requests per second; ten workers handle 100 per second. An async worker can overlap many more, limited by connection pools and downstream capacity. This is why the async question is really a question about the dependency latency profile, not about framework benchmarks.</p>
+<p>The same arithmetic exposes a second-order cost: the external call also consumes a connection from a pool. If the pool has 20 connections and each request holds one for 100 ms, the pool caps throughput at 20 / 0.1 s = 200 requests per second regardless of how many requests the event loop could overlap. Capacity planning therefore has to look at the smallest limit in the chain — worker count, event loop, connection pool, and downstream quota — not just the framework.</p>
+<h2 id="how-to-measure-instead-of-trusting-benchmarks">How to measure instead of trusting benchmarks</h2>
+<p>Published framework benchmarks rarely reflect an application's dependency mix, so the productive move is to measure the endpoint that matters. A minimal measurement plan:</p>
+<ol>
+<li><strong>Instrument the three phases separately.</strong> Record time spent in request parsing/validation, in the database query, and in the external call. In FastAPI, middleware or dependency-level timing works; in Django, middleware plus <code>connection.queries</code> or query logging; in Flask, <code>before_request</code>/<code>after_request</code> hooks. The goal is to see which phase dominates before optimizing anything.</li>
+<li><strong>Count queries per request.</strong> Django's query log and SQLAlchemy's event hooks both expose this. A rising query count with stable request count is the N+1 signature.</li>
+<li><strong>Load-test with a realistic latency profile.</strong> A mock external service that sleeps for the assumed latency is more informative than a fast local stub, because it exercises the concurrency model. Tools such as <code>wrk</code>, <code>hey</code>, or <code>locust</code> can drive the load; compare throughput and p95 latency at a fixed concurrency.</li>
+<li><strong>Compare configurations, not frameworks in the abstract.</strong> Vary worker count for the sync case and connection pool size for the async case. The best configuration for one framework may be a different shape than for another.</li>
+</ol>
+<p>A useful discipline is to write down the assumptions (dependency latencies, expected concurrency) before running anything, then check whether the measured throughput matches the arithmetic. When it does not, the gap usually points at a blocking call, a pool limit, or a query pattern — the three failure modes described above.</p>
+<h2 id="who-should-pick-which">Who should pick which</h2>
+<p><strong>Pick FastAPI if:</strong> the API is I/O-bound and benefits from async concurrency, generated OpenAPI and type-driven validation are valuable, and the team is comfortable assembling the ORM, migrations, and auth layers (or already has conventions for them). It is also a good fit when the API is primarily a facade over other services. Be honest about the async discipline required: one blocking call in an async path can degrade the whole worker.</p>
+<p><strong>Pick Django if:</strong> the API is CRUD over a relational schema, auth and an admin are needed, and the team values a framework that makes many decisions for it. It is the strongest choice when non-engineers need to inspect data, or when the team is large enough that convention beats flexibility. Accept that time will go into ORM query behavior and that async is a secondary path.</p>
+<p><strong>Pick Flask if:</strong> the service is small and well-bounded, the team already has strong conventions for validation, auth, and project structure, or a minimal core is needed for a specific integration. It should not be the default for a new large API just because it is familiar; the assembly cost compounds.</p>
+<p>A useful tiebreaker: if the team can name the person who will own the auth and admin layer, FastAPI and Flask become more attractive. If it cannot, Django's built-in answer is worth a lot.</p>
+<h2 id="the-30-minute-validation-step">The 30-minute validation step</h2>
+<p>Before committing, write one endpoint in the framework the team is leaning toward that exercises the three hardest requirements: an authenticated request, a database read with a relation, and a call to an external service with a timeout. Run it locally and inspect the generated schema (for FastAPI, the <code>/openapi.json</code> route; for Django REST Framework, the browsable API; for Flask, whatever was chosen for schema generation). If the endpoint requires more assembly than expected, that is the signal to reconsider before the codebase grows around the decision. Start with the authenticated endpoint — auth is the layer teams most often underestimate, and it is the one that is hardest to change later.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/sqlalchemy-vs-asyncpg-pooling-in-async-services/">SQLAlchemy vs asyncpg: pooling in async services</a></li>
+<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/tame-python-asyncs-hidden-traps/">
+                        <h3>Tame Python async’s hidden traps</h3>
+                        <p>Compare threaded and task-based async in Python: how each works, where each fails, how to measure the tradeoff yourself, and a checklist for choosing.</p>
+                        <span class="related-meta">11 min read · 29 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/sqlalchemy-vs-asyncpg-pooling-in-async-services/">
+                        <h3>SQLAlchemy vs asyncpg: pooling in async services</h3>
+                        <p>How SQLAlchemy&amp;#x27;s async engine and asyncpg&amp;#x27;s pool actually relate, how to size pools against Postgres max_connections, and the failure modes that cause timeouts.</p>
+                        <span class="related-meta">13 min read · 3 November 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/spot-ais-hidden-cost-spike-in-your-stack/">
+                        <h3>Spot AI’s hidden cost spike in your stack</h3>
+                        <p>AI refactors often trade cache hits for database reads, exhausting pools and inflating bills. Here is how to detect, verify and gate the change.</p>
+                        <span class="related-meta">14 min read · 28 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

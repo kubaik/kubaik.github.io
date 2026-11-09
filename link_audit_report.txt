@@ -1,4 +1,4 @@
-❌ Internal link audit: 416 broken link(s) found across 417 posts checked.
+❌ Internal link audit: 417 broken link(s) found across 418 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -307,6 +307,7 @@ Source Post                              Anchor Text                    Missing 
   /property-based-testing-vs-example-tests-the-bug-gap AI content policy              /ai-content-policy/
   /purpose-built-beats-general-ai-tools   AI content policy              /ai-content-policy/
   /pypi-poisoned-models-hit-prod-in-2025  AI content policy              /ai-content-policy/
+  /queueing-theory-for-backend-capacity   AI content policy              /ai-content-policy/
   /rag-in-prod-what-tutorials-wont-tell-you AI content policy              /ai-content-policy/
   /rag-is-not-enough-hybrid-search-reranking-in-2026 AI content policy              /ai-content-policy/
   /rag-on-legacy-systems-vector-db-vs-full-text-sql AI content policy              /ai-content-policy/

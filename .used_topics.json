@@ -237,5 +237,6 @@
   "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
   "Load testing methodology with k6 and Locust: realistic traffic models",
   "Designing pagination for large datasets: offset, cursor, and keyset approaches",
-  "Capacity planning for backend systems using queueing theory basics"
+  "Capacity planning for backend systems using queueing theory basics",
+  "FastAPI versus Django versus Flask for backend APIs in 2026"
 ]
