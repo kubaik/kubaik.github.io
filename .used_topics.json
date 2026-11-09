@@ -238,5 +238,7 @@
   "Load testing methodology with k6 and Locust: realistic traffic models",
   "Designing pagination for large datasets: offset, cursor, and keyset approaches",
   "Capacity planning for backend systems using queueing theory basics",
-  "FastAPI versus Django versus Flask for backend APIs in 2026"
+  "FastAPI versus Django versus Flask for backend APIs in 2026",
+  "Local plus cloud model routing: how teams stay competitive on cost and speed",
+  "Web application firewalls and bot management: what they stop and what they miss"
 ]

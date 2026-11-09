@@ -1561,6 +1561,13 @@
   "title": "CI/CD for AI code: test, secure, rollback fast",
   "words": 2508
  },
+ "waf-and-bot-management-what-they-miss": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "WAF and bot management: what they miss",
+  "words": 2677
+ },
  "ai-wrote-the-docs-humans-wrote-the-gaps": {
   "verdict": "KEEP",
   "reasons": [],
@@ -1738,7 +1745,7 @@
   "reasons": [],
   "fixes": [],
   "title": "FastAPI vs Django vs Flask: API picks for 2026",
-  "words": 2497
+  "words": 2904
  },
  "mobile-money-agents-when-m-pesa-api-fails": {
   "verdict": "KEEP",

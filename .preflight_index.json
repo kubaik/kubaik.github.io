@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-09T05:20:48.827296",
+  "built_at": "2026-11-09T22:06:16.842603",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5795,6 +5795,11 @@
       "slug": "fastapi-vs-django-vs-flask-api-picks-for-2026",
       "title": "FastAPI vs Django vs Flask: API picks for 2026",
       "summary": "fastapi versus looks simple until it has to survive real traffic. The failure is quiet — no errors, just wrong answers. This walks through the fix and the reasoning, not just the patch. Choosing a Python web framework for a backend API in 2026 is less about raw speed and more about which failure mod"
+    },
+    {
+      "slug": "waf-and-bot-management-what-they-miss",
+      "title": "WAF and bot management: what they miss",
+      "summary": "The vendor docs cover the setup and go quiet on the failure modes. local plus is the kind of decision that looks reversible until it isn't. This post covers what comes after the happy path. A web application firewall (WAF) sits in front of your app and blocks requests that match known-bad patterns. "
     }
   ]
 }

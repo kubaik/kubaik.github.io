@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Nov 2026 05:24:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 22:09:20 +0000</lastBuildDate>
+    <item>
+      <title>WAF and bot management: what they miss</title>
+      <link>https://kubaik.github.io/waf-and-bot-management-what-they-miss/</link>
+      <description>WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</description>
+      <pubDate>Mon, 09 Nov 2026 22:06:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/waf-and-bot-management-what-they-miss/</guid>
+    </item>
     <item>
       <title>FastAPI vs Django vs Flask: API picks for 2026</title>
       <link>https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/</link>
@@ -138,13 +145,6 @@
       <description>A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</description>
       <pubDate>Sat, 31 Oct 2026 04:43:23 +0000</pubDate>
       <guid>https://kubaik.github.io/dependency-pinning-the-lockfile-lie/</guid>
-    </item>
-    <item>
-      <title>KYC integrations: the data you shouldn&apos;t store</title>
-      <link>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</link>
-      <description>Design a KYC integration that persists only the decision and a vendor reference, with the raw identity evidence kept by the vendor under contract.</description>
-      <pubDate>Fri, 30 Oct 2026 09:37:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/kyc-integrations-the-data-you-shouldnt-store/</guid>
     </item>
   </channel>
 </rss>

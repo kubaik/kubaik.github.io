@@ -121,7 +121,7 @@ drift-detection-the-plan-that-lies,95,3215,Drift detection: the plan that lies,2
 duckdb-in-production-when-it-replaces-a-warehouse,95,2723,DuckDB in production: when it replaces a warehouse,2026-09-30T17:49:35.731106,1,no FAQ section
 edge-agents-vs-cloud-round-trips-in-2026,95,2244,Edge agents vs cloud round-trips in 2026,2026-07-23T14:09:55.983289,1,no FAQ section
 evaluate-agents-with-spark-vs-custom-harness,95,2430,Evaluate agents with Spark vs custom harness,2026-07-03T21:12:00.143657,1,no FAQ section
-fastapi-vs-django-vs-flask-api-picks-for-2026,95,2497,FastAPI vs Django vs Flask: API picks for 2026,2026-11-09T05:20:45.680557,1,no FAQ section
+fastapi-vs-django-vs-flask-api-picks-for-2026,95,2904,FastAPI vs Django vs Flask: API picks for 2026,2026-11-09T05:20:45.680557,1,no FAQ section
 fintech-features-break-in-ghana-the-real-fix,95,2686,Fintech features break in Ghana: the real fix,2026-07-18T13:24:23.053992,1,no FAQ section
 fix-ai-agent-failures-postmortem-guide,95,2390,"Postmortems for AI agents: drift, cost, replay",2026-06-29T21:20:13.013851,1,no FAQ section
 golden-paths-that-dont-handcuff,95,2301,Golden paths that don't handcuff,2026-09-21T08:28:08.494579,1,no FAQ section
@@ -396,6 +396,7 @@ use-feature-flags-to-deploy-ai-models-safely,100,2946,Use feature flags to deplo
 ussd-fintech-in-2026-the-300m-user-channel-nobody,100,3325,Designing USSD fintech flows that survive live networks,2026-06-11T14:34:31.818724,0,
 ussdsms-fallback-the-session-trap,100,3223,USSD/SMS fallback: the session trap,2026-11-06T19:03:57.266043,0,
 vibe-coding-mvp-gem-prod-albatross,100,3053,"Vibe coding: MVP gem, prod albatross",2026-06-19T20:47:43.902749,0,
+waf-and-bot-management-what-they-miss,100,2677,WAF and bot management: what they miss,2026-11-09T22:06:13.878976,0,
 wasm-servers-beat-containers-here,100,2421,WASM servers beat containers here,2026-08-05T13:49:01.207694,0,
 webhook-delivery-that-survives-outages,100,2698,Webhook delivery that survives outages,2026-10-02T17:40:12.720490,0,
 webhooks-2026-retries-idempotency-and-the-9995,100,2259,"Webhook Delivery: Retries, Idempotency, and Durability",2026-06-19T21:43:40.060877,0,

@@ -1,4 +1,4 @@
-❌ Internal link audit: 417 broken link(s) found across 418 posts checked.
+❌ Internal link audit: 418 broken link(s) found across 419 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -191,6 +191,7 @@ Source Post                              Anchor Text                    Missing 
   /event-driven-beats-agent-driven-910-times AI content policy              /ai-content-policy/
   /event-sourcing-pay-the-complexity-tax-only-here AI content policy              /ai-content-policy/
   /evolve-your-monolith-without-rewriting-in-2026 AI content policy              /ai-content-policy/
+  /fastapi-vs-django-vs-flask-api-picks-for-2026 AI content policy              /ai-content-policy/
   /feature-flags-became-ai-rollout-platforms AI content policy              /ai-content-policy/
   /fintech-features-break-in-ghana-the-real-fix AI content policy              /ai-content-policy/
   /fix-ai-agent-failures-postmortem-guide AI content policy              /ai-content-policy/

@@ -1540,6 +1540,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "waf-and-bot-management-what-they-miss",
+      "source": "post.json",
+      "word_count": 3168,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "ai-wrote-the-docs-humans-wrote-the-gaps",
       "source": "post.json",
       "word_count": 2682,

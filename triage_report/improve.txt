@@ -389,6 +389,7 @@ docs/ussdsms-fallback-the-session-trap/index.md
 docs/velocity-up-ownership-down-team-scaling-trap/index.md
 docs/vibe-code-works-great-fails-forever/index.md
 docs/vibe-coding-mvp-gem-prod-albatross/index.md
+docs/waf-and-bot-management-what-they-miss/index.md
 docs/wasm-servers-beat-containers-here/index.md
 docs/webhook-delivery-that-survives-outages/index.md
 docs/webhooks-2026-retries-idempotency-and-the-9995/index.md
