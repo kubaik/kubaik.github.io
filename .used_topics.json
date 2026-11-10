@@ -240,5 +240,6 @@
   "Capacity planning for backend systems using queueing theory basics",
   "FastAPI versus Django versus Flask for backend APIs in 2026",
   "Local plus cloud model routing: how teams stay competitive on cost and speed",
-  "Web application firewalls and bot management: what they stop and what they miss"
+  "Web application firewalls and bot management: what they stop and what they miss",
+  "Saga pattern implementation choices: orchestration versus choreography for payment flows"
 ]

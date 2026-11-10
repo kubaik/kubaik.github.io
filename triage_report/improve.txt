@@ -329,6 +329,7 @@ docs/run-apis-in-50-spots-what-breaks-first/index.md
 docs/runbooks-vs-ai-which-cuts-outages-50/index.md
 docs/rust-rewrites-where-they-pay-off-where-they-dont/index.md
 docs/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/index.md
+docs/saga-pattern-orchestration-vs-choreography-in-payments/index.md
 docs/sandboxed-computer-use-agents-with-gvisor/index.md
 docs/save-12kmonth-cloud-egress-costs-in-2026/index.md
 docs/sbom-attestation-that-gets-used/index.md

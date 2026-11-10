@@ -1,4 +1,4 @@
-❌ Internal link audit: 418 broken link(s) found across 419 posts checked.
+❌ Internal link audit: 419 broken link(s) found across 420 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -393,6 +393,7 @@ Source Post                              Anchor Text                    Missing 
   /velocity-up-ownership-down-team-scaling-trap AI content policy              /ai-content-policy/
   /vibe-code-works-great-fails-forever    AI content policy              /ai-content-policy/
   /vibe-coding-mvp-gem-prod-albatross     AI content policy              /ai-content-policy/
+  /waf-and-bot-management-what-they-miss  AI content policy              /ai-content-policy/
   /wasm-servers-beat-containers-here      AI content policy              /ai-content-policy/
   /webhook-delivery-that-survives-outages AI content policy              /ai-content-policy/
   /webhooks-2026-retries-idempotency-and-the-9995 AI content policy              /ai-content-policy/

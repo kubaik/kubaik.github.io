@@ -497,6 +497,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "saga-pattern-orchestration-vs-choreography-in-payments",
+      "source": "post.json",
+      "word_count": 3116,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "agentic-finops-is-a-trap",
       "source": "post.json",
       "word_count": 2367,

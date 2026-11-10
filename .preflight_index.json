@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-09T22:06:16.842603",
+  "built_at": "2026-11-10T06:34:06.177484",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5800,6 +5800,11 @@
       "slug": "waf-and-bot-management-what-they-miss",
       "title": "WAF and bot management: what they miss",
       "summary": "The vendor docs cover the setup and go quiet on the failure modes. local plus is the kind of decision that looks reversible until it isn't. This post covers what comes after the happy path. A web application firewall (WAF) sits in front of your app and blocks requests that match known-bad patterns. "
+    },
+    {
+      "slug": "saga-pattern-orchestration-vs-choreography-in-payments",
+      "title": "Saga pattern: orchestration vs choreography in payments",
+      "summary": "It's a one-line fix once you know where to look, and expensive until then. Inherited saga pattern setups tend to come with no explanation, just a working system and a long reverse-engineering session. Here's what holds up in practice, and why. Payment flows are distributed transactions by nature. Yo"
     }
   ]
 }

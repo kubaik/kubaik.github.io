@@ -1,9 +1,9 @@
 {
   "changed": [
     {
-      "slug": "waf-and-bot-management-what-they-miss",
+      "slug": "saga-pattern-orchestration-vs-choreography-in-payments",
       "sentences_removed": 0,
-      "sections_added": 2,
+      "sections_added": 1,
       "footer_migrated": false
     }
   ],

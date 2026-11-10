@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Nov 2026 22:09:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Nov 2026 06:37:20 +0000</lastBuildDate>
+    <item>
+      <title>Saga pattern: orchestration vs choreography in payments</title>
+      <link>https://kubaik.github.io/saga-pattern-orchestration-vs-choreography-in-payments/</link>
+      <description>How payment sagas coordinate steps, why refunds are not charge reversals, and a decision framework for choosing orchestration or choreography.</description>
+      <pubDate>Tue, 10 Nov 2026 06:34:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
+    </item>
     <item>
       <title>WAF and bot management: what they miss</title>
       <link>https://kubaik.github.io/waf-and-bot-management-what-they-miss/</link>
@@ -138,13 +145,6 @@
       <description>Why compact classifiers fail on rare inputs, and how per-label thresholds, guardrails and score monitoring contain the damage.</description>
       <pubDate>Sat, 31 Oct 2026 17:01:54 +0000</pubDate>
       <guid>https://kubaik.github.io/small-language-models-the-classifier-trap/</guid>
-    </item>
-    <item>
-      <title>Dependency pinning: the lockfile lie</title>
-      <link>https://kubaik.github.io/dependency-pinning-the-lockfile-lie/</link>
-      <description>A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</description>
-      <pubDate>Sat, 31 Oct 2026 04:43:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/dependency-pinning-the-lockfile-lie/</guid>
     </item>
   </channel>
 </rss>

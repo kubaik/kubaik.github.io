@@ -175,6 +175,17 @@
   "title": "JWT sessions: revocation, rotation, storage",
   "words": 2756
  },
+ "saga-pattern-orchestration-vs-choreography-in-payments": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Saga pattern: orchestration vs choreography in payments",
+  "words": 2688
+ },
  "agentic-finops-is-a-trap": {
   "verdict": "KEEP",
   "reasons": [],
@@ -1566,7 +1577,7 @@
   "reasons": [],
   "fixes": [],
   "title": "WAF and bot management: what they miss",
-  "words": 2677
+  "words": 3168
  },
  "ai-wrote-the-docs-humans-wrote-the-gaps": {
   "verdict": "KEEP",

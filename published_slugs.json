@@ -1073,6 +1073,9 @@
   "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "saga-pattern-orchestration-vs-choreography-in-payments": {
+    "first_seen": "2026-11-10T06:34:40.072818+00:00"
+  },
   "sandboxed-computer-use-agents-with-gvisor": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
