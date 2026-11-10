@@ -109,6 +109,7 @@ docs/observability-agents-lied-to-us/,add_sources,no_primary_sources,2629,Observ
 docs/offline-first-apps-what-3g-markets-taught-us/,add_sources,no_primary_sources,3020,Designing Offline-First Apps for Unreliable Networks
 docs/one-payment-stack-for-kenya-nigeria-ghana/,restructure_outline,template_clone_ending x12,2697,"One payment stack for Kenya, Nigeria, Ghana"
 docs/open-banking-apis-the-integration-traps/,add_sources,no_primary_sources,3083,Open banking APIs: the integration traps
+docs/open-source-contributions-the-credibility-trap/,add_sources,no_primary_sources,3007,Open source contributions: the credibility trap
 docs/pci-dss-architecture-12-requirements-that-matter/,add_sources,no_primary_sources,2724,PCI DSS architecture: 12 requirements that matter
 docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/,add_sources,no_primary_sources,2733,"Pick one: Stripe, Lemon Squeezy, Paddle in 2026"
 docs/platform-engineering-roi-metrics-that-fund-teams/,add_sources,no_primary_sources,2549,Platform engineering ROI: metrics that fund teams
@@ -135,7 +136,7 @@ docs/replace-env-with-these-in-2026/,restructure_outline,template_clone_ending x
 docs/replace-managed-services-with-postgres-17/,add_sources,no_primary_sources,2773,Replace managed services with Postgres 17
 docs/rogue-agent-api-calls-stop-the-bleeding/,add_sources,no_primary_sources,2098,Rogue Agent API Calls: Stop the Bleeding
 docs/runbooks-vs-ai-which-cuts-outages-50/,add_sources,no_primary_sources,2362,Runbooks vs AI Runbooks: A Decision Framework
-docs/saga-pattern-orchestration-vs-choreography-in-payments/,add_sources,no_primary_sources,2688,Saga pattern: orchestration vs choreography in payments
+docs/saga-pattern-orchestration-vs-choreography-in-payments/,add_sources,no_primary_sources,3116,Saga pattern: orchestration vs choreography in payments
 docs/save-12kmonth-cloud-egress-costs-in-2026/,add_sources,no_primary_sources,2606,Cutting cloud egress costs: architecture that works
 docs/sbom-attestation-that-gets-used/,restructure_outline,template_clone_ending x8,3399,SBOM + attestation that gets used
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/,add_sources,no_primary_sources,2479,Self-healing agents vs rule-based deployment rollback

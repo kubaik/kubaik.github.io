@@ -1,4 +1,4 @@
-❌ Internal link audit: 419 broken link(s) found across 420 posts checked.
+❌ Internal link audit: 420 broken link(s) found across 421 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -333,6 +333,7 @@ Source Post                              Anchor Text                    Missing 
   /runbooks-vs-ai-which-cuts-outages-50   AI content policy              /ai-content-policy/
   /rust-rewrites-where-they-pay-off-where-they-dont AI content policy              /ai-content-policy/
   /rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026 AI content policy              /ai-content-policy/
+  /saga-pattern-orchestration-vs-choreography-in-payments AI content policy              /ai-content-policy/
   /sandboxed-computer-use-agents-with-gvisor AI content policy              /ai-content-policy/
   /save-12kmonth-cloud-egress-costs-in-2026 AI content policy              /ai-content-policy/
   /sbom-attestation-that-gets-used        AI content policy              /ai-content-policy/

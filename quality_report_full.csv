@@ -12,6 +12,7 @@ ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks:
 audit-logs-that-scale-skip-the-3am-fire-drills,80,3151,Audit logs that scale: skip the 3AM fire drills,2026-08-17T12:51:36.917045,1,first-person incident: 'What follows is the reasoning a senior engineer would pass to a colleague hittin'
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
+open-source-contributions-the-credibility-trap,80,3007,Open source contributions: the credibility trap,2026-11-10T19:29:06.749741,1,first-person incident: '### How to confirm this cause\n\nAsk a colleague to look at your GitHub profile fo'
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
 remote-premium-rates-skills-ai-cant-copy,80,3733,Remote premium rates: skills AI can't copy,2026-10-21T08:45:29.894292,1,first-person incident: 'A practical way to verify is a dry run with a colleague.'
 spot-instances-vs-on-demand-for-ai-experiments,80,2587,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,1,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a'
@@ -364,7 +365,7 @@ retire-api-versions-before-they-pile-up,100,2467,Retire API versions before they
 rogue-agent-api-calls-stop-the-bleeding,100,2098,Rogue Agent API Calls: Stop the Bleeding,2026-09-07T12:11:38.676430,0,
 run-apis-in-50-spots-what-breaks-first,100,2344,Run APIs in 50 spots: what breaks first,2026-06-19T21:55:04.362560,0,
 rust-rewrites-where-they-pay-off-where-they-dont,100,2341,"Rust rewrites: where they pay off, where they don't",2026-09-21T10:01:49.793555,0,
-saga-pattern-orchestration-vs-choreography-in-payments,100,2688,Saga pattern: orchestration vs choreography in payments,2026-11-10T06:34:03.559543,0,
+saga-pattern-orchestration-vs-choreography-in-payments,100,3116,Saga pattern: orchestration vs choreography in payments,2026-11-10T06:34:03.559543,0,
 sandboxed-computer-use-agents-with-gvisor,100,2898,Sandboxed computer-use agents with gVisor,2026-09-21T18:02:36.068591,0,
 save-12kmonth-cloud-egress-costs-in-2026,100,2606,Cutting cloud egress costs: architecture that works,2026-06-11T09:49:21.554478,0,
 sbom-attestation-that-gets-used,100,3399,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,0,

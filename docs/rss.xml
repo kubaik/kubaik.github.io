@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Nov 2026 06:37:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Nov 2026 19:31:29 +0000</lastBuildDate>
+    <item>
+      <title>Open source contributions: the credibility trap</title>
+      <link>https://kubaik.github.io/open-source-contributions-the-credibility-trap/</link>
+      <description>Why merged pull requests often fail to persuade hiring teams, and how to choose projects and shape contributions that read as engineering judgment.</description>
+      <pubDate>Tue, 10 Nov 2026 19:29:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/open-source-contributions-the-credibility-trap/</guid>
+    </item>
     <item>
       <title>Saga pattern: orchestration vs choreography in payments</title>
       <link>https://kubaik.github.io/saga-pattern-orchestration-vs-choreography-in-payments/</link>
@@ -138,13 +145,6 @@
       <description>STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.</description>
       <pubDate>Sun, 01 Nov 2026 05:02:36 +0000</pubDate>
       <guid>https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/</guid>
-    </item>
-    <item>
-      <title>Small language models: the classifier trap</title>
-      <link>https://kubaik.github.io/small-language-models-the-classifier-trap/</link>
-      <description>Why compact classifiers fail on rare inputs, and how per-label thresholds, guardrails and score monitoring contain the damage.</description>
-      <pubDate>Sat, 31 Oct 2026 17:01:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/small-language-models-the-classifier-trap/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-10T06:34:06.177484",
+  "built_at": "2026-11-10T19:29:08.570117",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5805,6 +5805,11 @@
       "slug": "saga-pattern-orchestration-vs-choreography-in-payments",
       "title": "Saga pattern: orchestration vs choreography in payments",
       "summary": "It's a one-line fix once you know where to look, and expensive until then. Inherited saga pattern setups tend to come with no explanation, just a working system and a long reverse-engineering session. Here's what holds up in practice, and why. Payment flows are distributed transactions by nature. Yo"
+    },
+    {
+      "slug": "open-source-contributions-the-credibility-trap",
+      "title": "Open source contributions: the credibility trap",
+      "summary": "The official documentation for open source is good. What it doesn't cover is what happens six months into production. This works through the problem properly, from cause to fix. The answers online were either wrong or skipped the part that mattered. Open source contribution as a career strategy soun"
     }
   ]
 }

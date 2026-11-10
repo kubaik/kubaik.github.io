@@ -184,7 +184,7 @@
    "add_sources"
   ],
   "title": "Saga pattern: orchestration vs choreography in payments",
-  "words": 2688
+  "words": 3116
  },
  "agentic-finops-is-a-trap": {
   "verdict": "KEEP",
@@ -1725,6 +1725,17 @@
   "fixes": [],
   "title": "Unlock Python 3.13's free-threaded GIL for web apps",
   "words": 2761
+ },
+ "open-source-contributions-the-credibility-trap": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Open source contributions: the credibility trap",
+  "words": 3007
  },
  "aws-costs-for-nairobi-saas-2026-bill-split": {
   "verdict": "KEEP",
