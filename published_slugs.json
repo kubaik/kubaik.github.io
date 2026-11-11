@@ -806,6 +806,9 @@
   "mobile-money-agents-when-m-pesa-api-fails": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "model-evals-the-gaps-that-let-drift-slip-through": {
+    "first_seen": "2026-11-11T19:26:54.281370+00:00"
+  },
   "model-router-keep-it-simple-keep-it-local": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

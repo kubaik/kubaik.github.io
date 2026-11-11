@@ -243,5 +243,8 @@
   "Web application firewalls and bot management: what they stop and what they miss",
   "Saga pattern implementation choices: orchestration versus choreography for payment flows",
   "Open source contribution as a career strategy: choosing projects and building credibility",
-  "Progressive delivery with canary releases and automated rollback analysis"
+  "Progressive delivery with canary releases and automated rollback analysis",
+  "Time handling in distributed systems: clocks, timezones, and monotonic ordering",
+  "The token economics problem nobody has fully solved for always-on agent fleets",
+  "Evaluation gaps that let subtle model behavior changes slip into production"
 ]

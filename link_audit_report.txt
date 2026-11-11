@@ -1,4 +1,4 @@
-❌ Internal link audit: 421 broken link(s) found across 422 posts checked.
+❌ Internal link audit: 422 broken link(s) found across 423 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -145,6 +145,7 @@ Source Post                              Anchor Text                    Missing 
   /bundle-size-70-lighter-with-server-components AI content policy              /ai-content-policy/
   /buy-vs-build-ai-3-hard-rules-for-2026  AI content policy              /ai-content-policy/
   /cache-stampedes-the-patterns-that-scale-and-the-ones AI content policy              /ai-content-policy/
+  /canary-rollbacks-automate-the-decision-not-the-deploy AI content policy              /ai-content-policy/
   /cdc-pipeline-death-spiral-one-bad-llm-call-can-crash AI content policy              /ai-content-policy/
   /chaos-engineering-without-an-sre-team  AI content policy              /ai-content-policy/
   /choose-no-code-only-when               AI content policy              /ai-content-policy/

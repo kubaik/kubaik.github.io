@@ -3339,7 +3339,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Canary rollbacks: automate the decision, not the deploy",
-  "words": 2851
+  "words": 2565
  },
  "agent-auth-the-silent-deployment-killer": {
   "verdict": "IMPROVE",
@@ -3660,5 +3660,16 @@
   ],
   "title": "When velocity is hard to measure: evaluating engineering\u2026",
   "words": 2741
+ },
+ "model-evals-the-gaps-that-let-drift-slip-through": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Model evals: the gaps that let drift slip through",
+  "words": 2703
  }
 }

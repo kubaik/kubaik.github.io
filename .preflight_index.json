@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-11T05:19:32.068715",
+  "built_at": "2026-11-11T19:26:20.330033",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5815,6 +5815,11 @@
       "slug": "canary-rollbacks-automate-the-decision-not-the-deploy",
       "title": "Canary rollbacks: automate the decision, not the deploy",
       "summary": "Somewhere between the progressive delivery tutorial and the incident channel, a step goes missing. Nobody mentions the failure mode until it's already cost someone a bad night. This covers the fix, the cost of not knowing sooner, and what to monitor. The first time a canary release fails, it usually"
+    },
+    {
+      "slug": "model-evals-the-gaps-that-let-drift-slip-through",
+      "title": "Model evals: the gaps that let drift slip through",
+      "summary": "time handling was never the hard part. Knowing when it was about to fail was. Here's what a colleague hitting this for the first time needs to know. The default configuration is fine right up until it isn't. A model is not a function. You deploy a new checkpoint, a new system prompt, a new decoding "
     }
   ]
 }
