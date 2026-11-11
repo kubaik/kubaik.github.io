@@ -141,6 +141,7 @@ docs/built-a-multi-agent-system-without-langgraph/index.md
 docs/bundle-size-70-lighter-with-server-components/index.md
 docs/buy-vs-build-ai-3-hard-rules-for-2026/index.md
 docs/cache-stampedes-the-patterns-that-scale-and-the-ones/index.md
+docs/canary-rollbacks-automate-the-decision-not-the-deploy/index.md
 docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/index.md
 docs/chaos-engineering-without-an-sre-team/index.md
 docs/choose-no-code-only-when/index.md

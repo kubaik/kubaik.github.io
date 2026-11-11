@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Nov 2026 19:31:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 05:23:05 +0000</lastBuildDate>
+    <item>
+      <title>Canary rollbacks: automate the decision, not the deploy</title>
+      <link>https://kubaik.github.io/canary-rollbacks-automate-the-decision-not-the-deploy/</link>
+      <description>Design canary analysis that compares against a live baseline, guards on sample size, and avoids the false positives that erode trust in automation.</description>
+      <pubDate>Wed, 11 Nov 2026 05:19:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/canary-rollbacks-automate-the-decision-not-the-deploy/</guid>
+    </item>
     <item>
       <title>Open source contributions: the credibility trap</title>
       <link>https://kubaik.github.io/open-source-contributions-the-credibility-trap/</link>
@@ -138,13 +145,6 @@
       <description>Compare fine-tuning, retrieval-augmented generation and long context by failure mode, cost arithmetic and a decision checklist, with code for each.</description>
       <pubDate>Sun, 01 Nov 2026 17:48:05 +0000</pubDate>
       <guid>https://kubaik.github.io/3-llm-context-techniques-when-each-fails/</guid>
-    </item>
-    <item>
-      <title>STRIDE is a checklist, not a threat model</title>
-      <link>https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/</link>
-      <description>STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.</description>
-      <pubDate>Sun, 01 Nov 2026 05:02:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/stride-is-a-checklist-not-a-threat-model/</guid>
     </item>
   </channel>
 </rss>

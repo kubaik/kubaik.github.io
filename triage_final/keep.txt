@@ -85,6 +85,7 @@ docs/build-agent-workflows-that-survive-restarts/
 docs/built-a-multi-agent-system-without-langgraph/
 docs/bundle-size-70-lighter-with-server-components/
 docs/cache-stampedes-the-patterns-that-scale-and-the-ones/
+docs/canary-rollbacks-automate-the-decision-not-the-deploy/
 docs/chaos-engineering-without-an-sre-team/
 docs/cicd-for-ai-code-test-secure-rollback-fast/
 docs/cicd-for-django-in-20ms-africa-networks/

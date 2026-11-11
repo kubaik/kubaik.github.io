@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-10T19:29:08.570117",
+  "built_at": "2026-11-11T05:19:32.068715",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5810,6 +5810,11 @@
       "slug": "open-source-contributions-the-credibility-trap",
       "title": "Open source contributions: the credibility trap",
       "summary": "The official documentation for open source is good. What it doesn't cover is what happens six months into production. This works through the problem properly, from cause to fix. The answers online were either wrong or skipped the part that mattered. Open source contribution as a career strategy soun"
+    },
+    {
+      "slug": "canary-rollbacks-automate-the-decision-not-the-deploy",
+      "title": "Canary rollbacks: automate the decision, not the deploy",
+      "summary": "Somewhere between the progressive delivery tutorial and the incident channel, a step goes missing. Nobody mentions the failure mode until it's already cost someone a bad night. This covers the fix, the cost of not knowing sooner, and what to monitor. The first time a canary release fails, it usually"
     }
   ]
 }

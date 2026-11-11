@@ -2814,6 +2814,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "canary-rollbacks-automate-the-decision-not-the-deploy",
+      "source": "post.json",
+      "word_count": 2565,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "agent-auth-the-silent-deployment-killer",
       "source": "post.json",
       "word_count": 2662,

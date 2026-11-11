@@ -479,6 +479,9 @@
   "cache-stampedes-the-patterns-that-scale-and-the-ones": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "canary-rollbacks-automate-the-decision-not-the-deploy": {
+    "first_seen": "2026-11-11T05:20:09.960820+00:00"
+  },
   "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

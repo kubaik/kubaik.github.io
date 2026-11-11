@@ -1735,7 +1735,7 @@
    "add_sources"
   ],
   "title": "Open source contributions: the credibility trap",
-  "words": 3007
+  "words": 3563
  },
  "aws-costs-for-nairobi-saas-2026-bill-split": {
   "verdict": "KEEP",
@@ -3333,6 +3333,13 @@
   ],
   "title": "Runbooks vs AI Runbooks: A Decision Framework",
   "words": 2362
+ },
+ "canary-rollbacks-automate-the-decision-not-the-deploy": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Canary rollbacks: automate the decision, not the deploy",
+  "words": 2851
  },
  "agent-auth-the-silent-deployment-killer": {
   "verdict": "IMPROVE",
