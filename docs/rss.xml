@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Nov 2026 06:27:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Nov 2026 19:45:27 +0000</lastBuildDate>
+    <item>
+      <title>Structured logging: searchable at scale</title>
+      <link>https://kubaik.github.io/structured-logging-searchable-at-scale/</link>
+      <description>Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</description>
+      <pubDate>Thu, 12 Nov 2026 19:42:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/structured-logging-searchable-at-scale/</guid>
+    </item>
     <item>
       <title>7 ADR traps that cause stale decisions</title>
       <link>https://kubaik.github.io/7-adr-traps-that-cause-stale-decisions/</link>
@@ -138,13 +145,6 @@
       <description>How SQLAlchemy&amp;#x27;s async engine and asyncpg&amp;#x27;s pool actually relate, how to size pools against Postgres max_connections, and the failure modes that cause timeouts.</description>
       <pubDate>Tue, 03 Nov 2026 05:54:22 +0000</pubDate>
       <guid>https://kubaik.github.io/sqlalchemy-vs-asyncpg-pooling-in-async-services/</guid>
-    </item>
-    <item>
-      <title>Gateway API won&apos;t fix your Ingress mess</title>
-      <link>https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/</link>
-      <description>Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.</description>
-      <pubDate>Mon, 02 Nov 2026 21:32:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/gateway-api-wont-fix-your-ingress-mess/</guid>
     </item>
   </channel>
 </rss>

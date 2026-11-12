@@ -2,7 +2,6 @@ slug,score,word_count,title,created_at,issue_count,issues
 7-ways-to-measure-prompt-platform-roi-in-2026,70,2861,7 ways to measure prompt platform ROI in 2026,2026-07-08T11:53:30.438407,3,"first-person incident: 'Assume, for illustration only, that the average prompt is 1,000 tokens and the a' | no markdown table | no FAQ section"
 llm-metrics-that-stop-wasting-time,70,2611,LLM metrics that stop wasting time,2026-06-14T00:02:18.806821,3,"first-person incident: 'Suppose you decide the following weights and targets:\n\n- w1 = 0.4, w2 = 0.3, w3 ' | no markdown table | no FAQ section"
 regulations-forced-better-apis-the-2026-fintech,70,2638,Regulations forced better APIs: the 2026 fintech,2026-06-20T08:41:19.621334,3,first-person incident: '## Related reading\n\n- [Mobile money agents: when M-Pesa API fails](https://kubai' | no markdown table | no FAQ section
-7-adr-traps-that-cause-stale-decisions,75,2363,7 ADR traps that cause stale decisions,2026-11-12T06:24:11.818109,2,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."" | no markdown table"
 ai-fixes-legacy-code-nobody-owns,75,3722,AI fixes legacy code nobody owns,2026-06-27T09:58:08.588128,1,"fabricated citation: ""AI's analysis"""
 ai-ops-pagerduty-vs-opsgenie-which-burns-your-team,75,2655,AI ops: PagerDuty vs Opsgenie — which burns your team,2026-06-29T20:08:01.814298,2,first-person incident: 'If the simpler platform saved 12 hours of training compared to the more complex ' | no FAQ section
 negotiate-2026-pay-when-ai-steals-40-of-your-job,75,2396,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,2,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section
@@ -203,6 +202,7 @@ why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Rew
 3-llm-context-techniques-when-each-fails,100,3097,3 LLM context techniques: when each fails,2026-11-01T17:48:05.092232,0,
 3-ways-container-builds-got-3x-faster-in-2026,100,2630,Container Build Caching: What Actually Speeds Up CI,2026-06-14T01:45:48.667847,0,
 5-ai-tools-that-let-us-ship-faster-than-sf-teams,100,2107,Choosing AI Coding Assistants for Cloud-Heavy Stacks,2026-06-23T17:36:37.395172,0,
+7-adr-traps-that-cause-stale-decisions,100,2932,7 ADR traps that cause stale decisions,2026-11-12T06:24:11.818109,0,
 7-async-practices-that-cut-meeting-load,100,3217,Async practices that reduce meeting load,2026-11-05T19:43:18.938521,0,
 7-bundling-decisions-that-still-matter,100,2857,7 bundling decisions that still matter,2026-10-10T05:00:55.208475,0,
 7-code-review-traps-when-ai-writes-half-your-code,100,2304,7 code review traps when AI writes half your code,2026-06-11T05:25:07.580197,0,
@@ -388,6 +388,7 @@ starlink-in-production-what-changed-in-our-stack,100,2812,Designing APIs for Hig
 stop-assuming-payment-apis-never-fail,100,2623,Stop assuming payment APIs never fail,2026-09-13T03:56:25.937261,0,
 stop-guessing-tech-stacks-validate-tools-in-2-hours,100,2509,Stop guessing tech stacks: validate tools in 2 hours,2026-07-12T13:28:27.249245,0,
 stop-putting-llm-keys-in-env,100,2840,Stop Putting LLM Keys in .env,2026-09-17T04:06:21.695546,0,
+structured-logging-searchable-at-scale,100,3079,Structured logging: searchable at scale,2026-11-12T19:42:54.742269,0,
 supervisor-vs-swarm-vs-debate-vs-pipeline,100,3877,Supervisor vs swarm vs debate vs pipeline,2026-08-03T10:05:35.557297,0,
 tech-debt-when-half-your-stack-is-unfamiliar,100,2800,Tech debt: when half your stack is unfamiliar,2026-09-26T16:04:10.400734,0,
 technical-debt-defend-priorities-to-stakeholders,100,2579,Technical debt: defend priorities to stakeholders,2026-11-04T05:27:38.871384,0,

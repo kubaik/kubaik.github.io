@@ -373,6 +373,7 @@ docs/stop-the-writes-zero-downtime-db-migrations/index.md
 docs/stop-trusting-agents-for-core-logic/index.md
 docs/store-data-once-serve-everywhere-cheaper/index.md
 docs/stride-is-a-checklist-not-a-threat-model/index.md
+docs/structured-logging-searchable-at-scale/index.md
 docs/supervisor-vs-swarm-vs-debate-vs-pipeline/index.md
 docs/tame-python-asyncs-hidden-traps/index.md
 docs/tech-debt-when-half-your-stack-is-unfamiliar/index.md

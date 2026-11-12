@@ -207,6 +207,32 @@
             
             <div id="posts-container" class="post-grid">
                 
+                <a class="post-card" href="/structured-logging-searchable-at-scale/"
+                   data-title="Structured logging: searchable at scale"
+                   data-description="Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems."
+                   data-tags="StructuredLogging,LogManagement,LogAggregation,LogSchemaDesign,HighCardinalityLogs,Rag,Vectorsearch">
+                    <h3>Structured logging: searchable at scale</h3>
+                    <p class="post-excerpt">Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</p>
+                    
+                    <p class="post-reading-time">20 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/rag/">Rag</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/vectorsearch/">Vectorsearch</span>
+                        
+                        <span class="tag"
+                              >LogManagement</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
                 <a class="post-card" href="/7-adr-traps-that-cause-stale-decisions/"
                    data-title="7 ADR traps that cause stale decisions"
                    data-description="How architecture decision records go stale: template bloat, drifting status fields, hidden storage, broken numbering, missing context, no workflow trigger, no review."
@@ -805,32 +831,6 @@
                 </a>
                 
                 
-                <a class="post-card" href="/small-language-models-the-classifier-trap/"
-                   data-title="Small language models: the classifier trap"
-                   data-description="Why compact classifiers fail on rare inputs, and how per-label thresholds, guardrails and score monitoring contain the damage."
-                   data-tags="SmallLanguageModels,Classification,Small,Backend,Softwareengineering">
-                    <h3>Small language models: the classifier trap</h3>
-                    <p class="post-excerpt">Why compact classifiers fail on rare inputs, and how per-label thresholds, guardrails and score monitoring contain the damage.</p>
-                    
-                    <p class="post-reading-time">15 min read</p>
-                    
-                    
-                    <div class="tags">
-                        
-                        <span class="tag"
-                              >Small</span>
-                        
-                        <span class="tag"
-                              data-tag-href="/tag/backend/">Backend</span>
-                        
-                        <span class="tag"
-                              >Classification</span>
-                        
-                    </div>
-                    
-                </a>
-                
-                
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -889,7 +889,7 @@
         // client-side from posts.json go through the same qualifying-tag
         // check as server-rendered cards, so a JS-built card can never
         // link to a tag page that doesn't exist either.
-        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "africatech", "agent", "agentdecisionlogging", "agentdrift", "agentgovernance", "agentic", "agenticai", "agenticfinops", "agentorchestration", "agentpermissions", "agentplatform", "agentversioning", "ai", "aiagentcompliance", "aiagentmonitoring", "aiagentpermissions", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodereview", "aicodingtools", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiplatform", "aiuitools", "apachekafka", "apis", "apisecurity2026", "apiversioning", "artificialintelligence", "audittrail", "backend", "bm25", "buildinpublic", "cache", "careeradvice", "cicd", "circuitbreaker", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownership", "codereview", "codereviewchecklist", "coding", "connection", "containers", "cursorai", "cybersecurity", "database", "dataengineering", "debugging", "decisionrecord", "developer", "devops", "devtoolpricing", "distributed", "docker", "documentation", "driftdetection", "durable", "engineering", "eventsourcing", "fastapi", "faultinjection", "featureflags", "featureflagsai", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "generativeai", "github", "golang", "goldenpath", "graphql", "idempotency", "idempotencykey", "idempotencykeys", "indiehacker", "infosec", "internal", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmmonitoring", "llmobservability", "llmsecurity", "llmsecurityrisks", "llmstructuredoutput", "longrunningagents", "microservices", "mobiledev", "mobilemoney", "model", "multiagent", "multiagentsystems", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "orchestration", "owaspllmtop", "p99latency", "payment", "performance", "pgvector0.7", "platformengineering", "postgresql", "productionagents", "prometheus", "prompt", "promptinjection", "promptversioning", "python", "python3", "rag", "ragpipelineproduction", "reactjs", "redis", "rust", "rustlang", "saas", "salary", "seniorengineer", "serverless", "softwareengineering", "sql", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt", "technology", "terraform", "toolcallingpatterns", "typescript", "usagebasedpricing", "ussdsessiontimeout", "vector", "vectordb", "vectorsearch", "vibecoding", "vulnerability", "webdev", "webhook", "webhookretries2026"];
+        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "africatech", "agent", "agentdecisionlogging", "agentdrift", "agentgovernance", "agentic", "agenticai", "agenticfinops", "agentorchestration", "agentpermissions", "agentplatform", "agentversioning", "ai", "aiagentcompliance", "aiagentmonitoring", "aiagentpermissions", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodereview", "aicodingtools", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiplatform", "aiuitools", "apachekafka", "apis", "apisecurity2026", "apiversioning", "artificialintelligence", "audittrail", "backend", "bm25", "buildinpublic", "cache", "careeradvice", "cicd", "circuitbreaker", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownership", "codereview", "codereviewchecklist", "coding", "connection", "containers", "cursorai", "cybersecurity", "database", "dataengineering", "debugging", "decisionrecord", "developer", "devops", "devtoolpricing", "distributed", "docker", "documentation", "driftdetection", "durable", "engineering", "eventsourcing", "fastapi", "faultinjection", "featureflags", "featureflagsai", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "generativeai", "github", "golang", "goldenpath", "graphql", "idempotency", "idempotencykey", "idempotencykeys", "indiehacker", "infosec", "internal", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmmonitoring", "llmobservability", "llmsecurity", "llmsecurityrisks", "llmstructuredoutput", "longrunningagents", "microservices", "mobiledev", "mobilemoney", "model", "multiagent", "multiagentsystems", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "orchestration", "owaspllmtop", "p99latency", "payment", "performance", "pgvector0.7", "platformengineering", "postgresql", "productionagents", "prometheus", "prompt", "promptinjection", "promptversioning", "python", "python3", "rag", "ragpipelineproduction", "reactjs", "redis", "rust", "rustlang", "saas", "salary", "seniorengineer", "serverless", "softwareengineering", "sql", "structuredlogging", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt", "technology", "terraform", "toolcallingpatterns", "typescript", "usagebasedpricing", "ussdsessiontimeout", "vector", "vectordb", "vectorsearch", "vibecoding", "vulnerability", "webdev", "webhook", "webhookretries2026"];
 
         var fullPosts   = [];
         var loadedCount = postsContainer

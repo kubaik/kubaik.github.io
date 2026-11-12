@@ -248,5 +248,7 @@
   "The token economics problem nobody has fully solved for always-on agent fleets",
   "Evaluation gaps that let subtle model behavior changes slip into production",
   "The regulatory and compliance realities of deploying autonomous agents in African fintech",
-  "Architecture decision records: formats, workflows, and keeping them current"
+  "Architecture decision records: formats, workflows, and keeping them current",
+  "Zero-downtime database schema migrations: expand and contract explained",
+  "Structured logging practices that make large log volumes searchable and affordable"
 ]

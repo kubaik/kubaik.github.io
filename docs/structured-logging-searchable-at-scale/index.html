@@ -1,0 +1,494 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Structured logging: searchable at scale - Kubai Kevin</title>
+        <meta name="description" content="Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.">
+        <meta name="keywords" content="StructuredLogging, LogManagement, LogAggregation, LogSchemaDesign, HighCardinalityLogs, Rag, Vectorsearch">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-12T19:42:54.742269">
+        <meta property="article:modified_time" content="2026-11-12T19:44:54.919673+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Structured logging: searchable at scale">
+        <meta property="og:description" content="Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.">
+        <meta property="og:url" content="https://kubaik.github.io/structured-logging-searchable-at-scale/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/structured-logging-searchable-at-scale.png">
+        <meta property="og:image:alt" content="Structured logging: searchable at scale">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Structured logging: searchable at scale">
+        <meta name="twitter:description" content="Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/structured-logging-searchable-at-scale.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/structured-logging-searchable-at-scale/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/structured-logging-searchable-at-scale/#article",
+      "headline": "Structured logging: searchable at scale",
+      "description": "Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.",
+      "datePublished": "2026-11-12T19:42:54+00:00",
+      "dateModified": "2026-11-12T19:44:54+00:00",
+      "wordCount": 3934,
+      "timeRequired": "PT20M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/structured-logging-searchable-at-scale/"
+      },
+      "keywords": "StructuredLogging, LogManagement, LogAggregation, LogSchemaDesign, HighCardinalityLogs, Rag, Vectorsearch",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/structured-logging-searchable-at-scale.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Structured logging: searchable at scale",
+          "item": "https://kubaik.github.io/structured-logging-searchable-at-scale/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Structured logging: searchable at scale</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Structured logging: searchable at scale</h1>
+                
+                <p class="post-lead">Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/structuredlogging/"
+                       style="text-decoration:none;">StructuredLogging</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LogManagement</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LogAggregation</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LogSchemaDesign</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">HighCardinalityLogs</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/rag/"
+                       style="text-decoration:none;">Rag</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        20 min read
+                        &nbsp;·&nbsp; 3934 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-12
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Logs are the most expensive debugging tool most teams own, and the bill arrives whether or not anyone can find anything in them. A typical scenario: a service writes JSON lines to stdout, the platform ships them to a log store, and six months later the monthly invoice is large while a search for a specific request ID takes thirty seconds and returns nothing useful. The volume grew because every request emitted a dozen lines of prose, and the cost grew because those lines were stored as opaque strings with no indexable structure. The fix is not a new log vendor; it is a schema discipline that makes each line both cheap to store and fast to query. This article walks through the mechanism that makes large log volumes unsearchable and expensive, then shows the structured logging practices that reverse both problems.</p>
+<h2 id="the-situation-logs-that-are-written-but-never-read">The situation: logs that are written but never read</h2>
+<p>Most teams start with <code>console.log</code> or a language-native logger and never revisit the format. A line like <code>User 12345 logged in from 10.0.0.5</code> is readable by a human and useless to a query engine. When the volume is small, grep works. When the volume reaches millions of lines per day, grep is no longer an option: the log store bills by ingested bytes, and every query scans the full text of every matching line unless the store has an inverted index on the fields you filter by.</p>
+<p>The failure is gradual. First, a single service logs at INFO with a message per request. Then a background job adds another message per item. Then a third-party library logs its own headers at DEBUG, and someone sets the global level to DEBUG to chase a bug and forgets to revert it. The volume doubles, then triples, and the cost follows linearly because most log stores price on ingestion and retention, not on query count. The searchability degrades faster than the cost rises, because the fields needed for filtering — request ID, user ID, tenant, route, status code — are buried inside free-text messages that the query engine must parse at read time.</p>
+<p>A common symptom: an on-call engineer searches for a request ID and gets a timeout, then falls back to <code>kubectl logs</code> on a pod that has already been recycled. The logs exist somewhere, but the path from question to answer is too slow to be useful during an incident. The problem this article addresses is how to design log lines so that the common queries are index-backed and the storage cost is proportional to the value of the line, not to the verbosity of the code that wrote it.</p>
+<h2 id="the-mechanism-why-free-text-logs-are-expensive-and-slow">The mechanism: why free-text logs are expensive and slow</h2>
+<p>Log stores fall into two broad categories: full-text search engines (Elasticsearch, OpenSearch, Loki with its label index) and columnar or object-storage-backed systems (ClickHouse, BigQuery, S3+Athena, CloudWatch Logs Insights). Each has a different cost model, but the same underlying mechanism causes trouble: <strong>the fields you filter on must be extracted at write time or indexed at write time; if they are not, the query engine pays the cost at read time.</strong></p>
+<p>In a full-text engine, every line is tokenized and inverted-indexed by default. That makes grep-style search fast, but the index itself consumes storage and memory. If you log a 2 KB JSON blob per request, the index may be several times larger than the raw line. The engine also has a mapping problem: if a field sometimes appears as a string and sometimes as a number, the index may reject the document or coerce it silently, and queries against that field become unreliable. Elasticsearch's dynamic mapping will create a <code>text</code> field for a numeric ID if the first document happens to have a quoted value, and then range queries on that field stop working.</p>
+<p>In a columnar system, the cost is different: you pay for the columns you scan. If your log line is a single <code>message</code> string, every query scans the entire string column, even if you only want the status code. If you extract <code>status</code>, <code>route</code>, and <code>duration_ms</code> as separate columns, a query that filters on <code>status = 500</code> reads only the status column and the columns you project. The difference in scanned bytes can be orders of magnitude, and in systems that bill by bytes scanned (BigQuery, Athena), that difference is the bill.</p>
+<p>The searchability problem is the same in both cases: <strong>the query engine cannot use an index on a field that was never extracted as a field.</strong> A log line that says <code>request completed in 230ms</code> has no <code>duration_ms</code> field. A log line that says <code>user=12345</code> inside a message has no <code>user_id</code> field unless the store parses it with a regex at query time, which is slow and error-prone. The fix is to emit structured fields at write time, so the store can index or columnize them once and every subsequent query is cheap.</p>
+<p>There is a second, subtler mechanism: <strong>cardinality</strong>. In Loki, labels are indexed and every unique label combination creates a new stream. If you put <code>request_id</code> or <code>user_id</code> in a label, you create millions of streams, and the index and ingester memory blow up. Loki's documentation explicitly warns against high-cardinality labels. The same principle applies in Elasticsearch: a <code>keyword</code> field with millions of unique values consumes heap for the terms dictionary. The structured logging practice is to separate <strong>indexed fields</strong> (low cardinality, used for filtering: service, environment, level, route, status code) from <strong>payload fields</strong> (high cardinality, used for correlation: request ID, user ID, trace ID) that live in the log body and are searched only when needed.</p>
+<h3 id="a-worked-example-of-the-cost-difference">A worked example of the cost difference</h3>
+<p>Consider a service that handles 10 million requests per day and emits one log line per request. These figures are illustrative, chosen to make the arithmetic visible; substitute your own numbers.</p>
+<ul>
+<li>A prose line like <code>POST /checkout completed for user 12345 in 230ms with status 200</code> averages roughly 70 bytes, plus a timestamp and hostname added by the shipper, call it 150 bytes. At 10 million lines per day that is about 1.5 GB/day of raw ingestion.</li>
+<li>The same event as structured JSON with an envelope and a handful of context fields is larger raw: field names, punctuation, and quoting might push a line to 300–400 bytes. Call it 350 bytes, or 3.5 GB/day.</li>
+</ul>
+<p>So the structured line costs more to ingest in raw bytes. The payoff is on the read side. In a columnar store, a query that filters on <code>status_code = 500</code> against a single <code>message</code> column must scan every byte of that column for the day. Against a table where <code>status_code</code> is its own integer column, the engine reads only that column — a few bytes per row instead of a few hundred — plus whatever the query projects. If a dashboard runs that query every five minutes, the scanned-bytes difference compounds into the dominant cost. In an inverted-index store, the same logic applies in reverse: filtering on an indexed <code>status_code</code> touches a small term dictionary, while a full-text match on the message scans and scores every document.</p>
+<p>The lesson is not "structured logs are always cheaper." It is that <strong>structure moves cost from read time (repeated, unbounded, driven by query patterns) to write time (once, predictable, driven by schema).</strong> Whether that trade is worth it depends on how often the fields are queried. For fields used in dashboards and alerts, it almost always is.</p>
+<h2 id="the-fix-a-schema-a-logger-and-a-retention-policy">The fix: a schema, a logger, and a retention policy</h2>
+<p>The fix has three parts: define a schema for the fields you will always emit, configure the logger to emit them as structured data, and set retention so that high-volume, low-value lines expire before they dominate the bill.</p>
+<h3 id="1-define-a-minimal-stable-schema">1. Define a minimal, stable schema</h3>
+<p>A workable schema for a typical web service has two tiers. The <strong>envelope</strong> fields are present on every line and are low cardinality: <code>timestamp</code>, <code>level</code>, <code>service</code>, <code>environment</code>, <code>version</code>, <code>message</code>. The <strong>context</strong> fields are present when relevant and may be high cardinality: <code>request_id</code>, <code>trace_id</code>, <code>user_id</code>, <code>tenant_id</code>, <code>route</code>, <code>method</code>, <code>status_code</code>, <code>duration_ms</code>, <code>error_type</code>. The envelope goes into indexed fields or columns; the context goes into the log body as JSON, with the most common filters (route, status_code) promoted to indexed fields if the store supports it.</p>
+<p>The schema should be enforced in code, not by convention. A shared logger module that accepts a typed context object prevents the drift where one service logs <code>userId</code> and another logs <code>user_id</code> and a third logs <code>uid</code>. In TypeScript, a type like <code>LogContext</code> with optional fields and a <code>logger.info(message, context)</code> signature makes the schema visible at the call site. In Go, a <code>slog.Logger</code> with <code>With</code> attributes does the same. In Python, <code>structlog</code> binds context to a logger instance.</p>
+<h3 id="2-configure-the-logger-once-not-per-call-site">2. Configure the logger once, not per call site</h3>
+<p>A common mistake is to format the message at the call site and pass a string to the logger. That defeats structured logging because the logger cannot separate fields from prose. Instead, pass the message as a constant and the variable data as fields.</p>
+<pre><code class="language-typescript">// logger.ts — a minimal structured logger with a stable envelope
+import pino from 'pino';
+
+export type LogContext = {
+  request_id?: string;
+  trace_id?: string;
+  user_id?: string;
+  tenant_id?: string;
+  route?: string;
+  method?: string;
+  status_code?: number;
+  duration_ms?: number;
+  error_type?: string;
+};
+
+export const logger = pino({
+  level: process.env.LOG_LEVEL ?? 'info',
+  base: {
+    service: process.env.SERVICE_NAME ?? 'unknown',
+    environment: process.env.NODE_ENV ?? 'development',
+    version: process.env.SERVICE_VERSION ?? '0.0.0',
+  },
+  timestamp: pino.stdTimeFunctions.isoTime,
+  formatters: {
+    level: (label) =&gt; ({ level: label }),
+  },
+});
+
+// Usage: the message is a constant, the context is structured.
+logger.info({ request_id, route: '/checkout', method: 'POST', status_code: 200, duration_ms: 42 }, 'request completed');
+</code></pre>
+<p>This example uses Pino, a widely used Node.js logger that emits JSON lines by default. The important part is not the library but the shape: a constant <code>message</code> and a structured object. The same pattern works with <code>winston</code>, <code>bunyan</code>, Go's <code>log/slog</code>, Python's <code>structlog</code>, or a hand-rolled JSON encoder. The logger should also redact sensitive fields (authorization headers, passwords, tokens) at the logger level so that no call site can accidentally log them. Pino supports <code>redact</code> paths; other loggers have equivalent options.</p>
+<p>For languages without a mature structured logger, a small helper is enough:</p>
+<pre><code class="language-python"># log.py — structured JSON lines with a stable envelope
+import json, os, sys, time
+
+SERVICE = os.environ.get(&quot;SERVICE_NAME&quot;, &quot;unknown&quot;)
+ENV = os.environ.get(&quot;ENVIRONMENT&quot;, &quot;development&quot;)
+VERSION = os.environ.get(&quot;SERVICE_VERSION&quot;, &quot;0.0.0&quot;)
+
+def log(level: str, message: str, **context):
+    record = {
+        &quot;timestamp&quot;: time.strftime(&quot;%Y-%m-%dT%H:%M:%SZ&quot;, time.gmtime()),
+        &quot;level&quot;: level,
+        &quot;service&quot;: SERVICE,
+        &quot;environment&quot;: ENV,
+        &quot;version&quot;: VERSION,
+        &quot;message&quot;: message,
+    }
+    record.update(context)
+    sys.stdout.write(json.dumps(record, separators=(&quot;,&quot;, &quot;:&quot;)) + &quot;\n&quot;)
+</code></pre>
+<p>Both examples emit one JSON object per line. That is the format most log shippers and stores expect, and it preserves types: <code>status_code</code> is a number, not a string, so range queries work.</p>
+<p>One caveat worth stating plainly: the Python helper above writes to stdout without locking. In a multi-threaded program, concurrent calls can interleave at the write boundary and corrupt lines. If the process is multi-threaded, wrap the write in a lock, or use a logging library that handles synchronization.</p>
+<h3 id="3-separate-indexed-fields-from-payload-fields">3. Separate indexed fields from payload fields</h3>
+<p>If you use Loki, the recommendation is to keep labels low-cardinality: <code>service</code>, <code>environment</code>, <code>level</code>, and perhaps <code>route</code> if the route set is bounded. Do not put <code>request_id</code> in a label. Put it in the JSON body and use Loki's <code>| json</code> parser at query time, or use a store that supports structured metadata. If you use Elasticsearch, map <code>request_id</code> as <code>keyword</code> with <code>index: false</code> if you only need to retrieve it, or as <code>keyword</code> with an index if you need to search it; the trade-off is heap versus query speed. If you use ClickHouse or BigQuery, define the table schema explicitly so that <code>status_code</code> is an integer column and <code>duration_ms</code> is a float, not a string inside a message.</p>
+<p>The decision of which fields to index is a cost decision. Indexing a high-cardinality field costs storage and memory; not indexing it costs query time. A useful rule: index fields you filter on in dashboards and alerts (service, environment, level, route, status code); do not index fields you only use for ad-hoc correlation (request_id, user_id). For the latter, a full-text search on the message body or a JSON extraction at query time is usually good enough.</p>
+<h3 id="4-set-retention-by-value-not-by-convenience">4. Set retention by value, not by convenience</h3>
+<p>Most log stores let you set retention per index, per stream, or per table. The common failure is a single retention period for everything: 30 days for debug logs that are never read and 30 days for audit events that must be kept for a year. The fix is to route logs by level and category into different stores or indices with different retention. Debug logs can go to a short-retention index (for example, 7 days) or be sampled. Info logs can go to a medium-retention index (for example, 30 days). Error logs and audit events can go to a long-retention index with a lower sampling rate. The routing can happen in the log shipper (Fluent Bit, Vector, Filebeat) based on the <code>level</code> field, or in the store's index lifecycle management.</p>
+<p>A second lever is <strong>sampling</strong>. Not every successful request needs a log line. If you log every request at INFO, you are paying for lines that are only useful for aggregate metrics, which belong in a metrics system, not a log store. Log at INFO for state changes and errors, and use metrics for counters and latency histograms. If you need per-request logs for debugging, sample them (for example, 1 in 100) or log them only when a debug flag is set per request.</p>
+<h2 id="normalizing-routes-a-failure-mode-worth-its-own-section">Normalizing routes: a failure mode worth its own section</h2>
+<p>The single most common schema drift is a route field that quietly becomes high-cardinality. An application logs <code>route: req.url</code> and the route looks fine in development, where paths are <code>/users/1</code> and <code>/orders/2</code>. In production, the same field receives <code>/users/8f3c2a1b-...</code> and <code>/orders/2024-06-01T12:00:00Z</code>. The number of unique values tracks the number of distinct resources, not the number of endpoints, and the index grows without bound.</p>
+<p>The fix is to log the matched route template, not the request URL. Most web frameworks expose the pattern that matched — <code>/users/:id</code> in Express, the route pattern in Go's <code>http.ServeMux</code> patterns or router libraries, the URL rule in Flask. Log that. Keep the raw URL in the context payload if you need it for debugging, but do not index it.</p>
+<p>The same failure appears with <code>user_id</code> accidentally promoted to a label during a migration, or with a <code>tenant</code> field that turns out to be per-customer rather than per-plan. The general rule: <strong>any field whose unique-value count scales with traffic or with the number of customers is a payload field, not an indexed field.</strong></p>
+<h2 id="what-to-monitor-the-signals-that-tell-you-the-schema-is-drifting">What to monitor: the signals that tell you the schema is drifting</h2>
+<p>The schema is not a one-time decision; it drifts as services are added and libraries change. Four signals catch drift early.</p>
+<p><strong>Field cardinality.</strong> Monitor the number of unique values for each indexed field. If <code>route</code> suddenly has thousands of unique values, someone is putting a path parameter into the route field. That blows up the index and makes dashboards unusable. The fix is to normalize routes at the logger level, using the framework's route template rather than the raw URL.</p>
+<p><strong>Log volume by service and level.</strong> A sudden increase in DEBUG lines from one service usually means a log level was changed and not reverted, or a retry loop is logging on every attempt. Alert on the rate of lines per service per level, not on absolute volume, so the change is caught before the bill is.</p>
+<p><strong>Query latency and scanned bytes.</strong> In stores that expose query statistics (BigQuery shows bytes processed; Elasticsearch shows took time and total hits), track the cost of the top dashboards. If a dashboard that used to scan 10 MB now scans 10 GB, a field that was previously indexed has been moved into the message body, or a new high-cardinality field was added to the index. Treat query cost as a regression test: a dashboard that exceeds a budget should fail a check in CI, the same way a slow test does.</p>
+<p><strong>Missing fields.</strong> If a new service logs without the <code>service</code> or <code>environment</code> envelope, its lines will not appear in the shared dashboards. A schema validation step in the log pipeline (a shipper filter that drops or tags non-conforming lines) catches this at write time rather than at query time.</p>
+<h3 id="how-to-measure-each-signal">How to measure each signal</h3>
+<p>These checks are cheap to run and do not require a new tool:</p>
+<ul>
+<li><strong>Cardinality:</strong> in the log store, run a count-distinct query on each indexed field over the last 24 hours, grouped by service. Compare the result week over week. A field that grows with traffic is misclassified.</li>
+<li><strong>Volume by level:</strong> query the rate of lines per service per level over time and plot it. A step change is the signal; a slow climb is usually a new feature.</li>
+<li><strong>Scanned bytes:</strong> most columnar stores return bytes processed with each query result, and most dashboards can log their own execution statistics. Record the bytes for the top ten dashboards daily and alert on a threshold.</li>
+<li><strong>Missing envelope:</strong> a query for <code>NOT service:*</code> or the equivalent null check on the envelope fields, run daily, surfaces non-conforming producers.</li>
+</ul>
+<h2 id="the-broader-lesson-logs-are-a-data-product-not-a-side-effect">The broader lesson: logs are a data product, not a side effect</h2>
+<p>The principle behind all of this is that logs are a data product with consumers (on-call engineers, dashboards, alerting rules) and a cost (ingestion, storage, query). Treating them as a side effect of <code>console.log</code> is what makes them expensive and unsearchable. The teams that get this right define a schema, enforce it in a shared logger, separate indexed fields from payload fields, and set retention by value. The tools are interchangeable: Pino or <code>slog</code> or <code>structlog</code> for emission, Fluent Bit or Vector for routing, Elasticsearch or Loki or ClickHouse for storage. The discipline is the same.</p>
+<p>A useful test for any log line: if it were seen in isolation during an incident, would it identify which service, which environment, which request, and what happened? If the answer requires reading the surrounding lines, the line is under-structured. If the answer requires a regex, the line is over-prose. The target is a line that is self-contained, typed, and cheap to index.</p>
+<p>There is also a hard-to-reverse decision buried here: the choice of log store and schema. Migrating from free-text logs to structured logs is incremental and safe; migrating from one log store to another after two years of retention is not. If you are early, choose a store that supports structured fields and per-index retention, and define the schema before the volume makes the decision for you. If you are already at volume, the schema change is still worth it: run both formats in parallel, route the new format to a new index, and let the old index expire.</p>
+<h3 id="a-decision-checklist-before-choosing-a-store">A decision checklist before choosing a store</h3>
+<ul>
+<li>Does the store support typed fields (integers, floats, booleans) rather than treating everything as text?</li>
+<li>Does it support per-index or per-stream retention, so debug and audit lines can expire on different schedules?</li>
+<li>Does it expose query cost (bytes scanned, time taken) so dashboards can be budgeted?</li>
+<li>Does it warn against or prevent high-cardinality index keys, or will it accept them silently until it falls over?</li>
+<li>Can the shipper route by field value (level, service) without parsing the message body?</li>
+<li>What is the documented retention limit and the documented ingest limit on the plan you intend to buy?</li>
+</ul>
+<p>If a candidate store fails the first three questions, it will reproduce the problem this article describes regardless of how the log lines are formatted.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I make logs searchable without indexing every field?</strong>
+Index the fields you filter on in dashboards and alerts: service, environment, level, route, status code. Keep high-cardinality fields like request ID and user ID in the log body and search them with a full-text or JSON extraction query when needed. This keeps the index small and the common queries fast. The trade-off is that ad-hoc searches on high-cardinality fields are slower, which is usually acceptable because they are rare.</p>
+<p><strong>What is the difference between structured logging and log aggregation?</strong>
+Structured logging is the format of the line: JSON with named fields and types. Log aggregation is the pipeline that ships lines from many services to a central store. You can have aggregation without structure (many lines of prose in one place) and structure without aggregation (JSON lines on local disk). The practices in this article combine both: structured lines shipped to a store that can index the fields.</p>
+<p><strong>Why does my log bill keep growing even though traffic is flat?</strong>
+The usual causes are a log level left at DEBUG, a retry loop logging on every attempt, a new library logging at INFO on every request, or retention set longer than the value of the lines. Check the volume by service and level first; the increase is usually concentrated in one service and one level. Then check retention: debug lines kept for 30 days are often the largest line item and the least read.</p>
+<p><strong>Should request IDs be labels in Loki?</strong>
+No. Loki indexes labels and creates a stream per unique label combination; a request ID label creates millions of streams and destabilizes the ingester. Put request IDs in the log body and use the <code>| json</code> parser or structured metadata to filter on them. The same principle applies to any high-cardinality field: keep it out of the index and search it in the body.</p>
+<p><strong>Does structured logging increase storage cost?</strong>
+It can increase raw ingest bytes, because field names and punctuation make each line longer than equivalent prose. The saving comes from query cost: indexed or columnized fields let the store read far less data per query, and per-field retention lets low-value lines expire sooner. Whether the net is a saving depends on query volume and retention policy, which is why both should be measured rather than assumed.</p>
+<h2 id="the-next-30-minutes-audit-one-services-log-lines">The next 30 minutes: audit one service's log lines</h2>
+<p>Open the logger configuration for your busiest service and count how many fields are emitted as structured data versus embedded in the message string. If the message contains variable data (IDs, paths, durations), move those into a context object and keep the message constant. Then check the retention setting for that service's index: if debug and info lines share the same retention as error lines, split them. The goal for the next 30 minutes is not a full migration; it is one service emitting a stable envelope and one retention policy that reflects the value of the line.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/why-scaling-agents-kills-plain-logs/">Why scaling agents kills plain logs</a></li>
+<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+<li><a href="https://kubaik.github.io/vibe-code-works-great-fails-forever/">Vibe code: works great, fails forever</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://clickhouse.com/docs">ClickHouse documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+                        <h3>Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</h3>
+                        <p>Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.</p>
+                        <span class="related-meta">11 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/audit-logs-that-scale-skip-the-3am-fire-drills/">
+                        <h3>Audit logs that scale: skip the 3AM fire drills</h3>
+                        <p>How to design audit log pipelines that satisfy auditors and engineers: immutable event streams, hash chains, tiered retention, and a decision checklist.</p>
+                        <span class="related-meta">16 min read · 17 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/observability-2026-ditch-the-three-pillars/">
+                        <h3>Observability 2026: ditch the three pillars</h3>
+                        <p>Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
+                        <span class="related-meta">14 min read · 10 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

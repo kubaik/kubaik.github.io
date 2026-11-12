@@ -1180,7 +1180,7 @@
   "reasons": [],
   "fixes": [],
   "title": "7 ADR traps that cause stale decisions",
-  "words": 2363
+  "words": 2932
  },
  "ai-era-promotions-hinge-on-this-one-thing": {
   "verdict": "KEEP",
@@ -1332,6 +1332,13 @@
   "fixes": [],
   "title": "Use feature flags to deploy AI models safely",
   "words": 2946
+ },
+ "structured-logging-searchable-at-scale": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Structured logging: searchable at scale",
+  "words": 3079
  },
  "which-ai-wrappers-made-money-in-2026": {
   "verdict": "IMPROVE",

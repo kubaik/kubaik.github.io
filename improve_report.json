@@ -1,7 +1,7 @@
 {
   "improved": [
     {
-      "slug": "7-adr-traps-that-cause-stale-decisions",
+      "slug": "structured-logging-searchable-at-scale",
       "attempts": 1,
       "retitled": false
     }

@@ -220,6 +220,7 @@ docs/starlink-in-production-what-changed-in-our-stack/
 docs/stop-assuming-payment-apis-never-fail/
 docs/stop-putting-llm-keys-in-env/
 docs/stop-the-writes-zero-downtime-db-migrations/
+docs/structured-logging-searchable-at-scale/
 docs/supervisor-vs-swarm-vs-debate-vs-pipeline/
 docs/tech-debt-when-half-your-stack-is-unfamiliar/
 docs/temporal-changed-our-agent-retries-for-good/
