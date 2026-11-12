@@ -246,5 +246,7 @@
   "Progressive delivery with canary releases and automated rollback analysis",
   "Time handling in distributed systems: clocks, timezones, and monotonic ordering",
   "The token economics problem nobody has fully solved for always-on agent fleets",
-  "Evaluation gaps that let subtle model behavior changes slip into production"
+  "Evaluation gaps that let subtle model behavior changes slip into production",
+  "The regulatory and compliance realities of deploying autonomous agents in African fintech",
+  "Architecture decision records: formats, workflows, and keeping them current"
 ]

@@ -1,4 +1,4 @@
-❌ Internal link audit: 422 broken link(s) found across 423 posts checked.
+❌ Internal link audit: 423 broken link(s) found across 424 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -249,6 +249,7 @@ Source Post                              Anchor Text                    Missing 
   /mobile-first-ai-fails-you-didnt-plan   AI content policy              /ai-content-policy/
   /mobile-money-agent-fees-why-your-bot-keeps-failing AI content policy              /ai-content-policy/
   /mobile-money-agents-when-m-pesa-api-fails AI content policy              /ai-content-policy/
+  /model-evals-the-gaps-that-let-drift-slip-through AI content policy              /ai-content-policy/
   /model-router-keep-it-simple-keep-it-local AI content policy              /ai-content-policy/
   /monolith-to-services-without-a-rewrite AI content policy              /ai-content-policy/
   /most-llm-cost-dashboards-lie           AI content policy              /ai-content-policy/

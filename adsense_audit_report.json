@@ -1274,6 +1274,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "7-adr-traps-that-cause-stale-decisions",
+      "source": "post.json",
+      "word_count": 2932,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "ai-era-promotions-hinge-on-this-one-thing",
       "source": "post.json",
       "word_count": 2242,

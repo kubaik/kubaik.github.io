@@ -2,6 +2,7 @@ slug,score,word_count,title,created_at,issue_count,issues
 7-ways-to-measure-prompt-platform-roi-in-2026,70,2861,7 ways to measure prompt platform ROI in 2026,2026-07-08T11:53:30.438407,3,"first-person incident: 'Assume, for illustration only, that the average prompt is 1,000 tokens and the a' | no markdown table | no FAQ section"
 llm-metrics-that-stop-wasting-time,70,2611,LLM metrics that stop wasting time,2026-06-14T00:02:18.806821,3,"first-person incident: 'Suppose you decide the following weights and targets:\n\n- w1 = 0.4, w2 = 0.3, w3 ' | no markdown table | no FAQ section"
 regulations-forced-better-apis-the-2026-fintech,70,2638,Regulations forced better APIs: the 2026 fintech,2026-06-20T08:41:19.621334,3,first-person incident: '## Related reading\n\n- [Mobile money agents: when M-Pesa API fails](https://kubai' | no markdown table | no FAQ section
+7-adr-traps-that-cause-stale-decisions,75,2363,7 ADR traps that cause stale decisions,2026-11-12T06:24:11.818109,2,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."" | no markdown table"
 ai-fixes-legacy-code-nobody-owns,75,3722,AI fixes legacy code nobody owns,2026-06-27T09:58:08.588128,1,"fabricated citation: ""AI's analysis"""
 ai-ops-pagerduty-vs-opsgenie-which-burns-your-team,75,2655,AI ops: PagerDuty vs Opsgenie — which burns your team,2026-06-29T20:08:01.814298,2,first-person incident: 'If the simpler platform saved 12 hours of training compared to the more complex ' | no FAQ section
 negotiate-2026-pay-when-ai-steals-40-of-your-job,75,2396,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,2,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section
@@ -12,7 +13,6 @@ ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks:
 audit-logs-that-scale-skip-the-3am-fire-drills,80,3151,Audit logs that scale: skip the 3AM fire drills,2026-08-17T12:51:36.917045,1,first-person incident: 'What follows is the reasoning a senior engineer would pass to a colleague hittin'
 found-niche-in-2026-saas-that-ai-cant-copy,80,2255,Found niche in 2026: SaaS that AI can’t copy,2026-06-15T14:45:13.805761,2,title: past-tense action narrative | no markdown table
 m-pesa-daraja-20-your-2026-migration-checklist,80,2900,M-Pesa Daraja 2.0: your 2026 migration checklist,2026-07-02T16:41:45.048601,1,first-person incident: '## Related reading\n\n- [Skip M-Pesa: build one API for 3 African markets](https:/'
-model-evals-the-gaps-that-let-drift-slip-through,80,2703,Model evals: the gaps that let drift slip through,2026-11-11T19:26:17.713843,1,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."""
 open-source-contributions-the-credibility-trap,80,3563,Open source contributions: the credibility trap,2026-11-10T19:29:06.749741,1,first-person incident: '### How to confirm this cause\n\nAsk a colleague to look at the profile for thirty'
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
 remote-premium-rates-skills-ai-cant-copy,80,3733,Remote premium rates: skills AI can't copy,2026-10-21T08:45:29.894292,1,first-person incident: 'A practical way to verify is a dry run with a colleague.'
@@ -332,6 +332,7 @@ mcp-vs-a2a-pick-the-wrong-layer,100,3146,MCP vs A2A: pick the wrong layer,2026-1
 migrations-stop-running-them-live,100,2276,Migrations? Stop running them live,2026-06-28T01:58:52.802951,0,
 mobile-first-ai-fails-you-didnt-plan,100,2502,Mobile-first AI fails you didn’t plan…,2026-08-26T17:38:26.304775,0,
 mobile-money-agent-fees-why-your-bot-keeps-failing,100,2654,Mobile money agent fees: why your bot keeps failing,2026-08-05T14:16:59.891393,0,
+model-evals-the-gaps-that-let-drift-slip-through,100,2956,Model evals: the gaps that let drift slip through,2026-11-11T19:26:17.713843,0,
 monolith-to-services-without-a-rewrite,100,2878,Monolith to services without a rewrite,2026-06-27T20:07:07.246730,0,
 most-llm-cost-dashboards-lie,100,2611,Most LLM cost dashboards lie…,2026-09-19T08:31:18.982202,0,
 multi-agent-systems-when-they-quietly-degrade,100,2410,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,0,

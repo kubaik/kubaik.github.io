@@ -1175,6 +1175,13 @@
   "title": "Poolers won\u2019t save your serverless DB",
   "words": 2791
  },
+ "7-adr-traps-that-cause-stale-decisions": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "7 ADR traps that cause stale decisions",
+  "words": 2363
+ },
  "ai-era-promotions-hinge-on-this-one-thing": {
   "verdict": "KEEP",
   "reasons": [],
@@ -3670,6 +3677,6 @@
    "add_sources"
   ],
   "title": "Model evals: the gaps that let drift slip through",
-  "words": 2703
+  "words": 2956
  }
 }

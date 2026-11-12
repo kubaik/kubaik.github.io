@@ -1,9 +1,9 @@
 {
   "changed": [
     {
-      "slug": "model-evals-the-gaps-that-let-drift-slip-through",
+      "slug": "7-adr-traps-that-cause-stale-decisions",
       "sentences_removed": 0,
-      "sections_added": 1,
+      "sections_added": 2,
       "footer_migrated": false
     }
   ],
