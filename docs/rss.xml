@@ -5,7 +5,7 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Nov 2026 19:24:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 19:29:19 +0000</lastBuildDate>
     <item>
       <title>Distributed locks: safe only with fencing</title>
       <link>https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/</link>
