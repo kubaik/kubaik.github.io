@@ -633,7 +633,7 @@ Sitemap: {base_url}/sitemap.xml
         platforms (e.g. social_accounts.facebook = "your-facebook-page").
         The footer template previously rendered these placeholders directly
         as href="{{ url }}", producing broken same-site links like
-        https://kubaik.github.io/your-facebook-page (404) instead of either
+        https://blog.kubailabs.com/your-facebook-page (404) instead of either
         a real external profile or no link at all. Broken outbound links on
         every page are a crawl-budget and trust-signal problem for SEO and
         an unprofessional signal during AdSense review. This filters to

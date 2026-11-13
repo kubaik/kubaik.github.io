@@ -164,7 +164,7 @@ def score(d):
     n = max(len(ss), 1)
     anec = [s for s in ss if ANECDOTE.search(s) or ANEC2.search(s)]
     attr = [s for s in ss if ATTRIB.search(s)]
-    links = [u for u in LINK.findall(c) if "kubaik.github.io" not in u]
+    links = [u for u in LINK.findall(c) if "blog.kubailabs.com" not in u]
     internal = len(re.findall(r"\]\((?:/|https?://kubaik\.github\.io)", c))
     heads = HEAD.findall(c)
     words = len(STRIP.sub(" ", c).split())

@@ -243,7 +243,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--base-url",
-        default="https://kubaik.github.io",
+        default="https://blog.kubailabs.com",
         help="Site base URL, no trailing slash (default: %(default)s)",
     )
     parser.add_argument(

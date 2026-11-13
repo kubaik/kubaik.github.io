@@ -6,7 +6,7 @@ adsense_loader_page_types:
 adsense_slots: {}
 amazon_affiliate_tag: aiblogcontent-20
 base_path: ''
-base_url: https://kubaik.github.io
+base_url: https://blog.kubailabs.com
 content_topics:
 - Why most production AI agents still need circuit breakers and human escalation paths
   in 2026

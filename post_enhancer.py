@@ -206,7 +206,7 @@ def main():
     ap.add_argument("--docs", default="docs")
     ap.add_argument("--verdicts", help="saved verdicts.csv (default: scan docs/)")
     ap.add_argument("--backup", default=".quality_review_backups")
-    ap.add_argument("--base-url", default="https://kubaik.github.io")
+    ap.add_argument("--base-url", default="https://blog.kubailabs.com")
     ap.add_argument("--confirm", action="store_true")
     ap.add_argument("--verify-links", action="store_true")
     ap.add_argument("--max-posts", type=int, default=0, help="0 = all")

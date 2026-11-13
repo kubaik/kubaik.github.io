@@ -69,7 +69,7 @@ USAGE
         --max-deletions 2 \\
         --min-score 0.50 \\
         --backup-dir ./.duplicate_backups \\
-        --base-url "https://kubaik.github.io" \\
+        --base-url "https://blog.kubailabs.com" \\
         --confirm
 
 To undo a retirement: copy the backed-up directory from --backup-dir
@@ -283,7 +283,7 @@ if __name__ == "__main__":
     parser.add_argument("--max-deletions", type=int, default=2)
     parser.add_argument("--min-score", type=float, default=0.50)
     parser.add_argument("--backup-dir", default="./.duplicate_backups")
-    parser.add_argument("--base-url", default="https://kubaik.github.io")
+    parser.add_argument("--base-url", default="https://blog.kubailabs.com")
     parser.add_argument("--confirm", action="store_true", help="Actually write changes. Omit for a dry run.")
     parser.add_argument("--report", default="./duplicate_retirement_report.json")
     args = parser.parse_args()

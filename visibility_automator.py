@@ -891,7 +891,7 @@ def _trim_to_budget(text: str, budget: int) -> str:
 
     FIX (URL truncation bug): domains like "github.io" contain a period,
     which the sentence-boundary check above was mistaking for the end of a
-    sentence — chopping links such as "https://kubaik.github.io/some-post"
+    sentence — chopping links such as "https://blog.kubailabs.com/some-post"
     down to "https://kubaik.github." before posting. Every candidate cut
     point is now checked against the URL(s) in the text; if a cut would
     land partway through one, the cut is pulled back to just *before* that
@@ -1222,7 +1222,7 @@ class VisibilityAutomator:
                 'link_strategy': str,
             }
         """
-        base_url = self.config.get("base_url", "https://kubaik.github.io")
+        base_url = self.config.get("base_url", "https://blog.kubailabs.com")
         hook_style = self.config.get("hook_style", "auto")
         link_strategy = self.config.get("twitter_link_strategy", "link_in_tweet")
 
@@ -1270,7 +1270,7 @@ class VisibilityAutomator:
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized."}
 
-        base_url = self.config.get("base_url", "https://kubaik.github.io")
+        base_url = self.config.get("base_url", "https://blog.kubailabs.com")
         link_strategy = self.config.get("twitter_link_strategy", "link_in_tweet")
 
         SEP = "─" * 68
@@ -1351,7 +1351,7 @@ class VisibilityAutomator:
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized."}
 
-        base_url = self.config.get("base_url", "https://kubaik.github.io")
+        base_url = self.config.get("base_url", "https://blog.kubailabs.com")
         hook_style = self.config.get("hook_style", "auto")
         link_strategy = self.config.get("twitter_link_strategy", "link_in_tweet")
 
@@ -1567,7 +1567,7 @@ class VisibilityAutomator:
             return []
 
     def _craft_reply(self, tweet, keyword: str, post=None) -> Optional[str]:
-        base_url = self.config.get("base_url", "https://kubaik.github.io")
+        base_url = self.config.get("base_url", "https://blog.kubailabs.com")
         generic_replies = [
             f"Great point on {keyword}. One thing I'd add — consistency in the fundamentals beats chasing every new tool. Wrote a deep dive recently if helpful 👇",
             f"This is spot on. The teams that get {keyword} right share one trait: they treat it as a system, not a checklist. My full breakdown: {{url}}",
@@ -1752,7 +1752,7 @@ if __name__ == "__main__":
         config = {}
 
     visibility = VisibilityAutomator(config)
-    base_url = config.get("base_url", "https://kubaik.github.io")
+    base_url = config.get("base_url", "https://blog.kubailabs.com")
 
     print(f"\n🔍 Topic phrase  : '{_extract_topic_phrase(post.title)}'")
     print(f"🏷️  Hashtags       : '{_get_hashtags_for_post(post)}'")

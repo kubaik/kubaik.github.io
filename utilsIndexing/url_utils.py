@@ -7,7 +7,7 @@ we publish shows up in Search Console as "Page with redirect".
 
 from urllib.parse import urlsplit, urlunsplit
 
-BASE_URL = "https://kubaik.github.io"
+BASE_URL = "https://blog.kubailabs.com"
 
 
 def public_post_url(slug: str, base_url: str = BASE_URL) -> str:

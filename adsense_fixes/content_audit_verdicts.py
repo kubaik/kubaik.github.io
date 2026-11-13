@@ -108,7 +108,7 @@ TOMBSTONE_HTML = """\
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>This post has been removed</title>
     <meta name="robots" content="noindex, follow">
-    <link rel="canonical" href="https://kubaik.github.io/">
+    <link rel="canonical" href="https://blog.kubailabs.com/">
     <style>
         body {{ font-family: system-ui, sans-serif; margin: 0; background: #fafafa; }}
         .tombstone {{ text-align: center; padding: 4rem 1.5rem; max-width: 480px; margin: 0 auto; }}

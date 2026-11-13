@@ -38,7 +38,7 @@ from typing import List, Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pre_save_gate import title_problem, topic_overlap_problem
 
-BASE_URL = "https://kubaik.github.io"
+BASE_URL = "https://blog.kubailabs.com"
 
 STUB = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">

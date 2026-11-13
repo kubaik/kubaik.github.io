@@ -121,7 +121,7 @@ def audit_sitemap(docs_dir: Path, base_url: str) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--docs", default="./docs")
-    ap.add_argument("--base-url", default="https://kubaik.github.io")
+    ap.add_argument("--base-url", default="https://blog.kubailabs.com")
     ap.add_argument("--fail-on-error", action="store_true")
     args = ap.parse_args()
 

@@ -341,7 +341,7 @@ def main():
                         "redirect-stub preserves the URL as a redirect to the kept post "
                         "instead of letting it 404 — recommended if these posts may "
                         "already have backlinks or search impressions.")
-    parser.add_argument("--base-url", default="https://kubaik.github.io",
+    parser.add_argument("--base-url", default="https://blog.kubailabs.com",
                         help="Site base URL, used to build redirect targets in --mode redirect-stub")
     parser.add_argument("--yes", action="store_true",
                         help="Skip the interactive confirmation prompt before deleting")

@@ -7,7 +7,7 @@ Checks (all code-driven, no manual step):
   2. Every internal link in built HTML resolves to a real page.     -> 404
   3. No internal link or canonical omits the trailing slash.        -> "Page with redirect"
   4. Sitemap never lists a slug present in retired_slugs.json.      -> publish-then-delete loop
-Usage: python utilsIndexing/check_indexing_hygiene.py [--docs docs] [--base https://kubaik.github.io] [--strict]
+Usage: python utilsIndexing/check_indexing_hygiene.py [--docs docs] [--base https://blog.kubailabs.com] [--strict]
 Exit 1 on any ERROR (or WARN with --strict).
 """
 
@@ -36,7 +36,7 @@ def local_path(docs: Path, base: str, url: str):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--docs", default="docs")
-    ap.add_argument("--base", default="https://kubaik.github.io")
+    ap.add_argument("--base", default="https://blog.kubailabs.com")
     ap.add_argument("--strict", action="store_true")
     a = ap.parse_args()
     docs, base = Path(a.docs), a.base.rstrip("/")

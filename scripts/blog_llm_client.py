@@ -413,7 +413,7 @@ async def _call_openrouter(messages: List[Dict], max_tokens: int) -> str:
     headers = {
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://kubaik.github.io",
+        "HTTP-Referer": "https://blog.kubailabs.com",
         "X-Title": "kubaik-content-rewriter",
     }
 

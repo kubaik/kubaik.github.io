@@ -46,11 +46,11 @@ WIDTH = 1200
 HEIGHT = 630
 
 # Brand colours (matching #6366f1 indigo theme)
-BG_TOP = (60, 50, 150)       # dark indigo
-BG_BOTTOM = (99, 102, 241)   # #6366f1
-ACCENT = (165, 180, 252)     # indigo-300
+BG_TOP = (60, 50, 150)  # dark indigo
+BG_BOTTOM = (99, 102, 241)  # #6366f1
+ACCENT = (165, 180, 252)  # indigo-300
 WHITE = (255, 255, 255)
-DARK = (30, 27, 75)          # indigo-950
+DARK = (30, 27, 75)  # indigo-950
 
 # Font paths — fall back to default if custom fonts not available
 DEFAULT_FONT_SIZE_TITLE = 52
@@ -58,7 +58,7 @@ DEFAULT_FONT_SIZE_SUB = 28
 DEFAULT_FONT_SIZE_BRAND = 22
 
 SITE_NAME = "Kubai Kevin"
-SITE_URL = "kubaik.github.io"
+SITE_URL = "blog.kubailabs.com"
 
 
 def load_font(font_dir: Path, filename: str, size: int) -> ImageFont.FreeTypeFont:
@@ -79,7 +79,9 @@ def load_font(font_dir: Path, filename: str, size: int) -> ImageFont.FreeTypeFon
     return ImageFont.load_default()
 
 
-def wrap_text(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list[str]:
+def wrap_text(
+    draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_width: int
+) -> list[str]:
     """Word-wrap text to fit within max_width pixels."""
     words = text.split()
     lines = []
@@ -173,14 +175,16 @@ def generate_og_image(
     for i, line in enumerate(lines):
         y = y_start + i * line_height
         # Subtle shadow
-        draw.text((padding + 2, y + 2), line,
-                  font=font_title, fill=(0, 0, 0, 80))
+        draw.text((padding + 2, y + 2), line, font=font_title, fill=(0, 0, 0, 80))
         draw.text((padding, y), line, font=font_title, fill=WHITE)
 
     # ── Bottom bar: site name + URL ──
     bottom_y = HEIGHT - 80
-    draw.line([(padding, bottom_y - 16), (WIDTH - padding,
-              bottom_y - 16)], fill=(255, 255, 255, 60), width=1)
+    draw.line(
+        [(padding, bottom_y - 16), (WIDTH - padding, bottom_y - 16)],
+        fill=(255, 255, 255, 60),
+        width=1,
+    )
     draw.text((padding, bottom_y), SITE_NAME, font=font_brand, fill=WHITE)
     url_bbox = draw.textbbox((0, 0), SITE_URL, font=font_sub)
     url_x = WIDTH - padding - (url_bbox[2] - url_bbox[0])
@@ -203,19 +207,24 @@ def extract_post_data(html: str) -> dict:
 
     # og:title is more reliable than <title> (no site suffix)
     m = re.search(
-        r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)["\']', html, re.IGNORECASE)
+        r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)["\']',
+        html,
+        re.IGNORECASE,
+    )
     if m:
         title = m.group(1).strip()
 
     if not title:
         m = re.search(r"<title>([^<]+)</title>", html, re.IGNORECASE)
         if m:
-            title = re.sub(r"\s*[-|]\s*Kubai Kevin\s*$",
-                           "", m.group(1)).strip()
+            title = re.sub(r"\s*[-|]\s*Kubai Kevin\s*$", "", m.group(1)).strip()
 
     # First keyword as primary tag
     m = re.search(
-        r'<meta[^>]+name=["\']keywords["\'][^>]+content=["\']([^"\']+)["\']', html, re.IGNORECASE)
+        r'<meta[^>]+name=["\']keywords["\'][^>]+content=["\']([^"\']+)["\']',
+        html,
+        re.IGNORECASE,
+    )
     if m:
         tags = [t.strip() for t in m.group(1).split(",")]
         tag = tags[0] if tags else ""
@@ -256,20 +265,32 @@ def update_og_image_in_html(html: str, new_url: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Generate per-article OG images")
-    parser.add_argument("--posts-dir", required=True,
-                        help="Site output directory containing HTML files")
-    parser.add_argument("--output-dir", required=True,
-                        help="Where to write generated PNG files")
-    parser.add_argument("--font-dir", default=None,
-                        help="Optional directory containing TTF fonts (Inter recommended)")
+    parser = argparse.ArgumentParser(description="Generate per-article OG images")
     parser.add_argument(
-        "--base-url", default="https://kubaik.github.io", help="Site base URL")
-    parser.add_argument("--patch-html", action="store_true",
-                        help="Patch og:image in HTML files after generating images")
-    parser.add_argument("--limit", type=int, default=0,
-                        help="Only process N files (0 = all, for testing)")
+        "--posts-dir", required=True, help="Site output directory containing HTML files"
+    )
+    parser.add_argument(
+        "--output-dir", required=True, help="Where to write generated PNG files"
+    )
+    parser.add_argument(
+        "--font-dir",
+        default=None,
+        help="Optional directory containing TTF fonts (Inter recommended)",
+    )
+    parser.add_argument(
+        "--base-url", default="https://blog.kubailabs.com", help="Site base URL"
+    )
+    parser.add_argument(
+        "--patch-html",
+        action="store_true",
+        help="Patch og:image in HTML files after generating images",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=0,
+        help="Only process N files (0 = all, for testing)",
+    )
     args = parser.parse_args()
 
     site_dir = Path(args.posts_dir)
@@ -329,8 +350,7 @@ def main() -> int:
             print(f"  ERROR processing {html_path}: {e}", file=sys.stderr)
             errors += 1
 
-    print(
-        f"\nDone. Generated: {generated}, Skipped: {skipped}, Errors: {errors}")
+    print(f"\nDone. Generated: {generated}, Skipped: {skipped}, Errors: {errors}")
     return 0 if errors == 0 else 1
 
 

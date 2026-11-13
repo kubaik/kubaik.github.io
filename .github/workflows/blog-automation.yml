@@ -273,7 +273,7 @@ jobs:
                     --max-deletions 2 \
                     --min-score 0.50 \
                     --backup-dir ./.duplicate_backups \
-                    --base-url "https://kubaik.github.io" \
+                    --base-url "https://blog.kubailabs.com" \
                     --confirm
 
             # Bounded consumer for the fabrication entries retroactive_fabrication_audit.py
@@ -468,13 +468,13 @@ jobs:
                   echo "--- sitemap validation ---"
                   python scripts/generate_sitemap.py \
                     --output-dir ./docs \
-                    --base-url "https://kubaik.github.io" \
+                    --base-url "https://blog.kubailabs.com" \
                     --validate-only
 
             - name: 🧭 Indexing hygiene gate (sitemap/404/redirect/noindex)
               run: |
                   # Fails the deploy if the build would create GSC 404s, redirects or noindex-in-sitemap.
-                  python utilsIndexing/check_indexing_hygiene.py --docs ./docs --base https://kubaik.github.io
+                  python utilsIndexing/check_indexing_hygiene.py --docs ./docs --base https://blog.kubailabs.com
 
             - name: 📸 Generate per-article OG images
               continue-on-error: true
@@ -483,7 +483,7 @@ jobs:
                   python scripts/generate_og_images.py \
                     --posts-dir ./docs \
                     --output-dir ./docs/static/og \
-                    --base-url "https://kubaik.github.io" \
+                    --base-url "https://blog.kubailabs.com" \
                     --patch-html
 
                   og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)

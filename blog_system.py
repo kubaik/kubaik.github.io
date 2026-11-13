@@ -2630,7 +2630,7 @@ class BlogSystem:
             print(f"⚠️  OG image script not found at {script_path}")
             return False
 
-        base_url = self.config.get("base_url", "https://kubaik.github.io").rstrip("/")
+        base_url = self.config.get("base_url", "https://blog.kubailabs.com").rstrip("/")
 
         print("\n" + "=" * 80)
         print("📸 Generating per-article OG images (1200×630 PNG)")
@@ -3158,7 +3158,7 @@ class BlogSystem:
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
+            "HTTP-Referer": self.config.get("base_url", "https://blog.kubailabs.com"),
             "X-Title": self.config.get("site_name", "Kubai Kevin"),
         }
         waits = [2, 5, 10]
@@ -4082,7 +4082,7 @@ class BlogSystem:
 
             faq_schema = extract_and_build_faq_schema(
                 post.content,
-                self.config.get("base_url", "https://kubaik.github.io"),
+                self.config.get("base_url", "https://blog.kubailabs.com"),
                 post.slug,
             )
             if faq_schema:
@@ -4109,7 +4109,7 @@ class BlogSystem:
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 post_url = (
-                    f"{self.config.get('base_url', 'https://kubaik.github.io')}"
+                    f"{self.config.get('base_url', 'https://blog.kubailabs.com')}"
                     f"/{post.slug}/"
                 )
 
@@ -5374,7 +5374,7 @@ def create_sample_config(config_path: str = "config.yaml"):
             "Practical backend engineering, AI tooling, and developer career "
             "advice by Kubai Kevin — 10+ years building production systems."
         ),
-        "base_url": "https://kubaik.github.io",
+        "base_url": "https://blog.kubailabs.com",
         "base_path": "",
         "amazon_affiliate_tag": "aiblogcontent-20",
         "google_analytics_id": "",

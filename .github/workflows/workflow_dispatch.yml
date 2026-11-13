@@ -330,7 +330,7 @@ jobs:
         if: steps.fallback_check.outputs.has_fallback == 'true'
         run: |
           pip install --quiet beautifulsoup4
-          python scripts/generate_sitemap.py --output-dir docs --base-url https://kubaik.github.io
+          python scripts/generate_sitemap.py --output-dir docs --base-url https://blog.kubailabs.com
 
       # ── CONSOLIDATED REBUILD & SELF-HEALING PUSH ─────────────────────────────
 
@@ -401,7 +401,7 @@ jobs:
                 # Re-regenerate sitemap.xml too, since the deletion above was
                 # just re-run on top of the freshly rebased state.
                 if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
-                  python scripts/generate_sitemap.py --output-dir docs --base-url https://kubaik.github.io
+                  python scripts/generate_sitemap.py --output-dir docs --base-url https://blog.kubailabs.com
                 fi
 
                 # ── DISABLED: blog_system.py build (recompile re-run) ───────────
