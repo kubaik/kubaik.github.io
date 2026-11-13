@@ -251,5 +251,6 @@
   "Architecture decision records: formats, workflows, and keeping them current",
   "Zero-downtime database schema migrations: expand and contract explained",
   "Structured logging practices that make large log volumes searchable and affordable",
-  "Java virtual threads in production: what changes for blocking network services"
+  "Java virtual threads in production: what changes for blocking network services",
+  "Distributed locks with Redis and etcd: when they are safe"
 ]

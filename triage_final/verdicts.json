@@ -429,7 +429,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Virtual threads: what actually changes",
-  "words": 2644
+  "words": 2920
  },
  "price-ai-proof-skills-in-2026": {
   "verdict": "IMPROVE",
@@ -2055,6 +2055,13 @@
   "fixes": [],
   "title": "API abuse patterns rising in 2026",
   "words": 2348
+ },
+ "distributed-locks-safe-only-with-fencing": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Distributed locks: safe only with fencing",
+  "words": 2971
  },
  "skip-m-pesa-build-one-api-for-3-african-markets": {
   "verdict": "KEEP",

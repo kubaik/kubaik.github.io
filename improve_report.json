@@ -1,7 +1,7 @@
 {
   "improved": [
     {
-      "slug": "virtual-threads-what-actually-changes",
+      "slug": "distributed-locks-safe-only-with-fencing",
       "attempts": 1,
       "retitled": false
     }

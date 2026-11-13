@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why leader election fails on cloud networks">
         <meta property="og:description" content="Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.">
-        <meta property="og:url" content="https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/">
+        <meta property="og:url" content="https://blog.kubailabs.com/why-leader-election-fails-on-cloud-networks/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://kubaik.github.io/static/og/why-leader-election-fails-on-cloud-networks.png">
+        <meta property="og:image" content="https://blog.kubailabs.com/static/og/why-leader-election-fails-on-cloud-networks.png">
         <meta property="og:image:alt" content="Why leader election fails on cloud networks">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Why leader election fails on cloud networks">
         <meta name="twitter:description" content="Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.">
-        <meta name="twitter:image" content="https://kubaik.github.io/static/og/why-leader-election-fails-on-cloud-networks.png">
+        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/why-leader-election-fails-on-cloud-networks.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/">
+        <link rel="canonical" href="https://blog.kubailabs.com/why-leader-election-fails-on-cloud-networks/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/#article",
+      "@id": "https://blog.kubailabs.com/why-leader-election-fails-on-cloud-networks/#article",
       "headline": "Why leader election fails on cloud networks",
       "description": "Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.",
       "datePublished": "2026-10-17T03:37:16+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://kubaik.github.io/about/#author",
+        "@id": "https://blog.kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://kubaik.github.io/about/",
+        "url": "https://blog.kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://kubaik.github.io/#organization",
+        "@id": "https://blog.kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://kubaik.github.io"
+        "url": "https://blog.kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/"
+        "@id": "https://blog.kubailabs.com/why-leader-election-fails-on-cloud-networks/"
       },
       "keywords": "LeaderElection, DistributedSystems, CloudNetworkFailures, FencingTokens, Cloudcomputing",
       "image": {
         "@type": "ImageObject",
-        "url": "https://kubaik.github.io/static/og/why-leader-election-fails-on-cloud-networks.png",
+        "url": "https://blog.kubailabs.com/static/og/why-leader-election-fails-on-cloud-networks.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://kubaik.github.io/"
+          "item": "https://blog.kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Why leader election fails on cloud networks",
-          "item": "https://kubaik.github.io/why-leader-election-fails-on-cloud-networks/"
+          "item": "https://blog.kubailabs.com/why-leader-election-fails-on-cloud-networks/"
         }
       ]
     }
@@ -448,6 +448,12 @@ func main() {
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
+                    <a class="related-card" href="/distributed-locks-safe-only-with-fencing/">
+                        <h3>Distributed locks: safe only with fencing</h3>
+                        <p>A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</p>
+                        <span class="related-meta">17 min read · 13 November 2026</span>
+                    </a>
+                    
                     <a class="related-card" href="/mcp-hidden-cost-traps/">
                         <h3>MCP hidden cost traps</h3>
                         <p>How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.</p>
@@ -458,12 +464,6 @@ func main() {
                         <h3>Run APIs in 50 spots: what breaks first</h3>
                         <p>Edge APIs fail at the data layer, not the network. Covers sharding, bounded staleness, cache invalidation, clock drift, and how to measure each.</p>
                         <span class="related-meta">12 min read · 19 June 2026</span>
-                    </a>
-                    
-                    <a class="related-card" href="/agent-auth-the-silent-deployment-killer/">
-                        <h3>Agent auth: the silent deployment killer</h3>
-                        <p>How agent identity breaks under jitter, power loss, and low-end devices, and the fallback, rotation, and caching patterns that keep auth working.</p>
-                        <span class="related-meta">13 min read · 30 July 2026</span>
                     </a>
                     
                 </div>

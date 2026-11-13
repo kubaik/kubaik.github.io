@@ -4,29 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redis Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; &quot;Rate limiters: burst vs abuse, two designs,&quot; and &quot;Dead-letter queues: stop poison messages&quot;.">
+  <meta name="description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Distributed locks: safe only with fencing,&quot; &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; and &quot;Rate limiters: burst vs abuse, two designs&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
-  <link rel="canonical" href="https://kubaik.github.io/tag/redis/">
+  <link rel="canonical" href="https://blog.kubailabs.com/tag/redis/">
   <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
   <script src="/static/consent.js" defer></script>
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Redis Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; &quot;Rate limiters: burst vs abuse, two designs,&quot; and &quot;Dead-letter queues: stop poison messages&quot;.">
-  <meta property="og:url" content="https://kubaik.github.io/tag/redis/">
-  <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
+  <meta property="og:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Distributed locks: safe only with fencing,&quot; &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; and &quot;Rate limiters: burst vs abuse, two designs&quot;.">
+  <meta property="og:url" content="https://blog.kubailabs.com/tag/redis/">
+  <meta property="og:image" content="https://blog.kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Redis Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; &quot;Rate limiters: burst vs abuse, two designs,&quot; and &quot;Dead-letter queues: stop poison messages&quot;.">
-  <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
+  <meta name="twitter:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Distributed locks: safe only with fencing,&quot; &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; and &quot;Rate limiters: burst vs abuse, two designs&quot;.">
+  <meta name="twitter:image" content="https://blog.kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
-    "name":"Redis Articles","url":"https://kubaik.github.io/tag/redis/",
-    "description":"Articles on Redis covering practical, hands-on approaches to redis for software developers, including \"Redis vs Valkey vs Dragonfly: which in-memory store?,\" \"Rate limiters: burst vs abuse, two designs,\" and \"Dead-letter queues: stop poison messages\"."}
+    "name":"Redis Articles","url":"https://blog.kubailabs.com/tag/redis/",
+    "description":"Articles on Redis covering practical, hands-on approaches to redis for software developers, including \"Distributed locks: safe only with fencing,\" \"Redis vs Valkey vs Dragonfly: which in-memory store?,\" and \"Rate limiters: burst vs abuse, two designs\"."}
   </script>
 </head>
 <body>
@@ -44,9 +44,14 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Redis</span>
     </nav>
-    <h2>57 articles tagged <em>Redis</em></h2>
+    <h2>58 articles tagged <em>Redis</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/distributed-locks-safe-only-with-fencing/">
+        <h3>Distributed locks: safe only with fencing</h3>
+        <p class="post-excerpt">A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</p>
+        <p class="post-reading-time">17 min read · 13 November 2026</p>
+      </a>
       <a class="post-card" href="/redis-vs-valkey-vs-dragonfly-which-in-memory-store/">
         <h3>Redis vs Valkey vs Dragonfly: which in-memory store?</h3>
         <p class="post-excerpt">A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</p>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-13T05:44:44.110301",
+  "built_at": "2026-11-13T18:26:56.077826",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5835,6 +5835,11 @@
       "slug": "virtual-threads-what-actually-changes",
       "title": "Virtual threads: what actually changes",
       "summary": "There's a gap between how java virtual is taught and how it actually behaves under load. Most write-ups stop exactly where the interesting part starts. Here's what a colleague hitting this for the first time needs to know. Java virtual threads (JEP 444, final in JDK 21) are the first change to Java'"
+    },
+    {
+      "slug": "distributed-locks-safe-only-with-fencing",
+      "title": "Distributed locks: safe only with fencing",
+      "summary": "The first time distributed locks fails in production, it rarely fails in the way any postmortem template expects. It's the kind of problem that's easy to reproduce and hard to explain. This covers the fix, the cost of not knowing sooner, and what to monitor. A distributed lock is a lease on a shared"
     }
   ]
 }

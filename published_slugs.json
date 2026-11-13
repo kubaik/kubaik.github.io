@@ -587,6 +587,9 @@
   "detecting-silent-agent-failures": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "distributed-locks-safe-only-with-fencing": {
+    "first_seen": "2026-11-13T18:27:23.594467+00:00"
+  },
   "distroless-images-smaller-attack-surface": {
     "first_seen": "2026-11-02T05:05:41.720307+00:00"
   },

@@ -2,149 +2,149 @@
 <rss version="2.0">
   <channel>
     <title>Kubai Kevin</title>
-    <link>https://kubaik.github.io</link>
+    <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 13 Nov 2026 05:48:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 18:29:31 +0000</lastBuildDate>
+    <item>
+      <title>Distributed locks: safe only with fencing</title>
+      <link>https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/</link>
+      <description>A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</description>
+      <pubDate>Fri, 13 Nov 2026 18:26:53 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/</guid>
+    </item>
     <item>
       <title>Virtual threads: what actually changes</title>
-      <link>https://kubaik.github.io/virtual-threads-what-actually-changes/</link>
+      <link>https://blog.kubailabs.com/virtual-threads-what-actually-changes/</link>
       <description>What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.</description>
       <pubDate>Fri, 13 Nov 2026 05:44:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/virtual-threads-what-actually-changes/</guid>
+      <guid>https://blog.kubailabs.com/virtual-threads-what-actually-changes/</guid>
     </item>
     <item>
       <title>Structured logging: searchable at scale</title>
-      <link>https://kubaik.github.io/structured-logging-searchable-at-scale/</link>
+      <link>https://blog.kubailabs.com/structured-logging-searchable-at-scale/</link>
       <description>Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</description>
       <pubDate>Thu, 12 Nov 2026 19:42:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/structured-logging-searchable-at-scale/</guid>
+      <guid>https://blog.kubailabs.com/structured-logging-searchable-at-scale/</guid>
     </item>
     <item>
       <title>7 ADR traps that cause stale decisions</title>
-      <link>https://kubaik.github.io/7-adr-traps-that-cause-stale-decisions/</link>
+      <link>https://blog.kubailabs.com/7-adr-traps-that-cause-stale-decisions/</link>
       <description>How architecture decision records go stale: template bloat, drifting status fields, hidden storage, broken numbering, missing context, no workflow trigger, no review.</description>
       <pubDate>Thu, 12 Nov 2026 06:24:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-adr-traps-that-cause-stale-decisions/</guid>
+      <guid>https://blog.kubailabs.com/7-adr-traps-that-cause-stale-decisions/</guid>
     </item>
     <item>
       <title>Model evals: the gaps that let drift slip through</title>
-      <link>https://kubaik.github.io/model-evals-the-gaps-that-let-drift-slip-through/</link>
+      <link>https://blog.kubailabs.com/model-evals-the-gaps-that-let-drift-slip-through/</link>
       <description>Aggregate eval scores hide subtle model drift. Learn per-example diffing, slice reporting, pinned baselines, and a minimal CI gate that catches behavior changes.</description>
       <pubDate>Wed, 11 Nov 2026 19:26:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/model-evals-the-gaps-that-let-drift-slip-through/</guid>
+      <guid>https://blog.kubailabs.com/model-evals-the-gaps-that-let-drift-slip-through/</guid>
     </item>
     <item>
       <title>Canary rollbacks: automate the decision, not the deploy</title>
-      <link>https://kubaik.github.io/canary-rollbacks-automate-the-decision-not-the-deploy/</link>
+      <link>https://blog.kubailabs.com/canary-rollbacks-automate-the-decision-not-the-deploy/</link>
       <description>Design canary analysis that compares against a live baseline, guards on sample size, and avoids the false positives that erode trust in automation.</description>
       <pubDate>Wed, 11 Nov 2026 05:19:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/canary-rollbacks-automate-the-decision-not-the-deploy/</guid>
+      <guid>https://blog.kubailabs.com/canary-rollbacks-automate-the-decision-not-the-deploy/</guid>
     </item>
     <item>
       <title>Open source contributions: the credibility trap</title>
-      <link>https://kubaik.github.io/open-source-contributions-the-credibility-trap/</link>
+      <link>https://blog.kubailabs.com/open-source-contributions-the-credibility-trap/</link>
       <description>Why merged pull requests often fail to persuade hiring teams, and how to choose projects and shape contributions that read as engineering judgment.</description>
       <pubDate>Tue, 10 Nov 2026 19:29:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/open-source-contributions-the-credibility-trap/</guid>
+      <guid>https://blog.kubailabs.com/open-source-contributions-the-credibility-trap/</guid>
     </item>
     <item>
       <title>Saga pattern: orchestration vs choreography in payments</title>
-      <link>https://kubaik.github.io/saga-pattern-orchestration-vs-choreography-in-payments/</link>
+      <link>https://blog.kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</link>
       <description>How payment sagas coordinate steps, why refunds are not charge reversals, and a decision framework for choosing orchestration or choreography.</description>
       <pubDate>Tue, 10 Nov 2026 06:34:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
+      <guid>https://blog.kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
     </item>
     <item>
       <title>WAF and bot management: what they miss</title>
-      <link>https://kubaik.github.io/waf-and-bot-management-what-they-miss/</link>
+      <link>https://blog.kubailabs.com/waf-and-bot-management-what-they-miss/</link>
       <description>WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</description>
       <pubDate>Mon, 09 Nov 2026 22:06:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/waf-and-bot-management-what-they-miss/</guid>
+      <guid>https://blog.kubailabs.com/waf-and-bot-management-what-they-miss/</guid>
     </item>
     <item>
       <title>FastAPI vs Django vs Flask: API picks for 2026</title>
-      <link>https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/</link>
+      <link>https://blog.kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</link>
       <description>Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.</description>
       <pubDate>Mon, 09 Nov 2026 05:20:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/fastapi-vs-django-vs-flask-api-picks-for-2026/</guid>
+      <guid>https://blog.kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</guid>
     </item>
     <item>
       <title>Queueing theory for backend capacity</title>
-      <link>https://kubaik.github.io/queueing-theory-for-backend-capacity/</link>
+      <link>https://blog.kubailabs.com/queueing-theory-for-backend-capacity/</link>
       <description>Why doubling traffic can quadruple tail latency, how to model each constrained resource as a queue, and how to measure utilisation before you hit the cliff.</description>
       <pubDate>Sun, 08 Nov 2026 17:48:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/queueing-theory-for-backend-capacity/</guid>
+      <guid>https://blog.kubailabs.com/queueing-theory-for-backend-capacity/</guid>
     </item>
     <item>
       <title>Pagination for large datasets: offset vs cursor</title>
-      <link>https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/</link>
+      <link>https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/</link>
       <description>How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.</description>
       <pubDate>Sun, 08 Nov 2026 05:08:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/pagination-for-large-datasets-offset-vs-cursor/</guid>
+      <guid>https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/</guid>
     </item>
     <item>
       <title>k6 vs Locust: traffic models that lie</title>
-      <link>https://kubaik.github.io/k6-vs-locust-traffic-models-that-lie/</link>
+      <link>https://blog.kubailabs.com/k6-vs-locust-traffic-models-that-lie/</link>
       <description>Why closed-loop load tests under-report latency, how to build open-loop traffic models in k6 and Locust, and how to read the results without fooling yourself.</description>
       <pubDate>Sat, 07 Nov 2026 17:38:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/k6-vs-locust-traffic-models-that-lie/</guid>
+      <guid>https://blog.kubailabs.com/k6-vs-locust-traffic-models-that-lie/</guid>
     </item>
     <item>
       <title>Redis vs Valkey vs Dragonfly: which in-memory store?</title>
-      <link>https://kubaik.github.io/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</link>
+      <link>https://blog.kubailabs.com/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</link>
       <description>A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</description>
       <pubDate>Sat, 07 Nov 2026 05:14:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</guid>
+      <guid>https://blog.kubailabs.com/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</guid>
     </item>
     <item>
       <title>USSD/SMS fallback: the session trap</title>
-      <link>https://kubaik.github.io/ussdsms-fallback-the-session-trap/</link>
+      <link>https://blog.kubailabs.com/ussdsms-fallback-the-session-trap/</link>
       <description>Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</description>
       <pubDate>Fri, 06 Nov 2026 19:03:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ussdsms-fallback-the-session-trap/</guid>
+      <guid>https://blog.kubailabs.com/ussdsms-fallback-the-session-trap/</guid>
     </item>
     <item>
       <title>Envelope encryption with cloud KMS: key rotation traps</title>
-      <link>https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/</link>
+      <link>https://blog.kubailabs.com/envelope-encryption-with-cloud-kms-key-rotation-traps/</link>
       <description>How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.</description>
       <pubDate>Fri, 06 Nov 2026 05:44:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/envelope-encryption-with-cloud-kms-key-rotation-traps/</guid>
+      <guid>https://blog.kubailabs.com/envelope-encryption-with-cloud-kms-key-rotation-traps/</guid>
     </item>
     <item>
       <title>Async practices that reduce meeting load</title>
-      <link>https://kubaik.github.io/7-async-practices-that-cut-meeting-load/</link>
+      <link>https://blog.kubailabs.com/7-async-practices-that-cut-meeting-load/</link>
       <description>Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.</description>
       <pubDate>Thu, 05 Nov 2026 19:43:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-async-practices-that-cut-meeting-load/</guid>
+      <guid>https://blog.kubailabs.com/7-async-practices-that-cut-meeting-load/</guid>
     </item>
     <item>
       <title>Audit trails for AI agents: what breaks first</title>
-      <link>https://kubaik.github.io/audit-trails-for-ai-agents-what-breaks-first/</link>
+      <link>https://blog.kubailabs.com/audit-trails-for-ai-agents-what-breaks-first/</link>
       <description>Design append-only decision records for AI agents: write-ahead ordering, policy snapshots, idempotency keys, and reconstruction drills that expose gaps.</description>
       <pubDate>Thu, 05 Nov 2026 05:48:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/audit-trails-for-ai-agents-what-breaks-first/</guid>
+      <guid>https://blog.kubailabs.com/audit-trails-for-ai-agents-what-breaks-first/</guid>
     </item>
     <item>
       <title>PAPSS and mobile money: where integration breaks</title>
-      <link>https://kubaik.github.io/papss-and-mobile-money-where-integration-breaks/</link>
+      <link>https://blog.kubailabs.com/papss-and-mobile-money-where-integration-breaks/</link>
       <description>Why cross-border PAPSS and mobile money integrations break: hold-and-resolve state machines, identifier resolution, and pending-set reconciliation.</description>
       <pubDate>Wed, 04 Nov 2026 19:33:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/papss-and-mobile-money-where-integration-breaks/</guid>
+      <guid>https://blog.kubailabs.com/papss-and-mobile-money-where-integration-breaks/</guid>
     </item>
     <item>
       <title>Technical debt: defend priorities to stakeholders</title>
-      <link>https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/</link>
+      <link>https://blog.kubailabs.com/technical-debt-defend-priorities-to-stakeholders/</link>
       <description>A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.</description>
       <pubDate>Wed, 04 Nov 2026 05:27:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/technical-debt-defend-priorities-to-stakeholders/</guid>
-    </item>
-    <item>
-      <title>BM25 vs dense embeddings: hybrid search reality</title>
-      <link>https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/</link>
-      <description>How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.</description>
-      <pubDate>Tue, 03 Nov 2026 19:21:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/</guid>
+      <guid>https://blog.kubailabs.com/technical-debt-defend-priorities-to-stakeholders/</guid>
     </item>
   </channel>
 </rss>

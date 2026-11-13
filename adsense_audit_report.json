@@ -1911,6 +1911,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "distributed-locks-safe-only-with-fencing",
+      "source": "post.json",
+      "word_count": 3414,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
       "source": "post.json",
       "word_count": 2901,

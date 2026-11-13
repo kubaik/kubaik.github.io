@@ -1,4 +1,4 @@
-# robots.txt for https://kubaik.github.io
+# robots.txt for https://blog.kubailabs.com
 # Generated automatically - Do not edit manually
 
 User-agent: *
@@ -38,4 +38,4 @@ Allow: /
 # specified for XML sitemap files, not RSS feeds, so rss.xml was removed
 # from here. The RSS feed is still discoverable via the <link rel="alternate"
 # type="application/rss+xml"> tag in the page <head>.
-Sitemap: https://kubaik.github.io/sitemap.xml
+Sitemap: https://blog.kubailabs.com/sitemap.xml

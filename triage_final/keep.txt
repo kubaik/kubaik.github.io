@@ -105,6 +105,7 @@ docs/database-restore-drills-that-mean-something/
 docs/dead-letter-queues-stop-poison-messages/
 docs/debug-ai-agent-failures-differently/
 docs/detecting-silent-agent-failures/
+docs/distributed-locks-safe-only-with-fencing/
 docs/distroless-images-smaller-attack-surface/
 docs/double-entry-ledger-concurrent-write-errors/
 docs/double-the-price-double-the-revenue/
