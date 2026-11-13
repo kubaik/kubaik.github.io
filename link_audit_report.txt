@@ -1,4 +1,4 @@
-❌ Internal link audit: 424 broken link(s) found across 425 posts checked.
+❌ Internal link audit: 425 broken link(s) found across 426 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -377,6 +377,7 @@ Source Post                              Anchor Text                    Missing 
   /stop-trusting-agents-for-core-logic    AI content policy              /ai-content-policy/
   /store-data-once-serve-everywhere-cheaper AI content policy              /ai-content-policy/
   /stride-is-a-checklist-not-a-threat-model AI content policy              /ai-content-policy/
+  /structured-logging-searchable-at-scale AI content policy              /ai-content-policy/
   /supervisor-vs-swarm-vs-debate-vs-pipeline AI content policy              /ai-content-policy/
   /tame-python-asyncs-hidden-traps        AI content policy              /ai-content-policy/
   /tech-debt-when-half-your-stack-is-unfamiliar AI content policy              /ai-content-policy/

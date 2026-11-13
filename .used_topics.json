@@ -250,5 +250,6 @@
   "The regulatory and compliance realities of deploying autonomous agents in African fintech",
   "Architecture decision records: formats, workflows, and keeping them current",
   "Zero-downtime database schema migrations: expand and contract explained",
-  "Structured logging practices that make large log volumes searchable and affordable"
+  "Structured logging practices that make large log volumes searchable and affordable",
+  "Java virtual threads in production: what changes for blocking network services"
 ]

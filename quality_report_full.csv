@@ -16,6 +16,7 @@ open-source-contributions-the-credibility-trap,80,3563,Open source contributions
 purpose-built-beats-general-ai-tools,80,3110,Purpose-built beats general AI tools,2026-07-19T13:25:45.088612,1,first-person incident: 'The remaining 700 requests cost $1.33 per day.'
 remote-premium-rates-skills-ai-cant-copy,80,3733,Remote premium rates: skills AI can't copy,2026-10-21T08:45:29.894292,1,first-person incident: 'A practical way to verify is a dry run with a colleague.'
 spot-instances-vs-on-demand-for-ai-experiments,80,2587,Spot instances vs on-demand for AI experiments,2026-09-18T13:01:40.090270,1,first-person incident: 'A single A100-class instance left running over a weekend costs roughly $168 at a'
+virtual-threads-what-actually-changes,80,2644,Virtual threads: what actually changes,2026-11-13T05:44:40.828684,1,"first-person incident: ""Here's what a colleague hitting this for the first time needs to know."""
 micro-saas-niches-eaten-by-ai-in-2026,82,2266,Micro-SaaS niches eaten by AI in 2026,2026-06-29T09:34:39.935425,3,no fenced code block | no markdown table | no FAQ section
 why-monoliths-die-slowly-in-2026,82,2663,Why monoliths die slowly in 2026,2026-06-19T02:27:59.398225,3,no fenced code block | no markdown table | no FAQ section
 built-a-multi-agent-system-without-langgraph,85,2684,Built a multi-agent system without LangGraph,2026-07-27T14:44:13.456532,1,title: past-tense action narrative
@@ -388,7 +389,7 @@ starlink-in-production-what-changed-in-our-stack,100,2812,Designing APIs for Hig
 stop-assuming-payment-apis-never-fail,100,2623,Stop assuming payment APIs never fail,2026-09-13T03:56:25.937261,0,
 stop-guessing-tech-stacks-validate-tools-in-2-hours,100,2509,Stop guessing tech stacks: validate tools in 2 hours,2026-07-12T13:28:27.249245,0,
 stop-putting-llm-keys-in-env,100,2840,Stop Putting LLM Keys in .env,2026-09-17T04:06:21.695546,0,
-structured-logging-searchable-at-scale,100,3079,Structured logging: searchable at scale,2026-11-12T19:42:54.742269,0,
+structured-logging-searchable-at-scale,100,3934,Structured logging: searchable at scale,2026-11-12T19:42:54.742269,0,
 supervisor-vs-swarm-vs-debate-vs-pipeline,100,3877,Supervisor vs swarm vs debate vs pipeline,2026-08-03T10:05:35.557297,0,
 tech-debt-when-half-your-stack-is-unfamiliar,100,2800,Tech debt: when half your stack is unfamiliar,2026-09-26T16:04:10.400734,0,
 technical-debt-defend-priorities-to-stakeholders,100,2579,Technical debt: defend priorities to stakeholders,2026-11-04T05:27:38.871384,0,

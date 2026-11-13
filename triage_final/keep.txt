@@ -235,6 +235,7 @@ docs/use-feature-flags-to-deploy-ai-models-safely/
 docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/
 docs/ussdsms-fallback-the-session-trap/
 docs/vibe-code-works-great-fails-forever/
+docs/virtual-threads-what-actually-changes/
 docs/waf-and-bot-management-what-they-miss/
 docs/wasm-servers-beat-containers-here/
 docs/webhook-delivery-that-survives-outages/

@@ -1,0 +1,529 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Virtual threads: what actually changes - Kubai Kevin</title>
+        <meta name="description" content="What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.">
+        <meta name="keywords" content="VirtualThreads, JavaConcurrency, Java">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-13T05:44:40.828684">
+        <meta property="article:modified_time" content="2026-11-13T05:47:38.716877+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Virtual threads: what actually changes">
+        <meta property="og:description" content="What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.">
+        <meta property="og:url" content="https://kubaik.github.io/virtual-threads-what-actually-changes/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/virtual-threads-what-actually-changes.png">
+        <meta property="og:image:alt" content="Virtual threads: what actually changes">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Virtual threads: what actually changes">
+        <meta name="twitter:description" content="What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/virtual-threads-what-actually-changes.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/virtual-threads-what-actually-changes/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/virtual-threads-what-actually-changes/#article",
+      "headline": "Virtual threads: what actually changes",
+      "description": "What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.",
+      "datePublished": "2026-11-13T05:44:40+00:00",
+      "dateModified": "2026-11-13T05:47:38+00:00",
+      "wordCount": 2920,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/virtual-threads-what-actually-changes/"
+      },
+      "keywords": "VirtualThreads, JavaConcurrency, Java",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://kubaik.github.io/static/og/virtual-threads-what-actually-changes.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Virtual threads: what actually changes",
+          "item": "https://kubaik.github.io/virtual-threads-what-actually-changes/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Virtual threads: what actually changes</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Virtual threads: what actually changes</h1>
+                
+                <p class="post-lead">What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">VirtualThreads</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">JavaConcurrency</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Java</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2920 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-13
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="the-gap-between-the-tutorial-and-the-load-test">The gap between the tutorial and the load test</h2>
+<p>Most introductions to virtual threads stop where the interesting part starts. They explain that virtual threads are cheap, show a <code>Thread.ofVirtual().start(...)</code> snippet, and imply that a service will get faster. In practice, the first thing a team notices after switching is often that nothing changed, or that latency got worse. Both outcomes are predictable once you understand what virtual threads do and do not remove.</p>
+<p>Java virtual threads (JEP 444, final in JDK 21) are the first change to Java's threading model that genuinely alters how blocking network services are written. They look like threads, behave like threads in a debugger, and yet the rules for using them well differ from the rules for platform threads. This article covers what changes, what does not, and where the sharp edges are when they meet databases, HTTP APIs, and message brokers.</p>
+<p>The decision this article supports: whether virtual threads will simplify a given service, or merely move its bottleneck from threads to connections.</p>
+<h2 id="the-one-sentence-version">The one-sentence version</h2>
+<p>Virtual threads make thread-per-request cheap again, but they do not make downstream dependencies cheaper. If a service is limited by database connections, HTTP client pools, or CPU, virtual threads will not increase throughput; they will change where the queue forms.</p>
+<p>Everything below is about the consequences of that sentence.</p>
+<h2 id="what-virtual-threads-actually-are-and-are-not">What virtual threads actually are, and are not</h2>
+<p>A virtual thread is a Java thread scheduled by the JDK, not by the operating system. The JDK runs many virtual threads on a small pool of carrier threads, by default sized to the number of available processors; the <code>jdk.virtualThreadScheduler.parallelism</code> system property can change that. When a virtual thread blocks on a supported operation, the JDK unmounts it from its carrier, freeing the carrier to run another virtual thread. When the operation completes, the virtual thread is scheduled again.</p>
+<p>That unmounting is the key mechanism. It only works when the blocking call is one the JDK knows how to handle. The list is wide but not universal: <code>Socket</code> I/O, <code>java.nio</code> channels, <code>Thread.sleep</code>, <code>Object.wait</code>, most <code>java.util.concurrent</code> locks and synchronizers, and <code>java.net.http.HttpClient</code> all cooperate. Blocking on <code>synchronized</code> pinned the carrier thread in JDK 21 and 22; JDK 24 (JEP 491) removed that limitation, so a virtual thread blocked inside a <code>synchronized</code> block no longer holds its carrier. On JDK 21 or 22 this matters a great deal and is the most common source of "virtual threads made things worse" reports.</p>
+<p>What virtual threads are not:</p>
+<ul>
+<li>They are not a replacement for reactive programming in every case. They replace the <em>thread pool</em> part of the problem, not the <em>backpressure</em> part.</li>
+<li>They are not faster per request. A virtual thread doing the same work as a platform thread takes the same time.</li>
+<li>They are not a thread pool. Virtual threads should not be pooled. Create one per task; they are cheap (a few hundred bytes of heap initially, not a megabyte of stack).</li>
+<li>They do not make <code>ThreadLocal</code> free. Each virtual thread still has its own thread-locals, and a service with thousands of virtual threads and a fat <code>ThreadLocal</code> cache can use a lot of memory. <code>ScopedValue</code> was added as a preview in JDK 21 and finalized later, specifically to address per-thread context; <code>ThreadLocal</code> still works and still costs.</li>
+</ul>
+<h2 id="the-mental-model-threads-are-cheap-connections-are-not">The mental model: threads are cheap, connections are not</h2>
+<p>A useful analogy is a restaurant. Platform threads are tables: there is a fixed number, and when all tables are full, new customers wait outside. Virtual threads are effectively unlimited tables, so nobody waits at the door. But the kitchen — the database, the downstream API — still has a fixed number of burners. Adding tables does not add burners. It just means more people are seated, staring at the kitchen, wondering why their food is late.</p>
+<p>This is why the first thing to check when adopting virtual threads is not the thread count. It is every pool between the service and the work:</p>
+<ul>
+<li>The JDBC connection pool. For HikariCP, the documented default <code>maximumPoolSize</code> is 10.</li>
+<li>The HTTP client connection pool. <code>java.net.http.HttpClient</code> has its own limits, and so does every HTTP client library.</li>
+<li>The Redis client pool (Lettuce, Jedis).</li>
+<li>Any semaphore or bulkhead added to protect a downstream.</li>
+</ul>
+<p>If a service had 200 platform threads and a Hikari pool of 20, it was already serializing on the pool. Virtual threads do not change that. They make the serialization point more obvious, because now there may be 10,000 virtual threads all waiting on the same 20 connections.</p>
+<h2 id="worked-example-a-blocking-http-service-before-and-after">Worked example: a blocking HTTP service, before and after</h2>
+<p>Suppose a service handles requests by calling two downstream HTTP APIs and one database query. Each downstream call takes, illustratively, 50 ms; the database query takes 20 ms. The service is CPU-light. Assume a 4-core box.</p>
+<p><strong>Before (platform threads, fixed pool of 200):</strong></p>
+<pre><code class="language-java">ExecutorService pool = Executors.newFixedThreadPool(200);
+</code></pre>
+<p>Each request occupies a platform thread for roughly 120 ms of wall time, almost all of it waiting. With 200 threads, the theoretical maximum throughput is 200 / 0.120 s ≈ 1,666 requests/s, assuming the downstreams can keep up. If they cannot, the pool fills and requests queue. The queue is invisible until latency spikes.</p>
+<p><strong>After (virtual threads, one per request):</strong></p>
+<pre><code class="language-java">try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    server.setExecutor(executor);
+    server.start();
+}
+</code></pre>
+<p>Now the thread count is not the limit. The limit is whichever downstream saturates first. If the Hikari pool is 10 and the database query takes 20 ms, the database caps throughput at 10 / 0.020 s = 500 requests/s, regardless of how many virtual threads exist. The HTTP client pool might cap higher or lower. The first saturated dependency sets the ceiling.</p>
+<p>This is why "we switched to virtual threads and throughput didn't change" is a common report. The thread pool was never the bottleneck; it was just the most visible one. Virtual threads moved the queue from the thread pool to the connection pool, where it is harder to see.</p>
+<p><strong>A more interesting case:</strong> if the service was previously limited to 200 concurrent requests and each request blocked on a slow downstream (say 2 seconds), it was capped at 200 / 2 s = 100 requests/s. With virtual threads, thousands of requests can be in flight, and throughput is limited by the downstream's capacity, which might be 500 requests/s. That is a real improvement, but only because the thread pool was the binding constraint. If the downstream was already the constraint, nothing changes except the shape of the queue.</p>
+<h2 id="what-changes-in-the-code-and-what-does-not">What changes in the code, and what does not</h2>
+<p><strong>What does not change:</strong> blocking code stays blocking. That is the point. There is no need to rewrite a service as reactive or async. A method that calls <code>jdbcTemplate.query(...)</code> and then <code>httpClient.send(...)</code> still works, and can now run on a virtual thread without consuming a platform thread for the duration.</p>
+<p><strong>What changes:</strong></p>
+<ol>
+<li>
+<p><strong>Thread pools become per-task executors.</strong> Replace <code>Executors.newFixedThreadPool(n)</code> with <code>Executors.newVirtualThreadPerTaskExecutor()</code> for request handling. Do not pool virtual threads manually; the executor creates a new one per task.</p>
+</li>
+<li>
+<p><strong>Thread-local caches need rethinking.</strong> A <code>ThreadLocal&lt;byte[]&gt;</code> buffer of 10 KB, multiplied by 10,000 virtual threads, is roughly 100 MB of heap. On 200 platform threads it was roughly 2 MB. Audit thread-locals before scaling concurrency.</p>
+</li>
+<li>
+<p><strong>Pinning becomes a debugging concern.</strong> On JDK 21 and 22, a virtual thread that blocks inside a <code>synchronized</code> block pins its carrier. If enough virtual threads pin, the carrier pool can starve and latency spikes appear that look like thread starvation. The JFR event <code>jdk.VirtualThreadPinned</code> (with a configurable threshold) is how to find these. On JDK 24+, this specific cause is gone, but native code that blocks (some JNI calls, some file I/O on older JDKs) can still pin.</p>
+</li>
+<li>
+<p><strong>Thread-local-based frameworks need checking.</strong> Some older frameworks (logging, transaction management, security contexts) rely on thread-locals and assume a bounded number of threads. Most modern versions are fine, but ones that cache per-thread objects are worth a look.</p>
+</li>
+<li>
+<p><strong>Structured concurrency becomes natural.</strong> <code>StructuredTaskScope</code> (preview in JDK 21, still preview in later releases) pairs well with virtual threads: fork a subtask per downstream call, join, handle failures together. It is not required to use virtual threads, but it is the idiomatic way to fan out.</p>
+</li>
+</ol>
+<h2 id="the-pinning-trap-specifically">The pinning trap, specifically</h2>
+<p>Pinning is the failure mode most likely to bite a team moving to virtual threads on JDK 21. The mechanism: a virtual thread running inside a <code>synchronized</code> block cannot unmount when it blocks. It holds its carrier thread until the block exits. If there are, say, 4 carrier threads and 100 virtual threads all blocked inside <code>synchronized</code> on a slow I/O call, the scheduler has no free carriers and everything stalls.</p>
+<p>A typical shape that triggers this:</p>
+<pre><code class="language-java">public synchronized String fetch(String key) throws IOException {
+    // blocking I/O inside a synchronized method
+    return httpClient.send(request, BodyHandlers.ofString()).body();
+}
+</code></pre>
+<p>On JDK 21, every virtual thread calling <code>fetch</code> pins a carrier for the duration of the HTTP call. With enough concurrency, the carrier pool is exhausted and unrelated virtual threads stop making progress.</p>
+<p>The fix is not to remove <code>synchronized</code> everywhere; it is to avoid blocking I/O inside it. Use <code>ReentrantLock</code> (which does not pin) or restructure so the lock is held only around in-memory state. On JDK 24+, the <code>synchronized</code> case is fixed, but the general rule still applies to native blocking calls.</p>
+<p>To find pinning, enable JFR with the <code>jdk.VirtualThreadPinned</code> event and a threshold, for example:</p>
+<pre><code class="language-bash">java -XX:StartFlightRecording:filename=recording.jfr \
+     -Djdk.tracePinnedThreads=full \
+     -jar service.jar
+</code></pre>
+<p><code>jdk.tracePinnedThreads</code> prints stack traces when a virtual thread pins; it is a diagnostic, not something to leave on in production. The JFR event is the production-safe option.</p>
+<h2 id="how-to-measure-whether-it-helped">How to measure whether it helped</h2>
+<p>Claims about virtual threads are only meaningful against a measurement of the specific service. The measurement does not require a special toolchain; it requires comparing the same load before and after, with the bottleneck visible.</p>
+<p><strong>What to instrument:</strong></p>
+<ul>
+<li>In-flight requests, sampled continuously.</li>
+<li>Request-handling thread pool: active threads, queued tasks, and pool size (platform-thread baseline only).</li>
+<li>Each connection pool: active connections, idle connections, and threads waiting for a connection. For HikariCP, the relevant metrics include active connections and pending thread acquisition counts.</li>
+<li>Downstream latency (p50, p99) per dependency.</li>
+<li>CPU utilization and GC pause time, to catch thread-local memory pressure.</li>
+</ul>
+<p><strong>What to run:</strong> a fixed-rate load test at a concurrency level that previously saturated the thread pool, against an environment with the same downstream capacity. Run it once on the platform-thread executor and once on the virtual-thread executor, with the same pool sizes. Then compare throughput at a fixed error rate, and p99 latency.</p>
+<p><strong>What to compare:</strong></p>
+<ul>
+<li>If throughput rises and the connection-pool wait time stays low, the thread pool was the binding constraint.</li>
+<li>If throughput is flat and connection-pool wait time rises, the downstream was already the constraint and virtual threads only lengthened the queue.</li>
+<li>If p99 latency rises sharply with low CPU and no connection-pool saturation, suspect pinning on JDK 21/22; check the JFR pinning events.</li>
+</ul>
+<p>An illustrative reading: suppose the before-run shows a 200-thread pool fully occupied and a Hikari pool of 10 with near-zero wait time. After the switch, the pool metric disappears, Hikari wait time climbs to hundreds of milliseconds, and throughput is unchanged. That pattern says the database was always the ceiling and the platform-thread pool was masking it.</p>
+<h2 id="common-misreadings">Common misreadings</h2>
+<p><strong>"Virtual threads make the service faster."</strong> They make it cheaper to have many concurrent requests. Per-request latency is unchanged unless the thread pool was the bottleneck. If p99 is dominated by a slow downstream, virtual threads will not fix it.</p>
+<p><strong>"The reactive stack should be replaced with virtual threads."</strong> Sometimes yes, sometimes no. Virtual threads remove the need for callback-based async in many services, which is a real simplification. But reactive frameworks also provide backpressure, which virtual threads do not. If a service needs to signal a producer to slow down, it still needs a mechanism for that (bounded queues, semaphores, reactive streams). Virtual threads make the code look synchronous; they do not make the problem synchronous.</p>
+<p><strong>"Virtual threads need pooling."</strong> No. Pooling defeats the purpose. Create one per task and let the JDK schedule them.</p>
+<p><strong>"Virtual threads are only for new code."</strong> They work with existing blocking code, which is the main appeal. Migration is mostly about auditing thread-locals and pinning, not rewriting business logic.</p>
+<p><strong>"<code>Thread.sleep</code> and <code>Object.wait</code> are the problem."</strong> They are supported and unmount correctly. The problem cases are pinning (synchronized on older JDKs, native blocking) and anything that holds a carrier while waiting.</p>
+<h2 id="a-decision-framework-for-a-service">A decision framework for a service</h2>
+<p>Before flipping the executor, answer these in order:</p>
+<ol>
+<li>
+<p><strong>Is the thread pool currently the bottleneck?</strong> Measure in-flight requests versus pool size. If the pool is rarely full, virtual threads will not help throughput. They may still simplify code, which is a valid reason.</p>
+</li>
+<li>
+<p><strong>What is the first downstream to saturate?</strong> Check connection pool sizes and timeouts for JDBC, HTTP, and cache clients. The smallest of these sets the ceiling. Virtual threads do not raise it.</p>
+</li>
+<li>
+<p><strong>Are there blocking calls inside <code>synchronized</code> on JDK 21/22?</strong> If yes, either upgrade to JDK 24+ or refactor to <code>ReentrantLock</code>. Run with JFR pinning events in staging to confirm.</p>
+</li>
+<li>
+<p><strong>Are there fat thread-locals?</strong> Estimate heap: thread-local size × expected concurrent virtual threads. If that number is uncomfortable, switch to <code>ScopedValue</code> where possible or shrink the cached object.</p>
+</li>
+<li>
+<p><strong>Does anything rely on a bounded thread count?</strong> Some rate limiters, metrics, and frameworks assume a fixed pool. Check them.</p>
+</li>
+</ol>
+<p>If the answers are "pool not the bottleneck, downstream is," virtual threads are a code-simplicity change, not a throughput change. Adopt them for readability, but do not expect a capacity win.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Platform threads</th>
+<th>Virtual threads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cost per thread</td>
+<td>~1 MB stack by default</td>
+<td>A few hundred bytes, grows as needed</td>
+</tr>
+<tr>
+<td>Pooling</td>
+<td>Required</td>
+<td>Not recommended; create per task</td>
+</tr>
+<tr>
+<td>Blocking I/O</td>
+<td>Consumes a thread</td>
+<td>Unmounts, frees carrier (if supported)</td>
+</tr>
+<tr>
+<td><code>synchronized</code> + blocking</td>
+<td>Fine</td>
+<td>Pins carrier on JDK 21/22; fixed in JDK 24</td>
+</tr>
+<tr>
+<td>Thread-locals</td>
+<td>Bounded by pool size</td>
+<td>Multiply by concurrent virtual threads</td>
+</tr>
+<tr>
+<td>Backpressure</td>
+<td>Implicit via pool size</td>
+<td>Must be explicit (semaphores, bounded queues)</td>
+</tr>
+<tr>
+<td>Debugging</td>
+<td>Thread dumps show all</td>
+<td>Thread dumps show virtual threads; JFR for pinning</td>
+</tr>
+</tbody>
+</table>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Do virtual threads work with Spring Boot and an embedded servlet container?</strong></p>
+<p>On recent versions, yes. Spring Boot 3.2 added a configuration property (<code>spring.threads.virtual.enabled=true</code>) that switches the embedded container's request executor to virtual threads, and recent servlet containers support virtual threads as an executor. The caveats are the same as anywhere: check the JDBC pool size, audit thread-locals, and watch for pinning on JDK 21/22. Spring's transaction and security contexts use thread-locals, but they are per-request and bounded, so the multiplication concern is usually manageable.</p>
+<p><strong>Should a maximum be set on virtual threads?</strong></p>
+<p>Not at the thread level. Virtual threads are cheap enough that limiting them is the wrong control. What should be limited is the thing they contend for: database connections, HTTP connections, and any downstream with a quota. Use a <code>Semaphore</code> or a bounded pool around the downstream call, not around the thread. This is the same discipline that applies with platform threads, just made explicit.</p>
+<p><strong>Why did latency get worse after switching?</strong></p>
+<p>The most common causes, in order: (1) pinning on JDK 21/22 from <code>synchronized</code> around blocking calls, which starves carriers; (2) a connection pool that was already saturated, now with a much longer queue of waiters; (3) thread-local memory pressure causing GC pauses; (4) a framework that assumed a bounded thread count and now sees thousands. JFR with <code>jdk.VirtualThreadPinned</code> and a thread dump will usually distinguish these quickly.</p>
+<p><strong>Can virtual threads be used with <code>CompletableFuture</code>?</strong></p>
+<p>Yes, but be deliberate. <code>CompletableFuture.supplyAsync</code> without an executor uses the common ForkJoinPool, which is sized to CPU cores and is not a virtual-thread executor. Pass <code>Executors.newVirtualThreadPerTaskExecutor()</code> explicitly to run the task on a virtual thread. Mixing virtual threads with callback-based async is legal but tends to produce code that is neither simple nor fast; prefer structured concurrency or plain blocking calls on virtual threads.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the configuration for the JDBC connection pool (for HikariCP, look for <code>maximumPoolSize</code>; for Spring Boot, <code>spring.datasource.hikari.maximum-pool-size</code>) and write down the number. Compare it to the current request-handling thread pool size. If the connection pool is smaller, that number, not the thread count, is the real concurrency ceiling, and it is the first thing to reason about before adopting virtual threads.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://kubaik.github.io/code-ai-wont-rewrite/">Code AI won’t rewrite</a></li>
+<li><a href="https://kubaik.github.io/http3-changes-less-than-the-demos-imply/">HTTP/3 changes less than the demos imply</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/tame-python-asyncs-hidden-traps/">
+                        <h3>Tame Python async’s hidden traps</h3>
+                        <p>Compare threaded and task-based async in Python: how each works, where each fails, how to measure the tradeoff yourself, and a checklist for choosing.</p>
+                        <span class="related-meta">11 min read · 29 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
+                        <h3>Rust rewrites: where they pay off, where they don&#39;t</h3>
+                        <p>A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+                        <span class="related-meta">12 min read · 21 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/sqlalchemy-vs-asyncpg-pooling-in-async-services/">
+                        <h3>SQLAlchemy vs asyncpg: pooling in async services</h3>
+                        <p>How SQLAlchemy&amp;#x27;s async engine and asyncpg&amp;#x27;s pool actually relate, how to size pools against Postgres max_connections, and the failure modes that cause timeouts.</p>
+                        <span class="related-meta">13 min read · 3 November 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

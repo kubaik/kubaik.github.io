@@ -424,6 +424,13 @@
   "title": "Ship 1MB pages on 4G: Starlink Africa case study",
   "words": 2617
  },
+ "virtual-threads-what-actually-changes": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Virtual threads: what actually changes",
+  "words": 2644
+ },
  "price-ai-proof-skills-in-2026": {
   "verdict": "IMPROVE",
   "reasons": [
@@ -1338,7 +1345,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Structured logging: searchable at scale",
-  "words": 3079
+  "words": 3934
  },
  "which-ai-wrappers-made-money-in-2026": {
   "verdict": "IMPROVE",

@@ -374,7 +374,7 @@ stop-the-writes-zero-downtime-db-migrations,docs/stop-the-writes-zero-downtime-d
 stop-trusting-agents-for-core-logic,docs/stop-trusting-agents-for-core-logic/index.md,IMPROVE,,add_sources,Stop trusting agents for core logic,2026-09-14,1,0,0.007,2196,0,0.0,0,0,6,0,False,False,13,False
 store-data-once-serve-everywhere-cheaper,docs/store-data-once-serve-everywhere-cheaper/index.md,IMPROVE,,,"Store data once, serve everywhere: cheaper",2026-06-25,0,0,0.0,2142,0,0.0,0,4,5,0,False,False,14,False
 stride-is-a-checklist-not-a-threat-model,docs/stride-is-a-checklist-not-a-threat-model/index.md,IMPROVE,,add_sources,"STRIDE is a checklist, not a threat model",2026-11-01,0,0,0.0,2709,0,0.0,0,0,6,0,False,False,13,False
-structured-logging-searchable-at-scale,docs/structured-logging-searchable-at-scale/index.md,IMPROVE,,,Structured logging: searchable at scale,2026-11-12,0,0,0.0,2919,0,0.0,0,2,2,0,False,True,13,False
+structured-logging-searchable-at-scale,docs/structured-logging-searchable-at-scale/index.md,IMPROVE,,,Structured logging: searchable at scale,2026-11-12,0,0,0.0,3774,0,0.0,0,1,6,0,False,True,18,False
 supervisor-vs-swarm-vs-debate-vs-pipeline,docs/supervisor-vs-swarm-vs-debate-vs-pipeline/index.md,IMPROVE,,,Supervisor vs swarm vs debate vs pipeline,2026-08-03,0,0,0.0,3170,0,0.0,0,5,6,0,False,False,31,False
 tame-python-asyncs-hidden-traps,docs/tame-python-asyncs-hidden-traps/index.md,IMPROVE,,add_sources,Tame Python async’s hidden traps,2026-06-29,0,0,0.0,2026,0,0.0,0,0,6,0,False,False,10,False
 tech-debt-when-half-your-stack-is-unfamiliar,docs/tech-debt-when-half-your-stack-is-unfamiliar/index.md,IMPROVE,,,Tech debt: when half your stack is unfamiliar,2026-09-26,0,0,0.0,2673,0,0.0,0,5,5,0,False,True,15,False
@@ -396,6 +396,7 @@ ussdsms-fallback-the-session-trap,docs/ussdsms-fallback-the-session-trap/index.m
 velocity-up-ownership-down-team-scaling-trap,docs/velocity-up-ownership-down-team-scaling-trap/index.md,IMPROVE,,add_sources,"Velocity Up, Ownership Down: Team Scaling Trap",2026-10-22,0,0,0.0,2550,0,0.0,0,0,6,0,False,False,13,False
 vibe-code-works-great-fails-forever,docs/vibe-code-works-great-fails-forever/index.md,IMPROVE,,,"Vibe code: works great, fails forever",2026-06-20,1,0,0.007,2410,0,0.0,0,2,6,0,False,False,22,False
 vibe-coding-mvp-gem-prod-albatross,docs/vibe-coding-mvp-gem-prod-albatross/index.md,IMPROVE,,add_sources,"Vibe coding: MVP gem, prod albatross",2026-06-19,0,0,0.0,2641,0,0.0,1,0,6,0,False,False,21,False
+virtual-threads-what-actually-changes,docs/virtual-threads-what-actually-changes/index.md,IMPROVE,,,Virtual threads: what actually changes,2026-11-13,3,1,0.03,2597,0,0.0,0,2,2,0,False,True,13,False
 waf-and-bot-management-what-they-miss,docs/waf-and-bot-management-what-they-miss/index.md,IMPROVE,,,WAF and bot management: what they miss,2026-11-09,0,0,0.0,2877,0,0.0,0,3,6,0,False,True,19,False
 wasm-servers-beat-containers-here,docs/wasm-servers-beat-containers-here/index.md,IMPROVE,,,WASM servers beat containers here,2026-08-05,0,0,0.0,2214,0,0.0,0,4,6,0,False,False,16,False
 webhook-delivery-that-survives-outages,docs/webhook-delivery-that-survives-outages/index.md,IMPROVE,,,Webhook delivery that survives outages,2026-10-02,1,0,0.007,2435,0,0.0,0,2,6,0,False,True,12,False

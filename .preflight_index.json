@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-12T19:42:57.007947",
+  "built_at": "2026-11-13T05:44:44.110301",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5830,6 +5830,11 @@
       "slug": "structured-logging-searchable-at-scale",
       "title": "Structured logging: searchable at scale",
       "summary": "zerodowntime database has a reputation for being boring, which is exactly why nobody budgets time for it. Production gives you neither a clean environment nor a patient timeline. This walks through the fix and the reasoning, not just the patch. Logs are the most expensive debugging tool you own, and"
+    },
+    {
+      "slug": "virtual-threads-what-actually-changes",
+      "title": "Virtual threads: what actually changes",
+      "summary": "There's a gap between how java virtual is taught and how it actually behaves under load. Most write-ups stop exactly where the interesting part starts. Here's what a colleague hitting this for the first time needs to know. Java virtual threads (JEP 444, final in JDK 21) are the first change to Java'"
     }
   ]
 }

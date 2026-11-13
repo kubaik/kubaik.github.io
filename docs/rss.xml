@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Nov 2026 19:45:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 05:48:28 +0000</lastBuildDate>
+    <item>
+      <title>Virtual threads: what actually changes</title>
+      <link>https://kubaik.github.io/virtual-threads-what-actually-changes/</link>
+      <description>What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.</description>
+      <pubDate>Fri, 13 Nov 2026 05:44:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/virtual-threads-what-actually-changes/</guid>
+    </item>
     <item>
       <title>Structured logging: searchable at scale</title>
       <link>https://kubaik.github.io/structured-logging-searchable-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.</description>
       <pubDate>Tue, 03 Nov 2026 19:21:26 +0000</pubDate>
       <guid>https://kubaik.github.io/bm25-vs-dense-embeddings-hybrid-search-reality/</guid>
-    </item>
-    <item>
-      <title>SQLAlchemy vs asyncpg: pooling in async services</title>
-      <link>https://kubaik.github.io/sqlalchemy-vs-asyncpg-pooling-in-async-services/</link>
-      <description>How SQLAlchemy&amp;#x27;s async engine and asyncpg&amp;#x27;s pool actually relate, how to size pools against Postgres max_connections, and the failure modes that cause timeouts.</description>
-      <pubDate>Tue, 03 Nov 2026 05:54:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/sqlalchemy-vs-asyncpg-pooling-in-async-services/</guid>
     </item>
   </channel>
 </rss>
