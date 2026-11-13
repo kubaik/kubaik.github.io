@@ -280,6 +280,13 @@
     "priority": "normal"
   },
   {
+    "slug": "distributed-locks-safe-only-with-fencing",
+    "title": "Distributed locks: safe only with fencing",
+    "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'analysis by Martin Kleppmann'",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
     "slug": "iso-20022-where-payment-rails-actually-break",
     "title": "ISO 20022: where payment rails actually break",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'according to the SCOR'",

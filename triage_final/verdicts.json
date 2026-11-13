@@ -2061,7 +2061,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Distributed locks: safe only with fencing",
-  "words": 2971
+  "words": 3386
  },
  "skip-m-pesa-build-one-api-for-3-african-markets": {
   "verdict": "KEEP",

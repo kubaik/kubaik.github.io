@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-11-13T18:26:53.122295">
-        <meta property="article:modified_time" content="2026-11-13T18:28:57.161458+00:00">
+        <meta property="article:modified_time" content="2026-11-13T19:22:14.177255+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Distributed locks: safe only with fencing">
@@ -63,8 +63,8 @@
       "headline": "Distributed locks: safe only with fencing",
       "description": "A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.",
       "datePublished": "2026-11-13T18:26:53+00:00",
-      "dateModified": "2026-11-13T18:28:57+00:00",
-      "wordCount": 3414,
+      "dateModified": "2026-11-13T19:22:14+00:00",
+      "wordCount": 3386,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -254,7 +254,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3414 words
+                        &nbsp;·&nbsp; 3386 words
                         
                         &nbsp;·&nbsp; Updated 2026-11-13
                         
@@ -266,7 +266,7 @@
                 <p>A distributed lock is a lease on a shared resource, and every lease can expire while its holder is still running. The recurring mistake is treating the lock itself as the safety property. The safety property is that the resource rejects stale holders, which requires a monotonic fencing token checked by the resource, not by the lock service. Redis and etcd can both hand out ordered tokens, but neither makes the token part of the write path on its own. This article covers where each stops being safe and how to build the piece that makes either usable.</p>
 <h2 id="the-lease-that-outlives-its-holder">The lease that outlives its holder</h2>
 <p>The documented behaviour of every distributed lock is the same: acquire returns a token and a time-to-live; the holder is expected to renew before the TTL elapses; if renewal fails, the lock is released and another client can acquire it. The gap between that sentence and production is the pause. A process can be alive, holding a token it believes is valid, and not executing: stopped at a GC safepoint (the JVM's stop-the-world pauses are the canonical example), descheduled by the hypervisor, blocked on a full TCP send buffer, or frozen by a container runtime during a live migration. When it wakes, it resumes the critical section with a token the lock service has already expired and reissued.</p>
-<p>This is not a Redis bug or an etcd bug. It is the definition of a lease. The widely cited analysis by Martin Kleppmann (2016) argues that any lock based on timing assumptions is unsafe for correctness unless the protected resource can reject stale holders. The counter-argument from the Redis side is that for efficiency, meaning avoiding duplicated work, a lock that occasionally allows two holders is acceptable. Both positions are correct about different problems. The failure mode is teams using an efficiency lock where they need a correctness lock.</p>
+<p>This is not a Redis bug or an etcd bug. It is the definition of a lease. The counter-argument from the Redis side is that for efficiency, meaning avoiding duplicated work, a lock that occasionally allows two holders is acceptable. Both positions are correct about different problems. The failure mode is teams using an efficiency lock where they need a correctness lock.</p>
 <p>The distinction changes what you build:</p>
 <ul>
 <li>An <strong>efficiency lock</strong> (one cron leader, one cache warmer) only needs to be mostly right. A duplicated run wastes CPU; nothing corrupts.</li>

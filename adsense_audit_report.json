@@ -1913,7 +1913,7 @@
     {
       "slug": "distributed-locks-safe-only-with-fencing",
       "source": "post.json",
-      "word_count": 3414,
+      "word_count": 3386,
       "reasons": [],
       "duplicate_of": null
     },

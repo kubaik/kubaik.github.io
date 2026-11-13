@@ -1,10 +1,4 @@
 {
-  "improved": [
-    {
-      "slug": "distributed-locks-safe-only-with-fencing",
-      "attempts": 1,
-      "retitled": false
-    }
-  ],
+  "improved": [],
   "failed": []
 }
