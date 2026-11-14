@@ -252,5 +252,7 @@
   "Zero-downtime database schema migrations: expand and contract explained",
   "Structured logging practices that make large log volumes searchable and affordable",
   "Java virtual threads in production: what changes for blocking network services",
-  "Distributed locks with Redis and etcd: when they are safe"
+  "Distributed locks with Redis and etcd: when they are safe",
+  "Designing a wallet system: balances, holds, and transaction state machines",
+  "Freelance versus full-time remote engineering careers: tradeoffs for African developers"
 ]

@@ -198,6 +198,7 @@ docs/flaky-tests-reliability-bug-not-test-noise/index.md
 docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/index.md
 docs/found-niche-in-2026-saas-that-ai-cant-copy/index.md
 docs/fraud-detection-rules-vs-scoring-where-they-meet/index.md
+docs/freelance-vs-full-time-african-devs-real-tradeoffs/index.md
 docs/gateway-api-wont-fix-your-ingress-mess/index.md
 docs/global-state-is-the-wrong-tool-for-ai-features/index.md
 docs/golden-paths-become-load-bearing-walls/index.md

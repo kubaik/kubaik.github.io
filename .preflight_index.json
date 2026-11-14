@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-13T18:26:56.077826",
+  "built_at": "2026-11-14T05:34:58.687191",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5840,6 +5840,11 @@
       "slug": "distributed-locks-safe-only-with-fencing",
       "title": "Distributed locks: safe only with fencing",
       "summary": "The first time distributed locks fails in production, it rarely fails in the way any postmortem template expects. It's the kind of problem that's easy to reproduce and hard to explain. This covers the fix, the cost of not knowing sooner, and what to monitor. A distributed lock is a lease on a shared"
+    },
+    {
+      "slug": "freelance-vs-full-time-african-devs-real-tradeoffs",
+      "title": "Freelance vs full-time: African devs' real tradeoffs",
+      "summary": "There's a gap between how designing wallet is taught and how it actually behaves under load. Here's what holds up in practice, and why. Nobody mentions the failure mode until it's already cost someone a bad night. The first question most African developers ask when considering remote work is \"how do"
     }
   ]
 }

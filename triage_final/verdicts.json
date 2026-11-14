@@ -1481,6 +1481,17 @@
   "title": "Buy vs build AI: 3 hard rules for 2026",
   "words": 3070
  },
+ "freelance-vs-full-time-african-devs-real-tradeoffs": {
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
+  "title": "Freelance vs full-time: African devs' real tradeoffs",
+  "words": 2242
+ },
  "context-windows-live-longer-than-you-think": {
   "verdict": "KEEP",
   "reasons": [],
