@@ -424,5 +424,6 @@ docs/why-scaling-agents-kills-plain-logs/index.md
 docs/why-your-multi-agent-system-degraded-slowly/index.md
 docs/why-your-routing-layer-will-collapse-at-scale/index.md
 docs/world-models-wont-replace-your-backend/index.md
+docs/your-platform-team-is-too-big/index.md
 docs/zero-trust-ai-skip-the-latency-tax/index.md
 docs/zig-vs-rust-vs-go-compile-errors-compared/index.md

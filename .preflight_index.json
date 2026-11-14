@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-14T05:34:58.687191",
+  "built_at": "2026-11-14T17:48:27.526314",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5845,6 +5845,11 @@
       "slug": "freelance-vs-full-time-african-devs-real-tradeoffs",
       "title": "Freelance vs full-time: African devs' real tradeoffs",
       "summary": "There's a gap between how designing wallet is taught and how it actually behaves under load. Here's what holds up in practice, and why. Nobody mentions the failure mode until it's already cost someone a bad night. The first question most African developers ask when considering remote work is \"how do"
+    },
+    {
+      "slug": "your-platform-team-is-too-big",
+      "title": "Your platform team is too big",
+      "summary": "There's a gap between how cost reliability is taught and how it actually behaves under load. Here's what holds up in practice, and why. The dashboards look healthy right up until the incident starts. Most platform engineering advice assumes a company that doesn't exist in most of the world: a headco"
     }
   ]
 }

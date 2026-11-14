@@ -6,6 +6,7 @@ ai-fixes-legacy-code-nobody-owns,75,3722,AI fixes legacy code nobody owns,2026-0
 ai-ops-pagerduty-vs-opsgenie-which-burns-your-team,75,2655,AI ops: PagerDuty vs Opsgenie — which burns your team,2026-06-29T20:08:01.814298,2,first-person incident: 'If the simpler platform saved 12 hours of training compared to the more complex ' | no FAQ section
 negotiate-2026-pay-when-ai-steals-40-of-your-job,75,2396,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,2,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section
 stay-relevant-when-tools-change-faster-than-you-can,75,3127,Stay relevant when tools change faster than you can,2026-06-09T18:49:05.537160,1,fabricated citation: 'The benchmark says'
+your-platform-team-is-too-big,75,2862,Your platform team is too big,2026-11-14T17:48:24.398877,2,first-person incident: 'The failure mode is predictable and I have watched it play out in the abstract a' | no markdown table
 agentic-ai-cost-control-7-tools-one-backfire,80,2985,"Agentic AI cost control: 7 tools, one backfire",2026-09-19T11:35:45.274397,1,first-person incident: '**Strength:** You can see the exact trace that cost $0.40 and why.'
 ai-proof-your-mid-level-salary,80,2961,AI-proof your mid-level salary,2026-07-01T08:09:11.906955,1,"first-person incident: 'Estimated hit rate 80%, estimated p99 after the change 300 ms, added infrastruct'"
 ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks: 3 skills that protect pay,2026-06-24T05:02:01.012343,1,first-person incident: 'A developer who once spent two days on a settings page can often get a working d'
@@ -127,7 +128,7 @@ evaluate-agents-with-spark-vs-custom-harness,95,2430,Evaluate agents with Spark 
 fastapi-vs-django-vs-flask-api-picks-for-2026,95,2904,FastAPI vs Django vs Flask: API picks for 2026,2026-11-09T05:20:45.680557,1,no FAQ section
 fintech-features-break-in-ghana-the-real-fix,95,2686,Fintech features break in Ghana: the real fix,2026-07-18T13:24:23.053992,1,no FAQ section
 fix-ai-agent-failures-postmortem-guide,95,2390,"Postmortems for AI agents: drift, cost, replay",2026-06-29T21:20:13.013851,1,no FAQ section
-freelance-vs-full-time-african-devs-real-tradeoffs,95,2242,Freelance vs full-time: African devs' real tradeoffs,2026-11-14T05:34:55.851163,1,no markdown table
+freelance-vs-full-time-african-devs-real-tradeoffs,95,2361,Freelance vs full-time: African devs' real tradeoffs,2026-11-14T05:34:55.851163,1,no markdown table
 golden-paths-that-dont-handcuff,95,2301,Golden paths that don't handcuff,2026-09-21T08:28:08.494579,1,no FAQ section
 hire-for-agents-not-autocomplete,95,2690,"Hire for agents, not autocomplete",2026-08-02T11:06:20.609961,1,no FAQ section
 hybrid-cloud-routing-cost-speed-balance-for-sea,95,2605,Hybrid Cloud Routing: Cost-Speed Balance for SEA,2026-09-04T16:04:06.736348,1,no FAQ section

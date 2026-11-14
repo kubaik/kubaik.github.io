@@ -957,6 +957,13 @@
   "title": "Agentic workflows: surviving network partitions",
   "words": 3589
  },
+ "your-platform-team-is-too-big": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Your platform team is too big",
+  "words": 2862
+ },
  "global-state-is-the-wrong-tool-for-ai-features": {
   "verdict": "IMPROVE",
   "reasons": [
@@ -1482,15 +1489,11 @@
   "words": 3070
  },
  "freelance-vs-full-time-african-devs-real-tradeoffs": {
-  "verdict": "IMPROVE",
-  "reasons": [
-   "no_primary_sources"
-  ],
-  "fixes": [
-   "add_sources"
-  ],
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
   "title": "Freelance vs full-time: African devs' real tradeoffs",
-  "words": 2242
+  "words": 2361
  },
  "context-windows-live-longer-than-you-think": {
   "verdict": "KEEP",

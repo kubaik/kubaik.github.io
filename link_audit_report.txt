@@ -1,4 +1,4 @@
-❌ Internal link audit: 427 broken link(s) found across 428 posts checked.
+❌ Internal link audit: 428 broken link(s) found across 429 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -202,6 +202,7 @@ Source Post                              Anchor Text                    Missing 
   /foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality AI content policy              /ai-content-policy/
   /found-niche-in-2026-saas-that-ai-cant-copy AI content policy              /ai-content-policy/
   /fraud-detection-rules-vs-scoring-where-they-meet AI content policy              /ai-content-policy/
+  /freelance-vs-full-time-african-devs-real-tradeoffs AI content policy              /ai-content-policy/
   /gateway-api-wont-fix-your-ingress-mess AI content policy              /ai-content-policy/
   /global-state-is-the-wrong-tool-for-ai-features AI content policy              /ai-content-policy/
   /golden-paths-become-load-bearing-walls AI content policy              /ai-content-policy/

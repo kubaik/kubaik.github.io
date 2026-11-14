@@ -5,7 +5,14 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Nov 2026 05:38:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Nov 2026 17:50:51 +0000</lastBuildDate>
+    <item>
+      <title>Your platform team is too big</title>
+      <link>https://blog.kubailabs.com/your-platform-team-is-too-big/</link>
+      <description>Small engineering orgs often staff a platform team before scoping the platform as a product. Here is a staffing test, a written boundary, and paved roads.</description>
+      <pubDate>Sat, 14 Nov 2026 17:48:24 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/your-platform-team-is-too-big/</guid>
+    </item>
     <item>
       <title>Freelance vs full-time: African devs&apos; real tradeoffs</title>
       <link>https://blog.kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</link>
@@ -138,13 +145,6 @@
       <description>Design append-only decision records for AI agents: write-ahead ordering, policy snapshots, idempotency keys, and reconstruction drills that expose gaps.</description>
       <pubDate>Thu, 05 Nov 2026 05:48:30 +0000</pubDate>
       <guid>https://blog.kubailabs.com/audit-trails-for-ai-agents-what-breaks-first/</guid>
-    </item>
-    <item>
-      <title>PAPSS and mobile money: where integration breaks</title>
-      <link>https://blog.kubailabs.com/papss-and-mobile-money-where-integration-breaks/</link>
-      <description>Why cross-border PAPSS and mobile money integrations break: hold-and-resolve state machines, identifier resolution, and pending-set reconciliation.</description>
-      <pubDate>Wed, 04 Nov 2026 19:33:02 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/papss-and-mobile-money-where-integration-breaks/</guid>
     </item>
   </channel>
 </rss>
