@@ -1,7 +1,7 @@
 {
   "changed": [
     {
-      "slug": "your-platform-team-is-too-big",
+      "slug": "python-deps-uv-vs-poetry-vs-pip-tools",
       "sentences_removed": 0,
       "sections_added": 2,
       "footer_migrated": false

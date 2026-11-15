@@ -114,6 +114,13 @@
   "title": "MCP hidden cost traps",
   "words": 2570
  },
+ "python-deps-uv-vs-poetry-vs-pip-tools": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Python deps: uv vs Poetry vs pip-tools",
+  "words": 2268
+ },
  "webhook-delivery-that-survives-outages": {
   "verdict": "KEEP",
   "reasons": [],
@@ -962,7 +969,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Your platform team is too big",
-  "words": 2862
+  "words": 3577
  },
  "global-state-is-the-wrong-tool-for-ai-features": {
   "verdict": "IMPROVE",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-14T17:48:27.526314",
+  "built_at": "2026-11-15T05:32:28.934531",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5850,6 +5850,11 @@
       "slug": "your-platform-team-is-too-big",
       "title": "Your platform team is too big",
       "summary": "There's a gap between how cost reliability is taught and how it actually behaves under load. Here's what holds up in practice, and why. The dashboards look healthy right up until the incident starts. Most platform engineering advice assumes a company that doesn't exist in most of the world: a headco"
+    },
+    {
+      "slug": "python-deps-uv-vs-poetry-vs-pip-tools",
+      "title": "Python deps: uv vs Poetry vs pip-tools",
+      "summary": "Inherited serverless cold setups tend to come with no explanation, just a working system and a long reverse-engineering session. Production gives you neither a clean environment nor a patient timeline. Here's the root cause, not just the symptom. The confusion: three tools, three mental models Ask f"
     }
   ]
 }

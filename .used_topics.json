@@ -256,5 +256,7 @@
   "Designing a wallet system: balances, holds, and transaction state machines",
   "Freelance versus full-time remote engineering careers: tradeoffs for African developers",
   "The cost and reliability tradeoffs of running agents for users paying via mobile money",
-  "Platform engineering team topologies: how to staff and scope an internal platform group"
+  "Platform engineering team topologies: how to staff and scope an internal platform group",
+  "Serverless cold starts explained: runtimes, provisioned concurrency, and architecture workarounds",
+  "Python packaging and dependency management with uv, Poetry, and pip-tools"
 ]

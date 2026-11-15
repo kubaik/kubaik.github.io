@@ -448,6 +448,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "python-deps-uv-vs-poetry-vs-pip-tools",
+      "source": "post.json",
+      "word_count": 2329,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "webhook-delivery-that-survives-outages",
       "source": "post.json",
       "word_count": 2698,

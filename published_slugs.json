@@ -1016,6 +1016,9 @@
   "pypi-poisoned-models-hit-prod-in-2025": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "python-deps-uv-vs-poetry-vs-pip-tools": {
+    "first_seen": "2026-11-15T05:33:01.651956+00:00"
+  },
   "queueing-theory-for-backend-capacity": {
     "first_seen": "2026-11-08T17:48:43.455695+00:00"
   },

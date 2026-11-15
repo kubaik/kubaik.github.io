@@ -1,0 +1,529 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Python deps: uv vs Poetry vs pip-tools - Kubai Kevin</title>
+        <meta name="description" content="Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.">
+        <meta name="keywords" content="Python, DependencyManagement, UvVsPoetry, PipToolsLockfile, PythonLockfile, UvPythonPackaging, Python3">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-15T05:32:25.930711">
+        <meta property="article:modified_time" content="2026-11-15T05:34:57.050198+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Python deps: uv vs Poetry vs pip-tools">
+        <meta property="og:description" content="Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.">
+        <meta property="og:url" content="https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://blog.kubailabs.com/static/og/python-deps-uv-vs-poetry-vs-pip-tools.png">
+        <meta property="og:image:alt" content="Python deps: uv vs Poetry vs pip-tools">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Python deps: uv vs Poetry vs pip-tools">
+        <meta name="twitter:description" content="Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.">
+        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/python-deps-uv-vs-poetry-vs-pip-tools.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/#article",
+      "headline": "Python deps: uv vs Poetry vs pip-tools",
+      "description": "Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.",
+      "datePublished": "2026-11-15T05:32:25+00:00",
+      "dateModified": "2026-11-15T05:34:57+00:00",
+      "wordCount": 2329,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://blog.kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://blog.kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://blog.kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://blog.kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/"
+      },
+      "keywords": "Python, DependencyManagement, UvVsPoetry, PipToolsLockfile, PythonLockfile, UvPythonPackaging, Python3",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.kubailabs.com/static/og/python-deps-uv-vs-poetry-vs-pip-tools.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://blog.kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Python deps: uv vs Poetry vs pip-tools",
+          "item": "https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Python deps: uv vs Poetry vs pip-tools</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Python deps: uv vs Poetry vs pip-tools</h1>
+                
+                <p class="post-lead">Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">DependencyManagement</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">UvVsPoetry</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PipToolsLockfile</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PythonLockfile</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python3/"
+                       style="text-decoration:none;">Python3</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2329 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-15
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <h2 id="three-tools-three-mental-models">Three tools, three mental models</h2>
+<p>Ask several Python developers how they manage dependencies and the answers will diverge. One keeps a <code>requirements.txt</code> compiled with <code>pip-compile</code>. Another has a <code>pyproject.toml</code> with Poetry metadata and a <code>poetry.lock</code>. A third has moved to <code>uv</code> and runs <code>uv sync</code> instead of <code>pip install</code>. Each approach works in isolation. They do not interoperate cleanly.</p>
+<p>The confusion is not about which tool is "best" in the abstract. Each tool encodes a different model of what a dependency <em>is</em>, and teams mix them without noticing that the models conflict. The practical problem: a repository cannot safely mix <code>pip</code>, Poetry and <code>uv</code> without knowing which tool owns the lockfile and which one owns the virtualenv.</p>
+<p>This article lays out the underlying model each tool uses, shows where the models diverge, works the same small project through all three, and ends with a decision checklist.</p>
+<h2 id="the-underlying-model-resolver-lockfile-environment">The underlying model: resolver, lockfile, environment</h2>
+<p>Every Python dependency tool does three things, and the differences live in how it does them:</p>
+<ol>
+<li><strong>Resolve</strong> a set of version constraints into concrete pins.</li>
+<li><strong>Record</strong> those pins in a lockfile (or not).</li>
+<li><strong>Install</strong> the pins into an environment, usually a virtualenv.</li>
+</ol>
+<p><code>pip</code> historically only did step 3 well, with a resolver added in recent versions. <code>pip-tools</code> adds steps 1 and 2 through <code>pip-compile</code>, producing a <code>requirements.txt</code> with hashes. Poetry and <code>uv</code> do all three, but they disagree on file formats and on whether the lockfile is authoritative.</p>
+<p>The key mental model: <strong>the lockfile is the contract</strong>. If two tools disagree about which file is the lockfile, you have two contracts, and CI will eventually install a different set of packages than a developer laptop. That is the failure mode behind most "works on my machine" incidents in Python projects.</p>
+<p>A second axis is <strong>where the virtualenv lives</strong>. <code>pip</code> and <code>pip-tools</code> install into whatever environment is active (<code>$VIRTUAL_ENV</code>). Poetry creates and manages a virtualenv in a cache directory by default unless <code>virtualenvs.in-project</code> is set. <code>uv</code> defaults to a <code>.venv</code> in the project root. Running <code>poetry install</code> and then <code>uv sync</code> in the same repo can leave two virtualenvs and a confusing <code>python -c "import sys; print(sys.prefix)"</code> result.</p>
+<h2 id="where-the-models-diverge">Where the models diverge</h2>
+<h3 id="pip-tools-constraints-in-pins-out">pip-tools: constraints in, pins out</h3>
+<p><code>pip-tools</code> is the smallest conceptual leap from plain <code>pip</code>. Abstract requirements live in <code>requirements.in</code>:</p>
+<pre><code class="language-text"># requirements.in
+requests&gt;=2.31
+flask&gt;=3.0,&lt;4
+</code></pre>
+<p>Compile them:</p>
+<pre><code class="language-bash">pip-compile requirements.in --generate-hashes -o requirements.txt
+</code></pre>
+<p>The output <code>requirements.txt</code> contains exact pins with hashes, including transitive dependencies. Install with <code>pip install -r requirements.txt</code>. There is no separate lockfile concept — the compiled <code>requirements.txt</code> <em>is</em> the lockfile.</p>
+<p>This model is transparent. The tradeoffs: <code>pip-tools</code> does not manage the virtualenv, does not know about <code>pyproject.toml</code> dependency groups, and does not handle editable installs of your own package gracefully. It also does not resolve platform-specific markers into a single lockfile the way Poetry and <code>uv</code> do; conditional dependency trees may need separate compiled files per Python version or platform.</p>
+<h3 id="poetry-project-metadata-plus-lockfile">Poetry: project metadata plus lockfile</h3>
+<p>Poetry treats <code>pyproject.toml</code> as the source of truth for both package metadata and dependency constraints. <code>poetry.lock</code> records the resolved graph. <code>poetry install</code> reads the lockfile and installs into a Poetry-managed virtualenv.</p>
+<p>The lockfile format is Poetry-specific. It is not a <code>requirements.txt</code>, and <code>pip install -r</code> cannot consume it directly. Poetry can export one (<code>poetry export -f requirements.txt</code>), but the export is a one-way projection: the lockfile stays authoritative, and the exported file drifts if the export step is forgotten.</p>
+<p>Poetry's resolver is stricter than pip's about conflicting constraints, which catches problems early and frustrates when a transitive dependency has a loose upper bound. Long resolution on large graphs is a real tradeoff of full backtracking resolution rather than pip's more permissive approach.</p>
+<h3 id="uv-resolver-environment-manager-and-installer">uv: resolver, environment manager and installer</h3>
+<p><code>uv</code> is a single binary that resolves, locks and installs. It reads <code>pyproject.toml</code> for project metadata and dependencies, writes <code>uv.lock</code>, and creates a <code>.venv</code> in the project root by default. <code>uv sync</code> brings the environment in line with the lockfile; <code>uv lock</code> re-resolves; <code>uv add</code> and <code>uv remove</code> edit <code>pyproject.toml</code> and update the lock together.</p>
+<p>The important difference from Poetry is that <code>uv</code> is also a drop-in replacement for <code>pip</code> and <code>pip-tools</code> in many workflows: <code>uv pip install</code>, <code>uv pip compile</code> and <code>uv pip sync</code> operate on <code>requirements.txt</code> files. That allows incremental adoption — replace <code>pip install</code> with <code>uv pip install</code> first, then move to the project/lockfile model when ready.</p>
+<p>The <code>uv.lock</code> format is not a <code>requirements.txt</code> either. As with Poetry, export is needed to interoperate with tools that expect one.</p>
+<h3 id="side-by-side">Side-by-side</h3>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>pip-tools</th>
+<th>Poetry</th>
+<th>uv</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source of constraints</td>
+<td><code>requirements.in</code></td>
+<td><code>pyproject.toml</code></td>
+<td><code>pyproject.toml</code></td>
+</tr>
+<tr>
+<td>Lockfile</td>
+<td>compiled <code>requirements.txt</code></td>
+<td><code>poetry.lock</code></td>
+<td><code>uv.lock</code></td>
+</tr>
+<tr>
+<td>Manages virtualenv</td>
+<td>No</td>
+<td>Yes (cache dir by default)</td>
+<td>Yes (<code>.venv</code> by default)</td>
+</tr>
+<tr>
+<td>Consumable by <code>pip install -r</code></td>
+<td>Yes (it is one)</td>
+<td>Via <code>poetry export</code></td>
+<td>Via <code>uv export</code></td>
+</tr>
+<tr>
+<td>Handles editable self-install</td>
+<td>Awkward</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Drop-in <code>pip</code> replacement</td>
+<td>No</td>
+<td>No</td>
+<td>Yes (<code>uv pip</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="worked-example-the-same-project-in-all-three">Worked example: the same project in all three</h2>
+<p>Assume a small Flask service with two direct runtime dependencies and one dev-only dependency. The <code>pyproject.toml</code> for the Poetry and <code>uv</code> cases is similar:</p>
+<pre><code class="language-toml">[project]
+name = &quot;example-service&quot;
+version = &quot;0.1.0&quot;
+requires-python = &quot;&gt;=3.11&quot;
+dependencies = [
+    &quot;flask&gt;=3.0,&lt;4&quot;,
+    &quot;requests&gt;=2.31&quot;,
+]
+
+[dependency-groups]
+dev = [
+    &quot;pytest&gt;=8&quot;,
+]
+</code></pre>
+<p><strong>pip-tools workflow:</strong></p>
+<pre><code class="language-text"># requirements.in
+flask&gt;=3.0,&lt;4
+requests&gt;=2.31
+</code></pre>
+<pre><code class="language-text"># requirements-dev.in
+-c requirements.in
+pytest&gt;=8
+</code></pre>
+<pre><code class="language-bash">python -m venv .venv
+source .venv/bin/activate
+pip install pip-tools
+pip-compile requirements.in --generate-hashes -o requirements.txt
+pip-compile requirements-dev.in --generate-hashes -o requirements-dev.txt
+pip install -r requirements-dev.txt
+</code></pre>
+<p>The <code>-c requirements.in</code> line constrains the dev file to the same versions as the runtime file, which is the pip-tools idiom for keeping dev and runtime pins aligned. Without it, <code>pip-compile</code> may resolve <code>pytest</code> against a different <code>flask</code> version than <code>requirements.txt</code> contains.</p>
+<p><strong>Poetry workflow:</strong></p>
+<pre><code class="language-bash">poetry add &quot;flask&gt;=3.0,&lt;4&quot; &quot;requests&gt;=2.31&quot;
+poetry add --group dev &quot;pytest&gt;=8&quot;
+poetry install
+</code></pre>
+<p>Poetry writes the constraints into <code>pyproject.toml</code>, resolves, and writes <code>poetry.lock</code>. On CI, <code>poetry install --sync</code> makes the environment match the lockfile exactly, removing packages not in it. Without <code>--sync</code>, Poetry leaves extra packages in place, a subtle source of drift.</p>
+<p><strong>uv workflow:</strong></p>
+<pre><code class="language-bash">uv init --python 3.11
+uv add &quot;flask&gt;=3.0,&lt;4&quot; &quot;requests&gt;=2.31&quot;
+uv add --dev &quot;pytest&gt;=8&quot;
+uv sync
+</code></pre>
+<p><code>uv sync</code> creates <code>.venv</code> if it does not exist and installs exactly the locked set. <code>uv run pytest</code> executes a command inside the project environment without activation, which is the cleanest CI pattern of the three.</p>
+<h2 id="failure-modes-worth-knowing">Failure modes worth knowing</h2>
+<p><strong>CI resolves fresh instead of installing from the lockfile.</strong> A pipeline runs <code>pip install -e .</code> or <code>pip install .</code>, which resolves from <code>pyproject.toml</code> and ignores the lockfile entirely. The build passes while installing a different set of packages than developers have. The fix is to make the lockfile-reading command the only install step and to fail the build when <code>pyproject.toml</code> and the lockfile disagree. <code>uv lock --check</code> and <code>poetry check --lock</code> serve that purpose; run them before install.</p>
+<p><strong>Two lockfiles in one repository.</strong> A repo containing both <code>poetry.lock</code> and <code>uv.lock</code> is a repo where nobody knows which one is real. The tools will also disagree about which virtualenv to use. Pick one tool per repository and enforce it with a pre-commit hook or a CI check that fails if the other tool's lockfile appears.</p>
+<p><strong>Editors and IDEs pick the wrong interpreter.</strong> With <code>pip-tools</code>, <code>pip-compile</code> works regardless of the active environment (it does not need one), but <code>pip install -r</code> installs wherever the active <code>python</code> points. If an editor runs <code>python</code> from a system interpreter, installs land in the wrong place. The <code>pip-tools</code> model pushes environment management onto the developer; that is a feature for some teams and a footgun for others.</p>
+<p><strong>Hashes drift between runtime and dev files.</strong> When dev constraints are compiled without <code>-c requirements.in</code>, the dev lock can pin a different version of a shared transitive dependency. Installing the dev file then upgrades or downgrades a runtime package. Compile dev files against the runtime constraints and diff the two outputs in CI.</p>
+<p><strong>A slow resolver is blamed on the tool.</strong> Resolution time depends on graph size and constraint tightness. When a project resolves slowly, the usual cause is a transitive dependency with a wide version range that forces backtracking. Loosening your own constraints rarely helps; tightening the problematic transitive constraint via a direct pin often does. Switching tools fixes the symptom for one project and reproduces it on the next large graph.</p>
+<h2 id="how-to-measure-before-deciding">How to measure before deciding</h2>
+<p>Speed claims are tool- and project-specific, so measure on the actual dependency graph rather than trusting general statements.</p>
+<ul>
+<li><strong>Cold resolve time:</strong> in a clean checkout with no cache, time the lock command (<code>uv lock</code>, <code>poetry lock</code>, or <code>pip-compile</code>). Run it three times, clearing the tool's cache between runs, and compare medians.</li>
+<li><strong>Warm install time:</strong> with the cache populated, time the install-from-lock command (<code>uv sync --frozen</code>, <code>poetry install --sync</code>, or <code>pip install -r requirements.txt --require-hashes</code>) into a fresh virtualenv. This is the number that dominates CI.</li>
+<li><strong>Lockfile diff size:</strong> change one direct dependency and count the lines that change in the lockfile. Large diffs on small changes indicate a resolver that re-pins broadly.</li>
+<li><strong>CI wall-clock:</strong> instrument the dependency-install step itself, not the whole job, so other steps do not mask the difference.</li>
+</ul>
+<p>A simple harness is a shell script that records <code>date +%s%N</code> before and after each command, runs each step three times, and prints the median. Record the results next to the tool version and the commit hash, because resolver behavior changes between releases.</p>
+<h2 id="a-decision-framework">A decision framework</h2>
+<p>Use this to pick one tool per project. The first matching row wins.</p>
+<ol>
+<li><strong>You want a single binary that also replaces <code>pip</code> and works on Windows CI without a preinstalled Python toolchain.</strong> Use <code>uv</code>. The <code>uv pip</code> compatibility layer allows incremental migration, and <code>uv run</code> removes the activation step from CI.</li>
+<li><strong>You publish a library to PyPI and need PEP 621 metadata plus a lockfile for development.</strong> Use Poetry or <code>uv</code> — both read <code>pyproject.toml</code> <code>[project]</code> metadata. If a team already has Poetry lockfiles and CI, staying on Poetry is reasonable; migration cost is real and the benefit is mostly speed.</li>
+<li><strong>You have an existing <code>requirements.txt</code>-based pipeline (Docker images, Lambda layers, legacy CI) and cannot change the install step.</strong> Use <code>pip-tools</code>. It produces a <code>requirements.txt</code> that every downstream tool already understands, with hashes for <code>pip install --require-hashes</code>.</li>
+<li><strong>You have a monorepo with multiple packages and shared constraints.</strong> Use <code>uv</code> workspaces or Poetry's path dependencies, not <code>pip-tools</code>. <code>pip-tools</code> has no concept of a workspace, so per-package files must be compiled and kept aligned by hand.</li>
+<li><strong>You are on an air-gapped or heavily restricted network.</strong> <code>pip-tools</code> with a local wheel mirror is the simplest model because the install step is plain <code>pip</code>. <code>uv</code> and Poetry both support custom indexes, but verify resolver behavior against the mirror before committing.</li>
+</ol>
+<p>What to avoid: mixing tools in one repo, keeping both a <code>requirements.txt</code> and a lockfile as "authoritative" without a sync check, and letting CI resolve fresh instead of installing from the lockfile.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<p><strong>Can uv work with an existing requirements.txt?</strong></p>
+<p>Yes. <code>uv pip compile requirements.in -o requirements.txt</code> produces the same kind of hashed output as <code>pip-compile</code>, and <code>uv pip sync requirements.txt</code> installs exactly that set. This is the lowest-risk adoption path: keep the existing files, swap the commands, and measure the difference before moving to <code>uv.lock</code> and <code>pyproject.toml</code>.</p>
+<p><strong>Why does poetry install leave packages that are not in the lockfile?</strong></p>
+<p>By default, <code>poetry install</code> adds missing packages but does not remove extras. <code>poetry install --sync</code> removes anything not in the lockfile, making the environment match exactly. CI should use <code>--sync</code>; local development often does not, which is why environments drift over time.</p>
+<p><strong>How do I stop pip from resolving fresh in CI?</strong></p>
+<p>Replace <code>pip install -e .</code> or <code>pip install .</code> with an install from the lockfile: <code>uv sync --frozen</code>, <code>poetry install --sync</code>, or <code>pip install -r requirements.txt --require-hashes</code>. The <code>--frozen</code> flag on <code>uv sync</code> fails if <code>pyproject.toml</code> and <code>uv.lock</code> are out of sync, which catches the case where someone edited dependencies without re-locking.</p>
+<p><strong>What is the difference between a lockfile and a constraints file?</strong></p>
+<p>A lockfile records the full resolved graph, including transitive dependencies, at exact versions and usually with hashes. A constraints file (<code>-c</code> in pip) only narrows what the resolver is allowed to pick; it does not pin the full graph. <code>pip-tools</code> uses constraints as input and produces a lockfile-shaped <code>requirements.txt</code> as output. Conflating the two is a common source of "why did CI install a different version" confusion.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the repository you deploy most often and check whether it has more than one of <code>requirements.txt</code>, <code>poetry.lock</code> or <code>uv.lock</code> at the root. If it does, identify which file CI actually installs from, remove or archive the others in a branch, and add a CI step that fails if the wrong lockfile reappears. That single check prevents the most common class of Python dependency drift before it reaches production.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://blog.kubailabs.com/dependency-pinning-the-lockfile-lie/">Dependency pinning: the lockfile lie</a></li>
+<li><a href="https://blog.kubailabs.com/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
+<li><a href="https://blog.kubailabs.com/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/dependency-pinning-the-lockfile-lie/">
+                        <h3>Dependency pinning: the lockfile lie</h3>
+                        <p>A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</p>
+                        <span class="related-meta">16 min read · 31 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/pypi-poisoned-models-hit-prod-in-2025/">
+                        <h3>PyPI poisoned models hit prod in 2025</h3>
+                        <p>How to pin, hash and audit Python packages and datasets so a poisoned model or tampered dataset cannot reach training or production.</p>
+                        <span class="related-meta">11 min read · 25 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cicd-for-ai-code-test-secure-rollback-fast/">
+                        <h3>CI/CD for AI code: test, secure, rollback fast</h3>
+                        <p>A CI/CD pattern for AI-assisted code changes: deterministic locks, prompt-injection checks, smoke tests, metrics gates, and blue-green rollback.</p>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

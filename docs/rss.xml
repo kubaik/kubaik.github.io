@@ -5,7 +5,14 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Nov 2026 17:50:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2026 05:35:37 +0000</lastBuildDate>
+    <item>
+      <title>Python deps: uv vs Poetry vs pip-tools</title>
+      <link>https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</link>
+      <description>Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</description>
+      <pubDate>Sun, 15 Nov 2026 05:32:25 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</guid>
+    </item>
     <item>
       <title>Your platform team is too big</title>
       <link>https://blog.kubailabs.com/your-platform-team-is-too-big/</link>
@@ -138,13 +145,6 @@
       <description>Seven async practices that replace meetings rather than relocate them, with failure modes, prioritization guidance, and how to measure whether they work.</description>
       <pubDate>Thu, 05 Nov 2026 19:43:18 +0000</pubDate>
       <guid>https://blog.kubailabs.com/7-async-practices-that-cut-meeting-load/</guid>
-    </item>
-    <item>
-      <title>Audit trails for AI agents: what breaks first</title>
-      <link>https://blog.kubailabs.com/audit-trails-for-ai-agents-what-breaks-first/</link>
-      <description>Design append-only decision records for AI agents: write-ahead ordering, policy snapshots, idempotency keys, and reconstruction drills that expose gaps.</description>
-      <pubDate>Thu, 05 Nov 2026 05:48:30 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/audit-trails-for-ai-agents-what-breaks-first/</guid>
     </item>
   </channel>
 </rss>

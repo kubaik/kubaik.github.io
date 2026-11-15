@@ -6,7 +6,6 @@ ai-fixes-legacy-code-nobody-owns,75,3722,AI fixes legacy code nobody owns,2026-0
 ai-ops-pagerduty-vs-opsgenie-which-burns-your-team,75,2655,AI ops: PagerDuty vs Opsgenie — which burns your team,2026-06-29T20:08:01.814298,2,first-person incident: 'If the simpler platform saved 12 hours of training compared to the more complex ' | no FAQ section
 negotiate-2026-pay-when-ai-steals-40-of-your-job,75,2396,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,2,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section
 stay-relevant-when-tools-change-faster-than-you-can,75,3127,Stay relevant when tools change faster than you can,2026-06-09T18:49:05.537160,1,fabricated citation: 'The benchmark says'
-your-platform-team-is-too-big,75,2862,Your platform team is too big,2026-11-14T17:48:24.398877,2,first-person incident: 'The failure mode is predictable and I have watched it play out in the abstract a' | no markdown table
 agentic-ai-cost-control-7-tools-one-backfire,80,2985,"Agentic AI cost control: 7 tools, one backfire",2026-09-19T11:35:45.274397,1,first-person incident: '**Strength:** You can see the exact trace that cost $0.40 and why.'
 ai-proof-your-mid-level-salary,80,2961,AI-proof your mid-level salary,2026-07-01T08:09:11.906955,1,"first-person incident: 'Estimated hit rate 80%, estimated p99 after the change 300 ms, added infrastruct'"
 ai-steals-junior-tasks-3-skills-that-protect-pay,80,2638,AI steals junior tasks: 3 skills that protect pay,2026-06-24T05:02:01.012343,1,first-person incident: 'A developer who once spent two days on a settings page can often get a working d'
@@ -202,6 +201,7 @@ vibe-code-works-great-fails-forever,95,2656,"Vibe code: works great, fails forev
 webhooks-done-right-retries-that-dont-explode-in-2026,95,2082,Webhooks done right: retries that don’t explode in 2026,2026-06-25T22:56:03.752249,1,no FAQ section
 websockets-vs-server-sent-events-latency-over-3g,95,2793,WebSockets vs Server-Sent Events: latency over 3G,2026-08-21T07:12:18.738447,1,no FAQ section
 why-ai-interviewers-failed-68-of-us-in-2026,95,2445,Why AI Interview Graders Reward Keywords Over Correct Design,2026-06-14T17:09:29.558838,1,no FAQ section
+your-platform-team-is-too-big,95,3577,Your platform team is too big,2026-11-14T17:48:24.398877,1,no markdown table
 3-llm-context-techniques-when-each-fails,100,3097,3 LLM context techniques: when each fails,2026-11-01T17:48:05.092232,0,
 3-ways-container-builds-got-3x-faster-in-2026,100,2630,Container Build Caching: What Actually Speeds Up CI,2026-06-14T01:45:48.667847,0,
 5-ai-tools-that-let-us-ship-faster-than-sf-teams,100,2107,Choosing AI Coding Assistants for Cloud-Heavy Stacks,2026-06-23T17:36:37.395172,0,
@@ -359,6 +359,7 @@ portfolio-that-hires-show-constraints-not-code,100,2823,"Portfolio that hires: s
 pr-checklists-are-dead-ai-agents-do-reviews-now,100,2442,PR checklists are dead: AI agents do reviews now,2026-06-14T16:58:47.894995,0,
 price-ai-proof-skills-in-2026,100,2706,Price AI-proof skills in 2026,2026-06-29T16:52:04.366294,0,
 property-based-testing-vs-example-tests-the-bug-gap,100,3687,Property-based testing vs example tests: the bug gap,2026-10-20T04:03:30.469740,0,
+python-deps-uv-vs-poetry-vs-pip-tools,100,2268,Python deps: uv vs Poetry vs pip-tools,2026-11-15T05:32:25.930711,0,
 rag-in-prod-what-tutorials-wont-tell-you,100,2854,RAG in prod: what tutorials won’t tell you,2026-06-08T17:45:22.815623,0,
 rag-is-not-enough-hybrid-search-reranking-in-2026,100,2314,RAG is not enough: hybrid search + reranking in 2026,2026-06-27T09:26:41.755095,0,
 rag-rots-if-you-dont-refresh-indexes,100,2945,RAG rots if you don’t refresh indexes,2026-08-04T14:24:04.500365,0,
