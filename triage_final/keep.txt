@@ -158,6 +158,7 @@ docs/move-images-50-faster-in-2026-with-starlink-cdn/
 docs/multi-agent-dx-langgraph-vs-crewai-gaps/
 docs/multi-agent-systems-when-they-quietly-degrade/
 docs/multi-agent-systems-why-failures-hide/
+docs/multi-region-active-active-the-hidden-costs/
 docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/
 docs/oauth-21-migration-what-breaks-in-existing-integrations/
 docs/observability-2026-ditch-the-three-pillars/

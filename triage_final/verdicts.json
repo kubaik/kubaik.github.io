@@ -119,7 +119,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Python deps: uv vs Poetry vs pip-tools",
-  "words": 2268
+  "words": 2329
  },
  "webhook-delivery-that-survives-outages": {
   "verdict": "KEEP",
@@ -419,6 +419,13 @@
   "fixes": [],
   "title": "Self-service AI tooling: the permission trap",
   "words": 2748
+ },
+ "multi-region-active-active-the-hidden-costs": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Multi-region active-active: the hidden costs",
+  "words": 2783
  },
  "ship-1mb-pages-on-4g-starlink-africa-case-study": {
   "verdict": "IMPROVE",

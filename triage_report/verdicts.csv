@@ -259,6 +259,7 @@ multi-agent-handoffs-the-latency-tax-nobody-measures,docs/multi-agent-handoffs-t
 multi-agent-systems-break-first,docs/multi-agent-systems-break-first/index.md,IMPROVE,,,Multi-agent systems break first,2026-06-08,0,0,0.0,2106,0,0.0,0,3,6,0,False,False,18,False
 multi-agent-systems-when-they-quietly-degrade,docs/multi-agent-systems-when-they-quietly-degrade/index.md,IMPROVE,,,Multi-agent systems: when they quietly degrade,2026-09-24,0,0,0.0,2211,0,0.0,0,4,6,0,False,False,12,False
 multi-agent-systems-why-failures-hide,docs/multi-agent-systems-why-failures-hide/index.md,IMPROVE,,,Multi-agent systems: why failures hide,2026-09-18,0,0,0.0,2235,0,0.0,0,8,6,0,False,False,13,False
+multi-region-active-active-the-hidden-costs,docs/multi-region-active-active-the-hidden-costs/index.md,IMPROVE,,,Multi-region active-active: the hidden costs,2026-11-15,0,0,0.0,2709,0,0.0,0,3,2,0,False,True,14,False
 ndpr-2026-broke-fintech-apis,docs/ndpr-2026-broke-fintech-apis/index.md,IMPROVE,,,NDPR 2026 broke fintech APIs,2026-06-26,0,0,0.0,2124,0,0.0,0,1,4,0,False,False,12,False
 negotiate-2026-pay-when-ai-steals-40-of-your-job,docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/index.md,IMPROVE,,,Turn AI coding telemetry into a salary negotiation case,2026-06-11,0,0,0.0,1769,0,0.0,0,3,6,0,False,False,15,False
 negotiate-pay-in-2026-with-ai-proof-points,docs/negotiate-pay-in-2026-with-ai-proof-points/index.md,IMPROVE,,,Negotiate pay in 2026 with AI proof points,2026-06-25,1,0,0.008,1692,0,0.0,0,3,6,0,False,False,12,False
@@ -311,7 +312,7 @@ prompts-are-code-how-to-measure-their-value,docs/prompts-are-code-how-to-measure
 property-based-testing-vs-example-tests-the-bug-gap,docs/property-based-testing-vs-example-tests-the-bug-gap/index.md,IMPROVE,,,Property-based testing vs example tests: the bug gap,2026-10-20,0,0,0.0,3588,0,0.0,0,3,6,0,False,True,16,False
 purpose-built-beats-general-ai-tools,docs/purpose-built-beats-general-ai-tools/index.md,IMPROVE,,,Purpose-built beats general AI tools,2026-07-19,1,0,0.005,2922,0,0.0,0,3,5,0,False,False,15,False
 pypi-poisoned-models-hit-prod-in-2025,docs/pypi-poisoned-models-hit-prod-in-2025/index.md,IMPROVE,,,PyPI poisoned models hit prod in 2025,2026-08-25,0,0,0.0,1993,0,0.0,0,3,6,0,False,False,10,False
-python-deps-uv-vs-poetry-vs-pip-tools,docs/python-deps-uv-vs-poetry-vs-pip-tools/index.md,IMPROVE,,,Python deps: uv vs Poetry vs pip-tools,2026-11-15,0,0,0.0,2164,0,0.0,0,2,2,0,False,True,14,False
+python-deps-uv-vs-poetry-vs-pip-tools,docs/python-deps-uv-vs-poetry-vs-pip-tools/index.md,IMPROVE,,,Python deps: uv vs Poetry vs pip-tools,2026-11-15,0,0,0.0,2225,0,0.0,0,2,3,0,False,True,16,False
 queueing-theory-for-backend-capacity,docs/queueing-theory-for-backend-capacity/index.md,IMPROVE,,,Queueing theory for backend capacity,2026-11-08,2,0,0.013,2663,0,0.0,0,3,6,0,False,False,11,False
 rag-in-prod-what-tutorials-wont-tell-you,docs/rag-in-prod-what-tutorials-wont-tell-you/index.md,IMPROVE,,,RAG in prod: what tutorials won’t tell you,2026-06-08,0,0,0.0,2573,0,0.0,0,7,6,0,False,False,19,False
 rag-is-not-enough-hybrid-search-reranking-in-2026,docs/rag-is-not-enough-hybrid-search-reranking-in-2026/index.md,IMPROVE,,,RAG is not enough: hybrid search + reranking in 2026,2026-06-27,0,0,0.0,2165,0,0.0,0,5,6,0,False,False,13,False

@@ -258,6 +258,7 @@ docs/multi-agent-handoffs-the-latency-tax-nobody-measures/index.md
 docs/multi-agent-systems-break-first/index.md
 docs/multi-agent-systems-when-they-quietly-degrade/index.md
 docs/multi-agent-systems-why-failures-hide/index.md
+docs/multi-region-active-active-the-hidden-costs/index.md
 docs/ndpr-2026-broke-fintech-apis/index.md
 docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/index.md
 docs/negotiate-pay-in-2026-with-ai-proof-points/index.md

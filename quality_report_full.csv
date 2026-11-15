@@ -145,6 +145,7 @@ move-images-50-faster-in-2026-with-starlink-cdn,95,2612,Resize Images at the Edg
 multi-agent-dx-langgraph-vs-crewai-gaps,95,3300,Multi-agent DX: LangGraph vs CrewAI gaps,2026-10-28T04:45:55.701506,1,no FAQ section
 multi-agent-handoffs-the-latency-tax-nobody-measures,95,2259,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,1,no FAQ section
 multi-agent-systems-why-failures-hide,95,2590,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,1,no FAQ section
+multi-region-active-active-the-hidden-costs,95,2783,Multi-region active-active: the hidden costs,2026-11-15T18:39:30.005901,1,no markdown table
 ndpr-2026-broke-fintech-apis,95,2478,NDPR 2026 broke fintech APIs,2026-06-26T16:36:52.584537,1,no markdown table
 negotiate-pay-in-2026-with-ai-proof-points,95,2271,Negotiate pay in 2026 with AI proof points,2026-06-25T16:15:21.594638,1,no FAQ section
 negotiate-salaries-with-ai-skills-in-2026,95,2192,Negotiate salaries with AI skills in 2026,2026-06-27T22:11:29.284386,1,no FAQ section
@@ -359,7 +360,7 @@ portfolio-that-hires-show-constraints-not-code,100,2823,"Portfolio that hires: s
 pr-checklists-are-dead-ai-agents-do-reviews-now,100,2442,PR checklists are dead: AI agents do reviews now,2026-06-14T16:58:47.894995,0,
 price-ai-proof-skills-in-2026,100,2706,Price AI-proof skills in 2026,2026-06-29T16:52:04.366294,0,
 property-based-testing-vs-example-tests-the-bug-gap,100,3687,Property-based testing vs example tests: the bug gap,2026-10-20T04:03:30.469740,0,
-python-deps-uv-vs-poetry-vs-pip-tools,100,2268,Python deps: uv vs Poetry vs pip-tools,2026-11-15T05:32:25.930711,0,
+python-deps-uv-vs-poetry-vs-pip-tools,100,2329,Python deps: uv vs Poetry vs pip-tools,2026-11-15T05:32:25.930711,0,
 rag-in-prod-what-tutorials-wont-tell-you,100,2854,RAG in prod: what tutorials won’t tell you,2026-06-08T17:45:22.815623,0,
 rag-is-not-enough-hybrid-search-reranking-in-2026,100,2314,RAG is not enough: hybrid search + reranking in 2026,2026-06-27T09:26:41.755095,0,
 rag-rots-if-you-dont-refresh-indexes,100,2945,RAG rots if you don’t refresh indexes,2026-08-04T14:24:04.500365,0,

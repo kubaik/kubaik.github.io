@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-15T05:32:28.934531",
+  "built_at": "2026-11-15T18:39:37.978326",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5855,6 +5855,11 @@
       "slug": "python-deps-uv-vs-poetry-vs-pip-tools",
       "title": "Python deps: uv vs Poetry vs pip-tools",
       "summary": "Inherited serverless cold setups tend to come with no explanation, just a working system and a long reverse-engineering session. Production gives you neither a clean environment nor a patient timeline. Here's the root cause, not just the symptom. The confusion: three tools, three mental models Ask f"
+    },
+    {
+      "slug": "multi-region-active-active-the-hidden-costs",
+      "title": "Multi-region active-active: the hidden costs",
+      "summary": "Benchmarks for designing multiregion that don't mention their failure conditions aren't worth much. The gap between the demo and the incident report is where this actually lives. This works through the problem properly, from cause to fix. Multi-region active-active sounds like the ultimate resilienc"
     }
   ]
 }
