@@ -1,28 +1,359 @@
-african-devs-ai-tools-that-work-now-2026
-agent-versioning-the-contract-you-forgot
-agentic-workflows-surviving-network-partitions
-ai-micro-saas-under-150month-the-real-infra-choices
-choose-no-code-only-when
-context-windows-agents-that-run-for-days
-debugging-techniques-that-outlast-any-framework
-docs-that-survive-the-bus-factor-fix
-ebpf-observability-in-2026-what-actually-works
-flaky-tests-reliability-bug-not-test-noise
-hybrid-cloud-routing-cost-speed-balance-for-sea
-iso-20022-where-payment-rails-actually-break
-llm-evals-langsmith-vs-promptfoo-in-prod
-observability-2026-ditch-the-three-pillars
-offline-first-money-apps-with-dynamodb-streams
-portfolio-projects-hiring-managers-skip
-red-teaming-agents-without-killing-velocity
-scope-agent-permissions-per-task
-self-service-ai-tooling-the-permission-trap
-settlement-vs-clearing-backend-engineers-guide
-show-real-work-not-ai-clones
-staging-wont-catch-prod-bugs-make
-stop-assuming-payment-apis-never-fail
-when-velocity-is-hard-to-measure-evaluating-engineering
-when-your-agent-goes-silent-degrade-gracefully
-why-does-my-model-drift-after-deploy
-why-your-multi-agent-system-degraded-slowly
-zig-vs-rust-vs-go-compile-errors-compared
+docs/2026-alert-triage-when-opsgenie-slept-for-you/	Tags absent from body: Softwareengineering
+docs/2026-tech-salaries-where-cuts-stopped-where-raises/	Tags absent from body: Technology, Careeradvice
+docs/3-llm-context-techniques-when-each-fails/	Tags absent from body: FineTuning, Generativeai, Vectorsearch
+docs/3-ways-container-builds-got-3x-faster-in-2026/	Tags absent from body: Buildkit1.6, Depot.devCache, Performance, Containers
+docs/40-ai-code-meant-60-more-alerts/	Tags absent from body: AiGeneratedCode, DjangoWithAi, Generativeai
+docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/	Tags absent from body: AiCodingTools, NairobiTechStack, AwsDeveloperTools, CodeiumVsCopilot
+docs/5-ways-to-find-hidden-latency-before-production/	Tags absent from body: CiPipelineLatency, TrafficReplayTesting
+docs/7-adr-traps-that-cause-stale-decisions/	Tags absent from body: DecisionRecord, AdrBestPractices
+docs/7-async-practices-that-cut-meeting-load/	Tags absent from body: AsyncCommunication, MeetingReduction, AsyncStandup, Softwareengineering
+docs/7-code-review-traps-when-ai-writes-half-your-code/	Tags absent from body: CodeReviewChecklist, Artificialintelligence
+docs/7-guardrails-for-safer-llm-apps/	Tags absent from body: LlmGuardrails, PromptInjection, InputFilters, OutputValidators
+docs/7-kubernetes-resource-traps-that-bite-in-prod/	Tags absent from body: ResourceLimits, K8s, Kubernetesqosclass
+docs/7-skills-senior-engineers-need-now-agents-are-live/	Tags absent from body: AgentsInProduction, IdempotencyKeys, Redis7.2, Softwareengineering
+docs/7-ways-to-measure-prompt-platform-roi-in-2026/	Tags absent from body: PromptPlatformRoi, LlmCostAttribution, Cybersecurity, Indiehacker
+docs/9-vibe-coding-traps-that-break-production-code/	Tags absent from body: VibeCoding, VibeCodingTools, VibeCodingNextjs, VibeCodingRedis
+docs/african-fintech-agents-the-compliance-cliff-most-miss/	Tags absent from body: CbnAgentRules, Dataengineering
+docs/agent-access-for-non-ai-engineers/	Tags absent from body: AgentTools, InternalTools, AgentGuardrails, Softwareengineering
+docs/agent-architecture-the-new-model-trap/	Tags absent from body: AiAgents, AgentArchitecture, GptAgentDesign, Generativeai
+docs/agent-audit-trails-event-log-vs-state-snapshots/	Tags absent from body: AuditTrail, EventSourcing, AgentAuditLogs, Generativeai
+docs/agent-auth-the-silent-deployment-killer/	Tags absent from body: AgentIdentity, WorkloadIdentity, SpiffeSpire, EdgeIdentitySystems
+docs/agent-code-review-7-traps-that-slip-through/	Tags absent from body: AgentCodeReview, AiGeneratedCode, CodeReviewChecklist, Generativeai
+docs/agent-code-review-gap-nobody-admits/	Tags absent from body: Generativeai, Microservices
+docs/agent-compliance-the-layer-you-build-after-failure/	Tags absent from body: AgentGovernance, ComplianceFailure, AiAgentCompliance
+docs/agent-context-short-term-vs-long-term-memory/	Tags absent from body: LongRunningAgents, AiAgentHallucination, PgvectorAgentMemory, Softwareengineering
+docs/agent-drift-the-failure-mode-you-didnt-log/	Tags absent from body: AgentDrift, DriftDetection, AiAgentMonitoring
+docs/agent-drift-why-it-hurts-ux/	Tags absent from body: AgentDrift, DetectAgentDrift, ContainAgentDrift
+docs/agent-drift-why-prod-breaks-without-human-checkpoints/	Tags absent from body: AgentDrift, ProductionAgents, ConfidenceThreshold, ComplianceGuardrails
+docs/agent-flooded-our-api-with-bad-calls-overnight/	Tags absent from body: ApiAgentOverflow, LambdaCostSpike, Apis
+docs/agent-followed-instructions-too-literally-the-cron-job-trap/	Tags absent from body: CronJobTimeout, Python3, K8s, Techjobs
+docs/agent-frameworks-stop-rewriting-the-same-glue-code/	Tags absent from body: AgentFrameworks, LlmAgentBoilerplate, Generativeai, Techjobs
+docs/agent-governance-opa-vs-kyverno-after-our-incident/	Tags absent from body: AgentGovernance, OpaVsKyverno, K8s
+docs/agent-platform-abstractions-a-case-study/	Tags absent from body: AgentPlatform, AgentAbstractions, TypedToolContracts, Softwareengineering
+docs/agent-reliability-7-metrics-users-trust/	Tags absent from body: AgentReliability, TrustMetrics, MeasureAgentTrust
+docs/agent-slos-measure-what-agents-actually-do/	Tags absent from body: AgenticSystemSlo, BackgroundJobSlo, FastapiSlo, WeasyprintSlo
+docs/agent-tracing-when-logs-lie-and-metrics-mislead/	Tags absent from body: AsyncTracing, AgentTracing, JaegerAsyncGaps, CeleryTracing
+docs/agent-versioning-the-contract-you-forgot/	Tags absent from body: AgentVersioning, ApiVersioning, ToolSchemaVersioning
+docs/agentic-ai-cost-control-7-tools-one-backfire/	Tags absent from body: AiCost, LlmSpend, Agenticai
+docs/agentic-finops-is-a-trap/	Tags absent from body: AgenticFinops, AutonomousAiFinops, StatefulAgentCosts, Agenticai
+docs/agentic-systems-architecture-principles-that-hold/	Tags absent from body: AgenticArchitecture, MultiModelSystems, IdempotencyKey, TokenBudgetControl
+docs/agentic-workflows-how-we-kept-the-lights/	Tags absent from body: OpensearchServerless, DataPrepperArm64, Dataengineering, Redis
+docs/agentic-workflows-surviving-network-partitions/	Tags absent from body: AgenticWorkflows, NetworkPartitions, IdempotencyKey, Generativeai
+docs/agents-create-incidents-at-2am/	Tags absent from body: OnCallAutomation, AgentPermissions, IncidentResponse, IamAccessAnalyzer
+docs/agents-keep-breaking-prod-3-boundary-rules-you-still-need/	Tags absent from body: RefundAgentFailures, IdempotencyInAgents, SchemaDriftAgent, Generativeai
+docs/ai-agent-postmortem-human-loop-vs-blind-replay/	Tags absent from body: AiAgentPostmortem, AiIncidentResponse, DeterministicReplay, LlmFailureAnalysis
+docs/ai-agent-postmortems-trace-vs-logs-vs-code/	Tags absent from body: AiAgentPostmortem, LlmEvaluationLogs, AiAgentTracing, AiObservability2026
+docs/ai-agents-circuit-breakers-are-not-optional/	Tags absent from body: CircuitBreaker, AiAgentReliability, LlmCircuitBreaker, RedisCircuitBreaker
+docs/ai-agents-eat-your-budget-3-ways/	Tags absent from body: Artificialintelligence
+docs/ai-alert-triage-cut-pages-80-in-production/	Tags absent from body: AiAlertTriage, OnCallAutomation, PrometheusAlertmanager, FalsePositiveReduction
+docs/ai-answers-first-judgment-later/	Tags absent from body: JuniorEngineers, AiAssistants, CodeReview, Coding
+docs/ai-apps-break-when-you-treat-them-like-regular-software/	Tags absent from body: AiNativeArchitecture, AiApplicationDesign, AiSystemScalability, Vectordb
+docs/ai-ate-the-niches-first/	Tags absent from body: MicroSaasMoats, ComplianceMoatSaas, ProprietaryDataSaas, Dataengineering
+docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/	Tags absent from body: AiBurnout, DeveloperProductivity, GithubCopilotEnterprise, CursorAi
+docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/	Tags absent from body: AiCodeReview, Ruff0.5.4
+docs/ai-code-in-prod-postmortems-still-work/	Tags absent from body: AiCodePostmortem, PostmortemArtifacts, AiModelSnapshot, IncidentResponseAi
+docs/ai-code-traps-copilot-vs-cursor-smackdown/	Tags absent from body: EdgeCaseDebugging, Artificialintelligence, Github, Cursorai
+docs/ai-codebase-onboarding-2-paths-tested/	Tags absent from body: AiCodebaseOnboarding, Generativeai
+docs/ai-codebases-two-onboarding-paths-that-actually-work/	Tags absent from body: AiCodebaseOnboarding, DeterministicAiBuilds, Artificialintelligence
+docs/ai-era-promotions-hinge-on-this-one-thing/	Tags absent from body: AiFeatureDeployment, LlmValidation, PromptDriftHandling, Careeradvice
+docs/ai-errors-hide-in-plain-latency/	Tags absent from body: AiObservability, LlmLatency, P99Latency, Redis
+docs/ai-feature-drift-why-your-model-died-at-midnight/	Tags absent from body: AiFeatureDrift, ModelDriftMidnight, RedisFeatureStore, LambdaMemoryError
+docs/ai-features-as-tech-debt-or-golden-paths/	Tags absent from body: AiFeatureMaintenance, ResilientAiSystems, CacheStampedeAfrica, EdgeAiRouting
+docs/ai-features-rot-faster-than-you-build-them/	Tags absent from body: AiFeatureMaintenance, AiFeatureOutages
+docs/ai-freelance-rates-2026-which-stacks-still-pay/	Tags absent from body: Artificialintelligence, Nextjs, Vectordb
+docs/ai-glue-code-3-ways-to-avoid-duct-taping-models/	Tags absent from body: PredibaseLora2.0, Python
+docs/ai-in-slow-networks-why-models-flop-where-data-costs-rise/	Tags absent from body: AiInAfrica, MobileAiCosts, OnnxRuntimeWeb, Redis7.2Caching
+docs/ai-interviews-4-questions-that-caught-80-of-weak/	Tags absent from body: AiEngineeringInterviews, CandidateScreening2026, ResilientSystemDesign, RedisConnectionPool
+docs/ai-interviews-break-systems-5-real-mistakes-in-2026/	Tags absent from body: Systemdesign, Techjobs
+docs/ai-interviews-broke-system-design-3-patterns-that/	Tags absent from body: Artificialintelligence, Systemdesign, Techjobs
+docs/ai-interviews-now-ask-for-this/	Tags absent from body: Artificialintelligence
+docs/ai-memory-systems-context-that-survives-sessions/	Tags absent from body: AiAgentMemory, PersistentAiContext, Vectordb
+docs/ai-micro-saas-under-150month-the-real-infra-choices/	Tags absent from body: LlmCostOptimization, ServerlessAiBackend, CloudflareWorkersAi, MemorydbRedisPricing
+docs/ai-model-poisoning-3-real-attacks-on-datasets/	Tags absent from body: SlsaForAi, DatasetProvenance, Cybersecurity
+docs/ai-native-apps-break-when-you-copy-old-rules/	Tags absent from body: AiNativeApplications, AiAppLatency, AiCostOptimization, AiCachingTechniques
+docs/ai-native-apps-forget-the-old-stack/	Templated outline (50% of H2s reused across corpus); Tags absent from body: AiNativeApplications, LlmArchitecturePatterns, PromptTemplateVersioning, Artificialintelligence
+docs/ai-observability-the-metrics-that-matter/	Tags absent from body: AiObservability, LlmMonitoring, DriftDetection, ConfidenceTracking
+docs/ai-on-slow-networks-nairobi-teams-2026-playbook/	Tags absent from body: NairobiTechStack, RedisCachingAi, CloudflareWorkersAi, VectorSearchCaching
+docs/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/	Tags absent from body: AiIncidentResponse, AiOpsCost, MttaReduction
+docs/ai-ops-vs-human-ops-the-incidents-that-broke-them/	Tags absent from body: AiIncidentResponse, PagerdutyAiCopilot
+docs/ai-pair-prompts-9-setups-we-tried-in-2026/	Tags absent from body: AiPairProgramming, Coding
+docs/ai-proof-your-mid-level-salary/	Tags absent from body: AiProofSkills, SalaryProtection
+docs/ai-reshaped-my-engineering-principles/	Tags absent from body: Python, Github
+docs/ai-revives-unloved-legacy-codebases/	Tags absent from body: PsalmStaticAnalyzer, CodeqlLegacyPhp, Github
+docs/ai-rollouts-live-or-die-by-flags/	Tags absent from body: FeatureFlagsAi, AiRolloutStrategies, FeatureFlags2026, FeatureFlagService
+docs/ai-sales-cycles-3x-faster-40-less-talk/	Tags absent from body: GithubCopilotSales, Softwareengineering, Github
+docs/ai-sales-cycles-why-dev-tools-now-need-3-demos/	Tags absent from body: DeveloperToolsSales, DebugSessions, CliSales, Artificialintelligence
+docs/ai-scanners-overlook-real-vulns/	Tags absent from body: AiSecurityScanners, Afl++4.08, Cybersecurity
+docs/ai-static-analysis-vs-legacy-sast-5x-faster-scans/	Tags absent from body: AiStaticAnalysis, CodeqlAiReview, Artificialintelligence, Cicd
+docs/ai-stole-system-design/	Tags absent from body: SystemDesign2026, Generativeai, Systemdesign, Techjobs
+docs/ai-supply-chain-attacks-what-actually-broke/	Tags absent from body: AiSupplyChain, ModelSecurity, Cybersecurity
+docs/ai-tools-wont-help-if-everyone-writes-the-same-code/	Tags absent from body: AiTeamNorms, Engineering, AiCopilotPolicy, DistributedTeamAi
+docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/	Tags absent from body: FigmaAiLimitations, Reactjs
+docs/ai-ui-tools-broke-my-react-flow-heres-why/	Tags absent from body: AiUiTools, FrontendWorkflow, ReactV0, TailwindUiBlocks
+docs/ai-ui-tools-promise-vs-production/	Tags absent from body: AiUiTools, Reactjs, Cursorai
+docs/ai-wrote-the-docs-humans-wrote-the-gaps/	Tags absent from body: OpenapiEdgeCases, Generativeai
+docs/alerts-2026-ai-turns-false-alarms-to-silence/	Tags absent from body: AiAlertTriage, OnCallAutomation, PagerdutyCostSaving, Softwareengineering
+docs/always-on-agents-cost-more-than-you-think/	Tags absent from body: AlwaysOn, Saas, Africatech
+docs/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/	Tags absent from body: ApiSecurity2026, ApiAbusePatterns, JwtKidSwap, GraphqlDepthAttack
+docs/api-abuse-patterns-rising-in-2026/	Tags absent from body: ApiAbuse, ApiSecurity2026, EdgeBotDetection, AdaptiveRateLimiting
+docs/api-attacks-rising-40-the-3-patterns-to-block-now/	Tags absent from body: ApiSecurity2026, BlockApiAttacks, IdempotencyKeyApi, ApiGatewaySecurity
+docs/apm-is-blind-to-your-ai-agents/	Tags absent from body: LlmMonitoring, AiObservability, TraditionalApmGaps, Vectorsearch
+docs/apm-lied-about-our-ai-incidents/	Tags absent from body: AiIncidentDetection, ApmLimitations, GpuTelemetry, VllmMonitoring
+docs/audit-logs-ship-them-fast-keep-them-forever/	Tags absent from body: AuditLogArchitecture, S3CostOptimization, SiemQueryLatency, ImmutableAuditLogs
+docs/audit-logs-that-scale-skip-the-3am-fire-drills/	Tags absent from body: ClickhouseAuditLogs, KafkaAuditPipeline, Apachekafka
+docs/audit-trails-for-ai-agents-what-breaks-first/	Tags absent from body: AuditTrail, AiAgentCompliance, AgentDecisionLogging, IdempotencyKeyAgent
+docs/audit-trails-immutabledb-vs-dynamodb-streams/	Tags absent from body: AuditTrail, ImmutableLogs, DynamodbStreams, ComplianceLogging
+docs/aws-cloudwatch-synthetics-for-ai-pipelines/	Tags absent from body: CloudwatchSynthetics, AiPipelineMonitoring, MPesaIntegration, Flutterwave
+docs/aws-cost-levers-2026-the-3-that-cut-bills-30/	Tags absent from body: AwsCostOptimization, AwsSavingsPlans, ComputeOptimizer2026, ReduceAwsBill
+docs/aws-costs-for-nairobi-saas-2026-bill-split/	Tags absent from body: AwsCostBreakdown, CloudfrontCacheTtl, Lambda@edgeCost, Cloudcomputing
+docs/aws-local-zones-vs-localstack-ai-microservices-in/	Tags absent from body: EdgeAiMicroservices, PopiaCompliantAi, Cloudcomputing
+docs/bank-apis-broke-under-african-2g/	Tags absent from body: FintechApiDesign, Mobiledev, Redis
+docs/big-model-api-vs-fine-tune-the-2026-math/	Tags absent from body: Finetuning
+docs/bm25-vs-dense-embeddings-hybrid-search-reality/	Tags absent from body: HybridSearch, DenseEmbeddings, ReciprocalRankFusion
+docs/boring-aws-lambda-layers-that-dont-lock/	Tags absent from body: AwsLambdaLayers, LambdaGoldenPath, Cloudcomputing
+docs/build-a-search-system-in-2026-semantic-keyword/	Tags absent from body: SearchSystemDesign, HybridSearch2026, Pgvector0.7, Apis
+docs/build-agent-workflows-that-survive-restarts/	Tags absent from body: DurableAgentWorkflow, AgentPersistence, RedisStreamsAgent, FastapiAgentQueue
+docs/build-in-public-without-burning-out/	Tags absent from body: Performance, Softwareengineering, Opensource, Buildinpublic
+docs/built-a-multi-agent-system-without-langgraph/	Tags absent from body: Langgraph, FastapiAsyncAgents, Python3, Multiagent
+docs/bundle-size-70-lighter-with-server-components/	Tags absent from body: ServerComponentsReact, Next.jsBundleSize, ReduceReactBundle, Next.jsPerformance
+docs/buy-vs-build-ai-3-hard-rules-for-2026/	Tags absent from body: Saas
+docs/canary-rollbacks-automate-the-decision-not-the-deploy/	Tags absent from body: CanaryRelease, AutomatedRollback, ProgressiveDelivery, CanaryAnalysis
+docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/	Tags absent from body: CdcPipelineCrash, VllmCdc, PythonSemaphoreLlm, Python
+docs/chaos-engineering-without-an-sre-team/	Tags absent from body: ChaosEngineering, FaultInjection, SmallTeamReliability, AwsFis
+docs/choose-no-code-only-when/	Tags absent from body: Softwareengineering
+docs/cicd-for-ai-code-test-secure-rollback-fast/	Tags absent from body: AiCodeSecurity, BlueGreenRollback, PromptInjectionScan, Cybersecurity
+docs/cicd-for-django-in-20ms-africa-networks/	Tags absent from body: DjangoDockerAfrica, GithubActionsAfrica, Cloudcomputing, Containers
+docs/circleci-still-beats-github-actions-at-50k-builds/	Tags absent from body: GithubActionsCost, CircleciPricing2026, Africatech
+docs/claude-code-after-a-year-daily-wins/	Tags absent from body: ClaudeCode2026, AgenticCodingTools, AutomatedPatchReview, DependabotAutomation
+docs/cloud-agents-burned-18k-8-tools-that-didnt-work/	Tags absent from body: CloudCostTools, AgentCostMonitoring, Cloudcomputing, K8s
+docs/code-ai-wont-rewrite/	Tags absent from body: SemgrepLegacyCode, Localai2.5, Github
+docs/commit-ownership-in-ai-pair-coding/	Tags absent from body: AiPairProgramming, CodeOwnership, DockerGuardrails, Containers
+docs/compare-kafka-redpanda-nats-for-event-driven-systems/	Tags absent from body: EventDrivenArchitecture, KafkaTuningGuide, RedpandaTieredStorage, Apachekafka
+docs/computer-use-agents-the-permission-trap/	Tags absent from body: ComputerUseAgent, AgentSecurity, PromptInjection, LeastPrivilegeAgent
+docs/context-engineering-the-real-fix-for-agent-hallucinations/	Tags absent from body: AgentHallucinations, ContextEngineering, LongRunningAgents, LlmContextManagement
+docs/context-windows-agents-that-run-for-days/	Tags absent from body: ContextWindow, AgentMemory, Generativeai
+docs/context-windows-live-longer-than-you-think/	Tags absent from body: LongRunningAgents, LlmTokenLimits, SupportAgentTokens, OpenaiTokenUsage
+docs/contract-testing-is-not-optional/	Tags absent from body: ContractTesting, Microservices, IntegrationTesting
+docs/core-web-vitals-what-actually-moves-the-needle/	Tags absent from body: CoreWebVitals, Webdev, Dataengineering
+docs/cost-tools-fail-when-agents-scale-autonomously/	Tags absent from body: AutonomousScaling, CloudCostTools, AgentDrivenScaling, CostAwareAutoscaling
+docs/cqrs-when-it-pays-off-and-when-it-breaks/	Tags absent from body: EventualConsistency, ReadReplica, Dataengineering
+docs/cross-border-fintech-why-your-kyc-fails-in-dakar/	Tags absent from body: CrossBorderFintech, FintechPolicyLayer
+docs/currency-switch-fails-in-ghana-one-config-file-to-rule/	Tags absent from body: MtnMomoHeader, Flutterwave, XofCurrencySupport, Mobiledev
+docs/cut-cold-starts-70-lambda-cost-hack/	Tags absent from body: ServerlessColdStarts, LambdaSnapstart2026, Cicd
+docs/cut-false-positives-85-with-this-ci-security-trick/	Tags absent from body: CiSecurityScanning, SonarqubeFalsePositives, Cybersecurity, Infosec
+docs/database-restore-drills-that-mean-something/	Tags absent from body: DatabaseBackup, DisasterRecovery, RestoreDrill, MeasureRtoRpo
+docs/dead-letter-queues-stop-poison-messages/	Tags absent from body: DeadLetterQueue, PoisonMessage, BackgroundJobQueue, Python3
+docs/debug-ai-agent-failures-differently/	Tags absent from body: AiAgentPostmortem, LlmTraceAnalysis, AiIncidentRunbook, LangsmithVsDatadog
+docs/debug-ai-agents-failures-arent-just-bugs/	Tags absent from body: AiAgentPostmortem, LlmIncidentResponse, AiAgentObservability
+docs/debugging-techniques-that-outlast-any-framework/	Tags absent from body: FrameworkAgnostic, SystematicDebugging, Softwareengineering
+docs/dependency-pinning-the-lockfile-lie/	Tags absent from body: DependencyPinning, ScaTools, ReproducibleBuilds, Backend
+docs/deployment-platforms-senior-vs-new-hire/	Tags absent from body: DeploymentPlatform, DeveloperOnboarding, PlatformEngineering, Softwareengineering
+docs/detect-lazy-agents-without-false-alarms/	Tags absent from body: AgentOutputQuality, OutcomePredictor, LlmEvaluation
+docs/detecting-silent-agent-failures/	Tags absent from body: AgentQuality, LlmJudge, GroundednessCheckLlm, Generativeai
+docs/distributed-locks-safe-only-with-fencing/	Tags absent from body: DistributedLock, FencingToken, RedisDistributedLock, EtcdDistributedLock
+docs/distroless-images-smaller-attack-surface/	Tags absent from body: ContainerSecurity, MinimalBaseImage, DistrolessDocker, Cybersecurity
+docs/double-entry-ledger-concurrent-write-errors/	Tags absent from body: DoubleEntryLedger, ConcurrentWrites, SerializationFailure, LedgerConsistency
+docs/double-the-price-double-the-revenue/	Tags absent from body: DevToolPricing, Softwareengineering, Coding
+docs/drift-detection-the-plan-that-lies/	Tags absent from body: TerraformDrift, InfrastructureDrift
+docs/duckdb-in-production-when-it-replaces-a-warehouse/	Tags absent from body: EmbeddedAnalytics, DuckdbProduction, DuckdbParquetS3, Dataengineering
+docs/ebpf-observability-in-2026-what-actually-works/	Tags absent from body: Cybersecurity, Infosec
+docs/edge-agents-vs-cloud-round-trips-in-2026/	Tags absent from body: EdgeAiAgents, OnnxRuntime, Tinyllama, AndroidMlInference
+docs/envelope-encryption-with-cloud-kms-key-rotation-traps/	Tags absent from body: EnvelopeEncryption, KeyRotation, CloudKms, Cloudcomputing
+docs/evaluate-agents-with-spark-vs-custom-harness/	Tags absent from body: Softwareengineering, Multiagent
+docs/event-driven-beats-agent-driven-910-times/	Tags absent from body: Aws, Techjobs
+docs/event-sourcing-pay-the-complexity-tax-only-here/	Tags absent from body: EventSourcing, EventSourcing2026, EventSourcingCost
+docs/feature-flags-became-ai-rollout-platforms/	Tags absent from body: FeatureFlags, AiRollout, FeatureFlagTools, LlmRolloutStrategy
+docs/fintech-features-break-in-ghana-the-real-fix/	Tags absent from body: Fintech, PaymentTimeoutGhana, NationalIdValidation, Mobiledev
+docs/fix-ai-agent-failures-postmortem-guide/	Tags absent from body: AiAgentPostmortem, AiObservabilityTools, LlmFailureModes, AiIncidentResponse
+docs/flaky-tests-reliability-bug-not-test-noise/	Tags absent from body: FlakyTests, TestReliability, FlakyTestCauses
+docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/	Tags absent from body: AfricanFintechAi, SovereignAiNigeria, Dataengineering
+docs/fraud-detection-rules-vs-scoring-where-they-meet/	Tags absent from body: FraudDetection, RulesEngine, RiskScoringModel
+docs/freelance-vs-full-time-african-devs-real-tradeoffs/	Tags absent from body: RemoteWork, AfricanDevelopers, Passiveincome, Entrepreneurship
+docs/gateway-api-wont-fix-your-ingress-mess/	Tags absent from body: GatewayApi, KubernetesIngress, HttprouteDelegation
+docs/global-state-is-the-wrong-tool-for-ai-features/	Tags absent from body: AiStateManagement, ReactStateManagement, AiFeaturePerformance, Typescript
+docs/golden-paths-become-load-bearing-walls/	Tags absent from body: GoldenPath, AiPlatform, PromptVersioning, VectorStoreMetadata
+docs/golden-paths-that-dont-handcuff/	Tags absent from body: GoldenPath, ScaffoldVersioning, GoldenPathHandcuffs, Softwareengineering
+docs/hire-for-agents-not-autocomplete/	Tags absent from body: AfricanTechHiring, HiringFor3g, Tech, Technology
+docs/http3-changes-less-than-the-demos-imply/	Tags absent from body: HttpProduction, QuicBackendImpact, HttpFallbackHttp, Softwareengineering
+docs/human-in-the-loop-when-agents-need-a-human-veto/	Tags absent from body: AgentApprovals, PromptInjection, AgentSecurity, ApprovalGateAgent
+docs/hybrid-cloud-routing-cost-speed-balance-for-sea/	Tags absent from body: Cloudcomputing, Africatech
+docs/idempotency-keys-what-they-fix-what-they-dont/	Tags absent from body: IdempotencyKeys, PaymentApi, IdempotentRequests
+docs/idp-for-ai-2026-stack-evolution/	Tags absent from body: AiEmbeddingPipeline, NodeAiService, RedisVectorCache, FastifyAiBackend
+docs/iso-20022-where-payment-rails-actually-break/	Tags absent from body: PaymentRails, IsoMigration, PacsMessageMapping, IsoValidationRules
+docs/istio-and-cilium-what-really-breaks-in-production/	Tags absent from body: ServiceMesh2026, IstioVsCilium, MeshOverhead, ServiceMeshCost
+docs/json-modes-hidden-costs-revealed/	Tags absent from body: LlmStructuredOutput, JsonModeLimitations, AiExtractionPipeline, Dataengineering
+docs/json-modes-silent-failures-exposed/	Tags absent from body: LlmStructuredOutput, JsonModeLimitations, Generativeai, Redis
+docs/jwt-sessions-revocation-rotation-storage/	Tags absent from body: SessionManagement, TokenRevocation, RefreshTokenRotation, JwtStorage
+docs/k6-vs-locust-traffic-models-that-lie/	Tags absent from body: K6LoadTesting, LocustLoadTesting
+docs/keep-multi-model-systems-stable-6-rules-that-worked/	Tags absent from body: IdempotencyKeys, Redis7.2Eviction, LambdaConcurrency, Generativeai
+docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/	Tags absent from body: AlertFatigue, AlertTriageSystem, ReduceFalsePositives, PrometheusAlerting
+docs/kubernetes-or-nomad-the-real-experiment-cost-split/	Tags absent from body: NomadVsKubernetes, K8s, Techjobs
+docs/kyc-integrations-the-data-you-shouldnt-store/	Tags absent from body: KycIntegration, IdentityVerification, DataMinimisation, KycArchitecture
+docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/	Tags absent from body: AiInferenceLatency, NairobiTechStack, EdgeAiAfrica, Finetuning
+docs/least-privilege-for-agents-the-config-line-nobody-writes/	Tags absent from body: AgentPermissions, OpaRegoExamples, LeastPrivilegeAgents, Cybersecurity
+docs/llm-agents-why-monoliths-win/	Tags absent from body: LlmAgentArchitecture, LlmAgentLatency, LlmMonolithicDesign, Generativeai
+docs/llm-drift-the-silent-quality-drop-metrics-miss/	Tags absent from body: LlmDriftDetection, TokenizerRegression, LlmObservability, Generativeai
+docs/llm-eval-drift-that-users-notice-first/	Tags absent from body: LlmDriftDetection, TokenBudgetDrift, Generativeai
+docs/llm-evals-langsmith-vs-promptfoo-in-prod/	Tags absent from body: LlmEvals, PromptTesting, LangsmithVsPromptfoo, Generativeai
+docs/llm-evals-skip-the-hype-track-these-4-metrics/	Tags absent from body: LlmEvaluationMetrics, ProductionLlmScoring, Vllm0.5.3Benchmarks
+docs/llm-metrics-that-stop-wasting-time/	Tags absent from body: Generativeai
+docs/llm-output-metrics-that-actually-move-the-needle/	Tags absent from body: LlmEvaluationMetrics, Generativeai
+docs/llm-risks-underestimated-in-owasp-top-10/	Tags absent from body: LlmSecurityRisks, OwaspLlmTop, PromptInjection, LlmContextIsolation
+docs/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/	Tags absent from body: PromptTemplateRot, LlmEvaluationStack, Generativeai, Vectorsearch
+docs/local-llm-agents-vllm-vs-ollama-for-fintech/	Tags absent from body: LocalLlm, FintechAiCompliance, Dataengineering
+docs/marketing-without-budget-5k-mrr-in-18-months/	Tags absent from body: ZeroBudgetMarketing, MrrWithoutAds, OpenSourceTraction, Cybersecurity
+docs/mcp-hidden-cost-traps/	Tags absent from body: FintechMcpCompliance, Cybersecurity, Infosec
+docs/mcp-servers-the-3-hidden-costs-nobody-quotes/	Tags absent from body: McpServerProduction, McpMemoryLeak, McpBandwidthCost, McpSecurity
+docs/memory-systems-for-production-agents/	Tags absent from body: MemorySystems, ProductionAgents, ContextLeaks, Performance
+docs/merge-three-payment-apis-into-one-system/	Tags absent from body: Flutter
+docs/meter-dev-tool-pricing-in-2026/	Tags absent from body: DevToolPricing, UsageBasedPricing, StripeMeteredBilling, CliMonetization
+docs/mobile-first-ai-fails-you-didnt-plan/	Tags absent from body: MobileAiPerformance, LowBandwidthAi, Lambda, Reactjs
+docs/mobile-money-agent-fees-why-your-bot-keeps-failing/	Tags absent from body: ErrPaymentFailed, UssdSessionTimeout, Apis, Mobiledev
+docs/mobile-money-agents-when-m-pesa-api-fails/	Tags absent from body: MobileMoney, MPesaApi, Mobiledev
+docs/model-evals-the-gaps-that-let-drift-slip-through/	Tags absent from body: ModelEvaluation, BehaviorDrift, EvalGaps
+docs/model-router-keep-it-simple-keep-it-local/	Tags absent from body: Cloudcomputing
+docs/monolith-to-services-without-a-rewrite/	Tags absent from body: MonolithRefactor2026, DistributedMonolith, ServiceExtraction, Redis
+docs/most-llm-cost-dashboards-lie/	Tags absent from body: LlmCost, PromptCachingSavings, Generativeai
+docs/move-images-50-faster-in-2026-with-starlink-cdn/	Tags absent from body: StarlinkCdnAfrica, Cloudcomputing, Performance
+docs/multi-agent-dx-langgraph-vs-crewai-gaps/	Tags absent from body: MultiAgentSystems, AgentObservability, Softwareengineering, Coding
+docs/multi-agent-handoffs-the-latency-tax-nobody-measures/	Tags absent from body: MultiAgentLatency, AgentHandoff, LlmOrchestration, Generativeai
+docs/multi-agent-systems-break-first/	Tags absent from body: Multiagent
+docs/multi-agent-systems-when-they-quietly-degrade/	Tags absent from body: MultiAgentSystems, LlmObservability, AgentDegradation, TokenCostTracking
+docs/multi-agent-systems-why-failures-hide/	Tags absent from body: MultiAgentSystems, AgentOrchestration, LlmTokenBudget, Generativeai
+docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/	Tags absent from body: AiProductivityMetrics, GithubCopilotTelemetry, Artificialintelligence, Techjobs
+docs/negotiate-pay-in-2026-with-ai-proof-points/	Tags absent from body: NegotiateSalary2026, AiResumeProof, HumanWorkRatio, Techcareer
+docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/	Tags absent from body: SveltekitBundleSize, RemixOfflineSupport, Performance
+docs/nodejs-memory-leak-find-it-in-10-min/	Tags absent from body: MemoryProfiling, Softwareengineering
+docs/oauth-21-migration-what-breaks-in-existing-integrations/	Tags absent from body: OauthMigration, ImplicitGrantRemoval, RedirectUriMatching
+docs/observability-2026-ditch-the-three-pillars/	Tags absent from body: UnifiedTelemetry, ClickhouseObservability, TraceStorageCost, Vectorsearch
+docs/observability-agents-lied-to-us/	Tags absent from body: ObservabilityAgents, Opentelemetry, PrometheusOverhead, K8s
+docs/observe-llm-features-90-faster/	Tags absent from body: LlmObservability, LlmMetrics, FastapiWrapper, RedisFeatureFlags
+docs/offline-agent-workflows-for-last-mile-ops/	Tags absent from body: OfflineFirst, FieldAgents, IndexeddbSync
+docs/offline-first-agents-for-field-teams/	Tags absent from body: OfflineFirstApps, ReactNative, FieldAgentsAfrica, AwsAppsync
+docs/offline-first-apps-what-3g-markets-taught-us/	Tags absent from body: OfflineFirstApps, OfflineFirstDesign, SqliteOfflineStorage, Watermelondb1.6
+docs/one-misconfigured-vector-db-killed-our-rag-pipeline/	Tags absent from body: RagPipelineFailures, WeaviateError, FastapiRagService, RagObservability
+docs/only-boring-stacks-survive-ai-services/	Tags absent from body: FastapiStack, PostgresqlVsMongodb, CeleryAlternatives, K8s
+docs/open-banking-apis-the-integration-traps/	Tags absent from body: OpenBanking, ApiIntegration, ConsentManagement, IdempotencyKeys
+docs/open-source-contributions-the-credibility-trap/	Tags absent from body: OpenSourceCareer, ContributionStrategy, Techcareer, Opensource
+docs/orchestration-tax-kills-multi-agent-systems/	Tags absent from body: EventDrivenAgents, CrdtMultiAgent, Python3, Multiagent
+docs/papss-and-mobile-money-where-integration-breaks/	Tags absent from body: MobileMoney, PaymentIntegration, Mobiledev
+docs/pci-dss-architecture-12-requirements-that-matter/	Tags absent from body: PciDss, PaymentArchitecture, PciDssRequirements, Dataengineering
+docs/personal-ai-assistants-avoid-vendor-lock-in-traps/	Tags absent from body: FastapiAiAssistant, OpensearchVectorSearch, VllmLocalLlm, Artificialintelligence
+docs/platform-engineering-roi-metrics-that-fund-teams/	Tags absent from body: PlatformEngineering, RoiMetrics, PlatformTeamFunding, EngineeringMetrics
+docs/platform-teams-agentic-world-struggle/	Tags absent from body: Softwareengineering, Coding, Agenticai
+docs/platform-teams-in-2026-docs-vs-production-reality/	Tags absent from body: Softwareengineering, Coding
+docs/poolers-wont-save-your-serverless-db/	Tags absent from body: ServerlessDatabase, RdsProxyAlternatives, PgcatVsPgbouncer, Dataengineering
+docs/portfolio-projects-hiring-managers-skip/	Tags absent from body: PortfolioProject, HiringManagers, DeveloperPortfolio, Softwareengineering
+docs/portfolio-projects-that-hire-remote-senior-devs/	Tags absent from body: Softwareengineering
+docs/portfolio-that-hires-show-constraints-not-code/	Tags absent from body: 3gLatencyPortfolio, Fly.io$12Hosting, Softwareengineering, Coding
+docs/postgres-17-buried-redis-s3-cron/	Tags absent from body: PostgresJsonbCache, PostgresBlobStorage, Performance
+docs/postgres-vector-search-what-breaks-first/	Tags absent from body: PgvectorVsQdrant, VectorSearchLatency, Vectordb
+docs/pr-checklists-are-dead-ai-agents-do-reviews-now/	Tags absent from body: AiCodeReview, AgenticPipeline, PrAutomation, GithubActionsAi
+docs/prevent-ownership-drift-when-velocity-explodes/	Tags absent from body: OwnershipDrift, CacheOwnership, NodeGateway, RedisCache
+docs/price-ai-proof-skills-in-2026/	Tags absent from body: AiProofCompensation, Levels.fyi, Techjobs
+docs/price-saas-tools-in-2026-what-we-learned-pricing-a/	Tags absent from body: DeveloperToolPricing, UsageBasedPricing, ConcurrencyPricing, SaasCostModel
+docs/price-your-remote-job-like-a-new-york-dev/	Tags absent from body: RemoteSalaryNegotiation, FreelanceRateCalculator, Python3
+docs/promotions-in-the-ai-era-the-mechanism/	Tags absent from body: EngineeringPromotion, SeniorEngineer, AiCodingAssistants, Careeradvice
+docs/prompt-injection-got-the-hype-poison-data-ruined-us/	Tags absent from body: LlmSecurityRisks, ModelDriftDetection, OwaspLlmTop, Cybersecurity
+docs/prompt-injection-what-breaks-first-in-prod/	Tags absent from body: PromptInjection, ToolInjection, LlmSecurity, ToolCallingSecurity
+docs/prompt-injections-hidden-aws-tax/	Tags absent from body: PromptInjection, LlmSecurity, AiPromptSecurity, TemplateInjection
+docs/prompts-are-code-how-to-measure-their-value/	Tags absent from body: PromptMetrics, AgentGraphs, PromptVersioning, LlmObservability
+docs/property-based-testing-vs-example-tests-the-bug-gap/	Tags absent from body: PropertyBasedTesting, ExampleTests, Softwareengineering
+docs/purpose-built-beats-general-ai-tools/	Tags absent from body: AiPlatform, QdrantVsPinecone, Cybersecurity, Indiehacker
+docs/pypi-poisoned-models-hit-prod-in-2025/	Tags absent from body: AiModelPoisoning, PipToolsHashes, Cybersecurity
+docs/python-deps-uv-vs-poetry-vs-pip-tools/	Tags absent from body: DependencyManagement, UvVsPoetry, PipToolsLockfile, PythonLockfile
+docs/queueing-theory-for-backend-capacity/	Tags absent from body: QueueingTheory, CapacityPlanning, P99Latency, BackendPerformance
+docs/rag-in-prod-what-tutorials-wont-tell-you/	Tags absent from body: RagPipelineProduction, FaissLatencyTuning, PgvectorNightlyJob, RagCostOptimization
+docs/rag-is-not-enough-hybrid-search-reranking-in-2026/	Tags absent from body: RagHallucinationFix, Generativeai, Vectorsearch
+docs/rag-pipelines-4-silent-prod-killers/	Tags absent from body: RagPipelineProduction, VectorDatabaseCost, PgvectorVsMilvus, RagLatencyBenchmarks
+docs/rag-rots-if-you-dont-refresh-indexes/	Tags absent from body: ProductionRagSystems, Dataengineering, Vectorsearch
+docs/rate-limiters-burst-vs-abuse-two-designs/	Tags absent from body: RateLimiting, TokenBucket
+docs/react-19-compiler-my-components-changed-how/	Tags absent from body: React19Compiler, ReactForgetPerformance, UsememoVsCompiler, ReactCompilerBugs
+docs/read-replicas-the-bug-factory-you-built/	Tags absent from body: ReadReplicas, ReplicationLag, DatabaseReadScaling, StaleReads
+docs/rebalance-pay-when-ai-fills-half-your-role/	Tags absent from body: NegotiateSalary2026, Softwareengineering, Github, Techjobs
+docs/reconciling-mobile-money-edge-cases-banks-ignore/	Tags absent from body: Mobiledev
+docs/red-teaming-agents-without-killing-velocity/	Tags absent from body: RedTeamingAgents, AutomatedRedTeaming, LangchainSecurity, Cybersecurity
+docs/regulations-forced-better-apis-the-2026-fintech/	Tags absent from body: FintechApiDesign, DurablePaymentApis, Postgresql
+docs/remote-premium-rates-skills-ai-cant-copy/	Tags absent from body: RemoteWork, PremiumRates, LatencyBudget, RemoteDiagnosis
+docs/remote-salary-negotiate-without-sounding-cheap/	Tags absent from body: Techcareer, Careeradvice
+docs/remote-work-in-2026-which-tools-survived/	Tags absent from body: AsyncCommunicationMatrix, MatrixSynapse1.116.0
+docs/replace-managed-services-with-postgres-17/	Tags absent from body: PgSearch, PgCron, ManagedServicesCost, Tech
+docs/run-apis-in-50-spots-what-breaks-first/	Tags absent from body: EdgeNativeBackend, EdgeApiLatency, EdgeCachingPatterns, Softwareengineering
+docs/runbooks-vs-ai-which-cuts-outages-50/	Tags absent from body: AiRunbooks, MttrReduction, FirehydrantAiCopilot, PagerdutyAiopsCost
+docs/rust-rewrites-where-they-pay-off-where-they-dont/	Tags absent from body: RustBackendServices, AsyncRustPitfalls, Softwareengineering, Rustlang
+docs/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/	Tags absent from body: LlmProductionStack, FastapiLlmProduction, Python3, Rustlang
+docs/sandboxed-computer-use-agents-with-gvisor/	Tags absent from body: ComputerUseAgents, AgentSandboxing, GvisorSandbox
+docs/save-12kmonth-cloud-egress-costs-in-2026/	Tags absent from body: CloudEgressCost, EgressCost2026, Cloudcomputing, Dataengineering
+docs/sbom-attestation-that-gets-used/	Tags absent from body: SbomAttestation, CosignSbomSigning, Golang
+docs/scope-agent-permissions-per-task/	Tags absent from body: LeastPrivilege, AiAgentPermissions, Softwareengineering
+docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/	Tags absent from body: AiAgentsDeployment, CanaryAnalysisRollback, Prometheus3.1, Artificialintelligence
+docs/self-healing-pipelines-argo-vs-crossplane-in-2026/	Tags absent from body: GitopsSelfHealing, K8s
+docs/self-service-ai-tooling-the-permission-trap/	Tags absent from body: AiTooling, PermissionTrap, SelfServiceAi, TokenExchangeAi
+docs/self-service-ai-tooling-where-it-breaks-first/	Tags absent from body: AiRateLimit, AiBudgetEnforcement
+docs/self-service-is-broken-without-ai-ops/	Tags absent from body: SelfServicePlatform, AiGuardrails, PlatformEngineering, IamPolicyChecks
+docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/	Tags absent from body: SeniorEngineer, AiHiring, EngineeringRubric, Dataengineering
+docs/senior-role-projects-3-real-paths/	Tags absent from body: SeniorRemoteRoles, RedisRateLimiting, Cybersecurity, Infosec
+docs/serve-4g-as-baseline-apps-in-2026/	Tags absent from body: 4gWebPerformance, GoApi4g, Redis7.4Caching, Vite5.3Bundling
+docs/ship-1mb-pages-on-4g-starlink-africa-case-study/	Tags absent from body: 4gWebPerformance, BrotliCompression2026, CloudfrontQuic2026, StarlinkAfricaLatency
+docs/ship-a-solo-project-pipeline-under-20month/	Tags absent from body: Fly.ioCost, GithubActionsTips, Devops, Containers
+docs/ship-evals-before-your-agent-ships/	Tags absent from body: AgentEvals, LangsmithEval, GoldenDatasetAgents
+docs/show-real-work-not-ai-clones/	Tags absent from body: AiPortfolioFilter, NetworkLatencyResume, Mobiledev
+docs/skip-m-pesa-build-one-api-for-3-african-markets/	Tags absent from body: Mobiledev, Flutter
+docs/slos-for-agentic-features-beyond-latency/	Tags absent from body: AgenticAiSlos, OpentelemetryAgents, AgentSuccessRate, Agenticai
+docs/soft-deletes-fail-what-breaks-first/	Tags absent from body: SoftDeletes, SoftDeletePattern, DatabaseLifecycle, SoftDeleteAlternatives
+docs/spot-ais-hidden-cost-spike-in-your-stack/	Tags absent from body: AiRefactorRisks, Techcareer
+docs/spot-evictions-the-retry-logic-that-holds-up/	Tags absent from body: AwsSpotInstances, RetryLogic, BackgroundWorkers, AwsBatch
+docs/spot-instances-vs-on-demand-for-ai-experiments/	Tags absent from body: SpotInstances, GpuCost
+docs/staging-wont-catch-prod-bugs-make/	Tags absent from body: StagingEnvironment, FaultInjection, ProductionOnlyBugs, ConcurrencyTesting
+docs/stay-relevant-when-tools-change-faster-than-you-can/	Tags absent from body: StayTechnicallyRelevant, ToolUpgradeStrategy, DependencyManagement2026
+docs/stop-assuming-payment-apis-never-fail/	Tags absent from body: PaymentApis, AiCheckout, MPesaFailure, PaystackRetry
+docs/stop-false-positives-in-ci-scanning-now/	Tags absent from body: Cybersecurity, Infosec
+docs/stop-putting-llm-keys-in-env/	Tags absent from body: SecretsManagement, LlmApiKeys, EnvironmentVariables, LlmGatewaySecrets
+docs/stop-trusting-agents-for-core-logic/	Tags absent from body: AgentOrchestration, CodeReview, ContractFirstDesign
+docs/store-data-once-serve-everywhere-cheaper/	Tags absent from body: MultiRegionBackend, MultiRegionCaching, EdgeCaching2026, Softwareengineering
+docs/stride-is-a-checklist-not-a-threat-model/	Tags absent from body: ThreatModeling, AttackTrees, ThreatModelBackend, Softwareengineering
+docs/structured-logging-searchable-at-scale/	Tags absent from body: StructuredLogging, LogManagement, LogAggregation, LogSchemaDesign
+docs/supervisor-vs-swarm-vs-debate-vs-pipeline/	Tags absent from body: Multiagent
+docs/tame-python-asyncs-hidden-traps/	Tags absent from body: AsyncPython, FastapiAsync, Python3.11Async, AiohttpVsRequests
+docs/tech-debt-when-half-your-stack-is-unfamiliar/	Tags absent from body: TechnicalDebt, SoloEngineer, UnfamiliarTools, Technology
+docs/technical-debt-defend-priorities-to-stakeholders/	Tags absent from body: TechnicalDebt, Prioritization, Softwareengineering
+docs/temporal-changed-our-agent-retries-for-good/	Tags absent from body: TemporalWorkflow, DurableExecution, AgentPlatform, TemporalCloud
+docs/test-ai-code-without-testing-the-ai/	Tags absent from body: Generativeai
+docs/tool-calling-patterns-patterns-that-survive-load-vs/	Tags absent from body: ToolCallingPatterns, BackoffCurve, ToolCallSafety
+docs/tool-calling-stateless-beats-stateful-under-load/	Tags absent from body: ToolCalls, StatelessVsStateful, ConnectionPoolTuning, P99Latency
+docs/tool-calls-under-load-async-batch-vs-fire-and-forget/	Tags absent from body: Apis, Performance
+docs/tool-calls-why-retries-stampede/	Tags absent from body: ThunderingHerd, ToolUse, RetryStorm, AgentToolCalling
+docs/track-ai-agent-costs-in-fractal-workflows/	Tags absent from body: AgenticFinops, Langgraph, Cloudcomputing, Agenticai
+docs/trim-llm-bills-3-finops-moves-that-work/	Tags absent from body: LlmCostOptimization, ReduceLlmCosts, LlmCachingStrategies
+docs/two-engineer-classes-the-ai-tool-norm-trap/	Tags absent from body: AiCodingTools, AiDeveloperPolicy, TeamAiNorms, Generativeai
+docs/use-feature-flags-to-deploy-ai-models-safely/	Tags absent from body: FeatureFlags, AiDeployment, FeatureFlagsAi, RollBackAi
+docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/	Tags absent from body: UssdFintechAfrica, UssdGateway2026, Node.jsUssdTutorial, UssdLatencyOptimization
+docs/ussdsms-fallback-the-session-trap/	Tags absent from body: UssdSessionTimeout, SmsFallbackFintech, UssdTransactionState
+docs/velocity-up-ownership-down-team-scaling-trap/	Tags absent from body: TeamOwnership, ResponsibilityMatrix, OwnershipBlur
+docs/vibe-code-works-great-fails-forever/	Tags absent from body: VibeCoding, ProductionFailures, Fastapi, Structlog24.4.0
+docs/vibe-coding-mvp-gem-prod-albatross/	Tags absent from body: VibeCoding, MaintainableCode, TypescriptStrictMode, Js
+docs/waf-and-bot-management-what-they-miss/	Tags absent from body: BotManagement, WafBypass, BotDetectionGaps, Webdev
+docs/wasm-servers-beat-containers-here/	Tags absent from body: WebassemblyOnServer, WasmVsContainers, WasmPerformance, NodeLtsWasi
+docs/webhook-delivery-that-survives-outages/	Tags absent from body: OutboxPattern, WebhookRetry
+docs/webhooks-done-right-retries-that-dont-explode-in-2026/	Tags absent from body: WebhookRetries2026, IdempotentWebhooks, RedisIdempotency7.2
+docs/when-velocity-is-hard-to-measure-evaluating-engineering/	Unverifiable first-person experience claims x2 (not human_reviewed); Tags absent from body: EngineeringOutput, VelocityMetrics, ChangeFailureRate, DeploymentFrequency
+docs/when-your-agent-goes-silent-degrade-gracefully/	Tags absent from body: GracefulDegradation, CircuitBreaker, LlmTimeout, Generativeai
+docs/which-agent-stack-survives-3g/	Tags absent from body: LowLatencyAgents, EastAfricaDevelopers, EdgeAgentDeployment, ReconnectionStorm
+docs/which-ai-wrappers-made-money-in-2026/	Tags absent from body: AiCopilotWrappers, RagWrapperComparison, GuardrailsAiReview, Artificialintelligence
+docs/who-owns-ai-generated-code/	Tags absent from body: AiPairProgramming, CodeOwnershipModel, BanditSecurityScan, Cybersecurity
+docs/who-signs-off-on-ai-code/	Tags absent from body: AiCodeReview, CodeOwnership, AiAccountability, Generativeai
+docs/why-ai-interviewers-failed-68-of-us-in-2026/	Tags absent from body: AiInterviewerBias, Artificialintelligence, Postgresql, Apachekafka
+docs/why-do-production-agents-still-need-humans/	Tags absent from body: HumanInLoop, ProductionAgents
+docs/why-does-my-agent-version-break-clients/	Tags absent from body: AgentVersioning, SemanticVersioning, Docker, Containers
+docs/why-does-my-model-drift-after-deploy/	Tags absent from body: ModelDrift, MlEvaluation
+docs/why-leader-election-fails-on-cloud-networks/	Tags absent from body: LeaderElection, DistributedSystems, CloudNetworkFailures, FencingTokens
+docs/why-monoliths-die-slowly-in-2026/	Tags absent from body: MonolithMigration, StranglerFigPattern, MonolithToService, ExtractDomain
+docs/why-our-schema-survived-ai-scaling/	Tags absent from body: EmbeddingSchema, VectorStoreMigration, Dataengineering, Vectordb
+docs/why-platform-metrics-lie/	Tags absent from body: PlatformMetrics, TeamImpact
+docs/why-progressive-web-apps-fail-on-2g-and-how-to-fix/	Tags absent from body: 2gOptimization, MobilePerformance, ReactSsrEdge, BrotliAvif
+docs/why-scaling-agents-kills-plain-logs/	Tags absent from body: StructuredLogging, ModelPinning, Microservices
+docs/why-your-multi-agent-system-degraded-slowly/	Tags absent from body: NatsLatencyTuning, Performance, Multiagent
+docs/why-your-routing-layer-will-collapse-at-scale/	Tags absent from body: LlmRouting, ModelRouting, GdprModelRouting, RedisRetryState
+docs/world-models-wont-replace-your-backend/	Tags absent from body: WorldModels, PhysicalAi, BackendEngineering
+docs/your-platform-team-is-too-big/	Tags absent from body: PlatformEngineering, TeamTopologies, PlatformTeamStaffing, Softwareengineering
+docs/zero-trust-ai-skip-the-latency-tax/	Tags absent from body: ZeroTrust, AiLatency

@@ -1,4 +1,4 @@
-❌ Internal link audit: 432 broken link(s) found across 433 posts checked.
+❌ Internal link audit: 433 broken link(s) found across 433 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ Source Post                              Anchor Text                    Missing 
   /7-code-review-traps-when-ai-writes-half-your-code AI content policy              /ai-content-policy/
   /7-guardrails-for-safer-llm-apps        AI content policy              /ai-content-policy/
   /7-idp-shifts-for-ai-feature-delivery   AI content policy              /ai-content-policy/
+  /7-kubernetes-resource-traps-that-bite-in-prod AI content policy              /ai-content-policy/
   /7-patterns-for-systems-that-wont-die-when-networks AI content policy              /ai-content-policy/
   /7-skills-senior-engineers-need-now-agents-are-live AI content policy              /ai-content-policy/
   /7-ways-to-measure-prompt-platform-roi-in-2026 AI content policy              /ai-content-policy/
