@@ -44,12 +44,14 @@ import re
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 
-
 # Matches Markdown links: [anchor text](/slug/) or [anchor text](/base/slug/)
+# Also matches absolute links on the live domain and the legacy github.io host
+# (post_enhancer.py writes absolute "Related reading" links, which were never audited).
 _MD_INTERNAL_LINK_RE = re.compile(
-    r"\[([^\]]+)\]\((/[^\s)]*?/)\)",
+    r"\[([^\]]+)\]\((?:https?://(?:blog\.kubailabs\.com|kubaik\.github\.io))?(/[^\s)#?]*?/)\)",
     re.UNICODE,
 )
+_NON_POST_PREFIXES = {"tag", "author", "page", "static"}
 
 
 def _extract_slug_from_path(path: str) -> str:
@@ -62,8 +64,8 @@ def _extract_slug_from_path(path: str) -> str:
     """
     # Strip leading/trailing slashes and split
     parts = [p for p in path.strip("/").split("/") if p]
-    if not parts:
-        return ""
+    if not parts or parts[0] in _NON_POST_PREFIXES:
+        return ""  # /tag/x/, /author/x/, /page/2/ are generated listings, not posts
     return parts[-1]
 
 
@@ -74,7 +76,16 @@ def _extract_slug_from_path(path: str) -> str:
 # link and "please contact me" link was reported as a broken internal link,
 # which isn't true (docs/about/index.html and docs/contact/index.html both
 # exist) and buries genuinely broken links in the noise.
-_STATIC_PAGE_SLUGS = {"about", "contact"}
+_STATIC_PAGE_SLUGS = {
+    "about",
+    "contact",
+    "privacy-policy",
+    "terms-of-service",
+    "dmca",
+    "ai-content-policy",
+    "privacy",
+    "terms",
+}
 
 
 def _get_published_slugs(docs_dir: Path) -> Set[str]:

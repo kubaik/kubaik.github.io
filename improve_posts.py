@@ -238,7 +238,14 @@ def load_candidates(verdicts, docs: Path, slugs):
         print(
             f"⚠ {pending_deletes} post(s) are flagged DELETE and will be skipped — run delete_posts.py --confirm first."
         )
-    rows = [r for r in all_rows if r["verdict"] == "IMPROVE"]
+    # add_sources / add_inline_links are handled by post_enhancer (code), not the LLM.
+    _CODE_ONLY = {"add_sources", "add_inline_links"}
+    rows = [
+        r
+        for r in all_rows
+        if r["verdict"] == "IMPROVE"
+        and (set(f for f in (r.get("fixes") or "").split(",") if f) - _CODE_ONLY)
+    ]
     print(
         f"review result: {len(all_rows)} posts -> {pending_deletes} DELETE, {len(rows)} IMPROVE"
     )

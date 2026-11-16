@@ -145,3 +145,52 @@ Not run as a full site build.
         (4 replacements, same as apply_claim_fixes.py).
   [FIX] Render-time strip of "[CLAIM REMOVED ...]" placeholders in
         _generate_post_pages(), so leftovers can never reach a published page.
+
+==========================================================================
+Date: 2026-11-16 (fourth pass: adsense_fixes/*, triage, post_enhancer, queue
+      processors, auto_retire_duplicates, entity_gate)
+==========================================================================
+Status: py_compile OK. Tested on synthetic docs: stub skipped by triage, KEEP
+verdict returned, absolute/legal/tag links handled by link audit, wrong stub
+canonical detected. Not run on the real corpus.
+
+triage.py
+  [FIX] Never returned KEEP: every non-DELETE post was IMPROVE even with zero
+        fixes, so improve_posts.py queued the whole corpus for LLM rewriting.
+        No fixes now = KEEP (keep.txt written).
+  [FIX] Redirect stubs (post.json has redirect_to) are skipped. Before, a stub
+        scored as "Thin content" -> DELETE, so delete_posts.py turned a working
+        redirect into a 404, and improve_posts.py could LLM-rewrite it.
+improve_posts.py
+  [FIX] Only rows with a fix the LLM can do are rewritten; add_sources and
+        add_inline_links are code-only fixes (post_enhancer).
+canonical_guard.py
+  [FIX] audit_noindex_compliance() canonical check could never fire (it tested
+        for href="docs" in the HTML). It now parses the canonical href and
+        compares it with the survivor slug.
+link_validator.py
+  [FIX] Only root-relative links were audited; absolute links on
+        blog.kubailabs.com / kubaik.github.io (the form post_enhancer writes)
+        were never checked or stripped.
+  [FIX] /ai-content-policy/, /privacy-policy/ etc. were reported as broken (and
+        would be stripped by validate_post_links); /tag/, /author/, /page/ paths
+        are no longer treated as post slugs.
+post_enhancer.py
+  [FIX] Dead-link repair now covers blog.kubailabs.com links.
+  [FIX] "Related reading" required no minimum similarity and padded with
+        unrelated posts; floor 0.08 added.
+
+Reviewed, unchanged: auto_retire_duplicates.py, process_regeneration_queue.py,
+process_citation_queue.py, ads_scope_gate.py, claim_gate.py, topic_dedup.py,
+entity_gate.py, delete_posts_1.py (identical to the delete_posts.py already patched).
+Notes
+  - Stubs combine noindex with a canonical to the survivor and an instant meta
+    refresh. Google advises against noindex + canonical together; a plain
+    redirect stub without noindex consolidates signals more cleanly. Not changed
+    because static_site_generator.py and canonical_guard key off the noindex.
+  - triage.py similarity builds a dense n x n matrix; fine for ~3k posts, memory
+    heavy beyond ~10k. topic_dedup.find_clusters() is O(n^2) in pure Python.
+  - entity_gate.py's allowlist is finite; legitimate unlisted products are
+    flagged "unverifiable". Expect false positives, not misses.
+  - post_enhancer.py's keyword-to-docs map (e.g. "Temporal", "Rust", "Flux")
+    still matches ordinary words; it remains disabled in the workflow.

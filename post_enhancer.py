@@ -168,7 +168,7 @@ def strip_claims(text: str):
 
 
 LINK_RX = re.compile(
-    r"\[([^\]]+)\]\((?:https?://kubaik\.github\.io)?/([a-z0-9][a-z0-9-]*)/?\)"
+    r"\[([^\]]+)\]\((?:https?://(?:blog\.kubailabs\.com|kubaik\.github\.io))?/([a-z0-9][a-z0-9-]*)/?\)"
 )
 RESERVED = {
     "about",
@@ -239,7 +239,10 @@ def main():
     S = cosine_similarity(M)
     sims = {}
     for i, s in enumerate(slugs):
-        sims[s] = [slugs[j] for j in S[i].argsort()[::-1] if j != i][:6]
+        # similarity floor: never pad "Related reading" with unrelated posts
+        sims[s] = [
+            slugs[j] for j in S[i].argsort()[::-1] if j != i and S[i, j] >= 0.08
+        ][:6]
     report = {"changed": [], "needs_regeneration": [], "retitle": []}
     ok_cache = {}
     for n, r in enumerate(rows):

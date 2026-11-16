@@ -55,12 +55,28 @@ import re
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-
-_SLUG_SIMILARITY_THRESHOLD = 0.70   # Jaccard over slug bigrams
+_SLUG_SIMILARITY_THRESHOLD = 0.70  # Jaccard over slug bigrams
 _STOP_SLUG_WORDS = {
-    'the', 'a', 'an', 'and', 'or', 'in', 'of', 'for',
-    'to', 'is', 'are', 'with', 'how', 'why', 'what',
-    'guide', 'tutorial', 'post', 'article', 'blog',
+    "the",
+    "a",
+    "an",
+    "and",
+    "or",
+    "in",
+    "of",
+    "for",
+    "to",
+    "is",
+    "are",
+    "with",
+    "how",
+    "why",
+    "what",
+    "guide",
+    "tutorial",
+    "post",
+    "article",
+    "blog",
 }
 
 # Matches the exact stub pattern auto_retire_duplicates.py writes:
@@ -73,9 +89,10 @@ _MERGE_STUB_RE = re.compile(
 
 # ── Merge-stub detection ───────────────────────────────────────────────────
 
+
 def is_merge_stub(post) -> bool:
     """True if post.content is an auto_retire_duplicates.py redirect stub."""
-    content = getattr(post, 'content', '') or ''
+    content = getattr(post, "content", "") or ""
     return bool(_MERGE_STUB_RE.search(content))
 
 
@@ -84,16 +101,17 @@ def get_redirect_target(post) -> Optional[str]:
     Return the survivor slug a merge-stub post redirects to, or None if
     this post is not a stub.
     """
-    content = getattr(post, 'content', '') or ''
+    content = getattr(post, "content", "") or ""
     m = _MERGE_STUB_RE.search(content)
     if not m:
         return None
     path = m.group(2)
-    parts = [p for p in path.strip('/').split('/') if p]
+    parts = [p for p in path.strip("/").split("/") if p]
     return parts[-1] if parts else None
 
 
 # ── Canonical tag generator ────────────────────────────────────────────────
+
 
 def generate_canonical_meta(post, base_url: str) -> str:
     """
@@ -103,19 +121,20 @@ def generate_canonical_meta(post, base_url: str) -> str:
     this is what actually resolves the duplicate-content signal instead
     of just hiding it behind noindex.
     """
-    base = base_url.rstrip('/')
+    base = base_url.rstrip("/")
 
     target_slug = get_redirect_target(post)
     if target_slug:
         canonical = f"{base}/{target_slug}/"
         return f'<link rel="canonical" href="{canonical}">'
 
-    slug = getattr(post, 'slug', '').strip('/')
+    slug = getattr(post, "slug", "").strip("/")
     canonical = f"{base}/{slug}/"
     return f'<link rel="canonical" href="{canonical}">'
 
 
 # ── Canonical validation ───────────────────────────────────────────────────
+
 
 def validate_canonical(post, base_url: str) -> List[str]:
     """
@@ -123,16 +142,15 @@ def validate_canonical(post, base_url: str) -> List[str]:
     Returns a list of issue strings (empty list = no issues).
     """
     issues = []
-    slug = getattr(post, 'slug', '')
-    base = base_url.rstrip('/')
+    slug = getattr(post, "slug", "")
+    base = base_url.rstrip("/")
 
     if not slug:
         issues.append("Post has no slug — canonical URL cannot be formed.")
         return issues
 
     if not base:
-        issues.append(
-            "base_url is empty — canonical URL will be relative only.")
+        issues.append("base_url is empty — canonical URL will be relative only.")
 
     if is_merge_stub(post) and get_redirect_target(post) == slug:
         issues.append(
@@ -140,30 +158,29 @@ def validate_canonical(post, base_url: str) -> List[str]:
             f"produced a self-referential stub, verify manually."
         )
 
-    if slug.endswith('-2') or re.search(r'-\d+$', slug):
+    if slug.endswith("-2") or re.search(r"-\d+$", slug):
         issues.append(
             f"Slug '{slug}' ends with a numeric suffix, suggesting a duplicate "
             f"was auto-generated. Verify this is intentional."
         )
 
-    if re.search(r'[^a-z0-9\-]', slug):
+    if re.search(r"[^a-z0-9\-]", slug):
         issues.append(
             f"Slug '{slug}' contains characters other than lowercase letters, "
             f"digits, and hyphens. This may cause canonical URL inconsistency."
         )
 
-    if slug.startswith('-') or slug.endswith('-'):
+    if slug.startswith("-") or slug.endswith("-"):
         issues.append(f"Slug '{slug}' starts or ends with a hyphen.")
 
-    if base.startswith('http://'):
-        issues.append(
-            "base_url uses HTTP — canonical URLs should use HTTPS."
-        )
+    if base.startswith("http://"):
+        issues.append("base_url uses HTTP — canonical URLs should use HTTPS.")
 
     return issues
 
 
 # ── Duplicate slug audit ───────────────────────────────────────────────────
+
 
 def audit_duplicate_slugs(docs_dir: Path) -> str:
     """
@@ -175,15 +192,15 @@ def audit_duplicate_slugs(docs_dir: Path) -> str:
 
     slugs: List[Tuple[str, str]] = []
     for post_dir in sorted(docs_dir.iterdir()):
-        if not post_dir.is_dir() or post_dir.name in ('static', 'tag', 'author'):
+        if not post_dir.is_dir() or post_dir.name in ("static", "tag", "author"):
             continue
-        post_json = post_dir / 'post.json'
+        post_json = post_dir / "post.json"
         if not post_json.exists():
             continue
         try:
-            with open(post_json, 'r', encoding='utf-8') as f:
+            with open(post_json, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            slugs.append((post_dir.name, data.get('title', post_dir.name)))
+            slugs.append((post_dir.name, data.get("title", post_dir.name)))
         except (json.JSONDecodeError, KeyError):
             continue
 
@@ -229,12 +246,13 @@ def audit_duplicate_slugs(docs_dir: Path) -> str:
 
 # ── Helpers ────────────────────────────────────────────────────────────────
 
+
 def _slug_bigrams(slug: str) -> Set[str]:
-    words = [w for w in slug.split('-') if w and w not in _STOP_SLUG_WORDS]
-    text = ''.join(words)
+    words = [w for w in slug.split("-") if w and w not in _STOP_SLUG_WORDS]
+    text = "".join(words)
     if len(text) < 2:
         return set(text)
-    return {text[i:i + 2] for i in range(len(text) - 1)}
+    return {text[i : i + 2] for i in range(len(text) - 1)}
 
 
 def _slug_jaccard(a: str, b: str) -> float:
@@ -249,12 +267,13 @@ def _slug_jaccard(a: str, b: str) -> float:
 
 # ── Sitemap / noindex enforcement ──────────────────────────────────────────
 
+
 def get_noindex_paths() -> List[str]:
     """Static path patterns that should carry noindex meta tags."""
     return [
-        '/tag/',
-        '/404.html',
-        '/offline.html',
+        "/tag/",
+        "/404.html",
+        "/offline.html",
     ]
 
 
@@ -285,44 +304,59 @@ def audit_noindex_compliance(docs_dir: Path) -> str:
     if not docs_dir.exists():
         return "docs/ directory not found — nothing to audit."
 
-    sitemap_path = docs_dir / 'sitemap.xml'
-    sitemap_text = sitemap_path.read_text(encoding='utf-8') if sitemap_path.exists() else ''
+    sitemap_path = docs_dir / "sitemap.xml"
+    sitemap_text = (
+        sitemap_path.read_text(encoding="utf-8") if sitemap_path.exists() else ""
+    )
 
     problems = []
     stub_count = 0
 
     for post_dir in sorted(docs_dir.iterdir()):
-        if not post_dir.is_dir() or post_dir.name in ('static', 'tag', 'author'):
+        if not post_dir.is_dir() or post_dir.name in ("static", "tag", "author"):
             continue
-        post_json = post_dir / 'post.json'
+        post_json = post_dir / "post.json"
         if not post_json.exists():
             continue
         try:
-            data = json.loads(post_json.read_text(encoding='utf-8'))
+            data = json.loads(post_json.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
             continue
 
-        content = data.get('content', '')
+        content = data.get("content", "")
         m = _MERGE_STUB_RE.search(content)
         if not m:
             continue
 
         stub_count += 1
         slug = post_dir.name
-        target = [p for p in m.group(2).strip('/').split('/') if p][-1] if m.group(2) else None
+        target = (
+            [p for p in m.group(2).strip("/").split("/") if p][-1]
+            if m.group(2)
+            else None
+        )
 
         if target == slug:
             problems.append(f"/{slug}/ — self-referential redirect target")
         if f"/{slug}/" in sitemap_text:
             problems.append(f"/{slug}/ — still present in sitemap.xml")
 
-        html_path = post_dir / 'index.html'
+        html_path = post_dir / "index.html"
         if html_path.exists():
-            html = html_path.read_text(encoding='utf-8')
-            if 'noindex' not in html.lower():
+            html = html_path.read_text(encoding="utf-8")
+            if "noindex" not in html.lower():
                 problems.append(f"/{slug}/ — index.html missing noindex meta tag")
-            if f'href="{docs_dir.name}' not in html and f'/{slug}/"' in html and target and f'/{target}/"' not in html:
-                problems.append(f"/{slug}/ — canonical does not point at survivor /{target}/")
+            cm = re.search(
+                r'<link[^>]+rel=["\']canonical["\'][^>]*href=["\']([^"\']+)["\']',
+                html,
+                re.I,
+            )
+            if target and (
+                not cm or not cm.group(1).rstrip("/").endswith(f"/{target}")
+            ):
+                problems.append(
+                    f"/{slug}/ — canonical does not point at survivor /{target}/"
+                )
 
     if stub_count == 0:
         return "✅ Noindex audit: no merge-stub posts found."
@@ -330,6 +364,8 @@ def audit_noindex_compliance(docs_dir: Path) -> str:
     if not problems:
         return f"✅ Noindex audit: PASS — {stub_count} merge-stub post(s), all correctly noindexed/canonicalized/excluded from sitemap."
 
-    lines = [f"❌ Noindex audit: {len(problems)} issue(s) across {stub_count} merge-stub post(s)."]
+    lines = [
+        f"❌ Noindex audit: {len(problems)} issue(s) across {stub_count} merge-stub post(s)."
+    ]
     lines += [f"  - {p}" for p in problems]
     return "\n".join(lines)

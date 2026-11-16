@@ -119,6 +119,12 @@ def load(docs):
             data = _md_post(d.name, md)
             data["_no_json"] = True
             repaired.append(d.name)
+        if data.get("redirect_to"):
+            # Merge/redirect stub written by auto_retire_duplicates.py: not a real post.
+            # Scoring it ("thin content") made delete_posts.py delete the redirect, turning a
+            # working 301-style stub into a 404, and made improve_posts.py LLM-rewrite it.
+            skipped.append(d.name)
+            continue
         data.setdefault("title", d.name.replace("-", " "))
         data.setdefault("content", "")
         data.setdefault("created_at", "")
@@ -223,7 +229,9 @@ def verdict(sc, dup_loser):
         fix.append("add_inline_links")
     if sc["title_first"]:
         fix.append("retitle")
-    return "IMPROVE", why, fix
+    # Previously every non-DELETE post was "IMPROVE" even with zero fixes, so
+    # improve_posts.py queued the ENTIRE corpus for LLM rewriting. No fixes = KEEP.
+    return ("IMPROVE" if fix else "KEEP"), why, fix
 
 
 def analyze(docs: Path, dup_threshold: float = 0.40):
@@ -300,6 +308,9 @@ def write_report(rows, out):
     )
     Path(f"{out}/improve.txt").write_text(
         "\n".join(r["path"] for r in rows if r["verdict"] == "IMPROVE") + "\n"
+    )
+    Path(f"{out}/keep.txt").write_text(
+        "\n".join(r["path"] for r in rows if r["verdict"] == "KEEP") + "\n"
     )
 
 
