@@ -72,6 +72,7 @@ BANNED_ABOUT_PHRASES = [
 
 # ── Step 1: rebuild ──────────────────────────────────────────────────────
 
+
 def rebuild_site():
     """Regenerate the static site from current templates, then verify the
     About page no longer contains the old contradictory claim."""
@@ -101,12 +102,12 @@ def rebuild_site():
     if still_bad:
         print("  ❌ Rebuilt About page STILL contains contradictory claims:")
         for p in still_bad:
-            print(f"       - \"{p}\"")
+            print(f'       - "{p}"')
         print("     This text isn't coming from static_site_generator.py's")
         print("     current template, so it must be hardcoded somewhere else")
         print("     (a CMS override, a hand-edited file, or a second template")
         print("     path). Search the repo for it directly:")
-        print("       grep -rn \"I read every article\" .")
+        print('       grep -rn "I read every article" .')
     else:
         print("  ✅ Rebuilt About page matches the honest editorial-process")
         print("     copy. If the live site still shows old text, the fix is")
@@ -121,17 +122,17 @@ def rebuild_site():
 # University) and anything structurally similar elsewhere in the corpus.
 CITATION_PATTERNS = [
     re.compile(
-        r'(?P<sentence>[^.]*?\b(?:study|paper|report|survey|research|analysis)\b'
-        r'\s+(?:by|from)\s+[^.]*?\d{1,3}\s?%[^.]*\.)',
+        r"(?P<sentence>[^.]*?\b(?:study|paper|report|survey|research|analysis)\b"
+        r"\s+(?:by|from)\s+[^.]*?\d{1,3}\s?%[^.]*\.)",
         re.IGNORECASE,
     ),
     re.compile(
-        r'(?P<sentence>[^.]*?\baccording to\s+(?:a\s+)?[A-Z][\w&.\'\-]*'
-        r'(?:\s+[A-Z][\w&.\'\-]*){0,5}[^.]*\d{1,3}\s?%[^.]*\.)',
+        r"(?P<sentence>[^.]*?\baccording to\s+(?:a\s+)?[A-Z][\w&.\'\-]*"
+        r"(?:\s+[A-Z][\w&.\'\-]*){0,5}[^.]*\d{1,3}\s?%[^.]*\.)",
     ),
     re.compile(
-        r'(?P<sentence>[^.]*?\b(?:20\d{2})\s+(?:study|paper|report)\s+'
-        r'(?:by|from)\s+[^.]*\.)',
+        r"(?P<sentence>[^.]*?\b(?:20\d{2})\s+(?:study|paper|report)\s+"
+        r"(?:by|from)\s+[^.]*\.)",
         re.IGNORECASE,
     ),
 ]
@@ -179,37 +180,45 @@ def scan_citations():
             for m in pattern.finditer(content):
                 sentence = m.group("sentence").strip()
                 if sentence and sentence not in [x["sentence"] for x in matches]:
-                    matches.append({
-                        "sentence": sentence,
-                        "known_fabricated": any(
-                            snip.lower() in sentence.lower()
-                            for snip in KNOWN_FABRICATED_SNIPPETS
-                        ),
-                    })
+                    matches.append(
+                        {
+                            "sentence": sentence,
+                            "known_fabricated": any(
+                                snip.lower() in sentence.lower()
+                                for snip in KNOWN_FABRICATED_SNIPPETS
+                            ),
+                        }
+                    )
 
         if matches:
-            findings.append({
-                "slug": post_dir.name,
-                "post_json": str(post_json),
-                "title": data.get("title", ""),
-                "matches": matches,
-            })
+            findings.append(
+                {
+                    "slug": post_dir.name,
+                    "post_json": str(post_json),
+                    "title": data.get("title", ""),
+                    "matches": matches,
+                }
+            )
 
     REPORT_PATH.write_text(
         json.dumps(findings, indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
     total_matches = sum(len(f["matches"]) for f in findings)
-    known = sum(
-        1 for f in findings for m in f["matches"] if m["known_fabricated"]
-    )
+    known = sum(1 for f in findings for m in f["matches"] if m["known_fabricated"])
     print(f"Checked {checked} posts.")
-    print(f"Flagged {total_matches} suspect citation sentences across "
-          f"{len(findings)} posts.")
-    print(f"  - {known} match the already-confirmed fabricated pattern "
-          f"(iHub Research / Makerere University style).")
-    print(f"  - {total_matches - known} are new pattern matches — read these, "
-          f"the regex is deliberately loose and WILL include false positives.")
+    print(
+        f"Flagged {total_matches} suspect citation sentences across "
+        f"{len(findings)} posts."
+    )
+    print(
+        f"  - {known} match the already-confirmed fabricated pattern "
+        f"(iHub Research / Makerere University style)."
+    )
+    print(
+        f"  - {total_matches - known} are new pattern matches — read these, "
+        f"the regex is deliberately loose and WILL include false positives."
+    )
     print(f"\nFull report written to: {REPORT_PATH.resolve()}")
     print("Open it and read every sentence. For each one, decide:")
     print("  KEEP    — it's a real, verifiable, correctly-cited source")
@@ -219,6 +228,41 @@ def scan_citations():
 
 
 # ── Step 3: auto-fix the two already-confirmed fabrications ─────────────
+
+_MARKER_RE = re.compile(r"\[CLAIM REMOVED[^\]]*\]")
+
+
+def remove_sentence(content: str, sentence: str) -> str:
+    """Delete a flagged sentence cleanly. NEVER leave visible placeholder text
+    in a published article: readers and reviewers see "[CLAIM REMOVED ...]"
+    as an unfinished, machine-edited page. If the sentence was the whole
+    paragraph the paragraph goes too; otherwise only the sentence does."""
+    out = content.replace(sentence, "")
+    out = re.sub(r"[ \t]+\n", "\n", out)
+    out = re.sub(r"[ \t]{2,}", " ", out)
+    out = re.sub(r"\n{3,}", "\n\n", out)
+    return out
+
+
+def purge_markers(apply: bool):
+    """One-shot: remove every '[CLAIM REMOVED ...]' marker already published."""
+    touched = 0
+    for post_dir, post_json, data in iter_posts():
+        content = data.get("content", "")
+        if not _MARKER_RE.search(content):
+            continue
+        cleaned = _MARKER_RE.sub("", content)
+        cleaned = re.sub(r"[ \t]+\n", "\n", cleaned)
+        cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+        touched += 1
+        print(f"{'PURGED' if apply else 'WOULD PURGE'} marker(s) in {post_dir.name}")
+        if apply:
+            data["content"] = cleaned
+            post_json.write_text(
+                json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
+    print(f"{touched} posts {'edited' if apply else 'would be edited'}.")
+
 
 def fix_known(apply: bool):
     """Strip the two confirmed-fabricated citations to a neutral, honest
@@ -246,12 +290,8 @@ def fix_known(apply: bool):
             sentence = m["sentence"]
             if sentence not in content:
                 continue  # already edited or content changed since scan
-            marker = (
-                "[CLAIM REMOVED — previously cited a source/statistic that "
-                "could not be verified; see citation_audit_report.json]"
-            )
             if apply:
-                content = content.replace(sentence, marker)
+                content = remove_sentence(content, sentence)
             changed = True
 
         if changed:
@@ -263,14 +303,16 @@ def fix_known(apply: bool):
             if apply:
                 data["content"] = content
                 data["updated_at"] = datetime.now().isoformat()
-                data.setdefault("monetization_data", {})["review_status"] = (
-                    "credibility_reviewed_" + datetime.now().strftime("%Y%m%d")
-                )
+                data.setdefault("monetization_data", {})[
+                    "review_status"
+                ] = "credibility_reviewed_" + datetime.now().strftime("%Y%m%d")
                 with open(post_json, "w", encoding="utf-8") as f:
                     json.dump(data, f, indent=2, ensure_ascii=False)
 
     if not apply:
-        print(f"\n{touched} posts would be changed. Re-run with --apply to write changes.")
+        print(
+            f"\n{touched} posts would be changed. Re-run with --apply to write changes."
+        )
     else:
         print(f"\n{touched} posts updated. Now run:")
         print("  python adsense_credibility_cleanup.py rebuild")
@@ -279,12 +321,13 @@ def fix_known(apply: bool):
 
 # ── Step 3b: bulk-delete every flagged sentence, not just the known ones ─
 
+
 def delete_all_flagged(apply: bool):
     """Strip EVERY sentence in the report — known fabrications and the
     looser regex matches alike — down to a visible removal marker, and
     log each one as a 'delete' decision automatically. Use this instead
     of `review` when you've decided the safe default for anything with
-    an invented attribution is "cut it," not "rewrite it in place.\""""
+    an invented attribution is "cut it," not "rewrite it in place.\" """
     if not REPORT_PATH.exists():
         print(f"No {REPORT_PATH} found — run `scan` first.")
         sys.exit(1)
@@ -316,12 +359,8 @@ def delete_all_flagged(apply: bool):
                 continue  # already edited since scan, or scan/content drifted
 
             total_sentences += 1
-            marker = (
-                "[CLAIM REMOVED — previously cited a source/statistic that "
-                "could not be verified; see citation_audit_report.json]"
-            )
             if apply:
-                content = content.replace(sentence, marker)
+                content = remove_sentence(content, sentence)
                 decisions[key] = {
                     "slug": entry["slug"],
                     "sentence": sentence,
@@ -333,15 +372,17 @@ def delete_all_flagged(apply: bool):
 
         if changed:
             touched += 1
-            print(f"{'DELETED' if apply else 'WOULD DELETE'} {len(entry['matches'])} "
-                  f"sentence(s) in: {entry['slug']}")
+            print(
+                f"{'DELETED' if apply else 'WOULD DELETE'} {len(entry['matches'])} "
+                f"sentence(s) in: {entry['slug']}"
+            )
 
             if apply:
                 data["content"] = content
                 data["updated_at"] = datetime.now().isoformat()
-                data.setdefault("monetization_data", {})["review_status"] = (
-                    "credibility_reviewed_" + datetime.now().strftime("%Y%m%d")
-                )
+                data.setdefault("monetization_data", {})[
+                    "review_status"
+                ] = "credibility_reviewed_" + datetime.now().strftime("%Y%m%d")
                 with open(post_json, "w", encoding="utf-8") as f:
                     json.dump(data, f, indent=2, ensure_ascii=False)
 
@@ -360,6 +401,7 @@ def delete_all_flagged(apply: bool):
 
 
 # ── Step 4: log human review decisions for the remaining matches ────────
+
 
 def review():
     """Interactive pass through every non-known flagged sentence, so a real
@@ -385,13 +427,19 @@ def review():
             print("\n" + "=" * 70)
             print(f"Post: {entry['title']}  ({entry['slug']})")
             print(f"Sentence:\n  {m['sentence']}")
-            choice = input("Decision [k=keep / r=needs rewrite / d=delete claim / s=skip]: ").strip().lower()
+            choice = (
+                input("Decision [k=keep / r=needs rewrite / d=delete claim / s=skip]: ")
+                .strip()
+                .lower()
+            )
             if choice == "s":
                 continue
             decisions[key] = {
                 "slug": entry["slug"],
                 "sentence": m["sentence"],
-                "decision": {"k": "keep", "r": "rewrite", "d": "delete"}.get(choice, "unresolved"),
+                "decision": {"k": "keep", "r": "rewrite", "d": "delete"}.get(
+                    choice, "unresolved"
+                ),
                 "reviewed_at": datetime.now().isoformat(),
             }
             DECISIONS_PATH.write_text(
@@ -406,19 +454,48 @@ def review():
 
 # ── entry point ───────────────────────────────────────────────────────────
 
+
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     sub = parser.add_subparsers(dest="command")
 
-    sub.add_parser("rebuild", help="Regenerate the site so the About page matches source")
+    sub.add_parser(
+        "rebuild", help="Regenerate the site so the About page matches source"
+    )
     sub.add_parser("scan", help="Scan all posts for fabricated-citation patterns")
-    p_fix = sub.add_parser("fix-known", help="Strip the two confirmed fabrications (iHub Research, Makerere University)")
-    p_fix.add_argument("--apply", action="store_true", help="Write changes (default: dry run)")
-    p_del = sub.add_parser("delete-flagged", help="Strip EVERY flagged sentence in the report, not just the known ones")
-    p_del.add_argument("--apply", action="store_true", help="Write changes (default: dry run)")
-    sub.add_parser("review", help="Interactively log a decision for each remaining flagged sentence")
+    p_fix = sub.add_parser(
+        "fix-known",
+        help="Strip the two confirmed fabrications (iHub Research, Makerere University)",
+    )
+    p_fix.add_argument(
+        "--apply", action="store_true", help="Write changes (default: dry run)"
+    )
+    p_del = sub.add_parser(
+        "delete-flagged",
+        help="Strip EVERY flagged sentence in the report, not just the known ones",
+    )
+    p_del.add_argument(
+        "--apply", action="store_true", help="Write changes (default: dry run)"
+    )
+    p_pm = sub.add_parser(
+        "purge-markers",
+        help="Remove visible [CLAIM REMOVED ...] placeholders from all posts",
+    )
+    p_pm.add_argument(
+        "--apply", action="store_true", help="Write changes (default: dry run)"
+    )
+    sub.add_parser(
+        "review",
+        help="Interactively log a decision for each remaining flagged sentence",
+    )
     p_all = sub.add_parser("all", help="Run rebuild + scan + fix-known in sequence")
-    p_all.add_argument("--apply", action="store_true", help="Write changes during fix-known (default: dry run)")
+    p_all.add_argument(
+        "--apply",
+        action="store_true",
+        help="Write changes during fix-known (default: dry run)",
+    )
 
     args = parser.parse_args()
 
@@ -430,6 +507,8 @@ def main():
         fix_known(apply=args.apply)
     elif args.command == "delete-flagged":
         delete_all_flagged(apply=args.apply)
+    elif args.command == "purge-markers":
+        purge_markers(apply=args.apply)
     elif args.command == "review":
         review()
     elif args.command == "all":

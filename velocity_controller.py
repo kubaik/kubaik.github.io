@@ -5,14 +5,13 @@ Controls automated post-publication rate to prevent spam signals.
 
 WHY THIS EXISTS
 ---------------
-AdSense Site Readiness Guide (§7 — Automated Blog Specific Concerns):
-  "Publishing 100+ posts per day on a new site is a spam signal.
-   Throttle automated publishing to a natural, sustainable pace."
-
-Google's spam classifier uses publishing velocity as a strong signal.
-A new site that publishes 10 posts in 10 minutes looks like a content
-farm regardless of quality.  This module enforces a daily cap that
-scales with domain age and can be tuned per deployment environment.
+Google's spam policies describe "scaled content abuse": generating many
+pages primarily to manipulate rankings without adding value. Google does not
+publish a numeric posts-per-day threshold, so the caps below are this
+project's own conservative choice, not a documented Google limit. A new site
+that publishes 10 posts in 10 minutes looks like a content farm regardless of
+quality. This module enforces a daily cap that scales with site age and can be
+tuned per deployment environment.
 
 RECOMMENDED CAPS
 ---------------
@@ -201,6 +200,9 @@ class VelocityController:
                     continue
                 try:
                     data = json.loads(post_json.read_text(encoding="utf-8"))
+                    md = data.get("monetization_data") or {}
+                    if isinstance(md, dict) and md.get("date_unreliable"):
+                        continue  # recovered post with an mtime/checkout date
                     raw = data.get("created_at", "")
                     date_part = raw.split("T")[0] if "T" in raw else raw.strip()
                     if date_part:

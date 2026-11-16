@@ -288,7 +288,13 @@ def main():
         "--verify-online", action="store_true", help="PyPI/npm check of product names"
     )
     ap.add_argument(
-        "--no-finalize", action="store_true", help="skip post_enhancer.py afterwards"
+        "--no-finalize", action="store_true", help="(default now) skip post_enhancer.py"
+    )
+    ap.add_argument(
+        "--finalize",
+        action="store_true",
+        help="run post_enhancer.py afterwards. OFF by default: it appends keyword-mapped "
+        "'Official documentation' links that triage found irrelevant on 99+ posts.",
     )
     ap.add_argument("--confirm", action="store_true")
     a = ap.parse_args()
@@ -392,7 +398,7 @@ def main():
         print(
             "Posts that cannot be fixed automatically: re-run triage.py, review, then delete_posts.py --slug <slug>."
         )
-    if report["improved"] and not a.no_finalize:
+    if report["improved"] and a.finalize and not a.no_finalize:
         cmd = [
             sys.executable,
             str(Path(__file__).resolve().parent / "post_enhancer.py"),

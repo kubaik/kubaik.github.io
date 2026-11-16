@@ -109,7 +109,16 @@ class MonetizationManager:
         return pts
 
     def generate_ad_slots(self, content: str) -> dict:
-        n = len(content.split("\n"))
+        """Ad slot plan. Zero slots unless ads are enabled in config AND the
+        page clears ads_min_words of prose (code fences excluded). AdSense's
+        publisher policies disallow ads on screens with little or no original
+        content, so thin posts must never be planned with slots."""
+        prose = re.sub(r"```.*?```", " ", content or "", flags=re.S)
+        wc = len(re.findall(r"\b\w+\b", prose))
+        min_words = int(self.config.get("ads_min_words", 1200))
+        if not self.config.get("adsense_ads_enabled", False) or wc < min_words:
+            return {"ad_slots": 0, "affiliate_count": 0}
+        n = len((content or "").split("\n"))
         return {
             "header": 2,
             "middle": n // 2,

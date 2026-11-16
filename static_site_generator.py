@@ -1368,11 +1368,14 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             post_dir = Path("./docs") / post.slug
             post_dir.mkdir(exist_ok=True)
             markdown_converter = md.Markdown(extensions=["extra", "fenced_code", "toc"])
+            # Render-time safety net: never publish leftover "[CLAIM REMOVED ...]"
+            # placeholders from earlier cleanup runs, even if post.json still has them.
+            _render_src = re.sub(r"[ \t]*\[CLAIM REMOVED[^\]]*\]", "", post.content)
             content_html = markdown_converter.convert(
                 re.sub(
                     r"\n---\s*\n+### About this article.*\Z",
                     "",
-                    post.content,
+                    _render_src,
                     flags=re.S,
                 )
             )
@@ -2181,7 +2184,7 @@ def _build_templates() -> dict:
                     </p>
                     <p class="author-bio">
                         Software developer based in Nairobi, Kenya. Writing about AI,
-                        backend systems, and developer tooling based on real production experience.
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
                         <a href="{{ base_path }}/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
@@ -2420,8 +2423,8 @@ def _build_templates() -> dict:
     {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <main class="container">
         <div class="hero">
-            <h2>Real Systems. Real Failures. Real Fixes.</h2>
-            <p>Practical backend engineering, AI tooling, and developer career advice — no theory, just what's worked in real production systems.</p>
+            <h2>Backend engineering, AI tooling and developer careers</h2>
+            <p>Explainers on backend engineering, AI tooling and developer careers: mechanisms, failure modes and decision checklists. Drafted with an LLM pipeline; figures are illustrative.</p>
         </div>
 
         <div class="editorial-policy-note">
@@ -3132,8 +3135,8 @@ def _build_templates() -> dict:
                         <strong>Topic selection</strong>
                         <p>Topics are drawn from a curated list of recurring themes in backend
                         engineering, AI systems, and developer careers — areas I have direct
-                        interest and background in, covering patterns and trade-offs that come
-                        up often in real production work.</p>
+                        interest and background in, covering patterns and trade-offs that are
+                        widely discussed in backend and AI engineering.</p>
                     </div>
                 </div>
 

@@ -34,8 +34,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import quality_gate
 import triage
 
+# Absolute links on the current custom domain AND the legacy github.io host must both
+# be repaired, otherwise deleting a post leaves broken internal links behind.
 LINK_RX = re.compile(
-    r"\[([^\]]+)\]\((?:https?://kubaik\.github\.io)?/([a-z0-9][a-z0-9-]*)/?\)"
+    r"\[([^\]]+)\]\((?:https?://(?:blog\.kubailabs\.com|kubaik\.github\.io))?/([a-z0-9][a-z0-9-]*)/?\)"
 )
 
 

@@ -1,110 +1,147 @@
 CHANGELOG
 =========
-Date: 2026-10-30
-Scope: blog_post.py, static_site_generator.py, scripts/corpus_triage.py (new),
-       apply_pipeline_fixes.py (new)
+Date: 2026-11-16
+Scope: blog_post.py, velocity_controller.py, scripts/content_triage.py (new),
+       apply_claim_fixes.py (new)
 
-Status: syntax-checked; patcher tested on a copy of static_site_generator.py
-(applied cleanly, second run was a no-op). corpus_triage.py smoke-tested on
-two synthetic posts. NOT yet tested on the real docs/ corpus or a full site
-build. Run a build and review the output before pushing.
+Status: py_compile OK on all files. content_triage.py smoke-tested on 6
+synthetic posts (thin, near-duplicate, truncated title, fabricated-experience,
+junk tags, clean). apply_claim_fixes.py applied cleanly to a copy of the
+uploaded static_site_generator.py; second run was a no-op. NOT run against the
+real docs/ corpus or a full site build. docs/, seo_optimizer.py,
+monetization_manager.py, adsense_credibility_cleanup.py and
+blog-automation.yml were not available to this review.
 
 Deploy order
 ------------
-1. Replace blog_post.py with the new version.
-2. Replace static_site_generator.py with the new version
-   (or run: python apply_pipeline_fixes.py static_site_generator.py).
-3. Add scripts/corpus_triage.py.
-4. Run: python blog_system.py build
-5. Run: python scripts/corpus_triage.py --docs docs --out triage_out
+1. Replace blog_post.py and velocity_controller.py.
+2. Add scripts/content_triage.py.
+3. python apply_claim_fixes.py static_site_generator.py ; review the diff.
+4. Workflow: set `fetch-depth: 0` on actions/checkout in every job that builds
+   or recovers posts (see blog_post.py).
+5. python scripts/content_triage.py --docs docs --out triage_out
 6. Review triage_out/delete.txt and improve.txt before acting on them.
-7. Do not request an AdSense re-review until these changes are live.
-
+7. AdSense: add blog.kubailabs.com (or kubailabs.com) under Sites; the
+   dashboard lists only kubaik.github.io, which now resolves to the custom
+   domain. Confirm ads.txt is served at https://kubailabs.com/ads.txt.
+   Request review only after steps 1-6 are live.
 
 blog_post.py
 ------------
-[FIX] Added full_title field. Previously blog_system.py wrote full_title to
-      post.json, but BlogPost did not store or round-trip it, so every build
-      reloaded posts with only the truncated display title.
-      Result: titles such as "Staging won't catch prod bugs. Make…" appeared
-      in <title>, og:title, H1 and JSON-LD.
-[NEW] display_title property (full_title, falling back to title).
-[FIX] from_markdown_file(): timestamps now come from the file's first git
-      commit, falling back to mtime. In CI every checkout stamps all files
-      with the checkout time, so recovered posts looked published today
-      (inflating VelocityController.today_count() and faking freshness).
-[FIX] from_markdown_file(): no longer adds the junk tags "recovered" and
-      "blog" (these generated thin tag pages).
-[FIX] from_markdown_file(): ad_slots 3 -> 0 for recovered posts until reviewed.
-[FIX] _create_slug_static(): cuts on a word boundary at 60 characters
-      (was a mid-word cut at 50).
+[FIX] _first_commit_iso() returned the checkout commit for every file in a
+      shallow clone (actions/checkout default fetch-depth=1), reintroducing
+      the "everything was published today" bug. Now detects shallow repos and
+      returns None.
+[NEW] Recovered posts whose date came from mtime get
+      monetization_data.date_unreliable = True.
 
+velocity_controller.py
+----------------------
+[FIX] Posts flagged date_unreliable are ignored when counting today's posts
+      and when deriving site age.
+[FIX] Removed the quoted "AdSense Site Readiness Guide section 7" text (could
+      not be verified). Caps are documented as this project's own choice.
 
-static_site_generator.py  (39 changed lines vs. the uploaded file)
--------------------------------------------------------------------
-[FIX] Post pages render full_title in <title>, og:title, twitter:title, H1,
-      breadcrumb and data-title attributes.
-[FIX] Article JSON-LD "headline" uses full_title (capped at 110 characters);
-      BreadcrumbList item name uses full_title.
-[FIX] _find_related_posts(): replaced tag-overlap ranking with TF-IDF cosine
-      similarity plus a small tag boost.
-      - _build_tfidf_corpus() already existed but was never called.
-      - Minimum similarity floor of 0.06; returns fewer than 3 (or none)
-        instead of padding with unrelated recent posts.
-      - Corpus vectors are cached per build; related-card titles use
-        full_title.
-[FIX] The stored "### About this article" markdown footer is stripped at
-      render time. Previously it rendered together with the template's
-      "How this article was made" block, giving two overlapping disclosures
-      per post. The stored footer is left in post.json, so existing audit
-      checks that look for it still work.
-[FIX] Homepage <title> and og:title: was site_name + full site_description
-      (~150 characters, author name twice). Now site_name + site_tagline.
-      Set site_tagline in config.yaml; default is "Backend engineering, AI
-      tooling and developer careers".
-[MISC] Added "import re" if not already present.
-
-
-scripts/corpus_triage.py  (new)
+scripts/content_triage.py (new)
 -------------------------------
-Code-driven DELETE / IMPROVE / KEEP verdict per docs/*/post.json.
-Outputs: verdicts.json, delete.txt, improve.txt, summary.txt.
-Detectors (each based on a defect seen on the live site):
-  - truncated title with no recoverable full_title
-  - irrelevant "Official documentation" link (label/host not discussed in body)
-  - tags that do not appear in the body
-  - LLM filler openers
-  - templated structure (share of H2 headings reused across >= 8% of posts)
-  - first-person experience claims in posts not marked human_reviewed
-  - thin posts (< 1000 words DELETE, < 1500 IMPROVE)
-Flags:
-  --fix                   removes irrelevant doc links and junk tags (backups
-                          written to .triage_backups)
-  --max-delete-fraction   abort with exit code 3 if DELETE share exceeds this
-                          (default 0.25)
-Limitations: thresholds are untuned heuristics; review delete.txt before
-deleting anything. Near-duplicate detection is left to the existing
-adsense_compliance_audit.py.
+Deterministic DELETE / IMPROVE / KEEP per docs/*/post.json with exact paths
+and reasons (thin, near-duplicate, truncated title, templated outline, LLM
+filler, unverifiable first-person claims, unsourced numeric claims, tags not
+in body). --fix drops absent tags (backups in .triage_backups).
+--max-delete-fraction aborts with exit code 3 (default 0.25).
+Limitation: thresholds are untuned heuristics.
 
+apply_claim_fixes.py (new)
+--------------------------
+Idempotent patcher for static_site_generator.py. Replaces "Real Systems. Real
+Failures. Real Fixes.", "no theory, just what's worked in real production
+systems" and "based on real production experience" with wording consistent
+with the site's own disclosure that articles are LLM-drafted and figures are
+illustrative.
 
-apply_pipeline_fixes.py  (new)
-------------------------------
-Idempotent patcher that applies the static_site_generator.py changes above to
-your own copy. Fails with an assertion if the expected text is not found
-exactly once; writes a .bak backup before changing the file.
+Not changed (recommended)
+-------------------------
+- Per-post replacement content: needs an LLM rewrite step with sourced facts.
+  Use triage_out/improve.txt as its queue (adsense_compliance_audit.py
+  --improve already consumes a queue).
+- Posts that invent benchmark figures: generation prompt should require a
+  citation or omit the number.
+- blog-automation.yml: keep destructive cleanup on manual dispatch.
+- config.yaml / blog_system.py:5548 still say "10+ years"; verify or remove.
 
+==========================================================================
+Date: 2026-11-16 (second pass, after seo_optimizer.py, monetization_manager.py,
+      adsense_credibility_cleanup.py and blog-automation.yml were provided)
+==========================================================================
+Status: py_compile OK; purge-markers and generate_ad_slots tested on synthetic
+data; workflow parses as YAML. NOT run in GitHub Actions. seo_optimizer.py was
+read and left unchanged (no defect found that would cause rejection).
 
-Not changed (recommended, not implemented)
-------------------------------------------
-- velocity_controller.py: logic is correct; left as is. Its docstring cites
-  an "AdSense Site Readiness Guide section 7" quote I could not verify.
-- Homepage and about text that says articles are "written by" the author and
-  topics come from "real production work", which conflicts with the
-  unreviewed-LLM disclosure. Source template was not located.
-- blog-automation.yml: the 12-hour schedule runs deletion, retirement and
-  LLM rewrites against existing posts on every cycle. Recommended: move
-  destructive cleanup and rewrites to manual dispatch.
-- Repeated post outline across the corpus (scaled-content risk). Needs
-  prompt-level variation and real first-hand detail, not a formatting fix.
-- Consider a custom domain; AdSense handling of github.io subdomains was not
-  verified.
+Correction to the first pass: the workflow already uses fetch-depth: 0, so no
+checkout change is needed for blog_post.py's git-date logic.
+
+adsense_credibility_cleanup.py
+  [FIX] delete-flagged and fix-known replaced removed sentences with the visible
+        text "[CLAIM REMOVED - previously cited a source ... see
+        citation_audit_report.json]". Because the workflow ran this every 12h,
+        published articles can contain that placeholder. Sentences are now
+        removed cleanly.
+  [NEW] purge-markers [--apply]: removes existing placeholders from post.json.
+
+monetization_manager.py
+  [FIX] generate_ad_slots() returned 3 slots for every new post. It now returns
+        0 unless adsense_ads_enabled is true and the post clears ads_min_words.
+
+.github/workflows/blog-automation.yml
+  [FIX] Deletion, duplicate retirement, fabrication/citation stripping and LLM
+        rewrites of published posts ran unattended every 12h (and on every push).
+        They now run only on workflow_dispatch with destructive=true.
+  [FIX] Push events no longer generate posts or post to Twitter.
+  [FIX] Deploy step no longer has continue-on-error.
+  [FIX] Cleanup condition (startsWith(schedule, '0 0 ')) could never match the
+        cron "0 */12 * * *"; it is now an explicit manual input.
+  [NEW] purge-markers runs on every run; scripts/content_triage.py runs as a
+        report-only step.
+  Not verified: scripts called by the workflow that were not uploaded (quality_gate,
+  retroactive_fabrication_audit, final_triage, delete_posts, improve_posts, etc.).
+
+Deploy: replace the files, run
+  python adsense_credibility_cleanup.py purge-markers --apply
+once, rebuild, review the diff, then push.
+
+==========================================================================
+Date: 2026-11-16 (third pass: quality_gate, improve_posts, final_triage,
+      retroactive_fabrication_audit, delete_posts provided)
+==========================================================================
+Status: py_compile OK; link regex tested on 4 sample links. Not run end to end.
+
+improve_posts.py
+  [FIX] After every run it launched post_enhancer.py automatically, which
+        bypassed the workflow's own "DISABLED" note: post_enhancer appends
+        keyword-mapped "Official documentation" links that triage found
+        irrelevant on 99+ posts. Finalize is now opt-in via --finalize.
+
+delete_posts.py
+  [FIX] Link repair only matched kubaik.github.io. Posts linking to a deleted
+        post via https://blog.kubailabs.com/<slug>/ kept a dead link. Both hosts
+        are now repaired.
+
+Reviewed, unchanged: final_triage.py, retroactive_fabrication_audit.py.
+Notes
+  - final_triage.py ext_links() excludes only blog.kubailabs.com; a link to
+    kubaik.github.io would count as an external "source". Minor.
+  - quality_gate.py silently falls back to weaker scoring (or no claim gate)
+    if adsense_fixes/utils imports fail. In CI, make that a hard failure.
+  - adsense_fixes/*, utils/*, triage.py, post_enhancer.py, entity_gate.py,
+    process_*_queue.py, auto_retire_duplicates.py were not reviewed.
+
+==========================================================================
+static_site_generator.py (full file, 2026-11-16)
+==========================================================================
+Status: py_compile OK; diff vs. the uploaded file is 15 changed lines.
+Not run as a full site build.
+  [FIX] Homepage hero heading/tagline, author bio and process text no longer claim
+        "Real Systems. Real Failures. Real Fixes." / "real production experience"
+        (4 replacements, same as apply_claim_fixes.py).
+  [FIX] Render-time strip of "[CLAIM REMOVED ...]" placeholders in
+        _generate_post_pages(), so leftovers can never reach a published page.
