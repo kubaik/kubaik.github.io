@@ -425,7 +425,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Multi-region active-active: the hidden costs",
-  "words": 2783
+  "words": 3397
  },
  "ship-1mb-pages-on-4g-starlink-africa-case-study": {
   "verdict": "IMPROVE",
@@ -2684,6 +2684,13 @@
   "fixes": [],
   "title": "Offline-first money apps with DynamoDB Streams",
   "words": 3000
+ },
+ "human-in-the-loop-when-agents-need-a-human-veto": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "Human-in-the-loop: when agents need a human veto",
+  "words": 2185
  },
  "cache-stampedes-the-patterns-that-scale-and-the-ones": {
   "verdict": "KEEP",

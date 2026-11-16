@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-15T18:39:37.978326",
+  "built_at": "2026-11-16T05:32:15.376900",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5860,6 +5860,11 @@
       "slug": "multi-region-active-active-the-hidden-costs",
       "title": "Multi-region active-active: the hidden costs",
       "summary": "Benchmarks for designing multiregion that don't mention their failure conditions aren't worth much. The gap between the demo and the incident report is where this actually lives. This works through the problem properly, from cause to fix. Multi-region active-active sounds like the ultimate resilienc"
+    },
+    {
+      "slug": "human-in-the-loop-when-agents-need-a-human-veto",
+      "title": "Human-in-the-loop: when agents need a human veto",
+      "summary": "The gap between the demo and the incident report is where this actually lives. The conventional advice on prompt caching is incomplete in one specific, costly way. Here's what holds up in practice, and why. An agent that executes a refund, rotates an API key, or sends a password reset email has the "
     }
   ]
 }

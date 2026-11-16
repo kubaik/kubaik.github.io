@@ -145,7 +145,6 @@ move-images-50-faster-in-2026-with-starlink-cdn,95,2612,Resize Images at the Edg
 multi-agent-dx-langgraph-vs-crewai-gaps,95,3300,Multi-agent DX: LangGraph vs CrewAI gaps,2026-10-28T04:45:55.701506,1,no FAQ section
 multi-agent-handoffs-the-latency-tax-nobody-measures,95,2259,Multi-agent handoffs: the latency tax nobody measures,2026-09-29T17:53:25.995285,1,no FAQ section
 multi-agent-systems-why-failures-hide,95,2590,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,1,no FAQ section
-multi-region-active-active-the-hidden-costs,95,2783,Multi-region active-active: the hidden costs,2026-11-15T18:39:30.005901,1,no markdown table
 ndpr-2026-broke-fintech-apis,95,2478,NDPR 2026 broke fintech APIs,2026-06-26T16:36:52.584537,1,no markdown table
 negotiate-pay-in-2026-with-ai-proof-points,95,2271,Negotiate pay in 2026 with AI proof points,2026-06-25T16:15:21.594638,1,no FAQ section
 negotiate-salaries-with-ai-skills-in-2026,95,2192,Negotiate salaries with AI skills in 2026,2026-06-27T22:11:29.284386,1,no FAQ section
@@ -315,6 +314,7 @@ gateway-api-wont-fix-your-ingress-mess,100,2669,Gateway API won't fix your Ingre
 golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
 hpa-vs-keda-vs-karpenter-autoscaling-traps,100,3432,HPA vs KEDA vs Karpenter: autoscaling traps,2026-10-26T08:01:33.191005,0,
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,
+human-in-the-loop-when-agents-need-a-human-veto,100,2185,Human-in-the-loop: when agents need a human veto,2026-11-16T05:32:11.399364,0,
 json-modes-hidden-costs-revealed,100,2468,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2148,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
 jwt-sessions-revocation-rotation-storage,100,2756,"JWT sessions: revocation, rotation, storage",2026-10-27T17:43:39.631250,0,
@@ -340,6 +340,7 @@ model-evals-the-gaps-that-let-drift-slip-through,100,2956,Model evals: the gaps 
 monolith-to-services-without-a-rewrite,100,2878,Monolith to services without a rewrite,2026-06-27T20:07:07.246730,0,
 most-llm-cost-dashboards-lie,100,2611,Most LLM cost dashboards lie…,2026-09-19T08:31:18.982202,0,
 multi-agent-systems-when-they-quietly-degrade,100,2410,Multi-agent systems: when they quietly degrade,2026-09-24T16:46:39.313991,0,
+multi-region-active-active-the-hidden-costs,100,3397,Multi-region active-active: the hidden costs,2026-11-15T18:39:30.005901,0,
 nextjs-15-vs-remix-vs-sveltekit-2026-choices,100,2652,Next.js 15 vs Remix vs SvelteKit: 2026 choices,2026-06-16T06:24:02.992809,0,
 nodejs-memory-leak-find-it-in-10-min,100,2850,Node.js memory leak: find it in 10 min,2026-10-29T12:50:43.370815,0,
 oauth-21-migration-what-breaks-in-existing-integrations,100,3560,OAuth 2.1 migration: what breaks in existing integrations,2026-10-22T16:52:53.402403,0,

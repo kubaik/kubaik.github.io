@@ -1,4 +1,4 @@
-❌ Internal link audit: 430 broken link(s) found across 431 posts checked.
+❌ Internal link audit: 431 broken link(s) found across 432 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -262,6 +262,7 @@ Source Post                              Anchor Text                    Missing 
   /multi-agent-systems-break-first        AI content policy              /ai-content-policy/
   /multi-agent-systems-when-they-quietly-degrade AI content policy              /ai-content-policy/
   /multi-agent-systems-why-failures-hide  AI content policy              /ai-content-policy/
+  /multi-region-active-active-the-hidden-costs AI content policy              /ai-content-policy/
   /ndpr-2026-broke-fintech-apis           AI content policy              /ai-content-policy/
   /negotiate-2026-pay-when-ai-steals-40-of-your-job AI content policy              /ai-content-policy/
   /negotiate-pay-in-2026-with-ai-proof-points AI content policy              /ai-content-policy/

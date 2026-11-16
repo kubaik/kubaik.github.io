@@ -259,5 +259,8 @@
   "Platform engineering team topologies: how to staff and scope an internal platform group",
   "Serverless cold starts explained: runtimes, provisioned concurrency, and architecture workarounds",
   "Python packaging and dependency management with uv, Poetry, and pip-tools",
-  "Designing multi-region active-active architectures on AWS, Azure, and Google Cloud"
+  "Designing multi-region active-active architectures on AWS, Azure, and Google Cloud",
+  "Prompt caching and semantic caching for LLM applications: how each works",
+  "Understanding database isolation levels and the anomalies each one allows",
+  "Why most production agents still need strong human-in-the-loop boundaries in 2026"
 ]

@@ -2394,6 +2394,13 @@
       "duplicate_of": null
     },
     {
+      "slug": "human-in-the-loop-when-agents-need-a-human-veto",
+      "source": "post.json",
+      "word_count": 2824,
+      "reasons": [],
+      "duplicate_of": null
+    },
+    {
       "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
       "source": "post.json",
       "word_count": 3254,

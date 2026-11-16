@@ -1,0 +1,500 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Human-in-the-loop: when agents need a human veto - Kubai Kevin</title>
+        <meta name="description" content="Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.">
+        <meta name="keywords" content="AgentApprovals, PromptInjection, AgentSecurity, ApprovalGateAgent, AgentAuditTrail, Cybersecurity, Infosec">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-16T05:32:11.399364">
+        <meta property="article:modified_time" content="2026-11-16T05:35:07.883088+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Human-in-the-loop: when agents need a human veto">
+        <meta property="og:description" content="Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.">
+        <meta property="og:url" content="https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://blog.kubailabs.com/static/og/human-in-the-loop-when-agents-need-a-human-veto.png">
+        <meta property="og:image:alt" content="Human-in-the-loop: when agents need a human veto">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Human-in-the-loop: when agents need a human veto">
+        <meta name="twitter:description" content="Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.">
+        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/human-in-the-loop-when-agents-need-a-human-veto.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/#article",
+      "headline": "Human-in-the-loop: when agents need a human veto",
+      "description": "Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.",
+      "datePublished": "2026-11-16T05:32:11+00:00",
+      "dateModified": "2026-11-16T05:35:07+00:00",
+      "wordCount": 2824,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://blog.kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://blog.kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://blog.kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://blog.kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/"
+      },
+      "keywords": "AgentApprovals, PromptInjection, AgentSecurity, ApprovalGateAgent, AgentAuditTrail, Cybersecurity, Infosec",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.kubailabs.com/static/og/human-in-the-loop-when-agents-need-a-human-veto.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://blog.kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Human-in-the-loop: when agents need a human veto",
+          "item": "https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Human-in-the-loop: when agents need a human veto</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Human-in-the-loop: when agents need a human veto</h1>
+                
+                <p class="post-lead">Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentApprovals</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/promptinjection/"
+                       style="text-decoration:none;">PromptInjection</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/agentsecurity/"
+                       style="text-decoration:none;">AgentSecurity</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ApprovalGateAgent</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2824 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-16
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>An agent that executes a refund, rotates an API key, or sends a password reset email has the same blast radius as a compromised employee account. The difference is that the agent never gets tired, never takes a day off, and never asks itself whether the request is suspicious. When it goes wrong, the symptom is rarely a crash. It is a support ticket that says "we refunded the same order four times," or an audit log entry showing a delete that nobody remembers approving. The real problem is deciding exactly where to put a human veto, and how to enforce it in code, before an agent with production credentials does something you cannot undo.</p>
+<h2 id="the-symptom-the-approval-that-never-happened">The symptom: the approval that never happened</h2>
+<p>Most teams discover their human-in-the-loop boundary is missing only after an incident. The pattern is consistent:</p>
+<ul>
+<li>A tool call in the agent's trace shows <code>transfer_funds</code> or <code>delete_user</code> succeeded, but no human approval record exists for that trace ID.</li>
+<li>A customer reports a duplicate charge, and the agent's reasoning shows it retried a payment because the first call timed out — not because the payment failed.</li>
+<li>An engineer notices a production secret in a public repository's commit history, because the agent was given a GitHub token with <code>repo</code> scope and "helpfully" pushed its working directory.</li>
+<li>A support agent approves a refund, then watches the same agent issue three more refunds for the same order because the approval was checked at the start of the run, not at the moment of the side effect.</li>
+</ul>
+<p>None of these produce a stack trace. They produce an audit gap. The agent did what it was told, and the system had no mechanism to ask "are you sure?" at the point where certainty matters.</p>
+<h2 id="why-the-boundary-erodes-causes-in-order-of-probability">Why the boundary erodes: causes in order of probability</h2>
+<h3 id="1-the-approval-is-checked-at-the-wrong-layer">1. The approval is checked at the wrong layer</h3>
+<p>The most common failure is architectural. Teams add a human approval step to the agent's planning loop — the model is told "ask for confirmation before doing anything destructive" — and assume that is a boundary. It is not. A prompt instruction is a suggestion to a stochastic system. The model may skip it, misinterpret it, or be manipulated into ignoring it by content it reads from a tool result (a classic indirect prompt injection).</p>
+<p><strong>How to confirm:</strong> Search your agent's code for the tool that performs the side effect. If the approval check lives in the prompt or in the agent framework's "plan" step rather than in the function that executes the side effect, you have this bug. A quick test: disable the model's ability to call the approval tool and see whether the side effect still fires. If it does, the boundary is decorative.</p>
+<p><strong>Fix:</strong> Move the check into the execution path, below the model. Every tool that mutates state should call a gate function that verifies a signed, single-use approval token tied to the specific action and its parameters. The model cannot forge the token because it never sees the signing key.</p>
+<pre><code class="language-python"># gate.py — a minimal approval gate that the model cannot bypass
+import hmac, hashlib, json, time
+from dataclasses import dataclass
+
+@dataclass
+class Approval:
+    action: str
+    params_hash: str
+    expires_at: float
+    signature: str
+
+def sign_approval(secret: bytes, action: str, params: dict, ttl: int = 300) -&gt; Approval:
+    params_hash = hashlib.sha256(json.dumps(params, sort_keys=True).encode()).hexdigest()
+    expires_at = time.time() + ttl
+    msg = f&quot;{action}:{params_hash}:{expires_at}&quot;.encode()
+    sig = hmac.new(secret, msg, hashlib.sha256).hexdigest()
+    return Approval(action, params_hash, expires_at, sig)
+
+def require_approval(secret: bytes, approval: Approval, action: str, params: dict) -&gt; None:
+    if approval.action != action:
+        raise PermissionError(&quot;approval action mismatch&quot;)
+    if time.time() &gt; approval.expires_at:
+        raise PermissionError(&quot;approval expired&quot;)
+    expected = sign_approval(secret, action, params, ttl=0).params_hash
+    if not hmac.compare_digest(approval.params_hash, expected):
+        raise PermissionError(&quot;approval params mismatch&quot;)
+    msg = f&quot;{action}:{approval.params_hash}:{approval.expires_at}&quot;.encode()
+    expected_sig = hmac.new(secret, msg, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(approval.signature, expected_sig):
+        raise PermissionError(&quot;bad approval signature&quot;)
+</code></pre>
+<p>The human approves by calling <code>sign_approval</code> from a separate service that the agent cannot reach directly. The agent receives the <code>Approval</code> object as an opaque blob and passes it to the tool. If the agent tries to change the parameters after approval, the hash check fails.</p>
+<p>Two properties of this design are worth stating explicitly. First, the token is bound to the parameters, not just the tool name, so an approval for "refund order 1234 for 50.00" cannot be replayed against "refund order 5678 for 5000.00." Second, the TTL bounds the window in which a stale approval can be used; a token minted for a 9 a.m. review should not still be valid after lunch. The <code>ttl=0</code> call inside <code>require_approval</code> is a small trick to recompute the params hash without worrying about the expiry, since only the hash field is compared there.</p>
+<p>A known limitation: this snippet is single-use only if the verifier records consumed token IDs. Add a <code>token_id</code> field, store consumed IDs in a store the agent cannot write to, and reject any token seen before. Without that, a captured <code>Approval</code> object can be replayed until it expires.</p>
+<h3 id="2-the-approval-is-too-coarse">2. The approval is too coarse</h3>
+<p>A second common cause is approving the agent's <em>intent</em> rather than the <em>action</em>. A human clicks "approve" on a plan that says "process refunds for affected orders," and the agent then processes 400 refunds, including ones it inferred from a fuzzy match. The human approved a category, not a list.</p>
+<p><strong>How to confirm:</strong> Look at what the approval UI displays. If it shows a natural-language description rather than the exact tool name, parameters, and count, the approval is too coarse. Check whether the approval token is bound to a single invocation or to a batch.</p>
+<p><strong>Fix:</strong> Approvals should be bound to a concrete, enumerated set of actions. For batch operations, require the human to see the list and approve the list, not the description. In practice this means the agent must first produce a dry-run plan (a list of <code>(tool, params)</code> tuples), the human approves that exact list, and the executor refuses any action not on the list.</p>
+<p>A worked example makes the gap concrete. Suppose the agent proposes:</p>
+<pre><code class="language-text">Plan: refund orders affected by the duplicate-charge incident.
+Resolved orders: [A-1001, A-1002, A-1003, A-1004] (fuzzy match on customer email)
+</code></pre>
+<p>If the human approves the sentence, the executor has no way to know whether four refunds or forty were intended. If the human approves the enumerated list, the executor can hash the list, bind the hash into the token, and refuse any refund whose order ID is not in the approved set. When the agent later discovers a fifth order, the token check fails and the action returns to the human queue. The cost is one extra round trip; the benefit is that the approved unit equals the executed unit.</p>
+<h3 id="3-the-human-is-rubber-stamping">3. The human is rubber-stamping</h3>
+<p>Even a correctly placed gate fails if the human approves everything. This is the automation-bias failure mode: a queue of 200 approvals per day trains the reviewer to click "approve" without reading. The boundary exists on paper but not in behavior.</p>
+<p><strong>How to confirm:</strong> Measure the time between approval request and approval decision. If the median is under a few seconds for actions that involve money or data deletion, the reviewer is not reading. Also check the rejection rate: if it is effectively zero over a long period, either the agent is perfect (unlikely) or the gate is not being used as a gate. Both metrics are cheap to instrument: log <code>requested_at</code> and <code>decided_at</code> on every approval record, then compute the median and the reject count per week.</p>
+<p><strong>Fix:</strong> Make approvals expensive to rubber-stamp. Require the reviewer to type the affected resource ID or the amount before approving. Randomly sample a small fraction of approvals for a second reviewer. And surface the <em>reason</em> the agent wants to take the action, not just the action itself, so the reviewer has something to evaluate.</p>
+<p>There is a tension here worth naming: every friction you add reduces throughput, and every friction you remove increases the chance of a blind approval. The right calibration is not "make it hard" but "make the reviewer's decision genuinely possible." A reviewer who cannot see why the agent wants to act will rubber-stamp regardless of how many digits they have to type. A reviewer who sees "customer reports duplicate charge, order A-1001 already refunded once at 09:14" can make a real judgment in two seconds.</p>
+<h3 id="4-secrets-and-credentials-leak-through-the-agent">4. Secrets and credentials leak through the agent</h3>
+<p>Agents are often given broad credentials because scoping them is tedious. A common pattern is an agent that can read a repository and also has push access, or an agent with a database user that has <code>GRANT ALL</code>. When the agent is compromised via prompt injection or simply makes a mistake, the credential is the blast radius.</p>
+<p><strong>How to confirm:</strong> Audit the environment variables and secret mounts available to the agent process. Check whether any of them are long-lived, broadly scoped, or present in the agent's context window. Search public repositories for the secret's prefix (for example, cloud provider access key IDs) using the provider's own scanning tools.</p>
+<p><strong>Fix:</strong> Give the agent short-lived, narrowly scoped credentials minted per task, and keep the long-lived secrets out of the agent's environment entirely. The approval gate from cause 1 should be the only path to privileged operations. For repositories, use a bot account with read-only access by default and require a separate, human-approved step to push.</p>
+<p>A useful mental model: the agent's credential should be no broader than the task it is currently executing, and the privileged operation should be performed by a different principal than the one the agent holds. If the agent must push code, the push should happen through a service that holds the write credential and accepts only approved, signed requests — the agent never touches the write key.</p>
+<h3 id="5-the-audit-trail-cannot-answer-who-approved-this">5. The audit trail cannot answer "who approved this?"</h3>
+<p>When something goes wrong, the first question is who authorized the action. If the approval is recorded only in the agent's log stream, or if the approval token is not tied to a human identity, the answer is unavailable.</p>
+<p><strong>How to confirm:</strong> Pick a recent destructive action from the agent's logs and try to trace it back to a human approver. If you cannot, the audit trail is insufficient.</p>
+<p><strong>Fix:</strong> Every approval token should carry the approver's identity, the timestamp, the exact action and parameters, and the agent's trace ID. Store these in an append-only log that the agent cannot write to. The tool executor should log the token ID alongside the action so the two records can be joined later.</p>
+<p>The join is the whole point. Two logs that cannot be correlated are two logs that answer nothing. Design the token ID as the primary key that appears in both the approval service's record and the executor's action record, and make both writes happen before the side effect, not after.</p>
+<h2 id="prevention-designing-the-boundary-before-the-incident">Prevention: designing the boundary before the incident</h2>
+<p>The causes above share a root: the boundary was added as an afterthought. A more durable approach is to classify every tool by reversibility and blast radius, then apply a consistent policy.</p>
+<table>
+<thead>
+<tr>
+<th>Tool class</th>
+<th>Examples</th>
+<th>Default policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-only, scoped</td>
+<td>Search, fetch a record by ID</td>
+<td>No approval; log the call</td>
+</tr>
+<tr>
+<td>Reversible write</td>
+<td>Update a draft, add a tag</td>
+<td>Approval optional; require idempotency key</td>
+</tr>
+<tr>
+<td>Irreversible or financial</td>
+<td>Refund, transfer, delete, rotate key</td>
+<td>Signed approval token, per-action, short TTL</td>
+</tr>
+<tr>
+<td>Credential or permission change</td>
+<td>Grant role, create API key</td>
+<td>Two-person approval; separate service</td>
+</tr>
+</tbody>
+</table>
+<p>This table is a starting point, not a standard. The important part is that the policy is enforced in code at the executor, not in the prompt. A tool that is classified as irreversible should refuse to run without a valid token, regardless of what the model says.</p>
+<p>Two additional practices matter:</p>
+<p><strong>Idempotency keys on every mutating call.</strong> If the agent retries a refund because the first call timed out, the payment processor should see the same idempotency key and return the original result rather than charging twice. Most payment APIs support this; use it. The agent's retry logic should generate the key once per logical action, not per attempt.</p>
+<p><strong>Kill switch and rate limits.</strong> Even with approvals, an agent can loop. Put a hard cap on the number of mutating actions per trace (for example, a documented limit you choose, such as 10) and a global kill switch that a human can flip without deploying code. The kill switch should be tested regularly, because an untested kill switch is a rumor.</p>
+<h3 id="a-decision-checklist-for-a-new-tool">A decision checklist for a new tool</h3>
+<p>Before a mutating tool ships, answer these in writing:</p>
+<ol>
+<li>What is the worst outcome if this tool runs with wrong parameters? If the answer is "money leaves, data is gone, or access is granted," it needs a signed token.</li>
+<li>Is the approval bound to the exact parameters, or to a description? If the latter, fix the approval UI before shipping.</li>
+<li>Can the token be replayed? If consumed IDs are not recorded, it can.</li>
+<li>What is the TTL, and does it match how long a human review realistically takes? A five-minute TTL on a queue with a thirty-minute median wait produces expired-token errors, which teams then "fix" by removing the expiry.</li>
+<li>Does the executor log the token ID next to the action, in a store the agent cannot write to?</li>
+<li>Is there an idempotency key on the call, generated per logical action?</li>
+<li>What is the per-trace cap on mutating actions, and who can flip the kill switch?</li>
+</ol>
+<p>If any answer is "we'll add it later," the tool is not ready for production credentials.</p>
+<h2 id="the-next-concrete-step">The next concrete step</h2>
+<p>Open the file that defines your agent's tools and find the function that performs the highest-blast-radius action — the one that moves money, deletes data, or changes permissions. Check whether that function can execute without a signed approval token that the model never sees. If it can, you have found the gap. In the next 30 minutes, add a <code>require_approval</code> call at the top of that function and a corresponding signing endpoint in a service the agent cannot reach. The rest of the boundary can follow the same pattern.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why can't I just tell the model to ask for confirmation?</strong>
+Because the model's instruction-following is probabilistic and can be overridden by content it reads from tools or user input. A prompt instruction is not an enforcement mechanism. The confirmation must be enforced in the code that executes the side effect, where the model has no ability to bypass it.</p>
+<p><strong>How do I approve actions without slowing down every task?</strong>
+Classify tools by reversibility and blast radius, and only require approval for the irreversible or high-value ones. Read-only and reversible operations can proceed with logging and idempotency keys. The goal is not to approve everything; it is to make sure the things you cannot undo have a human in the path.</p>
+<p><strong>What is indirect prompt injection and why does it matter for approvals?</strong>
+Indirect prompt injection is when an attacker places instructions in content the agent reads — a web page, a document, a tool result — and the model follows them. If the agent has broad credentials and no execution-layer gate, the injected instruction can trigger destructive actions. A signed approval token that the model cannot forge limits the damage.</p>
+<p><strong>How do I audit which human approved which agent action?</strong>
+Tie every approval token to the approver's identity, the exact action and parameters, a timestamp, and the agent's trace ID. Store the token record in an append-only log outside the agent's write access, and have the tool executor log the token ID with the action. Joining the two records gives you the full chain.</p>
+<p><strong>Do I need human approval for every agent action in production?</strong>
+No. Requiring approval for everything defeats the purpose of an agent and trains reviewers to rubber-stamp. Approve only the actions that are irreversible, financial, or change permissions. For everything else, use idempotency keys, rate limits, and logging so you can detect and reverse problems after the fact.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://blog.kubailabs.com/self-service-ai-tooling-the-permission-trap/">Self-service AI tooling: the permission trap</a></li>
+<li><a href="https://blog.kubailabs.com/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">Agents keep breaking prod: 3 boundary rules you still need</a></li>
+<li><a href="https://blog.kubailabs.com/agent-reliability-7-metrics-users-trust/">Agent reliability: 7 metrics users trust</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/computer-use-agents-the-permission-trap/">
+                        <h3>Computer-use agents: the permission trap</h3>
+                        <p>GUI agents inherit a human&amp;#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.</p>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-access-for-non-ai-engineers/">
+                        <h3>Agent access for non-AI engineers</h3>
+                        <p>A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+                        <span class="related-meta">16 min read · 17 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agents-create-incidents-at-2am/">
+                        <h3>Agents create incidents at 2am</h3>
+                        <p>Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.</p>
+                        <span class="related-meta">12 min read · 6 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
