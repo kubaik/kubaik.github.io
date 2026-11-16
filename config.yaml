@@ -340,6 +340,79 @@ content_topics:
   or wrong
 - Common MCP server security mistakes that expose internal tools
 - Evaluation gaps that let subtle model behavior changes slip into production
+- When should a backend service split into microservices?
+- Choosing between message queues and event streams
+- 'Idempotency keys: designing safe retry semantics'
+- Database connection pooling under serverless workloads
+- How to design pagination for large result sets
+- When to denormalize a relational schema
+- Caching strategies and their invalidation tradeoffs
+- 'Read replicas versus sharding: choosing a scaling path'
+- Designing background jobs that survive restarts
+- Understanding distributed transactions and sagas
+- Time zones and date handling in backend systems
+- Designing audit logs that hold up over time
+- Designing webhooks with delivery guarantees
+- Backpressure in streaming pipelines explained
+- Structuring a monorepo for backend services
+- Graceful shutdown patterns for long-running workers
+- Blue-green versus canary deployments compared
+- 'Infrastructure as code drift: causes and detection'
+- Designing Kubernetes resource requests and limits
+- Container image supply chain hardening basics
+- Understanding cloud networking egress costs
+- Secrets management patterns for cloud workloads
+- 'Autoscaling policies: metrics that actually work'
+- Object storage lifecycle policies explained
+- Designing health checks that reflect real readiness
+- Zero trust networking for internal services
+- Threat modeling a new API endpoint
+- OAuth token lifetimes and rotation strategies
+- Session management in stateless architectures
+- SQL injection defenses beyond prepared statements
+- Designing secure file upload pipelines
+- Understanding CSRF and same-site cookies
+- Encryption at rest versus in transit tradeoffs
+- Handling PII in logs and telemetry
+- Dependency confusion and package registry risks
+- Designing RBAC versus ABAC for services
+- Evaluating retrieval augmented generation architectures
+- Prompt versioning and evaluation workflows
+- Designing guardrails for LLM outputs
+- Embedding storage and vector index tradeoffs
+- Chunking strategies for document retrieval
+- Evaluating hallucination detection approaches
+- Cost and latency tradeoffs in model selection
+- Designing human-in-the-loop AI workflows
+- Structured outputs and schema validation for LLMs
+- Caching strategies for LLM inference
+- Fine-tuning versus prompt engineering decisions
+- Designing evaluation datasets for AI features
+- Monitoring model quality in production
+- Handling context window limits in applications
+- Designing tool-use boundaries for agents
+- Career paths from backend to platform engineering
+- Building technical depth without title changes
+- How to evaluate a codebase before joining
+- Writing design docs that influence decisions
+- Mentoring without formal authority
+- Interviewing for distributed systems roles
+- Balancing on-call duties with project work
+- Learning cloud providers without certification chasing
+- Transitioning from frontend to backend engineering
+- Reading source code as a learning habit
+- Choosing specializations in a crowded market
+- Negotiating scope during performance reviews
+- Documentation habits that scale across teams
+- Understanding the security engineer career track
+- Building a portfolio that reflects systems thinking
+- Staying current without chasing every framework
+- Evaluating remote versus hybrid engineering roles
+- Handling legacy systems early in a new role
+- Designing internal tools developers actually use
+- Communicating architecture decisions to leadership
+- Refactoring safely in systems without tests
+- Choosing observability signals for new services
 duplicate_similarity_threshold: 0.4
 google_adsense_id: ca-pub-4477679588953789
 google_adsense_verification: ca-pub-4477679588953789

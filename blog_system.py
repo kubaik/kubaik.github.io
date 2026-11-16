@@ -311,6 +311,33 @@ def _load_existing_titles(docs_dir: Path) -> List[str]:
     return titles
 
 
+def _parse_topic_array(raw: str) -> List[str]:
+    """Parse the LLM's JSON array of topic strings.
+
+    Falls back to salvaging every complete "quoted string" when the reply is
+    truncated or malformed (large N can hit the provider's output limit), so a
+    cut-off answer still yields all topics that arrived intact.
+    """
+    raw = raw or ""
+    m = re.search(r"\[.*\]", raw, re.S)
+    if m:
+        try:
+            data = json.loads(m.group(0))
+            if isinstance(data, list):
+                return [str(x).strip() for x in data if str(x).strip()]
+        except json.JSONDecodeError:
+            pass
+    start = raw.find("[")
+    body = raw[start + 1 :] if start != -1 else raw
+    salvaged: List[str] = []
+    for s in re.findall(r'"((?:[^"\\]|\\.)*)"', body):
+        try:
+            salvaged.append(json.loads(f'"{s}"').strip())
+        except json.JSONDecodeError:
+            continue
+    return [s for s in salvaged if s]
+
+
 def _load_recent_hook_styles(docs_dir: Path, limit: int = 3) -> List[str]:
     entries = []
     if not docs_dir.exists():
@@ -4230,25 +4257,103 @@ class BlogSystem:
                 ),
             },
         ]
-        raw = await self._call_api_with_fallback(messages, max_tokens=2500)
-        m = re.search(r"\[.*\]", raw, re.S)
-        proposed = json.loads(m.group(0)) if m else []
-        pool = list(existing) + list(current)
+        # Scale the output budget with N (about 45 tokens per topic), capped at a
+        # size every provider in the fallback chain accepts.
+        raw = await self._call_api_with_fallback(
+            messages, max_tokens=min(4096, 400 + n * 45)
+        )
+        proposed = _parse_topic_array(raw)
+        if not proposed:
+            print(
+                "expand_topics: could not read any topics from the model reply. "
+                f"First 200 chars: {raw[:200]!r}"
+            )
+
+        # Same TF-IDF pre-flight index and thresholds the topic picker uses
+        # (pick_next_topic), so an accepted topic is not skipped there later.
+        preflight = PreFlightIndex(docs_dir=Path(self.output_dir))
+        preflight.load()
+
+        existing_posts = list(existing)
         kept: List[str] = []
+        rejected: List[Tuple[str, str, str, float]] = []  # topic, reason, match, score
         for t in proposed:
             t = str(t).strip().strip('"')
-            if not t or quality_gate.topic_problem(t) or topic_policy_violation(t):
+            if not t:
                 continue
-            dup, _, _ = _is_duplicate_title(
-                t, pool + kept, threshold=DUPLICATE_TITLE_THRESHOLD
+
+            # 1) content gates: first-person / numeric claims / narrative /
+            #    deleted-post blocklist / income-bait (same as filter_safe_topics)
+            why = (
+                quality_gate.topic_problem(t)
+                or topic_policy_violation(t)
+                or (
+                    "failed filter_safe_topics" if not filter_safe_topics([t]) else None
+                )
+            )
+            if why:
+                rejected.append((t, f"gate: {why}", "", 0.0))
+                continue
+
+            # 2) word-overlap (Jaccard) vs existing post titles - picker's first check
+            dup, match, score = _is_duplicate_title(
+                t, existing_posts, threshold=DUPLICATE_TITLE_THRESHOLD
             )
             if dup:
+                rejected.append(
+                    (t, "similar to an existing post (Jaccard)", match, score)
+                )
                 continue
+
+            # 3) word-overlap vs topics already in config.yaml or accepted this run
+            dup, match, score = _is_duplicate_title(
+                t, list(current) + kept, threshold=DUPLICATE_TITLE_THRESHOLD
+            )
+            if dup:
+                rejected.append(
+                    (
+                        t,
+                        "similar to a config topic / earlier proposal (Jaccard)",
+                        match,
+                        score,
+                    )
+                )
+                continue
+
+            # 4) TF-IDF cosine vs posts + blocked posts - picker's second check
+            blocked, match, score = preflight.is_duplicate(t)
+            if blocked:
+                rejected.append(
+                    (t, "similar to an existing post (TF-IDF)", match, score)
+                )
+                continue
+
             kept.append(t)
+
+        if rejected:
+            print(f"expand_topics: rejected {len(rejected)} proposed topic(s):")
+            for t, reason, match, score in rejected:
+                line = f"  - {t!r}\n      {reason}"
+                if match:
+                    line += f" | {score:.0%} vs {match!r}"
+                print(line)
         if kept:
             cfg["content_topics"] = current + kept
             with open(config_path, "w", encoding="utf-8") as f:
                 yaml.safe_dump(cfg, f, sort_keys=True, allow_unicode=True)
+            # Also record them in this script's NEW_TOPICS seed block so that
+            # 'python blog_system.py init' restores them into config.yaml.
+            try:
+                added = persist_topics_to_script(kept)
+                print(
+                    f"expand_topics: saved {added} topic(s) into blog_system.py "
+                    "NEW_TOPICS (init will keep them in config.yaml)."
+                )
+            except Exception as e:
+                print(
+                    f"expand_topics: WARNING - config.yaml updated, but "
+                    f"blog_system.py was not ({e})."
+                )
         print(
             f"expand_topics: {len(proposed)} proposed, {len(kept)} accepted, "
             f"{len(cfg.get('content_topics', []))} total topics."
@@ -5350,6 +5455,74 @@ def pick_next_topic(
     return topic
 
 
+# Marker lines that fence the part of NEW_TOPICS (inside create_sample_config)
+# which 'topics expand' is allowed to rewrite. They are matched as WHOLE
+# stripped lines, so these constants (which merely contain the text) never match.
+_TOPIC_BLOCK_BEGIN = (
+    "# >>> AUTO-EXPANDED TOPICS (managed by 'python blog_system.py topics "
+    "expand'; do not edit by hand) >>>"
+)
+_TOPIC_BLOCK_END = "# <<< AUTO-EXPANDED TOPICS <<<"
+
+
+def persist_topics_to_script(
+    topics: List[str], script_path: Optional[str] = None
+) -> int:
+    """Append topics to the NEW_TOPICS seed list inside this very script.
+
+    'python blog_system.py init' merges NEW_TOPICS into config.yaml, so topics
+    written here are restored into config.yaml by 'init' even if the file is
+    regenerated. Only the lines between the two marker comments are touched.
+
+    Safety: topics already present anywhere in the file are skipped, the new
+    source must pass ast.parse() before anything is written, and the write is
+    atomic (temp file + os.replace). Returns the number of topics added.
+    """
+    import ast
+
+    path = Path(script_path or __file__).resolve()
+    src = path.read_text(encoding="utf-8")
+    lines = src.splitlines(keepends=True)
+
+    begin = end = None
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if begin is None and stripped == _TOPIC_BLOCK_BEGIN:
+            begin = i
+        elif begin is not None and stripped == _TOPIC_BLOCK_END:
+            end = i
+            break
+    if begin is None or end is None:
+        print(
+            f"  persist_topics_to_script: marker block not found in {path.name}; "
+            "script left unchanged."
+        )
+        return 0
+
+    indent = lines[end][: len(lines[end]) - len(lines[end].lstrip())]
+    new_lines: List[str] = []
+    seen: set = set()
+    for t in topics:
+        t = str(t).strip()
+        if not t or t in seen:
+            continue
+        seen.add(t)
+        literal = json.dumps(t, ensure_ascii=False)  # valid Python string literal
+        if literal in src:
+            continue
+        new_lines.append(f"{indent}{literal},\n")
+    if not new_lines:
+        return 0
+
+    new_src = "".join(lines[:end] + new_lines + lines[end:])
+    ast.parse(new_src)  # raises SyntaxError -> nothing is written
+
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(new_src, encoding="utf-8")
+    os.replace(tmp, path)
+    return len(new_lines)
+
+
 def create_sample_config(config_path: str = "config.yaml"):
     CONFIG_FILE = config_path
 
@@ -5622,6 +5795,8 @@ def create_sample_config(config_path: str = "config.yaml"):
         "Open source contribution as a career strategy: choosing projects and building credibility",
         "Engineering interview preparation for system design rounds: a structured approach",
         "Reducing meeting load on engineering teams: async communication practices that work",
+        # >>> AUTO-EXPANDED TOPICS (managed by 'python blog_system.py topics expand'; do not edit by hand) >>>
+        # <<< AUTO-EXPANDED TOPICS <<<
     ]
 
     existing_topics: list = config.get("content_topics") or []
@@ -6363,11 +6538,16 @@ if __name__ == "__main__":
         elif mode == "topics":
             subcmd = sys.argv[2] if len(sys.argv) > 2 else "expand"
             if subcmd == "expand":
-                count = (
-                    int(sys.argv[3])
-                    if len(sys.argv) > 3 and sys.argv[3].isdigit()
-                    else 40
-                )
+                count = 40
+                if len(sys.argv) > 3:
+                    _raw_n = sys.argv[3].strip().rstrip(".")  # tolerate "80."
+                    if not _raw_n.isdigit() or int(_raw_n) < 1:
+                        print(
+                            f"Invalid count {sys.argv[3]!r}. "
+                            "Usage: python blog_system.py topics expand [N]"
+                        )
+                        sys.exit(2)
+                    count = int(_raw_n)
                 with open("config.yaml", "r", encoding="utf-8") as _f:
                     _cfg = yaml.safe_load(_f) or {}
                 asyncio.run(BlogSystem(_cfg).expand_topics(count))
