@@ -59,6 +59,9 @@
   "7-idp-shifts-for-ai-feature-delivery": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "7-kubernetes-resource-traps-that-bite-in-prod": {
+    "first_seen": "2026-11-16T09:09:52.785051+00:00"
+  },
   "7-patterns-for-systems-that-wont-die-when-networks": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

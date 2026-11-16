@@ -1607,6 +1607,13 @@
   "title": "AI Static Analysis vs Rule-Based SAST: A Practical Comparison",
   "words": 2735
  },
+ "7-kubernetes-resource-traps-that-bite-in-prod": {
+  "verdict": "KEEP",
+  "reasons": [],
+  "fixes": [],
+  "title": "7 Kubernetes resource traps that bite in prod",
+  "words": 2683
+ },
  "african-fintech-agents-the-compliance-cliff-most-miss": {
   "verdict": "IMPROVE",
   "reasons": [

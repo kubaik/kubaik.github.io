@@ -5,7 +5,14 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Nov 2026 08:33:27 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2026 09:12:20 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes Requests and Limits: Seven Production Traps</title>
+      <link>https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</link>
+      <description>Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.</description>
+      <pubDate>Mon, 16 Nov 2026 09:09:16 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</guid>
+    </item>
     <item>
       <title>Human-in-the-loop: when agents need a human veto</title>
       <link>https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/</link>
@@ -138,13 +145,6 @@
       <description>A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</description>
       <pubDate>Sat, 07 Nov 2026 05:14:51 +0000</pubDate>
       <guid>https://blog.kubailabs.com/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</guid>
-    </item>
-    <item>
-      <title>USSD/SMS fallback: the session trap</title>
-      <link>https://blog.kubailabs.com/ussdsms-fallback-the-session-trap/</link>
-      <description>Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</description>
-      <pubDate>Fri, 06 Nov 2026 19:03:57 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/ussdsms-fallback-the-session-trap/</guid>
     </item>
   </channel>
 </rss>

@@ -1,4 +1,10 @@
 {
-  "improved": [],
+  "improved": [
+    {
+      "slug": "7-kubernetes-resource-traps-that-bite-in-prod",
+      "attempts": 1,
+      "retitled": true
+    }
+  ],
   "failed": []
 }

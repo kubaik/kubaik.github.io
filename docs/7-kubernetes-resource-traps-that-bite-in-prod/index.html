@@ -1,0 +1,523 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>7 Kubernetes resource traps that bite in prod - Kubai Kevin</title>
+        <meta name="description" content="Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.">
+        <meta name="keywords" content="Kubernetes, ResourceLimits, KubernetesQosClass, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-16T09:09:16.650153">
+        <meta property="article:modified_time" content="2026-11-16T09:11:41.016210+00:00">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="7 Kubernetes resource traps that bite in prod">
+        <meta property="og:description" content="Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.">
+        <meta property="og:url" content="https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://blog.kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png">
+        <meta property="og:image:alt" content="7 Kubernetes resource traps that bite in prod">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="7 Kubernetes resource traps that bite in prod">
+        <meta name="twitter:description" content="Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.">
+        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/#article",
+      "headline": "7 Kubernetes resource traps that bite in prod",
+      "description": "Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.",
+      "datePublished": "2026-11-16T09:09:16+00:00",
+      "dateModified": "2026-11-16T09:11:41+00:00",
+      "wordCount": 2961,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://blog.kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://blog.kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://blog.kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://blog.kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/"
+      },
+      "keywords": "Kubernetes, ResourceLimits, KubernetesQosClass, K8s",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://blog.kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "7 Kubernetes resource traps that bite in prod",
+          "item": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What happens if I set a CPU limit but no CPU request?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The scheduler treats the request as zero, so it will place the pod on any node with free capacity — including one that's already heavily loaded. At runtime the container is capped at the limit, but the scheduler had no way to reserve capacity for it. The pod may be throttled immediately under load, and the node may be oversubscribed. Always set a request; the limit is optional depending on your latency tolerance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my pod get OOMKilled when memory usage looks fine in kubectl top?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "kubectl top shows a point-in-time sample, not the peak. A container can spike between samples — during a GC pause, a large request, or a batch import — and hit the cgroup limit before the next sample. The kernel kills the process immediately. Check kubectl describe pod for Last State: Terminated, Reason: OOMKilled and compare the limit against your observed peak under load, not against the average."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I always set requests equal to limits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Equal requests and limits give you Guaranteed QoS, which means no bursting and last-priority eviction. That's right for services with predictable load that you cannot afford to lose. For services with spiky traffic, a lower request and a higher limit (Burstable) lets the pod use idle node capacity while still reserving a floor. The wrong answer is leaving both unset and getting BestEffort by accident."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I know if my CPU limit is causing latency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Look at the containercpucfsthrottledsecondstotal metric for the pod. If it's increasing while your latency is spiking, the limit is the cause. A second signal is that latency improves when you remove the CPU limit but keep the request — that confirms the limit was the bottleneck, not the request."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>7 Kubernetes resource traps that bite in prod</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">7 Kubernetes resource traps that bite in prod</h1>
+                
+                <p class="post-lead">Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ResourceLimits</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Kubernetesqosclass</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2961 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-16
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Kubernetes resource requests and limits look like two simple numbers per container. In practice they encode scheduling, eviction, CPU throttling, memory OOM kills, and the difference between a rollout that finishes and one that wedges. The failure mode is rarely a crash on apply. It is a pod that schedules onto a node with no headroom, a Java process throttled to a crawl because its limit is half a core, or a node that starts evicting a payment service because a batch job's request was set to a token value.</p>
+<p>The concrete problem: teams set requests and limits once, never revisit them, and then spend days debugging p99 latency and OOMKilled pods that trace back to a single mis-sized number in a Deployment manifest. This article covers seven traps that surface when a workload moves from a laptop to production under load, and gives a detection method for each.</p>
+<h2 id="why-requests-and-limits-are-two-different-contracts">Why requests and limits are two different contracts</h2>
+<p>A <strong>request</strong> is what the scheduler uses to decide which node has room. It is a promise to the kubelet that this container will get at least that much. A <strong>limit</strong> is what the kernel enforces at runtime: exceed the CPU limit and the container is throttled; exceed the memory limit and it is OOM-killed.</p>
+<p>They are not symmetric. CPU is compressible — throttling slows a workload down but does not kill it. Memory is incompressible — going over the limit terminates the process. That asymmetry drives most of the traps below.</p>
+<p>If a request is set but no limit, the container can burst to use idle CPU on the node, and memory is unbounded until the node itself runs out and the eviction manager starts killing pods by QoS class. If a limit is set but no request, the scheduler assumes zero and will pack the pod onto a node that is already full — then throttle it to the limit the moment it tries to work.</p>
+<p>The Kubernetes documentation on managing resources for containers is the canonical reference for the mechanics; the traps below are about the judgement calls the mechanics leave open.</p>
+<h2 id="the-seven-traps">The seven traps</h2>
+<h3 id="1-the-cpu-limit-that-turns-a-fast-service-into-a-slow-one">1. The CPU limit that turns a fast service into a slow one</h3>
+<p><strong>What it does:</strong> A CPU limit caps how many CPU-seconds a container can consume per period (typically 100ms on the CFS quota). Hit the cap and the kernel throttles the container until the next period.</p>
+<p><strong>Strength:</strong> Prevents a runaway process — a hot loop, a badly tuned GC — from starving every other pod on the node.</p>
+<p><strong>Weakness:</strong> Throttling is invisible in most dashboards unless <code>container_cpu_cfs_throttled_seconds_total</code> is being watched. A service with a 500m limit and a bursty request pattern will show p99 latency spikes that look like network problems but are actually CFS quota exhaustion. Go and Java services with large thread pools are especially prone because they wake many threads at once, and a single 100ms period can be exhausted before the work completes.</p>
+<p><strong>Best for:</strong> Noisy-neighbour protection on shared nodes where the workload genuinely cannot be trusted. For latency-sensitive services, many teams drop the CPU limit entirely and rely on requests plus node autoscaling. That is a defensible default — but only if requests are set high enough that the scheduler does not overpack nodes.</p>
+<p><strong>Check:</strong> Query <code>rate(container_cpu_cfs_throttled_seconds_total[5m])</code> per pod. If it is non-zero for a service that is not supposed to be CPU-bound, the limit is too tight or the request is too low.</p>
+<h3 id="2-the-memory-limit-set-from-an-idle-observation">2. The memory limit set from an idle observation</h3>
+<p><strong>What it does:</strong> Memory limits are enforced by the cgroup OOM killer. Exceed them and the kernel sends SIGKILL to the container's main process. Kubernetes reports <code>OOMKilled</code> in the pod status.</p>
+<p><strong>Strength:</strong> Hard ceiling. One leaking pod cannot take down the node.</p>
+<p><strong>Weakness:</strong> Peak memory in a container is not the same as steady-state memory. A Go service that holds a large in-memory cache, a JVM with a heap sized as a fraction of the limit, or a Python process that spikes during a batch import will all exceed a limit sized from a quiet-period observation. Worse, the JVM historically reads the cgroup limit to size its default heap — but only if the runtime is new enough to be cgroup-aware. Older JVMs size the heap from the node's total memory, blow past the container limit, and get OOM-killed on startup.</p>
+<p><strong>Best for:</strong> Every container. But size the limit from an observed peak under realistic load, not from an idle <code>kubectl top</code>. Give headroom — a limit equal to the observed peak is a limit that will eventually be hit.</p>
+<p><strong>Check:</strong> <code>kubectl describe pod &lt;name&gt;</code> and look for <code>Last State: Terminated, Reason: OOMKilled</code>. If it is there, the limit is the problem, not the node.</p>
+<h3 id="3-requests-so-low-the-scheduler-overpacks-the-node">3. Requests so low the scheduler overpacks the node</h3>
+<p><strong>What it does:</strong> The scheduler sums requests across all pods on a node and refuses to place a pod if the sum would exceed allocatable capacity. Requests are the scheduler's only signal.</p>
+<p><strong>Strength:</strong> Predictable placement. If every pod declares honest requests, no node is oversubscribed and the eviction manager has little to do.</p>
+<p><strong>Weakness:</strong> Teams often set requests to a token value — 10m CPU, 32Mi memory — because "it schedules fine." It does schedule fine. Then the node fills with pods that each want ten times their request, the kubelet's eviction manager starts ranking pods by QoS class, and a BestEffort batch job gets killed while a Guaranteed database pod survives. The batch job's owner sees a mysterious eviction and blames the platform team.</p>
+<p>A worked example makes the arithmetic concrete. Suppose a node has 4 CPU and 16Gi allocatable, and it runs eight pods that each declare 100m CPU and 256Mi memory but actually consume 400m and 1Gi at peak. Declared requests total 800m CPU and 2Gi memory — comfortably inside the node. Actual usage is 3.2 CPU and 8Gi. The node looks 20% scheduled and is running at 80% CPU. Any ninth pod scheduled onto it will be squeezed, and a memory spike in one pod will trigger eviction. The scheduler did nothing wrong; it was told the wrong numbers.</p>
+<p><strong>Best for:</strong> All workloads. The request should approximate what the container needs to run well, not the minimum that lets it start.</p>
+<p><strong>Check:</strong> Compare <code>sum(kube_pod_container_resource_requests)</code> per node against <code>kube_node_status_allocatable</code>. If requests are far below actual usage, there is a scheduling debt that will surface as evictions.</p>
+<h3 id="4-the-qos-class-nobody-chose">4. The QoS class nobody chose</h3>
+<p><strong>What it does:</strong> Kubernetes assigns each pod a QoS class based on how requests and limits are set: <strong>Guaranteed</strong> (requests equal limits for every container and every resource), <strong>Burstable</strong> (some requests set, not equal to limits), <strong>BestEffort</strong> (no requests or limits at all).</p>
+<p><strong>Strength:</strong> QoS class determines eviction order under node pressure. Guaranteed pods are evicted last; BestEffort pods first.</p>
+<p><strong>Weakness:</strong> QoS class is a side effect of how the manifest was written, not a field that is set. A pod that sets only limits is Burstable; a pod that sets nothing is BestEffort. A critical payment service with no requests is BestEffort and will be the first thing killed when a node runs low on memory — even though it is the most important workload on the node.</p>
+<p><strong>Best for:</strong> Anything that matters should be at least Burstable with honest requests; anything that cannot be lost should be Guaranteed. The cost of Guaranteed is that the pod cannot burst, so reserve it for services with predictable load.</p>
+<p><strong>Check:</strong> <code>kubectl get pod &lt;name&gt; -o jsonpath='{.status.qosClass}'</code>. Audit the production namespace and count how many critical services are BestEffort.</p>
+<h3 id="5-the-limitrange-default-that-silently-rewrites-the-manifest">5. The LimitRange default that silently rewrites the manifest</h3>
+<p><strong>What it does:</strong> A <code>LimitRange</code> in a namespace injects default requests and limits into pods that do not specify them, and can enforce min/max bounds.</p>
+<p><strong>Strength:</strong> Prevents the BestEffort-by-accident problem. A cluster admin can set sane defaults so a developer who forgets to size a container still gets something reasonable.</p>
+<p><strong>Weakness:</strong> The default is invisible in the Deployment manifest. A developer reads the YAML, sees no resources block, and assumes the pod is unbounded. It is not — it is whatever the LimitRange says, which might be 100m CPU and 128Mi memory. The pod gets throttled or OOM-killed and the manifest offers no clue. This is especially painful when workloads move between namespaces with different LimitRanges.</p>
+<p><strong>Best for:</strong> Platform teams enforcing a floor. But document the defaults and surface them in the developer portal or a <code>kubectl get limitrange -o yaml</code> snippet in onboarding docs.</p>
+<p><strong>Check:</strong> <code>kubectl get limitrange -n &lt;namespace&gt; -o yaml</code>. If the contents are unknown, the actual runtime resources of the pods are unknown too.</p>
+<h3 id="6-the-hpa-that-scales-on-cpu-when-cpu-is-capped">6. The HPA that scales on CPU when CPU is capped</h3>
+<p><strong>What it does:</strong> The HorizontalPodAutoscaler scales replicas based on a metric — commonly CPU utilisation as a percentage of request.</p>
+<p><strong>Strength:</strong> Automatic capacity for variable load. Works well when the metric tracks the actual bottleneck.</p>
+<p><strong>Weakness:</strong> HPA compares observed CPU against the <strong>request</strong>, not the limit. With a CPU limit but a low request, the HPA sees high utilisation against the request and scales out aggressively — even though each pod is throttled at the limit and adding replicas may not help if the bottleneck is inside each pod. Conversely, with a high request and a low limit, the HPA may never scale because utilisation against the request stays low while every pod is throttled. The HPA and the limit are fighting each other.</p>
+<p><strong>Best for:</strong> Services where CPU is genuinely the bottleneck and requests are honest. For I/O-bound services, scale on a custom metric (queue depth, in-flight requests) instead of CPU.</p>
+<p><strong>Check:</strong> <code>kubectl describe hpa &lt;name&gt;</code> and look at the current vs target utilisation. Cross-reference with the throttling metric from trap 1. If both are high, the request/limit ratio is wrong.</p>
+<h3 id="7-the-sidecar-with-no-resources-at-all">7. The sidecar with no resources at all</h3>
+<p><strong>What it does:</strong> Service meshes, log shippers, and metric exporters run as sidecars or DaemonSets alongside the application container.</p>
+<p><strong>Strength:</strong> They provide observability, mTLS, and traffic policy without changing application code.</p>
+<p><strong>Weakness:</strong> Sidecars are containers. They consume CPU and memory. A service mesh sidecar that proxies every request can add measurable latency and memory per pod. If the sidecar has no requests, the scheduler does not account for it; if it has no limits, a sidecar leak can OOM the pod. Teams commonly size the application container carefully and leave the sidecar at defaults, then wonder why the pod's total memory footprint is higher than the sum of its parts.</p>
+<p><strong>Best for:</strong> Every sidecar should have requests and limits set, even if the mesh's injection template does not do it by default. Check the injector configuration.</p>
+<p><strong>Check:</strong> <code>kubectl get pod &lt;name&gt; -o jsonpath='{.spec.containers[*].name}'</code> to list containers, then inspect each one's resources. An empty resources block on any container is a gap.</p>
+<h2 id="how-to-prioritise-which-trap-to-fix-first">How to prioritise which trap to fix first</h2>
+<p>Not all seven matter equally. A practical order, based on blast radius:</p>
+<ol>
+<li><strong>OOMKilled pods in production.</strong> Memory limits that are too low cause hard outages. Fix these first. Look for <code>OOMKilled</code> in pod status across the production namespace.</li>
+<li><strong>BestEffort workloads that matter.</strong> Any service in the critical path with no requests is one node-pressure event away from eviction. Set requests at minimum.</li>
+<li><strong>CPU throttling on latency-sensitive services.</strong> This shows up as p99 latency that does not correlate with traffic. Check the throttling metric before blaming the network.</li>
+<li><strong>HPA and limit mismatch.</strong> If autoscaling is not helping under load, the request/limit ratio is the likely cause.</li>
+<li><strong>LimitRange defaults that are undocumented.</strong> Lower urgency, but the root cause of many "why is this pod throttled" tickets.</li>
+<li><strong>Sidecar resources.</strong> Important for cost and stability, but usually a smaller blast radius than the application container.</li>
+<li><strong>Requests set too low across the board.</strong> A scheduling hygiene issue that compounds over time. Fix it with a policy (admission controller or LimitRange) rather than a one-off audit.</li>
+</ol>
+<p>The principle: fix what causes outages first, then what causes latency, then what causes confusion.</p>
+<h2 id="a-minimal-manifest-that-avoids-all-seven">A minimal manifest that avoids all seven</h2>
+<p>Here is a Deployment fragment that sets requests equal to limits for a latency-sensitive service (Guaranteed QoS), includes a sidecar with its own resources, and leaves room for the HPA to scale on a request that reflects reality. The numbers are illustrative — replace them with values derived from your own load tests.</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: payments-api
+  template:
+    metadata:
+      labels:
+        app: payments-api
+    spec:
+      containers:
+        - name: api
+          image: registry.example.com/payments-api:1.4.2
+          resources:
+            requests:
+              cpu: &quot;500m&quot;
+              memory: &quot;512Mi&quot;
+            limits:
+              cpu: &quot;500m&quot;
+              memory: &quot;512Mi&quot;
+          ports:
+            - containerPort: 8080
+        - name: log-shipper
+          image: registry.example.com/log-shipper:2.1.0
+          resources:
+            requests:
+              cpu: &quot;50m&quot;
+              memory: &quot;64Mi&quot;
+            limits:
+              cpu: &quot;100m&quot;
+              memory: &quot;128Mi&quot;
+</code></pre>
+<p>Two things to notice. First, the application container has requests equal to limits, so the pod is Guaranteed and will be evicted last. Second, the sidecar has its own resources — it is not invisible to the scheduler. If the service is bursty and Burstable QoS is preferable, drop the CPU limit on the application container but keep the request honest; the memory limit should stay to prevent node-level OOM.</p>
+<p>For a batch job that can tolerate eviction, BestEffort is sometimes acceptable — but only if it is labelled as such and the team owning the node knows it. The trap is accidental BestEffort, not deliberate.</p>
+<h2 id="how-to-measure-whether-a-change-helped">How to measure whether a change helped</h2>
+<p>Resizing resources is an experiment, and it needs a before-and-after comparison rather than a feeling that things got faster. Three signals cover most cases:</p>
+<ul>
+<li><strong>Throttling.</strong> Compare <code>rate(container_cpu_cfs_throttled_seconds_total[5m])</code> per pod over a window that includes a representative peak, before and after the change. The target is zero for latency-sensitive services, or a small, steady value if the workload is deliberately capped.</li>
+<li><strong>OOM kills.</strong> Count <code>kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}</code> per pod over the same window. This should go to zero after a limit increase; if it does not, the memory growth is a leak, not a sizing problem, and a bigger limit only delays the failure.</li>
+<li><strong>Latency against traffic.</strong> Plot p99 latency against request rate. If throttling was the cause, the latency curve should flatten at the traffic level where it previously spiked. If latency still climbs with traffic but throttling is zero, the bottleneck is downstream and the resource change was not the fix.</li>
+</ul>
+<p>Run each change against one workload at a time. Changing requests, limits, and HPA targets together makes it impossible to attribute the result.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="what-happens-if-i-set-a-cpu-limit-but-no-cpu-request">What happens if I set a CPU limit but no CPU request?</h3>
+<p>The scheduler treats the request as zero, so it will place the pod on any node with free capacity — including one that is already heavily loaded. At runtime the container is capped at the limit, but the scheduler had no way to reserve capacity for it. The pod may be throttled immediately under load, and the node may be oversubscribed. Always set a request; the limit is optional depending on latency tolerance.</p>
+<h3 id="why-does-my-pod-get-oomkilled-when-memory-usage-looks-fine-in-kubectl-top">Why does my pod get OOMKilled when memory usage looks fine in kubectl top?</h3>
+<p><code>kubectl top</code> shows a point-in-time sample, not the peak. A container can spike between samples — during a GC pause, a large request, or a batch import — and hit the cgroup limit before the next sample. The kernel kills the process immediately. Check <code>kubectl describe pod</code> for <code>Last State: Terminated, Reason: OOMKilled</code> and compare the limit against the observed peak under load, not against the average.</p>
+<h3 id="should-i-always-set-requests-equal-to-limits">Should I always set requests equal to limits?</h3>
+<p>No. Equal requests and limits give Guaranteed QoS, which means no bursting and last-priority eviction. That is right for services with predictable load that cannot be lost. For services with spiky traffic, a lower request and a higher limit (Burstable) lets the pod use idle node capacity while still reserving a floor. The wrong answer is leaving both unset and getting BestEffort by accident.</p>
+<h3 id="how-do-i-know-if-my-cpu-limit-is-causing-latency">How do I know if my CPU limit is causing latency?</h3>
+<p>Look at <code>container_cpu_cfs_throttled_seconds_total</code> for the pod. If it is increasing while latency spikes, the limit is the cause. A second signal is that latency improves when the CPU limit is removed but the request is kept — that confirms the limit was the bottleneck, not the request.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Run this against the production namespace and look for containers with no requests or no limits:</p>
+<pre><code class="language-bash">kubectl get pods -n production -o json | \
+  jq -r '.items[] | .metadata.name as $n | .spec.containers[] | select(.resources.requests == null or .resources.limits == null) | &quot;\($n) / \(.name)&quot;'
+</code></pre>
+<p>Every line in the output is a container that is either BestEffort (no requests) or unbounded (no limits). Pick the one in the most critical path, check its actual usage with <code>kubectl top pod</code>, and set a request based on that number. That single change is the highest-leverage fix available today.</p>
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://blog.kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://blog.kubailabs.com/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+<li><a href="https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">HPA vs KEDA vs Karpenter: autoscaling traps</a></li>
+</ul>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://go.dev/doc/">Go documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">
+                        <h3>CI/CD pipelines stall with GPU pods: 2026 benchmarks</h3>
+                        <p>GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.</p>
+                        <span class="related-meta">13 min read · 28 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+                        <h3>HPA vs KEDA vs Karpenter: autoscaling traps</h3>
+                        <p>How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</p>
+                        <span class="related-meta">17 min read · 26 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/observability-agents-lied-to-us/">
+                        <h3>Observability agents lied to us</h3>
+                        <p>Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

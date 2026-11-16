@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-16T05:32:15.376900",
+  "built_at": "2026-11-16T09:09:19.038629",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5865,6 +5865,11 @@
       "slug": "human-in-the-loop-when-agents-need-a-human-veto",
       "title": "Human-in-the-loop: when agents need a human veto",
       "summary": "The gap between the demo and the incident report is where this actually lives. The conventional advice on prompt caching is incomplete in one specific, costly way. Here's what holds up in practice, and why. An agent that executes a refund, rotates an API key, or sends a password reset email has the "
+    },
+    {
+      "slug": "7-kubernetes-resource-traps-that-bite-in-prod",
+      "title": "7 Kubernetes resource traps that bite in prod",
+      "summary": "After enough code that touches designing humanintheloop gets reviewed, the same failure pattern keeps showing up. This walks through the fix and the reasoning, not just the patch. The workaround gets copy-pasted forward long after the original reason is forgotten. Kubernetes resource requests and li"
     }
   ]
 }
