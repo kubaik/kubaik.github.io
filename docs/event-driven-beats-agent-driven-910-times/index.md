@@ -329,9 +329,9 @@ For each match, ask the single question that separates the two patterns: *does t
 
 ## Related reading
 
-- [Always-On vs On-Demand Agents: Real Cost Trade-offs](https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/)
-- [Agent SLOs: measure what agents actually do](https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/)
-- [Built a multi-agent system without LangGraph](https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/)
+- [Always-On vs On-Demand Agents: Real Cost Trade-offs](https://blog.kubailabs.com/agents-247-vs-on-demand-42k-bill-shock/)
+- [Agent SLOs: measure what agents actually do](https://blog.kubailabs.com/agent-slos-measure-what-agents-actually-do/)
+- [Built a multi-agent system without LangGraph](https://blog.kubailabs.com/built-a-multi-agent-system-without-langgraph/)
 
 ## Official documentation
 

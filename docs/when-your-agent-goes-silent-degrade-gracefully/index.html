@@ -462,9 +462,9 @@ A useful implementation has three states: closed, open, and half-open. After the
 <p>Open the module that makes your service's model calls. For every call, check two things: whether its deadline is shorter than the user-visible budget for that operation, and whether the call can return a value instead of raising. Then add a <code>source</code> field to the return value (<code>model</code>, <code>cache</code>, or <code>fallback</code>) and emit it as a metric label. That single field is what makes degradation measurable, and measurement is what turns a vague resilience goal into a decision you can defend.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
-<li><a href="https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
-<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
+<li><a href="https://blog.kubailabs.com/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

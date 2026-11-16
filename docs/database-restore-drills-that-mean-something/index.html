@@ -426,9 +426,9 @@ The usual causes are missing roles (single-database dumps exclude globals), sequ
 <p>Open the backup job's configuration and find the exact command that produces the artefact — then run <code>pg_restore -l</code> (or the equivalent listing command for the backup tool) against the newest artefact and confirm it is younger than the backup interval and contains the tables expected. If it is not, the failure has been found before an incident did; if it is, the drill harness above has its input.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
-<li><a href="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
-<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+<li><a href="https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://blog.kubailabs.com/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
+<li><a href="https://blog.kubailabs.com/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

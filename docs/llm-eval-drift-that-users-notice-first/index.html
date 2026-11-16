@@ -542,9 +542,9 @@ def build_cache_key(user_id: str, prompt: str) -&gt; str:
 <p>Pick one endpoint that calls an LLM and add token counting in front of the model call. Log the input token count with a timestamp. Do not add an alert yet — just collect data for a day. Tomorrow, compute the p99 for that endpoint and compare it to the documented context limit minus your response reserve. If the p99 is within 20% of the budget, you have found a latent truncation risk before a user did.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/">Agent drift: the failure mode you didn't log</a></li>
-<li><a href="https://kubaik.github.io/why-does-my-model-drift-after-deploy/">Why ML Models Drift After Deployment</a></li>
-<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+<li><a href="https://blog.kubailabs.com/agent-drift-the-failure-mode-you-didnt-log/">Agent drift: the failure mode you didn't log</a></li>
+<li><a href="https://blog.kubailabs.com/why-does-my-model-drift-after-deploy/">Why ML Models Drift After Deployment</a></li>
+<li><a href="https://blog.kubailabs.com/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

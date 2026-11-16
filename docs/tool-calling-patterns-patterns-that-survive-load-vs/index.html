@@ -499,9 +499,9 @@ func callWithSafety(orderID string) ([]byte, error) {
 <p>Open the file in your codebase that issues calls to your most critical downstream dependency. Find the retry logic, if any. Answer three questions in writing: is the operation idempotent, what is the total attempt ceiling, and what happens to concurrent calls when the downstream slows down. If you cannot answer all three from the code, that is the gap to close first. Add a counter for retry attempts labelled by downstream and reason, deploy it, and watch it for one traffic cycle. A retry rate that rises during latency spikes is the signal that the pattern needs to change.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
-<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
-<li><a href="https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calls-under-load-async-batch-vs-fire-and-forget/">Tool calls under load: async batch vs fire-and-forget</a></li>
+<li><a href="https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://blog.kubailabs.com/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

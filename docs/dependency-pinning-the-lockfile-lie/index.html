@@ -420,9 +420,9 @@ No. It guarantees that the install follows the lockfile for the current platform
 <p>Open the CI configuration (<code>.github/workflows/ci.yml</code>, <code>.gitlab-ci.yml</code>, or <code>Jenkinsfile</code>) and find the dependency install step. If it runs <code>npm install</code>, <code>yarn install</code> without <code>--frozen-lockfile</code>, or <code>pip install -r requirements.txt</code> without <code>--require-hashes</code>, replace it with <code>npm ci</code>, <code>yarn install --frozen-lockfile</code>, or a hash-pinned <code>pip install --require-hashes -r requirements.txt</code>, then add a <code>git diff --exit-code</code> check on the lockfile after install. Commit the change and run the pipeline. If it fails, the lockfile was out of sync, which means the builds were not reproducible; fixing that is the highest-leverage dependency management change available today.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
-<li><a href="https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
-<li><a href="https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
+<li><a href="https://blog.kubailabs.com/claude-code-after-a-year-daily-wins/">Claude Code after a year: daily wins</a></li>
+<li><a href="https://blog.kubailabs.com/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
+<li><a href="https://blog.kubailabs.com/cicd-for-ai-code-test-secure-rollback-fast/">CI/CD for AI code: test, secure, rollback fast</a></li>
 </ul>
                 
                 

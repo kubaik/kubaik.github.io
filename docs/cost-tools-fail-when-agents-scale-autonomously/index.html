@@ -368,9 +368,9 @@ Yes. The accounting layer is the source of truth for what was actually billed, i
 <p>Pick one service that scales automatically, and confirm whether its scaling loop emits any cost signal at all. If it does not, add a single counter — <code>scaling_decision_cost_total</code>, labelled by decision type and direction — incremented at the point where the agent commits a capacity change, with <code>delta_usd</code> computed from replica count and node price. Run it for a week, then query the per-decision-type rate and compare the total against the accounting layer's figure for the same service and period. The size of that gap tells you how much of your cost story is currently invisible.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">Why Cloud Cost Tools Miss Agent-Driven GPU Spend</a></li>
-<li><a href="https://kubaik.github.io/agentic-ai-cost-control-7-tools-one-backfire/">Agentic AI cost control: 7 tools, one backfire</a></li>
-<li><a href="https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
+<li><a href="https://blog.kubailabs.com/cloud-agents-burned-18k-8-tools-that-didnt-work/">Why Cloud Cost Tools Miss Agent-Driven GPU Spend</a></li>
+<li><a href="https://blog.kubailabs.com/agentic-ai-cost-control-7-tools-one-backfire/">Agentic AI cost control: 7 tools, one backfire</a></li>
+<li><a href="https://blog.kubailabs.com/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

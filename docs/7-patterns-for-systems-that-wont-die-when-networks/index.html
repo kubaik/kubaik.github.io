@@ -519,8 +519,8 @@ No. They are transport-agnostic. The outbox requires a database with transaction
 <p>Open the source of the busiest mutating endpoint you own. Search for every outbound network call it makes and check whether each one has a bounded retry count and jitter. If any call retries without a limit, add the limit now — that single change will prevent the most common cascading failure, and it takes minutes to implement.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
-<li><a href="https://kubaik.github.io/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
+<li><a href="https://blog.kubailabs.com/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/hire-for-agents-not-autocomplete/">Hire for agents, not autocomplete</a></li>
 <li>Survive network drops: agentic workflows that keep running</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

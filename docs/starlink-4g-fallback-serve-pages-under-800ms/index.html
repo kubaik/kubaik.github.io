@@ -637,7 +637,7 @@ Load them after the shell is interactive, and never let one block first paint. I
 <p>Open your production site in Chrome DevTools, set a custom throttling profile of 1 Mbps down, 280 ms RTT and 10% packet loss, then reload and record <code>responseStart - requestStart</code> for the HTML document. If that number is above 800 ms, the problem is on the server or the edge, not in the bundle, and the fix is to stream the shell before any data fetch. If it is below 800 ms but the page still feels slow, measure the brotli-compressed size of your largest JavaScript file with <code>brotli -c file.js | wc -c</code> and compare it against the 120 kB budget.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
 <li>Build apps that still work on 500 ms latency</li>
 <li>Ship to Nairobi users: Starlink latency guide 2026</li>
 </ul>

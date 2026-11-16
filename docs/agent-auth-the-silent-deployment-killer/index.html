@@ -577,9 +577,9 @@ fi
 <p>Open your agent client and find the retry loop that handles authentication failures. Add a branch that stops retrying on any 4xx response and logs the token error reason separately from the status code. Then run a short load test against a slow-link profile and record the 403 count split by reason. That single change — distinguishing "retry because the network failed" from "never retry because policy rejected this" — removes a large class of self-inflicted load and gives you the data to decide whether anything else in this article applies to you.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
-<li><a href="https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/">Offline agent workflows for last-mile ops</a></li>
-<li><a href="https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
+<li><a href="https://blog.kubailabs.com/agent-auth-where-the-docs-ended-up-lying/">Agent auth: where the docs ended up lying</a></li>
+<li><a href="https://blog.kubailabs.com/offline-agent-workflows-for-last-mile-ops/">Offline agent workflows for last-mile ops</a></li>
+<li><a href="https://blog.kubailabs.com/mobile-money-agent-fees-why-your-bot-keeps-failing/">Mobile money agent fees: why your bot keeps failing</a></li>
 </ul>
                 
                 

@@ -729,9 +729,9 @@ Routing wins when your traffic is heterogeneous and your latency budget is tight
 <p>Open your router's metrics dashboard and find the p99 latency for your slowest agent backend. Write that number down. Then check whether your concurrency guard is a fixed-window counter or a sliding window. If it is fixed-window, replace it with the sorted-set implementation above — that single change is the most common fix for retry-storm tail latency.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
-<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Temporal changed our agent retries for good</a></li>
-<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+<li><a href="https://blog.kubailabs.com/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+<li><a href="https://blog.kubailabs.com/temporal-changed-our-agent-retries-for-good/">Temporal changed our agent retries for good</a></li>
+<li><a href="https://blog.kubailabs.com/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

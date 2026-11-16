@@ -404,9 +404,9 @@ WHERE application_name LIKE 'agent-%';
 <p>Open your proxy or pooler configuration and find the client wait timeout — the setting that governs how long a client waits for a backend connection. In PgBouncer it is <code>query_wait_timeout</code>; in other proxies it has a different name. If the value is greater than 5 seconds or unset, set it to 5 seconds and redeploy. Then check whether you have a metric for client wait time. If you do not, add one. That single metric will tell you whether your proxy is absorbing bursts or queueing them, and it is the first thing to look at when latency degrades under load.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/">Always-On vs On-Demand Agents: Real Cost Trade-offs</a></li>
-<li><a href="https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/">Serverless Cold Starts: Cost Levers and How to Measure Them</a></li>
-<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+<li><a href="https://blog.kubailabs.com/agents-247-vs-on-demand-42k-bill-shock/">Always-On vs On-Demand Agents: Real Cost Trade-offs</a></li>
+<li><a href="https://blog.kubailabs.com/cut-cold-starts-70-lambda-cost-hack/">Serverless Cold Starts: Cost Levers and How to Measure Them</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
 </ul>
                 
                 

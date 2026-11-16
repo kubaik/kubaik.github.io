@@ -373,9 +373,9 @@ module.exports = { fetchWithCoalescing };
 <p>Pick your single hottest cache key and add one metric: the count of concurrent in-flight backend reads for that key, bucketed per second. Emit it from the code path that performs the backend read, tagged with the key. Then force that key to expire during a load test and look at the peak. If the peak is more than a small multiple of one, you have a herd, and you now have a baseline to measure coalescing against.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
-<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
-<li><a href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+<li><a href="https://blog.kubailabs.com/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+<li><a href="https://blog.kubailabs.com/ai-features-as-tech-debt-or-golden-paths/">AI features as tech debt or golden paths</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

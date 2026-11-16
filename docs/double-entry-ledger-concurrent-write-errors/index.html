@@ -486,9 +486,9 @@ HAVING SUM(amount) != 0;
 <p>If it returns rows, you have a live consistency bug and the deferred constraint trigger is the fastest mitigation. If it returns nothing, check <code>pg_stat_database.xact_rollback</code> and your application logs for serialization failures and deadlocks. Either result tells you which fix to apply first.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/">Offline-first money apps with DynamoDB Streams</a></li>
-<li><a href="https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
-<li><a href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+<li><a href="https://blog.kubailabs.com/offline-first-money-apps-with-dynamodb-streams/">Offline-first money apps with DynamoDB Streams</a></li>
+<li><a href="https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+<li><a href="https://blog.kubailabs.com/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

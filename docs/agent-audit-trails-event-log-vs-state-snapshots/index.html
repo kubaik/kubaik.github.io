@@ -434,9 +434,9 @@ class AuditTrail:
 <p>Open your agent's decision-emitting code path and check one thing: does every state transition that affects an external outcome produce a record? If any transition can happen without emitting an event, your event log is not authoritative and replay will diverge from reality. Find the first such transition, add the emit call, and commit it. That single change is the difference between a log and an audit trail.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
-<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
-<li><a href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
+<li><a href="https://blog.kubailabs.com/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://blog.kubailabs.com/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
 </ul>
                 
                 

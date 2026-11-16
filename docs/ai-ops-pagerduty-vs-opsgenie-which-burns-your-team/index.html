@@ -424,9 +424,9 @@ if __name__ == &quot;__main__&quot;:
 <p>Open your metrics configuration and check the scrape interval. If it is longer than the clustering window you intend to use, a clustering-based platform cannot group events reliably. For a Prometheus setup, that means inspecting <code>prometheus.yml</code>, confirming <code>scrape_interval</code> is short enough for your grouping window, and verifying that scrape duration stays well below the interval so scrapes are not routinely missing their deadline. If the interval is too long or scrapes are timing out, fix the metrics pipeline before evaluating either tool, because no AI layer can cluster signals it never receives.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
-<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
-<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+<li><a href="https://blog.kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://blog.kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
+<li><a href="https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

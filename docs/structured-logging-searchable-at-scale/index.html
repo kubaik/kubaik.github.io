@@ -401,9 +401,9 @@ It can increase raw ingest bytes, because field names and punctuation make each 
 <p>Open the logger configuration for your busiest service and count how many fields are emitted as structured data versus embedded in the message string. If the message contains variable data (IDs, paths, durations), move those into a context object and keep the message constant. Then check the retention setting for that service's index: if debug and info lines share the same retention as error lines, split them. The goal for the next 30 minutes is not a full migration; it is one service emitting a stable envelope and one retention policy that reflects the value of the line.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/why-scaling-agents-kills-plain-logs/">Why scaling agents kills plain logs</a></li>
-<li><a href="https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
-<li><a href="https://kubaik.github.io/vibe-code-works-great-fails-forever/">Vibe code: works great, fails forever</a></li>
+<li><a href="https://blog.kubailabs.com/why-scaling-agents-kills-plain-logs/">Why scaling agents kills plain logs</a></li>
+<li><a href="https://blog.kubailabs.com/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+<li><a href="https://blog.kubailabs.com/vibe-code-works-great-fails-forever/">Vibe code: works great, fails forever</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

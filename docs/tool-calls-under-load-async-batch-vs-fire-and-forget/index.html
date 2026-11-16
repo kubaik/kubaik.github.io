@@ -499,9 +499,9 @@ async def instrumented_call(destination: str, coro_fn, *args, **kwargs):
 <p>Add a <code>tool_calls_per_request</code> histogram to your main request handler: increment a counter at each outbound tool call site and record the total per request at the end of the handler. Deploy it, and in a week you will have the median and P95 that determine whether batching is worth building. Everything else in this article follows from those two numbers.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
-<li><a href="https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
-<li><a href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
+<li><a href="https://blog.kubailabs.com/ai-native-apps-break-when-you-copy-old-rules/">AI-native apps break when you copy old rules</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calling-stateless-beats-stateful-under-load/">Tool calling: stateless beats stateful under load</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

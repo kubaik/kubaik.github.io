@@ -401,9 +401,9 @@ tokenizer.save_pretrained(&quot;/out/clean&quot;)
 <p>It closes the default path, which is a real improvement, but it doesn't eliminate the risk. Code that explicitly passes <code>weights_only=False</code> still executes pickle, and a lot of existing code does that to preserve compatibility with older checkpoints. The fix is to audit for explicit <code>weights_only=False</code> and remove it where possible. If a checkpoint genuinely can't load with <code>weights_only=True</code>, that's a signal the checkpoint contains more than tensors.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/">AI model poisoning: 3 real attacks on datasets</a></li>
-<li><a href="https://kubaik.github.io/sbom-attestation-that-gets-used/">SBOM + attestation that gets used</a></li>
-<li><a href="https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
+<li><a href="https://blog.kubailabs.com/ai-model-poisoning-3-real-attacks-on-datasets/">AI model poisoning: 3 real attacks on datasets</a></li>
+<li><a href="https://blog.kubailabs.com/sbom-attestation-that-gets-used/">SBOM + attestation that gets used</a></li>
+<li><a href="https://blog.kubailabs.com/pypi-poisoned-models-hit-prod-in-2025/">PyPI poisoned models hit prod in 2025</a></li>
 </ul>
                 
                 

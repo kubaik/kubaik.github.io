@@ -131,7 +131,7 @@
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://kubaik.github.io/opentelemetry-collector-pipelines-sampling-batching/#faq",
+  "@id": "https://blog.kubailabs.com/opentelemetry-collector-pipelines-sampling-batching/#faq",
   "mainEntity": [
     {
       "@type": "Question",
@@ -429,9 +429,9 @@ service:
 <p>Open the collector config and add a <code>memory_limiter</code> processor as the first processor in every pipeline. Set <code>limit_mib</code> to roughly 80% of the container's memory limit and <code>spike_limit_mib</code> to around 10%. Then scrape the collector's metrics endpoint and record <code>otelcol_receiver_refused_spans</code> and <code>otelcol_processor_memory_limiter_refused_spans</code> before and after the change. That single edit will not solve every pipeline problem, but it converts silent data loss into a visible, measurable signal.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
-<li><a href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">High-Volume Log Pipelines: Shipping 50k Events Per Second</a></li>
-<li><a href="https://kubaik.github.io/agent-drift-why-it-hurts-ux/">Agent drift: why it hurts UX</a></li>
+<li><a href="https://blog.kubailabs.com/observability-2026-ditch-the-three-pillars/">Observability 2026: ditch the three pillars</a></li>
+<li><a href="https://blog.kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">High-Volume Log Pipelines: Shipping 50k Events Per Second</a></li>
+<li><a href="https://blog.kubailabs.com/agent-drift-why-it-hurts-ux/">Agent drift: why it hurts UX</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

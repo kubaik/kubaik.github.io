@@ -645,8 +645,8 @@ def test_task_is_durable_across_restart(monkeypatch):
 <p>Open your agent project and add a single field to your task model: <code>attempt: int = 0</code>. Persist it alongside the task payload before every outbound call, and increment it on the persisted copy rather than in memory. Then write one test that kills the worker process mid-call and asserts the task is either retried or marked failed, never silently lost. If you cannot make that test pass, the rest of the durability work is decoration.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
-<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://blog.kubailabs.com/stop-assuming-payment-apis-never-fail/">Stop assuming payment APIs never fail</a></li>
+<li><a href="https://blog.kubailabs.com/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
 <li>Survive network drops: agentic workflows that keep running</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

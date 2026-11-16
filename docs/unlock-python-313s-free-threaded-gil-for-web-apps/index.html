@@ -523,9 +523,9 @@ There is no general rule. The gain depends on the same Python-to-I/O ratio as on
 <p>Pick one endpoint in your service that is I/O-bound and does a non-trivial amount of Python work per request. Add a temporary route that returns <code>sys._is_gil_enabled()</code> and <code>psutil.Process().num_threads()</code>. Deploy that build with <code>PYTHON_GIL=0</code> to a single canary instance behind your load balancer, hit the route, and confirm the GIL is actually off with all your production imports loaded. If it reports <code>True</code>, you have found a GIL-bound extension before it cost you a migration. If it reports <code>False</code>, run your existing load test against the canary and the baseline for the same duration and compare P99 latency on that one endpoint. That single comparison tells you more than any published benchmark.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
-<li><a href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
-<li><a href="https://kubaik.github.io/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://blog.kubailabs.com/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
+<li><a href="https://blog.kubailabs.com/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

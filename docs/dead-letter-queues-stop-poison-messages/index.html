@@ -552,9 +552,9 @@ def replay_dlq(queue_name: str, limit: int = 10):
 <p>Open your current worker code and add a single <code>MAX_RETRIES</code> constant with a value of 3. Then wrap your job function in a <code>try/except</code> that catches one specific transient exception, retries up to the cap, and re-raises everything else. Run your existing test suite. If a poison message still blocks the queue, you will see it in the test output — and now you have a place to put the DLQ logic.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
-<li><a href="https://kubaik.github.io/webhook-delivery-that-survives-outages/">Webhook delivery that survives outages</a></li>
-<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://blog.kubailabs.com/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+<li><a href="https://blog.kubailabs.com/webhook-delivery-that-survives-outages/">Webhook delivery that survives outages</a></li>
+<li><a href="https://blog.kubailabs.com/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

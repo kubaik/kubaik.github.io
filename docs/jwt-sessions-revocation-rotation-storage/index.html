@@ -131,7 +131,7 @@
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://kubaik.github.io/jwt-sessions-revocation-rotation-storage/#faq",
+  "@id": "https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/#faq",
   "mainEntity": [
     {
       "@type": "Question",
@@ -488,9 +488,9 @@ async function rotateRefreshToken(db, oldToken) {
 <p>Open the authentication configuration (for example, <code>auth.js</code>, <code>config/passport.js</code>, or the identity provider's settings) and find the access token expiry. If it exceeds the maximum revocation window identified in the checklist above, shorten it and note the resulting increase in refresh traffic. Then check the refresh logic: does it invalidate the old token on use and detect reuse? If not, that is the next change. Finally, verify that the refresh token is stored in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite</code> cookie and that the CORS policy does not combine <code>*</code> with credentials. These three checks close the most common JWT session gaps.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-auth-the-silent-deployment-killer/">Agent auth: the silent deployment killer</a></li>
-<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
-<li><a href="https://kubaik.github.io/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
+<li><a href="https://blog.kubailabs.com/agent-auth-the-silent-deployment-killer/">Agent auth: the silent deployment killer</a></li>
+<li><a href="https://blog.kubailabs.com/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://blog.kubailabs.com/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
 </ul>
                 
                 

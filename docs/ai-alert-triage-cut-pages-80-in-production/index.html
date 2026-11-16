@@ -722,9 +722,9 @@ Mount them as environment variables from a Kubernetes Secret, and never bake the
 <p>Open your monitoring UI and run a query that counts alerts by name over the last seven days, for example <code>sum by (alertname) (increase(alertmanager_alerts_received_total[7d]))</code>. Sort descending and look at the top five. For each one, answer a single question: if this alert fires at 3 a.m., does a human need to act before morning? Every alert where the answer is no is a candidate for the known-bad list or the queue path. Write those five names into a <code>bad_alerts.json</code> and load it into the service. That change alone is measurable, reversible, and requires no model tuning.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
-<li><a href="https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
-<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+<li><a href="https://blog.kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://blog.kubailabs.com/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+<li><a href="https://blog.kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -485,9 +485,9 @@ Run it for 60 seconds under your normal workload, then compare the histogram aga
 
 ## Related reading
 
-- [Kernel and EBS Tuning That Cuts EC2 CPU Overhead](https://kubaik.github.io/drop-ec2-bills-70-without-code/)
-- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
-- [Remote salary: negotiate without sounding cheap](https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/)
+- [Kernel and EBS Tuning That Cuts EC2 CPU Overhead](https://blog.kubailabs.com/drop-ec2-bills-70-without-code/)
+- [Internal developer platform: adoption traps](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [Remote salary: negotiate without sounding cheap](https://blog.kubailabs.com/remote-salary-negotiate-without-sounding-cheap/)
 
 ## Official documentation
 

@@ -409,9 +409,9 @@ Not necessarily, but the write-ahead insert and the side effect must share a fai
 <p>Open your agent's main decision path and find the line where the side effect happens — the payment call, the ticket creation, the email send. Check whether an audit row is written <em>before</em> that line with a <code>pending</code> outcome. If it is not, add the write-ahead insert and the reconciliation job that closes pending decisions against the provider's verify endpoint. That single change converts your audit trail from a log of what happened into evidence that a decision was made, under a known policy, with a reference you can reconcile.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-audit-trails-event-log-vs-state-snapshots/">Agent audit trails: event log vs state snapshots</a></li>
-<li><a href="https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
-<li><a href="https://kubaik.github.io/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+<li><a href="https://blog.kubailabs.com/agent-audit-trails-event-log-vs-state-snapshots/">Agent audit trails: event log vs state snapshots</a></li>
+<li><a href="https://blog.kubailabs.com/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://blog.kubailabs.com/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

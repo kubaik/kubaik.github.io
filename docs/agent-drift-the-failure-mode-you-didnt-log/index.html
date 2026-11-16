@@ -423,9 +423,9 @@ def enforce_sequence(history: list[str], next_tool: str) -&gt; bool:
 <p>Open the agent's trace log and extract the last 500 decisions. For each one, write the tool name and the argument keys as a single string. Count the distinct strings. If the count is under a few hundred, the categorical drift detector described above is buildable today: that count is the signature space, and it is small enough that a key-value store and a PSI function will produce a usable signal within a week. Start with the sequencing guard, not the dashboard.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
-<li><a href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
-<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
+<li><a href="https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agent-postmortems-trace-vs-logs-vs-code/">AI agent postmortems: trace vs logs vs code</a></li>
+<li><a href="https://blog.kubailabs.com/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

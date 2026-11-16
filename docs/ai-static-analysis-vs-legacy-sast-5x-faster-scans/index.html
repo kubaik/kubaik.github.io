@@ -420,9 +420,9 @@ jobs:
 <p>Open your CI configuration and find the security scan job. Answer one question: <strong>can this job fail the build?</strong> Look for <code>continue-on-error: true</code>, <code>|| true</code> on the scanner step, or an aggregation script that always exits zero. If the job cannot fail, you have no gate regardless of which scanner runs inside it. Fix that first, then run one scan on a deliberately vulnerable test file (a hardcoded credential and an obvious injection sink are enough) and confirm the job goes red. That single check tells you more about your current coverage than any tool comparison.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
-<li><a href="https://kubaik.github.io/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
-<li><a href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">Context-aware security gates that cut CI alert noise</a></li>
+<li><a href="https://blog.kubailabs.com/stop-false-positives-in-ci-scanning-now/">Stop false positives in CI scanning now</a></li>
+<li><a href="https://blog.kubailabs.com/ai-scanners-overlook-real-vulns/">AI scanners overlook real vulns</a></li>
+<li><a href="https://blog.kubailabs.com/cut-false-positives-85-with-this-ci-security-trick/">Context-aware security gates that cut CI alert noise</a></li>
 </ul>
                 
                 

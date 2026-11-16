@@ -459,9 +459,9 @@ pub extern &quot;C&quot; fn validate_jwt(
 <p>Pick your highest-latency CPU-bound endpoint — hashing, signature verification, compression, or parsing. Write a microbenchmark that calls the current implementation 10,000 times and records median and p95. Then compile the same logic to WASM, load it in a Node.js process, and run the identical benchmark. Compare <code>wasm_call - noop_call</code> against <code>host_call</code>, and compare module instantiation time against your container start time. If WASM does not clearly win on both, keep the container.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
-<li><a href="https://kubaik.github.io/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
-<li><a href="https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
+<li><a href="https://blog.kubailabs.com/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
+<li><a href="https://blog.kubailabs.com/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
+<li><a href="https://blog.kubailabs.com/nextjs-15-vs-remix-vs-sveltekit-2026-choices/">Next.js 15 vs Remix vs SvelteKit: 2026 choices</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

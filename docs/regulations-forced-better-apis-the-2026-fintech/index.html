@@ -423,9 +423,9 @@ export default router;
 <p>Open the file that implements your payment retry logic — often named something like <code>retry_policy.py</code>, <code>retry.go</code>, or <code>retry.ts</code>. Check whether it stores the retry count and the next retry time in durable storage, or only in memory. If it stores them only in memory, add a Redis hash or a database row keyed by payment ID with fields for <code>retries</code>, <code>next_retry_at</code>, and <code>error_code</code>, and set an expiry longer than your maximum retry window. That single change converts an in-memory retry counter into an auditable, restart-surviving retry record.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
-<li><a href="https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
-<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
+<li><a href="https://blog.kubailabs.com/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://blog.kubailabs.com/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+<li><a href="https://blog.kubailabs.com/m-pesa-failures-cost-us-40-hours/">M-Pesa failures cost us 40 hours</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

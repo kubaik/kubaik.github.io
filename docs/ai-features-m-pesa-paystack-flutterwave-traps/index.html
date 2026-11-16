@@ -424,9 +424,9 @@ Only if the p99 inference latency is comfortably below the provider's timeout. O
 <p>Open the webhook handler and find where the transaction ID is derived. If it uses the webhook delivery ID rather than the provider's <code>reference</code>, <code>tx_ref</code> or <code>CheckoutRequestID</code>, that is the bug that double-processes transactions. Change it to the provider's stable identifier, then add a <code>SET NX EX 86400</code> check against Redis before processing. That is a small change that removes an entire class of duplicate-event bugs from everything downstream, including any model trained on the resulting data.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
-<li><a href="https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/">Designing Reliable Webhook Pipelines for African Payment APIs</a></li>
-<li><a href="https://kubaik.github.io/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
+<li><a href="https://blog.kubailabs.com/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://blog.kubailabs.com/m-pesa-failures-cost-us-40-hours/">Designing Reliable Webhook Pipelines for African Payment APIs</a></li>
+<li><a href="https://blog.kubailabs.com/ai-payments-break-in-m-pesa-first/">AI payments break in M-Pesa first</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

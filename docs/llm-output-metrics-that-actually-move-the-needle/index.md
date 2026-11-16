@@ -157,9 +157,9 @@ Open the table or log store where LLM responses are recorded. If token counts ar
 
 ## Related reading
 
-- [LLM evals: skip the hype, track these 4 metrics](https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/)
-- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
-- [LLM metrics that stop wasting time](https://kubaik.github.io/llm-metrics-that-stop-wasting-time/)
+- [LLM evals: skip the hype, track these 4 metrics](https://blog.kubailabs.com/llm-evals-skip-the-hype-track-these-4-metrics/)
+- [LLM drift before users complain: catch it early](https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/)
+- [LLM metrics that stop wasting time](https://blog.kubailabs.com/llm-metrics-that-stop-wasting-time/)
 
 ## Official documentation
 

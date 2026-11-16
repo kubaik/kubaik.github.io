@@ -526,9 +526,9 @@ No. A WAF blocks known patterns. A zero-day exploit uses a request that does not
 <p>Open the WAF's logging configuration and check whether allowed requests are logged, not just blocked ones. If only blocks are logged, there is no visibility into what the WAF is missing. Enable full request logging to a storage bucket, then write a query to count requests with a 200 response that contain common attack strings in query parameters or body (for example, <code>' OR 1=1</code>, <code>&lt;script&gt;</code>). Any results are concrete gaps the WAF is not catching — and a starting list of controls to add in application code.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/api-abuse-patterns-rising-in-2026/">API abuse patterns rising in 2026</a></li>
-<li><a href="https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/">Defending APIs Against Amplification, Stuffing and Smuggling</a></li>
-<li><a href="https://kubaik.github.io/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/">Tiered API abuse defense: match cost to attacker economics</a></li>
+<li><a href="https://blog.kubailabs.com/api-abuse-patterns-rising-in-2026/">API abuse patterns rising in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/api-attacks-rising-40-the-3-patterns-to-block-now/">Defending APIs Against Amplification, Stuffing and Smuggling</a></li>
+<li><a href="https://blog.kubailabs.com/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/">Tiered API abuse defense: match cost to attacker economics</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

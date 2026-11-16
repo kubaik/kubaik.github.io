@@ -452,8 +452,8 @@ A common starting point is a 2-second connect timeout and a read timeout set abo
 <p>Open the module that wraps outbound HTTP calls in your agent — commonly <code>clients/http.py</code>, <code>utils/network.py</code>, or an equivalent. Grep for every call site that constructs a request without a timeout argument. For each one, add an explicit connect and read timeout, choosing the read value from the endpoint's observed p99 plus headroom. Then run one synthetic delay against a single endpoint and confirm the client aborts at the configured bound and logs the exception. That single verified abort proves the timeout path is wired correctly end to end.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
-<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://blog.kubailabs.com/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://blog.kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
 <li>Survive network drops: agentic workflows that keep running</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

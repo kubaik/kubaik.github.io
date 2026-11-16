@@ -514,9 +514,9 @@ SELECT set_config('app.current_user_id', $1, true);
 <p>Pick one event-driven endpoint in a current project and write a test that sends the same event payload twice, then assert that the number of side effects after the second delivery equals the number after the first. If the test fails, the fix is a unique constraint on the event ID and an <code>ON CONFLICT DO NOTHING</code> insert — and you have just found, in half an hour, a class of bug that otherwise surfaces as duplicate charges.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
-<li><a href="https://kubaik.github.io/claude-code-after-a-year-daily-wins/">Claude Code after 365 days: what actually works</a></li>
-<li><a href="https://kubaik.github.io/ai-reshaped-my-engineering-principles/">AI Code Generation: Failure Modes and Guardrails</a></li>
+<li><a href="https://blog.kubailabs.com/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+<li><a href="https://blog.kubailabs.com/claude-code-after-a-year-daily-wins/">Claude Code after 365 days: what actually works</a></li>
+<li><a href="https://blog.kubailabs.com/ai-reshaped-my-engineering-principles/">AI Code Generation: Failure Modes and Guardrails</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

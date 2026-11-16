@@ -448,9 +448,9 @@ Instrumenting rendered-prompt hashes and token usage per prompt version. Without
 <p>Open your prompt rendering code and find the function that produces the final prompt string. Add one line: hash the rendered prompt and log the hash alongside the request's token usage. Deploy it to staging, send a request containing <code>{{x}}</code> in a user-controlled field, and check whether the hash changes compared to the same request without those characters. If it does, your renderer is treating user input as template source, and that is the first thing to fix.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/">Prompt injection: what breaks first in prod</a></li>
-<li><a href="https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/">Defending APIs Against Amplification, Stuffing and Smuggling</a></li>
-<li><a href="https://kubaik.github.io/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
+<li><a href="https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/">Prompt injection: what breaks first in prod</a></li>
+<li><a href="https://blog.kubailabs.com/api-attacks-rising-40-the-3-patterns-to-block-now/">Defending APIs Against Amplification, Stuffing and Smuggling</a></li>
+<li><a href="https://blog.kubailabs.com/ai-errors-hide-in-plain-latency/">AI errors hide in plain latency</a></li>
 </ul>
                 
                 

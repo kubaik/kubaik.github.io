@@ -531,9 +531,9 @@ test_memory_persistence()
 <p>Open the module that reads memory in your agent and search for any query that does not take a session identifier. If one exists, add the identifier to the function signature, add the filter to the query, and delete the unscoped version so it cannot be called again. Then write a single test that saves a unique marker under a fixed session, restarts the process, and asserts the marker is still readable. That test is the difference between memory that works in a demo and memory that survives a deploy.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
-<li><a href="https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
-<li><a href="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
+<li><a href="https://blog.kubailabs.com/agent-context-short-term-vs-long-term-memory/">Agent context: short-term vs long-term memory</a></li>
+<li><a href="https://blog.kubailabs.com/agent-followed-instructions-too-literally-the-cron-job-trap/">Agent followed instructions too literally: the cron job trap</a></li>
+<li><a href="https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

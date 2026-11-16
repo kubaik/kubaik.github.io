@@ -456,9 +456,9 @@ def should_suppress(service: str, severity: str) -&gt; bool:
 <p>Open your largest Prometheus rule file, add a recording rule that computes the ratio of the current value to a 30-day average for one high-volume metric, and attach a <code>severity</code> label based on that ratio. Validate it with <code>promtool check rules rules/*.yml</code>, deploy to staging, and watch the new label appear in your alerting UI. You will immediately see which existing alerts would have been classified as spikes — and you will have the beginning of the data needed to justify suppressing them.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
-<li><a href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM drift before users complain: catch it early</a></li>
+<li><a href="https://blog.kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/">Designing an AI Alert Triage Layer That Reduces Pages</a></li>
+<li><a href="https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/">LLM drift before users complain: catch it early</a></li>
 </ul>
                 
                 

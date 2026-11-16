@@ -401,9 +401,9 @@ class BrowseUser(HttpUser):
 <p>Open the existing load test script and find the line that sets concurrency — <code>vus</code> in k6, <code>-u</code> in Locust. Before changing it, add one line that records the achieved request rate over time (k6: <code>--out csv=results.csv</code> and inspect <code>http_reqs</code>; Locust: <code>--csv=results</code> and read <code>requests.csv</code>). Run the test for at least five minutes, discard the first minute as warm-up, and compare the achieved rate to the configured rate. If they diverge by more than a few percent, the model is closed-loop in disguise, and every latency number reported from it is optimistic. That single comparison is the highest-value 30 minutes available on load testing this week.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
-<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
-<li><a href="https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
+<li><a href="https://blog.kubailabs.com/tool-calls-why-retries-stampede/">Tool calls: why retries stampede</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://blog.kubailabs.com/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

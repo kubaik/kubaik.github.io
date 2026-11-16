@@ -87,7 +87,7 @@ def load(docs: Path):
     return posts
 
 
-def ext_links(content: str, base="kubaik.github.io"):
+def ext_links(content: str, base="blog.kubailabs.com"):
     return [
         u for u in re.findall(r"\]\((https?://[^)\s]+)\)", content) if base not in u
     ]

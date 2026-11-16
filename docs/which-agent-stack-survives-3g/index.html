@@ -414,8 +414,8 @@ app.post(&quot;/agent&quot;, async (req, res) =&gt; {
 <p>Open your origin or load balancer logs and run one query: for each client identity, count requests arriving within 5 seconds of a connectivity restoration event. If the maximum is above roughly 100, add an in-flight coalescing map to your agent endpoint with a 5-second window and a key built from a normalised request plus the session id. Then replay one recorded outage trace and confirm the distinct-key count is close to the session count rather than the request count. That single measurement tells you whether your remaining problem is coalescing or placement.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/">Run APIs in 50 spots: what breaks first</a></li>
-<li><a href="https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
+<li><a href="https://blog.kubailabs.com/run-apis-in-50-spots-what-breaks-first/">Run APIs in 50 spots: what breaks first</a></li>
+<li><a href="https://blog.kubailabs.com/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
 <li>Build apps that still work on 500 ms latency</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

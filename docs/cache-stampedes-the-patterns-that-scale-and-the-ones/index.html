@@ -511,9 +511,9 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <p>Pick your single hottest cache key, add jitter to its TTL, and instrument two counters — cache misses and source queries — around its expiry window. Run a load test that expires the key deliberately, and record the source query rate for the ten seconds after expiry. That number tells you whether you have a stampede problem, and it gives you the baseline you need before changing anything else.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
-<li><a href="https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
-<li><a href="https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+<li><a href="https://blog.kubailabs.com/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
+<li><a href="https://blog.kubailabs.com/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

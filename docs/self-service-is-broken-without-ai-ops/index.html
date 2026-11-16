@@ -412,8 +412,8 @@ Action:        reconcile role before resuming
 <p>Pick the resource type involved in your most recent rollback and write down the single invariant it violated — for example, "this role must not have write access outside its own bucket prefix." Then find the cheapest deterministic check that would have caught it: a policy linter rule, a schema constraint, or a one-line script in your CI pipeline. Add that check to a single repository as a non-blocking warning, and log how often it fires over the next week. That log is your first real data point on whether guardrails will pay for themselves in your environment.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
-<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+<li><a href="https://blog.kubailabs.com/scope-agent-permissions-per-task/">Scope agent permissions per task</a></li>
+<li><a href="https://blog.kubailabs.com/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
 <li>Internal developer platform: adoption traps</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

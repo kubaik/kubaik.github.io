@@ -410,9 +410,9 @@ It depends entirely on the app and its dependencies, so measure rather than assu
 <p>Open the main service's Dockerfile and change the final stage to a distroless base that matches the runtime — <code>gcr.io/distroless/static-debian12:nonroot</code> for a static Go binary, or the appropriate language variant otherwise. Then run <code>trivy image --severity HIGH,CRITICAL &lt;your-image&gt;</code> against both the old and new image and compare the counts. If the new image fails to start, check the entrypoint first: a <code>sh -c</code> command is the most likely cause.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
-<li><a href="https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
-<li><a href="https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
+<li><a href="https://blog.kubailabs.com/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
+<li><a href="https://blog.kubailabs.com/ai-interviews-break-systems-5-real-mistakes-in-2026/">AI interviews break systems: 5 real mistakes in 2026</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

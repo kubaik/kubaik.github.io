@@ -389,9 +389,9 @@ When the workload is I/O-bound, when the team lacks Rust experience, or when the
 <p>Before writing any Rust, profile the service you already have. Pick one endpoint that you suspect is CPU-bound, run it under production-like load, and capture a CPU profile alongside p50/p95/p99 latency. Then compute the CPU fraction of the request: if it is small, stop and optimize elsewhere. If it is large, build a prototype of that single endpoint in Rust and run the same load against it on the same instance type at equal throughput. Compare the tail latency and CPU utilization numbers side by side. That comparison — not a benchmark from a tutorial — is the evidence that should decide whether the rewrite proceeds.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
-<li><a href="https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/">MCP servers: the 3 hidden costs nobody quotes</a></li>
-<li><a href="https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/">Observability for Long-Running LLM Agent Workflows</a></li>
+<li><a href="https://blog.kubailabs.com/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/mcp-servers-the-3-hidden-costs-nobody-quotes/">MCP servers: the 3 hidden costs nobody quotes</a></li>
+<li><a href="https://blog.kubailabs.com/agentic-workflows-how-we-kept-the-lights/">Observability for Long-Running LLM Agent Workflows</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

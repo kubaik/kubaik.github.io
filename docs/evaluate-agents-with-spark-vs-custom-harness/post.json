@@ -32,7 +32,7 @@
   "has_code": true,
   "has_table": true,
   "full_title": "Evaluate agents with Spark vs custom harness: what fails first",
-  "prewritten_tweet": "Most teams waste weeks debugging multi-agent harnesses.\n\nSpark gives you lineage but adds 400 ms latency.\n\nhttps://kubaik.github.io/evaluate-agents-with-spark-vs-custom-harness\n\n#AI #SoftwareEngineering #Coding #MultiAgent\n\nWhich part took you the longest to get right?",
+  "prewritten_tweet": "Most teams waste weeks debugging multi-agent harnesses.\n\nSpark gives you lineage but adds 400 ms latency.\n\nhttps://blog.kubailabs.com/evaluate-agents-with-spark-vs-custom-harness\n\n#AI #SoftwareEngineering #Coding #MultiAgent\n\nWhich part took you the longest to get right?",
   "audit_enhanced_at": "2026-10-03T15:59:33.428271+00:00",
   "llm_improved_at": "2026-10-03T15:57:55.499432+00:00"
 }

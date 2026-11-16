@@ -335,9 +335,9 @@ Open your CI workflow and find every network operation that has no timeout: `doc
 
 ## Related reading
 
-- [Build dev platform for $2k/month](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
-- [Designing APIs for High-Latency Satellite Links](https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/)
-- [ARM in production: Graviton4 vs Ampere in 2026](https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/)
+- [Build dev platform for $2k/month](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [Designing APIs for High-Latency Satellite Links](https://blog.kubailabs.com/starlink-in-production-what-changed-in-our-stack/)
+- [ARM in production: Graviton4 vs Ampere in 2026](https://blog.kubailabs.com/arm-in-production-graviton4-vs-ampere-in-2026/)
 
 ## Official documentation
 

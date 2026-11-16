@@ -493,9 +493,9 @@ async def test_no_loop_on_typical_query():
 <p>The one thing to do in the next 30 minutes: open your coordinator (or wherever you dispatch agent calls) and add a wall-clock deadline check before every dispatch. If there is no coordinator, add the check at your top-level handler. The exact line is a comparison of <code>time.monotonic()</code> against a deadline captured at request start, raising if exceeded. That single check catches deadlocks and runaway fan-out, which together account for most of the expensive agent failures described in postmortems. Do it before you add anything else.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
-<li><a href="https://kubaik.github.io/multi-agent-systems-when-they-quietly-degrade/">Multi-agent systems: when they quietly degrade</a></li>
-<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-when-they-quietly-degrade/">Multi-agent systems: when they quietly degrade</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

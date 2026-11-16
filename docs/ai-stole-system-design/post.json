@@ -38,7 +38,7 @@
   "reading_time_minutes": 10,
   "has_code": false,
   "has_table": true,
-  "prewritten_tweet": "Most system design interviews in 2026 are failing because candidates use AI to generate the answer.\n\nhttps://kubaik.github.io/ai-stole-system-design\n\n#Blockchain #AI #GenerativeAI #Redis\n\nWhere do you think most teams still get this wrong?",
+  "prewritten_tweet": "Most system design interviews in 2026 are failing because candidates use AI to generate the answer.\n\nhttps://blog.kubailabs.com/ai-stole-system-design\n\n#Blockchain #AI #GenerativeAI #Redis\n\nWhere do you think most teams still get this wrong?",
   "audit_improved_at": "2026-09-19T11:42:21.713997+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences",
   "audit_enhanced_at": "2026-10-03T13:00:02.711504+00:00",

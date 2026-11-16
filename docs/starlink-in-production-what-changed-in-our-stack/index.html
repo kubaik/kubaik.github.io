@@ -537,9 +537,9 @@ It helps on the local egress queue, which is where bufferbloat usually originate
 <p>Open the module that makes outbound HTTP calls and find every place a timeout triggers a retry. For each one, write down the maximum number of calls that a single client request can produce. If that number is greater than one, add a counter that increments on each retry and a log line that records the request ID. Deploy it, then look at the counter after the next slow period. The number you see is your amplification factor, and it is the first thing to fix.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
-<li><a href="https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
-<li><a href="https://kubaik.github.io/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
+<li><a href="https://blog.kubailabs.com/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/cicd-for-django-in-20ms-africa-networks/">CI/CD for Django in 20ms Africa networks</a></li>
+<li><a href="https://blog.kubailabs.com/which-agent-stack-survives-3g/">Which agent stack survives 3G?</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -510,9 +510,9 @@ Clone or create the project skeleton, write `src/ussd.ts` with the four-state ma
 
 ## Related reading
 
-- [Mobile money agent fees: why your bot keeps failing](https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/)
-- [Agent auth: where the docs ended up lying](https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/)
-- [5 notification systems ranked: push, email, SMS](https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/)
+- [Mobile money agent fees: why your bot keeps failing](https://blog.kubailabs.com/mobile-money-agent-fees-why-your-bot-keeps-failing/)
+- [Agent auth: where the docs ended up lying](https://blog.kubailabs.com/agent-auth-where-the-docs-ended-up-lying/)
+- [5 notification systems ranked: push, email, SMS](https://blog.kubailabs.com/5-notification-systems-ranked-push-email-sms/)
 
 ## Official documentation
 

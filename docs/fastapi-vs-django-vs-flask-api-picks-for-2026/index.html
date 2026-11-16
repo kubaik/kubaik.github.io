@@ -382,9 +382,9 @@ async def create_order(order: OrderIn) -&gt; OrderOut:
 <p>Before committing, write one endpoint in the framework the team is leaning toward that exercises the three hardest requirements: an authenticated request, a database read with a relation, and a call to an external service with a timeout. Run it locally and inspect the generated schema (for FastAPI, the <code>/openapi.json</code> route; for Django REST Framework, the browsable API; for Flask, whatever was chosen for schema generation). If the endpoint requires more assembly than expected, that is the signal to reconsider before the codebase grows around the decision. Start with the authenticated endpoint — auth is the layer teams most often underestimate, and it is the one that is hardest to change later.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/sqlalchemy-vs-asyncpg-pooling-in-async-services/">SQLAlchemy vs asyncpg: pooling in async services</a></li>
-<li><a href="https://kubaik.github.io/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
-<li><a href="https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/sqlalchemy-vs-asyncpg-pooling-in-async-services/">SQLAlchemy vs asyncpg: pooling in async services</a></li>
+<li><a href="https://blog.kubailabs.com/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://blog.kubailabs.com/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">Rust SDK vs FastAPI for LLM ops: trust in 2026</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

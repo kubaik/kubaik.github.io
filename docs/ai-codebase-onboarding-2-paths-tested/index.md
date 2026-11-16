@@ -175,9 +175,9 @@ Pick the largest generated file in your repository. Run `git log --format='%ae' 
 
 ## Related reading
 
-- [AI codebases: two onboarding paths that actually work](https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/)
-- [Keeping AI-Generated Code from Rotting Your Repository](https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/)
-- [Choosing a JavaScript Test Stack: Playwright and Vitest](https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/)
+- [AI codebases: two onboarding paths that actually work](https://blog.kubailabs.com/ai-codebases-two-onboarding-paths-that-actually-work/)
+- [Keeping AI-Generated Code from Rotting Your Repository](https://blog.kubailabs.com/ai-code-40-how-to-keep-it-from-rotting-your-repo/)
+- [Choosing a JavaScript Test Stack: Playwright and Vitest](https://blog.kubailabs.com/why-i-picked-playwright-and-vitest-in-2026/)
 
 ## Official documentation
 

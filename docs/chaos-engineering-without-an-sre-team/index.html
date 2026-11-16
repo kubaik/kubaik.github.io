@@ -453,9 +453,9 @@ Yes. Managed fault-injection services support Lambda and ECS/Fargate. For Lambda
 <p>Pick the one service that pages your team most often. Add the <code>ChaosMiddleware</code> from this article to its repository, gated behind the <code>X-Chaos-Experiment: enabled</code> header, and wire up a Redis key to toggle it. Then run the measurement script against your staging environment with a latency injection of 200 ms on 10% of calls, and record the baseline, during, and after numbers. If the service does not return to baseline within 30 seconds of disabling the injection, you have found a real weakness — and a concrete first fix.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
-<li><a href="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
-<li><a href="https://kubaik.github.io/ai-interviews-4-questions-that-caught-80-of-weak/">AI Interviews: Four Resilience Questions That Matter</a></li>
+<li><a href="https://blog.kubailabs.com/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+<li><a href="https://blog.kubailabs.com/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
+<li><a href="https://blog.kubailabs.com/ai-interviews-4-questions-that-caught-80-of-weak/">AI Interviews: Four Resilience Questions That Matter</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -283,9 +283,9 @@ The highest-leverage thing you can do in the next 30 minutes is open the root of
 
 ## Related reading
 
-- [Golden paths become load-bearing walls](https://kubaik.github.io/golden-paths-become-load-bearing-walls/)
-- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
-- [A Solo-Project Deploy Pipeline That Stays Under $20/Month](https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/)
+- [Golden paths become load-bearing walls](https://blog.kubailabs.com/golden-paths-become-load-bearing-walls/)
+- [Internal developer platform: adoption traps](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [A Solo-Project Deploy Pipeline That Stays Under $20/Month](https://blog.kubailabs.com/ship-a-solo-project-pipeline-under-20month/)
 
 ## Official documentation
 

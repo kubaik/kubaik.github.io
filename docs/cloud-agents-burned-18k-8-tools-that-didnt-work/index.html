@@ -382,9 +382,9 @@ WHERE t.decision_id IS NULL
 <p>Open your cloud billing dashboard and filter for GPU spend over the last 7 days. For each GPU resource, compare its actual runtime against the expected runtime of the workload that created it. Any resource that ran significantly longer than expected, with utilization below 10%, is a candidate for the forgotten-teardown failure mode. Identify the agent that owns it, check whether its teardown step runs on all code paths including error paths, and add a lifetime-based policy check like the query above before the next billing cycle.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
-<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
-<li><a href="https://kubaik.github.io/most-llm-cost-dashboards-lie/">Most LLM cost dashboards lie…</a></li>
+<li><a href="https://blog.kubailabs.com/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://blog.kubailabs.com/most-llm-cost-dashboards-lie/">Most LLM cost dashboards lie…</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

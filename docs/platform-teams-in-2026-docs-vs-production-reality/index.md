@@ -474,9 +474,9 @@ The output is your starting backlog. The storage class tells you whether new vol
 
 ## Related reading
 
-- [Stop guessing tech stacks: validate tools in 2 hours](https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/)
-- [Internal developer platform: adoption traps](https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/)
-- [AI wrote the docs — humans wrote the gaps](https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/)
+- [Stop guessing tech stacks: validate tools in 2 hours](https://blog.kubailabs.com/stop-guessing-tech-stacks-validate-tools-in-2-hours/)
+- [Internal developer platform: adoption traps](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [AI wrote the docs — humans wrote the gaps](https://blog.kubailabs.com/ai-wrote-the-docs-humans-wrote-the-gaps/)
 
 ## Official documentation
 

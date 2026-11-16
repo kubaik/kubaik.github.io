@@ -698,9 +698,9 @@ describe('evaluateFlag', () =&gt; {
 <p>Open <code>lib/ai-flag-service-stack.ts</code> and add a second CloudWatch alarm: fire when the SDK's fallback metric exceeds 1% of evaluations over a 5-minute window. That alarm is the difference between noticing a degraded flag service from a dashboard and noticing it from a customer report. Then create a flag named <code>ai-safety-filter-v1</code>, set it to target a small percentage of users, and confirm from the variant-distribution metric that the percentage you configured is the percentage you are actually getting — a mismatch there means the targeting logic and the telemetry disagree, and that is worth finding on a quiet day rather than during a rollout.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
-<li><a href="https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/">Feature flags became AI rollout platforms</a></li>
-<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://blog.kubailabs.com/use-feature-flags-to-deploy-ai-models-safely/">Use feature flags to deploy AI models safely</a></li>
+<li><a href="https://blog.kubailabs.com/feature-flags-became-ai-rollout-platforms/">Feature flags became AI rollout platforms</a></li>
+<li><a href="https://blog.kubailabs.com/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

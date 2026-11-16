@@ -406,9 +406,9 @@ if delta.iloc[-1] &lt; -0.05:
 <p>Open the table or log store where LLM responses are recorded. If token counts are not stored per request, add two columns — <code>prompt_tokens</code> and <code>completion_tokens</code> — and populate them from the API response for new requests. Then run a query over the last 24 hours that sums those columns and multiplies by the per-token price for the model in use. Compare the result to the expected daily budget. If the figure is higher than expected, the prompt size is the first thing to inspect, because prompt tokens are paid on every call and are the easiest cost to reduce.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM drift before users complain: catch it early</a></li>
-<li><a href="https://kubaik.github.io/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
+<li><a href="https://blog.kubailabs.com/llm-evals-skip-the-hype-track-these-4-metrics/">LLM evals: skip the hype, track these 4 metrics</a></li>
+<li><a href="https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/">LLM drift before users complain: catch it early</a></li>
+<li><a href="https://blog.kubailabs.com/llm-metrics-that-stop-wasting-time/">LLM metrics that stop wasting time</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

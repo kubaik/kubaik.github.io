@@ -435,9 +435,9 @@ CREATE TABLE api_metrics_2026_01
 <p>Pick the single highest-traffic code path that currently talks to your external cache, broker or time-series store. Find it in <code>pg_stat_statements</code> if it already touches Postgres, or in your tracing if it does not. Write down its current p99 latency, its request rate, and the size of the data it reads. That one row of numbers is the baseline you need before any consolidation decision is worth making.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
-<li><a href="https://kubaik.github.io/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
-<li><a href="https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/">Compare Kafka, Redpanda, NATS for event-driven systems</a></li>
+<li><a href="https://blog.kubailabs.com/postgres-17-buried-redis-s3-cron/">Postgres 17 buried Redis, S3, cron</a></li>
+<li><a href="https://blog.kubailabs.com/replace-managed-services-with-postgres-17/">Replace managed services with Postgres 17</a></li>
+<li><a href="https://blog.kubailabs.com/compare-kafka-redpanda-nats-for-event-driven-systems/">Compare Kafka, Redpanda, NATS for event-driven systems</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

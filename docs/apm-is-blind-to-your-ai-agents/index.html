@@ -420,9 +420,9 @@ The engineering cost is typically tens of hours to build a basic pipeline that l
 <p>Open the code path that handles a single AI request in your service. Add two log lines: one that records the number of documents returned by your retrieval step, and one that records the total token count from the LLM response. Deploy to a staging or low-traffic environment, let it run for an hour, then query the logs for the distribution of retrieval counts and token totals. Any zero-retrieval requests or token totals well above the median are the first incidents your APM missed.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/detect-lazy-agents-without-false-alarms/">Detect lazy agents without false alarms</a></li>
-<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
-<li><a href="https://kubaik.github.io/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
+<li><a href="https://blog.kubailabs.com/detect-lazy-agents-without-false-alarms/">Detect lazy agents without false alarms</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://blog.kubailabs.com/ai-native-apps-forget-the-old-stack/">AI-native apps: forget the old stack</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

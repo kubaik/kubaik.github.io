@@ -407,9 +407,9 @@ public async Task&lt;Plan&gt; HandleAsync(AgentRequest request)
 <p>Open the file that configures your circuit breaker and read the predicate. If it only checks status codes and latency, add a body inspection that classifies at least one logical error as non-tripping. Then add a hop counter to your request envelope and reject requests above a small fixed limit. Those two changes are a few lines each and close the two failure modes that a circuit breaker cannot see.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
-<li><a href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
-<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/">When your agent goes silent: degrade gracefully</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

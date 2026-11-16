@@ -410,9 +410,9 @@ No. A durable state machine persisted in the existing database, with a worker th
 <p>Open the service that handles the most common payment path and list every step between "customer clicks pay" and "order confirmed." For each step, write down its compensation and classify it as reversible (void), compensable (refund), or irreversible (payout). If any irreversible step is not last, or if any compensation calls an external API without an idempotency key, that is the first thing to fix — regardless of whether orchestration or choreography is in use. That list is also the input to the orchestration decision: if it has more than two entries, a durable orchestrator is the safer default.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/">Durable Execution for Multi-Step Agent Workflows</a></li>
-<li><a href="https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/">AWS CloudWatch Synthetics for AI pipelines</a></li>
-<li><a href="https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
+<li><a href="https://blog.kubailabs.com/temporal-changed-our-agent-retries-for-good/">Durable Execution for Multi-Step Agent Workflows</a></li>
+<li><a href="https://blog.kubailabs.com/aws-cloudwatch-synthetics-for-ai-pipelines/">AWS CloudWatch Synthetics for AI pipelines</a></li>
+<li><a href="https://blog.kubailabs.com/skip-m-pesa-build-one-api-for-3-african-markets/">Skip M-Pesa: build one API for 3 African markets</a></li>
 </ul>
                 
                 

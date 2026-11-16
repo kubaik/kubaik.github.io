@@ -503,9 +503,9 @@ curl -s localhost:9090/api/v1/query?query=scrape_duration_seconds | jq
 <p>Pick the failure mode above that is most plausible for your stack, and add one instrument to it in the next 30 minutes. If you are unsure where to start, add per-filter-predicate latency logging to your vector-search call and run a 10-minute load test at your expected peak concurrency. Compare the P99 for your most selective filter against the P99 for your least selective one. A gap larger than 3x is your next debugging session.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
-<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
-<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://blog.kubailabs.com/rag-is-not-enough-hybrid-search-reranking-in-2026/">RAG is not enough: hybrid search + reranking in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://blog.kubailabs.com/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

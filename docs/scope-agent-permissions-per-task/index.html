@@ -467,9 +467,9 @@ def get_order(order_id: str, authorization: str = Header(...)):
 <p>Open the agent's IAM role or service account configuration and list every permission it has. For each permission, ask: "Does the agent need this for every task, or only for specific tasks?" If the answer is "specific tasks," you have found a candidate for scoping. Start with the highest-risk permission (for example, write access to an external service) and implement a scoped token for just that one: add a broker endpoint that issues a short-lived JWT, and update one downstream service to validate it. Then add a counter for denied scope requests at that service so you can see whether the policy store keeps up with the code.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Resize Images at the Edge: A CloudFront and Lambda Guide</a></li>
-<li><a href="https://kubaik.github.io/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
-<li><a href="https://kubaik.github.io/self-service-is-broken-without-ai-ops/">Self-service is broken without AI ops</a></li>
+<li><a href="https://blog.kubailabs.com/move-images-50-faster-in-2026-with-starlink-cdn/">Resize Images at the Edge: A CloudFront and Lambda Guide</a></li>
+<li><a href="https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://blog.kubailabs.com/self-service-is-broken-without-ai-ops/">Self-service is broken without AI ops</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

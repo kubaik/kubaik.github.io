@@ -593,9 +593,9 @@ export default function () {
 <p>Pick your slowest endpoint and measure it under a realistic profile. Run <code>curl -w '%{time_total}\n' -o /dev/null -s https://your-api/v1/your-endpoint</code> ten times and note the spread, not just the average. Then run <code>MONITOR</code> in the Redis CLI for two minutes while you drive traffic at that endpoint, and count the <code>GET</code> misses and <code>SET</code> commands. If misses cluster, add jitter to your TTL and a small probabilistic early refresh, then repeat the measurement. You will have a before-and-after you can trust, and a baseline you can defend.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
-<li><a href="https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">Why progressive web apps fail on 2G and how to fix…</a></li>
-<li><a href="https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/">WebSockets vs Server-Sent Events: latency over 3G</a></li>
+<li><a href="https://blog.kubailabs.com/ship-1mb-pages-on-4g-starlink-africa-case-study/">Ship 1MB pages on 4G: Starlink Africa case study</a></li>
+<li><a href="https://blog.kubailabs.com/why-progressive-web-apps-fail-on-2g-and-how-to-fix/">Why progressive web apps fail on 2G and how to fix…</a></li>
+<li><a href="https://blog.kubailabs.com/websockets-vs-server-sent-events-latency-over-3g/">WebSockets vs Server-Sent Events: latency over 3G</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

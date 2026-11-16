@@ -518,9 +518,9 @@ Run N agents doing fixed work with no coordination and record p99 and RSS. Add o
 <p>Open your agent task handler and make the work idempotent: derive a key from the task identity, store it with a TTL longer than the maximum processing time, and release it on failure. Then run the same workload at 10, 100, and 500 agents with and without your current coordination layer, and compare p99 latency and per-agent RSS. If the tax grows with agent count, you have found the bottleneck — and the fix is to remove or shard the shared resource, not to tune the agents.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
-<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
-<li><a href="https://kubaik.github.io/multi-agent-handoffs-the-latency-tax-nobody-measures/">Multi-agent handoffs: the latency tax nobody measures</a></li>
+<li><a href="https://blog.kubailabs.com/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-handoffs-the-latency-tax-nobody-measures/">Multi-agent handoffs: the latency tax nobody measures</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -484,9 +484,9 @@ Probably not. A policy engine such as OPA or Cedar adds value when multiple team
 <p>Start with the guardrail that bounds the blast radius: an allowlist of callable functions with schema-validated parameters. Open the LLM client module and list every function the model can currently invoke. For each one, write down the worst thing that happens if it is called with attacker-controlled arguments. If any answer is "we would have to notify customers" or "we would have to notify a regulator," that function needs a constraint, an authorization check, or human review before the next deploy. That audit takes less than thirty minutes and will say more about the actual risk posture than any classifier benchmark.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-code-review-7-traps-that-slip-through/">Agent code review: 7 traps that slip through</a></li>
-<li><a href="https://kubaik.github.io/prompt-injection-what-breaks-first-in-prod/">Prompt injection: what breaks first in prod</a></li>
-<li><a href="https://kubaik.github.io/detecting-silent-agent-failures/">Detecting silent agent failures</a></li>
+<li><a href="https://blog.kubailabs.com/agent-code-review-7-traps-that-slip-through/">Agent code review: 7 traps that slip through</a></li>
+<li><a href="https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/">Prompt injection: what breaks first in prod</a></li>
+<li><a href="https://blog.kubailabs.com/detecting-silent-agent-failures/">Detecting silent agent failures</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

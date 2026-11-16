@@ -402,9 +402,9 @@ Yes. Classifiers, rankers, and embedding models have the same failure mode: aggr
 <p>Open the eval script and check whether it stores per-example outputs for the current production configuration. If it does not, add that now: write a JSONL file mapping example ID to model output, commit it as the baseline, and make the next eval run diff against it. That single change turns the eval from a score into a fingerprint, and a fingerprint is what catches subtle behavior change before users do.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
-<li><a href="https://kubaik.github.io/llm-evals-langsmith-vs-promptfoo-in-prod/">LLM evals: LangSmith vs Promptfoo in prod</a></li>
-<li><a href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
+<li><a href="https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/">LLM eval drift that users notice first</a></li>
+<li><a href="https://blog.kubailabs.com/llm-evals-langsmith-vs-promptfoo-in-prod/">LLM evals: LangSmith vs Promptfoo in prod</a></li>
+<li><a href="https://blog.kubailabs.com/ship-evals-before-your-agent-ships/">Ship evals before your agent ships</a></li>
 </ul>
                 
                 

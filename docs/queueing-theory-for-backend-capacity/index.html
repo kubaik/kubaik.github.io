@@ -375,9 +375,9 @@ print(mmc_latency(10, 6, 400))  # ~30ms
 <p>The next step is concrete: pick one service you own, and for its busiest hour, pull the requests per second and the average service time (or CPU time per request) from your metrics. Compute utilisation per instance and compare it to the observed p99 latency. If p99 is more than 3x the average service time, utilisation is likely above 0.6 and capacity should be added or service time reduced before the next traffic increase. Do this for every constrained resource—CPU, connection pools, thread pools—and you will have a capacity model you can defend.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/k6-vs-locust-traffic-models-that-lie/">k6 vs Locust: traffic models that lie</a></li>
-<li><a href="https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
-<li><a href="https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/">Why your routing layer will collapse at scale</a></li>
+<li><a href="https://blog.kubailabs.com/k6-vs-locust-traffic-models-that-lie/">k6 vs Locust: traffic models that lie</a></li>
+<li><a href="https://blog.kubailabs.com/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
+<li><a href="https://blog.kubailabs.com/why-your-routing-layer-will-collapse-at-scale/">Why your routing layer will collapse at scale</a></li>
 </ul>
                 
                 

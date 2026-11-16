@@ -30,11 +30,15 @@
 
         <link rel="canonical" href="https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">
         <meta name="robots" content="noindex, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
         <link rel="preconnect" href="https://www.google-analytics.com">
 
         <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
         <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
@@ -45,6 +49,7 @@
     gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
     </script>
     <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
 
             <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
@@ -444,9 +449,9 @@ Store the tokens you have already seen and stop when one repeats. This is a docu
 <p>Pick your highest-volume agent, add a per-run outbound call counter incremented atomically before each external request, and set the ceiling to the arithmetic worst case for one run. Make it exit non-zero and log the run ID when the ceiling is hit. That single change converts an unbounded spend into a bounded one, and it takes less time than reading the rest of the incident.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">Stopping a runaway polling agent from flooding your API</a></li>
-<li><a href="https://kubaik.github.io/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
-<li><a href="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Designing Alert Triage That Suppresses Noise Safely</a></li>
+<li><a href="https://blog.kubailabs.com/agent-flooded-our-api-with-bad-calls-overnight/">Stopping a runaway polling agent from flooding your API</a></li>
+<li><a href="https://blog.kubailabs.com/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://blog.kubailabs.com/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Designing Alert Triage That Suppresses Noise Safely</a></li>
 </ul>
                 
                 

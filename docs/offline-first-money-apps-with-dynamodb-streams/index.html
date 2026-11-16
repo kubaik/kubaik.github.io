@@ -673,9 +673,9 @@ module.exports.handler = async (event) =&gt; {
 <p>Open your wallet service and find the balance check for an offline transaction. If it reads the balance and then writes in a separate call, replace it with a single <code>TransactWriteItems</code> call that puts the ledger row and decrements the balance under a <code>#balance &gt;= :amount</code> condition — the code in Step 2 is a working template. Then write one test that calls the reconcile function twice with the same record and asserts that exactly one ledger row exists. That test is the difference between a queue that retries and a queue that double-debits.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
-<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
-<li><a href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
+<li><a href="https://blog.kubailabs.com/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

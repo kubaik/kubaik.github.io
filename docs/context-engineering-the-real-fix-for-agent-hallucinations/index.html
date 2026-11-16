@@ -405,8 +405,8 @@ Add a <code>facts</code> dictionary to your agent state and include it in every 
 <p>Open your agent's main loop file and find where you append tool results to the message history. Add a <code>state</code> object (a simple dict is fine) and a <code>prune</code> function that keeps only the last N messages plus the system prompt. Then, in your system prompt template, inject the current <code>facts</code> from the state. Run one long session and log every assistant message that contains a factual claim, together with the context that was sent at that step. Check whether each claim is backed by a tool result or a user message in that context. That log will tell you more about your agent's reliability than any benchmark.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-architecture-the-new-model-trap/">Agent architecture: the new model trap</a></li>
-<li><a href="https://kubaik.github.io/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
+<li><a href="https://blog.kubailabs.com/agent-architecture-the-new-model-trap/">Agent architecture: the new model trap</a></li>
+<li><a href="https://blog.kubailabs.com/context-windows-agents-that-run-for-days/">Context windows: agents that run for days</a></li>
 <li>Agents running hours? You're losing context fast</li>
 </ul>
                 

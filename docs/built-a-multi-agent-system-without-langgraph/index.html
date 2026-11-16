@@ -638,9 +638,9 @@ done | sort -n | awk '{a[NR]=$1} END {print &quot;p50=&quot;a[int(NR*0.5)], &quo
 <p>Then check <code>XPENDING</code> on your task stream. If p99 is more than roughly three times p50, or pending count is climbing, the retry and acknowledgement logic is where the next hour of work should go — not the framework choice.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/">Agent frameworks: stop rewriting the same glue code</a></li>
-<li><a href="https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
-<li><a href="https://kubaik.github.io/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
+<li><a href="https://blog.kubailabs.com/agent-frameworks-stop-rewriting-the-same-glue-code/">Agent frameworks: stop rewriting the same glue code</a></li>
+<li><a href="https://blog.kubailabs.com/orchestration-tax-kills-multi-agent-systems/">Orchestration tax kills multi-agent systems</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-break-first/">Multi-agent systems break first</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

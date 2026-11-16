@@ -508,9 +508,9 @@ export async function snapshot() {
 <p>Open your current client's storage layer and count how many writes go straight to <code>fetch()</code> without a local durable write first. Every one of those is a scan you'll lose the next time an agent walks into a market with no signal. In the next 30 minutes, pick the single highest-frequency write in your app — usually the status update — and route it through IndexedDB with a UUIDv7 and a <code>synced</code> flag before you touch anything else. That one change is where the data integrity actually comes from.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/offline-first-agents-for-field-teams/">Offline-first agents for field teams</a></li>
-<li><a href="https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/">Designing Offline-First Apps for Unreliable Networks</a></li>
-<li><a href="https://kubaik.github.io/offline-agents-local-first-sync-patterns/">Offline Agents: Local-First Sync Patterns</a></li>
+<li><a href="https://blog.kubailabs.com/offline-first-agents-for-field-teams/">Offline-first agents for field teams</a></li>
+<li><a href="https://blog.kubailabs.com/offline-first-apps-what-3g-markets-taught-us/">Designing Offline-First Apps for Unreliable Networks</a></li>
+<li><a href="https://blog.kubailabs.com/offline-agents-local-first-sync-patterns/">Offline Agents: Local-First Sync Patterns</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

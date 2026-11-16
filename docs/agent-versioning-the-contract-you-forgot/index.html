@@ -429,9 +429,9 @@ Bump major when a tool is removed or renamed, a parameter type changes, the outp
 <p>Open your agent's main handler file (for example, <code>handler.py</code> or <code>agent.js</code>) and add a <code>version</code> field to the output schema. Then add a routing check at the top of the handler that reads an <code>Accept-Version</code> header and defaults to <code>"1.0"</code>. Commit it. It will not fix everything, but it establishes the boundary. The next time a tool or output shape changes, there will be a place to put the new version — and a way to keep existing callers working.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/why-does-my-agent-version-break-clients/">Agent API versioning: why clients break on upgrade</a></li>
-<li><a href="https://kubaik.github.io/agent-access-for-non-ai-engineers/">Agent access for non-AI engineers</a></li>
-<li><a href="https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
+<li><a href="https://blog.kubailabs.com/why-does-my-agent-version-break-clients/">Agent API versioning: why clients break on upgrade</a></li>
+<li><a href="https://blog.kubailabs.com/agent-access-for-non-ai-engineers/">Agent access for non-AI engineers</a></li>
+<li><a href="https://blog.kubailabs.com/ai-features-rot-faster-than-you-build-them/">AI features rot faster than you build them</a></li>
 </ul>
                 
                 

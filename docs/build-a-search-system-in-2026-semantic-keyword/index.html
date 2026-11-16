@@ -680,9 +680,9 @@ Insert or upsert the new row with its embedding, and let the index update increm
 <p>Pick one endpoint — <code>/hybrid</code> is the best candidate — and instrument it. Add a timer around the database call and around the model call separately, run the k6 script for three minutes, and record the two numbers. That split tells you immediately whether the bottleneck is inference (model time dominates) or the vector index (database time dominates), and the two problems have completely different fixes. Do this before tuning any parameter, because tuning the wrong layer is the most common way to spend a week on a problem you don't have.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/senior-role-projects-3-real-paths/">Senior role projects: 3 real paths</a></li>
-<li><a href="https://kubaik.github.io/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
-<li><a href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
+<li><a href="https://blog.kubailabs.com/senior-role-projects-3-real-paths/">Senior role projects: 3 real paths</a></li>
+<li><a href="https://blog.kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://blog.kubailabs.com/ship-a-solo-project-pipeline-under-20month/">A Solo-Project Deploy Pipeline That Stays Under $20/Month</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

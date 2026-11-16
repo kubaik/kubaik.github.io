@@ -476,9 +476,9 @@ class VaultCredentials:
 <p>Open your agent codebase and count the places where a retry delay is hard-coded or a credential is fetched inline. Pick the single most-duplicated one. Write a failing test that asserts the retry delay honors a <code>Retry-After</code> header of <code>0</code>, then make it pass by routing that call through one shared adapter function. You now have one adapter, one test, and a baseline count of the remaining call sites — which is exactly the evidence you need to decide whether to continue.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
-<li><a href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
-<li><a href="https://kubaik.github.io/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
+<li><a href="https://blog.kubailabs.com/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://blog.kubailabs.com/built-a-multi-agent-system-without-langgraph/">Built a multi-agent system without LangGraph</a></li>
+<li><a href="https://blog.kubailabs.com/build-agent-workflows-that-survive-restarts/">Build agent workflows that survive restarts</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

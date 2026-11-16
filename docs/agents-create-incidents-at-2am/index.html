@@ -455,9 +455,9 @@ class SafeTicketClient:
 <p>Pick one agent that currently holds a write permission, and run the IAM policy simulation shown above against the single action you would least want it to perform — typically <code>sts:AssumeRole</code> on a broad resource, or a write action on your incident or issue system. If the result is <code>allowed</code> rather than <code>implicitDeny</code>, you have found a write boundary that is not actually enforcing anything. Attach a permissions boundary that excludes that action, re-run the simulation, and confirm the result flips. That is thirty minutes, and it converts an assumption into a verified constraint.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
-<li><a href="https://kubaik.github.io/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
-<li><a href="https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
+<li><a href="https://blog.kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
+<li><a href="https://blog.kubailabs.com/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+<li><a href="https://blog.kubailabs.com/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

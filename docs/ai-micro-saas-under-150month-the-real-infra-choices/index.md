@@ -243,9 +243,9 @@ Open the cost dashboard for the current infrastructure (cloud billing console, e
 
 ## Related reading
 
-- [AI features rot faster than you build them](https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/)
-- [AI unit costs: the metric both teams fight over](https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/)
-- [Self-service AI tooling: where it breaks first](https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/)
+- [AI features rot faster than you build them](https://blog.kubailabs.com/ai-features-rot-faster-than-you-build-them/)
+- [AI unit costs: the metric both teams fight over](https://blog.kubailabs.com/ai-unit-costs-the-metric-both-teams-fight-over/)
+- [Self-service AI tooling: where it breaks first](https://blog.kubailabs.com/self-service-ai-tooling-where-it-breaks-first/)
 
 ## Official documentation
 

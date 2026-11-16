@@ -466,8 +466,8 @@ Forgetting the outbound hops. Teams secure the front door with mTLS and policy, 
 <p>Open the handler in your inference service that receives the request before it reaches the model, and add a single histogram metric recording time from request receipt to first generated token. Deploy it to staging, run a five-minute load test at expected peak RPS, and look at the p99. If the gap between p50 and p99 exceeds 100 ms, the zero-trust overhead is in the tail. The first thing to check is whether policy evaluation is remote or local — that single measurement tells you which of the four optimizations above to apply first.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/">Model router: keep it simple, keep it local</a></li>
-<li><a href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://blog.kubailabs.com/model-router-keep-it-simple-keep-it-local/">Model router: keep it simple, keep it local</a></li>
+<li><a href="https://blog.kubailabs.com/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
 <li>Build apps that still work on 500 ms latency</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

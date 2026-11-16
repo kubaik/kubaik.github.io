@@ -39,7 +39,7 @@
   "reading_time_minutes": 17,
   "has_code": false,
   "has_table": true,
-  "prewritten_tweet": "Most teams burn months extracting services from a monolith only to make it slower and costlier.\n\nThe real work is decoupling the data layer first.\n\nhttps://kubaik.github.io/monolith-to-services-without-a-rewrite\n\n#Crypto #PostgreSQL #Redis #MonolithRefactor2026\n\nDone this differently? Tell me what worked.",
+  "prewritten_tweet": "Most teams burn months extracting services from a monolith only to make it slower and costlier.\n\nThe real work is decoupling the data layer first.\n\nhttps://blog.kubailabs.com/monolith-to-services-without-a-rewrite\n\n#Crypto #PostgreSQL #Redis #MonolithRefactor2026\n\nDone this differently? Tell me what worked.",
   "audit_improved_at": "2026-09-19T11:42:21.836803+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences",
   "audit_enhanced_at": "2026-10-03T15:59:34.919088+00:00",

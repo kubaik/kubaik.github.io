@@ -481,9 +481,9 @@ Almost certainly not. The storage you need is a trace table — prompt, tool cal
 <p>Open the tool definition file for your most dangerous agent-callable function — the one that writes to prod, sends money, or deletes data — and add a single line: <code>dry_run: bool = True</code> as the default for its arguments, plus a <code>confirmation</code> literal field that the caller must set to a fixed string. Run your existing agent test suite against it. If any test starts failing, that test was exercising a path that could have written to prod without approval, and you just found your first real guardrail gap.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
-<li><a href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
-<li><a href="https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/">Least privilege for agents: the config line nobody writes</a></li>
+<li><a href="https://blog.kubailabs.com/multi-agent-systems-why-failures-hide/">Multi-agent systems: why failures hide</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://blog.kubailabs.com/least-privilege-for-agents-the-config-line-nobody-writes/">Least privilege for agents: the config line nobody writes</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

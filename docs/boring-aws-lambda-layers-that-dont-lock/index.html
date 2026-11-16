@@ -551,9 +551,9 @@ cat /tmp/out.json
 <p>Pick one existing Lambda function that imports from a layer via a hard-coded ARN. Run <code>aws lambda get-function-configuration --function-name &lt;name&gt; --query 'Layers[].Arn' --output text</code> to capture the current ARN, then replace the literal in its template with <code>!Sub 'arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:layer:${LayerName}:${LayerVersion}'</code> and add <code>LayerName</code> and <code>LayerVersion</code> parameters with the current values as defaults. Deploy, then re-run the same command and confirm the resolved ARN is unchanged. You have now made that function survive a region move and a runtime upgrade without a code edit.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
-<li><a href="https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
-<li><a href="https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/">Resize Images at the Edge: A CloudFront and Lambda Guide</a></li>
+<li><a href="https://blog.kubailabs.com/ai-rollouts-live-or-die-by-flags/">AI rollouts live or die by flags</a></li>
+<li><a href="https://blog.kubailabs.com/keep-multi-model-systems-stable-6-rules-that-worked/">Stabilize multi-model agent routers: six production rules</a></li>
+<li><a href="https://blog.kubailabs.com/move-images-50-faster-in-2026-with-starlink-cdn/">Resize Images at the Edge: A CloudFront and Lambda Guide</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -498,9 +498,9 @@ Check PDBs first: an eviction that violates a PDB blocks consolidation. Second, 
 <p>Start with the workload that is least understood: list the HPA objects in the cluster and confirm that every container in the target Deployments has a CPU request set. That single check catches the most common autoscaling failure before it reaches production. Run <code>kubectl get hpa -A -o yaml | grep -A2 'target:'</code>, then cross-check each target Deployment's pod template for a <code>requests.cpu</code> value on every container — if one is missing, add it and watch the HPA's behavior change on the next load test.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
-<li><a href="https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
-<li><a href="https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+<li><a href="https://blog.kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://blog.kubailabs.com/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+<li><a href="https://blog.kubailabs.com/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

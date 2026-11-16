@@ -192,9 +192,9 @@ Open your repository and add a hypothesis section to the pull request template, 
 
 ## Related reading
 
-- [AI-proof your mid-level salary](https://kubaik.github.io/ai-proof-your-mid-level-salary/)
-- [3 skills to outrun AI salary cuts](https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/)
-- [LLM drift before users complain: catch it early](https://kubaik.github.io/llm-eval-drift-that-users-notice-first/)
+- [AI-proof your mid-level salary](https://blog.kubailabs.com/ai-proof-your-mid-level-salary/)
+- [3 skills to outrun AI salary cuts](https://blog.kubailabs.com/3-skills-to-outrun-ai-salary-cuts/)
+- [LLM drift before users complain: catch it early](https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/)
 
 ---
 

@@ -456,9 +456,9 @@ assert decrypt_data(new_package) == b&quot;new secret&quot;
 <p>In the next 30 minutes, search the codebase for every KMS decrypt call and check what <code>KeyId</code> it passes. If it is hardcoded or comes from configuration rather than from the stored record, that is trap 2 waiting to fire. Change it to read the key ID stored alongside the ciphertext, then run the encrypt-rotate-decrypt test above against a non-production key to confirm old records still decrypt.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/replace-env-with-these-in-2026/">Replace .env with these in 2026</a></li>
-<li><a href="https://kubaik.github.io/pci-dss-architecture-12-requirements-that-matter/">PCI DSS architecture: 12 requirements that matter</a></li>
-<li><a href="https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/">Cutting cloud egress costs: architecture that works</a></li>
+<li><a href="https://blog.kubailabs.com/replace-env-with-these-in-2026/">Replace .env with these in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/pci-dss-architecture-12-requirements-that-matter/">PCI DSS architecture: 12 requirements that matter</a></li>
+<li><a href="https://blog.kubailabs.com/save-12kmonth-cloud-egress-costs-in-2026/">Cutting cloud egress costs: architecture that works</a></li>
 </ul>
                 
                 

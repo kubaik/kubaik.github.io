@@ -482,9 +482,9 @@ Many payment processors and managed LLM gateways accept a client-supplied idempo
 <p>The next step is to add a test that fires two concurrent requests with the same idempotency key and asserts that only one charge is created. Open your test file for the charges endpoint, add the test, and run it with <code>pytest -k idempotency</code>. If it passes, you've confirmed the core guarantee. If it fails, you've found the exact line where your implementation diverges from the pattern. Run it today, before the next retry storm finds the gap for you.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
-<li><a href="https://kubaik.github.io/bank-apis-broke-under-african-2g/">Bank APIs broke under African 2G</a></li>
-<li><a href="https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://blog.kubailabs.com/regulations-forced-better-apis-the-2026-fintech/">Regulations forced better APIs: the 2026 fintech</a></li>
+<li><a href="https://blog.kubailabs.com/bank-apis-broke-under-african-2g/">Bank APIs broke under African 2G</a></li>
+<li><a href="https://blog.kubailabs.com/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

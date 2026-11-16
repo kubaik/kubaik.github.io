@@ -447,9 +447,9 @@ def record_outcome(db, user_ref: str, vendor_payload: dict) -&gt; dict:
 <p>Open the verification integration's webhook handler and the sidecar's request logging configuration, and search the codebase for every place the vendor's response body is written to a table, a log, or an error tracker. If there is a <code>raw_response</code> column or a <code>logger.info(response.json())</code> on the verification path, that is the first fix: replace it with an allow-list extraction like the one above, and add a scheduled deletion job for any historical rows that already contain raw identity data. That single change moves the system from "identity documents are stored and we hope" to "a decision and a pointer are stored", which is the architectural position every other compliance control depends on.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/cross-border-fintech-why-your-kyc-fails-in-dakar/">Cross-border fintech: why your KYC fails in Dakar</a></li>
-<li><a href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
-<li><a href="https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://blog.kubailabs.com/cross-border-fintech-why-your-kyc-fails-in-dakar/">Cross-border fintech: why your KYC fails in Dakar</a></li>
+<li><a href="https://blog.kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -371,9 +371,9 @@ There is no universal number. The threshold should be derived from the applicati
 <p>Open the data-access layer and find every place a read is routed to a replica. For each one, apply the decision checklist above, starting with the read that follows a user profile update — that is the one most likely to be reported as a bug. Then add a counter for replica reads that follow a write in the same request context and watch it for a day. That counter is the early warning system, and adding it takes less than thirty minutes.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/">Stop the writes — zero-downtime DB migrations</a></li>
-<li><a href="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
-<li><a href="https://kubaik.github.io/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
+<li><a href="https://blog.kubailabs.com/stop-the-writes-zero-downtime-db-migrations/">Stop the writes — zero-downtime DB migrations</a></li>
+<li><a href="https://blog.kubailabs.com/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
+<li><a href="https://blog.kubailabs.com/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

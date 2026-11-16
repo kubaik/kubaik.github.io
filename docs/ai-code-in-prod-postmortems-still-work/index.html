@@ -432,9 +432,9 @@ Then the diff artifact must be produced another way, for example by comparing th
 <p>Pick the most recent commit that introduced generated code. Run <code>git show --numstat --format= &lt;commit&gt;</code> on it and note which files gained the most lines. Open the largest one and find a single numeric literal that controls a timeout, retry count, or batch size. Then check whether that number matches the value configured in production. If it does not, you have found a concrete assumption mismatch, and you have also found the first field your postmortem artifacts need to record.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
-<li><a href="https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
-<li><a href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">Postmortems for AI agents: human review vs blind replay</a></li>
+<li><a href="https://blog.kubailabs.com/7-code-review-traps-when-ai-writes-half-your-code/">7 code review traps when AI writes half your code</a></li>
+<li><a href="https://blog.kubailabs.com/fix-ai-agent-failures-postmortem-guide/">Postmortems for AI agents: drift, cost, replay</a></li>
+<li><a href="https://blog.kubailabs.com/ai-agent-postmortem-human-loop-vs-blind-replay/">Postmortems for AI agents: human review vs blind replay</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>
