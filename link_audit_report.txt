@@ -1,4 +1,4 @@
-❌ Internal link audit: 431 broken link(s) found across 432 posts checked.
+❌ Internal link audit: 432 broken link(s) found across 432 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
@@ -211,6 +211,7 @@ Source Post                              Anchor Text                    Missing 
   /hire-for-agents-not-autocomplete       AI content policy              /ai-content-policy/
   /hpa-vs-keda-vs-karpenter-autoscaling-traps AI content policy              /ai-content-policy/
   /http3-changes-less-than-the-demos-imply AI content policy              /ai-content-policy/
+  /human-in-the-loop-when-agents-need-a-human-veto AI content policy              /ai-content-policy/
   /hybrid-cloud-routing-cost-speed-balance-for-sea AI content policy              /ai-content-policy/
   /idempotency-keys-what-they-fix-what-they-dont AI content policy              /ai-content-policy/
   /idp-for-ai-2026-stack-evolution        AI content policy              /ai-content-policy/

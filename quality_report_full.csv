@@ -1,7 +1,7 @@
 slug,score,word_count,title,created_at,issue_count,issues
 7-ways-to-measure-prompt-platform-roi-in-2026,70,2861,7 ways to measure prompt platform ROI in 2026,2026-07-08T11:53:30.438407,3,"first-person incident: 'Assume, for illustration only, that the average prompt is 1,000 tokens and the a' | no markdown table | no FAQ section"
 llm-metrics-that-stop-wasting-time,70,2611,LLM metrics that stop wasting time,2026-06-14T00:02:18.806821,3,"first-person incident: 'Suppose you decide the following weights and targets:\n\n- w1 = 0.4, w2 = 0.3, w3 ' | no markdown table | no FAQ section"
-regulations-forced-better-apis-the-2026-fintech,70,2638,Regulations forced better APIs: the 2026 fintech,2026-06-20T08:41:19.621334,3,first-person incident: '## Related reading\n\n- [Mobile money agents: when M-Pesa API fails](https://kubai' | no markdown table | no FAQ section
+regulations-forced-better-apis-the-2026-fintech,70,2638,Regulations forced better APIs: the 2026 fintech,2026-06-20T08:41:19.621334,3,first-person incident: '## Related reading\n\n- [Mobile money agents: when M-Pesa API fails](https://blog.' | no markdown table | no FAQ section
 ai-fixes-legacy-code-nobody-owns,75,3722,AI fixes legacy code nobody owns,2026-06-27T09:58:08.588128,1,"fabricated citation: ""AI's analysis"""
 ai-ops-pagerduty-vs-opsgenie-which-burns-your-team,75,2655,AI ops: PagerDuty vs Opsgenie — which burns your team,2026-06-29T20:08:01.814298,2,first-person incident: 'If the simpler platform saved 12 hours of training compared to the more complex ' | no FAQ section
 negotiate-2026-pay-when-ai-steals-40-of-your-job,75,2396,Turn AI coding telemetry into a salary negotiation case,2026-06-11T19:30:36.979984,2,first-person incident: '- Can a colleague reproduce your CSV from your script and your mapping rule?' | no FAQ section
@@ -314,7 +314,7 @@ gateway-api-wont-fix-your-ingress-mess,100,2669,Gateway API won't fix your Ingre
 golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
 hpa-vs-keda-vs-karpenter-autoscaling-traps,100,3432,HPA vs KEDA vs Karpenter: autoscaling traps,2026-10-26T08:01:33.191005,0,
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,
-human-in-the-loop-when-agents-need-a-human-veto,100,2185,Human-in-the-loop: when agents need a human veto,2026-11-16T05:32:11.399364,0,
+human-in-the-loop-when-agents-need-a-human-veto,100,2824,Human-in-the-loop: when agents need a human veto,2026-11-16T05:32:11.399364,0,
 json-modes-hidden-costs-revealed,100,2468,JSON mode's hidden costs revealed,2026-07-03T11:41:06.689262,0,
 json-modes-silent-failures-exposed,100,2148,JSON mode’s silent failures exposed,2026-06-21T21:03:17.962263,0,
 jwt-sessions-revocation-rotation-storage,100,2756,"JWT sessions: revocation, rotation, storage",2026-10-27T17:43:39.631250,0,

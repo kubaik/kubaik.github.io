@@ -1503,9 +1503,13 @@
   "words": 3070
  },
  "freelance-vs-full-time-african-devs-real-tradeoffs": {
-  "verdict": "KEEP",
-  "reasons": [],
-  "fixes": [],
+  "verdict": "IMPROVE",
+  "reasons": [
+   "no_primary_sources"
+  ],
+  "fixes": [
+   "add_sources"
+  ],
   "title": "Freelance vs full-time: African devs' real tradeoffs",
   "words": 2361
  },
@@ -2690,7 +2694,7 @@
   "reasons": [],
   "fixes": [],
   "title": "Human-in-the-loop: when agents need a human veto",
-  "words": 2185
+  "words": 2824
  },
  "cache-stampedes-the-patterns-that-scale-and-the-ones": {
   "verdict": "KEEP",
