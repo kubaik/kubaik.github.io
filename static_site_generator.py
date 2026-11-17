@@ -1571,6 +1571,24 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             )
         return result
 
+    @staticmethod
+    def _author_experience(config: Dict) -> Dict:
+        """Experience figures for /about/, derived from ONE config value
+        (author_career_start_year) so the "years" and "since" numbers can never
+        disagree. Absent/invalid value -> nothing is claimed. The About page
+        points readers to the LinkedIn profile where roles and dates can be
+        checked."""
+        try:
+            start = int(config.get("author_career_start_year") or 0)
+        except (TypeError, ValueError):
+            start = 0
+        now = datetime.now().year
+        if not (1990 <= start <= now):
+            return {"author_start_year": "", "author_years": ""}
+        years = now - start
+        # Floor to a whole-number "N+" figure; never overstate.
+        return {"author_start_year": start, "author_years": years if years >= 1 else ""}
+
     def _generate_static_pages(self, posts: List[BlogPost] = None):
         config = self.blog_system.config
         pages = {
@@ -1599,6 +1617,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 "base_path": config.get("base_path", ""),
                 "base_url": config.get("base_url", ""),
                 "current_year": datetime.now().year,
+                **self._author_experience(config),
                 "global_meta_tags": self.seo.generate_global_meta_tags(
                     page_type="utility"
                 ),
@@ -2309,7 +2328,7 @@ def _build_templates() -> dict:
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ site_name }} — {{ site_description }}">
+    <meta name="twitter:title" content="{{ site_name }} — {{ site_tagline|default('Backend engineering, AI tooling and developer careers') }}">
     <meta name="twitter:description" content="{{ site_description }}">
     <meta name="twitter:image" content="{{ base_url }}/static/og-default.png">
     <meta name="twitter:site" content="@KubaiKevin">
@@ -2429,7 +2448,7 @@ def _build_templates() -> dict:
 
         <div class="editorial-policy-note">
             Articles are drafted by an automated LLM pipeline under the editorial direction of <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
-            with 10+ years of production experience in fintech and AI. Topics are drawn from a curated
+            based in Nairobi, Kenya. Topics are drawn from a curated
             list of recurring backend, AI and career themes; the pipeline is gated by
             hard quality controls (minimum length, duplicate detection, boilerplate rejection).
             Individual line-by-line human review is not performed on every post before publication —
@@ -3041,8 +3060,9 @@ def _build_templates() -> dict:
                         </span>
                     </p>
                     <p class="author-bio" itemprop="description">
-                        I'm a software developer with over a decade of experience building production
-                        systems in the financial services sector in East Africa. My day-to-day work
+                        {% if author_years %}I'm a software developer with {{ author_years }}+ years of experience building production
+                        systems in the financial services sector in East Africa.{% else %}I'm a software developer building production
+                        systems in the financial services sector in East Africa.{% endif %} My day-to-day work
                         involves Python and Node.js backends, AWS serverless infrastructure, and
                         integrating AI/LLMs into real workflows. I also build Android applications
                         in Java and Kotlin.
@@ -3054,6 +3074,12 @@ def _build_templates() -> dict:
                         patterns I've encountered in my own work — see the
                         <a href="#editorial">editorial process</a> below for exactly what that
                         means and doesn't mean.
+                    </p>
+                    <p class="author-bio" id="verify-experience">
+                        <strong>Verify my background:</strong> roles, employers and dates are listed on my
+                        <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank"
+                           rel="noopener noreferrer">LinkedIn profile</a>, and my public code is on
+                        <a href="https://github.com/kubaik" target="_blank" rel="noopener noreferrer">GitHub</a>.
                     </p>
                     <div class="author-links">
                         <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/"
@@ -3107,14 +3133,14 @@ def _build_templates() -> dict:
                         <span class="stat-num">{{ posts|length }}</span>
                         <div class="stat-label">Articles published</div>
                     </div>
-                    <div class="stat-box">
-                        <span class="stat-num">10+</span>
+                    {% if author_years %}<div class="stat-box">
+                        <span class="stat-num">{{ author_years }}+</span>
                         <div class="stat-label">Years in production</div>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-num">2014</span>
+                        <span class="stat-num">{{ author_start_year }}</span>
                         <div class="stat-label">Started professionally</div>
-                    </div>
+                    </div>{% endif %}
                     <div class="stat-box">
                         <span class="stat-num">EAT</span>
                         <div class="stat-label">UTC+3 · Nairobi</div>
@@ -3790,7 +3816,7 @@ def _build_templates() -> dict:
         <article class="page-content">
             <div class="highlight-box">
                 <h2>Our Commitment in One Paragraph</h2>
-                <p style="margin-bottom:0;">Every article on {{ site_name }} starts from a topic chosen by the author (Kubai Kevin) from his own production experience in fintech and AI systems. Drafts are produced by an automated LLM pipeline that the author designed and maintains. <strong>Individual line-by-line human editing is not performed on every post before publication</strong> — instead, hard automated quality gates (minimum length, semantic duplicate detection, boilerplate and filler-phrase rejection) discard low-value output before it can be published. The author reviews and corrects specific articles when readers report errors, and periodically audits the corpus. Transparency about this process is intentional: readers should know exactly how content is produced.</p>
+                <p style="margin-bottom:0;">Every article on {{ site_name }} starts from a topic chosen by the author (Kubai Kevin) from a curated list of recurring backend, AI and career themes. Drafts are produced by an automated LLM pipeline that the author designed and maintains. <strong>Individual line-by-line human editing is not performed on every post before publication</strong> — instead, hard automated quality gates (minimum length, semantic duplicate detection, boilerplate and filler-phrase rejection) discard low-value output before it can be published. The author reviews and corrects specific articles when readers report errors, and periodically audits the corpus. Transparency about this process is intentional: readers should know exactly how content is produced.</p>
             </div>
 
             <div class="policy-section">

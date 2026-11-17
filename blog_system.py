@@ -5545,7 +5545,7 @@ def create_sample_config(config_path: str = "config.yaml"):
         "site_name": "Kubai Kevin",
         "site_description": (
             "Practical backend engineering, AI tooling, and developer career "
-            "advice by Kubai Kevin — 10+ years building production systems."
+            "advice by Kubai Kevin, a software developer in Nairobi, Kenya."
         ),
         "base_url": "https://blog.kubailabs.com",
         "base_path": "",
@@ -5554,6 +5554,7 @@ def create_sample_config(config_path: str = "config.yaml"):
         "google_adsense_id": "",
         "google_search_console_key": "",
         "hook_style": "auto",
+        "author_career_start_year": "",  # shown on /about/ only; set only if verifiable on LinkedIn
     }
 
     changed_keys: list[str] = []
@@ -5575,7 +5576,6 @@ def create_sample_config(config_path: str = "config.yaml"):
     social_defaults = {
         "twitter": "https://twitter.com/KubaiKevin",
         "linkedin": "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-        "facebook": "your-facebook-page",
     }
     if "social_accounts" not in existing:
         existing["social_accounts"] = social_defaults

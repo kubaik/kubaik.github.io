@@ -5,6 +5,7 @@ adsense_loader_page_types:
 - article
 adsense_slots: {}
 amazon_affiliate_tag: aiblogcontent-20
+author_career_start_year: ''
 base_path: ''
 base_url: https://blog.kubailabs.com
 content_topics:
