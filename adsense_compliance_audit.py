@@ -29,7 +29,10 @@ Changes vs. v2:
     classified DELETE (they were previously thin-content false positives).
   * Jaccard threshold lowered to 0.28 and boilerplate DF to 0.04 for tighter
     near-duplicate clustering on formulaic AI output.
-  * MIN_WORDS_DELETE raised to 1800; MIN_WORDS_FLAG to 2200.
+  * MIN_WORDS_DELETE raised to 1800. Length is NOT an IMPROVE reason: a post that
+    clears the delete floor is never queued for rewriting just for being short
+    (word-count targets reward padding). LLM rewrites may not pad: they must stay
+    above the delete floor and must not shrink by more than 15%.
   * Named-source pattern expanded (OWASP, Datadog, LinearB, iHub, Makerere).
   * Missing E-E-A-T footer ("About this article" / AI content policy link)
     now forces IMPROVE.
@@ -69,7 +72,7 @@ EXCLUDE_DIRS = {
 }
 
 MIN_WORDS_DELETE = 1800
-MIN_WORDS_FLAG = 2200
+MAX_SHRINK = 0.85  # LLM rewrite must keep >= 85% of the original prose words
 NGRAM = 8
 DUP_JACCARD = 0.28
 BOILERPLATE_DF = 0.04
@@ -164,11 +167,27 @@ def body_text(html: str) -> str:
     return text
 
 
+# Folders the loader could not review, with the reason. Nothing is dropped silently:
+# every folder under docs/ is either reviewed, excluded by name, or listed here.
+SKIPPED: List[dict] = []
+COVERAGE: Dict[str, int] = {"folders": 0, "excluded": 0}
+
+
+def _skip(d: Path, reason: str) -> None:
+    SKIPPED.append({"slug": d.name, "reason": reason})
+
+
 def load_post(d: Path) -> Optional[dict]:
     pj = d / "post.json"
     if pj.exists():
         try:
             j = json.loads(pj.read_text(encoding="utf-8"))
+            if not isinstance(j, dict):
+                raise ValueError("post.json is not a JSON object")
+            if j.get("redirect_to"):
+                # auto_retire_duplicates.py merge stub: not a post, never scored as thin.
+                _skip(d, f"redirect_stub -> {j.get('redirect_to')}")
+                return None
             c = j.get("content", "")
             return {
                 "content": c,
@@ -177,14 +196,18 @@ def load_post(d: Path) -> Optional[dict]:
                 "has_code": "```" in c,
                 "source": "post.json",
             }
-        except Exception:
-            pass
+        except Exception as e:
+            # Do NOT fall back to index.html: judging a corrupt source file by its
+            # rendered HTML would hide the corruption.
+            _skip(d, f"unparsable_post_json: {e}")
+            return None
     idx = d / "index.html"
     if idx.exists():
         html = idx.read_text(encoding="utf-8", errors="ignore")
         if re.search(r'http-equiv=["\']refresh', html, re.I) and re.search(
             r"noindex", html, re.I
         ):
+            _skip(d, "redirect_page (meta refresh + noindex, no post.json)")
             return None
         if "Post removed" in html or "This post has been removed" in html:
             return {
@@ -203,16 +226,24 @@ def load_post(d: Path) -> Optional[dict]:
             "has_code": bool(soup.find("pre") or soup.find("code")),
             "source": "html_orphan",
         }
+    _skip(d, "no post.json and no index.html")
     return None
 
 
 def load_posts() -> Dict[str, dict]:
     out = {}
-    for d in DOCS_DIR.iterdir():
-        if d.is_dir() and d.name not in EXCLUDE_DIRS:
-            p = load_post(d)
-            if p:
-                out[d.name] = p
+    SKIPPED.clear()
+    COVERAGE.update(folders=0, excluded=0)
+    for d in sorted(DOCS_DIR.iterdir()):
+        if not d.is_dir():
+            continue
+        COVERAGE["folders"] += 1
+        if d.name in EXCLUDE_DIRS or d.name.startswith((".", "_")):
+            COVERAGE["excluded"] += 1
+            continue
+        p = load_post(d)
+        if p:
+            out[d.name] = p
     return out
 
 
@@ -270,7 +301,13 @@ def duplicate_clusters(posts: Dict[str, dict]) -> Dict[str, str]:
 def build_report(min_words: int):
     posts = load_posts()
     dups = duplicate_clusters(posts)
-    report = {"delete": [], "improve": [], "keep": [], "retired": []}
+    report = {
+        "delete": [],
+        "improve": [],
+        "keep": [],
+        "retired": [],
+        "skipped": list(SKIPPED),
+    }
     for slug, d in posts.items():
         c, wc, reasons, verdict = d["content"], words(d["content"]), [], "keep"
         if d["source"] == "tombstone":
@@ -300,9 +337,6 @@ def build_report(min_words: int):
             reasons.append(f"unsourced_named_citation: '{hit}'")
             verdict = "delete"
         if verdict == "keep":
-            if wc < MIN_WORDS_FLAG:
-                reasons.append(f"below_target_length: {wc}")
-                verdict = "improve"
             if len(d["meta"] or "") < 60 or any(
                 p.match(d["meta"] or "") for p in GENERIC_META
             ):
@@ -461,7 +495,6 @@ CURRENT ARTICLE:
 """
 
 REASON_TEXT = {
-    "below_target_length": "Too short. Expand with real depth (worked examples, failure modes, checklists).",
     "generic_or_missing_meta_description": "Meta description is missing/generic. Write a specific 110-155 char one.",
     "no_code_in_technical_post": "Technical post has no code. Add at least one correct, runnable, language-tagged example.",
     "missing_eeat_footer": "(Footer is added automatically afterwards; do not write one.)",
@@ -493,8 +526,13 @@ def parse_llm(raw: str):
 def validate_rewrite(title, meta, body, tags, orig_codes, orig_body) -> List[str]:
     errs = []
     prose = len(CODE_RX.sub(" ", body).split())
-    if prose < MIN_WORDS_FLAG:
-        errs.append(f"too short: {prose} prose words (need >= {MIN_WORDS_FLAG})")
+    orig_prose = len(CODE_RX.sub(" ", orig_body or "").split())
+    floor = max(MIN_WORDS_DELETE, int(MAX_SHRINK * orig_prose))
+    if prose < floor:
+        errs.append(
+            f"too short: {prose} prose words (need >= {floor}: the delete floor "
+            f"and 85% of the original {orig_prose}); restore removed depth, do not pad"
+        )
     if body.count("```") % 2:
         errs.append("unbalanced code fences")
     n_codes = len(CODE_RX.findall(body))
@@ -547,7 +585,7 @@ async def llm_rewrite(bs, slug: str, d: dict, reasons: List[str], attempts: int)
     for n in range(1, attempts + 1):
         prompt = LLM_PROMPT.format(
             problems=problems,
-            min_words=MIN_WORDS_FLAG + 100,
+            min_words=MIN_WORDS_DELETE + 100,
             code_rule=code_rule,
             feedback=feedback,
             title=d.get("title", slug),
@@ -712,6 +750,11 @@ def main():
         "--force", action="store_true", help="allow deleting >25%% of corpus"
     )
     ap.add_argument(
+        "--strict-coverage",
+        action="store_true",
+        help="exit 2 if any folder under docs/ could not be reviewed (corrupt post.json etc.)",
+    )
+    ap.add_argument(
         "--purge-tombstones",
         action="store_true",
         help="forget RETIRED slugs for good: needs --ledger; removes them from the ledger, then git rm",
@@ -734,6 +777,21 @@ def main():
         f"posts={n} delete={nd} improve={len(report['improve'])} "
         f"keep={len(report['keep'])} retired(tombstones)={nr}"
     )
+    reviewed = n - nr
+    print(
+        f"coverage: folders={COVERAGE['folders']} excluded={COVERAGE['excluded']} "
+        f"reviewed={reviewed} tombstones={nr} skipped={len(report['skipped'])} "
+        f"(accounted for: {COVERAGE['excluded'] + n + len(report['skipped'])}/{COVERAGE['folders']})"
+    )
+    for e in report["skipped"]:
+        print(f"  NOT REVIEWED docs/{e['slug']}/ :: {e['reason']}")
+    unreviewed = [
+        e
+        for e in report["skipped"]
+        if not e["reason"].startswith(("redirect_stub", "redirect_page"))
+    ]
+    if a.strict_coverage and unreviewed:
+        raise SystemExit(2)
     for e in report["delete"]:
         print(f"  DELETE docs/{e['slug']}/ [{e['source']}] {e['reasons']}")
     if nr:

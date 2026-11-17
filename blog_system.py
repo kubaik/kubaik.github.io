@@ -160,7 +160,11 @@ MIN_WORD_COUNT = 2000
 MIN_WORD_PURGE = 1800
 
 MAX_GENERATION_ATTEMPTS = 5
-MIN_ACCEPTABLE_WORDS = 1500
+# Generation must not accept a draft that the audit/purge would delete afterwards.
+# Same unit everywhere (len(text.split()), code included): adsense_compliance_audit.py
+# MIN_WORDS_DELETE and MIN_WORD_PURGE are both 1800. Was 1500, which let 1500-1799 word
+# posts save and then be flagged DELETE.
+MIN_ACCEPTABLE_WORDS = MIN_WORD_PURGE
 
 _MAX_REPAIR_ATTEMPTS = 2
 
@@ -2171,6 +2175,13 @@ def _pick_tweet_hook_example(
 
 
 def inject_personal_intro(post, topic: str) -> None:
+    """Prepend a pool-built intro. DISABLED by default: the LLM already writes the
+    opening, and the pools produce boilerplate that is identical in shape across the
+    corpus and includes lines implying first-hand experience (e.g. "the part that
+    broke") that the generation prompt forbids. Set INJECT_TEMPLATE_INTRO=1 to restore
+    the old behaviour."""
+    if os.getenv("INJECT_TEMPLATE_INTRO", "0") != "1":
+        return
     topic_lower = topic.lower()
     stop = {
         "how",
@@ -2212,7 +2223,7 @@ _EEAT_FOOTER_TEMPLATE = """
 
 **Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
 
-**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Before publication, drafts are screened automatically for minimum length, near-duplicate content, invented or unsourced claims and citations, unverifiable product names, and broken internal links. Individual line-by-line human editing is not performed on every post. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
 
 **Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
 
