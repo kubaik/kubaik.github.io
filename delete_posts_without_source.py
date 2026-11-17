@@ -52,10 +52,27 @@ NON_POST_DIR_NAMES = {
     "page",
 }
 
-# Same link shape delete_posts.py repairs: [text](/slug/) or full-URL form.
+# Same link shape delete_posts.py repairs: [text](/slug/) or full-URL form, on the
+# current custom domain AND the legacy github.io host.
 LINK_RX = re.compile(
-    r"\[([^\]]+)\]\((?:https?://kubaik\.github\.io)?/([a-z0-9][a-z0-9-]*)/?\)"
+    r"\[([^\]]+)\]\((?:https?://(?:blog\.kubailabs\.com|kubaik\.github\.io))?/([a-z0-9][a-z0-9-]*)/?\)"
 )
+
+# utilsIndexing/retire_registry.py writes a 200 + noindex "This post has been removed"
+# page (index.html only, no post.json) for every retired slug. That is a tombstone, not a
+# post: "deleting" it is a no-op because the next build writes it again.
+TOMBSTONE_MARK = "This post has been removed"
+
+
+def is_tombstone(post_dir: Path) -> bool:
+    files = [f for f in post_dir.iterdir()]
+    if len(files) != 1 or files[0].name != "index.html":
+        return False
+    try:
+        html = files[0].read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return False
+    return TOMBSTONE_MARK in html and "noindex" in html
 
 
 def find_posts_without_source(docs_dir: Path, keep_markdown: bool) -> dict:
@@ -76,6 +93,9 @@ def find_posts_without_source(docs_dir: Path, keep_markdown: bool) -> dict:
 
         if (post_dir / "post.json").exists():
             continue  # has a source of truth
+
+        if is_tombstone(post_dir):
+            continue  # retire_registry placeholder; regenerated every build by design
 
         if keep_markdown and (post_dir / "index.md").exists():
             result["recoverable"].append(post_dir.name)
