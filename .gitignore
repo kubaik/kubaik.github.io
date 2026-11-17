@@ -1,4 +1,3 @@
-
 # Environment variables
 .env
 .env.local
@@ -65,4 +64,8 @@ cleanup_plan.json
 .adsense_triage/
 adsense_audit_report.json
 .triage_backups/
-
+.duplicate_backups/
+.fabrication_backups/
+.citation_backups/
+.quality_review_backups/
+.sources_backups/

@@ -338,12 +338,31 @@ jobs:
                   og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
                   echo "og_image_count=${og_count}" >> $GITHUB_ENV
 
+            # Destructive runs keep their pre-change copies for 30 days as a downloadable
+            # artifact, so the public repo does not accumulate thousands of backup files.
+            - name: Upload backups of removed/rewritten posts
+              if: env.DESTRUCTIVE == 'true'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: post-backups-${{ github.run_id }}
+                  retention-days: 30
+                  if-no-files-found: ignore
+                  include-hidden-files: true
+                  path: |
+                      .duplicate_backups
+                      .fabrication_backups
+                      .citation_backups
+                      .triage_backups
+                      .quality_review_backups
+                      .sources_backups
+
             - name: Commit and push with retry
               run: |
                   git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
                   git config --local user.name "github-actions[bot]"
-                  mkdir -p .duplicate_backups .fabrication_backups .citation_backups .triage_backups .quality_review_backups .sources_backups
-                  git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/ .triage_backups/ .quality_review_backups/ .sources_backups/
+                  # Backup dirs are git-ignored (see .gitignore) and shipped as a workflow
+                  # artifact instead. Never `git add` an ignored path by name: git exits 1.
+                  git add -A
                   if git diff --staged --quiet; then
                     echo "Nothing to commit"
                   else
