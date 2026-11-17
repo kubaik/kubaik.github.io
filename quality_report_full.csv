@@ -170,6 +170,7 @@ prompts-are-code-how-to-measure-their-value,95,3794,Prompts are code: how to mea
 pypi-poisoned-models-hit-prod-in-2025,95,2215,PyPI poisoned models hit prod in 2025,2026-08-25T01:25:20.513082,1,no FAQ section
 rag-on-legacy-systems-vector-db-vs-full-text-sql,95,2765,RAG on legacy systems: vector DB vs. full-text SQL,2026-06-30T19:45:17.392843,1,no markdown table
 rag-pipelines-4-silent-prod-killers,95,2576,RAG pipelines: 4 silent prod killers,2026-06-08T23:47:39.972246,1,no FAQ section
+rbac-vs-abac-pick-by-blast-radius,95,2320,RBAC vs ABAC: pick by blast radius,2026-11-17T07:08:29.405540,1,no FAQ section
 react-19-compiler-my-components-changed-how,95,2121,React 19 Compiler: What It Rewrites and Where It Breaks,2026-06-15T07:49:45.982179,1,no FAQ section
 read-replicas-the-bug-factory-you-built,95,3035,Read replicas: the bug factory you built,2026-10-18T03:42:26.873015,1,no markdown table
 rebalance-pay-when-ai-fills-half-your-role,95,2589,Rebalance pay when AI fills half your role,2026-06-15T23:55:31.138497,1,no FAQ section

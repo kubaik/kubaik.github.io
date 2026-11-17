@@ -1049,6 +1049,9 @@
   "rate-limiters-burst-vs-abuse-two-designs": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "rbac-vs-abac-pick-by-blast-radius": {
+    "first_seen": "2026-11-17T07:09:06.815793+00:00"
+  },
   "react-19-compiler-my-components-changed-how": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

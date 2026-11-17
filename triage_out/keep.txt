@@ -51,6 +51,7 @@ docs/pagination-for-large-datasets-offset-vs-cursor/	-
 docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/	-
 docs/postgres-17-swallowed-redis-kafka-timescale/	-
 docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/	-
+docs/rbac-vs-abac-pick-by-blast-radius/	-
 docs/redis-vs-valkey-vs-dragonfly-which-in-memory-store/	-
 docs/replace-env-with-these-in-2026/	-
 docs/retire-api-versions-before-they-pile-up/	-

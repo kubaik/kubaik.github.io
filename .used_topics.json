@@ -264,5 +264,6 @@
   "Understanding database isolation levels and the anomalies each one allows",
   "Why most production agents still need strong human-in-the-loop boundaries in 2026",
   "Designing human-in-the-loop AI workflows",
-  "Designing Kubernetes resource requests and limits"
+  "Designing Kubernetes resource requests and limits",
+  "Designing RBAC versus ABAC for services"
 ]

@@ -2155,6 +2155,11 @@
     ],
     "words": 2920
   },
+  "rbac-vs-abac-pick-by-blast-radius": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2059
+  },
   "react-19-compiler-my-components-changed-how": {
     "verdict": "IMPROVE",
     "reasons": [

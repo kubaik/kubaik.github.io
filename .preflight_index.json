@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-16T09:09:19.038629",
+  "built_at": "2026-11-17T07:08:31.759946",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5870,6 +5870,11 @@
       "slug": "7-kubernetes-resource-traps-that-bite-in-prod",
       "title": "7 Kubernetes resource traps that bite in prod",
       "summary": "After enough code that touches designing humanintheloop gets reviewed, the same failure pattern keeps showing up. This walks through the fix and the reasoning, not just the patch. The workaround gets copy-pasted forward long after the original reason is forgotten. Kubernetes resource requests and li"
+    },
+    {
+      "slug": "rbac-vs-abac-pick-by-blast-radius",
+      "title": "RBAC vs ABAC: pick by blast radius",
+      "summary": "The designing rbac section of a postmortem is easy to skim past, right up until it's the section that matters. This works through the problem properly, from cause to fix. Production gives you neither a clean environment nor a patient timeline. Role-based access control and attribute-based access con"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Nov 2026 21:47:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2026 07:09:49 +0000</lastBuildDate>
+    <item>
+      <title>RBAC vs ABAC: pick by blast radius</title>
+      <link>https://blog.kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</link>
+      <description>RBAC vs ABAC for services: why role explosion and attribute spoofing fail in opposite directions, with runnable policy code and a deny-on-missing test.</description>
+      <pubDate>Tue, 17 Nov 2026 07:08:29 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</guid>
+    </item>
     <item>
       <title>Kubernetes Requests and Limits: Seven Production Traps</title>
       <link>https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Why closed-loop load tests under-report latency, how to build open-loop traffic models in k6 and Locust, and how to read the results without fooling yourself.</description>
       <pubDate>Sat, 07 Nov 2026 17:38:37 +0000</pubDate>
       <guid>https://blog.kubailabs.com/k6-vs-locust-traffic-models-that-lie/</guid>
-    </item>
-    <item>
-      <title>Redis vs Valkey vs Dragonfly: which in-memory store?</title>
-      <link>https://blog.kubailabs.com/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</link>
-      <description>A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</description>
-      <pubDate>Sat, 07 Nov 2026 05:14:51 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/redis-vs-valkey-vs-dragonfly-which-in-memory-store/</guid>
     </item>
   </channel>
 </rss>
