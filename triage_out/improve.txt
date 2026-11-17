@@ -286,6 +286,7 @@ docs/sandboxed-computer-use-agents-with-gvisor/	Tags absent from body: ComputerU
 docs/save-12kmonth-cloud-egress-costs-in-2026/	Tags absent from body: CloudEgressCost, EgressCost2026, Cloudcomputing, Dataengineering
 docs/sbom-attestation-that-gets-used/	Tags absent from body: SbomAttestation, CosignSbomSigning, Golang
 docs/scope-agent-permissions-per-task/	Tags absent from body: LeastPrivilege, AiAgentPermissions, Softwareengineering
+docs/security-engineering-isnt-a-ladder/	Tags absent from body: SecurityEngineering, SecurityCareerPath, Cybersecurity, Infosec
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/	Tags absent from body: AiAgentsDeployment, CanaryAnalysisRollback, Prometheus3.1, Artificialintelligence
 docs/self-healing-pipelines-argo-vs-crossplane-in-2026/	Tags absent from body: GitopsSelfHealing, K8s
 docs/self-service-ai-tooling-the-permission-trap/	Tags absent from body: AiTooling, PermissionTrap, SelfServiceAi, TokenExchangeAi

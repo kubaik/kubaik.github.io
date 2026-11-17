@@ -1,2 +1,2 @@
 ✅ Internal link audit: PASS
-   434 posts checked — no broken internal links found.
+   435 posts checked — no broken internal links found.

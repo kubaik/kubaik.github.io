@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-17T07:08:31.759946",
+  "built_at": "2026-11-17T20:38:51.177203",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5875,6 +5875,11 @@
       "slug": "rbac-vs-abac-pick-by-blast-radius",
       "title": "RBAC vs ABAC: pick by blast radius",
       "summary": "The designing rbac section of a postmortem is easy to skim past, right up until it's the section that matters. This works through the problem properly, from cause to fix. Production gives you neither a clean environment nor a patient timeline. Role-based access control and attribute-based access con"
+    },
+    {
+      "slug": "security-engineering-isnt-a-ladder",
+      "title": "Security engineering isn't a ladder",
+      "summary": "The standard career advice for security engineers—get a CISSP, climb from analyst to engineer to architect, specialize early—is mostly wrong for the current threat landscape. I'm not saying certifications are worthless or that specialization is bad. I'm saying the ladder metaphor itself is the probl"
     }
   ]
 }

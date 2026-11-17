@@ -5,7 +5,14 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2026 10:07:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 17 Nov 2026 20:40:08 +0000</lastBuildDate>
+    <item>
+      <title>Security engineering isn&apos;t a ladder</title>
+      <link>https://blog.kubailabs.com/security-engineering-isnt-a-ladder/</link>
+      <description>Security engineering careers aren&amp;#x27;t a ladder—they&amp;#x27;re a lattice.</description>
+      <pubDate>Tue, 17 Nov 2026 20:38:48 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/security-engineering-isnt-a-ladder/</guid>
+    </item>
     <item>
       <title>RBAC vs ABAC: pick by blast radius</title>
       <link>https://blog.kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</link>
@@ -138,13 +145,6 @@
       <description>How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.</description>
       <pubDate>Sun, 08 Nov 2026 05:08:16 +0000</pubDate>
       <guid>https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/</guid>
-    </item>
-    <item>
-      <title>k6 vs Locust: traffic models that lie</title>
-      <link>https://blog.kubailabs.com/k6-vs-locust-traffic-models-that-lie/</link>
-      <description>Why closed-loop load tests under-report latency, how to build open-loop traffic models in k6 and Locust, and how to read the results without fooling yourself.</description>
-      <pubDate>Sat, 07 Nov 2026 17:38:37 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/k6-vs-locust-traffic-models-that-lie/</guid>
     </item>
   </channel>
 </rss>

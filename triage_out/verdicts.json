@@ -2311,6 +2311,13 @@
     ],
     "words": 3802
   },
+  "security-engineering-isnt-a-ladder": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: SecurityEngineering, SecurityCareerPath, Cybersecurity, Infosec"
+    ],
+    "words": 2631
+  },
   "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
     "verdict": "IMPROVE",
     "reasons": [
