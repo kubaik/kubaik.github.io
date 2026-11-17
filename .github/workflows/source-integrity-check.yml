@@ -1,49 +1,88 @@
 name: source-integrity-check
 
+# Fails when a published post directory has no source of truth (post.json or markdown).
+# Retired-post TOMBSTONES are legitimate and are not orphans: utilsIndexing/retire_registry.py
+# writes docs/<slug>/index.html (200 + noindex, "This post has been removed") for every slug
+# listed in retired_slugs.json, on every build. A directory is accepted as a tombstone only if
+# ALL of the following hold, so a real orphan post can never hide behind this exemption:
+#   1. the slug is in retired_slugs.json
+#   2. index.html is the only file in the directory
+#   3. index.html carries the tombstone marker and noindex
+#   4. the slug is not in docs/sitemap.xml
 on:
-  push:
-    paths:
-      - "docs/**"
-  pull_request:
-    paths:
-      - "docs/**"
+    push:
+        paths:
+            - "docs/**"
+            - "retired_slugs.json"
+    pull_request:
+        paths:
+            - "docs/**"
+            - "retired_slugs.json"
 
 jobs:
-  check-post-source:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    check-post-source:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Fail if any published post has no post.json
-        run: |
-          python3 - << 'EOF'
-          import sys
-          from pathlib import Path
+            - name: Fail if any published post has no post.json
+              run: |
+                  python3 - << 'EOF'
+                  import json
+                  import sys
+                  from pathlib import Path
 
-          DOCS_DIR = Path("docs")
-          EXCLUDE_DIRS = {
-              "static", "tag", "author", "page",
-              "contact", "about", "privacy-policy", "terms-of-service",
-              "dmca", "ai-content-policy",
-          }
+                  DOCS_DIR = Path("docs")
+                  EXCLUDE_DIRS = {
+                      "static", "tag", "author", "page",
+                      "contact", "about", "privacy-policy", "terms-of-service",
+                      "dmca", "ai-content-policy",
+                  }
+                  MARK = "This post has been removed"
 
-          orphans = []
-          for post_dir in DOCS_DIR.iterdir():
-              if not post_dir.is_dir() or post_dir.name in EXCLUDE_DIRS:
-                  continue
-              index = post_dir / "index.html"
-              post_json = post_dir / "post.json"
-              has_md = any(post_dir.glob("*.md"))
-              if index.exists() and not post_json.exists() and not has_md:
-                  orphans.append(post_dir.name)
+                  try:
+                      retired = set(json.loads(Path("retired_slugs.json").read_text(encoding="utf-8")))
+                  except Exception:
+                      retired = set()
+                  try:
+                      sitemap = (DOCS_DIR / "sitemap.xml").read_text(encoding="utf-8")
+                  except OSError:
+                      sitemap = ""
 
-          if orphans:
-              print(f"::error::{len(orphans)} published post(s) have no post.json/markdown "
-                    f"source. A post without a source of truth cannot be regenerated, "
-                    f"fact-checked, or corrected — this must not ship.")
-              for slug in orphans:
-                  print(f"::error file=docs/{slug}/index.html::missing post.json (no source of truth)")
-              sys.exit(1)
+                  orphans, bad_tombstones, tombstones = [], [], 0
+                  for post_dir in sorted(DOCS_DIR.iterdir()):
+                      name = post_dir.name
+                      if not post_dir.is_dir() or name in EXCLUDE_DIRS or name.startswith((".", "_")):
+                          continue
+                      index = post_dir / "index.html"
+                      if not index.exists() or (post_dir / "post.json").exists() or any(post_dir.glob("*.md")):
+                          continue
 
-          print(f"OK: all published posts have a recoverable source.")
-          EOF
+                      html = index.read_text(encoding="utf-8", errors="ignore")
+                      only_index = [f.name for f in post_dir.iterdir()] == ["index.html"]
+                      if name in retired and only_index and MARK in html and "noindex" in html:
+                          tombstones += 1
+                          if f"/{name}/" in sitemap:
+                              bad_tombstones.append(name)
+                          continue
+                      orphans.append(name)
+
+                  failed = False
+                  if orphans:
+                      failed = True
+                      print(f"::error::{len(orphans)} published post(s) have no post.json/markdown "
+                            f"source and are not registered tombstones. A post without a source of "
+                            f"truth cannot be regenerated, fact-checked, or corrected - this must not ship.")
+                      for slug in orphans:
+                          print(f"::error file=docs/{slug}/index.html::missing post.json (no source of truth)")
+                  if bad_tombstones:
+                      failed = True
+                      print(f"::error::{len(bad_tombstones)} retired tombstone(s) are listed in sitemap.xml; "
+                            f"retired URLs must never be submitted for indexing.")
+                      for slug in bad_tombstones:
+                          print(f"::error file=docs/{slug}/index.html::tombstone present in sitemap.xml")
+                  if failed:
+                      sys.exit(1)
+
+                  print(f"OK: every published post has a recoverable source ({tombstones} retired tombstone(s) ignored).")
+                  EOF
