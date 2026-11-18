@@ -2372,6 +2372,14 @@
     ],
     "words": 2347
   },
+  "senior-without-the-title-what-stalls-engineers": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Unverifiable first-person experience claims x1 (not human_reviewed)",
+      "Tags absent from body: TechnicalDepth, FreelanceEngineer, SeniorTitle, TimezoneSystemDesign"
+    ],
+    "words": 3363
+  },
   "serve-4g-as-baseline-apps-in-2026": {
     "verdict": "IMPROVE",
     "reasons": [

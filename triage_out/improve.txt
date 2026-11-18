@@ -294,6 +294,7 @@ docs/self-service-ai-tooling-where-it-breaks-first/	Tags absent from body: AiRat
 docs/self-service-is-broken-without-ai-ops/	Tags absent from body: SelfServicePlatform, AiGuardrails, PlatformEngineering, IamPolicyChecks
 docs/senior-engineer-the-bar-moved-nobody-updated-the-rubric/	Tags absent from body: SeniorEngineer, AiHiring, EngineeringRubric, Dataengineering
 docs/senior-role-projects-3-real-paths/	Tags absent from body: SeniorRemoteRoles, RedisRateLimiting, Cybersecurity, Infosec
+docs/senior-without-the-title-what-stalls-engineers/	Unverifiable first-person experience claims x1 (not human_reviewed); Tags absent from body: TechnicalDepth, FreelanceEngineer, SeniorTitle, TimezoneSystemDesign
 docs/serve-4g-as-baseline-apps-in-2026/	Tags absent from body: 4gWebPerformance, GoApi4g, Redis7.4Caching, Vite5.3Bundling
 docs/ship-1mb-pages-on-4g-starlink-africa-case-study/	Tags absent from body: 4gWebPerformance, BrotliCompression2026, CloudfrontQuic2026, StarlinkAfricaLatency
 docs/ship-a-solo-project-pipeline-under-20month/	Tags absent from body: Fly.ioCost, GithubActionsTips, Devops, Containers

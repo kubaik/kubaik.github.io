@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-17T20:38:51.177203",
+  "built_at": "2026-11-18T06:33:37.066657",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5880,6 +5880,11 @@
       "slug": "security-engineering-isnt-a-ladder",
       "title": "Security engineering isn't a ladder",
       "summary": "The standard career advice for security engineers—get a CISSP, climb from analyst to engineer to architect, specialize early—is mostly wrong for the current threat landscape. I'm not saying certifications are worthless or that specialization is bad. I'm saying the ladder metaphor itself is the probl"
+    },
+    {
+      "slug": "senior-without-the-title-what-stalls-engineers",
+      "title": "Senior without the title: what stalls engineers",
+      "summary": "The title on your contract says \"Mid-level Engineer\" or \"Analista de Sistemas\" or maybe just \"Desarrollador Senior\" — but the work you're doing has outgrown it. You're the one the client calls when the payment gateway starts rejecting cards from a new region. You're the one who notices the Kubernete"
     }
   ]
 }

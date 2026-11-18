@@ -5,7 +5,14 @@
     <link>https://blog.kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2026 20:40:08 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2026 06:35:15 +0000</lastBuildDate>
+    <item>
+      <title>Senior without the title: what stalls engineers</title>
+      <link>https://blog.kubailabs.com/senior-without-the-title-what-stalls-engineers/</link>
+      <description>Senior work without the senior title: how freelance engineers build real technical depth through decision logs, timezone-aware design, and payment…</description>
+      <pubDate>Wed, 18 Nov 2026 06:33:33 +0000</pubDate>
+      <guid>https://blog.kubailabs.com/senior-without-the-title-what-stalls-engineers/</guid>
+    </item>
     <item>
       <title>Security engineering isn&apos;t a ladder</title>
       <link>https://blog.kubailabs.com/security-engineering-isnt-a-ladder/</link>
@@ -138,13 +145,6 @@
       <description>Why doubling traffic can quadruple tail latency, how to model each constrained resource as a queue, and how to measure utilisation before you hit the cliff.</description>
       <pubDate>Sun, 08 Nov 2026 17:48:03 +0000</pubDate>
       <guid>https://blog.kubailabs.com/queueing-theory-for-backend-capacity/</guid>
-    </item>
-    <item>
-      <title>Pagination for large datasets: offset vs cursor</title>
-      <link>https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/</link>
-      <description>How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.</description>
-      <pubDate>Sun, 08 Nov 2026 05:08:16 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/</guid>
     </item>
   </channel>
 </rss>
