@@ -1,166 +1,160 @@
 {
   "2026-ai-stack-solo-saas-cost-showdown": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: AI Agents, LLMs"
+    ],
     "words": 2598
   },
   "2026-alert-triage-when-opsgenie-slept-for-you": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Softwareengineering"
+      "Tags absent from body: LLMs, Reliability"
     ],
     "words": 2625
   },
   "2026-tech-salaries-where-cuts-stopped-where-raises": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Technology, Careeradvice"
+      "Tags absent from body: Engineering Careers"
     ],
     "words": 2413
   },
   "3-llm-context-techniques-when-each-fails": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: FineTuning, Generativeai, Vectorsearch"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3020
   },
   "3-ways-container-builds-got-3x-faster-in-2026": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Buildkit1.6, Depot.devCache, Performance, Containers"
+      "Tags absent from body: Containers, Performance"
     ],
     "words": 2611
   },
   "40-ai-code-meant-60-more-alerts": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiGeneratedCode, DjangoWithAi, Generativeai"
+      "Tags absent from body: Reliability, CI/CD"
     ],
     "words": 1846
   },
   "5-ai-tools-that-let-us-ship-faster-than-sf-teams": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodingTools, NairobiTechStack, AwsDeveloperTools, CodeiumVsCopilot"
+      "Tags absent from body: Reliability, Africa Tech"
     ],
     "words": 2082
   },
   "5-ways-to-find-hidden-latency-before-production": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CiPipelineLatency, TrafficReplayTesting"
+      "Tags absent from body: Performance, Observability, Distributed Systems"
     ],
     "words": 2158
   },
   "7-adr-traps-that-cause-stale-decisions": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DecisionRecord, AdrBestPractices"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2786
   },
   "7-async-practices-that-cut-meeting-load": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AsyncCommunication, MeetingReduction, AsyncStandup, Softwareengineering"
+      "Tags absent from body: Engineering Management"
     ],
     "words": 3204
   },
   "7-bundling-decisions-that-still-matter": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Backend Engineering"
+    ],
     "words": 2884
   },
   "7-code-review-traps-when-ai-writes-half-your-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CodeReviewChecklist, Artificialintelligence"
+      "Tags absent from body: LLMs, Engineering Management, Platform Engineering, Identity & Access"
     ],
     "words": 2188
   },
   "7-guardrails-for-safer-llm-apps": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmGuardrails, PromptInjection, InputFilters, OutputValidators"
+      "Tags absent from body: AI Agents, Identity & Access"
     ],
     "words": 3606
   },
   "7-idp-shifts-for-ai-feature-delivery": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Vector Search, Platform Engineering"
+    ],
     "words": 2953
   },
   "7-kubernetes-resource-traps-that-bite-in-prod": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ResourceLimits, K8s, Kubernetesqosclass"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2920
   },
   "7-patterns-for-systems-that-wont-die-when-networks": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Data Engineering, Messaging, Engineering Careers"
+    ],
     "words": 3164
   },
   "7-skills-senior-engineers-need-now-agents-are-live": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentsInProduction, IdempotencyKeys, Redis7.2, Softwareengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2912
   },
   "7-ways-to-measure-prompt-platform-roi-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: PromptPlatformRoi, LlmCostAttribution, Cybersecurity, Indiehacker"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2847
   },
   "9-vibe-coding-traps-that-break-production-code": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: VibeCoding, VibeCodingTools, VibeCodingNextjs, VibeCodingRedis"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2238
   },
   "african-devs-ai-tools-that-work-now-2026": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Africa Tech"
+    ],
     "words": 2239
   },
   "african-fintech-agents-the-compliance-cliff-most-miss": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: CbnAgentRules, Dataengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1863
   },
   "agent-access-for-non-ai-engineers": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentTools, InternalTools, AgentGuardrails, Softwareengineering"
+      "Tags absent from body: LLMs, Reliability, Distributed Systems"
     ],
     "words": 3045
   },
   "agent-architecture-the-new-model-trap": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiAgents, AgentArchitecture, GptAgentDesign, Generativeai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3130
   },
   "agent-audit-trails-event-log-vs-state-snapshots": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AuditTrail, EventSourcing, AgentAuditLogs, Generativeai"
+      "Tags absent from body: LLMs, Distributed Systems, Reliability"
     ],
     "words": 2580
   },
   "agent-auth-the-silent-deployment-killer": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentIdentity, WorkloadIdentity, SpiffeSpire, EdgeIdentitySystems"
+      "Tags absent from body: Identity & Access"
     ],
     "words": 2164
   },
@@ -172,14 +166,14 @@
   "agent-code-review-7-traps-that-slip-through": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentCodeReview, AiGeneratedCode, CodeReviewChecklist, Generativeai"
+      "Tags absent from body: Engineering Management, Distributed Systems"
     ],
     "words": 3159
   },
   "agent-code-review-gap-nobody-admits": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Generativeai, Microservices"
+      "Tags absent from body: LLMs, Engineering Management"
     ],
     "words": 2440
   },
@@ -191,64 +185,58 @@
   "agent-compliance-the-layer-you-build-after-failure": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentGovernance, ComplianceFailure, AiAgentCompliance"
+      "Tags absent from body: Reliability, Identity & Access, LLMs"
     ],
     "words": 3196
   },
   "agent-context-short-term-vs-long-term-memory": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LongRunningAgents, AiAgentHallucination, PgvectorAgentMemory, Softwareengineering"
+      "Tags absent from body: Distributed Systems, Payments"
     ],
     "words": 2727
   },
   "agent-drift-the-failure-mode-you-didnt-log": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentDrift, DriftDetection, AiAgentMonitoring"
+      "Tags absent from body: LLMs, Vector Search, Reliability"
     ],
     "words": 2855
   },
   "agent-drift-why-it-hurts-ux": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentDrift, DetectAgentDrift, ContainAgentDrift"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2161
   },
   "agent-drift-why-prod-breaks-without-human-checkpoints": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentDrift, ProductionAgents, ConfidenceThreshold, ComplianceGuardrails"
+      "Tags absent from body: LLMs, Messaging"
     ],
     "words": 2610
   },
   "agent-flooded-our-api-with-bad-calls-overnight": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ApiAgentOverflow, LambdaCostSpike, Apis"
+      "Tags absent from body: API Design, Distributed Systems"
     ],
     "words": 2496
   },
   "agent-followed-instructions-too-literally-the-cron-job-trap": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: CronJobTimeout, Python3, K8s, Techjobs"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2327
   },
   "agent-frameworks-stop-rewriting-the-same-glue-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentFrameworks, LlmAgentBoilerplate, Generativeai, Techjobs"
+      "Tags absent from body: Distributed Systems, LLMs"
     ],
     "words": 2316
   },
   "agent-governance-opa-vs-kyverno-after-our-incident": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentGovernance, OpaVsKyverno, K8s"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2128
   },
   "agent-permissions-the-mistake-that-breaks-production": {
@@ -259,75 +247,69 @@
   "agent-platform-abstractions-a-case-study": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentPlatform, AgentAbstractions, TypedToolContracts, Softwareengineering"
+      "Tags absent from body: Distributed Systems, LLMs"
     ],
     "words": 2018
   },
   "agent-reliability-7-metrics-users-trust": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentReliability, TrustMetrics, MeasureAgentTrust"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3043
   },
   "agent-slos-measure-what-agents-actually-do": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgenticSystemSlo, BackgroundJobSlo, FastapiSlo, WeasyprintSlo"
+      "Tags absent from body: Observability, AI Agents"
     ],
     "words": 2326
   },
   "agent-systems-circuit-breakers-are-not-enough": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Reliability, LLMs"
+    ],
     "words": 2370
   },
   "agent-tracing-when-logs-lie-and-metrics-mislead": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AsyncTracing, AgentTracing, JaegerAsyncGaps, CeleryTracing"
+      "Tags absent from body: Distributed Systems, Messaging"
     ],
     "words": 1793
   },
   "agent-versioning-the-contract-you-forgot": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentVersioning, ApiVersioning, ToolSchemaVersioning"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2507
   },
   "agentic-ai-cost-control-7-tools-one-backfire": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCost, LlmSpend, Agenticai"
+      "Tags absent from body: LLMs, Observability"
     ],
     "words": 2945
   },
   "agentic-finops-is-a-trap": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgenticFinops, AutonomousAiFinops, StatefulAgentCosts, Agenticai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2191
   },
   "agentic-systems-architecture-principles-that-hold": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgenticArchitecture, MultiModelSystems, IdempotencyKey, TokenBudgetControl"
+      "Tags absent from body: Distributed Systems, LLMs"
     ],
     "words": 2485
   },
   "agentic-workflows-how-we-kept-the-lights": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: OpensearchServerless, DataPrepperArm64, Dataengineering, Redis"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2191
   },
   "agentic-workflows-surviving-network-partitions": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgenticWorkflows, NetworkPartitions, IdempotencyKey, Generativeai"
+      "Tags absent from body: LLMs, Messaging"
     ],
     "words": 3497
   },
@@ -339,53 +321,53 @@
   "agents-create-incidents-at-2am": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OnCallAutomation, AgentPermissions, IncidentResponse, IamAccessAnalyzer"
+      "Tags absent from body: Reliability, Containers"
     ],
     "words": 2188
   },
   "agents-keep-breaking-prod-3-boundary-rules-you-still-need": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: RefundAgentFailures, IdempotencyInAgents, SchemaDriftAgent, Generativeai"
+      "Tags absent from body: Payments, LLMs"
     ],
     "words": 2623
   },
   "ai-agent-postmortem-human-loop-vs-blind-replay": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAgentPostmortem, AiIncidentResponse, DeterministicReplay, LlmFailureAnalysis"
+      "Tags absent from body: Reliability, LLMs"
     ],
     "words": 3156
   },
   "ai-agent-postmortems-the-three-surprises": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Reliability, LLMs"
+    ],
     "words": 2850
   },
   "ai-agent-postmortems-trace-vs-logs-vs-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAgentPostmortem, LlmEvaluationLogs, AiAgentTracing, AiObservability2026"
+      "Tags absent from body: Reliability, LLMs, Observability"
     ],
     "words": 2393
   },
   "ai-agents-circuit-breakers-are-not-optional": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: CircuitBreaker, AiAgentReliability, LlmCircuitBreaker, RedisCircuitBreaker"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2296
   },
   "ai-agents-eat-your-budget-3-ways": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Artificialintelligence"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1998
   },
   "ai-agents-killed-dev-tool-sales-cycles": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Containers"
+    ],
     "words": 1821
   },
   "ai-agents-vs-argo-tekton-which-pipeline-heals-itself": {
@@ -396,75 +378,73 @@
   "ai-alert-triage-cut-pages-80-in-production": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAlertTriage, OnCallAutomation, PrometheusAlertmanager, FalsePositiveReduction"
+      "Tags absent from body: LLMs, Reliability"
     ],
     "words": 2168
   },
   "ai-answers-first-judgment-later": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: JuniorEngineers, AiAssistants, CodeReview, Coding"
+      "Tags absent from body: Engineering Careers, LLMs, Distributed Systems, Reliability"
     ],
     "words": 2656
   },
   "ai-apps-break-when-you-treat-them-like-regular-software": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiNativeArchitecture, AiApplicationDesign, AiSystemScalability, Vectordb"
+      "Tags absent from body: LLMs, Reliability"
     ],
     "words": 2894
   },
   "ai-ate-the-niches-first": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: MicroSaasMoats, ComplianceMoatSaas, ProprietaryDataSaas, Dataengineering"
+      "Tags absent from body: LLMs"
     ],
     "words": 1903
   },
   "ai-burnout-why-output-pressure-rose-even-as-tools-got": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiBurnout, DeveloperProductivity, GithubCopilotEnterprise, CursorAi"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2128
   },
   "ai-chats-hidden-wcag-fails": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs"
+    ],
     "words": 2366
   },
   "ai-code-40-how-to-keep-it-from-rotting-your-repo": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiCodeReview, Ruff0.5.4"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2283
   },
   "ai-code-in-prod-postmortems-still-work": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodePostmortem, PostmortemArtifacts, AiModelSnapshot, IncidentResponseAi"
+      "Tags absent from body: Reliability, LLMs"
     ],
     "words": 2020
   },
   "ai-code-traps-copilot-vs-cursor-smackdown": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: EdgeCaseDebugging, Artificialintelligence, Github, Cursorai"
+      "Tags absent from body: LLMs"
     ],
     "words": 2307
   },
   "ai-codebase-onboarding-2-paths-tested": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodebaseOnboarding, Generativeai"
+      "Tags absent from body: LLMs"
     ],
     "words": 2424
   },
   "ai-codebases-two-onboarding-paths-that-actually-work": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodebaseOnboarding, DeterministicAiBuilds, Artificialintelligence"
+      "Tags absent from body: LLMs, Reliability, CI/CD"
     ],
     "words": 2402
   },
@@ -476,46 +456,46 @@
   "ai-era-promotions-hinge-on-this-one-thing": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiFeatureDeployment, LlmValidation, PromptDriftHandling, Careeradvice"
+      "Tags absent from body: LLMs, CI/CD, Reliability"
     ],
     "words": 2102
   },
   "ai-errors-hide-in-plain-latency": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiObservability, LlmLatency, P99Latency, Redis"
+      "Tags absent from body: LLMs, Performance, Vector Search"
     ],
     "words": 2049
   },
   "ai-experimentation-guardrails-not-gates": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Platform Engineering, AWS"
+    ],
     "words": 2133
   },
   "ai-feature-drift-why-your-model-died-at-midnight": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiFeatureDrift, ModelDriftMidnight, RedisFeatureStore, LambdaMemoryError"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2595
   },
   "ai-features-as-tech-debt-or-golden-paths": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiFeatureMaintenance, ResilientAiSystems, CacheStampedeAfrica, EdgeAiRouting"
+      "Tags absent from body: Reliability, LLMs, Platform Engineering"
     ],
     "words": 2398
   },
   "ai-features-m-pesa-paystack-flutterwave-traps": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Messaging, Distributed Systems"
+    ],
     "words": 2235
   },
   "ai-features-rot-faster-than-you-build-them": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiFeatureMaintenance, AiFeatureOutages"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2665
   },
   "ai-fixes-legacy-code-nobody-owns": {
@@ -526,87 +506,83 @@
   "ai-freelance-rates-2026-which-stacks-still-pay": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Artificialintelligence, Nextjs, Vectordb"
+      "Tags absent from body: LLMs, Engineering Careers, Distributed Systems, Messaging"
     ],
     "words": 2005
   },
   "ai-glue-code-3-ways-to-avoid-duct-taping-models": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PredibaseLora2.0, Python"
+      "Tags absent from body: LLMs, CI/CD, Engineering Careers"
     ],
     "words": 2436
   },
   "ai-in-local-currency-costs-that-surprise": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Observability, Reliability"
+    ],
     "words": 2925
   },
   "ai-in-slow-networks-why-models-flop-where-data-costs-rise": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiInAfrica, MobileAiCosts, OnnxRuntimeWeb, Redis7.2Caching"
+      "Tags absent from body: Vector Search, Mobile Money"
     ],
     "words": 2653
   },
   "ai-interviews-4-questions-that-caught-80-of-weak": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiEngineeringInterviews, CandidateScreening2026, ResilientSystemDesign, RedisConnectionPool"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2226
   },
   "ai-interviews-break-systems-5-real-mistakes-in-2026": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Systemdesign, Techjobs"
+      "Tags absent from body: Containers, Engineering Careers"
     ],
     "words": 2282
   },
   "ai-interviews-broke-system-design-3-patterns-that": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Artificialintelligence, Systemdesign, Techjobs"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2677
   },
   "ai-interviews-now-ask-for-this": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Artificialintelligence"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2564
   },
   "ai-made-self-service-platforms-trivial-in-2026": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, CI/CD"
+    ],
     "words": 1682
   },
   "ai-memory-systems-context-that-survives-sessions": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAgentMemory, PersistentAiContext, Vectordb"
+      "Tags absent from body: AI Agents, Payments"
     ],
     "words": 2233
   },
   "ai-micro-saas-under-150month-the-real-infra-choices": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LlmCostOptimization, ServerlessAiBackend, CloudflareWorkersAi, MemorydbRedisPricing"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2814
   },
   "ai-model-poisoning-3-real-attacks-on-datasets": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SlsaForAi, DatasetProvenance, Cybersecurity"
+      "Tags absent from body: CI/CD, LLMs"
     ],
     "words": 2798
   },
   "ai-native-apps-break-when-you-copy-old-rules": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiNativeApplications, AiAppLatency, AiCostOptimization, AiCachingTechniques"
+      "Tags absent from body: LLMs, Distributed Systems"
     ],
     "words": 2428
   },
@@ -614,155 +590,151 @@
     "verdict": "IMPROVE",
     "reasons": [
       "Templated outline (50% of H2s reused across corpus)",
-      "Tags absent from body: AiNativeApplications, LlmArchitecturePatterns, PromptTemplateVersioning, Artificialintelligence"
+      "Tags absent from body: LLMs, AI Agents, Serverless"
     ],
     "words": 1856
   },
   "ai-observability-isnt-monitoring-heres-why": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Vector Search"
+    ],
     "words": 2453
   },
   "ai-observability-the-metrics-that-matter": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiObservability, LlmMonitoring, DriftDetection, ConfidenceTracking"
+      "Tags absent from body: LLMs, Vector Search"
     ],
     "words": 2261
   },
   "ai-on-slow-networks-nairobi-teams-2026-playbook": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: NairobiTechStack, RedisCachingAi, CloudflareWorkersAi, VectorSearchCaching"
+      "Tags absent from body: Africa Tech, LLMs, Distributed Systems"
     ],
     "words": 2130
   },
   "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiIncidentResponse, AiOpsCost, MttaReduction"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2496
   },
   "ai-ops-vs-human-ops-the-incidents-that-broke-them": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiIncidentResponse, PagerdutyAiCopilot"
+      "Tags absent from body: Reliability, AI Agents, CI/CD"
     ],
     "words": 2198
   },
   "ai-pair-prompts-9-setups-we-tried-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiPairProgramming, Coding"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2926
   },
   "ai-payments-break-in-m-pesa-first": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Distributed Systems, Messaging"
+    ],
     "words": 2301
   },
   "ai-proof-your-mid-level-salary": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiProofSkills, SalaryProtection"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2708
   },
   "ai-reshaped-my-engineering-principles": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Python, Github"
+      "Tags absent from body: LLMs, CI/CD, Python"
     ],
     "words": 1853
   },
   "ai-revives-unloved-legacy-codebases": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PsalmStaticAnalyzer, CodeqlLegacyPhp, Github"
+      "Tags absent from body: LLMs, Reliability, Containers"
     ],
     "words": 2643
   },
   "ai-rollouts-live-or-die-by-flags": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FeatureFlagsAi, AiRolloutStrategies, FeatureFlags2026, FeatureFlagService"
+      "Tags absent from body: Reliability, LLMs"
     ],
     "words": 2025
   },
   "ai-sales-cycles-3x-faster-40-less-talk": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: GithubCopilotSales, Softwareengineering, Github"
+      "Tags absent from body: LLMs, Distributed Systems"
     ],
     "words": 2915
   },
   "ai-sales-cycles-why-dev-tools-now-need-3-demos": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DeveloperToolsSales, DebugSessions, CliSales, Artificialintelligence"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2003
   },
   "ai-scanners-overlook-real-vulns": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiSecurityScanners, Afl++4.08, Cybersecurity"
+      "Tags absent from body: Observability, Reliability"
     ],
     "words": 2273
   },
   "ai-static-analysis-vs-legacy-sast-5x-faster-scans": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiStaticAnalysis, CodeqlAiReview, Artificialintelligence, Cicd"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2671
   },
   "ai-steals-junior-tasks-3-skills-that-protect-pay": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Engineering Careers, LLMs"
+    ],
     "words": 2460
   },
   "ai-stole-system-design": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SystemDesign2026, Generativeai, Systemdesign, Techjobs"
+      "Tags absent from body: Engineering Careers, LLMs"
     ],
     "words": 2105
   },
   "ai-supply-chain-attacks-what-actually-broke": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiSupplyChain, ModelSecurity, Cybersecurity"
+      "Tags absent from body: Engineering Careers, LLMs"
     ],
     "words": 3041
   },
   "ai-tools-wont-help-if-everyone-writes-the-same-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiTeamNorms, Engineering, AiCopilotPolicy, DistributedTeamAi"
+      "Tags absent from body: Reliability, Engineering Careers"
     ],
     "words": 2262
   },
   "ai-ui-generation-what-it-fixed-and-what-still-breaks": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FigmaAiLimitations, Reactjs"
+      "Tags absent from body: LLMs"
     ],
     "words": 2091
   },
   "ai-ui-tools-broke-my-react-flow-heres-why": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiUiTools, FrontendWorkflow, ReactV0, TailwindUiBlocks"
+      "Tags absent from body: LLMs"
     ],
     "words": 2184
   },
   "ai-ui-tools-promise-vs-production": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiUiTools, Reactjs, Cursorai"
+      "Tags absent from body: LLMs"
     ],
     "words": 1780
   },
@@ -774,56 +746,48 @@
   "ai-wrote-the-docs-humans-wrote-the-gaps": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OpenapiEdgeCases, Generativeai"
+      "Tags absent from body: API Design, Messaging"
     ],
     "words": 1905
   },
   "alerts-2026-ai-turns-false-alarms-to-silence": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAlertTriage, OnCallAutomation, PagerdutyCostSaving, Softwareengineering"
+      "Tags absent from body: Reliability, Messaging"
     ],
     "words": 2289
   },
   "always-on-agents-cost-more-than-you-think": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AlwaysOn, Saas, Africatech"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2578
   },
   "api-abuse-2026-5-attacks-we-missed-until-costs-spiked": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ApiSecurity2026, ApiAbusePatterns, JwtKidSwap, GraphqlDepthAttack"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1996
   },
   "api-abuse-patterns-rising-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ApiAbuse, ApiSecurity2026, EdgeBotDetection, AdaptiveRateLimiting"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2260
   },
   "api-attacks-rising-40-the-3-patterns-to-block-now": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ApiSecurity2026, BlockApiAttacks, IdempotencyKeyApi, ApiGatewaySecurity"
+      "Tags absent from body: API Design, Distributed Systems"
     ],
     "words": 2290
   },
   "apm-is-blind-to-your-ai-agents": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LlmMonitoring, AiObservability, TraditionalApmGaps, Vectorsearch"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2345
   },
   "apm-lied-about-our-ai-incidents": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiIncidentDetection, ApmLimitations, GpuTelemetry, VllmMonitoring"
+      "Tags absent from body: Reliability, LLMs"
     ],
     "words": 2344
   },
@@ -833,128 +797,108 @@
     "words": 2414
   },
   "audit-logs-ship-them-fast-keep-them-forever": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AuditLogArchitecture, S3CostOptimization, SiemQueryLatency, ImmutableAuditLogs"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2446
   },
   "audit-logs-that-scale-skip-the-3am-fire-drills": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ClickhouseAuditLogs, KafkaAuditPipeline, Apachekafka"
+      "Tags absent from body: Java, Reliability"
     ],
     "words": 3071
   },
   "audit-trails-for-ai-agents-what-breaks-first": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AuditTrail, AiAgentCompliance, AgentDecisionLogging, IdempotencyKeyAgent"
+      "Tags absent from body: Payments, Distributed Systems"
     ],
     "words": 2910
   },
   "audit-trails-immutabledb-vs-dynamodb-streams": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AuditTrail, ImmutableLogs, DynamodbStreams, ComplianceLogging"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2914
   },
   "aws-cloudwatch-synthetics-for-ai-pipelines": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CloudwatchSynthetics, AiPipelineMonitoring, MPesaIntegration, Flutterwave"
+      "Tags absent from body: CI/CD, Payments"
     ],
     "words": 1769
   },
   "aws-cost-levers-2026-the-3-that-cut-bills-30": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AwsCostOptimization, AwsSavingsPlans, ComputeOptimizer2026, ReduceAwsBill"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2343
   },
   "aws-costs-for-nairobi-saas-2026-bill-split": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AwsCostBreakdown, CloudfrontCacheTtl, Lambda@edgeCost, Cloudcomputing"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2368
   },
   "aws-local-zones-vs-localstack-ai-microservices-in": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EdgeAiMicroservices, PopiaCompliantAi, Cloudcomputing"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2546
   },
   "bank-apis-broke-under-african-2g": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FintechApiDesign, Mobiledev, Redis"
+      "Tags absent from body: Africa Tech, Distributed Systems"
     ],
     "words": 2632
   },
   "big-model-api-vs-fine-tune-the-2026-math": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Finetuning"
+      "Tags absent from body: LLMs"
     ],
     "words": 2834
   },
   "bm25-vs-dense-embeddings-hybrid-search-reality": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: HybridSearch, DenseEmbeddings, ReciprocalRankFusion"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2627
   },
   "boring-aws-lambda-layers-that-dont-lock": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AwsLambdaLayers, LambdaGoldenPath, Cloudcomputing"
+      "Tags absent from body: TypeScript, Distributed Systems"
     ],
     "words": 2074
   },
   "build-a-search-system-in-2026-semantic-keyword": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: SearchSystemDesign, HybridSearch2026, Pgvector0.7, Apis"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1714
   },
   "build-agent-workflows-that-survive-restarts": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DurableAgentWorkflow, AgentPersistence, RedisStreamsAgent, FastapiAgentQueue"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1675
   },
   "build-in-public-without-burning-out": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Performance, Softwareengineering, Opensource, Buildinpublic"
+      "Tags absent from body: Performance"
     ],
     "words": 2208
   },
   "built-a-multi-agent-system-without-langgraph": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Langgraph, FastapiAsyncAgents, Python3, Multiagent"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1985
   },
   "bundle-size-70-lighter-with-server-components": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ServerComponentsReact, Next.jsBundleSize, ReduceReactBundle, Next.jsPerformance"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2432
   },
   "buy-vs-build-ai-3-hard-rules-for-2026": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Saas"
+      "Tags absent from body: LLMs, Payments"
     ],
     "words": 3035
   },
@@ -966,331 +910,301 @@
   "canary-rollbacks-automate-the-decision-not-the-deploy": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CanaryRelease, AutomatedRollback, ProgressiveDelivery, CanaryAnalysis"
+      "Tags absent from body: CI/CD"
     ],
     "words": 2475
   },
   "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CdcPipelineCrash, VllmCdc, PythonSemaphoreLlm, Python"
+      "Tags absent from body: LLMs, Data Engineering, PostgreSQL, Messaging"
     ],
     "words": 2099
   },
   "chaos-engineering-without-an-sre-team": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ChaosEngineering, FaultInjection, SmallTeamReliability, AwsFis"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2505
   },
   "choose-no-code-only-when": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Softwareengineering"
+      "Tags absent from body: LLMs"
     ],
     "words": 2498
   },
   "cicd-for-ai-code-test-secure-rollback-fast": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodeSecurity, BlueGreenRollback, PromptInjectionScan, Cybersecurity"
+      "Tags absent from body: LLMs, Testing"
     ],
     "words": 1839
   },
   "cicd-for-django-in-20ms-africa-networks": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: DjangoDockerAfrica, GithubActionsAfrica, Cloudcomputing, Containers"
+      "Tags absent from body: Containers, Africa Tech"
     ],
     "words": 2018
   },
   "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: CI/CD, Containers"
+    ],
     "words": 2468
   },
   "circleci-still-beats-github-actions-at-50k-builds": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: GithubActionsCost, CircleciPricing2026, Africatech"
+      "Tags absent from body: Africa Tech"
     ],
     "words": 2214
   },
   "claude-code-after-a-year-daily-wins": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ClaudeCode2026, AgenticCodingTools, AutomatedPatchReview, DependabotAutomation"
+      "Tags absent from body: CI/CD, Identity & Access"
     ],
     "words": 1832
   },
   "cloud-agents-burned-18k-8-tools-that-didnt-work": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CloudCostTools, AgentCostMonitoring, Cloudcomputing, K8s"
+      "Tags absent from body: Messaging, LLMs"
     ],
     "words": 2361
   },
   "code-ai-wont-rewrite": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: SemgrepLegacyCode, Localai2.5, Github"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2130
   },
   "commit-ownership-in-ai-pair-coding": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiPairProgramming, CodeOwnership, DockerGuardrails, Containers"
+      "Tags absent from body: Containers, LLMs, AI Agents, Africa Tech"
     ],
     "words": 2653
   },
   "compare-kafka-redpanda-nats-for-event-driven-systems": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EventDrivenArchitecture, KafkaTuningGuide, RedpandaTieredStorage, Apachekafka"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2633
   },
   "computer-use-agents-the-permission-trap": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ComputerUseAgent, AgentSecurity, PromptInjection, LeastPrivilegeAgent"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2909
   },
   "context-engineering-the-real-fix-for-agent-hallucinations": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentHallucinations, ContextEngineering, LongRunningAgents, LlmContextManagement"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2849
   },
   "context-windows-agents-that-run-for-days": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ContextWindow, AgentMemory, Generativeai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3184
   },
   "context-windows-live-longer-than-you-think": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LongRunningAgents, LlmTokenLimits, SupportAgentTokens, OpenaiTokenUsage"
+      "Tags absent from body: LLMs, Distributed Systems"
     ],
     "words": 2170
   },
   "contract-testing-is-not-optional": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ContractTesting, Microservices, IntegrationTesting"
+      "Tags absent from body: API Design, AI Agents"
     ],
     "words": 3059
   },
   "core-web-vitals-what-actually-moves-the-needle": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CoreWebVitals, Webdev, Dataengineering"
+      "Tags absent from body: Containers, LLMs"
     ],
     "words": 3056
   },
   "cost-tools-fail-when-agents-scale-autonomously": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AutonomousScaling, CloudCostTools, AgentDrivenScaling, CostAwareAutoscaling"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2200
   },
   "cqrs-when-it-pays-off-and-when-it-breaks": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EventualConsistency, ReadReplica, Dataengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2428
   },
   "cross-border-fintech-why-your-kyc-fails-in-dakar": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: CrossBorderFintech, FintechPolicyLayer"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2502
   },
   "currency-switch-fails-in-ghana-one-config-file-to-rule": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: MtnMomoHeader, Flutterwave, XofCurrencySupport, Mobiledev"
+      "Tags absent from body: API Design, Payments"
     ],
     "words": 2103
   },
   "cut-cold-starts-70-lambda-cost-hack": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ServerlessColdStarts, LambdaSnapstart2026, Cicd"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2427
   },
   "cut-false-positives-85-with-this-ci-security-trick": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: CiSecurityScanning, SonarqubeFalsePositives, Cybersecurity, Infosec"
+      "Tags absent from body: Containers"
     ],
     "words": 1940
   },
   "database-restore-drills-that-mean-something": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: DatabaseBackup, DisasterRecovery, RestoreDrill, MeasureRtoRpo"
+      "Tags absent from body: Databases, Reliability"
     ],
     "words": 2827
   },
   "dead-letter-queues-stop-poison-messages": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DeadLetterQueue, PoisonMessage, BackgroundJobQueue, Python3"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2423
   },
   "debug-ai-agent-failures-differently": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAgentPostmortem, LlmTraceAnalysis, AiIncidentRunbook, LangsmithVsDatadog"
+      "Tags absent from body: LLMs, Reliability, Observability"
     ],
     "words": 2484
   },
   "debug-ai-agents-failures-arent-just-bugs": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAgentPostmortem, LlmIncidentResponse, AiAgentObservability"
+      "Tags absent from body: LLMs, Reliability, Vector Search"
     ],
     "words": 1969
   },
   "debugging-techniques-that-outlast-any-framework": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FrameworkAgnostic, SystematicDebugging, Softwareengineering"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 2253
   },
   "dependency-pinning-the-lockfile-lie": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: DependencyPinning, ScaTools, ReproducibleBuilds, Backend"
+      "Tags absent from body: Distributed Systems, TypeScript"
     ],
     "words": 3213
   },
   "deployment-platforms-senior-vs-new-hire": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DeploymentPlatform, DeveloperOnboarding, PlatformEngineering, Softwareengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3326
   },
   "detect-lazy-agents-without-false-alarms": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentOutputQuality, OutcomePredictor, LlmEvaluation"
+      "Tags absent from body: LLMs, Serverless"
     ],
     "words": 2888
   },
   "detecting-silent-agent-failures": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentQuality, LlmJudge, GroundednessCheckLlm, Generativeai"
+      "Tags absent from body: LLMs, Observability"
     ],
     "words": 2653
   },
   "distributed-locks-safe-only-with-fencing": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: DistributedLock, FencingToken, RedisDistributedLock, EtcdDistributedLock"
+      "Tags absent from body: Distributed Systems, AWS"
     ],
     "words": 3242
   },
   "distroless-images-smaller-attack-surface": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ContainerSecurity, MinimalBaseImage, DistrolessDocker, Cybersecurity"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2486
   },
   "docs-that-survive-the-bus-factor-fix": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Engineering Management, Reliability, CI/CD, Identity & Access"
+    ],
     "words": 2926
   },
   "double-entry-ledger-concurrent-write-errors": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: DoubleEntryLedger, ConcurrentWrites, SerializationFailure, LedgerConsistency"
+      "Tags absent from body: Payments, CI/CD"
     ],
     "words": 2660
   },
   "double-the-price-double-the-revenue": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DevToolPricing, Softwareengineering, Coding"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2200
   },
   "drift-detection-the-plan-that-lies": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: TerraformDrift, InfrastructureDrift"
+      "Tags absent from body: Reliability, Distributed Systems"
     ],
     "words": 3204
   },
   "duckdb-in-production-when-it-replaces-a-warehouse": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: EmbeddedAnalytics, DuckdbProduction, DuckdbParquetS3, Dataengineering"
+      "Tags absent from body: Data Engineering, AWS, Distributed Systems"
     ],
     "words": 2475
   },
   "ebpf-observability-in-2026-what-actually-works": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Cybersecurity, Infosec"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1981
   },
   "edge-agents-vs-cloud-round-trips-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EdgeAiAgents, OnnxRuntime, Tinyllama, AndroidMlInference"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1719
   },
   "envelope-encryption-with-cloud-kms-key-rotation-traps": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EnvelopeEncryption, KeyRotation, CloudKms, Cloudcomputing"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2255
   },
   "evaluate-agents-with-spark-vs-custom-harness": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Softwareengineering, Multiagent"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2265
   },
   "event-driven-beats-agent-driven-910-times": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Aws, Techjobs"
+      "Tags absent from body: Distributed Systems, Messaging"
     ],
     "words": 2520
   },
   "event-sourcing-pay-the-complexity-tax-only-here": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: EventSourcing, EventSourcing2026, EventSourcingCost"
+      "Tags absent from body: Distributed Systems, Data Engineering"
     ],
     "words": 1829
   },
   "evolve-your-monolith-without-rewriting-in-2026": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Distributed Systems, Software Architecture"
+    ],
     "words": 2147
   },
   "fastapi-vs-django-vs-flask-api-picks-for-2026": {
@@ -1301,288 +1215,274 @@
   "feature-flags-became-ai-rollout-platforms": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FeatureFlags, AiRollout, FeatureFlagTools, LlmRolloutStrategy"
+      "Tags absent from body: LLMs"
     ],
     "words": 3513
   },
   "fintech-features-break-in-ghana-the-real-fix": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Fintech, PaymentTimeoutGhana, NationalIdValidation, Mobiledev"
+      "Tags absent from body: Fintech"
     ],
     "words": 2352
   },
   "fix-ai-agent-failures-postmortem-guide": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiAgentPostmortem, AiObservabilityTools, LlmFailureModes, AiIncidentResponse"
+      "Tags absent from body: Reliability, LLMs"
     ],
     "words": 2280
   },
   "flaky-tests-reliability-bug-not-test-noise": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: FlakyTests, TestReliability, FlakyTestCauses"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2986
   },
   "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AfricanFintechAi, SovereignAiNigeria, Dataengineering"
+      "Tags absent from body: LLMs, Python"
     ],
     "words": 2156
   },
   "found-niche-in-2026-saas-that-ai-cant-copy": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs"
+    ],
     "words": 2167
   },
   "fraud-detection-rules-vs-scoring-where-they-meet": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FraudDetection, RulesEngine, RiskScoringModel"
+      "Tags absent from body: Fintech, Observability"
     ],
     "words": 3240
   },
   "freelance-vs-full-time-african-devs-real-tradeoffs": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: RemoteWork, AfricanDevelopers, Passiveincome, Entrepreneurship"
+      "Tags absent from body: Engineering Careers, Africa Tech"
     ],
     "words": 2422
   },
   "gateway-api-wont-fix-your-ingress-mess": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: GatewayApi, KubernetesIngress, HttprouteDelegation"
+      "Tags absent from body: API Design, Platform Engineering, Identity & Access"
     ],
     "words": 2589
   },
   "global-state-is-the-wrong-tool-for-ai-features": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiStateManagement, ReactStateManagement, AiFeaturePerformance, Typescript"
+      "Tags absent from body: LLMs, TypeScript"
     ],
     "words": 2102
   },
   "golden-paths-become-load-bearing-walls": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: GoldenPath, AiPlatform, PromptVersioning, VectorStoreMetadata"
+      "Tags absent from body: LLMs, Reliability"
     ],
     "words": 2503
   },
   "golden-paths-that-dont-handcuff": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: GoldenPath, ScaffoldVersioning, GoldenPathHandcuffs, Softwareengineering"
+      "Tags absent from body: Platform Engineering, Containers"
     ],
     "words": 1919
   },
   "graphql-vs-rest-vs-trpc-2026s-api-fight": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Reliability, LLMs"
+    ],
     "words": 2645
   },
   "hire-for-agents-not-autocomplete": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AfricanTechHiring, HiringFor3g, Tech, Technology"
+      "Tags absent from body: Engineering Careers, AI Agents, Reliability, Messaging"
     ],
     "words": 2503
   },
   "hpa-vs-keda-vs-karpenter-autoscaling-traps": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Containers, Messaging, Serverless"
+    ],
     "words": 3271
   },
   "http3-changes-less-than-the-demos-imply": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: HttpProduction, QuicBackendImpact, HttpFallbackHttp, Softwareengineering"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 2645
   },
   "human-in-the-loop-when-agents-need-a-human-veto": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentApprovals, PromptInjection, AgentSecurity, ApprovalGateAgent"
+      "Tags absent from body: LLMs, Distributed Systems, Payments"
     ],
     "words": 2736
   },
   "hybrid-cloud-routing-cost-speed-balance-for-sea": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Cloudcomputing, Africatech"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2374
   },
   "idempotency-keys-what-they-fix-what-they-dont": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: IdempotencyKeys, PaymentApi, IdempotentRequests"
+      "Tags absent from body: Distributed Systems, Payments, API Design"
     ],
     "words": 2569
   },
   "idp-for-ai-2026-stack-evolution": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiEmbeddingPipeline, NodeAiService, RedisVectorCache, FastifyAiBackend"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2294
   },
   "iso-20022-where-payment-rails-actually-break": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PaymentRails, IsoMigration, PacsMessageMapping, IsoValidationRules"
+      "Tags absent from body: Mobile Money"
     ],
     "words": 3347
   },
   "istio-and-cilium-what-really-breaks-in-production": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ServiceMesh2026, IstioVsCilium, MeshOverhead, ServiceMeshCost"
+      "Tags absent from body: Identity & Access, CI/CD"
     ],
     "words": 2775
   },
   "json-modes-hidden-costs-revealed": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LlmStructuredOutput, JsonModeLimitations, AiExtractionPipeline, Dataengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2149
   },
   "json-modes-silent-failures-exposed": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmStructuredOutput, JsonModeLimitations, Generativeai, Redis"
+      "Tags absent from body: LLMs, Redis"
     ],
     "words": 1834
   },
   "jwt-sessions-revocation-rotation-storage": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: SessionManagement, TokenRevocation, RefreshTokenRotation, JwtStorage"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2537
   },
   "k6-vs-locust-traffic-models-that-lie": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: K6LoadTesting, LocustLoadTesting"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2518
   },
   "keep-multi-model-systems-stable-6-rules-that-worked": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: IdempotencyKeys, Redis7.2Eviction, LambdaConcurrency, Generativeai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2039
   },
   "kill-noisy-alerts-the-triage-system-that-restored-sleep": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AlertFatigue, AlertTriageSystem, ReduceFalsePositives, PrometheusAlerting"
+      "Tags absent from body: Observability, Reliability, LLMs"
     ],
     "words": 2237
   },
   "kubernetes-or-nomad-the-real-experiment-cost-split": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: NomadVsKubernetes, K8s, Techjobs"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2044
   },
   "kyc-integrations-the-data-you-shouldnt-store": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: KycIntegration, IdentityVerification, DataMinimisation, KycArchitecture"
+      "Tags absent from body: Messaging"
     ],
     "words": 3044
   },
   "latency-trade-offs-nairobi-teams-beat-global-ai-providers": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiInferenceLatency, NairobiTechStack, EdgeAiAfrica, Finetuning"
+      "Tags absent from body: Africa Tech, LLMs"
     ],
     "words": 2534
   },
   "least-privilege-for-agents-the-config-line-nobody-writes": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentPermissions, OpaRegoExamples, LeastPrivilegeAgents, Cybersecurity"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2469
   },
   "llm-agents-why-monoliths-win": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmAgentArchitecture, LlmAgentLatency, LlmMonolithicDesign, Generativeai"
+      "Tags absent from body: LLMs, Containers"
     ],
     "words": 2017
   },
   "llm-drift-the-silent-quality-drop-metrics-miss": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmDriftDetection, TokenizerRegression, LlmObservability, Generativeai"
+      "Tags absent from body: LLMs, Vector Search, Reliability"
     ],
     "words": 2008
   },
   "llm-eval-drift-that-users-notice-first": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmDriftDetection, TokenBudgetDrift, Generativeai"
+      "Tags absent from body: LLMs, AI Agents"
     ],
     "words": 2697
   },
   "llm-evals-langsmith-vs-promptfoo-in-prod": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LlmEvals, PromptTesting, LangsmithVsPromptfoo, Generativeai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3043
   },
   "llm-evals-skip-the-hype-track-these-4-metrics": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmEvaluationMetrics, ProductionLlmScoring, Vllm0.5.3Benchmarks"
+      "Tags absent from body: LLMs, CI/CD, Observability, Vector Search"
     ],
     "words": 1876
   },
   "llm-metrics-that-stop-wasting-time": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Generativeai"
+      "Tags absent from body: LLMs, Reliability, Vector Search"
     ],
     "words": 2383
   },
   "llm-output-metrics-that-actually-move-the-needle": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmEvaluationMetrics, Generativeai"
+      "Tags absent from body: LLMs, CI/CD, Observability"
     ],
     "words": 1973
   },
   "llm-risks-underestimated-in-owasp-top-10": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmSecurityRisks, OwaspLlmTop, PromptInjection, LlmContextIsolation"
+      "Tags absent from body: LLMs, AI Agents, Observability"
     ],
     "words": 1897
   },
   "llmops-2026-evaluation-stack-that-replaced-rag-dashboards": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PromptTemplateRot, LlmEvaluationStack, Generativeai, Vectorsearch"
+      "Tags absent from body: LLMs, Vector Search, MLOps"
     ],
     "words": 2430
   },
   "local-llm-agents-vllm-vs-ollama-for-fintech": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LocalLlm, FintechAiCompliance, Dataengineering"
+      "Tags absent from body: AI Agents, LLMs"
     ],
     "words": 3122
   },
@@ -1592,13 +1492,17 @@
     "words": 2320
   },
   "m-pesa-daraja-20-your-2026-migration-checklist": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Mobile Money, API Design, Identity & Access"
+    ],
     "words": 2116
   },
   "m-pesa-failures-cost-us-40-hours": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Mobile Money, Messaging"
+    ],
     "words": 2028
   },
   "map-legacy-code-with-ai-before-it-breaks": {
@@ -1609,149 +1513,133 @@
   "marketing-without-budget-5k-mrr-in-18-months": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ZeroBudgetMarketing, MrrWithoutAds, OpenSourceTraction, Cybersecurity"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 2129
   },
   "mcp-hidden-cost-traps": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: FintechMcpCompliance, Cybersecurity, Infosec"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2404
   },
   "mcp-servers-the-3-hidden-costs-nobody-quotes": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: McpServerProduction, McpMemoryLeak, McpBandwidthCost, McpSecurity"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2903
   },
   "mcp-vs-a2a-pick-the-wrong-layer": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Identity & Access, LLMs"
+    ],
     "words": 3002
   },
   "memory-systems-for-production-agents": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MemorySystems, ProductionAgents, ContextLeaks, Performance"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1977
   },
   "merge-three-payment-apis-into-one-system": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Flutter"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2736
   },
   "meter-dev-tool-pricing-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DevToolPricing, UsageBasedPricing, StripeMeteredBilling, CliMonetization"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1820
   },
   "micro-saas-niches-eaten-by-ai-in-2026": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Engineering Careers"
+    ],
     "words": 2283
   },
   "migrations-stop-running-them-live": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Distributed Systems, Databases, CI/CD"
+    ],
     "words": 2186
   },
   "mobile-first-ai-fails-you-didnt-plan": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: MobileAiPerformance, LowBandwidthAi, Lambda, Reactjs"
+      "Tags absent from body: Serverless, Vector Search, AWS"
     ],
     "words": 2306
   },
   "mobile-money-agent-fees-why-your-bot-keeps-failing": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ErrPaymentFailed, UssdSessionTimeout, Apis, Mobiledev"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2480
   },
   "mobile-money-agents-when-m-pesa-api-fails": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MobileMoney, MPesaApi, Mobiledev"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2511
   },
   "model-evals-the-gaps-that-let-drift-slip-through": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ModelEvaluation, BehaviorDrift, EvalGaps"
+      "Tags absent from body: LLMs, MLOps, AI Agents"
     ],
     "words": 2877
   },
   "model-router-keep-it-simple-keep-it-local": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Cloudcomputing"
+      "Tags absent from body: LLMs"
     ],
     "words": 2230
   },
   "monolith-to-services-without-a-rewrite": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MonolithRefactor2026, DistributedMonolith, ServiceExtraction, Redis"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2656
   },
   "most-llm-cost-dashboards-lie": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmCost, PromptCachingSavings, Generativeai"
+      "Tags absent from body: LLMs, AI Agents"
     ],
     "words": 2456
   },
   "move-images-50-faster-in-2026-with-starlink-cdn": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: StarlinkCdnAfrica, Cloudcomputing, Performance"
+      "Tags absent from body: Performance, Serverless, Containers"
     ],
     "words": 2038
   },
   "multi-agent-dx-langgraph-vs-crewai-gaps": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MultiAgentSystems, AgentObservability, Softwareengineering, Coding"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3047
   },
   "multi-agent-handoffs-the-latency-tax-nobody-measures": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MultiAgentLatency, AgentHandoff, LlmOrchestration, Generativeai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2203
   },
   "multi-agent-systems-break-first": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Multiagent"
+      "Tags absent from body: LLMs, Payments, Messaging"
     ],
     "words": 2153
   },
   "multi-agent-systems-when-they-quietly-degrade": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: MultiAgentSystems, LlmObservability, AgentDegradation, TokenCostTracking"
+      "Tags absent from body: LLMs, Observability, Reliability"
     ],
     "words": 2248
   },
   "multi-agent-systems-why-failures-hide": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MultiAgentSystems, AgentOrchestration, LlmTokenBudget, Generativeai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2263
   },
   "multi-region-active-active-the-hidden-costs": {
@@ -1767,31 +1655,35 @@
   "negotiate-2026-pay-when-ai-steals-40-of-your-job": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiProductivityMetrics, GithubCopilotTelemetry, Artificialintelligence, Techjobs"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 1811
   },
   "negotiate-pay-in-2026-with-ai-proof-points": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: NegotiateSalary2026, AiResumeProof, HumanWorkRatio, Techcareer"
+      "Tags absent from body: Engineering Careers, Reliability"
     ],
     "words": 1737
   },
   "negotiate-salaries-with-ai-skills-in-2026": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Engineering Careers, LLMs"
+    ],
     "words": 1685
   },
   "neon-vs-planetscale-vs-turso-which-broke-first": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Distributed Systems, PostgreSQL"
+    ],
     "words": 2417
   },
   "nextjs-15-vs-remix-vs-sveltekit-2026-choices": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SveltekitBundleSize, RemixOfflineSupport, Performance"
+      "Tags absent from body: Performance"
     ],
     "words": 2430
   },
@@ -1803,42 +1695,45 @@
   "nodejs-memory-leak-find-it-in-10-min": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: MemoryProfiling, Softwareengineering"
+      "Tags absent from body: TypeScript, Containers, CI/CD"
     ],
     "words": 2703
   },
   "oauth-21-migration-what-breaks-in-existing-integrations": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OauthMigration, ImplicitGrantRemoval, RedirectUriMatching"
+      "Tags absent from body: Identity & Access"
     ],
     "words": 3520
+  },
+  "object-storage-lifecycle-policies-explained": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2590
   },
   "observability-2026-ditch-the-three-pillars": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: UnifiedTelemetry, ClickhouseObservability, TraceStorageCost, Vectorsearch"
+      "Tags absent from body: Data Engineering, Messaging"
     ],
     "words": 2479
   },
   "observability-agents-lied-to-us": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ObservabilityAgents, Opentelemetry, PrometheusOverhead, K8s"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2590
   },
   "observe-llm-features-90-faster": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmObservability, LlmMetrics, FastapiWrapper, RedisFeatureFlags"
+      "Tags absent from body: LLMs, Vector Search"
     ],
     "words": 1983
   },
   "offline-agent-workflows-for-last-mile-ops": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OfflineFirst, FieldAgents, IndexeddbSync"
+      "Tags absent from body: Payments"
     ],
     "words": 2589
   },
@@ -1848,17 +1743,13 @@
     "words": 1983
   },
   "offline-first-agents-for-field-teams": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: OfflineFirstApps, ReactNative, FieldAgentsAfrica, AwsAppsync"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2191
   },
   "offline-first-apps-what-3g-markets-taught-us": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: OfflineFirstApps, OfflineFirstDesign, SqliteOfflineStorage, Watermelondb1.6"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2901
   },
   "offline-first-money-apps-with-dynamodb-streams": {
@@ -1867,35 +1758,31 @@
     "words": 1948
   },
   "one-misconfigured-vector-db-killed-our-rag-pipeline": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: RagPipelineFailures, WeaviateError, FastapiRagService, RagObservability"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1867
   },
   "one-payment-stack-for-kenya-nigeria-ghana": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Africa Tech, Reliability"
+    ],
     "words": 2500
   },
   "only-boring-stacks-survive-ai-services": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: FastapiStack, PostgresqlVsMongodb, CeleryAlternatives, K8s"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2950
   },
   "open-banking-apis-the-integration-traps": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: OpenBanking, ApiIntegration, ConsentManagement, IdempotencyKeys"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2899
   },
   "open-source-contributions-the-credibility-trap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OpenSourceCareer, ContributionStrategy, Techcareer, Opensource"
+      "Tags absent from body: Engineering Careers"
     ],
     "words": 3506
   },
@@ -1907,7 +1794,7 @@
   "orchestration-tax-kills-multi-agent-systems": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: EventDrivenAgents, CrdtMultiAgent, Python3, Multiagent"
+      "Tags absent from body: Distributed Systems, Serverless"
     ],
     "words": 2341
   },
@@ -1917,24 +1804,20 @@
     "words": 2725
   },
   "papss-and-mobile-money-where-integration-breaks": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MobileMoney, PaymentIntegration, Mobiledev"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3605
   },
   "pci-dss-architecture-12-requirements-that-matter": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PciDss, PaymentArchitecture, PciDssRequirements, Dataengineering"
+      "Tags absent from body: Payments, Identity & Access"
     ],
     "words": 2684
   },
   "personal-ai-assistants-avoid-vendor-lock-in-traps": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: FastapiAiAssistant, OpensearchVectorSearch, VllmLocalLlm, Artificialintelligence"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2689
   },
   "pick-one-stripe-lemon-squeezy-paddle-in-2026": {
@@ -1943,190 +1826,172 @@
     "words": 2767
   },
   "platform-engineering-roi-metrics-that-fund-teams": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: PlatformEngineering, RoiMetrics, PlatformTeamFunding, EngineeringMetrics"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2460
   },
   "platform-teams-agentic-world-struggle": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Softwareengineering, Coding, Agenticai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2360
   },
   "platform-teams-in-2026-docs-vs-production-reality": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Softwareengineering, Coding"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2938
   },
   "poolers-wont-save-your-serverless-db": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ServerlessDatabase, RdsProxyAlternatives, PgcatVsPgbouncer, Dataengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2748
   },
   "portfolio-projects-hiring-managers-skip": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: PortfolioProject, HiringManagers, DeveloperPortfolio, Softwareengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3625
   },
   "portfolio-projects-that-hire-remote-senior-devs": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Softwareengineering"
+      "Tags absent from body: Engineering Careers, Containers, Distributed Systems"
     ],
     "words": 1720
   },
   "portfolio-that-hires-show-constraints-not-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: 3gLatencyPortfolio, Fly.io$12Hosting, Softwareengineering, Coding"
+      "Tags absent from body: Engineering Careers, Distributed Systems"
     ],
     "words": 2418
   },
   "postgres-17-buried-redis-s3-cron": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PostgresJsonbCache, PostgresBlobStorage, Performance"
+      "Tags absent from body: Performance, AWS"
     ],
     "words": 2047
   },
   "postgres-17-swallowed-redis-kafka-timescale": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Messaging, Databases"
+    ],
     "words": 2736
   },
   "postgres-vector-search-what-breaks-first": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: PgvectorVsQdrant, VectorSearchLatency, Vectordb"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2566
   },
   "pr-checklists-are-dead-ai-agents-do-reviews-now": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodeReview, AgenticPipeline, PrAutomation, GithubActionsAi"
+      "Tags absent from body: AI Agents, LLMs"
     ],
     "words": 2079
   },
   "prevent-ownership-drift-when-velocity-explodes": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OwnershipDrift, CacheOwnership, NodeGateway, RedisCache"
+      "Tags absent from body: LLMs, Reliability"
     ],
     "words": 2061
   },
   "price-ai-proof-skills-in-2026": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiProofCompensation, Levels.fyi, Techjobs"
+      "Tags absent from body: Engineering Careers, LLMs, Reliability"
     ],
     "words": 2261
   },
   "price-saas-tools-in-2026-what-we-learned-pricing-a": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: DeveloperToolPricing, UsageBasedPricing, ConcurrencyPricing, SaasCostModel"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2075
   },
   "price-your-remote-job-like-a-new-york-dev": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: RemoteSalaryNegotiation, FreelanceRateCalculator, Python3"
+      "Tags absent from body: Engineering Careers"
     ],
     "words": 2120
   },
   "promotions-in-the-ai-era-the-mechanism": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: EngineeringPromotion, SeniorEngineer, AiCodingAssistants, Careeradvice"
+      "Tags absent from body: Engineering Careers, Reliability, LLMs"
     ],
     "words": 3333
   },
   "prompt-injection-got-the-hype-poison-data-ruined-us": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmSecurityRisks, ModelDriftDetection, OwaspLlmTop, Cybersecurity"
+      "Tags absent from body: LLMs, Identity & Access, Observability"
     ],
     "words": 3427
   },
   "prompt-injection-what-breaks-first-in-prod": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: PromptInjection, ToolInjection, LlmSecurity, ToolCallingSecurity"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2553
   },
   "prompt-injections-hidden-aws-tax": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PromptInjection, LlmSecurity, AiPromptSecurity, TemplateInjection"
+      "Tags absent from body: LLMs, AWS"
     ],
     "words": 2198
   },
   "prompts-are-code-how-to-measure-their-value": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PromptMetrics, AgentGraphs, PromptVersioning, LlmObservability"
+      "Tags absent from body: LLMs, AI Agents, CI/CD"
     ],
     "words": 3687
   },
   "property-based-testing-vs-example-tests-the-bug-gap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PropertyBasedTesting, ExampleTests, Softwareengineering"
+      "Tags absent from body: Payments, Distributed Systems"
     ],
     "words": 3614
   },
   "purpose-built-beats-general-ai-tools": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiPlatform, QdrantVsPinecone, Cybersecurity, Indiehacker"
+      "Tags absent from body: LLMs, Python"
     ],
     "words": 2975
   },
   "pypi-poisoned-models-hit-prod-in-2025": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiModelPoisoning, PipToolsHashes, Cybersecurity"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 2046
   },
   "python-deps-uv-vs-poetry-vs-pip-tools": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: DependencyManagement, UvVsPoetry, PipToolsLockfile, PythonLockfile"
+      "Tags absent from body: Distributed Systems, Containers"
     ],
     "words": 2313
   },
   "queueing-theory-for-backend-capacity": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: QueueingTheory, CapacityPlanning, P99Latency, BackendPerformance"
+      "Tags absent from body: Observability"
     ],
     "words": 2714
   },
   "rag-in-prod-what-tutorials-wont-tell-you": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: RagPipelineProduction, FaissLatencyTuning, PgvectorNightlyJob, RagCostOptimization"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2631
   },
   "rag-is-not-enough-hybrid-search-reranking-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: RagHallucinationFix, Generativeai, Vectorsearch"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2222
   },
   "rag-on-legacy-systems-vector-db-vs-full-text-sql": {
@@ -2135,96 +2000,90 @@
     "words": 2689
   },
   "rag-pipelines-4-silent-prod-killers": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: RagPipelineProduction, VectorDatabaseCost, PgvectorVsMilvus, RagLatencyBenchmarks"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2310
   },
   "rag-rots-if-you-dont-refresh-indexes": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ProductionRagSystems, Dataengineering, Vectorsearch"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2810
   },
   "rate-limiters-burst-vs-abuse-two-designs": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: RateLimiting, TokenBucket"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2917
   },
   "rbac-vs-abac-pick-by-blast-radius": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: AI Agents"
+    ],
     "words": 2059
   },
   "react-19-compiler-my-components-changed-how": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: React19Compiler, ReactForgetPerformance, UsememoVsCompiler, ReactCompilerBugs"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1994
   },
   "read-replicas-the-bug-factory-you-built": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ReadReplicas, ReplicationLag, DatabaseReadScaling, StaleReads"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3004
   },
   "rebalance-pay-when-ai-fills-half-your-role": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: NegotiateSalary2026, Softwareengineering, Github, Techjobs"
+      "Tags absent from body: Engineering Careers, Reliability"
     ],
     "words": 2208
   },
   "reconciling-mobile-money-edge-cases-banks-ignore": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Mobiledev"
+      "Tags absent from body: Distributed Systems, Messaging"
     ],
     "words": 3303
   },
   "red-teaming-agents-without-killing-velocity": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: RedTeamingAgents, AutomatedRedTeaming, LangchainSecurity, Cybersecurity"
+      "Tags absent from body: AI Agents, LLMs, CI/CD, Messaging"
     ],
     "words": 2154
   },
   "redis-vs-valkey-vs-dragonfly-which-in-memory-store": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Databases, Distributed Systems"
+    ],
     "words": 3399
   },
   "regulations-forced-better-apis-the-2026-fintech": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FintechApiDesign, DurablePaymentApis, Postgresql"
+      "Tags absent from body: Payments, Messaging"
     ],
     "words": 2503
   },
   "remote-premium-rates-skills-ai-cant-copy": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: RemoteWork, PremiumRates, LatencyBudget, RemoteDiagnosis"
+      "Tags absent from body: Reliability, Engineering Careers"
     ],
     "words": 3295
   },
   "remote-salary-negotiate-without-sounding-cheap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Techcareer, Careeradvice"
+      "Tags absent from body: Payments"
     ],
     "words": 2353
   },
   "remote-work-in-2026-which-tools-survived": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AsyncCommunicationMatrix, MatrixSynapse1.116.0"
+      "Tags absent from body: Containers, Engineering Careers"
     ],
     "words": 1792
   },
@@ -2236,139 +2095,135 @@
   "replace-managed-services-with-postgres-17": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PgSearch, PgCron, ManagedServicesCost, Tech"
+      "Tags absent from body: PostgreSQL, LLMs"
     ],
     "words": 2729
   },
   "retire-api-versions-before-they-pile-up": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Testing, AI Agents"
+    ],
     "words": 2140
   },
   "rogue-agent-api-calls-stop-the-bleeding": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Reliability"
+    ],
     "words": 1876
   },
   "run-apis-in-50-spots-what-breaks-first": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EdgeNativeBackend, EdgeApiLatency, EdgeCachingPatterns, Softwareengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2088
   },
   "runbooks-vs-ai-which-cuts-outages-50": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiRunbooks, MttrReduction, FirehydrantAiCopilot, PagerdutyAiopsCost"
+      "Tags absent from body: LLMs, Reliability, CI/CD"
     ],
     "words": 2326
   },
   "rust-rewrites-where-they-pay-off-where-they-dont": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: RustBackendServices, AsyncRustPitfalls, Softwareengineering, Rustlang"
+      "Tags absent from body: Distributed Systems, LLMs"
     ],
     "words": 2222
   },
   "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LlmProductionStack, FastapiLlmProduction, Python3, Rustlang"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2071
   },
   "saga-pattern-orchestration-vs-choreography-in-payments": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Distributed Systems, Engineering Careers, Identity & Access"
+    ],
     "words": 2960
   },
   "sandboxed-computer-use-agents-with-gvisor": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ComputerUseAgents, AgentSandboxing, GvisorSandbox"
+      "Tags absent from body: LLMs, Containers"
     ],
     "words": 2781
   },
   "save-12kmonth-cloud-egress-costs-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: CloudEgressCost, EgressCost2026, Cloudcomputing, Dataengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2583
   },
   "sbom-attestation-that-gets-used": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SbomAttestation, CosignSbomSigning, Golang"
+      "Tags absent from body: Reliability, Containers"
     ],
     "words": 3315
   },
   "scope-agent-permissions-per-task": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LeastPrivilege, AiAgentPermissions, Softwareengineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3799
   },
   "security-engineering-isnt-a-ladder": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SecurityEngineering, SecurityCareerPath, Cybersecurity, Infosec"
+      "Tags absent from body: Engineering Careers, Reliability, LLMs"
     ],
     "words": 2631
   },
   "self-healing-ai-agents-vs-rule-based-ops-40-fewer": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiAgentsDeployment, CanaryAnalysisRollback, Prometheus3.1, Artificialintelligence"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2377
   },
   "self-healing-pipelines-argo-vs-crossplane-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: GitopsSelfHealing, K8s"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2482
   },
   "self-service-ai-tooling-the-permission-trap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiTooling, PermissionTrap, SelfServiceAi, TokenExchangeAi"
+      "Tags absent from body: AI Agents, LLMs, Reliability"
     ],
     "words": 2674
   },
   "self-service-ai-tooling-where-it-breaks-first": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiRateLimit, AiBudgetEnforcement"
+      "Tags absent from body: LLMs"
     ],
     "words": 2765
   },
   "self-service-is-broken-without-ai-ops": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SelfServicePlatform, AiGuardrails, PlatformEngineering, IamPolicyChecks"
+      "Tags absent from body: AI Agents, LLMs, Reliability"
     ],
     "words": 2360
   },
   "senior-engineer-the-bar-moved-nobody-updated-the-rubric": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SeniorEngineer, AiHiring, EngineeringRubric, Dataengineering"
+      "Tags absent from body: Engineering Careers, LLMs"
     ],
     "words": 2537
   },
   "senior-engineer-title-inflation-in-2026": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Engineering Careers"
+    ],
     "words": 1907
   },
   "senior-role-projects-3-real-paths": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SeniorRemoteRoles, RedisRateLimiting, Cybersecurity, Infosec"
+      "Tags absent from body: Engineering Careers, Containers"
     ],
     "words": 2344
   },
@@ -2376,15 +2231,13 @@
     "verdict": "IMPROVE",
     "reasons": [
       "Unverifiable first-person experience claims x1 (not human_reviewed)",
-      "Tags absent from body: TechnicalDepth, FreelanceEngineer, SeniorTitle, TimezoneSystemDesign"
+      "Tags absent from body: Engineering Careers, Payments, Reliability"
     ],
     "words": 3363
   },
   "serve-4g-as-baseline-apps-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: 4gWebPerformance, GoApi4g, Redis7.4Caching, Vite5.3Bundling"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2242
   },
   "settlement-vs-clearing-backend-engineers-guide": {
@@ -2395,81 +2248,75 @@
   "ship-1mb-pages-on-4g-starlink-africa-case-study": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: 4gWebPerformance, BrotliCompression2026, CloudfrontQuic2026, StarlinkAfricaLatency"
+      "Tags absent from body: Africa Tech, AI Agents, Observability"
     ],
     "words": 2154
   },
   "ship-a-solo-project-pipeline-under-20month": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Fly.ioCost, GithubActionsTips, Devops, Containers"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2544
   },
   "ship-evals-before-your-agent-ships": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentEvals, LangsmithEval, GoldenDatasetAgents"
+      "Tags absent from body: LLMs, Observability, Distributed Systems"
     ],
     "words": 2607
   },
   "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Data Engineering, Java"
+    ],
     "words": 2176
   },
   "show-real-work-not-ai-clones": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiPortfolioFilter, NetworkLatencyResume, Mobiledev"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2843
   },
   "skip-m-pesa-build-one-api-for-3-african-markets": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Mobiledev, Flutter"
+      "Tags absent from body: Africa Tech, Distributed Systems"
     ],
     "words": 2936
   },
   "slos-for-agentic-features-beyond-latency": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgenticAiSlos, OpentelemetryAgents, AgentSuccessRate, Agenticai"
+      "Tags absent from body: Performance, LLMs"
     ],
     "words": 2383
   },
   "small-language-models-the-classifier-trap": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Payments"
+    ],
     "words": 2877
   },
   "soft-deletes-fail-what-breaks-first": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SoftDeletes, SoftDeletePattern, DatabaseLifecycle, SoftDeleteAlternatives"
+      "Tags absent from body: Databases, Performance"
     ],
     "words": 2237
   },
   "spot-ais-hidden-cost-spike-in-your-stack": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AiRefactorRisks, Techcareer"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2527
   },
   "spot-evictions-the-retry-logic-that-holds-up": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AwsSpotInstances, RetryLogic, BackgroundWorkers, AwsBatch"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2135
   },
   "spot-instances-vs-on-demand-for-ai-experiments": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: SpotInstances, GpuCost"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2600
   },
   "sqlalchemy-vs-asyncpg-pooling-in-async-services": {
@@ -2480,7 +2327,7 @@
   "staging-wont-catch-prod-bugs-make": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: StagingEnvironment, FaultInjection, ProductionOnlyBugs, ConcurrencyTesting"
+      "Tags absent from body: Reliability, CI/CD, LLMs"
     ],
     "words": 2575
   },
@@ -2490,115 +2337,111 @@
     "words": 1800
   },
   "starlink-in-production-what-changed-in-our-stack": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: API Design, Reliability"
+    ],
     "words": 2390
   },
   "stay-relevant-when-tools-change-faster-than-you-can": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: StayTechnicallyRelevant, ToolUpgradeStrategy, DependencyManagement2026"
+      "Tags absent from body: CI/CD"
     ],
     "words": 3036
   },
   "stop-assuming-payment-apis-never-fail": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PaymentApis, AiCheckout, MPesaFailure, PaystackRetry"
+      "Tags absent from body: Mobile Money, API Design"
     ],
     "words": 2114
   },
   "stop-false-positives-in-ci-scanning-now": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Cybersecurity, Infosec"
+      "Tags absent from body: Containers"
     ],
     "words": 2711
   },
   "stop-guessing-tech-stacks-validate-tools-in-2-hours": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Containers, Reliability"
+    ],
     "words": 2358
   },
   "stop-putting-llm-keys-in-env": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: SecretsManagement, LlmApiKeys, EnvironmentVariables, LlmGatewaySecrets"
+      "Tags absent from body: LLMs, Containers, Reliability"
     ],
     "words": 2809
   },
   "stop-the-writes-zero-downtime-db-migrations": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Databases, Distributed Systems, Messaging"
+    ],
     "words": 2551
   },
   "stop-trusting-agents-for-core-logic": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgentOrchestration, CodeReview, ContractFirstDesign"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2242
   },
   "store-data-once-serve-everywhere-cheaper": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: MultiRegionBackend, MultiRegionCaching, EdgeCaching2026, Softwareengineering"
+      "Tags absent from body: Distributed Systems, Python"
     ],
     "words": 2201
   },
   "stride-is-a-checklist-not-a-threat-model": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ThreatModeling, AttackTrees, ThreatModelBackend, Softwareengineering"
+      "Tags absent from body: Identity & Access, LLMs"
     ],
     "words": 2713
   },
   "structured-logging-searchable-at-scale": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: StructuredLogging, LogManagement, LogAggregation, LogSchemaDesign"
+      "Tags absent from body: Observability, Data Engineering, Google Cloud"
     ],
     "words": 3865
   },
   "supervisor-vs-swarm-vs-debate-vs-pipeline": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: Multiagent"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 3186
   },
   "tame-python-asyncs-hidden-traps": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AsyncPython, FastapiAsync, Python3.11Async, AiohttpVsRequests"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2073
   },
   "tech-debt-when-half-your-stack-is-unfamiliar": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: TechnicalDebt, SoloEngineer, UnfamiliarTools, Technology"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2687
   },
   "technical-debt-defend-priorities-to-stakeholders": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: TechnicalDebt, Prioritization, Softwareengineering"
+      "Tags absent from body: Engineering Management, Reliability, CI/CD"
     ],
     "words": 2528
   },
   "temporal-changed-our-agent-retries-for-good": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: TemporalWorkflow, DurableExecution, AgentPlatform, TemporalCloud"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2312
   },
   "test-ai-code-without-testing-the-ai": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Generativeai"
+      "Tags absent from body: LLMs"
     ],
     "words": 2660
   },
@@ -2610,49 +2453,43 @@
   "tool-calling-patterns-patterns-that-survive-load-vs": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ToolCallingPatterns, BackoffCurve, ToolCallSafety"
+      "Tags absent from body: Reliability, AI Agents"
     ],
     "words": 2695
   },
   "tool-calling-stateless-beats-stateful-under-load": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ToolCalls, StatelessVsStateful, ConnectionPoolTuning, P99Latency"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2157
   },
   "tool-calls-under-load-async-batch-vs-fire-and-forget": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: Apis, Performance"
+      "Tags absent from body: API Design, Performance, Messaging"
     ],
     "words": 2823
   },
   "tool-calls-why-retries-stampede": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: ThunderingHerd, ToolUse, RetryStorm, AgentToolCalling"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2210
   },
   "track-ai-agent-costs-in-fractal-workflows": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: AgenticFinops, Langgraph, Cloudcomputing, Agenticai"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2549
   },
   "trim-llm-bills-3-finops-moves-that-work": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LlmCostOptimization, ReduceLlmCosts, LlmCachingStrategies"
+      "Tags absent from body: LLMs, Cloud Cost"
     ],
     "words": 1959
   },
   "two-engineer-classes-the-ai-tool-norm-trap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodingTools, AiDeveloperPolicy, TeamAiNorms, Generativeai"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 2177
   },
@@ -2664,42 +2501,40 @@
   "use-feature-flags-to-deploy-ai-models-safely": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: FeatureFlags, AiDeployment, FeatureFlagsAi, RollBackAi"
+      "Tags absent from body: CI/CD, Containers"
     ],
     "words": 2186
   },
   "ussd-fintech-in-2026-the-300m-user-channel-nobody": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: UssdFintechAfrica, UssdGateway2026, Node.jsUssdTutorial, UssdLatencyOptimization"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2363
   },
   "ussdsms-fallback-the-session-trap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: UssdSessionTimeout, SmsFallbackFintech, UssdTransactionState"
+      "Tags absent from body: AI Agents, Distributed Systems"
     ],
     "words": 2982
   },
   "velocity-up-ownership-down-team-scaling-trap": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: TeamOwnership, ResponsibilityMatrix, OwnershipBlur"
+      "Tags absent from body: Reliability"
     ],
     "words": 2564
   },
   "vibe-code-works-great-fails-forever": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: VibeCoding, ProductionFailures, Fastapi, Structlog24.4.0"
+      "Tags absent from body: Reliability, Distributed Systems, Python"
     ],
     "words": 2394
   },
   "vibe-coding-mvp-gem-prod-albatross": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: VibeCoding, MaintainableCode, TypescriptStrictMode, Js"
+      "Tags absent from body: Reliability"
     ],
     "words": 2658
   },
@@ -2709,36 +2544,32 @@
     "words": 2937
   },
   "waf-and-bot-management-what-they-miss": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: BotManagement, WafBypass, BotDetectionGaps, Webdev"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2908
   },
   "wasm-servers-beat-containers-here": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: WebassemblyOnServer, WasmVsContainers, WasmPerformance, NodeLtsWasi"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2250
   },
   "webhook-delivery-that-survives-outages": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: OutboxPattern, WebhookRetry"
+      "Tags absent from body: Messaging, Distributed Systems"
     ],
     "words": 2501
   },
   "webhooks-2026-retries-idempotency-and-the-9995": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Messaging, Distributed Systems"
+    ],
     "words": 1959
   },
   "webhooks-done-right-retries-that-dont-explode-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: WebhookRetries2026, IdempotentWebhooks, RedisIdempotency7.2"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1883
   },
   "websockets-vs-server-sent-events-latency-over-3g": {
@@ -2747,155 +2578,143 @@
     "words": 2555
   },
   "when-flags-become-experiments": {
-    "verdict": "KEEP",
-    "reasons": [],
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: CI/CD, Containers"
+    ],
     "words": 2900
   },
   "when-velocity-is-hard-to-measure-evaluating-engineering": {
     "verdict": "IMPROVE",
     "reasons": [
       "Unverifiable first-person experience claims x2 (not human_reviewed)",
-      "Tags absent from body: EngineeringOutput, VelocityMetrics, ChangeFailureRate, DeploymentFrequency"
+      "Tags absent from body: Reliability, Engineering Careers"
     ],
     "words": 2636
   },
   "when-your-agent-goes-silent-degrade-gracefully": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: GracefulDegradation, CircuitBreaker, LlmTimeout, Generativeai"
+      "Tags absent from body: Reliability, LLMs, Identity & Access"
     ],
     "words": 2284
   },
   "which-agent-stack-survives-3g": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: LowLatencyAgents, EastAfricaDevelopers, EdgeAgentDeployment, ReconnectionStorm"
+      "Tags absent from body: Distributed Systems, LLMs"
     ],
     "words": 2340
   },
   "which-ai-wrappers-made-money-in-2026": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCopilotWrappers, RagWrapperComparison, GuardrailsAiReview, Artificialintelligence"
+      "Tags absent from body: LLMs, Vector Search, Reliability"
     ],
     "words": 1826
   },
   "who-owns-ai-generated-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiPairProgramming, CodeOwnershipModel, BanditSecurityScan, Cybersecurity"
+      "Tags absent from body: LLMs, Identity & Access"
     ],
     "words": 1862
   },
   "who-signs-off-on-ai-code": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiCodeReview, CodeOwnership, AiAccountability, Generativeai"
+      "Tags absent from body: Reliability, Identity & Access, LLMs"
     ],
     "words": 2231
   },
   "why-ai-interviewers-failed-68-of-us-in-2026": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AiInterviewerBias, Artificialintelligence, Postgresql, Apachekafka"
+      "Tags absent from body: Engineering Careers, LLMs, Payments, PostgreSQL"
     ],
     "words": 2252
   },
   "why-do-production-agents-still-need-humans": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: HumanInLoop, ProductionAgents"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2220
   },
   "why-does-my-agent-version-break-clients": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: AgentVersioning, SemanticVersioning, Docker, Containers"
+      "Tags absent from body: AI Agents, Containers, CI/CD, Software Architecture"
     ],
     "words": 2359
   },
   "why-does-my-model-drift-after-deploy": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ModelDrift, MlEvaluation"
+      "Tags absent from body: CI/CD, LLMs"
     ],
     "words": 2806
   },
   "why-leader-election-fails-on-cloud-networks": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LeaderElection, DistributedSystems, CloudNetworkFailures, FencingTokens"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2528
   },
   "why-monoliths-die-slowly-in-2026": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: MonolithMigration, StranglerFigPattern, MonolithToService, ExtractDomain"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2713
   },
   "why-our-schema-survived-ai-scaling": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: EmbeddingSchema, VectorStoreMigration, Dataengineering, Vectordb"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 1998
   },
   "why-platform-metrics-lie": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PlatformMetrics, TeamImpact"
+      "Tags absent from body: LLMs, Platform Engineering"
     ],
     "words": 2326
   },
   "why-progressive-web-apps-fail-on-2g-and-how-to-fix": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: 2gOptimization, MobilePerformance, ReactSsrEdge, BrotliAvif"
+      "Tags absent from body: Backend Engineering"
     ],
     "words": 2383
   },
   "why-scaling-agents-kills-plain-logs": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: StructuredLogging, ModelPinning, Microservices"
+      "Tags absent from body: Reliability, Software Architecture"
     ],
     "words": 2145
   },
   "why-your-multi-agent-system-degraded-slowly": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: NatsLatencyTuning, Performance, Multiagent"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2660
   },
   "why-your-routing-layer-will-collapse-at-scale": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: LlmRouting, ModelRouting, GdprModelRouting, RedisRetryState"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2101
   },
   "world-models-wont-replace-your-backend": {
-    "verdict": "IMPROVE",
-    "reasons": [
-      "Tags absent from body: WorldModels, PhysicalAi, BackendEngineering"
-    ],
+    "verdict": "KEEP",
+    "reasons": [],
     "words": 2851
   },
   "your-platform-team-is-too-big": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: PlatformEngineering, TeamTopologies, PlatformTeamStaffing, Softwareengineering"
+      "Tags absent from body: Engineering Careers, Reliability"
     ],
     "words": 3555
   },
   "zero-trust-ai-skip-the-latency-tax": {
     "verdict": "IMPROVE",
     "reasons": [
-      "Tags absent from body: ZeroTrust, AiLatency"
+      "Tags absent from body: Identity & Access, Performance"
     ],
     "words": 2805
   },

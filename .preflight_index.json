@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-18T06:33:37.066657",
+  "built_at": "2026-11-18T20:12:18.125275",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5885,6 +5885,11 @@
       "slug": "senior-without-the-title-what-stalls-engineers",
       "title": "Senior without the title: what stalls engineers",
       "summary": "The title on your contract says \"Mid-level Engineer\" or \"Analista de Sistemas\" or maybe just \"Desarrollador Senior\" — but the work you're doing has outgrown it. You're the one the client calls when the payment gateway starts rejecting cards from a new region. You're the one who notices the Kubernete"
+    },
+    {
+      "slug": "object-storage-lifecycle-policies-explained",
+      "title": "Object storage lifecycle policies explained",
+      "summary": "Object storage bills are dominated by data that nobody reads but everyone keeps. The fix is a lifecycle policy — a set of rules that automatically transitions objects to cheaper storage classes or deletes them after a set time. Done well, it cuts storage costs without breaking compliance or applicat"
     }
   ]
 }

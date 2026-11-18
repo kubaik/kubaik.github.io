@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Nov 2026 13:43:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2026 20:12:55 +0000</lastBuildDate>
+    <item>
+      <title>Object storage lifecycle policies explained</title>
+      <link>https://kubailabs.com/object-storage-lifecycle-policies-explained/</link>
+      <description>Object storage lifecycle policies: avoid early deletion fees, orphaned uploads, and silent data loss.</description>
+      <pubDate>Wed, 18 Nov 2026 20:12:15 +0000</pubDate>
+      <guid>https://kubailabs.com/object-storage-lifecycle-policies-explained/</guid>
+    </item>
     <item>
       <title>Senior without the title: what stalls engineers</title>
       <link>https://kubailabs.com/senior-without-the-title-what-stalls-engineers/</link>
@@ -138,13 +145,6 @@
       <description>Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.</description>
       <pubDate>Mon, 09 Nov 2026 05:20:45 +0000</pubDate>
       <guid>https://kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</guid>
-    </item>
-    <item>
-      <title>Queueing theory for backend capacity</title>
-      <link>https://kubailabs.com/queueing-theory-for-backend-capacity/</link>
-      <description>Why doubling traffic can quadruple tail latency, how to model each constrained resource as a queue, and how to measure utilisation before you hit the cliff.</description>
-      <pubDate>Sun, 08 Nov 2026 17:48:03 +0000</pubDate>
-      <guid>https://kubailabs.com/queueing-theory-for-backend-capacity/</guid>
     </item>
   </channel>
 </rss>
