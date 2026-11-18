@@ -591,7 +591,11 @@ Sitemap: {base_url}/sitemap.xml
         """Single source of truth for tag -> URL slug, used everywhere a
         tag is turned into a /tag/{slug}/ link or a directory name, so the
         link-side and the page-generation-side can never drift apart."""
-        return tag.strip().lower().replace(" ", "-")
+        # "CI/CD" must not become a nested path (docs/tag/ci/cd) and "&" must
+        # not leak into URLs. Plain tags ("google cloud") keep their old slug.
+        s = tag.strip().lower().replace("&", " and ").replace("/", " ")
+        s = re.sub(r"\s+", "-", s).strip("-")
+        return s or "untagged"
 
     def _compute_qualifying_tag_slugs(self, posts: List[BlogPost]) -> set:
         """Tags that will actually get a generated /tag/{slug}/ page (i.e.
@@ -1714,9 +1718,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         tags_dir.mkdir(exist_ok=True, parents=True)
 
         for tag, tag_posts in qualifying.items():
-            tag_slug = tag.replace(" ", "-")
+            tag_slug = self._tag_slug(tag)
             tag_dir = tags_dir / tag_slug
-            tag_dir.mkdir(exist_ok=True)
+            tag_dir.mkdir(exist_ok=True, parents=True)
 
             # Raised threshold from 5 → 8 for AdSense thin-content protection.
             # Tags with fewer than 8 posts receive noindex, follow and should
@@ -1864,7 +1868,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
 """
             + "".join(
-                f'<a href="{base_path}/tag/{t.replace(" ", "-")}/" '
+                f'<a href="{base_path}/tag/{self._tag_slug(t)}/" '
                 f'style="background:#f0f4ff;border:1px solid #6366f1;border-radius:20px;'
                 f'padding:0.4rem 1rem;text-decoration:none;color:#333;font-size:0.9rem;">'
                 f"{t.title()} ({len(ps)})</a>"
@@ -2667,7 +2671,8 @@ def _build_templates() -> dict:
                         var sp         = document.createElement('span');
                         sp.className   = 'tag';
                         sp.textContent = t;
-                        var slug = t.toLowerCase().replace(/\\s+/g, '-');
+                        var slug = t.trim().toLowerCase().replace(/&/g, ' and ').replace(/\\//g, ' ')
+                                    .replace(/\\s+/g, '-').replace(/^-+|-+$/g, '') || 'untagged';
                         if (QUALIFYING_TAG_SLUGS.indexOf(slug) !== -1) {
                             sp.dataset.tagHref = BASE_PATH + '/tag/' + slug + '/';
                         }

@@ -965,7 +965,8 @@
                         var sp         = document.createElement('span');
                         sp.className   = 'tag';
                         sp.textContent = t;
-                        var slug = t.toLowerCase().replace(/\s+/g, '-');
+                        var slug = t.trim().toLowerCase().replace(/&/g, ' and ').replace(/\//g, ' ')
+                                    .replace(/\s+/g, '-').replace(/^-+|-+$/g, '') || 'untagged';
                         if (QUALIFYING_TAG_SLUGS.indexOf(slug) !== -1) {
                             sp.dataset.tagHref = BASE_PATH + '/tag/' + slug + '/';
                         }
