@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Typescript Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including &quot;Global state is the wrong tool for AI features&quot; and &quot;GraphQL vs REST vs tRPC: 2026’s API fight&quot;.">
-  <meta name="robots" content="noindex, follow">
+  <meta name="description" content="Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including &quot;Distroless images: smaller attack surface,&quot; &quot;Dependency pinning: the lockfile lie,&quot; and &quot;Node.js memory leak: find it in 10 min&quot;.">
+  <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/typescript/">
   <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Typescript Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including &quot;Global state is the wrong tool for AI features&quot; and &quot;GraphQL vs REST vs tRPC: 2026’s API fight&quot;.">
+  <meta property="og:description" content="Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including &quot;Distroless images: smaller attack surface,&quot; &quot;Dependency pinning: the lockfile lie,&quot; and &quot;Node.js memory leak: find it in 10 min&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/typescript/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Typescript Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including &quot;Global state is the wrong tool for AI features&quot; and &quot;GraphQL vs REST vs tRPC: 2026’s API fight&quot;.">
+  <meta name="twitter:description" content="Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including &quot;Distroless images: smaller attack surface,&quot; &quot;Dependency pinning: the lockfile lie,&quot; and &quot;Node.js memory leak: find it in 10 min&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Typescript Articles","url":"https://kubailabs.com/tag/typescript/",
-    "description":"Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including \"Global state is the wrong tool for AI features\" and \"GraphQL vs REST vs tRPC: 2026\u2019s API fight\"."}
+    "description":"Articles on Typescript covering TypeScript typing patterns and their use in real-world codebases, including \"Distroless images: smaller attack surface,\" \"Dependency pinning: the lockfile lie,\" and \"Node.js memory leak: find it in 10 min\"."}
   </script>
 </head>
 <body>
@@ -44,13 +44,48 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Typescript</span>
     </nav>
-    <h2>2 articles tagged <em>Typescript</em></h2>
+    <h2>9 articles tagged <em>Typescript</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/distroless-images-smaller-attack-surface/">
+        <h3>Distroless images: smaller attack surface</h3>
+        <p class="post-excerpt">How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.</p>
+        <p class="post-reading-time">13 min read · 2 November 2026</p>
+      </a>
+      <a class="post-card" href="/dependency-pinning-the-lockfile-lie/">
+        <h3>Dependency pinning: the lockfile lie</h3>
+        <p class="post-excerpt">A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</p>
+        <p class="post-reading-time">16 min read · 31 October 2026</p>
+      </a>
+      <a class="post-card" href="/nodejs-memory-leak-find-it-in-10-min/">
+        <h3>Node.js memory leak: find it in 10 min</h3>
+        <p class="post-excerpt">Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</p>
+        <p class="post-reading-time">14 min read · 29 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">
+        <h3>Agent followed instructions too literally: the cron job trap</h3>
+        <p class="post-excerpt">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
+        <p class="post-reading-time">12 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/wasm-servers-beat-containers-here/">
+        <h3>WASM servers beat containers here</h3>
+        <p class="post-excerpt">A practical guide to choosing WebAssembly over containers for short-lived, CPU-bound server tasks, with code, failure modes, and a measurement plan.</p>
+        <p class="post-reading-time">12 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/boring-aws-lambda-layers-that-dont-lock/">
+        <h3>Boring AWS Lambda layers that don’t lock…</h3>
+        <p class="post-excerpt">How to version, publish and reference Lambda layers so runtime upgrades, region moves and architecture changes don&#x27;t break dependent functions.</p>
+        <p class="post-reading-time">12 min read · 31 July 2026</p>
+      </a>
       <a class="post-card" href="/global-state-is-the-wrong-tool-for-ai-features/">
         <h3>Global state is the wrong tool for AI features</h3>
         <p class="post-excerpt">Why a single global store breaks under streaming AI: memory growth, race conditions, undo cost, plus a decision checklist and measurement plan.</p>
         <p class="post-reading-time">12 min read · 28 July 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-agents-for-field-teams/">
+        <h3>Offline-first agents for field teams</h3>
+        <p class="post-excerpt">Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.</p>
+        <p class="post-reading-time">14 min read · 16 July 2026</p>
       </a>
       <a class="post-card" href="/graphql-vs-rest-vs-trpc-2026s-api-fight/">
         <h3>GraphQL vs REST vs tRPC: 2026’s API fight</h3>

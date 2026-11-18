@@ -4,10 +4,9 @@
   "slug": "agent-compliance-in-african-fintech-the-cbn-gap",
   "tags": [
     "Fintech",
-    "AutonomousAgents",
-    "CbnAgentCompliance",
-    "Ndpa",
-    "Ai"
+    "AI Agents",
+    "Africa Tech",
+    "LLMs"
   ],
   "meta_description": "How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.",
   "featured_image": "/static/images/agent-compliance-in-african-fintech-the-cbn-gap.jpg",

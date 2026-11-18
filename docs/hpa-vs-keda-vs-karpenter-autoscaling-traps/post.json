@@ -4,10 +4,9 @@
   "slug": "hpa-vs-keda-vs-karpenter-autoscaling-traps",
   "tags": [
     "Kubernetes",
-    "Hpa",
-    "Keda",
-    "Karpenter",
-    "K8s"
+    "Containers",
+    "Messaging",
+    "Serverless"
   ],
   "meta_description": "How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.",
   "featured_image": "/static/images/hpa-vs-keda-vs-karpenter-autoscaling-traps.jpg",

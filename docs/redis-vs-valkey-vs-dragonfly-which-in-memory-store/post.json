@@ -4,10 +4,9 @@
   "slug": "redis-vs-valkey-vs-dragonfly-which-in-memory-store",
   "tags": [
     "Redis",
-    "Valkey",
-    "Dragonfly",
-    "Database",
-    "Rag"
+    "Databases",
+    "Distributed Systems",
+    "Observability"
   ],
   "meta_description": "A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.",
   "featured_image": "/static/images/redis-vs-valkey-vs-dragonfly-which-in-memory-store.jpg",

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aws Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Aws covering building and running systems on Amazon Web Services, including &quot;Multi-region active-active: the hidden costs&quot; and &quot;Event-driven systems avoid agent-driven contention&quot;.">
-  <meta name="robots" content="noindex, follow">
+  <meta name="description" content="Articles on Aws covering building and running systems on Amazon Web Services, including &quot;Multi-region active-active: the hidden costs,&quot; &quot;Python deps: uv vs Poetry vs pip-tools,&quot; and &quot;Distributed locks: safe only with fencing&quot;.">
+  <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/aws/">
   <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Aws Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Aws covering building and running systems on Amazon Web Services, including &quot;Multi-region active-active: the hidden costs&quot; and &quot;Event-driven systems avoid agent-driven contention&quot;.">
+  <meta property="og:description" content="Articles on Aws covering building and running systems on Amazon Web Services, including &quot;Multi-region active-active: the hidden costs,&quot; &quot;Python deps: uv vs Poetry vs pip-tools,&quot; and &quot;Distributed locks: safe only with fencing&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/aws/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Aws Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Aws covering building and running systems on Amazon Web Services, including &quot;Multi-region active-active: the hidden costs&quot; and &quot;Event-driven systems avoid agent-driven contention&quot;.">
+  <meta name="twitter:description" content="Articles on Aws covering building and running systems on Amazon Web Services, including &quot;Multi-region active-active: the hidden costs,&quot; &quot;Python deps: uv vs Poetry vs pip-tools,&quot; and &quot;Distributed locks: safe only with fencing&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Aws Articles","url":"https://kubailabs.com/tag/aws/",
-    "description":"Articles on Aws covering building and running systems on Amazon Web Services, including \"Multi-region active-active: the hidden costs\" and \"Event-driven systems avoid agent-driven contention\"."}
+    "description":"Articles on Aws covering building and running systems on Amazon Web Services, including \"Multi-region active-active: the hidden costs,\" \"Python deps: uv vs Poetry vs pip-tools,\" and \"Distributed locks: safe only with fencing\"."}
   </script>
 </head>
 <body>
@@ -44,7 +44,7 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Aws</span>
     </nav>
-    <h2>2 articles tagged <em>Aws</em></h2>
+    <h2>53 articles tagged <em>Aws</em></h2>
     <div class="post-grid">
 
       <a class="post-card" href="/multi-region-active-active-the-hidden-costs/">
@@ -52,10 +52,265 @@
         <p class="post-excerpt">Active-active across AWS, Azure and Google Cloud is a distributed-systems build, not a product. Here are its real costs and failure modes.</p>
         <p class="post-reading-time">17 min read · 15 November 2026</p>
       </a>
-      <a class="post-card" href="/event-driven-beats-agent-driven-910-times/">
-        <h3>Event-driven systems avoid agent-driven contention</h3>
-        <p class="post-excerpt">How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.</p>
-        <p class="post-reading-time">15 min read · 30 July 2026</p>
+      <a class="post-card" href="/python-deps-uv-vs-poetry-vs-pip-tools/">
+        <h3>Python deps: uv vs Poetry vs pip-tools</h3>
+        <p class="post-excerpt">Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 15 November 2026</p>
+      </a>
+      <a class="post-card" href="/distributed-locks-safe-only-with-fencing/">
+        <h3>Distributed locks: safe only with fencing</h3>
+        <p class="post-excerpt">A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</p>
+        <p class="post-reading-time">17 min read · 13 November 2026</p>
+      </a>
+      <a class="post-card" href="/waf-and-bot-management-what-they-miss/">
+        <h3>WAF and bot management: what they miss</h3>
+        <p class="post-excerpt">WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</p>
+        <p class="post-reading-time">16 min read · 9 November 2026</p>
+      </a>
+      <a class="post-card" href="/envelope-encryption-with-cloud-kms-key-rotation-traps/">
+        <h3>Envelope encryption with cloud KMS: key rotation traps</h3>
+        <p class="post-excerpt">How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.</p>
+        <p class="post-reading-time">12 min read · 6 November 2026</p>
+      </a>
+      <a class="post-card" href="/drift-detection-the-plan-that-lies/">
+        <h3>Drift detection: the plan that lies</h3>
+        <p class="post-excerpt">Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</p>
+        <p class="post-reading-time">16 min read · 26 October 2026</p>
+      </a>
+      <a class="post-card" href="/pci-dss-architecture-12-requirements-that-matter/">
+        <h3>PCI DSS architecture: 12 requirements that matter</h3>
+        <p class="post-excerpt">Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</p>
+        <p class="post-reading-time">14 min read · 19 October 2026</p>
+      </a>
+      <a class="post-card" href="/duckdb-in-production-when-it-replaces-a-warehouse/">
+        <h3>DuckDB in production: when it replaces a warehouse</h3>
+        <p class="post-excerpt">When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/chaos-engineering-without-an-sre-team/">
+        <h3>Chaos engineering without an SRE team</h3>
+        <p class="post-excerpt">How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-versioning-the-contract-you-forgot/">
+        <h3>Agent versioning: the contract you forgot</h3>
+        <p class="post-excerpt">Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.</p>
+        <p class="post-reading-time">13 min read · 28 September 2026</p>
+      </a>
+      <a class="post-card" href="/tech-debt-when-half-your-stack-is-unfamiliar/">
+        <h3>Tech debt: when half your stack is unfamiliar</h3>
+        <p class="post-excerpt">A repeatable process for debugging, verifying and governing tools you didn&#x27;t write, with baselines, contracts, environment measurement and tool cards.</p>
+        <p class="post-reading-time">14 min read · 26 September 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
+        <h3>Agentic AI cost control: 7 tools, one backfire</h3>
+        <p class="post-excerpt">How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
+        <p class="post-reading-time">15 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/scope-agent-permissions-per-task/">
+        <h3>Scope agent permissions per task</h3>
+        <p class="post-excerpt">Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
+        <p class="post-reading-time">20 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/mobile-money-agents-when-m-pesa-api-fails/">
+        <h3>Mobile money agents: when M-Pesa API fails</h3>
+        <p class="post-excerpt">Mobile money APIs return pending, then settle asynchronously. Learn to poll, deduplicate callbacks, and reconcile orphaned transactions.</p>
+        <p class="post-reading-time">14 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/spot-instances-vs-on-demand-for-ai-experiments/">
+        <h3>Spot instances vs on-demand for AI experiments</h3>
+        <p class="post-excerpt">How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.</p>
+        <p class="post-reading-time">13 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/ai-experimentation-guardrails-not-gates/">
+        <h3>AI Experimentation: Guardrails, Not Gates</h3>
+        <p class="post-excerpt">How to replace a centralized AI provisioning bottleneck with a self-service sandbox: least-privilege proxy, token budgets, tagging, and what to measure.</p>
+        <p class="post-reading-time">12 min read · 7 September 2026</p>
+      </a>
+      <a class="post-card" href="/hybrid-cloud-routing-cost-speed-balance-for-sea/">
+        <h3>Hybrid Cloud Routing: Cost-Speed Balance for SEA</h3>
+        <p class="post-excerpt">How SEA teams route latency-sensitive traffic locally and bursty workloads to the cloud, with Nginx fallback config, failure modes, and cost checks.</p>
+        <p class="post-reading-time">13 min read · 4 September 2026</p>
+      </a>
+      <a class="post-card" href="/temporal-changed-our-agent-retries-for-good/">
+        <h3>Durable Execution for Multi-Step Agent Workflows</h3>
+        <p class="post-excerpt">Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.</p>
+        <p class="post-reading-time">16 min read · 3 September 2026</p>
+      </a>
+      <a class="post-card" href="/idp-for-ai-2026-stack-evolution/">
+        <h3>IDP for AI: 2026 stack evolution</h3>
+        <p class="post-excerpt">How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.</p>
+        <p class="post-reading-time">14 min read · 2 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
+        <h3>Agent drift: why prod breaks without human checkpoints</h3>
+        <p class="post-excerpt">Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
+        <p class="post-reading-time">15 min read · 1 September 2026</p>
+      </a>
+      <a class="post-card" href="/mobile-first-ai-fails-you-didnt-plan/">
+        <h3>Mobile-first AI fails you didn’t plan…</h3>
+        <p class="post-excerpt">Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
+        <p class="post-reading-time">13 min read · 26 August 2026</p>
+      </a>
+      <a class="post-card" href="/self-service-is-broken-without-ai-ops/">
+        <h3>Self-service is broken without AI ops</h3>
+        <p class="post-excerpt">Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
+        <p class="post-reading-time">12 min read · 24 August 2026</p>
+      </a>
+      <a class="post-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
+        <h3>Spot evictions: the retry logic that holds up</h3>
+        <p class="post-excerpt">Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+        <p class="post-reading-time">13 min read · 12 August 2026</p>
+      </a>
+      <a class="post-card" href="/african-fintech-agents-the-compliance-cliff-most-miss/">
+        <h3>African fintech agents: the compliance cliff most miss</h3>
+        <p class="post-excerpt">How to design region-resident, queryable audit trails for autonomous fintech agents facing per-country latency, residency and retention rules.</p>
+        <p class="post-reading-time">10 min read · 12 August 2026</p>
+      </a>
+      <a class="post-card" href="/aws-cloudwatch-synthetics-for-ai-pipelines/">
+        <h3>AWS CloudWatch Synthetics for AI pipelines</h3>
+        <p class="post-excerpt">Build CloudWatch Synthetics canaries that exercise a full AI pipeline journey, not just an endpoint ping, and alarm on whole-flow failure.</p>
+        <p class="post-reading-time">13 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-money-apps-with-dynamodb-streams/">
+        <h3>Offline-first money apps with DynamoDB Streams</h3>
+        <p class="post-excerpt">Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.</p>
+        <p class="post-reading-time">15 min read · 8 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-flooded-our-api-with-bad-calls-overnight/">
+        <h3>Stopping a runaway polling agent from flooding your API</h3>
+        <p class="post-excerpt">Diagnose and fix runaway agent API calls: bounded retries, capped backoff, idempotency keys, and volume alerts that catch spikes before the bill does.</p>
+        <p class="post-reading-time">15 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/boring-aws-lambda-layers-that-dont-lock/">
+        <h3>Boring AWS Lambda layers that don’t lock…</h3>
+        <p class="post-excerpt">How to version, publish and reference Lambda layers so runtime upgrades, region moves and architecture changes don&#x27;t break dependent functions.</p>
+        <p class="post-reading-time">12 min read · 31 July 2026</p>
+      </a>
+      <a class="post-card" href="/built-a-multi-agent-system-without-langgraph/">
+        <h3>Built a multi-agent system without LangGraph</h3>
+        <p class="post-excerpt">Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.</p>
+        <p class="post-reading-time">13 min read · 27 July 2026</p>
+      </a>
+      <a class="post-card" href="/poolers-wont-save-your-serverless-db/">
+        <h3>Poolers won’t save your serverless DB</h3>
+        <p class="post-excerpt">Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
+        <p class="post-reading-time">14 min read · 19 July 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-agents-for-field-teams/">
+        <h3>Offline-first agents for field teams</h3>
+        <p class="post-excerpt">Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.</p>
+        <p class="post-reading-time">14 min read · 16 July 2026</p>
+      </a>
+      <a class="post-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
+        <h3>Stabilize multi-model agent routers: six production rules</h3>
+        <p class="post-excerpt">Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.</p>
+        <p class="post-reading-time">15 min read · 15 July 2026</p>
+      </a>
+      <a class="post-card" href="/audit-trails-immutabledb-vs-dynamodb-streams/">
+        <h3>Audit trails: ImmutableDB vs DynamoDB Streams</h3>
+        <p class="post-excerpt">Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.</p>
+        <p class="post-reading-time">15 min read · 4 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-governance-opa-vs-kyverno-after-our-incident/">
+        <h3>Agent Governance: OPA vs Kyverno in Kubernetes</h3>
+        <p class="post-excerpt">Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/prompt-injections-hidden-aws-tax/">
+        <h3>Prompt injection’s hidden AWS tax</h3>
+        <p class="post-excerpt">How unsanitized prompt templates leak instructions, trigger retry storms, and inflate token bills — plus concrete hardening steps and code.</p>
+        <p class="post-reading-time">12 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-proof-your-mid-level-salary/">
+        <h3>AI-proof your mid-level salary</h3>
+        <p class="post-excerpt">Tracking commits and story points keeps engineers in the layer AI automates best. Here is how to measure p99 latency, cost per request and error rate instead.</p>
+        <p class="post-reading-time">15 min read · 1 July 2026</p>
+      </a>
+      <a class="post-card" href="/9-vibe-coding-traps-that-break-production-code/">
+        <h3>9 Vibe coding traps that break production code</h3>
+        <p class="post-excerpt">Nine patterns that make AI-assisted prototypes fail under load, with the instrumentation to catch each one before it reaches production.</p>
+        <p class="post-reading-time">11 min read · 1 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-pair-prompts-9-setups-we-tried-in-2026/">
+        <h3>Choosing an AI Pair Programming Setup: A Practical Guide</h3>
+        <p class="post-excerpt">How to evaluate AI pair programming tools by latency, signal-to-noise, cost, and privacy, with configs, failure modes, and a decision checklist.</p>
+        <p class="post-reading-time">15 min read · 29 June 2026</p>
+      </a>
+      <a class="post-card" href="/aws-costs-for-nairobi-saas-2026-bill-split/">
+        <h3>AWS costs for Nairobi SaaS: 2026 bill split</h3>
+        <p class="post-excerpt">How to split an AWS bill by service for a Nairobi-facing SaaS: cost drivers, measurement commands, and a decision checklist for region choice and DR.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/aws-local-zones-vs-localstack-ai-microservices-in/">
+        <h3>AWS Local Zones vs LocalStack: AI microservices in</h3>
+        <p class="post-excerpt">Compare AWS Local Zones and LocalStack for AI microservices: latency, cost, compliance, and a decision framework, plus how to measure p99 at the edge.</p>
+        <p class="post-reading-time">14 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/postgres-17-buried-redis-s3-cron/">
+        <h3>Postgres 17 buried Redis, S3, cron</h3>
+        <p class="post-excerpt">How to evaluate Postgres 17 as a cache, scheduler and blob store, with measurement steps, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 26 June 2026</p>
+      </a>
+      <a class="post-card" href="/aws-cost-levers-2026-the-3-that-cut-bills-30/">
+        <h3>AWS Cost Levers: Savings Plans vs. Compute Optimizer</h3>
+        <p class="post-excerpt">A practical comparison of AWS Savings Plans, Compute Optimizer and Cost Anomaly Detection, with a decision framework and a 30-minute first step.</p>
+        <p class="post-reading-time">12 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">
+        <h3>Choosing AI Coding Assistants for Cloud-Heavy Stacks</h3>
+        <p class="post-excerpt">A practical framework for evaluating AI coding assistants on cloud-heavy stacks: what to measure, how to test, and which failure modes matter.</p>
+        <p class="post-reading-time">11 min read · 23 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-attacks-rising-40-the-3-patterns-to-block-now/">
+        <h3>Defending APIs Against Amplification, Stuffing and Smuggling</h3>
+        <p class="post-excerpt">How cache-stampede amplification, credential stuffing and HTTP/2 request smuggling work, plus edge admission, idempotency keys and circuit breakers that blunt them.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/cut-cold-starts-70-lambda-cost-hack/">
+        <h3>Serverless Cold Starts: Cost Levers and How to Measure Them</h3>
+        <p class="post-excerpt">Cold starts are a cost and consistency problem, not just latency. Learn how to measure latency-per-dollar and tune concurrency, memory, and architecture.</p>
+        <p class="post-reading-time">12 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/">
+        <h3>Tiered API abuse defense: match cost to attacker economics</h3>
+        <p class="post-excerpt">Five API abuse patterns that inflate cloud bills, why edge-only blocking fails, and how to build tiered defenses with measurable cost-per-request targets.</p>
+        <p class="post-reading-time">11 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/regulations-forced-better-apis-the-2026-fintech/">
+        <h3>Regulations forced better APIs: the 2026 fintech</h3>
+        <p class="post-excerpt">Why payment APIs need durable state machines, explicit retry policies, and status endpoints that survive restarts — and when the old synchronous playbook still works.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/webhooks-2026-retries-idempotency-and-the-9995/">
+        <h3>Webhook Delivery: Retries, Idempotency, and Durability</h3>
+        <p class="post-excerpt">Design reliable webhook ingestion with durable buffering, idempotency keys, bounded retries, and circuit breakers, plus how to measure each guarantee.</p>
+        <p class="post-reading-time">11 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/replace-env-with-these-in-2026/">
+        <h3>Replace .env with these in 2026</h3>
+        <p class="post-excerpt">Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.</p>
+        <p class="post-reading-time">15 min read · 18 June 2026</p>
+      </a>
+      <a class="post-card" href="/move-images-50-faster-in-2026-with-starlink-cdn/">
+        <h3>Resize Images at the Edge: A CloudFront and Lambda Guide</h3>
+        <p class="post-excerpt">Build an on-the-fly image resizing pipeline with CloudFront, Lambda@Edge, S3 and Terraform, including streaming, format negotiation and observability.</p>
+        <p class="post-reading-time">13 min read · 18 June 2026</p>
+      </a>
+      <a class="post-card" href="/price-saas-tools-in-2026-what-we-learned-pricing-a/">
+        <h3>Pricing SaaS tools by real cost, not seat count</h3>
+        <p class="post-excerpt">A practical method for pricing usage-based SaaS: instrument cost per request, model support burden, guard free tiers, and replay traffic before publishing.</p>
+        <p class="post-reading-time">13 min read · 15 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-rollouts-live-or-die-by-flags/">
+        <h3>AI rollouts live or die by flags</h3>
+        <p class="post-excerpt">How to gate model versions, prompts, and safety filters behind feature flags, with a Lambda evaluator, SDK, timeout handling, canaries, and tests.</p>
+        <p class="post-reading-time">14 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ussd-fintech-in-2026-the-300m-user-channel-nobody/">
+        <h3>Designing USSD fintech flows that survive live networks</h3>
+        <p class="post-excerpt">A practical guide to building reliable USSD fintech flows on AWS: state machines, 160-character screens, carrier SLAs, idempotency, and latency instrumentation.</p>
+        <p class="post-reading-time">17 min read · 11 June 2026</p>
       </a>
     </div>
   </main>

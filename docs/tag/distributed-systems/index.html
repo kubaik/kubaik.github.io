@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distributed Systems Articles — Kubai Kevin</title>
+  <meta name="description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Human-in-the-loop: when agents need a human veto,&quot; &quot;Multi-region active-active: the hidden costs,&quot; and &quot;Python deps: uv vs Poetry vs pip-tools&quot;.">
+  <meta name="robots" content="index, follow">
+  <meta name="base-path" content="">
+  <link rel="canonical" href="https://kubailabs.com/tag/distributed-systems/">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+  <script src="/static/consent.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Distributed Systems Articles — Kubai Kevin">
+  <meta property="og:description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Human-in-the-loop: when agents need a human veto,&quot; &quot;Multi-region active-active: the hidden costs,&quot; and &quot;Python deps: uv vs Poetry vs pip-tools&quot;.">
+  <meta property="og:url" content="https://kubailabs.com/tag/distributed-systems/">
+  <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Distributed Systems Articles — Kubai Kevin">
+  <meta name="twitter:description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Human-in-the-loop: when agents need a human veto,&quot; &quot;Multi-region active-active: the hidden costs,&quot; and &quot;Python deps: uv vs Poetry vs pip-tools&quot;.">
+  <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
+  <meta name="twitter:site" content="@KubaiKevin">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage",
+    "name":"Distributed Systems Articles","url":"https://kubailabs.com/tag/distributed-systems/",
+    "description":"Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including \"Human-in-the-loop: when agents need a human veto,\" \"Multi-region active-active: the hidden costs,\" and \"Python deps: uv vs Poetry vs pip-tools\"."}
+  </script>
+</head>
+<body>
+  <header><div class="container">
+    <h1><a href="/">Kubai Kevin</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div></header>
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">Distributed Systems</span>
+    </nav>
+    <h2>97 articles tagged <em>Distributed Systems</em></h2>
+    <div class="post-grid">
+
+      <a class="post-card" href="/human-in-the-loop-when-agents-need-a-human-veto/">
+        <h3>Human-in-the-loop: when agents need a human veto</h3>
+        <p class="post-excerpt">Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.</p>
+        <p class="post-reading-time">14 min read · 16 November 2026</p>
+      </a>
+      <a class="post-card" href="/multi-region-active-active-the-hidden-costs/">
+        <h3>Multi-region active-active: the hidden costs</h3>
+        <p class="post-excerpt">Active-active across AWS, Azure and Google Cloud is a distributed-systems build, not a product. Here are its real costs and failure modes.</p>
+        <p class="post-reading-time">17 min read · 15 November 2026</p>
+      </a>
+      <a class="post-card" href="/python-deps-uv-vs-poetry-vs-pip-tools/">
+        <h3>Python deps: uv vs Poetry vs pip-tools</h3>
+        <p class="post-excerpt">Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 15 November 2026</p>
+      </a>
+      <a class="post-card" href="/distributed-locks-safe-only-with-fencing/">
+        <h3>Distributed locks: safe only with fencing</h3>
+        <p class="post-excerpt">A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</p>
+        <p class="post-reading-time">17 min read · 13 November 2026</p>
+      </a>
+      <a class="post-card" href="/saga-pattern-orchestration-vs-choreography-in-payments/">
+        <h3>Saga pattern: orchestration vs choreography in payments</h3>
+        <p class="post-excerpt">How payment sagas coordinate steps, why refunds are not charge reversals, and a decision framework for choosing orchestration or choreography.</p>
+        <p class="post-reading-time">16 min read · 10 November 2026</p>
+      </a>
+      <a class="post-card" href="/waf-and-bot-management-what-they-miss/">
+        <h3>WAF and bot management: what they miss</h3>
+        <p class="post-excerpt">WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</p>
+        <p class="post-reading-time">16 min read · 9 November 2026</p>
+      </a>
+      <a class="post-card" href="/redis-vs-valkey-vs-dragonfly-which-in-memory-store/">
+        <h3>Redis vs Valkey vs Dragonfly: which in-memory store?</h3>
+        <p class="post-excerpt">A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</p>
+        <p class="post-reading-time">17 min read · 7 November 2026</p>
+      </a>
+      <a class="post-card" href="/ussdsms-fallback-the-session-trap/">
+        <h3>USSD/SMS fallback: the session trap</h3>
+        <p class="post-excerpt">Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</p>
+        <p class="post-reading-time">16 min read · 6 November 2026</p>
+      </a>
+      <a class="post-card" href="/audit-trails-for-ai-agents-what-breaks-first/">
+        <h3>Audit trails for AI agents: what breaks first</h3>
+        <p class="post-excerpt">Design append-only decision records for AI agents: write-ahead ordering, policy snapshots, idempotency keys, and reconstruction drills that expose gaps.</p>
+        <p class="post-reading-time">15 min read · 5 November 2026</p>
+      </a>
+      <a class="post-card" href="/dependency-pinning-the-lockfile-lie/">
+        <h3>Dependency pinning: the lockfile lie</h3>
+        <p class="post-excerpt">A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</p>
+        <p class="post-reading-time">16 min read · 31 October 2026</p>
+      </a>
+      <a class="post-card" href="/ai-answers-first-judgment-later/">
+        <h3>AI answers first, judgment later</h3>
+        <p class="post-excerpt">AI assistants give juniors fast, confident answers without your system&#x27;s context. Here is how to move mentoring from giving answers to reviewing judgment.</p>
+        <p class="post-reading-time">14 min read · 29 October 2026</p>
+      </a>
+      <a class="post-card" href="/drift-detection-the-plan-that-lies/">
+        <h3>Drift detection: the plan that lies</h3>
+        <p class="post-excerpt">Terraform plan only reports drift a provider reads back. Build observe-classify-remediate pipelines that catch out-of-band changes safely.</p>
+        <p class="post-reading-time">16 min read · 26 October 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-systems-architecture-principles-that-hold/">
+        <h3>Agentic systems: architecture principles that hold</h3>
+        <p class="post-excerpt">How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</p>
+        <p class="post-reading-time">15 min read · 23 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-code-review-7-traps-that-slip-through/">
+        <h3>Agent code review: 7 traps that slip through</h3>
+        <p class="post-excerpt">Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</p>
+        <p class="post-reading-time">17 min read · 23 October 2026</p>
+      </a>
+      <a class="post-card" href="/remote-premium-rates-skills-ai-cant-copy/">
+        <h3>Remote premium rates: skills AI can't copy</h3>
+        <p class="post-excerpt">Four drills for remote engineers: latency budgets, evidence-based diagnosis, decision records and handoff artifacts that outlast the work.</p>
+        <p class="post-reading-time">19 min read · 21 October 2026</p>
+      </a>
+      <a class="post-card" href="/property-based-testing-vs-example-tests-the-bug-gap/">
+        <h3>Property-based testing vs example tests: the bug gap</h3>
+        <p class="post-excerpt">How example-based and property-based tests differ in what they catch, what each costs to maintain, and how to split work between them in financial code.</p>
+        <p class="post-reading-time">18 min read · 20 October 2026</p>
+      </a>
+      <a class="post-card" href="/open-banking-apis-the-integration-traps/">
+        <h3>Open banking APIs: the integration traps</h3>
+        <p class="post-excerpt">Open banking integration failures come from semantic gaps between markets. Here is how consent, idempotency and errors differ, and how to test.</p>
+        <p class="post-reading-time">15 min read · 17 October 2026</p>
+      </a>
+      <a class="post-card" href="/why-leader-election-fails-on-cloud-networks/">
+        <h3>Why leader election fails on cloud networks</h3>
+        <p class="post-excerpt">Cloud networks break the timing assumptions consensus algorithms rely on. See the failure modes, a corrected etcd lease example, and fencing tokens.</p>
+        <p class="post-reading-time">13 min read · 17 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-audit-trails-event-log-vs-state-snapshots/">
+        <h3>Agent audit trails: event log vs state snapshots</h3>
+        <p class="post-excerpt">Event sourcing and state snapshots solve different audit problems for AI agents. Compare causal reconstruction, debugging fidelity, cost, and replay limits.</p>
+        <p class="post-reading-time">13 min read · 12 October 2026</p>
+      </a>
+      <a class="post-card" href="/rate-limiters-burst-vs-abuse-two-designs/">
+        <h3>Rate limiters: burst vs abuse, two designs</h3>
+        <p class="post-excerpt">Two rate limiter designs compared: token bucket with concurrency cap versus sliding window with penalty box, plus how to tune and measure each.</p>
+        <p class="post-reading-time">15 min read · 11 October 2026</p>
+      </a>
+      <a class="post-card" href="/webhook-delivery-that-survives-outages/">
+        <h3>Webhook delivery that survives outages</h3>
+        <p class="post-excerpt">How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.</p>
+        <p class="post-reading-time">13 min read · 2 October 2026</p>
+      </a>
+      <a class="post-card" href="/double-entry-ledger-concurrent-write-errors/">
+        <h3>Double-entry ledger: concurrent write errors</h3>
+        <p class="post-excerpt">Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.</p>
+        <p class="post-reading-time">15 min read · 1 October 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-workflows-surviving-network-partitions/">
+        <h3>Agentic workflows: surviving network partitions</h3>
+        <p class="post-excerpt">How to keep agentic workflows correct when networks drop: idempotency keys, an outbox with stable action IDs, and reconciliation on reconnect.</p>
+        <p class="post-reading-time">18 min read · 1 October 2026</p>
+      </a>
+      <a class="post-card" href="/duckdb-in-production-when-it-replaces-a-warehouse/">
+        <h3>DuckDB in production: when it replaces a warehouse</h3>
+        <p class="post-excerpt">When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/settlement-vs-clearing-backend-engineers-guide/">
+        <h3>Settlement vs clearing: backend engineer's guide</h3>
+        <p class="post-excerpt">Clearing produces obligations; settlement moves money. How to model both ledgers, reconcile them, and avoid the schema mistakes that break finance.</p>
+        <p class="post-reading-time">15 min read · 28 September 2026</p>
+      </a>
+      <a class="post-card" href="/ai-features-m-pesa-paystack-flutterwave-traps/">
+        <h3>AI features: M-Pesa, Paystack, Flutterwave traps</h3>
+        <p class="post-excerpt">Payment webhooks from M-Pesa, Paystack and Flutterwave disagree on timing, idempotency and error semantics. Here is how to normalize them before an AI feature reads them.</p>
+        <p class="post-reading-time">12 min read · 23 September 2026</p>
+      </a>
+      <a class="post-card" href="/tool-calls-why-retries-stampede/">
+        <h3>Tool calls: why retries stampede</h3>
+        <p class="post-excerpt">Why per-client backoff fails under fan-out tool use, and how shared token buckets, single-flight and one-layer retries fix it.</p>
+        <p class="post-reading-time">12 min read · 22 September 2026</p>
+      </a>
+      <a class="post-card" href="/cqrs-when-it-pays-off-and-when-it-breaks/">
+        <h3>CQRS: when it pays off and when it breaks</h3>
+        <p class="post-excerpt">CQRS trades strong consistency for independent read and write scaling. Learn the failure modes, how to measure projection lag, and when a read replica is enough.</p>
+        <p class="post-reading-time">12 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
+        <h3>Rust rewrites: where they pay off, where they don't</h3>
+        <p class="post-excerpt">A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+        <p class="post-reading-time">12 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/idempotency-keys-what-they-fix-what-they-dont/">
+        <h3>Idempotency keys: what they fix, what they don't</h3>
+        <p class="post-excerpt">How idempotency keys work, where they fail, and the failure modes they don&#x27;t cover: concurrent retries, key reuse, expiry, and partial failures.</p>
+        <p class="post-reading-time">14 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-access-for-non-ai-engineers/">
+        <h3>Agent access for non-AI engineers</h3>
+        <p class="post-excerpt">A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+        <p class="post-reading-time">16 min read · 17 September 2026</p>
+      </a>
+      <a class="post-card" href="/which-agent-stack-survives-3g/">
+        <h3>Which agent stack survives 3G?</h3>
+        <p class="post-excerpt">How edge-deployed and centralised agent stacks behave on high-latency, lossy mobile links, and how to measure reconnection storms before choosing one.</p>
+        <p class="post-reading-time">13 min read · 16 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-platform-abstractions-a-case-study/">
+        <h3>Agent platform abstractions: a case study</h3>
+        <p class="post-excerpt">Why agent failures are platform failures: typed tool contracts, durable execution, and structured traces that make runs replayable and retries safe.</p>
+        <p class="post-reading-time">11 min read · 16 September 2026</p>
+      </a>
+      <a class="post-card" href="/memory-systems-for-production-agents/">
+        <h3>Memory Systems for Production Agents</h3>
+        <p class="post-excerpt">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+        <p class="post-reading-time">11 min read · 15 September 2026</p>
+      </a>
+      <a class="post-card" href="/stop-trusting-agents-for-core-logic/">
+        <h3>Stop trusting agents for core logic</h3>
+        <p class="post-excerpt">Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.</p>
+        <p class="post-reading-time">11 min read · 14 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-our-schema-survived-ai-scaling/">
+        <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
+        <p class="post-excerpt">Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
+        <p class="post-reading-time">11 min read · 13 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-systems-circuit-breakers-are-not-enough/">
+        <h3>Agent Systems: Circuit Breakers Are Not Enough</h3>
+        <p class="post-excerpt">Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.</p>
+        <p class="post-reading-time">13 min read · 12 September 2026</p>
+      </a>
+      <a class="post-card" href="/thundering-herd-the-hidden-scaling-trap/">
+        <h3>Thundering Herd: The Hidden Scaling Trap</h3>
+        <p class="post-excerpt">Why synchronized cache misses and naive retries collapse services, and how coalescing, jittered backoff, and locks prevent self-inflicted overload.</p>
+        <p class="post-reading-time">12 min read · 10 September 2026</p>
+      </a>
+      <a class="post-card" href="/hybrid-cloud-routing-cost-speed-balance-for-sea/">
+        <h3>Hybrid Cloud Routing: Cost-Speed Balance for SEA</h3>
+        <p class="post-excerpt">How SEA teams route latency-sensitive traffic locally and bursty workloads to the cloud, with Nginx fallback config, failure modes, and cost checks.</p>
+        <p class="post-reading-time">13 min read · 4 September 2026</p>
+      </a>
+      <a class="post-card" href="/portfolio-projects-that-hire-remote-senior-devs/">
+        <h3>Portfolio projects that hire remote senior devs</h3>
+        <p class="post-excerpt">Build a portfolio that proves operational rigor: caching, rate limiting, observability, and load tests that survive a senior remote technical screen.</p>
+        <p class="post-reading-time">14 min read · 3 September 2026</p>
+      </a>
+      <a class="post-card" href="/idp-for-ai-2026-stack-evolution/">
+        <h3>IDP for AI: 2026 stack evolution</h3>
+        <p class="post-excerpt">How to wire embedding model changes into an internal developer platform so dimension drift fails loudly instead of silently shipping broken indexes.</p>
+        <p class="post-reading-time">14 min read · 2 September 2026</p>
+      </a>
+      <a class="post-card" href="/ship-evals-before-your-agent-ships/">
+        <h3>Ship evals before your agent ships</h3>
+        <p class="post-excerpt">Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.</p>
+        <p class="post-reading-time">16 min read · 31 August 2026</p>
+      </a>
+      <a class="post-card" href="/always-on-agents-cost-more-than-you-think/">
+        <h3>Always-on agents cost more than you think</h3>
+        <p class="post-excerpt">Always-on agents bill you while idle; on-demand agents bill you at wake-up. A cost model, failure modes, and how to measure both.</p>
+        <p class="post-reading-time">15 min read · 30 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-tracing-when-logs-lie-and-metrics-mislead/">
+        <h3>Agent tracing: when logs lie and metrics mislead</h3>
+        <p class="post-excerpt">Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.</p>
+        <p class="post-reading-time">10 min read · 28 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">
+        <h3>AI on slow networks: Nairobi teams' 2026 playbook</h3>
+        <p class="post-excerpt">How to cut perceived AI latency with multi-tier caching, stampede guards, and edge orchestration, plus how to measure each layer yourself.</p>
+        <p class="post-reading-time">13 min read · 26 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-payments-break-in-m-pesa-first/">
+        <h3>AI payments break in M-Pesa first</h3>
+        <p class="post-excerpt">Payment webhooks arrive duplicated and out of order. Here is how to normalize provider events, dedupe them, and reconcile an AI feature store safely.</p>
+        <p class="post-reading-time">14 min read · 23 August 2026</p>
+      </a>
+      <a class="post-card" href="/evolve-your-monolith-without-rewriting-in-2026/">
+        <h3>Evolve your monolith without rewriting in 2026</h3>
+        <p class="post-excerpt">A three-layer FastAPI layout (API, domain, infra) that keeps a monolith evolvable: worked code, failure modes, cache stampede fixes, and how to measure.</p>
+        <p class="post-reading-time">15 min read · 19 August 2026</p>
+      </a>
+      <a class="post-card" href="/orchestration-tax-kills-multi-agent-systems/">
+        <h3>Orchestration tax kills multi-agent systems</h3>
+        <p class="post-excerpt">Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/observability-agents-lied-to-us/">
+        <h3>Observability Agents as Application Code</h3>
+        <p class="post-excerpt">Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-frameworks-stop-rewriting-the-same-glue-code/">
+        <h3>Agent frameworks: stop rewriting the same glue code</h3>
+        <p class="post-excerpt">Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+        <p class="post-reading-time">13 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-money-apps-with-dynamodb-streams/">
+        <h3>Offline-first money apps with DynamoDB Streams</h3>
+        <p class="post-excerpt">Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.</p>
+        <p class="post-reading-time">15 min read · 8 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-flooded-our-api-with-bad-calls-overnight/">
+        <h3>Stopping a runaway polling agent from flooding your API</h3>
+        <p class="post-excerpt">Diagnose and fix runaway agent API calls: bounded retries, capped backoff, idempotency keys, and volume alerts that catch spikes before the bill does.</p>
+        <p class="post-reading-time">15 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/supervisor-vs-swarm-vs-debate-vs-pipeline/">
+        <h3>Supervisor vs swarm vs debate vs pipeline</h3>
+        <p class="post-excerpt">Compare four multi-agent orchestration patterns: supervisor, swarm, debate, and pipeline. Covers failure modes, backpressure, retries, and how to measure each.</p>
+        <p class="post-reading-time">19 min read · 3 August 2026</p>
+      </a>
+      <a class="post-card" href="/boring-aws-lambda-layers-that-dont-lock/">
+        <h3>Boring AWS Lambda layers that don’t lock…</h3>
+        <p class="post-excerpt">How to version, publish and reference Lambda layers so runtime upgrades, region moves and architecture changes don&#x27;t break dependent functions.</p>
+        <p class="post-reading-time">12 min read · 31 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-permissions-the-mistake-that-breaks-production/">
+        <h3>Agent permissions: the mistake that breaks production</h3>
+        <p class="post-excerpt">How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.</p>
+        <p class="post-reading-time">17 min read · 30 July 2026</p>
+      </a>
+      <a class="post-card" href="/event-driven-beats-agent-driven-910-times/">
+        <h3>Event-driven systems avoid agent-driven contention</h3>
+        <p class="post-excerpt">How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.</p>
+        <p class="post-reading-time">15 min read · 30 July 2026</p>
+      </a>
+      <a class="post-card" href="/context-windows-live-longer-than-you-think/">
+        <h3>Context windows live longer than you think</h3>
+        <p class="post-excerpt">Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.</p>
+        <p class="post-reading-time">13 min read · 25 July 2026</p>
+      </a>
+      <a class="post-card" href="/cache-stampedes-the-patterns-that-scale-and-the-ones/">
+        <h3>Cache stampedes: the patterns that scale and the ones…</h3>
+        <p class="post-excerpt">How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.</p>
+        <p class="post-reading-time">16 min read · 21 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-features-as-tech-debt-or-golden-paths/">
+        <h3>AI features as tech debt or golden paths</h3>
+        <p class="post-excerpt">Why wrapper-plus-cache AI features fail under network drops and model drift, and how to design state-machine fallbacks you can actually measure.</p>
+        <p class="post-reading-time">12 min read · 17 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-sales-cycles-3x-faster-40-less-talk/">
+        <h3>Designing AI-Assisted Sales for Developer Tools</h3>
+        <p class="post-excerpt">How to build an AI-assisted sales pipeline for developer tools: intent routing, code generation, handoff rules, failure modes, and what to instrument.</p>
+        <p class="post-reading-time">16 min read · 14 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-context-short-term-vs-long-term-memory/">
+        <h3>Agent context: short-term vs long-term memory</h3>
+        <p class="post-excerpt">Compare Redis-style short-term agent context with Postgres event logs: latency, durability, auditability, cost, and how to measure each.</p>
+        <p class="post-reading-time">15 min read · 9 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-in-local-currency-costs-that-surprise/">
+        <h3>AI in local currency: costs that surprise…</h3>
+        <p class="post-excerpt">How to choose where to run AI inference: decouple variable compute cost from fixed per-region compliance cost, and measure the trade-off.</p>
+        <p class="post-reading-time">15 min read · 7 July 2026</p>
+      </a>
+      <a class="post-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
+        <h3>Audit logs: ship them fast, keep them forever</h3>
+        <p class="post-excerpt">Design an audit log pipeline that separates durability from searchability, with tiered retention, integrity hashing, and a cost model you can verify.</p>
+        <p class="post-reading-time">14 min read · 6 July 2026</p>
+      </a>
+      <a class="post-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+        <h3>7 skills senior engineers need now agents are live</h3>
+        <p class="post-excerpt">Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+        <p class="post-reading-time">15 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/agents-247-vs-on-demand-42k-bill-shock/">
+        <h3>Always-On vs On-Demand Agents: Real Cost Trade-offs</h3>
+        <p class="post-excerpt">Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.</p>
+        <p class="post-reading-time">12 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/evaluate-agents-with-spark-vs-custom-harness/">
+        <h3>Evaluate agents with Spark vs custom harness</h3>
+        <p class="post-excerpt">A practical comparison of Spark-based and custom Python agent evaluation harnesses, with failure modes, cost arithmetic, and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <h3>High-Volume Log Pipelines: Shipping 50k Events Per Second</h3>
+        <p class="post-excerpt">Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.</p>
+        <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/serve-4g-as-baseline-apps-in-2026/">
+        <h3>Serve 4G-as-baseline apps in 2026</h3>
+        <p class="post-excerpt">Design APIs for 300 ms RTT, packet loss and data caps: payload budgets, stale-while-revalidate caching, adaptive fetch and honest measurement.</p>
+        <p class="post-reading-time">14 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/stop-the-writes-zero-downtime-db-migrations/">
+        <h3>Stop the writes — zero-downtime DB migrations</h3>
+        <p class="post-excerpt">Zero-downtime migrations fail when writes keep flowing during the copy. A drain-copy-flip state machine, with instrumentation and a decision checklist.</p>
+        <p class="post-reading-time">13 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/meter-dev-tool-pricing-in-2026/">
+        <h3>Meter dev-tool pricing in 2026</h3>
+        <p class="post-excerpt">Build usage-metered pricing for a dev tool: Stripe metered billing, Redis counters, idempotent usage events, and the edge cases that break first.</p>
+        <p class="post-reading-time">11 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/5-ways-to-find-hidden-latency-before-production/">
+        <h3>5 ways to find hidden latency before production</h3>
+        <p class="post-excerpt">Five practical ways to surface hidden latency before production: traffic replay, synthetic probes, profiling diffs, query plan diffs, and dependency latency budgets.</p>
+        <p class="post-reading-time">12 min read · 30 June 2026</p>
+      </a>
+      <a class="post-card" href="/bank-apis-broke-under-african-2g/">
+        <h3>Bank APIs broke under African 2G</h3>
+        <p class="post-excerpt">Why aggressive caching and remote idempotency stores fail on flaky 2G/3G links, and how to instrument, measure, and redesign balance endpoints for it.</p>
+        <p class="post-reading-time">14 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/migrations-stop-running-them-live/">
+        <h3>Migrations? Stop running them live</h3>
+        <p class="post-excerpt">Why live schema migrations cause outages, and how versioning the schema as a deployable artifact with expand/contract steps reduces that risk.</p>
+        <p class="post-reading-time">11 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/monolith-to-services-without-a-rewrite/">
+        <h3>Monolith to services without a rewrite</h3>
+        <p class="post-excerpt">Most monolith-to-services migrations fail on data coupling, not code structure. Here is how to audit coupling and measure the latency tax before extracting.</p>
+        <p class="post-reading-time">14 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/tool-calling-patterns-patterns-that-survive-load-vs/">
+        <h3>Tool calling patterns: patterns that survive load vs</h3>
+        <p class="post-excerpt">A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.</p>
+        <p class="post-reading-time">14 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/ndpr-2026-broke-fintech-apis/">
+        <h3>NDPR 2026 broke fintech APIs</h3>
+        <p class="post-excerpt">How regulatory transport rules and intermittent mobile connectivity change fintech API design, with worked latency arithmetic and a concrete measurement plan.</p>
+        <p class="post-reading-time">12 min read · 26 June 2026</p>
+      </a>
+      <a class="post-card" href="/webhooks-done-right-retries-that-dont-explode-in-2026/">
+        <h3>Webhooks done right: retries that don’t explode in 2026</h3>
+        <p class="post-excerpt">A practical guide to webhook delivery: idempotency, retry budgets, silent rate limits, poison-message triage, and what to instrument before you scale.</p>
+        <p class="post-reading-time">10 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/store-data-once-serve-everywhere-cheaper/">
+        <h3>Store data once, serve everywhere: cheaper</h3>
+        <p class="post-excerpt">How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.</p>
+        <p class="post-reading-time">12 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-abuse-patterns-rising-in-2026/">
+        <h3>API abuse patterns rising in 2026</h3>
+        <p class="post-excerpt">A layered architecture for stopping credential stuffing and scraping: client integrity tokens, cohort-based rate limiting, and behavioral scoring at the CDN edge.</p>
+        <p class="post-reading-time">12 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-native-apps-break-when-you-copy-old-rules/">
+        <h3>AI-native apps break when you copy old rules</h3>
+        <p class="post-excerpt">Model calls are distributed workloads, not function calls. Here is how to design task queues, cache keys, token budgets and retry policy for AI features.</p>
+        <p class="post-reading-time">13 min read · 23 June 2026</p>
+      </a>
+      <a class="post-card" href="/vibe-code-works-great-fails-forever/">
+        <h3>Vibe code: works great, fails forever</h3>
+        <p class="post-excerpt">Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-attacks-rising-40-the-3-patterns-to-block-now/">
+        <h3>Defending APIs Against Amplification, Stuffing and Smuggling</h3>
+        <p class="post-excerpt">How cache-stampede amplification, credential stuffing and HTTP/2 request smuggling work, plus edge admission, idempotency keys and circuit breakers that blunt them.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/run-apis-in-50-spots-what-breaks-first/">
+        <h3>Run APIs in 50 spots: what breaks first</h3>
+        <p class="post-excerpt">Edge APIs fail at the data layer, not the network. Covers sharding, bounded staleness, cache invalidation, clock drift, and how to measure each.</p>
+        <p class="post-reading-time">12 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/webhooks-2026-retries-idempotency-and-the-9995/">
+        <h3>Webhook Delivery: Retries, Idempotency, and Durability</h3>
+        <p class="post-excerpt">Design reliable webhook ingestion with durable buffering, idempotency keys, bounded retries, and circuit breakers, plus how to measure each guarantee.</p>
+        <p class="post-reading-time">11 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/portfolio-that-hires-show-constraints-not-code/">
+        <h3>Portfolio that hires: show constraints, not code</h3>
+        <p class="post-excerpt">A portfolio that proves engineering judgement: latency budgets, load tests, failure-mode notes and honest trade-offs recruiters can verify.</p>
+        <p class="post-reading-time">14 min read · 16 June 2026</p>
+      </a>
+      <a class="post-card" href="/7-patterns-for-systems-that-wont-die-when-networks/">
+        <h3>7 patterns for systems that won’t die when networks</h3>
+        <p class="post-excerpt">Concrete patterns for building services that tolerate network partitions: retries, idempotency, outbox, sagas, and how to measure each trade-off.</p>
+        <p class="post-reading-time">18 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/skip-m-pesa-build-one-api-for-3-african-markets/">
+        <h3>Skip M-Pesa: build one API for 3 African markets</h3>
+        <p class="post-excerpt">How to serve three African mobile-money markets through one orchestrator plus thin provider adapters, with metrics and reconciliation that hold up.</p>
+        <p class="post-reading-time">15 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-interviews-4-questions-that-caught-80-of-weak/">
+        <h3>AI Interviews: Four Resilience Questions That Matter</h3>
+        <p class="post-excerpt">AI screening interviews grade production resilience, not algorithm puzzles. Learn the four fault-injection questions and how to measure candidate fixes.</p>
+        <p class="post-reading-time">13 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-freelance-rates-2026-which-stacks-still-pay/">
+        <h3>AI freelance rates 2026: which stacks still pay</h3>
+        <p class="post-excerpt">AI code generation shifts effort from writing components to compliance, observability and edge cases. Here is how to price and instrument that hidden work.</p>
+        <p class="post-reading-time">12 min read · 13 June 2026</p>
+      </a>
+      <a class="post-card" href="/reconciling-mobile-money-edge-cases-banks-ignore/">
+        <h3>Reconciling mobile money: edge cases banks ignore</h3>
+        <p class="post-excerpt">Why provider webhooks are only approximate signals, and how to reconcile them against MNO ledgers with tolerance windows, dedup keys and batch jobs.</p>
+        <p class="post-reading-time">17 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-interviews-broke-system-design-3-patterns-that/">
+        <h3>AI interviews broke system design: 3 patterns that</h3>
+        <p class="post-excerpt">AI design tools produce complete-looking architectures that fail under real load. Three patterns, why they happen, and how to catch them before staging.</p>
+        <p class="post-reading-time">15 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/ussd-fintech-in-2026-the-300m-user-channel-nobody/">
+        <h3>Designing USSD fintech flows that survive live networks</h3>
+        <p class="post-excerpt">A practical guide to building reliable USSD fintech flows on AWS: state machines, 160-character screens, carrier SLAs, idempotency, and latency instrumentation.</p>
+        <p class="post-reading-time">17 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/save-12kmonth-cloud-egress-costs-in-2026/">
+        <h3>Cutting cloud egress costs: architecture that works</h3>
+        <p class="post-excerpt">Egress costs come from small, frequent cross-boundary calls. Learn the architecture patterns that reduce data transfer and how to verify savings.</p>
+        <p class="post-reading-time">13 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/personal-ai-assistants-avoid-vendor-lock-in-traps/">
+        <h3>Personal AI assistants: avoid vendor lock-in traps</h3>
+        <p class="post-excerpt">How to structure a personal AI assistant as replaceable services: contracts, self-hosted embeddings, retries, failure modes, and a checklist to start.</p>
+        <p class="post-reading-time">15 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/neon-vs-planetscale-vs-turso-which-broke-first/">
+        <h3>Neon vs PlanetScale vs Turso: which broke first?</h3>
+        <p class="post-excerpt">Diagnose connection drops, replica lag and proxy limits in Neon, PlanetScale and Turso, with reproducible tests and fixes that do not rely on guesswork.</p>
+        <p class="post-reading-time">13 min read · 10 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-interviews-now-ask-for-this/">
+        <h3>AI interviews now ask for this</h3>
+        <p class="post-excerpt">AI-assisted coding has changed what engineering interviews probe: flaky tests, observability overhead, secret rotation, and auditing generated code.</p>
+        <p class="post-reading-time">16 min read · 10 June 2026</p>
+      </a>
+      <a class="post-card" href="/event-sourcing-pay-the-complexity-tax-only-here/">
+        <h3>Event sourcing: pay the complexity tax only here</h3>
+        <p class="post-excerpt">When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.</p>
+        <p class="post-reading-time">10 min read · 9 June 2026</p>
+      </a>
+    </div>
+  </main>
+  <footer><div class="container">
+    <p>&copy; 2026 Kubai Kevin</p>
+  </div></footer>
+</body>
+</html>

@@ -44,7 +44,7 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Kubernetes</span>
     </nav>
-    <h2>16 articles tagged <em>Kubernetes</em></h2>
+    <h2>44 articles tagged <em>Kubernetes</em></h2>
     <div class="post-grid">
 
       <a class="post-card" href="/senior-without-the-title-what-stalls-engineers/">
@@ -62,20 +62,80 @@
         <p class="post-excerpt">Gateway API does not fix messy Ingress manifests. It changes who owns routing. Here is when delegation is worth the migration and when to wait.</p>
         <p class="post-reading-time">13 min read · 2 November 2026</p>
       </a>
+      <a class="post-card" href="/distroless-images-smaller-attack-surface/">
+        <h3>Distroless images: smaller attack surface</h3>
+        <p class="post-excerpt">How to move runtime containers to distroless bases, measure the reduction in packages and CVEs, and keep scans blocking in CI.</p>
+        <p class="post-reading-time">13 min read · 2 November 2026</p>
+      </a>
+      <a class="post-card" href="/opentelemetry-collector-pipelines-sampling-batching/">
+        <h3>OpenTelemetry collector pipelines: sampling, batching…</h3>
+        <p class="post-excerpt">How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</p>
+        <p class="post-reading-time">13 min read · 30 October 2026</p>
+      </a>
       <a class="post-card" href="/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
         <h3>HPA vs KEDA vs Karpenter: autoscaling traps</h3>
         <p class="post-excerpt">How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</p>
         <p class="post-reading-time">17 min read · 26 October 2026</p>
+      </a>
+      <a class="post-card" href="/deployment-platforms-senior-vs-new-hire/">
+        <h3>Deployment platforms: senior vs new hire</h3>
+        <p class="post-excerpt">How to build a deployment platform that serves both senior engineers and new hires, with escape hatches, guardrails, and a decision checklist.</p>
+        <p class="post-reading-time">17 min read · 7 October 2026</p>
+      </a>
+      <a class="post-card" href="/sbom-attestation-that-gets-used/">
+        <h3>SBOM + attestation that gets used</h3>
+        <p class="post-excerpt">How to generate, sign, attach and enforce SBOMs and build attestations so admission control and CI gates reject unverified artifacts.</p>
+        <p class="post-reading-time">17 min read · 3 October 2026</p>
+      </a>
+      <a class="post-card" href="/chaos-engineering-without-an-sre-team/">
+        <h3>Chaos engineering without an SRE team</h3>
+        <p class="post-excerpt">How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/world-models-wont-replace-your-backend/">
+        <h3>World models won't replace your backend</h3>
+        <p class="post-excerpt">World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.</p>
+        <p class="post-reading-time">15 min read · 24 September 2026</p>
+      </a>
+      <a class="post-card" href="/sandboxed-computer-use-agents-with-gvisor/">
+        <h3>Sandboxed computer-use agents with gVisor</h3>
+        <p class="post-excerpt">How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.</p>
+        <p class="post-reading-time">14 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/spot-instances-vs-on-demand-for-ai-experiments/">
+        <h3>Spot instances vs on-demand for AI experiments</h3>
+        <p class="post-excerpt">How spot and on-demand GPU instances differ on interruption handling, effective throughput, and the spend threshold where spot engineering pays off.</p>
+        <p class="post-reading-time">13 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/zero-trust-ai-skip-the-latency-tax/">
+        <h3>Zero-trust AI: skip the latency tax</h3>
+        <p class="post-excerpt">How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.</p>
+        <p class="post-reading-time">14 min read · 15 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-drift-why-it-hurts-ux/">
+        <h3>Agent drift: why it hurts UX</h3>
+        <p class="post-excerpt">Agent drift degrades latency and error rates without obvious alarms. Learn the four drift classes, detection methods, and a 30-minute audit.</p>
+        <p class="post-reading-time">12 min read · 9 September 2026</p>
       </a>
       <a class="post-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
         <h3>Cost tools fail when agents scale autonomously</h3>
         <p class="post-excerpt">Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
         <p class="post-reading-time">11 min read · 9 September 2026</p>
       </a>
+      <a class="post-card" href="/why-your-routing-layer-will-collapse-at-scale/">
+        <h3>Why your routing layer will collapse at scale</h3>
+        <p class="post-excerpt">How to build stateful, region-aware LLM routing: config schema, retry budgets, circuit breakers, audit trails, and the failure modes to plan for.</p>
+        <p class="post-reading-time">12 min read · 4 September 2026</p>
+      </a>
       <a class="post-card" href="/only-boring-stacks-survive-ai-services/">
         <h3>Only boring stacks survive AI services</h3>
         <p class="post-excerpt">Why monoliths beat microservices for solo AI builders, how to spot the &quot;one more abstraction&quot; trap, and how to measure when vertical scaling stops working.</p>
         <p class="post-reading-time">16 min read · 31 August 2026</p>
+      </a>
+      <a class="post-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
+        <h3>Spot evictions: the retry logic that holds up</h3>
+        <p class="post-excerpt">Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+        <p class="post-reading-time">13 min read · 12 August 2026</p>
       </a>
       <a class="post-card" href="/observability-agents-lied-to-us/">
         <h3>Observability Agents as Application Code</h3>
@@ -87,10 +147,20 @@
         <p class="post-excerpt">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
         <p class="post-reading-time">12 min read · 11 August 2026</p>
       </a>
+      <a class="post-card" href="/ebpf-observability-in-2026-what-actually-works/">
+        <h3>eBPF observability in 2026: what actually works</h3>
+        <p class="post-excerpt">A practical guide to production eBPF observability and runtime security: kernel requirements, verifier failures, ring buffers, pinning, and how to measure overhead.</p>
+        <p class="post-reading-time">14 min read · 9 August 2026</p>
+      </a>
       <a class="post-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
         <h3>Kubernetes or Nomad: the real experiment cost split</h3>
         <p class="post-excerpt">A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
         <p class="post-reading-time">11 min read · 3 August 2026</p>
+      </a>
+      <a class="post-card" href="/event-driven-beats-agent-driven-910-times/">
+        <h3>Event-driven systems avoid agent-driven contention</h3>
+        <p class="post-excerpt">How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.</p>
+        <p class="post-reading-time">15 min read · 30 July 2026</p>
       </a>
       <a class="post-card" href="/cloud-agents-burned-18k-8-tools-that-didnt-work/">
         <h3>Why Cloud Cost Tools Miss Agent-Driven GPU Spend</h3>
@@ -102,30 +172,100 @@
         <p class="post-excerpt">Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
         <p class="post-reading-time">15 min read · 5 July 2026</p>
       </a>
+      <a class="post-card" href="/audit-trails-immutabledb-vs-dynamodb-streams/">
+        <h3>Audit trails: ImmutableDB vs DynamoDB Streams</h3>
+        <p class="post-excerpt">Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.</p>
+        <p class="post-reading-time">15 min read · 4 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-made-self-service-platforms-trivial-in-2026/">
+        <h3>AI made self-service platforms trivial in 2026</h3>
+        <p class="post-excerpt">AI can draft Terraform and Kubernetes manifests, but correctness still needs policy checks, schema validation, and runtime verification before merge.</p>
+        <p class="post-reading-time">10 min read · 3 July 2026</p>
+      </a>
       <a class="post-card" href="/agent-governance-opa-vs-kyverno-after-our-incident/">
         <h3>Agent Governance: OPA vs Kyverno in Kubernetes</h3>
         <p class="post-excerpt">Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.</p>
         <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-memory-systems-context-that-survives-sessions/">
+        <h3>AI memory systems: context that survives sessions</h3>
+        <p class="post-excerpt">Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.</p>
+        <p class="post-reading-time">12 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-pair-prompts-9-setups-we-tried-in-2026/">
+        <h3>Choosing an AI Pair Programming Setup: A Practical Guide</h3>
+        <p class="post-excerpt">How to evaluate AI pair programming tools by latency, signal-to-noise, cost, and privacy, with configs, failure modes, and a decision checklist.</p>
+        <p class="post-reading-time">15 min read · 29 June 2026</p>
       </a>
       <a class="post-card" href="/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">
         <h3>CI/CD pipelines stall with GPU pods: 2026 benchmarks</h3>
         <p class="post-excerpt">GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.</p>
         <p class="post-reading-time">13 min read · 28 June 2026</p>
       </a>
+      <a class="post-card" href="/spot-ais-hidden-cost-spike-in-your-stack/">
+        <h3>Spot AI’s hidden cost spike in your stack</h3>
+        <p class="post-excerpt">AI refactors often trade cache hits for database reads, exhausting pools and inflating bills. Here is how to detect, verify and gate the change.</p>
+        <p class="post-reading-time">14 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">
+        <h3>AI agents vs Argo, Tekton: which pipeline heals itself?</h3>
+        <p class="post-excerpt">How Argo Workflows and Tekton Pipelines differ for automated failure detection and recovery, with working code and failure-mode analysis.</p>
+        <p class="post-reading-time">13 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/platform-teams-in-2026-docs-vs-production-reality/">
+        <h3>Platform teams in 2026: Docs vs. production reality</h3>
+        <p class="post-excerpt">Platform docs describe happy paths; production exposes the gaps. Covers cluster defaults, IDP design by company size, Helm guardrails, and policy enforcement.</p>
+        <p class="post-reading-time">18 min read · 27 June 2026</p>
+      </a>
       <a class="post-card" href="/self-healing-pipelines-argo-vs-crossplane-in-2026/">
         <h3>Self-healing pipelines: Argo vs Crossplane in 2026</h3>
         <p class="post-excerpt">Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
         <p class="post-reading-time">13 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/alerts-2026-ai-turns-false-alarms-to-silence/">
+        <h3>Alerts 2026: AI turns false alarms to silence</h3>
+        <p class="post-excerpt">Build a webhook service that counts alert firings per fingerprint and demotes noisy alerts, plus how to measure whether it works.</p>
+        <p class="post-reading-time">15 min read · 24 June 2026</p>
       </a>
       <a class="post-card" href="/use-feature-flags-to-deploy-ai-models-safely/">
         <h3>Use feature flags to deploy AI models safely</h3>
         <p class="post-excerpt">Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.</p>
         <p class="post-reading-time">15 min read · 20 June 2026</p>
       </a>
+      <a class="post-card" href="/ai-interviews-break-systems-5-real-mistakes-in-2026/">
+        <h3>AI interviews break systems: 5 real mistakes in 2026</h3>
+        <p class="post-excerpt">AI coding assistants assume a standard Docker environment. Here are five failure modes that break builds in CI, with fixes, verification steps, and a checklist.</p>
+        <p class="post-reading-time">14 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/3-ways-container-builds-got-3x-faster-in-2026/">
+        <h3>Container Build Caching: What Actually Speeds Up CI</h3>
+        <p class="post-excerpt">How container build caching works, why cache keys invalidate, and how to measure hit rate and cost before choosing a cache backend.</p>
+        <p class="post-reading-time">13 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-alert-triage-cut-pages-80-in-production/">
+        <h3>Designing an AI Alert Triage Layer That Reduces Pages</h3>
+        <p class="post-excerpt">How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.</p>
+        <p class="post-reading-time">14 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-sales-cycles-why-dev-tools-now-need-3-demos/">
+        <h3>AI sales cycles: why dev tools now need 3 demos</h3>
+        <p class="post-excerpt">Developer tools are increasingly bought by non-engineers who want proof in their own cluster. Here is how to structure three live demos that survive real infrastructure.</p>
+        <p class="post-reading-time">11 min read · 12 June 2026</p>
+      </a>
       <a class="post-card" href="/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
         <h3>Self-healing agents vs rule-based deployment rollback</h3>
         <p class="post-excerpt">Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.</p>
         <p class="post-reading-time">12 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-interviews-broke-system-design-3-patterns-that/">
+        <h3>AI interviews broke system design: 3 patterns that</h3>
+        <p class="post-excerpt">AI design tools produce complete-looking architectures that fail under real load. Three patterns, why they happen, and how to catch them before staging.</p>
+        <p class="post-reading-time">15 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/observability-2026-ditch-the-three-pillars/">
+        <h3>Observability 2026: ditch the three pillars</h3>
+        <p class="post-excerpt">Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
+        <p class="post-reading-time">14 min read · 10 June 2026</p>
       </a>
     </div>
   </main>

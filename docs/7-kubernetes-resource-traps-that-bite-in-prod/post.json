@@ -4,9 +4,8 @@
   "slug": "7-kubernetes-resource-traps-that-bite-in-prod",
   "tags": [
     "Kubernetes",
-    "ResourceLimits",
-    "K8s",
-    "Kubernetesqosclass"
+    "Containers",
+    "Java"
   ],
   "meta_description": "Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.",
   "featured_image": "/static/images/7-kubernetes-resource-traps-that-bite-in-prod.jpg",

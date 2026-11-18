@@ -4,11 +4,9 @@
   "slug": "python-deps-uv-vs-poetry-vs-pip-tools",
   "tags": [
     "Python",
-    "DependencyManagement",
-    "UvVsPoetry",
-    "PipToolsLockfile",
-    "PythonLockfile",
-    "Python3"
+    "Distributed Systems",
+    "AWS",
+    "Containers"
   ],
   "meta_description": "Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.",
   "featured_image": "/static/images/python-deps-uv-vs-poetry-vs-pip-tools.jpg",

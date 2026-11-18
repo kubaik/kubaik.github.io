@@ -218,16 +218,18 @@
                 <div class="tags">
                     
                     
-                    <a class="tag" href="/tag/toolcallingpatterns/"
-                       style="text-decoration:none;">ToolCallingPatterns</a>
+                    <a class="tag" href="/tag/reliability/"
+                       style="text-decoration:none;">Reliability</a>
                     
                     
                     
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">BackoffCurve</span>
+                    <a class="tag" href="/tag/distributed-systems/"
+                       style="text-decoration:none;">Distributed Systems</a>
                     
                     
                     
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">ToolCallSafety</span>
+                    <a class="tag" href="/tag/ai-agents/"
+                       style="text-decoration:none;">AI Agents</a>
                     
                     
                 </div>
@@ -533,12 +535,6 @@ func callWithSafety(orderID string) ([]byte, error) {
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
-                    <a class="related-card" href="/tool-calls-under-load-async-batch-vs-fire-and-forget/">
-                        <h3>Tool calls under load: async batch vs fire-and-forget</h3>
-                        <p>Compare async batch and fire-and-forget tool-calling patterns: when each fits, how to instrument latency and queue depth, and how to pick a batch size.</p>
-                        <span class="related-meta">16 min read · 13 June 2026</span>
-                    </a>
-                    
                     <a class="related-card" href="/agent-systems-circuit-breakers-are-not-enough/">
                         <h3>Agent Systems: Circuit Breakers Are Not Enough</h3>
                         <p>Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.</p>
@@ -549,6 +545,12 @@ func callWithSafety(orderID string) ([]byte, error) {
                         <h3>Tool calls: why retries stampede</h3>
                         <p>Why per-client backoff fails under fan-out tool use, and how shared token buckets, single-flight and one-layer retries fix it.</p>
                         <span class="related-meta">12 min read · 22 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/thundering-herd-the-hidden-scaling-trap/">
+                        <h3>Thundering Herd: The Hidden Scaling Trap</h3>
+                        <p>Why synchronized cache misses and naive retries collapse services, and how coalescing, jittered backoff, and locks prevent self-inflicted overload.</p>
+                        <span class="related-meta">12 min read · 10 September 2026</span>
                     </a>
                     
                 </div>

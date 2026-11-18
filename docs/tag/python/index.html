@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Python covering the Python programming language, its libraries, and best practices, including &quot;Python deps: uv vs Poetry vs pip-tools,&quot; &quot;FastAPI vs Django vs Flask: API picks for 2026,&quot; and &quot;SQLAlchemy vs asyncpg: pooling in async services&quot;.">
+  <meta name="description" content="Articles on Python covering the Python programming language, its libraries, and best practices, including &quot;Python deps: uv vs Poetry vs pip-tools,&quot; &quot;Structured logging: searchable at scale,&quot; and &quot;FastAPI vs Django vs Flask: API picks for 2026&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/python/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Python Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Python covering the Python programming language, its libraries, and best practices, including &quot;Python deps: uv vs Poetry vs pip-tools,&quot; &quot;FastAPI vs Django vs Flask: API picks for 2026,&quot; and &quot;SQLAlchemy vs asyncpg: pooling in async services&quot;.">
+  <meta property="og:description" content="Articles on Python covering the Python programming language, its libraries, and best practices, including &quot;Python deps: uv vs Poetry vs pip-tools,&quot; &quot;Structured logging: searchable at scale,&quot; and &quot;FastAPI vs Django vs Flask: API picks for 2026&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/python/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Python Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Python covering the Python programming language, its libraries, and best practices, including &quot;Python deps: uv vs Poetry vs pip-tools,&quot; &quot;FastAPI vs Django vs Flask: API picks for 2026,&quot; and &quot;SQLAlchemy vs asyncpg: pooling in async services&quot;.">
+  <meta name="twitter:description" content="Articles on Python covering the Python programming language, its libraries, and best practices, including &quot;Python deps: uv vs Poetry vs pip-tools,&quot; &quot;Structured logging: searchable at scale,&quot; and &quot;FastAPI vs Django vs Flask: API picks for 2026&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Python Articles","url":"https://kubailabs.com/tag/python/",
-    "description":"Articles on Python covering the Python programming language, its libraries, and best practices, including \"Python deps: uv vs Poetry vs pip-tools,\" \"FastAPI vs Django vs Flask: API picks for 2026,\" and \"SQLAlchemy vs asyncpg: pooling in async services\"."}
+    "description":"Articles on Python covering the Python programming language, its libraries, and best practices, including \"Python deps: uv vs Poetry vs pip-tools,\" \"Structured logging: searchable at scale,\" and \"FastAPI vs Django vs Flask: API picks for 2026\"."}
   </script>
 </head>
 <body>
@@ -44,7 +44,7 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Python</span>
     </nav>
-    <h2>20 articles tagged <em>Python</em></h2>
+    <h2>64 articles tagged <em>Python</em></h2>
     <div class="post-grid">
 
       <a class="post-card" href="/python-deps-uv-vs-poetry-vs-pip-tools/">
@@ -52,70 +52,220 @@
         <p class="post-excerpt">Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</p>
         <p class="post-reading-time">12 min read · 15 November 2026</p>
       </a>
+      <a class="post-card" href="/structured-logging-searchable-at-scale/">
+        <h3>Structured logging: searchable at scale</h3>
+        <p class="post-excerpt">Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</p>
+        <p class="post-reading-time">20 min read · 12 November 2026</p>
+      </a>
       <a class="post-card" href="/fastapi-vs-django-vs-flask-api-picks-for-2026/">
         <h3>FastAPI vs Django vs Flask: API picks for 2026</h3>
         <p class="post-excerpt">Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.</p>
         <p class="post-reading-time">15 min read · 9 November 2026</p>
+      </a>
+      <a class="post-card" href="/k6-vs-locust-traffic-models-that-lie/">
+        <h3>k6 vs Locust: traffic models that lie</h3>
+        <p class="post-excerpt">Why closed-loop load tests under-report latency, how to build open-loop traffic models in k6 and Locust, and how to read the results without fooling yourself.</p>
+        <p class="post-reading-time">13 min read · 7 November 2026</p>
       </a>
       <a class="post-card" href="/sqlalchemy-vs-asyncpg-pooling-in-async-services/">
         <h3>SQLAlchemy vs asyncpg: pooling in async services</h3>
         <p class="post-excerpt">How SQLAlchemy&#x27;s async engine and asyncpg&#x27;s pool actually relate, how to size pools against Postgres max_connections, and the failure modes that cause timeouts.</p>
         <p class="post-reading-time">13 min read · 3 November 2026</p>
       </a>
+      <a class="post-card" href="/dependency-pinning-the-lockfile-lie/">
+        <h3>Dependency pinning: the lockfile lie</h3>
+        <p class="post-excerpt">A lockfile records a resolution, not a guarantee. Learn where determinism breaks, how to enforce lockfiles in CI, and how pinning interacts with SCA.</p>
+        <p class="post-reading-time">16 min read · 31 October 2026</p>
+      </a>
+      <a class="post-card" href="/retire-api-versions-before-they-pile-up/">
+        <h3>Retire API versions before they pile up</h3>
+        <p class="post-excerpt">Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.</p>
+        <p class="post-reading-time">12 min read · 12 October 2026</p>
+      </a>
+      <a class="post-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
+        <p class="post-excerpt">How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+        <p class="post-reading-time">15 min read · 3 October 2026</p>
+      </a>
+      <a class="post-card" href="/duckdb-in-production-when-it-replaces-a-warehouse/">
+        <h3>DuckDB in production: when it replaces a warehouse</h3>
+        <p class="post-excerpt">When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/prompt-injection-what-breaks-first-in-prod/">
+        <h3>Prompt injection: what breaks first in prod</h3>
+        <p class="post-excerpt">Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
+        <p class="post-reading-time">15 min read · 27 September 2026</p>
+      </a>
+      <a class="post-card" href="/tech-debt-when-half-your-stack-is-unfamiliar/">
+        <h3>Tech debt: when half your stack is unfamiliar</h3>
+        <p class="post-excerpt">A repeatable process for debugging, verifying and governing tools you didn&#x27;t write, with baselines, contracts, environment measurement and tool cards.</p>
+        <p class="post-reading-time">14 min read · 26 September 2026</p>
+      </a>
+      <a class="post-card" href="/rust-rewrites-where-they-pay-off-where-they-dont/">
+        <h3>Rust rewrites: where they pay off, where they don't</h3>
+        <p class="post-excerpt">A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.</p>
+        <p class="post-reading-time">12 min read · 21 September 2026</p>
+      </a>
       <a class="post-card" href="/dead-letter-queues-stop-poison-messages/">
         <h3>Dead-letter queues: stop poison messages</h3>
         <p class="post-excerpt">Design retry caps, DLQs, and alerts so a poison message is isolated in seconds. Includes working Redis Queue code and pytest tests.</p>
         <p class="post-reading-time">15 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/platform-engineering-roi-metrics-that-fund-teams/">
+        <h3>Platform engineering ROI: metrics that fund teams</h3>
+        <p class="post-excerpt">How to connect platform work to business outcomes with flow metrics, honest attribution, and instrumentation you can build in an afternoon.</p>
+        <p class="post-reading-time">13 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/zero-trust-ai-skip-the-latency-tax/">
+        <h3>Zero-trust AI: skip the latency tax</h3>
+        <p class="post-excerpt">How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.</p>
+        <p class="post-reading-time">14 min read · 15 September 2026</p>
+      </a>
+      <a class="post-card" href="/offline-agents-local-first-sync-patterns/">
+        <h3>Offline Agents: Local-First Sync Patterns</h3>
+        <p class="post-excerpt">Design offline-capable agents with operation logs, versioned conflict resolution, auditable sync, and GDPR-aware deletion propagation.</p>
+        <p class="post-reading-time">12 min read · 7 September 2026</p>
+      </a>
+      <a class="post-card" href="/llm-eval-drift-that-users-notice-first/">
+        <h3>LLM eval drift that users notice first</h3>
+        <p class="post-excerpt">Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
+        <p class="post-reading-time">16 min read · 28 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-features-rot-faster-than-you-build-them/">
+        <h3>AI features rot faster than you build them</h3>
+        <p class="post-excerpt">Model APIs, prompts and schemas change under you. Here is how to make AI feature contracts explicit, versioned and reversible without a rewrite.</p>
+        <p class="post-reading-time">15 min read · 27 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-auth-where-the-docs-ended-up-lying/">
+        <h3>Agent auth: where the docs ended up lying</h3>
+        <p class="post-excerpt">OAuth2 and OIDC assume reliable clocks, stable power and trusted hardware. Here is what breaks on constrained agent networks, and how to measure it.</p>
+        <p class="post-reading-time">14 min read · 24 August 2026</p>
+      </a>
+      <a class="post-card" href="/websockets-vs-server-sent-events-latency-over-3g/">
+        <h3>WebSockets vs Server-Sent Events: latency over 3G</h3>
+        <p class="post-excerpt">Compare WebSocket and Server-Sent Events for real-time features on 3G/4G: reconnect behaviour, proxy timeouts, framing overhead, and how to measure each.</p>
+        <p class="post-reading-time">14 min read · 21 August 2026</p>
+      </a>
+      <a class="post-card" href="/40-ai-code-meant-60-more-alerts/">
+        <h3>Validating AI-Generated Code Before It Reaches Production</h3>
+        <p class="post-excerpt">AI-written code often fails quietly under load. Here is how to validate it at build time, guard it at runtime, and keep on-call triage fast.</p>
+        <p class="post-reading-time">10 min read · 20 August 2026</p>
+      </a>
+      <a class="post-card" href="/evolve-your-monolith-without-rewriting-in-2026/">
+        <h3>Evolve your monolith without rewriting in 2026</h3>
+        <p class="post-excerpt">A three-layer FastAPI layout (API, domain, infra) that keeps a monolith evolvable: worked code, failure modes, cache stampede fixes, and how to measure.</p>
+        <p class="post-reading-time">15 min read · 19 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-unit-costs-the-metric-both-teams-fight-over/">
+        <h3>AI unit costs: the metric both teams fight over</h3>
+        <p class="post-excerpt">Why per-call AI cost estimates break down, and how to instrument a shared cost-per-outcome metric that product and finance both accept.</p>
+        <p class="post-reading-time">14 min read · 18 August 2026</p>
       </a>
       <a class="post-card" href="/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/">
         <h3>Rust SDK vs FastAPI for LLM ops: trust in 2026</h3>
         <p class="post-excerpt">How to compare a compiled Rust inference service against a Python async API for LLM serving: cold starts, cache stampedes, memory, and how to measure each.</p>
         <p class="post-reading-time">10 min read · 14 August 2026</p>
       </a>
-      <a class="post-card" href="/orchestration-tax-kills-multi-agent-systems/">
-        <h3>Orchestration tax kills multi-agent systems</h3>
-        <p class="post-excerpt">Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
-        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      <a class="post-card" href="/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/">
+        <h3>Foreign AI models vs sovereign fintech stacks: 2026 reality</h3>
+        <p class="post-excerpt">How to choose between offshore LLM APIs and locally hosted inference for regulated fintech, with latency math, cost break-even, and a compliance checklist.</p>
+        <p class="post-reading-time">12 min read · 13 August 2026</p>
       </a>
       <a class="post-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">
         <h3>Agent followed instructions too literally: the cron job trap</h3>
         <p class="post-excerpt">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
         <p class="post-reading-time">12 min read · 11 August 2026</p>
       </a>
-      <a class="post-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
-        <h3>Cost-Effective AI Infrastructure for Micro-SaaS</h3>
-        <p class="post-excerpt">How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
-        <p class="post-reading-time">15 min read · 5 August 2026</p>
+      <a class="post-card" href="/starlink-in-production-what-changed-in-our-stack/">
+        <h3>Designing APIs for High-Latency Satellite Links</h3>
+        <p class="post-excerpt">How to keep an API reliable over high-latency satellite links: circuit breakers, retry budgets, failover gateways, and the metrics that show what broke.</p>
+        <p class="post-reading-time">14 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/least-privilege-for-agents-the-config-line-nobody-writes/">
+        <h3>Least privilege for agents: the config line nobody writes</h3>
+        <p class="post-excerpt">Why permissive agent tool defaults break in production, and how to add runtime, context-aware policy checks before every tool call.</p>
+        <p class="post-reading-time">14 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/why-your-multi-agent-system-degraded-slowly/">
+        <h3>Why your multi-agent system degraded slowly</h3>
+        <p class="post-excerpt">Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.</p>
+        <p class="post-reading-time">14 min read · 9 August 2026</p>
       </a>
       <a class="post-card" href="/mcp-servers-the-3-hidden-costs-nobody-quotes/">
         <h3>MCP servers: the 3 hidden costs nobody quotes</h3>
         <p class="post-excerpt">MCP servers are stateful async processes, not stateless APIs. Here are the real cost drivers, failure modes, and how to measure them yourself.</p>
         <p class="post-reading-time">16 min read · 5 August 2026</p>
       </a>
-      <a class="post-card" href="/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
-        <h3>CDC pipeline death spiral: one bad LLM call can crash…</h3>
-        <p class="post-excerpt">How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.</p>
-        <p class="post-reading-time">12 min read · 2 August 2026</p>
-      </a>
       <a class="post-card" href="/built-a-multi-agent-system-without-langgraph/">
         <h3>Built a multi-agent system without LangGraph</h3>
         <p class="post-excerpt">Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.</p>
         <p class="post-reading-time">13 min read · 27 July 2026</p>
+      </a>
+      <a class="post-card" href="/edge-agents-vs-cloud-round-trips-in-2026/">
+        <h3>Edge agents vs cloud round-trips in 2026</h3>
+        <p class="post-excerpt">A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.</p>
+        <p class="post-reading-time">11 min read · 23 July 2026</p>
+      </a>
+      <a class="post-card" href="/purpose-built-beats-general-ai-tools/">
+        <h3>Purpose-built beats general AI tools</h3>
+        <p class="post-excerpt">When a general AI platform beats a purpose-built stack, how to choose, and how to measure latency, cost and fallback behaviour yourself.</p>
+        <p class="post-reading-time">16 min read · 19 July 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-workflows-how-we-kept-the-lights/">
+        <h3>Observability for Long-Running LLM Agent Workflows</h3>
+        <p class="post-excerpt">Design an observability stack for agentic LLM workloads: millisecond event timestamps, queue-depth metrics, and bounded buffering that survives outages.</p>
+        <p class="post-reading-time">14 min read · 17 July 2026</p>
       </a>
       <a class="post-card" href="/build-agent-workflows-that-survive-restarts/">
         <h3>Build agent workflows that survive restarts</h3>
         <p class="post-excerpt">How to build agent task pipelines that resume after crashes, schema drift and model changes, using Redis streams, idempotent steps and replay.</p>
         <p class="post-reading-time">12 min read · 6 July 2026</p>
       </a>
+      <a class="post-card" href="/ai-model-poisoning-3-real-attacks-on-datasets/">
+        <h3>AI model poisoning: 3 real attacks on datasets</h3>
+        <p class="post-excerpt">How data, model, and dependency poisoning enter AI pipelines, plus concrete controls for provenance, review, sandboxing, and rollback.</p>
+        <p class="post-reading-time">15 min read · 4 July 2026</p>
+      </a>
+      <a class="post-card" href="/evaluate-agents-with-spark-vs-custom-harness/">
+        <h3>Evaluate agents with Spark vs custom harness</h3>
+        <p class="post-excerpt">A practical comparison of Spark-based and custom Python agent evaluation harnesses, with failure modes, cost arithmetic, and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+        <h3>AI agents: circuit breakers are not optional</h3>
+        <p class="post-excerpt">AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
+        <p class="post-reading-time">13 min read · 3 July 2026</p>
+      </a>
       <a class="post-card" href="/ai-reshaped-my-engineering-principles/">
         <h3>AI Code Generation: Failure Modes and Guardrails</h3>
         <p class="post-excerpt">AI code assistants change interfaces, concurrency and state in ways that pass review. Here are the failure modes and the checks that catch them.</p>
         <p class="post-reading-time">11 min read · 3 July 2026</p>
       </a>
+      <a class="post-card" href="/cicd-for-django-in-20ms-africa-networks/">
+        <h3>CI/CD for Django in 20ms Africa networks</h3>
+        <p class="post-excerpt">Design a Django CI/CD pipeline for 1-2 vCPU runners, slow links and metered egress: caching, image size, migrations and health checks.</p>
+        <p class="post-reading-time">13 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/json-modes-hidden-costs-revealed/">
+        <h3>JSON mode's hidden costs revealed</h3>
+        <p class="post-excerpt">LLM JSON mode guarantees syntax, not usable data. A two-stage extraction-plus-correction pipeline makes parsing reliable and cheap without fine-tuning.</p>
+        <p class="post-reading-time">12 min read · 3 July 2026</p>
+      </a>
       <a class="post-card" href="/ai-code-40-how-to-keep-it-from-rotting-your-repo/">
         <h3>Keeping AI-Generated Code from Rotting Your Repository</h3>
         <p class="post-excerpt">How to detect and contain AI-generated code debt with linters, review gates, and measurement instead of expensive governance platforms.</p>
         <p class="post-reading-time">12 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/meter-dev-tool-pricing-in-2026/">
+        <h3>Meter dev-tool pricing in 2026</h3>
+        <p class="post-excerpt">Build usage-metered pricing for a dev tool: Stripe metered billing, Redis counters, idempotent usage events, and the edge cases that break first.</p>
+        <p class="post-reading-time">11 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-wrote-the-docs-humans-wrote-the-gaps/">
+        <h3>AI wrote the docs — humans wrote the gaps</h3>
+        <p class="post-excerpt">AI generates API reference docs well but omits rate limits, deprecations and retry rules. A pattern for keeping human-written edge cases in sync with code.</p>
+        <p class="post-reading-time">13 min read · 1 July 2026</p>
       </a>
       <a class="post-card" href="/tame-python-asyncs-hidden-traps/">
         <h3>Tame Python async’s hidden traps</h3>
@@ -127,20 +277,90 @@
         <p class="post-excerpt">How to build an auditable compensation evidence pack that separates human-only work from AI-assisted output, with reproducible tooling and a negotiation script.</p>
         <p class="post-reading-time">14 min read · 29 June 2026</p>
       </a>
+      <a class="post-card" href="/spot-ais-hidden-cost-spike-in-your-stack/">
+        <h3>Spot AI’s hidden cost spike in your stack</h3>
+        <p class="post-excerpt">AI refactors often trade cache hits for database reads, exhausting pools and inflating bills. Here is how to detect, verify and gate the change.</p>
+        <p class="post-reading-time">14 min read · 28 June 2026</p>
+      </a>
       <a class="post-card" href="/negotiate-salaries-with-ai-skills-in-2026/">
         <h3>Negotiate salaries with AI skills in 2026</h3>
         <p class="post-excerpt">A practical method for quantifying which parts of a job AI can automate, building a defensible salary anchor, and handling pushback in negotiation.</p>
         <p class="post-reading-time">11 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-fixes-legacy-code-nobody-owns/">
+        <h3>AI fixes legacy code nobody owns</h3>
+        <p class="post-excerpt">How to combine static analysis, runtime traces, and LLM contextualization to make unowned legacy systems legible, with code and failure modes.</p>
+        <p class="post-reading-time">19 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/negotiate-pay-in-2026-with-ai-proof-points/">
+        <h3>Negotiate pay in 2026 with AI proof points</h3>
+        <p class="post-excerpt">A repeatable method for turning Git history into reviewable evidence of human-owned engineering work, plus how to measure it honestly.</p>
+        <p class="post-reading-time">11 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/store-data-once-serve-everywhere-cheaper/">
+        <h3>Store data once, serve everywhere: cheaper</h3>
+        <p class="post-excerpt">How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.</p>
+        <p class="post-reading-time">12 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/cicd-for-ai-code-test-secure-rollback-fast/">
+        <h3>CI/CD for AI code: test, secure, rollback fast</h3>
+        <p class="post-excerpt">A CI/CD pattern for AI-assisted code changes: deterministic locks, prompt-injection checks, smoke tests, metrics gates, and blue-green rollback.</p>
+        <p class="post-reading-time">13 min read · 23 June 2026</p>
       </a>
       <a class="post-card" href="/unlock-python-313s-free-threaded-gil-for-web-apps/">
         <h3>Unlock Python 3.13's free-threaded GIL for web apps</h3>
         <p class="post-excerpt">Free-threaded Python removes the GIL, but C extensions, shared state and pools break. A practical checklist for migrating a web service safely.</p>
         <p class="post-reading-time">14 min read · 22 June 2026</p>
       </a>
-      <a class="post-card" href="/ai-glue-code-3-ways-to-avoid-duct-taping-models/">
-        <h3>AI glue code: 3 ways to avoid duct-taping models</h3>
-        <p class="post-excerpt">Low-code AI platforms hide prompt drift, adapter decay and cold starts. Detect each with logged queries, a golden set and pre-warming, wired into CI.</p>
-        <p class="post-reading-time">14 min read · 20 June 2026</p>
+      <a class="post-card" href="/vibe-code-works-great-fails-forever/">
+        <h3>Vibe code: works great, fails forever</h3>
+        <p class="post-excerpt">Ten failure modes that make vibe-coded MVPs unmaintainable, with code fixes, measurement recipes, and a hardening checklist for each.</p>
+        <p class="post-reading-time">13 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/cut-cold-starts-70-lambda-cost-hack/">
+        <h3>Serverless Cold Starts: Cost Levers and How to Measure Them</h3>
+        <p class="post-excerpt">Cold starts are a cost and consistency problem, not just latency. Learn how to measure latency-per-dollar and tune concurrency, memory, and architecture.</p>
+        <p class="post-reading-time">12 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/use-feature-flags-to-deploy-ai-models-safely/">
+        <h3>Use feature flags to deploy AI models safely</h3>
+        <p class="post-excerpt">Use feature flags to canary, shadow and roll back AI model changes without redeploys, with code, metrics and failure-mode handling.</p>
+        <p class="post-reading-time">15 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/">
+        <h3>Tiered API abuse defense: match cost to attacker economics</h3>
+        <p class="post-excerpt">Five API abuse patterns that inflate cloud bills, why edge-only blocking fails, and how to build tiered defenses with measurable cost-per-request targets.</p>
+        <p class="post-reading-time">11 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/rebalance-pay-when-ai-fills-half-your-role/">
+        <h3>Rebalance pay when AI fills half your role</h3>
+        <p class="post-excerpt">Measure AI&#x27;s share of your codebase, then renegotiate scope, level, and pay with evidence instead of anecdotes or cost-of-living framing.</p>
+        <p class="post-reading-time">13 min read · 15 June 2026</p>
+      </a>
+      <a class="post-card" href="/ship-a-solo-project-pipeline-under-20month/">
+        <h3>A Solo-Project Deploy Pipeline That Stays Under $20/Month</h3>
+        <p class="post-excerpt">Build a test-and-deploy pipeline with GitHub Actions and a container host, then measure cost, cold start, and rollback time yourself.</p>
+        <p class="post-reading-time">16 min read · 15 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">
+        <h3>AI Static Analysis vs Rule-Based SAST: A Practical Comparison</h3>
+        <p class="post-excerpt">How AI-assisted static analysis compares with rule-based SAST on scan latency, false negatives, cost, and ops, plus how to measure both on your own repos.</p>
+        <p class="post-reading-time">14 min read · 13 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-alert-triage-cut-pages-80-in-production/">
+        <h3>Designing an AI Alert Triage Layer That Reduces Pages</h3>
+        <p class="post-excerpt">How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.</p>
+        <p class="post-reading-time">14 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-interviews-now-ask-for-this/">
+        <h3>AI interviews now ask for this</h3>
+        <p class="post-excerpt">AI-assisted coding has changed what engineering interviews probe: flaky tests, observability overhead, secret rotation, and auditing generated code.</p>
+        <p class="post-reading-time">16 min read · 10 June 2026</p>
+      </a>
+      <a class="post-card" href="/event-sourcing-pay-the-complexity-tax-only-here/">
+        <h3>Event sourcing: pay the complexity tax only here</h3>
+        <p class="post-excerpt">When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.</p>
+        <p class="post-reading-time">10 min read · 9 June 2026</p>
       </a>
       <a class="post-card" href="/price-your-remote-job-like-a-new-york-dev/">
         <h3>Price your remote job like a New York dev</h3>

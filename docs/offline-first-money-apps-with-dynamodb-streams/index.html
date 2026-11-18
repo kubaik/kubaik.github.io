@@ -218,16 +218,23 @@
                 <div class="tags">
                     
                     
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Duplicate</span>
+                    <a class="tag" href="/tag/ai-agents/"
+                       style="text-decoration:none;">AI Agents</a>
                     
                     
                     
-                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Conditional</span>
+                    <a class="tag" href="/tag/aws/"
+                       style="text-decoration:none;">AWS</a>
                     
                     
                     
-                    <a class="tag" href="/tag/mobiledev/"
-                       style="text-decoration:none;">Mobiledev</a>
+                    <a class="tag" href="/tag/payments/"
+                       style="text-decoration:none;">Payments</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/distributed-systems/"
+                       style="text-decoration:none;">Distributed Systems</a>
                     
                     
                 </div>
@@ -710,22 +717,22 @@ module.exports.handler = async (event) =&gt; {
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
+                    <a class="related-card" href="/ussdsms-fallback-the-session-trap/">
+                        <h3>USSD/SMS fallback: the session trap</h3>
+                        <p>Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</p>
+                        <span class="related-meta">16 min read · 6 November 2026</span>
+                    </a>
+                    
                     <a class="related-card" href="/double-entry-ledger-concurrent-write-errors/">
                         <h3>Double-entry ledger: concurrent write errors</h3>
                         <p>Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.</p>
                         <span class="related-meta">15 min read · 1 October 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/reconciling-mobile-money-edge-cases-banks-ignore/">
-                        <h3>Reconciling mobile money: edge cases banks ignore</h3>
-                        <p>Why provider webhooks are only approximate signals, and how to reconcile them against MNO ledgers with tolerance windows, dedup keys and batch jobs.</p>
-                        <span class="related-meta">17 min read · 12 June 2026</span>
-                    </a>
-                    
-                    <a class="related-card" href="/audit-trails-immutabledb-vs-dynamodb-streams/">
-                        <h3>Audit trails: ImmutableDB vs DynamoDB Streams</h3>
-                        <p>Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.</p>
-                        <span class="related-meta">15 min read · 4 July 2026</span>
+                    <a class="related-card" href="/offline-first-agents-for-field-teams/">
+                        <h3>Offline-first agents for field teams</h3>
+                        <p>Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.</p>
+                        <span class="related-meta">14 min read · 16 July 2026</span>
                     </a>
                     
                 </div>

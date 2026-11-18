@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rag Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Rag covering practical, hands-on approaches to rag for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; and &quot;3 LLM context techniques: when each fails&quot;.">
+  <meta name="description" content="Articles on Rag covering practical, hands-on approaches to rag for software developers, including &quot;BM25 vs dense embeddings: hybrid search reality,&quot; &quot;3 LLM context techniques: when each fails,&quot; and &quot;JWT sessions: revocation, rotation, storage&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/rag/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Rag Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Rag covering practical, hands-on approaches to rag for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; and &quot;3 LLM context techniques: when each fails&quot;.">
+  <meta property="og:description" content="Articles on Rag covering practical, hands-on approaches to rag for software developers, including &quot;BM25 vs dense embeddings: hybrid search reality,&quot; &quot;3 LLM context techniques: when each fails,&quot; and &quot;JWT sessions: revocation, rotation, storage&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/rag/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Rag Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Rag covering practical, hands-on approaches to rag for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;Redis vs Valkey vs Dragonfly: which in-memory store?,&quot; and &quot;3 LLM context techniques: when each fails&quot;.">
+  <meta name="twitter:description" content="Articles on Rag covering practical, hands-on approaches to rag for software developers, including &quot;BM25 vs dense embeddings: hybrid search reality,&quot; &quot;3 LLM context techniques: when each fails,&quot; and &quot;JWT sessions: revocation, rotation, storage&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Rag Articles","url":"https://kubailabs.com/tag/rag/",
-    "description":"Articles on Rag covering practical, hands-on approaches to rag for software developers, including \"Structured logging: searchable at scale,\" \"Redis vs Valkey vs Dragonfly: which in-memory store?,\" and \"3 LLM context techniques: when each fails\"."}
+    "description":"Articles on Rag covering practical, hands-on approaches to rag for software developers, including \"BM25 vs dense embeddings: hybrid search reality,\" \"3 LLM context techniques: when each fails,\" and \"JWT sessions: revocation, rotation, storage\"."}
   </script>
 </head>
 <body>
@@ -44,18 +44,13 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Rag</span>
     </nav>
-    <h2>19 articles tagged <em>Rag</em></h2>
+    <h2>21 articles tagged <em>Rag</em></h2>
     <div class="post-grid">
 
-      <a class="post-card" href="/structured-logging-searchable-at-scale/">
-        <h3>Structured logging: searchable at scale</h3>
-        <p class="post-excerpt">Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</p>
-        <p class="post-reading-time">20 min read · 12 November 2026</p>
-      </a>
-      <a class="post-card" href="/redis-vs-valkey-vs-dragonfly-which-in-memory-store/">
-        <h3>Redis vs Valkey vs Dragonfly: which in-memory store?</h3>
-        <p class="post-excerpt">A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</p>
-        <p class="post-reading-time">17 min read · 7 November 2026</p>
+      <a class="post-card" href="/bm25-vs-dense-embeddings-hybrid-search-reality/">
+        <h3>BM25 vs dense embeddings: hybrid search reality</h3>
+        <p class="post-excerpt">How BM25 and dense retrieval fail differently, why score fusion is not free, and how to choose RRF, weighted fusion, or a cascade for your corpus.</p>
+        <p class="post-reading-time">14 min read · 3 November 2026</p>
       </a>
       <a class="post-card" href="/3-llm-context-techniques-when-each-fails/">
         <h3>3 LLM context techniques: when each fails</h3>
@@ -67,10 +62,20 @@
         <p class="post-excerpt">Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</p>
         <p class="post-reading-time">14 min read · 27 October 2026</p>
       </a>
+      <a class="post-card" href="/7-guardrails-for-safer-llm-apps/">
+        <h3>7 guardrails for safer LLM apps</h3>
+        <p class="post-excerpt">A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first.</p>
+        <p class="post-reading-time">18 min read · 25 October 2026</p>
+      </a>
       <a class="post-card" href="/apm-is-blind-to-your-ai-agents/">
         <h3>APM is blind to your AI agents</h3>
         <p class="post-excerpt">Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
         <p class="post-reading-time">12 min read · 25 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-our-schema-survived-ai-scaling/">
+        <h3>Designing a Schema That Survives Embedding Model Upgrades</h3>
+        <p class="post-excerpt">Why embedding columns break on model upgrades, how to version vectors, migrate legacy JSON payloads, and when to offload to a vector store.</p>
+        <p class="post-reading-time">11 min read · 13 September 2026</p>
       </a>
       <a class="post-card" href="/rag-rots-if-you-dont-refresh-indexes/">
         <h3>RAG rots if you don’t refresh indexes</h3>
@@ -81,6 +86,11 @@
         <h3>When a vector DB misconfiguration breaks RAG silently</h3>
         <p class="post-excerpt">Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.</p>
         <p class="post-reading-time">11 min read · 29 July 2026</p>
+      </a>
+      <a class="post-card" href="/postgres-vector-search-what-breaks-first/">
+        <h3>Postgres vector search: what breaks first</h3>
+        <p class="post-excerpt">pgvector works until load grows. Here is what fails first, how to measure it, and when a dedicated ANN service earns its operational cost.</p>
+        <p class="post-reading-time">13 min read · 24 July 2026</p>
       </a>
       <a class="post-card" href="/kill-noisy-alerts-the-triage-system-that-restored-sleep/">
         <h3>Designing Alert Triage That Suppresses Noise Safely</h3>
@@ -97,6 +107,11 @@
         <p class="post-excerpt">Why RAG dashboards miss real failures, and how to build an evaluation stack around task resolution, dataset rotation, prompt versioning, and drift checks.</p>
         <p class="post-reading-time">13 min read · 5 July 2026</p>
       </a>
+      <a class="post-card" href="/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
+        <h3>RAG on legacy systems: vector DB vs. full-text SQL</h3>
+        <p class="post-excerpt">Compare vector databases and in-database vector search for adding RAG to legacy systems, with latency, cost, and operational trade-offs.</p>
+        <p class="post-reading-time">14 min read · 30 June 2026</p>
+      </a>
       <a class="post-card" href="/rag-is-not-enough-hybrid-search-reranking-in-2026/">
         <h3>RAG is not enough: hybrid search + reranking in 2026</h3>
         <p class="post-excerpt">Dense retrieval alone ranks poorly. A two-stage pipeline of BM25 plus a cross-encoder reranker fixes it. Architecture, code, and how to measure it.</p>
@@ -106,11 +121,6 @@
         <h3>AI steals junior tasks: 3 skills that protect pay</h3>
         <p class="post-excerpt">AI coding tools make boilerplate cheap. Here is how to measure whether your time is shifting to validated product work or just faster scaffolding.</p>
         <p class="post-reading-time">13 min read · 24 June 2026</p>
-      </a>
-      <a class="post-card" href="/log-audit-costs-without-breaking-compliance/">
-        <h3>Log audit costs without breaking compliance</h3>
-        <p class="post-excerpt">Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.</p>
-        <p class="post-reading-time">13 min read · 22 June 2026</p>
       </a>
       <a class="post-card" href="/offline-first-apps-what-3g-markets-taught-us/">
         <h3>Designing Offline-First Apps for Unreliable Networks</h3>
@@ -122,15 +132,15 @@
         <p class="post-excerpt">Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.</p>
         <p class="post-reading-time">14 min read · 14 June 2026</p>
       </a>
+      <a class="post-card" href="/llm-metrics-that-stop-wasting-time/">
+        <h3>LLM metrics that stop wasting time</h3>
+        <p class="post-excerpt">A practical guide to LLM evaluation in production: grounding checks, drift detection, cost and latency metrics, and how to measure each one.</p>
+        <p class="post-reading-time">13 min read · 14 June 2026</p>
+      </a>
       <a class="post-card" href="/which-ai-wrappers-made-money-in-2026/">
         <h3>Which AI wrappers made money in 2026</h3>
         <p class="post-excerpt">Most AI wrapper products fail on latency, cost, and churn rather than model quality. Here is a rubric, failure analysis, and code to build one that lasts.</p>
         <p class="post-reading-time">10 min read · 12 June 2026</p>
-      </a>
-      <a class="post-card" href="/observability-2026-ditch-the-three-pillars/">
-        <h3>Observability 2026: ditch the three pillars</h3>
-        <p class="post-excerpt">Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
-        <p class="post-reading-time">14 min read · 10 June 2026</p>
       </a>
       <a class="post-card" href="/rag-pipelines-4-silent-prod-killers/">
         <h3>RAG pipelines: 4 silent prod killers</h3>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ai Agents Articles — Kubai Kevin</title>
+  <meta name="description" content="Articles on Ai Agents covering practical, hands-on approaches to ai agents for software developers, including &quot;RBAC vs ABAC: pick by blast radius,&quot; &quot;Human-in-the-loop: when agents need a human veto,&quot; and &quot;7 ADR traps that cause stale decisions&quot;.">
+  <meta name="robots" content="index, follow">
+  <meta name="base-path" content="">
+  <link rel="canonical" href="https://kubailabs.com/tag/ai-agents/">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+  <script src="/static/consent.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ai Agents Articles — Kubai Kevin">
+  <meta property="og:description" content="Articles on Ai Agents covering practical, hands-on approaches to ai agents for software developers, including &quot;RBAC vs ABAC: pick by blast radius,&quot; &quot;Human-in-the-loop: when agents need a human veto,&quot; and &quot;7 ADR traps that cause stale decisions&quot;.">
+  <meta property="og:url" content="https://kubailabs.com/tag/ai-agents/">
+  <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ai Agents Articles — Kubai Kevin">
+  <meta name="twitter:description" content="Articles on Ai Agents covering practical, hands-on approaches to ai agents for software developers, including &quot;RBAC vs ABAC: pick by blast radius,&quot; &quot;Human-in-the-loop: when agents need a human veto,&quot; and &quot;7 ADR traps that cause stale decisions&quot;.">
+  <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
+  <meta name="twitter:site" content="@KubaiKevin">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage",
+    "name":"Ai Agents Articles","url":"https://kubailabs.com/tag/ai-agents/",
+    "description":"Articles on Ai Agents covering practical, hands-on approaches to ai agents for software developers, including \"RBAC vs ABAC: pick by blast radius,\" \"Human-in-the-loop: when agents need a human veto,\" and \"7 ADR traps that cause stale decisions\"."}
+  </script>
+</head>
+<body>
+  <header><div class="container">
+    <h1><a href="/">Kubai Kevin</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div></header>
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">Ai Agents</span>
+    </nav>
+    <h2>145 articles tagged <em>Ai Agents</em></h2>
+    <div class="post-grid">
+
+      <a class="post-card" href="/rbac-vs-abac-pick-by-blast-radius/">
+        <h3>RBAC vs ABAC: pick by blast radius</h3>
+        <p class="post-excerpt">RBAC vs ABAC for services: why role explosion and attribute spoofing fail in opposite directions, with runnable policy code and a deny-on-missing test.</p>
+        <p class="post-reading-time">12 min read · 17 November 2026</p>
+      </a>
+      <a class="post-card" href="/human-in-the-loop-when-agents-need-a-human-veto/">
+        <h3>Human-in-the-loop: when agents need a human veto</h3>
+        <p class="post-excerpt">Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.</p>
+        <p class="post-reading-time">14 min read · 16 November 2026</p>
+      </a>
+      <a class="post-card" href="/7-adr-traps-that-cause-stale-decisions/">
+        <h3>7 ADR traps that cause stale decisions</h3>
+        <p class="post-excerpt">How architecture decision records go stale: template bloat, drifting status fields, hidden storage, broken numbering, missing context, no workflow trigger, no review.</p>
+        <p class="post-reading-time">15 min read · 12 November 2026</p>
+      </a>
+      <a class="post-card" href="/model-evals-the-gaps-that-let-drift-slip-through/">
+        <h3>Model evals: the gaps that let drift slip through</h3>
+        <p class="post-excerpt">Aggregate eval scores hide subtle model drift. Learn per-example diffing, slice reporting, pinned baselines, and a minimal CI gate that catches behavior changes.</p>
+        <p class="post-reading-time">15 min read · 11 November 2026</p>
+      </a>
+      <a class="post-card" href="/waf-and-bot-management-what-they-miss/">
+        <h3>WAF and bot management: what they miss</h3>
+        <p class="post-excerpt">WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</p>
+        <p class="post-reading-time">16 min read · 9 November 2026</p>
+      </a>
+      <a class="post-card" href="/ussdsms-fallback-the-session-trap/">
+        <h3>USSD/SMS fallback: the session trap</h3>
+        <p class="post-excerpt">Why USSD sessions and SMS receipts mislead fallback designs, and how to make the ledger the source of truth with idempotent state transitions.</p>
+        <p class="post-reading-time">16 min read · 6 November 2026</p>
+      </a>
+      <a class="post-card" href="/audit-trails-for-ai-agents-what-breaks-first/">
+        <h3>Audit trails for AI agents: what breaks first</h3>
+        <p class="post-excerpt">Design append-only decision records for AI agents: write-ahead ordering, policy snapshots, idempotency keys, and reconstruction drills that expose gaps.</p>
+        <p class="post-reading-time">15 min read · 5 November 2026</p>
+      </a>
+      <a class="post-card" href="/papss-and-mobile-money-where-integration-breaks/">
+        <h3>PAPSS and mobile money: where integration breaks</h3>
+        <p class="post-excerpt">Why cross-border PAPSS and mobile money integrations break: hold-and-resolve state machines, identifier resolution, and pending-set reconciliation.</p>
+        <p class="post-reading-time">19 min read · 4 November 2026</p>
+      </a>
+      <a class="post-card" href="/stride-is-a-checklist-not-a-threat-model/">
+        <h3>STRIDE is a checklist, not a threat model</h3>
+        <p class="post-excerpt">STRIDE is a memory aid, not a threat model. Use attack trees to map paths to an asset and STRIDE to prompt each node, with a CI check that keeps trees current.</p>
+        <p class="post-reading-time">15 min read · 1 November 2026</p>
+      </a>
+      <a class="post-card" href="/opentelemetry-collector-pipelines-sampling-batching/">
+        <h3>OpenTelemetry collector pipelines: sampling, batching…</h3>
+        <p class="post-excerpt">How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</p>
+        <p class="post-reading-time">13 min read · 30 October 2026</p>
+      </a>
+      <a class="post-card" href="/nodejs-memory-leak-find-it-in-10-min/">
+        <h3>Node.js memory leak: find it in 10 min</h3>
+        <p class="post-excerpt">Classify rising memory before profiling it: compare heapUsed and rss, take two heap snapshots, read retainer paths, and bound every in-memory structure.</p>
+        <p class="post-reading-time">14 min read · 29 October 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-dx-langgraph-vs-crewai-gaps/">
+        <h3>Multi-agent DX: LangGraph vs CrewAI gaps</h3>
+        <p class="post-excerpt">Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</p>
+        <p class="post-reading-time">16 min read · 28 October 2026</p>
+      </a>
+      <a class="post-card" href="/context-engineering-the-real-fix-for-agent-hallucinations/">
+        <h3>Context engineering: the real fix for agent hallucinations</h3>
+        <p class="post-excerpt">Long-running agents fail because their context fills with stale tool output and contradictions. Here is how to structure, prune and measure that context.</p>
+        <p class="post-reading-time">16 min read · 27 October 2026</p>
+      </a>
+      <a class="post-card" href="/7-guardrails-for-safer-llm-apps/">
+        <h3>7 guardrails for safer LLM apps</h3>
+        <p class="post-excerpt">A practical review of seven guardrail layers for LLM applications: what each catches, where it fails, and which to build first.</p>
+        <p class="post-reading-time">18 min read · 25 October 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-systems-architecture-principles-that-hold/">
+        <h3>Agentic systems: architecture principles that hold</h3>
+        <p class="post-excerpt">How to enforce deadlines, token budgets, idempotency keys and bounded fan-out around multi-model agent graphs, with Python code and tests.</p>
+        <p class="post-reading-time">15 min read · 23 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-code-review-7-traps-that-slip-through/">
+        <h3>Agent code review: 7 traps that slip through</h3>
+        <p class="post-excerpt">Agent-written code passes its own tests and reads as deliberate. Here are seven recurring traps, the mechanical checks that catch them, and how to measure.</p>
+        <p class="post-reading-time">17 min read · 23 October 2026</p>
+      </a>
+      <a class="post-card" href="/mcp-vs-a2a-pick-the-wrong-layer/">
+        <h3>MCP vs A2A: pick the wrong layer</h3>
+        <p class="post-excerpt">MCP connects models to tools; A2A connects agents to agents. How to tell which layer a boundary belongs to, and what breaks when you mix them.</p>
+        <p class="post-reading-time">16 min read · 20 October 2026</p>
+      </a>
+      <a class="post-card" href="/contract-testing-is-not-optional/">
+        <h3>Contract testing is not optional</h3>
+        <p class="post-excerpt">Why end-to-end tests and API versioning miss integration breaks, how consumer-driven contracts close the gap, when they fit, and a 30-minute first step.</p>
+        <p class="post-reading-time">15 min read · 18 October 2026</p>
+      </a>
+      <a class="post-card" href="/prompts-are-code-how-to-measure-their-value/">
+        <h3>Prompts are code: how to measure their value</h3>
+        <p class="post-excerpt">Prompts and agent graphs need outcome metrics, not token counts. A practical guide to boundary instrumentation, versioning, and avoiding vanity metrics.</p>
+        <p class="post-reading-time">19 min read · 16 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-reliability-7-metrics-users-trust/">
+        <h3>Agent reliability: 7 metrics users trust</h3>
+        <p class="post-excerpt">Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.</p>
+        <p class="post-reading-time">16 min read · 14 October 2026</p>
+      </a>
+      <a class="post-card" href="/detecting-silent-agent-failures/">
+        <h3>Detecting silent agent failures</h3>
+        <p class="post-excerpt">A layered quality gate that catches well-formed but wrong agent output: schema checks, PII scans, citation grounding, and a model judge, plus how to measure each.</p>
+        <p class="post-reading-time">15 min read · 13 October 2026</p>
+      </a>
+      <a class="post-card" href="/retire-api-versions-before-they-pile-up/">
+        <h3>Retire API versions before they pile up</h3>
+        <p class="post-excerpt">Most API version graveyards come from shipping versions without a deletion plan. Here is how to make old versions cheap to measure, warn about, and remove.</p>
+        <p class="post-reading-time">12 min read · 12 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-audit-trails-event-log-vs-state-snapshots/">
+        <h3>Agent audit trails: event log vs state snapshots</h3>
+        <p class="post-excerpt">Event sourcing and state snapshots solve different audit problems for AI agents. Compare causal reconstruction, debugging fidelity, cost, and replay limits.</p>
+        <p class="post-reading-time">13 min read · 12 October 2026</p>
+      </a>
+      <a class="post-card" href="/self-service-ai-tooling-the-permission-trap/">
+        <h3>Self-service AI tooling: the permission trap</h3>
+        <p class="post-excerpt">Design self-service LLM layers so identity, context and budget controls prevent quiet permission failures instead of only working on the happy path.</p>
+        <p class="post-reading-time">14 min read · 9 October 2026</p>
+      </a>
+      <a class="post-card" href="/slos-for-agentic-features-beyond-latency/">
+        <h3>SLOs for agentic features: beyond latency</h3>
+        <p class="post-excerpt">Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.</p>
+        <p class="post-reading-time">15 min read · 6 October 2026</p>
+      </a>
+      <a class="post-card" href="/fraud-detection-rules-vs-scoring-where-they-meet/">
+        <h3>Fraud detection: rules vs scoring, where they meet</h3>
+        <p class="post-excerpt">How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.</p>
+        <p class="post-reading-time">17 min read · 4 October 2026</p>
+      </a>
+      <a class="post-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
+        <p class="post-excerpt">How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+        <p class="post-reading-time">15 min read · 3 October 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-workflows-surviving-network-partitions/">
+        <h3>Agentic workflows: surviving network partitions</h3>
+        <p class="post-excerpt">How to keep agentic workflows correct when networks drop: idempotency keys, an outbox with stable action IDs, and reconciliation on reconnect.</p>
+        <p class="post-reading-time">18 min read · 1 October 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-handoffs-the-latency-tax-nobody-measures/">
+        <h3>Multi-agent handoffs: the latency tax nobody measures</h3>
+        <p class="post-excerpt">Multi-agent pipelines pay a latency tax at every handoff. Here is how to measure serialisation, transport and re-prompting cost, and what to fix first.</p>
+        <p class="post-reading-time">11 min read · 29 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-versioning-the-contract-you-forgot/">
+        <h3>Agent versioning: the contract you forgot</h3>
+        <p class="post-excerpt">Agents expose tool schemas and output shapes as a public interface. Learn how to version that interface, migrate state, and avoid silent caller breakage.</p>
+        <p class="post-reading-time">13 min read · 28 September 2026</p>
+      </a>
+      <a class="post-card" href="/prompt-injection-what-breaks-first-in-prod/">
+        <h3>Prompt injection: what breaks first in prod</h3>
+        <p class="post-excerpt">Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.</p>
+        <p class="post-reading-time">15 min read · 27 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-architecture-the-new-model-trap/">
+        <h3>Agent architecture: the new model trap</h3>
+        <p class="post-excerpt">Newer models made prompt chaining obsolete but not policy enforcement. How to keep a deterministic layer around a capable planner.</p>
+        <p class="post-reading-time">17 min read · 27 September 2026</p>
+      </a>
+      <a class="post-card" href="/apm-is-blind-to-your-ai-agents/">
+        <h3>APM is blind to your AI agents</h3>
+        <p class="post-excerpt">Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+        <p class="post-reading-time">12 min read · 25 September 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-systems-when-they-quietly-degrade/">
+        <h3>Multi-agent systems: when they quietly degrade</h3>
+        <p class="post-excerpt">Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+        <p class="post-reading-time">12 min read · 24 September 2026</p>
+      </a>
+      <a class="post-card" href="/world-models-wont-replace-your-backend/">
+        <h3>World models won't replace your backend</h3>
+        <p class="post-excerpt">World models add a high-rate prediction stream to your system. Treat it as a sensor: schema, retention, backpressure, and rollback, not a new stack.</p>
+        <p class="post-reading-time">15 min read · 24 September 2026</p>
+      </a>
+      <a class="post-card" href="/tool-calls-why-retries-stampede/">
+        <h3>Tool calls: why retries stampede</h3>
+        <p class="post-excerpt">Why per-client backoff fails under fan-out tool use, and how shared token buckets, single-flight and one-layer retries fix it.</p>
+        <p class="post-reading-time">12 min read · 22 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-compliance-the-layer-you-build-after-failure/">
+        <h3>Agent compliance: the layer you build after failure</h3>
+        <p class="post-excerpt">Pre-execution policy gates miss most agent compliance failures. Build a decision trace that reconstructs what happened, why, and what would have stopped it.</p>
+        <p class="post-reading-time">16 min read · 22 September 2026</p>
+      </a>
+      <a class="post-card" href="/sandboxed-computer-use-agents-with-gvisor/">
+        <h3>Sandboxed computer-use agents with gVisor</h3>
+        <p class="post-excerpt">How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.</p>
+        <p class="post-reading-time">14 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/when-your-agent-goes-silent-degrade-gracefully/">
+        <h3>When your agent goes silent: degrade gracefully</h3>
+        <p class="post-excerpt">How to keep agent-backed features useful when a model is slow or confidently wrong: deadlines, fallbacks, circuit breakers, validation, and how to measure each.</p>
+        <p class="post-reading-time">13 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/offline-agent-workflows-for-last-mile-ops/">
+        <h3>Offline agent workflows for last-mile ops</h3>
+        <p class="post-excerpt">How to build an offline-first field agent client: IndexedDB schema, UUIDv7 identity, background sync, idempotent batch upload, and clock-drift handling.</p>
+        <p class="post-reading-time">15 min read · 21 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-compliance-in-african-fintech-the-cbn-gap/">
+        <h3>Agent compliance in African fintech: the CBN gap</h3>
+        <p class="post-excerpt">How to map autonomous agent behavior onto CBN, NDPA and SEC obligations using a three-layer split: model, deterministic policy gate, append-only audit.</p>
+        <p class="post-reading-time">16 min read · 20 September 2026</p>
+      </a>
+      <a class="post-card" href="/computer-use-agents-the-permission-trap/">
+        <h3>Computer-use agents: the permission trap</h3>
+        <p class="post-excerpt">GUI agents inherit a human&#x27;s full permissions and leave no semantic audit trail. Here is how a policy layer, a reduced interface and structured logs fix that.</p>
+        <p class="post-reading-time">15 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
+        <h3>Agentic AI cost control: 7 tools, one backfire</h3>
+        <p class="post-excerpt">How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
+        <p class="post-reading-time">15 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/scope-agent-permissions-per-task/">
+        <h3>Scope agent permissions per task</h3>
+        <p class="post-excerpt">Most agent permission models fail because credentials are scoped to the agent, not the task. Here is how to issue short-lived, task-scoped tokens and what to measure.</p>
+        <p class="post-reading-time">20 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/context-windows-agents-that-run-for-days/">
+        <h3>Context windows: agents that run for days</h3>
+        <p class="post-excerpt">Long-running agents fail when context is treated as a log. Keep constraints verbatim, checkpoint durable state, and cap the working set per cycle.</p>
+        <p class="post-reading-time">17 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/most-llm-cost-dashboards-lie/">
+        <h3>Most LLM cost dashboards lie…</h3>
+        <p class="post-excerpt">Per-request token attribution, prompt caching, model routing and retry caps: how to instrument LLM spend so the numbers match the invoice.</p>
+        <p class="post-reading-time">13 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/mobile-money-agents-when-m-pesa-api-fails/">
+        <h3>Mobile money agents: when M-Pesa API fails</h3>
+        <p class="post-excerpt">Mobile money APIs return pending, then settle asynchronously. Learn to poll, deduplicate callbacks, and reconcile orphaned transactions.</p>
+        <p class="post-reading-time">14 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/local-llm-agents-vllm-vs-ollama-for-fintech/">
+        <h3>Local LLM agents: vLLM vs Ollama for fintech</h3>
+        <p class="post-excerpt">Compare vLLM and Ollama for on-prem LLM agents in regulated fintech: concurrency, guided JSON, VRAM budgets, cost math, and a 30-minute test.</p>
+        <p class="post-reading-time">16 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-systems-why-failures-hide/">
+        <h3>Multi-agent systems: why failures hide</h3>
+        <p class="post-excerpt">Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
+        <p class="post-reading-time">13 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-drift-the-failure-mode-you-didnt-log/">
+        <h3>Agent drift: the failure mode you didn't log</h3>
+        <p class="post-excerpt">Agent drift is a distribution failure, not a model failure. How to detect it with categorical signatures and PSI, and contain it with state guards.</p>
+        <p class="post-reading-time">15 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-access-for-non-ai-engineers/">
+        <h3>Agent access for non-AI engineers</h3>
+        <p class="post-excerpt">A backend-first guide to exposing internal tools to LLM agents: typed schemas, dry-run defaults, idempotency, budgets, and replayable traces.</p>
+        <p class="post-reading-time">16 min read · 17 September 2026</p>
+      </a>
+      <a class="post-card" href="/which-agent-stack-survives-3g/">
+        <h3>Which agent stack survives 3G?</h3>
+        <p class="post-excerpt">How edge-deployed and centralised agent stacks behave on high-latency, lossy mobile links, and how to measure reconnection storms before choosing one.</p>
+        <p class="post-reading-time">13 min read · 16 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-platform-abstractions-a-case-study/">
+        <h3>Agent platform abstractions: a case study</h3>
+        <p class="post-excerpt">Why agent failures are platform failures: typed tool contracts, durable execution, and structured traces that make runs replayable and retries safe.</p>
+        <p class="post-reading-time">11 min read · 16 September 2026</p>
+      </a>
+      <a class="post-card" href="/memory-systems-for-production-agents/">
+        <h3>Memory Systems for Production Agents</h3>
+        <p class="post-excerpt">How in-memory stores, caches, and stateful services leak context in production agents, plus code, failure modes, and instrumentation to measure it yourself.</p>
+        <p class="post-reading-time">11 min read · 15 September 2026</p>
+      </a>
+      <a class="post-card" href="/stop-trusting-agents-for-core-logic/">
+        <h3>Stop trusting agents for core logic</h3>
+        <p class="post-excerpt">Agent orchestration hides coupling in YAML and makes review harder. Learn contract-first design, policy-as-code, and how to measure the trade-off.</p>
+        <p class="post-reading-time">11 min read · 14 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-does-my-agent-version-break-clients/">
+        <h3>Agent API versioning: why clients break on upgrade</h3>
+        <p class="post-excerpt">Why agent version upgrades break downstream clients, the contract drift behind the errors, and how to pin, check and roll out versions safely.</p>
+        <p class="post-reading-time">12 min read · 14 September 2026</p>
+      </a>
+      <a class="post-card" href="/platform-teams-agentic-world-struggle/">
+        <h3>Platform Teams: Agentic World Struggle</h3>
+        <p class="post-excerpt">Platform teams must adapt identity, tooling, and observability for AI agents that call APIs instead of using dashboards, with concrete patterns and failure modes.</p>
+        <p class="post-reading-time">13 min read · 12 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-systems-circuit-breakers-are-not-enough/">
+        <h3>Agent Systems: Circuit Breakers Are Not Enough</h3>
+        <p class="post-excerpt">Circuit breakers and bulkheads were built for stateless services. Agent systems need semantic error handling, externalized state, and recursion guards.</p>
+        <p class="post-reading-time">13 min read · 12 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-scaling-agents-kills-plain-logs/">
+        <h3>Why scaling agents kills plain logs</h3>
+        <p class="post-excerpt">Why plain-text logs and unpinned models break down past a handful of agents, and how to add structured logging plus hash verification.</p>
+        <p class="post-reading-time">11 min read · 11 September 2026</p>
+      </a>
+      <a class="post-card" href="/llm-agents-why-monoliths-win/">
+        <h3>LLM agents: why monoliths win</h3>
+        <p class="post-excerpt">Why splitting an LLM agent into micro-services often costs latency, audit continuity and money, and how to measure before you decompose.</p>
+        <p class="post-reading-time">11 min read · 10 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-drift-why-it-hurts-ux/">
+        <h3>Agent drift: why it hurts UX</h3>
+        <p class="post-excerpt">Agent drift degrades latency and error rates without obvious alarms. Learn the four drift classes, detection methods, and a 30-minute audit.</p>
+        <p class="post-reading-time">12 min read · 9 September 2026</p>
+      </a>
+      <a class="post-card" href="/cost-tools-fail-when-agents-scale-autonomously/">
+        <h3>Cost tools fail when agents scale autonomously</h3>
+        <p class="post-excerpt">Autonomous scaling agents decide faster than hourly cost reports can explain. Here is how to instrument cost per scaling decision and where the feedback loop breaks.</p>
+        <p class="post-reading-time">11 min read · 9 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-do-production-agents-still-need-humans/">
+        <h3>Why do production agents still need humans?</h3>
+        <p class="post-excerpt">Why production agents still need humans: designing HITL boundaries, error-code routing, cache fallbacks, and how to measure the results.</p>
+        <p class="post-reading-time">12 min read · 9 September 2026</p>
+      </a>
+      <a class="post-card" href="/rogue-agent-api-calls-stop-the-bleeding/">
+        <h3>Rogue Agent API Calls: Stop the Bleeding</h3>
+        <p class="post-excerpt">Runaway agents rarely crash — they succeed too often. Diagnose unbounded loops, retry storms, and feedback cycles, then add budgets and breakers.</p>
+        <p class="post-reading-time">10 min read · 7 September 2026</p>
+      </a>
+      <a class="post-card" href="/offline-agents-local-first-sync-patterns/">
+        <h3>Offline Agents: Local-First Sync Patterns</h3>
+        <p class="post-excerpt">Design offline-capable agents with operation logs, versioned conflict resolution, auditable sync, and GDPR-aware deletion propagation.</p>
+        <p class="post-reading-time">12 min read · 7 September 2026</p>
+      </a>
+      <a class="post-card" href="/temporal-changed-our-agent-retries-for-good/">
+        <h3>Durable Execution for Multi-Step Agent Workflows</h3>
+        <p class="post-excerpt">Why cron and ad-hoc retries break multi-step agent workflows, and how durable execution runtimes model retries, idempotency, and compensation.</p>
+        <p class="post-reading-time">16 min read · 3 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-drift-why-prod-breaks-without-human-checkpoints/">
+        <h3>Agent drift: why prod breaks without human checkpoints</h3>
+        <p class="post-excerpt">Why agents pass staging and drift in production, and how to add confidence thresholds, escalation queues and compliance guards that make drift visible.</p>
+        <p class="post-reading-time">15 min read · 1 September 2026</p>
+      </a>
+      <a class="post-card" href="/commit-ownership-in-ai-pair-coding/">
+        <h3>Commit ownership in AI pair coding</h3>
+        <p class="post-excerpt">AI pair coding shifts who is accountable for a commit. A practical contract: prompt hashing, test gates, ownership tags, and review discipline.</p>
+        <p class="post-reading-time">14 min read · 31 August 2026</p>
+      </a>
+      <a class="post-card" href="/ship-evals-before-your-agent-ships/">
+        <h3>Ship evals before your agent ships</h3>
+        <p class="post-excerpt">Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.</p>
+        <p class="post-reading-time">16 min read · 31 August 2026</p>
+      </a>
+      <a class="post-card" href="/always-on-agents-cost-more-than-you-think/">
+        <h3>Always-on agents cost more than you think</h3>
+        <p class="post-excerpt">Always-on agents bill you while idle; on-demand agents bill you at wake-up. A cost model, failure modes, and how to measure both.</p>
+        <p class="post-reading-time">15 min read · 30 August 2026</p>
+      </a>
+      <a class="post-card" href="/llm-risks-underestimated-in-owasp-top-10/">
+        <h3>LLM risks underestimated in OWASP Top 10</h3>
+        <p class="post-excerpt">The OWASP LLM Top 10 covers prompt injection, but production failures cluster in tool use, latency budgets and supply chain. How to measure and mitigate each.</p>
+        <p class="post-reading-time">9 min read · 30 August 2026</p>
+      </a>
+      <a class="post-card" href="/llm-eval-drift-that-users-notice-first/">
+        <h3>LLM eval drift that users notice first</h3>
+        <p class="post-excerpt">Three pipeline-level causes of user-visible LLM drift, how to instrument each one, and how to verify the fix with metrics rather than vibes.</p>
+        <p class="post-reading-time">16 min read · 28 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-tracing-when-logs-lie-and-metrics-mislead/">
+        <h3>Agent tracing: when logs lie and metrics mislead</h3>
+        <p class="post-excerpt">Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.</p>
+        <p class="post-reading-time">10 min read · 28 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-code-review-gap-nobody-admits/">
+        <h3>agent code review gap nobody admits</h3>
+        <p class="post-excerpt">AI-generated PRs pass linting and unit tests yet break production. The gap is environment fidelity, not code quality. Here is how to close it.</p>
+        <p class="post-reading-time">13 min read · 27 August 2026</p>
+      </a>
+      <a class="post-card" href="/self-service-is-broken-without-ai-ops/">
+        <h3>Self-service is broken without AI ops</h3>
+        <p class="post-excerpt">Self-service platforms fail on cognitive load, not RBAC. How to add pre-flight, mid-flight and post-flight guardrails with measurable results.</p>
+        <p class="post-reading-time">12 min read · 24 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-auth-where-the-docs-ended-up-lying/">
+        <h3>Agent auth: where the docs ended up lying</h3>
+        <p class="post-excerpt">OAuth2 and OIDC assume reliable clocks, stable power and trusted hardware. Here is what breaks on constrained agent networks, and how to measure it.</p>
+        <p class="post-reading-time">14 min read · 24 August 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-finops-is-a-trap/">
+        <h3>Agentic FinOps is a trap</h3>
+        <p class="post-excerpt">Standard FinOps tracks per-call cost and latency. Agents with retries, growing state and human hand-offs leak cost that never shows on the dashboard.</p>
+        <p class="post-reading-time">12 min read · 22 August 2026</p>
+      </a>
+      <a class="post-card" href="/african-fintech-agents-the-compliance-cliff-most-miss/">
+        <h3>African fintech agents: the compliance cliff most miss</h3>
+        <p class="post-excerpt">How to design region-resident, queryable audit trails for autonomous fintech agents facing per-country latency, residency and retention rules.</p>
+        <p class="post-reading-time">10 min read · 12 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-slos-measure-what-agents-actually-do/">
+        <h3>Agent SLOs: measure what agents actually do</h3>
+        <p class="post-excerpt">Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/orchestration-tax-kills-multi-agent-systems/">
+        <h3>Orchestration tax kills multi-agent systems</h3>
+        <p class="post-excerpt">Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/observability-agents-lied-to-us/">
+        <h3>Observability Agents as Application Code</h3>
+        <p class="post-excerpt">Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-followed-instructions-too-literally-the-cron-job-trap/">
+        <h3>Agent followed instructions too literally: the cron job trap</h3>
+        <p class="post-excerpt">Why agents that follow retry instructions literally hang forever, and how to fix it with per-request timeouts, async retries, and DNS limits.</p>
+        <p class="post-reading-time">12 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-frameworks-stop-rewriting-the-same-glue-code/">
+        <h3>Agent frameworks: stop rewriting the same glue code</h3>
+        <p class="post-excerpt">Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+        <p class="post-reading-time">13 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/least-privilege-for-agents-the-config-line-nobody-writes/">
+        <h3>Least privilege for agents: the config line nobody writes</h3>
+        <p class="post-excerpt">Why permissive agent tool defaults break in production, and how to add runtime, context-aware policy checks before every tool call.</p>
+        <p class="post-reading-time">14 min read · 10 August 2026</p>
+      </a>
+      <a class="post-card" href="/why-your-multi-agent-system-degraded-slowly/">
+        <h3>Why your multi-agent system degraded slowly</h3>
+        <p class="post-excerpt">Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.</p>
+        <p class="post-reading-time">14 min read · 9 August 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-money-apps-with-dynamodb-streams/">
+        <h3>Offline-first money apps with DynamoDB Streams</h3>
+        <p class="post-excerpt">Design an offline-first mobile-money sync pipeline on DynamoDB Streams: idempotency keys, conditional balance writes, DLQ handling, and how to measure it.</p>
+        <p class="post-reading-time">15 min read · 8 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
+        <h3>AI cost attribution without the spreadsheet hell</h3>
+        <p class="post-excerpt">How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
+        <p class="post-reading-time">15 min read · 7 August 2026</p>
+      </a>
+      <a class="post-card" href="/agents-create-incidents-at-2am/">
+        <h3>Agents create incidents at 2am</h3>
+        <p class="post-excerpt">Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.</p>
+        <p class="post-reading-time">12 min read · 6 August 2026</p>
+      </a>
+      <a class="post-card" href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">
+        <h3>Mobile money agent fees: why your bot keeps failing</h3>
+        <p class="post-excerpt">USSD session timeouts, not payment errors, break mobile money bots in production. Diagnose the session contract mismatch and fix it with per-request clients.</p>
+        <p class="post-reading-time">13 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-flooded-our-api-with-bad-calls-overnight/">
+        <h3>Stopping a runaway polling agent from flooding your API</h3>
+        <p class="post-excerpt">Diagnose and fix runaway agent API calls: bounded retries, capped backoff, idempotency keys, and volume alerts that catch spikes before the bill does.</p>
+        <p class="post-reading-time">15 min read · 5 August 2026</p>
+      </a>
+      <a class="post-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
+        <h3>Kubernetes or Nomad: the real experiment cost split</h3>
+        <p class="post-excerpt">A practical comparison of Kubernetes and Nomad for GPU training jobs, covering scheduler latency, cost modelling, GPU sharing, and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 3 August 2026</p>
+      </a>
+      <a class="post-card" href="/supervisor-vs-swarm-vs-debate-vs-pipeline/">
+        <h3>Supervisor vs swarm vs debate vs pipeline</h3>
+        <p class="post-excerpt">Compare four multi-agent orchestration patterns: supervisor, swarm, debate, and pipeline. Covers failure modes, backpressure, retries, and how to measure each.</p>
+        <p class="post-reading-time">19 min read · 3 August 2026</p>
+      </a>
+      <a class="post-card" href="/hire-for-agents-not-autocomplete/">
+        <h3>Hire for agents, not autocomplete</h3>
+        <p class="post-excerpt">Constraint-aware hiring tests whether engineers can ship when networks are slow, gateways fail, and CI times out. Includes code, failure modes, and a 30-minute action.</p>
+        <p class="post-reading-time">13 min read · 2 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-permissions-the-mistake-that-breaks-production/">
+        <h3>Agent permissions: the mistake that breaks production</h3>
+        <p class="post-excerpt">How to build desktop agents that survive no-admin Windows environments: COM automation, per-user installs, heartbeats, and failure design, with code.</p>
+        <p class="post-reading-time">17 min read · 30 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-auth-the-silent-deployment-killer/">
+        <h3>Agent auth: the silent deployment killer</h3>
+        <p class="post-excerpt">How agent identity breaks under jitter, power loss, and low-end devices, and the fallback, rotation, and caching patterns that keep auth working.</p>
+        <p class="post-reading-time">13 min read · 30 July 2026</p>
+      </a>
+      <a class="post-card" href="/event-driven-beats-agent-driven-910-times/">
+        <h3>Event-driven systems avoid agent-driven contention</h3>
+        <p class="post-excerpt">How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.</p>
+        <p class="post-reading-time">15 min read · 30 July 2026</p>
+      </a>
+      <a class="post-card" href="/built-a-multi-agent-system-without-langgraph/">
+        <h3>Built a multi-agent system without LangGraph</h3>
+        <p class="post-excerpt">Build a multi-agent research pipeline with Redis Streams, Step Functions retries and FastAPI, plus the failure modes that matter and how to measure them.</p>
+        <p class="post-reading-time">13 min read · 27 July 2026</p>
+      </a>
+      <a class="post-card" href="/track-ai-agent-costs-in-fractal-workflows/">
+        <h3>Track AI agent costs in fractal workflows</h3>
+        <p class="post-excerpt">Standard FinOps dashboards miss sub-agent, idle, and retry costs. A dependency-graph cost model shows where agent spend actually lands.</p>
+        <p class="post-reading-time">12 min read · 27 July 2026</p>
+      </a>
+      <a class="post-card" href="/context-windows-live-longer-than-you-think/">
+        <h3>Context windows live longer than you think</h3>
+        <p class="post-excerpt">Long-running agents exhaust context windows through unbounded history growth. Covers pruning, summarisation, retrieval, and retention policies with code.</p>
+        <p class="post-reading-time">13 min read · 25 July 2026</p>
+      </a>
+      <a class="post-card" href="/edge-agents-vs-cloud-round-trips-in-2026/">
+        <h3>Edge agents vs cloud round-trips in 2026</h3>
+        <p class="post-excerpt">A practical guide to building on-device agents with ONNX Runtime, Redis caching, confidence-based cloud fallback, and honest ways to measure latency and memory.</p>
+        <p class="post-reading-time">11 min read · 23 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-code-in-prod-postmortems-still-work/">
+        <h3>AI code in prod? Postmortems still work</h3>
+        <p class="post-excerpt">AI-generated code hides its assumptions. Capture the prompt, model snapshot and runtime context so incident reviews explain decisions, not just stack traces.</p>
+        <p class="post-reading-time">11 min read · 21 July 2026</p>
+      </a>
+      <a class="post-card" href="/poolers-wont-save-your-serverless-db/">
+        <h3>Poolers won’t save your serverless DB</h3>
+        <p class="post-excerpt">Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
+        <p class="post-reading-time">14 min read · 19 July 2026</p>
+      </a>
+      <a class="post-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">
+        <h3>Agents keep breaking prod: 3 boundary rules you still need</h3>
+        <p class="post-excerpt">Agents that mutate external state fail silently when 2xx is mistaken for completion. Three boundary rules: outcome polling, schema drift gates, atomic claims.</p>
+        <p class="post-reading-time">14 min read · 17 July 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-workflows-how-we-kept-the-lights/">
+        <h3>Observability for Long-Running LLM Agent Workflows</h3>
+        <p class="post-excerpt">Design an observability stack for agentic LLM workloads: millisecond event timestamps, queue-depth metrics, and bounded buffering that survives outages.</p>
+        <p class="post-reading-time">14 min read · 17 July 2026</p>
+      </a>
+      <a class="post-card" href="/red-teaming-agents-without-killing-velocity/">
+        <h3>Red-teaming agents without killing velocity</h3>
+        <p class="post-excerpt">How to embed lightweight adversarial testing for LLM agents into pull requests: fuzzed payloads, resilience assertions, shadow canaries.</p>
+        <p class="post-reading-time">11 min read · 17 July 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-agents-for-field-teams/">
+        <h3>Offline-first agents for field teams</h3>
+        <p class="post-excerpt">Design an offline-first field agent: local state machine, durable sync queue, conflict resolution, and honest ways to measure latency and battery.</p>
+        <p class="post-reading-time">14 min read · 16 July 2026</p>
+      </a>
+      <a class="post-card" href="/cloud-agents-burned-18k-8-tools-that-didnt-work/">
+        <h3>Why Cloud Cost Tools Miss Agent-Driven GPU Spend</h3>
+        <p class="post-excerpt">Agent-driven GPU spend breaks assumptions in standard cloud cost tools. Learn why they miss it, how to measure detection latency, and what to build instead.</p>
+        <p class="post-reading-time">12 min read · 10 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-context-short-term-vs-long-term-memory/">
+        <h3>Agent context: short-term vs long-term memory</h3>
+        <p class="post-excerpt">Compare Redis-style short-term agent context with Postgres event logs: latency, durability, auditability, cost, and how to measure each.</p>
+        <p class="post-reading-time">15 min read · 9 July 2026</p>
+      </a>
+      <a class="post-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
+        <h3>7 ways to measure prompt platform ROI in 2026</h3>
+        <p class="post-excerpt">How to attribute token cost, latency and developer time to prompt and agent platforms, with instrumentation recipes, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">14 min read · 8 July 2026</p>
+      </a>
+      <a class="post-card" href="/build-agent-workflows-that-survive-restarts/">
+        <h3>Build agent workflows that survive restarts</h3>
+        <p class="post-excerpt">How to build agent task pipelines that resume after crashes, schema drift and model changes, using Redis streams, idempotent steps and replay.</p>
+        <p class="post-reading-time">12 min read · 6 July 2026</p>
+      </a>
+      <a class="post-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+        <h3>7 skills senior engineers need now agents are live</h3>
+        <p class="post-excerpt">Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+        <p class="post-reading-time">15 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/agents-247-vs-on-demand-42k-bill-shock/">
+        <h3>Always-On vs On-Demand Agents: Real Cost Trade-offs</h3>
+        <p class="post-excerpt">Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.</p>
+        <p class="post-reading-time">12 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/detect-lazy-agents-without-false-alarms/">
+        <h3>Detect lazy agents without false alarms</h3>
+        <p class="post-excerpt">Success/fail gates miss agents that keep running while producing harmful output. Measure outcomes instead, with a worked predictor design and decision rules.</p>
+        <p class="post-reading-time">14 min read · 4 July 2026</p>
+      </a>
+      <a class="post-card" href="/agent-governance-opa-vs-kyverno-after-our-incident/">
+        <h3>Agent Governance: OPA vs Kyverno in Kubernetes</h3>
+        <p class="post-excerpt">Compare OPA and Kyverno for agent governance in Kubernetes: policy language, latency, audit trails, and a decision checklist.</p>
+        <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/evaluate-agents-with-spark-vs-custom-harness/">
+        <h3>Evaluate agents with Spark vs custom harness</h3>
+        <p class="post-excerpt">A practical comparison of Spark-based and custom Python agent evaluation harnesses, with failure modes, cost arithmetic, and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+        <h3>AI agents: circuit breakers are not optional</h3>
+        <p class="post-excerpt">AI agents fail by hanging and returning plausible garbage, not by crashing. Here is how to add a circuit breaker that catches semantic failures.</p>
+        <p class="post-reading-time">13 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-memory-systems-context-that-survives-sessions/">
+        <h3>AI memory systems: context that survives sessions</h3>
+        <p class="post-excerpt">Why AI agents silently lose memory across restarts, how to scope memory to a session, and how to test persistence before production.</p>
+        <p class="post-reading-time">12 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-killed-dev-tool-sales-cycles/">
+        <h3>AI agents killed dev tool sales cycles</h3>
+        <p class="post-excerpt">How agent-driven evaluation changes integration design, onboarding, and pricing for developer tools, with concrete patterns and a 30-minute test.</p>
+        <p class="post-reading-time">10 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/debug-ai-agents-failures-arent-just-bugs/">
+        <h3>Debug AI agents: failures aren't just bugs</h3>
+        <p class="post-excerpt">AI agent postmortems need different questions than service incidents. Compare structured failure narratives with LLM-assisted causal graphs, and when each wins.</p>
+        <p class="post-reading-time">11 min read · 1 July 2026</p>
+      </a>
+      <a class="post-card" href="/2026-ai-stack-solo-saas-cost-showdown/">
+        <h3>2026 AI stack: solo SaaS cost showdown</h3>
+        <p class="post-excerpt">A framework for choosing between AI-generated and hand-written infrastructure for a solo SaaS, with cost models, failure modes and a 30-minute audit.</p>
+        <p class="post-reading-time">13 min read · 30 June 2026</p>
+      </a>
+      <a class="post-card" href="/fix-ai-agent-failures-postmortem-guide/">
+        <h3>Postmortems for AI agents: drift, cost, replay</h3>
+        <p class="post-excerpt">How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.</p>
+        <p class="post-reading-time">12 min read · 29 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-observability-the-metrics-that-matter/">
+        <h3>AI observability: the metrics that matter</h3>
+        <p class="post-excerpt">AI observability needs drift, confidence, and attribution metrics. Covers instrumentation, cardinality limits, failure modes, and when not to build it.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">
+        <h3>CI/CD pipelines stall with GPU pods: 2026 benchmarks</h3>
+        <p class="post-excerpt">GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/">
+        <h3>AI agents vs Argo, Tekton: which pipeline heals itself?</h3>
+        <p class="post-excerpt">How Argo Workflows and Tekton Pipelines differ for automated failure detection and recovery, with working code and failure-mode analysis.</p>
+        <p class="post-reading-time">13 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/debug-ai-agent-failures-differently/">
+        <h3>Debug AI agent failures differently</h3>
+        <p class="post-excerpt">Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+        <p class="post-reading-time">13 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/tool-calling-patterns-patterns-that-survive-load-vs/">
+        <h3>Tool calling patterns: patterns that survive load vs</h3>
+        <p class="post-excerpt">A practical comparison of naive synchronous tool calls versus retry-budget, backoff, circuit-breaker and bulkhead patterns, with code and metrics.</p>
+        <p class="post-reading-time">14 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/self-healing-pipelines-argo-vs-crossplane-in-2026/">
+        <h3>Self-healing pipelines: Argo vs Crossplane in 2026</h3>
+        <p class="post-excerpt">Compare Argo CD and Crossplane for self-healing infrastructure: reconciliation models, health signals, failure modes, and how to measure detection and recovery yourself.</p>
+        <p class="post-reading-time">13 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/claude-code-after-a-year-daily-wins/">
+        <h3>Claude Code after a year: daily wins</h3>
+        <p class="post-excerpt">Design an agentic Dependabot patcher that bumps a dependency, runs tests in a container, and opens a PR only when the suite passes.</p>
+        <p class="post-reading-time">13 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agent-postmortems-the-three-surprises/">
+        <h3>AI agent postmortems: the three surprises</h3>
+        <p class="post-excerpt">How to run postmortems for AI agents that fail semantically, not just technically: structured semantic logging, live shadowing, and a decision checklist.</p>
+        <p class="post-reading-time">14 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/istio-and-cilium-what-really-breaks-in-production/">
+        <h3>Istio and Cilium: what really breaks in production</h3>
+        <p class="post-excerpt">Service meshes amplify latent platform failures. Here is what breaks in Istio and Cilium, how to measure it, and when to defer adoption.</p>
+        <p class="post-reading-time">13 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/map-legacy-code-with-ai-before-it-breaks/">
+        <h3>Map legacy code with AI before it breaks</h3>
+        <p class="post-excerpt">A practical workflow for using AI, static analysis, and OpenTelemetry to map legacy systems, find silent failures, and validate fixes.</p>
+        <p class="post-reading-time">13 min read · 23 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-ops-vs-human-ops-the-incidents-that-broke-them/">
+        <h3>AI-First vs Human-First Incident Response</h3>
+        <p class="post-excerpt">Compare AI-first autonomous incident response with human-first ops plus AI triage: architecture, failure modes, cost modeling, and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 23 June 2026</p>
+      </a>
+      <a class="post-card" href="/offline-first-apps-what-3g-markets-taught-us/">
+        <h3>Designing Offline-First Apps for Unreliable Networks</h3>
+        <p class="post-excerpt">Offline-first architecture for metered, low-signal networks: storage, encryption, sync scheduling, conflict resolution, and how to measure each.</p>
+        <p class="post-reading-time">15 min read · 21 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agent-postmortem-human-loop-vs-blind-replay/">
+        <h3>Postmortems for AI agents: human review vs blind replay</h3>
+        <p class="post-excerpt">Compare human-in-the-loop and deterministic-replay postmortems for AI agents, with a decision checklist and a 30-minute audit you can run today.</p>
+        <p class="post-reading-time">16 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/cut-cold-starts-70-lambda-cost-hack/">
+        <h3>Serverless Cold Starts: Cost Levers and How to Measure Them</h3>
+        <p class="post-excerpt">Cold starts are a cost and consistency problem, not just latency. Learn how to measure latency-per-dollar and tune concurrency, memory, and architecture.</p>
+        <p class="post-reading-time">12 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/tool-calling-stateless-beats-stateful-under-load/">
+        <h3>Tool calling: stateless beats stateful under load</h3>
+        <p class="post-excerpt">How request-scoped and pooled tool calls behave under load, what to instrument, and a decision checklist for choosing between them.</p>
+        <p class="post-reading-time">11 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/replace-env-with-these-in-2026/">
+        <h3>Replace .env with these in 2026</h3>
+        <p class="post-excerpt">Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.</p>
+        <p class="post-reading-time">15 min read · 18 June 2026</p>
+      </a>
+      <a class="post-card" href="/pr-checklists-are-dead-ai-agents-do-reviews-now/">
+        <h3>PR checklists are dead: AI agents do reviews now</h3>
+        <p class="post-excerpt">How to split PR review into narrow automated agents that run checks, propose fixes, and escalate only the edge cases to humans.</p>
+        <p class="post-reading-time">12 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agent-postmortems-trace-vs-logs-vs-code/">
+        <h3>AI agent postmortems: trace vs logs vs code</h3>
+        <p class="post-excerpt">Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.</p>
+        <p class="post-reading-time">13 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-native-apps-forget-the-old-stack/">
+        <h3>AI-native apps: forget the old stack</h3>
+        <p class="post-excerpt">LLM-backed services are token-bound, stateful and failure-prone. Learn the failure modes, how to measure them, and patterns that contain them.</p>
+        <p class="post-reading-time">10 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-sales-cycles-why-dev-tools-now-need-3-demos/">
+        <h3>AI sales cycles: why dev tools now need 3 demos</h3>
+        <p class="post-excerpt">Developer tools are increasingly bought by non-engineers who want proof in their own cluster. Here is how to structure three live demos that survive real infrastructure.</p>
+        <p class="post-reading-time">11 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ship-1mb-pages-on-4g-starlink-africa-case-study/">
+        <h3>Ship 1MB pages on 4G: Starlink Africa case study</h3>
+        <p class="post-excerpt">How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.</p>
+        <p class="post-reading-time">13 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/self-healing-ai-agents-vs-rule-based-ops-40-fewer/">
+        <h3>Self-healing agents vs rule-based deployment rollback</h3>
+        <p class="post-excerpt">Comparing AI-agent and rule-based deployment rollback: failure modes, what to instrument, and a decision checklist for choosing between them.</p>
+        <p class="post-reading-time">12 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-eat-your-budget-3-ways/">
+        <h3>AI agents eat your budget 3 ways</h3>
+        <p class="post-excerpt">Token inflation, retry storms and timeout math quietly inflate AI agent bills. Learn how to instrument, cap and verify each cost vector.</p>
+        <p class="post-reading-time">12 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-systems-break-first/">
+        <h3>Multi-agent systems break first</h3>
+        <p class="post-excerpt">Why multi-agent systems break in production: non-determinism, state bloat, silent data loss, and how to instrument and fix each failure mode.</p>
+        <p class="post-reading-time">13 min read · 8 June 2026</p>
+      </a>
+    </div>
+  </main>
+  <footer><div class="container">
+    <p>&copy; 2026 Kubai Kevin</p>
+  </div></footer>
+</body>
+</html>

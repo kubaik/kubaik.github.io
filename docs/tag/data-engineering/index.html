@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Engineering Articles — Kubai Kevin</title>
+  <meta name="description" content="Articles on Data Engineering covering practical, hands-on approaches to data engineering for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;DuckDB in production: when it replaces a warehouse,&quot; and &quot;CDC pipeline death spiral: one bad LLM call can crash…&quot;.">
+  <meta name="robots" content="index, follow">
+  <meta name="base-path" content="">
+  <link rel="canonical" href="https://kubailabs.com/tag/data-engineering/">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+  <script src="/static/consent.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Data Engineering Articles — Kubai Kevin">
+  <meta property="og:description" content="Articles on Data Engineering covering practical, hands-on approaches to data engineering for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;DuckDB in production: when it replaces a warehouse,&quot; and &quot;CDC pipeline death spiral: one bad LLM call can crash…&quot;.">
+  <meta property="og:url" content="https://kubailabs.com/tag/data-engineering/">
+  <meta property="og:image" content="https://kubailabs.com/static/og/tag-data-engineering.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Data Engineering Articles — Kubai Kevin">
+  <meta name="twitter:description" content="Articles on Data Engineering covering practical, hands-on approaches to data engineering for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;DuckDB in production: when it replaces a warehouse,&quot; and &quot;CDC pipeline death spiral: one bad LLM call can crash…&quot;.">
+  <meta name="twitter:image" content="https://kubailabs.com/static/og/tag-data-engineering.png">
+  <meta name="twitter:site" content="@KubaiKevin">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage",
+    "name":"Data Engineering Articles","url":"https://kubailabs.com/tag/data-engineering/",
+    "description":"Articles on Data Engineering covering practical, hands-on approaches to data engineering for software developers, including \"Structured logging: searchable at scale,\" \"DuckDB in production: when it replaces a warehouse,\" and \"CDC pipeline death spiral: one bad LLM call can crash\u2026\"."}
+  </script>
+</head>
+<body>
+  <header><div class="container">
+    <h1><a href="/">Kubai Kevin</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div></header>
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">Data Engineering</span>
+    </nav>
+    <h2>9 articles tagged <em>Data Engineering</em></h2>
+    <div class="post-grid">
+
+      <a class="post-card" href="/structured-logging-searchable-at-scale/">
+        <h3>Structured logging: searchable at scale</h3>
+        <p class="post-excerpt">Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</p>
+        <p class="post-reading-time">20 min read · 12 November 2026</p>
+      </a>
+      <a class="post-card" href="/duckdb-in-production-when-it-replaces-a-warehouse/">
+        <h3>DuckDB in production: when it replaces a warehouse</h3>
+        <p class="post-excerpt">When an embedded columnar database beats a cloud warehouse for analytics, how to size it, and the failure modes that decide the boundary.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
+        <h3>CDC pipeline death spiral: one bad LLM call can crash…</h3>
+        <p class="post-excerpt">How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.</p>
+        <p class="post-reading-time">12 min read · 2 August 2026</p>
+      </a>
+      <a class="post-card" href="/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <h3>High-Volume Log Pipelines: Shipping 50k Events Per Second</h3>
+        <p class="post-excerpt">Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.</p>
+        <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/log-audit-costs-without-breaking-compliance/">
+        <h3>Log audit costs without breaking compliance</h3>
+        <p class="post-excerpt">Compare PostgreSQL and ClickHouse for audit logging: write amplification, query latency, retention, cost modelling, and a decision checklist.</p>
+        <p class="post-reading-time">13 min read · 22 June 2026</p>
+      </a>
+      <a class="post-card" href="/7-patterns-for-systems-that-wont-die-when-networks/">
+        <h3>7 patterns for systems that won’t die when networks</h3>
+        <p class="post-excerpt">Concrete patterns for building services that tolerate network partitions: retries, idempotency, outbox, sagas, and how to measure each trade-off.</p>
+        <p class="post-reading-time">18 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/observability-2026-ditch-the-three-pillars/">
+        <h3>Observability 2026: ditch the three pillars</h3>
+        <p class="post-excerpt">Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
+        <p class="post-reading-time">14 min read · 10 June 2026</p>
+      </a>
+      <a class="post-card" href="/event-sourcing-pay-the-complexity-tax-only-here/">
+        <h3>Event sourcing: pay the complexity tax only here</h3>
+        <p class="post-excerpt">When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.</p>
+        <p class="post-reading-time">10 min read · 9 June 2026</p>
+      </a>
+      <a class="post-card" href="/rag-in-prod-what-tutorials-wont-tell-you/">
+        <h3>RAG in prod: what tutorials won’t tell you</h3>
+        <p class="post-excerpt">Why nightly embedding refreshes break RAG latency, and how a hot/cold retrieval split with partial vector updates fixes it.</p>
+        <p class="post-reading-time">14 min read · 8 June 2026</p>
+      </a>
+    </div>
+  </main>
+  <footer><div class="container">
+    <p>&copy; 2026 Kubai Kevin</p>
+  </div></footer>
+</body>
+</html>

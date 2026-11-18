@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Observability Articles — Kubai Kevin</title>
+  <meta name="description" content="Articles on Observability covering practical, hands-on approaches to observability for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;Canary rollbacks: automate the decision, not the deploy,&quot; and &quot;Queueing theory for backend capacity&quot;.">
+  <meta name="robots" content="index, follow">
+  <meta name="base-path" content="">
+  <link rel="canonical" href="https://kubailabs.com/tag/observability/">
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+  <script src="/static/consent.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Observability Articles — Kubai Kevin">
+  <meta property="og:description" content="Articles on Observability covering practical, hands-on approaches to observability for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;Canary rollbacks: automate the decision, not the deploy,&quot; and &quot;Queueing theory for backend capacity&quot;.">
+  <meta property="og:url" content="https://kubailabs.com/tag/observability/">
+  <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Observability Articles — Kubai Kevin">
+  <meta name="twitter:description" content="Articles on Observability covering practical, hands-on approaches to observability for software developers, including &quot;Structured logging: searchable at scale,&quot; &quot;Canary rollbacks: automate the decision, not the deploy,&quot; and &quot;Queueing theory for backend capacity&quot;.">
+  <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
+  <meta name="twitter:site" content="@KubaiKevin">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage",
+    "name":"Observability Articles","url":"https://kubailabs.com/tag/observability/",
+    "description":"Articles on Observability covering practical, hands-on approaches to observability for software developers, including \"Structured logging: searchable at scale,\" \"Canary rollbacks: automate the decision, not the deploy,\" and \"Queueing theory for backend capacity\"."}
+  </script>
+</head>
+<body>
+  <header><div class="container">
+    <h1><a href="/">Kubai Kevin</a></h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div></header>
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span>
+      <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
+      <span aria-current="page">Observability</span>
+    </nav>
+    <h2>77 articles tagged <em>Observability</em></h2>
+    <div class="post-grid">
+
+      <a class="post-card" href="/structured-logging-searchable-at-scale/">
+        <h3>Structured logging: searchable at scale</h3>
+        <p class="post-excerpt">Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</p>
+        <p class="post-reading-time">20 min read · 12 November 2026</p>
+      </a>
+      <a class="post-card" href="/canary-rollbacks-automate-the-decision-not-the-deploy/">
+        <h3>Canary rollbacks: automate the decision, not the deploy</h3>
+        <p class="post-excerpt">Design canary analysis that compares against a live baseline, guards on sample size, and avoids the false positives that erode trust in automation.</p>
+        <p class="post-reading-time">13 min read · 11 November 2026</p>
+      </a>
+      <a class="post-card" href="/queueing-theory-for-backend-capacity/">
+        <h3>Queueing theory for backend capacity</h3>
+        <p class="post-excerpt">Why doubling traffic can quadruple tail latency, how to model each constrained resource as a queue, and how to measure utilisation before you hit the cliff.</p>
+        <p class="post-reading-time">14 min read · 8 November 2026</p>
+      </a>
+      <a class="post-card" href="/redis-vs-valkey-vs-dragonfly-which-in-memory-store/">
+        <h3>Redis vs Valkey vs Dragonfly: which in-memory store?</h3>
+        <p class="post-excerpt">A mechanism-first guide to picking Redis, Valkey or Dragonfly: fork history, single-thread limits, expiry semantics, migration tests and metrics.</p>
+        <p class="post-reading-time">17 min read · 7 November 2026</p>
+      </a>
+      <a class="post-card" href="/small-language-models-the-classifier-trap/">
+        <h3>Small language models: the classifier trap</h3>
+        <p class="post-excerpt">Why compact classifiers fail on rare inputs, and how per-label thresholds, guardrails and score monitoring contain the damage.</p>
+        <p class="post-reading-time">15 min read · 31 October 2026</p>
+      </a>
+      <a class="post-card" href="/opentelemetry-collector-pipelines-sampling-batching/">
+        <h3>OpenTelemetry collector pipelines: sampling, batching…</h3>
+        <p class="post-excerpt">How receivers, processors, and exporters interact under load, with worked memory arithmetic, sampling trade-offs, routing isolation, and metrics to watch.</p>
+        <p class="post-reading-time">13 min read · 30 October 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-dx-langgraph-vs-crewai-gaps/">
+        <h3>Multi-agent DX: LangGraph vs CrewAI gaps</h3>
+        <p class="post-excerpt">Where LangGraph and CrewAI leave you on your own when debugging multi-agent systems, the failure modes that recur, and how to instrument for causal traces.</p>
+        <p class="post-reading-time">16 min read · 28 October 2026</p>
+      </a>
+      <a class="post-card" href="/remote-premium-rates-skills-ai-cant-copy/">
+        <h3>Remote premium rates: skills AI can't copy</h3>
+        <p class="post-excerpt">Four drills for remote engineers: latency budgets, evidence-based diagnosis, decision records and handoff artifacts that outlast the work.</p>
+        <p class="post-reading-time">19 min read · 21 October 2026</p>
+      </a>
+      <a class="post-card" href="/agent-reliability-7-metrics-users-trust/">
+        <h3>Agent reliability: 7 metrics users trust</h3>
+        <p class="post-excerpt">Seven agent reliability metrics that reflect user trust, how to compute each from existing logs, and which to instrument first.</p>
+        <p class="post-reading-time">16 min read · 14 October 2026</p>
+      </a>
+      <a class="post-card" href="/detecting-silent-agent-failures/">
+        <h3>Detecting silent agent failures</h3>
+        <p class="post-excerpt">A layered quality gate that catches well-formed but wrong agent output: schema checks, PII scans, citation grounding, and a model judge, plus how to measure each.</p>
+        <p class="post-reading-time">15 min read · 13 October 2026</p>
+      </a>
+      <a class="post-card" href="/slos-for-agentic-features-beyond-latency/">
+        <h3>SLOs for agentic features: beyond latency</h3>
+        <p class="post-excerpt">Define agent SLOs on task success, tool-call validity and clean termination, instrument them with OpenTelemetry, and alert on error-budget burn.</p>
+        <p class="post-reading-time">15 min read · 6 October 2026</p>
+      </a>
+      <a class="post-card" href="/fraud-detection-rules-vs-scoring-where-they-meet/">
+        <h3>Fraud detection: rules vs scoring, where they meet</h3>
+        <p class="post-excerpt">How to split fraud decisions between a deterministic rules gate and a calibrated scoring model, with a worked three-layer architecture and audit trail.</p>
+        <p class="post-reading-time">17 min read · 4 October 2026</p>
+      </a>
+      <a class="post-card" href="/llm-evals-langsmith-vs-promptfoo-in-prod/">
+        <h3>LLM evals: LangSmith vs Promptfoo in prod</h3>
+        <p class="post-excerpt">How to choose between hosted trace-based eval platforms and local CLI eval runners, with latency, cost, CI and data-residency tradeoffs.</p>
+        <p class="post-reading-time">15 min read · 3 October 2026</p>
+      </a>
+      <a class="post-card" href="/chaos-engineering-without-an-sre-team/">
+        <h3>Chaos engineering without an SRE team</h3>
+        <p class="post-excerpt">How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.</p>
+        <p class="post-reading-time">14 min read · 30 September 2026</p>
+      </a>
+      <a class="post-card" href="/tech-debt-when-half-your-stack-is-unfamiliar/">
+        <h3>Tech debt: when half your stack is unfamiliar</h3>
+        <p class="post-excerpt">A repeatable process for debugging, verifying and governing tools you didn&#x27;t write, with baselines, contracts, environment measurement and tool cards.</p>
+        <p class="post-reading-time">14 min read · 26 September 2026</p>
+      </a>
+      <a class="post-card" href="/apm-is-blind-to-your-ai-agents/">
+        <h3>APM is blind to your AI agents</h3>
+        <p class="post-excerpt">Traditional APM monitors transport, not semantics. See how to instrument retrieval quality, token cost, and answer correctness in AI agent pipelines.</p>
+        <p class="post-reading-time">12 min read · 25 September 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-systems-when-they-quietly-degrade/">
+        <h3>Multi-agent systems: when they quietly degrade</h3>
+        <p class="post-excerpt">Multi-agent LLM systems drift into slow, costly behaviour without failing loudly. Here is what to instrument, what to budget, and how to catch the slide.</p>
+        <p class="post-reading-time">12 min read · 24 September 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-ai-cost-control-7-tools-one-backfire/">
+        <h3>Agentic AI cost control: 7 tools, one backfire</h3>
+        <p class="post-excerpt">How to control agentic AI spend: ground-truth billing data first, attribution second, and why LLM optimizers over billing data backfire.</p>
+        <p class="post-reading-time">15 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/platform-engineering-roi-metrics-that-fund-teams/">
+        <h3>Platform engineering ROI: metrics that fund teams</h3>
+        <p class="post-excerpt">How to connect platform work to business outcomes with flow metrics, honest attribution, and instrumentation you can build in an afternoon.</p>
+        <p class="post-reading-time">13 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/most-llm-cost-dashboards-lie/">
+        <h3>Most LLM cost dashboards lie…</h3>
+        <p class="post-excerpt">Per-request token attribution, prompt caching, model routing and retry caps: how to instrument LLM spend so the numbers match the invoice.</p>
+        <p class="post-reading-time">13 min read · 19 September 2026</p>
+      </a>
+      <a class="post-card" href="/multi-agent-systems-why-failures-hide/">
+        <h3>Multi-agent systems: why failures hide</h3>
+        <p class="post-excerpt">Why multi-agent LLM pipelines fail silently, and how per-agent tracing, schema validation, budget enforcement, and loop detection make those failures loud.</p>
+        <p class="post-reading-time">13 min read · 18 September 2026</p>
+      </a>
+      <a class="post-card" href="/platform-teams-agentic-world-struggle/">
+        <h3>Platform Teams: Agentic World Struggle</h3>
+        <p class="post-excerpt">Platform teams must adapt identity, tooling, and observability for AI agents that call APIs instead of using dashboards, with concrete patterns and failure modes.</p>
+        <p class="post-reading-time">13 min read · 12 September 2026</p>
+      </a>
+      <a class="post-card" href="/why-scaling-agents-kills-plain-logs/">
+        <h3>Why scaling agents kills plain logs</h3>
+        <p class="post-excerpt">Why plain-text logs and unpinned models break down past a handful of agents, and how to add structured logging plus hash verification.</p>
+        <p class="post-reading-time">11 min read · 11 September 2026</p>
+      </a>
+      <a class="post-card" href="/agent-drift-why-it-hurts-ux/">
+        <h3>Agent drift: why it hurts UX</h3>
+        <p class="post-excerpt">Agent drift degrades latency and error rates without obvious alarms. Learn the four drift classes, detection methods, and a 30-minute audit.</p>
+        <p class="post-reading-time">12 min read · 9 September 2026</p>
+      </a>
+      <a class="post-card" href="/ship-evals-before-your-agent-ships/">
+        <h3>Ship evals before your agent ships</h3>
+        <p class="post-excerpt">Agent evals fail when they only test the happy path. Build outcome-based evals from shadow traffic, wire them into CI, and catch regressions before users do.</p>
+        <p class="post-reading-time">16 min read · 31 August 2026</p>
+      </a>
+      <a class="post-card" href="/llm-risks-underestimated-in-owasp-top-10/">
+        <h3>LLM risks underestimated in OWASP Top 10</h3>
+        <p class="post-excerpt">The OWASP LLM Top 10 covers prompt injection, but production failures cluster in tool use, latency budgets and supply chain. How to measure and mitigate each.</p>
+        <p class="post-reading-time">9 min read · 30 August 2026</p>
+      </a>
+      <a class="post-card" href="/prevent-ownership-drift-when-velocity-explodes/">
+        <h3>Prevent ownership drift when velocity explodes</h3>
+        <p class="post-excerpt">How to keep clear ownership of caches, SLOs and services when teams ship faster: deployment boundaries, error budgets, stampede locks and useful telemetry.</p>
+        <p class="post-reading-time">15 min read · 29 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-tracing-when-logs-lie-and-metrics-mislead/">
+        <h3>Agent tracing: when logs lie and metrics mislead</h3>
+        <p class="post-excerpt">Async agents break synchronous tracing assumptions. Learn how to model queue spans, propagate context across brokers, and read traces honestly.</p>
+        <p class="post-reading-time">10 min read · 28 August 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-finops-is-a-trap/">
+        <h3>Agentic FinOps is a trap</h3>
+        <p class="post-excerpt">Standard FinOps tracks per-call cost and latency. Agents with retries, growing state and human hand-offs leak cost that never shows on the dashboard.</p>
+        <p class="post-reading-time">12 min read · 22 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-errors-hide-in-plain-latency/">
+        <h3>AI errors hide in plain latency</h3>
+        <p class="post-excerpt">Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.</p>
+        <p class="post-reading-time">10 min read · 21 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-unit-costs-the-metric-both-teams-fight-over/">
+        <h3>AI unit costs: the metric both teams fight over</h3>
+        <p class="post-excerpt">Why per-call AI cost estimates break down, and how to instrument a shared cost-per-outcome metric that product and finance both accept.</p>
+        <p class="post-reading-time">14 min read · 18 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-slos-measure-what-agents-actually-do/">
+        <h3>Agent SLOs: measure what agents actually do</h3>
+        <p class="post-excerpt">Latency and 5xx SLOs miss stuck loops. Define outcome SLOs on completion rate, with schema, PromQL, and failure handling.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/observability-agents-lied-to-us/">
+        <h3>Observability Agents as Application Code</h3>
+        <p class="post-excerpt">Why telemetry agents break at scale, how to budget their resources, and when the standard install-and-forget playbook is actually fine.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/ebpf-observability-in-2026-what-actually-works/">
+        <h3>eBPF observability in 2026: what actually works</h3>
+        <p class="post-excerpt">A practical guide to production eBPF observability and runtime security: kernel requirements, verifier failures, ring buffers, pinning, and how to measure overhead.</p>
+        <p class="post-reading-time">14 min read · 9 August 2026</p>
+      </a>
+      <a class="post-card" href="/why-your-multi-agent-system-degraded-slowly/">
+        <h3>Why your multi-agent system degraded slowly</h3>
+        <p class="post-excerpt">Multi-agent systems can lose p99 responsiveness while every agent stays healthy. Here is how payload creep, queueing and retries compound, and how to measure it.</p>
+        <p class="post-reading-time">14 min read · 9 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-cost-attribution-without-the-spreadsheet-hell/">
+        <h3>AI cost attribution without the spreadsheet hell</h3>
+        <p class="post-excerpt">How to attribute AI inference costs to users, features and models: instrumentation, cardinality limits, sampling error, and a 30-minute first step.</p>
+        <p class="post-reading-time">15 min read · 7 August 2026</p>
+      </a>
+      <a class="post-card" href="/prompt-injection-got-the-hype-poison-data-ruined-us/">
+        <h3>Prompt Injection Is Not Your Biggest LLM Data Risk</h3>
+        <p class="post-excerpt">Prompt injection dominates LLM security checklists, but poisoned training data and label drift often cause more damage. A pipeline-stage model for triage.</p>
+        <p class="post-reading-time">17 min read · 3 August 2026</p>
+      </a>
+      <a class="post-card" href="/apm-lied-about-our-ai-incidents/">
+        <h3>Why APM Misses GPU-Bound LLM Incidents</h3>
+        <p class="post-excerpt">Application monitoring traces Python calls, not CUDA kernels or batch queues. Here is how to instrument the layers where LLM latency actually hides.</p>
+        <p class="post-reading-time">12 min read · 1 August 2026</p>
+      </a>
+      <a class="post-card" href="/one-misconfigured-vector-db-killed-our-rag-pipeline/">
+        <h3>When a vector DB misconfiguration breaks RAG silently</h3>
+        <p class="post-excerpt">Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.</p>
+        <p class="post-reading-time">11 min read · 29 July 2026</p>
+      </a>
+      <a class="post-card" href="/track-ai-agent-costs-in-fractal-workflows/">
+        <h3>Track AI agent costs in fractal workflows</h3>
+        <p class="post-excerpt">Standard FinOps dashboards miss sub-agent, idle, and retry costs. A dependency-graph cost model shows where agent spend actually lands.</p>
+        <p class="post-reading-time">12 min read · 27 July 2026</p>
+      </a>
+      <a class="post-card" href="/purpose-built-beats-general-ai-tools/">
+        <h3>Purpose-built beats general AI tools</h3>
+        <p class="post-excerpt">When a general AI platform beats a purpose-built stack, how to choose, and how to measure latency, cost and fallback behaviour yourself.</p>
+        <p class="post-reading-time">16 min read · 19 July 2026</p>
+      </a>
+      <a class="post-card" href="/agentic-workflows-how-we-kept-the-lights/">
+        <h3>Observability for Long-Running LLM Agent Workflows</h3>
+        <p class="post-excerpt">Design an observability stack for agentic LLM workloads: millisecond event timestamps, queue-depth metrics, and bounded buffering that survives outages.</p>
+        <p class="post-reading-time">14 min read · 17 July 2026</p>
+      </a>
+      <a class="post-card" href="/keep-multi-model-systems-stable-6-rules-that-worked/">
+        <h3>Stabilize multi-model agent routers: six production rules</h3>
+        <p class="post-excerpt">Six rules for multi-model agent routers: bounded concurrency, idempotency keys, timeouts, observability, and how to measure each one yourself.</p>
+        <p class="post-reading-time">15 min read · 15 July 2026</p>
+      </a>
+      <a class="post-card" href="/stop-guessing-tech-stacks-validate-tools-in-2-hours/">
+        <h3>Stop guessing tech stacks: validate tools in 2 hours</h3>
+        <p class="post-excerpt">A repeatable two-hour process for validating an unfamiliar library or service before it reaches production, with concrete checks and exit criteria.</p>
+        <p class="post-reading-time">13 min read · 12 July 2026</p>
+      </a>
+      <a class="post-card" href="/kill-noisy-alerts-the-triage-system-that-restored-sleep/">
+        <h3>Designing Alert Triage That Suppresses Noise Safely</h3>
+        <p class="post-excerpt">Classify alerts by shape and downstream impact, then suppress with evidence. Includes PromQL, SQL, breaker logic, and a 30-minute first step.</p>
+        <p class="post-reading-time">12 min read · 11 July 2026</p>
+      </a>
+      <a class="post-card" href="/observe-llm-features-90-faster/">
+        <h3>Observability for LLM Features: Metrics That Drive Decisions</h3>
+        <p class="post-excerpt">Log one structured event per LLM interaction instead of tracing every token, then alert only on user-facing outcomes that justify keeping a feature.</p>
+        <p class="post-reading-time">14 min read · 8 July 2026</p>
+      </a>
+      <a class="post-card" href="/7-ways-to-measure-prompt-platform-roi-in-2026/">
+        <h3>7 ways to measure prompt platform ROI in 2026</h3>
+        <p class="post-excerpt">How to attribute token cost, latency and developer time to prompt and agent platforms, with instrumentation recipes, failure modes and a decision checklist.</p>
+        <p class="post-reading-time">14 min read · 8 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-in-local-currency-costs-that-surprise/">
+        <h3>AI in local currency: costs that surprise…</h3>
+        <p class="post-excerpt">How to choose where to run AI inference: decouple variable compute cost from fixed per-region compliance cost, and measure the trade-off.</p>
+        <p class="post-reading-time">15 min read · 7 July 2026</p>
+      </a>
+      <a class="post-card" href="/build-agent-workflows-that-survive-restarts/">
+        <h3>Build agent workflows that survive restarts</h3>
+        <p class="post-excerpt">How to build agent task pipelines that resume after crashes, schema drift and model changes, using Redis streams, idempotent steps and replay.</p>
+        <p class="post-reading-time">12 min read · 6 July 2026</p>
+      </a>
+      <a class="post-card" href="/llm-drift-the-silent-quality-drop-metrics-miss/">
+        <h3>LLM drift: the silent quality drop metrics miss</h3>
+        <p class="post-excerpt">Latency and error rate stay flat while LLM output quality quietly degrades. Here is how to log prompts, measure embedding drift, and catch it early.</p>
+        <p class="post-reading-time">11 min read · 4 July 2026</p>
+      </a>
+      <a class="post-card" href="/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <h3>High-Volume Log Pipelines: Shipping 50k Events Per Second</h3>
+        <p class="post-excerpt">Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.</p>
+        <p class="post-reading-time">11 min read · 3 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-scanners-overlook-real-vulns/">
+        <h3>AI scanners overlook real vulns</h3>
+        <p class="post-excerpt">AI scanners catch pattern-level flaws but miss logic bugs. Learn a layered approach using deterministic rules, fuzzing, and runtime monitoring.</p>
+        <p class="post-reading-time">12 min read · 2 July 2026</p>
+      </a>
+      <a class="post-card" href="/5-ways-to-find-hidden-latency-before-production/">
+        <h3>5 ways to find hidden latency before production</h3>
+        <p class="post-excerpt">Five practical ways to surface hidden latency before production: traffic replay, synthetic probes, profiling diffs, query plan diffs, and dependency latency budgets.</p>
+        <p class="post-reading-time">12 min read · 30 June 2026</p>
+      </a>
+      <a class="post-card" href="/fix-ai-agent-failures-postmortem-guide/">
+        <h3>Postmortems for AI agents: drift, cost, replay</h3>
+        <p class="post-excerpt">How to run postmortems on AI agents: capture prompts and model versions, measure drift and cost per session, and choose between log-based and instrumented pipelines.</p>
+        <p class="post-reading-time">12 min read · 29 June 2026</p>
+      </a>
+      <a class="post-card" href="/aws-costs-for-nairobi-saas-2026-bill-split/">
+        <h3>AWS costs for Nairobi SaaS: 2026 bill split</h3>
+        <p class="post-excerpt">How to split an AWS bill by service for a Nairobi-facing SaaS: cost drivers, measurement commands, and a decision checklist for region choice and DR.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-observability-the-metrics-that-matter/">
+        <h3>AI observability: the metrics that matter</h3>
+        <p class="post-excerpt">AI observability needs drift, confidence, and attribution metrics. Covers instrumentation, cardinality limits, failure modes, and when not to build it.</p>
+        <p class="post-reading-time">13 min read · 28 June 2026</p>
+      </a>
+      <a class="post-card" href="/debug-ai-agent-failures-differently/">
+        <h3>Debug AI agent failures differently</h3>
+        <p class="post-excerpt">Structured logs catch infrastructure faults; behavior traces catch hallucinations and prompt drift. How to instrument both, measure detection time, and pick a stack.</p>
+        <p class="post-reading-time">13 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-fixes-legacy-code-nobody-owns/">
+        <h3>AI fixes legacy code nobody owns</h3>
+        <p class="post-excerpt">How to combine static analysis, runtime traces, and LLM contextualization to make unowned legacy systems legible, with code and failure modes.</p>
+        <p class="post-reading-time">19 min read · 27 June 2026</p>
+      </a>
+      <a class="post-card" href="/llm-output-metrics-that-actually-move-the-needle/">
+        <h3>LLM output metrics that actually move the needle</h3>
+        <p class="post-excerpt">A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.</p>
+        <p class="post-reading-time">10 min read · 26 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-observability-isnt-monitoring-heres-why/">
+        <h3>AI observability isn’t monitoring — here’s why</h3>
+        <p class="post-excerpt">Traditional monitoring proves a service is up; AI observability proves its outputs are still correct. Layers, code, drift math, and failure modes.</p>
+        <p class="post-reading-time">14 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/pick-one-stripe-lemon-squeezy-paddle-in-2026/">
+        <h3>Pick one: Stripe, Lemon Squeezy, Paddle in 2026</h3>
+        <p class="post-excerpt">A constraint-based framework for choosing between Stripe, Paddle and Lemon Squeezy, with latency tests, cost math and a 30-day pilot checklist.</p>
+        <p class="post-reading-time">14 min read · 25 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agent-postmortems-the-three-surprises/">
+        <h3>AI agent postmortems: the three surprises</h3>
+        <p class="post-excerpt">How to run postmortems for AI agents that fail semantically, not just technically: structured semantic logging, live shadowing, and a decision checklist.</p>
+        <p class="post-reading-time">14 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/istio-and-cilium-what-really-breaks-in-production/">
+        <h3>Istio and Cilium: what really breaks in production</h3>
+        <p class="post-excerpt">Service meshes amplify latent platform failures. Here is what breaks in Istio and Cilium, how to measure it, and when to defer adoption.</p>
+        <p class="post-reading-time">13 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/api-abuse-patterns-rising-in-2026/">
+        <h3>API abuse patterns rising in 2026</h3>
+        <p class="post-excerpt">A layered architecture for stopping credential stuffing and scraping: client integrity tokens, cohort-based rate limiting, and behavioral scoring at the CDN edge.</p>
+        <p class="post-reading-time">12 min read · 24 June 2026</p>
+      </a>
+      <a class="post-card" href="/map-legacy-code-with-ai-before-it-breaks/">
+        <h3>Map legacy code with AI before it breaks</h3>
+        <p class="post-excerpt">A practical workflow for using AI, static analysis, and OpenTelemetry to map legacy systems, find silent failures, and validate fixes.</p>
+        <p class="post-reading-time">13 min read · 23 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-ops-vs-human-ops-the-incidents-that-broke-them/">
+        <h3>AI-First vs Human-First Incident Response</h3>
+        <p class="post-excerpt">Compare AI-first autonomous incident response with human-first ops plus AI triage: architecture, failure modes, cost modeling, and a decision checklist.</p>
+        <p class="post-reading-time">12 min read · 23 June 2026</p>
+      </a>
+      <a class="post-card" href="/unlock-python-313s-free-threaded-gil-for-web-apps/">
+        <h3>Unlock Python 3.13's free-threaded GIL for web apps</h3>
+        <p class="post-excerpt">Free-threaded Python removes the GIL, but C extensions, shared state and pools break. A practical checklist for migrating a web service safely.</p>
+        <p class="post-reading-time">14 min read · 22 June 2026</p>
+      </a>
+      <a class="post-card" href="/llm-evals-skip-the-hype-track-these-4-metrics/">
+        <h3>LLM evals: skip the hype, track these 4 metrics</h3>
+        <p class="post-excerpt">A practical guide to production LLM evaluation: four metric classes, code for deterministic validators, and how to detect prompt drift and scorer decay.</p>
+        <p class="post-reading-time">11 min read · 22 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-glue-code-3-ways-to-avoid-duct-taping-models/">
+        <h3>AI glue code: 3 ways to avoid duct-taping models</h3>
+        <p class="post-excerpt">Low-code AI platforms hide prompt drift, adapter decay and cold starts. Detect each with logged queries, a golden set and pre-warming, wired into CI.</p>
+        <p class="post-reading-time">14 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/2026-alert-triage-when-opsgenie-slept-for-you/">
+        <h3>2026 alert triage: when Opsgenie slept for you</h3>
+        <p class="post-excerpt">Build a scoring, deduplication and LLM-summary layer over PagerDuty or Opsgenie, plus how to measure whether it actually reduces wake-ups.</p>
+        <p class="post-reading-time">16 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/why-monoliths-die-slowly-in-2026/">
+        <h3>Why monoliths die slowly in 2026</h3>
+        <p class="post-excerpt">Monolith decomposition usually fails on data locality, not routing. A step-by-step order for extracting data first, routing traffic later, with checks.</p>
+        <p class="post-reading-time">13 min read · 19 June 2026</p>
+      </a>
+      <a class="post-card" href="/compare-kafka-redpanda-nats-for-event-driven-systems/">
+        <h3>Compare Kafka, Redpanda, NATS for event-driven systems</h3>
+        <p class="post-excerpt">Compare Kafka, Redpanda and NATS on durability, tail latency and cost, with config defaults, failure modes and a bake-off checklist you can run yourself.</p>
+        <p class="post-reading-time">14 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agent-postmortems-trace-vs-logs-vs-code/">
+        <h3>AI agent postmortems: trace vs logs vs code</h3>
+        <p class="post-excerpt">Traces, evaluation logs, and code debugging reveal different AI agent failures. Compare overhead, cost, and coverage, then pick the right tool.</p>
+        <p class="post-reading-time">13 min read · 14 June 2026</p>
+      </a>
+      <a class="post-card" href="/ship-1mb-pages-on-4g-starlink-africa-case-study/">
+        <h3>Ship 1MB pages on 4G: Starlink Africa case study</h3>
+        <p class="post-excerpt">How to cut page weight with Brotli, fallback encoding, CDN caching and QUIC, plus how to measure transfer, TTFB and Core Web Vitals honestly.</p>
+        <p class="post-reading-time">13 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/save-12kmonth-cloud-egress-costs-in-2026/">
+        <h3>Cutting cloud egress costs: architecture that works</h3>
+        <p class="post-excerpt">Egress costs come from small, frequent cross-boundary calls. Learn the architecture patterns that reduce data transfer and how to verify savings.</p>
+        <p class="post-reading-time">13 min read · 11 June 2026</p>
+      </a>
+      <a class="post-card" href="/build-a-search-system-in-2026-semantic-keyword/">
+        <h3>Build a search system in 2026: semantic, keyword</h3>
+        <p class="post-excerpt">How to build a hybrid search service with PostgreSQL, pgvector, and Redis: schema, keyword and semantic queries, reranking, caching, and how to measure recall.</p>
+        <p class="post-reading-time">13 min read · 10 June 2026</p>
+      </a>
+      <a class="post-card" href="/observability-2026-ditch-the-three-pillars/">
+        <h3>Observability 2026: ditch the three pillars</h3>
+        <p class="post-excerpt">Why the logs-metrics-traces split breaks under load, and how to design a single event store with schemas, queries and migration steps.</p>
+        <p class="post-reading-time">14 min read · 10 June 2026</p>
+      </a>
+    </div>
+  </main>
+  <footer><div class="container">
+    <p>&copy; 2026 Kubai Kevin</p>
+  </div></footer>
+</body>
+</html>

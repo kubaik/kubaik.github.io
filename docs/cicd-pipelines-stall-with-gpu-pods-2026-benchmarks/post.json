@@ -4,8 +4,9 @@
   "slug": "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks",
   "tags": [
     "Kubernetes",
-    "Ai",
-    "K8s"
+    "CI/CD",
+    "AI Agents",
+    "Containers"
   ],
   "meta_description": "GPU pods stuck Pending are usually a scheduling or quota problem, not a broken container. Learn how to diagnose node selectors, device plugins and quotas.",
   "featured_image": "/static/images/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks.jpg",

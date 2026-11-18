@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Serverless Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including &quot;Senior engineer title inflation in 2026,&quot; &quot;Cost-Effective AI Infrastructure for Micro-SaaS,&quot; and &quot;Boring AWS Lambda layers that don’t lock…&quot;.">
+  <meta name="description" content="Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including &quot;HPA vs KEDA vs Karpenter: autoscaling traps,&quot; &quot;Always-on agents cost more than you think,&quot; and &quot;Mobile-first AI fails you didn’t plan…&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/serverless/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Serverless Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including &quot;Senior engineer title inflation in 2026,&quot; &quot;Cost-Effective AI Infrastructure for Micro-SaaS,&quot; and &quot;Boring AWS Lambda layers that don’t lock…&quot;.">
+  <meta property="og:description" content="Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including &quot;HPA vs KEDA vs Karpenter: autoscaling traps,&quot; &quot;Always-on agents cost more than you think,&quot; and &quot;Mobile-first AI fails you didn’t plan…&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/serverless/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Serverless Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including &quot;Senior engineer title inflation in 2026,&quot; &quot;Cost-Effective AI Infrastructure for Micro-SaaS,&quot; and &quot;Boring AWS Lambda layers that don’t lock…&quot;.">
+  <meta name="twitter:description" content="Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including &quot;HPA vs KEDA vs Karpenter: autoscaling traps,&quot; &quot;Always-on agents cost more than you think,&quot; and &quot;Mobile-first AI fails you didn’t plan…&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Serverless Articles","url":"https://kubailabs.com/tag/serverless/",
-    "description":"Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including \"Senior engineer title inflation in 2026,\" \"Cost-Effective AI Infrastructure for Micro-SaaS,\" and \"Boring AWS Lambda layers that don\u2019t lock\u2026\"."}
+    "description":"Articles on Serverless covering practical, hands-on approaches to serverless for software developers, including \"HPA vs KEDA vs Karpenter: autoscaling traps,\" \"Always-on agents cost more than you think,\" and \"Mobile-first AI fails you didn\u2019t plan\u2026\"."}
   </script>
 </head>
 <body>
@@ -44,43 +44,128 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Serverless</span>
     </nav>
-    <h2>8 articles tagged <em>Serverless</em></h2>
+    <h2>25 articles tagged <em>Serverless</em></h2>
     <div class="post-grid">
 
-      <a class="post-card" href="/senior-engineer-title-inflation-in-2026/">
-        <h3>Senior engineer title inflation in 2026</h3>
-        <p class="post-excerpt">How AI-generated code changes senior-engineer expectations: residency-aware LLM gateways, retry budgets, audit logs, and verification you can run.</p>
-        <p class="post-reading-time">11 min read · 13 August 2026</p>
+      <a class="post-card" href="/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+        <h3>HPA vs KEDA vs Karpenter: autoscaling traps</h3>
+        <p class="post-excerpt">How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.</p>
+        <p class="post-reading-time">17 min read · 26 October 2026</p>
+      </a>
+      <a class="post-card" href="/always-on-agents-cost-more-than-you-think/">
+        <h3>Always-on agents cost more than you think</h3>
+        <p class="post-excerpt">Always-on agents bill you while idle; on-demand agents bill you at wake-up. A cost model, failure modes, and how to measure both.</p>
+        <p class="post-reading-time">15 min read · 30 August 2026</p>
+      </a>
+      <a class="post-card" href="/mobile-first-ai-fails-you-didnt-plan/">
+        <h3>Mobile-first AI fails you didn’t plan…</h3>
+        <p class="post-excerpt">Mobile-first AI features fail on payload size, latency and device RAM, not model quality. A practical guide to measuring and fixing the network and device bottlenecks.</p>
+        <p class="post-reading-time">13 min read · 26 August 2026</p>
+      </a>
+      <a class="post-card" href="/ai-unit-costs-the-metric-both-teams-fight-over/">
+        <h3>AI unit costs: the metric both teams fight over</h3>
+        <p class="post-excerpt">Why per-call AI cost estimates break down, and how to instrument a shared cost-per-outcome metric that product and finance both accept.</p>
+        <p class="post-reading-time">14 min read · 18 August 2026</p>
+      </a>
+      <a class="post-card" href="/orchestration-tax-kills-multi-agent-systems/">
+        <h3>Orchestration tax kills multi-agent systems</h3>
+        <p class="post-excerpt">Why coordination layers dominate multi-agent latency and memory, with patterns that remove the scheduler and how to measure your own orchestration tax.</p>
+        <p class="post-reading-time">13 min read · 11 August 2026</p>
+      </a>
+      <a class="post-card" href="/agent-frameworks-stop-rewriting-the-same-glue-code/">
+        <h3>Agent frameworks: stop rewriting the same glue code</h3>
+        <p class="post-excerpt">Agent glue code — retries, credentials, state — is mostly boilerplate. Here are three abstractions, worked examples, and how to measure the savings.</p>
+        <p class="post-reading-time">13 min read · 10 August 2026</p>
       </a>
       <a class="post-card" href="/ai-micro-saas-under-150month-the-real-infra-choices/">
         <h3>Cost-Effective AI Infrastructure for Micro-SaaS</h3>
         <p class="post-excerpt">How to architect an AI micro-SaaS on a tight budget: caching, batching, serverless scaling, cost measurement, and the failure modes that break naive designs.</p>
         <p class="post-reading-time">15 min read · 5 August 2026</p>
       </a>
+      <a class="post-card" href="/mcp-servers-the-3-hidden-costs-nobody-quotes/">
+        <h3>MCP servers: the 3 hidden costs nobody quotes</h3>
+        <p class="post-excerpt">MCP servers are stateful async processes, not stateless APIs. Here are the real cost drivers, failure modes, and how to measure them yourself.</p>
+        <p class="post-reading-time">16 min read · 5 August 2026</p>
+      </a>
       <a class="post-card" href="/boring-aws-lambda-layers-that-dont-lock/">
         <h3>Boring AWS Lambda layers that don’t lock…</h3>
         <p class="post-excerpt">How to version, publish and reference Lambda layers so runtime upgrades, region moves and architecture changes don&#x27;t break dependent functions.</p>
         <p class="post-reading-time">12 min read · 31 July 2026</p>
+      </a>
+      <a class="post-card" href="/model-router-keep-it-simple-keep-it-local/">
+        <h3>Model router: keep it simple, keep it local</h3>
+        <p class="post-excerpt">Design a local-plus-cloud model router that stays small: rule-based selection, real health checks, pre-warming, and the failure modes that actually bite.</p>
+        <p class="post-reading-time">14 min read · 24 July 2026</p>
       </a>
       <a class="post-card" href="/poolers-wont-save-your-serverless-db/">
         <h3>Poolers won’t save your serverless DB</h3>
         <p class="post-excerpt">Why poolers add latency and cost to bursty serverless workloads, and how multiplexing, the Aurora Data API, and direct connections compare.</p>
         <p class="post-reading-time">14 min read · 19 July 2026</p>
       </a>
-      <a class="post-card" href="/agentic-workflows-how-we-kept-the-lights/">
-        <h3>Observability for Long-Running LLM Agent Workflows</h3>
-        <p class="post-excerpt">Design an observability stack for agentic LLM workloads: millisecond event timestamps, queue-depth metrics, and bounded buffering that survives outages.</p>
-        <p class="post-reading-time">14 min read · 17 July 2026</p>
+      <a class="post-card" href="/ai-sales-cycles-3x-faster-40-less-talk/">
+        <h3>Designing AI-Assisted Sales for Developer Tools</h3>
+        <p class="post-excerpt">How to build an AI-assisted sales pipeline for developer tools: intent routing, code generation, handoff rules, failure modes, and what to instrument.</p>
+        <p class="post-reading-time">16 min read · 14 July 2026</p>
       </a>
-      <a class="post-card" href="/audit-trails-immutabledb-vs-dynamodb-streams/">
-        <h3>Audit trails: ImmutableDB vs DynamoDB Streams</h3>
-        <p class="post-excerpt">Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.</p>
-        <p class="post-reading-time">15 min read · 4 July 2026</p>
+      <a class="post-card" href="/agents-247-vs-on-demand-42k-bill-shock/">
+        <h3>Always-On vs On-Demand Agents: Real Cost Trade-offs</h3>
+        <p class="post-excerpt">Always-on containers bill for idle time; on-demand functions bill per invocation. Compare latency, retries, cold starts, and the failure modes that decide which fits.</p>
+        <p class="post-reading-time">12 min read · 5 July 2026</p>
+      </a>
+      <a class="post-card" href="/detect-lazy-agents-without-false-alarms/">
+        <h3>Detect lazy agents without false alarms</h3>
+        <p class="post-excerpt">Success/fail gates miss agents that keep running while producing harmful output. Measure outcomes instead, with a worked predictor design and decision rules.</p>
+        <p class="post-reading-time">14 min read · 4 July 2026</p>
+      </a>
+      <a class="post-card" href="/ai-proof-your-mid-level-salary/">
+        <h3>AI-proof your mid-level salary</h3>
+        <p class="post-excerpt">Tracking commits and story points keeps engineers in the layer AI automates best. Here is how to measure p99 latency, cost per request and error rate instead.</p>
+        <p class="post-reading-time">15 min read · 1 July 2026</p>
+      </a>
+      <a class="post-card" href="/9-vibe-coding-traps-that-break-production-code/">
+        <h3>9 Vibe coding traps that break production code</h3>
+        <p class="post-excerpt">Nine patterns that make AI-assisted prototypes fail under load, with the instrumentation to catch each one before it reaches production.</p>
+        <p class="post-reading-time">11 min read · 1 July 2026</p>
+      </a>
+      <a class="post-card" href="/2026-ai-stack-solo-saas-cost-showdown/">
+        <h3>2026 AI stack: solo SaaS cost showdown</h3>
+        <p class="post-excerpt">A framework for choosing between AI-generated and hand-written infrastructure for a solo SaaS, with cost models, failure modes and a 30-minute audit.</p>
+        <p class="post-reading-time">13 min read · 30 June 2026</p>
+      </a>
+      <a class="post-card" href="/llm-output-metrics-that-actually-move-the-needle/">
+        <h3>LLM output metrics that actually move the needle</h3>
+        <p class="post-excerpt">A layered approach to measuring LLM output quality in production: structured validation, p95 latency, cost per request, and retention signals.</p>
+        <p class="post-reading-time">10 min read · 26 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-native-apps-break-when-you-copy-old-rules/">
+        <h3>AI-native apps break when you copy old rules</h3>
+        <p class="post-excerpt">Model calls are distributed workloads, not function calls. Here is how to design task queues, cache keys, token budgets and retry policy for AI features.</p>
+        <p class="post-reading-time">13 min read · 23 June 2026</p>
       </a>
       <a class="post-card" href="/cut-cold-starts-70-lambda-cost-hack/">
         <h3>Serverless Cold Starts: Cost Levers and How to Measure Them</h3>
         <p class="post-excerpt">Cold starts are a cost and consistency problem, not just latency. Learn how to measure latency-per-dollar and tune concurrency, memory, and architecture.</p>
         <p class="post-reading-time">12 min read · 20 June 2026</p>
+      </a>
+      <a class="post-card" href="/move-images-50-faster-in-2026-with-starlink-cdn/">
+        <h3>Resize Images at the Edge: A CloudFront and Lambda Guide</h3>
+        <p class="post-excerpt">Build an on-the-fly image resizing pipeline with CloudFront, Lambda@Edge, S3 and Terraform, including streaming, format negotiation and observability.</p>
+        <p class="post-reading-time">13 min read · 18 June 2026</p>
+      </a>
+      <a class="post-card" href="/portfolio-that-hires-show-constraints-not-code/">
+        <h3>Portfolio that hires: show constraints, not code</h3>
+        <p class="post-excerpt">A portfolio that proves engineering judgement: latency budgets, load tests, failure-mode notes and honest trade-offs recruiters can verify.</p>
+        <p class="post-reading-time">14 min read · 16 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-native-apps-forget-the-old-stack/">
+        <h3>AI-native apps: forget the old stack</h3>
+        <p class="post-excerpt">LLM-backed services are token-bound, stateful and failure-prone. Learn the failure modes, how to measure them, and patterns that contain them.</p>
+        <p class="post-reading-time">10 min read · 12 June 2026</p>
+      </a>
+      <a class="post-card" href="/ai-agents-eat-your-budget-3-ways/">
+        <h3>AI agents eat your budget 3 ways</h3>
+        <p class="post-excerpt">Token inflation, retry storms and timeout math quietly inflate AI agent bills. Learn how to instrument, cap and verify each cost vector.</p>
+        <p class="post-reading-time">12 min read · 11 June 2026</p>
       </a>
       <a class="post-card" href="/neon-vs-planetscale-vs-turso-which-broke-first/">
         <h3>Neon vs PlanetScale vs Turso: which broke first?</h3>

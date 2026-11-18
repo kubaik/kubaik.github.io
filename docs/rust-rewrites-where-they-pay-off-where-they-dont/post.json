@@ -4,12 +4,9 @@
   "slug": "rust-rewrites-where-they-pay-off-where-they-dont",
   "tags": [
     "Rust",
-    "Backend",
-    "RustBackendServices",
-    "AsyncRustPitfalls",
-    "Softwareengineering",
-    "Rustlang",
-    "Golang"
+    "Python",
+    "Distributed Systems",
+    "LLMs"
   ],
   "meta_description": "A practical framework for deciding whether a Rust backend rewrite is worth it, with code, failure modes, and measurement steps.",
   "featured_image": "/static/images/rust-rewrites-where-they-pay-off-where-they-dont.jpg",
