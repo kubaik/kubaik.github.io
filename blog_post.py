@@ -126,10 +126,13 @@ class BlogPost:
             title = lines[0][2:].strip()
             body = "\n".join(lines[1:]).strip()
         slug = slug or cls._create_slug_static(title)
-        ts = (
-            cls._first_commit_iso(path)
-            or datetime.fromtimestamp(path.stat().st_mtime).isoformat()
-        )
+        git_ts = cls._first_commit_iso(path)
+        # No git history (shallow clone, untracked file) -> fall back to mtime, but
+        # FLAG it. velocity_controller._publish_dates() skips posts carrying
+        # monetization_data["date_unreliable"]; without the flag a checkout-time
+        # mtime counted as "published today", throttling real publishing, and
+        # sitemap <lastmod>/schema dateModified advertised fake freshness.
+        ts = git_ts or datetime.fromtimestamp(path.stat().st_mtime).isoformat()
 
         return cls(
             title=title,
@@ -147,6 +150,7 @@ class BlogPost:
                 "affiliate_count": 0,
                 "review_status": "recovered_from_markdown",
                 "needs_quality_review": True,
+                "date_unreliable": git_ts is None,
             },
         )
 

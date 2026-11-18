@@ -30,6 +30,7 @@ from seo_optimizer import SEOOptimizer
 from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
 from hashtag_manager import HashtagManager, add_hashtags_to_post
+from taxonomy import derive_site_tags
 from utils import dedup_similarity
 
 from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
@@ -1257,6 +1258,19 @@ def _is_valid_hashtag(tag: str) -> bool:
     return True
 
 
+def _hashtag_key_matches(key: str, haystack: str) -> bool:
+    """Boundary-aware match. Raw `key in text` made 'rag' hit 'storage',
+    'coding' hit 'encoding', 'ai' hit 'maintain', 'ml' hit 'html'.
+    Keys of <=3 chars must match a whole word; longer keys may be stems
+    ('machinelearn', 'fine-tun') so only the left edge is anchored."""
+    k = key.strip()
+    if not k:
+        return False
+    left = r"(?<![a-z0-9])"
+    right = r"(?![a-z0-9])" if (len(k) <= 3 or key.endswith(" ")) else ""
+    return re.search(left + re.escape(k) + right, haystack) is not None
+
+
 def _derive_hashtags_from_keywords(
     keywords: List[str],
     topic: str = "",
@@ -1268,7 +1282,7 @@ def _derive_hashtags_from_keywords(
 
     for tier, mapping in _HASHTAG_TIERS.items():
         for keyword, tags in mapping.items():
-            if keyword in combined:
+            if _hashtag_key_matches(keyword, combined):
                 for tag in tags:
                     if _is_valid_hashtag(tag) and tag not in selected[tier]:
                         selected[tier].append(tag)
@@ -4135,9 +4149,17 @@ class BlogSystem:
             )
             print(f"Hashtags selected: {', '.join(hashtags)}")
 
-            all_tags = _to_single_word_tags(seo_keywords[:5] + hashtags)
-            post.tags = all_tags[:15]
-            post.seo_keywords = _to_single_word_tags(seo_keywords + hashtags)[:15]
+            # Site taxonomy is derived from a controlled vocabulary (taxonomy.py),
+            # NOT from tweet hashtags: hashtag leakage produced incoherent public
+            # /tag/ archives ("Rag" on a logging post, "UvVsPoetry", "SeniorTitle").
+            # Hashtags stay in post.twitter_hashtags only. seo_keywords keeps the
+            # LLM's readable phrases instead of CamelCase hashtag fragments.
+            post.tags = derive_site_tags(
+                title=full_title, keywords=seo_keywords, content=content
+            )
+            post.seo_keywords = [
+                k.strip() for k in seo_keywords if isinstance(k, str) and k.strip()
+            ][:8]
             post.twitter_hashtags = " ".join(
                 f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
             )
@@ -5534,6 +5556,50 @@ def persist_topics_to_script(
     return len(new_lines)
 
 
+def _content_word_tokens(text: str) -> set:
+    """Content words only (no bigrams). Used for topic near-duplicate detection."""
+    text = text.lower()
+    words = re.sub(r"[^\w\s]", " ", text).split()
+    return {w for w in words if w not in _STOP_WORDS and len(w) > 2}
+
+
+def _jaccard_words(a: set, b: set) -> float:
+    if not a or not b:
+        return 0.0
+    inter = len(a & b)
+    union = len(a | b)
+    return inter / union if union else 0.0
+
+
+def _remove_near_duplicate_topics(
+    topics: list,
+    threshold: float = 0.70,
+) -> tuple:
+    """Drop near-duplicate topics (Jaccard >= threshold on content words).
+
+    Keeps the earlier occurrence and drops any later topic whose content-word
+    Jaccard with an already-kept topic is >= threshold. Returns (kept, removed).
+    This is the same rule that previously reduced a 338-topic list to 318.
+    """
+    kept: list = []
+    kept_tokens: list = []
+    removed: list = []
+
+    for t in topics:
+        t = str(t).strip()
+        if not t:
+            continue
+        tokens = _content_word_tokens(t)
+        is_dup = any(_jaccard_words(tokens, prev) >= threshold for prev in kept_tokens)
+        if is_dup:
+            removed.append(t)
+        else:
+            kept.append(t)
+            kept_tokens.append(tokens)
+
+    return kept, removed
+
+
 def create_sample_config(config_path: str = "config.yaml"):
     CONFIG_FILE = config_path
 
@@ -5556,7 +5622,8 @@ def create_sample_config(config_path: str = "config.yaml"):
         "site_name": "Kubai Kevin",
         "site_description": (
             "Practical backend engineering, AI tooling, and developer career "
-            "advice by Kubai Kevin, a software developer in Nairobi, Kenya."
+            "advice by Kubai Kevin — a software developer with 10+ years "
+            "building production systems in fintech and AI."
         ),
         "base_url": "https://kubailabs.com",
         "base_path": "",
@@ -5603,94 +5670,134 @@ def create_sample_config(config_path: str = "config.yaml"):
 
     config = existing
 
+    # Seed topics. On `init`, existing content_topics are first cleaned of
+    # near-duplicates (Jaccard >= 0.70 on content words; earlier kept), then
+    # any missing seeds from this list are appended.
     NEW_TOPICS = [
-        "MCP in production: the operational costs and security gotchas most teams miss",
+        "Why most production AI agents still need circuit breakers and human escalation paths in 2026",
+        "Agentic workflows that survive network partitions: the patterns that actually work in Africa",
+        "Why structured output + validation layers beat JSON mode for anything that touches money",
+        "Building reliable multi-agent systems without the orchestration tax most frameworks impose",
+        "When to fine-tune, when to route, and when to just use a bigger model — 2026 decision framework",
+        "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that survive real data change",
+        "AI observability beyond token counts: what actually predicts user-visible degradation",
+        "Golden paths that don't become golden handcuffs — keeping the paved road evolvable",
+        "How AI changed what 'self-service' means for platform teams in 2026",
+        "Why most internal developer platforms fail at the adoption layer, not the technical one",
+        "Building a deployment platform that works for both senior engineers and new hires",
+        "Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads",
+        "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026",
+        "Cost attribution for AI features that product managers actually understand",
+        "The audit logging architecture that satisfies both compliance and performance teams",
+        "Connection poolers in the age of serverless and AI agents — what still makes sense",
+        "Building change data capture that doesn't fall over when your LLM pipeline goes wild",
+        "Least-privilege for AI agents: the permission model that doesn't make developers revolt",
+        "SBOM + attestation that actually gets used instead of sitting in a bucket",
+        "Zero-trust networking for AI services without the latency tax",
+        "Building postmortems that actually improve things when half the code is AI-generated",
+        "The frontend performance budget that still matters when most traffic is from Africa",
+        "Building accessible AI chat interfaces that don't fail WCAG audits",
+        "Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without country-specific forks",
+        "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers",
+        "Offline-first + eventual consistency patterns that actually work for mobile money apps",
+        "The cost and reliability tradeoffs of running AI features for users paying in local currency",
+        "How AI changed what 'senior engineer' actually means in 2026 hiring rubrics",
+        "The skills that still command premium remote rates when AI can do the obvious parts",
+        "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios",
+        "The compensation negotiation playbook that works when the market knows AI increased your output",
+        "Why some engineers are getting promoted faster in the AI era while others are being managed out",
+        "How to lead technical decisions when half your team is using tools you don't fully understand yet",
+        "The portfolio projects that actually get African engineers hired into senior remote roles in 2026",
+        "Why most AI wrapper businesses died in 2026 and what the survivors have in common",
+        "Building in public as a solo developer without burning out on content performance",
+        "How AI changed the sales cycle for developer tools — and what still works",
+        "When to build vs when to buy the AI components of your SaaS in 2026",
+        "eBPF in 2026: the observability and security use cases that finally justified the complexity",
+        "How feature flags evolved into full AI rollout and experimentation platforms",
+        "Building systems that can absorb new AI capabilities without major rewrites every 6 months",
+        "The architecture principles that survived the shift to agentic and multi-model systems",
+        "MCP in production: the hidden operational costs and security gotchas nobody talks about",
+        "Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline)",
+        "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems",
+        "Context engineering for long-running agents: the patterns that actually reduce hallucinations",
+        "Why most production agents still need strong human-in-the-loop boundaries in 2026",
+        "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
+        "The token economics problem nobody solved yet for always-on agent teams",
+        "Building evaluation harnesses for multi-agent systems that developers actually trust",
+        "Security model for MCP servers in regulated environments (fintech case study)",
+        "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
+        "World models and physical AI: what they mean for backend engineers in 2026",
+        "Building durable agent workflows that survive restarts, model changes, and network blips",
+        "Evaluation-driven development for agents: the loop that replaced vibe testing",
+        "The tool-use patterns that scaled and the ones that created thundering herd problems",
+        "Context window management strategies for agents that run for hours or days",
+        "Productionizing 'computer use' style agents without giving them dangerous permissions",
+        "Why most platform teams are still building for 2024 developer workflows in an agentic world",
+        "Building golden paths for AI features that don't become maintenance nightmares",
+        "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS",
+        "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2",
+        "Building unit economics for AI features that product and finance teams can both understand",
+        "Building SLOs for agentic features that don't just measure latency and error rate",
+        "Building audit trails for agent decisions that satisfy both compliance and debugging needs",
+        "Data residency and sovereign AI constraints for African fintech using global models",
+        "The cost and reliability tradeoffs of running agents for users who pay in local mobile money",
+        "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
+        "Why global AI best practices often fail in markets with high mobile data costs and latency",
+        "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
+        "Offline-capable agent workflows for field agents and last-mile operations in Africa",
+        "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
+        "The developer experience gaps that still exist when building and debugging multi-agent systems",
+        "Building internal tools that help non-AI engineers work safely with agents",
+        "The skills that became table stakes for senior engineers once agents were in production",
+        "Building healthy team norms around AI tool usage without creating two classes of engineers",
+        "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
+        "How African engineering teams are adapting hiring and onboarding for the agentic era",
+        "Event-driven vs agent-driven architectures: when each wins in 2026",
+        "The database and state management patterns that survived heavy agent usage",
+        "Designing systems that can gracefully degrade when an upstream agent or model is slow or wrong",
+        "The MCP server security mistake that could have exposed internal tools",
+        "The evaluation gap that let a subtle model behavior change slip into production",
         "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
-        "Multi-agent orchestration patterns compared: supervisor, swarm, debate, pipeline",
         "Common failure modes of multi-agent systems at scale, and why they're hard to catch early",
         "Building a multi-agent research system without LangGraph: a framework comparison",
-        "Agent-to-Agent (A2A) vs MCP: when to use each in a 2026 production system",
-        "Context engineering for long-running agents: patterns that reduce hallucinations",
-        "Why production agents still need human-in-the-loop boundaries in 2026",
         "LLMOps in 2026: the evaluation and monitoring stack replacing old RAG dashboards",
         "How the Claude 4 / GPT-5 model generation changed agent architecture decisions",
-        "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
-        "The token economics problem nobody has fully solved for always-on agent fleets",
-        "Building evaluation harnesses for multi-agent systems that developers actually trust",
         "Memory systems for production agents: approaches compared, and where each leaks context",
         "Detecting and containing agent drift before it degrades the user experience",
-        "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
         "The governance layer agent systems need after a compliance-relevant failure",
-        "On-device and edge agents in 2026: when they beat cloud round-trips for African users",
         "Running local LLM agents for sensitive fintech workflows without sending data abroad",
-        "World models and physical AI: what they mean for backend engineers in 2026",
         "Purpose-built AI platforms vs general platforms: a 2026 decision framework",
         "Using AI to optimize AI spend: agentic cost management, and where it can backfire",
         "Versioning and rolling back production agents without breaking downstream systems",
         "The hidden latency tax of multi-agent handoffs, and where it can be reduced",
-        "Building durable agent workflows that survive restarts, model changes, and network blips",
-        "Why structured logging and model pinning become non-negotiable past 15+ agents in production",
-        "Evaluation-driven development for agents: replacing vibe testing with a real loop",
         "Measuring 'agent reliability' in a way that correlates with user trust",
-        "Tool-use patterns that scale, and the ones that create thundering-herd problems",
-        "Context window management strategies for agents that run for hours or days",
         "Circuit breakers and bulkheads for agent systems: designing for cascade failure",
-        "Productionizing 'computer use' style agents without granting dangerous permissions",
         "How Internal Developer Platforms are evolving to support AI feature development",
         "The platform abstractions that make agent development faster for engineering teams",
-        "Why platform teams building for 2024 developer workflows struggle in an agentic world",
-        "Building golden paths for AI features that don't become maintenance nightmares",
         "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
         "Self-service AI tooling layers that let product teams experiment safely",
         "Token attribution models that make AI spend visible to product and finance teams",
-        "Agentic FinOps: the dashboards and alerts that make AI costs visible to leadership",
-        "The real cost of always-on vs on-demand agents for a Nairobi-based SaaS",
-        "Spot instances with smart retry logic for non-critical agent workloads: a cost comparison",
-        "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
         "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
-        "Building unit economics for AI features that product and finance teams can both read",
         "What traditional observability misses when agents enter production",
         "Agent-specific tracing patterns that actually help during incidents",
         "Writing postmortems that account for agent-made decisions, not just human error",
-        "Building SLOs for agentic features beyond latency and error rate",
         "Detecting when an agent is 'working' but producing low-quality or harmful output",
         "On-call process changes teams make once agents can create incidents unattended",
-        "Least-privilege access models for agents that call 30+ internal tools",
         "Prompt and tool injection attacks documented in production, and how teams block them",
-        "Building audit trails for agent decisions that satisfy compliance and debugging needs",
         "Why agent identity and authentication is harder than traditional service auth",
         "Red-teaming internal agents without slowing down development velocity",
-        "Data residency and sovereign AI constraints for African fintech using global models",
         "Low-latency agent features for users on intermittent 3G/4G connections in East Africa",
-        "The cost and reliability tradeoffs of running agents for users paying via mobile money",
-        "Building AI features that tolerate M-Pesa, Paystack, and Flutterwave failure modes",
-        "Why global AI best practices often fail in markets with high mobile data costs and latency",
-        "Local plus cloud model routing: how teams stay competitive on cost and speed",
-        "Offline-capable agent workflows for field agents and last-mile operations in Africa",
-        "The regulatory and compliance realities of deploying autonomous agents in African fintech",
         "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows",
-        "The developer experience gaps that remain in building and debugging multi-agent systems",
         "Testing and reviewing agent-generated code and workflows at team scale",
-        "Building internal tools that help non-AI engineers work safely with agents",
         "How the 'AI Engineer' role has evolved through 2026",
-        "The skills that became table stakes for senior engineers once agents reached production",
         "Code review and architecture decisions when large parts of a system are agent-orchestrated",
-        "Building healthy team norms around AI tool usage without creating two classes of engineers",
         "Leadership challenges when output velocity rises faster than ownership clarity",
-        "How African engineering teams are adapting hiring and onboarding for the agentic era",
-        "Event-driven vs agent-driven architectures: when each wins in 2026",
         "How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent workflows",
-        "Database and state management patterns that hold up under heavy agent usage",
-        "Designing systems that gracefully degrade when an upstream agent or model is slow or wrong",
         "Versioning and evolving agent capabilities without breaking existing integrations",
         "What happens when an agent follows instructions too literally: documented failure patterns",
         "Why multi-agent research systems quietly degrade over time, and how to catch it",
-        "Common MCP server security mistakes that expose internal tools",
-        "Recovering from an agent that made thousands of low-value API calls overnight",
-        "Evaluation gaps that let subtle model behavior changes slip into production",
         "Why leader election still breaks in subtle ways on modern cloud networks",
         "ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale",
-        "Sharding strategies that survive a 10x traffic spike without a rewrite",
         "The CAP theorem tradeoffs teams actually hit once they run multi-region databases",
         "Building a double-entry ledger that stays consistent under concurrent writes",
         "Idempotency keys done right: the payment API bugs they prevent and the ones they don't",
@@ -5734,12 +5841,9 @@ def create_sample_config(config_path: str = "config.yaml"):
         "Designing background job queues that handle poison messages gracefully",
         "The outbox pattern explained: solving dual writes without distributed transactions",
         "Core Web Vitals in 2026: what actually moves the needle versus what's cargo cult",
-        "Edge caching strategies that cut latency without serving stale financial data",
         "Bundling and code-splitting decisions that still matter with modern frameworks",
-        "Running a blameless postmortem process that people actually participate in",
         "The on-call rotation structures that don't burn out a small engineering team",
         "How engineering managers should evaluate output when velocity is hard to measure",
-        # Fresh topics added after the pool was exhausted (backend, cloud, security, AI, careers)
         "Kubernetes Gateway API versus Ingress: what changes for platform teams",
         "Postgres partitioning strategies for time-series workloads in transactional systems",
         "Designing multi-tenant SaaS data isolation: schemas, row-level security, and separate databases",
@@ -5806,20 +5910,129 @@ def create_sample_config(config_path: str = "config.yaml"):
         "Open source contribution as a career strategy: choosing projects and building credibility",
         "Engineering interview preparation for system design rounds: a structured approach",
         "Reducing meeting load on engineering teams: async communication practices that work",
-        # >>> AUTO-EXPANDED TOPICS (managed by 'python blog_system.py topics expand'; do not edit by hand) >>>
-        # <<< AUTO-EXPANDED TOPICS <<<
+        "MCP in production: the operational costs and security gotchas most teams miss",
+        "The token economics problem nobody has fully solved for always-on agent fleets",
+        "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
+        "Tool-use patterns that scale, and the ones that create thundering-herd problems",
+        "Productionizing 'computer use' style agents without granting dangerous permissions",
+        "Agentic FinOps: the dashboards and alerts that make AI costs visible to leadership",
+        "Spot instances with smart retry logic for non-critical agent workloads: a cost comparison",
+        "Common MCP server security mistakes that expose internal tools",
+        "Evaluation gaps that let subtle model behavior changes slip into production",
+        "When should a backend service split into microservices?",
+        "Choosing between message queues and event streams",
+        "Idempotency keys: designing safe retry semantics",
+        "Database connection pooling under serverless workloads",
+        "How to design pagination for large result sets",
+        "When to denormalize a relational schema",
+        "Caching strategies and their invalidation tradeoffs",
+        "Read replicas versus sharding: choosing a scaling path",
+        "Designing background jobs that survive restarts",
+        "Understanding distributed transactions and sagas",
+        "Time zones and date handling in backend systems",
+        "Designing audit logs that hold up over time",
+        "Designing webhooks with delivery guarantees",
+        "Backpressure in streaming pipelines explained",
+        "Structuring a monorepo for backend services",
+        "Graceful shutdown patterns for long-running workers",
+        "Blue-green versus canary deployments compared",
+        "Infrastructure as code drift: causes and detection",
+        "Designing Kubernetes resource requests and limits",
+        "Container image supply chain hardening basics",
+        "Understanding cloud networking egress costs",
+        "Secrets management patterns for cloud workloads",
+        "Autoscaling policies: metrics that actually work",
+        "Object storage lifecycle policies explained",
+        "Designing health checks that reflect real readiness",
+        "Zero trust networking for internal services",
+        "Threat modeling a new API endpoint",
+        "OAuth token lifetimes and rotation strategies",
+        "Session management in stateless architectures",
+        "SQL injection defenses beyond prepared statements",
+        "Designing secure file upload pipelines",
+        "Understanding CSRF and same-site cookies",
+        "Encryption at rest versus in transit tradeoffs",
+        "Handling PII in logs and telemetry",
+        "Dependency confusion and package registry risks",
+        "Designing RBAC versus ABAC for services",
+        "Evaluating retrieval augmented generation architectures",
+        "Prompt versioning and evaluation workflows",
+        "Designing guardrails for LLM outputs",
+        "Embedding storage and vector index tradeoffs",
+        "Chunking strategies for document retrieval",
+        "Evaluating hallucination detection approaches",
+        "Cost and latency tradeoffs in model selection",
+        "Designing human-in-the-loop AI workflows",
+        "Structured outputs and schema validation for LLMs",
+        "Caching strategies for LLM inference",
+        "Fine-tuning versus prompt engineering decisions",
+        "Designing evaluation datasets for AI features",
+        "Monitoring model quality in production",
+        "Handling context window limits in applications",
+        "Designing tool-use boundaries for agents",
+        "Career paths from backend to platform engineering",
+        "Building technical depth without title changes",
+        "How to evaluate a codebase before joining",
+        "Writing design docs that influence decisions",
+        "Mentoring without formal authority",
+        "Interviewing for distributed systems roles",
+        "Balancing on-call duties with project work",
+        "Learning cloud providers without certification chasing",
+        "Transitioning from frontend to backend engineering",
+        "Reading source code as a learning habit",
+        "Choosing specializations in a crowded market",
+        "Negotiating scope during performance reviews",
+        "Documentation habits that scale across teams",
+        "Understanding the security engineer career track",
+        "Building a portfolio that reflects systems thinking",
+        "Staying current without chasing every framework",
+        "Evaluating remote versus hybrid engineering roles",
+        "Handling legacy systems early in a new role",
+        "Designing internal tools developers actually use",
+        "Communicating architecture decisions to leadership",
+        "Refactoring safely in systems without tests",
+        "Choosing observability signals for new services",
     ]
+    raw_topics: list = config.get("content_topics") or []
+    # Remove near-duplicates (Jaccard >= 0.70 on content words). Keep earlier
+    # occurrence; drop later ones. This is what previously reduced 338 -> 318.
+    cleaned_topics, removed_topics = _remove_near_duplicate_topics(
+        raw_topics, threshold=0.70
+    )
+    if removed_topics:
+        print(
+            f"  Removed {len(removed_topics)} near-duplicate topic(s) "
+            f"(Jaccard >= 0.70, later occurrence dropped):"
+        )
+        for rt in removed_topics:
+            print(f"    - {rt[:100]}")
+        changed_keys.append(
+            f"content_topics (removed {len(removed_topics)} near-duplicates)"
+        )
 
-    existing_topics: list = config.get("content_topics") or []
-    existing_topic_set = set(existing_topics)
+    existing_topic_set = set(cleaned_topics)
     appended_topics = [
         t for t in filter_safe_topics(NEW_TOPICS) if t not in existing_topic_set
     ]
-    config["content_topics"] = existing_topics + appended_topics
-    if appended_topics:
+    # Also drop any NEW_TOPICS entry that is a near-duplicate of something already kept
+    final_new: list = []
+    for t in appended_topics:
+        tokens = _content_word_tokens(t)
+        if any(
+            _jaccard_words(tokens, _content_word_tokens(k)) >= 0.70
+            for k in cleaned_topics
+        ):
+            continue
+        final_new.append(t)
+    config["content_topics"] = cleaned_topics + final_new
+    if final_new:
         changed_keys.append(
-            f"content_topics (+{len(appended_topics)} new, "
-            f"{len(existing_topics)} preserved)"
+            f"content_topics (+{len(final_new)} new, "
+            f"{len(cleaned_topics)} after dedup)"
+        )
+    elif removed_topics:
+        changed_keys.append(
+            f"content_topics ({len(cleaned_topics)} after near-duplicate removal)"
         )
 
     with open(CONFIG_FILE, "w", encoding="utf-8") as _f:

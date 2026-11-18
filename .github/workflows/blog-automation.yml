@@ -218,6 +218,22 @@ jobs:
             - name: 🧽 Purge visible placeholder markers
               run: python adsense_credibility_cleanup.py purge-markers --apply
 
+            # Metadata-only + idempotent: rewrites post.json `tags` to the controlled
+            # taxonomy (taxonomy.py). Never touches content/updated_at, so no churn.
+            - name: 🏷️ Normalise tags to controlled taxonomy
+              run: python scripts/retag_posts.py --docs ./docs --apply
+
+            # Deterministic (no LLM) DELETE / IMPROVE / KEEP verdicts for every post.
+            - name: 🧮 Post verdicts (report only)
+              run: python scripts/post_verdicts.py --docs ./docs --out "$RUNNER_TEMP/triage_verdicts"
+
+            - name: Upload verdict report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: post-verdicts-${{ github.run_id }}
+                  retention-days: 30
+                  path: ${{ runner.temp }}/triage_verdicts
+
             # ── DESTRUCTIVE / REWRITE STEPS: manual dispatch with destructive=true ─
             - name: 🧹 Auto-retire confirmed duplicate posts (bounded)
               if: env.DESTRUCTIVE == 'true'

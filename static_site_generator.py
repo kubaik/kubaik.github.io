@@ -2,6 +2,7 @@ from monetization_manager import MonetizationManager
 from visibility_automator import VisibilityAutomator
 from seo_optimizer import SEOOptimizer
 from blog_post import BlogPost
+from related_index import build_related_index
 from jinja2 import Template, Environment, BaseLoader
 from datetime import datetime
 from typing import Dict, List
@@ -1541,21 +1542,41 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         is a worse signal than none."""
         MIN_SIM = 0.06
         key = (id(all_posts), len(all_posts))
-        if getattr(self, "_tfidf_key", None) != key:
-            self._tfidf_vectors = _build_tfidf_corpus(all_posts)
-            self._tfidf_key = key
-        vecs = self._tfidf_vectors
-        cur_vec = vecs.get(current.slug, {})
-        cur_tags = {t.lower() for t in current.tags}
-        scored = []
-        for p in all_posts:
-            if p.slug == current.slug:
-                continue
-            sim = _cosine_similarity(cur_vec, vecs.get(p.slug, {}))
-            sim += 0.02 * len(cur_tags & {t.lower() for t in p.tags})
-            if sim >= MIN_SIM:
-                scored.append((sim, p.slug, p))
-        scored.sort(key=lambda x: (-x[0], x[1]))
+        # Fast path: one sparse TF-IDF matrix for the whole corpus (related_index.py).
+        # Built once per build, O(N) per post afterwards; falls back to the legacy
+        # pure-Python scorer only if scikit-learn is unavailable.
+        if getattr(self, "_rel_key", None) != key:
+            self._rel_index = build_related_index(
+                all_posts, stop_words=_RELATED_STOP_WORDS, top_k=8
+            )
+            self._rel_by_slug = {p.slug: p for p in all_posts}
+            self._rel_key = key
+        if self._rel_index is not None:
+            scored = [
+                (sim, slug, self._rel_by_slug[slug])
+                for sim, slug in self._rel_index.get(current.slug, [])
+                if slug in self._rel_by_slug
+                # never pass link equity to merge stubs / quarantined posts
+                and slug not in getattr(self, "_noindex_slugs", set())
+            ]
+        else:
+            if getattr(self, "_tfidf_key", None) != key:
+                self._tfidf_vectors = _build_tfidf_corpus(all_posts)
+                self._tfidf_key = key
+            vecs = self._tfidf_vectors
+            cur_vec = vecs.get(current.slug, {})
+            cur_tags = {t.lower() for t in current.tags}
+            scored = []
+            for p in all_posts:
+                if p.slug == current.slug:
+                    continue
+                sim = _cosine_similarity(cur_vec, vecs.get(p.slug, {}))
+                sim += 0.02 * len(cur_tags & {t.lower() for t in p.tags})
+                if sim >= MIN_SIM and p.slug not in getattr(
+                    self, "_noindex_slugs", set()
+                ):
+                    scored.append((sim, p.slug, p))
+            scored.sort(key=lambda x: (-x[0], x[1]))
         result = []
         for _, _, p in scored[:max_count]:
             excerpt = _safe_excerpt(p.meta_description, p.content, p.title, max_len=120)
@@ -1901,7 +1922,16 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     def _generate_sitemap(self, posts: List[BlogPost]):
         config = self.blog_system.config
         base_url = config.get("base_url", "")
-        today = datetime.now().strftime("%Y-%m-%d")
+        # lastmod must reflect real content change. It used to be stamped with the
+        # build date on the homepage and every static/legal page, so every URL
+        # claimed to change on every build; Google then discounts <lastmod>
+        # for the whole sitemap. Home = newest real post update; static pages
+        # omit <lastmod> (valid per the sitemap protocol).
+        _post_dates = [
+            (p.updated_at or p.created_at or "").split("T")[0] for p in posts
+        ]
+        _post_dates = [d for d in _post_dates if re.match(r"^\d{4}-\d{2}-\d{2}$", d)]
+        today = max(_post_dates) if _post_dates else datetime.now().strftime("%Y-%m-%d")
 
         # Google's image sitemap extension only lists jpeg/png/gif/webp —
         # SVG isn't in the supported set, so unlike the has_og_image check
@@ -1922,12 +1952,12 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         urls = [
             f"<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority>"
             f"<image:image><image:loc>{base_url}/static/og-default.png</image:loc></image:image></url>",
-            f"<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>",
-            f"<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>",
-            f"<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>",
-            f"<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>",
-            f"<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>",
-            f"<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>",
+            f"<url><loc>{base_url}/about/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>",
+            f"<url><loc>{base_url}/contact/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>",
+            f"<url><loc>{base_url}/privacy-policy/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>",
+            f"<url><loc>{base_url}/terms-of-service/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>",
+            f"<url><loc>{base_url}/dmca/</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>",
+            f"<url><loc>{base_url}/ai-content-policy/</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>",
         ]
         # FIX (audit, 2026-09-15): this loop previously added every post
         # unconditionally — the reason 2 of 13 merge-redirect stubs were

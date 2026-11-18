@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>https://kubailabs.com/</loc><lastmod>2026-11-18</lastmod><changefreq>daily</changefreq><priority>1.0</priority><image:image><image:loc>https://kubailabs.com/static/og-default.png</image:loc></image:image></url>
-  <url><loc>https://kubailabs.com/about/</loc><lastmod>2026-11-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://kubailabs.com/contact/</loc><lastmod>2026-11-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://kubailabs.com/privacy-policy/</loc><lastmod>2026-11-18</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubailabs.com/terms-of-service/</loc><lastmod>2026-11-18</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubailabs.com/dmca/</loc><lastmod>2026-11-18</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://kubailabs.com/ai-content-policy/</loc><lastmod>2026-11-18</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubailabs.com/about/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kubailabs.com/contact/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kubailabs.com/privacy-policy/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubailabs.com/terms-of-service/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubailabs.com/dmca/</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubailabs.com/ai-content-policy/</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://kubailabs.com/senior-without-the-title-what-stalls-engineers/</loc><lastmod>2026-11-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubailabs.com/static/og/senior-without-the-title-what-stalls-engineers.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/security-engineering-isnt-a-ladder/</loc><lastmod>2026-11-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubailabs.com/static/og/security-engineering-isnt-a-ladder.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</loc><lastmod>2026-11-17</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><image:image><image:loc>https://kubailabs.com/static/og/rbac-vs-abac-pick-by-blast-radius.png</image:loc></image:image></url>
@@ -183,7 +183,7 @@
   <url><loc>https://kubailabs.com/agentic-finops-is-a-trap/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority><image:image><image:loc>https://kubailabs.com/static/og/agentic-finops-is-a-trap.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/ai-errors-hide-in-plain-latency/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority><image:image><image:loc>https://kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/websockets-vs-server-sent-events-latency-over-3g/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority><image:image><image:loc>https://kubailabs.com/static/og/websockets-vs-server-sent-events-latency-over-3g.png</image:loc></image:image></url>
-  <url><loc>https://kubailabs.com/40-ai-code-meant-60-more-alerts/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority><image:image><image:loc>https://kubailabs.com/static/og/40-ai-code-meant-60-more-alerts.png</image:loc></image:image></url>
+  <url><loc>https://kubailabs.com/40-ai-code-meant-60-more-alerts/</loc><lastmod>2026-10-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubailabs.com/static/og/40-ai-code-meant-60-more-alerts.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/evolve-your-monolith-without-rewriting-in-2026/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubailabs.com/static/og/evolve-your-monolith-without-rewriting-in-2026.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/ai-unit-costs-the-metric-both-teams-fight-over/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubailabs.com/static/og/ai-unit-costs-the-metric-both-teams-fight-over.png</image:loc></image:image></url>
   <url><loc>https://kubailabs.com/audit-logs-that-scale-skip-the-3am-fire-drills/</loc><lastmod>2026-10-04</lastmod><changefreq>monthly</changefreq><priority>0.7</priority><image:image><image:loc>https://kubailabs.com/static/og/audit-logs-that-scale-skip-the-3am-fire-drills.png</image:loc></image:image></url>
