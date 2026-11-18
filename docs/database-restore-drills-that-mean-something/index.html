@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Database restore drills that mean something">
         <meta property="og:description" content="A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.">
-        <meta property="og:url" content="https://blog.kubailabs.com/database-restore-drills-that-mean-something/">
+        <meta property="og:url" content="https://kubailabs.com/database-restore-drills-that-mean-something/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/database-restore-drills-that-mean-something.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/database-restore-drills-that-mean-something.png">
         <meta property="og:image:alt" content="Database restore drills that mean something">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Database restore drills that mean something">
         <meta name="twitter:description" content="A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/database-restore-drills-that-mean-something.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/database-restore-drills-that-mean-something.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/database-restore-drills-that-mean-something/">
+        <link rel="canonical" href="https://kubailabs.com/database-restore-drills-that-mean-something/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/database-restore-drills-that-mean-something/#article",
+      "@id": "https://kubailabs.com/database-restore-drills-that-mean-something/#article",
       "headline": "Database restore drills that mean something",
       "description": "A repeatable PostgreSQL restore drill that measures recovery time, data loss window and integrity, plus the failure modes that make drills lie.",
       "datePublished": "2026-10-28T18:06:31+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/database-restore-drills-that-mean-something/"
+        "@id": "https://kubailabs.com/database-restore-drills-that-mean-something/"
       },
       "keywords": "DatabaseBackup, DisasterRecovery, RestoreDrill, Postgresql, MeasureRtoRpo, BackupVerification, Database",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/database-restore-drills-that-mean-something.png",
+        "url": "https://kubailabs.com/static/og/database-restore-drills-that-mean-something.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Database restore drills that mean something",
-          "item": "https://blog.kubailabs.com/database-restore-drills-that-mean-something/"
+          "item": "https://kubailabs.com/database-restore-drills-that-mean-something/"
         }
       ]
     }
@@ -426,9 +426,9 @@ The usual causes are missing roles (single-database dumps exclude globals), sequ
 <p>Open the backup job's configuration and find the exact command that produces the artefact — then run <code>pg_restore -l</code> (or the equivalent listing command for the backup tool) against the newest artefact and confirm it is younger than the backup interval and contains the tables expected. If it is not, the failure has been found before an incident did; if it is, the drill harness above has its input.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
-<li><a href="https://blog.kubailabs.com/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
-<li><a href="https://blog.kubailabs.com/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
+<li><a href="https://kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">Audit trails: ImmutableDB vs DynamoDB Streams</a></li>
+<li><a href="https://kubailabs.com/neon-vs-planetscale-vs-turso-which-broke-first/">Neon vs PlanetScale vs Turso: which broke first?</a></li>
+<li><a href="https://kubailabs.com/audit-logs-that-scale-skip-the-3am-fire-drills/">Audit logs that scale: skip the 3AM fire drills</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -28,6 +28,6 @@
   "reading_time_minutes": 12,
   "has_code": true,
   "has_table": true,
-  "prewritten_tweet": "Unpopular opinion: RBAC vs ABAC is not a maturity ladder. They fail in opposite directions — role explosion vs silent policy bugs. Pick by blast radius, not by role count.\n\nhttps://blog.kubailabs.com/rbac-vs-abac-pick-by-blast-radius/\n\n#Rbac #Abac #RbacVsAbac\n\nHot take: most people skip the measurement step. Agree?",
+  "prewritten_tweet": "Unpopular opinion: RBAC vs ABAC is not a maturity ladder. They fail in opposite directions — role explosion vs silent policy bugs. Pick by blast radius, not by role count.\n\nhttps:https://kubailabs.com/rbac-vs-abac-pick-by-blast-radius/\n\n#Rbac #Abac #RbacVsAbac\n\nHot take: most people skip the measurement step. Agree?",
   "tweet_hook_style": "unpopular opinion"
 }

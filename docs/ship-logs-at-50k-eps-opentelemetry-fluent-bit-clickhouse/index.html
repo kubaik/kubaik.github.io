@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
         <meta property="og:description" content="Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.">
-        <meta property="og:url" content="https://blog.kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <meta property="og:url" content="https://kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png">
         <meta property="og:image:alt" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
         <meta name="twitter:description" content="Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
+        <link rel="canonical" href="https://kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/#article",
+      "@id": "https://kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/#article",
       "headline": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
       "description": "Compare a columnar-SQL log pipeline against a search-cluster pipeline at 50k EPS: architecture, failure modes, cost drivers, and how to measure both.",
       "datePublished": "2026-07-03T13:30:22+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/"
+        "@id": "https://kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/"
       },
       "keywords": "Observability, LogIngestionCost",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png",
+        "url": "https://kubailabs.com/static/og/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
-          "item": "https://blog.kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/"
+          "item": "https://kubailabs.com/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/"
         }
       ]
     }
@@ -342,9 +342,9 @@ WHERE tenant_id = 'acme'
 <p>If the search backend scans a large fraction of the index while the columnar store prunes to a handful of granules, cardinality is your bottleneck and the architecture decision is effectively made.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
-<li><a href="https://blog.kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
-<li><a href="https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

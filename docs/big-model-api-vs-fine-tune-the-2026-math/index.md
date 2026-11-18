@@ -331,9 +331,9 @@ Substitute your own column layout. The output gives you the numerator for the co
 
 ## Related reading
 
-- [Model router: keep it simple, keep it local](https://blog.kubailabs.com/model-router-keep-it-simple-keep-it-local/)
-- [Route, fine-tune, or scale: pick right](https://blog.kubailabs.com/big-model-api-vs-fine-tune-the-2026-math/)
-- [LLM costs: fine-tune vs route vs bigger model](https://blog.kubailabs.com/big-model-api-vs-fine-tune-the-2026-math/)
+- [Model router: keep it simple, keep it local](https://kubailabs.com/model-router-keep-it-simple-keep-it-local/)
+- [Route, fine-tune, or scale: pick right](https://kubailabs.com/big-model-api-vs-fine-tune-the-2026-math/)
+- [LLM costs: fine-tune vs route vs bigger model](https://kubailabs.com/big-model-api-vs-fine-tune-the-2026-math/)
 
 ## Official documentation
 

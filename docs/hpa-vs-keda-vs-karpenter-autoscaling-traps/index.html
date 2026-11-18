@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="HPA vs KEDA vs Karpenter: autoscaling traps">
         <meta property="og:description" content="How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.">
-        <meta property="og:url" content="https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+        <meta property="og:url" content="https://kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png">
         <meta property="og:image:alt" content="HPA vs KEDA vs Karpenter: autoscaling traps">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="HPA vs KEDA vs Karpenter: autoscaling traps">
         <meta name="twitter:description" content="How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
+        <link rel="canonical" href="https://kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/#article",
+      "@id": "https://kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/#article",
       "headline": "HPA vs KEDA vs Karpenter: autoscaling traps",
       "description": "How HPA, KEDA and Karpenter divide responsibility, where each one silently fails, and how to verify each layer before traffic arrives.",
       "datePublished": "2026-10-26T08:01:33+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
+        "@id": "https://kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
       },
       "keywords": "Kubernetes, Hpa, Keda, Karpenter, K8s",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png",
+        "url": "https://kubailabs.com/static/og/hpa-vs-keda-vs-karpenter-autoscaling-traps.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "HPA vs KEDA vs Karpenter: autoscaling traps",
-          "item": "https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
+          "item": "https://kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/"
         }
       ]
     }
@@ -498,9 +498,9 @@ Check PDBs first: an eviction that violates a PDB blocks consolidation. Second, 
 <p>Start with the workload that is least understood: list the HPA objects in the cluster and confirm that every container in the target Deployments has a CPU request set. That single check catches the most common autoscaling failure before it reaches production. Run <code>kubectl get hpa -A -o yaml | grep -A2 'target:'</code>, then cross-check each target Deployment's pod template for a <code>requests.cpu</code> value on every container — if one is missing, add it and watch the HPA's behavior change on the next load test.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
-<li><a href="https://blog.kubailabs.com/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
-<li><a href="https://blog.kubailabs.com/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+<li><a href="https://kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubailabs.com/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+<li><a href="https://kubailabs.com/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

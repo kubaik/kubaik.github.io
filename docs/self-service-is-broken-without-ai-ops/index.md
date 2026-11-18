@@ -161,9 +161,9 @@ Pick the resource type involved in your most recent rollback and write down the 
 
 ## Related reading
 
-- [Scope agent permissions per task](https://blog.kubailabs.com/scope-agent-permissions-per-task/)
-- [Self-service AI tooling: where it breaks first](https://blog.kubailabs.com/self-service-ai-tooling-where-it-breaks-first/)
-- [Internal developer platform: adoption traps](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [Scope agent permissions per task](https://kubailabs.com/scope-agent-permissions-per-task/)
+- [Self-service AI tooling: where it breaks first](https://kubailabs.com/self-service-ai-tooling-where-it-breaks-first/)
+- [Internal developer platform: adoption traps](https://kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
 
 ## Official documentation
 

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="When your agent goes silent: degrade gracefully">
         <meta property="og:description" content="How to keep agent-backed features useful when a model is slow or confidently wrong: deadlines, fallbacks, circuit breakers, validation, and how to measure each.">
-        <meta property="og:url" content="https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/">
+        <meta property="og:url" content="https://kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/when-your-agent-goes-silent-degrade-gracefully.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/when-your-agent-goes-silent-degrade-gracefully.png">
         <meta property="og:image:alt" content="When your agent goes silent: degrade gracefully">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="When your agent goes silent: degrade gracefully">
         <meta name="twitter:description" content="How to keep agent-backed features useful when a model is slow or confidently wrong: deadlines, fallbacks, circuit breakers, validation, and how to measure each.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/when-your-agent-goes-silent-degrade-gracefully.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/when-your-agent-goes-silent-degrade-gracefully.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/">
+        <link rel="canonical" href="https://kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/#article",
+      "@id": "https://kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/#article",
       "headline": "When your agent goes silent: degrade gracefully",
       "description": "How to keep agent-backed features useful when a model is slow or confidently wrong: deadlines, fallbacks, circuit breakers, validation, and how to measure each.",
       "datePublished": "2026-09-21T11:42:38+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/"
+        "@id": "https://kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/"
       },
       "keywords": "GracefulDegradation, CircuitBreaker, LlmTimeout, Model, Llm, Generativeai",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/when-your-agent-goes-silent-degrade-gracefully.png",
+        "url": "https://kubailabs.com/static/og/when-your-agent-goes-silent-degrade-gracefully.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "When your agent goes silent: degrade gracefully",
-          "item": "https://blog.kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/"
+          "item": "https://kubailabs.com/when-your-agent-goes-silent-degrade-gracefully/"
         }
       ]
     }
@@ -462,9 +462,9 @@ A useful implementation has three states: closed, open, and half-open. After the
 <p>Open the module that makes your service's model calls. For every call, check two things: whether its deadline is shorter than the user-visible budget for that operation, and whether the call can return a value instead of raising. Then add a <code>source</code> field to the return value (<code>model</code>, <code>cache</code>, or <code>fallback</code>) and emit it as a metric label. That single field is what makes degradation measurable, and measurement is what turns a vague resilience goal into a decision you can defend.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
-<li><a href="https://blog.kubailabs.com/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
-<li><a href="https://blog.kubailabs.com/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
+<li><a href="https://kubailabs.com/ai-agents-circuit-breakers-are-not-optional/">AI agents: circuit breakers are not optional</a></li>
+<li><a href="https://kubailabs.com/tool-calling-patterns-patterns-that-survive-load-vs/">Tool calling patterns: patterns that survive load vs</a></li>
+<li><a href="https://kubailabs.com/agent-systems-circuit-breakers-are-not-enough/">Agent Systems: Circuit Breakers Are Not Enough</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="CDC pipeline death spiral: one bad LLM call can crash it">
         <meta property="og:description" content="How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.">
-        <meta property="og:url" content="https://blog.kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
+        <meta property="og:url" content="https://kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png">
         <meta property="og:image:alt" content="CDC pipeline death spiral: one bad LLM call can crash it">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="CDC pipeline death spiral: one bad LLM call can crash it">
         <meta name="twitter:description" content="How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
+        <link rel="canonical" href="https://kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/#article",
+      "@id": "https://kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/#article",
       "headline": "CDC pipeline death spiral: one bad LLM call can crash it",
       "description": "How unconstrained LLM bursts stall CDC pipelines, and how to add backpressure at each layer with metrics, configs, and a worked failure example.",
       "datePublished": "2026-08-02T13:29:42+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/"
+        "@id": "https://kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/"
       },
       "keywords": "CdcPipelineCrash, VllmCdc, PythonSemaphoreLlm, CdcBackpressure, LlmConcurrencyLimit, Python, Python3, Postgresql",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png",
+        "url": "https://kubailabs.com/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "CDC pipeline death spiral: one bad LLM call can crash it",
-          "item": "https://blog.kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/"
+          "item": "https://kubailabs.com/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/"
         }
       ]
     }
@@ -453,9 +453,9 @@ It delays the failure. The slot will retain more WAL before becoming a problem, 
 <p>Query your replication slot's retained WAL twice, 60 seconds apart, and export both values. If the second reading is higher than the first while your pipeline is nominally idle, you have an unconfirmed slot and an unbounded link somewhere upstream — start by checking the in-flight LLM request count and the response size histogram.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/observe-llm-features-90-faster/">Observability for LLM Features: Metrics That Drive Decisions</a></li>
-<li><a href="https://blog.kubailabs.com/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
-<li><a href="https://blog.kubailabs.com/ai-agents-eat-your-budget-3-ways/">AI agents eat your budget 3 ways</a></li>
+<li><a href="https://kubailabs.com/observe-llm-features-90-faster/">Observability for LLM Features: Metrics That Drive Decisions</a></li>
+<li><a href="https://kubailabs.com/starlink-in-production-what-changed-in-our-stack/">Designing APIs for High-Latency Satellite Links</a></li>
+<li><a href="https://kubailabs.com/ai-agents-eat-your-budget-3-ways/">AI agents eat your budget 3 ways</a></li>
 </ul>
                 
                 

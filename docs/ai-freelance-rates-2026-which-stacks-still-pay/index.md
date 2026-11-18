@@ -282,9 +282,9 @@ Pick one event-driven endpoint in a current project and write a test that sends 
 
 ## Related reading
 
-- [7 code review traps when AI writes half your code](https://blog.kubailabs.com/7-code-review-traps-when-ai-writes-half-your-code/)
-- [Claude Code after 365 days: what actually works](https://blog.kubailabs.com/claude-code-after-a-year-daily-wins/)
-- [AI Code Generation: Failure Modes and Guardrails](https://blog.kubailabs.com/ai-reshaped-my-engineering-principles/)
+- [7 code review traps when AI writes half your code](https://kubailabs.com/7-code-review-traps-when-ai-writes-half-your-code/)
+- [Claude Code after 365 days: what actually works](https://kubailabs.com/claude-code-after-a-year-daily-wins/)
+- [AI Code Generation: Failure Modes and Guardrails](https://kubailabs.com/ai-reshaped-my-engineering-principles/)
 
 ## Official documentation
 

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG on legacy systems: vector DB vs. full-text SQL">
         <meta property="og:description" content="Compare vector databases and in-database vector search for adding RAG to legacy systems, with latency, cost, and operational trade-offs.">
-        <meta property="og:url" content="https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
+        <meta property="og:url" content="https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/rag-on-legacy-systems-vector-db-vs-full-text-sql.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/rag-on-legacy-systems-vector-db-vs-full-text-sql.png">
         <meta property="og:image:alt" content="RAG on legacy systems: vector DB vs. full-text SQL">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="RAG on legacy systems: vector DB vs. full-text SQL">
         <meta name="twitter:description" content="Compare vector databases and in-database vector search for adding RAG to legacy systems, with latency, cost, and operational trade-offs.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/rag-on-legacy-systems-vector-db-vs-full-text-sql.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/rag-on-legacy-systems-vector-db-vs-full-text-sql.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
+        <link rel="canonical" href="https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/#article",
+      "@id": "https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/#article",
       "headline": "RAG on legacy systems: vector DB vs. full-text SQL",
       "description": "Compare vector databases and in-database vector search for adding RAG to legacy systems, with latency, cost, and operational trade-offs.",
       "datePublished": "2026-06-30T19:45:17+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/"
+        "@id": "https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/"
       },
       "keywords": "RagImplementation, Enterprise, Pgvector0.7, Weaviate1.22Cost, Postgresql, RagProductionLessons, Ai, Database",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/rag-on-legacy-systems-vector-db-vs-full-text-sql.png",
+        "url": "https://kubailabs.com/static/og/rag-on-legacy-systems-vector-db-vs-full-text-sql.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "RAG on legacy systems: vector DB vs. full-text SQL",
-          "item": "https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/"
+          "item": "https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/"
         }
       ]
     }
@@ -410,9 +410,9 @@ Recall at a fixed index parameter setting tends to degrade as the dataset grows,
 <p>Open a connection to a copy of your target database and run <code>CREATE EXTENSION IF NOT EXISTS vector;</code>. If it succeeds, you have confirmed that in-database vector search is at least technically possible in your environment, and you can proceed to size the instance and measure latency on a representative sample. If it fails, you have confirmed that the dedicated vector service is the path, and you can start scoping the integration layer. Either result is more useful than any benchmark you will read.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/why-our-schema-survived-ai-scaling/">Why our schema survived AI scaling</a></li>
-<li><a href="https://blog.kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
-<li><a href="https://blog.kubailabs.com/rag-rots-if-you-dont-refresh-indexes/">RAG rots if you don’t refresh indexes</a></li>
+<li><a href="https://kubailabs.com/why-our-schema-survived-ai-scaling/">Why our schema survived AI scaling</a></li>
+<li><a href="https://kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://kubailabs.com/rag-rots-if-you-dont-refresh-indexes/">RAG rots if you don’t refresh indexes</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

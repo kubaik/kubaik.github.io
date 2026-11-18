@@ -110,7 +110,7 @@ _AUTHOR_LINK_LABELS = {
     "https://github.com/kubaik": "GitHub",
 }
 
-_DEFAULT_BASE_URL = "https://blog.kubailabs.com"
+_DEFAULT_BASE_URL = "https://kubailabs.com"
 
 
 def author_schema(base_url: str) -> dict:

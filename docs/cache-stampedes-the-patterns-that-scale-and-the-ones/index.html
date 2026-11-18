@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Cache stampedes: the patterns that scale and the ones that don’t">
         <meta property="og:description" content="How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.">
-        <meta property="og:url" content="https://blog.kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/">
+        <meta property="og:url" content="https://kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png">
         <meta property="og:image:alt" content="Cache stampedes: the patterns that scale and the ones that don’t">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Cache stampedes: the patterns that scale and the ones that don’t">
         <meta name="twitter:description" content="How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/">
+        <link rel="canonical" href="https://kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/#article",
+      "@id": "https://kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/#article",
       "headline": "Cache stampedes: the patterns that scale and the ones that don’t",
       "description": "How cache stampedes happen, why lazy TTLs fail under load, and how to implement coordinated refresh with locks, stale fallbacks, and jitter.",
       "datePublished": "2026-07-21T02:56:30+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/"
+        "@id": "https://kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/"
       },
       "keywords": "",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png",
+        "url": "https://kubailabs.com/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Cache stampedes: the patterns that scale and the ones that don’t",
-          "item": "https://blog.kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/"
+          "item": "https://kubailabs.com/cache-stampedes-the-patterns-that-scale-and-the-ones/"
         }
       ]
     }
@@ -511,9 +511,9 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <p>Pick your single hottest cache key, add jitter to its TTL, and instrument two counters — cache misses and source queries — around its expiry window. Run a load test that expires the key deliberately, and record the source query rate for the ten seconds after expiry. That number tells you whether you have a stampede problem, and it gives you the baseline you need before changing anything else.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
-<li><a href="https://blog.kubailabs.com/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
-<li><a href="https://blog.kubailabs.com/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
+<li><a href="https://kubailabs.com/webhooks-done-right-retries-that-dont-explode-in-2026/">Webhooks done right: retries that don’t explode in 2026</a></li>
+<li><a href="https://kubailabs.com/3-ways-container-builds-got-3x-faster-in-2026/">Container Build Caching: What Actually Speeds Up CI</a></li>
+<li><a href="https://kubailabs.com/idempotency-keys-what-they-fix-what-they-dont/">Idempotency keys: what they fix, what they don't</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

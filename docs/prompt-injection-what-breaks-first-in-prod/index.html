@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Prompt injection: what breaks first in prod">
         <meta property="og:description" content="Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.">
-        <meta property="og:url" content="https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/">
+        <meta property="og:url" content="https://kubailabs.com/prompt-injection-what-breaks-first-in-prod/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/prompt-injection-what-breaks-first-in-prod.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/prompt-injection-what-breaks-first-in-prod.png">
         <meta property="og:image:alt" content="Prompt injection: what breaks first in prod">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Prompt injection: what breaks first in prod">
         <meta name="twitter:description" content="Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/prompt-injection-what-breaks-first-in-prod.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/prompt-injection-what-breaks-first-in-prod.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/">
+        <link rel="canonical" href="https://kubailabs.com/prompt-injection-what-breaks-first-in-prod/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/#article",
+      "@id": "https://kubailabs.com/prompt-injection-what-breaks-first-in-prod/#article",
       "headline": "Prompt injection: what breaks first in prod",
       "description": "Why prompt injection defeats prompt-level defenses, and how to bound the blast radius with tool allowlists, argument scoping, URL filtering and confirmation gates.",
       "datePublished": "2026-09-27T16:41:09+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/"
+        "@id": "https://kubailabs.com/prompt-injection-what-breaks-first-in-prod/"
       },
       "keywords": "PromptInjection, ToolInjection, LlmSecurity, Prompt, ToolCallingSecurity, Cybersecurity, Infosec",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/prompt-injection-what-breaks-first-in-prod.png",
+        "url": "https://kubailabs.com/static/og/prompt-injection-what-breaks-first-in-prod.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Prompt injection: what breaks first in prod",
-          "item": "https://blog.kubailabs.com/prompt-injection-what-breaks-first-in-prod/"
+          "item": "https://kubailabs.com/prompt-injection-what-breaks-first-in-prod/"
         }
       ]
     }
@@ -548,9 +548,9 @@ def test_unknown_tool_rejected():
 <p>The single most useful thing you can do in the next 30 minutes is open your tool-execution code and find the line where a model-supplied tool name and arguments become a function call. If that line looks like <code>globals()[name](**args)</code> or <code>getattr(module, name)(**args)</code>, you have an unguarded execution path. Replace it with a registry lookup and Pydantic schema validation before you do anything else. That one change eliminates the entire class of arbitrary-tool-call injections, and it takes less time than reading the rest of this article.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/prompt-injections-hidden-aws-tax/">Prompt injection’s hidden AWS tax</a></li>
-<li><a href="https://blog.kubailabs.com/llm-risks-underestimated-in-owasp-top-10/">LLM risks underestimated in OWASP Top 10</a></li>
-<li><a href="https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
+<li><a href="https://kubailabs.com/prompt-injections-hidden-aws-tax/">Prompt injection’s hidden AWS tax</a></li>
+<li><a href="https://kubailabs.com/llm-risks-underestimated-in-owasp-top-10/">LLM risks underestimated in OWASP Top 10</a></li>
+<li><a href="https://kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">Sandboxed computer-use agents with gVisor</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Rogue Agent API Calls: Stop the Bleeding">
         <meta property="og:description" content="Runaway agents rarely crash — they succeed too often. Diagnose unbounded loops, retry storms, and feedback cycles, then add budgets and breakers.">
-        <meta property="og:url" content="https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">
+        <meta property="og:url" content="https://kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/rogue-agent-api-calls-stop-the-bleeding.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/rogue-agent-api-calls-stop-the-bleeding.png">
         <meta property="og:image:alt" content="Rogue Agent API Calls: Stop the Bleeding">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Rogue Agent API Calls: Stop the Bleeding">
         <meta name="twitter:description" content="Runaway agents rarely crash — they succeed too often. Diagnose unbounded loops, retry storms, and feedback cycles, then add budgets and breakers.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/rogue-agent-api-calls-stop-the-bleeding.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/rogue-agent-api-calls-stop-the-bleeding.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">
+        <link rel="canonical" href="https://kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">
         <meta name="robots" content="noindex, follow">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
         <link rel="preconnect" href="https://www.google-analytics.com">
@@ -54,7 +54,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/#article",
+      "@id": "https://kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/#article",
       "headline": "Rogue Agent API Calls: Stop the Bleeding",
       "description": "Runaway agents rarely crash — they succeed too often. Diagnose unbounded loops, retry storms, and feedback cycles, then add budgets and breakers.",
       "datePublished": "2026-09-07T12:11:38+00:00",
@@ -65,10 +65,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -86,18 +86,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/"
+        "@id": "https://kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/"
       },
       "keywords": "Apis",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/rogue-agent-api-calls-stop-the-bleeding.png",
+        "url": "https://kubailabs.com/static/og/rogue-agent-api-calls-stop-the-bleeding.png",
         "width": 1200,
         "height": 630
       }
@@ -109,13 +109,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Rogue Agent API Calls: Stop the Bleeding",
-          "item": "https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/"
+          "item": "https://kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/"
         }
       ]
     }
@@ -444,9 +444,9 @@ Store the tokens you have already seen and stop when one repeats. This is a docu
 <p>Pick your highest-volume agent, add a per-run outbound call counter incremented atomically before each external request, and set the ceiling to the arithmetic worst case for one run. Make it exit non-zero and log the run ID when the ceiling is hit. That single change converts an unbounded spend into a bounded one, and it takes less time than reading the rest of the incident.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/agent-flooded-our-api-with-bad-calls-overnight/">Stopping a runaway polling agent from flooding your API</a></li>
-<li><a href="https://blog.kubailabs.com/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
-<li><a href="https://blog.kubailabs.com/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Designing Alert Triage That Suppresses Noise Safely</a></li>
+<li><a href="https://kubailabs.com/agent-flooded-our-api-with-bad-calls-overnight/">Stopping a runaway polling agent from flooding your API</a></li>
+<li><a href="https://kubailabs.com/apm-is-blind-to-your-ai-agents/">APM is blind to your AI agents</a></li>
+<li><a href="https://kubailabs.com/kill-noisy-alerts-the-triage-system-that-restored-sleep/">Designing Alert Triage That Suppresses Noise Safely</a></li>
 </ul>
                 
                 

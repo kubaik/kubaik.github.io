@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Starlink 4G fallback: serve pages under 800ms">
         <meta property="og:description" content="How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.">
-        <meta property="og:url" content="https://blog.kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/">
+        <meta property="og:url" content="https://kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/starlink-4g-fallback-serve-pages-under-800ms.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/starlink-4g-fallback-serve-pages-under-800ms.png">
         <meta property="og:image:alt" content="Starlink 4G fallback: serve pages under 800ms">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Starlink 4G fallback: serve pages under 800ms">
         <meta name="twitter:description" content="How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/starlink-4g-fallback-serve-pages-under-800ms.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/starlink-4g-fallback-serve-pages-under-800ms.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/">
+        <link rel="canonical" href="https://kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/#article",
+      "@id": "https://kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/#article",
       "headline": "Starlink 4G fallback: serve pages under 800ms",
       "description": "How to build a streaming HTML shell, small client bundle and edge cache that keeps TTFB under 800ms on 4G, satellite and low-end Android devices.",
       "datePublished": "2026-06-26T22:22:56+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/"
+        "@id": "https://kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/"
       },
       "keywords": "4g, Cheap, BrotliLevel4, Performance, Androiddev, Redis, Nextjs",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/starlink-4g-fallback-serve-pages-under-800ms.png",
+        "url": "https://kubailabs.com/static/og/starlink-4g-fallback-serve-pages-under-800ms.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Starlink 4G fallback: serve pages under 800ms",
-          "item": "https://blog.kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/"
+          "item": "https://kubailabs.com/starlink-4g-fallback-serve-pages-under-800ms/"
         }
       ]
     }
@@ -637,7 +637,7 @@ Load them after the shell is interactive, and never let one block first paint. I
 <p>Open your production site in Chrome DevTools, set a custom throttling profile of 1 Mbps down, 280 ms RTT and 10% packet loss, then reload and record <code>responseStart - requestStart</code> for the HTML document. If that number is above 800 ms, the problem is on the server or the edge, not in the bundle, and the fix is to stream the shell before any data fetch. If it is below 800 ms but the page still feels slow, measure the brotli-compressed size of your largest JavaScript file with <code>brotli -c file.js | wc -c</code> and compare it against the 120 kB budget.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
+<li><a href="https://kubailabs.com/serve-4g-as-baseline-apps-in-2026/">Serve 4G-as-baseline apps in 2026</a></li>
 <li>Build apps that still work on 500 ms latency</li>
 <li>Ship to Nairobi users: Starlink latency guide 2026</li>
 </ul>

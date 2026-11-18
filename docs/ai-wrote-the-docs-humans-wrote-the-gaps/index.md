@@ -398,9 +398,9 @@ Open your repository, create `docs/edge-cases.md`, and write the first three con
 
 ## Related reading
 
-- [Claude Code after 365 days: what actually works](https://blog.kubailabs.com/claude-code-after-a-year-daily-wins/)
-- [7 code review traps when AI writes half your code](https://blog.kubailabs.com/7-code-review-traps-when-ai-writes-half-your-code/)
-- [Who owns AI-generated code?](https://blog.kubailabs.com/who-owns-ai-generated-code/)
+- [Claude Code after 365 days: what actually works](https://kubailabs.com/claude-code-after-a-year-daily-wins/)
+- [7 code review traps when AI writes half your code](https://kubailabs.com/7-code-review-traps-when-ai-writes-half-your-code/)
+- [Who owns AI-generated code?](https://kubailabs.com/who-owns-ai-generated-code/)
 
 ## Official documentation
 

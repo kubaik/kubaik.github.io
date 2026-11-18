@@ -424,9 +424,9 @@ Pick one real Dependabot alert in a repository you own, set the `alert` object a
 
 ## Related reading
 
-- [Claude Code after 365 days: what actually works](https://blog.kubailabs.com/claude-code-after-a-year-daily-wins/)
-- [PR checklists are dead: AI agents do reviews now](https://blog.kubailabs.com/pr-checklists-are-dead-ai-agents-do-reviews-now/)
-- [agent code review gap nobody admits](https://blog.kubailabs.com/agent-code-review-gap-nobody-admits/)
+- [Claude Code after 365 days: what actually works](https://kubailabs.com/claude-code-after-a-year-daily-wins/)
+- [PR checklists are dead: AI agents do reviews now](https://kubailabs.com/pr-checklists-are-dead-ai-agents-do-reviews-now/)
+- [agent code review gap nobody admits](https://kubailabs.com/agent-code-review-gap-nobody-admits/)
 
 ## Official documentation
 

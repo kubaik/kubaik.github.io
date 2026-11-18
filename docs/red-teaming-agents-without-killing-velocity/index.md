@@ -159,9 +159,9 @@ Open the repository for an agent you maintain and create a single test file that
 
 ## Related reading
 
-- [Claude Code after 365 days: what actually works](https://blog.kubailabs.com/claude-code-after-a-year-daily-wins/)
-- [agent code review gap nobody admits](https://blog.kubailabs.com/agent-code-review-gap-nobody-admits/)
-- [Choosing a JavaScript Test Stack: Playwright and Vitest](https://blog.kubailabs.com/why-i-picked-playwright-and-vitest-in-2026/)
+- [Claude Code after 365 days: what actually works](https://kubailabs.com/claude-code-after-a-year-daily-wins/)
+- [agent code review gap nobody admits](https://kubailabs.com/agent-code-review-gap-nobody-admits/)
+- [Choosing a JavaScript Test Stack: Playwright and Vitest](https://kubailabs.com/why-i-picked-playwright-and-vitest-in-2026/)
 
 ## Official documentation
 

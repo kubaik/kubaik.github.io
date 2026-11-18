@@ -60,7 +60,7 @@ STANDARDS = {re.compile(k): v for k, v in STANDARDS.items()}
 MIN_STD_HITS = 3
 HEAD = re.compile(r"^## Official documentation\s*$", re.M | re.I)
 FOOTER_SPLIT = re.compile(r"\n---\n\n### About this article")
-SELF = "blog.kubailabs.com"
+SELF = "kubailabs.com"
 
 
 def has_external(c: str) -> bool:

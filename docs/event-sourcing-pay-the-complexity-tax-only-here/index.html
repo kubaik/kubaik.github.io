@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Event sourcing: pay the complexity tax only here">
         <meta property="og:description" content="When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.">
-        <meta property="og:url" content="https://blog.kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/">
+        <meta property="og:url" content="https://kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/event-sourcing-pay-the-complexity-tax-only-here.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/event-sourcing-pay-the-complexity-tax-only-here.png">
         <meta property="og:image:alt" content="Event sourcing: pay the complexity tax only here">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Event sourcing: pay the complexity tax only here">
         <meta name="twitter:description" content="When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/event-sourcing-pay-the-complexity-tax-only-here.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/event-sourcing-pay-the-complexity-tax-only-here.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/">
+        <link rel="canonical" href="https://kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/#article",
+      "@id": "https://kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/#article",
       "headline": "Event sourcing: pay the complexity tax only here",
       "description": "When an append-only event log earns its cost, when a temporal table is enough, and how to measure replay and projection lag before committing.",
       "datePublished": "2026-06-09T09:48:26+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/"
+        "@id": "https://kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/"
       },
       "keywords": "EventSourcing, EventSourcing2026, EventSourcingCost, EventSourcingSchema, EventSourcingExamples",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/event-sourcing-pay-the-complexity-tax-only-here.png",
+        "url": "https://kubailabs.com/static/og/event-sourcing-pay-the-complexity-tax-only-here.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Event sourcing: pay the complexity tax only here",
-          "item": "https://blog.kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/"
+          "item": "https://kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/"
         }
       ]
     }
@@ -453,9 +453,9 @@ Yes, but batch events to reduce per-invocation overhead, and make handlers idemp
 <p>Pick the aggregate in your system that auditors or support engineers ask about most often. Time how long it takes to answer: "What did this aggregate look like at a specific past timestamp?" If the answer requires restoring a backup, parsing binlogs, or writing a one-off script, record that time and the steps involved. Then compare it against the replay-time measurement described above. That comparison, not a general preference for or against event sourcing, is what should drive the decision.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
-<li><a href="https://blog.kubailabs.com/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
-<li><a href="https://blog.kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubailabs.com/cqrs-when-it-pays-off-and-when-it-breaks/">CQRS: when it pays off and when it breaks</a></li>
+<li><a href="https://kubailabs.com/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
+<li><a href="https://kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

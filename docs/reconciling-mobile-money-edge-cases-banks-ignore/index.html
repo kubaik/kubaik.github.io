@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Reconciling mobile money: edge cases banks ignore">
         <meta property="og:description" content="Why provider webhooks are only approximate signals, and how to reconcile them against MNO ledgers with tolerance windows, dedup keys and batch jobs.">
-        <meta property="og:url" content="https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">
+        <meta property="og:url" content="https://kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/reconciling-mobile-money-edge-cases-banks-ignore.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/reconciling-mobile-money-edge-cases-banks-ignore.png">
         <meta property="og:image:alt" content="Reconciling mobile money: edge cases banks ignore">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Reconciling mobile money: edge cases banks ignore">
         <meta name="twitter:description" content="Why provider webhooks are only approximate signals, and how to reconcile them against MNO ledgers with tolerance windows, dedup keys and batch jobs.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/reconciling-mobile-money-edge-cases-banks-ignore.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/reconciling-mobile-money-edge-cases-banks-ignore.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">
+        <link rel="canonical" href="https://kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/#article",
+      "@id": "https://kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/#article",
       "headline": "Reconciling mobile money: edge cases banks ignore",
       "description": "Why provider webhooks are only approximate signals, and how to reconcile them against MNO ledgers with tolerance windows, dedup keys and batch jobs.",
       "datePublished": "2026-06-12T02:44:27+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/"
+        "@id": "https://kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/"
       },
       "keywords": "Mobiledev, Flutter",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/reconciling-mobile-money-edge-cases-banks-ignore.png",
+        "url": "https://kubailabs.com/static/og/reconciling-mobile-money-edge-cases-banks-ignore.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Reconciling mobile money: edge cases banks ignore",
-          "item": "https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/"
+          "item": "https://kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/"
         }
       ]
     }
@@ -467,9 +467,9 @@ The greater of an absolute floor and a relative percentage, with both constants 
 <p>Pick one provider you integrate with and pull the last 1,000 webhook payloads for it. Group them by <code>(phone, amount)</code> and compute the distribution of time gaps between rows in each group. That single histogram tells you whether your current dedup window is too narrow (duplicates slipping through) or too wide (legitimate transfers being collapsed), and it costs you one query and a few minutes of interpretation.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
-<li><a href="https://blog.kubailabs.com/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
-<li><a href="https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
+<li><a href="https://kubailabs.com/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+<li><a href="https://kubailabs.com/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubailabs.com/double-entry-ledger-concurrent-write-errors/">Double-entry ledger: concurrent write errors</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

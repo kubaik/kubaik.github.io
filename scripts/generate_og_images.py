@@ -58,7 +58,7 @@ DEFAULT_FONT_SIZE_SUB = 28
 DEFAULT_FONT_SIZE_BRAND = 22
 
 SITE_NAME = "Kubai Kevin"
-SITE_URL = "blog.kubailabs.com"
+SITE_URL = "kubailabs.com"
 
 
 def load_font(font_dir: Path, filename: str, size: int) -> ImageFont.FreeTypeFont:
@@ -278,7 +278,7 @@ def main() -> int:
         help="Optional directory containing TTF fonts (Inter recommended)",
     )
     parser.add_argument(
-        "--base-url", default="https://blog.kubailabs.com", help="Site base URL"
+        "--base-url", default="https://kubailabs.com", help="Site base URL"
     )
     parser.add_argument(
         "--patch-html",

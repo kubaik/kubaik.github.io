@@ -154,9 +154,9 @@ Write a single Python script that queries your CI system for the last 100 workfl
 
 ## Related reading
 
-- [Internal developer platform: adoption traps](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
-- [Internal platform adoption: one metric kills velocity](https://blog.kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
-- [Platform Teams: Agentic World Struggle](https://blog.kubailabs.com/platform-teams-agentic-world-struggle/)
+- [Internal developer platform: adoption traps](https://kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [Internal platform adoption: one metric kills velocity](https://kubailabs.com/internal-platform-adoption-one-metric-kills-velocity/)
+- [Platform Teams: Agentic World Struggle](https://kubailabs.com/platform-teams-agentic-world-struggle/)
 
 ## Official documentation
 

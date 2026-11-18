@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="JWT sessions: revocation, rotation, storage">
         <meta property="og:description" content="Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.">
-        <meta property="og:url" content="https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/">
+        <meta property="og:url" content="https://kubailabs.com/jwt-sessions-revocation-rotation-storage/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/jwt-sessions-revocation-rotation-storage.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/jwt-sessions-revocation-rotation-storage.png">
         <meta property="og:image:alt" content="JWT sessions: revocation, rotation, storage">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="JWT sessions: revocation, rotation, storage">
         <meta name="twitter:description" content="Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/jwt-sessions-revocation-rotation-storage.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/jwt-sessions-revocation-rotation-storage.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/">
+        <link rel="canonical" href="https://kubailabs.com/jwt-sessions-revocation-rotation-storage/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/#article",
+      "@id": "https://kubailabs.com/jwt-sessions-revocation-rotation-storage/#article",
       "headline": "JWT sessions: revocation, rotation, storage",
       "description": "Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.",
       "datePublished": "2026-10-27T17:43:39+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/"
+        "@id": "https://kubailabs.com/jwt-sessions-revocation-rotation-storage/"
       },
       "keywords": "Jwt, SessionManagement, TokenRevocation, RefreshTokenRotation, JwtStorage, JwtPitfalls, Rag, Vectorsearch",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/jwt-sessions-revocation-rotation-storage.png",
+        "url": "https://kubailabs.com/static/og/jwt-sessions-revocation-rotation-storage.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "JWT sessions: revocation, rotation, storage",
-          "item": "https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/"
+          "item": "https://kubailabs.com/jwt-sessions-revocation-rotation-storage/"
         }
       ]
     }
@@ -131,7 +131,7 @@
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://blog.kubailabs.com/jwt-sessions-revocation-rotation-storage/#faq",
+  "@id": "https://kubailabs.com/jwt-sessions-revocation-rotation-storage/#faq",
   "mainEntity": [
     {
       "@type": "Question",
@@ -488,9 +488,9 @@ async function rotateRefreshToken(db, oldToken) {
 <p>Open the authentication configuration (for example, <code>auth.js</code>, <code>config/passport.js</code>, or the identity provider's settings) and find the access token expiry. If it exceeds the maximum revocation window identified in the checklist above, shorten it and note the resulting increase in refresh traffic. Then check the refresh logic: does it invalidate the old token on use and detect reuse? If not, that is the next change. Finally, verify that the refresh token is stored in an <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite</code> cookie and that the CORS policy does not combine <code>*</code> with credentials. These three checks close the most common JWT session gaps.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/agent-auth-the-silent-deployment-killer/">Agent auth: the silent deployment killer</a></li>
-<li><a href="https://blog.kubailabs.com/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
-<li><a href="https://blog.kubailabs.com/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
+<li><a href="https://kubailabs.com/agent-auth-the-silent-deployment-killer/">Agent auth: the silent deployment killer</a></li>
+<li><a href="https://kubailabs.com/ai-memory-systems-context-that-survives-sessions/">AI memory systems: context that survives sessions</a></li>
+<li><a href="https://kubailabs.com/context-windows-live-longer-than-you-think/">Context windows live longer than you think</a></li>
 </ul>
                 
                 

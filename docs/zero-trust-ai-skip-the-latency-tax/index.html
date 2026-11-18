@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Zero-trust AI: skip the latency tax">
         <meta property="og:description" content="How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.">
-        <meta property="og:url" content="https://blog.kubailabs.com/zero-trust-ai-skip-the-latency-tax/">
+        <meta property="og:url" content="https://kubailabs.com/zero-trust-ai-skip-the-latency-tax/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/zero-trust-ai-skip-the-latency-tax.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/zero-trust-ai-skip-the-latency-tax.png">
         <meta property="og:image:alt" content="Zero-trust AI: skip the latency tax">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Zero-trust AI: skip the latency tax">
         <meta name="twitter:description" content="How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/zero-trust-ai-skip-the-latency-tax.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/zero-trust-ai-skip-the-latency-tax.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/zero-trust-ai-skip-the-latency-tax/">
+        <link rel="canonical" href="https://kubailabs.com/zero-trust-ai-skip-the-latency-tax/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/zero-trust-ai-skip-the-latency-tax/#article",
+      "@id": "https://kubailabs.com/zero-trust-ai-skip-the-latency-tax/#article",
       "headline": "Zero-trust AI: skip the latency tax",
       "description": "How to keep per-request identity and least privilege in inference services while moving handshakes and policy evaluation off the hot path.",
       "datePublished": "2026-09-15T16:35:21+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/zero-trust-ai-skip-the-latency-tax/"
+        "@id": "https://kubailabs.com/zero-trust-ai-skip-the-latency-tax/"
       },
       "keywords": "ZeroTrust, AiLatency, Ai",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/zero-trust-ai-skip-the-latency-tax.png",
+        "url": "https://kubailabs.com/static/og/zero-trust-ai-skip-the-latency-tax.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Zero-trust AI: skip the latency tax",
-          "item": "https://blog.kubailabs.com/zero-trust-ai-skip-the-latency-tax/"
+          "item": "https://kubailabs.com/zero-trust-ai-skip-the-latency-tax/"
         }
       ]
     }
@@ -466,8 +466,8 @@ Forgetting the outbound hops. Teams secure the front door with mTLS and policy, 
 <p>Open the handler in your inference service that receives the request before it reaches the model, and add a single histogram metric recording time from request receipt to first generated token. Deploy it to staging, run a five-minute load test at expected peak RPS, and look at the p99. If the gap between p50 and p99 exceeds 100 ms, the zero-trust overhead is in the tail. The first thing to check is whether policy evaluation is remote or local — that single measurement tells you which of the four optimizations above to apply first.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/model-router-keep-it-simple-keep-it-local/">Model router: keep it simple, keep it local</a></li>
-<li><a href="https://blog.kubailabs.com/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
+<li><a href="https://kubailabs.com/model-router-keep-it-simple-keep-it-local/">Model router: keep it simple, keep it local</a></li>
+<li><a href="https://kubailabs.com/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">AI in slow networks: why models flop where data costs rise</a></li>
 <li>Build apps that still work on 500 ms latency</li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>

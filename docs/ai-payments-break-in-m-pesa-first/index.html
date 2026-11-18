@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI payments break in M-Pesa first">
         <meta property="og:description" content="Payment webhooks arrive duplicated and out of order. Here is how to normalize provider events, dedupe them, and reconcile an AI feature store safely.">
-        <meta property="og:url" content="https://blog.kubailabs.com/ai-payments-break-in-m-pesa-first/">
+        <meta property="og:url" content="https://kubailabs.com/ai-payments-break-in-m-pesa-first/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/ai-payments-break-in-m-pesa-first.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/ai-payments-break-in-m-pesa-first.png">
         <meta property="og:image:alt" content="AI payments break in M-Pesa first">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI payments break in M-Pesa first">
         <meta name="twitter:description" content="Payment webhooks arrive duplicated and out of order. Here is how to normalize provider events, dedupe them, and reconcile an AI feature store safely.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/ai-payments-break-in-m-pesa-first.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/ai-payments-break-in-m-pesa-first.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/ai-payments-break-in-m-pesa-first/">
+        <link rel="canonical" href="https://kubailabs.com/ai-payments-break-in-m-pesa-first/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/ai-payments-break-in-m-pesa-first/#article",
+      "@id": "https://kubailabs.com/ai-payments-break-in-m-pesa-first/#article",
       "headline": "AI payments break in M-Pesa first",
       "description": "Payment webhooks arrive duplicated and out of order. Here is how to normalize provider events, dedupe them, and reconcile an AI feature store safely.",
       "datePublished": "2026-08-23T01:36:53+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/ai-payments-break-in-m-pesa-first/"
+        "@id": "https://kubailabs.com/ai-payments-break-in-m-pesa-first/"
       },
       "keywords": "Ai, Payment, PaymentFailureModes, Idempotency, Flutter",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/ai-payments-break-in-m-pesa-first.png",
+        "url": "https://kubailabs.com/static/og/ai-payments-break-in-m-pesa-first.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "AI payments break in M-Pesa first",
-          "item": "https://blog.kubailabs.com/ai-payments-break-in-m-pesa-first/"
+          "item": "https://kubailabs.com/ai-payments-break-in-m-pesa-first/"
         }
       ]
     }
@@ -538,9 +538,9 @@ Use a local cache of rates from a source you trust, and prefer a central bank re
 <p>In the next 30 minutes, add one measurement: log every inbound webhook with <code>provider</code>, normalized <code>tx_id</code>, provider timestamp, and receipt timestamp to a table or log sink. Do not add deduplication yet. Run it for a day, then query for duplicate <code>(provider, tx_id)</code> pairs and for timestamp inversions. That gives you the real duplicate and reordering rates for your traffic, which is the only baseline worth designing against.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/m-pesa-failures-cost-us-40-hours/">Designing Reliable Webhook Pipelines for African Payment APIs</a></li>
-<li><a href="https://blog.kubailabs.com/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
-<li><a href="https://blog.kubailabs.com/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
+<li><a href="https://kubailabs.com/m-pesa-failures-cost-us-40-hours/">Designing Reliable Webhook Pipelines for African Payment APIs</a></li>
+<li><a href="https://kubailabs.com/ai-features-m-pesa-paystack-flutterwave-traps/">AI features: M-Pesa, Paystack, Flutterwave traps</a></li>
+<li><a href="https://kubailabs.com/mobile-money-agents-when-m-pesa-api-fails/">Mobile money agents: when M-Pesa API fails</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

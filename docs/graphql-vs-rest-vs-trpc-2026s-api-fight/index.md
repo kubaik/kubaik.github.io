@@ -130,9 +130,9 @@ Open the file that defines your API's contract — an OpenAPI document, a GraphQ
 
 ## Related reading
 
-- [Agent access for non-AI engineers](https://blog.kubailabs.com/agent-access-for-non-ai-engineers/)
-- [RAG on legacy systems: vector DB vs. full-text SQL](https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/)
-- [Route, fine-tune, or scale: pick right](https://blog.kubailabs.com/big-model-api-vs-fine-tune-the-2026-math/)
+- [Agent access for non-AI engineers](https://kubailabs.com/agent-access-for-non-ai-engineers/)
+- [RAG on legacy systems: vector DB vs. full-text SQL](https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/)
+- [Route, fine-tune, or scale: pick right](https://kubailabs.com/big-model-api-vs-fine-tune-the-2026-math/)
 
 ## Official documentation
 

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Audit logs: compliance vs performance">
         <meta property="og:description" content="How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.">
-        <meta property="og:url" content="https://blog.kubailabs.com/audit-logs-compliance-vs-performance/">
+        <meta property="og:url" content="https://kubailabs.com/audit-logs-compliance-vs-performance/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/audit-logs-compliance-vs-performance.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/audit-logs-compliance-vs-performance.png">
         <meta property="og:image:alt" content="Audit logs: compliance vs performance">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Audit logs: compliance vs performance">
         <meta name="twitter:description" content="How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/audit-logs-compliance-vs-performance.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/audit-logs-compliance-vs-performance.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/audit-logs-compliance-vs-performance/">
+        <link rel="canonical" href="https://kubailabs.com/audit-logs-compliance-vs-performance/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/audit-logs-compliance-vs-performance/#article",
+      "@id": "https://kubailabs.com/audit-logs-compliance-vs-performance/#article",
       "headline": "Audit logs: compliance vs performance",
       "description": "How to design audit logging that survives crashes and preserves per-entity order without wrecking p99 latency, plus how to measure the overhead.",
       "datePublished": "2026-09-20T04:05:00+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/audit-logs-compliance-vs-performance/"
+        "@id": "https://kubailabs.com/audit-logs-compliance-vs-performance/"
       },
       "keywords": "Performance",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/audit-logs-compliance-vs-performance.png",
+        "url": "https://kubailabs.com/static/og/audit-logs-compliance-vs-performance.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Audit logs: compliance vs performance",
-          "item": "https://blog.kubailabs.com/audit-logs-compliance-vs-performance/"
+          "item": "https://kubailabs.com/audit-logs-compliance-vs-performance/"
         }
       ]
     }
@@ -462,9 +462,9 @@ No. A message queue decouples consumers from producers but does not make the aud
 <p>Pick one write path in your service and instrument the audit write as its own timing span. Run your existing load test, record the p99 latency of that span, and check whether the audit write currently happens in the same transaction as the business write. That single measurement tells you whether you have a latency problem, a durability problem, or both.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
-<li><a href="https://blog.kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
-<li><a href="https://blog.kubailabs.com/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
+<li><a href="https://kubailabs.com/audit-logs-ship-them-fast-keep-them-forever/">Audit logs: ship them fast, keep them forever</a></li>
+<li><a href="https://kubailabs.com/log-audit-costs-without-breaking-compliance/">Log audit costs without breaking compliance</a></li>
+<li><a href="https://kubailabs.com/african-fintech-agents-the-compliance-cliff-most-miss/">African fintech agents: the compliance cliff most miss</a></li>
 </ul>
                 
                 

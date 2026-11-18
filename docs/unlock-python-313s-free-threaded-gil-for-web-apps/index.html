@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Unlock Python 3.13&#39;s free-threaded GIL for web apps">
         <meta property="og:description" content="Free-threaded Python removes the GIL, but C extensions, shared state and pools break. A practical checklist for migrating a web service safely.">
-        <meta property="og:url" content="https://blog.kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/">
+        <meta property="og:url" content="https://kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/unlock-python-313s-free-threaded-gil-for-web-apps.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/unlock-python-313s-free-threaded-gil-for-web-apps.png">
         <meta property="og:image:alt" content="Unlock Python 3.13&#39;s free-threaded GIL for web apps">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Unlock Python 3.13&#39;s free-threaded GIL for web apps">
         <meta name="twitter:description" content="Free-threaded Python removes the GIL, but C extensions, shared state and pools break. A practical checklist for migrating a web service safely.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/unlock-python-313s-free-threaded-gil-for-web-apps.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/unlock-python-313s-free-threaded-gil-for-web-apps.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/">
+        <link rel="canonical" href="https://kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/#article",
+      "@id": "https://kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/#article",
       "headline": "Unlock Python 3.13's free-threaded GIL for web apps",
       "description": "Free-threaded Python removes the GIL, but C extensions, shared state and pools break. A practical checklist for migrating a web service safely.",
       "datePublished": "2026-06-22T19:38:03+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/"
+        "@id": "https://kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/"
       },
       "keywords": "Fastapi, Python, Python3",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/unlock-python-313s-free-threaded-gil-for-web-apps.png",
+        "url": "https://kubailabs.com/static/og/unlock-python-313s-free-threaded-gil-for-web-apps.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Unlock Python 3.13's free-threaded GIL for web apps",
-          "item": "https://blog.kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/"
+          "item": "https://kubailabs.com/unlock-python-313s-free-threaded-gil-for-web-apps/"
         }
       ]
     }
@@ -523,9 +523,9 @@ There is no general rule. The gain depends on the same Python-to-I/O ratio as on
 <p>Pick one endpoint in your service that is I/O-bound and does a non-trivial amount of Python work per request. Add a temporary route that returns <code>sys._is_gil_enabled()</code> and <code>psutil.Process().num_threads()</code>. Deploy that build with <code>PYTHON_GIL=0</code> to a single canary instance behind your load balancer, hit the route, and confirm the GIL is actually off with all your production imports loaded. If it reports <code>True</code>, you have found a GIL-bound extension before it cost you a migration. If it reports <code>False</code>, run your existing load test against the canary and the baseline for the same duration and compare P99 latency on that one endpoint. That single comparison tells you more than any published benchmark.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
-<li><a href="https://blog.kubailabs.com/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
-<li><a href="https://blog.kubailabs.com/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
+<li><a href="https://kubailabs.com/tame-python-asyncs-hidden-traps/">Tame Python async’s hidden traps</a></li>
+<li><a href="https://kubailabs.com/bundle-size-70-lighter-with-server-components/">Cutting Client Bundle Size with React Server Components</a></li>
+<li><a href="https://kubailabs.com/meter-dev-tool-pricing-in-2026/">Meter dev-tool pricing in 2026</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

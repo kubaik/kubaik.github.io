@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="One misconfigured vector DB killed our RAG pipeline">
         <meta property="og:description" content="Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.">
-        <meta property="og:url" content="https://blog.kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/">
+        <meta property="og:url" content="https://kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/one-misconfigured-vector-db-killed-our-rag-pipeline.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/one-misconfigured-vector-db-killed-our-rag-pipeline.png">
         <meta property="og:image:alt" content="One misconfigured vector DB killed our RAG pipeline">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="One misconfigured vector DB killed our RAG pipeline">
         <meta name="twitter:description" content="Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/one-misconfigured-vector-db-killed-our-rag-pipeline.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/one-misconfigured-vector-db-killed-our-rag-pipeline.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/">
+        <link rel="canonical" href="https://kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/#article",
+      "@id": "https://kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/#article",
       "headline": "One misconfigured vector DB killed our RAG pipeline",
       "description": "Vector DB misconfigurations cause RAG outages that look like app bugs. Learn to detect index errors, add circuit breakers, and instrument query latency.",
       "datePublished": "2026-07-29T14:18:17+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/"
+        "@id": "https://kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/"
       },
       "keywords": "RagPipelineFailures, WeaviateError, Vector, FastapiRagService, RagObservability, RagCircuitBreaker, Database, Rag",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/one-misconfigured-vector-db-killed-our-rag-pipeline.png",
+        "url": "https://kubailabs.com/static/og/one-misconfigured-vector-db-killed-our-rag-pipeline.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "One misconfigured vector DB killed our RAG pipeline",
-          "item": "https://blog.kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/"
+          "item": "https://kubailabs.com/one-misconfigured-vector-db-killed-our-rag-pipeline/"
         }
       ]
     }
@@ -508,9 +508,9 @@ def test_retry_on_timeout():
 <p><strong>One action for the next 30 minutes:</strong> add a query-based health check endpoint to your RAG service that performs a real similarity search against your production index, and point your readiness probe at it instead of the database's built-in readiness endpoint. Then break the index name in a staging environment and confirm the probe fails. That single change converts a silent, application-level outage into a visible, infrastructure-level one.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
-<li><a href="https://blog.kubailabs.com/rag-in-prod-what-tutorials-wont-tell-you/">RAG in prod: what tutorials won’t tell you</a></li>
-<li><a href="https://blog.kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
+<li><a href="https://kubailabs.com/rag-on-legacy-systems-vector-db-vs-full-text-sql/">RAG on legacy systems: vector DB vs. full-text SQL</a></li>
+<li><a href="https://kubailabs.com/rag-in-prod-what-tutorials-wont-tell-you/">RAG in prod: what tutorials won’t tell you</a></li>
+<li><a href="https://kubailabs.com/postgres-vector-search-what-breaks-first/">Postgres vector search: what breaks first</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

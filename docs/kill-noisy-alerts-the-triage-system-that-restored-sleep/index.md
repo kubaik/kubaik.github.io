@@ -231,9 +231,9 @@ Open your largest Prometheus rule file, add a recording rule that computes the r
 
 ## Related reading
 
-- [2026 alert triage: when Opsgenie slept for you](https://blog.kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/)
-- [Designing an AI Alert Triage Layer That Reduces Pages](https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/)
-- [LLM drift before users complain: catch it early](https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/)
+- [2026 alert triage: when Opsgenie slept for you](https://kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/)
+- [Designing an AI Alert Triage Layer That Reduces Pages](https://kubailabs.com/ai-alert-triage-cut-pages-80-in-production/)
+- [LLM drift before users complain: catch it early](https://kubailabs.com/llm-eval-drift-that-users-notice-first/)
 
 ## Official documentation
 

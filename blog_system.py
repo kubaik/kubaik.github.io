@@ -2668,7 +2668,7 @@ class BlogSystem:
             print(f"⚠️  OG image script not found at {script_path}")
             return False
 
-        base_url = self.config.get("base_url", "https://blog.kubailabs.com").rstrip("/")
+        base_url = self.config.get("base_url", "https://kubailabs.com").rstrip("/")
 
         print("\n" + "=" * 80)
         print("📸 Generating per-article OG images (1200×630 PNG)")
@@ -3196,7 +3196,7 @@ class BlogSystem:
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": self.config.get("base_url", "https://blog.kubailabs.com"),
+            "HTTP-Referer": self.config.get("base_url", "https://kubailabs.com"),
             "X-Title": self.config.get("site_name", "Kubai Kevin"),
         }
         waits = [2, 5, 10]
@@ -4120,7 +4120,7 @@ class BlogSystem:
 
             faq_schema = extract_and_build_faq_schema(
                 post.content,
-                self.config.get("base_url", "https://blog.kubailabs.com"),
+                self.config.get("base_url", "https://kubailabs.com"),
                 post.slug,
             )
             if faq_schema:
@@ -4147,7 +4147,7 @@ class BlogSystem:
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 post_url = (
-                    f"{self.config.get('base_url', 'https://blog.kubailabs.com')}"
+                    f"{self.config.get('base_url', 'https://kubailabs.com')}"
                     f"/{post.slug}/"
                 )
 
@@ -5558,7 +5558,7 @@ def create_sample_config(config_path: str = "config.yaml"):
             "Practical backend engineering, AI tooling, and developer career "
             "advice by Kubai Kevin, a software developer in Nairobi, Kenya."
         ),
-        "base_url": "https://blog.kubailabs.com",
+        "base_url": "https://kubailabs.com",
         "base_path": "",
         "amazon_affiliate_tag": "aiblogcontent-20",
         "google_analytics_id": "",

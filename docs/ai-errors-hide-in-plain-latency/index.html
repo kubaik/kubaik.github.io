@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI errors hide in plain latency">
         <meta property="og:description" content="Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.">
-        <meta property="og:url" content="https://blog.kubailabs.com/ai-errors-hide-in-plain-latency/">
+        <meta property="og:url" content="https://kubailabs.com/ai-errors-hide-in-plain-latency/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png">
         <meta property="og:image:alt" content="AI errors hide in plain latency">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="AI errors hide in plain latency">
         <meta name="twitter:description" content="Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/ai-errors-hide-in-plain-latency/">
+        <link rel="canonical" href="https://kubailabs.com/ai-errors-hide-in-plain-latency/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/ai-errors-hide-in-plain-latency/#article",
+      "@id": "https://kubailabs.com/ai-errors-hide-in-plain-latency/#article",
       "headline": "AI errors hide in plain latency",
       "description": "Why token counts and GPU utilization miss user-visible AI degradation, and how to instrument end-to-end p95/p99 latency and error rate instead.",
       "datePublished": "2026-08-21T16:58:29+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/ai-errors-hide-in-plain-latency/"
+        "@id": "https://kubailabs.com/ai-errors-hide-in-plain-latency/"
       },
       "keywords": "AiObservability, LlmLatency, P99Latency, Model, RedisCacheStampede, OpentelemetryForAi, SloDrivenAutoscaling, Ai",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png",
+        "url": "https://kubailabs.com/static/og/ai-errors-hide-in-plain-latency.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "AI errors hide in plain latency",
-          "item": "https://blog.kubailabs.com/ai-errors-hide-in-plain-latency/"
+          "item": "https://kubailabs.com/ai-errors-hide-in-plain-latency/"
         }
       ]
     }
@@ -472,9 +472,9 @@ def extract_disclaimer(text):
 <p>Open your API gateway or ingress configuration and add a request-duration histogram with buckets <code>[0.1, 0.2, 0.3, 0.5, 0.75, 1.0, 2.0]</code> seconds, plus an alert that fires when the 0.95 quantile exceeds your SLO for five consecutive minutes. Deploy it to staging, generate load, and confirm the histogram populates. That single change gives you the end-to-end signal that token-count dashboards cannot provide.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
-<li><a href="https://blog.kubailabs.com/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
-<li><a href="https://blog.kubailabs.com/ai-observability-isnt-monitoring-heres-why/">AI observability isn’t monitoring — here’s why</a></li>
+<li><a href="https://kubailabs.com/llm-drift-the-silent-quality-drop-metrics-miss/">LLM drift: the silent quality drop metrics miss</a></li>
+<li><a href="https://kubailabs.com/ai-observability-the-metrics-that-matter/">AI observability: the metrics that matter</a></li>
+<li><a href="https://kubailabs.com/ai-observability-isnt-monitoring-heres-why/">AI observability isn’t monitoring — here’s why</a></li>
 </ul>
                 
                 

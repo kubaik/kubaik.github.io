@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Store data once, serve everywhere: cheaper">
         <meta property="og:description" content="How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.">
-        <meta property="og:url" content="https://blog.kubailabs.com/store-data-once-serve-everywhere-cheaper/">
+        <meta property="og:url" content="https://kubailabs.com/store-data-once-serve-everywhere-cheaper/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/store-data-once-serve-everywhere-cheaper.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/store-data-once-serve-everywhere-cheaper.png">
         <meta property="og:image:alt" content="Store data once, serve everywhere: cheaper">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Store data once, serve everywhere: cheaper">
         <meta name="twitter:description" content="How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/store-data-once-serve-everywhere-cheaper.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/store-data-once-serve-everywhere-cheaper.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/store-data-once-serve-everywhere-cheaper/">
+        <link rel="canonical" href="https://kubailabs.com/store-data-once-serve-everywhere-cheaper/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/store-data-once-serve-everywhere-cheaper/#article",
+      "@id": "https://kubailabs.com/store-data-once-serve-everywhere-cheaper/#article",
       "headline": "Store data once, serve everywhere: cheaper",
       "description": "How to serve reads from regional caches instead of replicating your database everywhere, with worked cost math, invalidation code, and failure modes.",
       "datePublished": "2026-06-25T08:39:15+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/store-data-once-serve-everywhere-cheaper/"
+        "@id": "https://kubailabs.com/store-data-once-serve-everywhere-cheaper/"
       },
       "keywords": "MultiRegionBackend, MultiRegionCaching, EdgeCaching2026, Postgresql, Backend, Softwareengineering, Redis",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/store-data-once-serve-everywhere-cheaper.png",
+        "url": "https://kubailabs.com/static/og/store-data-once-serve-everywhere-cheaper.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Store data once, serve everywhere: cheaper",
-          "item": "https://blog.kubailabs.com/store-data-once-serve-everywhere-cheaper/"
+          "item": "https://kubailabs.com/store-data-once-serve-everywhere-cheaper/"
         }
       ]
     }
@@ -442,9 +442,9 @@ while True:
 <p>Pick your slowest endpoint and measure it from a region far from your database. Run a loop of 100 requests from a machine in that region, recording the response time of each, and compute the p99. Then check your provider's billing export for cross-region transfer on that same endpoint's traffic. If the p99 exceeds your target and cross-region transfer is a visible line item, you have the two numbers that justify a cache — and you can size the TTL from the staleness your product already tolerates.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/aws-costs-for-nairobi-saas-2026-bill-split/">AWS costs for Nairobi SaaS: 2026 bill split</a></li>
+<li><a href="https://kubailabs.com/aws-costs-for-nairobi-saas-2026-bill-split/">AWS costs for Nairobi SaaS: 2026 bill split</a></li>
 <li>50 locations, 50 headaches: edge-native backends in</li>
-<li><a href="https://blog.kubailabs.com/ai-stole-system-design/">AI stole system design</a></li>
+<li><a href="https://kubailabs.com/ai-stole-system-design/">AI stole system design</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

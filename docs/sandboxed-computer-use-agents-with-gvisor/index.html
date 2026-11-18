@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Sandboxed computer-use agents with gVisor">
         <meta property="og:description" content="How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.">
-        <meta property="og:url" content="https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">
+        <meta property="og:url" content="https://kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/sandboxed-computer-use-agents-with-gvisor.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/sandboxed-computer-use-agents-with-gvisor.png">
         <meta property="og:image:alt" content="Sandboxed computer-use agents with gVisor">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Sandboxed computer-use agents with gVisor">
         <meta name="twitter:description" content="How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/sandboxed-computer-use-agents-with-gvisor.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/sandboxed-computer-use-agents-with-gvisor.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">
+        <link rel="canonical" href="https://kubailabs.com/sandboxed-computer-use-agents-with-gvisor/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/#article",
+      "@id": "https://kubailabs.com/sandboxed-computer-use-agents-with-gvisor/#article",
       "headline": "Sandboxed computer-use agents with gVisor",
       "description": "How to contain computer-use agents using gVisor, egress allowlists, and short-lived credentials, with code, failure modes, and planning figures.",
       "datePublished": "2026-09-21T18:02:36+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/"
+        "@id": "https://kubailabs.com/sandboxed-computer-use-agents-with-gvisor/"
       },
       "keywords": "ComputerUseAgents, AgentSandboxing, GvisorSandbox, Prompt, EgressAllowlistAgent",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/sandboxed-computer-use-agents-with-gvisor.png",
+        "url": "https://kubailabs.com/static/og/sandboxed-computer-use-agents-with-gvisor.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Sandboxed computer-use agents with gVisor",
-          "item": "https://blog.kubailabs.com/sandboxed-computer-use-agents-with-gvisor/"
+          "item": "https://kubailabs.com/sandboxed-computer-use-agents-with-gvisor/"
         }
       ]
     }
@@ -432,9 +432,9 @@ server.listen(3128, '127.0.0.1');
 <p>Open the IAM role definition your agent assumes and check the <code>DurationSeconds</code> on its <code>sts:AssumeRole</code> call. If it's longer than your session timeout, change it to <code>SESSION_TIMEOUT - 60</code> right now — that single edit is the highest-impact containment change available today, and it takes less time than reading this sentence twice.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/computer-use-agents-the-permission-trap/">Computer-use agents: the permission trap</a></li>
-<li><a href="https://blog.kubailabs.com/agent-permissions-the-mistake-that-breaks-production/">Agent permissions: the mistake that breaks production</a></li>
-<li><a href="https://blog.kubailabs.com/prompt-injection-got-the-hype-poison-data-ruined-us/">Prompt Injection Is Not Your Biggest LLM Data Risk</a></li>
+<li><a href="https://kubailabs.com/computer-use-agents-the-permission-trap/">Computer-use agents: the permission trap</a></li>
+<li><a href="https://kubailabs.com/agent-permissions-the-mistake-that-breaks-production/">Agent permissions: the mistake that breaks production</a></li>
+<li><a href="https://kubailabs.com/prompt-injection-got-the-hype-poison-data-ruined-us/">Prompt Injection Is Not Your Biggest LLM Data Risk</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

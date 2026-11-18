@@ -40,7 +40,7 @@
   "reading_time_minutes": 21,
   "has_code": false,
   "has_table": true,
-  "prewritten_tweet": "Teams treat AI like regular code and wonder why it fails at scale.\n\nVector stores melt. Cache stampedes happen. Model drift goes undetected.\n\nhttps://blog.kubailabs.com/ai-apps-break-when-you-treat-them-like-regular-software\n\n#Crypto #AI #LLM #VectorDB\n\nAnyone hit a different failure mode? Reply below.",
+  "prewritten_tweet": "Teams treat AI like regular code and wonder why it fails at scale.\n\nVector stores melt. Cache stampedes happen. Model drift goes undetected.\n\nhttps:https://kubailabs.com/ai-apps-break-when-you-treat-them-like-regular-software\n\n#Crypto #AI #LLM #VectorDB\n\nAnyone hit a different failure mode? Reply below.",
   "audit_improved_at": "2026-09-19T11:42:21.652658+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences",
   "audit_enhanced_at": "2026-10-04T05:00:42.996046+00:00",

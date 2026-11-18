@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agents create incidents at 2am">
         <meta property="og:description" content="Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.">
-        <meta property="og:url" content="https://blog.kubailabs.com/agents-create-incidents-at-2am/">
+        <meta property="og:url" content="https://kubailabs.com/agents-create-incidents-at-2am/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/agents-create-incidents-at-2am.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/agents-create-incidents-at-2am.png">
         <meta property="og:image:alt" content="Agents create incidents at 2am">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Agents create incidents at 2am">
         <meta name="twitter:description" content="Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/agents-create-incidents-at-2am.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/agents-create-incidents-at-2am.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/agents-create-incidents-at-2am/">
+        <link rel="canonical" href="https://kubailabs.com/agents-create-incidents-at-2am/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/agents-create-incidents-at-2am/#article",
+      "@id": "https://kubailabs.com/agents-create-incidents-at-2am/#article",
       "headline": "Agents create incidents at 2am",
       "description": "Why autonomous agents that can open, mutate, or page on incidents cause 2am page storms, and how write boundaries and idempotent alerting fix it.",
       "datePublished": "2026-08-06T08:07:50+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/agents-create-incidents-at-2am/"
+        "@id": "https://kubailabs.com/agents-create-incidents-at-2am/"
       },
       "keywords": "OnCallAutomation, AgentPermissions, IncidentResponse, IamAccessAnalyzer, AwsLambdaSecurity, 2amPageCauses, Automation, Pagerduty",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/agents-create-incidents-at-2am.png",
+        "url": "https://kubailabs.com/static/og/agents-create-incidents-at-2am.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Agents create incidents at 2am",
-          "item": "https://blog.kubailabs.com/agents-create-incidents-at-2am/"
+          "item": "https://kubailabs.com/agents-create-incidents-at-2am/"
         }
       ]
     }
@@ -455,9 +455,9 @@ class SafeTicketClient:
 <p>Pick one agent that currently holds a write permission, and run the IAM policy simulation shown above against the single action you would least want it to perform — typically <code>sts:AssumeRole</code> on a broad resource, or a write action on your incident or issue system. If the result is <code>allowed</code> rather than <code>implicitDeny</code>, you have found a write boundary that is not actually enforcing anything. Attach a permissions boundary that excludes that action, re-run the simulation, and confirm the result flips. That is thirty minutes, and it converts an assumption into a verified constraint.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
-<li><a href="https://blog.kubailabs.com/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
-<li><a href="https://blog.kubailabs.com/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
+<li><a href="https://kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI-First vs Human-First Incident Response</a></li>
+<li><a href="https://kubailabs.com/agentic-finops-is-a-trap/">Agentic FinOps is a trap</a></li>
+<li><a href="https://kubailabs.com/track-ai-agent-costs-in-fractal-workflows/">Track AI agent costs in fractal workflows</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

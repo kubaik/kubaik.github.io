@@ -35,7 +35,7 @@
   "has_code": true,
   "has_table": true,
   "full_title": "AI made self-service platforms trivial in 2026",
-  "prewritten_tweet": "Most platform teams spent years building self-service portals.\n\nIn 2026, an LLM builds the portal from a Slack message — and rolls it back if it breaks.\n\nhttps://blog.kubailabs.com/ai-made-self-service-platforms-trivial-in-2026\n\n#Crypto #AI #DevOps #Terraform\n\nWhere do you think most teams still get this wrong?",
+  "prewritten_tweet": "Most platform teams spent years building self-service portals.\n\nIn 2026, an LLM builds the portal from a Slack message — and rolls it back if it breaks.\n\nhttps:https://kubailabs.com/ai-made-self-service-platforms-trivial-in-2026\n\n#Crypto #AI #DevOps #Terraform\n\nWhere do you think most teams still get this wrong?",
   "audit_enhanced_at": "2026-10-03T11:41:38.849674+00:00",
   "llm_improved_at": "2026-10-03T11:39:03.798741+00:00"
 }

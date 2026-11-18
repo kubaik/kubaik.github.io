@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Pagination for large datasets: offset vs cursor">
         <meta property="og:description" content="How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.">
-        <meta property="og:url" content="https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/">
+        <meta property="og:url" content="https://kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/pagination-for-large-datasets-offset-vs-cursor.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/pagination-for-large-datasets-offset-vs-cursor.png">
         <meta property="og:image:alt" content="Pagination for large datasets: offset vs cursor">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Pagination for large datasets: offset vs cursor">
         <meta name="twitter:description" content="How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/pagination-for-large-datasets-offset-vs-cursor.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/pagination-for-large-datasets-offset-vs-cursor.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/">
+        <link rel="canonical" href="https://kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/#article",
+      "@id": "https://kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/#article",
       "headline": "Pagination for large datasets: offset vs cursor",
       "description": "How offset and keyset pagination behave on large datasets, where each fails, and how to ship signed cursors that stay correct under writes.",
       "datePublished": "2026-11-08T05:08:16+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/"
+        "@id": "https://kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/"
       },
       "keywords": "Pagination, Keyset, Offset, Cursor, Cybersecurity, Infosec, Sql, Cursorai",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/pagination-for-large-datasets-offset-vs-cursor.png",
+        "url": "https://kubailabs.com/static/og/pagination-for-large-datasets-offset-vs-cursor.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Pagination for large datasets: offset vs cursor",
-          "item": "https://blog.kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/"
+          "item": "https://kubailabs.com/pagination-for-large-datasets-offset-vs-cursor/"
         }
       ]
     }
@@ -473,9 +473,9 @@ Sign it. Encryption adds key-management overhead without much benefit, because t
 <p>Pick the list endpoint with the highest <code>OFFSET</code> values in the logs — the one where clients are paging deep — and run <code>EXPLAIN ANALYZE</code> on it with a representative offset. If the plan shows a large scan before the <code>Limit</code> node, that endpoint is a candidate for keyset pagination. The 30-minute version: add the composite index on <code>(tenant_id, created_at, id)</code>, rewrite the query to use the tuple comparison, and return a signed <code>next_cursor</code> instead of a page number. Ship it behind a new API version so existing clients keep working, and watch the p99 latency on that endpoint for a week.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/soft-deletes-fail-what-breaks-first/">Soft deletes fail: what breaks first</a></li>
-<li><a href="https://blog.kubailabs.com/why-our-schema-survived-ai-scaling/">Designing a Schema That Survives Embedding Model Upgrades</a></li>
-<li><a href="https://blog.kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">Rogue Agent API Calls: Stop the Bleeding</a></li>
+<li><a href="https://kubailabs.com/soft-deletes-fail-what-breaks-first/">Soft deletes fail: what breaks first</a></li>
+<li><a href="https://kubailabs.com/why-our-schema-survived-ai-scaling/">Designing a Schema That Survives Embedding Model Upgrades</a></li>
+<li><a href="https://kubailabs.com/rogue-agent-api-calls-stop-the-bleeding/">Rogue Agent API Calls: Stop the Bleeding</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

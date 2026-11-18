@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Designing an AI Alert Triage Layer That Reduces Pages">
         <meta property="og:description" content="How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.">
-        <meta property="og:url" content="https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/">
+        <meta property="og:url" content="https://kubailabs.com/ai-alert-triage-cut-pages-80-in-production/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/ai-alert-triage-cut-pages-80-in-production.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/ai-alert-triage-cut-pages-80-in-production.png">
         <meta property="og:image:alt" content="Designing an AI Alert Triage Layer That Reduces Pages">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Designing an AI Alert Triage Layer That Reduces Pages">
         <meta name="twitter:description" content="How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/ai-alert-triage-cut-pages-80-in-production.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/ai-alert-triage-cut-pages-80-in-production.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/">
+        <link rel="canonical" href="https://kubailabs.com/ai-alert-triage-cut-pages-80-in-production/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/#article",
+      "@id": "https://kubailabs.com/ai-alert-triage-cut-pages-80-in-production/#article",
       "headline": "Designing an AI Alert Triage Layer That Reduces Pages",
       "description": "How to build an AI alert-triage service between Alertmanager and your pager: fingerprinting, LLM filtering, fail-open rules, and honest measurement.",
       "datePublished": "2026-06-12T21:55:33+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/"
+        "@id": "https://kubailabs.com/ai-alert-triage-cut-pages-80-in-production/"
       },
       "keywords": "AiAlertTriage, OnCallAutomation, PrometheusAlertmanager, FalsePositiveReduction, PagerdutyAlternatives, LlmAlertFiltering, QdrantVectorSearch, Ai",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/ai-alert-triage-cut-pages-80-in-production.png",
+        "url": "https://kubailabs.com/static/og/ai-alert-triage-cut-pages-80-in-production.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Designing an AI Alert Triage Layer That Reduces Pages",
-          "item": "https://blog.kubailabs.com/ai-alert-triage-cut-pages-80-in-production/"
+          "item": "https://kubailabs.com/ai-alert-triage-cut-pages-80-in-production/"
         }
       ]
     }
@@ -722,9 +722,9 @@ Mount them as environment variables from a Kubernetes Secret, and never bake the
 <p>Open your monitoring UI and run a query that counts alerts by name over the last seven days, for example <code>sum by (alertname) (increase(alertmanager_alerts_received_total[7d]))</code>. Sort descending and look at the top five. For each one, answer a single question: if this alert fires at 3 a.m., does a human need to act before morning? Every alert where the answer is no is a candidate for the known-bad list or the queue path. Write those five names into a <code>bad_alerts.json</code> and load it into the service. That change alone is measurable, reversible, and requires no model tuning.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
-<li><a href="https://blog.kubailabs.com/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
-<li><a href="https://blog.kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
+<li><a href="https://kubailabs.com/2026-alert-triage-when-opsgenie-slept-for-you/">2026 alert triage: when Opsgenie slept for you</a></li>
+<li><a href="https://kubailabs.com/alerts-2026-ai-turns-false-alarms-to-silence/">Alerts 2026: AI turns false alarms to silence</a></li>
+<li><a href="https://kubailabs.com/ai-ops-vs-human-ops-the-incidents-that-broke-them/">AI ops vs human ops: the incidents that broke them</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Audit trails: ImmutableDB vs DynamoDB Streams">
         <meta property="og:description" content="Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.">
-        <meta property="og:url" content="https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">
+        <meta property="og:url" content="https://kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png">
         <meta property="og:image:alt" content="Audit trails: ImmutableDB vs DynamoDB Streams">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Audit trails: ImmutableDB vs DynamoDB Streams">
         <meta name="twitter:description" content="Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">
+        <link rel="canonical" href="https://kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/#article",
+      "@id": "https://kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/#article",
       "headline": "Audit trails: ImmutableDB vs DynamoDB Streams",
       "description": "Compare append-only hash-chained logs with DynamoDB Streams for audit trails: replay, tamper evidence, cost model, and a decision checklist.",
       "datePublished": "2026-07-04T16:10:41+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/"
+        "@id": "https://kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/"
       },
       "keywords": "AuditTrail, ImmutableLogs, DynamodbStreams, ComplianceLogging, AgentDecisionLogging, ServerlessAuditTrail, Performance, Serverless",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png",
+        "url": "https://kubailabs.com/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Audit trails: ImmutableDB vs DynamoDB Streams",
-          "item": "https://blog.kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/"
+          "item": "https://kubailabs.com/audit-trails-immutabledb-vs-dynamodb-streams/"
         }
       ]
     }
@@ -485,9 +485,9 @@ print(f&quot;replayed {count} decisions into decisions.db&quot;)
 <p>Pick one decision your system makes in production, then write a script that reconstructs that decision's full context from your current audit trail and times how long it takes. Run it against your production data, not a sample. If it takes longer than your incident response budget, or if it cannot reconstruct the context at all, you have found the gap that matters — and you now have a concrete number to bring to the decision about which architecture to adopt.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
-<li><a href="https://blog.kubailabs.com/agent-governance-opa-vs-kyverno-after-our-incident/">Agent Governance: OPA vs Kyverno in Kubernetes</a></li>
-<li><a href="https://blog.kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/">Event sourcing: pay the complexity tax only here</a></li>
+<li><a href="https://kubailabs.com/audit-logs-compliance-vs-performance/">Audit logs: compliance vs performance</a></li>
+<li><a href="https://kubailabs.com/agent-governance-opa-vs-kyverno-after-our-incident/">Agent Governance: OPA vs Kyverno in Kubernetes</a></li>
+<li><a href="https://kubailabs.com/event-sourcing-pay-the-complexity-tax-only-here/">Event sourcing: pay the complexity tax only here</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

@@ -225,7 +225,7 @@ jobs:
                   python scripts/auto_retire_duplicates.py \
                     --docs-dir ./docs --max-deletions 2 --min-score 0.50 \
                     --backup-dir ./.duplicate_backups \
-                    --base-url "https://blog.kubailabs.com" --confirm
+                    --base-url "https://kubailabs.com" --confirm
 
             - name: 🧹 Process fabrication regeneration queue (bounded)
               if: env.DESTRUCTIVE == 'true'
@@ -324,17 +324,17 @@ jobs:
                   open('noindex_audit_report.txt', 'w').write(report)
                   "
                   python scripts/generate_sitemap.py \
-                    --output-dir ./docs --base-url "https://blog.kubailabs.com" --validate-only
+                    --output-dir ./docs --base-url "https://kubailabs.com" --validate-only
 
             - name: 🧭 Indexing hygiene gate (sitemap/404/redirect/noindex)
-              run: python utilsIndexing/check_indexing_hygiene.py --docs ./docs --base https://blog.kubailabs.com
+              run: python utilsIndexing/check_indexing_hygiene.py --docs ./docs --base https://kubailabs.com
 
             - name: 📸 Generate per-article OG images
               continue-on-error: true
               run: |
                   python scripts/generate_og_images.py \
                     --posts-dir ./docs --output-dir ./docs/static/og \
-                    --base-url "https://blog.kubailabs.com" --patch-html
+                    --base-url "https://kubailabs.com" --patch-html
                   og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
                   echo "og_image_count=${og_count}" >> $GITHUB_ENV
 

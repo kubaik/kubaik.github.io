@@ -189,9 +189,9 @@ Open the dashboard your platform team shows to stakeholders and pick the single 
 
 ## Related reading
 
-- [AWS costs for Nairobi SaaS: 2026 bill split](https://blog.kubailabs.com/aws-costs-for-nairobi-saas-2026-bill-split/)
-- [AI unit costs: the metric both teams fight over](https://blog.kubailabs.com/ai-unit-costs-the-metric-both-teams-fight-over/)
-- [LLM drift before users complain: catch it early](https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/)
+- [AWS costs for Nairobi SaaS: 2026 bill split](https://kubailabs.com/aws-costs-for-nairobi-saas-2026-bill-split/)
+- [AI unit costs: the metric both teams fight over](https://kubailabs.com/ai-unit-costs-the-metric-both-teams-fight-over/)
+- [LLM drift before users complain: catch it early](https://kubailabs.com/llm-eval-drift-that-users-notice-first/)
 
 ## Official documentation
 

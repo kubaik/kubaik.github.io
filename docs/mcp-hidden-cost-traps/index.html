@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="MCP hidden cost traps">
         <meta property="og:description" content="How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.">
-        <meta property="og:url" content="https://blog.kubailabs.com/mcp-hidden-cost-traps/">
+        <meta property="og:url" content="https://kubailabs.com/mcp-hidden-cost-traps/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/mcp-hidden-cost-traps.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/mcp-hidden-cost-traps.png">
         <meta property="og:image:alt" content="MCP hidden cost traps">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="MCP hidden cost traps">
         <meta name="twitter:description" content="How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/mcp-hidden-cost-traps.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/mcp-hidden-cost-traps.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/mcp-hidden-cost-traps/">
+        <link rel="canonical" href="https://kubailabs.com/mcp-hidden-cost-traps/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/mcp-hidden-cost-traps/#article",
+      "@id": "https://kubailabs.com/mcp-hidden-cost-traps/#article",
       "headline": "MCP hidden cost traps",
       "description": "How misconfigured autoscaling, over-permissive IAM and secret-lease churn create a cost feedback loop on managed container platforms, and how to break it.",
       "datePublished": "2026-09-12T13:48:03+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/mcp-hidden-cost-traps/"
+        "@id": "https://kubailabs.com/mcp-hidden-cost-traps/"
       },
       "keywords": "Mcp, Security, FintechMcpCompliance, Cybersecurity, Infosec",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/mcp-hidden-cost-traps.png",
+        "url": "https://kubailabs.com/static/og/mcp-hidden-cost-traps.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "MCP hidden cost traps",
-          "item": "https://blog.kubailabs.com/mcp-hidden-cost-traps/"
+          "item": "https://kubailabs.com/mcp-hidden-cost-traps/"
         }
       ]
     }
@@ -462,9 +462,9 @@ Yes. A longer cooldown means nodes that are no longer needed stay billed for lon
 <p>Open your Terraform configuration, find the node group that backs your busiest workload, and add the <code>CostCenter</code> tag if it is missing. Then run <code>terraform plan</code> and confirm the tag appears in the diff. Tagging takes under 30 minutes and is the prerequisite for every measurement described above — without it, you cannot tell which change helped.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
-<li><a href="https://blog.kubailabs.com/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
-<li><a href="https://blog.kubailabs.com/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
+<li><a href="https://kubailabs.com/spot-ais-hidden-cost-spike-in-your-stack/">Spot AI’s hidden cost spike in your stack</a></li>
+<li><a href="https://kubailabs.com/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
+<li><a href="https://kubailabs.com/cost-tools-fail-when-agents-scale-autonomously/">Cost tools fail when agents scale autonomously</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

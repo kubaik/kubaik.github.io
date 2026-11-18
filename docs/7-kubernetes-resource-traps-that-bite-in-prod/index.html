@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 Kubernetes resource traps that bite in prod">
         <meta property="og:description" content="Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.">
-        <meta property="og:url" content="https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/">
+        <meta property="og:url" content="https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png">
         <meta property="og:image:alt" content="7 Kubernetes resource traps that bite in prod">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="7 Kubernetes resource traps that bite in prod">
         <meta name="twitter:description" content="Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/">
+        <link rel="canonical" href="https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/#article",
+      "@id": "https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/#article",
       "headline": "7 Kubernetes resource traps that bite in prod",
       "description": "Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.",
       "datePublished": "2026-11-16T09:09:16+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/"
+        "@id": "https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/"
       },
       "keywords": "Kubernetes, ResourceLimits, KubernetesQosClass, K8s",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png",
+        "url": "https://kubailabs.com/static/og/7-kubernetes-resource-traps-that-bite-in-prod.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "7 Kubernetes resource traps that bite in prod",
-          "item": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/"
+          "item": "https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/"
         }
       ]
     }
@@ -131,7 +131,7 @@
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/#faq",
+  "@id": "https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/#faq",
   "mainEntity": [
     {
       "@type": "Question",
@@ -429,9 +429,9 @@ spec:
 <p>Every line in the output is a container that is either BestEffort (no requests) or unbounded (no limits). Pick the one in the most critical path, check its actual usage with <code>kubectl top pod</code>, and set a request based on that number. That single change is the highest-leverage fix available today.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
-<li><a href="https://blog.kubailabs.com/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
-<li><a href="https://blog.kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">HPA vs KEDA vs Karpenter: autoscaling traps</a></li>
+<li><a href="https://kubailabs.com/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/">CI/CD pipelines stall with GPU pods: 2026 benchmarks</a></li>
+<li><a href="https://kubailabs.com/kubernetes-or-nomad-the-real-experiment-cost-split/">Kubernetes or Nomad: the real experiment cost split</a></li>
+<li><a href="https://kubailabs.com/hpa-vs-keda-vs-karpenter-autoscaling-traps/">HPA vs KEDA vs Karpenter: autoscaling traps</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

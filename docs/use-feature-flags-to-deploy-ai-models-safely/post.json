@@ -42,7 +42,7 @@
   "reading_time_minutes": 14,
   "has_code": true,
   "has_table": true,
-  "prewritten_tweet": "Most teams burn $8k+ on AI tools before measuring ROI.\n\nMost of it goes to autocomplete nobody audits.\n\nHere is what actually paid off 👇\n\nhttps://blog.kubailabs.com/use-feature-flags-to-deploy-ai-models-safely\n\n#FutureTech #AI #Kubernetes #K8s\n\nHot take: most people skip the measurement step. Agree?",
+  "prewritten_tweet": "Most teams burn $8k+ on AI tools before measuring ROI.\n\nMost of it goes to autocomplete nobody audits.\n\nHere is what actually paid off 👇\n\nhttps:https://kubailabs.com/use-feature-flags-to-deploy-ai-models-safely\n\n#FutureTech #AI #Kubernetes #K8s\n\nHot take: most people skip the measurement step. Agree?",
   "audit_improved_at": "2026-09-19T08:27:14.754068+00:00",
   "audit_improve_reason": "Claim: Unverifiable first-person incident language (2 sentence(s)).",
   "audit_enhanced_at": "2026-10-03T13:00:17.076412+00:00",

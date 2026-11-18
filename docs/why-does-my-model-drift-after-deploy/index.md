@@ -317,9 +317,9 @@ Take the next 30 minutes to open your CI repository, add a `test_shadow_latency`
 
 ## Related reading
 
-- [LLM eval drift that users notice first](https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/)
-- [LLM drift before users complain: catch it early](https://blog.kubailabs.com/llm-eval-drift-that-users-notice-first/)
-- [LLM output metrics that actually move the needle](https://blog.kubailabs.com/llm-output-metrics-that-actually-move-the-needle/)
+- [LLM eval drift that users notice first](https://kubailabs.com/llm-eval-drift-that-users-notice-first/)
+- [LLM drift before users complain: catch it early](https://kubailabs.com/llm-eval-drift-that-users-notice-first/)
+- [LLM output metrics that actually move the needle](https://kubailabs.com/llm-output-metrics-that-actually-move-the-needle/)
 
 ## Official documentation
 

@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Double-entry ledger: concurrent write errors">
         <meta property="og:description" content="Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.">
-        <meta property="og:url" content="https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/">
+        <meta property="og:url" content="https://kubailabs.com/double-entry-ledger-concurrent-write-errors/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/double-entry-ledger-concurrent-write-errors.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/double-entry-ledger-concurrent-write-errors.png">
         <meta property="og:image:alt" content="Double-entry ledger: concurrent write errors">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Double-entry ledger: concurrent write errors">
         <meta name="twitter:description" content="Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/double-entry-ledger-concurrent-write-errors.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/double-entry-ledger-concurrent-write-errors.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/">
+        <link rel="canonical" href="https://kubailabs.com/double-entry-ledger-concurrent-write-errors/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/#article",
+      "@id": "https://kubailabs.com/double-entry-ledger-concurrent-write-errors/#article",
       "headline": "Double-entry ledger: concurrent write errors",
       "description": "Why concurrent writes corrupt double-entry ledgers, and how to enforce the debit-equals-credit invariant with isolation, locks, and triggers.",
       "datePublished": "2026-10-01T18:15:25+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/"
+        "@id": "https://kubailabs.com/double-entry-ledger-concurrent-write-errors/"
       },
       "keywords": "DoubleEntryLedger, ConcurrentWrites, SerializationFailure, LedgerConsistency",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/double-entry-ledger-concurrent-write-errors.png",
+        "url": "https://kubailabs.com/static/og/double-entry-ledger-concurrent-write-errors.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Double-entry ledger: concurrent write errors",
-          "item": "https://blog.kubailabs.com/double-entry-ledger-concurrent-write-errors/"
+          "item": "https://kubailabs.com/double-entry-ledger-concurrent-write-errors/"
         }
       ]
     }
@@ -486,9 +486,9 @@ HAVING SUM(amount) != 0;
 <p>If it returns rows, you have a live consistency bug and the deferred constraint trigger is the fastest mitigation. If it returns nothing, check <code>pg_stat_database.xact_rollback</code> and your application logs for serialization failures and deadlocks. Either result tells you which fix to apply first.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/offline-first-money-apps-with-dynamodb-streams/">Offline-first money apps with DynamoDB Streams</a></li>
-<li><a href="https://blog.kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
-<li><a href="https://blog.kubailabs.com/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
+<li><a href="https://kubailabs.com/offline-first-money-apps-with-dynamodb-streams/">Offline-first money apps with DynamoDB Streams</a></li>
+<li><a href="https://kubailabs.com/reconciling-mobile-money-edge-cases-banks-ignore/">Reconciling mobile money: edge cases banks ignore</a></li>
+<li><a href="https://kubailabs.com/agent-platform-abstractions-a-case-study/">Agent platform abstractions: a case study</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

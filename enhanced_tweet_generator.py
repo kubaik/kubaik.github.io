@@ -117,7 +117,7 @@ class EnhancedTweetGenerator:
     Designed for kubaik.github.io blog posts.
     """
 
-    BASE_URL = "https://blog.kubailabs.com"
+    BASE_URL = "https://kubailabs.com"
 
     # ── Public API ────────────────────────────────────────────────────────────
 

@@ -2,149 +2,149 @@
 <rss version="2.0">
   <channel>
     <title>Kubai Kevin</title>
-    <link>https://blog.kubailabs.com</link>
+    <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
     <lastBuildDate>Wed, 18 Nov 2026 06:35:15 +0000</lastBuildDate>
     <item>
       <title>Senior without the title: what stalls engineers</title>
-      <link>https://blog.kubailabs.com/senior-without-the-title-what-stalls-engineers/</link>
+      <link>https://kubailabs.com/senior-without-the-title-what-stalls-engineers/</link>
       <description>Senior work without the senior title: how freelance engineers build real technical depth through decision logs, timezone-aware design, and payment…</description>
       <pubDate>Wed, 18 Nov 2026 06:33:33 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/senior-without-the-title-what-stalls-engineers/</guid>
+      <guid>https://kubailabs.com/senior-without-the-title-what-stalls-engineers/</guid>
     </item>
     <item>
       <title>Security engineering isn&apos;t a ladder</title>
-      <link>https://blog.kubailabs.com/security-engineering-isnt-a-ladder/</link>
+      <link>https://kubailabs.com/security-engineering-isnt-a-ladder/</link>
       <description>Security engineering careers aren&amp;#x27;t a ladder—they&amp;#x27;re a lattice.</description>
       <pubDate>Tue, 17 Nov 2026 20:38:48 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/security-engineering-isnt-a-ladder/</guid>
+      <guid>https://kubailabs.com/security-engineering-isnt-a-ladder/</guid>
     </item>
     <item>
       <title>RBAC vs ABAC: pick by blast radius</title>
-      <link>https://blog.kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</link>
+      <link>https://kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</link>
       <description>RBAC vs ABAC for services: why role explosion and attribute spoofing fail in opposite directions, with runnable policy code and a deny-on-missing test.</description>
       <pubDate>Tue, 17 Nov 2026 07:08:29 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</guid>
+      <guid>https://kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</guid>
     </item>
     <item>
       <title>Kubernetes Requests and Limits: Seven Production Traps</title>
-      <link>https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</link>
+      <link>https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</link>
       <description>Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.</description>
       <pubDate>Mon, 16 Nov 2026 09:09:16 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</guid>
+      <guid>https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</guid>
     </item>
     <item>
       <title>Human-in-the-loop: when agents need a human veto</title>
-      <link>https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/</link>
+      <link>https://kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/</link>
       <description>Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.</description>
       <pubDate>Mon, 16 Nov 2026 05:32:11 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/</guid>
+      <guid>https://kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/</guid>
     </item>
     <item>
       <title>Multi-region active-active: the hidden costs</title>
-      <link>https://blog.kubailabs.com/multi-region-active-active-the-hidden-costs/</link>
+      <link>https://kubailabs.com/multi-region-active-active-the-hidden-costs/</link>
       <description>Active-active across AWS, Azure and Google Cloud is a distributed-systems build, not a product. Here are its real costs and failure modes.</description>
       <pubDate>Sun, 15 Nov 2026 18:39:30 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/multi-region-active-active-the-hidden-costs/</guid>
+      <guid>https://kubailabs.com/multi-region-active-active-the-hidden-costs/</guid>
     </item>
     <item>
       <title>Python deps: uv vs Poetry vs pip-tools</title>
-      <link>https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</link>
+      <link>https://kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</link>
       <description>Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</description>
       <pubDate>Sun, 15 Nov 2026 05:32:25 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</guid>
+      <guid>https://kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</guid>
     </item>
     <item>
       <title>Your platform team is too big</title>
-      <link>https://blog.kubailabs.com/your-platform-team-is-too-big/</link>
+      <link>https://kubailabs.com/your-platform-team-is-too-big/</link>
       <description>Small engineering orgs often staff a platform team before scoping the platform as a product. Here is a staffing test, a written boundary, and paved roads.</description>
       <pubDate>Sat, 14 Nov 2026 17:48:24 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/your-platform-team-is-too-big/</guid>
+      <guid>https://kubailabs.com/your-platform-team-is-too-big/</guid>
     </item>
     <item>
       <title>Freelance vs full-time: African devs&apos; real tradeoffs</title>
-      <link>https://blog.kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</link>
+      <link>https://kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</link>
       <description>A structural comparison of freelance contracts and full-time remote jobs for African developers: risk transfer, utilization, tax, IP, and a worked pay comparison.</description>
       <pubDate>Sat, 14 Nov 2026 05:34:55 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</guid>
+      <guid>https://kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</guid>
     </item>
     <item>
       <title>Distributed locks: safe only with fencing</title>
-      <link>https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/</link>
+      <link>https://kubailabs.com/distributed-locks-safe-only-with-fencing/</link>
       <description>A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</description>
       <pubDate>Fri, 13 Nov 2026 18:26:53 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/</guid>
+      <guid>https://kubailabs.com/distributed-locks-safe-only-with-fencing/</guid>
     </item>
     <item>
       <title>Virtual threads: what actually changes</title>
-      <link>https://blog.kubailabs.com/virtual-threads-what-actually-changes/</link>
+      <link>https://kubailabs.com/virtual-threads-what-actually-changes/</link>
       <description>What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.</description>
       <pubDate>Fri, 13 Nov 2026 05:44:40 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/virtual-threads-what-actually-changes/</guid>
+      <guid>https://kubailabs.com/virtual-threads-what-actually-changes/</guid>
     </item>
     <item>
       <title>Structured logging: searchable at scale</title>
-      <link>https://blog.kubailabs.com/structured-logging-searchable-at-scale/</link>
+      <link>https://kubailabs.com/structured-logging-searchable-at-scale/</link>
       <description>Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</description>
       <pubDate>Thu, 12 Nov 2026 19:42:54 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/structured-logging-searchable-at-scale/</guid>
+      <guid>https://kubailabs.com/structured-logging-searchable-at-scale/</guid>
     </item>
     <item>
       <title>7 ADR traps that cause stale decisions</title>
-      <link>https://blog.kubailabs.com/7-adr-traps-that-cause-stale-decisions/</link>
+      <link>https://kubailabs.com/7-adr-traps-that-cause-stale-decisions/</link>
       <description>How architecture decision records go stale: template bloat, drifting status fields, hidden storage, broken numbering, missing context, no workflow trigger, no review.</description>
       <pubDate>Thu, 12 Nov 2026 06:24:11 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/7-adr-traps-that-cause-stale-decisions/</guid>
+      <guid>https://kubailabs.com/7-adr-traps-that-cause-stale-decisions/</guid>
     </item>
     <item>
       <title>Model evals: the gaps that let drift slip through</title>
-      <link>https://blog.kubailabs.com/model-evals-the-gaps-that-let-drift-slip-through/</link>
+      <link>https://kubailabs.com/model-evals-the-gaps-that-let-drift-slip-through/</link>
       <description>Aggregate eval scores hide subtle model drift. Learn per-example diffing, slice reporting, pinned baselines, and a minimal CI gate that catches behavior changes.</description>
       <pubDate>Wed, 11 Nov 2026 19:26:17 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/model-evals-the-gaps-that-let-drift-slip-through/</guid>
+      <guid>https://kubailabs.com/model-evals-the-gaps-that-let-drift-slip-through/</guid>
     </item>
     <item>
       <title>Canary rollbacks: automate the decision, not the deploy</title>
-      <link>https://blog.kubailabs.com/canary-rollbacks-automate-the-decision-not-the-deploy/</link>
+      <link>https://kubailabs.com/canary-rollbacks-automate-the-decision-not-the-deploy/</link>
       <description>Design canary analysis that compares against a live baseline, guards on sample size, and avoids the false positives that erode trust in automation.</description>
       <pubDate>Wed, 11 Nov 2026 05:19:28 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/canary-rollbacks-automate-the-decision-not-the-deploy/</guid>
+      <guid>https://kubailabs.com/canary-rollbacks-automate-the-decision-not-the-deploy/</guid>
     </item>
     <item>
       <title>Open source contributions: the credibility trap</title>
-      <link>https://blog.kubailabs.com/open-source-contributions-the-credibility-trap/</link>
+      <link>https://kubailabs.com/open-source-contributions-the-credibility-trap/</link>
       <description>Why merged pull requests often fail to persuade hiring teams, and how to choose projects and shape contributions that read as engineering judgment.</description>
       <pubDate>Tue, 10 Nov 2026 19:29:06 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/open-source-contributions-the-credibility-trap/</guid>
+      <guid>https://kubailabs.com/open-source-contributions-the-credibility-trap/</guid>
     </item>
     <item>
       <title>Saga pattern: orchestration vs choreography in payments</title>
-      <link>https://blog.kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</link>
+      <link>https://kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</link>
       <description>How payment sagas coordinate steps, why refunds are not charge reversals, and a decision framework for choosing orchestration or choreography.</description>
       <pubDate>Tue, 10 Nov 2026 06:34:03 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
+      <guid>https://kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
     </item>
     <item>
       <title>WAF and bot management: what they miss</title>
-      <link>https://blog.kubailabs.com/waf-and-bot-management-what-they-miss/</link>
+      <link>https://kubailabs.com/waf-and-bot-management-what-they-miss/</link>
       <description>WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</description>
       <pubDate>Mon, 09 Nov 2026 22:06:13 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/waf-and-bot-management-what-they-miss/</guid>
+      <guid>https://kubailabs.com/waf-and-bot-management-what-they-miss/</guid>
     </item>
     <item>
       <title>FastAPI vs Django vs Flask: API picks for 2026</title>
-      <link>https://blog.kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</link>
+      <link>https://kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</link>
       <description>Compare FastAPI, Django, and Flask on concurrency, validation, ORM, auth, and operations, with a worked latency example and a 30-minute check.</description>
       <pubDate>Mon, 09 Nov 2026 05:20:45 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</guid>
+      <guid>https://kubailabs.com/fastapi-vs-django-vs-flask-api-picks-for-2026/</guid>
     </item>
     <item>
       <title>Queueing theory for backend capacity</title>
-      <link>https://blog.kubailabs.com/queueing-theory-for-backend-capacity/</link>
+      <link>https://kubailabs.com/queueing-theory-for-backend-capacity/</link>
       <description>Why doubling traffic can quadruple tail latency, how to model each constrained resource as a queue, and how to measure utilisation before you hit the cliff.</description>
       <pubDate>Sun, 08 Nov 2026 17:48:03 +0000</pubDate>
-      <guid>https://blog.kubailabs.com/queueing-theory-for-backend-capacity/</guid>
+      <guid>https://kubailabs.com/queueing-theory-for-backend-capacity/</guid>
     </item>
   </channel>
 </rss>

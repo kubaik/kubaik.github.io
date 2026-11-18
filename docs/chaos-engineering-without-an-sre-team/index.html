@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Chaos engineering without an SRE team">
         <meta property="og:description" content="How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.">
-        <meta property="og:url" content="https://blog.kubailabs.com/chaos-engineering-without-an-sre-team/">
+        <meta property="og:url" content="https://kubailabs.com/chaos-engineering-without-an-sre-team/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/chaos-engineering-without-an-sre-team.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/chaos-engineering-without-an-sre-team.png">
         <meta property="og:image:alt" content="Chaos engineering without an SRE team">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Chaos engineering without an SRE team">
         <meta name="twitter:description" content="How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/chaos-engineering-without-an-sre-team.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/chaos-engineering-without-an-sre-team.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/chaos-engineering-without-an-sre-team/">
+        <link rel="canonical" href="https://kubailabs.com/chaos-engineering-without-an-sre-team/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/chaos-engineering-without-an-sre-team/#article",
+      "@id": "https://kubailabs.com/chaos-engineering-without-an-sre-team/#article",
       "headline": "Chaos engineering without an SRE team",
       "description": "How to run controlled fault injection in CI without a dedicated SRE team: scoping, kill switches, instrumentation, and failure modes to avoid.",
       "datePublished": "2026-09-30T04:44:20+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/chaos-engineering-without-an-sre-team/"
+        "@id": "https://kubailabs.com/chaos-engineering-without-an-sre-team/"
       },
       "keywords": "ChaosEngineering, Sre, FaultInjection, SmallTeamReliability, AwsFis, ChaosTesting, Softwareengineering",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/chaos-engineering-without-an-sre-team.png",
+        "url": "https://kubailabs.com/static/og/chaos-engineering-without-an-sre-team.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Chaos engineering without an SRE team",
-          "item": "https://blog.kubailabs.com/chaos-engineering-without-an-sre-team/"
+          "item": "https://kubailabs.com/chaos-engineering-without-an-sre-team/"
         }
       ]
     }
@@ -453,9 +453,9 @@ Yes. Managed fault-injection services support Lambda and ECS/Fargate. For Lambda
 <p>Pick the one service that pages your team most often. Add the <code>ChaosMiddleware</code> from this article to its repository, gated behind the <code>X-Chaos-Experiment: enabled</code> header, and wire up a Redis key to toggle it. Then run the measurement script against your staging environment with a latency injection of 200 ms on 10% of calls, and record the baseline, during, and after numbers. If the service does not return to baseline within 30 seconds of disabling the injection, you have found a real weakness — and a concrete first fix.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
-<li><a href="https://blog.kubailabs.com/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
-<li><a href="https://blog.kubailabs.com/ai-interviews-4-questions-that-caught-80-of-weak/">AI Interviews: Four Resilience Questions That Matter</a></li>
+<li><a href="https://kubailabs.com/self-service-ai-tooling-where-it-breaks-first/">Self-service AI tooling: where it breaks first</a></li>
+<li><a href="https://kubailabs.com/spot-instances-vs-on-demand-for-ai-experiments/">Spot instances vs on-demand for AI experiments</a></li>
+<li><a href="https://kubailabs.com/ai-interviews-4-questions-that-caught-80-of-weak/">AI Interviews: Four Resilience Questions That Matter</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

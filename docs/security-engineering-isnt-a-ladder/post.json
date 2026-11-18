@@ -31,6 +31,6 @@
   "reading_time_minutes": 13,
   "has_code": true,
   "has_table": false,
-  "prewritten_tweet": "Same title, wildly different jobs. Security engineering careers follow a lattice, not a ladder…\n\nhttps://blog.kubailabs.com/security-engineering-isnt-a-ladder/\n\n#CyberSecurity #InfoSec #SecurityEngineering\n\nWhat's the tool you wished you'd found earlier?",
+  "prewritten_tweet": "Same title, wildly different jobs. Security engineering careers follow a lattice, not a ladder…\n\nhttps:https://kubailabs.com/security-engineering-isnt-a-ladder/\n\n#CyberSecurity #InfoSec #SecurityEngineering\n\nWhat's the tool you wished you'd found earlier?",
   "tweet_hook_style": "pattern across many examples"
 }

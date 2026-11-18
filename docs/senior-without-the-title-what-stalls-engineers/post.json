@@ -38,6 +38,6 @@
   "reading_time_minutes": 16,
   "has_code": true,
   "has_table": false,
-  "prewritten_tweet": "The documentation tells you a function exists. Depth tells you when calling it will cause a 2 AM incident.\n\nhttps://blog.kubailabs.com/senior-without-the-title-what-stalls-engineers/\n\n#SoftwareEngineering #Kubernetes #K8s #Freelancing\n\nWhat's the tool you wished you'd found earlier?",
+  "prewritten_tweet": "The documentation tells you a function exists. Depth tells you when calling it will cause a 2 AM incident.\n\nhttps:https://kubailabs.com/senior-without-the-title-what-stalls-engineers/\n\n#SoftwareEngineering #Kubernetes #K8s #Freelancing\n\nWhat's the tool you wished you'd found earlier?",
   "tweet_hook_style": "docs gap"
 }

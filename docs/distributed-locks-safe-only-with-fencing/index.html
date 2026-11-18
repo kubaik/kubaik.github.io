@@ -15,20 +15,20 @@
         <meta property="og:type" content="article">
         <meta property="og:title" content="Distributed locks: safe only with fencing">
         <meta property="og:description" content="A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.">
-        <meta property="og:url" content="https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/">
+        <meta property="og:url" content="https://kubailabs.com/distributed-locks-safe-only-with-fencing/">
         <meta property="og:site_name" content="Kubai Kevin">
         <meta property="og:locale" content="en_US">
-        <meta property="og:image" content="https://blog.kubailabs.com/static/og/distributed-locks-safe-only-with-fencing.png">
+        <meta property="og:image" content="https://kubailabs.com/static/og/distributed-locks-safe-only-with-fencing.png">
         <meta property="og:image:alt" content="Distributed locks: safe only with fencing">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Distributed locks: safe only with fencing">
         <meta name="twitter:description" content="A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.">
-        <meta name="twitter:image" content="https://blog.kubailabs.com/static/og/distributed-locks-safe-only-with-fencing.png">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/distributed-locks-safe-only-with-fencing.png">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/">
+        <link rel="canonical" href="https://kubailabs.com/distributed-locks-safe-only-with-fencing/">
         <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
@@ -59,7 +59,7 @@
   "@graph": [
     {
       "@type": "Article",
-      "@id": "https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/#article",
+      "@id": "https://kubailabs.com/distributed-locks-safe-only-with-fencing/#article",
       "headline": "Distributed locks: safe only with fencing",
       "description": "A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.",
       "datePublished": "2026-11-13T18:26:53+00:00",
@@ -70,10 +70,10 @@
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
-        "@id": "https://blog.kubailabs.com/about/#author",
+        "@id": "https://kubailabs.com/about/#author",
         "name": "Kubai Kevin",
         "jobTitle": "Software Developer",
-        "url": "https://blog.kubailabs.com/about/",
+        "url": "https://kubailabs.com/about/",
         "sameAs": [
           "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
           "https://twitter.com/KubaiKevin",
@@ -91,18 +91,18 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://blog.kubailabs.com/#organization",
+        "@id": "https://kubailabs.com/#organization",
         "name": "Kubai Kevin",
-        "url": "https://blog.kubailabs.com"
+        "url": "https://kubailabs.com"
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/"
+        "@id": "https://kubailabs.com/distributed-locks-safe-only-with-fencing/"
       },
       "keywords": "DistributedLock, FencingToken, RedisDistributedLock, EtcdDistributedLock, Redis",
       "image": {
         "@type": "ImageObject",
-        "url": "https://blog.kubailabs.com/static/og/distributed-locks-safe-only-with-fencing.png",
+        "url": "https://kubailabs.com/static/og/distributed-locks-safe-only-with-fencing.png",
         "width": 1200,
         "height": 630
       }
@@ -114,13 +114,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://blog.kubailabs.com/"
+          "item": "https://kubailabs.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Distributed locks: safe only with fencing",
-          "item": "https://blog.kubailabs.com/distributed-locks-safe-only-with-fencing/"
+          "item": "https://kubailabs.com/distributed-locks-safe-only-with-fencing/"
         }
       ]
     }
@@ -429,9 +429,9 @@ return token
 <p><strong>Action for the next 30 minutes:</strong> find every place in the codebase that calls a lock's acquire, and for each one write down the resource it protects and whether that resource compares a stored token to an incoming one. Any lock whose resource does not compare tokens is an efficiency lock whether or not the team knows it; either add the conditional write or document the accepted risk.</p>
 <h2 id="related-reading">Related reading</h2>
 <ul>
-<li><a href="https://blog.kubailabs.com/mcp-hidden-cost-traps/">MCP hidden cost traps</a></li>
-<li><a href="https://blog.kubailabs.com/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
-<li><a href="https://blog.kubailabs.com/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
+<li><a href="https://kubailabs.com/mcp-hidden-cost-traps/">MCP hidden cost traps</a></li>
+<li><a href="https://kubailabs.com/thundering-herd-the-hidden-scaling-trap/">Thundering Herd: The Hidden Scaling Trap</a></li>
+<li><a href="https://kubailabs.com/monolith-to-services-without-a-rewrite/">Monolith to services without a rewrite</a></li>
 </ul>
 <h2 id="official-documentation">Official documentation</h2>
 <ul>

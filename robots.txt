@@ -1,4 +1,4 @@
-# robots.txt for https://blog.kubailabs.com
+# robots.txt for https://kubailabs.com
     # Generated automatically - Do not edit manually
 
     User-agent: *
@@ -19,6 +19,6 @@
     Disallow: /.git/
 
     # Sitemap
-    Sitemap: https://blog.kubailabs.com/sitemap.xml
-    Sitemap: https://blog.kubailabs.com/rss.xml
+    Sitemap: https://kubailabs.com/sitemap.xml
+    Sitemap: https://kubailabs.com/rss.xml
     
