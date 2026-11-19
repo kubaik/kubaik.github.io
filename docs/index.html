@@ -209,10 +209,10 @@
                 
                 <a class="post-card" href="/on-call-without-derailing-projects/"
                    data-title="On-call without derailing projects"
-                   data-description="On-call rotations erode project delivery when alerts are noisy and capacity isn&#x27;t planned."
+                   data-description="On-call rotations erode project delivery when alerts are noisy and capacity isn&#39;t planned."
                    data-tags="Reliability">
                     <h3>On-call without derailing projects</h3>
-                    <p class="post-excerpt">On-call rotations erode project delivery when alerts are noisy and capacity isn&#x27;t planned.</p>
+                    <p class="post-excerpt">On-call rotations erode project delivery when alerts are noisy and capacity isn&#39;t planned.</p>
                     
                     <p class="post-reading-time">13 min read</p>
                     
@@ -281,10 +281,10 @@
                 
                 <a class="post-card" href="/security-engineering-isnt-a-ladder/"
                    data-title="Security engineering isn&#39;t a ladder"
-                   data-description="Security engineering careers aren&#x27;t a ladder—they&#x27;re a lattice."
+                   data-description="Security engineering careers aren&#39;t a ladder—they&#39;re a lattice."
                    data-tags="Security,Engineering Careers,Reliability,LLMs">
                     <h3>Security engineering isn&#39;t a ladder</h3>
-                    <p class="post-excerpt">Security engineering careers aren&#x27;t a ladder—they&#x27;re a lattice.</p>
+                    <p class="post-excerpt">Security engineering careers aren&#39;t a ladder—they&#39;re a lattice.</p>
                     
                     <p class="post-reading-time">13 min read</p>
                     
@@ -1013,7 +1013,7 @@
         }
 
         function highlightText(text, query) {
-            if (!query) return text;
+            if (!query) return escapeHtml(text);
             var lower  = text.toLowerCase();
             var qLower = query.toLowerCase();
             var result = '';
