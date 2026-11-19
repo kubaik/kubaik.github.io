@@ -1,5 +1,7 @@
 import re
 import subprocess
+
+from text_hygiene import normalize_list, normalize_text
 from datetime import datetime
 from pathlib import Path
 
@@ -47,16 +49,23 @@ class BlogPost:
         twitter_hashtags=None,
         full_title=None,
     ):
+        # Titles/descriptions/tags are PLAIN TEXT. Strip any HTML entities an
+        # LLM or an older pipeline stage may have baked in, so storage never
+        # holds "isn&#x27;t" and renderers can escape exactly once.
+        # (`content` is intentionally left alone: code samples may contain
+        # legitimate "&lt;" sequences.)
+        title = normalize_text(title)
+        full_title = normalize_text(full_title)
         self.title = title
         self.full_title = full_title or title
         self.content = content
         self.slug = slug
-        self.tags = tags or []
-        self.meta_description = meta_description
+        self.tags = normalize_list(tags or [])
+        self.meta_description = normalize_text(meta_description)
         self.featured_image = featured_image
         self.created_at = created_at
         self.updated_at = updated_at
-        self.seo_keywords = seo_keywords or []
+        self.seo_keywords = normalize_list(seo_keywords or [])
         self.affiliate_links = affiliate_links or []
         self.monetization_data = monetization_data or {}
         self.twitter_hashtags = twitter_hashtags or ""

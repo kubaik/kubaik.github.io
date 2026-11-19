@@ -24,11 +24,23 @@ from adsense_fixes.ads_txt_sync import AdsTxtError, sync_ads_txt
 
 import html as _html_stdlib
 
+from text_hygiene import assert_no_double_escaping, normalize_text
 
-def _safe_excerpt(
+
+def _plain_excerpt(
     meta_description: str, content: str, title: str = "", max_len: int = 155
 ) -> str:
-    """Return a plain-text excerpt, HTML-escaped, safe for use in attributes."""
+    """Return a PLAIN-TEXT excerpt (never HTML-escaped).
+
+    Escaping is the job of the output boundary, exactly once:
+      * Jinja templates -> autoescape=True (just pass this value)
+      * posts.json / JSON-LD -> json.dumps
+      * RSS -> _escape_xml
+      * hand-built f-string HTML -> wrap in _html_stdlib.escape(..., quote=True)
+
+    History: this function used to return html.escape()d text, which Jinja
+    then escaped again, publishing "isn&#x27;t" literally on the live site.
+    """
     import re
 
     desc = (meta_description or "").strip()
@@ -52,8 +64,7 @@ def _safe_excerpt(
         "i've answered",
     )
     if desc and not any(desc.lower().startswith(w) for w in _WEAK_OPENERS):
-        # Escape quotes/ampersands so the value is safe inside HTML attributes
-        return _html_stdlib.escape(desc, quote=True)
+        return normalize_text(desc)
 
     text = re.sub(r"```[\s\S]*?```", " ", content or "")
     text = re.sub(r"`[^`]+`", " ", text)
@@ -75,10 +86,10 @@ def _safe_excerpt(
             continue
         if len(sentence) > max_len:
             sentence = sentence[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
-        return _html_stdlib.escape(sentence, quote=True)
+        return normalize_text(sentence)
 
     fallback = f"Practical guide to {title}." if title else text[:max_len]
-    return _html_stdlib.escape(fallback, quote=True)
+    return normalize_text(fallback)
 
 
 _RELATED_STOP_WORDS = frozenset(
@@ -414,6 +425,12 @@ class StaticSiteGenerator:
         self._generate_ads_txt()
         self._generate_pwa_files()
         self._generate_tag_pages(posts)
+
+        # GATE: never publish double-escaped entities ("isn&#x27;t" shown
+        # literally). Fails the build rather than shipping broken
+        # titles/excerpts/meta descriptions to users and crawlers.
+        assert_no_double_escaping(Path("./docs"))
+
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_default_og_image(self):
@@ -671,7 +688,7 @@ Sitemap: {base_url}/sitemap.xml
                 post_dict["short_tags"], limit=3
             )
             post_dict["reading_time"] = self._reading_time_minutes(p.content)
-            post_dict["meta_description"] = _safe_excerpt(
+            post_dict["meta_description"] = _plain_excerpt(
                 p.meta_description, p.content, p.title
             )
             # Strip the full content from the homepage payload — it is only
@@ -770,9 +787,9 @@ Sitemap: {base_url}/sitemap.xml
 
             cards = "".join(
                 f'<a class="post-card" href="{base_path}/{p.slug}/">'
-                f"<h3>{p.title}</h3>"
+                f"<h3>{_html_stdlib.escape(p.title, quote=True)}</h3>"
                 f'<p class="post-excerpt">'
-                f"{_safe_excerpt(p.meta_description, p.content, p.title)}</p>"
+                f"{_html_stdlib.escape(_plain_excerpt(p.meta_description, p.content, p.title), quote=True)}</p>"
                 f'<p class="post-reading-time">'
                 f"{self._reading_time_minutes(p.content)} min read · "
                 f"{self._format_display_date(p.created_at)}</p></a>"
@@ -1394,7 +1411,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             post_dict["updated_date"] = self._format_display_date(post.updated_at)
             post_dict["reading_time"] = self._reading_time_minutes(post.content)
             post_dict["word_count"] = len(post.content.split())
-            post_dict["meta_description"] = _safe_excerpt(
+            post_dict["meta_description"] = _plain_excerpt(
                 post.meta_description, post.content, post.title
             )
             post_dict["review_date"] = datetime.now().strftime("%B %Y")
@@ -1583,7 +1600,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             scored.sort(key=lambda x: (-x[0], x[1]))
         result = []
         for _, _, p in scored[:max_count]:
-            excerpt = _safe_excerpt(p.meta_description, p.content, p.title, max_len=120)
+            excerpt = _plain_excerpt(
+                p.meta_description, p.content, p.title, max_len=120
+            )
             result.append(
                 {
                     "title": getattr(p, "full_title", None) or p.title,
@@ -1735,7 +1754,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 d["display_date"] = self._format_display_date(p.created_at)
                 d["short_tags"] = sorted(p.tags, key=len)[:3]
                 d["reading_time"] = self._reading_time_minutes(p.content)
-                d["meta_description"] = _safe_excerpt(
+                d["meta_description"] = _plain_excerpt(
                     p.meta_description, p.content, p.title
                 )
                 posts_data.append(d)
@@ -1816,8 +1835,8 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 """
                 + "".join(f"""
       <a class="post-card" href="{base_path}/{p["slug"]}/">
-        <h3>{p["title"]}</h3>
-        <p class="post-excerpt">{p["meta_description"]}</p>
+        <h3>{_html_stdlib.escape(p["title"], quote=True)}</h3>
+        <p class="post-excerpt">{_html_stdlib.escape(p["meta_description"], quote=True)}</p>
         <p class="post-reading-time">{p["reading_time"]} min read · {p["display_date"]}</p>
       </a>""" for p in posts_data)
                 + f"""
@@ -1899,7 +1918,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         base_url = config.get("base_url", "")
         rss_items = []
         for post in posts[:20]:
-            desc = _safe_excerpt(post.meta_description, post.content, post.title)
+            desc = _plain_excerpt(post.meta_description, post.content, post.title)
             item = f"""    <item>
       <title>{self._escape_xml(post.title)}</title>
       <link>{base_url}/{post.slug}/</link>
@@ -2038,7 +2057,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 {
                     "slug": p.slug,
                     "title": p.title,
-                    "meta_description": _safe_excerpt(
+                    "meta_description": _plain_excerpt(
                         p.meta_description, p.content, p.title
                     ),
                     "tags": p.tags,
@@ -2746,7 +2765,7 @@ def _build_templates() -> dict:
         }
 
         function highlightText(text, query) {
-            if (!query) return text;
+            if (!query) return escapeHtml(text);
             var lower  = text.toLowerCase();
             var qLower = query.toLowerCase();
             var result = '';

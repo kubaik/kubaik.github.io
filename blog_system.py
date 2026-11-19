@@ -6564,6 +6564,21 @@ if __name__ == "__main__":
                 ["python", "deduplicate_posts.py", "--delete"] + sys.argv[2:]
             )
 
+        elif mode == "fix-entities":
+            # Clean HTML-entity junk ("isn&#x27;t") from stored titles,
+            # descriptions, tags and keywords; optionally repair built HTML.
+            #   python blog_system.py fix-entities [--dry-run] [--html]
+            import text_hygiene
+
+            dry = "--dry-run" in sys.argv[2:]
+            docs = Path("./docs")
+            n = text_hygiene.fix_sources(docs, dry_run=dry)
+            print(f"{n} post.json file(s) {'would be ' if dry else ''}cleaned.")
+            if "--html" in sys.argv[2:]:
+                files, reps = text_hygiene.fix_built_html(docs, dry_run=dry)
+                print(f"built HTML: {files} file(s), {reps} replacement(s).")
+            print("Run `python blog_system.py build` to regenerate the site.")
+
         elif mode == "fix-descriptions":
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
@@ -6823,7 +6838,7 @@ if __name__ == "__main__":
         else:
             print(
                 "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
-                "debug|social|test-twitter|dedup|fix-descriptions|fix-titles|"
+                "debug|social|test-twitter|dedup|fix-descriptions|fix-entities|fix-titles|"
                 "refresh-stale|audit-links|audit-slugs|audit-freshness|velocity|"
                 "preflight-rebuild|preflight-check]"
             )
@@ -6832,7 +6847,7 @@ if __name__ == "__main__":
         print("AI Blog System — Usage: python blog_system.py [command]")
         print(
             "Commands: init | auto | build | cleanup | audit | purge | debug | social | "
-            "test-twitter | dedup | fix-descriptions | fix-titles | refresh-stale | "
+            "test-twitter | dedup | fix-descriptions | fix-entities | fix-titles | refresh-stale | "
             "audit-links | audit-slugs | audit-freshness | velocity | topics | preflight-rebuild | "
             "preflight-check"
         )
