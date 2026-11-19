@@ -174,6 +174,7 @@ docs/oauth-21-migration-what-breaks-in-existing-integrations/	Tags absent from b
 docs/observability-2026-ditch-the-three-pillars/	Tags absent from body: Data Engineering, Messaging
 docs/observe-llm-features-90-faster/	Tags absent from body: LLMs, Vector Search
 docs/offline-agent-workflows-for-last-mile-ops/	Tags absent from body: Payments
+docs/on-call-without-derailing-projects/	Tags absent from body: Reliability
 docs/one-payment-stack-for-kenya-nigeria-ghana/	Tags absent from body: Africa Tech, Reliability
 docs/open-source-contributions-the-credibility-trap/	Tags absent from body: Engineering Careers
 docs/orchestration-tax-kills-multi-agent-systems/	Tags absent from body: Distributed Systems, Serverless

@@ -1,0 +1,434 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>On-call without derailing projects - Kubai Kevin</title>
+        <meta name="description" content="On-call rotations erode project delivery when alerts are noisy and capacity isn&amp;#x27;t planned.">
+        <meta name="keywords" content="on-call, project work, alert fatigue, on-call rotation, reduce on-call pages, on-call handoff checklist, how to balance on-call with project work, why does on-call slow down delivery">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-19T06:34:43.475595">
+        <meta property="article:modified_time" content="2026-11-19T06:34:43.475607">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="On-call without derailing projects">
+        <meta property="og:description" content="On-call rotations erode project delivery when alerts are noisy and capacity isn&amp;#x27;t planned.">
+        <meta property="og:url" content="https://kubailabs.com/on-call-without-derailing-projects/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/on-call-without-derailing-projects.png">
+        <meta property="og:image:alt" content="On-call without derailing projects">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="On-call without derailing projects">
+        <meta name="twitter:description" content="On-call rotations erode project delivery when alerts are noisy and capacity isn&amp;#x27;t planned.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/on-call-without-derailing-projects.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/on-call-without-derailing-projects/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/on-call-without-derailing-projects/#article",
+      "headline": "On-call without derailing projects",
+      "description": "On-call rotations erode project delivery when alerts are noisy and capacity isn't planned.",
+      "datePublished": "2026-11-19T06:34:43+00:00",
+      "dateModified": "2026-11-19T06:34:43+00:00",
+      "wordCount": 2635,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/on-call-without-derailing-projects/"
+      },
+      "keywords": "on-call, project work, alert fatigue, on-call rotation, reduce on-call pages, on-call handoff checklist, how to balance on-call with project work, why does on-call slow down delivery"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "On-call without derailing projects",
+          "item": "https://kubailabs.com/on-call-without-derailing-projects/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>On-call without derailing projects</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">On-call without derailing projects</h1>
+                
+                <p class="post-lead">On-call rotations erode project delivery when alerts are noisy and capacity isn&amp;#x27;t planned.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/reliability/"
+                       style="text-decoration:none;">Reliability</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2635 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-19
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>On-call rotations and project work are two jobs with the same eight hours. The on-call engineer is expected to triage alerts, write postmortems, and still deliver the feature they committed to. When the pager goes off at 2am, the next day's project work doesn't disappear — it just gets compressed. The result is a slow erosion of delivery pace that looks like a staffing problem but is really a scheduling problem. This post is about the mechanics of separating the two: how to define on-call boundaries, how to make alerting precise enough that on-call is quiet, and how to hand off work so that neither the project nor the rotation absorbs the other's cost. The concrete problem: teams treat on-call as background noise and then wonder why sprint velocity collapses every time someone joins the rotation.</p>
+<h2 id="the-real-cost-is-context-switching-not-the-pages-themselves">The real cost is context switching, not the pages themselves</h2>
+<p>Most teams measure on-call by page volume. A quiet week is assumed to be a good week. But the expensive part of on-call is not the 3am page — it's the low-grade background load of knowing you might be paged, plus the morning triage that fragments focus. A single interruption during a deep-work block can cost more than the interruption itself because re-establishing context (reading the stack trace, remembering the design decision, finding the right file) takes time that isn't tracked anywhere.</p>
+<p>The pattern that causes the most damage is what I'd call the <em>absorbed rotation</em>: the on-call engineer is nominally on rotation but also expected to attend all project standups, review PRs, and make design decisions. The rotation is real but invisible in planning. When an incident lands, the project absorbs the cost silently, and the team learns to under-commit rather than fix the structure.</p>
+<p>The fix is structural: on-call must be a <em>visible</em> allocation of capacity, not an assumption that the engineer will "just handle it." That means the rotation needs a defined scope, a quiet baseline, and a handoff protocol that the whole team follows — not just the person holding the pager.</p>
+<h2 id="prerequisites-what-you-need-before-changing-the-rotation">Prerequisites: what you need before changing the rotation</h2>
+<p>You can't fix on-call scheduling without three things in place. Skip any of these and the changes won't stick.</p>
+<ol>
+<li>
+<p><strong>An alert inventory with ownership.</strong> Every alert that can page a human needs a named owning service and a documented runbook. If you don't have this, start by exporting your alert rules and listing which ones have fired in the last 30 days. Alerts that never fire are candidates for deletion; alerts that fire often without action are candidates for demotion to a dashboard.</p>
+</li>
+<li>
+<p><strong>A rotation tool that supports overrides and escalation.</strong> Most incident tools (PagerDuty, Opsgenie, Grafana OnCall, and the open-source Alertmanager with a routing tree) support schedule overrides and escalation policies. If you're still using a shared phone and a spreadsheet, the rest of this post will be hard to apply. The minimum viable setup is a schedule with a primary and secondary, an escalation policy that fires after a documented timeout, and a way to override for planned absence.</p>
+</li>
+<li>
+<p><strong>A definition of "project work" that excludes on-call capacity.</strong> This sounds obvious, but most sprint plans assume full availability. If your team runs two-week sprints and one engineer is on-call for one of those weeks, the plan should reflect roughly half capacity for that person — not because they'll be paged constantly, but because the background load and triage time are real. The exact fraction depends on your alert volume; the point is to make it explicit rather than discovered at retro.</p>
+</li>
+</ol>
+<h2 id="step-1-define-the-on-call-contract-in-writing">Step 1: Define the on-call contract in writing</h2>
+<p>The first implementation step is a one-page document that states what on-call covers and what it doesn't. This is not bureaucracy — it's the thing you point to when someone asks the on-call engineer to join a design review during their rotation week.</p>
+<p>A useful contract has four clauses:</p>
+<ul>
+<li><strong>Scope:</strong> which services and which severity levels page the on-call engineer. Everything else goes to a ticket or a dashboard.</li>
+<li><strong>Response expectations:</strong> what "acknowledge" means (e.g., within 5 minutes during business hours, 15 minutes out of hours) and what "resolve" means (e.g., mitigate within 1 hour, root-cause within the next business day). These are targets, not guarantees; document them so the team can measure against them.</li>
+<li><strong>Exclusions:</strong> project work that is explicitly paused during rotation. Typically this is deep-work tasks — feature development, large refactors — while code review and small bug fixes remain allowed because they're interruptible.</li>
+<li><strong>Handoff:</strong> when and how the rotation transfers, including what the outgoing engineer must write down.</li>
+</ul>
+<p>The contract should be reviewed at every retro. If it's not being followed, the retro is where you find out why.</p>
+<p>A common trap: teams write the contract but don't enforce the exclusions. The on-call engineer still attends every meeting because "it's just one meeting." The contract only works if the team treats exclusions as real — which means the project lead has to plan around them, not the on-call engineer.</p>
+<h2 id="step-2-make-alerting-precise-enough-that-on-call-is-quiet">Step 2: Make alerting precise enough that on-call is quiet</h2>
+<p>The single biggest lever for balancing on-call with project work is reducing the number of pages. A rotation that pages twice a week is a different job from one that pages twice a month. The goal is not zero pages — some alerts are real — but every page should be actionable and every non-actionable alert should be removed or demoted.</p>
+<p>A worked example using Prometheus alerting rules (the same logic applies to any metrics-based alerting system):</p>
+<pre><code class="language-yaml"># Before: pages on any 5xx rate above 1% for 1 minute.
+# This fires on deploy blips, health-check noise, and single-client retry storms.
+- alert: HighErrorRate
+  expr: rate(http_requests_total{status=~&quot;5..&quot;}[1m]) / rate(http_requests_total[1m]) &gt; 0.01
+  for: 1m
+  labels:
+    severity: page
+
+# After: pages only when the error rate is sustained and affects a meaningful
+# share of traffic, with a longer window to ride out deploys.
+- alert: HighErrorRate
+  expr: |
+    (
+      sum(rate(http_requests_total{status=~&quot;5..&quot;}[5m]))
+      /
+      sum(rate(http_requests_total[5m]))
+    ) &gt; 0.05
+    and
+    sum(rate(http_requests_total[5m])) &gt; 1
+  for: 10m
+  labels:
+    severity: page
+  annotations:
+    runbook_url: https://runbooks.example.com/high-error-rate
+</code></pre>
+<p>The changes: a 5-minute window instead of 1 minute, a 10-minute <code>for</code> duration, a higher threshold (5% instead of 1%), and a minimum traffic floor so low-traffic services don't page on a single error. The runbook link is not optional — an alert without a runbook is a page that requires the engineer to rediscover the system at 3am.</p>
+<p>This is the kind of change that teams commonly resist because it feels like "ignoring errors." The counter-argument: an alert that fires on deploy blips trains engineers to ignore pages, which is worse than not alerting at all. The 5% threshold and 10-minute window are illustrative — the right values depend on your traffic shape and error budget. The principle is to alert on sustained, user-impacting conditions, not on instantaneous noise.</p>
+<p>After changing thresholds, run a review: for each alert, ask "what action does this page require?" If the answer is "look at the dashboard and close it," demote it to a dashboard annotation or a ticket. If the answer is "restart the service," the alert is a symptom of a missing automation — file a ticket to fix the root cause and keep the alert until then.</p>
+<h2 id="step-3-structure-the-rotation-so-project-work-has-a-home">Step 3: Structure the rotation so project work has a home</h2>
+<p>Once the contract exists and alert volume is under control, the rotation itself needs structure. The goal is to make on-call a predictable, bounded role rather than an ambient state.</p>
+<p><strong>Use weekly rotations with a fixed handoff time.</strong> Daily rotations sound humane but they create a handoff every day, and each handoff loses context. Weekly rotations (Monday morning handoff) give the on-call engineer enough time to learn the current incident state and enough continuity to handle multi-day issues. For teams with very high page volume, a follow-the-sun model with regional rotations is better than forcing one timezone to absorb nights.</p>
+<p><strong>Pair the rotation with a secondary.</strong> The secondary is not a backup for vacation — it's the first escalation target when the primary doesn't acknowledge within the response window. This matters for project work because it means the primary can be in a meeting or on a train without the pager becoming a crisis. The secondary should be someone not on the critical path for the current project milestone, if possible.</p>
+<p><strong>Schedule project work around the rotation, not through it.</strong> The project lead should know who is on-call and plan interruptible work for that week. This is a planning discipline, not a tool: in the sprint plan, mark the on-call engineer's capacity as reduced and assign them tasks that can be paused (code review, documentation, small bug fixes) rather than tasks that require long uninterrupted blocks (complex feature work, migrations).</p>
+<p>A common failure mode: the on-call engineer is assigned a large feature and told to "just pause it if you get paged." Pausing a complex feature for an incident and resuming it the next day is expensive — the context reload alone can eat an hour. Better to not assign that work in the first place.</p>
+<h2 id="step-4-write-a-handoff-that-actually-transfers-context">Step 4: Write a handoff that actually transfers context</h2>
+<p>The handoff is where most rotations leak. The outgoing engineer knows about three ongoing issues, a flaky alert, and a deploy that's half-rolled-out. If none of that is written down, the incoming engineer starts from zero and the first page becomes a discovery exercise.</p>
+<p>A useful handoff has five fields, and it should take ten minutes to write:</p>
+<ol>
+<li><strong>Open incidents and their state:</strong> what's broken, what's been tried, what's next.</li>
+<li><strong>Recent changes:</strong> deploys, config changes, or feature flags that went out during the rotation and might be related to future pages.</li>
+<li><strong>Noisy alerts:</strong> which alerts fired and whether they were actionable. This feeds the alert-review loop from Step 2.</li>
+<li><strong>Upcoming risks:</strong> planned deploys, traffic events, or maintenance windows in the next week.</li>
+<li><strong>Project status for the on-call engineer:</strong> what work was paused and where to pick it up.</li>
+</ol>
+<p>The fifth field is the one teams skip, and it's the one that connects on-call to project work. If the outgoing engineer was mid-task when their rotation ended, the incoming engineer doesn't need to continue that task — but the project lead does need to know it was paused so it can be rescheduled.</p>
+<h2 id="edge-cases-and-errors">Edge cases and errors</h2>
+<p><strong>The alert that pages but has no owner.</strong> This happens when a service is deprecated but its alerts remain. The fix is an ownership audit: every alert rule must have a <code>team</code> label or an entry in an ownership file. Alerts without an owner should be deleted, not reassigned to the on-call engineer by default.</p>
+<p><strong>The on-call engineer who is also the only person who can deploy.</strong> If the deployment process requires a specific person, the rotation is a single point of failure. The fix is to document the deploy process and grant deploy access to the secondary as well. This is a prerequisite for the rotation to function, not a nice-to-have.</p>
+<p><strong>The project deadline that "can't slip."</strong> When a deadline is fixed and an engineer is on-call, the team is choosing to accept risk. The right move is to make the risk explicit: either reduce scope for that week or bring in someone else to cover the rotation. Silently expecting the on-call engineer to absorb both is how burnout happens.</p>
+<p><strong>The alert that fires only during business hours.</strong> Some alerts are noise during the day but meaningful at night (e.g., a batch job that fails). Use time-based routing in your alerting tool to send these to a ticket during business hours and to the pager out of hours, or suppress them entirely if they're not user-impacting.</p>
+<h2 id="verification-how-to-know-the-balance-is-working">Verification: how to know the balance is working</h2>
+<p>You can't verify "balance" directly, but you can measure the inputs. Track these four metrics over a month:</p>
+<ul>
+<li><strong>Pages per rotation:</strong> the count of pages that required action. A downward trend after threshold changes is the signal that Step 2 worked.</li>
+<li><strong>Acknowledged-within-target rate:</strong> the share of pages acknowledged within the response window. If this drops, the rotation is under-staffed or the response targets are unrealistic.</li>
+<li><strong>Paused project tasks per rotation:</strong> the count of tasks that were started and paused due to a page. This should be low; if it's high, the project plan isn't respecting the rotation.</li>
+<li><strong>Handoff completeness:</strong> a spot-check that each handoff has the five fields. This is qualitative, but it's the leading indicator for whether the next rotation starts from a known state.</li>
+</ul>
+<p>A simple way to collect the first two is to export the incident history from your on-call tool and count. The third requires the project lead to note pauses in the sprint board — a label like <code>paused-oncall</code> is enough.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do you balance on-call with a full-time project?</strong>
+Treat on-call as a capacity allocation, not an add-on. Reduce the on-call engineer's project commitments for the rotation week, assign interruptible work, and make the reduction visible in the sprint plan. The exact reduction depends on page volume, but the principle is that the plan should reflect the rotation rather than discovering it at retro.</p>
+<p><strong>What is a reasonable on-call rotation length?</strong>
+Weekly rotations are common because they balance continuity against fatigue. Daily rotations create frequent handoffs and context loss; monthly rotations concentrate fatigue and make it hard to plan project work around them. The right length depends on page volume and team size, but a week is a reasonable default for most teams.</p>
+<p><strong>How many pages per shift is too many?</strong>
+There's no universal number, but a useful heuristic is that if the on-call engineer can't complete a focused task during a shift, the rotation is too noisy. Some teams target fewer than one actionable page per shift; others accept more during incidents. The key is to review pages monthly and demote or fix any alert that doesn't require action.</p>
+<p><strong>Should on-call engineers attend project standups?</strong>
+Attendance is fine if it's short and interruptible, but the on-call engineer should not be the decision-maker for project blockers during their rotation. The project lead should have a backup decision path so that a page doesn't stall the project. If standups are long or require deep context, consider excusing the on-call engineer during their rotation week.</p>
+<h2 id="next-step-audit-your-noisiest-alert-today">Next step: audit your noisiest alert today</h2>
+<p>Open your alerting configuration and find the alert that fired most often in the last 30 days. For that alert, check three things: does it have a runbook, does it require an action other than "look and close," and what is its <code>for</code> duration? If it fails any of these, change one parameter — raise the threshold, extend the <code>for</code> window, or demote it to a dashboard — and note the change in your team's alert-review doc. That single edit is the first step toward a rotation that leaves room for project work.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/">Prometheus documentation</a></li>
+<li><a href="https://csrc.nist.gov/pubs/sp/800/61/r2/final">NIST SP 800-61: Computer Security Incident Handling Guide</a></li>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/kill-noisy-alerts-the-triage-system-that-restored-sleep/">
+                        <h3>Kill noisy alerts: the triage system that restored sleep</h3>
+                        <p>Classify alerts by shape and downstream impact, then suppress with evidence. Includes PromQL, SQL, breaker logic, and a 30-minute first step.</p>
+                        <span class="related-meta">12 min read · 11 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/security-engineering-isnt-a-ladder/">
+                        <h3>Security engineering isn&#39;t a ladder</h3>
+                        <p>Security engineering careers aren&amp;#x27;t a ladder—they&amp;#x27;re a lattice.</p>
+                        <span class="related-meta">13 min read · 17 November 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/technical-debt-defend-priorities-to-stakeholders/">
+                        <h3>Technical debt: defend priorities to stakeholders</h3>
+                        <p>A framework that turns technical debt into cost, risk, and timing arguments stakeholders can act on, with scoring, cost-of-delay arithmetic, and capacity rules.</p>
+                        <span class="related-meta">13 min read · 4 November 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

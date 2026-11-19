@@ -1757,6 +1757,13 @@
     "reasons": [],
     "words": 1948
   },
+  "on-call-without-derailing-projects": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Reliability"
+    ],
+    "words": 2652
+  },
   "one-misconfigured-vector-db-killed-our-rag-pipeline": {
     "verdict": "KEEP",
     "reasons": [],

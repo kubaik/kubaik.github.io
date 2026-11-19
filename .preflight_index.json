@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-18T20:12:18.125275",
+  "built_at": "2026-11-19T06:34:46.512584",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5890,6 +5890,11 @@
       "slug": "object-storage-lifecycle-policies-explained",
       "title": "Object storage lifecycle policies explained",
       "summary": "Object storage bills are dominated by data that nobody reads but everyone keeps. The fix is a lifecycle policy — a set of rules that automatically transitions objects to cheaper storage classes or deletes them after a set time. Done well, it cuts storage costs without breaking compliance or applicat"
+    },
+    {
+      "slug": "on-call-without-derailing-projects",
+      "title": "On-call without derailing projects",
+      "summary": "On-call rotations and project work are two jobs with the same eight hours. The on-call engineer is expected to triage alerts, write postmortems, and still deliver the feature they committed to. When the pager goes off at 2am, the next day's project work doesn't disappear — it just gets compressed. T"
     }
   ]
 }

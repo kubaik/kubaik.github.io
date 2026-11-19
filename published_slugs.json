@@ -914,6 +914,9 @@
   "offline-first-money-apps-with-dynamodb-streams": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "on-call-without-derailing-projects": {
+    "first_seen": "2026-11-19T06:34:53.682856+00:00"
+  },
   "one-misconfigured-vector-db-killed-our-rag-pipeline": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
