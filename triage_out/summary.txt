@@ -1,9 +1,9 @@
-2026-11-19 08:02  posts=438
+2026-11-19 20:13  posts=439
 DELETE       0  0%
-IMPROVE    269  61%
-KEEP       169  39%
+IMPROVE    270  62%
+KEEP       169  38%
 
 Top reasons:
-    269  Tags absent from body
+    270  Tags absent from body
       2  Unverifiable first-person experience claims
       1  Templated outline

@@ -102,6 +102,7 @@ docs/commit-ownership-in-ai-pair-coding/	Tags absent from body: Containers, LLMs
 docs/context-windows-live-longer-than-you-think/	Tags absent from body: LLMs, Distributed Systems
 docs/contract-testing-is-not-optional/	Tags absent from body: API Design, AI Agents
 docs/core-web-vitals-what-actually-moves-the-needle/	Tags absent from body: Containers, LLMs
+docs/csrf-and-samesite-cookies-what-breaks/	Tags absent from body: Payments
 docs/currency-switch-fails-in-ghana-one-config-file-to-rule/	Tags absent from body: API Design, Payments
 docs/cut-false-positives-85-with-this-ci-security-trick/	Tags absent from body: Containers
 docs/database-restore-drills-that-mean-something/	Tags absent from body: Databases, Reliability

@@ -1,0 +1,526 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CSRF and SameSite cookies: what breaks - Kubai Kevin</title>
+        <meta name="description" content="CSRF and SameSite cookies: why Lax still allows state-changing GETs, how to add a double-submit token, and the Secure flag mistake that silently drops…">
+        <meta name="keywords" content="CSRF, SameSite, SameSite cookies explained, CSRF protection with SameSite, double submit cookie pattern, SameSite Lax vs Strict, how does SameSite prevent CSRF, why is my session cookie not sent">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-19T20:13:23.970256">
+        <meta property="article:modified_time" content="2026-11-19T20:13:23.970269">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="CSRF and SameSite cookies: what breaks">
+        <meta property="og:description" content="CSRF and SameSite cookies: why Lax still allows state-changing GETs, how to add a double-submit token, and the Secure flag mistake that silently drops…">
+        <meta property="og:url" content="https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/csrf-and-samesite-cookies-what-breaks.png">
+        <meta property="og:image:alt" content="CSRF and SameSite cookies: what breaks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="CSRF and SameSite cookies: what breaks">
+        <meta name="twitter:description" content="CSRF and SameSite cookies: why Lax still allows state-changing GETs, how to add a double-submit token, and the Secure flag mistake that silently drops…">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/csrf-and-samesite-cookies-what-breaks.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/#article",
+      "headline": "CSRF and SameSite cookies: what breaks",
+      "description": "CSRF and SameSite cookies: why Lax still allows state-changing GETs, how to add a double-submit token, and the Secure flag mistake that silently drops…",
+      "datePublished": "2026-11-19T20:13:23+00:00",
+      "dateModified": "2026-11-19T20:13:23+00:00",
+      "wordCount": 2677,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/"
+      },
+      "keywords": "CSRF, SameSite, SameSite cookies explained, CSRF protection with SameSite, double submit cookie pattern, SameSite Lax vs Strict, how does SameSite prevent CSRF, why is my session cookie not sent"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "CSRF and SameSite cookies: what breaks",
+          "item": "https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>CSRF and SameSite cookies: what breaks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">CSRF and SameSite cookies: what breaks</h1>
+                
+                <p class="post-lead">CSRF and SameSite cookies: why Lax still allows state-changing GETs, how to add a double-submit token, and the Secure flag mistake that silently drops…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/security/"
+                       style="text-decoration:none;">Security</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/payments/"
+                       style="text-decoration:none;">Payments</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2677 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-19
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>CSRF is not a bug you fix once. It is a class of request-forgery that reappears every time you add a new cookie, a new subdomain, or a new browser default. The SameSite cookie attribute changed the default behavior for cross-site requests, but it did not make CSRF disappear. It moved the failure mode from "any cross-site POST works" to "exactly which cross-site POSTs still carry credentials, and which ones do not." This post walks through the mechanics, the browser defaults, the edge cases that bite teams in production, and a minimal runnable defense. By the end you will be able to look at a cookie header and predict whether a cross-site request will include it — and you will know the one file to check first when a form mysteriously stops submitting.</p>
+<h2 id="what-csrf-actually-is-before-samesite-enters-the-picture">What CSRF actually is, before SameSite enters the picture</h2>
+<p>CSRF exploits the fact that browsers attach cookies to requests based on the target origin, not the origin that initiated the request. If a user is logged into <code>app.example.com</code> and visits <code>evil.example.net</code>, a form on the evil page can POST to <code>app.example.com/transfer</code> and the browser will include the session cookie because the request targets the app's origin. The server sees a valid session and processes the transfer.</p>
+<p>The classic defenses are:</p>
+<ul>
+<li><strong>Synchronizer token pattern</strong>: the server embeds a random token in the form, stores it in the session, and rejects requests where the submitted token does not match.</li>
+<li><strong>Double-submit cookie</strong>: the server sets a random value in a cookie and also expects it in a request header or form field; an attacker on another origin cannot read the cookie to copy it into the header.</li>
+<li><strong>Origin/Referer checking</strong>: reject state-changing requests whose <code>Origin</code> header is not the expected site.</li>
+<li><strong>SameSite cookies</strong>: instruct the browser not to send the cookie on cross-site requests, or only on top-level navigations.</li>
+</ul>
+<p>SameSite is the newest of these and the one most often misunderstood, because it is enforced by the browser, not the server. That means your server-side tests will pass while real browsers silently drop the cookie.</p>
+<h2 id="prerequisites-what-you-need-to-reproduce-this">Prerequisites: what you need to reproduce this</h2>
+<p>You need a server that sets cookies with explicit <code>SameSite</code> values, a second origin to act as the attacker, and a browser that follows current cookie defaults. A local setup with two ports on <code>localhost</code> is not enough, because <code>localhost</code> is treated as a single site for cookie purposes in most browsers. Use two hostnames that resolve to the same machine, for example <code>app.local.test</code> and <code>evil.local.test</code>, added to your hosts file. Serve over HTTP for local testing; the <code>Secure</code> attribute is ignored on <code>http://localhost</code> in most browsers, but on custom hostnames you will need HTTPS or you will spend an hour debugging why <code>Secure</code> cookies do not appear.</p>
+<p>You also need to know which browser you are testing against. Chrome, Firefox, and Safari all implement SameSite, but their treatment of "site" versus "origin" differs for subdomains and for schemes. The specification defines "site" as scheme plus registrable domain (eTLD+1). That means <code>https://app.example.com</code> and <code>https://api.example.com</code> are the same site, while <code>http://app.example.com</code> and <code>https://app.example.com</code> are different sites because the scheme differs. This is the single most common source of confusion when a cookie works in one environment and not another.</p>
+<h2 id="step-1-set-samesite-explicitly-and-know-the-three-values">Step 1: Set SameSite explicitly and know the three values</h2>
+<p>The <code>SameSite</code> attribute accepts three values: <code>Strict</code>, <code>Lax</code>, and <code>None</code>. If you omit it, modern browsers treat the cookie as <code>Lax</code> by default. That default was a deliberate change to reduce CSRF, but it is not a security guarantee, because <code>Lax</code> still sends cookies on top-level GET navigations.</p>
+<p>Here is a minimal Go server that sets a session cookie with each mode, so you can compare behavior:</p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;net/http&quot;
+)
+
+func main() {
+    http.HandleFunc(&quot;/set&quot;, func(w http.ResponseWriter, r *http.Request) {
+        mode := r.URL.Query().Get(&quot;mode&quot;)
+        if mode == &quot;&quot; {
+            mode = &quot;Lax&quot;
+        }
+        cookie := &amp;http.Cookie{
+            Name:     &quot;session&quot;,
+            Value:    &quot;abc123&quot;,
+            Path:     &quot;/&quot;,
+            HttpOnly: true,
+            Secure:   false, // set true behind HTTPS
+            SameSite: parseSameSite(mode),
+        }
+        http.SetCookie(w, cookie)
+        fmt.Fprintf(w, &quot;set session with SameSite=%s\n&quot;, mode)
+    })
+
+    http.HandleFunc(&quot;/echo&quot;, func(w http.ResponseWriter, r *http.Request) {
+        c, err := r.Cookie(&quot;session&quot;)
+        if err != nil {
+            fmt.Fprintln(w, &quot;no session cookie&quot;)
+            return
+        }
+        fmt.Fprintf(w, &quot;session=%s\n&quot;, c.Value)
+    })
+
+    http.ListenAndServe(&quot;:8080&quot;, nil)
+}
+
+func parseSameSite(s string) http.SameSite {
+    switch s {
+    case &quot;Strict&quot;:
+        return http.SameSiteStrictMode
+    case &quot;None&quot;:
+        return http.SameSiteNoneMode
+    default:
+        return http.SameSiteLaxMode
+    }
+}
+</code></pre>
+<p>Run it, visit <code>/set?mode=Strict</code>, then load a page on your second hostname that issues a cross-site request to <code>/echo</code>. With <code>Strict</code>, the cookie is absent. With <code>Lax</code>, it is absent for POST and present for top-level GET navigation. With <code>None</code>, it is present for both, provided <code>Secure</code> is set (browsers reject <code>SameSite=None</code> without <code>Secure</code>).</p>
+<p>The gotcha: <code>SameSite=None</code> without <code>Secure</code> is rejected by Chrome and Firefox, and the cookie is not stored at all. The console warning is easy to miss. If your integration test runs over plain HTTP and sets <code>SameSite=None</code>, the cookie will not exist in the browser, and your test will fail for the wrong reason.</p>
+<h2 id="step-2-understand-what-lax-actually-permits">Step 2: Understand what Lax actually permits</h2>
+<p><code>Lax</code> is the default, and it is permissive enough to be dangerous if you assume it blocks all CSRF. It allows the cookie on top-level navigations that use safe methods (GET, HEAD, OPTIONS). It blocks the cookie on cross-site POST, PUT, DELETE, and on iframes, image tags, and fetch requests from another origin.</p>
+<p>That means a cross-site GET to a state-changing endpoint still carries the session cookie. If your application has any GET endpoint that mutates state — <code>/logout</code>, <code>/delete?id=...</code>, <code>/transfer?amount=...</code> — <code>Lax</code> does not protect it. The fix is not to change the cookie; the fix is to stop using GET for state changes. This is a design rule, not a cookie setting.</p>
+<p>The other subtlety: <code>Lax</code> treats a top-level navigation as safe even if it is initiated by a link on an attacker's page. A user clicking a link to <code>https://app.example.com/transfer?to=attacker</code> sends the cookie. If that endpoint performs the transfer on GET, CSRF is still possible. Browsers are doing what the spec says; the application is violating HTTP semantics.</p>
+<h2 id="step-3-add-a-server-side-token-so-samesite-is-not-your-only-defense">Step 3: Add a server-side token so SameSite is not your only defense</h2>
+<p>SameSite is a browser control. You do not control which browser the user runs, and older browsers may ignore the attribute entirely. A robust defense combines SameSite with a synchronizer token or double-submit cookie. The token check runs on the server and does not depend on browser behavior.</p>
+<p>A minimal double-submit implementation in Go:</p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;crypto/rand&quot;
+    &quot;encoding/hex&quot;
+    &quot;net/http&quot;
+)
+
+func setCSRFCookie(w http.ResponseWriter) string {
+    b := make([]byte, 32)
+    if _, err := rand.Read(b); err != nil {
+        panic(err)
+    }
+    token := hex.EncodeToString(b)
+    http.SetCookie(w, &amp;http.Cookie{
+        Name:     &quot;csrf&quot;,
+        Value:    token,
+        Path:     &quot;/&quot;,
+        HttpOnly: false, // must be readable by JS to copy into header
+        Secure:   true,
+        SameSite: http.SameSiteLaxMode,
+    })
+    return token
+}
+
+func requireCSRF(next http.HandlerFunc) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        if r.Method == http.MethodGet || r.Method == http.MethodHead {
+            next(w, r)
+            return
+        }
+        cookie, err := r.Cookie(&quot;csrf&quot;)
+        if err != nil {
+            http.Error(w, &quot;missing csrf cookie&quot;, http.StatusForbidden)
+            return
+        }
+        header := r.Header.Get(&quot;X-CSRF-Token&quot;)
+        if header == &quot;&quot; || header != cookie.Value {
+            http.Error(w, &quot;csrf token mismatch&quot;, http.StatusForbidden)
+            return
+        }
+        next(w, r)
+    }
+}
+</code></pre>
+<p>The client must read the <code>csrf</code> cookie and send it back in the <code>X-CSRF-Token</code> header on every state-changing request. An attacker on another origin cannot read the cookie value because of the same-origin policy, so they cannot forge the header. This works even if the browser ignores SameSite.</p>
+<p>The gotcha: if you set the <code>csrf</code> cookie with <code>HttpOnly: true</code>, JavaScript cannot read it, and the double-submit pattern breaks. That is a common mistake when teams apply a blanket <code>HttpOnly</code> policy to all cookies. The session cookie should be <code>HttpOnly</code>; the CSRF cookie must not be.</p>
+<h2 id="step-4-handle-the-cases-samesite-does-not-cover">Step 4: Handle the cases SameSite does not cover</h2>
+<p>SameSite does not protect against attacks that originate from the same site. If an attacker can run JavaScript on a subdomain — for example, a user-content subdomain like <code>user.example.com</code> — that script is same-site with <code>app.example.com</code> and can read cookies that are not <code>HttpOnly</code>, and can issue same-site requests with credentials. This is why cookie scoping matters: set cookies on the most specific hostname possible, and avoid sharing a registrable domain between trusted and untrusted content.</p>
+<p>The second case is OAuth and payment redirects. When a user returns from an external identity provider or a payment processor, the browser performs a top-level navigation from the external site to yours. With <code>SameSite=Strict</code>, the session cookie is not sent on that first request, so the user appears logged out. With <code>Lax</code>, the cookie is sent because it is a top-level GET. This is the reason <code>Strict</code> breaks many login flows, and why <code>Lax</code> is the common default for session cookies. If you need <code>Strict</code>, you must handle the first request without a session and redirect to a URL that re-establishes it.</p>
+<p>The third case is cross-site POSTs that are legitimately required, such as a payment processor's webhook or a form embedded in a partner site. Those requests will not carry a <code>Lax</code> or <code>Strict</code> cookie. The correct pattern is to not rely on cookies for those endpoints; use a signed request or a shared secret in the body or header, and verify it server-side.</p>
+<h2 id="step-5-verify-with-a-real-cross-site-request-not-a-unit-test">Step 5: Verify with a real cross-site request, not a unit test</h2>
+<p>Unit tests that use an HTTP client do not enforce SameSite, because the client is not a browser. You will get false confidence. The verification must happen in a browser, with two distinct sites.</p>
+<p>A practical checklist:</p>
+<ol>
+<li>Set the session cookie with <code>SameSite=Lax</code> and <code>Secure</code>.</li>
+<li>From a page on the second hostname, submit a cross-site form POST to your endpoint. The request must arrive without the session cookie, and the server must reject it.</li>
+<li>From the same page, navigate with a top-level GET to a read-only endpoint. The cookie should be present.</li>
+<li>From the same page, navigate with a top-level GET to a state-changing endpoint. If the cookie is present and the endpoint mutates state, you have a bug — fix the endpoint, not the cookie.</li>
+<li>Repeat with <code>SameSite=Strict</code> and confirm the cookie is absent on the first navigation from the external site.</li>
+<li>Repeat with <code>SameSite=None; Secure</code> and confirm the cookie is present on cross-site POST, then confirm your CSRF token check still rejects the request.</li>
+</ol>
+<p>If step 6 passes without a token check, your application is vulnerable to CSRF despite the cookie attribute. That is the whole point: <code>SameSite=None</code> is sometimes necessary, and it removes the browser-level protection.</p>
+<h2 id="edge-cases-and-errors-that-show-up-in-production">Edge cases and errors that show up in production</h2>
+<p><strong>The cookie disappears after a redirect from an external site.</strong> This is <code>Strict</code> behaving as specified. The first request after the redirect has no session. If your app redirects to a login page, the user sees a login screen even though they just authenticated. The fix is to use <code>Lax</code> for the session cookie, or to handle the first request as unauthenticated and then redirect to a same-site URL that sets the session.</p>
+<p><strong>The cookie is set but not sent on API calls.</strong> If the frontend is on <code>app.example.com</code> and the API is on <code>api.example.com</code>, they are same-site (same scheme and registrable domain), so <code>Lax</code> cookies are sent. If the frontend is on <code>app.example.com</code> and the API is on <code>api.other.com</code>, they are cross-site, and <code>Lax</code> cookies are not sent on fetch. The error in the browser console is a CORS error, not a cookie error, which sends teams down the wrong path. Check the <code>Set-Cookie</code> header and the request's <code>Cookie</code> header in the network tab before touching CORS config.</p>
+<p><strong><code>SameSite=None</code> is rejected in Safari.</strong> Safari has historically been stricter about third-party cookies and about <code>SameSite=None</code>. If your integration depends on cross-site cookies, test in Safari specifically. A cookie that works in Chrome may be dropped in Safari, and the failure is silent.</p>
+<p><strong>The CSRF token is cached.</strong> If your HTML is cached by a CDN and contains a per-session CSRF token, users will receive a token that does not match their session. The server rejects the request. The fix is to not cache pages that embed per-session tokens, or to fetch the token via a separate uncached request.</p>
+<p><strong>Double-submit fails behind a proxy that rewrites cookies.</strong> Some reverse proxies or API gateways rewrite cookie headers. If the <code>csrf</code> cookie is rewritten but the <code>X-CSRF-Token</code> header is not, the comparison fails. Verify the cookie value at the edge matches what the application sees.</p>
+<h2 id="a-decision-table-for-cookie-attributes">A decision table for cookie attributes</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Session cookie</th>
+<th>CSRF cookie</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard web app, same-site frontend and API</td>
+<td><code>SameSite=Lax; Secure; HttpOnly</code></td>
+<td><code>SameSite=Lax; Secure</code> (not HttpOnly)</td>
+<td>Lax allows top-level GET after external redirects; token check covers POST</td>
+</tr>
+<tr>
+<td>App requires cross-site POST (embedded form, partner integration)</td>
+<td><code>SameSite=None; Secure; HttpOnly</code></td>
+<td><code>SameSite=None; Secure</code> (not HttpOnly)</td>
+<td>None is required for cross-site; token check is mandatory because browser protection is off</td>
+</tr>
+<tr>
+<td>High-security app with no external redirects</td>
+<td><code>SameSite=Strict; Secure; HttpOnly</code></td>
+<td><code>SameSite=Strict; Secure</code> (not HttpOnly)</td>
+<td>Strict blocks all cross-site sending; handle first navigation without session</td>
+</tr>
+<tr>
+<td>API-only service consumed by third-party sites</td>
+<td>No cookie; use bearer token</td>
+<td>N/A</td>
+<td>Cookies are the wrong tool for cross-site API auth</td>
+</tr>
+</tbody>
+</table>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Does SameSite=Lax prevent all CSRF?</strong>
+No. Lax still sends cookies on top-level GET navigations, so any state-changing GET endpoint remains exploitable. It also does not protect against same-site attacks, such as a compromised subdomain. Lax reduces the attack surface but does not replace a server-side token check.</p>
+<p><strong>Why is my session cookie not sent after redirect from PayPal or Auth0?</strong>
+This is usually <code>SameSite=Strict</code>. The redirect from the external provider is a cross-site navigation, and Strict cookies are not sent on the first request. Switch the session cookie to <code>Lax</code>, or handle the first request as unauthenticated and redirect to a same-site URL that re-establishes the session.</p>
+<p><strong>Can I use SameSite=None without Secure?</strong>
+No. Browsers reject <code>SameSite=None</code> cookies that lack the <code>Secure</code> attribute, and the cookie is not stored. You must serve over HTTPS. During local development, <code>http://localhost</code> is often treated as a secure context, but custom hostnames are not, so local tests can behave differently from production.</p>
+<p><strong>Is a CSRF token still needed if I use SameSite=Strict?</strong>
+Defense in depth says yes. SameSite is enforced by the browser, and you do not control the browser version or extensions. A server-side token check is independent of browser behavior and catches cases where the attribute is ignored or stripped. The cost is small: one random value per session and one header comparison.</p>
+<h2 id="the-one-thing-to-check-first">The one thing to check first</h2>
+<p>Open your browser's developer tools, load your app, and inspect the <code>Set-Cookie</code> header on the login response. Confirm that every cookie has an explicit <code>SameSite</code> value, that the session cookie has <code>HttpOnly</code>, and that the CSRF cookie does not. If any cookie is missing <code>SameSite</code>, the browser is defaulting it to <code>Lax</code>, and you are relying on a default you did not choose. Fix that header before you touch any CSRF middleware — it takes five minutes and eliminates the most common cause of "it works in Postman but not in the browser."</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://oauth.net/2/">OAuth 2.0 resources</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/jwt-sessions-revocation-rotation-storage/">
+                        <h3>JWT sessions: revocation, rotation, storage</h3>
+                        <p>Why JWT revocation is a state problem, how refresh token rotation with reuse detection works, and how token storage shapes the threat model.</p>
+                        <span class="related-meta">14 min read · 27 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/oauth-21-migration-what-breaks-in-existing-integrations/">
+                        <h3>OAuth 2.1 migration: what breaks in existing integrations</h3>
+                        <p>OAuth 2.1 removes the implicit and password grants, mandates PKCE, and requires exact redirect URIs. Here is what breaks and how to sequence the migration.</p>
+                        <span class="related-meta">18 min read · 22 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/waf-and-bot-management-what-they-miss/">
+                        <h3>WAF and bot management: what they miss</h3>
+                        <p>WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</p>
+                        <span class="related-meta">16 min read · 9 November 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

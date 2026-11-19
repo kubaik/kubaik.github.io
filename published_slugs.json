@@ -551,6 +551,9 @@
   "cross-border-fintech-why-your-kyc-fails-in-dakar": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "csrf-and-samesite-cookies-what-breaks": {
+    "first_seen": "2026-11-19T20:13:35.845990+00:00"
+  },
   "currency-switch-fails-in-ghana-one-config-file-to-rule": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

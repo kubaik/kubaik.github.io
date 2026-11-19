@@ -296,6 +296,7 @@ context-windows-agents-that-run-for-days,100,3443,Context windows: agents that r
 context-windows-live-longer-than-you-think,100,2608,Context windows live longer than you think,2026-07-25T13:43:38.060125,0,
 contract-testing-is-not-optional,100,3072,Contract testing is not optional,2026-10-18T13:52:46.472859,0,
 cqrs-when-it-pays-off-and-when-it-breaks,100,2430,CQRS: when it pays off and when it breaks,2026-09-21T11:34:04.702917,0,
+csrf-and-samesite-cookies-what-breaks,100,2677,CSRF and SameSite cookies: what breaks,2026-11-19T20:13:23.970256,0,
 currency-switch-fails-in-ghana-one-config-file-to-rule,100,2579,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,
 cut-false-positives-85-with-this-ci-security-trick,100,2302,Context-aware security gates that cut CI alert noise,2026-06-12T07:15:04.340904,0,
 database-restore-drills-that-mean-something,100,3089,Database restore drills that mean something,2026-10-28T18:06:31.553898,0,

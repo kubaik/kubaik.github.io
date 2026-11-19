@@ -1043,6 +1043,13 @@
     "reasons": [],
     "words": 2502
   },
+  "csrf-and-samesite-cookies-what-breaks": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Payments"
+    ],
+    "words": 2551
+  },
   "currency-switch-fails-in-ghana-one-config-file-to-rule": {
     "verdict": "IMPROVE",
     "reasons": [

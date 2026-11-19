@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Nov 2026 08:03:08 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Nov 2026 20:14:05 +0000</lastBuildDate>
+    <item>
+      <title>CSRF and SameSite cookies: what breaks</title>
+      <link>https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/</link>
+      <description>CSRF and SameSite cookies: why Lax still allows state-changing GETs, how to add a double-submit token, and the Secure flag mistake that silently drops…</description>
+      <pubDate>Thu, 19 Nov 2026 20:13:23 +0000</pubDate>
+      <guid>https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/</guid>
+    </item>
     <item>
       <title>On-call without derailing projects</title>
       <link>https://kubailabs.com/on-call-without-derailing-projects/</link>
@@ -138,13 +145,6 @@
       <description>How payment sagas coordinate steps, why refunds are not charge reversals, and a decision framework for choosing orchestration or choreography.</description>
       <pubDate>Tue, 10 Nov 2026 06:34:03 +0000</pubDate>
       <guid>https://kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
-    </item>
-    <item>
-      <title>WAF and bot management: what they miss</title>
-      <link>https://kubailabs.com/waf-and-bot-management-what-they-miss/</link>
-      <description>WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</description>
-      <pubDate>Mon, 09 Nov 2026 22:06:13 +0000</pubDate>
-      <guid>https://kubailabs.com/waf-and-bot-management-what-they-miss/</guid>
     </item>
   </channel>
 </rss>
