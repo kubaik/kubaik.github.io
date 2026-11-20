@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Nov 2026 20:14:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Nov 2026 06:23:06 +0000</lastBuildDate>
+    <item>
+      <title>Graceful shutdown: SIGKILL is not the enemy</title>
+      <link>https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/</link>
+      <description>Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.</description>
+      <pubDate>Fri, 20 Nov 2026 06:22:38 +0000</pubDate>
+      <guid>https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/</guid>
+    </item>
     <item>
       <title>CSRF and SameSite cookies: what breaks</title>
       <link>https://kubailabs.com/csrf-and-samesite-cookies-what-breaks/</link>
@@ -138,13 +145,6 @@
       <description>Why merged pull requests often fail to persuade hiring teams, and how to choose projects and shape contributions that read as engineering judgment.</description>
       <pubDate>Tue, 10 Nov 2026 19:29:06 +0000</pubDate>
       <guid>https://kubailabs.com/open-source-contributions-the-credibility-trap/</guid>
-    </item>
-    <item>
-      <title>Saga pattern: orchestration vs choreography in payments</title>
-      <link>https://kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</link>
-      <description>How payment sagas coordinate steps, why refunds are not charge reversals, and a decision framework for choosing orchestration or choreography.</description>
-      <pubDate>Tue, 10 Nov 2026 06:34:03 +0000</pubDate>
-      <guid>https://kubailabs.com/saga-pattern-orchestration-vs-choreography-in-payments/</guid>
     </item>
   </channel>
 </rss>

@@ -1,0 +1,481 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Graceful shutdown: SIGKILL is not the enemy - Kubai Kevin</title>
+        <meta name="description" content="Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.">
+        <meta name="keywords" content="graceful shutdown, worker shutdown, SIGTERM handler, long-running worker checkpoint, terminationGracePeriodSeconds, Kubernetes worker shutdown, how to gracefully shutdown a worker, why does my worker lose jobs on deploy">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-20T06:22:38.510502">
+        <meta property="article:modified_time" content="2026-11-20T06:22:38.510516">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Graceful shutdown: SIGKILL is not the enemy">
+        <meta property="og:description" content="Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.">
+        <meta property="og:url" content="https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/graceful-shutdown-sigkill-is-not-the-enemy.png">
+        <meta property="og:image:alt" content="Graceful shutdown: SIGKILL is not the enemy">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Graceful shutdown: SIGKILL is not the enemy">
+        <meta name="twitter:description" content="Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/graceful-shutdown-sigkill-is-not-the-enemy.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/#article",
+      "headline": "Graceful shutdown: SIGKILL is not the enemy",
+      "description": "Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.",
+      "datePublished": "2026-11-20T06:22:38+00:00",
+      "dateModified": "2026-11-20T06:22:38+00:00",
+      "wordCount": 2737,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/"
+      },
+      "keywords": "graceful shutdown, worker shutdown, SIGTERM handler, long-running worker checkpoint, terminationGracePeriodSeconds, Kubernetes worker shutdown, how to gracefully shutdown a worker, why does my worker lose jobs on deploy"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Graceful shutdown: SIGKILL is not the enemy",
+          "item": "https://kubailabs.com/graceful-shutdown-sigkill-is-not-the-enemy/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Graceful shutdown: SIGKILL is not the enemy</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Graceful shutdown: SIGKILL is not the enemy</h1>
+                
+                <p class="post-lead">Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/distributed-systems/"
+                       style="text-decoration:none;">Distributed Systems</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2737 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-20
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most teams treat SIGKILL as the villain in their shutdown story. They add signal handlers, preStop hooks, and terminationGracePeriodSeconds values plucked from a blog post, then wonder why they still lose in-flight jobs. The contrarian take: SIGKILL is not the problem. The problem is that your worker has no concept of a shutdown deadline, and no way to checkpoint work that cannot finish in time. If you fix that, SIGKILL becomes a harmless safety net. If you don't, no amount of signal handling will save you.</p>
+<p>This post argues that graceful shutdown is not a signal-handling problem — it is a state-durability problem. The signal is just the messenger. The real work is making every long-running job resumable or abortable within a bounded time, and then treating the orchestrator's kill signal as a deadline you must beat, not a courtesy you can ignore.</p>
+<h2 id="the-common-advice-catch-sigterm-drain-exit">The common advice: catch SIGTERM, drain, exit</h2>
+<p>The standard recipe goes like this: register a SIGTERM handler, stop accepting new work, wait for in-flight work to finish, then exit. In Kubernetes, add a preStop hook to sleep a few seconds so the load balancer stops sending traffic before the process starts shutting down. Set terminationGracePeriodSeconds high enough that your longest job can finish. Done.</p>
+<p>This advice is not wrong. It is incomplete in a way that quietly fails at the worst moment. The recipe assumes your work is short enough to finish within the grace period, and that the grace period is long enough to cover your p99 job duration. For a request-serving API, that is often true. For a long-running worker — a batch processor, a queue consumer, a video transcoder, a report generator — it is almost never true. Jobs run for minutes or hours. The grace period is measured in seconds. The math does not close.</p>
+<p>When the math does not close, teams do one of two things. They set terminationGracePeriodSeconds to something enormous, like an hour, which makes every deploy take an hour and makes the orchestrator's eviction logic sluggish. Or they accept that jobs get killed mid-flight and rely on retries. Retries work only if the job is idempotent and cheap to restart. Many are not.</p>
+<h2 id="why-the-drain-and-wait-pattern-breaks-for-long-jobs">Why the drain-and-wait pattern breaks for long jobs</h2>
+<p>The drain-and-wait pattern has three failure modes that show up repeatedly in production.</p>
+<p><strong>The unbounded wait.</strong> A worker receives SIGTERM, stops pulling new messages, and waits for the current job. The job has no timeout. It hangs on a network call, a lock, or a slow downstream. The grace period expires. The orchestrator sends SIGKILL. The job is lost, and because the worker never acknowledged the message, the queue redelivers it — possibly to another worker that hits the same hang. This is the classic poison-message loop, except the message is not poisonous; the shutdown logic is.</p>
+<p><strong>The in-flight acknowledgement gap.</strong> Many queue clients acknowledge a message only after the handler returns. If the process is killed between the handler finishing and the acknowledgement being sent, the message is redelivered even though the work was done. For non-idempotent work, that is a duplicate side effect. For idempotent work, it is wasted compute. Either way, the shutdown path did not coordinate with the acknowledgement path.</p>
+<p><strong>The preStop sleep illusion.</strong> The preStop hook that sleeps for five seconds is meant to let the load balancer deregister the pod. For a worker consuming from a queue, there is no load balancer in the path. The sleep does nothing except delay shutdown. Worse, teams copy the preStop hook from an HTTP service manifest into a worker manifest and believe they have solved a problem they never had.</p>
+<p>The common thread: the pattern treats shutdown as a sequence of signals and sleeps. It does not treat it as a deadline that forces the worker to decide, at a specific moment, whether to finish, checkpoint, or abort.</p>
+<h2 id="the-better-mental-model-shutdown-as-a-deadline-not-a-signal">The better mental model: shutdown as a deadline, not a signal</h2>
+<p>A worker's shutdown logic should look like a deadline-aware state machine, not a signal handler. The signal is an input. The output is a decision made against a clock.</p>
+<p>Here is the model. When the worker starts a job, it records a deadline: the job must either complete or reach a checkpoint by <code>start_time + max_job_duration</code>. When SIGTERM arrives, the worker computes the remaining time until the orchestrator's kill deadline (terminationGracePeriodSeconds minus a safety margin). It then compares the job's remaining work against that budget. If the work fits, it finishes. If it does not, it checkpoints and exits cleanly. If it cannot checkpoint, it aborts and lets the queue redeliver — but only after marking the attempt so a poison message does not loop forever.</p>
+<p>The key shift: the worker owns the deadline. It does not wait passively for SIGKILL. It makes an explicit decision at a known time, and that decision is testable.</p>
+<p>This model requires two things that the drain-and-wait pattern does not: a checkpoint mechanism, and a job-level timeout that is shorter than the orchestrator's grace period. Both are engineering work. Neither is optional if jobs are long.</p>
+<h2 id="checkpointing-the-part-nobody-wants-to-build">Checkpointing: the part nobody wants to build</h2>
+<p>Checkpointing is where most teams stall, because it sounds like distributed-systems research. In practice, for most workers, it is a small, boring change: persist enough state that a restarted job can resume without redoing everything.</p>
+<p>The simplest form is a progress marker. A worker processing a large file writes the byte offset it has reached to a durable store every N records. On restart, it reads the offset and seeks. A worker generating a report writes partial results to object storage keyed by job ID and page number. On restart, it skips pages that already exist.</p>
+<p>The harder form is transactional checkpointing, where the job's side effects and its progress marker must commit together. If they do not, a crash between the side effect and the marker causes duplicate work. This is why idempotency keys matter: the side effect carries a key, and the downstream deduplicates. The checkpoint then only needs to be approximately right; the idempotency key handles the boundary.</p>
+<p>A minimal, runnable example in Python shows the shape. It uses a signal handler only to set a flag, and a deadline check inside the work loop. The checkpoint is a JSON file; in production it would be Redis, Postgres, or object storage.</p>
+<pre><code class="language-python">import json
+import os
+import signal
+import time
+from pathlib import Path
+
+CHECKPOINT = Path(&quot;checkpoint.json&quot;)
+shutdown_requested = False
+
+def handle_sigterm(signum, frame):
+    global shutdown_requested
+    shutdown_requested = True
+
+signal.signal(signal.SIGTERM, handle_sigterm)
+
+def load_offset():
+    if CHECKPOINT.exists():
+        return json.loads(CHECKPOINT.read_text())[&quot;offset&quot;]
+    return 0
+
+def save_offset(offset):
+    tmp = CHECKPOINT.with_suffix(&quot;.tmp&quot;)
+    tmp.write_text(json.dumps({&quot;offset&quot;: offset}))
+    os.replace(tmp, CHECKPOINT)  # atomic on POSIX
+
+def process(record):
+    time.sleep(0.01)  # stand-in for real work
+
+def run(records, grace_seconds=20):
+    offset = load_offset()
+    deadline = time.monotonic() + grace_seconds
+    for i in range(offset, len(records)):
+        if shutdown_requested and time.monotonic() &gt; deadline:
+            save_offset(i)
+            print(f&quot;checkpointed at {i}, exiting&quot;)
+            return
+        process(records[i])
+        if i % 100 == 0:
+            save_offset(i)
+    save_offset(len(records))
+    print(&quot;completed&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    run(list(range(10000)))
+</code></pre>
+<p>The important details: the signal handler does almost nothing (sets a flag), the deadline is computed from <code>time.monotonic()</code> not wall clock, and the checkpoint write is atomic via <code>os.replace</code>. The handler does not call <code>save_offset</code> directly, because doing I/O in a signal handler is unsafe. The loop checks the flag and the deadline at a safe point.</p>
+<p>This example is illustrative, not a library. The point is the shape: signal sets a flag, loop checks flag and clock, checkpoint is atomic, exit is clean.</p>
+<h2 id="where-the-common-advice-is-still-right">Where the common advice is still right</h2>
+<p>The drain-and-wait pattern is correct for short-lived work. If your p99 job duration is well under the grace period, the simple recipe is fine, and adding checkpointing is over-engineering. The decision rule is arithmetic: if <code>p99_job_duration + safety_margin &lt; terminationGracePeriodSeconds</code>, drain-and-wait works. If not, you need the deadline model.</p>
+<p>The preStop hook is also right for HTTP services behind a load balancer, where the delay lets endpoint propagation catch up. It is wrong for pure queue consumers, where there is no endpoint to propagate. Copying it into a worker manifest is a common mistake, but the hook itself is not the problem; applying it to the wrong workload is.</p>
+<p>And SIGTERM handling is still necessary. The deadline model does not remove the signal; it gives the signal a job to do. Without a handler, the process dies immediately on SIGTERM and never gets the chance to checkpoint. The handler is the trigger; the deadline logic is the response.</p>
+<h2 id="a-decision-rule-for-choosing-a-shutdown-pattern">A decision rule for choosing a shutdown pattern</h2>
+<p>Use this table to pick the pattern that fits the workload. The rows are workload shapes; the columns are the properties that determine which pattern applies.</p>
+<table>
+<thead>
+<tr>
+<th>Workload shape</th>
+<th>Typical job duration</th>
+<th>Checkpointable?</th>
+<th>Recommended pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP request server</td>
+<td>milliseconds to seconds</td>
+<td>N/A</td>
+<td>Drain-and-wait with preStop</td>
+</tr>
+<tr>
+<td>Short queue consumer</td>
+<td>seconds</td>
+<td>Usually not needed</td>
+<td>Drain-and-wait, ack after handler</td>
+</tr>
+<tr>
+<td>Long batch job</td>
+<td>minutes to hours</td>
+<td>Yes</td>
+<td>Deadline model with periodic checkpoints</td>
+</tr>
+<tr>
+<td>Long batch job</td>
+<td>minutes to hours</td>
+<td>No</td>
+<td>Deadline model with abort-and-redeliver plus attempt cap</td>
+</tr>
+<tr>
+<td>Streaming consumer</td>
+<td>continuous</td>
+<td>Offset-based</td>
+<td>Commit offsets on shutdown, not per message</td>
+</tr>
+</tbody>
+</table>
+<p>The rule in words: if the job cannot finish inside the grace period, it must either checkpoint or abort. If it can neither checkpoint nor abort safely, the design is wrong, and no shutdown pattern will fix it. That is the uncomfortable conclusion. Graceful shutdown is a constraint on job design, not a patch you apply at the process level.</p>
+<p>For jobs that cannot checkpoint, the abort path needs an attempt counter. Without one, a job that always times out during shutdown will be redelivered forever. The counter can live in the message metadata or a side table. After N attempts, route to a dead-letter queue and alert. This is the same poison-message logic that applies to any retry loop; shutdown is just one source of retries.</p>
+<h2 id="the-orchestrator-settings-that-actually-matter">The orchestrator settings that actually matter</h2>
+<p>Three settings determine whether the deadline model has room to work. They are worth getting right before writing any handler code.</p>
+<p><strong>terminationGracePeriodSeconds</strong> is the total budget from SIGTERM to SIGKILL. Set it to <code>max_expected_shutdown_time + safety_margin</code>. If your checkpoint write takes up to two seconds and you want to give in-flight work ten seconds to finish, set it to fifteen. Do not set it to an hour to avoid thinking about the problem; that makes deploys slow and evictions sluggish.</p>
+<p><strong>The preStop hook</strong> should be omitted for queue consumers unless you have a specific reason. For HTTP services, a short sleep (a few seconds) is reasonable to let endpoint updates propagate. The hook runs before SIGTERM, so it consumes part of the grace period. Account for it in the budget.</p>
+<p><strong>The queue's visibility timeout</strong> must be longer than the longest expected processing time, including shutdown. If a worker checkpoints and exits, the message may still be invisible to other consumers until the visibility timeout expires. If the timeout is shorter than the job duration, another worker will pick up the message while the first is still working, causing duplicate processing. This is a documented behavior of visibility-timeout-based queues, and it is a common source of duplicate side effects during deploys.</p>
+<p>A worked example makes the arithmetic concrete. Assume a grace period of 30 seconds, a preStop sleep of 5 seconds, a checkpoint write of up to 2 seconds, and a desired in-flight finish window of 10 seconds. The budget after preStop is 25 seconds. Subtracting the checkpoint write leaves 23 seconds for work. If the job's remaining work is under 23 seconds, finish; otherwise checkpoint. These are illustrative assumptions, not measured values, but the arithmetic is the point: every second in the budget has a name.</p>
+<h2 id="testing-shutdown-without-waiting-for-a-deploy">Testing shutdown without waiting for a deploy</h2>
+<p>Shutdown logic is rarely tested because it only runs during deploys or evictions. That is backwards. It should be tested more than the happy path, because it runs at the worst possible time.</p>
+<p>The cheapest test is a local signal. Start the worker, send SIGTERM with <code>kill -TERM &lt;pid&gt;</code>, and assert that it checkpoints and exits within the budget. This catches the obvious bugs: handlers that block, checkpoints that are not atomic, loops that ignore the flag.</p>
+<p>The next test is a kill during checkpoint. Send SIGKILL at a random point during the checkpoint write and assert that the next start reads a consistent state. This is where non-atomic writes show up. If the checkpoint is written in place rather than via a temp file and rename, a kill mid-write leaves a truncated file, and the next start either crashes or resumes from a corrupt offset.</p>
+<p>The third test is the orchestrator path. In Kubernetes, deleting a pod triggers the real sequence: preStop, SIGTERM, grace period, SIGKILL. Running this in a staging cluster with a synthetic long job is the only way to confirm that the grace period and the job's deadline logic agree. A unit test cannot catch a mismatch between <code>terminationGracePeriodSeconds</code> and the worker's internal budget.</p>
+<p>A useful assertion: after the test, the job should be either completed or checkpointed, never lost. If it is lost, the shutdown path has a gap, and the gap is usually between the side effect and the acknowledgement or checkpoint.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How long should terminationGracePeriodSeconds be for a worker?</strong></p>
+<p>It should be the sum of your maximum checkpoint write time, your desired in-flight finish window, and a safety margin. For a worker that checkpoints in under two seconds and finishes in-flight work in ten, fifteen to twenty seconds is reasonable. Setting it to an hour to avoid the problem makes deploys slow and evictions sluggish, and it does not fix jobs that cannot finish anyway.</p>
+<p><strong>Why does my worker lose jobs on deploy even with a SIGTERM handler?</strong></p>
+<p>Because the handler waits for the job to finish, and the job outlasts the grace period. The orchestrator sends SIGKILL, and the job is lost. The fix is not a longer handler; it is a deadline check inside the job loop that checkpoints or aborts before the grace period expires. The handler sets a flag; the loop makes the decision.</p>
+<p><strong>What is the difference between graceful shutdown and checkpointing?</strong></p>
+<p>Graceful shutdown is the process of stopping work cleanly when asked. Checkpointing is the mechanism that makes it possible for long jobs. Without checkpointing, graceful shutdown for a long job is just a slower way to lose it. With checkpointing, shutdown becomes a pause and resume rather than a loss.</p>
+<p><strong>When should a worker abort instead of checkpoint?</strong></p>
+<p>When it cannot persist enough state to resume safely, or when the remaining work is too large to checkpoint within the budget. In that case, abort and let the queue redeliver, but cap the attempts. Without a cap, a job that always aborts during shutdown becomes a poison message that loops forever.</p>
+<h2 id="the-one-thing-to-check-first">The one thing to check first</h2>
+<p>Open your worker's main loop and find where it handles SIGTERM. If the handler does anything other than set a flag, that is the first problem. If the loop has no deadline check against the orchestrator's grace period, that is the second. Fix the flag first, then add the deadline check, then add checkpointing. The next 30 minutes: run <code>kubectl get deployment &lt;worker&gt; -o jsonpath='{.spec.template.spec.terminationGracePeriodSeconds}'</code> and compare it to your worker's maximum checkpoint write time plus in-flight finish window. If the grace period is smaller, you have found the gap that loses jobs on every deploy.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/spot-evictions-the-retry-logic-that-holds-up/">
+                        <h3>Spot evictions: the retry logic that holds up</h3>
+                        <p>Spot evictions break naive retry logic. Learn how to decouple retries from instance lifecycle, add jitter, and avoid coordinated retry storms.</p>
+                        <span class="related-meta">13 min read · 12 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/event-driven-beats-agent-driven-910-times/">
+                        <h3>Event-driven systems avoid agent-driven contention</h3>
+                        <p>How to tell when scheduled jobs and polling loops quietly turn an event-driven system into an agent-driven one, and how to fix it without a rewrite.</p>
+                        <span class="related-meta">15 min read · 30 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+                        <h3>7 skills senior engineers need now agents are live</h3>
+                        <p>Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+                        <span class="related-meta">15 min read · 5 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

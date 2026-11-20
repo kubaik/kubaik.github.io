@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Distributed Systems Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Human-in-the-loop: when agents need a human veto,&quot; &quot;Multi-region active-active: the hidden costs,&quot; and &quot;Python deps: uv vs Poetry vs pip-tools&quot;.">
+  <meta name="description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Graceful shutdown: SIGKILL is not the enemy,&quot; &quot;Human-in-the-loop: when agents need a human veto,&quot; and &quot;Multi-region active-active: the hidden costs&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/distributed-systems/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Distributed Systems Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Human-in-the-loop: when agents need a human veto,&quot; &quot;Multi-region active-active: the hidden costs,&quot; and &quot;Python deps: uv vs Poetry vs pip-tools&quot;.">
+  <meta property="og:description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Graceful shutdown: SIGKILL is not the enemy,&quot; &quot;Human-in-the-loop: when agents need a human veto,&quot; and &quot;Multi-region active-active: the hidden costs&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/distributed-systems/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Distributed Systems Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Human-in-the-loop: when agents need a human veto,&quot; &quot;Multi-region active-active: the hidden costs,&quot; and &quot;Python deps: uv vs Poetry vs pip-tools&quot;.">
+  <meta name="twitter:description" content="Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including &quot;Graceful shutdown: SIGKILL is not the enemy,&quot; &quot;Human-in-the-loop: when agents need a human veto,&quot; and &quot;Multi-region active-active: the hidden costs&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Distributed Systems Articles","url":"https://kubailabs.com/tag/distributed-systems/",
-    "description":"Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including \"Human-in-the-loop: when agents need a human veto,\" \"Multi-region active-active: the hidden costs,\" and \"Python deps: uv vs Poetry vs pip-tools\"."}
+    "description":"Articles on Distributed Systems covering practical, hands-on approaches to distributed systems for software developers, including \"Graceful shutdown: SIGKILL is not the enemy,\" \"Human-in-the-loop: when agents need a human veto,\" and \"Multi-region active-active: the hidden costs\"."}
   </script>
 </head>
 <body>
@@ -44,9 +44,14 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Distributed Systems</span>
     </nav>
-    <h2>97 articles tagged <em>Distributed Systems</em></h2>
+    <h2>98 articles tagged <em>Distributed Systems</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/graceful-shutdown-sigkill-is-not-the-enemy/">
+        <h3>Graceful shutdown: SIGKILL is not the enemy</h3>
+        <p class="post-excerpt">Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.</p>
+        <p class="post-reading-time">14 min read · 20 November 2026</p>
+      </a>
       <a class="post-card" href="/human-in-the-loop-when-agents-need-a-human-veto/">
         <h3>Human-in-the-loop: when agents need a human veto</h3>
         <p class="post-excerpt">Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.</p>

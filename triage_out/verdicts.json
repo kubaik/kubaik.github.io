@@ -1301,6 +1301,11 @@
     ],
     "words": 1919
   },
+  "graceful-shutdown-sigkill-is-not-the-enemy": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2679
+  },
   "graphql-vs-rest-vs-trpc-2026s-api-fight": {
     "verdict": "IMPROVE",
     "reasons": [

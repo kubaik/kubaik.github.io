@@ -271,5 +271,7 @@
   "Building technical depth without title changes",
   "Object storage lifecycle policies explained",
   "Balancing on-call duties with project work",
-  "Understanding CSRF and same-site cookies"
+  "Understanding CSRF and same-site cookies",
+  "Designing guardrails for LLM outputs",
+  "Graceful shutdown patterns for long-running workers"
 ]

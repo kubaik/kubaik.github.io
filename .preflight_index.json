@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-19T20:13:27.173460",
+  "built_at": "2026-11-20T06:22:41.262315",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5900,6 +5900,11 @@
       "slug": "csrf-and-samesite-cookies-what-breaks",
       "title": "CSRF and SameSite cookies: what breaks",
       "summary": "CSRF is not a bug you fix once. It is a class of request-forgery that reappears every time you add a new cookie, a new subdomain, or a new browser default. The SameSite cookie attribute changed the default behavior for cross-site requests, but it did not make CSRF disappear. It moved the failure mod"
+    },
+    {
+      "slug": "graceful-shutdown-sigkill-is-not-the-enemy",
+      "title": "Graceful shutdown: SIGKILL is not the enemy",
+      "summary": "Most teams treat SIGKILL as the villain in their shutdown story. They add signal handlers, preStop hooks, and terminationGracePeriodSeconds values plucked from a blog post, then wonder why they still lose in-flight jobs. The contrarian take: SIGKILL is not the problem. The problem is that your worke"
     }
   ]
 }

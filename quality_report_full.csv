@@ -317,6 +317,7 @@ flaky-tests-reliability-bug-not-test-noise,100,3189,"Flaky tests: reliability bu
 fraud-detection-rules-vs-scoring-where-they-meet,100,3367,"Fraud detection: rules vs scoring, where they meet",2026-10-04T11:01:21.830716,0,
 gateway-api-wont-fix-your-ingress-mess,100,2669,Gateway API won't fix your Ingress mess,2026-11-02T21:32:05.551213,0,
 golden-paths-become-load-bearing-walls,100,2601,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
+graceful-shutdown-sigkill-is-not-the-enemy,100,2737,Graceful shutdown: SIGKILL is not the enemy,2026-11-20T06:22:38.510502,0,
 hpa-vs-keda-vs-karpenter-autoscaling-traps,100,3432,HPA vs KEDA vs Karpenter: autoscaling traps,2026-10-26T08:01:33.191005,0,
 http3-changes-less-than-the-demos-imply,100,2575,HTTP/3 changes less than the demos imply,2026-10-24T03:52:19.685380,0,
 human-in-the-loop-when-agents-need-a-human-veto,100,2824,Human-in-the-loop: when agents need a human veto,2026-11-16T05:32:11.399364,0,
