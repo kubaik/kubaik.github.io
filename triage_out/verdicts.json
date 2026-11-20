@@ -1033,6 +1033,13 @@
     "reasons": [],
     "words": 2200
   },
+  "cpu-based-autoscaling-is-mostly-wrong": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs, Reliability"
+    ],
+    "words": 2772
+  },
   "cqrs-when-it-pays-off-and-when-it-breaks": {
     "verdict": "KEEP",
     "reasons": [],

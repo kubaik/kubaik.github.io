@@ -295,6 +295,7 @@ computer-use-agents-the-permission-trap,100,3021,Computer-use agents: the permis
 context-windows-agents-that-run-for-days,100,3443,Context windows: agents that run for days,2026-09-19T08:48:07.286152,0,
 context-windows-live-longer-than-you-think,100,2608,Context windows live longer than you think,2026-07-25T13:43:38.060125,0,
 contract-testing-is-not-optional,100,3072,Contract testing is not optional,2026-10-18T13:52:46.472859,0,
+cpu-based-autoscaling-is-mostly-wrong,100,2838,CPU-based autoscaling is mostly wrong,2026-11-20T19:47:56.425038,0,
 cqrs-when-it-pays-off-and-when-it-breaks,100,2430,CQRS: when it pays off and when it breaks,2026-09-21T11:34:04.702917,0,
 csrf-and-samesite-cookies-what-breaks,100,2677,CSRF and SameSite cookies: what breaks,2026-11-19T20:13:23.970256,0,
 currency-switch-fails-in-ghana-one-config-file-to-rule,100,2579,Currency switch fails in Ghana: one config file to rule…,2026-08-13T08:44:44.433311,0,

@@ -273,5 +273,8 @@
   "Balancing on-call duties with project work",
   "Understanding CSRF and same-site cookies",
   "Designing guardrails for LLM outputs",
-  "Graceful shutdown patterns for long-running workers"
+  "Graceful shutdown patterns for long-running workers",
+  "SQL injection defenses beyond prepared statements",
+  "Understanding cloud networking egress costs",
+  "Autoscaling policies: metrics that actually work"
 ]

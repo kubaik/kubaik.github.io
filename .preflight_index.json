@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-20T06:22:41.262315",
+  "built_at": "2026-11-20T19:47:59.325581",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5905,6 +5905,11 @@
       "slug": "graceful-shutdown-sigkill-is-not-the-enemy",
       "title": "Graceful shutdown: SIGKILL is not the enemy",
       "summary": "Most teams treat SIGKILL as the villain in their shutdown story. They add signal handlers, preStop hooks, and terminationGracePeriodSeconds values plucked from a blog post, then wonder why they still lose in-flight jobs. The contrarian take: SIGKILL is not the problem. The problem is that your worke"
+    },
+    {
+      "slug": "cpu-based-autoscaling-is-mostly-wrong",
+      "title": "CPU-based autoscaling is mostly wrong",
+      "summary": "Most autoscaling policies are built on a metric that has almost nothing to do with the thing you actually care about. CPU utilization feels scientific — it's a number, it goes up and down, you can draw a threshold on it — so teams wire it to a scaling policy, ship it, and then spend the next six mon"
     }
   ]
 }
