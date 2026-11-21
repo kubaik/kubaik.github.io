@@ -279,5 +279,10 @@
   "Autoscaling policies: metrics that actually work",
   "How to design pagination for large result sets",
   "Caching strategies and their invalidation tradeoffs",
-  "Mentoring without formal authority"
+  "Mentoring without formal authority",
+  "Session management in stateless architectures",
+  "When should a backend service split into microservices?",
+  "Read replicas versus sharding: choosing a scaling path",
+  "Database connection pooling under serverless workloads",
+  "Building a portfolio that reflects systems thinking"
 ]
