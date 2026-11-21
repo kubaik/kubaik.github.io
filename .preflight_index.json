@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-20T19:47:59.325581",
+  "built_at": "2026-11-21T06:12:22.652573",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5910,6 +5910,11 @@
       "slug": "cpu-based-autoscaling-is-mostly-wrong",
       "title": "CPU-based autoscaling is mostly wrong",
       "summary": "Most autoscaling policies are built on a metric that has almost nothing to do with the thing you actually care about. CPU utilization feels scientific — it's a number, it goes up and down, you can draw a threshold on it — so teams wire it to a scaling policy, ship it, and then spend the next six mon"
+    },
+    {
+      "slug": "mentoring-without-formal-authority-the-invisible-mandate",
+      "title": "Mentoring without formal authority: the invisible mandate",
+      "summary": "You have no direct reports, no budget, and no title that makes people listen. Yet you are expected to mentor. The sprint board doesn't show it, the performance review doesn't measure it, and the people you're supposed to guide have their own managers, their own priorities, and no obligation to take "
     }
   ]
 }

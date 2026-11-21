@@ -276,5 +276,8 @@
   "Graceful shutdown patterns for long-running workers",
   "SQL injection defenses beyond prepared statements",
   "Understanding cloud networking egress costs",
-  "Autoscaling policies: metrics that actually work"
+  "Autoscaling policies: metrics that actually work",
+  "How to design pagination for large result sets",
+  "Caching strategies and their invalidation tradeoffs",
+  "Mentoring without formal authority"
 ]

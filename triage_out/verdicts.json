@@ -1558,6 +1558,14 @@
     "reasons": [],
     "words": 1977
   },
+  "mentoring-without-formal-authority-the-invisible-mandate": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Unverifiable first-person experience claims x1 (not human_reviewed)",
+      "Tags absent from body: Engineering Careers, Engineering Management"
+    ],
+    "words": 2337
+  },
   "merge-three-payment-apis-into-one-system": {
     "verdict": "KEEP",
     "reasons": [],

@@ -1,0 +1,149 @@
+# Mentoring without formal authority: the invisible mandate
+
+You have no direct reports, no budget, and no title that makes people listen. Yet you are expected to mentor. The sprint board doesn't show it, the performance review doesn't measure it, and the people you're supposed to guide have their own managers, their own priorities, and no obligation to take your advice. The result is a quiet failure mode: you offer help, they nod politely, and nothing changes. The real problem this post solves is how to build a mentoring relationship that survives contact with a flat org chart — using explicit agreements, borrowed authority, and small, verifiable commitments instead of assumed deference.
+
+## The symptom: advice that evaporates after the meeting
+
+The pattern is consistent. You spend 45 minutes walking a junior engineer through a design decision. They seem engaged. Two weeks later, the same mistake appears in their pull request. Or you suggest a testing strategy in a code review comment; the comment gets a thumbs-up and the code merges unchanged. You are not ignored — you are simply not *load-bearing*. Your input is optional, and optional input loses to deadlines every time.
+
+This is not a personality problem. It is a structural one. In organisations without formal authority, influence flows through three channels: **explicit agreements**, **borrowed credibility**, and **visible outcomes**. When any of those is missing, mentoring becomes performance art.
+
+A typical failure mode looks like this: a senior engineer (call them the mentor) decides to "help" a newer colleague by reviewing their code more closely. The mentor leaves detailed comments. The colleague thanks them and resolves the comments without changing the code. The mentor escalates to the colleague's manager. The manager, who has their own delivery pressure, tells the colleague to "be more receptive to feedback." The colleague now associates mentoring with criticism and avoids the mentor. The relationship is worse than before.
+
+The root cause is almost never the mentee's attitude. It is that the mentor never established *why* the mentee should care, *what* the mentee gets out of it, or *how* the mentor's input connects to the mentee's own goals.
+
+## Causes, in order of probability
+
+### 1. No explicit agreement about the relationship
+
+Most mentoring starts with an implicit assumption: "I am senior, you are junior, therefore you should listen." That assumption is not shared. The mentee may already have a manager, a tech lead, and a Slack channel full of opinions. Your advice is one more input in a noisy system.
+
+**How to confirm:** Ask the mentee directly, in a neutral moment, "What would make our conversations useful for you?" If they give a vague answer ("Oh, just learning from you"), you have no agreement. If they name a specific problem ("I want to get better at estimating"), you have a starting point.
+
+**Fix:** Propose a lightweight mentoring agreement. Not a contract — a shared understanding of cadence, scope, and exit. For example: "Let's try four sessions, every two weeks, focused on your design reviews. After that we can decide whether to continue." This does three things: it sets a time boundary (low commitment), it names a concrete topic (high relevance), and it gives both parties an easy out (no awkwardness). The agreement is the authority you lack.
+
+### 2. Your advice is not connected to their incentives
+
+Engineers optimise for what their manager measures: shipping features, closing tickets, not breaking production. If your mentoring advice adds work without reducing other work, it will be deprioritised. This is rational, not disrespectful.
+
+**How to confirm:** Look at the mentee's last three pull requests. Did they follow your suggestion? If not, ask what they were optimising for at the time. Often the answer is "I had to get this out before the release" or "My manager asked for a different approach." That tells you your advice was competing with a stronger incentive.
+
+**Fix:** Reframe advice as a trade-off, not a directive. Instead of "You should add integration tests here," say "If you add integration tests for this path, you'll catch the regression before the release. The cost is about an hour now. Do you think that's worth it this sprint?" You are not telling them what to do; you are giving them a model to decide. When they choose, they own the outcome.
+
+### 3. You have no visible track record with them
+
+Authority in flat organisations is borrowed from demonstrated competence. If the mentee has never seen you solve a problem they care about, your advice is theoretical. They have no reason to prioritise it over their own instincts.
+
+**How to confirm:** Ask yourself: has this person ever seen me debug a hard issue, ship a feature, or handle an incident? If the answer is no, you are asking for trust you haven't earned.
+
+**Fix:** Start with a small, concrete collaboration. Pair on a bug they are stuck on. Write a short design doc for a problem they own. Do not frame it as mentoring — frame it as "I have some context here, want to look together?" The goal is to produce a visible result *with* them, not *for* them. Once they have seen you work, your advice carries weight.
+
+### 4. The mentee's manager is not aligned
+
+In many organisations, mentoring is informal and invisible to the manager. If the manager doesn't know about it, they can't reinforce it. Worse, the manager may see your involvement as interference.
+
+**How to confirm:** Ask the mentee, "Does your manager know we're meeting?" If the answer is "Not really," you have a gap. The manager controls the mentee's priorities and performance review. Without their buy-in, your mentoring is a side channel.
+
+**Fix:** Send the manager a short message: "I'm spending 30 minutes every two weeks with [name] on design reviews. No action needed from you — just wanted you to know." This does two things: it makes your mentoring visible (so the manager can factor it into workload), and it signals that you respect their authority. If the manager objects, you have a conversation to have. If they don't, you have tacit approval.
+
+### 5. You are mentoring by correction, not by invitation
+
+A common pattern: the mentor reviews every pull request the mentee writes, leaving comments on style, structure, and naming. The mentee experiences this as surveillance. They stop asking questions and start avoiding the mentor.
+
+**How to confirm:** Check the mentee's behaviour. Do they ask you for help, or only receive unsolicited feedback? Do they respond to your comments with explanations, or just "done"? If the latter, you are correcting, not mentoring.
+
+**Fix:** Switch from push to pull. Instead of commenting on every PR, say: "I'm happy to review when you want a second pair of eyes — just tag me." Then wait. When they do ask, give focused, actionable feedback on the thing they asked about, not everything you noticed. The goal is to make asking for help cheaper than not asking.
+
+## How to confirm the cause before you fix it
+
+Before changing your approach, run a quick diagnosis. Answer these three questions honestly:
+
+1. **Have we ever agreed on what this relationship is for?** If not, cause 1 is likely.
+2. **Have I ever produced a visible result with this person?** If not, cause 3 is likely.
+3. **Does their manager know I exist?** If not, cause 4 is likely.
+
+You can also ask the mentee directly, but phrase it as a request for feedback, not an accusation: "I want to make sure our time is useful. What's one thing I could do differently?" People are more honest when they are not defending themselves.
+
+## Fixes that work without formal authority
+
+### Use a lightweight mentoring agreement
+
+The agreement does not need to be written down, but it should be explicit. Here is a template you can adapt:
+
+```markdown
+## Mentoring agreement (draft)
+
+- **Focus:** [specific skill or problem, e.g., "design reviews for the payments service"]
+- **Cadence:** 30 minutes every two weeks, for four sessions.
+- **Format:** You bring a real problem; we work through it together.
+- **My role:** Ask questions, share patterns, review your thinking. I will not make decisions for you.
+- **Your role:** Bring a problem, try one thing between sessions, tell me what happened.
+- **Review:** After four sessions, we decide whether to continue.
+```
+
+This agreement is the source of your authority. It says: we are both here voluntarily, for a defined purpose, for a limited time. That is enough to justify the mentee's attention.
+
+### Borrow authority from artefacts, not titles
+
+You may not have a title, but you can create artefacts that carry weight: a design doc template, a checklist for code reviews, a runbook for a common failure. When you mentor, you are not saying "do it my way" — you are saying "here is a tool that has worked before." The artefact is the authority.
+
+For example, instead of telling a mentee "you should write a design doc," give them a one-page template with sections for problem, constraints, options, and decision. Then offer to review their first draft. The template does the persuading; you do the coaching.
+
+### Make progress visible to the manager
+
+Every four to six weeks, send the manager a two-line update: "[Name] has been working on X. They made progress on Y. No action needed." This does three things: it shows the manager that mentoring is happening, it gives the mentee credit they might not otherwise get, and it reinforces your role as a helpful ally rather than a critic.
+
+Do not ask for anything in return. The update is a gift. But over time, it builds a track record that makes future mentoring easier.
+
+### Use pull-based feedback
+
+Instead of reviewing everything, wait to be asked. When you are asked, ask a clarifying question first: "What kind of feedback do you want — correctness, design, or style?" This gives the mentee control and focuses your input. It also models how to ask for help, which is a skill in itself.
+
+### Escalate only when the mentee asks
+
+If you see a problem that the mentee is not addressing, resist the urge to escalate to their manager. Instead, say: "I noticed X. I'm not going to raise it with your manager unless you want me to. Would it help if I did?" This preserves trust and keeps the mentee in control. If they say yes, you escalate with their consent. If they say no, you have learned something about their priorities.
+
+## Prevention: building mentoring authority before you need it
+
+The best time to build mentoring authority is before you have a specific mentee. Three habits help:
+
+1. **Publish your thinking.** Write short design docs or incident reviews and share them in a team channel. People learn to trust your judgment by seeing it in writing.
+2. **Offer small, specific help.** When someone is stuck, offer a 15-minute pairing session, not a lecture. Small help is easier to accept and builds reciprocity.
+3. **Connect people.** Introduce two colleagues who are working on similar problems. Being a connector is a form of authority that does not require a title.
+
+These habits create a reservoir of goodwill and credibility that you can draw on when you formally mentor someone.
+
+## Frequently Asked Questions
+
+### How do I mentor someone who doesn't want to be mentored?
+
+You can't force it, and you shouldn't try. Start by asking what they want to get better at, and if they have no interest, offer a low-commitment alternative: "If you ever want a second pair of eyes on a design, I'm around." Then step back. Forcing mentoring creates resentment and wastes both people's time. If the organisation expects you to mentor this person, talk to their manager about the mismatch — but do not turn it into a performance issue.
+
+### What if my mentee's manager sees me as a threat?
+
+This is common in organisations with unclear roles. The fix is transparency and deference. Tell the manager what you are doing, ask if they have any concerns, and make it clear you are not trying to replace them. If the manager remains threatened, reduce your involvement and focus on artefacts (templates, docs) rather than direct advice. You can also ask a skip-level manager to clarify roles, but that is a last resort.
+
+### How do I measure whether mentoring is working?
+
+Don't measure it with metrics like "number of sessions" or "PRs reviewed." Measure it by changes in the mentee's behaviour: do they bring you problems earlier? Do they ask better questions? Do they apply a pattern you discussed in a different context? These are leading indicators. Lagging indicators (promotions, performance ratings) are influenced by many factors and are not a fair test of mentoring.
+
+### Can I mentor someone more senior than me?
+
+Yes, but the framing changes. You are not teaching them your job; you are offering a different perspective. Be explicit about what you can offer: "I can help you think through the API design because I've worked with similar systems, but you know the domain better than I do." Respect their expertise and focus on the specific gap you can fill.
+
+## The next 30 minutes
+
+Open your calendar and find the next scheduled one-on-one with the person you are mentoring (or want to mentor). Delete the default agenda. Replace it with one question: "What's one problem you're stuck on right now?" Then, in the meeting, resist the urge to solve it. Ask three questions about the problem, and offer one pattern or artefact that might help. End by asking, "What will you try next?" That single change — from telling to asking — is the first step toward mentoring that works without formal authority.
+
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Before publication, drafts are screened automatically for minimum length, near-duplicate content, invented or unsourced claims and citations, unverifiable product names, and broken internal links. Individual line-by-line human editing is not performed on every post. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
+
+**Last generated:** November 2026
