@@ -133,6 +133,7 @@ docs/run-apis-in-50-spots-what-breaks-first/	-
 docs/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/	-
 docs/save-12kmonth-cloud-egress-costs-in-2026/	-
 docs/scope-agent-permissions-per-task/	-
+docs/secure-file-uploads-where-pipelines-break/	-
 docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/	-
 docs/self-healing-pipelines-argo-vs-crossplane-in-2026/	-
 docs/serve-4g-as-baseline-apps-in-2026/	-

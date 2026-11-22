@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-22T05:47:00.254385",
+  "built_at": "2026-11-22T19:14:13.393410",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5920,6 +5920,11 @@
       "slug": "backpressure-in-streaming-pipelines-the-silent-killer",
       "title": "Backpressure in Streaming Pipelines: The Silent Killer",
       "summary": "A streaming pipeline that never says no is not reliable — it is just delaying the moment it fails. The confusion is that backpressure is often mistaken for a performance tuning knob or a network protocol detail, when it is actually the feedback loop that keeps a pipeline from turning into a memory l"
+    },
+    {
+      "slug": "secure-file-uploads-where-pipelines-break",
+      "title": "Secure file uploads: where pipelines break",
+      "summary": "File uploads are the part of an application where untrusted bytes cross a trust boundary. Most teams get the UI right — drag-and-drop, progress bars, retry logic — and then discover, usually after a security review, that the pipeline behind it trusts the client far more than it should. The symptom i"
     }
   ]
 }

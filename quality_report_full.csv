@@ -390,6 +390,7 @@ sandboxed-computer-use-agents-with-gvisor,100,2898,Sandboxed computer-use agents
 save-12kmonth-cloud-egress-costs-in-2026,100,2606,Cutting cloud egress costs: architecture that works,2026-06-11T09:49:21.554478,0,
 sbom-attestation-that-gets-used,100,3399,SBOM + attestation that gets used,2026-10-03T10:43:42.064063,0,
 scope-agent-permissions-per-task,100,3910,Scope agent permissions per task,2026-09-19T09:21:55.925855,0,
+secure-file-uploads-where-pipelines-break,100,2697,Secure file uploads: where pipelines break,2026-11-22T19:14:11.020297,0,
 self-healing-pipelines-argo-vs-crossplane-in-2026,100,2592,Self-healing pipelines: Argo vs Crossplane in 2026,2026-06-25T13:16:29.832770,0,
 self-service-ai-tooling-the-permission-trap,100,2748,Self-service AI tooling: the permission trap,2026-10-09T05:16:57.522175,0,
 self-service-ai-tooling-where-it-breaks-first,100,2986,Self-service AI tooling: where it breaks first,2026-09-16T09:53:25.584787,0,

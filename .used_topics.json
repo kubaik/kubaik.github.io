@@ -285,5 +285,6 @@
   "Read replicas versus sharding: choosing a scaling path",
   "Database connection pooling under serverless workloads",
   "Building a portfolio that reflects systems thinking",
-  "Backpressure in streaming pipelines explained"
+  "Backpressure in streaming pipelines explained",
+  "Designing secure file upload pipelines"
 ]

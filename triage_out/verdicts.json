@@ -2209,6 +2209,11 @@
     "reasons": [],
     "words": 3799
   },
+  "secure-file-uploads-where-pipelines-break": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2645
+  },
   "security-engineering-isnt-a-ladder": {
     "verdict": "IMPROVE",
     "reasons": [

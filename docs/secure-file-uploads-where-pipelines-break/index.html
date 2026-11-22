@@ -1,0 +1,493 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Secure file uploads: where pipelines break - Kubai Kevin</title>
+        <meta name="description" content="Secure file upload pipelines fail at the same six points. Spot the Content-Type trust mistake, path traversal, and origin misconfig before a review does.">
+        <meta name="keywords" content="file upload security, path traversal, secure file upload pipeline, content type validation upload, prevent file upload attacks, how to validate uploaded files, why is my file upload vulnerable, what is magic byte sniffing">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-22T19:14:11.020297">
+        <meta property="article:modified_time" content="2026-11-22T19:14:11.020312">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Secure file uploads: where pipelines break">
+        <meta property="og:description" content="Secure file upload pipelines fail at the same six points. Spot the Content-Type trust mistake, path traversal, and origin misconfig before a review does.">
+        <meta property="og:url" content="https://kubailabs.com/secure-file-uploads-where-pipelines-break/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/secure-file-uploads-where-pipelines-break.png">
+        <meta property="og:image:alt" content="Secure file uploads: where pipelines break">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Secure file uploads: where pipelines break">
+        <meta name="twitter:description" content="Secure file upload pipelines fail at the same six points. Spot the Content-Type trust mistake, path traversal, and origin misconfig before a review does.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/secure-file-uploads-where-pipelines-break.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/secure-file-uploads-where-pipelines-break/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/secure-file-uploads-where-pipelines-break/#article",
+      "headline": "Secure file uploads: where pipelines break",
+      "description": "Secure file upload pipelines fail at the same six points. Spot the Content-Type trust mistake, path traversal, and origin misconfig before a review does.",
+      "datePublished": "2026-11-22T19:14:11+00:00",
+      "dateModified": "2026-11-22T19:14:11+00:00",
+      "wordCount": 2697,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/secure-file-uploads-where-pipelines-break/"
+      },
+      "keywords": "file upload security, path traversal, secure file upload pipeline, content type validation upload, prevent file upload attacks, how to validate uploaded files, why is my file upload vulnerable, what is magic byte sniffing"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Secure file uploads: where pipelines break",
+          "item": "https://kubailabs.com/secure-file-uploads-where-pipelines-break/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Secure file uploads: where pipelines break</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Secure file uploads: where pipelines break</h1>
+                
+                <p class="post-lead">Secure file upload pipelines fail at the same six points. Spot the Content-Type trust mistake, path traversal, and origin misconfig before a review does.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/aws/"
+                       style="text-decoration:none;">AWS</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/security/"
+                       style="text-decoration:none;">Security</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/containers/"
+                       style="text-decoration:none;">Containers</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2697 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-22
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>File uploads are the part of an application where untrusted bytes cross a trust boundary. Most teams get the UI right — drag-and-drop, progress bars, retry logic — and then discover, usually after a security review, that the pipeline behind it trusts the client far more than it should. The symptom is rarely a crash. It's a finding in a penetration test report, a bucket with public read enabled, or a file that was "image/jpeg" on the way in and an HTML document on the way out.</p>
+<p>This post walks through the failure modes that show up across unrelated codebases: the same root causes behind different error messages. It's a diagnostic guide, not a tutorial. The goal is to help you self-triage an existing upload path before a reviewer does it for you.</p>
+<h2 id="the-symptom-a-file-that-passes-validation-but-shouldnt">The symptom: a file that passes validation but shouldn't</h2>
+<p>The exact symptom varies by stack, but the pattern is consistent: a file is accepted by the application, stored somewhere, and later served or processed in a way that violates an assumption the team thought was enforced. Common error strings and log lines that indicate this class of problem:</p>
+<ul>
+<li><code>Content-Type</code> mismatch warnings from a virus scanner or image processor: <code>expected image/jpeg, got text/html</code></li>
+<li>A 200 response from your upload endpoint for a file whose magic bytes don't match its extension</li>
+<li>S3 <code>AccessDenied</code> on an object that should be private, or the opposite: an object that is readable by anyone with the URL</li>
+<li><code>413 Request Entity Too Large</code> from a proxy that disagrees with your application's limit</li>
+<li><code>Multipart: Boundary not found</code> or <code>Unexpected end of form</code> from a body parser when the request is malformed or truncated</li>
+<li>A filename in your storage layer containing <code>../</code> or a null byte</li>
+</ul>
+<p>If any of these appear in your logs, the pipeline is doing less validation than the team believes. The rest of this post is about which layer is failing and how to confirm it.</p>
+<h2 id="cause-1-trusting-the-clients-content-type-header">Cause 1: trusting the client's Content-Type header</h2>
+<p>The most common cause is that the application uses the <code>Content-Type</code> header from the multipart request as the file's type. That header is set by the client. A browser will usually set it correctly based on the file extension, but an attacker controls it completely. A file named <code>invoice.pdf</code> can be uploaded with <code>Content-Type: image/png</code>, or with no type at all.</p>
+<h3 id="how-to-confirm">How to confirm</h3>
+<p>Check whether your validation code reads <code>file.mimetype</code> (Express/Multer), <code>UploadFile.content_type</code> (FastAPI/Starlette), or the equivalent in your framework. If the only check is against that value, you have this cause. A quick test: upload a text file with <code>Content-Type: image/jpeg</code> using <code>curl -F 'file=@test.txt;type=image/jpeg' https://your-app/upload</code>. If it's accepted, the pipeline trusts the header.</p>
+<h3 id="the-fix">The fix</h3>
+<p>Validate the file's actual content, not its declared type. For images, parse the header bytes. The magic numbers for common formats are stable and short:</p>
+<pre><code class="language-python"># Python: check magic bytes for common image types
+def sniff_image_type(header: bytes) -&gt; str | None:
+    if header.startswith(b'\xff\xd8\xff'):
+        return 'image/jpeg'
+    if header.startswith(b'\x89PNG\r\n\x1a\n'):
+        return 'image/png'
+    if header.startswith(b'GIF87a') or header.startswith(b'GIF89a'):
+        return 'image/gif'
+    if header.startswith(b'RIFF') and header[8:12] == b'WEBP':
+        return 'image/webp'
+    return None
+
+# In your handler:
+header = await file.read(16)
+await file.seek(0)
+detected = sniff_image_type(header)
+if detected not in ALLOWED_TYPES:
+    raise HTTPException(status_code=415, detail='Unsupported file type')
+</code></pre>
+<p>For formats beyond images — PDF, Office documents, ZIP archives — use a library that parses the container rather than a hand-rolled header check. <code>python-magic</code> wraps libmagic and is the usual choice in Python; on Node.js, the <code>file-type</code> package reads magic bytes for a wide range of formats. Neither is a security boundary on its own: a polyglot file can be a valid JPEG and a valid HTML document at the same time. The point is to stop trusting the header, then add a second layer (see Cause 3).</p>
+<h2 id="cause-2-path-traversal-and-filename-injection">Cause 2: path traversal and filename injection</h2>
+<p>The second most common cause is using the client-supplied filename directly in a filesystem path or object key. <code>../../etc/passwd</code> as a filename is the classic example, but the more realistic problem is overwriting an existing object or writing outside the intended prefix. On object storage the equivalent is a key like <code>uploads/../other-tenant/file.png</code>, which some SDKs and proxies will normalize differently.</p>
+<h3 id="how-to-confirm_1">How to confirm</h3>
+<p>Search your codebase for the upload handler and check whether the original filename is used in any path construction. In Node.js, look for <code>path.join(uploadDir, file.originalname)</code>. In Python, <code>os.path.join(UPLOAD_DIR, file.filename)</code>. If the filename is concatenated or joined without sanitization, you have this cause. Also check whether the filename is used in a database query or a <code>Content-Disposition</code> header — both have their own injection risks.</p>
+<h3 id="the-fix_1">The fix</h3>
+<p>Generate the storage key yourself and never use the client filename for anything except display. A UUID or a content hash is sufficient. If you need the original name for the user's benefit, store it as metadata and sanitize it on display.</p>
+<pre><code class="language-javascript">// Node.js: generate a safe key, keep original name as metadata
+const crypto = require('crypto');
+const path = require('path');
+
+function safeKey(originalName) {
+  const ext = path.extname(originalName).toLowerCase();
+  const allowed = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp']);
+  if (!allowed.has(ext)) throw new Error('extension not allowed');
+  return `uploads/${crypto.randomUUID()}${ext}`;
+}
+</code></pre>
+<p>Notice that the extension is still taken from the client filename. That's acceptable only because it's checked against an allowlist and the rest of the name is discarded. If you want to be stricter, derive the extension from the sniffed type instead. The key point is that the path is constructed entirely from server-controlled values.</p>
+<h2 id="cause-3-storing-and-serving-user-content-from-the-same-origin">Cause 3: storing and serving user content from the same origin</h2>
+<p>A pipeline can validate type and sanitize filenames and still be exploitable if uploaded files are served from the application's own origin. An HTML file uploaded as <code>report.html</code> and served with <code>Content-Type: text/html</code> runs with the same origin as your app. That gives it access to cookies, local storage, and any same-origin API. This is stored XSS with extra steps.</p>
+<h3 id="how-to-confirm_2">How to confirm</h3>
+<p>Request an uploaded file and inspect the response headers. If <code>Content-Type</code> reflects the uploaded file's type and there is no <code>Content-Disposition: attachment</code>, the file is being rendered. If the file is served from the same hostname as your application (not a separate domain or a CDN with a different origin), the risk is present. Check whether <code>X-Content-Type-Options: nosniff</code> is set; without it, some browsers will sniff the content type and render HTML even when you send <code>text/plain</code>.</p>
+<h3 id="the-fix_2">The fix</h3>
+<p>Serve user content from a separate origin, ideally a domain that shares no cookies with the application. On AWS, that usually means an S3 bucket behind CloudFront with a distinct hostname, not a path on the app's domain. Set <code>Content-Disposition: attachment</code> for anything that isn't an image you intend to render inline, and always send <code>X-Content-Type-Options: nosniff</code>. If you must serve from the same origin, use a strict Content Security Policy that disallows inline scripts and restricts <code>script-src</code> to your own bundle.</p>
+<p>A related failure: presigned URLs with excessively long expiry. A presigned S3 URL is a bearer token. If it leaks — through logs, referrer headers, or a shared link — anyone can use it until it expires. Keep expiry short (minutes, not days) and generate a new URL per request rather than storing one.</p>
+<h2 id="cause-4-size-limits-enforced-in-only-one-layer">Cause 4: size limits enforced in only one layer</h2>
+<p>The <code>413 Request Entity Too Large</code> error is usually a sign that two layers disagree about the maximum size. A common setup is an application-level limit of 10 MB and a reverse proxy (nginx, ALB, API Gateway) with a lower default. The request is rejected before your handler runs, so your application-level error handling never fires and the user sees a generic proxy error.</p>
+<h3 id="how-to-confirm_3">How to confirm</h3>
+<p>Check the limits at every hop: the client, the CDN, the load balancer, the reverse proxy, the application framework, and the storage layer. For nginx, <code>client_max_body_size</code> defaults to 1 MB. For AWS API Gateway, the payload limit is 10 MB for REST APIs. Application Load Balancers have their own limits. If any of these is lower than your application's limit, the effective limit is the lowest one, and the error will come from that layer, not yours.</p>
+<h3 id="the-fix_3">The fix</h3>
+<p>Decide on a single maximum size and configure every layer to match or exceed it, with the application enforcing the final limit. Return a structured error from the application so clients can distinguish "too large" from "wrong type." If you're uploading directly to S3 with presigned URLs, enforce the size limit in the presigned policy using a <code>content-length-range</code> condition; otherwise the client can upload anything up to S3's own limits.</p>
+<h2 id="cause-5-processing-untrusted-files-in-process">Cause 5: processing untrusted files in-process</h2>
+<p>Image resizing, PDF text extraction, and archive decompression are all operations that parse attacker-controlled input. Running them in the same process as your web server means a parser bug or a decompression bomb takes down the application. A zip bomb is the simplest example: a small compressed file that expands to gigabytes when decompressed.</p>
+<h3 id="how-to-confirm_4">How to confirm</h3>
+<p>Look at where your processing code runs. If <code>sharp</code>, ImageMagick, <code>pdftotext</code>, or an archive library is called directly in a request handler, you have this cause. Check whether there are limits on decompressed size, pixel count, or processing time. ImageMagick in particular has a history of vulnerabilities when processing untrusted input; the project's own security policy recommends policy.xml restrictions.</p>
+<h3 id="the-fix_4">The fix</h3>
+<p>Move processing to an isolated worker with resource limits: a separate container with CPU and memory caps, a Lambda function with a timeout, or a queue-backed worker. Set explicit limits on output size and processing time. For images, configure the decoder to reject images above a pixel count. For archives, check the uncompressed size before extracting and refuse anything above a threshold. The web request should only validate and store the raw bytes; processing happens asynchronously.</p>
+<h2 id="cause-6-missing-antivirus-and-content-disarm">Cause 6: missing antivirus and content disarm</h2>
+<p>If the pipeline accepts documents that will later be opened by other users, malware scanning is part of the trust boundary. The symptom is usually indirect: a user reports a suspicious attachment, or a security review asks where scanning happens and the answer is "nowhere."</p>
+<h3 id="how-to-confirm_5">How to confirm</h3>
+<p>Trace the lifecycle of an uploaded document. If it goes from upload to storage to download without passing through a scanner, there is no scanning. Check whether the scanner result is enforced — a scan that runs but doesn't block download is logging, not prevention.</p>
+<h3 id="the-fix_5">The fix</h3>
+<p>Scan asynchronously after upload, tag the object as <code>pending</code>, <code>clean</code>, or <code>infected</code>, and only allow download when the tag is <code>clean</code>. For formats that support it, content disarm and reconstruction (CDR) is more robust than signature-based scanning: it rebuilds the file from parsed content, discarding anything that isn't part of the document structure. ClamAV is the usual open-source scanner; commercial CDR services exist but the mechanism is the same. The important design decision is that scanning is a gate, not an alert.</p>
+<h2 id="a-decision-framework-for-the-pipeline">A decision framework for the pipeline</h2>
+<p>When designing or reviewing an upload path, the useful question is not "is this secure?" but "which layer enforces which invariant?" The table below maps each invariant to the layer that should own it. If two layers claim the same invariant, one of them is probably not enforcing it.</p>
+<table>
+<thead>
+<tr>
+<th>Invariant</th>
+<th>Enforced by</th>
+<th>Typical mistake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>File type is allowed</td>
+<td>Application, via magic-byte sniffing</td>
+<td>Trusting <code>Content-Type</code> header</td>
+</tr>
+<tr>
+<td>File size is bounded</td>
+<td>Every hop, with application as final gate</td>
+<td>Only application limit set</td>
+</tr>
+<tr>
+<td>Storage key is safe</td>
+<td>Application, generated server-side</td>
+<td>Using client filename in path</td>
+</tr>
+<tr>
+<td>Content is served safely</td>
+<td>CDN/object storage with separate origin</td>
+<td>Serving from app origin</td>
+</tr>
+<tr>
+<td>Content is free of malware</td>
+<td>Async scanner with download gate</td>
+<td>Scanning but not blocking</td>
+</tr>
+<tr>
+<td>Processing is isolated</td>
+<td>Worker with resource limits</td>
+<td>Decoding in request handler</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prevention-the-checklist-to-run-before-the-next-review">Prevention: the checklist to run before the next review</h2>
+<p>A secure upload pipeline is mostly a matter of not trusting the client at any layer. The checklist below is ordered by how often each item is missing in practice.</p>
+<ol>
+<li><strong>Sniff content, don't read the header.</strong> Validate magic bytes for every accepted format. Reject anything that doesn't match an allowlist.</li>
+<li><strong>Generate storage keys server-side.</strong> Never use the client filename in a path or object key. Keep it as metadata only.</li>
+<li><strong>Serve from a separate origin.</strong> Use a distinct hostname for user content, set <code>Content-Disposition: attachment</code> and <code>X-Content-Type-Options: nosniff</code>.</li>
+<li><strong>Align size limits across every hop.</strong> Proxy, load balancer, application, and storage should agree. Enforce the final limit in the presigned policy if uploading directly.</li>
+<li><strong>Scan asynchronously and gate download.</strong> A scan that doesn't block is telemetry, not security.</li>
+<li><strong>Process in isolation.</strong> Decode images, PDFs, and archives in a worker with CPU, memory, and time limits.</li>
+<li><strong>Log the decisions.</strong> Record the sniffed type, the size, the scanner result, and the generated key. When something goes wrong, the log is how you reconstruct which layer failed.</li>
+</ol>
+<h2 id="the-next-30-minutes-check-your-upload-handler">The next 30 minutes: check your upload handler</h2>
+<p>Open the file that handles uploads in your application and search for the client-supplied filename and <code>Content-Type</code>. If either appears in a path, a storage key, or a validation check, you've found the first thing to fix. Replace the filename with a server-generated UUID and add a magic-byte check before the file is written anywhere. That single change closes the two most common findings in upload pipelines, and it's small enough to ship today.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why is checking the file extension not enough for secure uploads?</strong>
+Because the extension is part of the client-supplied filename and can be anything. A file named <code>photo.jpg</code> can contain HTML, a ZIP archive, or an executable. The extension tells you what the client claims the file is, not what it is. Magic-byte sniffing reads the actual content header, and for formats with complex containers, parsing the structure is the only reliable check.</p>
+<p><strong>Should I store uploads in S3 or on the local filesystem?</strong>
+For most applications, object storage is the better default because it separates the storage layer from the application process and makes it easier to serve content from a different origin. The security properties depend on configuration: block public access, use presigned URLs with short expiry, and enable versioning so an overwrite doesn't destroy the original. Local filesystem storage is workable for small deployments but requires you to handle path traversal, disk quotas, and backup yourself.</p>
+<p><strong>How do I prevent zip bombs and decompression attacks?</strong>
+Check the uncompressed size before extracting, and refuse archives that exceed a threshold relative to their compressed size. Run extraction in a worker with a memory limit and a timeout so a bomb fails the worker rather than the host. The same principle applies to image decoding: set a maximum pixel count and reject images above it before allocating buffers.</p>
+<p><strong>What is the difference between antivirus scanning and content disarm?</strong>
+Antivirus scanning matches known signatures and heuristics; it catches known malware but misses new or targeted files. Content disarm and reconstruction parses the document and rebuilds it from the structural elements it understands, discarding anything else — macros, embedded scripts, external references. CDR is more robust against unknown threats but can alter the document's appearance or functionality. Many pipelines use both: scan first, then disarm.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/">AWS Lambda Developer Guide</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/move-images-50-faster-in-2026-with-starlink-cdn/">
+                        <h3>Resize Images at the Edge: A CloudFront and Lambda Guide</h3>
+                        <p>Build an on-the-fly image resizing pipeline with CloudFront, Lambda@Edge, S3 and Terraform, including streaming, format negotiation and observability.</p>
+                        <span class="related-meta">13 min read · 18 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/waf-and-bot-management-what-they-miss/">
+                        <h3>WAF and bot management: what they miss</h3>
+                        <p>WAFs and bot managers filter known-bad requests, not business logic. Map blind spots, tune rules safely, and add application-layer controls.</p>
+                        <span class="related-meta">16 min read · 9 November 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-scanners-overlook-real-vulns/">
+                        <h3>AI scanners overlook real vulns</h3>
+                        <p>AI scanners catch pattern-level flaws but miss logic bugs. Learn a layered approach using deterministic rules, fuzzing, and runtime monitoring.</p>
+                        <span class="related-meta">12 min read · 2 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
