@@ -446,6 +446,9 @@
   "aws-local-zones-vs-localstack-ai-microservices-in": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "backpressure-in-streaming-pipelines-the-silent-killer": {
+    "first_seen": "2026-11-22T05:47:07.474454+00:00"
+  },
   "bank-apis-broke-under-african-2g": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

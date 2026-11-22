@@ -842,6 +842,13 @@
     "reasons": [],
     "words": 2546
   },
+  "backpressure-in-streaming-pipelines-the-silent-killer": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Messaging, Reliability"
+    ],
+    "words": 3019
+  },
   "bank-apis-broke-under-african-2g": {
     "verdict": "IMPROVE",
     "reasons": [

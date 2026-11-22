@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-21T06:12:22.652573",
+  "built_at": "2026-11-22T05:47:00.254385",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5915,6 +5915,11 @@
       "slug": "mentoring-without-formal-authority-the-invisible-mandate",
       "title": "Mentoring without formal authority: the invisible mandate",
       "summary": "You have no direct reports, no budget, and no title that makes people listen. Yet you are expected to mentor. The sprint board doesn't show it, the performance review doesn't measure it, and the people you're supposed to guide have their own managers, their own priorities, and no obligation to take "
+    },
+    {
+      "slug": "backpressure-in-streaming-pipelines-the-silent-killer",
+      "title": "Backpressure in Streaming Pipelines: The Silent Killer",
+      "summary": "A streaming pipeline that never says no is not reliable — it is just delaying the moment it fails. The confusion is that backpressure is often mistaken for a performance tuning knob or a network protocol detail, when it is actually the feedback loop that keeps a pipeline from turning into a memory l"
     }
   ]
 }
