@@ -2457,6 +2457,13 @@
     ],
     "words": 3865
   },
+  "structured-outputs-schema-vs-reality": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs"
+    ],
+    "words": 2137
+  },
   "supervisor-vs-swarm-vs-debate-vs-pipeline": {
     "verdict": "KEEP",
     "reasons": [],

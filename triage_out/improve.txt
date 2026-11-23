@@ -243,6 +243,7 @@ docs/stop-the-writes-zero-downtime-db-migrations/	Tags absent from body: Databas
 docs/store-data-once-serve-everywhere-cheaper/	Tags absent from body: Distributed Systems, Python
 docs/stride-is-a-checklist-not-a-threat-model/	Tags absent from body: Identity & Access, LLMs
 docs/structured-logging-searchable-at-scale/	Tags absent from body: Observability, Data Engineering, Google Cloud
+docs/structured-outputs-schema-vs-reality/	Tags absent from body: LLMs
 docs/technical-debt-defend-priorities-to-stakeholders/	Tags absent from body: Engineering Management, Reliability, CI/CD
 docs/test-ai-code-without-testing-the-ai/	Tags absent from body: LLMs
 docs/tool-calling-patterns-patterns-that-survive-load-vs/	Tags absent from body: Reliability, AI Agents

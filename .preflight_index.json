@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-22T19:14:13.393410",
+  "built_at": "2026-11-23T06:32:07.873638",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5925,6 +5925,11 @@
       "slug": "secure-file-uploads-where-pipelines-break",
       "title": "Secure file uploads: where pipelines break",
       "summary": "File uploads are the part of an application where untrusted bytes cross a trust boundary. Most teams get the UI right — drag-and-drop, progress bars, retry logic — and then discover, usually after a security review, that the pipeline behind it trusts the client far more than it should. The symptom i"
+    },
+    {
+      "slug": "structured-outputs-schema-vs-reality",
+      "title": "Structured outputs: schema vs. reality",
+      "summary": "A structured output is a promise the model makes about the shape of its reply, enforced either by the API or by you. The confusion worth resolving is that there are two very different things people call \"structured outputs\": the provider-enforced kind (JSON mode, function calling, or a response sche"
     }
   ]
 }

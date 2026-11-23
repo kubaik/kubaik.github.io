@@ -1,0 +1,161 @@
+# Structured outputs: schema vs. reality
+
+A structured output is a promise the model makes about the shape of its reply, enforced either by the API or by you. The confusion worth resolving is that there are two very different things people call "structured outputs": the provider-enforced kind (JSON mode, function calling, or a response schema) and the kind you enforce yourself by parsing and validating the model's text. They fail in different ways, cost different amounts, and solve different problems. Teams routinely pick one, assume it covers the other, and then discover the gap in production when a downstream consumer crashes on a field that was supposed to be an integer.
+
+The problem this post solves: deciding which layer should own the schema contract, and what to do when the model returns something that is valid JSON but invalid according to your schema.
+
+## The two contracts hiding under one name
+
+When a provider offers a "structured output" feature, it is usually doing one of three things, and the distinction matters:
+
+1. **Prompt-level JSON mode.** The model is instructed to emit JSON and the API may guarantee syntactic validity (parseable JSON) but not schema conformance. You can get `{"age": "thirty"}` back and it is still valid JSON.
+2. **Schema-constrained decoding.** The provider accepts a JSON Schema and constrains sampling so the output matches it. This is stronger: the output should conform to the schema, not just parse.
+3. **Tool/function calling.** You declare a function with a parameter schema, and the model returns a structured call. The parameter object is usually schema-conformant, but the model can still choose not to call the tool, call the wrong tool, or omit optional fields.
+
+A useful analogy: JSON mode is a spell-checker. Schema-constrained decoding is a grammar checker that also knows your sentence template. Function calling is a form with fields — the model fills it in, but it can also decline to submit the form.
+
+Most production incidents I have seen described (and the ones teams report in issue trackers) come from treating layer 1 as if it were layer 2. The fix is not "use structured outputs" — it is deciding which layer owns which guarantee, and validating at the boundary regardless.
+
+| Mechanism | Guarantees syntax | Guarantees schema | Can decline | Typical failure |
+|---|---|---|---|---|
+| Prompt-level JSON mode | Usually | No | No | Valid JSON, wrong types or missing fields |
+| Schema-constrained decoding | Yes | Yes, per supported schema subset | No | Unsupported schema keywords silently ignored or rejected |
+| Function/tool calling | Yes for the call envelope | Yes for declared parameters, usually | Yes | Model picks no tool, or a different tool |
+| Your own validator | N/A | Whatever you implement | N/A | You forget to run it on retries |
+
+That table is the whole post in miniature. The rest is about making the last row real.
+
+## Why "valid JSON" is the wrong finish line
+
+JSON validity is a lexical property. Schema conformance is a semantic one. The gap between them is where most bugs live.
+
+Consider a schema that says `age` is an integer between 0 and 150. A model in JSON mode can return any of these, all syntactically valid:
+
+```json
+{"age": "30"}
+{"age": 30.5}
+{"age": -1}
+{"age": null}
+{}
+```
+
+Only the second is a number, and even it violates the integer constraint. The fourth violates the type. The fifth omits the field entirely. If your downstream code does `user.age + 1`, the string case silently concatenates in JavaScript and the null case throws at runtime, possibly hours later in a different service.
+
+The deeper issue is that the model has no runtime type system. It predicts tokens. A schema in the prompt is a hint about token distributions, not a constraint on the sampler — unless the provider actually constrains the sampler. Even then, the constraint applies to the schema subset the provider supports. JSON Schema is large; no provider implements all of it. Keywords like `oneOf`, `patternProperties`, or deeply nested `$ref` are common casualties. When a keyword is unsupported, behavior varies: some APIs reject the schema at request time, others accept it and ignore the keyword. The second is worse because it looks like it worked.
+
+## A worked example: validating what the model returns
+
+Assume a provider that supports JSON mode but not schema-constrained decoding (still common, especially with self-hosted or smaller models). You want to extract a support ticket into a fixed shape. Here is a minimal, runnable validator using Pydantic v2, which is the de facto schema library in the Python ecosystem and supports JSON Schema generation.
+
+```python
+from pydantic import BaseModel, Field, ValidationError, field_validator
+from typing import Literal
+import json
+
+class Ticket(BaseModel):
+    ticket_id: str = Field(pattern=r"^T-\d{6}$")
+    priority: Literal["low", "medium", "high"]
+    summary: str = Field(min_length=10, max_length=280)
+    tags: list[str] = Field(default_factory=list, max_length=5)
+
+    @field_validator("tags")
+    @classmethod
+    def normalize_tags(cls, v: list[str]) -> list[str]:
+        return [t.strip().lower() for t in v if t.strip()]
+
+def parse_ticket(raw: str) -> Ticket:
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"model returned non-JSON: {e}") from e
+    try:
+        return Ticket.model_validate(data)
+    except ValidationError as e:
+        # e.errors() gives field-level detail you can feed back to the model
+        raise ValueError(f"schema violation: {e.errors()}") from e
+```
+
+Two things to notice. First, `json.loads` and `model_validate` are separate steps on purpose: a parse failure and a schema failure need different recovery strategies. A parse failure usually means the model wrapped the JSON in prose or markdown fences. A schema failure means the model understood the shape but got a value wrong. Second, `Ticket.model_json_schema()` produces a JSON Schema you can put in the prompt. The same schema serves both as a prompt hint and as your validator — one source of truth, two uses.
+
+The retry loop is where most implementations get sloppy. A typical pattern:
+
+```python
+def extract_with_retry(call_model, prompt: str, max_attempts: int = 3) -> Ticket:
+    last_error = None
+    for attempt in range(max_attempts):
+        raw = call_model(prompt)
+        try:
+            return parse_ticket(raw)
+        except ValueError as e:
+            last_error = e
+            prompt = (
+                f"{prompt}\n\nYour previous reply was rejected: {e}. "
+                "Return only JSON matching the schema. No prose, no markdown fences."
+            )
+    raise RuntimeError(f"schema conformance failed after {max_attempts} attempts: {last_error}")
+```
+
+This is illustrative, not a benchmark. The `max_attempts = 3` is a policy choice, not a measured optimum. The important part is that the error message from the validator is fed back into the prompt. Generic retries ("try again") waste tokens; field-specific feedback ("`priority` was `urgent`, expected one of low/medium/high") converges faster in practice because it gives the model a concrete token to avoid.
+
+## Where schema-constrained decoding changes the calculus
+
+If your provider supports schema-constrained decoding, the validator above becomes a belt-and-suspenders check rather than the primary defense. That is still worth having, for two reasons. First, schema support is partial. If you use a keyword the provider does not implement, you may get a schema that is accepted but not enforced. Second, the constraint applies to the model's output tokens, not to your application's assumptions. A field can conform to `type: string` while being semantically wrong (e.g., a summary that is just the word "summary"). Schema validation catches structural errors; it does not catch semantic ones.
+
+The practical rule: use schema-constrained decoding when available because it reduces retry volume, but never remove the validator. The validator is your contract with downstream consumers. The decoding constraint is a performance optimization on top of it.
+
+There is a cost angle too. Constrained decoding can be slower per token on some inference stacks because the sampler has to mask invalid tokens at each step. Whether that matters depends on your latency budget. For batch extraction jobs, it usually does not. For interactive chat, it can. That is a tradeoff to measure on your own workload, not something to assume from a blog post.
+
+## Common misreadings
+
+**"JSON mode means I don't need validation."** This is the most expensive misreading. JSON mode guarantees parseability at best. It does not guarantee your fields, types, or ranges. Every JSON-mode response should pass through the same validator you would use for a free-text model.
+
+**"The schema in the prompt is enforced."** A schema in a prompt is a suggestion. Models follow it most of the time, which is exactly what makes the failures intermittent and hard to reproduce. If you need enforcement, it has to come from the API or from your validator, not from the prompt.
+
+**"More schema detail is better."** Long schemas with many optional fields and nested objects increase the chance the model drops a required field or hallucinates a plausible-looking extra one. If a field is not needed by the downstream consumer, leave it out. Optional fields in particular are a trap: the model may omit them, and your code may not handle the absence.
+
+**"Retries fix schema errors."** Retries fix transient sampling variance. They do not fix a schema the model cannot satisfy — for example, a regex pattern the tokenizer struggles to produce, or an enum value the model has never seen in training. If the same field fails repeatedly, the schema is the bug, not the model.
+
+**"Function calling is structured output."** Function calling gives you a structured call envelope, but the model can return zero tool calls, multiple tool calls, or a call to a different tool. Your code has to handle all three. Treating the first tool call as guaranteed is a common source of null-pointer errors in agent code.
+
+## A decision framework for picking the layer
+
+When you are choosing how to get structured data out of a model, work through these in order:
+
+1. **Does the provider support schema-constrained decoding for the schema subset you need?** If yes, use it, and keep the validator. If the schema uses unsupported keywords, simplify the schema before falling back.
+2. **If not, does it support JSON mode?** Use it to reduce parse failures, but assume schema failures are possible and validate.
+3. **If neither, prompt for JSON explicitly and strip markdown fences before parsing.** This is the weakest option and should come with the most aggressive retry and fallback logic.
+4. **In all cases, validate against a single schema definition** shared between prompt generation and runtime validation. Pydantic, Zod, and similar libraries let you generate JSON Schema and validate at runtime from the same model, which removes the drift between the two.
+5. **Log validation failures with the raw model output.** Without the raw output, you cannot tell whether the model was wrong or your validator was. This is the single highest-value observability investment for structured-output pipelines.
+
+A note on fallback: when validation fails after retries, do not silently drop the record. Route it to a dead-letter queue or a human review queue with the raw output attached. Silent drops are how data pipelines develop quiet gaps that nobody notices until a report is wrong.
+
+## Frequently Asked Questions
+
+**What is the difference between JSON mode and structured outputs?** JSON mode typically guarantees that the response parses as JSON, but not that it matches your schema. Structured outputs, in the schema-constrained sense, constrain the model's sampling so the output conforms to a provided JSON Schema. The practical difference shows up when a field has the wrong type or is missing: JSON mode can produce that, schema-constrained decoding should not — within the subset of JSON Schema the provider supports.
+
+**How do I validate LLM output against a JSON Schema in Python?** Generate the schema from a Pydantic model with `model_json_schema()`, use the same model to validate with `model_validate()`, and catch `ValidationError` to get field-level errors. Feed those errors back into the retry prompt. Keep parsing (`json.loads`) and validation as separate steps so you can distinguish malformed JSON from schema violations.
+
+**Why does my LLM return valid JSON but fail schema validation?** Because JSON validity is about syntax and schema conformance is about types, required fields, ranges, and patterns. A model can produce `{"age": "30"}` — valid JSON, wrong type. Common causes are ambiguous field descriptions, optional fields the model omits, and enum values the model has not seen. Tightening field descriptions and reducing optional fields usually helps more than adding retries.
+
+**When should I use function calling instead of a response schema?** Use function calling when the model needs to choose among actions, not just fill a form. Use a response schema when you need one fixed object back. Function calling adds the possibility of zero or multiple calls, which you must handle; a response schema removes that ambiguity but gives up the model's ability to decide whether to act.
+
+## The next 30 minutes
+
+Open the file where you currently parse model output and check one thing: is `json.loads` (or the equivalent) immediately followed by a schema validation call, or does the parsed dict flow directly into application code? If it flows directly, add the validator now — even a minimal one with required fields and types — and log the raw output on failure. That single change converts an intermittent production bug into a visible, debuggable error.
+
+## Official documentation
+
+- [Pydantic documentation](https://docs.pydantic.dev/)
+- [Google SRE Book: Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Before publication, drafts are screened automatically for minimum length, near-duplicate content, invented or unsourced claims and citations, unverifiable product names, and broken internal links. Individual line-by-line human editing is not performed on every post. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
+
+**Last generated:** November 2026

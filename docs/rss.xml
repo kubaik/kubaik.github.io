@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Nov 2026 19:14:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 06:32:45 +0000</lastBuildDate>
+    <item>
+      <title>Structured outputs: schema vs. reality</title>
+      <link>https://kubailabs.com/structured-outputs-schema-vs-reality/</link>
+      <description>Here is a minimal, runnable validator using Pydantic v2, which is the de facto schema library in the Python ecosystem and supports JSON Schema generation.</description>
+      <pubDate>Mon, 23 Nov 2026 06:32:04 +0000</pubDate>
+      <guid>https://kubailabs.com/structured-outputs-schema-vs-reality/</guid>
+    </item>
     <item>
       <title>Secure file uploads: where pipelines break</title>
       <link>https://kubailabs.com/secure-file-uploads-where-pipelines-break/</link>
@@ -138,13 +145,6 @@
       <description>What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.</description>
       <pubDate>Fri, 13 Nov 2026 05:44:40 +0000</pubDate>
       <guid>https://kubailabs.com/virtual-threads-what-actually-changes/</guid>
-    </item>
-    <item>
-      <title>Structured logging: searchable at scale</title>
-      <link>https://kubailabs.com/structured-logging-searchable-at-scale/</link>
-      <description>Why free-text logs get slow and expensive at scale, and how a stable schema, shared logger, and value-based retention fix both problems.</description>
-      <pubDate>Thu, 12 Nov 2026 19:42:54 +0000</pubDate>
-      <guid>https://kubailabs.com/structured-logging-searchable-at-scale/</guid>
     </item>
   </channel>
 </rss>

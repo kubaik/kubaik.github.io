@@ -286,5 +286,6 @@
   "Database connection pooling under serverless workloads",
   "Building a portfolio that reflects systems thinking",
   "Backpressure in streaming pipelines explained",
-  "Designing secure file upload pipelines"
+  "Designing secure file upload pipelines",
+  "Structured outputs and schema validation for LLMs"
 ]

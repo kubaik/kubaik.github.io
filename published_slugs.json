@@ -1265,6 +1265,9 @@
   "structured-logging-searchable-at-scale": {
     "first_seen": "2026-11-12T19:43:24.737829+00:00"
   },
+  "structured-outputs-schema-vs-reality": {
+    "first_seen": "2026-11-23T06:32:16.486063+00:00"
+  },
   "supervisor-vs-swarm-vs-debate-vs-pipeline": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

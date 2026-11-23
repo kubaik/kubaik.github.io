@@ -407,6 +407,7 @@ stop-assuming-payment-apis-never-fail,100,2623,Stop assuming payment APIs never 
 stop-guessing-tech-stacks-validate-tools-in-2-hours,100,2509,Stop guessing tech stacks: validate tools in 2 hours,2026-07-12T13:28:27.249245,0,
 stop-putting-llm-keys-in-env,100,2840,Stop Putting LLM Keys in .env,2026-09-17T04:06:21.695546,0,
 structured-logging-searchable-at-scale,100,3934,Structured logging: searchable at scale,2026-11-12T19:42:54.742269,0,
+structured-outputs-schema-vs-reality,100,2297,Structured outputs: schema vs. reality,2026-11-23T06:32:04.672620,0,
 supervisor-vs-swarm-vs-debate-vs-pipeline,100,3877,Supervisor vs swarm vs debate vs pipeline,2026-08-03T10:05:35.557297,0,
 tech-debt-when-half-your-stack-is-unfamiliar,100,2800,Tech debt: when half your stack is unfamiliar,2026-09-26T16:04:10.400734,0,
 technical-debt-defend-priorities-to-stakeholders,100,2579,Technical debt: defend priorities to stakeholders,2026-11-04T05:27:38.871384,0,
