@@ -68,6 +68,7 @@ docs/distroless-images-smaller-attack-surface/	-
 docs/double-the-price-double-the-revenue/	-
 docs/ebpf-observability-in-2026-what-actually-works/	-
 docs/edge-agents-vs-cloud-round-trips-in-2026/	-
+docs/encryption-at-rest-vs-in-transit-the-gap/	-
 docs/envelope-encryption-with-cloud-kms-key-rotation-traps/	-
 docs/evaluate-agents-with-spark-vs-custom-harness/	-
 docs/fastapi-vs-django-vs-flask-api-picks-for-2026/	-

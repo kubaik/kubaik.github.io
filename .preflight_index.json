@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-23T06:32:07.873638",
+  "built_at": "2026-11-23T23:36:45.042273",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5930,6 +5930,11 @@
       "slug": "structured-outputs-schema-vs-reality",
       "title": "Structured outputs: schema vs. reality",
       "summary": "A structured output is a promise the model makes about the shape of its reply, enforced either by the API or by you. The confusion worth resolving is that there are two very different things people call \"structured outputs\": the provider-enforced kind (JSON mode, function calling, or a response sche"
+    },
+    {
+      "slug": "encryption-at-rest-vs-in-transit-the-gap",
+      "title": "Encryption at rest vs in transit: the gap",
+      "summary": "Encryption at rest and encryption in transit are often treated as two checkboxes on a compliance form. In reality, they protect against different threats, fail in different ways, and cost different amounts to operate. The gap between what the documentation promises and what actually happens under lo"
     }
   ]
 }

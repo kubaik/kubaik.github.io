@@ -1197,6 +1197,11 @@
     "reasons": [],
     "words": 1719
   },
+  "encryption-at-rest-vs-in-transit-the-gap": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2164
+  },
   "envelope-encryption-with-cloud-kms-key-rotation-traps": {
     "verdict": "KEEP",
     "reasons": [],

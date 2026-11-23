@@ -1,0 +1,487 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Encryption at rest vs in transit: the gap - Kubai Kevin</title>
+        <meta name="description" content="Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.">
+        <meta name="keywords" content="encryption at rest, encryption in transit, TLS enforcement, data encryption tradeoffs, PostgreSQL SSL configuration, encryption failure modes, how does encryption at rest differ from in transit, why is TLS enforcement often misconfigured">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-23T23:36:41.740745">
+        <meta property="article:modified_time" content="2026-11-23T23:36:41.740759">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Encryption at rest vs in transit: the gap">
+        <meta property="og:description" content="Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.">
+        <meta property="og:url" content="https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/encryption-at-rest-vs-in-transit-the-gap.png">
+        <meta property="og:image:alt" content="Encryption at rest vs in transit: the gap">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Encryption at rest vs in transit: the gap">
+        <meta name="twitter:description" content="Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/encryption-at-rest-vs-in-transit-the-gap.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/#article",
+      "headline": "Encryption at rest vs in transit: the gap",
+      "description": "Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.",
+      "datePublished": "2026-11-23T23:36:41+00:00",
+      "dateModified": "2026-11-23T23:36:41+00:00",
+      "wordCount": 2269,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/"
+      },
+      "keywords": "encryption at rest, encryption in transit, TLS enforcement, data encryption tradeoffs, PostgreSQL SSL configuration, encryption failure modes, how does encryption at rest differ from in transit, why is TLS enforcement often misconfigured"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Encryption at rest vs in transit: the gap",
+          "item": "https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Encryption at rest vs in transit: the gap</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Encryption at rest vs in transit: the gap</h1>
+                
+                <p class="post-lead">Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/security/"
+                       style="text-decoration:none;">Security</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">PostgreSQL</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/identity-and-access/"
+                       style="text-decoration:none;">Identity &amp; Access</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/aws/"
+                       style="text-decoration:none;">AWS</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2269 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-23
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Encryption at rest and encryption in transit are often treated as two checkboxes on a compliance form. In reality, they protect against different threats, fail in different ways, and cost different amounts to operate. The gap between what the documentation promises and what actually happens under load is where most teams get surprised.</p>
+<p>Consider a typical microservice that stores user records in a database. The database encrypts the disk (encryption at rest), and the service connects over TLS (encryption in transit). Both boxes are ticked. Yet a misconfigured client that disables certificate verification, or a backup that gets copied to an unencrypted staging bucket, can silently break the guarantee. The problem is not that the primitives are weak; it is that the operational boundaries are fuzzy.</p>
+<p>This post examines the tradeoffs between encryption at rest and in transit, focusing on where implementations diverge from expectations. It covers the mechanisms, a concrete implementation with code, how to measure effectiveness, failure modes, and when each approach is the wrong tool. By the end, you will have a decision framework and a specific action to take in the next 30 minutes.</p>
+<h2 id="where-the-documentation-ends-and-reality-begins">Where the documentation ends and reality begins</h2>
+<p>Official docs for cloud providers and databases describe encryption at rest as "data encrypted on disk using AES-256" and in transit as "TLS 1.2+ enforced." What they often omit is the fine print: encryption at rest protects against physical disk theft but not against a compromised application with valid credentials. Encryption in transit protects against network eavesdropping but not against a misconfigured client that falls back to plaintext.</p>
+<p>A common misconception is that enabling encryption at rest automatically encrypts backups. In many managed databases, automated backups are encrypted with the same key, but manual snapshots exported to object storage may not inherit that setting. Similarly, encryption in transit for service-to-service communication often relies on mutual TLS (mTLS), but many teams enable it only at the ingress and leave internal traffic unencrypted.</p>
+<p>The gap widens when you consider key management. Encryption at rest is only as strong as the key management system (KMS). If the KMS key is stored alongside the data (e.g., in the same S3 bucket), the encryption is effectively defeated. Encryption in transit depends on certificate authority (CA) trust chains; a compromised CA or a misissued certificate can break the guarantee.</p>
+<p>The real problem this post solves is: how to reason about the tradeoffs between encryption at rest and in transit so you can allocate effort where it actually reduces risk, rather than where it satisfies an auditor.</p>
+<h2 id="the-mechanisms-what-each-actually-protects">The mechanisms: what each actually protects</h2>
+<p>Encryption at rest protects data when it is not moving: on disk, in backups, in object storage. It mitigates threats like physical media theft, improper disposal of drives, and unauthorized access to storage snapshots. The mechanism is usually block-level encryption (e.g., LUKS for Linux, BitLocker for Windows) or application-level encryption (e.g., encrypting specific fields before storing).</p>
+<p>Encryption in transit protects data as it moves between systems: client to server, service to service, database to application. It mitigates eavesdropping, man-in-the-middle (MITM) attacks, and data tampering. The mechanism is TLS (or its predecessor SSL), which provides confidentiality and integrity through symmetric encryption (e.g., AES-GCM) and asymmetric key exchange (e.g., ECDHE).</p>
+<p>The tradeoff is not either/or; they are complementary. But they have different cost profiles. Encryption at rest adds CPU overhead for encryption/decryption at the storage layer, but modern CPUs with AES-NI make this negligible. Encryption in transit adds latency due to the TLS handshake and encryption overhead, plus operational complexity for certificate management.</p>
+<p>A key difference is the attack surface. Encryption at rest is static: once data is encrypted, it stays encrypted until decrypted by an authorized process. Encryption in transit is dynamic: every connection must be secured, and a single misconfigured client can downgrade to plaintext. This is why in-transit encryption often fails silently.</p>
+<p>Consider the threat models:</p>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Encryption at rest</th>
+<th>Encryption in transit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Physical disk theft</td>
+<td>Protects</td>
+<td>No effect</td>
+</tr>
+<tr>
+<td>Network eavesdropping</td>
+<td>No effect</td>
+<td>Protects</td>
+</tr>
+<tr>
+<td>Compromised application</td>
+<td>No effect (app has keys)</td>
+<td>No effect (app terminates TLS)</td>
+</tr>
+<tr>
+<td>Misconfigured client</td>
+<td>No effect</td>
+<td>Can fail open (plaintext)</td>
+</tr>
+<tr>
+<td>Backup leakage</td>
+<td>Protects if backups encrypted</td>
+<td>No effect</td>
+</tr>
+<tr>
+<td>Insider access to storage</td>
+<td>Protects if keys segregated</td>
+<td>No effect</td>
+</tr>
+</tbody>
+</table>
+<p>The table shows that neither alone is sufficient. The tradeoff is in where you invest: at-rest encryption is mostly a one-time configuration with ongoing key management, while in-transit encryption requires continuous monitoring and certificate lifecycle management.</p>
+<h2 id="implementing-both-without-the-common-pitfalls">Implementing both without the common pitfalls</h2>
+<p>A typical implementation uses a managed database with encryption at rest enabled and TLS enforced for connections. But the devil is in the details. For example, PostgreSQL supports SSL/TLS connections, but the default <code>ssl</code> setting is <code>off</code> in many distributions. You must set <code>ssl = on</code> in <code>postgresql.conf</code> and configure <code>ssl_cert_file</code> and <code>ssl_key_file</code>. Even then, clients can choose not to use SSL unless you enforce it via <code>hostssl</code> entries in <code>pg_hba.conf</code>.</p>
+<p>Here is a minimal example of enforcing TLS in PostgreSQL:</p>
+<pre><code class="language-conf"># postgresql.conf
+ssl = on
+ssl_cert_file = '/etc/ssl/certs/server.crt'
+ssl_key_file = '/etc/ssl/private/server.key'
+</code></pre>
+<pre><code class="language-conf"># pg_hba.conf
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+hostssl all             all             0.0.0.0/0               scram-sha-256
+</code></pre>
+<p>The <code>hostssl</code> directive ensures that only SSL connections are allowed. Without it, clients can connect without encryption.</p>
+<p>For encryption at rest, if you are using a cloud provider's managed database, it is often a checkbox. But if you are self-hosting, you might use LUKS for disk encryption. Here is a simplified example of encrypting a block device with LUKS:</p>
+<pre><code class="language-bash"># Create a new encrypted volume (simplified)
+cryptsetup luksFormat /dev/sdb1
+cryptsetup open /dev/sdb1 encrypted_volume
+mkfs.ext4 /dev/mapper/encrypted_volume
+mount /dev/mapper/encrypted_volume /mnt/data
+</code></pre>
+<p>This encrypts the entire volume. But note: the key is derived from a passphrase or key file. If the key is stored on the same server, the encryption is only effective against physical theft, not against a compromised OS.</p>
+<p>A more robust approach for application-level encryption at rest is to encrypt specific fields before storing them, using a library like <code>cryptography</code> in Python. Here is a runnable example that encrypts a field using AES-GCM:</p>
+<pre><code class="language-python">from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import os
+import base64
+
+key = AESGCM.generate_key(bit_length=256)
+aesgcm = AESGCM(key)
+nonce = os.urandom(12)
+plaintext = b&quot;sensitive data&quot;
+ciphertext = aesgcm.encrypt(nonce, plaintext, None)
+# Store nonce + ciphertext
+encoded = base64.b64encode(nonce + ciphertext).decode('utf-8')
+print(encoded)
+</code></pre>
+<p>This approach gives you control over keys, but it shifts the burden of key management to you. You must store the key securely, rotate it, and ensure it is not logged.</p>
+<p>For encryption in transit, enforcing TLS on the client side is equally important. In Go, for example, the default <code>http.Client</code> verifies certificates, but many teams disable verification for testing and forget to re-enable it. Here is a correct configuration:</p>
+<pre><code class="language-go">import (
+    &quot;crypto/tls&quot;
+    &quot;net/http&quot;
+)
+
+func main() {
+    tlsConfig := &amp;tls.Config{
+        MinVersion: tls.VersionTLS12,
+    }
+    client := &amp;http.Client{
+        Transport: &amp;http.Transport{
+            TLSClientConfig: tlsConfig,
+        },
+    }
+    // Use client
+}
+</code></pre>
+<p>Setting <code>MinVersion</code> to TLS 1.2 or higher prevents downgrade attacks. Never set <code>InsecureSkipVerify: true</code> in production.</p>
+<h2 id="measuring-what-you-actually-get">Measuring what you actually get</h2>
+<p>You cannot measure encryption directly, but you can measure its absence. For in-transit encryption, monitor for plaintext connections. In PostgreSQL, you can query <code>pg_stat_ssl</code> to see which connections are using SSL:</p>
+<pre><code class="language-sql">SELECT pid, ssl, version, cipher FROM pg_stat_ssl;
+</code></pre>
+<p>If <code>ssl</code> is false for any connection, you have a gap. For encryption at rest, you can verify that disk encryption is active using tools like <code>cryptsetup status</code> or cloud provider APIs. But measuring key management hygiene is harder: check for keys stored in code, keys with overly permissive access, and rotation policies.</p>
+<p>A practical metric is the percentage of connections using TLS. In a service mesh like Istio, you can use telemetry to see the percentage of mTLS traffic. For example, the <code>istio_requests_total</code> metric with <code>connection_security_policy</code> label can show <code>mutual_tls</code> vs <code>none</code>.</p>
+<p>Another metric is the time to rotate a key or certificate. If rotation takes days, your encryption is brittle. Automate rotation with tools like cert-manager for Kubernetes or AWS Certificate Manager.</p>
+<h2 id="failure-modes-where-encryption-breaks">Failure modes: where encryption breaks</h2>
+<p>The most common failure mode for encryption in transit is the fallback to plaintext. Many protocols and libraries allow downgrade for compatibility. For example, SMTP with STARTTLS can be stripped by an attacker, resulting in plaintext email. Similarly, some database drivers will connect without TLS if the server does not support it, unless you explicitly require it.</p>
+<p>Another failure mode is certificate expiry. An expired certificate causes connection failures, but a more insidious problem is a certificate that is valid but issued by an untrusted CA. If the client does not properly validate the certificate chain, it may accept a MITM certificate.</p>
+<p>For encryption at rest, the failure mode is key compromise. If the key is stored in the same location as the data, or if access to the KMS is too broad, encryption provides little protection. A related failure is incomplete encryption: encrypting the database but not the backups, or encrypting the primary disk but not the swap file.</p>
+<p>A subtle failure mode is the confusion between encryption at rest and encryption in use. Encryption at rest does not protect data while it is being processed in memory. If an attacker gains access to the application's memory, they can read plaintext. This is why some teams use enclaves (e.g., AWS Nitro Enclaves) for sensitive operations, but that is beyond the scope of this post.</p>
+<h2 id="when-encryption-at-rest-or-in-transit-is-the-wrong-choice">When encryption at rest or in transit is the wrong choice</h2>
+<p>Encryption is not free. It adds CPU overhead, latency, and operational complexity. In some cases, the tradeoff is not worth it.</p>
+<p>For example, encrypting data at rest in a development environment with no sensitive data adds unnecessary complexity. Similarly, enforcing TLS for internal health checks between services in a trusted network may add latency without meaningful security benefit, especially if the network is already isolated.</p>
+<p>However, the more common mistake is under-encrypting. The decision should be based on threat modeling. If the data is sensitive (PII, credentials, financial records), encrypt both at rest and in transit. If the data is public, encryption may still be required for compliance, but the risk is lower.</p>
+<p>A wrong choice is relying solely on encryption at rest for data that is transmitted over untrusted networks. For example, storing encrypted backups in cloud storage but transferring them over FTP without TLS. The encryption at rest is irrelevant if the data is intercepted in transit.</p>
+<p>Another wrong choice is using encryption in transit as a substitute for encryption at rest. TLS protects data in transit, but once it reaches the server, it is decrypted and stored in plaintext on disk. If the disk is stolen, the data is exposed.</p>
+<p>The counterintuitive part is that encryption at rest can sometimes increase risk if it leads to a false sense of security. Teams may assume that because the disk is encrypted, they can be lax about access controls. But encryption at rest does not protect against a compromised application with valid credentials.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Does encryption at rest protect data in backups?</strong>
+It depends on how backups are configured. In many managed databases, automated backups inherit the encryption settings of the primary instance. However, manual snapshots exported to object storage may not be encrypted unless you explicitly enable encryption on the storage bucket. Always verify backup encryption separately.</p>
+<p><strong>Is TLS 1.2 still secure for encryption in transit?</strong>
+TLS 1.2 is considered secure when configured with strong cipher suites and proper certificate validation. However, TLS 1.3 is preferred because it removes legacy features and reduces handshake latency. As of 2026, most major providers support TLS 1.3, and it is recommended to enable it where possible.</p>
+<p><strong>Can I use encryption at rest without a KMS?</strong>
+Yes, you can use application-level encryption with keys stored in a file or environment variable, but this is less secure. A KMS provides centralized key management, audit logging, and rotation. For production systems, a KMS is strongly recommended.</p>
+<p><strong>What is the performance impact of encryption in transit?</strong>
+The impact is typically small with modern hardware. TLS handshakes add latency on connection establishment, but session resumption and TLS 1.3 reduce this. The encryption itself uses AES-GCM, which is hardware-accelerated on most CPUs. The overhead is usually negligible compared to network latency.</p>
+<h2 id="next-step-audit-your-tls-enforcement-in-30-minutes">Next step: audit your TLS enforcement in 30 minutes</h2>
+<p>Open your database configuration file (e.g., <code>pg_hba.conf</code> for PostgreSQL) and check for <code>hostssl</code> entries. If you see <code>host</code> instead of <code>hostssl</code>, clients can connect without encryption. Change at least one entry to <code>hostssl</code> and reload the configuration. Then, run a query against <code>pg_stat_ssl</code> to confirm that new connections use SSL. This single change closes a common gap between documented encryption in transit and actual enforcement.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/envelope-encryption-with-cloud-kms-key-rotation-traps/">
+                        <h3>Envelope encryption with cloud KMS: key rotation traps</h3>
+                        <p>How envelope encryption with cloud KMS breaks during key rotation, why wrapped data keys and key IDs must travel with ciphertext, and how to test it.</p>
+                        <span class="related-meta">12 min read · 6 November 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/pci-dss-architecture-12-requirements-that-matter/">
+                        <h3>PCI DSS architecture: 12 requirements that matter</h3>
+                        <p>Map PCI DSS requirements to concrete architecture decisions: CDE boundary, envelope encryption and key separation, immutable logging, CI/CD controls, and scope reduction.</p>
+                        <span class="related-meta">14 min read · 19 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/replace-env-with-these-in-2026/">
+                        <h3>Replace .env with these in 2026</h3>
+                        <p>Why .env files fail in production and how managed secret stores, vault agents and encrypted-file workflows replace them, with rotation and caching tradeoffs.</p>
+                        <span class="related-meta">15 min read · 18 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

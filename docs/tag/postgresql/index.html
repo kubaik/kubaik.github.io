@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Postgresql Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Distributed locks: safe only with fencing,&quot; &quot;7 ADR traps that cause stale decisions,&quot; and &quot;Pagination for large datasets: offset vs cursor&quot;.">
+  <meta name="description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Encryption at rest vs in transit: the gap,&quot; &quot;Distributed locks: safe only with fencing,&quot; and &quot;7 ADR traps that cause stale decisions&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubailabs.com/tag/postgresql/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Postgresql Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Distributed locks: safe only with fencing,&quot; &quot;7 ADR traps that cause stale decisions,&quot; and &quot;Pagination for large datasets: offset vs cursor&quot;.">
+  <meta property="og:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Encryption at rest vs in transit: the gap,&quot; &quot;Distributed locks: safe only with fencing,&quot; and &quot;7 ADR traps that cause stale decisions&quot;.">
   <meta property="og:url" content="https://kubailabs.com/tag/postgresql/">
   <meta property="og:image" content="https://kubailabs.com/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Postgresql Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Distributed locks: safe only with fencing,&quot; &quot;7 ADR traps that cause stale decisions,&quot; and &quot;Pagination for large datasets: offset vs cursor&quot;.">
+  <meta name="twitter:description" content="Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including &quot;Encryption at rest vs in transit: the gap,&quot; &quot;Distributed locks: safe only with fencing,&quot; and &quot;7 ADR traps that cause stale decisions&quot;.">
   <meta name="twitter:image" content="https://kubailabs.com/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Postgresql Articles","url":"https://kubailabs.com/tag/postgresql/",
-    "description":"Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including \"Distributed locks: safe only with fencing,\" \"7 ADR traps that cause stale decisions,\" and \"Pagination for large datasets: offset vs cursor\"."}
+    "description":"Articles on Postgresql covering practical, hands-on approaches to postgresql for software developers, including \"Encryption at rest vs in transit: the gap,\" \"Distributed locks: safe only with fencing,\" and \"7 ADR traps that cause stale decisions\"."}
   </script>
 </head>
 <body>
@@ -44,9 +44,14 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Postgresql</span>
     </nav>
-    <h2>46 articles tagged <em>Postgresql</em></h2>
+    <h2>47 articles tagged <em>Postgresql</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/encryption-at-rest-vs-in-transit-the-gap/">
+        <h3>Encryption at rest vs in transit: the gap</h3>
+        <p class="post-excerpt">Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.</p>
+        <p class="post-reading-time">11 min read · 23 November 2026</p>
+      </a>
       <a class="post-card" href="/distributed-locks-safe-only-with-fencing/">
         <h3>Distributed locks: safe only with fencing</h3>
         <p class="post-excerpt">A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</p>

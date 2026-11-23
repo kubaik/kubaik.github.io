@@ -287,5 +287,6 @@
   "Building a portfolio that reflects systems thinking",
   "Backpressure in streaming pipelines explained",
   "Designing secure file upload pipelines",
-  "Structured outputs and schema validation for LLMs"
+  "Structured outputs and schema validation for LLMs",
+  "Encryption at rest versus in transit tradeoffs"
 ]

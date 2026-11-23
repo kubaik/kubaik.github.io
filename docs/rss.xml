@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Nov 2026 06:32:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 23:37:20 +0000</lastBuildDate>
+    <item>
+      <title>Encryption at rest vs in transit: the gap</title>
+      <link>https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/</link>
+      <description>Encryption at rest vs in transit: where the guarantees break. Learn the tradeoffs, failure modes, and a 30-minute audit to enforce TLS in PostgreSQL.</description>
+      <pubDate>Mon, 23 Nov 2026 23:36:41 +0000</pubDate>
+      <guid>https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/</guid>
+    </item>
     <item>
       <title>Structured outputs: schema vs. reality</title>
       <link>https://kubailabs.com/structured-outputs-schema-vs-reality/</link>
@@ -138,13 +145,6 @@
       <description>A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</description>
       <pubDate>Fri, 13 Nov 2026 18:26:53 +0000</pubDate>
       <guid>https://kubailabs.com/distributed-locks-safe-only-with-fencing/</guid>
-    </item>
-    <item>
-      <title>Virtual threads: what actually changes</title>
-      <link>https://kubailabs.com/virtual-threads-what-actually-changes/</link>
-      <description>What virtual threads change in a blocking Java service, where the real bottleneck moves, how pinning and thread-locals bite, and how to measure it.</description>
-      <pubDate>Fri, 13 Nov 2026 05:44:40 +0000</pubDate>
-      <guid>https://kubailabs.com/virtual-threads-what-actually-changes/</guid>
     </item>
   </channel>
 </rss>
