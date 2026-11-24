@@ -1,0 +1,195 @@
+# Hallucination detection: metrics that mislead
+
+## The symptom: your detector says 95% accurate, but the model still lies
+
+A team ships a hallucination detector for their RAG pipeline. Offline evaluation shows a 95% accuracy score. Two weeks later, support tickets pile up: the model confidently states that a refund policy allows 90-day returns when the document says 30. The detector never flagged it. The accuracy number was real—but it was measuring the wrong thing. The detector was trained on a balanced dataset where half the examples were hallucinations, while production traffic has maybe 5% hallucinations. It learned to predict "not hallucination" for anything that looked fluent. The 95% was an artifact of class imbalance, not a measure of usefulness.
+
+This is the core problem with hallucination detection: the metrics that look good on a benchmark often collapse under production distributions. Evaluating detection approaches requires understanding what each method actually measures, where it fails, and how to construct an evaluation that reflects your deployment. This post walks through the common failure modes of detector evaluation, how to diagnose them, and how to build a test set that tells the truth.
+
+## Why detection metrics diverge from production reality
+
+Most hallucination detection evaluations start with a labeled dataset—often built by human annotators or synthetic generation. Three structural issues cause the gap between offline scores and production behavior.
+
+**Class imbalance.** In many real applications, hallucinations are rare. If only 2% of responses contain a hallucination, a detector that always predicts "no hallucination" achieves 98% accuracy. The metric looks excellent while the detector is useless. Precision, recall, and F1 are more informative, but even they can mislead if the evaluation set doesn't reflect the true prevalence.
+
+**Annotation ambiguity.** What counts as a hallucination? A model that says "the Eiffel Tower is in Paris" when the retrieved document says "the Eiffel Tower is located in Paris" is not hallucinating—it's paraphrasing. But a strict string-matching annotator might label it as unsupported. Different annotators will disagree on borderline cases, and that noise propagates into the detector's training and evaluation. Without a clear definition and inter-annotator agreement measurement, the evaluation is measuring annotator whims, not detection quality.
+
+**Distribution shift.** Detectors trained on one domain (e.g., Wikipedia-based QA) often fail on another (e.g., legal contracts). The linguistic patterns of hallucination differ: legal text hallucinations might involve misstated dates or clause numbers, while encyclopedic hallucinations involve invented entities. An evaluation on the wrong domain gives false confidence.
+
+A typical failure mode: a team uses a public benchmark like HaluEval or TruthfulQA to validate their detector, then deploys on customer support transcripts. The detector performs well on the benchmark because it learned surface cues (e.g., hedged language) that don't correlate with hallucination in the new domain.
+
+## The likely causes, in order of probability
+
+When a detector's production performance falls short of its evaluation, the causes usually stack in this order:
+
+1. **Evaluation set doesn't match production distribution.** The test set has different class balance, domain, or query types. This is the most common cause.
+2. **Metric choice hides failure.** Accuracy or AUC-ROC on imbalanced data masks poor recall at the operating threshold.
+3. **Annotation guidelines are underspecified.** Annotators label inconsistently, so the detector learns noise.
+4. **Detector overfits to superficial features.** The model latches onto artifacts (e.g., response length, specific phrases) that correlate with labels in the training set but not in production.
+5. **Threshold miscalibration.** The detector outputs a probability, but the threshold chosen on the evaluation set doesn't match the cost trade-off in production.
+
+## Confirming each cause
+
+### Cause 1: Distribution mismatch
+
+**Symptom:** Offline F1 is high, but production precision/recall (measured via spot checks or user feedback) is much lower. The detector flags different types of errors than expected.
+
+**Confirmation:** Compare the distribution of your evaluation set to production logs. Look at:
+- Class prevalence: what percentage of responses are hallucinations in each?
+- Query length and type: are production queries longer, more conversational, or from a different domain?
+- Response length: does the detector rely on length as a proxy?
+
+A simple check: compute the detector's positive rate (fraction flagged) on both sets. If it's 50% on the eval set and 5% in production, the threshold is likely miscalibrated for the production prevalence.
+
+### Cause 2: Misleading metric
+
+**Symptom:** The reported metric is accuracy, AUC, or a similar aggregate that doesn't reflect the operational goal. Stakeholders are satisfied, but the detector misses many hallucinations.
+
+**Confirmation:** Recompute metrics that separate classes: precision, recall, F1, and the confusion matrix at the chosen threshold. Also compute precision-recall AUC (PR-AUC) instead of ROC-AUC; PR-AUC is more sensitive to class imbalance. If recall is low (e.g., below 0.5) while accuracy is above 0.9, the metric is hiding the problem.
+
+### Cause 3: Annotation noise
+
+**Symptom:** The detector's errors seem random; human review of flagged examples shows many are not hallucinations, and missed hallucinations are often borderline. Inter-annotator agreement is low.
+
+**Confirmation:** Have two annotators label a sample of 100 examples independently. Compute Cohen's kappa or percentage agreement. If agreement is below 0.7, the labels are too noisy for reliable evaluation. Also inspect the annotation guidelines for ambiguous cases (e.g., "partially supported" statements).
+
+### Cause 4: Overfitting to superficial features
+
+**Symptom:** The detector performs well on the evaluation set but fails on adversarial or out-of-distribution examples. It may be triggered by specific phrases (e.g., "according to") rather than factual consistency.
+
+**Confirmation:** Run an ablation: remove or perturb superficial features (e.g., truncate responses, shuffle sentences) and see if detection performance drops. Also test on a small set of hand-crafted examples where the hallucination is subtle but the surface form is normal. If the detector misses those, it's overfit.
+
+### Cause 5: Threshold miscalibration
+
+**Symptom:** The detector's raw scores are informative (e.g., hallucinations have lower scores), but the chosen threshold yields too many false positives or false negatives in production.
+
+**Confirmation:** Plot the score distribution for positive and negative classes on a production sample. Check where the threshold sits. If the distributions overlap heavily, no single threshold will work well; you may need a cost-sensitive threshold or a different detector.
+
+## Fixes for each cause
+
+### Fix 1: Align evaluation with production
+
+Rebuild your evaluation set by sampling from production logs. If labels are unavailable, use a combination of weak supervision (e.g., user feedback, downstream task success) and targeted human annotation. Ensure the class prevalence matches production. If hallucinations are rare, use stratified sampling to include enough positives for stable estimates, but reweight metrics to reflect true prevalence.
+
+A practical approach: collect 500 recent production responses, label them (or use a reliable proxy), and compute metrics on that set. This is your new gold standard. Update it quarterly as traffic shifts.
+
+### Fix 2: Choose metrics that reflect costs
+
+Define the operational cost of false positives (flagging a correct answer as hallucination) and false negatives (missing a hallucination). Then select a threshold that minimizes expected cost. Report precision, recall, and F1 at that threshold, not just aggregate accuracy. For imbalanced settings, PR-AUC is more informative than ROC-AUC.
+
+If the detector outputs a probability, calibrate it using a held-out set (e.g., with isotonic regression or Platt scaling) so that the scores are interpretable as probabilities. Then you can set thresholds based on risk tolerance.
+
+### Fix 3: Improve annotation quality
+
+Write explicit guidelines with examples of borderline cases. Use multiple annotators and measure agreement. For ambiguous cases, consider a third annotator or a adjudication process. If agreement remains low, the task may be too subjective; consider reframing the detection target (e.g., "unsupported by retrieved evidence" instead of "hallucination").
+
+Also, ensure annotators have access to the same context the model had (e.g., retrieved documents). Labeling without context leads to inconsistent judgments.
+
+### Fix 4: Reduce overfitting with diverse training data
+
+If you're training a detector, augment your data with paraphrases, adversarial examples, and domain shifts. Use cross-validation across domains. Evaluate on a held-out set that differs in style or topic. For LLM-based detectors (e.g., prompting a model to judge consistency), test with different prompt formulations to check robustness.
+
+A simple sanity check: evaluate the detector on examples where the hallucination is caused by a numeric error (e.g., wrong date) versus an entity swap. A robust detector should handle both; if it only catches one type, it's overfit.
+
+### Fix 5: Calibrate thresholds per deployment
+
+Instead of a single threshold, use a threshold that adapts to the expected prevalence and cost. For example, if the cost of a false negative is 10x the cost of a false positive, set the threshold lower to increase recall. You can compute the optimal threshold from the precision-recall curve given the cost ratio and prevalence.
+
+In production, monitor the flag rate. If it deviates significantly from the expected prevalence, investigate—it may indicate drift or a broken detector.
+
+## A worked example: computing cost-sensitive threshold
+
+Assume a detector outputs a score between 0 and 1. On a validation set of 1000 examples with 50 hallucinations (5% prevalence), you compute the following counts at threshold 0.5:
+
+| | Predicted positive | Predicted negative |
+|---|---|---|
+| Actual positive | 30 (TP) | 20 (FN) |
+| Actual negative | 50 (FP) | 900 (TN) |
+
+Precision = 30 / (30+50) = 0.375, Recall = 30 / (30+20) = 0.6. If a false negative costs $100 (e.g., customer churn) and a false positive costs $10 (e.g., manual review), the expected cost per 1000 examples is 20*100 + 50*10 = $2500. If you lower the threshold to 0.3, suppose you get 45 TP, 5 FN, 150 FP, 800 TN. Expected cost = 5*100 + 150*10 = $2000. So the lower threshold is better despite more false positives. This illustrates why accuracy alone is misleading: at threshold 0.5, accuracy is (30+900)/1000 = 93%, but the cost is higher.
+
+## Prevention: build an evaluation harness that stays honest
+
+To avoid these traps, treat detector evaluation as a continuous process, not a one-time benchmark.
+
+- **Maintain a production-representative test set.** Sample regularly from live traffic, label a subset, and track metrics over time. Use a fixed holdout for comparability.
+- **Report multiple metrics.** Always include precision, recall, F1, and PR-AUC. Report the confusion matrix at the operating threshold.
+- **Monitor drift.** Track the distribution of detector scores and flag rates. A sudden change in flag rate often precedes a drop in precision.
+- **Document annotation guidelines.** Version them and measure inter-annotator agreement on a sample each time you update.
+- **Test robustness.** Evaluate on adversarial examples and out-of-domain samples to catch overfitting.
+
+A lightweight code snippet to compute precision, recall, and F1 from a list of true labels and predicted scores, using scikit-learn:
+
+```python
+from sklearn.metrics import precision_recall_fscore_support, average_precision_score
+import numpy as np
+
+def evaluate_detector(y_true, y_scores, threshold=0.5):
+    y_pred = (np.array(y_scores) >= threshold).astype(int)
+    precision, recall, f1, _ = precision_recall_fscore_support(
+        y_true, y_pred, average='binary'
+    )
+    pr_auc = average_precision_score(y_true, y_scores)
+    return {
+        'precision': precision,
+        'recall': recall,
+        'f1': f1,
+        'pr_auc': pr_auc
+    }
+
+# Example usage
+# y_true = [0, 1, 0, 1, ...]
+# y_scores = [0.1, 0.8, 0.3, 0.9, ...]
+# print(evaluate_detector(y_true, y_scores, threshold=0.5))
+```
+
+This function returns the key metrics. Use it on your production-representative set, not just the original benchmark.
+
+## Which detection approach fits which failure mode
+
+Different detection methods have different strengths and weaknesses. The table below summarizes common approaches and where they tend to fail.
+
+| Approach | How it works | Strengths | Weaknesses |
+|----------|--------------|-----------|------------|
+| Retrieval-based consistency | Checks if response is entailed by retrieved documents (e.g., using NLI model) | Directly targets factual grounding; interpretable | Fails when retrieval is incomplete; struggles with paraphrasing |
+| Self-consistency | Samples multiple responses and checks agreement | No external knowledge needed; catches some hallucinations | Expensive; misses consistent hallucinations; sensitive to temperature |
+| LLM-as-judge | Prompts a strong LLM to evaluate factual accuracy | Flexible; can handle nuanced cases | Costly; judge may have its own biases; prompt-sensitive |
+| Uncertainty-based | Uses model's token probabilities or entropy | Cheap; no extra model | Poorly calibrated; hallucination can be confident |
+| Trained classifier | Fine-tunes a model on labeled hallucination data | Can be accurate if data is representative | Needs labeled data; prone to overfitting and distribution shift |
+
+No single approach dominates. In practice, combining a retrieval-based check with a trained classifier often yields better precision-recall trade-offs than either alone. But the evaluation must be designed to measure that trade-off correctly.
+
+## Frequently Asked Questions
+
+**How many examples do I need to evaluate a hallucination detector reliably?**
+
+It depends on the prevalence and the desired confidence. For a rough estimate, if you expect 5% hallucinations, you need at least a few hundred positive examples to estimate recall with reasonable confidence. A common rule of thumb is to have at least 100 positives and 100 negatives in your test set. For precise estimates, use confidence intervals; for a proportion around 0.5, a sample of 400 gives a margin of error of about ±5% at 95% confidence. If hallucinations are rarer, you need more examples or stratified sampling.
+
+**Can I use an LLM to label my evaluation set?**
+
+LLM labeling can be a cheap way to scale, but it introduces its own errors. Use it only if you validate against a human-labeled subset and measure agreement. If the LLM judge agrees with humans on 90% of cases, that may be acceptable for rough monitoring, but not for final evaluation. Also, be aware that LLM judges may share biases with the model being evaluated, especially if they are the same family.
+
+**What's the difference between hallucination detection and factuality evaluation?**
+
+Hallucination detection typically focuses on whether a response contains unsupported or false information relative to a source or world knowledge. Factuality evaluation is broader: it assesses whether the response is true, which may involve external verification. In practice, detection often uses retrieval or NLI to check consistency with provided evidence, while factuality may require knowledge bases or web search. The metrics and challenges overlap, but detection is usually more constrained.
+
+**Why does my detector perform well on the test set but fail in production?**
+
+The most likely reason is distribution shift: the test set differs from production in class balance, domain, or query style. Other causes include annotation noise, overfitting to superficial features, or threshold miscalibration. To diagnose, compare the distributions and recompute metrics on a production sample. Also check for data leakage between training and test sets.
+
+## Start by auditing your evaluation set
+
+Before tuning another detector, take 30 minutes to audit the evaluation set you're using. Open your test data and compute the class prevalence, then compare it to a sample of 100 recent production responses. If the prevalence differs by more than a few percentage points, your metrics are likely misleading. Rebuild the test set from production samples, relabel a subset, and recompute precision, recall, and PR-AUC. That single step will reveal more about your detector's real performance than any new model architecture.
+
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Before publication, drafts are screened automatically for minimum length, near-duplicate content, invented or unsourced claims and citations, unverifiable product names, and broken internal links. Individual line-by-line human editing is not performed on every post. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
+
+**Last generated:** November 2026

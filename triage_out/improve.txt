@@ -134,6 +134,7 @@ docs/global-state-is-the-wrong-tool-for-ai-features/	Tags absent from body: LLMs
 docs/golden-paths-become-load-bearing-walls/	Tags absent from body: LLMs, Reliability
 docs/golden-paths-that-dont-handcuff/	Tags absent from body: Platform Engineering, Containers
 docs/graphql-vs-rest-vs-trpc-2026s-api-fight/	Tags absent from body: Reliability, LLMs
+docs/hallucination-detection-metrics-that-mislead/	Tags absent from body: LLMs
 docs/hire-for-agents-not-autocomplete/	Tags absent from body: Engineering Careers, AI Agents, Reliability, Messaging
 docs/hpa-vs-keda-vs-karpenter-autoscaling-traps/	Tags absent from body: Containers, Messaging, Serverless
 docs/http3-changes-less-than-the-demos-imply/	Tags absent from body: Backend Engineering

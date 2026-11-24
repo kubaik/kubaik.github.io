@@ -1332,6 +1332,13 @@
     ],
     "words": 2645
   },
+  "hallucination-detection-metrics-that-mislead": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: LLMs"
+    ],
+    "words": 2555
+  },
   "hire-for-agents-not-autocomplete": {
     "verdict": "IMPROVE",
     "reasons": [

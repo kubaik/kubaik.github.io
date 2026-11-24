@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-24T09:01:13.663268",
+  "built_at": "2026-11-24T22:06:03.620922",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5940,6 +5940,11 @@
       "slug": "message-queues-vs-event-streams-7-traps",
       "title": "Message queues vs event streams: 7 traps",
       "summary": "The first time you wire a service to a queue and a service to a stream, they look interchangeable: both accept messages from a producer, both deliver them to a consumer, both promise not to lose them. Then the consumer that reads from the stream replays a week of history by accident, or the queue co"
+    },
+    {
+      "slug": "hallucination-detection-metrics-that-mislead",
+      "title": "Hallucination detection: metrics that mislead",
+      "summary": "The symptom: your detector says 95% accurate, but the model still lies A team ships a hallucination detector for their RAG pipeline. Offline evaluation shows a 95% accuracy score. Two weeks later, support tickets pile up: the model confidently states that a refund policy allows 90-day returns when t"
     }
   ]
 }

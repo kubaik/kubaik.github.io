@@ -695,6 +695,9 @@
   "graphql-vs-rest-vs-trpc-2026s-api-fight": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "hallucination-detection-metrics-that-mislead": {
+    "first_seen": "2026-11-24T22:06:09.046804+00:00"
+  },
   "hire-for-agents-not-autocomplete": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

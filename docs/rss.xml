@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Nov 2026 09:01:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2026 22:06:27 +0000</lastBuildDate>
+    <item>
+      <title>Hallucination detection: metrics that mislead</title>
+      <link>https://kubailabs.com/hallucination-detection-metrics-that-mislead/</link>
+      <description>Hallucination detection metrics often mislead: class imbalance, annotation noise, and distribution shift can make a 95% accurate detector useless in…</description>
+      <pubDate>Tue, 24 Nov 2026 22:06:01 +0000</pubDate>
+      <guid>https://kubailabs.com/hallucination-detection-metrics-that-mislead/</guid>
+    </item>
     <item>
       <title>Message queues vs event streams: 7 traps</title>
       <link>https://kubailabs.com/message-queues-vs-event-streams-7-traps/</link>
@@ -138,13 +145,6 @@
       <description>Small engineering orgs often staff a platform team before scoping the platform as a product. Here is a staffing test, a written boundary, and paved roads.</description>
       <pubDate>Sat, 14 Nov 2026 17:48:24 +0000</pubDate>
       <guid>https://kubailabs.com/your-platform-team-is-too-big/</guid>
-    </item>
-    <item>
-      <title>Freelance vs full-time: African devs&apos; real tradeoffs</title>
-      <link>https://kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</link>
-      <description>A structural comparison of freelance contracts and full-time remote jobs for African developers: risk transfer, utilization, tax, IP, and a worked pay comparison.</description>
-      <pubDate>Sat, 14 Nov 2026 05:34:55 +0000</pubDate>
-      <guid>https://kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</guid>
     </item>
   </channel>
 </rss>

@@ -289,5 +289,9 @@
   "Designing secure file upload pipelines",
   "Structured outputs and schema validation for LLMs",
   "Encryption at rest versus in transit tradeoffs",
-  "Choosing between message queues and event streams"
+  "Choosing between message queues and event streams",
+  "Secrets management patterns for cloud workloads",
+  "Cost and latency tradeoffs in model selection",
+  "Evaluating retrieval augmented generation architectures",
+  "Evaluating hallucination detection approaches"
 ]
