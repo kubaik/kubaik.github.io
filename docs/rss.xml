@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Nov 2026 23:37:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Nov 2026 09:01:40 +0000</lastBuildDate>
+    <item>
+      <title>Message queues vs event streams: 7 traps</title>
+      <link>https://kubailabs.com/message-queues-vs-event-streams-7-traps/</link>
+      <description>Message queues vs event streams: seven traps around replay, fan-out, backpressure and exactly-once, with a rule for choosing and a 30-minute check.</description>
+      <pubDate>Tue, 24 Nov 2026 09:01:10 +0000</pubDate>
+      <guid>https://kubailabs.com/message-queues-vs-event-streams-7-traps/</guid>
+    </item>
     <item>
       <title>Encryption at rest vs in transit: the gap</title>
       <link>https://kubailabs.com/encryption-at-rest-vs-in-transit-the-gap/</link>
@@ -138,13 +145,6 @@
       <description>A structural comparison of freelance contracts and full-time remote jobs for African developers: risk transfer, utilization, tax, IP, and a worked pay comparison.</description>
       <pubDate>Sat, 14 Nov 2026 05:34:55 +0000</pubDate>
       <guid>https://kubailabs.com/freelance-vs-full-time-african-devs-real-tradeoffs/</guid>
-    </item>
-    <item>
-      <title>Distributed locks: safe only with fencing</title>
-      <link>https://kubailabs.com/distributed-locks-safe-only-with-fencing/</link>
-      <description>A lease can expire while its holder is still running. Fencing tokens, enforced by the protected resource, are what make a distributed lock safe.</description>
-      <pubDate>Fri, 13 Nov 2026 18:26:53 +0000</pubDate>
-      <guid>https://kubailabs.com/distributed-locks-safe-only-with-fencing/</guid>
     </item>
   </channel>
 </rss>

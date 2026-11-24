@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-23T23:36:45.042273",
+  "built_at": "2026-11-24T09:01:13.663268",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5935,6 +5935,11 @@
       "slug": "encryption-at-rest-vs-in-transit-the-gap",
       "title": "Encryption at rest vs in transit: the gap",
       "summary": "Encryption at rest and encryption in transit are often treated as two checkboxes on a compliance form. In reality, they protect against different threats, fail in different ways, and cost different amounts to operate. The gap between what the documentation promises and what actually happens under lo"
+    },
+    {
+      "slug": "message-queues-vs-event-streams-7-traps",
+      "title": "Message queues vs event streams: 7 traps",
+      "summary": "The first time you wire a service to a queue and a service to a stream, they look interchangeable: both accept messages from a producer, both deliver them to a consumer, both promise not to lose them. Then the consumer that reads from the stream replays a week of history by accident, or the queue co"
     }
   ]
 }

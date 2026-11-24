@@ -821,6 +821,9 @@
   "merge-three-payment-apis-into-one-system": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "message-queues-vs-event-streams-7-traps": {
+    "first_seen": "2026-11-24T09:01:20.030453+00:00"
+  },
   "meter-dev-tool-pricing-in-2026": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

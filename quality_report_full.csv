@@ -143,6 +143,7 @@ llm-output-metrics-that-actually-move-the-needle,95,2089,LLM output metrics that
 local-llm-agents-vllm-vs-ollama-for-fintech,95,3190,Local LLM agents: vLLM vs Ollama for fintech,2026-09-18T12:42:41.960286,1,no markdown table
 memory-systems-for-production-agents,95,2196,Memory Systems for Production Agents,2026-09-15T04:09:36.116554,1,no FAQ section
 merge-three-payment-apis-into-one-system,95,3048,Merge three payment APIs into one system,2026-06-10T02:38:19.531287,1,no FAQ section
+message-queues-vs-event-streams-7-traps,95,2769,Message queues vs event streams: 7 traps,2026-11-24T09:01:10.519723,1,no markdown table
 meter-dev-tool-pricing-in-2026,95,2157,Meter dev-tool pricing in 2026,2026-07-02T17:53:21.753006,1,no FAQ section
 move-images-50-faster-in-2026-with-starlink-cdn,95,2612,Resize Images at the Edge: A CloudFront and Lambda Guide,2026-06-18T16:57:23.521775,1,no FAQ section
 multi-agent-dx-langgraph-vs-crewai-gaps,95,3300,Multi-agent DX: LangGraph vs CrewAI gaps,2026-10-28T04:45:55.701506,1,no FAQ section

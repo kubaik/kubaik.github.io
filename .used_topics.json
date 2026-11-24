@@ -288,5 +288,6 @@
   "Backpressure in streaming pipelines explained",
   "Designing secure file upload pipelines",
   "Structured outputs and schema validation for LLMs",
-  "Encryption at rest versus in transit tradeoffs"
+  "Encryption at rest versus in transit tradeoffs",
+  "Choosing between message queues and event streams"
 ]

@@ -159,6 +159,7 @@ docs/m-pesa-failures-cost-us-40-hours/	Tags absent from body: Mobile Money, Mess
 docs/marketing-without-budget-5k-mrr-in-18-months/	Tags absent from body: Backend Engineering
 docs/mcp-vs-a2a-pick-the-wrong-layer/	Tags absent from body: Identity & Access, LLMs
 docs/mentoring-without-formal-authority-the-invisible-mandate/	Unverifiable first-person experience claims x1 (not human_reviewed); Tags absent from body: Engineering Careers, Engineering Management
+docs/message-queues-vs-event-streams-7-traps/	Tags absent from body: Messaging
 docs/micro-saas-niches-eaten-by-ai-in-2026/	Tags absent from body: LLMs, Engineering Careers
 docs/migrations-stop-running-them-live/	Tags absent from body: Distributed Systems, Databases, CI/CD
 docs/mobile-first-ai-fails-you-didnt-plan/	Tags absent from body: Serverless, Vector Search, AWS

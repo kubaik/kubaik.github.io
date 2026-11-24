@@ -1583,6 +1583,13 @@
     "reasons": [],
     "words": 2736
   },
+  "message-queues-vs-event-streams-7-traps": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Messaging"
+    ],
+    "words": 2810
+  },
   "meter-dev-tool-pricing-in-2026": {
     "verdict": "KEEP",
     "reasons": [],
