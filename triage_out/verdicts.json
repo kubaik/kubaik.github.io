@@ -987,6 +987,11 @@
     "reasons": [],
     "words": 2130
   },
+  "codebase-due-diligence-read-the-tests-first": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2360
+  },
   "commit-ownership-in-ai-pair-coding": {
     "verdict": "IMPROVE",
     "reasons": [

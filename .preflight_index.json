@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-24T22:06:03.620922",
+  "built_at": "2026-11-25T07:40:45.297612",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5945,6 +5945,11 @@
       "slug": "hallucination-detection-metrics-that-mislead",
       "title": "Hallucination detection: metrics that mislead",
       "summary": "The symptom: your detector says 95% accurate, but the model still lies A team ships a hallucination detector for their RAG pipeline. Offline evaluation shows a 95% accuracy score. Two weeks later, support tickets pile up: the model confidently states that a refund policy allows 90-day returns when t"
+    },
+    {
+      "slug": "codebase-due-diligence-read-the-tests-first",
+      "title": "Codebase due diligence: read the tests first",
+      "summary": "Interview loops optimize for the wrong signal. You spend hours on algorithm puzzles and system design whiteboard sketches, then accept an offer based on a vibe from four people who have all rehearsed the same pitch. The codebase you will actually maintain for the next two years gets maybe fifteen mi"
     }
   ]
 }

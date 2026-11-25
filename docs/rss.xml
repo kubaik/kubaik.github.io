@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Nov 2026 22:06:27 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 07:41:22 +0000</lastBuildDate>
+    <item>
+      <title>Codebase due diligence: read the tests first</title>
+      <link>https://kubailabs.com/codebase-due-diligence-read-the-tests-first/</link>
+      <description>Evaluate a codebase before joining by reading tests, CI config, and commit history. Spot red flags like ignored dependency updates and broken builds.</description>
+      <pubDate>Wed, 25 Nov 2026 07:40:42 +0000</pubDate>
+      <guid>https://kubailabs.com/codebase-due-diligence-read-the-tests-first/</guid>
+    </item>
     <item>
       <title>Hallucination detection: metrics that mislead</title>
       <link>https://kubailabs.com/hallucination-detection-metrics-that-mislead/</link>
@@ -138,13 +145,6 @@
       <description>Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</description>
       <pubDate>Sun, 15 Nov 2026 05:32:25 +0000</pubDate>
       <guid>https://kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</guid>
-    </item>
-    <item>
-      <title>Your platform team is too big</title>
-      <link>https://kubailabs.com/your-platform-team-is-too-big/</link>
-      <description>Small engineering orgs often staff a platform team before scoping the platform as a product. Here is a staffing test, a written boundary, and paved roads.</description>
-      <pubDate>Sat, 14 Nov 2026 17:48:24 +0000</pubDate>
-      <guid>https://kubailabs.com/your-platform-team-is-too-big/</guid>
     </item>
   </channel>
 </rss>

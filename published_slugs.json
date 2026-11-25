@@ -521,6 +521,9 @@
   "code-ai-wont-rewrite": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "codebase-due-diligence-read-the-tests-first": {
+    "first_seen": "2026-11-25T07:40:53.738405+00:00"
+  },
   "commit-ownership-in-ai-pair-coding": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },

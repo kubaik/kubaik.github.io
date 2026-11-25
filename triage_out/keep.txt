@@ -54,6 +54,7 @@ docs/bundle-size-70-lighter-with-server-components/	-
 docs/cache-stampedes-the-patterns-that-scale-and-the-ones/	-
 docs/chaos-engineering-without-an-sre-team/	-
 docs/code-ai-wont-rewrite/	-
+docs/codebase-due-diligence-read-the-tests-first/	-
 docs/compare-kafka-redpanda-nats-for-event-driven-systems/	-
 docs/computer-use-agents-the-permission-trap/	-
 docs/context-engineering-the-real-fix-for-agent-hallucinations/	-

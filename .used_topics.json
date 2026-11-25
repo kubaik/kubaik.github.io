@@ -293,5 +293,8 @@
   "Secrets management patterns for cloud workloads",
   "Cost and latency tradeoffs in model selection",
   "Evaluating retrieval augmented generation architectures",
-  "Evaluating hallucination detection approaches"
+  "Evaluating hallucination detection approaches",
+  "Interviewing for distributed systems roles",
+  "Embedding storage and vector index tradeoffs",
+  "How to evaluate a codebase before joining"
 ]

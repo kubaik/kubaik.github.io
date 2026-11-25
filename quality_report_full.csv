@@ -292,6 +292,7 @@ chaos-engineering-without-an-sre-team,100,2713,Chaos engineering without an SRE 
 cicd-pipelines-stall-with-gpu-pods-2026-benchmarks,100,2646,CI/CD pipelines stall with GPU pods: 2026 benchmarks,2026-06-28T11:45:59.811643,0,
 circleci-still-beats-github-actions-at-50k-builds,100,2267,When CircleCI's Concurrency Model Beats GitHub Actions,2026-06-09T04:46:48.424623,0,
 claude-code-after-a-year-daily-wins,100,2524,Claude Code after a year: daily wins,2026-06-25T03:55:14.348158,0,
+codebase-due-diligence-read-the-tests-first,100,2485,Codebase due diligence: read the tests first,2026-11-25T07:40:42.471516,0,
 commit-ownership-in-ai-pair-coding,100,2851,Commit ownership in AI pair coding,2026-08-31T12:27:42.708342,0,
 compare-kafka-redpanda-nats-for-event-driven-systems,100,2724,"Compare Kafka, Redpanda, NATS for event-driven systems",2026-06-14T18:22:50.210273,0,
 computer-use-agents-the-permission-trap,100,3021,Computer-use agents: the permission trap,2026-09-19T12:00:05.749785,0,
